@@ -6,13 +6,5 @@
             <field name="name">Annual Closing: Corporate Tax</field>
             <field name="deadline_periodicity">year</field>
         </record>
-
-        <!-- Subtypes -->
-        <record id="subtype_check_return_reset" model="mail.message.subtype">
-            <field name="name">Return State Reset</field>
-            <field name="res_model">account.return.check</field>
-            <field name="default" eval="True"/>
-            <field name="description">Tax Return Reset</field>
-        </record>
     </data>
 </odoo>

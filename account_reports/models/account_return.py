@@ -1851,7 +1851,7 @@ class AccountReturnCheck(models.Model):
 
     # Return related
     return_id = fields.Many2one(comodel_name='account.return', string="Account Return", required=True, ondelete="cascade")
-    return_state = fields.Char(string="Return State", related="return_id.state", store=True, tracking=10)
+    return_state = fields.Char(string="Return State", related="return_id.state", store=True)
     return_name = fields.Char(string="Return Name", related="return_id.name")
     date_deadline = fields.Date("Deadline", related="return_id.date_deadline")
 
@@ -1896,19 +1896,3 @@ class AccountReturnCheck(models.Model):
             'reviewed': self.return_id.action_submit,
             'submitted': self.return_id.action_pay,
         }
-
-    def _track_subtype(self, init_values):
-        self.ensure_one()
-
-        states = ['new', 'reviewed', 'submitted', 'paid']
-        init_state = init_values.get('return_state')
-        current_state = self.return_state
-        if (
-            init_state
-            and init_state in states
-            and current_state in states
-            and states.index(current_state) < states.index(init_state)
-        ):
-            return self.env.ref('account_reports.subtype_check_return_reset')
-
-        return super()._track_subtype(init_values)
