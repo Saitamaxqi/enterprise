@@ -2,10 +2,9 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
-import { htmlJoin } from "@mail/utils/common/html";
-
 import { Component, markup, onMounted, onWillUnmount } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { htmlJoin } from "@web/core/utils/html";
 
 export class MailComposerChatGPT extends Component {
     static template = "mail.MailComposerChatGPT";
@@ -37,9 +36,9 @@ export class MailComposerChatGPT extends Component {
 
     async onOpenChatGPTPromptDialogBtnClick() {
         await this.aiChatLauncher.openAIChatFromContextV2({
-            callerComponentName: 'composer_ai_button',
+            callerComponentName: "composer_ai_button",
             originalRecordModel: this.props.record.data.model,
-            originalRecordId: Number(this.props.record.data.res_ids.slice(1,-1)),
+            originalRecordId: Number(this.props.record.data.res_ids.slice(1, -1)),
             originalRecordData: this.props.record.data,
             specialActionCallbacks: {
                 insert: (content) => {

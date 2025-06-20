@@ -1,5 +1,4 @@
 import { useSelection } from "@mail/utils/common/hooks";
-import { htmlJoin } from "@mail/utils/common/html";
 
 import { Component, htmlEscape, markup, useEffect, useRef } from "@odoo/owl";
 
@@ -10,6 +9,7 @@ import { _t } from "@web/core/l10n/translation";
 import { normalize, normalizedMatch } from "@web/core/l10n/utils";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
+import { htmlJoin } from "@web/core/utils/html";
 import { escapeRegExp } from "@web/core/utils/strings";
 import { useDebounced } from "@web/core/utils/timing";
 import { user } from "@web/core/user";

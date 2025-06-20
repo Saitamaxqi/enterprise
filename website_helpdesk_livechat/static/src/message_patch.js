@@ -1,9 +1,8 @@
 import { Message } from "@mail/core/common/message";
-import { createDocumentFragmentFromContent } from "@mail/utils/common/html";
 
 import { markup } from "@odoo/owl";
 
-import { setElementContent } from "@web/core/utils/html";
+import { createDocumentFragmentFromContent, setElementContent } from "@web/core/utils/html";
 import { patch } from "@web/core/utils/patch";
 
 function addNewTicketsToMessage(oldMessage, newElement) {
