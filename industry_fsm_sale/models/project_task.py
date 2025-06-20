@@ -667,7 +667,7 @@ class ProjectTask(models.Model):
     def copy_data(self, default=None):
         vals_list = super().copy_data(default)
         for task, vals in zip(self, vals_list):
-            if task.is_fsm:
+            if task.is_fsm and not task.recurring_task:
                 vals.update({
                     'sale_order_id': False,
                     'sale_line_id': False,
