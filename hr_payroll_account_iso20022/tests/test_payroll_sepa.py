@@ -83,7 +83,8 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         self.assertEqual(self.payslip_run.state, '01_draft', 'State not changed!')
 
         # I create a payslip employee.
-        self.payslip_run.generate_payslips([self.hr_employee_john.id])
+        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id]))
+        self.payslip_run.generate_payslips(versions.ids)
 
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
@@ -115,7 +116,8 @@ class TestPayrollSEPACreditTransfer(TestPayrollSEPACreditTransferCommon):
         self.assertEqual(self.payslip_run.state, '01_draft')
 
         # I create a payslip employee.
-        self.payslip_run.generate_payslips([self.hr_employee_john.id])
+        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id]))
+        self.payslip_run.generate_payslips(versions.ids)
 
         self.assertTrue(len(self.payslip_run.slip_ids) > 0)
         self.assertEqual(self.payslip_run.state, '02_verify')
@@ -154,7 +156,8 @@ class TestPayrollSEPACreditTransferXmlValidity(TestPayrollSEPACreditTransferComm
     def test_01_hr_payroll_account_iso20022(self):
         """ Checking the process of payslip run when you create a SEPA payment. """
 
-        self.payslip_run.generate_payslips([self.hr_employee_john.id])
+        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id]))
+        self.payslip_run.generate_payslips(versions.ids)
         self.payslip_run.action_validate()
         file = self.env['hr.payroll.payment.report.wizard'].create({
             'payslip_ids': self.payslip_run.slip_ids.ids,

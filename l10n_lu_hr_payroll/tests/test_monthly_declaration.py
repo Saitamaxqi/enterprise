@@ -24,7 +24,8 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'company_id': self.lux_company.id,
             'state': '02_verify',
         })
-        self.payslip_run.generate_payslips([self.employee_david.id])
+        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.employee_david.id]))
+        self.payslip_run.generate_payslips(versions.ids)
 
     def test_01_generate_missing_identification(self):
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
@@ -114,7 +115,8 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'state': '02_verify',
         })
 
-        batch.generate_payslips([self.employee_david.id, madison_employee.id, laura_employee.id])
+        versions = self.env["hr.version"].search(batch._get_valid_versions_domain(employee_ids=[self.employee_david.id, madison_employee.id, laura_employee.id]))
+        batch.generate_payslips(versions.ids)
 
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
             'month': '3',
@@ -217,7 +219,8 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
             'company_id': self.lux_company.id,
             'state': '02_verify',
         })
-        batch.generate_payslips([self.employee_david.id, jade_employee.id])
+        versions = self.env["hr.version"].search(batch._get_valid_versions_domain(employee_ids=[self.employee_david.id, jade_employee.id]))
+        batch.generate_payslips(versions.ids)
 
         wizard = self.env['l10n.lu.monthly.declaration.wizard'].create({
             'month': '3',

@@ -4,7 +4,7 @@ import { ListController } from "@web/views/list/list_controller";
 import { useService } from "@web/core/utils/hooks";
 import { useState } from "@odoo/owl";
 
-export class EmployeePayrunListController extends ListController {
+export class VersionPayrunListController extends ListController {
 
     setup() {
         super.setup();
@@ -25,17 +25,18 @@ export class EmployeePayrunListController extends ListController {
     buildRawRecord(rawRecord) {
         return {
             name: rawRecord.name,
-            date_start: luxon.DateTime.fromISO(rawRecord.date_start),
-            date_end: luxon.DateTime.fromISO(rawRecord.date_end),
+            date_start: luxon.DateTime.fromISO(rawRecord.date_start).toISODate(),
+            date_end: luxon.DateTime.fromISO(rawRecord.date_end).toISODate(),
             structure_id: rawRecord.structure_id.id,
             schedule_pay: rawRecord.schedule_pay,
+            company_id: rawRecord.company_id?.id,
         };
     }
 
     async generatePayslips() {
         this.state.disabled = true;
-        const selectedEmployees = await this.model.root.getResIds(true);
-        if (selectedEmployees.length < 1) return;
+        const selectedVersions = await this.model.root.getResIds(true);
+        if (selectedVersions.length < 1) return;
         let ids = [this.props.context.active_id];
         if (this.props.context.raw_record) {
             const rawRecord = this.buildRawRecord(this.props.context.raw_record);
@@ -47,7 +48,7 @@ export class EmployeePayrunListController extends ListController {
                 "generate_payslips",
                 [ids],
                 {
-                    employee_ids: selectedEmployees,
+                    versions: selectedVersions,
                 });
             if (this.props.context.raw_record) {
                 await this.openPayslips(ids);
@@ -73,10 +74,10 @@ export class EmployeePayrunListController extends ListController {
         });
     }
 }
-export const employeePayrunListController = {
+export const versionPayrunListController = {
     ...listView,
-    Controller: EmployeePayrunListController,
-    buttonTemplate: "hr_payroll.EmployeePayrunListController.Buttons",
+    Controller: VersionPayrunListController,
+    buttonTemplate: "hr_payroll.VersionPayrunListController.Buttons",
 };
 
-registry.category("views").add("hr_employee_payrun_list", employeePayrunListController);
+registry.category("views").add("hr_version_payrun_list", versionPayrunListController);

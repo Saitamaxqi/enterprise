@@ -3068,8 +3068,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "date_start": '2020-12-01',
             "date_end": '2020-12-31',
         })
-        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
-        payslip_run.generate_payslips(employees.ids)
+
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain())
+        payslip_run.generate_payslips(versions.ids)
 
         payslips = payslip_run.slip_ids
         self.assertEqual(len(payslips), 2)

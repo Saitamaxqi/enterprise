@@ -97,7 +97,8 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
             }
         )
 
-        payslip_run.generate_payslips(employee_ids.ids)
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=employee_ids.ids))
+        payslip_run.generate_payslips(versions.ids)
         payslip_run.slip_ids.write({"input_line_ids": [(0, 0, {
             "input_type_id": self.env.ref(input_id).id,
             "amount": amount,

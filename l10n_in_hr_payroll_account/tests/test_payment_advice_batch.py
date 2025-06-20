@@ -17,7 +17,8 @@ class TestPaymentAdviceBatch(TestPayrollAccountCommon):
             'company_id': self.company_in.id,
         })
 
-        payslip_run.generate_payslips([self.rahul_emp.id, self.jethalal_emp.id])
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.rahul_emp.id, self.jethalal_emp.id]))
+        payslip_run.generate_payslips(versions.ids)
         payslip_run.action_validate()
         return payslip_run
 

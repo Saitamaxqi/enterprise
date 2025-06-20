@@ -20,7 +20,8 @@ class TestPayslipRun(L10nPayrollAccountCommon):
                 "company_id": self.company.id,
             }
         )
-        payslip_run.generate_payslips([self.employee_1.id, self.employee_2.id])
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.employee_1.id, self.employee_2.id]))
+        payslip_run.generate_payslips(versions.ids)
         payslip_run.action_validate()
         return payslip_run
 

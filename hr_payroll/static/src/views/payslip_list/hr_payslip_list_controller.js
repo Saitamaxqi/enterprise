@@ -76,7 +76,7 @@ export class PayslipListController extends ListController {
     }
 
     async selectEmployees() {
-        const employeeListAction = await this.orm.call("hr.payslip.run", "action_payroll_hr_employee_list_view_payrun", [
+        const employeeListAction = await this.orm.call("hr.payslip.run", "action_payroll_hr_version_list_view_payrun", [
             [this.payrunId]
         ]);
         return this.actionService.doAction({

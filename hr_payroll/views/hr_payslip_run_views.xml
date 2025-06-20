@@ -92,7 +92,7 @@
                     <button name="action_payment_report" type="object" class="btn btn-secondary" string="Create Payment Report" invisible="state != '03_close'"/>
                     <button name="action_draft" type="object" class="btn btn-secondary" string="Set to Draft" invisible="state not in ('02_verify', '03_close')"/>
                     <button name="add_payslips" type="object" class="btn btn-secondary" string="Add Payslips" invisible="state in ('03_close', '04_paid')"/>
-                    <button name="action_payroll_hr_employee_list_view_payrun" type="object" class="btn btn-secondary" string="Generate Payslips" invisible="state in ('03_close', '04_paid')"/>
+                    <button name="action_payroll_hr_version_list_view_payrun" type="object" class="btn btn-secondary" string="Generate Payslips"/>
                     <button name="unlink" type="object" class="btn text-danger" string="Delete"/>
                 </action>
                 </div>
@@ -100,7 +100,7 @@
                     <field name="company_id" groups="base.group_multi_company" options="{'no_create': 1, 'no_quick_create': 1}"
                            placeholder="Visible to all" domain="[('id', 'in', allowed_company_ids)]"
                            invisible="context.get('allowed_company_ids', []).length &lt; 2"/>
-                    <field name="structure_id" domain="[('country_id', 'in', [country_id, False])]"/>
+                    <field name="structure_id" domain="[('country_id', 'in', [country_id, False])]" placeholder="All structures"/>
                     <field name="schedule_pay"/>
                     <label for="date_start" string="Period"/>
                     <div class="o_row">

@@ -26,6 +26,7 @@
         'views/hr_payslip_worked_days_views.xml',
         'views/hr_payslip_views.xml',
         'views/hr_payslip_run_views.xml',
+        'views/hr_version_views.xml',
         'views/hr_payslip_input_type_views.xml',
         'views/hr_salary_attachment_views.xml',
         'views/hr_employee_views.xml',

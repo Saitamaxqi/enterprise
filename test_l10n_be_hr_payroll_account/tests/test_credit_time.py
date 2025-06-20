@@ -141,8 +141,8 @@ class TestCreditTime(AccountTestInvoicingCommon):
             "date_end": "2020-03-31",
         })
 
-        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
-        payslip_run.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain())
+        payslip_run.generate_payslips(versions.ids)
 
         self.assertEqual(len(payslip_run.slip_ids), 2)
 
@@ -276,8 +276,8 @@ class TestCreditTime(AccountTestInvoicingCommon):
             "date_end": "2020-03-31",
         })
 
-        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
-        payslip_run.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain())
+        payslip_run.generate_payslips(versions.ids)
 
         self.assertEqual(len(payslip_run.slip_ids), 2)
 

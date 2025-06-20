@@ -56,7 +56,12 @@ class TestPayslipFlow(TestPayslipBase):
 
         # I create record for generating the payslip for this Payslip run.
 
-        payslip_run.generate_payslips([self.richard_emp.id])
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.richard_emp.id]))
+
+        # The contract of Richard starts in 2018, the payrun is for 2011, no valid versions can be found.
+        # So the generate_payslip without versions must raise an error
+        with self.assertRaises(UserError):
+            payslip_run.generate_payslips(versions.ids)
 
     def test_01_batch_with_specific_structure(self):
         """ Generate payslips for the employee whose running contract is based on the same Salary Structure Type"""
@@ -78,10 +83,9 @@ class TestPayslipFlow(TestPayslipBase):
             'name': 'End of the year bonus',
         })
 
-        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
-
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain())
         with self.assertRaises(UserError):
-            payslip_run.generate_payslips(employees.ids)
+            payslip_run.generate_payslips(versions.ids)
 
         # Update the structure type and generate payslips again
         specific_structure_type.default_struct_id = specific_structure.id
@@ -94,13 +98,13 @@ class TestPayslipFlow(TestPayslipBase):
             'name': 'Batch for Structure',
         })
 
-        employees = self.env["hr.employee"].search(payslip_run._get_employees_domain())
-        payslip_run.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain())
+        payslip_run.generate_payslips(versions.ids)
 
         self.richard_emp.structure_type_id = specific_structure_type.id
 
         self.assertTrue(payslip_run.slip_ids)
-        self.assertTrue(self.richard_emp.id in employees.ids)
+        self.assertTrue(self.richard_emp.id in versions.employee_id.ids)
 
         self.assertEqual(len(payslip_run.slip_ids), 1)
         self.assertEqual(payslip_run.slip_ids.struct_id.id, specific_structure.id)
@@ -116,7 +120,8 @@ class TestPayslipFlow(TestPayslipBase):
             'name': 'End of the year bonus'
         })
         # I create record for generating the payslip for this Payslip run.
-        payslip_run.generate_payslips([self.richard_emp.id])
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.richard_emp.id]))
+        payslip_run.generate_payslips(versions.ids)
 
         self.assertEqual(len(payslip_run.slip_ids), 1)
 
@@ -141,7 +146,8 @@ class TestPayslipFlow(TestPayslipBase):
             'name': 'Payment Test',
         })
 
-        payslip_run.generate_payslips([self.richard_emp.id, self.jules_emp.id])
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.richard_emp.id, self.jules_emp.id]))
+        payslip_run.generate_payslips(versions.ids)
 
         payslip_run.action_validate()
 
@@ -181,7 +187,8 @@ class TestPayslipFlow(TestPayslipBase):
             'name': 'Payment Test',
         })
 
-        payslip_run.generate_payslips([self.richard_emp.id, self.jules_emp.id])
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.richard_emp.id, self.jules_emp.id]))
+        payslip_run.generate_payslips(versions.ids)
 
         self.assertEqual(len(payslip_run.slip_ids.employee_id.ids), 2)
         self.assertTrue(all(employee in [self.richard_emp.id, self.jules_emp.id] for employee in payslip_run.slip_ids.employee_id.ids))
@@ -209,7 +216,8 @@ class TestPayslipFlow(TestPayslipBase):
 
         employees = self.env["hr.employee"].search([('department_id', 'in', [self.dep_rd.id])])
 
-        payslip_run.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=employees.ids))
+        payslip_run.generate_payslips(versions.ids)
 
         self.assertEqual(len(employees.ids), 1)
         self.assertEqual(employees.ids[0], self.jules_emp.id)
@@ -235,7 +243,8 @@ class TestPayslipFlow(TestPayslipBase):
 
         employees = self.env["hr.employee"].search([('job_id', 'in', [job_developer.id])])
 
-        payslip_run.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=employees.ids))
+        payslip_run.generate_payslips(versions.ids)
 
         self.assertEqual(len(employees.ids), 1)
         self.assertTrue(self.richard_emp in employees)
@@ -264,7 +273,8 @@ class TestPayslipFlow(TestPayslipBase):
 
         employees = self.env["hr.employee"].search([('category_ids', 'in', [category_tag.id])])
 
-        payslip_run.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=employees.ids))
+        payslip_run.generate_payslips(versions.ids)
 
         self.assertEqual(len(employees.ids), 1)
         self.assertEqual(employees.ids[0], self.jules_emp.id)
@@ -352,8 +362,8 @@ class TestPayslipFlow(TestPayslipBase):
         # Expected employees/contracts
         # Timmy  contract A (YEAR-1/01/01 -> YEAR-1/03/15)
         # Gerard contract A (YEAR-1/01/01 -> no end date )
-        employees = self.env["hr.employee"].search(payslip_runA._get_employees_domain())
-        payslip_runA.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_runA._get_valid_versions_domain())
+        payslip_runA.generate_payslips(versions.ids)
         self.assertEqual(len(payslip_runA.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runA.slip_ids.ids), 2)
         self.assertTrue(all(
@@ -366,8 +376,8 @@ class TestPayslipFlow(TestPayslipBase):
         # Expected employees/contracts
         # Timmy  contract B (YEAR-1/03/16 -> no end date)
         # Michel contract B (YEAR-1/01/01 -> no end date)
-        employees = self.env["hr.employee"].search(payslip_runB._get_employees_domain())
-        payslip_runB.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_runB._get_valid_versions_domain())
+        payslip_runB.generate_payslips(versions.ids)
         self.assertEqual(len(payslip_runB.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runB.slip_ids.ids), 2)
         self.assertTrue(all(
@@ -382,8 +392,8 @@ class TestPayslipFlow(TestPayslipBase):
         #      | contract B (YEAR-1/03/16 -> no end date )
         # Gerard contract A (YEAR-1/01/01 -> no end date )
         # Michel contract B (YEAR-1/01/01 -> no end date )
-        employees = self.env["hr.employee"].search(payslip_runC._get_employees_domain())
-        payslip_runC.generate_payslips(employees.ids)
+        versions = self.env["hr.version"].search(payslip_runC._get_valid_versions_domain())
+        payslip_runC.generate_payslips(versions.ids)
         self.assertEqual(len(payslip_runC.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runC.slip_ids.ids), 2)
         self.assertTrue(all(

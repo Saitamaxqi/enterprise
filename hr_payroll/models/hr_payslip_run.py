@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from ast import literal_eval
+from collections import defaultdict
 from datetime import date, datetime, time
 from dateutil.relativedelta import relativedelta
 import pytz
@@ -49,7 +50,7 @@ class HrPayslipRun(models.Model):
         ('bi-weekly', 'Bi-weekly'),
         ('weekly', 'Weekly'),
         ('daily', 'Daily')],
-        compute='_compute_schedule_pay', readonly=False, store=True, precompute=True)
+        compute='_compute_schedule_pay', default="monthly", readonly=False, store=True, precompute=True)
     payslip_count = fields.Integer(compute='_compute_payslip_count', store=True)
     company_id = fields.Many2one('res.company', string='Company', required=True,
         default=lambda self: self.env.company)
@@ -70,16 +71,28 @@ class HrPayslipRun(models.Model):
     net_sum = fields.Monetary(compute="_compute_gross_net_sum", store=True, readonly=True, copy=False)
 
     def _get_name_for_period(self, vals=None, cache=None):
+
+        def normalize_date(val):
+            if isinstance(val, date):
+                return val
+            elif isinstance(val, datetime):
+                return val.date()
+            elif isinstance(val, str):
+                return date.fromisoformat(val)
+            return None
+
         if vals is None:
             vals = {}
         if cache is None:
             cache = {}
-        if not vals.get("date_start") or not vals.get("date_start"):
+        if not vals.get("date_start") or not vals.get("date_end"):
             raise UserError(self.env._("You must set a start and end date for the Pay Run"))
-        date_start = datetime.fromisoformat(vals.get("date_start"))
-        date_end = datetime.fromisoformat(vals.get("date_end"))
+        date_start = normalize_date(vals["date_start"])
+        date_end = normalize_date(vals["date_end"])
         structure_id = vals.get("structure_id")
         name = ""
+        if not date_start or not date_end:
+            return name
         format_date_cached = self.env["hr.payslip"]._format_date_cached
         if date_end.year == date_start.year:
             if date_end.month - date_start.month == 11:
@@ -100,7 +113,7 @@ class HrPayslipRun(models.Model):
             name += " - " + structure_id.name
         return name
 
-    def _get_employees_domain(self, date_start=None, date_end=None, structure_id=None, company_id=None):
+    def _get_valid_versions_domain(self, date_start=None, date_end=None, structure_id=None, company_id=None, employee_ids=None):
         date_start = date_start or self.date_start
         date_end = date_end or self.date_end
         structure = self.env["hr.payroll.structure"].browse(structure_id) if structure_id else self.structure_id
@@ -109,13 +122,44 @@ class HrPayslipRun(models.Model):
             ('company_id', '=', company),
             ('contract_date_start', '<=', date_end),
             '|',
-            ('contract_date_end', '=', False),
-            ('contract_date_end', '>=', date_start),
+                ('contract_date_end', '=', False),
+                ('contract_date_end', '>=', date_start),
+            ('date_version', '<=', date_end),
         ])
         if structure:
             version_domain &= Domain([('structure_type_id', '=', structure.type_id.id)])
-        versions = self.env['hr.version'].search(version_domain)
-        domain = [('id', 'in', versions.employee_id.ids)]
+        if employee_ids:
+            version_domain &= Domain([('employee_id', 'in', employee_ids)])
+        all_versions = self.env['hr.version']._read_group(
+            domain=version_domain,
+            groupby=['employee_id', 'date_version:day'],
+            order="date_version:day DESC",
+            aggregates=['id:recordset'],
+        )
+        all_employee_versions = defaultdict(list)
+        for employee, _, version in all_versions:
+            all_employee_versions[employee].append(version)
+        valid_versions = self.env["hr.version"]
+        for employee_versions in all_employee_versions.values():
+            employee_valid_versions = self.env["hr.version"]
+            for i in range(len(employee_versions)):
+                version = employee_versions[i]
+                if version.date_version <= date_start or employee_versions[-1] == version:
+                    # End case: The first version in contract before the pay run start or the last version of the list
+                    employee_valid_versions |= version
+                    break
+                if employee_valid_versions:
+                    # Version already added => new contract?
+                    if (employee_valid_versions[-1].contract_date_start > version.contract_date_start
+                        and (version.contract_date_start >= version.date_version
+                            or version.contract_date_start > employee_versions[i + 1].contract_date_start)):
+                        # Take only the first version of the new contract founded
+                        employee_valid_versions |= version
+                elif version.contract_date_start >= version.date_version or version.contract_date_start > employee_versions[i + 1].contract_date_start:
+                    # Take only the first version of the first contract founded
+                    employee_valid_versions |= version
+            valid_versions |= employee_valid_versions
+        domain = [('id', 'in', valid_versions.ids)]
         return domain
 
     @api.depends("structure_id")
@@ -196,7 +240,7 @@ class HrPayslipRun(models.Model):
         return payslip_done_result
 
     def action_confirm(self):
-        self.slip_ids.filtered(lambda slip: slip.state == 'draft').write({'state': 'verify'})
+        self.slip_ids.filtered(lambda slip: slip.state == 'draft').compute_sheet()
 
     def action_open_payslips(self):
         action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_view_hr_payslip_month_form')
@@ -205,9 +249,9 @@ class HrPayslipRun(models.Model):
             search_default_payslip_run_id=self.id or False)
         return action
 
-    def action_payroll_hr_employee_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):
-        action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_payroll_hr_employee_list_view_payrun')
-        action['domain'] = self._get_employees_domain(
+    def action_payroll_hr_version_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):
+        action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_payroll_hr_version_list_view_payrun')
+        action['domain'] = self._get_valid_versions_domain(
             fields.Date.from_string(date_start),
             fields.Date.from_string(date_end),
             structure_id,
@@ -215,49 +259,23 @@ class HrPayslipRun(models.Model):
         )
         return action
 
-    def generate_payslips(self, employee_ids):
+    def generate_payslips(self, versions):
         self.ensure_one()
 
-        if not employee_ids:
-            raise UserError(self.env._("You must select employee(s) to generate payslip(s)."))
+        if not versions:
+            raise UserError(self.env._("You must select employee(s) version(s) to generate payslip(s)."))
 
         Payslip = self.env['hr.payslip']
 
-        all_versions = dict(self.env['hr.version']._read_group(
-            domain=[
-                ('employee_id', 'in', employee_ids),
-                ('company_id', '=', self.company_id.id),
-                ('contract_date_start', '<=', self.date_end),
-                '|',
-                    ('contract_date_end', '=', False),
-                    ('contract_date_end', '>=', self.date_start),
-                ('date_version', '<=', self.date_end),
-            ],
-            groupby=['employee_id'],
-            aggregates=['id:recordset'],
-        ))
-
-        valid_versions = self.env["hr.version"]
-        for employee_versions in all_versions.values():
-            employee_valid_versions = self.env["hr.version"]
-            for version in employee_versions.sorted('date_version', reverse=True):
-                if version.date_version <= self.date_start:
-                    employee_valid_versions |= version
-                    break
-                if employee_valid_versions:
-                    if employee_valid_versions[-1].contract_date_start > version.contract_date_start >= version.date_version:
-                        employee_valid_versions |= version
-                elif version.contract_date_start >= version.date_version:
-                    employee_valid_versions |= version
-            valid_versions |= employee_valid_versions
+        valid_versions = self.env["hr.version"].browse(versions)
 
         if self.structure_id:
-            valid_versions = valid_versions.filtered(lambda c: c.structure_type_id.id in self.structure_id.type_id.ids)
+            valid_versions = valid_versions.filtered(lambda c: c.structure_type_id.id == self.structure_id.type_id.id)
         valid_versions.generate_work_entries(self.date_start, self.date_end)
 
         all_work_entries = dict(self.env['hr.work.entry']._read_group(
             domain=[
-                ('employee_id', 'in', employee_ids),
+                ('employee_id', 'in', valid_versions.employee_id.ids),
                 ('date_start', '<=', self.date_end),
                 ('date_stop', '>=', self.date_start),
             ],
@@ -289,7 +307,7 @@ class HrPayslipRun(models.Model):
 
         default_values = Payslip.default_get(Payslip.fields_get())
         payslips_vals = []
-        for version in valid_versions[::-1]:
+        for version in valid_versions:
             values = default_values | {
                 'name': self.env._('New Payslip'),
                 'employee_id': version.employee_id.id,

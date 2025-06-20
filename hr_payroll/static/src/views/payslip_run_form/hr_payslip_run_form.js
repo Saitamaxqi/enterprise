@@ -4,7 +4,7 @@ import { formView } from "@web/views/form/form_view";
 import { markup } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { addFieldDependencies, extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
-import {serializeDate} from "@web/core/l10n/dates";
+import { serializeDate } from "@web/core/l10n/dates";
 
 export class PayslipBatchFormController extends FormController {
     setup() {
@@ -22,7 +22,7 @@ export class PayslipBatchFormController extends FormController {
     }
 
     async selectEmployees() {
-        const employeeListAction = await this.orm.call("hr.payslip.run", "action_payroll_hr_employee_list_view_payrun", [
+        const employeeListAction = await this.orm.call("hr.payslip.run", "action_payroll_hr_version_list_view_payrun", [
             [this.model.root.resId],
             serializeDate(this.model.root.data.date_start),
             serializeDate(this.model.root.data.date_end),

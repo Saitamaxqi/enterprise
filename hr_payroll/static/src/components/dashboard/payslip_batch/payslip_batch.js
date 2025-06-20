@@ -1,6 +1,6 @@
-import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { Component } from "@odoo/owl";
+import { useOpenPayRun } from "../../../views/payslip_run_hook";
 
 export class PayrollDashboardPayslipBatch extends Component {
     static template = "hr_payroll.PayslipBatch";
@@ -8,6 +8,7 @@ export class PayrollDashboardPayslipBatch extends Component {
 
     setup() {
         this.actionService = useService("action");
+        this.openPayRun = useOpenPayRun();
     }
 
     /**
@@ -31,15 +32,10 @@ export class PayrollDashboardPayslipBatch extends Component {
      * Handles clicking on the line
      *
      * @param {number} batchID
-     * @param {string} batchNames
      */
-    onClickLine(batchID, batchName) {
-        this.actionService.doAction({
-            type: 'ir.actions.act_window',
-            name: _t('Employee Payslips'),
-            res_model: 'hr.payslip.run',
-            res_id: batchID,
-            views: [[false, 'form']],
+    onClickLine(batchID) {
+        this.openPayRun({
+            id: batchID
         });
     }
 }

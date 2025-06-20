@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-    <t t-name="hr_payroll.EmployeePayrunListController.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary">
+    <t t-name="hr_payroll.VersionPayrunListController.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary">
         <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
             <button class="btn btn-primary" t-on-click="generatePayslips" t-att-disabled="model.root.selection.length &lt; 1 || state.disabled">
                 Select
