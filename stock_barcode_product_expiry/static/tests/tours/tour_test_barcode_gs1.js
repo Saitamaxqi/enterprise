@@ -1,6 +1,5 @@
 import * as helper from "@stock_barcode/../tests/tours/tour_helper_stock_barcode";
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@stock_barcode/../tests/tours/tour_step_utils";
 
 registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
     steps: () => [
@@ -102,6 +101,16 @@ registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
                 helper.assert(lot_with_date_3, `b1-b003 (${date3})`, "lot line");
             },
         },
-        ...stepUtils.validateBarcodeOperation(".o_validate_page"),
+        {
+            trigger: ".o_validate_page",
+            run: "scan OBTVALI",
+        },
+        {
+            trigger: "button[name='process']",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification_bar.bg-success",
+        },
     ],
 });
