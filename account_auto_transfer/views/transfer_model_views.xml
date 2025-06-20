@@ -34,7 +34,7 @@
     <menuitem id="menu_auto_transfer"
               name="Transfers"
               action="transfer_model_action"
-              groups="base.group_multi_company"
+              groups="account.group_account_user"
               parent="account.account_transactions_menu" sequence="30"/>
 
     <!-- VIEWS -->
