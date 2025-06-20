@@ -17,10 +17,10 @@ export function useDelayedValueChange(getCurrentValue, duration = 5000) {
     let timeout = null;
     useEffect(
         () => {
-            clearTimeout(timeout);
             timeout = setTimeout(() => {
                 state.oldValue = getCurrentValue();
             }, duration);
+            return () => clearTimeout(timeout);
         },
         () => [getCurrentValue()]
     );
