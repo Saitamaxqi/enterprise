@@ -254,7 +254,7 @@ class AccountMove(models.Model):
         prepayment_by_move = defaultdict(float)
         source_exchange_move = {}
         for field in ('debit', 'credit'):
-            for partial in lines[f'matched_{field}_ids'].sorted('exchange_move_id', reverse=True):
+            for partial in lines[f'matched_{field}_ids'].sorted('exchange_move_id.id'):
                 counterpart_line = partial[f'{field}_move_id']
                 # Aggregate the exchange difference amount
                 if partial.exchange_move_id:
