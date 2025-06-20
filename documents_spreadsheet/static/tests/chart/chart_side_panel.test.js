@@ -181,7 +181,9 @@ test("stacked line chart", async () => {
     // check
     await contains(".o-checkbox input[name='stackedBar']").click();
     expect(model.getters.getChart(chartId).stacked).toBe(true);
-    expect(".o-checkbox input:checked").toHaveCount(1, { message: "checkbox should be checked" });
+    expect(".o-checkbox input[name='stackedBar']:checked").toHaveCount(1, {
+        message: "checkbox should be checked",
+    });
 });
 
 test("Odoo line chart with cumulated start", async () => {
@@ -262,7 +264,7 @@ test("Open chart odoo's data properties", async function () {
     env.openSidePanel("ChartPanel");
     await animationFrame();
 
-    const sections = target.querySelectorAll(".o-section");
+    const sections = target.querySelectorAll(".o-panel-content > div:not(.d-none) .o-section");
     expect(sections.length).toBe(6, { message: "it should have 6 sections" });
     const [, , pivotModel, domain, , measures] = sections;
 
