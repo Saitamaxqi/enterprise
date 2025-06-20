@@ -1,4 +1,4 @@
-import { deserializeDateTime } from "@web/core/l10n/dates";
+import { deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
 import { rpc } from "@web/core/network/rpc";
 import publicWidget from '@web/legacy/js/public/public_widget';
 import { msecPerUnit, RentingMixin } from '@website_sale_renting/js/renting_mixin';
@@ -8,6 +8,7 @@ const { DateTime } = luxon;
 publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(RentingMixin, {
     selector: '.o_website_sale_daterange_picker',
     disabledInEditableMode: true,
+    rentingAvailabilities: {},
 
     /**
      * During start, load the renting constraints to validate renting pickup and return dates.
@@ -72,8 +73,8 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         return rpc("/rental/product/constraints").then((constraints) => {
             this.rentingUnavailabilityDays = constraints.renting_unavailabity_days;
             this.rentingMinimalTime = constraints.renting_minimal_time;
-            this.websiteTz = constraints.website_tz
-            $('.oe_website_sale').trigger('renting_constraints_changed', {
+            this.websiteTz = constraints.website_tz;
+            this._triggerRentingConstraintsChanged({
                 rentingUnavailabilityDays: this.rentingUnavailabilityDays,
                 rentingMinimalTime: this.rentingMinimalTime,
                 websiteTz: this.websiteTz,
@@ -126,6 +127,28 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
                 el.querySelector("input[name=renting_end_date]"),
             ]
         ).enable());
+    },
+
+    async _fetchProductAvailabilities(productId, minDate, maxDate) {
+        const result = await rpc("/rental/product/availabilities", {
+            product_id: productId,
+            min_date: minDate,
+            max_date: maxDate,
+        });
+        this.rentingAvailabilities[productId] = [];
+        if (result.renting_availabilities?.length) {
+            this.rentingAvailabilities[productId] = result.renting_availabilities.map(
+                (rentingAvailabilities) => {
+                    const { start, end, ...rest } = rentingAvailabilities;
+                    return {
+                        start: deserializeDateTime(start),
+                        end: deserializeDateTime(end),
+                        ...rest,
+                    };
+                }
+            );
+        }
+        return result;
     },
 
     // ------------------------------------------
@@ -193,7 +216,22 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
      * @private
      */
     _isCustomDate(date) {
-        return [];
+        const result = [];
+        const productId = this._getProductId();
+        if (!productId || !this.rentingAvailabilities[productId]) {
+            return result;
+        }
+        const dateStart = date.startOf('day');
+        for (const interval of this.rentingAvailabilities[productId]) {
+            if (interval.start.startOf('day') > dateStart) {
+                return result;
+            }
+            if (interval.end.endOf('day') > dateStart && interval.quantity_available <= 0) {
+                result.push('o_daterangepicker_danger');
+                return result;
+            }
+        }
+        return result;
     },
 
     /**
@@ -214,7 +252,21 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         return !message;
     },
 
-    _getProductId() {},
+    /**
+     * Get the product id from the dom if not initialized.
+     */
+    _getProductId() {
+        if (!this.productId) {
+            const productSelector = [
+                'input[type="hidden"][name="product_id"]',
+                'input[type="radio"][name="product_id"]:checked'
+            ];
+            const form = this._getParentElement();
+            const productInput = form && form.querySelector(productSelector.join(', '));
+            this.productId = productInput && parseInt(productInput.value);
+        }
+        return this.productId;
+    },
 
     _getParentElement() {
         return this.el.closest('form');
@@ -230,7 +282,34 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
             counter++;
         }
         return date;
-    }
+    },
+
+    _triggerRentingConstraintsChanged(vals) {
+        $('.oe_website_sale').trigger('renting_constraints_changed', vals || {});
+    },
+
+    /**
+     * Update the renting availabilities dict with the unavailabilities of the current product
+     *
+     * @private
+     */
+    async _updateRentingProductAvailabilities() {
+        const productId = this._getProductId();
+        if (!productId || this.rentingAvailabilities[productId]) {
+            return;
+        }
+        const result = await this._fetchProductAvailabilities(
+            productId,
+            serializeDateTime(luxon.DateTime.now()),
+            serializeDateTime(luxon.DateTime.now().plus({years: 3}))
+        );
+        this.preparationTime = result.preparation_time;
+        this._triggerRentingConstraintsChanged({
+            rentingAvailabilities: this.rentingAvailabilities,
+            preparationTime: this.preparationTime,
+        });
+        this._verifyValidPeriod();
+    },
 });
 
 export default publicWidget.registry.WebsiteSaleDaterangePicker;
