@@ -39,7 +39,7 @@
                     <Direccion t-out="assignee['address'][:80]"/>
                     <eMail t-out="assignee['email']"/>
                 </Cesionario>
-                <MontoCesion t-out="float_repr(move.amount_total, decimals)"/>
+                <MontoCesion t-out="float_repr(move.amount_total_signed, decimals)"/>
                 <UltimoVencimiento t-out="move.invoice_date_due"/>
                 <TmstCesion t-out="get_cl_current_strftime()"/>
             </DocumentoCesion></Cesion>
