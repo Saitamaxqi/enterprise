@@ -68,7 +68,10 @@ class PosConfig(models.Model):
     @api.model
     def fix_rounding_for_scale_certification(self):
         decimal_precision = self.env['decimal.precision'].search([('name', '=', 'Product Unit')])
-        print(decimal_precision)
-        print(decimal_precision.digits)
         if decimal_precision.digits < 3:
             decimal_precision.digits = 3
+
+        if not self.env.user.has_group('uom.group_uom'):
+            self.env['res.config.settings'].create({
+                'group_uom': True,
+            }).execute()
