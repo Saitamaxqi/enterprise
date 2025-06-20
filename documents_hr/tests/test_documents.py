@@ -21,6 +21,19 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         })
         cls.contract = cls.employee.version_id
 
+    def test_documents_hr_employees_folders_no_owner(self):
+        # Document owner is the user that creates the document. But hr 'system' folders cannot be owned by anyone.
+        public_user = self.env['res.users'].create({
+            'name': 'Johnny Applicant',
+            'login': 'applicant',
+            'email': 'john.icant@example.com',
+        })
+        employee = self.env['hr.employee'].with_user(public_user).sudo().create({
+            'name': 'Johnny Employee'
+        })
+        self.assertTrue(employee.hr_employee_folder_id)
+        self.assertFalse(employee.hr_employee_folder_id.owner_id)
+
     def test_employee_subfolder_generation_renaming_and_access(self):
         # hr_employee_folder_id should have been created at employee creation
         self.assertEqual(self.employee.hr_employee_folder_id.name, self.employee.name,

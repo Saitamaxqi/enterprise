@@ -68,7 +68,8 @@ class HrEmployee(models.Model):
             'company_id': employee.company_id.id,
             'access_internal': 'none',
             'access_via_link': 'edit',
-            'is_access_via_link_hidden': True
+            'is_access_via_link_hidden': True,
+            'owner_id': False,
         } for employee in employees])
         for employee, folder in zip(employees, folders):
             employee.hr_employee_folder_id = folder.id
