@@ -15,6 +15,7 @@ import { DateFilterEditorSidePanel } from "./components/filter_editor/date_filte
 import { TextFilterEditorSidePanel } from "./components/filter_editor/text_filter_editor_side_panel";
 import { RelationFilterEditorSidePanel } from "./components/filter_editor/relation_filter_editor_side_panel";
 import { BooleanFilterEditorSidePanel } from "./components/filter_editor/boolean_filter_editor_side_panel";
+import { SelectionFilterEditorSidePanel } from "./components/filter_editor/selection_filter_editor_side_panel";
 
 const { sidePanelRegistry, topbarComponentRegistry, cellMenuRegistry } = spreadsheet.registries;
 
@@ -26,6 +27,11 @@ sidePanelRegistry.add("DATE_FILTER_SIDE_PANEL", {
 sidePanelRegistry.add("TEXT_FILTER_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: TextFilterEditorSidePanel,
+});
+
+sidePanelRegistry.add("SELECTION_FILTERS_SIDE_PANEL", {
+    title: _t("Filter properties"),
+    Body: SelectionFilterEditorSidePanel,
 });
 
 sidePanelRegistry.add("RELATION_FILTER_SIDE_PANEL", {
@@ -45,9 +51,8 @@ sidePanelRegistry.add("GLOBAL_FILTERS_SIDE_PANEL", {
 
 topbarComponentRegistry.add("filter_component", {
     component: FilterComponent,
-    isVisible: (env) => {
-        return !env.model.getters.isReadonly() || env.model.getters.getGlobalFilters().length;
-    },
+    isVisible: (env) =>
+        !env.model.getters.isReadonly() || env.model.getters.getGlobalFilters().length,
     sequence: 30,
 });
 

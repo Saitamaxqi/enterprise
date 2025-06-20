@@ -46,6 +46,10 @@
                         <i class="fa fa-toggle-off me-2"/>
                         <span>Yes/No</span>
                     </button>
+                    <button t-if="hasDataSources()" t-on-click="newSelection" class="o-button o_global_filter_new_selection">
+                        <i class="fa fa-caret-down me-2"/>
+                        <span>Selection</span>
+                    </button>
                 </div>
             </div>
             <GlobalFilterSuggestions t-if="!isReadonly"/>

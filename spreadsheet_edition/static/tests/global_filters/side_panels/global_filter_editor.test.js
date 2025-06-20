@@ -50,6 +50,7 @@ import { DateFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_fi
 import { RelationFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel";
 import { TextFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel";
 import { user } from "@web/core/user";
+import { SelectionFilterEditorSidePanel } from "@spreadsheet_edition/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel";
 
 const { useStoreProvider, ModelStore, NotificationStore } = stores;
 
@@ -76,6 +77,7 @@ const SIDE_PANELS = {
     date: DateFilterEditorSidePanel,
     relation: RelationFilterEditorSidePanel,
     boolean: BooleanFilterEditorSidePanel,
+    selection: SelectionFilterEditorSidePanel,
 };
 
 class Parent extends Component {
@@ -128,6 +130,16 @@ async function openSidePanel(model, env, filterId, notificationStore) {
 async function selectModelForRelation(relation) {
     await contains('.o_side_panel_related_model input[type="text"]').click();
     await contains(`.o_model_selector_${relation.replaceAll(".", "_")}`).click();
+}
+
+async function selectModelForSelection(selection) {
+    await contains('.o-selection-model-field input[type="text"]').click();
+    await contains(`.o_model_selector_${selection.replaceAll(".", "_")}`).click();
+}
+
+async function selectFieldForSelection(fieldName) {
+    await contains(".o_model_field_selector_value").click();
+    await contains(`.o_model_field_selector_popover_item[data-name='${fieldName}'] button`).click();
 }
 
 async function selectFieldMatching(fieldName, fieldMatching = target) {
@@ -196,6 +208,84 @@ test("Create a new boolean global filter", async function () {
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("My Label");
+});
+
+test("Create a new selection global filter", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "selection");
+    await editGlobalFilterLabel("My Label");
+    await selectModelForSelection("res.users");
+    await selectFieldForSelection("state");
+    await saveGlobalFilter();
+    const [globalFilter] = model.getters.getGlobalFilters();
+    expect(globalFilter.label).toBe("My Label");
+    expect(globalFilter.resModel).toBe("res.users");
+    expect(globalFilter.selectionField).toBe("state");
+});
+
+test("Cannot save a selection filter without model-field", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "selection");
+    await editGlobalFilterLabel("My Label");
+    await saveGlobalFilter();
+    expect(model.getters.getGlobalFilters()).toHaveLength(0);
+    await selectModelForSelection("res.users");
+    await saveGlobalFilter();
+    expect(model.getters.getGlobalFilters()).toHaveLength(0);
+    await selectFieldForSelection("state");
+    await saveGlobalFilter();
+    expect(model.getters.getGlobalFilters()).toHaveLength(1);
+});
+
+test("Selecting a model-field for selection will set the label if empty", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "selection");
+    await selectModelForSelection("res.users");
+    await selectFieldForSelection("state");
+    expect(".o_global_filter_label").toHaveValue("Status (Users)");
+});
+
+test("Selecting a model-field for selection does not reset label", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    await openSidePanelForCreation(model, env, "selection");
+    await editGlobalFilterLabel("My Label");
+    await selectModelForSelection("res.users");
+    await selectFieldForSelection("state");
+    expect(".o_global_filter_label").toHaveValue("My Label");
+});
+
+test("Selecting another model resets the default value", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    addGlobalFilterWithoutReload(model, {
+        id: "42",
+        type: "selection",
+        label: "Status",
+        resModel: "res.users",
+        selectionField: "state",
+        defaultValue: ["new"],
+    });
+    await openSidePanel(model, env, "42");
+    await openSidePanelForCreation(model, env, "selection");
+    expect(".o_tag_badge_text").toHaveCount(1);
+    await selectModelForSelection("partner");
+    expect(".o_tag_badge_text").toHaveCount(0);
+});
+
+test("Selecting another field resets the default value", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    addGlobalFilterWithoutReload(model, {
+        id: "42",
+        type: "selection",
+        label: "Status",
+        resModel: "res.users",
+        selectionField: "state",
+        defaultValue: ["new"],
+    });
+    await openSidePanel(model, env, "42");
+    await openSidePanelForCreation(model, env, "selection");
+    expect(".o_tag_badge_text").toHaveCount(1);
+    await selectFieldForSelection("lang");
+    expect(".o_tag_badge_text").toHaveCount(0);
 });
 
 test("Create a new text global filter", async function () {
@@ -606,7 +696,7 @@ test("Create a new relational global filter with a domain", async function () {
 test("Create a new relational global filter of users will shows the checkbox", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
     await openSidePanelForCreation(model, env, "relation");
-    await selectModelForRelation("res\\.users");
+    await selectModelForRelation("res.users");
     const defaultUserOption = document.querySelector("[name=user_automatic_filter]");
     expect(defaultUserOption).not.toBe(null);
     expect(defaultUserOption).not.toBeChecked();

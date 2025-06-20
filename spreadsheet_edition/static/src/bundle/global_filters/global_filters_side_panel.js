@@ -48,6 +48,10 @@ export class GlobalFiltersSidePanel extends Component {
         this.env.openSidePanel("TEXT_FILTER_SIDE_PANEL");
     }
 
+    newSelection() {
+        this.env.openSidePanel("SELECTION_FILTERS_SIDE_PANEL");
+    }
+
     newDate() {
         this.env.openSidePanel("DATE_FILTER_SIDE_PANEL");
     }
@@ -80,6 +84,9 @@ export class GlobalFiltersSidePanel extends Component {
                 break;
             case "boolean":
                 this.env.openSidePanel("BOOLEAN_FILTERS_SIDE_PANEL", { id });
+                break;
+            case "selection":
+                this.env.openSidePanel("SELECTION_FILTERS_SIDE_PANEL", { id });
                 break;
         }
     }

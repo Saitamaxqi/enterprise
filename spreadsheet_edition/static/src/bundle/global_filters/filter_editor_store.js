@@ -14,11 +14,14 @@ export class FilterEditorStore extends SpreadsheetStore {
     mutators = [
         "saveGlobalFilter",
         "selectRelatedModel",
+        "onSelectionFieldSelected",
+        "onSelectionModelSelected",
         "update",
         "updateCanUseChildOf",
         "updateFieldMatching",
         "updateFieldMatchingOffset",
         "updateRelationModelLabel",
+        "updateSelectionModelLabel",
     ];
 
     constructor(get, initialProps, type) {
@@ -40,6 +43,7 @@ export class FilterEditorStore extends SpreadsheetStore {
         this._canUseChildOf = this.filter.includeChildren;
         this._fieldsMatching = [];
         this._relationModelLabel = "";
+        this._selectionModelLabel = "";
     }
 
     get allowedFieldTypes() {
@@ -52,11 +56,18 @@ export class FilterEditorStore extends SpreadsheetStore {
                 return ["boolean"];
             case "relation":
                 return ["many2one", "many2many", "one2many"];
+            case "selection":
+                return ["selection"];
         }
         return [];
     }
 
     get canSave() {
+        if (this.filter.type === "selection") {
+            if (!this.filter.resModel || !this.filter.selectionField) {
+                return false;
+            }
+        }
         return (
             (this.filter.type !== "relation" || this.filter.modelName) &&
             this.fieldsMatching.every((fm) => fm.isValid)
@@ -119,6 +130,10 @@ export class FilterEditorStore extends SpreadsheetStore {
         return this._relationModelLabel;
     }
 
+    get selectionModelLabel() {
+        return this._selectionModelLabel;
+    }
+
     get shouldDisplayFieldMatching() {
         switch (this.filter.type) {
             case "text":
@@ -127,6 +142,12 @@ export class FilterEditorStore extends SpreadsheetStore {
                 return this._fieldsMatching.length;
             case "relation":
                 return this._fieldsMatching.length && this.filter.modelName;
+            case "selection":
+                return (
+                    this._fieldsMatching.length &&
+                    this.filter.resModel &&
+                    this.filter.selectionField
+                );
         }
         return false;
     }
@@ -139,6 +160,44 @@ export class FilterEditorStore extends SpreadsheetStore {
             this.filter.rangesOfAllowedValues,
             this.filter.defaultValue
         );
+    }
+
+    onSelectionModelSelected({ technical, label }) {
+        if (this.filter.type !== "selection") {
+            return;
+        }
+        if (this.filter.resModel !== technical) {
+            this.update({ defaultValue: undefined });
+        }
+        this.update({
+            resModel: technical,
+            selectionField: undefined,
+        });
+        this.updateSelectionModelLabel(label);
+
+        this.fieldsMatching.forEach((fm) => {
+            this.updateFieldMatching(fm.id, undefined, undefined);
+        });
+    }
+
+    onSelectionFieldSelected(field, { fieldDef }) {
+        if (!this.filter.label) {
+            const label = `${fieldDef.string} (${this._selectionModelLabel})`;
+            this.update({ label });
+        }
+        if (this.filter.selectionField !== field) {
+            this.update({ defaultValue: undefined });
+        }
+        this.update({
+            selectionField: field,
+        });
+        this.fieldsMatching.forEach((fm) => {
+            if (fm.model() === this.filter.resModel) {
+                this.updateFieldMatching(fm.id, field, fieldDef);
+            } else {
+                this.updateFieldMatching(fm.id, undefined, undefined);
+            }
+        });
     }
 
     selectRelatedModel(technical, label) {
@@ -173,6 +232,10 @@ export class FilterEditorStore extends SpreadsheetStore {
 
     updateRelationModelLabel(label) {
         this._relationModelLabel = label;
+    }
+
+    updateSelectionModelLabel(label) {
+        this._selectionModelLabel = label;
     }
 
     updateFieldMatching(id, chain, field) {

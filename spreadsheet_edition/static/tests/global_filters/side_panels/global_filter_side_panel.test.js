@@ -28,6 +28,7 @@ const FILTER_CREATION_SELECTORS = {
     date: ".o_global_filter_new_time",
     relation: ".o_global_filter_new_relation",
     boolean: ".o_global_filter_new_boolean",
+    selection: ".o_global_filter_new_selection",
 };
 
 class Parent extends Component {
@@ -74,11 +75,12 @@ test("Simple display", async function () {
     expect(".o_spreadsheet_global_filters_side_panel").toHaveCount(1);
 
     const buttons = target.querySelectorAll(".o_spreadsheet_global_filters_side_panel .o-button");
-    expect(buttons.length).toBe(4);
+    expect(buttons.length).toBe(5);
     expect(buttons[0]).toHaveClass("o_global_filter_new_time");
     expect(buttons[1]).toHaveClass("o_global_filter_new_relation");
     expect(buttons[2]).toHaveClass("o_global_filter_new_text");
     expect(buttons[3]).toHaveClass("o_global_filter_new_boolean");
+    expect(buttons[4]).toHaveClass("o_global_filter_new_selection");
 });
 
 test("Display with an existing 'Date' global filter", async function () {
@@ -107,6 +109,14 @@ test("Create a new boolean global filter", async function () {
     await openSidePanel(model, env);
     await clickCreateFilter("boolean");
     expect.verifySteps(["BOOLEAN_FILTERS_SIDE_PANEL"]);
+});
+
+test("Create a new selection global filter", async function () {
+    const { model, env } = await createSpreadsheetWithPivot();
+    env.openSidePanel = (name) => expect.step(name);
+    await openSidePanel(model, env);
+    await clickCreateFilter("selection");
+    expect.verifySteps(["SELECTION_FILTERS_SIDE_PANEL"]);
 });
 
 test("Create a new text global filter", async function () {
@@ -139,6 +149,12 @@ test("Cannot create a relation filter without data source", async function () {
     expect(".o_global_filter_new_time").toHaveCount(1);
     expect(".o_global_filter_new_relation").toHaveCount(0);
     expect(".o_global_filter_new_text").toHaveCount(1);
+});
+
+test("Cannot create a selection filter without data source", async function () {
+    const { model, env } = await createModelWithDataSource();
+    await openSidePanel(model, env);
+    expect(".o_global_filter_new_selection").toHaveCount(0);
 });
 
 test("Can create a relation filter with at least a data source", async function () {
