@@ -26,7 +26,7 @@ class WebsiteHelpdesk(http.Controller):
     def website_helpdesk_teams(self, team=None, **kwargs):
         search = kwargs.get('search')
 
-        teams_domain = Domain('use_website_helpdesk_form', '=', True)
+        teams_domain = Domain('use_website_helpdesk_form', '=', True) & Domain('website_id', '=', request.website.id)
         if not request.env.user.has_group('helpdesk.group_helpdesk_manager'):
             if team and not team.is_published:
                 raise NotFound()

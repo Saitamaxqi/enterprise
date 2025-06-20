@@ -1,6 +1,7 @@
 import re
 
 from odoo.tests.common import HttpCase, TransactionCase
+from lxml import html
 
 
 class TestHelpdesk(HttpCase):
@@ -29,6 +30,24 @@ class TestHelpdesk(HttpCase):
         expected_string = "Select your Team for help"
         search_result = re.search(expected_string.encode(), other_response.content).group().decode()
         self.assertEqual(search_result, expected_string)
+
+    def test_helpdesk_team_visibility(self):
+        test_website = self.env['website'].create({'name': 'test website', 'sequence': 5})
+        new_teams = [('Test team1', self.env.ref('website.default_website')),
+                    ('Test team2', test_website),
+                    ('Test team3', test_website)]
+        for name, website in new_teams:
+            self.env['helpdesk.team'].create([{
+                'name': name,
+                'use_website_helpdesk_form': True,
+                'website_id': website.id,
+                'is_published': True,
+            }])
+        response = self.url_open('/helpdesk')
+        tree = html.fromstring(response.content)
+        team_names = tree.xpath('//article[contains(@class, "team_card")]')
+
+        self.assertEqual(len(team_names), 2, "Expected exactly 2 helpdesk teams to be rendered")
 
 
 class TestHelpdeskMenu(TransactionCase):
