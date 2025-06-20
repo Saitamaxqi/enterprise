@@ -488,11 +488,11 @@ class HrPayslip(models.Model):
         elm_slips = self.filtered(lambda p: p.struct_id.code == "CHMONTHLYELM")
         if not elm_slips:
             return super()._compute_basic_net()
-        line_values = (self._origin)._get_line_values(["WT_1000", "BASICHOURLY", "BASICLESSON", "GROSS_SALARY", 'NET'])
+        line_values = (self._origin)._get_line_values(["WT_1000", "BASICHOURLY", "BASICLESSON", "GROSS_SALARY", 'NET', 'Net_Paid'])
         for payslip in elm_slips:
             payslip.basic_wage = line_values['WT_1000'][payslip._origin.id]['total'] + line_values['BASICHOURLY'][payslip._origin.id]['total'] + line_values['BASICLESSON'][payslip._origin.id]['total']
             payslip.gross_wage = line_values['GROSS_SALARY'][payslip._origin.id]['total']
-            payslip.net_wage = line_values['NET'][payslip._origin.id]['total']
+            payslip.net_wage = line_values['NET'][payslip._origin.id]['total'] + line_values['Net_Paid'][payslip._origin.id]['total']
         super(HrPayslip, self - elm_slips)._compute_basic_net()
 
     def _get_base_local_dict(self):
