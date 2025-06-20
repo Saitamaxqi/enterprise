@@ -89,8 +89,8 @@ class HrApplicant(models.Model):
         return super().archive_applicant()
 
     def action_generate_offer(self):
-        if not self.partner_name or not self.email_from:
-            raise UserError(_('Offer link can not be send. The applicant needs to have a name and email.'))
+        if not self.partner_name:
+            raise UserError(_('Offer link can not be sent without an applicant name.'))
 
         offer_validity_period = int(self.env['ir.config_parameter'].sudo().get_param(
             'hr_contract_salary.access_token_validity', default=30))
@@ -104,11 +104,11 @@ class HrApplicant(models.Model):
             default_contract_template_id=self._get_contract_template().id).create(offer_values)
 
         self.message_post(
-            body=_("An %(offer)s has been sent by %(user)s to the applicant (mail: %(email)s)",
+            body=_("An %(offer)s for the applicant %(applicant_name)s has been created by %(user)s.",
                     offer=Markup("<a href='#' data-oe-model='hr.contract.salary.offer' data-oe-id='{offer_id}'>Offer</a>")
                     .format(offer_id=offer.id),
-                    user=self.env.user.name,
-                    email=self.partner_id.email or self.email_from
+                    applicant_name=self.partner_name,
+                    user=self.env.user.name
             )
         )
 
