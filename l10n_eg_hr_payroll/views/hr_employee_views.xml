@@ -5,34 +5,33 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <group name="contract" position="inside">
-                <field name="country_code" invisible="1"/>
-                <label for="l10n_eg_housing_allowance" invisible="country_code != 'EG'" string="Housing Allowance"/>
-                <div class="o_row mw-50" name="l10n_eg_housing_allowance" invisible="country_code != 'EG'" >
-                    <field name="l10n_eg_housing_allowance" class="oe_inline o_hr_narrow_field" nolabel="1"/>
-                    <span>/ month</span>
-                </div>
-                <label for="l10n_eg_transportation_allowance" invisible="country_code != 'EG'" string="Transportation Allowance"/>
-                <div class="o_row mw-50" name="l10n_eg_transportation_allowance" invisible="country_code != 'EG'">
-                    <field name="l10n_eg_transportation_allowance" class="oe_inline o_hr_narrow_field" nolabel="1"/>
-                    <span>/ month</span>
-                </div>
-                <label for="l10n_eg_other_allowances" invisible="country_code != 'EG'" string="Other Allowances"/>
-                <div class="o_row mw-50" name="l10n_eg_other_allowances" invisible="country_code != 'EG'">
-                    <field name="l10n_eg_other_allowances" class="oe_inline o_hr_narrow_field" nolabel="1"/>
-                    <span>/ month</span>
-                </div>
-            </group>
-            <group name="contract" position="after">
-                <group name="annual_leave_provision" string="Annual Leave Provision" invisible="country_code != 'EG'">
+            <group name="payroll_group" position="inside">
+                <group string="Allowances" invisible="country_code != 'EG'">
+                    <label for="l10n_eg_housing_allowance" string="Housing"/>
+                    <div class="o_row" name="l10n_eg_housing_allowance" >
+                        <field name="l10n_eg_housing_allowance" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="l10n_eg_transportation_allowance" string="Transportation"/>
+                    <div class="o_row" name="l10n_eg_transportation_allowance">
+                        <field name="l10n_eg_transportation_allowance" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="l10n_eg_other_allowances" string="Other"/>
+                    <div class="o_row" name="l10n_eg_other_allowances">
+                        <field name="l10n_eg_other_allowances" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+
+                    <separator string="Annual Leave Provision"/>
                     <field name="l10n_eg_total_leave_days"/>
-                </group>
-                <group name="end_of_service_benefit" string="End Of Service benefit" invisible="country_code != 'EG'">
+
+                    <separator string="End Of Service benefit"/>
                     <field name="l10n_eg_number_of_days"/>
                     <field name="l10n_eg_total_number_of_days"/>
                     <field name="l10n_eg_total_eos_benefit" invisible="active_employee"/>
-                </group>
-                <group name="social_insurance_reference" string="Social Insurance Reference" invisible="country_code != 'EG'">
+
+                    <separator string="Social Insurance Reference"/>
                     <field name="l10n_eg_social_insurance_reference"/>
                 </group>
             </group>

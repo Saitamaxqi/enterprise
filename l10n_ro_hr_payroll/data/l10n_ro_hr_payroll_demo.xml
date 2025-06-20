@@ -199,7 +199,7 @@
     </record>
 
     <function name="create_version" model="hr.employee">
-        <value eval="[ref('l10n_lt_hr_payroll.hr_employee_norberta')]"/>
+        <value eval="[ref('l10n_ro_hr_payroll.hr_employee_demetra')]"/>
         <value eval="{
             'date_version': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),
             'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2) + relativedelta(days=1),

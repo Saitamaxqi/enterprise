@@ -55,8 +55,8 @@
                 <field name="wage_type"/>
                 <field name="schedule_pay"/>
                 <label for="hourly_wage" invisible="wage_type != 'hourly'"/>
-                <div class="o_row mw-50" name="hourly_wage" invisible="wage_type != 'hourly'">
-                    <field name="hourly_wage" nolabel="1"/>
+                <div class="o_row" name="hourly_wage" invisible="wage_type != 'hourly'">
+                    <field name="hourly_wage" class="o_hr_narrow_field"/>
                     <span>/ hour</span>
                 </div>
             </xpath>
@@ -73,21 +73,16 @@
                 <div class="mb-3" invisible="schedule_pay != 'weekly'">/ week</div>
                 <div class="mb-3" invisible="schedule_pay != 'daily'">/ day</div>
             </xpath>
-            <xpath expr="//page[@name='payroll_information']" position="inside">
-                <group>
-                    <group name="part_time" string="Part time">
-                        <group colspan="2">
-                            <label for="time_credit"/>
-                            <div class="o_row">
-                                <field name="time_credit"/>
-                                <field name="work_time_rate" invisible="not time_credit" widget="percentage"/>
-                            </div>
-                            <field name="standard_calendar_id" invisible="not time_credit" help="The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."/>
-                            <field name="time_credit_type_id" invisible="not time_credit" required="time_credit"/>
-                        </group>
-                    </group>
-                </group>
-            </xpath>
+
+            <field name="resource_calendar_id" position="after">
+                <label for="time_credit"/>
+                <div class="o_row">
+                    <field name="time_credit"/>
+                    <field name="work_time_rate" invisible="not time_credit" widget="percentage"/>
+                </div>
+                <field name="standard_calendar_id" invisible="not time_credit" help="The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."/>
+                <field name="time_credit_type_id" invisible="not time_credit" required="time_credit"/>
+            </field>
         </field>
     </record>
 

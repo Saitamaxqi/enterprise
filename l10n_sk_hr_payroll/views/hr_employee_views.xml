@@ -5,17 +5,19 @@
         <field name="model">hr.employee</field>
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="arch" type="xml">
-            <group name="contract" position="inside">
-                <label for="l10n_sk_meal_voucher_employee" invisible="country_code != 'SK'"/>
-                <div class="o_row" invisible="country_code != 'SK'">
-                    <field name="l10n_sk_meal_voucher_employee" class="o_hr_narrow_field" nolabel="1"/>
-                    <span>€ / voucher</span>
-                </div>
-                <label for="l10n_sk_meal_voucher_employer" invisible="country_code != 'SK'"/>
-                <div class="o_row" invisible="country_code != 'SK'">
-                    <field name="l10n_sk_meal_voucher_employer" class="o_hr_narrow_field" nolabel="1"/>
-                    <span>€ / voucher</span>
-                </div>
+            <group name="payroll_group" position="inside">
+                <group string="Meal Vouchers" invisible="company_country_code != 'SK'">
+                    <label for="l10n_sk_meal_voucher_employee"/>
+                    <div class="o_row">
+                        <field name="l10n_sk_meal_voucher_employee" class="o_hr_narrow_field"/>
+                        <span>/ voucher</span>
+                    </div>
+                    <label for="l10n_sk_meal_voucher_employer"/>
+                    <div class="o_row">
+                        <field name="l10n_sk_meal_voucher_employer" class="o_hr_narrow_field"/>
+                        <span>/ voucher</span>
+                    </div>
+                </group>
             </group>
         </field>
     </record>

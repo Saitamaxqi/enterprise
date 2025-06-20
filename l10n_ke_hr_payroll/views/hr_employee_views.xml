@@ -14,47 +14,46 @@
                 <field name="l10n_ke_nhif_number" invisible="company_country_code != 'KE'"/>
                 <field name="l10n_ke_shif_number" invisible="company_country_code != 'KE'"/>
             </xpath>
-            <group name="payroll_localization" position="inside">
-                <group string="Tax Deduction" name="l10n_ke_tax_deduction" class="o_form_fw_labels">
-                    <label for="l10n_ke_pension_contribution" invisible="country_code != 'KE' or wage_type == 'hourly'"/>
-                    <div class="o_row" invisible="country_code != 'KE' or wage_type == 'hourly'">
+            <group name="payroll_group" position="inside">
+                <group string="Tax Deduction" name="l10n_ke_tax_deduction" class="o_form_fw_labels" invisible="country_code != 'KE'">
+                    <label for="l10n_ke_pension_contribution" invisible="wage_type == 'hourly'"/>
+                    <div class="o_row" invisible="wage_type == 'hourly'">
                         <field name="l10n_ke_pension_contribution" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <field name="l10n_ke_is_secondary" invisible="country_code != 'KE'"/>
-                </group>
-                <group string="Benefits" class="o_form_fw_labels">
-                    <label for="l10n_ke_food_allowance" invisible="country_code != 'KE'"/>
-                    <div class="o_row" invisible="country_code != 'KE'">
+                    <field name="l10n_ke_is_secondary"/>
+
+                    <separator string="Benefits"/>
+                    <label for="l10n_ke_food_allowance"/>
+                    <div class="o_row">
                         <field name="l10n_ke_food_allowance" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="l10n_ke_airtime_allowance" invisible="country_code != 'KE'"/>
-                    <div class="o_row" invisible="country_code != 'KE'">
+                    <label for="l10n_ke_airtime_allowance"/>
+                    <div class="o_row">
                         <field name="l10n_ke_airtime_allowance" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="l10n_ke_pension_allowance" invisible="country_code != 'KE'"/>
-                    <div class="o_row" invisible="country_code != 'KE'">
+                    <label for="l10n_ke_pension_allowance"/>
+                    <div class="o_row">
                         <field name="l10n_ke_pension_allowance" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                </group>
-                <group string="Insurance" class="o_form_fw_labels">
-                    <label for="l10n_ke_voluntary_medical_insurance" invisible="country_code != 'KE'"/>
-                    <div class="o_row" invisible="country_code != 'KE'">
+
+                    <separator string="Insurance"/>
+                    <label for="l10n_ke_voluntary_medical_insurance"/>
+                    <div class="o_row">
                         <field name="l10n_ke_voluntary_medical_insurance" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="l10n_ke_life_insurance" invisible="country_code != 'KE'"/>
-                    <div class="o_row" invisible="country_code != 'KE'">
+                    <label for="l10n_ke_life_insurance"/>
+                    <div class="o_row">
                         <field name="l10n_ke_life_insurance" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <field name="l10n_ke_is_li_managed_by_employee"
-                        invisible="country_code != 'KE' or not l10n_ke_life_insurance"/>
-                    <label for="l10n_ke_education" invisible="country_code != 'KE'"/>
-                    <div class="o_row" invisible="country_code != 'KE'">
+                    <field name="l10n_ke_is_li_managed_by_employee" invisible="not l10n_ke_life_insurance"/>
+                    <label for="l10n_ke_education"/>
+                    <div class="o_row">
                         <field name="l10n_ke_education" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>

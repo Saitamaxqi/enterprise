@@ -22,6 +22,7 @@
         'views/hr_contract_salary_template.xml',
         'views/hr_contract_salary_offer_views.xml',
         'views/hr_fleet_state_views.xml',
+        'views/hr_employee_views.xml',
     ],
     'demo': [
         'data/l10n_be_hr_contract_salary_demo.xml',

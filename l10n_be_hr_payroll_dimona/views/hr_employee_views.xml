@@ -8,9 +8,8 @@
             <header position="inside">
                 <button name="action_check_dimona" string="Check Dimona" type="object" groups="base.group_no_one"/>
             </header>
-            <group name="payroll_localization" position="inside">
-                <separator string="Dimona" invisible="country_code != 'BE'" groups="base.group_no_one"/>
-                <group name="dimona" invisible="country_code != 'BE'" groups="base.group_no_one">
+            <group name="payroll_group" position="inside">
+                <group string="Dimona" invisible="country_code != 'BE'" groups="base.group_no_one">
                     <field name="l10n_be_dimona_in_declaration_number"/>
                     <field name="l10n_be_dimona_last_declaration_number"/>
                     <field name="l10n_be_dimona_declaration_state"/>
