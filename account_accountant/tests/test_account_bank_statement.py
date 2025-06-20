@@ -1167,21 +1167,46 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             'company_id': branch.id,
         })
 
-        aml = self._create_invoice_line(
+        aml_branch = self._create_invoice_line(
             'out_invoice',
             company_id=branch.id,
             partner_id=partner_branch.id,
             invoice_date='2019-01-01',
             invoice_line_ids=[{'name': 'Test reco', 'quantity': 1, 'price_unit': 1000}],
         )
-        st_line = self._create_st_line(
+        st_line_main = self._create_st_line(
             1000.0,
             company_id=company.id,
             date='2019-01-01',
             payment_ref='Test reco',
         )
+        st_line_branch = self._create_st_line(
+            1000.0,
+            company_id=branch.id,
+            date='2019-01-01',
+            payment_ref='Test reco2',
+            partner_id=partner_branch.id,
+        )
 
-        st_line.set_line_bank_statement_line(aml.ids)
+        # Case 1: reconciliation with st_line on the main company + aml on the branch
+        st_line_main.set_line_bank_statement_line(aml_branch.ids)
+        # Assert that the partner is not set to avoid "Incompatible companies on records" error
+        self.assertFalse(st_line_main.partner_id)
+
+        st_line_main.action_undo_reconciliation()
+
+        # Case 2: reconciliation with both st_line and aml on the branch
+        st_line_branch.set_line_bank_statement_line(aml_branch.ids)
+        # Assert that the partner is set correctly
+        self.assertEqual(st_line_branch.partner_id, partner_branch, "The partner should remain set on the transaction for the branch company.")
+
+        st_line_branch.action_undo_reconciliation()
+
+        # Case 3: reconciliation with both st_line and aml on the branch, no partner on the st_line
+        st_line_branch.partner_id = False
+        st_line_branch.set_line_bank_statement_line(aml_branch.ids)
+        # Assert that the partner is set from the aml on the transaction
+        self.assertEqual(st_line_branch.partner_id, partner_branch, "The partner should be automatically set on the transaction for the branch company if it's set on the aml.")
 
     def test_residual_amount_same_currency(self):
         st_line_1 = self._create_st_line(

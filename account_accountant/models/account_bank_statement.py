@@ -591,8 +591,15 @@ class AccountBankStatementLine(models.Model):
         move.line_ids = lines_commands
         partner_id = self._get_partner_id({line['partner_id'] for line in lines_to_add if line.get('partner_id')})
         partner = self.env['res.partner'].browse(partner_id)
-        if partner and partner.company_id == partner.company_id.root_id:
-            move.line_ids.filtered(lambda line: not line.partner_id).partner_id = partner
+        if partner:
+            # To avoid "Incompatible companies on records" error, make sure the user is linked to a main company.
+            allowed_companies = partner.company_id.root_id
+            if len(lines_to_set.company_id) == 1:
+                # Or the user is linked to the st_line's company.
+                allowed_companies |= lines_to_set.company_id
+            # Or the user is not linked to any company.
+            if not partner.company_id or partner.company_id in allowed_companies:
+                move.line_ids.filtered(lambda line: not line.partner_id).partner_id = partner
 
         # Create missing partner bank if necessary.
         if self.account_number and self.partner_id:
