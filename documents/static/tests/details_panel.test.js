@@ -40,7 +40,7 @@ const archWithTags = basicDocumentsKanbanArch.replace(
 
 const mockRPCIrModelDisplayNameFor = async function (route, args) {
     if (args.model === "ir.model" && args.method === "display_name_for") {
-        return args.args[0];
+        return args.args[0].map((model) => ({ model, display_name: model }));
     }
 };
 

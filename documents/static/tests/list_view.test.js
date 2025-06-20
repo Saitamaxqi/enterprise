@@ -108,7 +108,7 @@ test("Right panel shows and updates focused or container record only", async fun
                 return false;
             }
             if (args.model === "ir.model" && args.method === "display_name_for") {
-                return args.args[0];
+                return args.args[0].map((model) => ({ model, display_name: model }));
             }
         },
     });
@@ -179,7 +179,7 @@ test("Document actions are hidden when focused record is not selected", async fu
                 return false;
             }
             if (args.model === "ir.model" && args.method === "display_name_for") {
-                return args.args[0];
+                return args.args[0].map((model) => ({ model, display_name: model }));
             }
         },
     });

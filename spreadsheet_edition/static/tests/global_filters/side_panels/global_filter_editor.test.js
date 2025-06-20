@@ -127,7 +127,7 @@ async function openSidePanel(model, env, filterId, notificationStore) {
 
 async function selectModelForRelation(relation) {
     await contains('.o_side_panel_related_model input[type="text"]').click();
-    await contains(`.o_model_selector_${relation}`).click();
+    await contains(`.o_model_selector_${relation.replaceAll(".", "_")}`).click();
 }
 
 async function selectFieldMatching(fieldName, fieldMatching = target) {
@@ -682,14 +682,14 @@ test("switching relational model displays the children checkbox or not", async f
     await openSidePanelForCreation(model, env, "relation");
     expect(".o-checkbox:contains(Include children)").toHaveCount(0);
 
-    await selectModelForRelation("res\\.currency");
+    await selectModelForRelation("res.currency");
     expect(".o-checkbox:contains(Include children)").toHaveCount(0);
 
     await selectModelForRelation("product");
     expect(".o-checkbox:contains(Include children)").toHaveCount(1);
     expect(queryFirst(".o-checkbox:contains(Include children) input").checked).toBe(true);
 
-    await selectModelForRelation("res\\.currency");
+    await selectModelForRelation("res.currency");
     expect(".o-checkbox:contains(Include children)").toHaveCount(0);
 });
 
