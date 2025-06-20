@@ -127,9 +127,10 @@ class AccountMove(models.Model):
     # Account_edi OVERRIDE
     # -------------------------------------------------------------------------
 
-    def _retry_edi_documents_error_hook(self):
-        # OVERRIDE
+    def _retry_edi_documents_error(self):
+        # EXTENDS account_edi
         # For CO, remove the l10n_co_edi_transaction to force re-send (otherwise this only triggers a check_status)
+        super()._retry_edi_documents_error()
         carvajal = self.env.ref('l10n_co_edi.edi_carvajal')
         self.filtered(lambda m: m._get_edi_document(carvajal).blocking_level == 'error').l10n_co_edi_transaction = None
 
