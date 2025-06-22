@@ -1,7 +1,6 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { markup } from "@odoo/owl";
-import { queryOne } from "@odoo/hoot-dom";
 
 registry.category("web_tour.tours").add("documents_tour", {
     url: "/odoo",
@@ -15,6 +14,14 @@ registry.category("web_tour.tours").add("documents_tour", {
             run: "click",
         },
         {
+            trigger: ".o_search_panel_label_title:contains('" + _t("All") + "')",
+            content: "Go to the 'All' folder special folder",
+            run: "click",
+        },
+        {
+            trigger: "span.o_documents_in_folder",
+        },
+        {
             trigger:
                 'body:not(:has(.o-FileViewer)) img[src="https://img.youtube.com/vi/Ayab6wZ_U1A/0.jpg"]',
             content: markup(_t("Click on a thumbnail to <b>preview the document</b>.")),
@@ -25,42 +32,31 @@ registry.category("web_tour.tours").add("documents_tour", {
             trigger: ".o_documents_kanban",
         },
         {
-            trigger: "[title='Close (Esc)']",
+            trigger: "div[title='" + _t("Close (Esc)") + "']",
             content: markup(_t("Click the cross to <b>exit preview</b>.")),
             tooltipPosition: "left",
             run: "click",
         },
         {
-            trigger: ".o_search_panel_label",
-        },
-        {
-            // equivalent to '.o_search_panel_filter_value:contains('Inbox')' but language agnostic.
-            trigger: ".o_search_panel_filter_value:eq(0)",
-            content: markup(
-                _t(
-                    "Let's process documents in your Inbox.<br/><i>Tip: Use Tags to filter documents and structure your process.</i>"
-                )
-            ),
-            tooltipPosition: "bottom",
-            run: function (actions) {
-                queryOne(".o_search_panel_filter_value:eq(0) .o_search_panel_label_title").click();
-            },
-        },
-        {
             trigger: "body:not(:has(.o-FileViewer)) .o_documents_kanban",
         },
         {
-            trigger: ".o_kanban_record:contains(mail.png)",
+            trigger: ".o_kanban_record:contains('" + _t("Internal") + "')",
+            content: markup(_t("Let's process documents in this folder.<br/>")),
+            tooltipPosition: "top",
+            run: "click",
+        },
+        {
+            trigger: ".o_kanban_record:contains('mail.png')",
             content: markup(_t("Click on a card to <b>select the document</b>.")),
             tooltipPosition: "bottom",
             run: "click",
         },
         {
-            // equivalent to '.o_inspector_rule:contains('Send to Legal') .o_inspector_trigger_rule' but language agnostic.
-            trigger: '.o_inspector_rule[data-id="3"] .o_inspector_trigger_rule',
+            trigger: ".o_control_panel_actions button:contains('" + _t("Send To Finance") + "')",
             content: markup(
                 _t(
-                    "Let's tag this mail as legal<br/> <i>Tips: actions can be tailored to your process, according to the workspace.</i>"
+                    "Let's move this document to Finance<br/> <i>Tips: actions can be tailored to your process, according to the folder.</i>"
                 )
             ),
             tooltipPosition: "bottom",
@@ -70,28 +66,30 @@ registry.category("web_tour.tours").add("documents_tour", {
             trigger: ".o_documents_kanban",
         },
         {
-            // the nth(0) ensures that the filter of the preceding step has been applied.
-            trigger: ".o_kanban_record:nth(0):contains(Mails_inbox.pdf)",
+            trigger: ".o_kanban_record:contains('Mails_inbox.pdf')",
             content: _t("Let's process this document, coming from our scanner."),
             tooltipPosition: "bottom",
             run: "click",
         },
         {
-            trigger: '[title="Mails_inbox.pdf"]',
-        },
-        {
-            trigger: ".o_inspector_split",
-            content: _t(
-                "As this PDF contains multiple documents, let's split and process in bulk."
-            ),
+            trigger: ".o_documents_action_dropdown button:contains(" + _t("Action") + "')",
+            content: _t("Open the actions menu"),
             tooltipPosition: "bottom",
             run: "click",
         },
         {
-            trigger: ".o_documents_pdf_canvas:nth(5)", // Makes sure that all the canvas are loaded.
+            trigger:
+                ".o_documents_action_dropdown button.dropdown-item:contains('" +
+                _t("Split PDF") +
+                "')",
+            content: _t(
+                "As this PDF contains multiple documents, let's split and process in bulk."
+            ),
+            tooltipPosition: "left",
+            run: "click",
         },
         {
-            trigger: ".o_page_splitter_wrapper:nth(3)",
+            trigger: ".o_page_splitter_wrapper:eq(3)",
             content: markup(
                 _t(
                     "Click on the <b>page separator</b>: we don't want to split these two pages as they belong to the same document."
@@ -101,10 +99,7 @@ registry.category("web_tour.tours").add("documents_tour", {
             run: "click",
         },
         {
-            trigger: ".o_documents_pdf_manager",
-        },
-        {
-            trigger: ".o_documents_pdf_page_selector:nth(5)",
+            trigger: ".o_documents_pdf_page_selector:eq(5)",
             content: markup(_t("<b>Deselect this page</b> as we plan to process all bills first.")),
             tooltipPosition: "left",
             run: "click",
@@ -113,9 +108,8 @@ registry.category("web_tour.tours").add("documents_tour", {
             trigger: ".o_documents_pdf_manager",
         },
         {
-            // equivalent to '.o_pdf_manager_button:contains(Create an Expense)' but language agnostic.
-            trigger: ".o_pdf_manager_button:nth-last-child(2)",
-            content: _t("Let's process these bills: send to Finance workspace."),
+            trigger: ".o_pdf_manager_button:contains('Send To Finance')",
+            content: _t("Let's process these bills: send to Finance folder."),
             tooltipPosition: "bottom",
             run: "click",
         },
@@ -132,9 +126,8 @@ registry.category("web_tour.tours").add("documents_tour", {
             trigger: ".o_pdf_manager_button:not(:disabled)",
         },
         {
-            // equivalent to '.o_pdf_manager_button:contains(Send to Legal)' but language agnostic.
-            trigger: ".o_pdf_manager_button:nth-child(4)",
-            content: _t("Send this letter to the legal department, by assigning the right tags."),
+            trigger: ".btn-primary.o_pdf_manager_button:contains('Split')",
+            content: _t("Create a new document for the remaining page."),
             tooltipPosition: "bottom",
             run: "click",
         },
