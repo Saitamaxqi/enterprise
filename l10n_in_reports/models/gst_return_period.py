@@ -502,18 +502,19 @@ class L10n_InGstReturnPeriod(models.Model):
             'cess': self.env.ref('l10n_in.tax_tag_cess'),
         }
         journal_items = self.env['account.move.line'].search(domain)
-        tax_details_sql = self.env['account.move.line']._get_query_tax_details_from_domain(domain=[('id', 'in', journal_items.ids)])
+        tax_details_sql = self.env['account.move.line']._get_query_tax_details_from_domain(domain=domain)
         tax_details = self.env.execute_query_dict(tax_details_sql)
         # Retrieve base lines and tax lines based on tax_details
         base_lines = self.env['account.move.line'].browse([tax['base_line_id'] for tax in tax_details])
         tax_lines = self.env['account.move.line'].browse([tax['tax_line_id'] for tax in tax_details])
         base_lines_map = {line.id: line for line in base_lines}
         tax_lines_map = {line.id: line for line in tax_lines}
+        seen_lines = set()
         for tax_vals in tax_details:
             base_line = base_lines_map[tax_vals['base_line_id']]
             tax_line = tax_lines_map[tax_vals['tax_line_id']]
-            journal_items -= base_line
-            journal_items -= tax_line
+            seen_lines.add(base_line.id)
+            seen_lines.add(tax_line.id)
             move_id = base_line.move_id
             tax_vals_map.setdefault(move_id, {}).setdefault(base_line, {
                 'base_amount': tax_vals['base_amount'],
@@ -534,7 +535,7 @@ class L10n_InGstReturnPeriod(models.Model):
                         tax_vals_map[move_id][base_line]['l10n_in_reverse_charge'] = True
             tax_vals_map[move_id][base_line]['gst_tax_rate'] = sum(tax_vals_map[move_id][base_line]['rate_by_tax_tag'].values())
         # IF line have 0% tax or not have tax then we add it manually
-        for journal_item in journal_items:
+        for journal_item in self.env['account.move.line'].browse(list(set(journal_items.ids) - seen_lines)):
             move_id = journal_item.move_id
             tax_vals_map.setdefault(move_id, {}).setdefault(journal_item, {
                 'base_amount': journal_item.balance,
