@@ -17,7 +17,7 @@ msgstr ""
 
 #. module: l10n_se_sie4_import
 #: model:ir.model,name:l10n_se_sie4_import.model_l10n_se_sie4_import_wizard
-msgid "Accounting SIE4 import wizard"
+msgid "Accounting SIE 4 import wizard"
 msgstr ""
 
 #. module: l10n_se_sie4_import
@@ -28,6 +28,13 @@ msgstr ""
 #. module: l10n_se_sie4_import
 #: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__company_id
 msgid "Company"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__import_opening_balance
+msgid ""
+"Compare opening balance information from Odoo with the file and create a "
+"move with the difference found."
 msgstr ""
 
 #. module: l10n_se_sie4_import
@@ -56,21 +63,6 @@ msgid "ID"
 msgstr ""
 
 #. module: l10n_se_sie4_import
-#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__import_opening_balance
-msgid ""
-"If true, all IB-0 item balances found in the file will be compared with "
-"Odoo's opening balance. If a difference is found, a new miscellaneous move "
-"with the difference will be created."
-msgstr ""
-
-#. module: l10n_se_sie4_import
-#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__update_account_data
-msgid ""
-"If true, any information about account name/type found in the file will "
-"update the existing account in the company."
-msgstr ""
-
-#. module: l10n_se_sie4_import
 #. odoo-javascript
 #: code:addons/l10n_se_sie4_import/static/src/xml/l10n_se_sie4_import_button.xml:0
 #: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
@@ -85,7 +77,14 @@ msgstr ""
 
 #. module: l10n_se_sie4_import
 #: model_terms:ir.ui.view,arch_db:l10n_se_sie4_import.sie4_import_view_form
-msgid "Import your accounting data from a SIE-4 file"
+msgid "Import your accounting data from a SIE 4 file"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#. odoo-python
+#: code:addons/l10n_se_sie4_import/wizard/import_wizard.py:0
+#, python-format
+msgid "Imported from SIE4"
 msgstr ""
 
 #. module: l10n_se_sie4_import
@@ -101,6 +100,21 @@ msgstr ""
 #. module: l10n_se_sie4_import
 #: model:ir.actions.act_window,name:l10n_se_sie4_import.action_open_load_sie4
 msgid "Load SIE 4 file"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#. odoo-python
+#: code:addons/l10n_se_sie4_import/wizard/import_wizard.py:0
+#, python-format
+msgid ""
+"Missing element in #ADRESS line.\n"
+"Expected format: \"contact\" \"distribution address\" \"postal address\" \"telephone\".\n"
+"Received data: %(data)s."
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__attachment_file
+msgid "SIE 4 File"
 msgstr ""
 
 #. module: l10n_se_sie4_import
@@ -123,4 +137,9 @@ msgstr ""
 #. module: l10n_se_sie4_import
 #: model:ir.model.fields,field_description:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__update_account_data
 msgid "Update Chart of Account data"
+msgstr ""
+
+#. module: l10n_se_sie4_import
+#: model:ir.model.fields,help:l10n_se_sie4_import.field_l10n_se_sie4_import_wizard__update_account_data
+msgid "Update existing accounts information with the file's information."
 msgstr ""

@@ -1,6 +1,7 @@
 import base64
 
 from odoo import fields, Command
+from odoo.exceptions import UserError
 from odoo.tests import tagged
 from odoo.tools import file_open
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -93,6 +94,30 @@ class AccountTestSIE4Import(AccountTestInvoicingCommon):
             'street2': 'Box 1',
             'phone': '012-34 56 78',
         }])
+
+    def test_sie4_import_identification_with_missing_element_in_adress(self):
+        self.wizard.attachment_file = base64.b64encode(b"""
+            #SIETYP 4
+            #FNAMN "Swedish Series"
+            #ORGNR 555555-5555
+            #ADRESS "Siw Eriksson" "123 45 STORSTAD" "012-34 56 78"
+            #RAR 0 20210101 20211231
+            #RAR -1 20200101 20201231
+            #TAXAR 2022
+            #VALUTA SEK
+            #KPTYP EUBAS97
+        """)
+        with self.assertRaises(UserError) as err:
+            self.wizard.action_import_sie4()
+
+        self.assertEqual(
+            (
+                'Missing element in #ADRESS line.\n'
+                'Expected format: "contact" "distribution address" "postal address" "telephone".\n'
+                'Received data: Siw Eriksson 123 45 STORSTAD 012-34 56 78.'
+            ),
+            err.exception.args[0],
+        )
 
     def test_sie4_import_chart_of_account(self):
         self.wizard.attachment_file = base64.b64encode(b"""
@@ -249,6 +274,33 @@ class AccountTestSIE4Import(AccountTestInvoicingCommon):
             {'name': "MISC/2024/01/0003", 'ref': "Imported from SIE4 - 1st item", 'date': fields.Date.from_string('2024-01-07'), **common_values},
         ])
         self.assertSequenceEqual(sorted_moves.line_ids.mapped('balance'), (100.0, -100.0, 200.0, -200.0, 300.0, -300.0))
+
+    def test_sie4_import_move_with_tabs_instead_of_spaces(self):
+        """ Ensure the imported moves with tabulations instead of spaces are correctly imported. """
+        self.wizard.attachment_file = base64.b64encode(b"""
+            #VER A 1 20240107 "item with tabs and spaces"
+            {
+                #TRANS\t1060\t{}\t300.0
+                #TRANS\t2030 {} -300.0
+            }
+        """)
+        self.wizard.action_import_sie4()
+
+        imported_moves = self.env['account.move'].search([('company_id', '=', self.company_id.id)])
+        self.assertRecordValues(
+            imported_moves,
+            [
+                {
+                    "name": "MISC/2024/01/0001",
+                    "ref": "Imported from SIE4 - item with tabs and spaces",
+                    "date": fields.Date.from_string("2024-01-07"),
+                    "move_type": "entry",
+                    "state": "draft",
+                    "journal_id": self.journal_misc_id,
+                }
+            ],
+        )
+        self.assertSequenceEqual(imported_moves.line_ids.mapped("balance"), (300.0, -300.0))
 
     # --------------------------------------------------------------------------
     # Import Key Algorithm Tests
