@@ -1271,7 +1271,7 @@ class AccountReturn(models.Model):
             tax_with_incomplete_group_domain.append(('country_id', '=', country.id))
 
         if self.env['account.tax'].search(tax_with_incomplete_group_domain, limit=1):
-            tax_groups_domain = [('country_id', 'in', (False, country))] if country else []
+            tax_groups_domain = [('country_id', 'in', (False, country.id))] if country else []
 
             raise RedirectWarning(
                 _('Please specify the accounts necessary for the tax closing entry.'),
@@ -1860,19 +1860,12 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
         if 'check_unkown_partner_receivables' not in check_codes_to_ignore:
             receivable_report = self.env.ref('account_reports.aged_receivable_report')
-            aml_ids = get_unknown_partner_aml_ids(receivable_report)
-            action = {
-                'type': 'ir.actions.act_window',
-                'view_mode': 'list',
-                'res_model': 'account.move.line',
-                'domain': [('id', 'in', aml_ids)],
-                'views': [[False, 'list'], [False, 'form']],
-            }
+            aml_ids = self.env['account.move.line'].browse(get_unknown_partner_aml_ids(receivable_report))
             checks.append({
                 'name': _("Aged receivables per partner"),
                 'message': _("Review receivables without a partner."),
                 'code': 'check_unkown_partner_receivables',
-                'action': action if aml_ids else None,
+                'action': aml_ids._get_records_action() if aml_ids else None,
                 'result': 'failure' if aml_ids else 'success',
             })
 
@@ -1902,19 +1895,12 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
         if 'check_unkown_partner_payables' not in check_codes_to_ignore:
             payable_report = self.env.ref('account_reports.aged_payable_report')
-            aml_ids = get_unknown_partner_aml_ids(payable_report)
-            action = {
-                'type': 'ir.actions.act_window',
-                'view_mode': 'list',
-                'res_model': 'account.move.line',
-                'domain': [('id', 'in', aml_ids)],
-                'views': [[False, 'list'], [False, 'form']],
-            }
+            aml_ids = self.env['account.move.line'].browse(get_unknown_partner_aml_ids(payable_report))
             checks.append({
                 'name': _("Aged payables per partner"),
                 'message': _("Review payables without a partner."),
                 'code': 'check_unkown_partner_payables',
-                'action': action if aml_ids else None,
+                'action': aml_ids._get_records_action() if aml_ids else None,
                 'result': 'failure' if aml_ids else 'success',
             })
 
@@ -2006,16 +1992,6 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             )[0][0]
 
             invalid_vies_partners_count = len(invalid_vies_partners)
-
-            review_action = {
-                'type': 'ir.actions.act_window',
-                'name': _("Valid VAT Numbers"),
-                'view_mode': 'list',
-                'res_model': 'res.partner',
-                'domain': [('id', 'in', invalid_vies_partners.ids)],
-                'views': [[False, 'list'], [False, 'form']],
-            }
-
             checks.append({
                 'name': _("Valid VAT Numbers"),
                 'code': 'check_partner_vies',
@@ -2023,7 +1999,11 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'state': 'new',
                 'records_count': invalid_vies_partners_count,
                 'records_name': _("Partner") if invalid_vies_partners_count == 1 else _("Partners"),
-                'action': review_action if invalid_vies_partners_count else None,
+                'action': (
+                    invalid_vies_partners._get_records_action(name=self.env._("Valid VAT Numbers"))
+                    if invalid_vies_partners_count
+                    else None
+                ),
                 'result': 'failure' if invalid_vies_partners_count else 'success',
             })
 
@@ -2102,35 +2082,33 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 })
 
             if 'only_b2b' not in check_codes_to_ignore:
-                non_b2b_partners = [partner.id for partner, _partner_result in partner_results if not partner.is_company]
+                non_b2b_partners = self.env['res.partner'].browse(
+                    partner.id for partner, _partner_result in partner_results if not partner.is_company
+                )
                 checks.append({
                     'name': _("Only business customers"),
                     'message': _("Exclude any private customers."),
                     'code': 'only_b2b',
                     'result': 'failure' if non_b2b_partners else 'success',
-                    'action': {
-                        'type': 'ir.actions.act_window',
-                        'name': _("Private Customers"),
-                        'res_model': 'res.partner',
-                        'domain': [('id', 'in', non_b2b_partners)],
-                        'views': [(False, 'list'), (False, 'form')],
-                    },
+                    'action': (
+                        non_b2b_partners._get_records_action(name=self.env._("Private Customers"))
+                        if non_b2b_partners else None
+                    ),
                 })
 
             if 'no_partners_without_vat' not in check_codes_to_ignore:
-                no_vat_partners = [partner.id for partner, _partner_result in partner_results if not partner.vat]
+                no_vat_partners = self.env['res.partner'].browse(
+                    partner.id for partner, _partner_result in partner_results if not partner.vat
+                )
                 checks.append({
                     'name': _("VAT Numbers"),
                     'message': _("All customers have a VAT number."),
                     'code': 'no_partners_without_vat',
                     'result': 'failure' if no_vat_partners else 'success',
-                    'action': {
-                        'type': 'ir.actions.act_window',
-                        'name': _("Partners without VAT"),
-                        'res_model': 'res.partner',
-                        'domain': [('id', 'in', no_vat_partners)],
-                        'views': [(False, 'list'), (False, 'form')],
-                    },
+                    'action': (
+                        no_vat_partners._get_records_action(name=self.env._("Partners without VAT"))
+                        if no_vat_partners else None
+                    ),
                 })
 
         self._generic_vies_vat_check(check_codes_to_ignore, checks)

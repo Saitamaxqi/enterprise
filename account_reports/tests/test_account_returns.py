@@ -10,6 +10,8 @@ from odoo.exceptions import UserError
 
 def patched_generate_all_returns(account_return_type, country_code, main_company, tax_unit=None):
     TestAccountReturn.basic_return_type._try_create_returns_for_fiscal_year(main_company, tax_unit)
+    TestAccountReturn.ec_sales_list_return_type._try_create_returns_for_fiscal_year(main_company, tax_unit)
+    TestAccountReturn.annual_return_type._try_create_returns_for_fiscal_year(main_company, tax_unit)
 
 
 @tagged('post_install', '-at_install')
@@ -31,10 +33,18 @@ class TestAccountReturn(TestAccountReportsCommon):
             'default_deadline_start_date': '2024-01-01'
         })
 
-        cls.startClassPatcher(freeze_time('2024-01-01'))
+        cls.ec_sales_list_return_type = cls.env['account.return.type'].create({
+            'name': 'EC Sales List',
+            'report_id': cls.env.ref('account_reports.generic_ec_sales_report').id,
+            'default_deadline_start_date': '2024-01-01'
+        })
+
+        cls.annual_return_type = cls.env.ref('account_reports.annual_corporate_tax_return_type')
+
+        cls.startClassPatcher(freeze_time('2024-01-16'))
 
         with cls._patch_returns_generation():
-            cls.env.company.account_opening_date = '2024-01-01'
+            cls.env.company.account_opening_date = '2023-01-01'
 
     @classmethod
     def _patch_returns_generation(cls):
@@ -89,6 +99,13 @@ class TestAccountReturn(TestAccountReportsCommon):
         if errors:
             self.fail('\n'.join(errors))
 
+    def assert_return_contains_checks(self, account_return, expected_check_codes):
+        checks_by_code = {check.code: check for check in account_return.check_ids}
+        missing_checks = [code for code in expected_check_codes if code not in checks_by_code]
+
+        if missing_checks:
+            self.fail(f"Missing checks in return: {', '.join(missing_checks)}")
+
     def test_return_generation_normal(self):
         existing_returns = self.env['account.return'].search([
             ('type_id', '=', self.basic_return_type.id),
@@ -109,6 +126,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
+                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -139,6 +157,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
+                ("2024-11-01", "2024-12-31"),
             ]
         )
 
@@ -159,6 +178,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
+                ("2024-11-01", "2024-12-31"),
             ]
         )
 
@@ -188,6 +208,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
+                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -257,6 +278,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
+                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -266,6 +288,7 @@ class TestAccountReturn(TestAccountReportsCommon):
         self.assertRecordValues(
             existing_returns,
             [
+                {'is_completed': True},
                 {'is_completed': True},
                 {'is_completed': True},
                 {'is_completed': True},
@@ -301,6 +324,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
+                ("2024-12-01", "2024-12-31"),
             ]
         )
 
@@ -403,7 +427,7 @@ class TestAccountReturn(TestAccountReportsCommon):
             branch_2_data = self.setup_other_company(name='Branch 2', vat='23434344', parent_id=self.company_data['company'].id, account_return_periodicity='semester', account_opening_date="2014-01-01")
 
             branch_2_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('company_id', '=', branch_2_data['company'].id)])
-            self.assert_return_dates_equal(branch_2_return, [("2024-01-01", "2024-06-30")])
+            self.assert_return_dates_equal(branch_2_return, [[("2024-01-01"), ("2024-06-30")], [("2024-07-01"), ("2024-12-31")]])
             self.assertEqual(branch_2_return.company_id, branch_2_data['company'])
 
             branch_1_1_data = self.setup_other_company(name='Branch 1-1', parent_id=branch_1_data['company'].id)
@@ -427,6 +451,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                     ("2024-09-01", "2024-09-30"),
                     ("2024-10-01", "2024-10-31"),
                     ("2024-11-01", "2024-11-30"),
+                    ("2024-12-01", "2024-12-31"),
                 ],
             )
             self.assertTrue(all(tax_return.company_ids == vat_tree_1 for tax_return in tree_1_returns))
@@ -436,6 +461,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 tree_2_returns,
                 [
                     ("2024-01-01", "2024-06-30"),
+                    ("2024-07-01", "2024-12-31"),
                 ],
             )
             self.assertTrue(all(tax_return.company_ids == vat_tree_2 for tax_return in tree_2_returns))
@@ -458,6 +484,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
+                ("2024-11-01", "2024-12-31"),
             ],
         )
 
@@ -475,6 +502,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-09-01", "2024-09-30"),
                 ("2024-10-01", "2024-10-31"),
                 ("2024-11-01", "2024-11-30"),
+                ("2024-12-01", "2024-12-31"),
             ],
         )
 
@@ -497,6 +525,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 ("2024-05-01", "2024-06-30"),
                 ("2024-07-01", "2024-08-31"),
                 ("2024-09-01", "2024-10-31"),
+                ("2024-11-01", "2024-12-31"),
             ],
         )
 
@@ -913,3 +942,204 @@ class TestAccountReturn(TestAccountReportsCommon):
                     self.assertEqual('reviewed', audit_status)
                 else:
                     self.assertEqual('todo', audit_status)
+
+    def test_basic_return_checks(self):
+
+        january_return = self.env['account.return'].search([
+            ('type_id', '=', self.basic_return_type.id),
+            ('company_id', '=', self.env.company.id),
+            ('date_from', '=', '2024-01-01'),
+            ('date_to', '=', '2024-01-31'),
+        ])
+
+        self.assertEqual(len(january_return), 1, "There should be one return for January 2024")
+
+        # check_company_data
+        self.env.company.vat = False
+        # check_match_all_bank_entries
+        bank_journal = self.company_data['default_journal_bank']
+        bank_statement_line = self.env['account.bank.statement.line'].create({
+            'payment_ref': 'To be reconciled',
+            'company_id': self.env.company.id,
+            'journal_id': bank_journal.id,
+            'partner_id': self.partner_a.id,
+            'amount': 100.0,
+            'date': '2024-01-01',
+        })
+        # check_draft_entries
+        draft_invoice = self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-01-01')
+        # check_bills_attachment
+        bill = self.init_invoice('in_invoice', amounts=[10], invoice_date='2024-01-01', post=True)
+
+        january_return.refresh_checks()
+        checks = january_return.check_ids
+
+        self.assert_return_contains_checks(
+            january_return,
+            [
+                'check_match_all_bank_entries',
+                'check_bills_attachment',
+                'check_company_data',
+                'check_draft_entries',
+                'check_tax_countries'
+            ],
+        )
+
+        company_data_check = checks.filtered(lambda c: c.code == 'check_company_data')
+        match_all_bank_entries_check = checks.filtered(lambda c: c.code == 'check_match_all_bank_entries')
+        draft_entries_check = checks.filtered(lambda c: c.code == 'check_draft_entries')
+        bills_attachment_check = checks.filtered(lambda c: c.code == 'check_bills_attachment')
+
+        self.assertEqual(company_data_check.result, 'failure', "The company data check should fail as the VAT is not set")
+        self.assertEqual(match_all_bank_entries_check.result, 'failure', "The match all bank entries check should fail as there's a bank statement line but not reconciled")
+        self.assertEqual(draft_entries_check.result, 'failure', "The draft entries check should fail as the invoice is not posted")
+        self.assertEqual(bills_attachment_check.result, 'failure', "The bills attachment check should fail as the bill has no attachment")
+
+        self.env.company.vat = 'BE123456789'
+        draft_invoice.action_post()
+        bill.attachment_ids = self.env['ir.attachment'].create({
+            'name': 'bill_attachment.pdf',
+            'res_model': 'account.move',
+            'res_id': bill.id,
+            'type': 'binary',
+            'datas': b'',
+            'mimetype': 'application/pdf',
+            'company_id': self.env.company.id,
+        })
+        payment = self.env['account.payment'].create({
+            'amount': 100.0,
+            'payment_type': 'inbound',
+            'date': '2024-01-01',
+            'journal_id': bank_journal.id,
+            'partner_id': self.partner_a.id,
+        })
+        payment.action_post()
+        payment_line = payment.move_id.line_ids.filtered(lambda line: line.account_id == payment.payment_method_line_id.payment_account_id)
+        bank_statement_line.set_line_bank_statement_line(payment_line.id)
+
+        january_return.refresh_checks()
+
+        self.assertEqual(company_data_check.result, 'success', "The company data check should succeed as the VAT is set")
+        self.assertEqual(match_all_bank_entries_check.result, 'success', "The match all bank entries check should succeed as the bank statement line is reconciled")
+        self.assertEqual(draft_entries_check.result, 'success', "The draft entries check should succeed as the invoice is posted")
+        self.assertEqual(bills_attachment_check.result, 'success', "The bills attachment check should succeed as the bill has an attachment")
+
+    def test_ec_sales_list_return_checks(self):
+        """ Checks that the checks for the EC Sales List return are correctly generated.
+        """
+        ec_sales_list_return = self.env['account.return'].search([
+            ('type_id', '=', self.ec_sales_list_return_type.id),
+            ('company_id', '=', self.env.company.id),
+            ('date_from', '=', '2024-01-01'),
+            ('date_to', '=', '2024-01-31'),
+        ])
+
+        self.assertEqual(len(ec_sales_list_return), 1, "There should be one EC Sales List return for January 2024")
+        ec_sales_list_return.refresh_checks()
+        checks = ec_sales_list_return.check_ids
+
+        self.assert_return_contains_checks(
+            ec_sales_list_return,
+            [
+                'goods_service_classification',
+                'only_b2b',
+                'eu_cross_border',
+                'reverse_charge_mentioned',
+                'no_partners_without_vat'
+            ],
+        )
+
+        eu_cross_border_check = checks.filtered(lambda c: c.code == 'eu_cross_border')
+        only_b2b_check = checks.filtered(lambda c: c.code == 'only_b2b')
+        no_partners_without_vat_check = checks.filtered(lambda c: c.code == 'no_partners_without_vat')
+
+        self.assertEqual(eu_cross_border_check.result, 'success', "The EU cross border check should succeed as there is a cross-border transaction")
+        self.assertEqual(only_b2b_check.result, 'success', "The only B2B check should succeed as there is a B2B transaction")
+        self.assertEqual(no_partners_without_vat_check.result, 'success', "The no partners without VAT check should succeed as there is a partner without VAT")
+
+    def test_annual_return_checks(self):
+        """ Checks that the checks for the Annual return are correctly generated.
+        """
+        annual_return = self.env['account.return'].search([
+            ('type_id', '=', self.annual_return_type.id),
+            ('company_id', '=', self.env.company.id),
+            ('date_from', '=', '2024-01-01'),
+            ('date_to', '=', '2024-12-31'),
+        ])
+
+        self.assertEqual(len(annual_return), 1, "There should be one Annual return for 2024")
+
+        bank_journal = self.company_data['default_journal_bank']
+        bank_statement_line = self.env['account.bank.statement.line'].create({
+            'payment_ref': 'To be reconciled',
+            'company_id': self.env.company.id,
+            'journal_id': bank_journal.id,
+            'partner_id': self.partner_a.id,
+            'amount': 100.0,
+            'date': '2024-01-01',
+        })
+        draft_invoice = self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-01-01')
+
+        annual_return.refresh_checks()
+        checks = annual_return.check_ids
+
+        self.assert_return_contains_checks(
+            annual_return,
+            [
+                'check_unkown_partner_payables',
+                'check_unkown_partner_receivables',
+                'check_bank_reconcile',
+                'check_deferred_entries',
+                'earnings_allocation',
+                'manual_adjustments',
+                'check_draft_entries',
+                'check_overdue_payables',
+                'check_overdue_receivables',
+                'check_total_receivables',
+                'check_total_payables',
+            ],
+        )
+
+        check_unkown_partner_payables = checks.filtered(lambda c: c.code == 'check_unkown_partner_payables')
+        check_unkown_partner_receivables = checks.filtered(lambda c: c.code == 'check_unkown_partner_receivables')
+        check_bank_reconcile = checks.filtered(lambda c: c.code == 'check_bank_reconcile')
+        check_deferred_entries = checks.filtered(lambda c: c.code == 'check_deferred_entries')
+        earnings_allocation = checks.filtered(lambda c: c.code == 'earnings_allocation')
+        check_draft_entries = checks.filtered(lambda c: c.code == 'check_draft_entries')
+        manual_adjustments = checks.filtered(lambda c: c.code == 'manual_adjustments')
+        check_overdue_payables = checks.filtered(lambda c: c.code == 'check_overdue_payables')
+        check_overdue_receivables = checks.filtered(lambda c: c.code == 'check_overdue_receivables')
+        check_total_receivables = checks.filtered(lambda c: c.code == 'check_total_receivables')
+        check_total_payables = checks.filtered(lambda c: c.code == 'check_total_payables')
+
+        self.assertEqual(check_bank_reconcile.result, 'failure', "The bank reconcile check should fail as the bank statement line is not reconciled")
+        self.assertEqual(check_draft_entries.result, 'failure', "The draft entries check should fail as the invoice is not posted")
+        self.assertEqual(check_overdue_payables.result, 'success', "The overdue payables check should succeed as the payable is paid")
+
+        payment = self.env['account.payment'].create({
+            'amount': 100.0,
+            'payment_type': 'inbound',
+            'date': '2024-01-01',
+            'journal_id': bank_journal.id,
+            'partner_id': self.partner_a.id,
+        })
+        payment.action_post()
+        payment_line = payment.move_id.line_ids.filtered(lambda line: line.account_id == payment.payment_method_line_id.payment_account_id)
+        bank_statement_line.set_line_bank_statement_line(payment_line.id)
+        draft_invoice.action_post()
+        self.init_invoice('in_invoice', amounts=[400], invoice_date='2023-05-01', post=True)
+        self.init_invoice('out_invoice', amounts=[200], invoice_date='2023-06-01', post=True)
+
+        annual_return.refresh_checks()
+
+        self.assertEqual(check_unkown_partner_payables.result, 'success', "The unknown partner payables check should succeed as the invoice is posted")
+        self.assertEqual(check_unkown_partner_receivables.result, 'success', "The unknown partner receivables check should succeed as the invoice is posted")
+        self.assertEqual(check_bank_reconcile.result, 'success', "The bank reconcile check should succeed as the bank statement line is reconciled")
+        self.assertEqual(check_deferred_entries.result, 'manual', "The deferred entries check should be manual as it requires user intervention")
+        self.assertEqual(earnings_allocation.result, 'manual', "The earnings allocation check should be manual as it requires user intervention")
+        self.assertEqual(manual_adjustments.result, 'manual', "The manual adjustments check should be manual as it requires user intervention")
+        self.assertEqual(check_draft_entries.result, 'success', "The draft entries check should succeed as the invoice is posted")
+        self.assertEqual(check_overdue_payables.result, 'failure', "The overdue payables check should fail as the payable is not paid")
+        self.assertEqual(check_overdue_receivables.result, 'failure', "The overdue receivables check should fail as the receivable is not paid")
+        self.assertEqual(check_total_receivables.result, 'success', "The total receivables check should succeed as the invoice is posted")
+        self.assertEqual(check_total_payables.result, 'success', "The total payables check should succeed as the invoice is posted")
