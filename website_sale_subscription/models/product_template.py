@@ -43,6 +43,40 @@ class ProductTemplate(models.Model):
             and not request.cart.plan_id
         )
 
+    def _get_recurring_pricings(self, pricelist, variant=None):
+        """Return the first pricing applicable for each of the available subscription plans."""
+        self.ensure_one()
+
+        pricings = self.env['product.pricelist.item']
+        domain = pricelist._get_applicable_rules_domain(
+            products=variant or self,
+            date=fields.Datetime.now(),
+            any_plan=True,
+        )
+
+        all_pricings = self.env['product.pricelist.item'].search(
+            domain, order=self.env['product.pricelist.item']._get_recurring_rules_order()
+        )
+        if not all_pricings and pricelist:
+            # If the current pricelist has no recurring rules, the recurring price (and plans) will
+            # be decided by the recurring rules not linked to a specific pricelist.
+            domain = self.env['product.pricelist']._get_applicable_rules_domain(
+                products=variant or self,
+                date=fields.Datetime.now(),
+                any_plan=True,
+            )
+            all_pricings = self.env['product.pricelist.item'].search(
+                domain, order=self.env['product.pricelist.item']._get_recurring_rules_order()
+            )
+
+        found_plan_ids = set()
+        for pricing in all_pricings:
+            if (plan_id := pricing.plan_id.id) not in found_plan_ids:
+                found_plan_ids.add(plan_id)
+                pricings |= pricing
+
+        return pricings
+
     def _get_additionnal_combination_info(self, product_or_template, quantity, uom, date, website):
         res = super()._get_additionnal_combination_info(product_or_template, quantity, uom, date, website)
 
@@ -53,22 +87,6 @@ class ProductTemplate(models.Model):
         pricings = self._get_recurring_pricings(pricelist=request.pricelist, variant=product)
 
         res['list_price'] = res['price']  # No pricelist discount for subscription prices
-        currency = website.currency_id
-        requested_plan = request and request.params.get('plan_id')
-        requested_plan_id = requested_plan and requested_plan.isdigit() and int(requested_plan)
-        possible_pricing_count = 0
-
-        if pricings:
-            to_year = {'year': 1, 'month': 12, 'week': 52}
-            translation_mapping = {
-                'year': _('year'),
-                'month': _('month'),
-                'week': _('week'),
-            }
-            minimum_period = min(
-                pricings.sudo().plan_id.mapped('billing_period_unit'),
-                key=lambda x: 1 / to_year[x],
-            )
 
         if not pricings:
             res.update({
@@ -80,15 +98,39 @@ class ProductTemplate(models.Model):
             })
             return res
 
-        pricing_details = []
-        default_pricing_data = {}
-        for pricing in pricings:
+        to_year = {'year': 1, 'month': 12, 'week': 52}
+        translation_mapping = {
+            'year': _('year'),
+            'month': _('month'),
+            'week': _('week'),
+        }
+        minimum_period = min(
+            pricings.sudo().plan_id.mapped('billing_period_unit'),
+            key=lambda x: 1 / to_year[x],
+        )
+
+        currency = website.currency_id
+        requested_plan = request and request.params.get('plan_id')
+        requested_plan_id = requested_plan and requested_plan.isdigit() and int(requested_plan)
+        requested_plan_id = requested_plan_id or request.cart.plan_id.id
+        if requested_plan_id:
+            chosen_pricing = pricings.filtered(lambda pricing: pricing.plan_id.id == requested_plan_id)
+        else:
+            chosen_pricing = pricings[0]
+
+        sales_price = res['price']
+
+        def _get_pricing_data(pricing):
+            if not pricing:
+                return {}
+
             price = pricing._compute_price(
                 product=product_or_template,
                 quantity=quantity or 1.0,
                 date=date,
-                uom=product_or_template.uom_id,  # TODO VFE website uom broll when merged
+                uom=product_or_template.uom_id,
                 currency=currency,
+                plan_id=pricing.plan_id.id,
             )
 
             if res.get('product_taxes', False):
@@ -104,7 +146,6 @@ class ProductTemplate(models.Model):
                 * to_year[pricing_plan_sudo.billing_period_unit]
                 / to_year[minimum_period]
             )
-            can_be_added = request.cart.plan_id.id in (pricing_plan_sudo.id, False)
             pricing_data = {
                 'plan_id': pricing_plan_sudo.id,
                 'price': f"{pricing.plan_id.name}: {price_format}",
@@ -113,34 +154,37 @@ class ProductTemplate(models.Model):
                 'table_name': pricing.plan_id.name.replace(' ', ' '),
                 'to_minimum_billing_period': f'{format_amount(self.env, amount=price_in_minimum_period, currency=currency)}'
                                              f' / {translation_mapping.get(minimum_period, minimum_period)}',
-                'can_be_added': can_be_added,
+                'can_be_added': request.cart.plan_id.id in (pricing_plan_sudo.id, False),
             }
-            if can_be_added:
-                possible_pricing_count += 1
-                if (not default_pricing_data or pricing_plan_sudo.id == requested_plan_id):
-                    default_pricing_data = pricing_data
 
             # discount calculation for one time purchase
             discount = 0.0
             if product_or_template.type == 'consu':
-                if price > 0 and self.list_price > 0 and self.list_price >= price:
-                    discount = ((self.list_price - price) * 100) / self.list_price
+                if price > 0 and sales_price > 0 and sales_price >= price:
+                    discount = ((sales_price - price) * 100) / sales_price
                     pricing_data['discounted_price'] = floor(discount)  # Round down to the nearest integer
                 else:
                     pricing_data['discounted_price'] = 0.0
 
-            pricing_details.append(pricing_data)
+            return pricing_data
+
+        default_pricing_data = _get_pricing_data(chosen_pricing)
+
+        pricing_details = [
+            _get_pricing_data(pricing)
+            for pricing in pricings
+        ]
 
         unit_price = default_pricing_data.get('price_value', 0)
         return {
             **res,
             'is_subscription': True,
             'pricings': pricing_details,
-            'is_plan_possible': possible_pricing_count > 0,
+            'is_plan_possible': bool(chosen_pricing),
             'price': unit_price,
             'subscription_default_pricing_price': default_pricing_data.get('price', ''),
             'subscription_default_pricing_plan_id': default_pricing_data.get('plan_id', False),
-            'subscription_pricing_select': possible_pricing_count > 1,
+            'subscription_pricing_select': len(pricings) > 1 and not request.cart.plan_id,
             'prevent_zero_price_sale': website.prevent_zero_price_sale and currency.is_zero(
                 unit_price,
             ),
@@ -190,8 +234,9 @@ class ProductTemplate(models.Model):
                 product=template,
                 quantity=1.0,
                 date=date,
-                uom=template.uom_id,  # TODO VFE website uom broll when merged
+                uom=template.uom_id,
                 currency=currency,
+                plan_id=so_plan_id,
             )
 
             # taxes application

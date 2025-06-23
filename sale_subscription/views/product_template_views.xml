@@ -22,9 +22,6 @@
                 <attribute name="invisible">not sale_ok and not recurring_invoice</attribute>
                 <attribute name="class">page_sales</attribute>
             </page>
-            <group name="upsell" position="inside">
-                <field name="allow_one_time_sale" invisible="not recurring_invoice or type != 'consu'"/>
-            </group>
             <div name="options" position="inside">
                 <span class="d-inline-flex">
                     <field name="recurring_invoice"/>
@@ -40,10 +37,10 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <page name="sales_price" position="attributes">
-                <attribute name="invisible" separator="or" add="recurring_invoice"/>
+                <attribute name="invisible" separator="or" add="(recurring_invoice and not allow_one_time_sale)"/>
             </page>
-            <page name="sales" position="after">
-                <page string="Pricing" name="subscription_pricing" invisible="not recurring_invoice">
+            <page name="sales_price" position="after">
+                <page string="Recurring prices" name="subscription_pricing" invisible="not recurring_invoice">
                     <field
                         name="subscription_rule_ids"
                         context="{
@@ -67,6 +64,9 @@
                             <field name="product_tmpl_id" column_invisible="True"/>
                         </list>
                     </field>
+                    <group>
+                        <field name="allow_one_time_sale" invisible="not recurring_invoice or type != 'consu'"/>
+                    </group>
                 </page>
             </page>
         </field>

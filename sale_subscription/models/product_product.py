@@ -7,7 +7,7 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     subscription_rule_ids = fields.One2many(
-        string="Custom Subscription Pricings",
+        string="Subscription Pricings",
         comodel_name='product.pricelist.item',
         inverse_name='product_id',
         compute='_compute_subscription_rule_ids',

@@ -21,8 +21,8 @@ class ProductTemplate(models.Model):
     subscription_rule_ids = fields.One2many(
         comodel_name='product.pricelist.item',
         inverse_name='product_tmpl_id',
-        string="Custom Subscription Pricings",
-        domain=[('plan_id', '!=', False)],
+        string="Subscription Pricings",
+        domain=lambda self: self._domain_subscription_rule_ids(),
         auto_join=True,
         copy=False,
         groups='sales_team.group_sale_salesman',
@@ -31,6 +31,12 @@ class ProductTemplate(models.Model):
     display_subscription_pricing = fields.Char(
         string='Display Price', compute='_compute_display_subscription_pricing',
     )
+
+    def _domain_subscription_rule_ids(self):
+        return Domain.AND([
+            self._base_domain_item_ids(),
+            [('plan_id', '!=', False)],
+        ])
 
     def _domain_pricelist_rule_ids(self):
         # Recurring rules shouldn't be shown in standard pricelist rules
@@ -207,40 +213,6 @@ class ProductTemplate(models.Model):
                 data['price_info'] = pricing.plan_id.sudo().billing_period_display_sentence
 
         return data
-
-    def _get_recurring_pricings(self, pricelist, variant=None):
-        """Return the first pricing applicable for each the subscription plans."""
-        self.ensure_one()
-
-        pricings = self.env['product.pricelist.item']
-        domain = pricelist._get_applicable_rules_domain(
-            products=variant or self,
-            date=fields.Datetime.now(),
-            any_plan=True,
-        )
-
-        all_pricings = self.env['product.pricelist.item'].search(
-            domain, order=self.env['product.pricelist.item']._get_recurring_rules_order()
-        )
-        if not all_pricings and pricelist:
-            # If the current pricelist has no recurring rules, the recurring price (and plans) will
-            # be decided by the recurring rules not linked to a specific pricelist.
-            domain = self.env['product.pricelist']._get_applicable_rules_domain(
-                products=variant or self,
-                date=fields.Datetime.now(),
-                any_plan=True,
-            )
-            all_pricings = self.env['product.pricelist.item'].search(
-                domain, order=self.env['product.pricelist.item']._get_recurring_rules_order()
-            )
-
-        found_plan_ids = set()
-        for pricing in all_pricings:
-            if (plan_id := pricing.plan_id.id) not in found_plan_ids:
-                found_plan_ids.add(plan_id)
-                pricings |= pricing
-
-        return pricings
 
     def _get_recurring_pricing(self, pricelist, variant=None, plan_id=None):
         self.ensure_one()

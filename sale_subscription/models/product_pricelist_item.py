@@ -49,7 +49,7 @@ class ProductPricelistItem(models.Model):
         # Subscription rules should not apply to non-recurring products
         if self.plan_id and not product.recurring_invoice:
             return False
-        if not self.plan_id and product.recurring_invoice:
+        if not self.plan_id and product.recurring_invoice and not product.allow_one_time_sale:
             return False
         return super()._is_applicable_for(product, qty_in_product_uom)
 
