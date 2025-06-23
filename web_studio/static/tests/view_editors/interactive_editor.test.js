@@ -775,3 +775,30 @@ test("arch classes are reflected in the DOM", async () => {
         "my_custom_class2",
     ]);
 });
+
+test("edit selection values trims values", async () => {
+    const arch = `<list><field name="display_name"/></list>`;
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        expect(params.operations[0].node.field_description.selection).toBe(
+            '[["with spaces","with spaces"]]'
+        );
+        expect.step("edit_view");
+    });
+
+    await mountViewEditor({
+        type: "list",
+        resModel: "partner",
+        arch,
+    });
+
+    await contains(".o_web_studio_new_fields .o_web_studio_field_selection").dragAndDrop(
+        ".o_web_studio_hook"
+    );
+    await contains(
+        ".modal .o_web_studio_selection_editor .o-web-studio-interactive-list-item-input"
+    ).edit("with spaces   ");
+    await contains(".o-web-studio-interactive-list-edit-item").click();
+    await contains(".modal .btn-primary").click();
+    expect.verifySteps(["edit_view"]);
+});

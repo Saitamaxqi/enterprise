@@ -133,9 +133,18 @@ export class SelectionContentDialog extends Component {
     editItem(item) {
         const selItem = this.getSelectionFromItem(item);
         if (item.id === "new") {
+            selItem[0] = selItem[0]?.trim();
+            selItem[1] = selItem[1]?.trim();
             return this.addItem(selItem);
         }
         if (this.editedItem?.id === item.id) {
+            const old = this.oldValue.get(selItem);
+            if (old[0] !== selItem[0]) {
+                selItem[0] = selItem[0]?.trim();
+            }
+            if (old[1] !== selItem[1]) {
+                selItem[1] = selItem[1]?.trim();
+            }
             if (!this.ensureUnique(selItem)) {
                 return;
             }
