@@ -362,6 +362,11 @@ class HrPayslip(models.Model):
         for payslip in self:
             payslip.sum_worked_hours = sum([line.number_of_hours for line in payslip.worked_days_line_ids if not line.is_credit_time])
 
+    def _get_regular_worked_hours(self):
+        # To be overridden by localization modules. Used for the amount computation for each worked days type.
+        self.ensure_one()
+        return self.sum_worked_hours
+
     def _compute_is_superuser(self):
         self.is_superuser = self.env.user._is_superuser() and self.env.user.has_group('base.group_no_one')
 

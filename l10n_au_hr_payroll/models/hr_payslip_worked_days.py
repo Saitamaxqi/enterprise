@@ -19,7 +19,9 @@ class HrPayslipWorkedDays(models.Model):
             if not wd.payslip_id.edited and wd.is_paid and uses_leave_loading:
                 wd.amount *= 1 + (wd.version_id.l10n_au_leave_loading_rate / 100)
                 continue
-            rate = 1 + wd.version_id.l10n_au_casual_loading + wd.work_entry_type_id.l10n_au_penalty_rate
+            rate = 1 + wd.work_entry_type_id.l10n_au_penalty_rate
+            if wd.work_entry_type_id.l10n_au_work_stp_code != 'T':  # Casual loading is not applicable to Overtime hours
+                rate += wd.version_id.l10n_au_casual_loading
             wd.amount *= rate
         return res
 
@@ -31,11 +33,13 @@ class HrPayslipWorkedDays(models.Model):
             or self.payslip_id.wage_type == "hourly":
             wage = self.payslip_id.version_id.hourly_wage
         else:
-            wage = self.payslip_id.version_id.contract_wage / (self.payslip_id.sum_worked_hours or 1) if self.is_paid else 0
+            wage = self.payslip_id.version_id.contract_wage / (self.payslip_id._get_regular_worked_hours() or 1) if self.is_paid else 0
 
         uses_leave_loading = self.version_id.l10n_au_leave_loading == "regular" and self.work_entry_type_id.code == 'AU.PT'
         if not self.payslip_id.edited and self.is_paid and uses_leave_loading:
             wage *= 1 + (self.version_id.l10n_au_leave_loading_rate / 100)
             return wage
-        rate = 1 + self.version_id.l10n_au_casual_loading + self.work_entry_type_id.l10n_au_penalty_rate
+        rate = 1 + self.work_entry_type_id.l10n_au_penalty_rate
+        if self.work_entry_type_id.l10n_au_work_stp_code != 'T':
+            rate += self.version_id.l10n_au_casual_loading
         return wage * rate

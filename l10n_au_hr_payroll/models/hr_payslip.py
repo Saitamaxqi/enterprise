@@ -1105,3 +1105,11 @@ class HrPayslip(models.Model):
             "The Employee '%(employee)s' with tax treatment category '%(category)s' has no valid tax schedule.",
             employee=employee.name, category=employee.l10n_au_tax_treatment_category
         ))
+
+    def _get_regular_worked_hours(self):
+        """
+        Get the worked hours for the payslip except for the overtime hours.
+        """
+        self.ensure_one()
+        overtime_days = self.worked_days_line_ids.filtered(lambda d: d.work_entry_type_id.l10n_au_work_stp_code == 'T')
+        return self.sum_worked_hours - sum(overtime_days.mapped("number_of_hours"))
