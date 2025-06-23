@@ -17,6 +17,9 @@ class TestL10NHkHrPayrollAccountCommon(TestPayslipValidationCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        payroll_manager = cls.env.ref('hr_payroll.group_hr_payroll_manager')
+        cls.env.user.group_ids |= payroll_manager
+
         resource_calendar = cls.env['resource.calendar'].create({
             'name': "Test Calendar : 40 Hours/Week",
             'company_id': cls.env.company.id,

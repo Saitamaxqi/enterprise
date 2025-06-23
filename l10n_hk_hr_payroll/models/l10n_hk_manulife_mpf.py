@@ -5,11 +5,10 @@ from datetime import date
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
+from odoo.addons.l10n_hk_hr_payroll.models.l10n_hk_ird import MONTH_SELECTION
 from odoo.exceptions import UserError
 from odoo.tools import format_date
-
-from odoo.addons.l10n_hk_hr_payroll.models.l10n_hk_ird import MONTH_SELECTION
 
 
 class L10n_HkManulifeMpf(models.Model):
@@ -20,11 +19,11 @@ class L10n_HkManulifeMpf(models.Model):
     @api.model
     def default_get(self, fields):
         if self.env.company.country_id.code != 'HK':
-            raise UserError(_('You must be logged in a Hong Kong company to use this feature.'))
+            raise UserError(self.env._('You must be logged in a Hong Kong company to use this feature.'))
         if not self.env.company.l10n_hk_manulife_mpf_scheme:
-            raise UserError(_('You must set a Manulife MPF Scheme Number in your company settings first.'))
+            raise UserError(self.env._('You must set a Manulife MPF Scheme Number in your company settings first.'))
         if not self.env.company.l10n_hk_employer_name:
-            raise UserError(_('You must set an Employer Name in your company settings first.'))
+            raise UserError(self.env._('You must set an Employer Name in your company settings first.'))
         return super().default_get(fields)
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
@@ -92,7 +91,7 @@ class L10n_HkManulifeMpf(models.Model):
             ('struct_id', '=', salary_structure.id),
         ])
         if not all_payslips:
-            raise UserError(_('There are no confirmed payslips for this period.'))
+            raise UserError(self.env._('There are no confirmed payslips for this period.'))
         all_employees = all_payslips.employee_id
 
         employee_payslips = defaultdict(lambda: self.env['hr.payslip'])
@@ -154,7 +153,7 @@ class L10n_HkManulifeMpf(models.Model):
 
         employees = self.line_ids.mapped('employee_id')
         if not employees:
-            raise UserError(_('No employees to generate the report for.'))
+            raise UserError(self.env._('No employees to generate the report for.'))
 
         file = io.BytesIO()
         import xlsxwriter  # noqa: PLC0415

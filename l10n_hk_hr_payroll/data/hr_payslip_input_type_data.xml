@@ -47,8 +47,8 @@
     </record>
 
     <record id="input_custom_moving_daily_wage" model="hr.payslip.input.type">
-        <field name="name">Moving Daily Wage</field>
-        <field name="code">MOVING_DAILY_WAGE</field>
+        <field name="name">Average Daily Wage</field>
+        <field name="code">AVERAGE_DAILY_WAGE</field>
         <field name="country_id" ref="base.hk" />
         <field name="struct_ids" eval="[(4, ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary'))]" />
     </record>

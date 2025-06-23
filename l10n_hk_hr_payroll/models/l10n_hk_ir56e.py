@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, _
+from odoo import api, models
 from odoo.tools import format_date
 
 
@@ -18,7 +17,7 @@ class L10n_HkIr56e(models.Model):
             if sheet.submission_date:
                 sheet.display_name = format_date(self.env, sheet.submission_date, date_format="MMMM y", lang_code=lang_code)
             else:
-                sheet.display_name = _("IR56E Sheet")
+                sheet.display_name = sheet.env._("IR56E Sheet")
 
     def _get_rendering_data(self, employees):
         self.ensure_one()
@@ -56,7 +55,7 @@ class L10n_HkIr56e(models.Model):
 
     def _get_pdf_filename(self, employee):
         self.ensure_one()
-        return _('%(employee_name)s_-_IR56E-%(submission_date)s', employee_name=employee.name, submission_date=self.submission_date)
+        return self.env._('%(employee_name)s_-_IR56E-%(submission_date)s', employee_name=employee.name, submission_date=self.submission_date)
 
     def _post_process_rendering_data_pdf(self, rendering_data):
         result = {}

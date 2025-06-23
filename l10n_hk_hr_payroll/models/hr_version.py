@@ -1,6 +1,8 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 import pytz
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -84,4 +86,4 @@ class HrVersion(models.Model):
     def _check_l10n_hk_mpf_vc_percentage(self):
         for version in self:
             if version.l10n_hk_mpf_vc_percentage > 0.05 or version.l10n_hk_mpf_vc_percentage < 0:
-                raise ValidationError(_('Enter VC Percentage between 0% and 5%.'))
+                raise ValidationError(version.env._('Enter VC Percentage between 0% and 5%.'))

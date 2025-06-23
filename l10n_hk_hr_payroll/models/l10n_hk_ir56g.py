@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import date
 from collections import defaultdict
+from datetime import date
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class L10n_HkIr56g(models.Model):
@@ -133,7 +132,7 @@ class L10n_HkIr56g(models.Model):
 
     def _get_pdf_filename(self, employee):
         self.ensure_one()
-        return _('%(employee_name)s_-_IR56G_-_%(start_year)s', employee_name=employee.name, start_year=self.start_year)
+        return self.env._('%(employee_name)s_-_IR56G_-_%(start_year)s', employee_name=employee.name, start_year=self.start_year)
 
     def _post_process_rendering_data_pdf(self, rendering_data):
         result = {}

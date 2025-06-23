@@ -1,17 +1,14 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
-
-from lxml import html
 from collections import defaultdict
 
-from odoo import _, api, fields, models
+from lxml.html import etree
+
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Command
 from odoo.tools import format_date
-
-etree = html.etree
 
 
 class L10n_HkIr56b(models.Model):
@@ -36,7 +33,8 @@ class L10n_HkIr56b(models.Model):
         no_xml_file_records = self.filtered(lambda record: not record.xml_file)
         no_xml_file_records.update({
             'xml_validation_state': 'normal',
-            'error_message': False})
+            'error_message': False,
+        })
         for record in self - no_xml_file_records:
             xml_root = etree.fromstring(base64.b64decode(record.xml_file))
             schema = annual_schema if record.type_of_form == 'O' else extra_schema
@@ -75,11 +73,13 @@ class L10n_HkIr56b(models.Model):
         lang_code = self.env.user.lang or 'en_US'
         for sheet in self:
             if sheet.start_period and sheet.end_period:
-                sheet.display_name = _("From %(start_period)s to %(end_period)s",
-                                       start_period=format_date(self.env, sheet.start_period, date_format="MMMM y", lang_code=lang_code),
-                                       end_period=format_date(self.env, sheet.end_period, date_format="MMMM y", lang_code=lang_code))
+                sheet.display_name = sheet.env._(
+                    "From %(start_period)s to %(end_period)s",
+                    start_period=format_date(self.env, sheet.start_period, date_format="MMMM y", lang_code=lang_code),
+                    end_period=format_date(self.env, sheet.end_period, date_format="MMMM y", lang_code=lang_code),
+                )
             else:
-                sheet.display_name = _("IR56B Sheet")
+                sheet.display_name = sheet.env._("IR56B Sheet")
 
     def _get_rendering_data(self, employees):
         self.ensure_one()
@@ -90,7 +90,6 @@ class L10n_HkIr56b(models.Model):
 
         report_info = self._get_report_info_data()
 
-        payslip_info = False
         try:
             payslip_info = self._get_employees_payslip_data(employees)
         except UserError as e:
@@ -210,7 +209,7 @@ class L10n_HkIr56b(models.Model):
 
     def _get_pdf_filename(self, employee):
         self.ensure_one()
-        return _('%(employee_name)s_-_IR56B_-_%(start_year)s', employee_name=employee.name, start_year=self.start_year)
+        return self.env._('%(employee_name)s_-_IR56B_-_%(start_year)s', employee_name=employee.name, start_year=self.start_year)
 
     def _post_process_rendering_data_pdf(self, rendering_data):
         result = {}

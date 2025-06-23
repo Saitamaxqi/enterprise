@@ -145,8 +145,7 @@ result_name = inputs['GLOBAL_DEDUCTION'].name
         <field name="sequence">109</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-domain = payslip._get_last_year_payslips_domain(payslip.date_from, payslip.date_to, [employee.id])
-last_year_payslips = payslip.env['hr.payslip'].search(domain, order='date_from desc')
+last_year_payslips = payslip._get_previous_year_payslips(order='date_from desc')
 result = payslip.date_to.month == 12 and last_year_payslips
         </field>
         <field name="amount_select">code</field>
@@ -157,8 +156,7 @@ last_day = payslip.date_to + relativedelta(month=12, day=31)
 total_days = (last_day - first_day).days + 1
 
 # Find past 12-month payslips
-domain = payslip._get_last_year_payslips_domain(payslip.date_from, payslip.date_to, [employee.id])
-last_year_payslips = payslip.env['hr.payslip'].search(domain, order='date_from desc')
+last_year_payslips = payslip._get_previous_year_payslips(order='date_from desc')
 
 # Calculate the work rate
 number_of_days = last_year_payslips._get_number_of_worked_days(only_full_pay=True)

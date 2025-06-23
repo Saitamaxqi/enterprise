@@ -1,15 +1,14 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 from datetime import date
+
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import format_date
 from odoo.tools.misc import file_path
-
 
 MONTH_SELECTION = [
     ('1', 'January'), ('2', 'February'), ('3', 'March'), ('4', 'April'),
@@ -33,9 +32,9 @@ class L10n_HkIrd(models.AbstractModel):
     @api.model
     def default_get(self, fields):
         if self.env.company.country_id.code != 'HK':
-            raise UserError(_('You must be logged in a Hong Kong company to use this feature.'))
+            raise UserError(self.env._('You must be logged in a Hong Kong company to use this feature.'))
         if not self.env.company.l10n_hk_employer_name or not self.env.company.l10n_hk_employer_file_number:
-            raise UserError(_("Please configure the Employer's Name and the Employer's File Number in the company settings."))
+            raise UserError(self.env._("Please configure the Employer's Name and the Employer's File Number in the company settings."))
         return super().default_get(fields)
 
     display_name = fields.Char()
@@ -73,9 +72,9 @@ class L10n_HkIrd(models.AbstractModel):
         for report in self.filtered(lambda c: c.year_of_employer_return):
             if year := report.year_of_employer_return:
                 if not year.isdecimal() or len(year) != 4:
-                    raise UserError(_("The year of employer's return must be a 4 digits number."))
+                    raise UserError(self.env._("The year of employer's return must be a 4 digits number."))
                 if int(year) > fields.Date.today().year:
-                    raise UserError(_("The year of employer's return must be in the past."))
+                    raise UserError(self.env._("The year of employer's return must be in the past."))
 
     @api.depends('start_year', 'start_month', 'end_year', 'end_month')
     def _compute_period(self):
@@ -89,7 +88,7 @@ class L10n_HkIrd(models.AbstractModel):
             if sheet.start_period:
                 sheet.display_name = format_date(self.env, sheet.start_period, date_format="MMMM y", lang_code=self.env.user.lang or 'en_US')
             else:
-                sheet.display_name = _("IRD Sheet")
+                sheet.display_name = self.env._("IRD Sheet")
 
     @api.depends('xml_file')
     def _compute_validation_state(self):
@@ -104,19 +103,19 @@ class L10n_HkIrd(models.AbstractModel):
     def _validate_employee_addresses(self, employees):
         invalid_employees = employees.filtered(lambda e: not e.private_street or not e.private_state_id)
         if invalid_employees:
-            return _("The following employees don't have a valid private address (with a street and a state): %s", ', '.join(invalid_employees.mapped('name')))
+            return self.env._("The following employees don't have a valid private address (with a street and a state): %s", ', '.join(invalid_employees.mapped('name')))
         return None
 
     def _validate_employee_personal_info(self, employees):
         invalid_employees = employees.filtered(lambda e: not e.l10n_hk_surname or not e.l10n_hk_given_name or not e.sex)
         if invalid_employees:
-            return _("Please configure a surname, a given name and a sex for the following employees: %s", ', '.join(invalid_employees.mapped('name')))
+            return self.env._("Please configure a surname, a given name and a sex for the following employees: %s", ', '.join(invalid_employees.mapped('name')))
         return None
 
     def _validate_employee_identification(self, employees):
         invalid_employees = employees.filtered(lambda e: not e.identification_id and not e.passport_id)
         if invalid_employees:
-            return _("Please configure a HKID or a passport number for the following employees: %s", ', '.join(invalid_employees.mapped('name')))
+            return self.env._("Please configure a HKID or a passport number for the following employees: %s", ', '.join(invalid_employees.mapped('name')))
         return None
 
     def _validate_employee_rental_records(self, employees):
@@ -126,13 +125,13 @@ class L10n_HkIrd(models.AbstractModel):
             '|', ('date_end', '>', self.start_period), ('date_end', '=', False),
         ])) > 2)
         if invalid_employees:
-            return _("Some employee have more than 2 rental records within the period:\n%s", '\n'.join(invalid_employees.mapped('name')))
+            return self.env._("Some employee have more than 2 rental records within the period:\n%s", '\n'.join(invalid_employees.mapped('name')))
         return None
 
     @api.model
     def _check_employees(self, employees):
         if not employees:
-            return _("You must select at least one employee.")
+            return self.env._("You must select at least one employee.")
 
         error_messages = []
         error_messages.append(self._validate_employee_addresses(employees))
@@ -147,7 +146,7 @@ class L10n_HkIrd(models.AbstractModel):
 
         salary_structure = self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary', raise_if_not_found=False)
         if not salary_structure:
-            raise UserError(_("Salary structure 'CAP57: Employees Monthly Pay' not found."))
+            raise UserError(self.env._("Salary structure 'CAP57: Employees Monthly Pay' not found."))
 
         all_payslips = self.env['hr.payslip'].search([
             ('state', 'in', ['validated', 'paid']),
@@ -158,7 +157,7 @@ class L10n_HkIrd(models.AbstractModel):
         ])
 
         if not all_payslips:
-            raise UserError(_('There are no confirmed payslips using the CAP57 structure for the selected employees in this period.'))
+            raise UserError(self.env._('There are no confirmed payslips using the CAP57 structure for the selected employees in this period.'))
 
         employee_payslips_map = defaultdict(lambda: self.env['hr.payslip'])
         for payslip in all_payslips:
@@ -168,6 +167,7 @@ class L10n_HkIrd(models.AbstractModel):
 
     def _get_report_info_data(self):
         self.ensure_one()
+        file_number = ''
         company = self.company_id
         if company.l10n_hk_employer_file_number:
             file_number = company.l10n_hk_employer_file_number.strip()

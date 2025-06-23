@@ -12,11 +12,11 @@
                            placeholder="0240402"
                            invisible="l10n_hk_autopay_account_type != 'svid'"
                            required="l10n_hk_autopay_account_type == 'svid'"/>
-                    <field name="l10n_hk_autopay_emal"
+                    <field name="l10n_hk_autopay_email"
                            placeholder="susan.wong@abc.com.hk"
                            invisible="l10n_hk_autopay_account_type != 'emal'"
                            required="l10n_hk_autopay_account_type == 'emal'"/>
-                    <field name="l10n_hk_autopay_mobn"
+                    <field name="l10n_hk_autopay_mobile"
                            placeholder="+852-92223333"
                            invisible="l10n_hk_autopay_account_type != 'mobn'"
                            required="l10n_hk_autopay_account_type == 'mobn'"/>

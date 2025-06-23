@@ -89,7 +89,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             self.assertEqual(len(payslip.worked_days_line_ids), 3 if month in [3, 4] else 2)
             self.assertEqual(len(payslip.input_line_ids), 1 if month == 2 else 0)
 
-            self.assertAlmostEqual(payslip._get_moving_daily_wage(),
+            self.assertAlmostEqual(payslip._get_average_daily_wage(),
                                    results[month]['moving_daily_wage'],
                                    delta=0.01,
                                    msg="Incorrect moving daily wage for the %s month payslip" % month)
@@ -178,7 +178,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             self.assertEqual(len(payslip.worked_days_line_ids), 2)
             self.assertEqual(len(payslip.input_line_ids), 0)
 
-            self.assertAlmostEqual(payslip._get_moving_daily_wage(),
+            self.assertAlmostEqual(payslip._get_average_daily_wage(),
                                    results[month]['moving_daily_wage'],
                                    delta=0.01,
                                    msg="Incorrect moving daily wage for the %s month payslip" % month)

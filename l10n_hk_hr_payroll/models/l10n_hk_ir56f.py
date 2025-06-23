@@ -1,16 +1,13 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
-
-from datetime import date
 from collections import defaultdict
-from lxml import html
+from datetime import date
 
-from odoo import _, models, api
+from lxml.html import etree
+
+from odoo import api, models
 from odoo.exceptions import UserError
-
-etree = html.etree
 
 
 class L10n_HkIr56f(models.Model):
@@ -49,7 +46,7 @@ class L10n_HkIr56f(models.Model):
         error_messages = super()._check_employees(employees)
         invalid_lines = self.line_ids.filtered(lambda line: not line.employee_id.departure_reason_id.l10n_hk_ir56f_code)
         if invalid_lines:
-            error_messages += "\n" + _(
+            error_messages += "\n" + self.env._(
                 "The following employees don't have a valid departure reason: %s",
                 invalid_lines.employee_id.mapped("name"),
             )
@@ -97,7 +94,7 @@ class L10n_HkIr56f(models.Model):
             ]).sorted('date_start')
 
             departure_code = sheet_line.employee_id.departure_reason_id.l10n_hk_ir56f_code
-            if departure_code == 5:
+            if departure_code == '5':
                 departure_reason_other = sheet_line.employee_id.departure_description
                 departure_reason_str = sheet_line.employee_id.departure_description
             elif departure_code:
@@ -198,7 +195,7 @@ class L10n_HkIr56f(models.Model):
 
     def _get_pdf_filename(self, employee):
         self.ensure_one()
-        return _('%(employee_name)s_-_IR56F_-_%(start_year)s', employee_name=employee.name, start_year=self.start_year)
+        return self.env._('%(employee_name)s_-_IR56F_-_%(start_year)s', employee_name=employee.name, start_year=self.start_year)
 
     def _post_process_rendering_data_pdf(self, rendering_data):
         result = {}

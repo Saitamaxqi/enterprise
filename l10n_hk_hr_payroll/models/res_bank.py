@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -14,4 +13,4 @@ class ResBank(models.Model):
     def _check_l10n_hk_bank_code(self):
         for bank in self:
             if bank.country_code == 'HK' and len(bank.l10n_hk_bank_code or '') != 3:
-                raise ValidationError(_("Bank code length must be 3 letters."))
+                raise ValidationError(bank.env._("Bank code length must be 3 letters."))

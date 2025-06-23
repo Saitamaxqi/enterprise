@@ -70,7 +70,7 @@
         <field name="company_ids" eval="[(4, ref('base.demo_company_hk'))]"/>
         <field name="company_id" ref="base.demo_company_hk"/>
         <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
-        <field name="image_1920" type="base64" file="hr/static/img/employee_ngh-image.jpg"/>
+        <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
     </record>
 
     <record id="hk_res_bank_hang_seng" model="res.bank">

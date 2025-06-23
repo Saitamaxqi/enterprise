@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 
@@ -75,7 +75,7 @@ class L10n_HkRental(models.Model):
 
             domain = Domain.AND([domain, start_domain, end_domain])
             if self.search_count(domain):
-                raise ValidationError(_(
+                raise ValidationError(rental.env._(
                     'Rental %(rental)s: employee %(employee)s already has a rental running during this period.',
                     rental=rental.name, employee=rental.employee_id.name,
                 ))
@@ -84,7 +84,7 @@ class L10n_HkRental(models.Model):
     def _check_dates(self):
         for rental in self:
             if rental.date_end and rental.date_start > rental.date_end:
-                raise ValidationError(_(
+                raise ValidationError(rental.env._(
                     'Rental %(rental)s: start date (%(start)s) must be earlier than rental end date (%(end)s).',
                     rental=rental.name, start=rental.date_start, end=rental.date_end,
                 ))

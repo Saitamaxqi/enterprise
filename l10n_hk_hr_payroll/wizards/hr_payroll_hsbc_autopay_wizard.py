@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -35,7 +34,7 @@ class HrPayslipRunHsbcAutopayWizard(models.TransientModel):
     def _check_payment_set_code(self):
         for wizard in self:
             if len(wizard.payment_set_code) != 3:
-                raise ValidationError(_("Payment Set Code length must be 3 letters."))
+                raise ValidationError(wizard.env._("Payment Set Code length must be 3 letters."))
 
     def generate_hsbc_autopay_apc_file(self):
         payslip_run_id = self.env['hr.payslip.run'].browse(self.env.context['active_id'])

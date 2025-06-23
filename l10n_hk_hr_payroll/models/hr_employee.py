@@ -1,89 +1,99 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import re
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import single_email_re
 
-auto_mobn_re = re.compile(r"""^[+]\d{1,3}-\d{1,29}$""", re.VERBOSE)
+auto_mobile_re = re.compile(r"^\+\d{1,3}-\d{1,29}$")
 
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
     l10n_hk_surname = fields.Char(
-        "Surname",
+        string="Surname",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_given_name = fields.Char(
-        "Given Name",
+        string="Given Name",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_name_in_chinese = fields.Char(
-        "Name in Chinese",
+        string="Name in Chinese",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_passport_place_of_issue = fields.Char(
-        "Place of Issue",
+        string="Place of Issue",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_spouse_identification_id = fields.Char(
-        "Spouse Identification No",
+        string="Spouse Identification No",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_spouse_passport_id = fields.Char(
-        "Spouse Passport No",
+        string="Spouse Passport No",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_spouse_passport_place_of_issue = fields.Char(
-        "Spouse Place of Issue",
+        string="Spouse Place of Issue",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_mpf_manulife_account = fields.Char(
-        "MPF Manulife Account",
+        string="MPF Manulife Account",
         groups="hr.group_hr_user",
         tracking=True,
-        copy=False)
+        copy=False,
+    )
     l10n_hk_rental_ids = fields.One2many(
-        'l10n_hk.rental',
-        'employee_id',
+        comodel_name='l10n_hk.rental',
+        inverse_name='employee_id',
         string='Rentals',
         copy=False,
-        groups="hr.group_hr_user")
+        groups="hr.group_hr_user",
+    )
     l10n_hk_rentals_count = fields.Integer(
         compute='_compute_l10n_hk_rentals_count',
-        groups="hr.group_hr_user")
+        groups="hr.group_hr_user",
+    )
     l10n_hk_years_of_service = fields.Float(
-        "Years of Service",
+        string="Years of Service",
         compute="_compute_l10n_hk_years_of_service",
         digits=(16, 2),
-        groups="hr.group_hr_user")
+        groups="hr.group_hr_user",
+    )
 
     # Autopay fields
     l10n_hk_autopay_account_type = fields.Selection(
         selection=[
-            ('bban', 'BBAN'),
-            ('svid', 'SVID'),
-            ('emal', 'EMAL'),
-            ('mobn', 'MOBN'),
-            ('hkid', 'HKID')
+            ('bban', 'Bank Code + Account Number + Beneficiary Name'),
+            ('svid', 'FPS ID'),
+            ('emal', 'Email address + / Bank Code'),
+            ('mobn', '(Country Code) Mobile Phone Number + / Bank Code'),
+            ('hkid', 'HKID + Beneficiary Name'),
         ],
         default='bban',
-        string='Autopay Type',
-        groups='hr.group_hr_user'
+        string='Autopay Payment Type',
+        groups='hr.group_hr_user',
     )
     l10n_hk_autopay_svid = fields.Char(string='FPS Identifier', groups="hr.group_hr_user")
-    l10n_hk_autopay_emal = fields.Char(string='Autopay Email Address', groups="hr.group_hr_user")
-    l10n_hk_autopay_mobn = fields.Char(string='Autopay Mobile Number', groups="hr.group_hr_user")
+    l10n_hk_autopay_email = fields.Char(string='Autopay Email Address', groups="hr.group_hr_user")
+    l10n_hk_autopay_mobile = fields.Char(string='Autopay Mobile Number', groups="hr.group_hr_user")
     l10n_hk_autopay_ref = fields.Char(string='Autopay Reference', groups="hr.group_hr_user")
 
     l10n_hk_internet = fields.Monetary(readonly=False, related="version_id.l10n_hk_internet", inherited=True, groups="hr_payroll.group_hr_payroll_user")
@@ -91,17 +101,17 @@ class HrEmployee(models.Model):
     l10n_hk_mpf_vc_percentage = fields.Float(readonly=False, related="version_id.l10n_hk_mpf_vc_percentage", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     l10n_hk_rental_id = fields.Many2one(readonly=False, related="version_id.l10n_hk_rental_id", inherited=True, groups="hr_payroll.group_hr_payroll_user")
 
-    @api.constrains('l10n_hk_autopay_emal')
-    def _check_l10n_hk_autopay_emal(self):
+    @api.constrains('l10n_hk_autopay_email')
+    def _check_l10n_hk_autopay_email(self):
         for employee in self:
-            if employee.l10n_hk_autopay_emal and not single_email_re.match(employee.l10n_hk_autopay_emal):
-                raise ValidationError(_('Invalid Email! Please enter a valid email address.'))
+            if employee.l10n_hk_autopay_email and not single_email_re.match(employee.l10n_hk_autopay_email):
+                raise ValidationError(employee.env._('The "Autopay Email Address" field must be filled with a single correct email address.'))
 
-    @api.constrains('l10n_hk_autopay_mobn')
-    def _check_l10n_hk_auto_mobn(self):
+    @api.constrains('l10n_hk_autopay_mobile')
+    def _check_l10n_hk_auto_mobile(self):
         for employee in self:
-            if employee.l10n_hk_autopay_mobn and not auto_mobn_re.match(employee.l10n_hk_autopay_mobn):
-                raise ValidationError(_('Invalid Mobile! Please enter a valid mobile number.'))
+            if employee.l10n_hk_autopay_mobile and not auto_mobile_re.match(employee.l10n_hk_autopay_mobile):
+                raise ValidationError(employee.env._('The "Autopay Mobile Number" must match the format "+xxx-xxxxxxxx".'))
 
     @api.depends('l10n_hk_surname', 'l10n_hk_given_name')
     def _compute_legal_name(self):
@@ -111,32 +121,13 @@ class HrEmployee(models.Model):
 
         super(HrEmployee, self - hk_employees)._compute_legal_name()
 
+    @api.depends('version_ids', 'contract_date_start')
     def _compute_l10n_hk_years_of_service(self):
         for employee in self:
             contracts = employee.version_ids.sorted('date_start', reverse=True)
             if contracts:
                 contract_end_date = contracts[0].date_end or fields.Date.today()
                 employee.l10n_hk_years_of_service = ((contract_end_date - employee.contract_date_start).days + 1) / 365
-
-    def get_l10n_hk_autopay_bank_code(self) -> str:
-        self.ensure_one()
-        if self.l10n_hk_autopay_account_type == 'bban':
-            return self.bank_account_id.bank_id.l10n_hk_bank_code
-        else:
-            return ''
-
-    def get_l10n_hk_autopay_field(self) -> str:
-        self.ensure_one()
-        if self.l10n_hk_autopay_account_type == 'bban':
-            return re.sub(r"[^0-9]", "", self.bank_account_id.acc_number)
-        if self.l10n_hk_autopay_account_type == 'svid':
-            return self.l10n_hk_autopay_svid
-        if self.l10n_hk_autopay_account_type == 'emal':
-            return self.l10n_hk_autopay_emal
-        if self.l10n_hk_autopay_account_type == 'mobn':
-            return self.l10n_hk_autopay_mobn
-        if self.l10n_hk_autopay_account_type == 'hkid':
-            return self.identification_id
 
     @api.depends('l10n_hk_rental_ids')
     def _compute_l10n_hk_rentals_count(self):
