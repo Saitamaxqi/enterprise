@@ -10,7 +10,7 @@ from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 import time
 
 
-OCR_VERSION = 132
+OCR_VERSION = 133
 
 
 class HrExpense(models.Model):
@@ -88,12 +88,11 @@ class HrExpense(models.Model):
 
             receipt_name = '.'.join(self.message_main_attachment_id.name.split('.')[:-1])
             if (receipt_name and self.name == receipt_name):
-                predicted_product_id = self._predict_product(description_ocr, category=True)
+                predicted_product_id = self._predict_product(description_ocr)
                 if predicted_product_id:
                     vals['product_id'] = predicted_product_id
                 vals['name'] = description_ocr
                 # We need to set the name after the product change as changing the product may change the name
-            vals['predicted_category'] = description_ocr
 
             context_create_date = fields.Date.context_today(self, self.create_date)
             if not self.date or self.date == context_create_date:

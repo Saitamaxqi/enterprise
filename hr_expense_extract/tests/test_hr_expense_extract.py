@@ -38,7 +38,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         return {
             'status': 'success',
             'results': [{
-                'description': {'selected_value': {'content': 'food', 'candidates': []}},
+                'description': {'selected_value': {'content': 'Pizzeria', 'candidates': []}},
                 'total': {'selected_value': {'content': 99.99, 'candidates': []}},
                 'date': {'selected_value': {'content': '2022-02-22', 'candidates': []}},
                 'currency': {'selected_value': {'content': 'euro', 'candidates': []}},
@@ -96,7 +96,6 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.assertEqual(float_compare(self.expense.total_amount, ext_result['total']['selected_value']['content'], 2), 0)
         self.assertEqual(self.expense.currency_id, eur_currency)
         self.assertEqual(str(self.expense.date), ext_result['date']['selected_value']['content'])
-        self.assertEqual(self.expense.name, self.expense.predicted_category, ext_result['description']['selected_value']['content'])
         self.assertEqual(self.expense.product_id, self.product_c)
 
     def test_manual_send_for_digitization(self):
@@ -131,7 +130,6 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.assertEqual(float_compare(self.expense.total_amount, ext_result['total']['selected_value']['content'], 2), 0)
         self.assertEqual(self.expense.currency_id, eur_currency)
         self.assertEqual(str(self.expense.date), ext_result['date']['selected_value']['content'])
-        self.assertEqual(self.expense.name, self.expense.predicted_category, ext_result['description']['selected_value']['content'])
         self.assertEqual(self.expense.product_id, self.product_c)
 
     def test_no_send_for_digitization(self):
@@ -253,7 +251,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
     def test_extract_multi_currencies_with_several_possible_currencies(self):
         """Test that the extraction does not crash"""
         ocr_results = {
-                'description': {'selected_value': {'content': 'food', 'candidates': []}},
+                'description': {'selected_value': {'content': 'Pizzeria', 'candidates': []}},
                 'total': {'selected_value': {'content': 99.99, 'candidates': []}},
                 'date': {'selected_value': {'content': '2022-02-22', 'candidates': []}},
                 'currency': {'selected_value': {'content': '$', 'candidates': []}},
@@ -266,7 +264,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
     def test_extract_without_possible_currencies(self):
         """Test that the extraction does not crash"""
         ocr_results = {
-                'description': {'selected_value': {'content': 'food', 'candidates': []}},
+                'description': {'selected_value': {'content': 'Pizzeria', 'candidates': []}},
                 'total': {'selected_value': {'content': 99.99, 'candidates': []}},
                 'date': {'selected_value': {'content': '2022-02-22', 'candidates': []}},
                 'currency': {'selected_value': {'content': 'undefined', 'candidates': []}},
