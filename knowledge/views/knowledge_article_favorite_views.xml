@@ -33,7 +33,7 @@
             <search string="Search Favorites">
                 <field name="article_id"/>
                 <field name="user_id"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="Article" name="group_by_article_id"
                             domain="[]" context="{'group_by': 'article_id'}"/>
                     <filter string="User" name="group_by_user_id"

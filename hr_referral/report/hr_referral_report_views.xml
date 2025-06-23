@@ -79,7 +79,7 @@
                     <field name="medium_id"/>
                     <field name="write_date"/>
                     <filter string="Date" name="year" date="write_date" default_period="month"/>
-                    <group expand="1" string="Group By">
+                    <group string="Group By">
                         <filter string="Employee" name="ref_user_id" context="{'group_by':'ref_user_id'}"/>
                         <filter string="Job" name="job_id" context="{'group_by':'job_id'}"/>
                         <filter string="Department" name="department_id" context="{'group_by':'department_id'}"/>

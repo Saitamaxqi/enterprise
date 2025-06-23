@@ -15,7 +15,7 @@
                 <filter string="Current month" name="filter_date_start" date="date_start" default_period="month"/>
                 <separator/>
                 <filter string="Validated" name="filter_work_entry_validated" domain="[('state', '=', 'validated')]"/>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Work Entry Type" name="work_entry_type_id" context="{'group_by': 'work_entry_type_id'}"/>
                     <filter string="Employee" name="employee_id" context="{'group_by': 'employee_id'}"/>
                     <filter string="Department" name="department_id" context="{'group_by': 'department_id'}"/>

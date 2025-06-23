@@ -161,7 +161,7 @@
                     filter_domain="['|', ('payslip_ids.id', 'ilike', self), ('payslip_ids.name', 'ilike', self)]"/>
                 <filter name="todo" string="To Do" domain="[('state', '!=', 'sent')]"/>
                 <filter name="sent" string="Submitted" domain="[('state', '=', 'sent')]"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter name="filter_payevent_type" string="Pay Event Type" context="{'group_by': 'payevent_type'}"/>
                 </group>
             </search>

@@ -60,7 +60,7 @@
                 <separator/>
                 <filter string="Archived" name="filter_archived" domain="[('state', '=', 'archived')]"/>
 
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="State" name="groupby_state" context="{'group_by': 'state'}"/>
                     <filter string="Job Position" name="groupby_job" context="{'group_by':'job_id'}"/>
                     <filter string="Stage" name="groupby_stage" context="{'group_by':'stage_id'}"/>

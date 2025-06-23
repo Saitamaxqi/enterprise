@@ -13,7 +13,7 @@
                 <filter string="Male" name="sex_male" domain="[('sex', '=', 'male')]"/>
                 <filter string="Female" name="sex_female" domain="[('sex', '=', 'female')]"/>
                 <filter string="Other" name="sex_other" domain="[('sex', '=', 'other')]"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="Sex" name="group_by_sex" context="{'group_by': 'sex'}"/>
                     <filter string="Leadership Level" name="group_by_leadership_level" context="{'group_by': 'leadership_level'}"/>
                     <filter string="Department" name="group_by_department_id" context="{'group_by': 'department_id'}"/>

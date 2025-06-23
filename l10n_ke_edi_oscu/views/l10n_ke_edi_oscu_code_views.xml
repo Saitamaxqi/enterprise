@@ -23,7 +23,7 @@
                         <field name="code"/>
                         <field name="description"/>
                     </group>
-                    <group expand="0" string="Group By">
+                    <group string="Group By">
                         <filter string="Code Type" name="code_type" context="{'group_by':'code_type'}"/>
                         <separator orientation="vertical"/>
                     </group>

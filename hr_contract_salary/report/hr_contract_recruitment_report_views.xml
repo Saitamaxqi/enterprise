@@ -17,7 +17,7 @@
                             ]"
                     />
                     <separator />
-                    <group expand="0" string="Group By">
+                    <group string="Group By">
                         <filter string="Offer" name="group_by_offer_id" domain="[]"
                             context="{'group_by': 'offer_id'}" />
                         <filter string="Applicant" name="group_by_applicant_id" domain="[]"

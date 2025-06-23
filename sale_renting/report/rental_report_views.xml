@@ -63,7 +63,7 @@
                 <field name="partner_id"/>
                 <field name="user_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>
-                <group expand="1" string="Group By" name="report_group_by">
+                <group string="Group By" name="report_group_by">
                     <filter string="Salesperson" name="User" context="{'group_by':'user_id'}"/>
                     <filter string="Customer" name="Customer" context="{'group_by':'partner_id'}"/>
                     <filter string="Product" name="Product" context="{'group_by':'product_id'}"/>

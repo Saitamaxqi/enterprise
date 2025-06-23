@@ -51,7 +51,7 @@
                     <field name="awarded_employee_id"/>
                     <field name="write_date"/>
                     <filter string="Date" name="year" date="write_date" default_period="month"/>
-                    <group expand="1" string="Group By">
+                    <group string="Group By">
                         <filter string="Employee" name="awarded_employee_id" context="{'group_by':'awarded_employee_id'}"/>
                         <filter string="Reward" name="reward_id" context="{'group_by':'reward_id'}"/>
                         <filter string="Company" name="company_id" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>

@@ -13,7 +13,7 @@
                 <filter string="Paid" name="paid" domain="[('state', '=', '04_paid')]" help="Paid Payslip Batches"/>
                 <separator/>
                 <filter string="Date" name="date_filter" date="date_start"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
                 </group>
             </search>

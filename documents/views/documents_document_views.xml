@@ -25,7 +25,7 @@
                 <filter string="Requested Documents" name="requested_filter" domain="[('type', '=', 'binary'), ('attachment_id', '=', False)]"/>
                 <separator/>
                 <field name="type"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="Contact" name="filter_partner_id" domain="[]" context="{'group_by': 'partner_id'}"/>
                     <filter string="Owner" name="filter_owner_id" domain="[]" context="{'group_by': 'owner_id'}"/>
                     <filter string="Type" name="filter_type" domain="[]" context="{'group_by': 'type'}"/>

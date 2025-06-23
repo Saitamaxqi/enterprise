@@ -178,7 +178,7 @@
                     end_year="2"
                     start_month="0"
                     end_month="2"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter name="group_platform"
                         string="Platform"
                         context="{'group_by': 'platform_id'}"/>

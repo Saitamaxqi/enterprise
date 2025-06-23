@@ -373,7 +373,7 @@ class IrUiView(models.Model):
         search = E.search(*fields)
         search.extend(filters)
         if groupbys:
-            groupby = E.group(expand="0", string=_('Group By'))
+            groupby = E.group(string=_('Group By'))
             groupby.extend(groupbys)
             search.extend(groupby)
         arch = etree.tostring(search, encoding='unicode', pretty_print=True)

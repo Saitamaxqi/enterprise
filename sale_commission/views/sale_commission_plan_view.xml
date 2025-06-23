@@ -21,7 +21,7 @@
                 <field name="user_id" string="User"/>
                 <separator/>
                  <field name="plan_id"/>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="User" name="user" context="{'group_by':'user_id'}"/>
                     <filter string="Plan" name="plan" context="{'group_by':'plan_id'}"/>
                     <filter string="Date From" name="date_from" context="{'group_by':'date_from'}"/>
@@ -194,7 +194,7 @@
                         domain="[('date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 <filter string="Upcoming" name="current"
                         domain="[('date_from', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Periodicity" name="periodicity" context="{'group_by':'periodicity'}"/>
                     <filter string="Type" name="type" context="{'group_by':'type'}"/>
                     <filter string="Company" name="company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>

@@ -36,7 +36,7 @@
                 <field name="name" string="Structure Name"/>
                 <field name="type_id" string="Structure Type"/>
                 <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                <group col="8" colspan="4" expand="0" string="Group By">
+                <group col="8" colspan="4" string="Group By">
                     <filter string="Structure Type" name="group_by_type_id" context="{'group_by': 'type_id'}"/>
                 </group>
             </search>

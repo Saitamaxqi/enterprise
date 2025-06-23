@@ -117,7 +117,7 @@
                     <field name="state" icon="fa-tasks" enable_counters="1"/>
                     <field name="account_ids" select="multi" icon="fa-share-alt" enable_counters="1"/>
                 </searchpanel>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Campaign" name="filter_utm_campaign_id" context="{'group_by':'utm_campaign_id'}"/>
                     <filter string="Calendar Date" name="filter_calendar_date" context="{'group_by':'calendar_date'}"/>
                     <filter string="Company" name="filter_company_id" groups="base.group_multi_company" context="{'group_by':'company_id'}"/>

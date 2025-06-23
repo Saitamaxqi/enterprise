@@ -137,7 +137,7 @@
                 <filter name="filter_effective_date" string="Invoiced" domain="[('effective_date','!=', False)]"/>
                 <filter name="filter_effective_date" string="Not Invoiced" domain="[('effective_date','=', False)]"/>
                 <separator/>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Event Date" name="group_by_event_date" domain="[]"
                             context="{'group_by': 'event_date'}"/>
                     <filter string="Event Type" name="group_by_event_type" domain="[]"

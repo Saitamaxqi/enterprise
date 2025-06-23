@@ -15,7 +15,7 @@
                         ('target_id.date_to', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(month=1, day=1), datetime.time(0,0,0)).to_utc())),
                         ('target_id.date_to', '&lt;=', (datetime.datetime.combine(context_today() + relativedelta(years=1, month=1, day=1), datetime.time(0,0,0)).to_utc())),
                     ]"/>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Sales Team" name="team_id" context="{'group_by':'team_id'}"/>
                     <filter string="Salesperson" name="user_id" context="{'group_by':'user_id'}"/>
                     <filter string="Period" name="target_id" context="{'group_by':'target_id'}"/>

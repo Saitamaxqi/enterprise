@@ -160,7 +160,7 @@
                 <filter string="Favorite" name="is_favorite" domain="[('is_favorite', '=', True)]"/>
                 <separator/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="By Responsible" name="group_by_responsible" context="{'group_by': 'responsible_ids'}"/>
                 </group>
             </search>

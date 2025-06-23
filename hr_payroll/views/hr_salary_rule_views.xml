@@ -145,7 +145,7 @@
                 <field name="amount_python_compute" string="Python Code" filter_domain="['|', ('amount_python_compute', 'ilike', self), ('condition_python', 'ilike', self)]"/>
                 <separator/>
                 <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                <group col="8" colspan="4" expand="0" string="Group By">
+                <group col="8" colspan="4" string="Group By">
                     <filter string="Category" name="head" context="{'group_by': 'category_id'}"/>
                     <filter string="Salary Structure" name="group_by_struct_id" context="{'group_by': 'struct_id'}"/>
                 </group>

@@ -221,7 +221,7 @@
                     <filter string="Approved" name="approved" domain="[('status', '=', 'approved')]"/>
                     <separator/>
                     <filter string="Archived" name="filter_archived" domain="[('active', '=', False)]"/>
-                    <group expand="0" string="Group By">
+                    <group string="Group By">
                         <filter string="Model" name="model_id" domain="[]" context="{'group_by': 'model_id'}"/>
                         <filter string="Status" name="status" domain="[]" context="{'group_by': 'status'}"/>
                         <filter string="Account" name="groupby_wa_account_id" domain="[]" context="{'group_by': 'wa_account_id'}"/>

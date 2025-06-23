@@ -224,7 +224,7 @@
                         ]"/>
                 <separator/>
                 <filter name="archived_documents" string="Archived" domain="[('active', '=', False)]"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter name="group_by_template" string="Template" domain="[]" context="{'group_by': 'template_id'}"/>
                     <filter name="group_by_state" string="State" domain="[]" context="{'group_by': 'state'}"/>
                 </group>

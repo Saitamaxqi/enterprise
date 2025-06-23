@@ -62,7 +62,7 @@
             <search string="Search Yearly Snapshots">
                 <field name="employee_id"/>
                 <field name="year"/>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Year"
                             name="group_by_year"
                             context="{'group_by':'year'}"/>

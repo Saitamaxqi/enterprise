@@ -11,7 +11,7 @@
                 <field name="capacity"/>
                 <separator/>
                 <filter name="filter_active" string="Archived" domain="[('active', '=', False)]"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="Available In" name="group_by_appointment_type" context="{'group_by': 'appointment_type_ids'}"/>
                 </group>
             </search>

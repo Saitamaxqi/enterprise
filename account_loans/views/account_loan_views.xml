@@ -143,7 +143,7 @@
                     <filter string="Closed" name="closed" domain="[('state', '=', 'closed')]" help="Closed Loans"/>
                     <separator/>
                     <filter string="Date" name="date" date="date"/>
-                    <group expand="0" string="Group By">
+                    <group string="Group By">
                         <filter string="Asset Group" name="group_by_asset_group" domain="[]" context="{'group_by': 'asset_group_id'}"/>
                         <filter string="Properties" name="group_by_properties" domain="[]" context="{'group_by': 'loan_properties'}"/>
                         <filter string="Date" name="group_by_date" domain="[]" context="{'group_by': 'date'}"/>
@@ -236,7 +236,7 @@
                     <filter string="Closed" name="closed" domain="[('loan_state', '=', 'closed')]" help="Closed Loans"/>
                     <separator/>
                     <filter string="Loan Date" name="loan_line_date" date="date"/>
-                    <group expand="0" string="Group By">
+                    <group string="Group By">
                         <filter string="Loan" name="group_by_loan" domain="[]" context="{'group_by': 'loan_id'}"/>
                         <filter string="Loan Date" name="group_by_loan_line_date" domain="[]" context="{'group_by': 'date'}"/>
                         <filter string="Asset Group" name="group_by_asset_group" domain="[]" context="{'group_by': 'loan_asset_group_id'}"/>

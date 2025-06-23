@@ -121,7 +121,7 @@
             <search>
                 <field name="message" string="Post Message"/>
                 <filter string="My Streams" domain="[('stream_id.create_uid','=',uid)]" name="search_my_streams"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter name="group_by_stream" string="By Stream" context="{'group_by': 'stream_id'}"/>
                 </group>
             </search>

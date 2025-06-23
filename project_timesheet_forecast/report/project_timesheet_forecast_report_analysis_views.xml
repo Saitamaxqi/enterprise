@@ -77,7 +77,7 @@
                         ('entry_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(weeks=-1,days=1,weekday=0), datetime.time(0,0,0)).to_utc())),
                     ]"/>
                 </filter>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Employee" name="resource_employee" context="{'group_by':'employee_id'}"/>
                     <filter string="Project" name="project_resource" context="{'group_by':'project_id'}"/>
                     <filter string="Date" name="date_month" context="{'group_by':'entry_date:month'}"/>

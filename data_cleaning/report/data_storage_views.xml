@@ -21,7 +21,7 @@
                 <search>
                     <field name="res_model"/>
                     <field name="res_id"/>
-                    <group expand="0" string="Group By">
+                    <group string="Group By">
                         <filter name="group_res_model" string="Model" domain="[]" context="{'group_by':'res_model'}"/>
                     </group>
                 </search>

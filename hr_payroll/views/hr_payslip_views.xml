@@ -294,7 +294,7 @@
                 <separator/>
                 <filter string="Credit Notes" name="credit_note" domain="[('credit_note', '=', True)]"/>
                 <separator/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="Employee" name="group_by_employee_id" context="{'group_by': 'employee_id'}"/>
                     <filter string="Version" name="group_by_version_id" context="{'group_by': 'version_id'}"/>
                     <filter string="Department" name="group_by_department_id" context="{'group_by':'department_id'}"/>

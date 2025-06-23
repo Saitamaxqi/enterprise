@@ -197,7 +197,7 @@
                 <filter string="Date" name="check_in" date="check_in"/>
                 <separator/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter string="Station" name="group_by_station" context="{'group_by': 'station_id'}"/>
                     <filter string="Date" name="group_by_date" context="{'group_by': 'check_in'}"/>
                     <filter string="Host" name="group_by_host" context="{'group_by': 'host_ids'}"/>

@@ -180,7 +180,7 @@
                 <filter name="filter_first_contract_date" date="first_contract_date"/>
                 <filter name="filter_next_invoice_date" date="next_invoice_date"/>
                 <filter name="filter_date_end" date="end_date"/>
-                <group expand="1" string="Group By">
+                <group string="Group By">
                     <filter string="Subscription State" name="group_by_subscription_state" domain="[]" context="{'group_by': 'subscription_state'}"/>
                     <filter string="Sales Team" name="group_by_team" domain="[]" context="{'group_by': 'team_id'}"/>
                     <filter string="Salesperson" name="group_by_sales_person" domain="[]" context="{'group_by': 'user_id'}"/>

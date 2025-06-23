@@ -70,7 +70,7 @@
                 <filter name="start_date" string="Fiscal Year" date="start_date"/>
                 <filter name="not_finalised" string="To Finalise" domain="[('finalised', '=', False)]"/>
                 <filter name="finalised" string="Finalised" domain="[('finalised', '=', True)]"/>
-                <group expand="0" string="Group By">
+                <group string="Group By">
                     <filter name="filter_group_fiscal_year" string="Fiscal Year" context="{'group_by': 'start_date'}"/>
                     <filter name="filter_group_employee_id" string="Employee" context="{'group_by': 'employee_id'}"/>
                     <filter name="filter_group_income_stream" string="Income Stream Type" context="{'group_by': 'l10n_au_income_stream_type'}"/>
