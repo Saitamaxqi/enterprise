@@ -3295,7 +3295,7 @@ test("cannot add a related properties field", async () => {
     expect(".modal .o_model_field_selector").toHaveCount(1);
 
     await contains(".modal .o_model_field_selector").click();
-    await followRelation(2); // Product
+    await followRelation(); // Product
 
     expect(
         queryAllTexts(
