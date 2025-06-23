@@ -42,7 +42,7 @@ class Account_FollowupManual_Reminder(models.TransientModel):
     join_invoices = fields.Boolean(string="Attach Invoices")
 
     # attachments fields
-    attachment_ids = fields.Many2many(comodel_name='ir.attachment')
+    attachment_ids = fields.Many2many(comodel_name='ir.attachment', bypass_search_access=True)
 
     # Wizard buttons visibility controllers
     show_send_button = fields.Boolean(compute="_compute_show_send_button")

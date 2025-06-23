@@ -65,7 +65,7 @@ class HrContractSignDocumentWizard(models.TransientModel):
     subject = fields.Char(string="Subject", required=True, default='Signature Request')
     message = fields.Html("Message")
     cc_partner_ids = fields.Many2many('res.partner', string="Copy to")
-    attachment_ids = fields.Many2many('ir.attachment')
+    attachment_ids = fields.Many2many('ir.attachment', bypass_search_access=True)
     mail_to = fields.Selection([
         ('work', 'Work'),
         ('private', 'Private'),

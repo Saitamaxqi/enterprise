@@ -117,6 +117,7 @@ class WhatsappTemplate(models.Model):
     header_text = fields.Char(string="Template Header Text", size=60)
     header_attachment_ids = fields.Many2many(
         'ir.attachment', string="Template Static Header",
+        bypass_search_access=True,
         copy=False)  # keep False to avoid linking attachments; we have to copy them instead
     footer_text = fields.Char(string="Footer Message")
     report_id = fields.Many2one(

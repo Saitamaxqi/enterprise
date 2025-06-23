@@ -40,7 +40,7 @@ class AppraisalAskFeedback(models.TransientModel):
                                   domain=lambda self: [('model_id', '=', self.env['ir.model']._get('hr.appraisal').id)])
     attachment_ids = fields.Many2many(
         'ir.attachment', 'hr_appraisal_survey_mail_compose_message_ir_attachments_rel',
-        'wizard_id', 'attachment_id', string='Attachments')
+        'wizard_id', 'attachment_id', string='Attachments', bypass_search_access=True)
     author_id = fields.Many2one(
         'res.partner', string='Author', required=True,
         default=lambda self: self.env.user.partner_id.id,

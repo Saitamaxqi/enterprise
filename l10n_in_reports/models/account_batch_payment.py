@@ -13,7 +13,7 @@ class AccountBatchPayment(models.Model):
         related='journal_id.country_code',
     )
     l10n_in_enet_vendor_batch_payment_feature_enabled = fields.Boolean(related='company_id.l10n_in_enet_vendor_batch_payment_feature')
-    l10n_in_pay_order_attachment_ids = fields.Many2many('ir.attachment', string='Pay Order Attachments')
+    l10n_in_pay_order_attachment_ids = fields.Many2many('ir.attachment', string='Pay Order Attachments', bypass_search_access=True)
 
     def generate_pay_order(self):
         journal = self.journal_id

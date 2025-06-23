@@ -553,7 +553,7 @@ class AccountReturn(models.Model):
     tax_unit_id = fields.Many2one(comodel_name='account.tax.unit', string="Tax Unit")
     company_ids = fields.Many2many(comodel_name='res.company', string="Companies", compute="_compute_company_ids", compute_sudo=True, store=True, precompute=True)
     closing_move_ids = fields.One2many(comodel_name='account.move', inverse_name='closing_return_id', tracking=True)
-    attachment_ids = fields.Many2many(comodel_name='ir.attachment')
+    attachment_ids = fields.Many2many(comodel_name='ir.attachment', bypass_search_access=True)
     type_external_id = fields.Char(compute="_compute_type_external_id")
     date_deadline = fields.Date(string="Deadline", compute="_compute_deadline", store=True)
     date_lock = fields.Date(string="Lock Date")

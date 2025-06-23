@@ -66,7 +66,7 @@ class DocumentsDocument(models.Model):
     description = fields.Text('Attachment Description', related='attachment_id.description', readonly=False)
 
     # Versioning
-    previous_attachment_ids = fields.Many2many('ir.attachment', string="History")
+    previous_attachment_ids = fields.Many2many('ir.attachment', string="History", bypass_search_access=True)
 
     # Document
     name = fields.Char('Name', copy=True, store=True, compute='_compute_name_and_preview', readonly=False,

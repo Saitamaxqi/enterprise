@@ -71,8 +71,8 @@ class SignRequest(models.Model):
     cc_partner_ids = fields.Many2many('res.partner', string='Copy to', compute='_compute_cc_partners')
     message = fields.Html('sign.message')
     message_cc = fields.Html('sign.message_cc')
-    attachment_ids = fields.Many2many('ir.attachment', string='Attachments', readonly=True, copy=False, ondelete="restrict")
-    completed_document_attachment_ids = fields.Many2many('ir.attachment', 'sign_request_completed_document_rel', string='Completed Documents', readonly=True, copy=False, ondelete="restrict")
+    attachment_ids = fields.Many2many('ir.attachment', string='Attachments', readonly=True, copy=False, ondelete="restrict", bypass_search_access=True)
+    completed_document_attachment_ids = fields.Many2many('ir.attachment', 'sign_request_completed_document_rel', string='Completed Documents', readonly=True, copy=False, ondelete="restrict", bypass_search_access=True)
 
     need_my_signature = fields.Boolean(compute='_compute_need_my_signature', search='_search_need_my_signature')
 

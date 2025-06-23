@@ -39,7 +39,7 @@ class SignSendRequest(models.TransientModel):
     subject = fields.Char(string="Subject", compute='_compute_subject', store=True)
     message = fields.Html("Message", help="Message to be sent to signers of the specified document")
     message_cc = fields.Html("CC Message", help="Message to be sent to contacts in copy of the signed document")
-    attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
+    attachment_ids = fields.Many2many('ir.attachment', string='Attachments', bypass_search_access=True)
     filename = fields.Char("Filename", compute='_compute_filename', store=True)
 
     validity = fields.Date(compute='_compute_validity', store=True, readonly=False,

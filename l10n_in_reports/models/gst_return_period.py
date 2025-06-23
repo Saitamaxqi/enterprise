@@ -126,7 +126,7 @@ class L10n_InGstReturnPeriod(models.Model):
         ('to_process', 'To Process'),
         ('process_with_error', 'Process With Error')
     ], string="IRN Status", readonly=True, tracking=True)
-    list_of_irn_json_attachment_ids = fields.Many2many('ir.attachment', 'irn_attachment_portal_json', string='JSON with list of IRNs')
+    list_of_irn_json_attachment_ids = fields.Many2many('ir.attachment', 'irn_attachment_portal_json', string='JSON with list of IRNs', bypass_search_access=True)
     l10n_in_gstr_activate_einvoice_fetch = fields.Selection(related="company_id.l10n_in_gstr_activate_einvoice_fetch")
     gstr1_spreadsheet_id = fields.Many2one('documents.document')
     l10n_in_fetch_vendor_edi_feature_enabled = fields.Boolean(related='company_id.l10n_in_fetch_vendor_edi_feature')

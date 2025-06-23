@@ -45,7 +45,7 @@ class HrRecruitmentSignDocumentWizard(models.TransientModel):
     subject = fields.Char(string="Subject", required=True, default='Signature Request')
     message = fields.Html("Message")
     cc_partner_ids = fields.Many2many('res.partner', string="Copy to")
-    attachment_ids = fields.Many2many('ir.attachment')
+    attachment_ids = fields.Many2many('ir.attachment', bypass_search_access=True)
 
     @api.depends('sign_template_responsible_ids')
     def _compute_applicant_role_id(self):
