@@ -3,6 +3,7 @@
 
 from . import models
 from . import wizard
+from . import controller
 
 
 def post_init_hook(env):

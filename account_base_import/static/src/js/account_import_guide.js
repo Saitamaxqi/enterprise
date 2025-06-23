@@ -24,6 +24,12 @@ export class AccountImportGuide extends Component {
         });
     }
 
+    get downloadAssetTemplateUrl() {
+        const companyId = user?.activeCompany?.id;
+        if (!companyId) return "#"; // Fallback or disable the link
+        return `/web/binary/download_asset_template/${companyId}`;
+    }
+
     _importAccountGuideAction(action) {
         this.actionService.doAction(action);
     }

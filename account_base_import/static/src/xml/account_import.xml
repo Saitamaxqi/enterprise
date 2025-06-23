@@ -99,8 +99,8 @@
                     <p>
                         Use templates to import CSV or Excel for your accounting setup.
                     </p>
-                    <ol class="d-flex flex-column flex-lg-row">
-                        <li class="pt-4">
+                    <ol class="row list-unstyled">
+                        <li class="col-lg-6 pt-4">
                             <div class="row">
                                 <div class="col-lg-10">
                                     <h3>Import contacts</h3>
@@ -114,7 +114,7 @@
                                 <div class="col-lg-2 border-start"/>
                             </div>
                         </li>
-                        <li class="pt-4">
+                        <li class="col-lg-6 pt-4">
                             <div class="row">
                                 <div class="col-lg-10">
                                     <h3>Import Chart of Accounts</h3>
@@ -129,7 +129,7 @@
                                 <div class="col-lg-2 border-start"/>
                             </div>
                         </li>
-                        <li class="pt-4">
+                        <li class="col-lg-6 pt-4">
                             <div class="row">
                                 <div class="col-lg-10">
                                     <h3>Import Journal Items</h3>
@@ -140,6 +140,21 @@
                                     </p>
                                     <button type="button" class="btn btn-primary" t-on-click="() => this._importAccountGuideAction('account_base_import.action_account_move_line_import')">Import Journal Items</button>
                                 </div>
+                                <div class="col-lg-2 border-start"/>
+                            </div>
+                        </li>
+                        <li class="col-lg-6 pt-4">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <h3>Import Assets</h3>
+                                    <p>Import your fixed assets and their opening depreciation values using a
+                                        <a class="fw-bold" t-att-href="downloadAssetTemplateUrl">
+                                            template
+                                        </a>
+                                    </p>
+                                    <button type="button" class="btn btn-primary" t-on-click="() => this._importAccountGuideAction('account_base_import.action_asset_import')">Import Assets</button>
+                                </div>
+                                <div class="col-lg-2 border-start"/>
                             </div>
                         </li>
                     </ol>
