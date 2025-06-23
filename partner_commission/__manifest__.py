@@ -10,7 +10,7 @@ This module allows to configure commissions for resellers.
     """,
     'depends': [
         'purchase',
-        'sale_subscription',
+        'sale_subscription_partnership',
         'website_crm_partner_assign',
     ],
     'data': [
