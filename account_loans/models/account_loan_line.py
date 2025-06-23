@@ -72,4 +72,9 @@ class AccountLoanLine(models.Model):
     @api.depends('generated_move_ids.state')
     def _compute_is_payment_move_posted(self):
         for line in self:
-            line.is_payment_move_posted = line.generated_move_ids.filtered(lambda m: m.is_loan_payment_move).state == 'posted'  # Only one payment move per loan line
+            generated_moves = line.generated_move_ids.filtered(lambda m: m.is_loan_payment_move)
+            # In case of audit trail being activated, we can have more than 1 generated move (i.e. after loan closing/cancellation and re-confirmation),
+            # so we take the one that has no reversal move.
+            if len(generated_moves) > 1 and any(m.reversal_move_ids for m in generated_moves):
+                generated_moves = generated_moves.filtered(lambda m: not m.reversal_move_ids)
+            line.is_payment_move_posted = any(m.state == 'posted' for m in generated_moves)

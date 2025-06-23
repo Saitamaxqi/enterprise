@@ -390,11 +390,11 @@ class AccountLoan(models.Model):
         }
 
     def action_cancel(self):
-        self.line_ids.generated_move_ids._unlink_or_reverse()
+        self.line_ids.generated_move_ids.filtered(lambda m: m.state != 'cancel')._unlink_or_reverse()
         self.state = 'cancelled'
 
     def action_set_to_draft(self):
-        self.line_ids.generated_move_ids._unlink_or_reverse()
+        self.line_ids.generated_move_ids.filtered(lambda m: m.state != 'cancel')._unlink_or_reverse()
         self.state = 'draft'
 
     def action_open_loan_entries(self):

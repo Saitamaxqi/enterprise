@@ -251,6 +251,54 @@ class TestLoanManagement(AccountTestInvoicingCommon):
             self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
             self.assertEqual(loan2.state, 'closed')
 
+    @freeze_time('2024-06-23')
+    def test_loan_states_with_audit_trail(self):
+        """Test the flow of the loan: Draft, Running, Closed, Cancelled"""
+        self.company.restrictive_audit_trail = True
+        # Create the loan
+        loan = self.create_loan('Odoomobile Loan 🚗', '2024-01-01', 12, 24_000, 2_400)
+
+        # Verify that the loan is in draft
+        self.assertEqual(loan.state, 'draft')
+        self.assertFalse(loan.line_ids.generated_move_ids)
+
+        # Verify that the loan is running
+        loan.action_confirm()
+        self.assertEqual(loan.state, 'running')
+        self.assertEqual(len(loan.line_ids.generated_move_ids.filtered(lambda m: m.state == 'posted')), 15)
+        self.assertEqual(len(loan.line_ids.generated_move_ids), 34)
+
+        # Verify that the loan is cancelled
+        loan.action_cancel()
+        self.assertEqual(loan.state, 'cancelled')
+        self.assertFalse(len(loan.line_ids.generated_move_ids.filtered(lambda m: m.state == 'posted')))
+        self.assertEqual(len(loan.line_ids.generated_move_ids), 15)
+
+        # Verify that we can reset to draft the loan
+        loan.action_set_to_draft()
+        self.assertEqual(loan.state, 'draft')
+        self.assertEqual(len(loan.line_ids.generated_move_ids), 15)
+
+        # Run it again
+        loan.action_confirm()
+        self.assertEqual(loan.state, 'running')
+        self.assertEqual(len(loan.line_ids.generated_move_ids.filtered(lambda m: m.state == 'posted')), 15)
+        self.assertEqual(len(loan.line_ids.generated_move_ids), 49)
+
+        # Close the loan, only draft entries should be removed
+        action = loan.action_close()
+        wizard = self.env[action['res_model']].browse(action['res_id'])
+        wizard.action_save()
+        self.assertEqual(loan.state, 'closed')
+        self.assertEqual(len(loan.line_ids.generated_move_ids.filtered(lambda m: m.state == 'posted')), 15)
+        self.assertEqual(len(loan.line_ids.generated_move_ids), 33)
+
+        # Reset to draft, the entries should be removed
+        loan.action_set_to_draft()
+        self.assertEqual(loan.state, 'draft')
+        self.assertFalse(len(loan.line_ids.generated_move_ids.filtered(lambda m: m.state == 'posted')))
+        self.assertEqual(len(loan.line_ids.generated_move_ids), 30)
+
     @freeze_time('2024-01-01')
     def test_loan_import_amortization_schedule(self):
         """Test that we can import an amortization schedule from a file"""
