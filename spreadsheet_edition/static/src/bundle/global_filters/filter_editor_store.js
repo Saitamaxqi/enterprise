@@ -149,7 +149,7 @@ export class FilterEditorStore extends SpreadsheetStore {
             this.update({ label });
         }
         if (this.filter.modelName !== technical) {
-            this.update({ defaultValue: [] });
+            this.update({ defaultValue: undefined });
         }
         this.update({ modelName: technical, domainOfAllowedValues: [] });
         this.updateRelationModelLabel(label);

@@ -112,7 +112,7 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
             resIds
         );
         this.store.update({
-            defaultValue: resIds,
+            defaultValue: resIds.length ? resIds : undefined,
             displayNames: Object.values(displayNames),
         });
     }
@@ -121,7 +121,7 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         if (checked) {
             this.store.update({ defaultValue: "current_user" });
         } else {
-            this.store.update({ defaultValue: [] });
+            this.store.update({ defaultValue: undefined });
         }
     }
     toggleDomainRestriction(isChecked) {

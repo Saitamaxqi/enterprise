@@ -55,7 +55,11 @@ export class AbstractFilterEditorSidePanel extends Component {
     }
 
     updateDefaultValue(defaultValue) {
-        this.store.update({ defaultValue });
+        if (Array.isArray(defaultValue) && defaultValue.length === 0) {
+            this.store.update({ defaultValue: undefined });
+        } else {
+            this.store.update({ defaultValue });
+        }
     }
 
     /**

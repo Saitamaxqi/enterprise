@@ -56,7 +56,6 @@ test("preserve global filters when navigating through breadcrumb", async functio
         type: "relation",
         label: "Relation Filter",
         modelName: "product",
-        defaultValue: [],
     });
     await setGlobalFilterValue(model, {
         id: "42",

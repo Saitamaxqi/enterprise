@@ -104,7 +104,6 @@ test("Can open context menu with positional argument", async function () {
         {
             id: "42",
             type: "relation",
-            defaultValue: [],
         },
         { pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } } }
     );
@@ -128,7 +127,6 @@ test("Can open context menu without argument", async function () {
         {
             id: "42",
             type: "relation",
-            defaultValue: [],
         },
         { pivot: { "PIVOT#1": { chain: "product_id", type: "many2one" } } }
     );
@@ -153,7 +151,6 @@ test("Can open context menu when there is a filter with no field defined", async
     await addGlobalFilter(model, {
         id: "42",
         type: "relation",
-        defaultValue: [],
     });
     selectCell(model, "B3");
     const root = cellMenuRegistry.getMenuItems().find((item) => item.id === "use_global_filter");

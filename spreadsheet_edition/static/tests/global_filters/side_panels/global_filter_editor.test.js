@@ -326,7 +326,7 @@ test("Create a new relational global filter", async function () {
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("Product");
-    expect(globalFilter.defaultValue).toEqual([]);
+    expect(globalFilter.defaultValue).toBe(undefined);
     expect(model.getters.getPivotFieldMatching(pivotId, globalFilter.id)).toEqual({
         chain: "product_id",
         type: "many2one",
@@ -379,7 +379,7 @@ test("Create a new many2many relational global filter", async function () {
 
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("Vehicle");
-    expect(globalFilter.defaultValue).toEqual([]);
+    expect(globalFilter.defaultValue).toBe(undefined);
     expect(model.getters.getPivotFieldMatching(pivotId, globalFilter.id)).toEqual({
         chain: "vehicle_ids",
         type: "many2many",
@@ -448,7 +448,6 @@ test("Display with an existing 'Relation' global filter", async function () {
         type: "relation",
         modelName: "product",
         label,
-        defaultValue: [],
     };
     addGlobalFilterWithoutReload(model, filter, {
         pivot: {
@@ -568,7 +567,7 @@ test("Create a new relational global filter with a pivot", async function () {
     await saveGlobalFilter();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("Product");
-    expect(globalFilter.defaultValue).toEqual([]);
+    expect(globalFilter.defaultValue).toBe(undefined);
     expect(model.getters.getPivotFieldMatching("PIVOT#1", globalFilter.id)).toEqual({
         chain: "product_id",
         type: "many2one",
@@ -583,7 +582,7 @@ test("Create a new relational global filter with a chart", async function () {
     const [chartId] = model.getters.getOdooChartIds();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("Product");
-    expect(globalFilter.defaultValue).toEqual([]);
+    expect(globalFilter.defaultValue).toBe(undefined);
     expect(model.getters.getOdooChartFieldMatching(chartId, globalFilter.id)).toEqual({
         chain: "product_id",
         type: "many2one",
@@ -650,7 +649,6 @@ test("edit a relational global filter to uncheck a parent/child model", async fu
         modelName: "product",
         label: "Relation Filter",
         includeChildren: true,
-        defaultValue: [],
     });
     await openSidePanel(model, env, "42");
     const checkbox = queryFirst(".o-checkbox:contains(Include children)");
@@ -1027,7 +1025,6 @@ test("Empty field is marked as warning", async function () {
         id: "42",
         type: "text",
         label: "Text Filter",
-        defaultValue: [],
     });
     await openSidePanel(model, env, "42");
     expect(target.querySelector(".o_spreadsheet_field_matching")).toHaveClass("o_missing_field");
@@ -1039,7 +1036,6 @@ test("Can save with an empty field", async function () {
         id: "42",
         type: "text",
         label: "Text Filter",
-        defaultValue: [],
     });
     await openSidePanel(model, env, "42");
     await saveGlobalFilter();
@@ -1054,7 +1050,6 @@ test("Can clear a field matching an invalid field", async function () {
             id: "42",
             type: "text",
             label: "Text Filter",
-            defaultValue: [],
             name: "test",
         },
         {
@@ -1092,7 +1087,7 @@ test("Create a new relational global filter with a list snapshot", async functio
     await contains(".o_global_filter_save").click();
     const [globalFilter] = model.getters.getGlobalFilters();
     expect(globalFilter.label).toBe("Product");
-    expect(globalFilter.defaultValue).toEqual([]);
+    expect(globalFilter.defaultValue).toBe(undefined);
     expect(model.getters.getListFieldMatching("1", globalFilter.id)).toEqual({
         chain: "product_id",
         type: "many2one",

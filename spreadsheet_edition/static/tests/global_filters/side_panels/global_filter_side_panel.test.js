@@ -160,7 +160,6 @@ test("Display name for 'Relation' global filter values can be updated correctly"
         type: "relation",
         modelName: "product",
         label,
-        defaultValue: [],
     });
     await openSidePanel(model, env, "42");
     await contains(".o-autocomplete--input.o_input").click();
@@ -524,8 +523,8 @@ describe("integration", () => {
             type: "many2one",
         });
         expect(globalFilter).toEqual({
+            defaultValue: undefined,
             id: filterId,
-            defaultValue: [],
             domainOfAllowedValues: [],
             label: "My product filter",
             modelName: "product",
