@@ -10,6 +10,15 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Domain
 from odoo.tools.date_utils import get_month
 
+STATUS_COLOR = {
+    '01_draft': 4,  # info light blue
+    '02_verify': 2,  # warning orange
+    '03_close': 10,  # success green
+    '04_paid': 5,  # primary purple
+    '05_cancel': 0,  # default grey
+    False: 0,  # default grey -- for studio
+}
+
 
 class HrPayslipRun(models.Model):
     _name = 'hr.payslip.run'
@@ -30,6 +39,7 @@ class HrPayslipRun(models.Model):
         string='Status', index=True, readonly=True, copy=False,
         default='01_draft', tracking=True,
         compute='_compute_state', store=True)
+    color = fields.Integer(compute='_compute_color', export_string_translation=False)
     date_start = fields.Date(
         string='From', readonly=False, required=True,
         compute="_compute_date_start", store=True, precompute=True,
@@ -189,6 +199,11 @@ class HrPayslipRun(models.Model):
             else:
                 payslip_run.state = '01_draft'
 
+    @api.depends('state')
+    def _compute_color(self):
+        for payslip_run in self:
+            payslip_run.color = STATUS_COLOR[payslip_run.state]
+
     @api.depends('schedule_pay')
     def _compute_date_start(self):
         for payslip_run in self:
@@ -260,6 +275,13 @@ class HrPayslipRun(models.Model):
         action['context'] = dict(
             literal_eval(action["context"]),
             search_default_payslip_run_id=self.id or False)
+        return action
+
+    def action_open_off_cycle(self):
+        action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_view_hr_payslip_month_form')
+        action['context'] = dict(
+            literal_eval(action["context"]),
+            search_default_filter_off_cycle=1)
         return action
 
     def action_payroll_hr_version_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):

@@ -47,6 +47,11 @@ Accounting Data for Australian Payroll Rules.
     'demo': [
         "data/l10n_au_hr_payroll_account_demo.xml",
     ],
+    'assets': {
+        'web.assets_backend': [
+            'l10n_au_hr_payroll_account/static/src/**/*',
+        ],
+    },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

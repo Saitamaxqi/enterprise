@@ -10,7 +10,7 @@
         <xpath expr="//button[hasclass('o_column_unfold')]" position="replace">
         </xpath>
         <xpath expr="//div[hasclass('o_column_title')][2]" position="attributes">
-            <attribute name="class" remove="text-900" add="fw-medium cursor-pointer" separator=" "/>
+            <attribute name="class" remove="text-900" add="fw-medium py-2 cursor-pointer" separator=" "/>
             <attribute name="t-on-click.stop">group.toggle.bind(group)</attribute>
         </xpath>
         <xpath expr="//div[hasclass('o_column_title')][2]/*[1]" position="before">
@@ -31,15 +31,11 @@
         </xpath>
     </t>
 
-    <t t-name="hr_payroll.PayrunKanbanRecord" t-inherit="web.KanbanRecord" t-inherit-mode="primary">
-        <xpath expr="//article[@t-ref='root']" position="inside">
-            <PayRunCard record="props.record" archInfo="props.archInfo"/>
-        </xpath>
-    </t>
-
-    <t t-name="PayrunKanbanView.Buttons" t-inherit="web.KanbanView.Buttons" t-inherit-mode="primary">
-        <xpath expr="." position="inside">
-            <button t-on-click="openOffCycle" class="btn btn-secondary">See Off-Cycle</button>
-        </xpath>
+    <t t-name="hr_payroll.PayrunKanbanRecordMenu">
+        <t t-name="web.KanbanRecordMenu">
+            <div t-if="showMenu" class="w-auto ms-auto">
+                <t t-call="{{ this.templates[this.constructor.KANBAN_MENU_ATTRIBUTE] }}" t-call-context="renderingContext"/>
+            </div>
+        </t>
     </t>
 </templates>

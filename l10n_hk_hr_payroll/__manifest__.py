@@ -65,6 +65,9 @@ Hong Kong Payroll Rules.
         'data/l10n_hk_hr_payroll_demo.xml',
     ],
     'assets': {
+        'web.assets_backend': [
+            'l10n_hk_hr_payroll/static/src/**/*',
+        ],
         'web.report_assets_common': [
             'l10n_hk_hr_payroll/static/src/scss/report_ird.scss',
         ]

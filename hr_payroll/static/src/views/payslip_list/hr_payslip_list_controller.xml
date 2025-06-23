@@ -6,7 +6,7 @@
                     t-props="recordComponentProps"
                     t-slot-scope="recordScope"
                     t-key="revId">
-                <PayRunCard record="recordScope.record" archInfo="props.archInfo"/>
+                <PayRunCard t-if="recordScope.record" record="recordScope.record"/>
             </Record>
         </xpath>
         <xpath expr="//Layout//t[@t-component='props.Renderer']" position="attributes">

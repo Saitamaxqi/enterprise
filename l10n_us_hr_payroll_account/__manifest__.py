@@ -21,6 +21,11 @@ Accounting Data for United States Payroll Rules
     'demo': [
         'data/l10n_us_hr_payroll_account_demo.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'l10n_us_hr_payroll_account/static/src/**/*',
+        ],
+    },
     'license': 'OEEL-1',
     'auto_install': True,
 }

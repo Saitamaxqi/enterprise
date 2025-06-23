@@ -7,7 +7,9 @@ import { onWillStart, onWillRender, useState, markup } from "@odoo/owl";
 import { PayRunCard } from "../../components/payrun_card/payrun_card";
 import { Record } from "@web/model/record";
 import { PayslipListRenderer } from "./hr_payslip_list_renderer";
-import { useFormViewArch } from "../load_form_arch_hook";
+import { parseXML } from "@web/core/utils/xml";
+import { useViewCompiler } from "@web/views/view_compiler";
+import { PayRunKanbanCompiler } from "../payslip_run_kanban/hr_payslip_run_kanban_compiler";
 
 export class PayslipListController extends ListController {
     static template = "hr_payroll.PayslipListView";
@@ -17,34 +19,49 @@ export class PayslipListController extends ListController {
         Record,
     };
 
+    static KANBAN_CARD_ATTRIBUTE = "card";
+    static KANBAN_MENU_ATTRIBUTE = "menu";
+
     setup() {
         super.setup();
         this.orm = useService("orm");
         this.viewService = useService("view");
         this.notificationService = useService("notification");
-        this.loadFormArchService = useFormViewArch();
         this.state = useState({});
         this.revId = 0;
+        const viewRegistry = registry.category("views");
 
-        onWillStart(async()=> {
-            const {archInfo, buttonBoxTemplate } = await this.loadFormArchService("hr.payslip.run");
+        onWillStart(async () => {
+            const resModel = "hr.payslip.run";
+            const { relatedModels, views } = await this.viewService.loadViews({
+                resModel: resModel,
+                views: [[false, "kanban"]],
+            });
+            const { ArchParser } = viewRegistry.get("kanban");
+            const xmlDoc = parseXML(views["kanban"].arch);
+            const archInfo = new ArchParser().parse(xmlDoc, relatedModels, resModel);
+            const { templateDocs: templates } = archInfo;
+
+            this.templates = useViewCompiler(PayRunKanbanCompiler, templates);
+
             this.payRunArchInfo = archInfo;
             this.props.archInfo.fieldNodes = {
                 ...this.props.archInfo.fieldNodes,
-                ...archInfo.fieldNodes
+                ...archInfo.fieldNodes,
             };
-            this.props.archInfo.buttonBoxTemplate = buttonBoxTemplate;
             this.state.payRunInfo = {
-                id: this.env.searchModel.domain.find(([field, operator]) =>
-                    field === "payslip_run_id" && operator === "="
-                )?.[2] ?? null,
+                id:
+                    this.env.searchModel.domain.find(
+                        ([field, operator]) => field === "payslip_run_id" && operator === "="
+                    )?.[2] ?? null,
             };
         });
 
-        onWillRender(async() => {
-            this.state.payRunInfo.id = this.env.searchModel.domain.find(([field, operator]) =>
-                field === "payslip_run_id" && operator === "="
-            )?.[2] ?? null;
+        onWillRender(async () => {
+            this.state.payRunInfo.id =
+                this.env.searchModel.domain.find(
+                    ([field, operator]) => field === "payslip_run_id" && operator === "="
+                )?.[2] ?? null;
         });
 
         this.displayHeaderButtonsTransitions = {
@@ -62,13 +79,23 @@ export class PayslipListController extends ListController {
     async onSelectionChanged() {
         await super.onSelectionChanged();
         let selection;
-        if ((selection = await this.model.root.getResIds(true)))
+        if ((selection = await this.model.root.getResIds(true))) {
             this.state.selectionStates = await this.orm.read("hr.payslip", selection, ["state"]);
+        }
     }
 
     displayButton(button) {
-        if (!this.state.selectionStates?.map(s => s.state).every((state, i, array) => state === array[0])) return false;
-        return button.clickParams.name === this.displayHeaderButtonsTransitions[this.state.selectionStates[0]?.state];
+        if (
+            !this.state.selectionStates
+                ?.map((s) => s.state)
+                .every((state, i, array) => state === array[0])
+        ) {
+            return false;
+        }
+        return (
+            button.clickParams.name ===
+            this.displayHeaderButtonsTransitions[this.state.selectionStates[0]?.state]
+        );
     }
 
     createNewPayRun() {
@@ -76,9 +103,11 @@ export class PayslipListController extends ListController {
     }
 
     async selectEmployees() {
-        const employeeListAction = await this.orm.call("hr.payslip.run", "action_payroll_hr_version_list_view_payrun", [
-            [this.payrunId]
-        ]);
+        const employeeListAction = await this.orm.call(
+            "hr.payslip.run",
+            "action_payroll_hr_version_list_view_payrun",
+            [[this.payrunId]]
+        );
         return this.actionService.doAction({
             ...employeeListAction,
             help: markup(employeeListAction.help),
@@ -89,20 +118,22 @@ export class PayslipListController extends ListController {
     }
 
     async onReload() {
-        return this.actionService.doAction({type: "ir.actions.client", tag: "soft_reload"});
+        return this.actionService.doAction({ type: "ir.actions.client", tag: "soft_reload" });
     }
 
     async onClose() {
         return this.actionService.doAction({ type: "ir.actions.act_window_close" });
     }
 
-    async addPayslips(){
+    async addPayslips() {
         const slipIds = await this.model.root.getResIds(true);
         await this.orm.write("hr.payslip", slipIds, {
-            "payslip_run_id": this.model.config.context.active_id,
+            payslip_run_id: this.model.config.context.active_id,
         });
         await this.env.model.root.load();
-        this.notificationService.add(_t("The payslips(s) are now added to the batch"), { type: "success" });
+        this.notificationService.add(_t("The payslips(s) are now added to the batch"), {
+            type: "success",
+        });
         await this.onClose();
         await this.onReload();
     }
@@ -111,7 +142,7 @@ export class PayslipListController extends ListController {
         return {
             resModel: "hr.payslip.run",
             resId: this.payrunId,
-            fieldNames: Object.values(this.payRunArchInfo.fieldNodes).map(f => f.name),
+            fieldNames: Object.values(this.payRunArchInfo.fieldNodes).map((f) => f.name),
             mode: "readonly",
         };
     }
@@ -133,11 +164,11 @@ export class PayslipListController extends ListController {
         return super.afterExecuteActionButton(...arguments);
     }
 
-    get actionMenuProps(){
+    get actionMenuProps() {
         const res = super.actionMenuProps;
         const oldOnActionExecuted = res.onActionExecuted;
         res.onActionExecuted = () => {
-            this.revId ++;
+            this.revId++;
             oldOnActionExecuted?.call(res);
         };
         return res;

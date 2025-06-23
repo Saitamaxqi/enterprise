@@ -7,13 +7,15 @@
         <field name="arch" type="xml">
             <search string="Search Pay Run">
                 <field name="name" string="Pay Run"/>
-                <filter string="Draft" name="draft" domain="[('state', '=', '01_draft')]" help="Draft Pay Runs"/>
-                <filter string="Confirmed" name="confirmed" domain="[('state', '=', '02_verify')]" help="Confirmed Payslip Batches"/>
+                <filter string="New" name="draft" domain="[('state', '=', '01_draft')]" help="Draft Pay Runs"/>
+                <filter string="Waiting" name="confirmed" domain="[('state', '=', '02_verify')]" help="Confirmed Payslip Batches"/>
                 <filter string="Done" name="done_filter" domain="[('state', '=', '03_close')]" help="Done Pay Runs"/>
                 <filter string="Paid" name="paid" domain="[('state', '=', '04_paid')]" help="Paid Payslip Batches"/>
                 <separator/>
                 <filter string="Date" name="date_filter" date="date_start"/>
-                <group string="Group By">
+                <separator/>
+                <filter string="Archived" name="filter_archived" domain="[('active', '=', 'False')]"/>
+                <group expand="0" string="Group By">
                     <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
                 </group>
             </search>
@@ -25,12 +27,69 @@
         <field name="model">hr.payslip.run</field>
         <field name="arch" type="xml">
             <kanban
+                highlight_color="color"
                 default_order="date_end desc, date_start desc, id desc"
-                js_class="payrun_kanban"
-                edit="0"
-                quick_create="0">
+                quick_create="0"
+                records_draggable="0"
+                js_class="payslip_run_kanban"
+                group_create="false">
+                <header>
+                    <button name="action_open_off_cycle" type="object" string="See Off-Cycle" display="always"/>
+                </header>
+                <field name="color"/>
+                <field name="currency_id"/>
+                <field name="payment_report_format"/>
+                <field name="payment_report_filename"/>
                 <templates>
-                    <t t-name="card" class="cursor-pointer o_payrun_card_kanban w-100"/>
+                    <t t-name="menu" class="d-flex flex-column">
+                        <button name="action_confirm" type="object" class="btn oe_highlight" string="Compute" invisible="state != '01_draft' or not payslip_count"/>
+                        <button name="action_validate" type="object" class="btn oe_highlight" string="Confirm" invisible="state != '02_verify'" context="{'payslip_generate_pdf': True}"/>
+                        <button name="action_paid" type="object" class="btn btn-primary" string="Mark as Paid" invisible="state != '03_close'" options="{'is_priority': True}"/>
+                        <field name="payment_report" filename="payment_report_filename" format="payment_report_format"
+                               widget="payrun_binary" class="btn btn-secondary btn-addr align-content-center text-center"  invisible="not payment_report"/>
+                        <button name="action_unpaid" type="object" class="btn btn-secondary" string="Revert" invisible="state != '04_paid'"/>
+                        <button name="action_payment_report" type="object" class="btn btn-secondary" string="Payment Report" invisible="state != '03_close'"/>
+                        <button name="action_draft" type="object" class="btn btn-secondary" string="Set to Draft" invisible="state not in ('02_verify', '03_close')"/>
+                        <button name="add_payslips" type="object" class="btn btn-secondary" string="Add Payslips" invisible="state in ('03_close', '04_paid')"/>
+                        <button name="action_payroll_hr_version_list_view_payrun" type="object" class="btn btn-secondary" string="Generate Payslips" invisible="state in ('03_close', '04_paid')"/>
+                        <button name="unlink" type="object" class="btn text-danger" string="Delete"/>
+                    </t>
+                    <t t-name="card" class="o_payrun_card cursor-pointer gap-4 w-100 px-3 py-1 d-grid justify-items-center align-items-center align-content-center">
+                        <div class="o_cell d-flex flex-column o_payrun_info">
+                            <div class="fs-2">
+                                <field name="name"/>
+                            </div>
+                            <div class="small fw-medium d-flex gap-2 align-items-center">
+                                <span>
+                                    <field name="date_start"/>
+                                    <i class="oi oi-arrow-right px-2"></i>
+                                    <field name="date_end"/>
+                                </span>
+                                <span class="badge rounded-pill btn-outline-secondary btn-addr border">
+                                    <field name="payslip_count"/> payslips
+                                </span>
+                            </div>
+                        </div>
+                        <div class="o_cell d-flex flex-column o_payrun_cost">
+                            <div class="fs-2">
+                                <field name="gross_sum"/>
+                            </div>
+                            <div class="small fw-medium d-flex gap-2 align-items-center">
+                                <span>gross</span>
+                            </div>
+                        </div>
+                        <div class="o_cell d-flex flex-column o_payrun_cost">
+                            <div class="fs-2">
+                                <field name="net_sum"/>
+                            </div>
+                            <div class="small fw-medium d-flex gap-2 align-items-center">
+                                <span>net</span>
+                            </div>
+                        </div>
+                        <div class="o_cell d-flex flex-column o_payrun_state">
+                            <field name="state" widget="hr_payroll_status_bubble" options="{'remove_states':['05_cancel']}"/>
+                        </div>
+                    </t>
                 </templates>
             </kanban>
         </field>
@@ -51,7 +110,7 @@
                     hide_time="True"
                     delete="0"
                     create="1"
-                    color="state"
+                    color="color"
                     show_date_picker="0">
                 <field name="state" filters="1" invisible="1"/>
             </calendar>
@@ -81,21 +140,6 @@
         <field name="model">hr.payslip.run</field>
         <field name="arch" type="xml">
             <form string="Pay Runs" js_class="hr_payslip_batch_form">
-                <div name="button_box">
-                <action>
-                    <field name="payment_report" filename="payment_report_filename" format="payment_report_format"
-                           widget="payrun_binary" class="btn btn-secondary btn-addr"  invisible="not payment_report"/>
-                    <button name="action_confirm" type="object" class="btn oe_highlight" string="Compute" invisible="state != '01_draft' or not payslip_count"/>
-                    <button name="action_validate" type="object" class="btn oe_highlight" string="Confirm" invisible="state != '02_verify'" context="{'payslip_generate_pdf': True}"/>
-                    <button name="action_paid" type="object" class="btn oe_highlight" string="Mark as Paid" invisible="state != '03_close'"/>
-                    <button name="action_unpaid" type="object" class="btn btn-secondary" string="Revert" invisible="state != '04_paid'"/>
-                    <button name="action_payment_report" type="object" class="btn btn-secondary" string="Create Payment Report" invisible="state != '03_close'"/>
-                    <button name="action_draft" type="object" class="btn btn-secondary" string="Set to Draft" invisible="state not in ('02_verify', '03_close')"/>
-                    <button name="add_payslips" type="object" class="btn btn-secondary" string="Add Payslips" invisible="state in ('03_close', '04_paid')"/>
-                    <button name="action_payroll_hr_version_list_view_payrun" type="object" class="btn btn-secondary" string="Generate Payslips"/>
-                    <button name="unlink" type="object" class="btn text-danger" string="Delete"/>
-                </action>
-                </div>
                 <group>
                     <field name="company_id" groups="base.group_multi_company" options="{'no_create': 1, 'no_quick_create': 1}"
                            placeholder="Visible to all" domain="[('id', 'in', allowed_company_ids)]"
@@ -110,15 +154,6 @@
                                readonly="state != '01_draft'"/>
                     </div>
                 </group>
-                <field name="name" invisible="1"/>
-                <field name="country_id" invisible="1"/>
-                <field name="payslip_count" invisible="1"/>
-                <field name="currency_id" invisible="1"/>
-                <field name="gross_sum" invisible="1"/>
-                <field name="net_sum" invisible="1"/>
-                <field name="payment_report_format" invisible="1"/>
-                <field name="payment_report_filename" invisible="1"/>
-                <field name="payment_report" invisible="1"/>
             </form>
         </field>
     </record>

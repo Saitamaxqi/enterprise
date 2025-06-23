@@ -25,6 +25,11 @@ Generic Payroll system Integrated with Accounting.
     'demo': [
         'data/hr_payroll_account_demo.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'hr_payroll_account/static/src/**/*',
+        ],
+    },
     'pre_init_hook': '_salaries_account_journal_pre_init',
     'auto_install':  ['hr_payroll', 'accountant'],
     'post_init_hook': '_hr_payroll_account_post_init',

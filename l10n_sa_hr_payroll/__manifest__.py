@@ -47,4 +47,9 @@ Saudi Arabia Payroll and End of Service rules.
     'demo': [
         'data/l10n_sa_hr_payroll_demo.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'l10n_sa_hr_payroll/static/src/**/*',
+        ],
+    },
 }

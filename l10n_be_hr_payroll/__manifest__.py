@@ -168,7 +168,7 @@ requirements and reduces manual interaction with the SFTP portal.
     ],
     'assets': {
         'web.assets_backend': [
-            'l10n_be_hr_payroll/static/src/js/**/*',
+            'l10n_be_hr_payroll/static/src/**/*',
         ],
         'web.report_assets_common': [
             'l10n_be_hr_payroll/static/src/scss/*.scss',

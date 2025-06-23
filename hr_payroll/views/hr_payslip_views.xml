@@ -296,6 +296,7 @@
                 <separator/>
                 <filter string="Date" name="date_filter" date="date_to" default_period="month-1"/>
                 <separator/>
+                <filter string="Off-Cycle" name="filter_off_cycle" domain="[('payslip_run_id', '=', False)]"/>
                 <filter string="Credit Notes" name="credit_note" domain="[('credit_note', '=', True)]"/>
                 <separator/>
                 <group string="Group By">
