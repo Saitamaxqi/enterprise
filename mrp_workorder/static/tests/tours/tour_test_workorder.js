@@ -385,13 +385,8 @@ registry
             },
             {
                 content: "Await for the Component to be added",
-                trigger: ".modal-content input.o_input[type='number']",
-                run: function () {
-                    helper.assert(
-                        document.querySelector(".modal-content input.o_input[type='number']").value,
-                        "2"
-                    );
-                },
+                trigger: ".modal-content input.o_input[type='number']:value(2)",
+                run() {},
             },
             {
                 trigger: ".modal-content button.btn-close",
