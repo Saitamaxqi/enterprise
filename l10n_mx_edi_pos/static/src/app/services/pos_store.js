@@ -16,7 +16,7 @@ patch(PosStore.prototype, {
                         (x) =>
                             x.price_subtotal > 0.0 && !x[2]?.refunded_orderline_id && !x.coupon_id
                     )) ||
-                (!isRefund && currentOrder.amount_total < 0.0)
+                (!isRefund && this.currency.isNegative(currentOrder.amount_total))
             ) {
                 this.dialog.add(AlertDialog, {
                     title: _t("Error"),
