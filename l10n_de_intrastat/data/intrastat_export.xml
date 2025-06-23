@@ -13,7 +13,7 @@
                     <t t-set="type" t-value="'PSI'"/>
                     <t t-set="role" t-value="'sender'"/>
                 </t>
-                <testIndicator t-if="is_test">true</testIndicator>
+                <testIndicator t-out="'true' if is_test else 'false'"/>
                 <softwareUsed t-out="version"/>
                 <t t-call="l10n_de_intrastat.Declaration">
                     <t t-set="reception" t-value="True"/>
@@ -53,6 +53,7 @@
             <t t-else="">
                 <partyId t-out="company.vat"/>
                 <partyName t-out="company.name"/>
+                <interchangeAgreementId t-out="res_company.interchange_agreement_id or ''"/>
                 <t t-call="l10n_de_intrastat.Address"/>
                 <t t-call="l10n_de_intrastat.ContactPerson"/>
             </t>
@@ -113,7 +114,7 @@
                 <invoicedAmount t-out="item['value']"/>
                 <t t-call="l10n_de_intrastat.NatureOfTransaction"/>
                 <modeOfTransportCode t-if="item.get('transport_code')" t-out="item['transport_code']"/>
-                <regionCode t-if="item.get('region_code')" t-out="item['region_code']"/>
+                <regionCode t-out="item.get('region_code', '99')"/>
                 <partnerId t-out="item['partner_vat']"/>
                 <t t-call="l10n_de_intrastat.DeliveryTerms"/>
             </Item>

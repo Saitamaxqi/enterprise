@@ -1,9 +1,11 @@
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from lxml import etree
 
 from odoo import _, models, fields, api
 from odoo.exceptions import UserError
-from odoo.tools import SQL
+from odoo.tools import float_round, SQL
+
 
 class AccountIntrastatGoodsReportHandler(models.AbstractModel):
     _inherit = 'account.intrastat.goods.report.handler'
@@ -73,10 +75,10 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
             'user': self.env.user,
             'in_vals': in_vals,
             'out_vals': out_vals,
-            'in_vals_total_weight': round(sum(float(elem['weight']) for elem in in_vals), 3),
-            'out_vals_total_weight': round(sum(float(elem['weight']) for elem in out_vals), 3),
-            'in_vals_total_amount': round(sum(elem['value'] for elem in in_vals), 3),
-            'out_vals_total_amount': round(sum(elem['value'] for elem in out_vals), 3),
+            'in_vals_total_weight': float_round(sum(float(elem['weight'] or 0.0) for elem in in_vals), 3),
+            'out_vals_total_weight': float_round(sum(float(elem['weight'] or 0.0) for elem in out_vals), 3),
+            'in_vals_total_amount': float_round(sum(elem['value'] for elem in in_vals), 3),
+            'out_vals_total_amount': float_round(sum(elem['value'] for elem in out_vals), 3),
             'date': date,
             'sending_date': today,
             'is_test': False,
@@ -86,14 +88,14 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
 
         return {
             'file_name': self.env['account.report'].browse(options['report_id']).get_default_report_filename(options, 'xml'),
-            'file_content': file_content,
+            'file_content': etree.tostring(etree.fromstring(file_content), encoding="ISO-8859-1", xml_declaration=True),
             'file_type': 'xml',
         }
 
     @api.model
     def _prepare_values_for_de_export(self, vals_list):
         for count, vals in enumerate(vals_list, start=1):
-            vals['value'] = round(vals['value'], 3)
+            vals['value'] = float_round(vals['value'], 3)
             vals['itemNumber'] = count
-            vals['quantity'] = round(vals['quantity'] * float(vals['supplementary_units']) if vals['supplementary_units'] else vals['quantity'], 2)
+            vals['quantity'] = float_round(vals['quantity'] * float(vals['supplementary_units']) if vals['supplementary_units'] else vals['quantity'], 2)
         return vals_list

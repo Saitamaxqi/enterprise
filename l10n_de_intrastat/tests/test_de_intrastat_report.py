@@ -85,6 +85,7 @@ class TestDEIntrastatReport(TestAccountReportsCommon):
                     </Party>
                     <Party partyType="PSI" partyRole="sender">
                         <partyName>company_1_data</partyName>
+                        <interchangeAgreementId>AZIZ2025</interchangeAgreementId>
                         <Address>
                             <countryName>Germany</countryName>
                         </Address>
@@ -93,6 +94,7 @@ class TestDEIntrastatReport(TestAccountReportsCommon):
                             <e-mail>accountman@test.com</e-mail>
                         </ContactPerson>
                     </Party>
+                    <testIndicator>false</testIndicator>
                     <softwareUsed>___ignore___</softwareUsed>
                     <Declaration>
                         <declarationId>2022-05</declarationId>
@@ -124,6 +126,7 @@ class TestDEIntrastatReport(TestAccountReportsCommon):
                                 <natureOfTransactionACode>1</natureOfTransactionACode>
                                 <natureOfTransactionBCode>1</natureOfTransactionBCode>
                             </NatureOfTransaction>
+                            <regionCode>06</regionCode>
                             <partnerId>QN999999999999</partnerId>
                         </Item>
                         <totalNumberLines>1</totalNumberLines>
@@ -159,6 +162,7 @@ class TestDEIntrastatReport(TestAccountReportsCommon):
                                 <natureOfTransactionACode>1</natureOfTransactionACode>
                                 <natureOfTransactionBCode>1</natureOfTransactionBCode>
                             </NatureOfTransaction>
+                            <regionCode>06</regionCode>
                             <partnerId>QN999999999999</partnerId>
                         </Item>
                         <totalNumberLines>1</totalNumberLines>
@@ -172,6 +176,8 @@ class TestDEIntrastatReport(TestAccountReportsCommon):
     def test_xml_export(self):
         self.inwards_vendor_bill.action_post()
         self.outwards_customer_invoice.action_post()
+        self.env.company.intrastat_region_id = self.env.ref('l10n_de_intrastat.intrastat_region_06')
+        self.env.company.interchange_agreement_id = 'AZIZ2025'
         self.env.cr.flush()
         options = self._generate_options(self.report, '2022-05-01', '2022-05-31', default_options={'export_mode': 'file'})
 
