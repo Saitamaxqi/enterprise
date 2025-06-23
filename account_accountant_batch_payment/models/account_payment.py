@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from odoo import models
+from odoo import Command, models
 
 
 class AccountPayment(models.Model):
@@ -14,7 +14,7 @@ class AccountPayment(models.Model):
             if payment.state not in valid_payment_states:
                 continue
 
-            account2amount = defaultdict(float)
+            line2amount = defaultdict(float)
 
             payment_term_lines = payment.invoice_ids.line_ids.filtered(lambda line: line.display_type == "payment_term").sorted("date")
             remaining = payment.amount_signed
@@ -24,25 +24,34 @@ class AccountPayment(models.Model):
 
                 current = min(remaining, line.currency_id._convert(from_amount=line.amount_currency, to_currency=payment.currency_id))
                 remaining -= current
-                account2amount[line.account_id] -= current
+                line2amount[line] -= current
 
             if remaining:
-                partner_account = (
-                    payment.partner_id.property_account_payable_id
-                    if payment.payment_type == "outbound"
-                    else payment.partner_id.property_account_receivable_id
-                )
-                account2amount[partner_account] -= remaining
+                line2amount[False] -= remaining
 
-            for account, amount in account2amount.items():
-                # TODO flg keep invoice link here
-                lines_to_create.append({
-                    'sequence': len(lines_to_create) + 1,
-                    'name': payment.name,
-                    'account_id': account.id,
-                    'partner_id': payment.partner_id.id,
-                    'currency_id': payment.currency_id.id,
-                    'amount_currency': amount,
-                    'balance': payment.currency_id._convert(from_amount=amount, to_currency=self.env.company.currency_id),
-                })
+            for line, amount in line2amount.items():
+                if line:
+                    line_to_create = line._get_aml_values(
+                        name=payment.name,
+                        balance=payment.currency_id._convert(from_amount=amount, to_currency=self.env.company.currency_id),
+                        amount_currency=amount,
+                        reconciled_lines_ids=[Command.set(line.ids)],
+                        payment_lines_ids=[Command.set(payment.ids)],
+                    )
+                else:
+                    partner_account = (
+                        payment.partner_id.property_account_payable_id
+                        if payment.payment_type == "outbound"
+                        else payment.partner_id.property_account_receivable_id
+                    )
+                    line_to_create = {
+                        'name': payment.name,
+                        'partner_id': payment.partner_id.id,
+                        'account_id': partner_account.id,
+                        'currency_id': payment.currency_id.id,
+                        'amount_currency': amount,
+                        'balance': payment.currency_id._convert(from_amount=amount, to_currency=self.env.company.currency_id),
+                        'payment_lines_ids': [Command.set(payment.ids)],
+                    }
+                lines_to_create.append(line_to_create)
         return lines_to_create

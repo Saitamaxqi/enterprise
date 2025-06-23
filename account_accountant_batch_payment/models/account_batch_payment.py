@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from collections import defaultdict
 
 from odoo import Command, models, _
 
@@ -24,20 +25,25 @@ class AccountBatchPayment(models.Model):
 
     def _get_amls_from_batch_payments(self, domain):
         amls = self.env['account.move.line']
+        payment2amls = defaultdict(self.env['account.move.line'].browse)
         amls_to_create = []
         payments_with_move = self.payment_ids.filtered(lambda payment: payment.move_id)
 
         for payment in payments_with_move:
             liquidity_lines, _counterpart_lines, _writeoff_lines = payment._seek_for_lines()
-            amls |= liquidity_lines.filtered_domain(domain)
+            filtered_liquidity_lines = liquidity_lines.filtered_domain(domain)
+            amls |= filtered_liquidity_lines
+            payment2amls[payment] = filtered_liquidity_lines
 
-        amls_to_create += [
-            aml._get_aml_values(
-                balance=-aml.balance,
-                amount_currency=-aml.amount_currency,
-                reconciled_lines_ids=[Command.set(aml.ids)]
-            ) for aml in amls
-        ]
+        for payment, move_lines in payment2amls.items():
+            amls_to_create += [
+                move_line._get_aml_values(
+                    balance=-move_line.balance,
+                    amount_currency=-move_line.amount_currency,
+                    reconciled_lines_ids=[Command.set(move_line.ids)],
+                    payment_lines_ids=[Command.set(payment.ids)],
+                ) for move_line in move_lines
+            ]
 
         amls_to_create += (self.payment_ids - payments_with_move)._get_amls_for_payment_without_move()
         return amls, amls_to_create

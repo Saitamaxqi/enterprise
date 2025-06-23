@@ -231,3 +231,205 @@ class TestBatchPayment(AccountTestInvoicingCommon):
                     {'account_id': outstanding_account.id, 'partner_id': self.partner_a.id, 'balance': 100.0},
                     {'account_id': outstanding_account.id, 'partner_id': self.partner_b.id, 'balance': 200.0},
                 ])
+
+    def test_bank_rec_widget_batch_payment_with_entries(self):
+        payment = self.create_payment(self.partner_a, 100, journal_id=self.company_data['default_journal_bank'].id)
+        payment.create_batch_payment()
+
+        st_line = self._create_st_line(amount=100)
+        st_line.set_batch_payment_bank_statement_line(payment.batch_payment_id.id)
+
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'name': st_line.payment_ref, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': payment.journal_id.inbound_payment_method_line_ids.payment_account_id.id, 'name': payment.journal_id.inbound_payment_method_line_ids[0].name, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
+        ])
+        self.assertEqual(st_line.line_ids.reconciled_lines_ids, payment.move_id.line_ids.filtered(lambda x: x.account_id.account_type == 'asset_current'))
+
+    def test_bank_rec_widget_batch_payment_without_entries(self):
+        payment = self.create_payment(self.partner_a, 100, payment_method_line_id=self.batch_deposit.id)
+        payment.create_batch_payment()
+
+        st_line = self._create_st_line(amount=100)
+        st_line.set_batch_payment_bank_statement_line(payment.batch_payment_id.id)
+
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'name': st_line.payment_ref, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': self.partner_a.property_account_receivable_id.id, 'name': payment.name, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': False},
+        ])
+
+    def test_bank_rec_widget_batch_payment_delete_payment(self):
+        payment = self.create_payment(self.partner_a, 100, payment_method_line_id=self.batch_deposit.id)
+        payment.create_batch_payment()
+
+        st_line = self._create_st_line(amount=100)
+        st_line.set_batch_payment_bank_statement_line(payment.batch_payment_id.id)
+
+        # When removing the payment line, the payment should go back to in_process but the batch remains untouched
+        st_line.delete_reconciled_line(st_line.line_ids[-1].id)
+        self.assertEqual(payment.state, 'in_process')
+
+    def test_bank_rec_widget_batch_payment_without_entries_link_to_move(self):
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 100,
+                }),
+            ],
+        })
+        invoice.action_post()
+        payment = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=invoice.ids
+        ).create({
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+        })._create_payments()
+
+        payment.create_batch_payment()
+        st_line = self._create_st_line(amount=100)
+        st_line.set_batch_payment_bank_statement_line(payment.batch_payment_id.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 100.0, 'balance': 100.0, 'reconciled': False},
+            {'account_id': invoice.line_ids[-1].account_id.id, 'amount_currency': -100.0, 'balance': -100.0, 'reconciled': True},
+        ])
+        self.assertEqual(st_line.line_ids.reconciled_lines_ids, payment.invoice_ids.line_ids.filtered(lambda x: x.account_id.account_type == 'asset_receivable'))
+
+        st_line.delete_reconciled_line(st_line.line_ids[-1].id)
+        self.assertEqual(payment.state, 'in_process')
+        self.assertEqual(invoice.payment_state, 'in_payment')
+
+    def test_bank_rec_widget_batch_move_link_to_multiple_payment_without_entries(self):
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 1000,
+                }),
+            ],
+        })
+        invoice.action_post()
+        payment_1 = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=invoice.ids,
+        ).create({
+            'amount': 400,
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+        })._create_payments()
+        payment_2 = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=invoice.ids,
+        ).create({
+            'amount': 600,
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+        })._create_payments()
+
+        (payment_1 + payment_2).create_batch_payment()
+        st_line = self._create_st_line(amount=1000)
+        st_line.set_batch_payment_bank_statement_line(payment_1.batch_payment_id.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 1000.0, 'balance': 1000.0, 'reconciled': False},
+            {'account_id': invoice.line_ids[-1].account_id.id, 'amount_currency': -400.0, 'balance': -400.0, 'reconciled': True},
+            {'account_id': invoice.line_ids[-1].account_id.id, 'amount_currency': -600.0, 'balance': -600.0, 'reconciled': True},
+        ])
+        st_line.delete_reconciled_line(st_line.line_ids[-1].id)
+        self.assertEqual(payment_1.state, 'paid')
+        self.assertEqual(payment_2.state, 'in_process')
+        self.assertEqual(invoice.payment_state, 'in_payment')
+
+    def test_bank_rec_widget_batch_one_move_multiple_payment_without_entries(self):
+        invoice_1 = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 1000,
+                }),
+            ],
+        })
+        invoice_1.action_post()
+        invoice_2 = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 1000,
+                }),
+            ],
+        })
+        invoice_2.action_post()
+
+        payments = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=(invoice_1 + invoice_2).ids,
+        ).create({
+            'amount': 2000,
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+        })._create_payments()
+        payments.create_batch_payment()
+        st_line = self._create_st_line(amount=2000)
+        st_line.set_batch_payment_bank_statement_line(payments.batch_payment_id.id)
+
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 2000.0, 'balance': 2000.0, 'reconciled': False},
+            {'account_id': invoice_1.line_ids[-1].account_id.id, 'amount_currency': -1000.0, 'balance': -1000.0, 'reconciled': True},
+            {'account_id': invoice_2.line_ids[-1].account_id.id, 'amount_currency': -1000.0, 'balance': -1000.0, 'reconciled': True},
+        ])
+
+    def test_bank_rec_widget_batch_one_move_multiple_payment_without_entries_grouped(self):
+        invoice_1 = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 1000,
+                }),
+            ],
+        })
+        invoice_1.action_post()
+        invoice_2 = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 1000,
+                }),
+            ],
+        })
+        invoice_2.action_post()
+
+        payments = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=(invoice_1 + invoice_2).ids,
+        ).create({
+            'amount': 2000,
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+            'group_payment': True,
+        })._create_payments()
+        payments.create_batch_payment()
+        st_line = self._create_st_line(amount=2000)
+        st_line.set_batch_payment_bank_statement_line(payments.batch_payment_id.id)
+
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 2000.0, 'balance': 2000.0, 'reconciled': False},
+            {'account_id': invoice_1.line_ids[-1].account_id.id, 'amount_currency': -1000.0, 'balance': -1000.0, 'reconciled': True},
+            {'account_id': invoice_2.line_ids[-1].account_id.id, 'amount_currency': -1000.0, 'balance': -1000.0, 'reconciled': True},
+        ])
