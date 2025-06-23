@@ -95,11 +95,6 @@ class L10n_DeTaxReportHandler(models.AbstractModel):
                 else:
                     elem.text = float_repr(line_value, 2).replace('.', ',')
 
-            # "kz83" must be supplied with 0.00 if it doesn't have balance
-            elif line_code == "83":
-                elem = etree.SubElement(taxes, "Kz" + line_code)
-                elem.text = "0,00"
-
         return {
             'file_name': report.get_default_report_filename(options, 'xml'),
             'file_content': etree.tostring(tree, pretty_print=True, standalone=False, encoding='ISO-8859-1',),
