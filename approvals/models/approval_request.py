@@ -51,7 +51,7 @@ class ApprovalRequest(models.Model):
         default=lambda self: self.env.user)
     user_status = fields.Selection([
         ('new', 'New'),
-        ('pending', 'To Approve'),
+        ('pending', 'Submitted'),
         ('waiting', 'Waiting'),
         ('approved', 'Approved'),
         ('refused', 'Refused'),

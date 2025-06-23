@@ -93,8 +93,8 @@
                                 </group>
                                 <group string="Approvers" name="approvers">
                                     <field name="manager_approval"/>
-                                    <separator colspan="2"/>
-                                    <field name="approver_ids"/>
+                                    <label for="approver_ids" string="Approvers"/>
+                                    <field name="approver_ids" colspan="2" nolabel="1"/>
                                     <field name="approver_sequence" invisible="approval_minimum == 0"/>
                                     <field name="approval_minimum"/>
                                     <field name="invalid_minimum" invisible="1"/>
@@ -121,6 +121,7 @@
                 "views": [[False, "form"]],
                 "target": "new",
                 "res_id": records.id,
+                "name": "Approval Settings",
             }
         </field>
     </record>

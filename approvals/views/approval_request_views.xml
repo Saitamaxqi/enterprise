@@ -88,6 +88,8 @@
                         context="{'group_by': 'request_owner_id'}"/>
                     <filter string="Category" name="groupby_category_id"
                         context="{'group_by': 'category_id'}"/>
+                    <filter string="Request Status" name="groupby_request_status"
+                        context="{'group_by': 'request_status'}"/>
                 </group>
             </search>
         </field>
@@ -203,7 +205,7 @@
                                     <field name="sequence" column_invisible="True"/>
                                     <field name="can_edit" column_invisible="True"/>
                                     <field name="can_edit_user_id" column_invisible="True"/>
-                                    <field name="user_id" string="Approver" readonly="not can_edit_user_id or status != 'new'" force_save="1" />
+                                    <field name="user_id" string="Approver" widget="many2one_avatar_user" readonly="not can_edit_user_id or status != 'new'" force_save="1" />
                                     <field name="required" readonly="not can_edit" force_save="1"/>
                                     <field name="status"/>
                                     <field name="company_id" column_invisible="True"/>
@@ -246,32 +248,45 @@
             group_create="false" group_edit="false" group_delete="false" sample="1">
                 <field name="request_status"/>
                 <field name="user_status"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
                 <templates>
-                    <t t-name="menu">
-                        <a t-if="widget.editable" role="menuitem" type="open" class="dropdown-item">Edit Request</a>
-                        <a t-if="widget.deletable" role="menuitem" type="delete" class="dropdown-item">Delete</a>
-                        <a name="action_approve" type="object" invisible="user_status != 'pending'"
-                            role="menuitem" class="dropdown-item">Approve</a>
-                        <a name="action_refuse" type="object" invisible="user_status != 'pending'"
-                            role="menuitem" class="dropdown-item">Refuse</a>
-                        <a name="action_withdraw" type="object" invisible="request_status == 'new' or user_status in ['waiting', 'pending', 'cancel']"
-                            role="menuitem" class="dropdown-item">Withdraw</a>
-                    </t>
                     <t t-name="card">
-                        <div class="ribbon ribbon-top-right" invisible="user_status not in ['pending', 'approved', 'refused', 'cancel']">
-                            <field name="user_status" t-if="record.user_status.raw_value == 'pending'" class="text-bg-info"/>
-                            <field name="user_status" t-if="record.user_status.raw_value == 'approved'" class="text-bg-success"/>
-                            <field name="user_status" t-if="record.user_status.raw_value == 'refused'" class="text-bg-danger"/>
-                            <field name="user_status" t-if="record.user_status.raw_value == 'cancel'" class="text-bg-warning"/>
+                        <div class="row g-2">
+                            <div class="col-auto">
+                                <field name="category_image" widget="image" options="{'preview_image': 'category_image', 'size': [64, 64]}"/>
+                            </div>
+                            <div class="col">
+                                <field name="request_status"
+                                       widget="badge"
+                                       class="float-end"
+                                       decoration-info="request_status == 'new'"
+                                       decoration-warning="request_status == 'pending'"
+                                       decoration-success="request_status == 'approved'"
+                                       decoration-danger="request_status == 'refused'"/>
+                                <field name="name" class="fw-bolder fs-3 pe-5 d-block text-wrap"/>
+                                <field name="request_owner_id" widget="many2one_avatar_user" options="{'display_avatar_name': True}" class="o_approval_kanban_avatar fw-bold my-1"/>
+                                <div class="text-muted">
+                                    <t t-if="record.date_start.raw_value" t-out="luxon.DateTime.fromISO(record.date_start.raw_value).toLocaleString({ month: 'short', day: 'numeric', year: 'numeric'})"/>
+                                    <t t-if="record.date_end.raw_value and record.date_start.raw_value != record.date_end.raw_value">
+                                        <span class="mx-1">-</span>
+                                        <t t-out="luxon.DateTime.fromISO(record.date_end.raw_value).toLocaleString({ month: 'short', day: 'numeric', year: 'numeric'})"/>
+                                    </t>
+                                </div>
+                            </div>
                         </div>
-                        <field name="name" class="fw-bolder fs-5"/>
-                        <field name="category_id" class="text-muted"/>
-                        <div class="d-flex text-muted">
-                            <field name="date_start" options="{'show_time': false}" class="me-1"/>-<field name="date_end" options="{'show_time': false}" class="ms-1"/>
-                        </div>
-                        <footer class="pt-0">
-                            <field name="activity_ids" widget="kanban_activity"/>
-                            <field name="request_owner_id" widget="many2one_avatar_user" class="ms-auto"/>
+                        <footer class="o_kanban_footer">
+                            <div class="d-flex align-items-center w-100">
+                                <div class="d-flex gap-2 ms-auto">
+                                    <button t-if="record.user_status.raw_value == 'pending'" name="action_approve" type="object" class="btn btn-sm py-0">
+                                        <i class="fa fa-check text-success me-1"/>Approve
+                                    </button>
+                                    <button t-if="record.user_status.raw_value == 'pending'" name="action_refuse" type="object" class="btn btn-sm py-0">
+                                        <i class="fa fa-times text-danger me-1"/>Refuse
+                                    </button>
+                                </div>
+                                <field name="activity_ids" widget="kanban_activity"/>
+                            </div>
                         </footer>
                     </t>
                 </templates>

@@ -44,6 +44,7 @@ creates next activities for the related approvers.
             'approvals/static/src/common/**',
             'approvals/static/src/web/**',
             'approvals/static/src/views/**',
+            'approvals/static/src/scss/**',
         ],
         'mail.assets_public': [
             'approvals/static/src/common/**',
