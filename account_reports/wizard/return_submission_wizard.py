@@ -1,3 +1,5 @@
+import json
+
 from odoo import _, api, models, fields
 
 
@@ -26,3 +28,15 @@ class AccountReturnSubmissionWizard(models.TransientModel):
             'dialog_size': 'large',
         }
         return record_action
+
+    def print_pdf(self):
+        options = self.return_id._get_closing_report_options()
+        return {
+            'type': 'ir_actions_account_report_download',
+            'data': {
+                'model': self.env.context.get('model'),
+                'options': json.dumps(options),
+                'file_generator': 'export_to_pdf',
+                'no_closing_after_download': True,
+            },
+        }
