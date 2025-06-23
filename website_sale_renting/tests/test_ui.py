@@ -2,6 +2,7 @@
 
 from freezegun import freeze_time
 
+from odoo import Command
 from odoo.tests import HttpCase, tagged
 
 from odoo.addons.website_sale_renting.tests.common import TestWebsiteSaleRentingCommon
@@ -61,6 +62,23 @@ class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
     def test_website_sale_update_rental_duration(self):
         self.computer.website_published = True
         self.start_tour('/shop', 'rental_cart_update_duration')
+
+    def test_website_sale_update_rental_duration_days(self):
+        self.computer.update({
+            'website_published': True,
+            'product_pricing_ids': [
+                Command.clear(),
+                Command.create({
+                    'recurrence_id': self.recurrence_day.id,
+                    'price': 20.0,
+                }),
+            ],
+        })
+        self.env.company.update({
+            'renting_minimal_time_duration': 1,
+            'renting_minimal_time_unit': 'day',
+        })
+        self.start_tour('/shop', 'date_based_rental_duration')
 
     def test_website_sale_renting_select_wrong_period(self):
         self.computer.website_published = True

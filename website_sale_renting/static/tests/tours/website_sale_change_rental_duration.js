@@ -3,6 +3,11 @@
 import { registry } from "@web/core/registry";
 import * as tourUtils from '@website_sale/js/tours/tour_utils';
 
+function getFutureDate(days) {
+    days = (days ?? 0) + 7;
+    return luxon.DateTime.now().set({ weekday: 1 }).plus({ days }).toFormat('MM/dd/yyyy');
+}
+
 registry.category("web_tour.tours").add("rental_cart_update_duration", {
     url: "/shop",
     steps: () => [
@@ -65,5 +70,32 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
             content: "Verify order line rental period return time",
             trigger: 'div.text-muted.small span:contains("12:00")',
         },
+    ],
+});
+
+registry.category('web_tour.tours').add('date_based_rental_duration', {
+    steps: () => [
+        ...tourUtils.searchProduct("Computer", { select: true }),
+        {
+            content: "Select the return date",
+            trigger: 'input[name=renting_end_date]',
+            run: `edit ${getFutureDate(2)}`,
+        },
+        {
+            content: "Rent for 2 days",
+            trigger: 'input[name=renting_start_date]',
+            run: `edit ${getFutureDate(1)}`,
+        },
+        {
+            content: "Add to cart",
+            trigger: '#product_detail form #add_to_cart',
+            run: 'click',
+        },
+        {
+            content: "Rental duration should display 2 days",
+            trigger: 'span.o_renting_details:contains(2 Days)',
+        },
+        tourUtils.goToCart(),
+        ...tourUtils.assertCartAmounts({ untaxed: "40.00" }), // $ 20.00 per day
     ],
 });
