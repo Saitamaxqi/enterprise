@@ -957,7 +957,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         },
         {
             content: "Add Manager",
-            trigger: ".nav-link:contains('Settings')",
+            trigger: ".nav-link:contains('Work')",
             run: "click",
         },
         {
@@ -973,7 +973,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         },
         {
             content: "Add Work Email",
-            trigger: '.o_group [name="work_email"] input',
+            trigger: 'h5 [name="work_email"] input',
             run: "edit mitchel3_work@example.com",
         },
         {
