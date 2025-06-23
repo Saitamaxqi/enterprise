@@ -7,8 +7,6 @@
     </t>
 
     <t t-name="hr_payroll.PayrunKanbanHeader" t-inherit="web.KanbanHeader" t-inherit-mode="primary">
-        <xpath expr="//div[hasclass('o_kanban_config')]" position="replace">
-        </xpath>
         <xpath expr="//button[hasclass('o_column_unfold')]" position="replace">
         </xpath>
         <xpath expr="//div[hasclass('o_column_title')][2]" position="attributes">
