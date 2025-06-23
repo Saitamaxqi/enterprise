@@ -212,6 +212,18 @@ class SignRequest(models.Model):
         res = super().write(vals)
         return res
 
+    def unlink(self):
+        # Prevent deletion of signed documents by validating before unlink
+        self._check_signed_before_unlink()
+        return super().unlink()
+
+    def _check_signed_before_unlink(self):
+        """
+        Raise an error if any of the records are in 'signed' state.
+        """
+        if any(r.state == 'signed' for r in self):
+            raise UserError(self.env._("Signed documents cannot be deleted for legal reasons. Please archive them instead."))
+
     def copy_data(self, default=None):
         default = dict(default or {})
         vals_list = super().copy_data(default=default)
