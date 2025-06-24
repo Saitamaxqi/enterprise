@@ -5,7 +5,6 @@ import {
     insertSnippet,
     registerWebsitePreviewTour,
 } from "@website/js/tours/tour_utils";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
 
 registerWebsitePreviewTour("test_searchbar_within_appointments", {
     url: "/",
@@ -19,7 +18,6 @@ registerWebsitePreviewTour("test_searchbar_within_appointments", {
         trigger: ':iframe .s_searchbar_input[action="/appointment"]',
     },
     ...clickOnSave(),
-    stepUtils.waitIframeIsReady(),
     {
         content: "Enter search term",
         trigger: ":iframe .o_searchbar_form input",
