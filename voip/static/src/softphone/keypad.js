@@ -394,10 +394,10 @@ function highlightT9Match(name, t9) {
     if (t9.length !== 0) {
         return "";
     }
-    return htmlJoin(
+    return htmlJoin([
         markup(`<span class="o-voip-highlighted-letter fw-bolder">`),
         ...nameAsArr.slice(0, matchEnd),
-        markup("</span>"),
-        ...nameAsArr.slice(matchEnd)
-    );
+        markup`</span>`,
+        ...nameAsArr.slice(matchEnd),
+    ]);
 }

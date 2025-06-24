@@ -45,8 +45,9 @@ export class MailComposerChatGPT extends Component {
                     const root = document.createElement("div");
                     root.appendChild(content);
                     const { body } = this.props.record.data;
+                    // markup: the element of which innerHTML is taken should be safely built
                     this.props.record.update({
-                        body: htmlJoin(markup(root.innerHTML), body),
+                        body: htmlJoin([markup(root.innerHTML), body]),
                     });
                 },
             },

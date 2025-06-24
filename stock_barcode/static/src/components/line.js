@@ -1,6 +1,8 @@
 import { Component, markup } from "@odoo/owl";
+
 import { ProductImageDialog } from "@stock_barcode/components/product_image_dialog";
-import { htmlEscape } from "@web/core/utils/html";
+
+import { htmlReplaceAll } from "@web/core/utils/html";
 
 export default class LineComponent extends Component {
     static props = ["displayUOM", "line", "subline?", "editLine"];
@@ -112,8 +114,7 @@ export default class LineComponent extends Component {
     }
 
     get lineDescription() {
-       const description = htmlEscape(this.line.description_picking).replace(/\n/g, "<br/>");
-       return markup(description);
+        return htmlReplaceAll(this.line.description_picking, "\n", markup`<br/>`);
     }
 
     _getLocationPath(rootLocation, currentLocation) {
