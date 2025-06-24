@@ -48,10 +48,15 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
             run: "click",
         },
         {
-            trigger: "div.pivot_filter",
+            trigger: "a.o-edit-global-filters",
+            content: "Open Filters Side Panel",
+            run: "click",
+        },
+        {
+            trigger: "div.pivot_filter_section",
             content: "",
             run: function (actions) {
-                const pivots = document.querySelectorAll("div.pivot_filter");
+                const pivots = document.querySelectorAll("div.pivot_filter_section");
                 assert(pivots.length, 1, "There should be one filter");
                 const pivot = pivots[0];
                 assert(
@@ -59,40 +64,7 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
                     "MyFilter1",
                     "Invalid filter name"
                 );
-                assert(
-                    Boolean(
-                        pivot.querySelector(
-                            'div.o_multi_record_selector span.o_tag[data-tooltip="AdminDude"]'
-                        )
-                    ),
-                    true,
-                    "Wrong default filter value"
-                );
-                actions.click(pivot.querySelector(".o_side_panel_filter_icon.fa-cog"));
-            },
-        },
-        {
-            trigger: ".o_spreadsheet_filter_editor_side_panel",
-            content: "Check filter values",
-            run: function () {
-                const defaultFilterValue = document.querySelectorAll(
-                    'div.o_multi_record_selector span.o_tag[data-tooltip="AdminDude"]'
-                );
-                assert(
-                    defaultFilterValue.length,
-                    1,
-                    "There should be a default value in the filter..."
-                );
-                assert(
-                    document.querySelector(".o_side_panel_related_model input").value,
-                    "User",
-                    "Wrong model selected"
-                );
-
-                const fieldsValue = document.querySelector(
-                    "div.o_model_field_selector_value span.o_model_field_selector_chain_part"
-                );
-                assert(fieldsValue.textContent.trim(), "Users");
+                actions.click(pivot.querySelector(".pivot_filter_section"));
             },
         },
         {

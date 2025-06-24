@@ -3,34 +3,30 @@
 
     <div t-name="spreadsheet_edition.GlobalFiltersSidePanel" class="o_spreadsheet_global_filters_side_panel h-100">
         <div class="h-100 overflow-auto" t-ref="filtersList">
-            <div class="o-section pivot_filter_section py-3"
-                t-foreach="filters"
-                t-as="filter"
-                t-key="'filter_' + filter_index"
-                t-att-class="{ 'o-filter-dragging': dnd.draggedItemId === filter.id }"
-                t-att-style="getFilterItemStyle(filter)"
-                >
-                <div class="pivot_filter position-relative">
-                    <div class="o-filter-drag-handle h-100 position-absolute d-flex align-items-center text-muted"
-                        t-on-pointerdown="(ev) => this.startDragAndDrop(filter, ev)">
-                        <t t-call="o-spreadsheet-Icon.THIN_DRAG_HANDLE" />
-                    </div>
-                    <div class="o-section-title">
-                        <span class="o_side_panel_filter_label" t-esc="_t(filter.label)"/>
-                    </div>
-                    <div class="pivot_filter_input">
-                        <FilterValue filter="filter"
-                                     model="env.model"
-                                     showClear="true"
-                                     setGlobalFilterValue.bind="setGlobalFilterValue"
-                                     globalFilterValue="env.model.getters.getGlobalFilterValue(filter.id)"/>
-                        <i t-if="!isReadonly"
-                            class="fa fa-cog btn btn-link text-muted o_side_panel_filter_icon"
-                            title="Edit"
-                            t-on-click="() => this.onEdit(filter.id)"/>
+            <Section t-if="filters.length">
+                <div class="pivot_filter_section w-100 o-filter-drag-handle h-100 cursor-pointer"
+                    t-foreach="filters"
+                    t-as="filter"
+                    t-key="'filter_' + filter_index"
+                    t-att-class="{ 'o-filter-dragging': dnd.draggedItemId === filter.id }"
+                    t-att-style="getFilterItemStyle(filter)"
+                    t-on-pointerdown="(ev) => this.startDragAndDrop(filter, ev)"
+                    t-on-click="() => this.openEditor(filter.id)"
+                    >
+                    <div class="py-1 px-2 d-flex flex-column shadow-sm pivot-dimension mb-2 w-100">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <div class="d-flex align-items-center overflow-hidden text-nowrap">
+                                <i t-if="filter.type === 'date'" class="fa fa-calendar me-2"/>
+                                <i t-if="filter.type === 'relation'" class="fa fa-link me-2"/>
+                                <i t-if="filter.type === 'text'" class="fa fa-font me-2"/>
+                                <i t-if="filter.type === 'boolean'" class="fa fa-toggle-off me-2"/>
+                                <span t-esc="filter.label" class="o-fw-bold o_side_panel_filter_label"/>
+                            </div>
+                            <i class="o-button-icon fa fa-trash pe-1 ps-2" t-on-click="() => this.deleteFilter(filter.id)" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Section>
             <div t-if="!isReadonly" class="o-section">
                 <div class="o_add_filter o-section-title">Create filter</div>
                 <div class="o_filter_buttons_wrap grid">

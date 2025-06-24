@@ -63,7 +63,7 @@ export class GlobalFiltersSidePanel extends Component {
     /**
      * @param {string} id
      */
-    onEdit(id) {
+    openEditor(id) {
         const filter = this.env.model.getters.getGlobalFilter(id);
         if (!filter) {
             return;
@@ -105,7 +105,7 @@ export class GlobalFiltersSidePanel extends Component {
     }
 
     getFiltersElementsRects() {
-        return Array.from(this.filtersListRef.el.children).map((filterEl) =>
+        return Array.from(this.filtersListRef.el.children[0].children).map((filterEl) =>
             filterEl.getBoundingClientRect()
         );
     }
@@ -131,5 +131,9 @@ export class GlobalFiltersSidePanel extends Component {
                 delta,
             });
         }
+    }
+
+    deleteFilter(filterId) {
+        this.env.model.dispatch("REMOVE_GLOBAL_FILTER", { id: filterId });
     }
 }

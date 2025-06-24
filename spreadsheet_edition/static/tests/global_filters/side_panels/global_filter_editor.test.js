@@ -362,12 +362,11 @@ test("Cannot select ID in text filter", async function () {
 test("Create a new many2many relational global filter", async function () {
     defineModels([Vehicle]);
     const serverData = getBasicServerData();
-    const vehicleField = fields.Many2many({
+    Partner._fields.vehicle_ids = fields.Many2many({
         relation: "vehicle",
         searchable: true,
         string: "Vehicle",
     });
-    Partner._fields.vehicle_ids = vehicleField;
     serverData.models["ir.model"] = {
         records: [{ id: 34, name: "Vehicle", model: "vehicle" }],
     };
@@ -947,8 +946,7 @@ test("Create a new relative date filter with a negative offset should save the a
 test("Change all domains -> Set corresponding model should allow saving", async function () {
     const serverData = getBasicServerData();
     defineModels([Vehicle]);
-    const vehicle_ids = fields.Many2many({ relation: "vehicle", string: "Vehicle" });
-    Partner._fields.vehicle_ids = vehicle_ids;
+    Partner._fields.vehicle_ids = fields.Many2many({ relation: "vehicle", string: "Vehicle" });
     serverData.models["ir.model"].records = [
         ...IrModel._records,
         {
