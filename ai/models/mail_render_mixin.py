@@ -57,17 +57,18 @@ class MailRenderMixinAI(models.AbstractModel):
 
         return result
 
-    def _render_field(self, field, res_ids, engine='inline_template', compute_lang=False, set_lang=False, add_context=None, options=None):
-        """Use the field's eval_ai_prompts attr if no 'eval_ai_prompts' option is provided."""
+    def _render_field(self, field, res_ids, engine='inline_template',
+                      # lang options
+                      compute_lang=False, res_ids_lang=False, set_lang=False,
+                      # rendering context and options
+                      add_context=None, options=None):
+        # Use the field's eval_ai_prompts attr if no 'eval_ai_prompts' option is provided
         if getattr(self._fields[field], "eval_ai_prompts", False) and "eval_ai_prompts" not in (options or {}):
             if not options:
                 options = {}
             options["eval_ai_prompts"] = True
         return super()._render_field(
-            field, res_ids,
-            engine=engine,
-            compute_lang=compute_lang,
-            set_lang=set_lang,
-            add_context=add_context,
-            options=options,
+            field, res_ids, engine=engine,
+            compute_lang=compute_lang, set_lang=set_lang, res_ids_lang=res_ids_lang,
+            add_context=add_context, options=options,
         )
