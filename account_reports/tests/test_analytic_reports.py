@@ -677,3 +677,32 @@ class TestAnalyticReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_profit_and_loss_multicompany_access_rights(self):
+        branch = self.env['res.company'].create([{
+            'name': "My Test Branch",
+            'parent_id': self.env.company.id,
+        }])
+        other_currency = self.setup_other_currency('EUR', rounding=0.001)
+        test_journal = self.env['account.journal'].create({
+            'name': 'Test Journal',
+            'code': 'TEST',
+            'type': 'sale',
+            'company_id': self.env.company.id,
+            'currency_id': other_currency.id,
+        })
+        test_user = self.env['res.users'].create({
+            'login': 'test',
+            'name': 'The King',
+            'email': 'noop@example.com',
+            'group_ids': [Command.link(self.env.ref('account.group_account_manager').id)],
+            'company_ids': [Command.link(self.env.company.id), Command.link(branch.id)],
+        })
+        self.env.invalidate_all()
+
+        options = self._generate_options(
+            self.report.with_user(test_user).with_company(branch), '2019-01-01', '2019-12-31',
+        )
+        lines = self.report._get_lines(options)
+        self.assertTrue(lines)
+        self.assertEqual(test_journal.display_name, "Test Journal (EUR)")
