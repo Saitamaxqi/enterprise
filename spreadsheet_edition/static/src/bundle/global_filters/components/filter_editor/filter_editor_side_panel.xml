@@ -25,7 +25,7 @@
                     class="d-flex flex-row justify-content-start"
                     name="field-match"
                 >
-                    <span class="text-muted w-50">Field</span>
+                    <span class="text-muted pe-2">Field</span>
                     <ModelFieldSelector
                             path="getModelField(match.fieldMatch)"
                             resModel="match.model()"
