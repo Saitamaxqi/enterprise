@@ -1797,3 +1797,54 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         })
         wizard.generate_lot()
         self.assertEqual(so.amount_total, 0)
+
+    def test_kit_product_delivery_validate_when_mark_as_done(self):
+        """
+        check that when the product added to the sale order is a kit, clicking on mark as done on the task
+        still validates the delivery (as it would with a non kit product)
+        """
+        if self.env['ir.module.module']._get('sale_mrp').state != 'installed':
+            self.skipTest("If the 'sale_mrp' module isn't installed, we can't test bom!")
+        # create BOM
+        product_a, product_b, final_product = self.env['product.product'].create([{
+            'name': p_name,
+            'type': 'consu',
+            'is_storable': True,
+            'seller_ids': [
+                Command.create({
+                    'partner_id': self.partner_1.id,
+                })
+            ],
+        } for p_name in ['Comp 1', 'Comp 2', 'Final Product']]).with_context({'fsm_task_id': self.task.id})
+        self.env['mrp.bom'].create({
+            'product_id': final_product.id,
+            'product_tmpl_id': final_product.product_tmpl_id.id,
+            'product_qty': 1,
+            'consumption': 'flexible',
+            'type': 'phantom',
+            'bom_line_ids': [
+                Command.create({
+                    'product_id': product_a.id,
+                    'product_qty': 1
+                }),
+                Command.create({
+                    'product_id': product_b.id,
+                    'product_qty': 1
+                }),
+            ]
+        })
+        # add a product to the task's sale order
+        self.task.write({'partner_id': self.partner_1.id})
+        self.task.with_user(self.project_user)._fsm_ensure_sale_order()
+        so = self.task.sale_order_id
+        so.write({
+            'order_line': [
+                Command.create({
+                    'product_id': final_product.id,
+                    'product_uom_qty': 1,
+                    'task_id': self.task.id,
+                }),
+            ],
+        })
+        self.task.with_user(self.project_user).action_fsm_validate()
+        self.assertEqual(so.picking_ids.state, 'done')

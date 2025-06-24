@@ -21,7 +21,8 @@ class ProjectTask(models.Model):
             for order_line in sale_line:
                 to_log = {}
                 total_qty = sum(order_line.move_ids.filtered(lambda m: m.state != 'cancel' and not m.move_dest_ids).mapped('product_uom_qty'))
-                if float_compare(order_line.product_uom_qty, total_qty, precision_rounding=order_line.product_uom_id.rounding) < 0:
+                if (float_compare(order_line.product_uom_qty, total_qty, precision_rounding=order_line.product_uom_id.rounding) < 0
+                    and order_line.product_id in order_line.move_ids.product_id):
                     to_log[order_line] = (order_line.product_uom_qty, total_qty)
 
                 if to_log:
