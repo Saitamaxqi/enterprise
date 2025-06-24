@@ -721,13 +721,13 @@ class DocumentsDocument(models.Model):
             self._get_last_access_date_group_cte(), tuple(values))
         return [('id', 'in', query)]
 
-    def _field_to_sql(self, alias, fname, query=None, flush: bool = True) -> SQL:
+    def _field_to_sql(self, alias, fname, query=None) -> SQL:
         if fname == 'last_access_date_group':
             # Allow to group on the field
             return SQL("""(%s SELECT date FROM last_access_date WHERE document_id = %s)""",
                        self._get_last_access_date_group_cte(), SQL.identifier(alias, 'id'))
 
-        return super()._field_to_sql(alias, fname, query, flush)
+        return super()._field_to_sql(alias, fname, query)
 
     def _order_field_to_sql(self, alias, field_name, direction, nulls, query):
         if field_name == 'last_access_date_group':
