@@ -132,7 +132,7 @@ class ProductProduct(models.Model):
         for product in self:
             if product.pricer_sale_pricelist_id:
                 product._origin.lst_price = product.lst_price
-                computed_price = product.pricer_sale_pricelist_id._get_product_price(product._origin, 1.0, False)
+                computed_price = product.pricer_sale_pricelist_id._get_product_price(product._origin or product, quantity=1.0)
                 product.on_sale_price = product._origin.on_sale_price = computed_price
             else:
                 product.on_sale_price = 0.0
