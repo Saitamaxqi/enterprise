@@ -61,7 +61,7 @@ class ResourceCalendarLeaves(models.Model):
         if domain is None:
             domain = self._process_shifts_domain()
         shifts = self.env['planning.slot'].search(domain)
-        shifts._compute_allocated_hours()
+        self.env.add_to_compute(self.env['planning.slot']._fields.get('allocated_hours'), shifts)
 
     @api.model_create_multi
     def create(self, vals_list):
