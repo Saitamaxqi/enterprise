@@ -256,6 +256,25 @@ class AppointmentResource(AppointmentCommon):
             {'total_remaining_capacity': 0},
             'No result should give dict with correct accumulated values.')
 
+    @users('apt_user')
+    def test_appointment_user_can_create_booking_with_resources_from_gantt(self):
+        """ Test if a user (with user rights) can create a booking from the calendar gantt view. """
+
+        gantt_context = {
+            'booking_gantt_create_record': True,
+            'default_appointment_type_id': self.appointment_manage_capacity.id,
+            'default_resource_ids': [self.resource_1.id],
+        }
+
+        booking_form = Form(self.env['calendar.event'].with_context(gantt_context))
+        booking_form.name = 'Gommage'
+        booking = booking_form.save()
+
+        self.assertEqual(booking.name, 'Gommage')
+        self.assertEqual(booking.appointment_type_id, self.appointment_manage_capacity)
+        self.assertEqual(len(booking.resource_ids), 1)
+        self.assertEqual(booking.appointment_resource_ids, self.resource_1)
+
 
 @tagged('appointment_resources', 'post_install', '-at_install')
 class AppointmentResourceBookingTest(AppointmentCommon):

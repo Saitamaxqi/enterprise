@@ -48,6 +48,16 @@ class AppointmentCommon(MailCase, common.HttpCase):
             login='apt_manager',
             tz='Europe/Brussels'
         )
+        cls.apt_user = mail_new_test_user(
+            cls.env,
+            company_id=cls.company_admin.id,
+            email='apt_user@test.example.com',
+            groups='base.group_user,appointment.group_appointment_user',
+            name='Appointment User',
+            notification_type='email',
+            login='apt_user',
+            tz='Europe/Brussels'
+        )
         cls.staff_user_bxls = mail_new_test_user(
             cls.env,
             company_id=cls.company_admin.id,
@@ -308,7 +318,6 @@ class AppointmentSecurityCommon(AppointmentCommon):
     @classmethod
     def setUpClass(cls):
         super(AppointmentSecurityCommon, cls).setUpClass()
-        cls.apt_user = mail_new_test_user(cls.env, login='apt_user', tz="UTC", groups='base.group_user,appointment.group_appointment_user')
         cls.internal_user = mail_new_test_user(cls.env, login="internal_user", tz="UTC", groups="base.group_user")
         cls.public_user = mail_new_test_user(cls.env, login="public_user", tz="UTC", groups="base.group_public")
         cls.common_slot_config = {
