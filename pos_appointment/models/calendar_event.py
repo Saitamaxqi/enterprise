@@ -11,7 +11,7 @@ class CalendarEvent(models.Model):
     answers = fields.Char('Q&A answers', compute='_compute_answers')
     phone_number = fields.Char(string='Phone number')
     appointment_status = fields.Selection(group_expand='_read_group_appointment_status')
-    waiting_list_capacity = fields.Integer(string='Waiting List Capacity', default=0, compute='_compute_waiting_list_capacity', store=True, readonly=False)
+    waiting_list_capacity = fields.Integer(string='Waiting List Capacity', compute='_compute_waiting_list_capacity', store=True, readonly=False)
 
     @api.model
     def _read_group_appointment_status(self, status, domain):
@@ -86,11 +86,16 @@ class CalendarEvent(models.Model):
             }
         }
 
-    @api.depends('resource_ids')
+    @api.depends('resource_ids', 'total_capacity_reserved')
     def _compute_waiting_list_capacity(self):
         for event in self:
             if not event.waiting_list_capacity:
-                event.waiting_list_capacity = sum(event.resource_ids.mapped('capacity'))
+                if event.total_capacity_reserved:
+                    event.waiting_list_capacity = event.total_capacity_reserved
+                elif event.resource_ids:
+                    event.waiting_list_capacity = sum(event.resource_ids.mapped('capacity'))
+                else:
+                    event.waiting_list_capacity = 0
 
     def set_attended(self):
         self.appointment_status = 'attended'
