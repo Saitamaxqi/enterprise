@@ -78,9 +78,6 @@
             <field name="mode">primary</field>
             <field name="priority">10</field>
             <field name="arch" type="xml">
-                <xpath expr="//header/button[@name='%(action_account_create_batch_payment)d']" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </xpath>
                 <xpath expr="//field[@name='journal_id']" position="attributes">
                     <attribute name="optional">hide</attribute>
                 </xpath>
