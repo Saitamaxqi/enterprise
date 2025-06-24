@@ -134,6 +134,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
 
         incoming_cc = f'"New Cc" <new.cc@test.agrolait.com>, {self.partner_2.email_formatted}'
         incoming_to = f'{self.ticket_alias.alias_full_name}, {self.partner_1.email_formatted}, "New Customer" <new.customer@test.agrolait.com>'
+        incoming_to_filtered = f'{self.partner_1.email_formatted}, "New Customer" <new.customer@test.agrolait.com>'
         for test_user in (self.user_employee, self.helpdesk_portal, False):
             with self.subTest(user_name=test_user.name if test_user else new_partner_email):
                 email_from = test_user.email_formatted if test_user else new_partner_email
@@ -203,7 +204,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 'email_from': formataddr((author.name, author.email_normalized)),
                                 # coming from incoming email
                                 'incoming_email_cc': incoming_cc,
-                                'incoming_email_to': incoming_to,
+                                'incoming_email_to': incoming_to_filtered,
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # followers of 'new task' subtype (but not original To as they
                                 # already received the email)
@@ -386,8 +387,8 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 'email_from': author.email_formatted,
                                 # coming from incoming email
                                 'incoming_email_cc': f'"Another Cc" <another.cc@test.agrolait.com>, {self.partner_3.email}',
-                                # To: received email Msg-To - customer who replies + email Reply-To
-                                'incoming_email_to': ', '.join(external_partners.mapped('email_formatted') + [expected_answer_reply_to]),
+                                # To: received email Msg-To - customer who replies, without email Reply-To
+                                'incoming_email_to': ', '.join(external_partners.mapped('email_formatted')),
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # notified: followers - already emailed, aka internal only
                                 'notified_partner_ids': internal_followers,
