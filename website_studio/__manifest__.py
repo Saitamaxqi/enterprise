@@ -38,7 +38,7 @@ model. Furthermore, you can create a new website form or edit an existing one.
         'website.backend_assets_all_wysiwyg': [
             'website_studio/static/src/website_form_editor.js',
         ],
-        'html_builder.assets': [
+        'website.website_builder_assets': [
             'website_studio/static/src/plugins/**/*',
         ],
     }

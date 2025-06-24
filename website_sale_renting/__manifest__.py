@@ -31,7 +31,7 @@ appropriate views and selling choices.
         'web.assets_tests': [
             'website_sale_renting/static/tests/tours/**/*',
         ],
-        'html_builder.assets': [
+        'website.website_builder_assets': [
             'website_sale_renting/static/src/plugins/**/*',
         ],
     },

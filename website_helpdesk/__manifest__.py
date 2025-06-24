@@ -28,7 +28,7 @@
             ('remove', 'website_helpdesk/static/src/js/website_helpdesk_form_editor.js'),
             ('remove', 'website_helpdesk/static/src/js/website_helpdesk_edit_menu.js'),
         ],
-        'html_builder.assets': [  # Should use website.website_builder
+        'website.website_builder_assets': [  # Should use website.website_builder
             'website_helpdesk/static/src/js/website_helpdesk_form_editor.js',
         ],
         'website.assets_editor': [

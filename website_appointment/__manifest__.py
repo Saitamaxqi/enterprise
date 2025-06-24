@@ -61,7 +61,7 @@ Allow clients to Schedule Appointments through your Website
         'website.assets_editor': [
             'website_appointment/static/src/js/systray_items/*.js',
         ],
-        'html_builder.assets': [
+        'website.website_builder_assets': [
             'website_appointment/static/src/plugins/**/*',
         ],
         'website.assets_wysiwyg': [

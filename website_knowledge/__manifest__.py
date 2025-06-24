@@ -42,7 +42,7 @@
             'website_knowledge/static/tests/**/*',
             ('remove', 'website_knowledge/static/tests/tours/**/*'),
         ],
-        'html_builder.assets': [
+        'website.website_builder_assets': [
             'website_knowledge/static/src/plugins/**/*',
         ],
     },
