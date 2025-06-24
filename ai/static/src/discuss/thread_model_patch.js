@@ -32,4 +32,12 @@ patch(Thread.prototype, {
 
         return super.avatarUrl;
     },
+    computeCorrespondent() {
+        const correspondent = super.computeCorrespondent();
+        // remove any correspondent from ai composer chats (should remove related alerts)
+        if (this.channel_type === "ai_composer") {
+            return;
+        }
+        return correspondent;
+    },
 });

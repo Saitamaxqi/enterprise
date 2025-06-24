@@ -23,8 +23,11 @@
         'whatsapp',
     ],
     'assets': {
+        'web.assets_tests': [
+            'test_discuss_full_enterprise/static/tests/tours/**/*',
+        ],
         'web.assets_unit_tests': [
-            'test_discuss_full_enterprise/static/tests/**/*',
+            'test_discuss_full_enterprise/static/tests/*',
         ],
     },
     'author': 'Odoo S.A.',
