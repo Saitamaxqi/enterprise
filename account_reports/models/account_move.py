@@ -7,10 +7,17 @@ class AccountMove(models.Model):
     closing_return_id = fields.Many2one(comodel_name='account.return', index='btree_not_null')
 
     def action_open_tax_return(self):
-        action = self.env['account.return'].action_open_tax_return_view(additional_return_domain=[('id', '=', self.closing_return_id.id)])
-        if action['res_model'] == 'account.return':
-            del action['context']
-        return action
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.closing_return_id.name,
+            'res_model': 'account.return.check',
+            'view_mode': 'kanban',
+            'context': {
+                'account_return_id': self.closing_return_id.id,
+            },
+            'domain': [['return_id', '=', self.closing_return_id.id]],
+            'views': [(self.env.ref('account_reports.account_return_check_kanban_view').id, 'kanban')],
+        }
 
     def unlink(self):
         for move in self:

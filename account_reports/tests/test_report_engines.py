@@ -1432,7 +1432,7 @@ class TestReportEngines(TestAccountReportsCommon):
             tax_return.action_review()
 
             with self.allow_pdf_render():
-                tax_return.action_submit()
+                tax_return.action_lock()
 
         self._run_external_engine_default_test_case(True, False, lock_via_tax_closing)
 
@@ -1449,7 +1449,12 @@ class TestReportEngines(TestAccountReportsCommon):
         )
 
         non_tax_report = self._create_report([test_line_1, test_line_2], name="non_tax_report")
-        tax_report = self._create_report([test_line_1, test_line_2], root_report_id=self.env.ref('account.generic_tax_report').id, name="tax_report")
+        tax_report = self._create_report(
+            [test_line_1, test_line_2],
+            root_report_id=self.env.ref('account.generic_tax_report').id,
+            name="tax_report",
+            country_id=self.env.ref('base.us').id,
+        )
 
         # Create the journal entries.
         self._create_test_account_moves([

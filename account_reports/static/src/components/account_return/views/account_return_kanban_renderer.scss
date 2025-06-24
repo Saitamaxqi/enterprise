@@ -1,61 +1,32 @@
-.o_account_return_kanban_container {
-    .o_account-return-kanban {
+.o_account-return-kanban {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+
+    .o_kanban_record {
+        width: 100%;
+        padding: 5px;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-block: 20px;
-        gap: 5px;
-        overflow: auto;
-        flex-grow: 1;
-
-        .o_kanban_record {
-            width: calc(100% - 5vw);
-            padding: 5px;
-            display: flex;
-            flex-direction: row;
-            position: relative;
-            flex-grow: 0;
-
-            @include media-breakpoint-up(md) {
-                &.account_return_selected {
-                    box-shadow: inset 0 0px 0px 3px var(--KanbanColumn__highlight-selected-border);
-                }
-            }
-
-            .container{
-                max-width: none;
-
-                .row{
-                    --gutter-x: 0;
-                }
-            }
-        }
-
-        .return-group-header {
-            width: calc(100% - 5vw);
-            display: block;
-            font-weight: 700;
-            font-size: 1rem;
-            padding: 10px;
-        }
+        flex-direction: row;
+        position: relative;
     }
 
-    .o_account_return_chatter {
-        border-left: 1px solid var(--border-color);
-        max-width: calc(#{$o-mail-Chatter-minWidth} + 20px + var(--Chatter-asideExtraWidth));
-        transition: max-width 0.2s ease-in-out;
+    .return-group-header {
+        margin-top: 10px;
+        width: calc(100% - 1vw);
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 10px;
+    }
 
-        .o-mail-Chatter-topbar {
-            padding-top: 0.25rem;
-        }
+    .o_kanban_record .fa-clock-o {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
 
-        .o-mail-ActivityList {
-            padding-left: 0.25rem;
-        }
-
-        &.o_account_return_chatter_hidden{
-            max-width: 0;
-            transition: max-width 0.2s ease-in-out;
-        }
+    .o_kanban_record:hover .fa-clock-o {
+        opacity: 1;
     }
 }

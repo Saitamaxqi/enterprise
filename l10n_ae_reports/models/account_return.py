@@ -6,13 +6,13 @@ from odoo.exceptions import RedirectWarning
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
-    def _proceed_with_submission(self, options_to_inject=None):
+    def _proceed_with_locking(self, options_to_inject=None):
         # EXTEND: account_reports account.return
         if self.type_id.report_id == self.env.ref('l10n_ae_reports.ae_corporate_tax_report'):
             options = {**self._get_closing_report_options(), **(options_to_inject or {})}
             self._generate_tax_closing_entries(options)
 
-        return super()._proceed_with_submission(options_to_inject)
+        return super()._proceed_with_locking(options_to_inject)
 
     def _create_accounting_entry(self, date_period, value, company, debit_account, credit_account):
         return self.env['account.move'].create({

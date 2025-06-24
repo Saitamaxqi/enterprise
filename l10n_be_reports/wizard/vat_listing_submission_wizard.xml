@@ -10,7 +10,6 @@
                 <field name="instructions" position="replace">
                     <group>
                         <group id="instructions">
-                            <separator string="Instructions"/>
                             <ol colspan="2">
                                 <li>
                                     <div class="d-inline-block align-top">

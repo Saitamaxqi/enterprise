@@ -141,7 +141,7 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
         # Suppress the pdf output
         tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            tax_return.action_submit()
+            tax_return.action_lock()
 
         options = self._generate_options(self.report, '2021-06-01', '2021-06-30')
         report_lines = self.report._get_lines(options)

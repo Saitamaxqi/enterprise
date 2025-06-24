@@ -94,7 +94,7 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
         })
         april_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            april_return.action_submit()
+            april_return.action_lock()
 
         self.assertRecordValues(
             april_return.closing_move_ids.line_ids,
@@ -134,7 +134,7 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
         })
         may_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            may_return.action_submit()
+            may_return.action_lock()
 
         self.assertRecordValues(
             may_return.closing_move_ids.line_ids,
@@ -246,7 +246,7 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
         })
         may_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            may_return.action_submit()
+            may_return.action_lock()
 
         with patch.object(self.env.registry['l10n_fr_reports.send.vat.report'], '_send_xml_to_aspone', return_value=[]):
             send_vat_wizard.send_vat_return()

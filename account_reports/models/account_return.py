@@ -1,6 +1,7 @@
 import base64
 import datetime
 from collections import defaultdict
+from markupsafe import Markup
 
 from dateutil.relativedelta import relativedelta
 from odoo import Command, _, api, fields, models
@@ -121,7 +122,7 @@ class AccountReturnType(models.Model):
         # Post generation -> we need to vacuum all returns that should not exist anymore
         return_root_company_domain = [('company_ids', 'in', root_companies.ids)]
         all_return_that_might_be_deleted = self.env['account.return'].sudo().search([
-            ('date_submission', '=', False),
+            ('date_lock', '=', False),
             ('is_completed', '=', False),
             *return_root_company_domain,
         ])
@@ -175,7 +176,7 @@ class AccountReturnType(models.Model):
         if not self._can_return_exist(main_company, tax_unit):
             returns_to_unlink = self.env['account.return'].sudo().search([
                 ('company_id', '=', main_company.id),
-                ('date_submission', '=', False),
+                ('date_lock', '=', False),
                 ('is_completed', '=', False),
                 ('type_id', '=', self.id),
                 ('date_to', '>=', date_from),
@@ -229,7 +230,7 @@ class AccountReturnType(models.Model):
             for same_period in same_periods:
                 same_period_returns = existing_periods[same_period]
                 for same_period_return in same_period_returns:
-                    if same_period_return.company_id == main_company and not same_period_return.is_completed and not same_period_return.date_submission:
+                    if same_period_return.company_id == main_company and not same_period_return.is_completed and not same_period_return.date_lock:
                         if same_period_return.tax_unit_id != tax_unit:
                             same_period_return.tax_unit_id = tax_unit
                         elif same_period_return.company_ids != expected_companies:
@@ -244,7 +245,7 @@ class AccountReturnType(models.Model):
             unmatched_existing_periods_posted_returns = self.env['account.return']
             unmatched_existing_periods_unposted_returns = self.env['account.return']
             for period in unmatched_existing_periods:
-                if not existing_periods[period].date_submission and not existing_periods[period].is_completed:
+                if not existing_periods[period].date_lock and not existing_periods[period].is_completed:
                     unmatched_existing_periods_unposted_returns |= existing_periods[period]
                 else:
                     unmatched_existing_periods_posted_returns |= existing_periods[period]
@@ -416,6 +417,7 @@ class AccountReturn(models.Model):
     attachment_ids = fields.Many2many(comodel_name='ir.attachment')
     type_external_id = fields.Char(compute="_compute_type_external_id")
     date_deadline = fields.Date(string="Deadline", compute="_compute_deadline", store=True)
+    date_lock = fields.Date(string="Lock Date")
     date_submission = fields.Date(string="Submission Date")
     check_ids = fields.One2many(comodel_name='account.return.check', inverse_name='return_id', string="Checks")
     unresolved_check_count = fields.Integer(string="Issues", compute="_compute_unresolved_check_count")
@@ -652,6 +654,7 @@ class AccountReturn(models.Model):
     ####################################################################################################
     ####  State Actions
     ####################################################################################################
+
     def try_auto_review(self):
         for account_return in self.filtered(lambda r: r.state == 'new'):
             if account_return.unresolved_check_count == 0 and account_return.check_ids.filtered(lambda r: r.bypassed):
@@ -664,61 +667,22 @@ class AccountReturn(models.Model):
         if bypass_failing_tests:
             self.check_ids.filtered(lambda check: check.result == 'failure').bypassed = True
 
-        if action := self._check_for_checks_wizard('action_review'):
-            return action
-
-        action = None
-
-        if self.unresolved_check_count == 0:
-            action = {
-                'type': 'ir.actions.client',
-                'tag': 'action_return_checks_completed_notification',
-                'params': {
-                    'message': _("%(count)s checks passed", count=self.resolved_check_count),
-                    'action': self.action_review_checks(),
-                },
-            }
+        self._check_failing_checks_in_current_stage()
 
         self.state = 'reviewed'
-        return action
+        return True
 
-    def action_submit(self):
+    def action_lock(self):
         self.ensure_one()
-        return self._proceed_with_submission()
+        self._proceed_with_locking()
 
-    def _get_amount_to_pay_additional_tax_domain(self):
-        return []
-
-    def _evaluate_amount_to_pay_from_tax_closing_accounts(self):
-        country = self.type_id.report_id.country_id or self.company_id.account_fiscal_country_id
-        tax_groups = self.env['account.tax'].sudo()._read_group(
-            domain=[
-                ('company_id', 'in', self.company_ids.ids),
-                ('country_id', '=', country.id),
-                *self._get_amount_to_pay_additional_tax_domain(),
-            ],
-            aggregates=['tax_group_id:recordset'],
-        )[0][0]
-
-        payable_accounts = tax_groups.tax_payable_account_id
-        receivable_accounts = tax_groups.tax_receivable_account_id
-
-        amount = -sum(
-            aml.balance
-            for aml in self.closing_move_ids.line_ids
-            if (aml.account_id in payable_accounts and aml.credit) or (aml.account_id in receivable_accounts and aml.debit)
-        )
-
-        return self.amount_to_pay_currency_id.round(amount)
-
-    def _proceed_with_submission(self, options_to_inject=None):
+    def _proceed_with_locking(self, options_to_inject=None):
         """
-        Called at the end of a submission to actually submit.
+        Called at the end of the locking process.
         It creates:
         - closing entries if it is a tax report
-        - set the submission_date
-        - change the state to submitted
-        - generates attachements specified in `_generate_submission_attachments`
+        - change the state to locked
+        - generates attachments specified in `_generate_locking_attachments`
 
         """
         self.ensure_one()
@@ -727,17 +691,16 @@ class AccountReturn(models.Model):
             ('company_id', '=', self.company_id.id),
             ('type_id', '=', self.type_id.id),
             ('date_deadline', '<', self.date_deadline),
-            ('date_submission', '=', False),
+            ('date_lock', '=', False),
             ('is_completed', '=', False),
         ]
         count = self.env['account.return'].search_count(domain, limit=1)
         if count:
-            raise UserError(_("You cannot submit this return as there are previous returns that are waiting to be posted."))
+            raise UserError(_("You cannot lock this return as there are previous returns that are waiting to be posted."))
 
-        if action := self._check_for_checks_wizard('action_submit'):
-            return action
+        self._check_failing_checks_in_current_stage()
 
-        self.state = 'submitted'
+        self.state = 'locked'
 
         if report := self.type_id.report_id:
             options = {**self._get_closing_report_options(), **(options_to_inject or {})}
@@ -748,7 +711,8 @@ class AccountReturn(models.Model):
 
                 # Create default expressions for next period if necessary
                 main_company = self.tax_unit_id.main_company_id or self.company_id
-                if (not report.country_id or report.country_id == main_company.account_fiscal_country_id) and (not main_company.tax_lock_date or self.date_to > main_company.tax_lock_date):
+                if (report.country_id and report.country_id == main_company.account_fiscal_country_id and
+                        (not main_company.tax_lock_date or self.date_to > main_company.tax_lock_date)):
                     for company in self.company_ids:
                         company.sudo().tax_lock_date = self.date_to
                         self.env['account.report'].with_company(company)._generate_default_external_values(self.date_from, self.date_to, True)
@@ -757,19 +721,36 @@ class AccountReturn(models.Model):
                 self.amount_to_pay = self._evaluate_amount_to_pay_from_tax_closing_accounts()
 
             report.with_context(allowed_company_ids=self.company_ids.ids)._generate_carryover_external_values(options)
-            self._generate_submission_attachments(options)
+            self._generate_locking_attachments(options)
 
-        self.date_submission = fields.Date.context_today(self)
-        return self._on_post_submission_event()
+        self.date_lock = fields.Date.context_today(self)
 
-    def _on_post_submission_event(self):
-        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
-            self.is_completed = True
+    def _evaluate_amount_to_pay_from_tax_closing_accounts(self):
+        country = self.type_id.report_id.country_id or self.company_id.account_fiscal_country_id
+        tax_groups_sudo = self.env['account.tax'].sudo()._read_group(
+            domain=[
+                ('company_id', 'in', self.company_ids.ids),
+                ('country_id', '=', country.id),
+                *self._get_amount_to_pay_additional_tax_domain(),
+            ],
+            aggregates=['tax_group_id:recordset'],
+        )[0][0]
 
-        if self.is_tax_return:
-            return self.action_pay()
+        payable_accounts = tax_groups_sudo.tax_payable_account_id
+        receivable_accounts = tax_groups_sudo.tax_receivable_account_id
 
-    def _generate_submission_attachments(self, options):
+        amount = -sum(
+            aml.balance
+            for aml in self.closing_move_ids.line_ids
+            if (aml.account_id in payable_accounts and aml.credit) or (aml.account_id in receivable_accounts and aml.debit)
+        )
+
+        return self.amount_to_pay_currency_id.round(amount)
+
+    def _get_amount_to_pay_additional_tax_domain(self):
+        return []
+
+    def _generate_locking_attachments(self, options):
         self.ensure_one()
         self._add_attachment(self.type_id.report_id.export_to_pdf(options))
 
@@ -787,10 +768,26 @@ class AccountReturn(models.Model):
             'res_id': self.id,
         })]
 
+    def action_submit(self):
+        self.ensure_one()
+        self._proceed_with_submission()
+
+    def _proceed_with_submission(self):
+        self._check_failing_checks_in_current_stage()
+        self.state = 'submitted'
+        self.date_submission = fields.Date.context_today(self)
+        return self._on_post_submission_event()
+
+    def _on_post_submission_event(self):
+        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
+            self.is_completed = True
+
+        if self.is_tax_return:
+            return self.action_pay()
+
     def action_pay(self):
         self.ensure_one()
-        if action := self._check_for_checks_wizard('action_pay'):
-            return action
+        self._check_failing_checks_in_current_stage()
         if not self.amount_to_pay_currency_id.is_zero(self.amount_to_pay) or self.state == 'new':
             return (self._get_pay_wizard() or self._action_finalize_payment())
         self._action_finalize_payment()
@@ -812,26 +809,39 @@ class AccountReturn(models.Model):
         checks_to_reset = self.check_ids.filtered(lambda check: check.state in states)
         checks_to_reset.write({
             'bypassed': False,
-            'approver_ids': False,
+            'approver_id': False,
+            'supervisor_id': False,
         })
+        for account_return in checks_to_reset.return_id:
+            account_return.message_post(body=_("All checks and approvers have been reset"))
 
     def action_reset_tax_return_common(self):
         self.ensure_one()
+        if not self.is_tax_return:
+            return True
+
+        if not self.env.user.has_group('account.group_account_manager'):
+            raise UserError(_("Only an Accounting Administrator can reset a tax return"))
 
         if self.state == 'paid':
             self._reset_checks_for_states([self.state, 'submitted'])
             self.state = 'submitted'
 
         if self.state == 'submitted':
-            # Check if it is the last return closed
+            self._reset_checks_for_states([self.state, 'locked'])
+            self.date_submission = False
+            self.state = 'locked'
+
+        if self.state == 'locked':
+            # Check if it is the last return locked
             domain = [
                 ('company_id', '=', self.company_id.id),
                 ('type_id', '=', self.type_id.id),
-                ('date_submission', '!=', False),
+                ('date_lock', '!=', False),
                 ('date_deadline', '>', self.date_deadline),
             ]
             if self.env['account.return'].search_count(domain, limit=1):
-                raise UserError(_("You cannot reset this return to reviewed, as another return has been posted at a later date."))
+                raise UserError(_("You cannot reset this return to reviewed, as another return has been locked at a later date."))
 
             # delete carryover if possible
             if report := self.type_id.report_id:
@@ -862,7 +872,7 @@ class AccountReturn(models.Model):
             self.closing_move_ids.unlink()
             self.attachment_ids.unlink()
 
-            self.date_submission = False
+            self.date_lock = False
             self.report_opened_once = False
             self._reset_checks_for_states([self.state, 'reviewed'])
             self.state = 'reviewed'
@@ -876,6 +886,10 @@ class AccountReturn(models.Model):
 
     def action_reset_annual_closing(self):
         self.ensure_one()
+
+        if not self.env.user.has_group('account.group_account_manager'):
+            raise UserError(_("Only an Accounting Administrator can reset an annual closing"))
+
         if self.state == 'submitted':
             self._reset_checks_for_states([self.state, 'new'])
             self.state = 'new'
@@ -886,13 +900,9 @@ class AccountReturn(models.Model):
     ####  Other Actions
     ####################################################################################################
     def action_open_attachments(self):
-        return {
-            'name': self.name,
-            'type': 'ir.actions.act_window',
-            'res_model': 'ir.attachment',
-            'views': [(self.env.ref('account_reports.view_attachment_kanban_inherit_return').id, 'kanban')],
-            'domain': [('id', 'in', self.attachment_ids.ids)],
-        }
+        action = self.action_open_account_return()
+        action['context']['open_attachments_in_chatter'] = True
+        return action
 
     def action_mark_completed(self):
         self.ensure_one()
@@ -934,29 +944,6 @@ class AccountReturn(models.Model):
 
         company_ids = self.company_ids.ids
         return report.with_context(allowed_company_ids=company_ids).get_options(previous_options=options)
-
-    def action_review_checks(self):
-        self.ensure_one()
-        return {
-            'name': _("%(return_name)s Checks", return_name=self.type_id._get_return_name(self.company_id)),
-            'type': 'ir.actions.act_window',
-            'res_model': 'account.return.check',
-            'views': [(self.env.ref('account_reports.account_return_check_kanban_view').id, 'kanban'), (False, 'search')],
-            'domain': [('return_id', '=', self.id), ('state', '=', self.state)],
-            'view_mode': 'kanban,search',
-            'context': {'hide_return_name': True},
-        }
-
-    def action_review_all_checks(self):
-        self.ensure_one()
-
-        action = self.action_review_checks()
-        action['domain'] = [('return_id', '=', self.id)]
-        action['context'] = action.get('context', {}) | {
-            'disable_return_checks_redirection': True,
-        }
-
-        return action
 
     ####################################################################################################
     ####  Tax Closing
@@ -1257,7 +1244,8 @@ class AccountReturn(models.Model):
     ####################################################################################################
     ####  Checks
     ####################################################################################################
-    def _check_for_checks_wizard(self, wizard_on_validate: str | bool = False):
+
+    def _check_failing_checks_in_current_stage(self):
         self.ensure_one()
         domain = [
             ('return_id', '=', self.id),
@@ -1266,7 +1254,7 @@ class AccountReturn(models.Model):
             ('bypassed', '=', False),
         ]
         if self.env['account.return.check'].search_count(domain, limit=1):
-            return self.action_review_checks()
+            raise UserError(_("Some checks fail in the current stage, please solve them before proceeding."))
 
     def refresh_checks(self, force_bypassed=False):
         """
@@ -1333,7 +1321,8 @@ class AccountReturn(models.Model):
                 'target': 'new',
             }
             company = self.company_id
-            is_company_config_valid = company.vat and company.country_id and company.phone and company.email
+            required_fields = [company.vat, company.country_id, company.phone, company.email]
+            invalid_fields_count = sum(1 for field in required_fields if not field)
 
             checks.append({
                 'name': _("Company data"),
@@ -1342,9 +1331,10 @@ class AccountReturn(models.Model):
                     such as using the wrong VAT rate, wrongly exempting transactions.
                 """),
                 'code': 'check_company_data',
-                'records_name': _("Company Data"),
+                'records_count': invalid_fields_count,
+                'records_name': _("Missing"),
                 'action': review_action,
-                'result': 'failure' if not is_company_config_valid else 'success',
+                'result': 'failure' if invalid_fields_count else 'success',
             })
 
         if 'check_match_all_bank_entries' not in check_codes_to_ignore:
@@ -1804,6 +1794,23 @@ class AccountReturn(models.Model):
             'result': 'failure' if unreconciled_bank_entries_count else 'success',
         }
 
+    def action_open_account_return(self):
+        self.ensure_one()
+        if not self.check_ids:
+            self.refresh_checks()
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Tax Return'),
+            'res_model': 'account.return.check',
+            'view_mode': 'kanban',
+            'context': {
+                'account_return_id': self.id,
+            },
+            'domain': [['return_id', '=', self.id]],
+            'views': [(self.env.ref('account_reports.account_return_check_kanban_view').id, 'kanban')],
+        }
+
     def _check_draft_entries(self, code, name, message, exclude_entries=False):
         domain = [
             ('state', '=', 'draft'),
@@ -1838,7 +1845,6 @@ class AccountReturn(models.Model):
 class AccountReturnCheck(models.Model):
     _name = "account.return.check"
     _description = "Accounting Return Check"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "result, bypassed, name, id"
 
     code = fields.Char(string="Check ID", required=True)
@@ -1867,8 +1873,13 @@ class AccountReturnCheck(models.Model):
     date_deadline = fields.Date("Deadline", related="return_id.date_deadline")
 
     # Editable fields
-    bypassed = fields.Boolean(string="Bypassed", tracking=True)
-    approver_ids = fields.Many2many('res.users', string="Approved By", tracking=True)
+    bypassed = fields.Boolean(string="Bypassed")
+    approver_id = fields.Many2one(comodel_name='res.users', string="Approved By")
+    supervisor_id = fields.Many2one(comodel_name='res.users', string="Supervised By")
+    approver_supervisor_ids = fields.Many2many(comodel_name='res.users', string="Approver and Supervisor", compute='_compute_approver_supervisor_ids')
+    show_supervise = fields.Boolean(string="Show Supervise", compute='_compute_show_supervise')
+    show_invalidate = fields.Boolean(string="Show Invalidate", compute='_compute_show_invalidate')
+
     notes = fields.Html()
 
     @api.constrains('code')
@@ -1877,33 +1888,132 @@ class AccountReturnCheck(models.Model):
             if len(record.return_id.check_ids.filtered(lambda check: check.code == record.code)) > 1:
                 raise ValidationError(_("You can only have a unique check code for each return."))
 
+    @api.depends('approver_id', 'supervisor_id')
+    def _compute_approver_supervisor_ids(self):
+        for check in self:
+            check.approver_supervisor_ids = check.approver_id | check.supervisor_id
+
+    @api.depends_context('uid')
+    @api.depends('approver_id', 'supervisor_id')
+    def _compute_show_supervise(self):
+        is_admin = self.env.user.has_group('account.group_account_manager')
+        for check in self:
+            check.show_supervise = is_admin and check.approver_id and not check.supervisor_id
+
+    @api.depends_context('uid')
+    @api.depends('approver_id', 'supervisor_id', 'bypassed')
+    def _compute_show_invalidate(self):
+        is_admin = self.env.user.has_group('account.group_account_manager')
+        for check in self:
+            is_only_approved = check.approver_id and not check.supervisor_id
+            check.show_invalidate = is_admin and check.bypassed or is_only_approved
+
     def action_review(self):
         self.ensure_one()
         if self.action:
             return self.action
 
-    def action_bypass_or_undo(self):
+    def action_validate_check(self):
         self.ensure_one()
-        self.bypassed = not self.bypassed
 
-    def action_open_form_view(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'account.return.check',
-            'view_mode': 'form',
-            'res_id': self.id,
-            'target': 'current',
+        changes = {}
+        if not self.bypassed:
+            self.bypassed = True
+            changes['bypassed'] = {
+                'old': False,
+                'new': True,
+            }
+
+        original_approvers = self.approver_id | self.supervisor_id
+
+        is_admin = self.env.user.has_group('account.group_account_manager')
+
+        if not self.approver_id:
+            self.approver_id = self.env.user
+
+        if not self.supervisor_id and is_admin:
+            self.supervisor_id = self.env.user
+
+        new_approvers = self.approver_id | self.supervisor_id
+
+        if original_approvers != new_approvers:
+            changes['approved_by'] = {
+                'old': original_approvers,
+                'new': new_approvers,
+            }
+        self._log_return_changes(changes)
+        self.return_id.try_auto_review()
+
+    def action_invalidate_check(self):
+        self.ensure_one()
+
+        is_admin = self.env.user.has_group('account.group_account_manager')
+        if not is_admin and self.supervisor_id:
+            raise UserError(_("You can't invalidate a check approved by an Administrator"))
+
+        changes = {
+            'approved_by': {
+            'old': self.approver_id | self.supervisor_id,
+            'new': self.env['res.users'],
+        }}
+        self.approver_id = False
+        self.supervisor_id = False
+
+        self.bypassed = False
+        changes['bypassed'] = {
+            'old': True,
+            'new': False,
         }
+        self._log_return_changes(changes)
 
-    def _get_next_state_action_func_for_current_state(self):
-        """
-        Can be overridden
+        if self.return_id.state == 'reviewed':
+            self.return_id.state = 'new'
 
-        :returns: A dictionary with a mapping of current state mapped to the action function that trigger the next state
-        :rtype: dict
-        """
-        return {
-            'new': self.return_id.action_review,
-            'reviewed': self.return_id.action_submit,
-            'submitted': self.return_id.action_pay,
-        }
+    def _log_return_changes(self, changes=None):
+        """Log the changes of checks on the return's chatter"""
+        if not changes:
+            changes = {}
+
+        messages = []
+
+        if changes.get('bypassed'):
+            messages.append(Markup("""
+                <li>
+                    <span class='o-mail-Message-trackingOld me-1 px-1 text-muted fw-bold'>{old}</span>
+                    <i class='o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600'/>
+                    <span class='o-mail-Message-trackingNew me-1 fw-bold text-info'>{new}</span>
+                    <span class='o-mail-Message-trackingField ms-1 fst-italic text-muted'>({field_name})</span>
+                </li>
+                """).format(
+                old=changes['bypassed']['old'],
+                new=changes['bypassed']['new'],
+                field_name=_("Bypassed"),
+            ))
+
+        if changes.get('approved_by'):
+            old_approvers = ', '.join(changes['approved_by']['old'].mapped('name')) or _("None")
+            new_approvers = ', '.join(changes['approved_by']['new'].mapped('name')) or _("None")
+            messages.append(Markup("""
+                <li>
+                    <span class='o-mail-Message-trackingOld me-1 px-1 text-muted fw-bold'>{old}</span>
+                    <i class='o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600'/>
+                    <span class='o-mail-Message-trackingNew me-1 fw-bold text-info'>{new}</span>
+                    <span class='o-mail-Message-trackingField ms-1 fst-italic text-muted'>({field_name})</span>
+                </li>
+            """).format(
+                old=old_approvers,
+                new=new_approvers,
+                field_name=_("Approved by"),
+            ))
+
+        if messages:
+            body = Markup("""
+                <i>{check_name}</i> check updated:
+                <ul class='mb-0 ps-4'>
+                    {changes}
+                </ul>
+            """).format(
+                check_name=self.name,
+                changes=Markup("").join(messages),
+            )
+            self.return_id.message_post(body=body)

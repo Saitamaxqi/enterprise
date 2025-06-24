@@ -9,18 +9,18 @@ export class AccountReturnCheckKanbanRecord extends KanbanRecord {
         if (this.props.record.data.action)
             super.onGlobalClick(ev, newWindow);
     }
-    
+
     getRecordClasses() {
         const { archInfo, forceGlobalClick } = this.props;
-        const classes = ["o_kanban_record d-flex"];
+        let classes = super.getRecordClasses();
 
-        if ((forceGlobalClick || archInfo.openAction || archInfo.canOpenRecords) && this.props.record.data.action) {
-            classes.push("cursor-pointer");
+        const shouldHaveCursorPointer = (forceGlobalClick || archInfo.openAction || archInfo.canOpenRecords) && this.props.record.data.action;
+        classes = classes.replace(/\bcursor-pointer\b/, "");
+
+        if (shouldHaveCursorPointer) {
+            classes += " cursor-pointer";
         }
-        if (!this.props.groupByField) {
-            classes.push("flex-grow-1 flex-md-shrink-1 flex-shrink-0");
-        }
-        classes.push(archInfo.cardClassName);
-        return classes.join(" ");
+
+        return classes.trim();
     }
 } 

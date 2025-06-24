@@ -334,11 +334,6 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
     @freeze_time('2019-04-15')
     def test_generate_xml_with_prorata(self):
         company = self.env.company
-        handler = self.env['l10n_be.tax.report.handler']
-
-        report = self.env.ref('l10n_be.tax_report_vat')
-        options = report.get_options({})
-
         account_return = self.env['account.return'].create({
             'name': 'BE Tax Return',
             'type_id': self.env.ref('l10n_be_reports.be_vat_return_type').id,
@@ -346,19 +341,18 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
             'date_from': '2019-03-01',
             'date_to': '2019-03-31',
         })
-        wizard_action = self.env['l10n_be_reports.vat.return.submission.wizard']._open_submission_wizard(account_return)
-        wizard = self.env['l10n_be_reports.vat.return.submission.wizard'].browse(wizard_action['res_id'])
-        wizard.write({
+
+        wizard_lock = self.env['l10n_be_reports.vat.return.lock.wizard'].create({
+            'return_id': account_return.id,
             'is_prorata_necessary': True,
             'prorata_year': 2019,
             'prorata': 25,
             'prorata_at_100': 50,
             'prorata_at_0': 50,
         })
-
-        options = {**options, **(wizard._get_submission_options_to_inject() or {})}
-
-        wizard.print_xml()
+        with self.allow_pdf_render():
+            wizard_lock.action_proceed_with_locking()
+        xml_file = account_return.attachment_ids.filtered(lambda a: a.name.endswith(".xml"))
 
         # The partner id is changing between execution of the test so we need to append it manually to the reference.
         # Declaring March month, so 3
@@ -404,6 +398,6 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
         """ % ref
 
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_string(handler.export_tax_report_to_xml(options)['file_content']),
+            self.get_xml_tree_from_attachment(xml_file),
             self.get_xml_tree_from_string(expected_xml)
         )

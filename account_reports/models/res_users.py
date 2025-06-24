@@ -9,10 +9,11 @@ class ResUsers(models.Model):
         activities = super()._get_activity_groups()
 
         for activity in activities:
-            if activity['model'] == 'account.return.check':
+            if activity['model'] == 'account.return':
                 activity |= {
                     'name': self.env._("Tax Returns"),
                     'icon': modules.module.get_module_icon('account'),
+                    'view_type': 'kanban',
                 }
 
         return activities

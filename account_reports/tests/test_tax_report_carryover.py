@@ -108,7 +108,7 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
         })
         tax_return.action_review()
         with self.allow_pdf_render():
-            tax_return.action_submit()
+            tax_return.action_lock()
 
         # There should be an external value of -1000.0
         external_value = self.env['account.report.external.value'].search([('company_id', '=', self.company_1.id)])
@@ -219,7 +219,7 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
         })
         tax_return.action_review()
         with self.allow_pdf_render():
-            tax_return.action_submit()
+            tax_return.action_lock()
 
         self.assertTrue(all(move.state == 'posted' for move in tax_return.closing_move_ids))
         self.assertEqual(len(tax_return.closing_move_ids), 2, "There should be one closing per company in the tax unit")

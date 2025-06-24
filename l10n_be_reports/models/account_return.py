@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
 from datetime import date
 from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class AccountReturnType(models.Model):
@@ -218,7 +219,27 @@ class AccountReturn(models.Model):
 
         return checks
 
+    def action_lock(self):
+        # OVERRIDE
+        if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
+            new_wizard = self.env['l10n_be_reports.vat.return.lock.wizard'].create([{'return_id': self.id}])
+            return {
+                'type': 'ir.actions.act_window',
+                'name': _('Lock'),
+                'view_mode': 'form',
+                'res_model': 'l10n_be_reports.vat.return.lock.wizard',
+                'target': 'new',
+                'res_id': new_wizard.id,
+                'views': [[self.env.ref('l10n_be_reports.vat_return_lock_wizard_form').id, 'form']],
+                'context': {
+                    'dialog_size': 'medium',
+                },
+            }
+
+        return super().action_lock()
+
     def action_submit(self):
+        # OVERRIDE
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
             return self.env['l10n_be_reports.vat.return.submission.wizard']._open_submission_wizard(self)
 
@@ -257,6 +278,11 @@ class AccountReturn(models.Model):
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_to_xml_sales_report'))
 
     def l10n_be_reset_2_sates_common(self):
+        self.ensure_one()
+
+        if not self.env.user.has_group('account.group_account_manager'):
+            raise UserError(_("Only an Accounting Administrator can reset a tax return"))
+
         if self.state == 'submitted':
             self._reset_checks_for_states([self.state, 'reviewed'])
             self.date_submission = False
@@ -272,6 +298,11 @@ class AccountReturn(models.Model):
         return True
 
     def l10n_be_reset_tax_prepayment(self):
+        self.ensure_one()
+
+        if not self.env.user.has_group('account.group_account_manager'):
+            raise UserError(_("Only an Accounting Administrator can reset a tax return"))
+
         if self.state == 'paid':
             self._reset_checks_for_states([self.state, 'new'])
             self.state = 'new'
@@ -279,3 +310,13 @@ class AccountReturn(models.Model):
         self.is_completed = False
 
         return True
+
+    def action_open_account_return(self):
+        # OVERRIDE
+        self.ensure_one()
+        if self.type_external_id == 'l10n_be_reports.be_isoc_prepayment_return_type':
+            action = self.action_pay()
+            if action:
+                return action
+            return False
+        return super().action_open_account_return()

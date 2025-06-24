@@ -149,8 +149,7 @@ class OSSTaxReportTest(TestAccountReportsCommon):
         })
         tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            wizard_action = tax_return.action_submit()
-            self.env[wizard_action['res_model']].browse(wizard_action['res_id']).action_proceed_with_submission()
+            tax_return.action_lock()
 
         self.assertEqual(len(tax_return.closing_move_ids), 1)
 
@@ -369,9 +368,9 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             'type_id': self.tax_return_type.id,
             'company_id': self.env.company.id,
         })
-        oss_return.action_review()
+        oss_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            oss_return.action_submit()
+            oss_return.action_lock()
 
         tax_closing_entry_lines = oss_return.closing_move_ids.line_ids.filtered(lambda l: l.balance != 0.0)
 

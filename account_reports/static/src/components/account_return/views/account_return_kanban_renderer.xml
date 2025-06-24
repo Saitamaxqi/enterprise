@@ -20,28 +20,18 @@
                 <t t-set="list" t-value="props.list"/>
             </t>
         </div>
-
-        <div t-att-class="{'o_account_return_chatter_hidden': !this.props.chatterState.visible or !this.props.chatterState.returnId or ui.isSmall}"
-             class="o_account_return_chatter o-mail-ChatterContainer h-100 o-aside d-flex flex-column">
-            <Chatter
-                threadId="this.props.chatterState.returnId"
-                threadModel="'account.return'"
-                isChatterAside="!ui.isSmall"
-            />
-        </div>
     </t>
 
     <t t-name="account_reports.return_list">
         <t t-foreach="list.records" t-as="record" t-key="record.id">
             <AccountReturnKanbanRecord
-                chatterState="this.props.chatterState"
                 record="record"
                 archInfo="props.archInfo"
                 Compiler="props.Compiler"
                 readonly="false"
                 forceGlobalClick="false"
                 canResequence="false"
-                openRecord="props.openRecord"
+                openRecord.bind="openRecord"
             />
         </t>
     </t>

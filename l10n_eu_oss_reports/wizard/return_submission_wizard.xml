@@ -10,7 +10,6 @@
                 <field name="instructions" position="replace">
                     <group>
                         <group id="instructions">
-                            <separator string="Instructions"/>
                             <field name="country_code" invisible="1"/>
 
                             <ol colspan="2" invisible="country_code != 'BE'">

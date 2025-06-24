@@ -186,7 +186,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
         })
         tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            tax_return.action_submit()
+            tax_return.action_lock()
 
         # Get to the next month
         report_lines = self.report._get_lines(second_month_options)

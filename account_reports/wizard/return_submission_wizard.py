@@ -1,4 +1,4 @@
-from odoo import api, models, fields
+from odoo import _, api, models, fields
 
 
 class AccountReturnSubmissionWizard(models.TransientModel):
@@ -10,16 +10,7 @@ class AccountReturnSubmissionWizard(models.TransientModel):
 
     def action_proceed_with_submission(self):
         self.ensure_one()
-        return self.return_id._proceed_with_submission(options_to_inject=self._get_submission_options_to_inject())
-
-    def _get_submission_options_to_inject(self):
-        """
-        Can be overidden
-
-        Used to inject additional options inside the report options during submission of the return
-        """
-        # Hook for extension
-        return {}
+        return self.return_id._proceed_with_submission()
 
     @api.model
     def _open_submission_wizard(self, account_return, instructions=None):
@@ -28,7 +19,7 @@ class AccountReturnSubmissionWizard(models.TransientModel):
             'return_id': account_return.id if account_return else None,
         })._get_records_action(target='new')
 
-        record_action['name'] = account_return.type_id.name
+        record_action['name'] = _("Submission Instructions")
 
         record_action.setdefault('context', {})
         record_action['context'] |= {

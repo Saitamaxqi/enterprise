@@ -32,7 +32,16 @@ class L10n_Be_ReportsISOCPrepaymentPayWizard(models.TransientModel):
 
     def action_mark_as_paid(self):
         self.return_id.amount_to_pay = self.amount_to_pay
-        return super().action_mark_as_paid()
+        super().action_mark_as_paid()
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'action_return_refresh',
+            'params': {
+                'next_action': {'type': 'ir.actions.act_window_close'},
+                'return_ids': self.return_id.ids,
+            },
+        }
 
     def _generate_communication(self):
         ''' Taken from https://finances.belgium.be/fr/communication-structuree

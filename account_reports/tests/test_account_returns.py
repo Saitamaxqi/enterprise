@@ -90,9 +90,9 @@ class TestAccountReturn(TestAccountReportsCommon):
             ('company_id', '=', self.env.company.id)
         ])
 
-        # Submitting this one ("2025-01-01", "2025-01-31")
+        # Locking this one ("2025-01-01", "2025-01-31")
         with self.allow_pdf_render():
-            existing_returns[0].action_submit()
+            existing_returns[0].action_lock()
 
         # Regenerate new returns without overriding posted ones
         with self._patch_returns_generation():
@@ -134,9 +134,9 @@ class TestAccountReturn(TestAccountReportsCommon):
             ]
         )
 
-        # Submitting this one ("2024-01-01", "2024-02-28")
+        # Locking this one ("2024-01-01", "2024-02-28")
         with self.allow_pdf_render():
-            existing_returns[0].action_submit()
+            existing_returns[0].action_lock()
 
         # Regenerate new returns without overriding posted ones
         with self._patch_returns_generation():
@@ -187,9 +187,9 @@ class TestAccountReturn(TestAccountReportsCommon):
             ('type_id', '=', self.basic_return_type.id),
             ('company_id', '=', self.env.company.id)
         ])
-        # Submitting this one ("2024-01-01", "2024-01-31")
+        # Locking this one ("2024-01-01", "2024-01-31")
         with self.allow_pdf_render():
-            existing_returns[0].action_submit()
+            existing_returns[0].action_lock()
 
         with self._patch_returns_generation():
             self.basic_return_type.deadline_start_date = '2024-12-01'
@@ -366,7 +366,7 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         first_return.action_review()
         with self.allow_pdf_render():
-            first_return.action_submit()
+            first_return.action_lock()
 
         self.assertTrue(first_return.closing_move_ids)
 
@@ -485,8 +485,8 @@ class TestAccountReturn(TestAccountReportsCommon):
         first_return.action_review()
         second_return.action_review()
         with self.allow_pdf_render():
-            first_return.action_submit()
-            second_return.action_submit()
+            first_return.action_lock()
+            second_return.action_lock()
 
         with self.assertRaises(UserError):
             first_return.action_reset_tax_return_common()
@@ -503,12 +503,12 @@ class TestAccountReturn(TestAccountReportsCommon):
         second_return.action_review()
         with self.allow_pdf_render():
             with self.assertRaises(UserError):
-                second_return.action_submit()
+                second_return.action_lock()
 
         first_return.action_review()
         with self.allow_pdf_render():
-            first_return.action_submit()
-            second_return.action_submit()
+            first_return.action_lock()
+            second_return.action_lock()
 
     def test_return_manual_creation_wizard_single_return(self):
         original_number_of_returns = self.env['account.return'].search_count([])

@@ -87,17 +87,67 @@
     white-space: nowrap;
 }
 
-.o_account-return-kanban {
-    .o_return_check_kanban_card {
-        width: calc(100% - 40px);
-        min-width: 300px;
-        min-height: 64px;
-        padding: 0;
-        margin-left: 20px;
-        margin-right: 20px;
+.kanban_checks_view {
+    display: flex;
+    height:100%;
+
+    .kanban_return_and_checks_cards {
+        flex-grow: 1;
+
+        .kanban_return_card {
+            margin: 20px 20px 40px;
+        }
+
+        .kanban_checks_cards {
+            .o_return_check_kanban_card {
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-bottom: 5px;
+                min-height: 64px;
+                padding: 0;
+            }
+
+            .return-check-card-green {
+                border-left: 2px solid #28a745;
+                &:hover{
+                    box-shadow: inset 0 0 0 1px rgba(40, 167, 69, 0.25);
+                }
+            }
+
+            .return-check-card-gray {
+                border-left: 2px solid #b1b1b1;
+                &:hover{
+                    box-shadow: inset 0 0 0 1px rgba(177, 177, 177, 0.25);
+                }
+            }
+        }
     }
 
-    .return-check-card-success {
-        background-color: var(--AccountReturnCheck-card-success-bg-color, #eafaeb);
+    .o_account_return_chatter {
+        border-left: 1px solid var(--border-color);
+        max-width: calc(#{$o-mail-Chatter-minWidth} + 20px + var(--Chatter-asideExtraWidth));
+
+        .o-mail-Chatter-topbar {
+            padding-top: 0.25rem;
+        }
+
+        .o-mail-ActivityList {
+            padding-left: 0.25rem;
+        }
+
+        @media (max-width: 992px) {
+            display: none !important;
+        }
+
+        .o-mail-AttachmentList {
+            margin-left: 10px;
+        }
+    }
+
+    .return-check-card-red {
+        border-left: 2px solid #ff1616;
+        &:hover{
+            box-shadow: inset 0 0 0 1px rgba(255, 22, 22, 0.25);
+        }
     }
 }

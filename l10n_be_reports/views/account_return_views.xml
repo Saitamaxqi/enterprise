@@ -10,12 +10,6 @@
                 <t t-if="record.type_external_id.raw_value == 'l10n_be_reports.be_isoc_prepayment_return_type'" t-set="states" t-value="[{value: 'paid', display:paidLabel}]"/>
             </t>
 
-            <t id="default_buttons" position="before">
-                <t t-elif="record.type_external_id.raw_value == 'l10n_be_reports.be_isoc_prepayment_return_type'">
-                    <button invisible="is_completed" class="btn btn-primary" type="object" name="action_pay">Pay</button>
-                </t>
-            </t>
-
             <a name="action_reset_tax_return_common" position="after">
                 <a invisible="state == 'new' and not is_completed or type_external_id != 'l10n_be_reports.be_isoc_prepayment_return_type'" class="dropdown-item" type="object" name="l10n_be_reset_tax_prepayment" string="Reset"/>
                 <a invisible="state == 'new' and not is_completed or type_external_id not in ('l10n_be_reports.be_vat_listing_return_type', 'l10n_be_reports.be_ec_sales_list_return_type')" class="dropdown-item" type="object" name="l10n_be_reset_2_sates_common" string="Reset"/>
