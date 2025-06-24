@@ -582,8 +582,7 @@ class HrAppraisal(models.Model):
         if self.has_demo_data():
             return
         self.env['hr.employee']._load_scenario()
-        convert.convert_file(self.env, 'hr_appraisal', 'data/scenarios/hr_appraisal_scenario.xml', None, mode='init',
-            kind='data')
+        convert.convert_file(self.env, 'hr_appraisal', 'data/scenarios/hr_appraisal_scenario.xml', None, mode='init')
         return {
             'type': 'ir.actions.client',
             'tag': 'reload',

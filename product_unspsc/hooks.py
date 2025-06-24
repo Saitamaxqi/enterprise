@@ -42,8 +42,7 @@ def _assign_codes_uom(env):
     """Assign the codes in UoM of each data, this is here because the data is
     created in the last method"""
     tools.convert.convert_file(
-        env, 'product_unspsc', 'data/product_data.xml', None, mode='init',
-        kind='data')
+        env, 'product_unspsc', 'data/product_data.xml', None, mode='init')
 
 def _assign_codes_demo(env):
     """Assign the codes in the products used in demo invoices, this is here because the data is

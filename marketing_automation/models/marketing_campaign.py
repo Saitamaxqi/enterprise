@@ -624,7 +624,7 @@ for record in records:
             self.sudo().env,
             'marketing_automation',
             'data/templates/mail_template_body_welcome_template.xml',
-            idref={}, mode='init', kind='data'
+            idref={}, mode='init',
         )
         rendered_template = self.env['ir.qweb']._render(self.env.ref('marketing_automation.mail_template_body_welcome_template').id,
                         {'db_host': self.get_base_url(), 'company_website': self.env.company.website})
@@ -695,7 +695,7 @@ for record in records:
             self.sudo().env,
             'marketing_automation',
             'data/templates/mail_template_body_yellow_discount_template.xml',
-            idref={}, mode='init', kind='data'
+            idref={}, mode='init',
         )
         rendered_template = self.env['ir.qweb']._render(self.env.ref('marketing_automation.mail_template_body_yellow_discount_template').id,
                                                         {'db_host': self.get_base_url(), 'company_website': self.env.company.website})
@@ -756,7 +756,7 @@ for record in records:
             self.sudo().env,
             'marketing_automation',
             'data/templates/mail_template_body_confirmation_template.xml',
-            idref={}, mode='init', kind='data'
+            idref={}, mode='init',
         )
         rendered_template = self.env['ir.qweb']._render(self.env.ref('marketing_automation.mail_template_body_confirmation_template').id,
                                                 {'db_host': self.get_base_url()})
@@ -817,13 +817,13 @@ for record in records:
             self.sudo().env,
             'marketing_automation',
             'data/templates/mail_template_body_join_partnership_template.xml',
-            idref={}, mode='init', kind='data'
+            idref={}, mode='init',
         )
         convert.convert_file(
             self.sudo().env,
             'marketing_automation',
             'data/templates/mail_template_body_free_trial_template.xml',
-            idref={}, mode='init', kind='data'
+            idref={}, mode='init',
         )
 
         free_trial_rendered = self.env['ir.qweb']._render(self.env.ref('marketing_automation.mail_template_body_free_trial_template').id,

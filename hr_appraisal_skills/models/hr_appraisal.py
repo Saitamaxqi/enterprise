@@ -99,8 +99,7 @@ class HrAppraisal(models.Model):
 
     def _load_demo_data(self):
         super()._load_demo_data()
-        convert.convert_file(self.env, 'hr_appraisal_skills', 'demo/scenarios/scenario_appraisal_demo.xml', None,
-            mode='init', kind='data')
+        convert.convert_file(self.env, 'hr_appraisal_skills', 'demo/scenarios/scenario_appraisal_demo.xml', None, mode='init')
         return {
             'type': 'ir.actions.client',
             'tag': 'reload',
