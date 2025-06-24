@@ -37,14 +37,6 @@
         <field name="sequence">4</field>
         <field name="report_id" ref="l10n_mx.diot_report"/>
     </record>
-    <record id="diot_report_partner_nationality" model="account.report.column">
-        <field name="name">Nationality</field>
-        <field name="name@es_419">Nacionalidad</field>
-        <field name="expression_label">partner_nationality</field>
-        <field name="figure_type">string</field>
-        <field name="sequence">5</field>
-        <field name="report_id" ref="l10n_mx.diot_report"/>
-    </record>
 
     <!-- EXTRA EXPRESSIONS -->
     <record id="tax_report_mx_diot_third_party_code" model="account.report.expression">

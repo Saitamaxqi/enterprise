@@ -18,10 +18,13 @@ class ResPartner(models.Model):
         compute='_compute_type_of_third',
         help='Mexico: Describes what type of third party the supplier is. This is the first column in DIOT report.')
     l10n_mx_type_of_operation = fields.Selection([
+        ('02', ' 02 - Alienation of Assets'),
         ('03', ' 03 - Provision of Professional Services'),
         ('06', ' 06 - Renting of buildings'),
-        ('85', ' 85 - Others')],
-        help='Mexico: The type of operations that this supplier performs. This is the second column in DIOT report.',
+        ('07', ' 07 - Import of goods or services'),
+        ('08', ' 08 - Import via virtual transfer'),
+        ('85', ' 85 - Others'),
+        ('87', ' 87 - Global Operations')],
         string='Type of Operation',
     )
     l10n_mx_nationality = fields.Char(

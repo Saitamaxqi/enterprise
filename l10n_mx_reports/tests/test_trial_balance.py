@@ -18,6 +18,10 @@ class TestL10nMXTrialBalanceReportCommon(TestMxEdiCommon, TestAccountReportsComm
     def setUpClass(cls):
         super().setUpClass()
 
+        # Enforce old default expence account
+        cls.company = cls.company_data['company']
+        cls.company_data['default_account_expense'] = cls.env.ref(f'account.{cls.company.id}_cuenta601_84')
+
         cls.account_tag_debit = cls.env.ref('l10n_mx.tag_debit_balance_account')
         cls.account_tag_credit = cls.env.ref('l10n_mx.tag_credit_balance_account')
 
@@ -190,9 +194,11 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="115.06" NumCta="115.06" Desc="Goods held by third parties" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="118" NumCta="118" Desc="Creditable taxes paid" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="118.01" NumCta="118.01" Desc="Creditable VAT paid" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="118.02" NumCta="118.02" Desc="Creditable import VAT paid" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="118.03" NumCta="118.03" Desc="Creditable IEPS paid" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="119" NumCta="119" Desc="Taxes payable" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="119.01" NumCta="119.01" Desc="VAT due" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="119.02" NumCta="119.02" Desc="Import VAT due" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="119.03" NumCta="119.03" Desc="IEPS pending payment" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="120" NumCta="120" Desc="Advances to suppliers" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="120.01" NumCta="120.01" Desc="Advance to national suppliers" Nivel="2" Natur="D"/>
@@ -257,6 +263,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="601.26" NumCta="601.26" Desc="IMSS contributions" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.27" NumCta="601.27" Desc="Infonavit contributions" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.28" NumCta="601.28" Desc="SAR contributions" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.58" NumCta="601.58" Desc="Other taxes and duties" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.74" NumCta="601.74" Desc="Commissions on sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.84" NumCta="601.84" Desc="Other overheads" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="701" NumCta="701" Desc="Financial expenses" Nivel="1" Natur="D"/>
@@ -311,9 +318,11 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="115.06" NumCta="115.06" Desc="Goods held by third parties" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="118" NumCta="118" Desc="Creditable taxes paid" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="118.01" NumCta="118.01" Desc="Creditable VAT paid" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="118.02" NumCta="118.02" Desc="Creditable import VAT paid" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="118.03" NumCta="118.03" Desc="Creditable IEPS paid" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="119" NumCta="119" Desc="Taxes payable" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="119.01" NumCta="119.01" Desc="VAT due" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="119.02" NumCta="119.02" Desc="Import VAT due" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="119.03" NumCta="119.03" Desc="IEPS pending payment" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="120" NumCta="120" Desc="Advances to suppliers" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="120.01" NumCta="120.01" Desc="Advance to national suppliers" Nivel="2" Natur="D"/>
@@ -378,6 +387,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="601.26" NumCta="601.26" Desc="IMSS contributions" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.27" NumCta="601.27" Desc="Infonavit contributions" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.28" NumCta="601.28" Desc="SAR contributions" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.58" NumCta="601.58" Desc="Other taxes and duties" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.74" NumCta="601.74" Desc="Commissions on sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.84" NumCta="601.84" Desc="Other overheads" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="701" NumCta="701" Desc="Financial expenses" Nivel="1" Natur="D"/>

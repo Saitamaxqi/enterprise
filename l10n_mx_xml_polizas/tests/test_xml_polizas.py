@@ -19,6 +19,10 @@ class AccountXmlPolizasWizard(TestMxEdiCommon, TestAccountReportsCommon):
         # Setup the company
         cls.company = cls.company_data['company']
         cls.company_2 = cls.company_data_2['company']
+        # Enforce old default expence account
+        cls.company_data['default_account_expense'] = cls.env.ref(f'account.{cls.company.id}_cuenta601_84')
+        cls.company_data_2['default_account_expense'] = cls.env.ref(f'account.{cls.company_2.id}_cuenta601_84')
+
         cls.company.vat = 'AAAA611013AAA'
         cls.company_2.vat = 'P&G851223B24'
         cls.wizard = cls.env['l10n_mx_xml_polizas.xml_polizas_wizard'].create({
@@ -310,6 +314,7 @@ class AccountXmlPolizasWizard(TestMxEdiCommon, TestAccountReportsCommon):
                 'quantity': 5,
                 'discount': 20.0,
                 'tax_ids': [],
+                'account_id': self.company_data['default_account_expense'].id,
             })],
         })
 

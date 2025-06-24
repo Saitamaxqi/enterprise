@@ -13,27 +13,44 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, get_lang, SQL
 
 _logger = logging.getLogger(__name__)
 
+
 def diot_country_adapt(values):
-    # In SAT classification some countries have a different country code
-    # and others do not exists at all
-    # https://blueprints.launchpad.net/openerp-mexico-localization/+spec/diot-mexico
+    # 2025 SAT classification uses 3-letter country codes
+    # https://www.fiscalia.com/archivos/2025-02-06-DIOT_2025_Ayuda_Carga_Masiva.pdf
     cc = values.get('country_code')
-    non_diot_countries = {
-        'CD', 'SS', 'PS', 'XK', 'SX', 'ER', 'RS', 'ME', 'TL', 'MD', 'MF',
-        'BL', 'BQ', 'YT', 'AZ', 'MM', 'SK', 'CW', 'GS'
-    }
     diot_country_dict = {
-        'AM': 'SU', 'BZ': 'BL', 'CZ': 'CS', 'DO': 'DM', 'EE': 'SU',
-        'GE': 'SU', 'DE': 'DD', 'GL': 'GJ', 'GG': 'GZ', 'IM': 'IH',
-        'JE': 'GZ', 'KZ': 'SU', 'KG': 'SU', 'LV': 'SU', 'LT': 'SU',
-        'RU': 'SU', 'WS': 'EO', 'TJ': 'SU', 'TM': 'SU', 'UZ': 'SU',
-        'SI': 'YU', 'BA': 'YU', 'HR': 'YU', 'MK': 'YU'
+        'MX': 'MEX', None: '',
+        'AF': 'AFG', 'AX': 'ALA', 'AL': 'ALB', 'DE': 'DEU', 'AD': 'AND', 'AO': 'AGO', 'AI': 'AIA', 'AQ': 'ATA', 'AG': 'ATG', 'SA': 'SAU',
+        'DZ': 'DZA', 'AR': 'ARG', 'AM': 'ARM', 'AW': 'ABW', 'AU': 'AUS', 'AT': 'AUT', 'AZ': 'AZE', 'BS': 'BHS', 'BD': 'BGD', 'BB': 'BRB',
+        'BH': 'BHR', 'BE': 'BEL', 'BZ': 'BLZ', 'BJ': 'BEN', 'BM': 'BMU', 'BY': 'BLR', 'MM': 'MMR', 'BO': 'BOL', 'BA': 'BIH', 'BW': 'BWA',
+        'BR': 'BRA', 'BN': 'BRN', 'BG': 'BGR', 'BF': 'BFA', 'BI': 'BDI', 'BT': 'BTN', 'CV': 'CPV', 'KH': 'KHM', 'CM': 'CMR', 'CA': 'CAN',
+        'QA': 'QAT', 'TD': 'TCD', 'CL': 'CHL', 'CN': 'CHN', 'CY': 'CYP', 'CO': 'COL', 'KM': 'COM', 'KP': 'PRK', 'KR': 'KOR', 'CI': 'CIV',
+        'CR': 'CRI', 'HR': 'HRV', 'CU': 'CUB', 'CW': 'CUW', 'DK': 'DNK', 'DM': 'DMA', 'EC': 'ECU', 'EG': 'EGY', 'SV': 'SLV', 'AE': 'ARE',
+        'ER': 'ERI', 'SK': 'SVK', 'SI': 'SVN', 'ES': 'ESP', 'US': 'USA', 'EE': 'EST', 'ET': 'ETH', 'PH': 'PHL', 'FI': 'FIN', 'FJ': 'FJI',
+        'FR': 'FRA', 'GA': 'GAB', 'GM': 'GMB', 'GE': 'GEO', 'GH': 'GHA', 'GI': 'GIB', 'GD': 'GRD', 'GR': 'GRC', 'GL': 'GRL', 'GP': 'GLP',
+        'GU': 'GUM', 'GT': 'GTM', 'GF': 'GUF', 'GG': 'GGY', 'GN': 'GIN', 'GW': 'GNB', 'GQ': 'GNY', 'HT': 'HTI', 'HN': 'HND', 'HK': 'HKG',
+        'HU': 'HUN', 'IN': 'IND', 'IQ': 'IRQ', 'IR': 'IRN', 'IE': 'IRL', 'BV': 'BVT', 'IM': 'IMN', 'CX': 'CXR', 'NF': 'NFK', 'IS': 'ISL',
+        'KY': 'CYM', 'CC': 'CCK', 'CK': 'COK', 'FO': 'FRO', 'GS': 'SGS', 'HM': 'HMD', 'FK': 'FLK', 'MP': 'MNP', 'MH': 'MHL', 'PN': 'PCN',
+        'SB': 'SLB', 'TC': 'TCA', 'UM': 'UMI', 'VG': 'VGB', 'VI': 'VIR', 'IL': 'ISR', 'IT': 'ITA', 'JM': 'JAM', 'JP': 'JPN', 'JE': 'JEY',
+        'JO': 'JOR', 'KZ': 'KAZ', 'KE': 'KEN', 'KG': 'KGZ', 'KI': 'KIR', 'KW': 'KWT', 'LA': 'LAO', 'LS': 'LSO', 'LV': 'LVA', 'LB': 'LBA',
+        'LR': 'LBR', 'LY': 'LBY', 'LI': 'LIE', 'LT': 'LTU', 'LU': 'LUX', 'MO': 'MAC', 'MG': 'MDG', 'MY': 'MYS', 'MW': 'MWI', 'MV': 'MDV',
+        'ML': 'MLI', 'MT': 'MLT', 'MA': 'MAR', 'MQ': 'MTQ', 'MU': 'MUS', 'MR': 'MRT', 'YT': 'MYT', 'FM': 'FSM', 'MD': 'MDA', 'MC': 'MCO',
+        'MN': 'MNG', 'ME': 'MNE', 'MS': 'MSR', 'MZ': 'MOZ', 'NA': 'NAM', 'NR': 'NRU', 'NP': 'NPL', 'NI': 'NIC', 'NE': 'NER', 'NG': 'NGA',
+        'NU': 'NIU', 'NO': 'NOR', 'NC': 'NCL', 'NZ': 'NZL', 'OM': 'OMN', 'NL': 'NLD', 'PK': 'PAK', 'PW': 'PLW', 'PS': 'PSE', 'PA': 'PAN',
+        'PG': 'PNG', 'PY': 'PRY', 'PE': 'PER', 'PF': 'PYF', 'PL': 'POL', 'PT': 'PRT', 'PR': 'PRI', 'CF': 'CAF', 'CZ': 'CZE', 'MK': 'MKD',
+        'CG': 'COG', 'CD': 'COD', 'DR': 'DOM', 'RE': 'REU', 'RW': 'RWA', 'RO': 'ROU', 'RU': 'RUS', 'EH': 'ESH', 'WS': 'WSM', 'AS': 'ASM',
+        'BL': 'BLM', 'KN': 'KNA', 'SM': 'SMR', 'MF': 'MAF', 'PM': 'SPM', 'VC': 'VCT', 'SH': 'SHN', 'LC': 'LCA', 'ST': 'STP', 'SN': 'SEN',
+        'RS': 'SRB', 'SC': 'SYC', 'SL': 'SLE', 'SG': 'SGP', 'SX': 'SXM', 'SY': 'SYR', 'SO': 'SOM', 'LK': 'LKA', 'SZ': 'SWZ', 'ZA': 'ZAF',
+        'SD': 'SDN', 'SS': 'SSD', 'SE': 'SWE', 'CH': 'CHE', 'SR': 'SUR', 'SJ': 'SJM', 'TH': 'THA', 'TW': 'TWA', 'TZ': 'TZA', 'TJ': 'TJK',
+        'IO': 'IOT', 'TF': 'ATF', 'TL': 'TLS', 'TG': 'TGO', 'TK': 'TKL', 'TO': 'TON', 'TT': 'TTO', 'TN': 'TUN', 'TM': 'TKM', 'TR': 'TUR',
+        'TV': 'TUV', 'UA': 'UKR', 'UG': 'UGA', 'UY': 'URY', 'UZ': 'UZB', 'VU': 'VUT', 'VA': 'VAT', 'VE': 'VEN', 'VN': 'VNM', 'WF': 'WLF',
+        'YE': 'YEM', 'DJ': 'DJY', 'ZM': 'ZMB', 'ZW': 'ZWE'
     }
 
-    if cc in non_diot_countries:
-        # Country not in DIOT catalog, so we use the special code 'XX'
+    if cc not in diot_country_dict:
+        # Country not in DIOT catalog, so we use the special code 'ZZZ'
         # for 'Other' countries
-        values['country_code'] = 'XX'
+        values['country_code'] = 'ZZZ'
     else:
         # Map the standard country_code to the SAT standard
         values['country_code'] = diot_country_dict.get(cc, cc)
@@ -94,7 +111,7 @@ class L10n_MxReportHandler(models.AbstractModel):
                 JOIN account_account_tag_account_move_line_rel AS tag_aml_rel ON account_move_line.id = tag_aml_rel.account_move_line_id
                 JOIN account_account_tag AS tag ON tag.id = tag_aml_rel.account_account_tag_id AND tag.id IN %(tags)s
                 JOIN res_partner AS partner ON partner.id = account_move_line.partner_id
-                JOIN res_country AS country ON country.id = partner.country_id
+                LEFT JOIN res_country AS country ON country.id = partner.country_id
                 WHERE %(search_condition)s
                 ORDER BY partner.name, account_move_line.date, account_move_line.id
             )
@@ -134,34 +151,41 @@ class L10n_MxReportHandler(models.AbstractModel):
         report = self.env['account.report'].browse(options['report_id'])
         partner_and_values_to_report = self._get_diot_values_per_partner(report, options)
 
-        self.check_for_error_on_partner([partner for partner in partner_and_values_to_report])
+        self.check_for_error_on_partner(list(partner_and_values_to_report))
 
         lines = []
+        data_87 = [0] * 54
         for partner, values in partner_and_values_to_report.items():
-            if not any([values.get(x) for x in ('paid_16', 'paid_16_non_cred', 'paid_8', 'paid_8_non_cred', 'importation_16', 'paid_0', 'exempt', 'withheld', 'refunds')]):
+            if not sum(values.get(x, 0) for x in (
+                'paid_8', 'paid_8_non_cred', 'refunds_8_n',
+                'paid_8_s', 'paid_8_s_nc', 'refunds_8_s',
+                'paid_16', 'paid_16_non_cred', 'refunds_16',
+                'importation_16', 'paid_16_imp_nc', 'refunds_16_imp',
+                'paid_16_imp_int', 'paid_16_imp_int_nc', 'refunds_16_imp_int',
+                'withheld', 'exempt', 'exempt_imp', 'paid_0', 'no_obj'
+            )):
                 # don't report if there isn't any amount to report
                 continue
 
-            is_foreign_partner = values['third_party_code'] != '04'
-            data = [''] * 25
-            data[0] = values['third_party_code']  # Supplier Type
-            data[1] = values['operation_type_code']  # Operation Type
-            data[2] = values['partner_vat_number'] if not is_foreign_partner else '' # Tax Number
-            data[3] = values['partner_vat_number'] if is_foreign_partner else ''  # Tax Number for Foreigners
-            data[4] = ''.join(self.str_format(partner.name)).encode('utf-8').strip().decode('utf-8') if is_foreign_partner else ''  # Name
-            data[5] = values['country_code'] if is_foreign_partner else '' # Country
-            data[6] = ''.join(self.str_format(values['partner_nationality'])).encode('utf-8').strip().decode('utf-8') if is_foreign_partner else '' # Nationality
-            data[7] = round(float(values.get('paid_16', 0))) or '' # 16%
-            data[9] = round(float(values.get('paid_16_non_cred', 0))) or '' # 16% Non-Creditable
-            data[12] = round(float(values.get('paid_8', 0))) or '' # 8%
-            data[14] = round(float(values.get('paid_8_non_cred', 0))) or '' # 8% Non-Creditable
-            data[15] = round(float(values.get('importation_16', 0))) or '' # 16% - Importation
-            data[20] = round(float(values.get('paid_0', 0))) or '' # 0%
-            data[21] = round(float(values.get('exempt', 0))) or '' # Exempt
-            data[22] = round(float(values.get('withheld', 0))) or '' # Withheld
-            data[23] = round(float(values.get('refunds', 0))) or '' # Refunds
-
-            lines.append('|'.join(str(d) for d in data))
+            data = [0] * 54
+            if values['operation_type_code'] != '87':
+                self.l10n_mx_diot_get_values(values, data, partner)
+                for i in range(7, 53):
+                    if not data[i]:
+                        data[i] = ''
+                    if not isinstance(data[i], str):
+                        data[i] = str(round(data[i]))
+                lines.append('|'.join(str(d) for d in data))
+            else:
+                self.l10n_mx_diot_get_values(values, data_87, partner)
+        # Global Operations
+        if any(data_87):
+            for i in range(7, 53):
+                if not data_87[i]:
+                    data_87[i] = ''
+                if not isinstance(data_87[i], str):
+                    data_87[i] = str(round(data_87[i]))
+            lines.append('|'.join(str(d) for d in data_87))
 
         diot_txt_result = '\n'.join(lines)
         return {
@@ -169,6 +193,49 @@ class L10n_MxReportHandler(models.AbstractModel):
             'file_content': diot_txt_result.encode(),
             'file_type': 'txt',
         }
+
+    def l10n_mx_diot_get_values(self, values, data, partner):
+        is_foreign_partner = values.get('third_party_code') != '04'
+        is_global = values.get('operation_type_code') == '87'
+        # Non-numerical
+        data[0] = values.get('third_party_code')  # Supplier Type
+        data[1] = values.get('operation_type_code')  # Operation Type
+        data[2] = 'XAXX010101000' if is_global else (values.get('partner_vat_number') if not is_foreign_partner else '')  # Tax Number
+        data[3] = '' if is_global else (values.get('partner_vat_number') if is_foreign_partner else '')  # Tax Number for Foreigners
+        data[4] = '' if is_global else (''.join(self.str_format(partner.name)).encode('utf-8').strip().decode('utf-8') if is_foreign_partner else '')  # Name
+        data[5] = '' if is_global else (values.get('country_code') if is_foreign_partner else '')  # Country
+        data[6] = ''  # Fiscal Jurisdiction specified (for manual entry)
+        # Sums and refunds
+        data[7] += float(values.get('paid_8_n_wnc', 0))  # 8% Northern +NC paid
+        data[8] += float(values.get('refunds_8_n', 0))  # 8% Northern refunds
+        data[9] += float(values.get('paid_8_s_wnc', 0))  # 8% Southern +NC paid
+        data[10] += float(values.get('refunds_8_s', 0))  # 8% Southern refunds
+        data[11] += float(values.get('paid_16_wnc', 0))  # 16% +NC paid
+        data[12] += float(values.get('refunds_16', 0))  # 16% refunds
+        data[13] += float(values.get('paid_16_imp_wnc', 0))  # 16% imports +NC paid
+        data[14] += float(values.get('refunds_16_imp', 0))  # 16% imports refunds
+        data[15] += float(values.get('paid_16_imp_int_wnc', 0))  # 16% intangible imports +NC paid
+        data[16] += float(values.get('refunds_16_imp_int', 0))  # 16% int imp refunds
+        # Creditable VAT
+        data[17] += float(values.get('paid_8', 0))  # 8% Northern paid
+        data[19] += float(values.get('paid_8_s', 0))  # 8% Southern paid
+        data[21] += float(values.get('paid_16', 0))  # 16% VAT exclusive base
+        data[23] += float(values.get('importation_16', 0))  # 16% import VAT exclusive base
+        data[25] += float(values.get('paid_16_imp_int', 0))  # 16% int imp VAT exclusive base
+        # Non-creditable VAT
+        data[27] += float(values.get('paid_8_non_cred', 0))  # 8% Northern NC paid
+        data[31] += float(values.get('paid_8_s_nc', 0))  # 8% Southern NC paid
+        data[35] += float(values.get('paid_16_non_cred', 0))  # 16% NC paid
+        data[39] += float(values.get('paid_16_imp_nc', 0))  # 16% imports NC paid
+        data[43] += float(values.get('paid_16_imp_int_nc', 0))  # 16% non tangible imports NC paid
+        # Additional data
+        data[47] += float(values.get('withheld', 0))  # DIOT:Retention base
+        data[48] += float(values.get('exempt', 0))  # DIOT:Exempt base
+        data[49] += float(values.get('exempt_imp', 0))  # DIOT:Import Exempt base
+        data[50] += float(values.get('paid_0', 0))  # 0% payments
+        data[51] += float(values.get('no_obj', 0))  # No tax object
+        # Declaration
+        data[53] = '02' if is_global else '01'  # "Hereby I declare that I rightfully credited VAT"
 
     def action_get_dpiva_txt(self, options):
         report = self.env['account.report'].browse(options['report_id'])
@@ -194,7 +261,10 @@ class L10n_MxReportHandler(models.AbstractModel):
 
         lines = []
         for partner, values in partner_and_values_to_report.items():
-            if not any([values.get(x) for x in ('paid_16', 'paid_16_non_cred', 'paid_8', 'paid_8_non_cred', 'importation_16', 'paid_0', 'exempt', 'withheld', 'refunds')]):
+            if not any(values.get(x) for x in (
+                'paid_16', 'paid_16_non_cred', 'paid_8', 'paid_8_non_cred', 'importation_16',
+                'paid_0', 'exempt', 'withheld', 'refunds_8_n', 'refunds_16', 'refunds_16_imp'
+            )):
                 # don't report if there isn't any amount to report
                 continue
 
@@ -216,13 +286,13 @@ class L10n_MxReportHandler(models.AbstractModel):
             data[30] = ''.join(self.str_format(partner.name)).encode('utf-8').strip().decode('utf-8') if is_foreign_partner else ''  # Name
             data[31] = values['country_code'] if is_foreign_partner else ''  # Country
             data[32] = ''.join(self.str_format(values['partner_nationality'])).encode('utf-8').strip().decode('utf-8') if is_foreign_partner else ''  # Nationality
-            data[33] = round(float(values.get('paid_16', 0))) or '' # 16%
-            data[36] = round(float(values.get('paid_8', 0))) or '' # 8%
-            data[39] = round(float(values.get('importation_16', 0))) or '' # 16% - Importation
-            data[44] = round(float(values.get('paid_0', 0))) or '' # 0%
-            data[45] = round(float(values.get('exempt', 0))) or '' # Exempt
-            data[46] = round(float(values.get('withheld', 0))) or '' # Withheld
-            data[47] = round(float(values.get('refunds', 0))) or '' # Refunds
+            data[33] = round(float(values.get('paid_16', 0))) or ''  # 16%
+            data[36] = round(float(values.get('paid_8', 0))) or ''  # 8%
+            data[39] = round(float(values.get('importation_16', 0))) or ''  # 16% - Importation
+            data[44] = round(float(values.get('paid_0', 0))) or ''  # 0%
+            data[45] = round(float(values.get('exempt', 0))) or ''  # Exempt
+            data[46] = round(float(values.get('withheld', 0))) or ''  # Withheld
+            data[47] = round(float(values.get('refunds_8_n', 0)) + float(values.get('refunds_16', 0)) + float(values.get('refunds_16_imp', 0))) or ''  # Refunds
 
             lines.append('|{}|'.format('|'.join(str(d) for d in data)))
 
