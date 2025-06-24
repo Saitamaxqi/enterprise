@@ -44,7 +44,7 @@ import {
 import { user } from "@web/core/user";
 import { WebClient } from "@web/webclient/webclient";
 
-const { sanitizeSheetName, toCartesian } = helpers;
+const { sanitizeSheetName, toCartesian, toZone } = helpers;
 
 defineDocumentSpreadsheetModels();
 defineDocumentSpreadsheetTestAction();
@@ -64,7 +64,7 @@ function getGridIconEventPosition(model, xc) {
     }
     const gridPosition = getFixture().querySelector(".o-grid-overlay").getBoundingClientRect();
     const gridOffset = model.getters.getGridOffset();
-    const rect = model.getters.getCellIconRect(icon);
+    const rect = model.getters.getCellIconRect(icon, model.getters.getRect(toZone(xc)));
     const x = rect.x + rect.width / 2 - gridOffset.x + gridPosition.x;
     const y = rect.y + rect.height / 2 - gridOffset.y + +gridPosition.y;
     return { x, y };
