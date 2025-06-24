@@ -407,6 +407,25 @@ class WebStudioReportController(main.WebStudioController):
             request.update_context(**context)
         request.update_context(studio=1)
 
+        views = self._create_default_report_views(layout)
+        model = request.env['ir.model']._get(model_name)
+        report = request.env['ir.actions.report'].create({
+            'name': _('%s Report', model.name),
+            'model': model.model,
+            'report_type': 'qweb-pdf',
+            'report_name': views[0].name,
+        })
+        # make it available in the print menu
+        report.create_action()
+
+        return {
+            'id': report.id,
+            'display_name': report.display_name,
+            'report_name': report.name,
+        }
+
+    def _create_default_report_views(self, layout='web.basic_layout'):
+        env = request.env(context={**request.env.context, "studio": 1})
         if layout == 'web.basic_layout':
             arch_document = etree.fromstring("""
                 <t t-name="studio_report_document">
@@ -422,7 +441,7 @@ class WebStudioReportController(main.WebStudioController):
                 </t>
                 """ % {'layout': layout})
 
-        view_document = request.env['ir.ui.view'].create({
+        view_document = env['ir.ui.view'].create({
             'name': 'studio_report_document',
             'type': 'qweb',
             'arch': etree.tostring(arch_document, encoding='utf-8', pretty_print=True),
@@ -454,7 +473,7 @@ class WebStudioReportController(main.WebStudioController):
                 </t>
             """ % {'document': new_view_document_xml_id})
 
-        view = request.env['ir.ui.view'].create({
+        view = env['ir.ui.view'].create({
             'name': 'studio_main_report',
             'type': 'qweb',
             'arch': etree.tostring(arch, encoding='utf-8', pretty_print=True),
@@ -464,21 +483,7 @@ class WebStudioReportController(main.WebStudioController):
         view.name = new_view_document_xml_id
         view.key = new_view_document_xml_id
 
-        model = request.env['ir.model']._get(model_name)
-        report = request.env['ir.actions.report'].create({
-            'name': _('%s Report', model.name),
-            'model': model.model,
-            'report_type': 'qweb-pdf',
-            'report_name': view.name,
-        })
-        # make it available in the print menu
-        report.create_action()
-
-        return {
-            'id': report.id,
-            'display_name': report.display_name,
-            'report_name': report.name,
-        }
+        return env["ir.ui.view"].browse([view.id, view_document.id])
 
     @http.route('/web_studio/print_report', type='jsonrpc', auth='user')
     def print_report(self, report_id, record_id):
@@ -491,6 +496,10 @@ class WebStudioReportController(main.WebStudioController):
             request.update_context(**context)
         request.update_context(studio=1)
         report = request.env['ir.actions.report'].browse(report_id)
+        if not report.report_name or not request.env["ir.ui.view"]._get_template_view(report.report_name, raise_if_not_found=False):
+            report_views = self._create_default_report_views()
+            report.report_name = report_views[0].name
+
         report_data = report.read(fields)
         paperformat = report._read_paper_format_measures()
 

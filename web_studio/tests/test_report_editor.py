@@ -1444,3 +1444,20 @@ class TestReportEditorUIUnit(HttpCase):
         added_field = added_field[0]
         self.assertTrue(added_field.get("t-field").startswith("company."))
         self.assertEqual(added_field.text, "studio company id")
+
+    def test_report_without_view(self):
+        report = self.env["ir.actions.report"].create({
+                "name": "Test Report(No view)",
+                "model": "res.partner",
+                "report_name": "web_studio.test_no_view_report",
+                "report_type": "qweb-pdf",
+        })
+
+        # Assert that the report has no associated views
+        views = self.env["ir.ui.view"].search([("key", "=", "web_studio.test_no_view_report")])
+        self.assertFalse(views, "The report should not have any associated views.")
+
+        self.start_tour(self.tour_url, "web_studio.test_report_without_view", login="admin")
+        self.assertNotEqual(report.report_name, "web_studio.test_no_view_report")
+        views = self.env["ir.ui.view"].search([("key", "=", report.report_name)])
+        self.assertEqual(len(views), 1)

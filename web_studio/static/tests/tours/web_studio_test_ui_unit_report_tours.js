@@ -1472,3 +1472,19 @@ registry.category("web_tour.tours").add("web_studio.test_edit_header_only_compan
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio.test_report_without_view", {
+    steps: () => [
+        {
+            trigger: ".o_menu_sections button:contains('Reports')",
+            run: "click",
+        },
+        {
+            trigger: ".o_kanban_record:contains('Test Report(No view)')",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable",
+        },
+    ],
+});
