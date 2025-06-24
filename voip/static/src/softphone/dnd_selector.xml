@@ -3,8 +3,9 @@
 
 <t t-name="voip.DndSelector">
     <Dropdown position="'bottom-end'">
-        <button class="o-voip-DndSelector-badge btn btn-light d-flex p-2" t-att-title="badgeTitle">
-            <i class="fa" t-attf-class="{{ doNotDisturbUntilDt ? 'fa-minus-circle text-danger' : 'fa-circle text-success' }}" aria-hidden="true"/>
+        <button class="o-voip-DndSelector-badge btn btn-light align-items-center d-flex p-2" t-att-title="badgeTitle">
+            <i class="fa" t-att-class="doNotDisturbUntilDt ? 'fa-minus-circle text-danger' : 'fa-circle text-success'" aria-hidden="true"/>
+            <span class="ms-2" t-esc="statusText"/>
         </button>
         <t t-set-slot="content">
             <DropdownItem onSelected="() => this.settings.setVoipDoNotDisturb(0)">

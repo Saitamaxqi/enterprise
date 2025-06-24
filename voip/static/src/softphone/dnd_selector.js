@@ -20,10 +20,10 @@ export class DndSelector extends Component {
     }
 
     get badgeTitle() {
-        if (!this.doNotDisturbUntilDt || this.doNotDisturbUntilDt <= luxon.DateTime.now()) {
+        if (this.isAvailable) {
             return _t("Available");
         }
-        if (this.doNotDisturbUntilDt.toMillis() === FOREVER.toMillis()) {
+        if (this.isMutedForever) {
             return _t("Do Not Disturb until I turn it back on");
         }
         return _t("Do Not Disturb until %(time)s", {
@@ -36,14 +36,29 @@ export class DndSelector extends Component {
     }
 
     get dndButtonBottomText() {
-        if (!this.doNotDisturbUntilDt || this.doNotDisturbUntilDt <= luxon.DateTime.now()) {
+        if (this.isAvailable) {
             return _t("Incoming calls will be muted");
         }
-        if (this.doNotDisturbUntilDt.toMillis() === FOREVER.toMillis()) {
+        if (this.isMutedForever) {
             return _t("Until I turn it back on");
         }
         return _t("Until %(time)s", {
             time: this.doNotDisturbUntilDt.toLocaleString(luxon.DateTime.DATETIME_MED),
         });
+    }
+
+    get isAvailable() {
+        return !this.doNotDisturbUntilDt || this.doNotDisturbUntilDt <= luxon.DateTime.now();
+    }
+
+    get isMutedForever() {
+        return this.doNotDisturbUntilDt && this.doNotDisturbUntilDt.toMillis() === FOREVER.toMillis();
+    }
+
+    get statusText() {
+        if (this.isAvailable) {
+            return _t("Available");
+        }
+        return _t("Do Not Disturb");
     }
 }
