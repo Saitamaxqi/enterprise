@@ -792,26 +792,23 @@ class HelpdeskTicket(models.Model):
 
     def _sla_generate_status_values(self, slas, keep_reached=False):
         """ Return the list of values for given SLA to be applied on current ticket """
-        status_to_keep = dict.fromkeys(self.ids, list())
-
+        exclude_slas_per_ticket = {}
         # generate the map of status to keep by ticket only if requested
         if keep_reached:
-            for ticket in self:
-                for status in ticket.sla_status_ids:
-                    if status.reached_datetime:
-                        status_to_keep[ticket.id].append(status.sla_id.id)
-
-        # create the list of value, and maybe exclude the existing ones
+            exclude_slas_per_ticket = dict(self.env['helpdesk.sla.status']._read_group(
+                domain=[('reached_datetime', '!=', False), ('ticket_id', 'in', self.ids)],
+                groupby=['ticket_id'],
+                aggregates=['sla_id:recordset'],
+            ))
         result = []
         for ticket in self:
-            for sla in slas:
-                if not (keep_reached and sla.id in status_to_keep[ticket.id]):
-                    result.append({
-                        'ticket_id': ticket.id,
-                        'sla_id': sla.id,
-                        'reached_datetime': fields.Datetime.now() if ticket.stage_id == sla.stage_id else False # in case of SLA on first stage
-                    })
-
+            exclude_slas = exclude_slas_per_ticket.get(ticket, self.env['helpdesk.sla'])
+            for sla in slas - exclude_slas:
+                result.append({
+                    'ticket_id': ticket.id,
+                    'sla_id': sla.id,
+                    'reached_datetime': fields.Datetime.now() if ticket.stage_id == sla.stage_id else False  # in case of SLA on first stage
+               })
         return result
 
     def _sla_reach(self, stage_id):
