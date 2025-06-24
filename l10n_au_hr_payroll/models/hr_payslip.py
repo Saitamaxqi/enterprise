@@ -74,6 +74,7 @@ class HrPayslip(models.Model):
             'l10n_au_hr_payroll', [
                 'data/hr_payslip_input_type_data.xml',
                 'data/salary_rules/hr_salary_rule_regular_data.xml',
+                'data/hr_rule_parameters_data.xml',
             ])]
 
     def _get_base_local_dict(self):
