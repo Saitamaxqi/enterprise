@@ -2856,15 +2856,15 @@ class AccountReport(models.Model):
     def _get_static_line_dict(self, options, line, all_column_groups_expression_totals, parent_id=None):
         line_id = self._get_generic_line_id('account.report.line', line.id, parent_line_id=parent_id)
         columns = self._build_static_line_columns(line, options, all_column_groups_expression_totals)
-        has_children = (any(col['has_sublines'] for col in columns) or bool(line.children_ids))
         groupby = line._get_groupby(options)
+        has_children = (groupby and any(col['has_sublines'] for col in columns)) or bool(line.children_ids)
 
         rslt = {
             'id': line_id,
             'name': line.name,
             'groupby': groupby,
             'unfoldable': line.foldable and has_children,
-            'unfolded': bool((not line.foldable and (line.children_ids or groupby)) or line_id in options['unfolded_lines']) or (has_children and options['unfold_all']),
+            'unfolded': (not line.foldable and (groupby or has_children)) or line_id in options['unfolded_lines'] or has_children and options['unfold_all'],
             'columns': columns,
             'level': line.hierarchy_level,
             'page_break': line.print_on_new_page,
