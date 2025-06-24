@@ -396,8 +396,15 @@
                       mode="month"
                       show_unusual_days="True"
             >
-                 <field name="resource_id" avatar_field="avatar_128" widget="many2one_avatar_resource" filters="1"
-                        write_model="planning.calendar.resource" write_field="resource_id" filter_field="checked"/>
+                <field name="resource_id"
+                       avatar_field="avatar_128"
+                       widget="many2one_avatar_resource"
+                       filters="1"
+                       write_model="planning.calendar.resource"
+                       write_field="resource_id"
+                       filter_field="checked"
+                       groups="planning.group_planning_user"
+                />
 
                 <field name="resource_type" invisible="1"/>
                 <field name="is_hatched" invisible="1" />
@@ -460,8 +467,15 @@
                       js_class="planning_calendar"
                       mode="month"
             >
-                <field name="resource_id" avatar_field="avatar_128" widget="many2one_avatar_resource" filters="1"
-                        write_model="planning.calendar.resource" write_field="resource_id" filter_field="checked"/>
+                <field name="resource_id"
+                       avatar_field="avatar_128"
+                       widget="many2one_avatar_resource"
+                       filters="1"
+                       write_model="planning.calendar.resource"
+                       write_field="resource_id"
+                       filter_field="checked"
+                       groups="planning.group_planning_user"
+                />
                 <field name="resource_type" invisible="1"/>
                 <field name="role_id" invisible="1"/>
                 <field name="allocated_hours" invisible="1"/>
