@@ -5897,9 +5897,82 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
 
 registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mixed_uom", {
     steps: () => [
+        // receipt 1: 2 pack of 6
         {
             trigger: ".o_stock_barcode_main_menu",
-            run: "scan SPOPWMU",
+            run: "scan SPOPWMU1",
+        },
+        {
+            trigger: ".o_barcode_line",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "0/2 Pack of 6");
+            },
+        },
+        // Scan 3 units of Lovely product
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(0.5)",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "0.5/2 Pack of 6");
+            },
+        },
+        // Scan a pack of 6 -> should edit add 6 units to the 10 missing
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(1.5)",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "1.5/2 Pack of 6");
+            },
+        },
+        // Scan 3 units of Lovely product
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(2)",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "2/2 Pack of 6");
+            },
+        },
+        {
+            trigger: ".o_validate_page",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification:has(.bg-success) .o_notification_close",
+            run: "click",
+        },
+        // receipt 2: 12 units in pack of 6
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan SPOPWMU2",
         },
         {
             trigger: ".o_barcode_line",
@@ -5913,6 +5986,19 @@ registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mix
                 );
             },
         },
+        // scan a dozen => should create a new line as it is neither the packaging nor the product uom
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 12love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains('1')",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineQty(0, "0/12 Units");
+                helper.assertLineQty(1, "1 Dozens");
+            },
+        },
         // Scan a pack of 6
         {
             trigger: ".o_barcode_client_action",
@@ -5921,8 +6007,9 @@ registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mix
         {
             trigger: ".o_barcode_line .qty-done:contains('6')",
             run: () => {
-                helper.assertLinesCount(1);
+                helper.assertLinesCount(2);
                 helper.assertLineQty(0, "6/12 Units");
+                helper.assertLineQty(1, "1 Dozens");
             },
         },
         // Scan 2 units of Lovely product
@@ -5937,8 +6024,9 @@ registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mix
         {
             trigger: ".o_barcode_line .qty-done:contains('8')",
             run: () => {
-                helper.assertLinesCount(1);
+                helper.assertLinesCount(2);
                 helper.assertLineQty(0, "8/12 Units");
+                helper.assertLineQty(1, "1 Dozens");
             },
         },
         // Scan a pack of 6
@@ -5947,17 +6035,19 @@ registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mix
             run: "scan 6love",
         },
         {
-            trigger: ".o_barcode_line .qty-done:contains('12')",
+            trigger: ".o_barcode_line .qty-done:contains('2')",
             run: () => {
-                helper.assertLinesCount(2);
+                helper.assertLinesCount(3);
                 helper.assertLineQty(0, "12/12 Units");
                 helper.assertLineQty(1, "2 Units");
-                const [line1, line2] = helper.getLines({ barcode: "love" });
+                helper.assertLineQty(2, "1 Dozens");
+                const [line1, line2, line3] = helper.getLines({ barcode: "love" });
                 helper.assert(
                     line1.querySelector(".o_packaging").innerText,
                     "Packaging: 2 Pack of 6"
                 );
                 helper.assert(line2.querySelector(".o_packaging"), null);
+                helper.assert(line3.querySelector(".o_packaging"), null);
             },
         },
         // Scan a pack of 6
@@ -5968,11 +6058,114 @@ registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mix
         {
             trigger: ".o_barcode_line .o_line_uom:contains('Pack')",
             run: () => {
-                helper.assertLinesCount(3);
+                helper.assertLinesCount(4);
                 helper.assertLineQty(0, "12/12 Units");
                 helper.assertLineQty(1, "2 Units");
                 helper.assertLineQty(2, "1 Pack of 6");
+                helper.assertLineQty(3, "1 Dozens");
             },
+        },
+        {
+            trigger: ".o_validate_page",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification:has(.bg-success) .o_notification_close",
+            run: "click",
+        },
+        // receipt 3: 10 units and 2 pack of 6
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan SPOPWMU3",
+        },
+        {
+            trigger: ".o_barcode_line",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineQty(0, "0/10 Units");
+                helper.assertLineQty(1, "0/1 Pack of 6");
+            },
+        },
+        // Scan a pack of 6 -> should edit the pack of 6 line
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(1)",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineQty(0, "0/10 Units");
+                helper.assertLineQty(1, "1/1 Pack of 6");
+            },
+        },
+        // Scan a pack of 6 -> should edit add 6 units to the 10 missing
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(6)",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineQty(0, "6/10 Units");
+                helper.assertLineQty(1, "1/1 Pack of 6");
+            },
+        },
+        // Scan a pack of 6 -> should edit add 4 units to the 10 missing and create a new line for 2 units
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(2)",
+            run: () => {
+                helper.assertLinesCount(3);
+                helper.assertLineQty(0, "10/10 Units");
+                helper.assertLineQty(1, "2 Units");
+                helper.assertLineQty(2, "1/1 Pack of 6");
+            },
+        },
+        // Scan 1 units of Lovely product
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(3)",
+            run: () => {
+                helper.assertLinesCount(3);
+                helper.assertLineQty(0, "10/10 Units");
+                helper.assertLineQty(1, "3 Units");
+                helper.assertLineQty(2, "1/1 Pack of 6");
+            },
+        },
+        // Scan 2 pack of 6
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan 6love",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(2)",
+            run: () => {
+                helper.assertLinesCount(4);
+                helper.assertLineQty(0, "10/10 Units");
+                helper.assertLineQty(1, "3 Units");
+                helper.assertLineQty(2, "2 Pack of 6");
+                helper.assertLineQty(3, "1/1 Pack of 6");
+            },
+        },
+        {
+            trigger: ".o_validate_page",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification_bar.bg-success",
+            run() {},
         },
     ],
 });

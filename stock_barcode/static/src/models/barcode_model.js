@@ -1452,17 +1452,18 @@ export default class BarcodeModel extends EventBus {
 
         // If line found is expressed in an different unit than its packaging adapt the
         // barcodeData to update the line properly or force the creation of a new line
+        const barcodeDataUom = this.cache.getRecord(
+            "uom.uom",
+            barcodeData.uom ? barcodeData.uom.id : barcodeData.product?.uom_id
+        );
         const expressedInPackagingUom =
-            currentLine &&
-            barcodeData.uom &&
-            barcodeData.uom.id !== currentLine.product_uom_id.id &&
-            barcodeData.uom.id === currentLine.packaging_uom_id.id;
+            currentLine && barcodeDataUom && barcodeDataUom.id !== currentLine.product_uom_id.id;
         if (expressedInPackagingUom) {
             if (!this._lineIsNotComplete(currentLine)) {
                 currentLine = false;
             } else {
                 barcodeData.quantity =
-                    (barcodeData.quantity * currentLine.packaging_uom_id.factor) /
+                    (barcodeData.quantity * barcodeDataUom.factor) /
                     currentLine.product_uom_id.factor;
                 barcodeData.uom = currentLine.product_uom_id;
             }
@@ -1481,7 +1482,11 @@ export default class BarcodeModel extends EventBus {
                 ) {
                     // In this case, lowers the increment quantity and keeps
                     // the excess quantity to create a new line.
-                    exceedingQuantity = barcodeData.quantity - remainingQty;
+                    exceedingQuantity = parseFloat(
+                        formatFloat(barcodeData.quantity - remainingQty, {
+                            digits: [false, this.precision],
+                        })
+                    );
                     barcodeData.quantity = remainingQty;
                 }
             }
@@ -1729,8 +1734,9 @@ export default class BarcodeModel extends EventBus {
 
     _findLine(barcodeData) {
         let foundLine = false;
-        const { lot, lotName, product, uom } = barcodeData;
+        const { lot, lotName, product } = barcodeData;
         const quantPackage = barcodeData.package;
+        const uomId = barcodeData.uom ? barcodeData.uom.id : barcodeData.product?.uom_id;
         const dataLotName = lotName || (lot && lot.name) || false;
         const pageLines = [...this.pageLines];
         // If a line is selected, unshift it to the first position to start the search by it
@@ -1749,10 +1755,13 @@ export default class BarcodeModel extends EventBus {
                 continue; // Not the same product.
             }
             if (
-                uom
-                    ? line.product_uom_id.id !== uom.id && line.packaging_uom_id?.id !== uom.id
-                    : line.product_uom_id.id !== product.uom_id
+                line.packaging_uom_id &&
+                line.packaging_uom_id.id !== line.product_uom_id.id &&
+                line.packaging_uom_id.id !== uomId &&
+                line.product_uom_id.id !== uomId
             ) {
+                // If the packaging UoM is different from the UoM of the move we should
+                // only find the line if the barcode Uom is either of these
                 continue; // Not the same UoM.
             }
             if (quantPackage && (!line.package_id || line.package_id.id !== quantPackage.id)) {
@@ -1795,7 +1804,8 @@ export default class BarcodeModel extends EventBus {
                         this.lineIsInTheCurrentLocation(line) &&
                         (line.product_id.tracking === "none" ||
                             !dataLotName ||
-                            dataLotName === lineLotName)
+                            dataLotName === lineLotName) &&
+                        line.product_uom_id.id === uomId
                     ) {
                         // In case of tracked product, stop searching only if no
                         // LN/SN was scanned or if it's the same.
@@ -1845,6 +1855,9 @@ export default class BarcodeModel extends EventBus {
                 continue;
             } else if (this._lineIsNotComplete(line)) {
                 // If previous line is completed and current one is not, prioritize the current one.
+                foundLine = line;
+            } else if (foundLine.product_uom_id.id !== uomId && line.product_uom_id.id === uomId) {
+                // If previous line does not have the perfect uom and the current does, prioritize the current one.
                 foundLine = line;
             } else if (
                 this.lineIsSelected(line) ||

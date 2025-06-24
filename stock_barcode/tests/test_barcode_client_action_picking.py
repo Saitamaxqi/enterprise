@@ -3397,43 +3397,113 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_scan_packaging_on_picking_with_mixed_uom(self):
         """
-        Create a delivery for 12 units of a product packed in pack of 6. Process it
-        in barcode and check that 6 units are added each time a pack is scanned.
+        Create receipts for a product with Unit uom and that can be packed in pack of 6.
+
+        Process these pickings in barcode by scanning both Units and pack of 6.
+
+        receipt 1: - 2 pack of 6
+
+        receipt 2: - 12 units expected to be packed in pack of 6
+
+        receipt 3: - 10 units
+                   - 1 pack of 6
         """
         self.env.user.write({'group_ids': [Command.link(self.ref('uom.group_uom'))]})
+        self.uom_dozen.action_unarchive()
+        unit, pack_of_6 = self.ref('uom.product_uom_unit'), self.ref('uom.product_uom_pack_6')
         lovely_product = self.env['product.product'].create({
             'name': 'Lovely product',
             'is_storable': True,
             'barcode': 'love',
             'uom_id': self.ref('uom.product_uom_unit'),
-            'uom_ids': [Command.link(self.ref('uom.product_uom_pack_6'))],
-            'product_uom_ids': [Command.create({
-                'uom_id': self.ref('uom.product_uom_pack_6'),
-                'barcode': '6love',
+            'uom_ids': [Command.link(pack_of_6), Command.link(self.uom_dozen.id)],
+            'product_uom_ids': [
+                Command.create({
+                    'uom_id': pack_of_6,
+                    'barcode': '6love',
+                }),
+                Command.create({
+                    'uom_id': self.uom_dozen.id,
+                    'barcode': '12love',
             })]
         })
-        self.env['stock.quant']._update_available_quantity(lovely_product, self.stock_location, 20)
-        delivery = self.env['stock.picking'].create({
-            'name': "SPOPWMU",
-            'location_id': self.stock_location.id,
-            'location_dest_id': self.customer_location.id,
-            'picking_type_id': self.picking_type_out.id,
-            'move_ids': [Command.create({
-                'location_id': self.stock_location.id,
-                'location_dest_id': self.customer_location.id,
-                'product_id': lovely_product.id,
-                'product_uom_qty': 12,
-            })]
-        })
-        delivery.move_ids.packaging_uom_id = self.env.ref('uom.product_uom_pack_6')
-        delivery.action_confirm()
-        self.assertRecordValues(delivery.move_ids, [
-            {'product_uom_qty': 12.0, 'quantity': 12.0, 'picked': False, 'packaging_uom_qty': 2, 'packaging_uom_id': self.ref('uom.product_uom_pack_6')}
+        receipt_1, receipt_2, receipt_3 = self.env['stock.picking'].create([
+            {
+                'name': "SPOPWMU1",
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'picking_type_id': self.picking_type_in.id,
+                'move_ids': [
+                    Command.create({
+                        'location_id': self.supplier_location.id,
+                        'location_dest_id': self.stock_location.id,
+                        'product_id': lovely_product.id,
+                        'product_uom_qty': 2,
+                        'product_uom': pack_of_6,
+                    }),
+                ],
+            },
+            {
+                'name': "SPOPWMU2",
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'picking_type_id': self.picking_type_in.id,
+                'move_ids': [
+                    Command.create({
+                        'location_id': self.supplier_location.id,
+                        'location_dest_id': self.stock_location.id,
+                        'product_id': lovely_product.id,
+                        'product_uom_qty': 12,
+                })],
+            },
+            {
+                'name': "SPOPWMU3",
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'picking_type_id': self.picking_type_in.id,
+                'move_ids': [
+                    Command.create({
+                        'location_id': self.supplier_location.id,
+                        'location_dest_id': self.stock_location.id,
+                        'product_id': lovely_product.id,
+                        'product_uom_qty': 10,
+                    }),
+                    Command.create({
+                        'location_id': self.supplier_location.id,
+                        'location_dest_id': self.stock_location.id,
+                        'product_id': lovely_product.id,
+                        'product_uom_qty': 1,
+                        'product_uom': pack_of_6,
+                    }),
+                ],
+            },
+        ])
+        receipt_2.move_ids.packaging_uom_id = pack_of_6
+        (receipt_1 | receipt_2 | receipt_3).action_confirm()
+        self.assertRecordValues(receipt_1.move_ids, [
+            {'product_uom_qty': 2.0, 'quantity': 2.0, 'picked': False, 'product_uom': pack_of_6}
+        ])
+        self.assertRecordValues(receipt_2.move_ids, [
+            {'product_uom_qty': 12.0, 'quantity': 12.0, 'picked': False, 'packaging_uom_qty': 2, 'packaging_uom_id': pack_of_6}
+        ])
+        self.assertRecordValues(receipt_3.move_ids, [
+            {'product_uom_qty': 10.0, 'quantity': 10.0, 'product_uom': unit, 'picked': False},
+            {'product_uom_qty': 1.0, 'quantity': 1.0, 'product_uom': pack_of_6, 'picked': False},
         ])
 
         action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = f"/web#action={action.id}"
         self.start_tour(url, 'test_scan_packaging_on_picking_with_mixed_uom', login='admin')
+        self.assertRecordValues(receipt_1.move_ids, [
+            {'product_uom_qty': 2.0, 'quantity': 2, 'product_uom': pack_of_6, 'state': 'done'},
+        ])
+        self.assertRecordValues(receipt_2.move_ids, [
+            {'product_uom_qty': 12.0, 'quantity': 32.0, 'packaging_uom_id': unit, 'state': 'done'}
+        ])
+        self.assertRecordValues(receipt_3.move_ids, [
+            {'product_uom_qty': 10.0, 'quantity': 10.0, 'product_uom': unit, 'state': 'done'},
+            {'product_uom_qty': 1.0, 'quantity': 3.5, 'product_uom': pack_of_6, 'state': 'done'},
+        ])
 
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
