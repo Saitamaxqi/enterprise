@@ -94,7 +94,7 @@
                             <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
                             <main class="modal-body">
                                 Do you want to resume the subscription today?<br/>
-                                Next invoice date: <t t-if="sale_order.is_subscription and sale_order.state == 'sale'" t-out="format_date(next_invoice_date_at_resume)"/>
+                                Next invoice date: <t t-if="sale_order.is_subscription and sale_order.state == 'sale' and next_invoice_date_at_resume" t-out="format_date(next_invoice_date_at_resume)"/>
                             </main>
                             <footer class="modal-footer">
                                 <button class="btn btn-primary">Resume</button>
