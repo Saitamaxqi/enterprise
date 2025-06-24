@@ -5,10 +5,23 @@
         <field name="company_id" ref="base.demo_company_be"/>
     </record>
 
+    <record id="job_developer_be" model="hr.job">
+        <field name="name">Experienced Developer (BE)</field>
+        <field name="department_id" ref="hr_department_rdbe"/>
+        <field name="no_of_recruitment">5</field>
+        <field name="contract_type_id" ref="hr.contract_type_permanent"/>
+        <field name="description">
+            We are looking for an experienced developer to join our Web team in Belgium.
+            Someone who can snap out of coding and perform analysis or meet clients to explain the technical
+            possibilities that can meet their needs.
+        </field>
+        <field name="company_id" ref="base.demo_company_be"/>
+    </record>
+
     <record id="contract_template_be_cdi_experienced_developer" model="hr.version">
         <field name="name">CDI - Experienced Developer (BE)</field>
         <field name="department_id" ref="hr.dep_rd"/>
-        <field name="job_id" ref="hr.job_developer"/>
+        <field name="job_id" ref="job_developer_be"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="wage">2650</field>
         <field name="wage_on_signature">2650</field>
@@ -24,13 +37,14 @@
         <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
     </record>
 
-    <record id="hr.job_developer" model="hr.job">
-        <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
+    <record id="job_developer_be" model="hr.job">
+        <field name="contract_template_id" ref="contract_template_be_cdi_experienced_developer"/>
     </record>
 
     <record id="employee_max" model="hr.employee">
         <field name="name">Max Durand</field>
-        <field name="job_id" ref="hr.job_developer"/>
+        <field name="job_id" ref="job_developer_be"/>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="country_id" ref="base.be"/>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="image_1920" type="base64" file="hr_contract_salary/static/img/hr_employee_max_durand.jpg"/>
@@ -168,6 +182,7 @@
         <field name="bike_id" ref="fleet_vehicle_bike_laurie_poiret"/>
         <field name="ip_wage_rate">25</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="job_id" ref="job_developer_be"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>
         <field name="sign_template_id" ref="hr_contract_salary.sign_template_cdi_developer"/>
