@@ -246,7 +246,8 @@
 
     <template id="appointment_card_top">
         <div class="card-img-top position-relative">
-            <a t-attf-href="/appointment/#{appointment.id}" t-attf-title="Book {{appointment.name}}">
+            <a t-attf-href="/appointment/#{appointment.id}?#{keep_query('filter_appointment_type_ids', 'filter_staff_user_ids', 'filter_resource_ids', 'invite_token')}"
+                t-attf-title="Book {{appointment.name}}">
                 <div t-field="appointment.image_1920" class="d-block h-100 w-100 overflow-hidden ratio ratio-16x9 object-fit-cover" t-options="{'widget': 'image', 'class': 'object-fit-cover', 'preview_image': 'image_512'}"/>
             </a>
             <small t-if="not appointment.website_published" class="o_appointment_unpublished badge bg-danger position-absolute top-0 end-0 mt-2 me-2" groups="base.group_user">
@@ -277,7 +278,8 @@
             </div>
             <span t-if="not is_html_empty(appointment.message_intro)" class="o_wappointment_message_intro card-text text-muted overflow-hidden" t-field="appointment.message_intro" itemprop="message_intro" placeholder="Add an intro message here..."/>
             <div class="mt-auto">
-                <a t-attf-href="/appointment/#{appointment.id}" t-attf-title="Book {{appointment.name}}" role="button" class="btn btn-primary w-100 mt-3 o_not_editable" contenteditable="false">Book now</a>
+                <a t-attf-href="/appointment/#{appointment.id}?#{keep_query('filter_appointment_type_ids', 'filter_staff_user_ids', 'filter_resource_ids', 'invite_token')}"
+                    t-attf-title="Book {{appointment.name}}" role="button" class="btn btn-primary w-100 mt-3 o_not_editable" contenteditable="false">Book now</a>
             </div>
         </div>
     </template>
