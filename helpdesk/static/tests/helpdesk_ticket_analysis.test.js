@@ -19,6 +19,8 @@ describe.current.tags("desktop");
 class HelpdeskTicketReportAnalysis extends models.Model {
     _name = "helpdesk.ticket.report.analysis";
     team_id = fields.Many2one({ relation: "helpdesk.team" });
+    ticket_id = fields.Many2one({ relation: "helpdesk.ticket" });
+    rating_last_value = fields.Integer({ string: "Rating (1-5)" });
     create_date = fields.Datetime();
     close_date = fields.Datetime();
 
@@ -71,7 +73,7 @@ helpdeskModels.HelpdeskTicket._views = {
 defineHelpdeskModels();
 setupChartJsForTests();
 
-async function mountView(viewName) {
+async function mountView(viewName, ctx = {}) {
     const view = await mountWithCleanup(WebClient);
     await getService("action").doAction({
         id: 1,
@@ -79,6 +81,7 @@ async function mountView(viewName) {
         res_model: "helpdesk.ticket.report.analysis",
         type: "ir.actions.act_window",
         views: [[false, viewName]],
+        context: ctx,
     });
     return view;
 }
@@ -141,4 +144,35 @@ test("helpdesk.ticket.report.analysis (cohort): clicking on a cell leads to help
     });
     // The model of the list view that is opened consequently should be "helpdesk.ticket"
     expect.verifySteps(["helpdesk.ticket.report.analysis", "helpdesk.ticket"]);
+});
+
+test("helpdesk.ticket.report.analysis : fix the domain, in case field is not present in main model", async () => {
+    mockService("action", {
+        doAction({ domain, res_model }) {
+            if (res_model === "helpdesk.ticket") {
+                expect(domain).toEqual(["&", [1, "=", 1], ["id", "=", 1]]);
+            }
+            return super.doAction(...arguments);
+        },
+    });
+
+    HelpdeskTicketReportAnalysis._records = [
+        { id: 1, ticket_id: 1, rating_last_value: 2 },
+        { id: 2, ticket_id: 2, rating_last_value: 4 },
+    ];
+    HelpdeskTicketReportAnalysis._views = {
+        graph: /* xml */ `
+            <graph string="Tickets Analysis" sample="1" js_class="helpdesk_ticket_analysis_graph">
+                <field name="ticket_id"/>
+                <field name="rating_last_value"/>
+            </graph>
+        `
+    };
+
+    const view = await mountView("graph", { group_by: ["ticket_id", "rating_last_value"] });
+    await animationFrame();
+    await clickOnDataset(view);
+    await animationFrame();
+
+    expect(`.o_list_renderer .o_data_row`).toHaveCount(1);
 });
