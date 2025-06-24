@@ -25,7 +25,7 @@ export class ErrorScreen extends Component {
     }
 
     onClick() {
-        if (this.props.error.isNonBlocking) {
+        if (this.props.isNonBlocking) {
             this.voip.resolveError();
         }
     }
