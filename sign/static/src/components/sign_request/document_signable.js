@@ -454,7 +454,7 @@ export class Document extends Component {
     _getRouteAndParams() {
         const route = this.signatureInfo.smsToken
             ? `/sign/sign/${encodeURIComponent(this.requestID)}/${encodeURIComponent(
-                  this.props.accessToken
+                  this.accessToken
               )}/${encodeURIComponent(this.signatureInfo.smsToken)}`
             : `/sign/sign/${encodeURIComponent(this.requestID)}/${encodeURIComponent(
                   this.accessToken
