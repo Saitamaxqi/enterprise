@@ -44,6 +44,6 @@ class AccountJournal(models.Model):
             'params': {
                 'model': 'account.bank.statement.line',
                 'context': ctx,
-                'filename': 'bank_statement_import.csv',
+                'filename': attachments.name,
             }
         }

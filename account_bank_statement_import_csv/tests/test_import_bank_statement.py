@@ -39,24 +39,36 @@ class TestAccountBankStatementImportCSV(AccountTestInvoicingCommon):
             'quoting': '"',
             'bank_stmt_import': True,
             'headers': True,
+            'limit': 10,
+            'skip': 0,
             'separator': ';',
             'float_thousand_separator': ',',
             'float_decimal_separator': '.',
             'advanced': False,
         }
         import_wizard_fields = csv_fields or ['date', False, 'payment_ref', 'amount', 'balance']
-        import_wizard.execute_import(import_wizard_fields, [], import_wizard_options, dryrun=False)
+        res = import_wizard.execute_import(import_wizard_fields, [], import_wizard_options, dryrun=False)
+        while not res['messages'] and res['nextrow'] != 0:  # no error and there is a next row
+            import_wizard_options['skip'] = res['nextrow'] + 1
+            res = import_wizard.execute_import(import_wizard_fields, [], import_wizard_options, dryrun=False)
 
     def test_csv_file_import(self):
         self._import_file('account_bank_statement_import_csv/test_csv_file/test_csv.csv')
 
         # Check the imported bank statement
         imported_statement = self.env['account.bank.statement'].search([('company_id', '=', self.env.company.id)])
-        self.assertRecordValues(imported_statement, [{
-            'reference': 'test_csv.csv',
-            'balance_start': 21699.55,
-            'balance_end_real': 23462.55,
-        }])
+        self.assertRecordValues(imported_statement, [
+            {
+                'reference': 'test_csv.csv',
+                'balance_start': 27773.03,
+                'balance_end_real': 23462.55,
+            },
+            {
+                'reference': 'test_csv.csv',
+                'balance_start': 21699.55,
+                'balance_end_real': 23462.55,
+            }
+        ])
         self.assertRecordValues(imported_statement.line_ids.sorted(lambda line: (line.date, line.payment_ref)), [
             {'date': fields.Date.from_string('2015-02-02'), 'amount': 3728.87,  'payment_ref': 'ACH CREDIT"AMERICAN EXPRESS-SETTLEMENT'},
             {'date': fields.Date.from_string('2015-02-02'), 'amount': -500.08,  'payment_ref': 'DEBIT CARD 6906 EFF 02-01"01/31 INDEED 203-564-2400 CT'},
@@ -69,9 +81,9 @@ class TestAccountBankStatementImportCSV(AccountTestInvoicingCommon):
             {'date': fields.Date.from_string('2015-02-03'), 'amount': -45.86,   'payment_ref': 'DEBIT CARD 6906"02/02 DISTRICT SF SAN FRANCISCOCA'},
             {'date': fields.Date.from_string('2015-02-03'), 'amount': -1284.33, 'payment_ref': 'DEBIT CARD 6906"02/02 VIR ATL 9327 180-08628621 CT'},
             {'date': fields.Date.from_string('2015-02-03'), 'amount': -1284.33, 'payment_ref': 'DEBIT CARD 6906"02/02 VIR ATL 9327 180-08628621 CT'},
+            {'date': fields.Date.from_string('2015-02-03'), 'amount': -1123.33, 'payment_ref': 'DEBIT CARD 6906"02/02 VIR ATL 9327 180-08628621 CT'},
+            {'date': fields.Date.from_string('2015-02-03'), 'amount': -1123.33, 'payment_ref': 'DEBIT CARD 6906"02/02 VIR ATL 9327 180-08628621 CT'},
             {'date': fields.Date.from_string('2015-02-03'), 'amount': -1284.33, 'payment_ref': 'DEBIT CARD 6906"02/02 VIR ATL 9327 180-08628621 CT'},
-            {'date': fields.Date.from_string('2015-02-03'), 'amount': -1123.33, 'payment_ref': 'DEBIT CARD 6906"02/02 VIR ATL 9327 180-08628621 CT'},
-            {'date': fields.Date.from_string('2015-02-03'), 'amount': -1123.33, 'payment_ref': 'DEBIT CARD 6906"02/02 VIR ATL 9327 180-08628621 CT'},
             {'date': fields.Date.from_string('2015-02-03'), 'amount': -4344.66, 'payment_ref': 'DEBIT CARD 6906"02/03 IBM USED PC 888S 188-874-6742 NY'},
             {'date': fields.Date.from_string('2015-02-03'), 'amount': 8366.00,  'payment_ref': 'DEPOSIT-WIRED FUNDS"TVET OPERATING PLLC'},
             {'date': fields.Date.from_string('2015-02-04'), 'amount': -1284.33, 'payment_ref': 'DEBIT CARD 6906"02/03 VIR ATL 9327 180-08628621 CT'},

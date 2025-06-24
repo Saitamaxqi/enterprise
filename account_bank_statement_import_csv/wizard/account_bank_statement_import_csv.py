@@ -142,10 +142,6 @@ class Base_ImportImport(models.TransientModel):
                     # We trigger the schedule action after the import is done, so that the auto reconcile is done in the background
                     # and we avoid having an error when importing the file.
                     self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
-                    res['messages'].append({
-                        'statement_id': statement.id,
-                        'type': 'bank_statement'
-                        })
             with contextlib.suppress(psycopg2.InternalError):
                 savepoint.close(rollback=dryrun)
             return res
