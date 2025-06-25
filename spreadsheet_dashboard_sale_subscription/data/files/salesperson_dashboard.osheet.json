@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -322,7 +322,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E2",
-            "baselineDescr": "MRR",
+            "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!D2",
             "humanize": false
           },
@@ -343,7 +343,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E8",
-            "baselineDescr": "MRR",
+            "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!B8",
             "humanize": false
           },
@@ -386,7 +386,8 @@
               "measure": "mrr_change_normalized",
               "order": null,
               "resModel": "sale.order.log.report",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -425,7 +426,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!D13",
-            "baselineDescr": "over the period",
+            "baselineDescr": { "text": "over the period" },
             "keyValue": "Data!D12",
             "humanize": false
           },
@@ -1000,14 +1001,12 @@
       "id": "5dac8b40-3868-4049-a237-6fc28656c7a4",
       "type": "date",
       "label": "Period",
-      "defaultValue": "this_month",
-      "rangeType": "fixedPeriod"
+      "defaultValue": "this_month"
     },
     {
       "id": "2967df50-3aec-4336-af5d-4eaceb383120",
       "type": "relation",
       "label": "Country",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.country"
     },
@@ -1015,7 +1014,6 @@
       "id": "4e294d4b-9dae-401f-a278-49a0237387a6",
       "type": "relation",
       "label": "Sales Team",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "crm.team"
     },

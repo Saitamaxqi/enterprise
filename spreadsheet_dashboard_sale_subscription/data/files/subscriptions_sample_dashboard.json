@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -291,7 +291,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!D3",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!D2",
             "humanize": false
           },
@@ -312,7 +312,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!B6",
-            "baselineDescr": "/sub.",
+            "baselineDescr": { "text": "/sub." },
             "keyValue": "Data!B5",
             "humanize": false
           },
@@ -332,7 +332,7 @@
             "title": { "text": "Cust. Lifespan", "color": "#434343", "bold": true },
             "type": "scorecard",
             "background": "#EFF6FF",
-            "baselineDescr": "Month(s)",
+            "baselineDescr": { "text": "Month(s)" },
             "keyValue": "Data!D10",
             "humanize": false
           },

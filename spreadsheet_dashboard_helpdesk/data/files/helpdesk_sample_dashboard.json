@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -140,7 +140,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E6",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D6",
             "humanize": false
           },
@@ -161,7 +161,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E2",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D2",
             "humanize": false
           },
@@ -182,7 +182,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D3",
             "humanize": false
           },
@@ -203,7 +203,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E4",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D4",
             "humanize": false
           },
@@ -224,7 +224,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E5",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D5",
             "humanize": false
           },

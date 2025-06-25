@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "Sheet1",
@@ -460,7 +460,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!E4",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D4",
             "humanize": false
           },
@@ -481,7 +481,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!E5",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D5",
             "humanize": false
           },
@@ -501,7 +501,7 @@
             "title": { "text": "Open opportunities", "color": "#434343", "bold": true },
             "type": "scorecard",
             "background": "#EFF6FF",
-            "baselineDescr": "to close",
+            "baselineDescr": { "text": "to close" },
             "keyValue": "Data!D7",
             "humanize": false
           },
@@ -523,7 +523,8 @@
               "measure": "prorated_revenue",
               "order": null,
               "resModel": "crm.lead",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -571,7 +572,8 @@
               "measure": "prorated_revenue",
               "order": null,
               "resModel": "crm.lead",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -1144,68 +1146,54 @@
       "id": "bf6dcdb0-d22d-468c-b6a9-64f717005043",
       "type": "date",
       "label": "Period",
-      "defaultValue": {},
-      "rangeType": "relative"
+      "defaultValue": {}
     },
     {
       "id": "9f3d4602-0b4b-4eb4-b013-959d72af88ab",
       "type": "relation",
       "label": "Stage",
       "modelName": "crm.stage",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "9c8a3e99-903a-40a3-8799-5eaf098b884f",
       "type": "relation",
       "label": "Salesperson",
       "modelName": "res.users",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "aaba8a27-cf83-4397-a9ad-a85bba4c8016",
       "type": "relation",
       "label": "Sales Team",
       "modelName": "crm.team",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "f6ef716d-3135-4963-b645-bc12c6a3421b",
       "type": "relation",
       "label": "Country",
       "modelName": "res.country",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "ec772492-b1db-4a63-be55-a4e0c3167edf",
       "type": "text",
-      "label": "City",
-      "rangeType": "year"
+      "label": "City"
     },
     {
       "id": "c21a4660-9a0a-4757-8d28-1c8d95f73edb",
       "type": "relation",
       "label": "Medium",
       "modelName": "utm.medium",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "c33d6d0a-df2d-4150-86b0-112cd250ddbd",
       "type": "relation",
       "label": "Source",
       "modelName": "utm.source",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     }
   ],
   "lists": {

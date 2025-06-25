@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "c1dd5136-2d63-4eb2-8a48-42eae5ba2086",
@@ -141,7 +141,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "KPIs!D3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!D4",
             "humanize": true
           },
@@ -167,7 +167,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "KPIs!C3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!C4",
             "humanize": false
           },
@@ -193,7 +193,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "KPIs!I3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!I4",
             "humanize": true
           },
@@ -219,7 +219,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "KPIs!H3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "KPIs!H4",
             "humanize": true
           },
@@ -245,7 +245,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "KPIs!E3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!E4",
             "humanize": true
           },
@@ -271,7 +271,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "KPIs!G3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "KPIs!G4",
             "humanize": true
           },
@@ -297,7 +297,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "KPIs!D10",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!D11",
             "humanize": false
           },
@@ -323,7 +323,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "KPIs!C17",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!B17",
             "humanize": false
           },

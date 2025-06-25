@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -548,7 +548,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "'Mailing Statistics'!C10",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B10",
             "humanize": false
           },
@@ -569,7 +569,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C11",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B11",
             "humanize": false
           },
@@ -590,7 +590,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "'Mailing Statistics'!C17",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B17",
             "humanize": false
           },
@@ -611,7 +611,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C14",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B14",
             "humanize": false
           },
@@ -632,7 +632,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C13",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B13",
             "humanize": false
           },
@@ -653,7 +653,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C12",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B12",
             "humanize": false
           },
@@ -674,7 +674,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C16",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B16",
             "humanize": false
           },
@@ -695,7 +695,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "'Mailing Statistics'!C21",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B21",
             "humanize": false
           },
@@ -815,7 +815,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "'Mailing Statistics'!C7",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B7",
             "humanize": false
           },
@@ -1482,14 +1482,12 @@
       "id": "eb89bf39-7f4d-41c7-939a-d85c0841c9c2",
       "type": "date",
       "label": "Period",
-      "defaultValue": "last_year",
-      "rangeType": "relative"
+      "defaultValue": "last_12_months"
     },
     {
       "id": "52262898-66ee-4e22-b038-c36cbd0e15d4",
       "type": "relation",
       "label": "Mailing Campaign",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "mailing.mailing",
       "includeChildren": false
@@ -1498,7 +1496,6 @@
       "id": "538ee908-65e8-49ca-9bc5-e9081ac75a3f",
       "type": "relation",
       "label": "Responsible",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.users",
       "includeChildren": false
@@ -1507,7 +1504,6 @@
       "id": "36252475-7a85-482c-b6da-ba74ef40b71f",
       "type": "relation",
       "label": "Medium",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "utm.medium",
       "includeChildren": false
@@ -1516,7 +1512,6 @@
       "id": "68397898-aab8-400e-9f49-875fa34f04a4",
       "type": "relation",
       "label": "Source",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "utm.source",
       "includeChildren": false

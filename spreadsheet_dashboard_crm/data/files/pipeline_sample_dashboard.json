@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "Sheet1",
@@ -176,7 +176,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!E4",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D4",
             "humanize": false
           },
@@ -197,7 +197,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!E5",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D5",
             "humanize": false
           },
@@ -217,7 +217,7 @@
             "title": { "text": "Open opportunities", "color": "#434343", "bold": true },
             "type": "scorecard",
             "background": "#EFF6FF",
-            "baselineDescr": "to close",
+            "baselineDescr": { "text": "to close" },
             "keyValue": "Data!D7",
             "humanize": false
           },

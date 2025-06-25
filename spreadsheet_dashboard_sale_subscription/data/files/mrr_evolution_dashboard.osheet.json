@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -387,7 +387,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C11",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C10",
             "humanize": false
           },
@@ -408,7 +408,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C3",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C2",
             "humanize": false
           },
@@ -429,7 +429,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C7",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C6",
             "humanize": false
           },
@@ -450,7 +450,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!C9",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C8",
             "humanize": false
           },
@@ -471,7 +471,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C15",
-            "baselineDescr": "of total invoiced",
+            "baselineDescr": { "text": "of total invoiced" },
             "keyValue": "Data!C13",
             "humanize": false
           },
@@ -509,6 +509,7 @@
             "verticalAxisPosition": "left",
             "stacked": false,
             "cumulative": true,
+            "cumulatedStart": true,
             "fillArea": true,
             "fieldMatching": {
               "954bb57d-1c53-4918-a516-c179fc19579b": { "chain": "event_date", "type": "date", "offset": 0 },
@@ -537,7 +538,8 @@
               "measure": "mrr_change_normalized",
               "order": null,
               "resModel": "sale.order.log.report",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -1057,14 +1059,12 @@
       "id": "954bb57d-1c53-4918-a516-c179fc19579b",
       "type": "date",
       "label": "Date",
-      "defaultValue": "last_year",
-      "rangeType": "relative"
+      "defaultValue": "last_12_months"
     },
     {
       "id": "a20dbbaa-c062-4527-bd96-641257f29345",
       "type": "relation",
       "label": "Country",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.country"
     },
@@ -1072,7 +1072,6 @@
       "id": "efcb1557-c59e-45c7-b970-1d3df23908db",
       "type": "relation",
       "label": "Customer",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.partner"
     },
@@ -1080,7 +1079,6 @@
       "id": "ab1df29c-770b-4ec5-bf93-cd3f57bcdab4",
       "type": "relation",
       "label": "Sales Team",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "crm.team"
     },
@@ -1088,7 +1086,6 @@
       "id": "866b40f9-0436-4e8b-8ec1-69c18381c876",
       "type": "relation",
       "label": "Salesperon",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.users"
     },
@@ -1096,7 +1093,6 @@
       "id": "bb803250-fe24-48ab-ab18-54ec5ab5806f",
       "type": "relation",
       "label": "Recurrence",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "sale.subscription.plan"
     }

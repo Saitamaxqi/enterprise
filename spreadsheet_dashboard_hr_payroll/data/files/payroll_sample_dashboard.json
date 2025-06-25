@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -160,7 +160,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!B16",
-            "baselineDescr": "Employees",
+            "baselineDescr": { "text": "Employees" },
             "keyValue": "Data!B17",
             "humanize": false
           },

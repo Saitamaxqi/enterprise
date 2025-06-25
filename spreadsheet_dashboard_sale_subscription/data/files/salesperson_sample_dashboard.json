@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -140,7 +140,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E2",
-            "baselineDescr": "MRR",
+            "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!D2",
             "humanize": false
           },
@@ -161,7 +161,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E8",
-            "baselineDescr": "MRR",
+            "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!B8",
             "humanize": false
           },
@@ -203,7 +203,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!D13",
-            "baselineDescr": "over the period",
+            "baselineDescr": { "text": "over the period" },
             "keyValue": "Data!D12",
             "humanize": false
           },

@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -208,7 +208,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "'Mailing Statistics'!C10",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B10",
             "humanize": false
           },
@@ -229,7 +229,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C11",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B11",
             "humanize": false
           },
@@ -250,7 +250,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "'Mailing Statistics'!C17",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B17",
             "humanize": false
           },
@@ -271,7 +271,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C14",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B14",
             "humanize": false
           },
@@ -292,7 +292,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C13",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B13",
             "humanize": false
           },
@@ -313,7 +313,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C12",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B12",
             "humanize": false
           },
@@ -334,7 +334,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "'Mailing Statistics'!C16",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B16",
             "humanize": false
           },
@@ -355,7 +355,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "'Mailing Statistics'!C21",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B21",
             "humanize": false
           },
@@ -376,7 +376,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "'Mailing Statistics'!C7",
-            "baselineDescr": "vs last period",
+            "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B7",
             "humanize": false
           },

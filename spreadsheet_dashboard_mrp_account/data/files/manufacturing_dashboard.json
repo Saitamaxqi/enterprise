@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -226,7 +226,8 @@
               "measure": "product_uom_qty",
               "order": null,
               "resModel": "mrp.production",
-              "mode": "line"
+              "mode": "line",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -241,6 +242,7 @@
             "dataSets": [],
             "verticalAxisPosition": "left",
             "stacked": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "a5d0b2fb-b866-4fa0-8d25-bcf1c41cf592": { "chain": "date_finished", "type": "datetime", "offset": 0 },
@@ -267,7 +269,8 @@
               "measure": "product_uom_qty",
               "order": "DESC",
               "resModel": "mrp.production",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -318,7 +321,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D3",
             "humanize": false
           },
@@ -339,7 +342,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E2",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D2",
             "humanize": false
           },
@@ -360,7 +363,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "Data!E7",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D7",
             "humanize": false
           },
@@ -381,7 +384,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!E8",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D8",
             "humanize": false
           },
@@ -884,35 +887,28 @@
       "id": "a5d0b2fb-b866-4fa0-8d25-bcf1c41cf592",
       "type": "date",
       "label": "Period",
-      "defaultValue": "last_three_months",
-      "rangeType": "relative"
+      "defaultValue": "last_90_days"
     },
     {
       "id": "ad6b4dd2-f0c1-4ef7-9591-f9af7c790bdb",
       "type": "relation",
       "label": "Product",
       "modelName": "product.product",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "dfe37941-d119-494e-af10-62c1ed04c413",
       "type": "relation",
       "label": "Operation Type",
       "modelName": "stock.picking.type",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "be98718e-525b-4252-92c5-1c95bd470fc9",
       "type": "relation",
       "label": "Responsible",
       "modelName": "res.users",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     }
   ],
   "lists": {},

@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -209,7 +209,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C11",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C10",
             "humanize": false
           },
@@ -230,7 +230,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C3",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C2",
             "humanize": false
           },
@@ -251,7 +251,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C7",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C6",
             "humanize": false
           },
@@ -272,7 +272,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C9",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!C8",
             "humanize": false
           },
@@ -293,7 +293,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C15",
-            "baselineDescr": "of total invoiced",
+            "baselineDescr": { "text": "of total invoiced" },
             "keyValue": "Data!C13",
             "humanize": false
           },

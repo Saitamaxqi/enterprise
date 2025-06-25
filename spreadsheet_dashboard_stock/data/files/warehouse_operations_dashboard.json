@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -418,6 +418,7 @@
             "verticalAxisPosition": "left",
             "stacked": true,
             "cumulative": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "6a738f48-e4d7-4b69-9f69-889b703ccff7": { "chain": "location_id", "type": "many2one" },
@@ -475,6 +476,7 @@
             "verticalAxisPosition": "left",
             "stacked": true,
             "cumulative": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "6a738f48-e4d7-4b69-9f69-889b703ccff7": { "chain": "location_id", "type": "many2one" },
@@ -503,7 +505,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.picking",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -547,7 +550,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.picking",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -599,7 +603,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.picking",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -652,7 +657,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.picking",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -705,7 +711,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.picking",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -963,7 +970,6 @@
       "id": "6a738f48-e4d7-4b69-9f69-889b703ccff7",
       "type": "relation",
       "label": "Source location",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "stock.location"
     },
@@ -971,7 +977,6 @@
       "id": "4f4dae92-1bd5-466d-a7ca-dace8a4838dd",
       "type": "relation",
       "label": "Destination locations",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "stock.location"
     },
@@ -979,7 +984,6 @@
       "id": "a77447da-4a1c-4bc2-b38f-0f0678f1933b",
       "type": "relation",
       "label": "Operation Type",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "stock.picking.type",
       "includeChildren": false
@@ -988,7 +992,6 @@
       "id": "a311c75a-9843-4666-a845-2a646f4785f8",
       "type": "relation",
       "label": "Product",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "product.product",
       "includeChildren": false
@@ -997,7 +1000,6 @@
       "id": "0c53514d-da7c-4e17-89c4-8c4e4ed42224",
       "type": "relation",
       "label": "Contact",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.partner"
     },

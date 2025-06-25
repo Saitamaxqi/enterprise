@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "Sheet1",
@@ -600,9 +600,7 @@
       "id": "069d7cf1-9623-4d6e-8226-ad7c60112662",
       "type": "date",
       "label": "Month",
-      "defaultValue": "this_month",
-      "rangeType": "fixedPeriod",
-      "disabledPeriods": ["quarter"]
+      "defaultValue": "this_month"
     }
   ],
   "lists": {},

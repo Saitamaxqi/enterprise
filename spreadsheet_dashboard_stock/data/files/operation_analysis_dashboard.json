@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "df33ef16-d138-4c86-a257-a2d529a1cdfa",
@@ -82,7 +82,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!C2",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B2",
             "humanize": false
           },
@@ -108,7 +108,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!C3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B3",
             "humanize": false
           },
@@ -129,7 +129,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!C6",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B6",
             "humanize": false
           },
@@ -155,7 +155,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "Data!C9",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B9",
             "humanize": false
           },
@@ -177,7 +177,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.picking",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -224,7 +225,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.move",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -3593,28 +3595,25 @@
       "id": "472f70c0-7336-48e5-a84c-9d03754250b7",
       "type": "text",
       "label": "Sort graph by",
-      "defaultValue": "Demand",
-      "rangeOfAllowedValues": "'By product overview fill rate - On time'!H6:H7"
+      "defaultValue": ["Demand"],
+      "rangesOfAllowedValues": ["'By product overview fill rate - On time'!H6:H7"]
     },
     {
       "id": "ad701208-d8cf-431f-97eb-dc72a229a727",
       "type": "text",
       "label": "Top/Bottoms values",
-      "defaultValue": "Top",
-      "rangeOfAllowedValues": "'By product overview fill rate - On time'!I5:J5"
+      "defaultValue": ["Top"],
+      "rangesOfAllowedValues": ["'By product overview fill rate - On time'!I5:J5"]
     },
     {
       "id": "4ab93c39-bd84-437b-b00f-9688b680937e",
       "type": "date",
-      "label": "Period",
-      "defaultValue": "",
-      "rangeType": "relative"
+      "label": "Period"
     },
     {
       "id": "049280a5-d8a4-4e65-a895-8bdfe313b7b2",
       "type": "relation",
       "label": "Product",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "product.product",
       "includeChildren": false
@@ -3623,7 +3622,6 @@
       "id": "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98",
       "type": "relation",
       "label": "Product Category",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "product.category",
       "includeChildren": true
@@ -3632,7 +3630,6 @@
       "id": "81e2a28d-25f4-4ebf-b550-ac5e53833b56",
       "type": "relation",
       "label": "Warehouse",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "stock.warehouse",
       "includeChildren": false
@@ -3641,7 +3638,6 @@
       "id": "11efc48d-661b-4b4a-aa83-7bdee9f5f36c",
       "type": "relation",
       "label": "Transfer",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "stock.picking.type",
       "includeChildren": false

@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -580,7 +580,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!D4",
-            "baselineDescr": "ARR",
+            "baselineDescr": { "text": "ARR" },
             "keyValue": "Data!D3",
             "humanize": false
           },
@@ -601,7 +601,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!B7",
-            "baselineDescr": "/sub.",
+            "baselineDescr": { "text": "/sub." },
             "keyValue": "Data!B6",
             "humanize": false
           },
@@ -623,7 +623,8 @@
               "measure": "recurring_monthly",
               "order": null,
               "resModel": "sale.subscription.report",
-              "mode": "pie"
+              "mode": "pie",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -679,7 +680,8 @@
               "measure": "recurring_monthly",
               "order": null,
               "resModel": "sale.subscription.report",
-              "mode": "pie"
+              "mode": "pie",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -735,7 +737,8 @@
               "measure": "recurring_monthly",
               "order": null,
               "resModel": "sale.subscription.report",
-              "mode": "pie"
+              "mode": "pie",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -789,7 +792,7 @@
             "title": { "text": "Cust. Lifespan", "color": "#434343", "bold": true },
             "type": "scorecard",
             "background": "#EFF6FF",
-            "baselineDescr": "Month(s)",
+            "baselineDescr": { "text": "Month(s)" },
             "keyValue": "Data!D11",
             "humanize": false
           },
@@ -831,7 +834,8 @@
               "measure": "recurring_monthly",
               "order": null,
               "resModel": "sale.subscription.report",
-              "mode": "pie"
+              "mode": "pie",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -1603,7 +1607,6 @@
       "id": "e6db018b-19ec-42c3-b29e-11b1e3910916",
       "type": "relation",
       "label": "Land",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.country"
     },
@@ -1611,7 +1614,6 @@
       "id": "dbb716a1-5977-47ee-a53e-ca5716303433",
       "type": "relation",
       "label": "Product",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "product.template"
     },
@@ -1619,7 +1621,6 @@
       "id": "7d95fe28-fd13-4805-948c-95742e7d6733",
       "type": "relation",
       "label": "Customer",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.partner"
     },
@@ -1627,7 +1628,6 @@
       "id": "b75963ca-ab5f-4da5-9c90-67526517e5e7",
       "type": "relation",
       "label": "Sales Team",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "crm.team"
     },
@@ -1635,7 +1635,6 @@
       "id": "4181e8e3-2e7e-42be-a88b-f24acb7d03e7",
       "type": "relation",
       "label": "Salesperson",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.users"
     },
@@ -1643,7 +1642,6 @@
       "id": "ec466626-f54a-4955-9611-eaa2719f1afb",
       "type": "relation",
       "label": "Source",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "utm.source"
     },
@@ -1651,7 +1649,6 @@
       "id": "85d94827-6ce2-429c-9775-ef646cfddb6b",
       "type": "relation",
       "label": "Medium",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "utm.medium"
     }

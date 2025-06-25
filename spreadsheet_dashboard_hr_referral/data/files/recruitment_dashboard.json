@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -507,7 +507,8 @@
               "measure": "count",
               "order": null,
               "resModel": "hr.recruitment.report",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -547,7 +548,8 @@
               "measure": "hired",
               "order": "DESC",
               "resModel": "hr.recruitment.report",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -662,7 +664,8 @@
               "measure": "count",
               "order": null,
               "resModel": "hr.recruitment.report",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -704,7 +707,8 @@
               "measure": "final_yearly_costs",
               "order": null,
               "resModel": "hr.contract.salary.offer",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -1157,53 +1161,42 @@
     {
       "id": "f93b0b68-4ddf-4141-b8e7-9e666c54bc45",
       "type": "date",
-      "label": "Date",
-      "rangeType": "from_to"
+      "label": "Date"
     },
     {
       "id": "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6",
       "type": "relation",
       "label": "Job Position",
       "modelName": "hr.job",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "a5279de1-3e92-4dbd-8897-06d34b7ce62a",
       "type": "relation",
       "label": "Recruiter",
       "modelName": "res.users",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "f1bc3bcb-c60a-4222-82c5-1dad28754122",
       "type": "relation",
       "label": "Medium",
       "modelName": "utm.medium",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "2f535150-c79b-4a1e-8961-b97f083427c3",
       "type": "relation",
       "label": "Source",
       "modelName": "utm.source",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "a6015d8c-333c-48ec-926f-6c9bd312a50e",
       "type": "relation",
       "label": "Company",
       "modelName": "res.company",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     }
   ],
   "lists": {

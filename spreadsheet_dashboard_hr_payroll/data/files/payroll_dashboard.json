@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -187,7 +187,8 @@
               "measure": "net_wage",
               "order": null,
               "resModel": "hr.payroll.report",
-              "mode": "line"
+              "mode": "line",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -200,6 +201,7 @@
             "dataSets": [],
             "verticalAxisPosition": "left",
             "stacked": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "856ca699-dd18-47ea-a8c7-bb48a37e0f9f": { "chain": "date_from", "type": "date", "offset": -1 },
@@ -224,7 +226,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!B16",
-            "baselineDescr": "Employees",
+            "baselineDescr": { "text": "Employees" },
             "keyValue": "Data!B17",
             "humanize": false
           },
@@ -537,14 +539,12 @@
       "id": "856ca699-dd18-47ea-a8c7-bb48a37e0f9f",
       "type": "date",
       "label": "Period",
-      "defaultValue": "last_year",
-      "rangeType": "relative"
+      "defaultValue": "last_12_months"
     },
     {
       "id": "74f6a928-ecb5-4350-9a5e-39a6edc250d4",
       "type": "relation",
       "label": "Job position",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "hr.job"
     },
@@ -552,7 +552,6 @@
       "id": "cc3ddb0d-417c-441f-95bb-dc16ab4f11fe",
       "type": "relation",
       "label": "Companies",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.company"
     }

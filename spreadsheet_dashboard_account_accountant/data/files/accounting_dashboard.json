@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "Sheet1",
@@ -248,7 +248,7 @@
         {
           "rule": {
             "type": "CellIsRule",
-            "operator": "GreaterThan",
+            "operator": "isGreaterThan",
             "values": ["0"],
             "style": { "fillColor": "", "textColor": "#10B981", "bold": true }
           },
@@ -258,7 +258,7 @@
         {
           "rule": {
             "type": "CellIsRule",
-            "operator": "LessThan",
+            "operator": "isLessThan",
             "values": ["0"],
             "style": { "fillColor": "", "textColor": "#FF0000", "bold": true }
           },
@@ -282,7 +282,8 @@
               "measure": "price_subtotal",
               "order": null,
               "resModel": "account.invoice.report",
-              "mode": "line"
+              "mode": "line",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -307,6 +308,7 @@
             "dataSets": [],
             "verticalAxisPosition": "left",
             "stacked": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "7785b753-917c-4640-a937-4b6226222ca8": { "chain": "invoice_date", "type": "date", "offset": 0 }
@@ -329,7 +331,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!C2",
             "humanize": false
           },
@@ -349,7 +351,7 @@
             "title": { "text": "Receivables", "bold": true, "color": "#434343" },
             "type": "scorecard",
             "background": "#FFF7ED",
-            "baselineDescr": "to receive",
+            "baselineDescr": { "text": "to receive" },
             "keyValue": "Data!C4",
             "humanize": false
           },
@@ -370,7 +372,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!C6",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!C5",
             "humanize": false
           },
@@ -390,7 +392,7 @@
             "title": { "text": "Payables", "bold": true, "color": "#434343" },
             "type": "scorecard",
             "background": "#FFF7ED",
-            "baselineDescr": "to pay",
+            "baselineDescr": { "text": "to pay" },
             "keyValue": "Data!C7",
             "humanize": false
           },
@@ -978,8 +980,7 @@
       "id": "7785b753-917c-4640-a937-4b6226222ca8",
       "type": "date",
       "label": "Year",
-      "defaultValue": "this_year",
-      "rangeType": "fixedPeriod"
+      "defaultValue": "this_year"
     }
   ],
   "lists": {},

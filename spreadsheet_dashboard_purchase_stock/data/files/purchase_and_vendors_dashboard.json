@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "c1dd5136-2d63-4eb2-8a48-42eae5ba2086",
@@ -291,7 +291,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "KPIs!D3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!D4",
             "humanize": true
           },
@@ -317,7 +317,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "KPIs!C3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!C4",
             "humanize": false
           },
@@ -343,7 +343,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "KPIs!I3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!I4",
             "humanize": true
           },
@@ -369,7 +369,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "KPIs!H3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "KPIs!H4",
             "humanize": true
           },
@@ -395,7 +395,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "KPIs!E3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!E4",
             "humanize": true
           },
@@ -421,7 +421,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "KPIs!G3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "KPIs!G4",
             "humanize": true
           },
@@ -447,7 +447,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "KPIs!D10",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!D11",
             "humanize": false
           },
@@ -473,7 +473,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "KPIs!C17",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "KPIs!B17",
             "humanize": false
           },
@@ -517,6 +517,7 @@
             "verticalAxisPosition": "left",
             "stacked": true,
             "cumulative": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "3e8575de-1649-4bcb-9e8c-367655452c70": { "chain": "date_order", "type": "datetime" },
@@ -544,7 +545,8 @@
               "measure": "on_time_rate",
               "order": "DESC",
               "resModel": "vendor.delay.report",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -641,7 +643,8 @@
               "measure": "amount_total",
               "order": null,
               "resModel": "purchase.order",
-              "mode": "pie"
+              "mode": "pie",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -702,6 +705,7 @@
             "verticalAxisPosition": "left",
             "stacked": false,
             "cumulative": false,
+            "cumulatedStart": false,
             "fillArea": false,
             "fieldMatching": {
               "3e8575de-1649-4bcb-9e8c-367655452c70": { "chain": "date_order", "type": "datetime" },
@@ -1741,14 +1745,12 @@
     {
       "id": "3e8575de-1649-4bcb-9e8c-367655452c70",
       "type": "date",
-      "label": "Order date",
-      "rangeType": "relative"
+      "label": "Order date"
     },
     {
       "id": "eaabbadf-abbf-46a1-ab7b-00f0c73e453e",
       "type": "relation",
       "label": "Vendor",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.partner",
       "includeChildren": false
@@ -1757,7 +1759,6 @@
       "id": "99ff934e-4d52-4353-a1a3-b4c0f4dfe03a",
       "type": "relation",
       "label": "Buyer",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "res.users",
       "includeChildren": false
@@ -1766,7 +1767,6 @@
       "id": "41a58f16-d8c0-4ede-a391-ef2fcaaa0e32",
       "type": "relation",
       "label": "Product",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "product.product",
       "includeChildren": false
@@ -1775,7 +1775,6 @@
       "id": "698db1cf-95a4-4fa6-8364-56ff2d5b0adf",
       "type": "relation",
       "label": "Product Category",
-      "defaultValue": [],
       "defaultValueDisplayNames": [],
       "modelName": "product.category",
       "includeChildren": true

@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -264,7 +264,8 @@
               "measure": "quantity",
               "order": null,
               "resModel": "sale.rental.report",
-              "mode": "line"
+              "mode": "line",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -285,6 +286,7 @@
             "dataSets": [],
             "verticalAxisPosition": "left",
             "stacked": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "a58dc8ef-f393-4607-bdcd-acb43a20585d": { "chain": "date", "type": "date", "offset": 0 },
@@ -311,7 +313,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E3",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D3",
             "humanize": false
           },
@@ -332,7 +334,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E7",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D7",
             "humanize": false
           },
@@ -353,7 +355,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E2",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D2",
             "humanize": false
           },
@@ -770,44 +772,35 @@
       "id": "a58dc8ef-f393-4607-bdcd-acb43a20585d",
       "type": "date",
       "label": "Period",
-      "defaultValue": "last_month",
-      "rangeType": "relative"
+      "defaultValue": "last_30_days"
     },
     {
       "id": "fe7785ab-5c8e-404a-84f0-990dd4461c09",
       "type": "relation",
       "label": "Product Category",
       "modelName": "product.category",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "82fcd2d0-6793-4bb2-8fae-549decfe46e9",
       "type": "relation",
       "label": "Product",
       "modelName": "product.product",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "b810ed25-c56a-4a70-ab8c-f12f54c0d8f4",
       "type": "relation",
       "label": "Salesperson",
       "modelName": "res.users",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "64e3bd4b-8b6d-4776-b802-d678cf8c4f56",
       "type": "relation",
       "label": "Customer",
       "modelName": "res.partner",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     }
   ],
   "lists": {},

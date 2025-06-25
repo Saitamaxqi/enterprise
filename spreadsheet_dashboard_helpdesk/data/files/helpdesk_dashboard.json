@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -275,7 +275,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "helpdesk.ticket.report.analysis",
-              "mode": "bar"
+              "mode": "bar",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -315,7 +316,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "helpdesk.ticket.report.analysis",
-              "mode": "pie"
+              "mode": "pie",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -352,7 +354,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E6",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D6",
             "humanize": false
           },
@@ -373,7 +375,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E2",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D2",
             "humanize": false
           },
@@ -394,7 +396,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D3",
             "humanize": false
           },
@@ -415,7 +417,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E4",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D4",
             "humanize": false
           },
@@ -436,7 +438,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E5",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D5",
             "humanize": false
           },
@@ -864,53 +866,42 @@
       "id": "9c37c741-1bb5-439a-b93d-d5443a9544be",
       "type": "date",
       "label": "Period",
-      "defaultValue": "last_month",
-      "rangeType": "relative"
+      "defaultValue": "last_30_days"
     },
     {
       "id": "32224750-df4d-496b-94d1-113aeb0a922a",
       "type": "relation",
       "label": "Team",
       "modelName": "helpdesk.team",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "6bd364fc-ce70-461b-81fb-1e9cfbc0fb48",
       "type": "relation",
       "label": "Agent",
       "modelName": "res.users",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "6cfea52a-55aa-4c5e-8068-a087b0432cc4",
       "type": "relation",
       "label": "Ticket Stage",
       "modelName": "helpdesk.stage",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "cc4e1afb-103a-4a2d-a95a-a2cffb4ec225",
       "type": "relation",
       "label": "Customer",
       "modelName": "res.partner",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "7cgfa52a-52bb-5t4e-2089-a980b0432ff5",
       "type": "relation",
       "label": "Tags",
       "modelName": "helpdesk.tag",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     }
   ],
   "lists": {},

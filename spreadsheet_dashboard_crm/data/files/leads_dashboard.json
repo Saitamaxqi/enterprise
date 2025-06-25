@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "Sheet1",
@@ -480,7 +480,8 @@
               "measure": "__count",
               "order": null,
               "resModel": "crm.lead",
-              "mode": "line"
+              "mode": "line",
+              "cumulatedStart": false
             },
             "searchParams": {
               "comparison": null,
@@ -507,6 +508,7 @@
             "dataSets": [],
             "verticalAxisPosition": "left",
             "stacked": false,
+            "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
               "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
@@ -537,7 +539,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!E4",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D4",
             "humanize": false
           },
@@ -558,7 +560,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!E5",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D5",
             "humanize": false
           },
@@ -579,7 +581,7 @@
             "type": "scorecard",
             "background": "#FFF7ED",
             "baseline": "Data!E6",
-            "baselineDescr": "since last period",
+            "baselineDescr": { "text": "since last period" },
             "keyValue": "Data!D6",
             "humanize": false
           },
@@ -600,7 +602,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E9",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D9",
             "humanize": false
           },
@@ -621,7 +623,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!E10",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!D10",
             "humanize": false
           },
@@ -1465,80 +1467,63 @@
       "id": "77bc36ef-1319-4784-891f-950545059abc",
       "type": "date",
       "label": "Period",
-      "defaultValue": "last_year",
-      "rangeType": "relative"
+      "defaultValue": "last_12_months"
     },
     {
       "id": "dafc928e-1d51-4f33-9975-fc3bb76f5d9d",
       "type": "relation",
       "label": "Country",
       "modelName": "res.country",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce",
       "type": "relation",
       "label": "Tags",
       "modelName": "crm.tag",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "43ab094a-2100-4110-a618-7b2513d38901",
       "type": "relation",
       "label": "Lost Reason",
       "modelName": "crm.lost.reason",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "be8c3d56-d33f-4878-a33f-63271d52c3c5",
       "type": "relation",
       "label": "Medium",
       "modelName": "utm.medium",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "79d2d4b4-b905-4622-9923-5702e6a8b8bf",
       "type": "relation",
       "label": "Campaign",
       "modelName": "utm.campaign",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "d5c6c38d-d612-4273-8cb0-bbe37351e7a9",
       "type": "relation",
       "label": "Source",
       "modelName": "utm.source",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "e06a6095-d07b-4b2f-b737-a2f5b3b4ab7c",
       "type": "relation",
       "label": "Sales Team",
       "modelName": "crm.team",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     },
     {
       "id": "e6c83660-136f-4665-a809-ba4d1f735de4",
       "type": "relation",
       "label": "Salesperson",
       "modelName": "res.users",
-      "defaultValue": [],
-      "defaultValueDisplayNames": [],
-      "rangeType": "year"
+      "defaultValueDisplayNames": []
     }
   ],
   "lists": {},

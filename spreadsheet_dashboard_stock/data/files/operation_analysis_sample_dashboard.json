@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "df33ef16-d138-4c86-a257-a2d529a1cdfa",
@@ -82,7 +82,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!C2",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B2",
             "humanize": false
           },
@@ -108,7 +108,7 @@
             "type": "scorecard",
             "background": "#FEF2F2",
             "baseline": "Data!C3",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B3",
             "humanize": false
           },
@@ -129,7 +129,7 @@
             "type": "scorecard",
             "background": "#EFF6FF",
             "baseline": "Data!C6",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B6",
             "humanize": false
           },
@@ -155,7 +155,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "Data!C9",
-            "baselineDescr": "last period",
+            "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B9",
             "humanize": false
           },

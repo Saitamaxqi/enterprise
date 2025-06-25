@@ -1,5 +1,5 @@
 {
-  "version": "18.3.1",
+  "version": "18.4.14",
   "sheets": [
     {
       "id": "sheet1",
@@ -60,7 +60,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "Data!C3",
-            "baselineDescr": "Churns",
+            "baselineDescr": { "text": "Churns" },
             "keyValue": "Data!C2",
             "humanize": false
           },
@@ -81,7 +81,7 @@
             "type": "scorecard",
             "background": "#ECFDF5",
             "baseline": "Data!C5",
-            "baselineDescr": "MRR",
+            "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!C4",
             "humanize": false
           },
