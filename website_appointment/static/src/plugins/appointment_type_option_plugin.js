@@ -23,7 +23,7 @@ class AppointmentTypeOptionPlugin extends Plugin {
     };
 }
 
-class BaseAppointmentAction extends BuilderAction {
+export class BaseAppointmentAction extends BuilderAction {
     
     setup(fieldName, applyValue, clearValue) {
         this.fieldName = fieldName;
@@ -60,28 +60,28 @@ class BaseAppointmentAction extends BuilderAction {
     clear() {}
 }
 
-class AppointmentTypeShowTimezoneAction extends BaseAppointmentAction {
+export class AppointmentTypeShowTimezoneAction extends BaseAppointmentAction {
     static id = "appointmentTypeShowTimezone";
     setup() {
         super.setup("hide_timezone", false, true);
     }
 }
 
-class AppointmentTypeShowDurationAction extends BaseAppointmentAction {
+export class AppointmentTypeShowDurationAction extends BaseAppointmentAction {
     static id = "appointmentTypeShowDuration";
     setup() {
         super.setup("hide_duration", false, true);
     }
 }
 
-class AppointmentTypeShowAvatarsAction extends BaseAppointmentAction {
+export class AppointmentTypeShowAvatarsAction extends BaseAppointmentAction {
     static id = "appointmentTypeShowAvatars";
     setup() {
         super.setup("avatars_display", "show", "hide");
     }
 }
 
-class AppointmentTypeShowAllowGuestsAction extends BaseAppointmentAction {
+export class AppointmentTypeShowAllowGuestsAction extends BaseAppointmentAction {
     static id = "appointmentTypeShowAllowGuests";
     setup() {
         super.setup("allow_guests", false, true);

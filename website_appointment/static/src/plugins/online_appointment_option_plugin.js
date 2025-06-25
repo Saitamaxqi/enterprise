@@ -92,7 +92,7 @@ class OnlineAppointmentOptionPlugin extends Plugin {
     }
 }
 
-class SetAppTypesAction extends BuilderAction {
+export class SetAppTypesAction extends BuilderAction {
     static id = "setAppTypes";
     static dependencies = ["OnlineAppointmentOption"];
     apply({ editingElement, value }) {
@@ -116,7 +116,7 @@ class SetAppTypesAction extends BuilderAction {
     }
 }
 
-class SetStaffUsersAction extends BuilderAction {
+export class SetStaffUsersAction extends BuilderAction {
     static id = "setStaffUsers";
     static dependencies = ["OnlineAppointmentOption"];
     apply({ editingElement, value }) {

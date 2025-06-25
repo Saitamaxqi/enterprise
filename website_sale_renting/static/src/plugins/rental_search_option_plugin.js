@@ -32,7 +32,7 @@ class RentalSearchOptionPlugin extends Plugin {
     };
 }
 
-class SetRentalSearchTimingAction extends BuilderAction {
+export class SetRentalSearchTimingAction extends BuilderAction {
     static id = "setRentalSearchTiming";
     isApplied({ editingElement, params: { mainParam: timing } }) {
         if (!editingElement.dataset.timing) {
@@ -46,7 +46,7 @@ class SetRentalSearchTimingAction extends BuilderAction {
     }
 }
 
-class SetRentalSearchProductAttributeAction extends BuilderAction {
+export class SetRentalSearchProductAttributeAction extends BuilderAction {
     static id = "setRentalSearchProductAttribute";
     static dependencies = ["cachedModel"];
     getValue({ editingElement }) {

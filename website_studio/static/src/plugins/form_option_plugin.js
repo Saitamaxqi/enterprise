@@ -192,7 +192,7 @@ export class StudioFormOptionPlugin extends Plugin {
     }
 }
 
-class StudioMoreModelsAction extends BuilderAction {
+export class StudioMoreModelsAction extends BuilderAction {
     static id = "studioMoreModels";
     static dependencies = ["studioFormOption", "websiteFormOption", "builderActions"];
     isApplied() {
@@ -228,7 +228,7 @@ class StudioMoreModelsAction extends BuilderAction {
     }
 }
 
-class StudioToggleFormAccessAction extends BuilderAction {
+export class StudioToggleFormAccessAction extends BuilderAction {
     static id = "studioToggleFormAccess";
     static dependencies = ["websiteFormOption", "studioFormOption"]
     isApplied({ editingElement: formEl }) {
