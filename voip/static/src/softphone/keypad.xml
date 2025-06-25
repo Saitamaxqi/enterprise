@@ -102,7 +102,7 @@
                         icon="'oi-user'"
                         onClick="() => this.onClickContact(contact)"
                     />
-                    <t class="o-voip-AddressBook-applicant-xpathTarget"/>
+                    <t class="o-voip-AddressBook-xpathTarget"/>
                     <ActionButton
                         name.translate="Activity"
                         title.translate="Schedule an activity"

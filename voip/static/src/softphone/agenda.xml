@@ -45,7 +45,7 @@
                                 <i class="oi oi-fw oi-user me-1" aria-hidden="true"/>Contact
                             </button>
                         </t>
-                        <t class="o-voip-Agenda-applicant-xpathTarget"/>
+                        <t class="o-voip-Agenda-xpathTarget"/>
                         <button class="btn btn-link ms-n2 px-2" title="Open related record" t-on-click="() => this.onClickActivity(activity)">
                             <i class="oi oi-fw oi-arrow-right me-1" aria-hidden="true"/>
                             <t t-esc="activity.res_name"/>
