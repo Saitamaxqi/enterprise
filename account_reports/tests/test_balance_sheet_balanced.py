@@ -450,7 +450,8 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
         for coa in installed_coas:
             with contextlib.closing(self.env.cr.savepoint(flush=False)), self.subTest(CoA=coa):
                 # === 1. Set-up localization === #
-                available_reports, aml_pairs, accounts_by_aml = self._set_up_localization(coa)
+                available_reports, aml_pairs, accounts_by_aml = self._set_up_localization(
+                    coa, post_lines=not IDENTIFY_INCORRECT_ACCOUNTS)
                 self.env.cr.execute("ANALYZE account_account, account_move, account_move_line")
 
                 # Test each of the Balance Sheet reports available for the CoA.
@@ -479,7 +480,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
                             if bad_account_ids:
                                 self.fail('Balance Sheet not balanced.')
 
-    def _set_up_localization(self, coa):
+    def _set_up_localization(self, coa, post_lines=False):
         ''' Set up a localization for testing.
 
             This identifies the company to use (creating it if needed),
@@ -489,6 +490,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
             rather than create a new company and load a new CoA for it.
 
             :param account.chart.template coa: the Chart of Accounts to install
+            :param post_lines: whether to post the generated move lines
 
             :return: (available_reports, aml_pairs, accounts_by_aml), where:
                 * available_reports are the reports that can be tested for this localization
@@ -550,8 +552,8 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
         coa_setup_data['tested_accounts'] = tested_accounts - coa_setup_data['counterpart_account']
 
         # Create two test journal entries: one with debits in each account (other than the counterpart account), the other with credits.
-        debit_move_aml_pairs, debit_accounts_by_aml = self._create_balance_sheet_test_move(coa_setup_data)
-        credit_move_aml_pairs, credit_accounts_by_aml = self._create_balance_sheet_test_move(coa_setup_data, create_credits=True)
+        debit_move_aml_pairs, debit_accounts_by_aml = self._create_balance_sheet_test_move(coa_setup_data, post_lines=post_lines)
+        credit_move_aml_pairs, credit_accounts_by_aml = self._create_balance_sheet_test_move(coa_setup_data, create_credits=True, post_lines=post_lines)
 
         aml_pairs = debit_move_aml_pairs + credit_move_aml_pairs
         accounts_by_aml = {**debit_accounts_by_aml, **credit_accounts_by_aml}
@@ -602,7 +604,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
 
         return report_setup_data
 
-    def _create_balance_sheet_test_move(self, coa_setup_data, create_credits=False):
+    def _create_balance_sheet_test_move(self, coa_setup_data, create_credits=False, post_lines=False):
         ''' Create a journal entry that will be the basis for testing the Balance Sheet.
             The created journal entry will have one AML in each account in coa_setup_data['tested_accounts'],
             and corresponding counterpart AMLs in coa_setup_data['counterpart_account'].
@@ -610,6 +612,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
 
             :param bool create_credits: If true, the AMLs will be created with credits (instead of debits)
                                         and the counterpart AMLs will be created with debits.
+            :param bool post_lines: If true, the created AMLs will be posted.
 
             :return: (aml_pairs, accounts_by_aml), where:
                - aml_pairs is a list of tuples (aml_id, counterpart_aml_id) containing the AMLs of the journal entry that was created.
@@ -629,6 +632,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
                 'display_type': 'product',
                 'journal_id': move.journal_id.id,
                 'move_id': move.id,
+                'parent_state': 'posted' if post_lines else None,
             }
 
         move = self.env['account.move'].create({
@@ -692,15 +696,14 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
     def _check_balance_sheet_balanced(self, report_setup_data, aml_pairs):
         ''' Check whether the Balance Sheet is balanced. '''
         # Set 'parent_state' to 'posted' on the AMLs of the debits journal entry, and to 'draft' on all other AMLs.
-        with self._activate_lines(aml_pairs):
-            totals = self._get_report_totals(report_setup_data)
-            if not totals['is_balanced']:
-                self.fail(f'''
-                    The balance sheet {report_setup_data['report_ref']} is not balanced.
-                    Total Assets: {totals['total_asset']}; Total Liabilities + Equity: {totals['total_liability']}.
-                    This test can also find out for you which accounts are incorrectly used in the Balance Sheet.
-                    To do this, set the IDENTIFY_INCORRECT_ACCOUNTS variable at the top of this file to something truthy.
-                ''')
+        totals = self._get_report_totals(report_setup_data)
+        if not totals['is_balanced']:
+            self.fail(f'''
+                The balance sheet {report_setup_data['report_ref']} is not balanced.
+                Total Assets: {totals['total_asset']}; Total Liabilities + Equity: {totals['total_liability']}.
+                This test can also find out for you which accounts are incorrectly used in the Balance Sheet.
+                To do this, set the IDENTIFY_INCORRECT_ACCOUNTS variable at the top of this file to something truthy.
+            ''')
 
     @contextlib.contextmanager
     def _activate_lines(self, aml_pairs):
