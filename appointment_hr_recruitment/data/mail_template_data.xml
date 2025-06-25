@@ -26,6 +26,5 @@
 </div>
         </field>
         <field name="auto_delete" eval="True"/>
-        <field name="lang">{{ object.partner_id.lang or '' }}</field>
     </record>
 </odoo>

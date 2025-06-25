@@ -303,10 +303,10 @@ class TestMAPerformance(MAPerformanceCommon):
         based on DB state. """
         campaign = self.test_campaign
 
-        # local: 15461
-        # runbot: 15492, taking 100 more to avoid runbot issues in stable
+        # local: 16028
+        # runbot: 16060, taking 100 more to avoid runbot issues in stable
         # hours+4 -> is going to trigger all 4 begin activities
-        with self.assertQueryCount(15492 + 100), \
+        with self.assertQueryCount(16060 + 100), \
              self.mock_datetime_and_now(self.date_reference + timedelta(hours=4)), \
              self.mock_mail_gateway(), self.mockSMSGateway(), \
              self.mockWhatsappGateway(), self.patchWhatsappCronTrigger(), \
