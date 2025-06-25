@@ -24,7 +24,17 @@
 
     <template id="subscription_product_price" inherit_id="website_sale.product_price" name="Subscription Product Price">
         <div name="product_price_container" position="attributes">
-            <attribute name="t-att-hidden">combination_info.get('is_subscription', False)</attribute>
+            <attribute name="t-if">not combination_info.get('is_subscription')</attribute>
+        </div>
+        <div name="product_list_price_container" position="attributes">
+            <attribute name="t-if">not combination_info.get('is_subscription')</attribute>
+        </div>
+        <div name="product_price" position="attributes">
+            <attribute
+                name="t-attf-class"
+                separator=" "
+                add="{{'w-100' if combination_info.get('is_subscription') else ''}}"
+            />
         </div>
         <div name="product_price_container" position="after">
             <t t-if="combination_info.get('is_subscription') and combination_info.get('allow_one_time_sale')">
@@ -36,12 +46,22 @@
         </div>
     </template>
 
+    <template
+        id="subscription_product_price_boxed"
+        inherit_id="website_sale.cta_wrapper_boxed"
+        name="Subscription Product Price Boxed"
+    >
+        <span name="o_wsale_cta_wrapper_boxed_price_label" position="attributes">
+            <attribute name="t-attf-class">{{'d-none' if combination_info.get('is_subscription') else ''}}</attribute>
+        </span>
+    </template>
+
     <template id="sale_subscription_product_price" name="Subscription Product Price">
         <t t-if="combination_info.get('is_subscription') and combination_info['pricings']">
             <select
                 t-if="combination_info['subscription_pricing_select']"
                 name="plan_id"
-                class="form-select plan_select fs-5"
+                class="form-select plan_select"
                 required="1"
                 t-nocache="1"
             >
@@ -77,7 +97,7 @@
                     checked="checked"
                     class="form-check-input me-2 allow_one_time_sale"
                 />
-                One Time Purchase
+                <span>One Time Purchase</span>
                 <!-- FIXME ARJ no consideration of currencies where the symbol is supposed to be after the amount? -->
                 <span class= "fw-bold" t-esc="combination_info.get('currency').symbol"/>
                 <span class= "fw-bold" t-esc="combination_info.get('list_price')"/>
@@ -103,14 +123,14 @@
                         t-att-style="'text-decoration: line-through;'"
                     >
                         <span class="fw-bold" t-esc="combination_info.get('currency').symbol"/>
-                        <span t-field="product.list_price"/>
+                        <span t-esc="product.list_price"/>
                     </span>
                     <span class="fw-bold ms-1" id="product_price" t-esc="combination_info.get('pricings')[0]['table_price']" />
                 </span>
                 <t t-set="discounted_percentage" t-value="combination_info.get('pricings')[0]['discounted_price']"/>
                 <span
                     t-if="discounted_percentage > 0"
-                    class="text-muted border border-success text-success bg-light rounded px-2 py-1 discount_info ms-2"
+                    class="badge text-bg-primary discount_info"
                 >
                     <span id="discount_price" t-out="discounted_percentage"/>%
                 </span>
