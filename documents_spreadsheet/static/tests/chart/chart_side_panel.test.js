@@ -287,10 +287,8 @@ test("Update the chart domain from the side panel", async function () {
     await contains(".o_edit_domain").click();
     await dsHelpers.addNewRule();
     await contains(".modal-footer .btn-primary").click();
-    expect(model.getters.getChartDefinition(chartId).searchParams.domain).toEqual([
-        ["id", "in", []],
-    ]);
-    expect(dsHelpers.getConditionText(fixture)).toBe("Id = ( )");
+    expect(model.getters.getChartDefinition(chartId).searchParams.domain).toEqual([["id", "=", 1]]);
+    expect(dsHelpers.getConditionText(fixture)).toBe("Id = 1");
 });
 
 test("Cumulative line chart", async () => {
