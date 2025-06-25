@@ -119,6 +119,10 @@ export class AiModelFieldSelectorPopover extends ModelFieldSelectorPopover {
             if (!this.isTemplateEditor && !this.allowedQwebExpressions?.includes(fullPath)) {
                 return false;
             }
+            if (fieldDefs[key].type === "separator") {
+                // Don't show separator property
+                return false;
+            }
             return fieldDefs[key].searchable;
         });
         return Object.fromEntries(filteredKeys.map((k) => [k, fieldDefs[k]]));
