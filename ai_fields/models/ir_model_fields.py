@@ -5,6 +5,8 @@ import datetime
 import logging
 
 from odoo import api, fields, models
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.exceptions import UserError
 from odoo.fields import Domain
 from odoo.tools import OrderedSet, SQL
 
@@ -62,7 +64,16 @@ class IrModelFields(models.Model):
         field_params['system_prompt'] = ai
         return field_params
 
-    def _cron_fill_ai_fields(self, batch_size=20):
+    def _cron_fill_ai_fields(self, batch_size=10):
+        # only openAI is supported as gemini's openAI_support does not support the responses API
+        # yet, which is required to use web grounding only when needed
+        llm_api_service = LLMApiService(self.env, 'openai')
+        try:
+            llm_api_service._get_api_token()
+        except UserError:
+            _logger.info('AI Fields cron skipped, openAI key is missing')
+            return
+
         fields = self.search([
             '|',
                 '&', '&', ('ai', '=', True), ('system_prompt', '!=', False), ('ttype', 'in', ('char', 'text', 'html')),

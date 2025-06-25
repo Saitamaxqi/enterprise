@@ -5,8 +5,8 @@ import json
 from unittest.mock import patch
 
 from odoo import Command, fields
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.base.tests.test_ir_cron import CronMixinCase
-from odoo.addons.iap.tools import iap_tools
 from odoo.tests import TransactionCase, tagged
 from odoo.tools import SQL
 
@@ -88,10 +88,15 @@ class TestAiFieldsCrons(TransactionCase, CronMixinCase):
 
 @tagged('post_install', '-at_install')
 class TestAiFields(TransactionCase):
+    def _mock_llm_api_get_token(self):
+        def _mock_get_api_token(self):
+            return "dummy"
+        return patch.object(LLMApiService, '_get_api_token', _mock_get_api_token)
+
     def test_ai_field_cron_fields(self):
         """Check that the cron only process NULL textual fields (that are in the ai_domain)."""
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": f"response value {params.get('prompt')}"}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body.get('input')}"})}]}]}
 
         model = self.env["test.ai.fields.model"]
 
@@ -126,7 +131,8 @@ class TestAiFields(TransactionCase):
         self.assertEqual(result[records[2].id], ("existing", "existing", "<p>existing</p>", 5, True))
 
         # run the cron job
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc), self.enter_registry_test_mode():
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
+            self._mock_llm_api_get_token():
             self.env.ref('ai_fields.ir_cron_fill_ai_fields').method_direct_trigger()
 
         self.env.flush_all()
@@ -135,7 +141,7 @@ class TestAiFields(TransactionCase):
 
         self.assertEqual(
             result[records[0].id],
-            (None, "response value text prompt", "<p>response value html prompt</p>", 0, False),
+            (None, "response value text prompt", "<p>response value html prompt</p>\n", 0, False),
             "Textual fields should have been updated (except char which is excluded by ai_domain)"
         )
         # only NULL textual fields should be updated
@@ -144,8 +150,8 @@ class TestAiFields(TransactionCase):
 
     def test_ai_field_cron_properties(self):
 
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": f"response value {params.get('prompt')}"}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body.get('input')}"})}]}]}
 
         parent = self.env["test.ai.fields.parent"].create({})
 
@@ -177,7 +183,8 @@ class TestAiFields(TransactionCase):
         self.assertEqual(result.get(record_4.id), {"char": False})
         self.assertEqual(result.get(record_5.id), {})
 
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc), self.enter_registry_test_mode():
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
+            self._mock_llm_api_get_token():
             self.env.ref('ai_fields.ir_cron_fill_ai_fields').method_direct_trigger()
         self.env.flush_all()
 
@@ -261,12 +268,13 @@ class TestAiFields(TransactionCase):
             'system_prompt': 'prompt',
         })
 
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": '<img src="x" onerror="alert(1)"/>'}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': '<img src="x" onerror="alert(1)"/>'})}]}]}
 
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc), self.enter_registry_test_mode():
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
+            self._mock_llm_api_get_token():
             value = record.get_ai_field_value("x_ai_html", None)
-            self.assertEqual(value, '<img src="x">')
+            self.assertEqual(value, '<p><img src="x"></p>\n')
 
         record.write({
             "properties": [{
@@ -278,6 +286,8 @@ class TestAiFields(TransactionCase):
             }],
         })
         record.flush_recordset()
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc), self.enter_registry_test_mode():
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token(), \
+            self.enter_registry_test_mode():
             value = record.get_ai_property_value("properties.test_html", None)
-        self.assertEqual(value, '<img src="x">')
+        self.assertEqual(value, '<p><img src="x"></p>\n')

@@ -1,50 +1,40 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import json
+import pytz
 import re
 from datetime import datetime
+from dateutil.parser import isoparse
+try:
+    from markdown2 import markdown
+except ImportError:
+    markdown = None
 
-from odoo.addons.iap.tools import iap_tools  # todo: remove when using method of ai app
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT, html_sanitize
+from odoo import fields
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.tools import html_sanitize
 from odoo.tools.mail import html_to_inner_content
 
-DEFAULT_OLG_ENDPOINT = 'https://olg.api.odoo.com'  # todo: remove when using method of ai app
-
 FIELD_PROMPTS = {
-    'boolean': "Your answer must be either True or False.",
-    'char': "Your answer must be a short, concise string.",
-    'date': f"Your answer must follow this format: {DATE_FORMAT}.",
-    'datetime': f"Your answer must follow this format: {DATETIME_FORMAT}.",
-    'float': "Your answer must be a decimal number (use a dot as the decimal separator).",
-    'html': "Your answer must be valid HTML (e.g., use <p>, <ul>, ...).",
-    'integer': "Your answer must be a whole number.",
-    'many2many': "Your answer must be a comma-separated list of integers representing record IDs. You will receive valid values in the form: {id: Description}.",
-    'many2one': "Your answer must be an integer representing the selected record ID. You will receive valid values in the form: {id: Description}.",
-    'monetary': "Your answer must be a float value (use a dot as the decimal separator).",
-    'selection': "You must return exactly one of the keys from the dictionary provided below, which maps valid values to their display names. Return only the selected key.",
-    'tags': "You must return a comma-separated list of keys from the dictionary provided below, which maps valid values to their display names. Return only the keys.",
-    'text': "You can provide a longer freeform string (one or multiple sentences)."
+    'boolean': "The field is a boolean.",
+    'char': "The field is a char.",
+    'date': "The field is a date.",
+    'datetime': "The field is a datetime.",
+    'float': "The field is a float.",
+    'html': "The field is a HTML.",
+    'integer': "The field is an integer.",
+    'many2many': "The field is a multi-relation field (multiple records can be assigned to the field). You will receive valid records in the form: {id: Description}.",
+    'many2one': "The field is a relational field. You will receive valid records in the form: {id: Description}.",
+    'monetary': "The field is a monetary.",
+    'selection': "The field is a selection. Only the keys from the dictionary below which maps selection values to their display name, are valid values.",
+    'tags': "The field is a tags selection. Only the keys from the dictionary below which maps tags to their display names are valid values.",
+    'text': "The field is a multi-line text."
 }
 
-GENERIC_PROMPT = """
-You are a field value generator for an ERP system. When triggered, you must provide the appropriate value for a specific field.
-Your answer must contain no quotes, no backticks, no explanations, no labels.
-"""
+GENERIC_PROMPT = """You are a field value generator for an ERP system. You must provide the appropriate value for a specific field (which might be to leave the field empty)."""
 
-
-# todo: remove when using method of ai app
-def generate_ai_response(env, system_prompt, user_prompt):
-    IrConfigSudo = env['ir.config_parameter'].sudo()
-    olg_api_endpoint = IrConfigSudo.get_param('web_editor.olg_api_endpoint', DEFAULT_OLG_ENDPOINT)
-    database_id = IrConfigSudo.get_param('database.uuid')
-    response = iap_tools.iap_jsonrpc(olg_api_endpoint + '/api/olg/1/chat', params={
-        'prompt': user_prompt,
-        'conversation_history': [{
-            'role': 'system',
-            'content': system_prompt,
-        }],
-        'database_id': database_id,
-    }, timeout=20)
-    return (response and response.get('content')) or ''
+OPENAI_ENDPOINT = '/v1/responses'
+OPENAI_MODEL = 'gpt-4.1-mini'
 
 
 def get_ai_value(env, field_type, system_prompt, user_prompt, allowed_values):
@@ -57,8 +47,97 @@ def get_ai_value(env, field_type, system_prompt, user_prompt, allowed_values):
 
     :return: the response of the LLM cast to the expected type if the value is allowed
     """
+    llm_api = LLMApiService(env, 'openai')
+    web_search_params = {
+        'user_location':
+        {
+            'type': 'approximate',
+            'country': country_code,
+            'city': env.company.partner_id.city,
+        }
+    } if (country_code := env.company.country_id.code) else {}
+
+    schema_value = {"type": "string"}
+    if field_type == 'boolean':
+        schema_value['type'] = 'boolean'
+    elif field_type == 'char':
+        schema_value['description'] = 'A short, concise string, without any Markdown formatting'
+    elif field_type == 'date':
+        schema_value['type'] = ['string', 'null']
+        schema_value['format'] = 'date'
+        schema_value['description'] = 'A full date (year, month and day should be correct). null to leave empty'
+    elif field_type == 'datetime':
+        schema_value['type'] = ['string', 'null']
+        schema_value['format'] = 'date-time'
+        schema_value['description'] = 'A full datetime (year, month and day should be correct), including the correct timezone'
+    elif field_type == 'integer':
+        schema_value['type'] = 'integer'
+        schema_value['description'] = "A whole number. If a number is expressed in words (e.g. '6.67 billion'), it must be converted into its full numeric form (e.g. '6670000000')"
+    elif field_type in ('float', 'monetary'):
+        schema_value['type'] = 'number'
+    elif field_type == 'html':
+        schema_value['description'] = 'A well-structured Markdown (it may contain tables). It will be converted to HTML after generation'
+    elif field_type == 'many2many':
+        schema_value['type'] = 'array'
+        schema_value['items'] = {'type': 'integer'}
+        schema_value['description'] = 'The list of IDs of records to select. Leave empty to leave the field empty'
+    elif field_type == 'many2one':
+        schema_value['type'] = ['integer', 'null']
+        schema_value['description'] = 'The ID of the record to select. null to leave the field empty'
+    elif field_type == 'selection':
+        schema_value['type'] = ['string', 'null']
+        schema_value['description'] = "Key of the value to select. null to leave the field empty"
+    elif field_type == 'tags':
+        schema_value['type'] = 'array'
+        schema_value['items'] = {'type': 'string'}
+        schema_value['description'] = "List of keys of the tags to select. Leave empty to leave the field empty"
+    elif field_type == 'text':
+        schema_value['description'] = 'A few sentences, without any Markdown formatting'
+
+    llm_response = llm_api._request(
+        'post',
+        OPENAI_ENDPOINT,
+        llm_api._get_base_headers(),
+        body={
+            'model': OPENAI_MODEL,
+            'instructions': f"{system_prompt}\n# Context\nThe current date is {datetime.now(pytz.utc).astimezone().isoformat()}.",
+            'input': user_prompt,
+            'text': {
+                'format': {
+                  'type': 'json_schema',
+                  'description': 'Generate a value for a field',
+                  'name': 'generate_field_value',
+                  'schema': {
+                    'type': 'object',
+                    'properties': {
+                      'value': schema_value
+                    },
+                    'required': [
+                      'value'
+                    ],
+                    'additionalProperties': False
+                  },
+                  'strict': True
+                }
+              },
+            'tools': [{
+                'type': 'web_search_preview',
+                **web_search_params,
+            }],
+        }
+    )
+
+    if (
+        not llm_response
+        or llm_response.get('error')
+        or not (output := llm_response.get('output'))
+        or not (content := output[-1].get('content'))
+        or not (response := content[0].get('text'))
+        ):
+        return False
+
     return parse_ai_response(
-        generate_ai_response(env, system_prompt, user_prompt),
+        json.loads(response, strict=False).get('value'),
         field_type,
         allowed_values,
     )
@@ -129,58 +208,33 @@ def parse_ai_response(response, field_type, allowed_values):
     :return: the value with the type expected for the given field type, or False if the value
         could not be cast or is not in allowed_values
     """
-    def to_int(val):
-        try:
-            return int(val)
-        except ValueError:
-            return False
-
     if not allowed_values:
         allowed_values = {}
 
-    # remove the quotes the LLM can add around the text
-    response = response.strip('`"\'')
-
-    if field_type == 'boolean':
-        return response.lower() == 'true'
-    elif field_type in ('char', 'text'):
-        return response
-    elif field_type == 'integer':
-        return to_int(response)
-    elif field_type in ('float', 'monetary'):
-        try:
-            return float(response)
-        except ValueError:
+    if field_type == 'datetime':
+        if not response:
             return False
-    elif field_type == 'datetime':
         try:
-            datetime.strptime(response, DATETIME_FORMAT)
+            return fields.Datetime.to_string(isoparse(response).astimezone(pytz.utc))
         except ValueError:
             return False
         return response
     elif field_type == 'date':
+        if not response:
+            return False
         try:
-            datetime.strptime(response, DATE_FORMAT)
+            return fields.Datetime.to_string(isoparse(response))
         except ValueError:
             return False
         return response
-    elif field_type == 'selection':
+    elif field_type in ('selection', 'many2one'):
         return response if response in allowed_values else False
-    elif field_type == 'many2one':
-        return res_id if (res_id := to_int(response)) in allowed_values else False
-    elif field_type == 'many2many':
-        return [
-            res_id
-            for value in response.split(",")
-            if (res_id := to_int(value)) in allowed_values
-        ]
-    elif field_type == 'tags':
-        return [
-            stripped_value
-            for value in response.split(",")
-            if (stripped_value := value.strip()) in allowed_values
-        ]
+    elif field_type in ('tags', 'many2many'):
+        return [value for value in response if value in allowed_values]
     elif field_type == 'html':
+        if markdown:
+            raw_html = markdown(response, extras=['fenced-code-blocks', 'tables', 'strike'])
+            return html_sanitize(raw_html or "")
         return html_sanitize(response or "")
     else:
         return response
