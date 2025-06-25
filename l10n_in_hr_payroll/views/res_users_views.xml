@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="hr.res_users_view_form_profile"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='emergency_contact']" position="after">
-                    <field name="l10n_in_relationship" readonly="not can_edit"/>
+                    <field name="l10n_in_relationship" readonly="not can_edit" placeholder="e.g. Father"/>
                 </xpath>
             </field>
         </record>

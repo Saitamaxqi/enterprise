@@ -5,7 +5,7 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook" position="inside">
+            <xpath expr="//page[@name='calendar']" position="after">
                 <!-- This page is not displayed in the forms of portal users (share = True) in order to avoid confusing
                      administrators with irrelevant settings. -->
                 <page string="VoIP" name="voip" invisible="share">
@@ -34,7 +34,7 @@
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook" position="inside">
+            <xpath expr="//page[@name='calendar']" position="after">
                 <page string="VoIP" name="voip">
                     <group>
                         <group string="Credentials" name="voip_credentials">

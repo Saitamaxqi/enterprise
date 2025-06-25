@@ -35,7 +35,6 @@ Key Features
         'views/hr_appraisal_note_views.xml',
         'views/hr_department_views.xml',
         'views/res_config_settings_view.xml',
-        'views/res_users_views.xml',
         'views/hr_employee_views.xml',
         'views/hr_employee_public_views.xml',
         'views/hr_appraisal_template_views.xml',

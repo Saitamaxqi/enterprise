@@ -98,7 +98,6 @@ requirements and reduces manual interaction with the SFTP portal.
         'views/l10n_be_meal_voucher_report_views.xml',
         'views/hr_contract_template_views.xml',
         'views/hr_employee_views.xml',
-        'views/res_users_views.xml',
         'views/hr_work_entry_views.xml',
         'views/report_termination_fees.xml',
         'views/report_termination_holidays.xml',

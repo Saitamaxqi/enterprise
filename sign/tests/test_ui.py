@@ -21,7 +21,6 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
         group_order_template = self.env.ref('sale_management.group_sale_order_template', raise_if_not_found=False)
         if group_order_template:
             self.env.ref('base.group_user').write({"implied_ids": [(4, group_order_template.id)]})
-        self.start_tour("/odoo", 'sign_widgets_tour', login='admin')
 
         # make sure that we only have the required template.
         self.env['sign.template'].search([('name', '!=', 'template_1_role')]).write({'active': False})

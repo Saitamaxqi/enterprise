@@ -32,7 +32,6 @@ creates next activities for the related approvers.
         'views/approval_request_template.xml',
         'report/approval_request_report.xml',
         'views/approval_request_views.xml',
-        'views/res_users_views.xml',
     ],
     'demo':[
         'data/approval_demo.xml',
