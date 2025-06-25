@@ -37,7 +37,7 @@
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'list', 'view_id': ref('view_data_storage_tree'), 'sequence': 1}),
             ]"/>
-            <field name="search_view_id" eval='view_data_storage_search'/>
+            <field name="search_view_id" ref="view_data_storage_search"/>
         </record>
 
         <record model="ir.ui.view" id="view_data_storage_attachment_tree">

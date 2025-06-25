@@ -21,7 +21,7 @@
             'default_is_subscription': 1,
             'search_default_is_subscription': 1,
         }</field>
-        <field name="search_view_id" eval='sale_order_template_view_search'/>
+        <field name="search_view_id" ref="sale_order_template_view_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new template of subscription
