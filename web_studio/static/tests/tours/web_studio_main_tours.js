@@ -1026,7 +1026,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
         },
         {
             // The report has been saved
-            trigger: ".o_web_studio_menu .o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o_web_studio_menu .o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
         {
             trigger: ".o_web_studio_breadcrumb .o_back_button:contains(Reports)",
@@ -1131,7 +1131,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_basic_layout_tour
         },
         {
             // The report has been saved
-            trigger: ".o_web_studio_menu .o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o_web_studio_menu .o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
         {
             // leave the report

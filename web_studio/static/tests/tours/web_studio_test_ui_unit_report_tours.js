@@ -213,7 +213,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
         {
             trigger:
@@ -290,7 +290,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_ca
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -497,7 +497,7 @@ registry.category("web_tour.tours").add("web_studio.test_table_rendering", {
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -575,7 +575,7 @@ registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -664,7 +664,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -856,7 +856,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_fiel
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -945,7 +945,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1034,7 +1034,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1046,7 +1046,7 @@ registry.category("web_tour.tours").add("web_studio.test_saving_xml_editor_reloa
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
         {
             trigger: ".o_web_studio_xml_editor .ace_editor",
@@ -1064,7 +1064,7 @@ registry.category("web_tour.tours").add("web_studio.test_saving_xml_editor_reloa
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
         {
             trigger: ".o_web_studio_xml_editor .ace_editor",
@@ -1246,7 +1246,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_arch", {
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1270,7 +1270,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_in_t_call", {
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1301,7 +1301,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_and_in_t_call
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1341,7 +1341,7 @@ registry.category("web_tour.tours").add("web_studio.test_translations_are_copied
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1381,7 +1381,7 @@ registry.category("web_tour.tours").add("web_studio.test_dont_translate_on_save"
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
         {
             trigger: "body :iframe .odoo-editor-editable#wrapwrap span",
@@ -1403,7 +1403,7 @@ registry.category("web_tour.tours").add("web_studio.test_dont_translate_on_save"
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1421,7 +1421,7 @@ registry.category("web_tour.tours").add("web_studio.test_do_not_delete_unspecial
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
@@ -1463,7 +1463,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_header_only_compan
             run: "click",
         },
         {
-            trigger: ".o-web-studio-save-report:not(.btn-primary)",
+            trigger: ".o-web-studio-save-report:not(.btn-primary):not(:visible)",
         },
     ],
 });
