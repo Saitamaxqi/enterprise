@@ -1,8 +1,6 @@
-import { makeKwArgs } from "@web/../tests/web_test_helpers";
-import { registry } from "@web/core/registry";
+import { onRpc } from "@web/../tests/web_test_helpers";
 
-function _mockGridUpdateCell({ args, kwargs, model }) {
-    kwargs = makeKwArgs(kwargs);
+onRpc("grid_update_cell", function gridUpdateCell({ args, kwargs, model }) {
     const [domain, fieldNameToUpdate, value] = args;
     const records = this.env[model].search_read(domain, [fieldNameToUpdate], kwargs);
     if (records.length > 1) {
@@ -16,6 +14,4 @@ function _mockGridUpdateCell({ args, kwargs, model }) {
         this.env[model].create({ [fieldNameToUpdate]: value }, kwargs);
     }
     return false;
-}
-
-registry.category("mock_rpc").add("grid_update_cell", _mockGridUpdateCell);
+});

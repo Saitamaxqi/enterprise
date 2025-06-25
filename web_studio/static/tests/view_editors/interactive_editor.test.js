@@ -16,11 +16,7 @@ import {
     stepAllNetworkCalls,
 } from "@web/../tests/web_test_helpers";
 import { CodeEditor } from "@web/core/code_editor/code_editor";
-import {
-    createMockViewResult,
-    handleDefaultStudioRoutes,
-    mountViewEditor,
-} from "../view_editor_tests_utils";
+import { editView, handleDefaultStudioRoutes, mountViewEditor } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -53,7 +49,7 @@ test("add a monetary field without currency in the model", async () => {
         });
         const newArch =
             "<list><field name='display_name'/><field name='x_currency_id'/><field name='monetary_field'/></list>";
-        return createMockViewResult("list", newArch, Partner);
+        return editView(params, "list", newArch);
     });
 
     await mountViewEditor({
@@ -257,7 +253,7 @@ test("add a related field", async () => {
             expect(params.operations[3].node.field_description.store).toBe(false);
         }
 
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await mountViewEditor({
@@ -534,10 +530,10 @@ test("add a many2one field", async () => {
 });
 
 test("switch mode after element removal", async () => {
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect.step("edit_view");
         const newArch = "<list><field name='display_name'/></list>";
-        return createMockViewResult("list", newArch, Partner);
+        return editView(request, "list", newArch);
     });
 
     await mountViewEditor({
@@ -651,12 +647,16 @@ test("XML editor: reset operations stack", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect.step("edit_view");
-        expect(params.operations.length).toBe(1);
+        expect(params.operations).toHaveLength(1);
     });
 
     onRpc("/web_studio/edit_view_arch", async () => {
         expect.step("edit_view_arch");
-        const result = await createMockViewResult("form", arch, Partner);
+        const result = await editView(
+            { model: "partner", view_id: "__test_studio_view_arch__" },
+            "form",
+            arch
+        );
         return { ...result, studio_view_id: "__test_studio_view_arch__" };
     });
 
@@ -716,7 +716,7 @@ test("blockUI not removed just after rename", async () => {
         const fieldName = params.operations[0].node.field_description.name;
         const newArch = `<list><field name='${fieldName}'/><field name='display_name'/></list>`;
         Partner._fields[fieldName] = fields.Char();
-        return createMockViewResult("list", newArch, Partner);
+        return editView(params, "list", newArch);
     });
 
     onRpc("/web_studio/rename_field", () => {

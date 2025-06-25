@@ -1,31 +1,27 @@
-import { expect, test, describe } from "@odoo/hoot";
-import { animationFrame, advanceTime } from "@odoo/hoot-mock";
-import {
-    mountWithCleanup,
-    contains,
-    models,
-    fields,
-    defineModels,
-    getService,
-    onRpc,
-    mockService,
-    serverState,
-    patchWithCleanup,
-    MockServer,
-} from "@web/../tests/web_test_helpers";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import {
-    createMockViewResult,
-    handleDefaultStudioRoutes,
-    mountViewEditor,
-} from "../view_editor_tests_utils";
-import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { queryAllTexts, edit, press } from "@odoo/hoot-dom";
-import { registry } from "@web/core/registry";
-import { SIDEBAR_SAFE_FIELDS } from "@web_studio/client_action/view_editor/editors/sidebar_safe_fields";
-import { ListRenderer } from "@web/views/list/list_renderer";
+import { describe, expect, test } from "@odoo/hoot";
+import { edit, press, queryAllTexts } from "@odoo/hoot-dom";
+import { advanceTime, animationFrame } from "@odoo/hoot-mock";
 import { onWillRender } from "@odoo/owl";
+import {
+    contains,
+    defineModels,
+    fields,
+    getService,
+    MockServer,
+    mockService,
+    models,
+    mountWithCleanup,
+    onRpc,
+    patchWithCleanup,
+    serverState,
+} from "@web/../tests/web_test_helpers";
+import { registry } from "@web/core/registry";
+import { ListRenderer } from "@web/views/list/list_renderer";
+import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { ListEditorRenderer } from "@web_studio/client_action/view_editor/editors/list/list_editor_renderer";
+import { SIDEBAR_SAFE_FIELDS } from "@web_studio/client_action/view_editor/editors/sidebar_safe_fields";
+import { editView, handleDefaultStudioRoutes, mountViewEditor } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -153,7 +149,7 @@ test("new field should come with 'show' as default value of optional", async () 
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect(params.operations[0].node.attrs.optional).toBe("show");
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_new_fields .o_web_studio_field_char").dragAndDrop(
@@ -197,7 +193,7 @@ test("new field before a button_group", async () => {
                 },
             ],
         });
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_new_fields .o_web_studio_field_char").dragAndDrop(
@@ -242,7 +238,7 @@ test("new field after a button_group", async () => {
                 },
             ],
         });
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_new_fields .o_web_studio_field_char").dragAndDrop(
@@ -353,7 +349,7 @@ test("invisible toggle field in list editor", async () => {
         const { params } = await request.json();
         expect(params.operations).toEqual(operations);
         const arch = `<list><field name="display_name"/></list>`;
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_view").click();
@@ -464,12 +460,12 @@ test("visible studio hooks in listview", async () => {
         arch: `<list><field name="display_name"/></list>`,
     });
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         const arch = `
             <list editable='bottom'>
                 <field name='display_name'/>
             </list>`;
-        return createMockViewResult("list", arch, Partner);
+        return editView(request, "list", arch);
     });
 
     expect("th.o_web_studio_hook").toBeVisible();
@@ -499,7 +495,7 @@ test("sortby and orderby field in sidebar", async () => {
         arch,
     });
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         editViewCount++;
         let newArch = arch;
         if (editViewCount === 1) {
@@ -521,7 +517,7 @@ test("sortby and orderby field in sidebar", async () => {
                     <field name='char_field'/>
                 </list>`;
         }
-        return createMockViewResult("list", newArch, Partner);
+        return editView(request, "list", newArch);
     });
 
     await contains(".o_web_studio_view").click();
@@ -751,7 +747,7 @@ test("add a selection field in non debug", async () => {
         expect(params.operations[0].node.field_description.selection).toBe(
             '[["Value 1","Miramar"]]'
         );
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_new_fields .o_web_studio_field_selection").dragAndDrop(
@@ -797,7 +793,7 @@ test("add a selection field in debug", async () => {
         expect(params.operations[0].node.field_description.selection).toBe(
             '[["Value 2","Value 2"],["Value 1","My Value"],["Sulochan","Sulochan"]]'
         );
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_new_fields .o_web_studio_field_selection").dragAndDrop(
@@ -874,7 +870,7 @@ test("add a selection field with widget priority", async () => {
             ["2", "High"],
             ["3", "Very High"],
         ]);
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     expect(".o_web_studio_list_view_editor table thead [data-studio-xpath]").toHaveCount(1);
@@ -977,7 +973,7 @@ test("list editor invisible to visible on field", async () => {
         expect(params.context.lang).toBe(false);
         expect(params.operations[0].new_attrs.invisible).toBe("False");
         expect(params.operations[0].new_attrs.column_invisible).toBe("False");
-        return createMockViewResult("list", archReturn, Partner);
+        return editView(params, "list", archReturn);
     });
 
     await contains(".o_web_studio_view").click();
@@ -1011,7 +1007,7 @@ test("list editor invisible to visible on field readonly", async () => {
         expect(params.context.tz).toBe("taht");
         expect(params.operations[0].new_attrs.readonly).toBe(undefined);
         expect(params.operations[0].new_attrs.column_invisible).toBe("True");
-        return createMockViewResult("list", archReturn, Partner);
+        return editView(params, "list", archReturn);
     });
 
     await contains(".o_web_studio_view").click();
@@ -1079,7 +1075,7 @@ test("add group to field", async () => {
         const arch = `<list>
                 <field name='display_name' studio_groups='[{&quot;id&quot;:11, &quot;name&quot;: &quot;Unnamed&quot;}]'/>
             </list>`;
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_list_view_editor [data-studio-xpath]").click();
@@ -1195,7 +1191,7 @@ test("move a field in list", async () => {
             <field name='display_name'/>
             <field name='id'/>
         </list>`;
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     expect(queryAllTexts(".o_web_studio_list_view_editor th[data-name]")).toEqual([
@@ -1255,7 +1251,7 @@ test("list editor field with aggregate function", async () => {
         } else if (op.new_attrs.sum === "" || op.new_attrs.avg == "") {
             arch = `<list><field name="display_name"/><field name="float_field"/><field name="money_field"/><field name="integer_field"/></list>`;
         }
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains("thead th[data-studio-xpath]").click();
@@ -1325,12 +1321,12 @@ test("error during list rendering: undo", async () => {
         arch,
     });
 
-    onRpc("/web_studio/edit_view", async () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect.step("edit_view");
         if (triggerError) {
-            return createMockViewResult("list", errorArch, Partner);
+            return editView(request, "list", errorArch);
         } else {
-            return createMockViewResult("list", arch, Partner);
+            return editView(request, "list", arch);
         }
     });
 
@@ -1371,7 +1367,7 @@ test("error in view edition: undo", async () => {
             triggerError = false;
             return Promise.reject(new Error("Boom"));
         } else {
-            expect(params.operations.length).toBe(1);
+            expect(params.operations).toHaveLength(1);
         }
     });
 
@@ -1413,7 +1409,7 @@ test("Default group by field in sidebar", async () => {
         arch,
     });
 
-    onRpc("/web_studio/edit_view", async () => {
+    onRpc("/web_studio/edit_view", (request) => {
         let newArch = arch;
         editViewCount++;
         if (editViewCount === 1) {
@@ -1424,7 +1420,7 @@ test("Default group by field in sidebar", async () => {
                 </list>
             `;
         }
-        return createMockViewResult("list", newArch, Partner);
+        return editView(request, "list", newArch);
     });
 
     await contains(".nav-tabs > li:nth-child(2) a").click();
@@ -1519,7 +1515,7 @@ test("List readonly attribute should not set force_save", async () => {
         const { params } = await request.json();
         expect(params.operations[0].new_attrs.readonly).toBe("True");
         expect(params.operations[0].new_attrs.force_save).toBe(undefined);
-        return createMockViewResult("list", arch, Partner);
+        return editView(params, "list", arch);
     });
 
     await contains(".o_web_studio_list_view_editor [data-name='display_name']").click();
@@ -1543,11 +1539,11 @@ test("change 'editable' and 'open_form_view' attribute", async () => {
         if (nbViewEdit === 1) {
             expect(params.operations[0].new_attrs.editable).toBe("bottom");
             const newArch = `<list editable="bottom"><field column_invisible="1" name="display_name"/></list>`;
-            return createMockViewResult("list", newArch, Partner);
+            return editView(params, "list", newArch);
         } else {
             expect(params.operations[1].new_attrs.open_form_view).toBe(true);
             const newArch = `<list editable="bottom" open_form_view="true"><field column_invisible="1" name="display_name"/></list>`;
-            return createMockViewResult("list", newArch, Partner);
+            return editView(params, "list", newArch);
         }
     });
 
@@ -1590,7 +1586,7 @@ test("multi_edit is visible when can_edit is true", async () => {
         const { params } = await request.json();
         const { new_attrs, result } = viewResults.shift();
         expect(params.operations.at(-1).new_attrs).toEqual(new_attrs);
-        return createMockViewResult("list", result, Partner);
+        return editView(params, "list", result);
     });
 
     await contains(".o_web_studio_view").click();

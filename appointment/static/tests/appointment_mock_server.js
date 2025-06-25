@@ -1,9 +1,8 @@
-import { registry } from "@web/core/registry";
+import { onRpc } from "@web/../tests/web_test_helpers";
 
-const mockRegistry = registry.category("mock_rpc");
-
-mockRegistry.add("/appointment/appointment_type/create_custom", async function (request) {
-    const slots = (await request.json()).params.slots;
+onRpc("/appointment/appointment_type/create_custom", async function createCustom(request) {
+    const { params } = await request.json();
+    const { slots } = params;
     if (!slots.length) {
         return false;
     }
@@ -29,7 +28,7 @@ mockRegistry.add("/appointment/appointment_type/create_custom", async function (
     };
 });
 
-mockRegistry.add("/appointment/appointment_type/search_create_anytime", function () {
+onRpc("/appointment/appointment_type/search_create_anytime", function searchCreateAnytime() {
     let anytimeAppointmentID = this.env["appointment.type"].search([
         ["category", "=", "anytime"],
         ["staff_user_ids", "in", [100]],
@@ -48,14 +47,20 @@ mockRegistry.add("/appointment/appointment_type/search_create_anytime", function
     };
 });
 
-mockRegistry.add("/appointment/appointment_type/get_book_url", async function (request) {
-    const appointment_type_id = (await request.json()).params.appointment_type_id;
+onRpc("/appointment/appointment_type/get_book_url", async function getBookUrl(request) {
+    const { params } = await request.json();
+    const { appointment_type_id } = params;
     return {
         appointment_type_id: appointment_type_id,
         invite_url: `http://amazing.odoo.com/appointment/${appointment_type_id}?filter_staff_user_ids=%5B${100}%5D`,
     };
 });
 
-mockRegistry.add("/appointment/appointment_type/get_staff_user_appointment_types", function () {
-    return { appointment_types_info: [] };
-});
+onRpc(
+    "/appointment/appointment_type/get_staff_user_appointment_types",
+    function getStaffUserAppointmentTypes() {
+        return {
+            appointment_types_info: [],
+        };
+    }
+);

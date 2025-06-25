@@ -1,17 +1,18 @@
 import { describe, expect, test } from "@odoo/hoot";
 import {
     queryAll,
+    queryAllAttributes,
+    queryAllProperties,
     queryAllTexts,
+    unload,
     waitFor,
     waitForNone,
-    queryAllAttributes,
-    unload,
-    queryAllProperties,
 } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Component, onMounted, xml } from "@odoo/owl";
 
 import { mailModels, STORE_FETCH_ROUTES } from "@mail/../tests/mail_test_helpers";
+import { followRelation } from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 import {
     contains,
     defineActions,
@@ -32,18 +33,17 @@ import { ImageField } from "@web/views/fields/image/image_field";
 import { WebClient } from "@web/webclient/webclient";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 import { COMPUTED_DISPLAY_OPTIONS } from "@web_studio/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties";
-import { followRelation } from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 
+import { RPCError } from "@web/core/network/rpc";
+import { Setting } from "@web/views/form/setting/setting";
 import {
-    createMockViewResult,
     disableHookAnimation,
+    editView,
     handleDefaultStudioRoutes,
     mountViewEditor,
     openStudio,
 } from "@web_studio/../tests/view_editor_tests_utils";
 import { formEditor } from "@web_studio/client_action/view_editor/editors/form/form_editor";
-import { RPCError } from "@web/core/network/rpc";
-import { Setting } from "@web/views/form/setting/setting";
 
 describe.current.tags("desktop");
 
@@ -270,7 +270,7 @@ test("image field is the placeholder when record is empty", async () => {
 });
 
 test("image field edition (change size)", async () => {
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         const newArch = `
                 <form>
                     <sheet>
@@ -278,7 +278,7 @@ test("image field edition (change size)", async () => {
                     </sheet>
                 </form>
             `;
-        return createMockViewResult("form", newArch, Partner);
+        return editView(request, "form", newArch);
     });
 
     patchWithCleanup(ImageField.prototype, {
@@ -321,7 +321,7 @@ test("image field edition (change size)", async () => {
 test("image size can be unset from the selection", async () => {
     let editViewCount = 0;
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         editViewCount++;
         let newArch;
         if (editViewCount === 1) {
@@ -334,7 +334,7 @@ test("image size can be unset from the selection", async () => {
                 </sheet>
             </form>`;
         }
-        return createMockViewResult("form", newArch, Partner);
+        return editView(request, "form", newArch);
     });
 
     await mountViewEditor({
@@ -381,7 +381,7 @@ test("signature field edition (change full_name)", async () => {
             Coucou._fields[newFieldName] = fields.Binary({
                 string: "Signature",
             });
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(params, "form", newArch);
         } else if (editViewCount === 2) {
             expect(params.operations[1].new_attrs.options).toBe('{"full_name":"display_name"}', {
                 message: "correct options for 'signature' widget should be passed",
@@ -409,7 +409,7 @@ test("signature field edition (change full_name)", async () => {
                 </form>
                 `;
         }
-        return createMockViewResult("form", newArch, Coucou);
+        return editView(params, "form", newArch);
     });
     await mountViewEditor({
         type: "form",
@@ -553,20 +553,20 @@ test("options with computed display to have a dynamic sidebar list of options", 
     const arch = `<form><group>
         <field name="display_name"/>
     </group></form>`;
-    onRpc("/web_studio/edit_view", async () => {
+    onRpc("/web_studio/edit_view", (request) => {
         editCount++;
         if (editCount === 1) {
             const newArch =
                 "<form><group><field name='display_name' options='{\"fake_super_option\":True}'/></group></form>";
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(request, "form", newArch);
         }
         if (editCount === 2) {
             const newArch = `<form><group><field name='display_name' options="{'fake_super_option':True,'suboption_a':'Nice'}"/></group></form>`;
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(request, "form", newArch);
         }
         if (editCount === 3) {
             const newArch = `<form><group><field name='display_name' options="{'fake_super_option':True,'suboption_a':'Nice','suboption_b':True}"/></group></form>`;
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(request, "form", newArch);
         }
     });
     await mountViewEditor({
@@ -625,12 +625,12 @@ test("field selection when editing a suboption", async () => {
     const arch = `<form><group>
         <field name="display_name"/>
     </group></form>`;
-    onRpc("/web_studio/edit_view", async () => {
+    onRpc("/web_studio/edit_view", (request) => {
         editCount++;
         if (editCount === 1) {
             const newArch =
                 "<form><group><field name='display_name' options='{\"fake_super_option\":True}'/></group></form>";
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(request, "form", newArch);
         }
     });
     await mountViewEditor({
@@ -659,7 +659,7 @@ test("'class' attribute is editable in the sidebar with a tooltip", async () => 
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect(params.operations[0].new_attrs).toEqual({ class: "new_class" });
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
     await mountViewEditor({
         type: "form",
@@ -760,14 +760,14 @@ test("edit options and attributes on a widget node", async () => {
                 <widget name="test_widget" width="30"/>
             </group></form>`;
             expect(params.operations[0].new_attrs).toEqual({ width: "30" });
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(params, "form", newArch);
         }
         if (editCount === 2) {
             expect(params.operations[1].new_attrs).toEqual({ options: '{"color":"primary"}' });
             const newArch = `<form><group>
                 <widget name="test_widget" width="30" options="{'color': 'primary'}"/>
             </group></form>`;
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(params, "form", newArch);
         }
     });
     await mountViewEditor({
@@ -1450,7 +1450,7 @@ test("invisible group in form sheet", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect(params.operations[0].new_attrs.invisible).toBe("True");
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     expect(".o_inner_group").toHaveCount(2);
@@ -1795,7 +1795,7 @@ test("notebook edition", async () => {
         expect(params.operations[0].node.attrs.string).toBe("New Page");
         expect(params.operations[0].position).toBe("inside");
         expect(params.operations[0].target.tag).toBe("notebook");
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     expect(".o_content .o_notebook li").toHaveCount(2);
@@ -1894,7 +1894,7 @@ test("invisible notebook page in form", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect(params.operations[0].new_attrs.invisible).toBe("True");
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     expect(
@@ -1938,9 +1938,9 @@ test("restore active notebook tab after adding/removing an element", async () =>
         arch,
     });
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect.step("edit_view");
-        return createMockViewResult("form", arch, Coucou);
+        return editView(request, "form", arch);
     });
 
     await contains(".o_notebook .kikou2").click();
@@ -1987,9 +1987,9 @@ test("restore active notebook tab and element", async () => {
         arch,
     });
 
-    onRpc("/web_studio/edit_view", async () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect.step("edit_view");
-        return createMockViewResult("form", arch, Coucou);
+        return editView(request, "form", arch);
     });
 
     // first, let's change the properties of a tab element
@@ -2045,9 +2045,9 @@ test("restore active notebook tab after view property change", async () => {
         arch,
     });
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect.step("edit_view");
-        return createMockViewResult("form", arch, Coucou);
+        return editView(request, "form", arch);
     });
 
     await contains(".o_notebook .kikou2").click();
@@ -2110,7 +2110,7 @@ test("label edition", async () => {
             ],
         });
         expect(params.operations[0].new_attrs).toEqual({ string: "Yeah" });
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     expect(".o_web_studio_form_view_editor label:eq(0)").toHaveText("Kikou");
@@ -2154,7 +2154,7 @@ test("add a statusbar", async () => {
 
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
-        expect(params.operations.length).toBe(2);
+        expect(params.operations).toHaveLength(2);
         expect(params.operations[0]).toEqual({ type: "statusbar" });
         expect(params.operations[1].target).toEqual({ tag: "header" });
         expect(params.operations[1].position).toBe("inside");
@@ -2250,7 +2250,7 @@ test("move a field in form", async () => {
                     </group>
                 </sheet>
             </form>`;
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     expect(queryAllTexts(".o_web_studio_form_view_editor .o_form_sheet [data-field-name]")).toEqual(
@@ -2344,7 +2344,7 @@ test("form editor add avatar image", async () => {
                     </sheet>
                 </form>`;
         }
-        return createMockViewResult("form", newArch, Partner);
+        return editView(params, "form", newArch);
     });
 
     expect(".o_field_widget.oe_avatar").toHaveCount(0);
@@ -2539,7 +2539,7 @@ test("new button in buttonbox", async () => {
                 },
             },
         ]);
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     await contains(".o_web_studio_button_hook").click();
@@ -2601,7 +2601,7 @@ test("new button in buttonbox through 'Search more'", async () => {
                 },
             },
         ]);
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     await contains(".o_web_studio_button_hook").click();
@@ -2679,7 +2679,7 @@ test("element removal", async () => {
             expect(params.operations[3].target.xpath_info.at(-1).tag).toBe("notebook");
         }
 
-        return createMockViewResult("form", arch, Coucou);
+        return editView(params, "form", arch);
     });
 
     await contains("[data-field-name='display_name']").click();
@@ -2889,10 +2889,10 @@ test("approval one rule by default", async () => {
         arch,
     });
 
-    onRpc("/web_studio/edit_view", () => createMockViewResult("form", arch, Coucou));
+    onRpc("/web_studio/edit_view", (request) => editView(request, "form", arch));
 
-    onRpc("studio.approval.rule", "create_rule", (params) => {
-        expect(params.args).toEqual(["coucou", null, "0", "2"]);
+    onRpc("studio.approval.rule", "create_rule", ({ args }) => {
+        expect(args).toEqual(["coucou", null, "0", "2"]);
         return {};
     });
 
@@ -3009,7 +3009,7 @@ test("edit the rainbowman effect from the sidebar", async () => {
                         </div>
                     </sheet>
                 </form>`;
-            return createMockViewResult("form", newArch, Coucou);
+            return editView(params, "form", newArch);
         } else {
             expect(params.operations[1].new_attrs).toEqual({
                 effect: {},
@@ -3055,11 +3055,11 @@ test("Sets 'force_save' attribute when changing readonly attribute in form view"
             nbEdit++;
             expect(operation.new_attrs.readonly).toEqual("True");
             expect(operation.new_attrs.force_save).toEqual("1");
-            return createMockViewResult("form", readonlyArch, Coucou);
+            return editView(params, "form", readonlyArch);
         } else {
             expect(operation.new_attrs.readonly).toEqual("False");
             expect(operation.new_attrs.force_save).toEqual("0");
-            return createMockViewResult("form", arch, Coucou);
+            return editView(params, "form", arch);
         }
     });
 
@@ -3193,9 +3193,9 @@ test("Restrict drag and drop of notebook and group in a inner group", async () =
     });
 
     let editViewCount = 0;
-    onRpc("/web_studio/edit_view", async () => {
+    onRpc("/web_studio/edit_view", (request) => {
         editViewCount++;
-        return createMockViewResult("form", arch, Coucou);
+        return editView(request, "form", arch);
     });
 
     expect(".o_inner_group").toHaveCount(1);
@@ -3691,7 +3691,7 @@ test("display one2many without inline views", async () => {
                     <field name='product_ids'>${Product._views.list}</field>
                 </sheet>
             </form>`;
-        return createMockViewResult("list", Product._views.list, Product);
+        return editView(params, "list", Product._views.list);
     });
 
     expect(".o_field_one2many.o_field_widget").toHaveCount(1);
@@ -3708,17 +3708,19 @@ test("edit one2many list view", async () => {
 
     serverState.debug = "1";
 
-    Coucou._views = {
-        "form,1": `
-            <form>
-                <sheet>
-                    <field name='display_name'/>
-                    <field name='product_ids'>
-                        <list><field name='display_name'/></list>
-                    </field>
-                </sheet>
-            </form>`,
-    };
+    Coucou._views["form,1"] = /* xml */ `
+        <form>
+            <sheet>
+                <field name='display_name'/>
+                <field name='product_ids'>
+                    <list><field name='display_name'/></list>
+                </field>
+            </sheet>
+        </form>`;
+    Product._views["form,1"] = /* xml */ `
+        <form />
+    `;
+    Product._fields.product_ids = fields.Many2many({ relation: "product" });
 
     await mountViewEditor({
         type: "form",
@@ -3743,7 +3745,7 @@ test("edit one2many list view", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect(params.view_id).toBe(1);
-        expect(params.operations.length).toBe(1);
+        expect(params.operations).toHaveLength(1);
 
         expect(params.operations[0].type).toBe("add");
         expect(params.operations[0].position).toBe("before");
@@ -3762,7 +3764,7 @@ test("edit one2many list view", async () => {
             "/form[1]/sheet[1]/field[2]/list[1]"
         );
 
-        const newArch = `
+        const newArch = /* xml */ `
             <form>
                 <sheet>
                     <field name='display_name'/>
@@ -3771,7 +3773,7 @@ test("edit one2many list view", async () => {
                     </field>
                 </sheet>
             </form>`;
-        return createMockViewResult("form", newArch, Product);
+        return editView(params, "form", newArch);
     });
 
     await contains(".o_web_studio_view_renderer .o_field_one2many").click();

@@ -1,8 +1,6 @@
-import { makeKwArgs } from "@web/../tests/web_test_helpers";
-import { registry } from "@web/core/registry";
+import { makeKwArgs, onRpc } from "@web/../tests/web_test_helpers";
 
-function _mockGetGanttData({ kwargs, model }) {
-    kwargs = makeKwArgs(kwargs);
+onRpc("get_gantt_data", function getGanttData({ kwargs, model }) {
     let groups = this.env[model].formatted_read_group({
         ...kwargs,
         aggregates: ["id:array_agg"],
@@ -37,7 +35,11 @@ function _mockGetGanttData({ kwargs, model }) {
         progress_bars[fieldName] = {};
     }
 
-    return { groups, length, records, unavailabilities, progress_bars };
-}
-
-registry.category("mock_rpc").add("get_gantt_data", _mockGetGanttData);
+    return {
+        groups,
+        length,
+        records,
+        unavailabilities,
+        progress_bars,
+    };
+});

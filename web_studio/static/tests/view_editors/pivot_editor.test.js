@@ -12,7 +12,7 @@ import {
     onRpc,
 } from "@web/../tests/web_test_helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { createMockViewResult, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
+import { editView, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -105,7 +105,7 @@ test("switching column and row groupby fields in pivot editor", async () => {
                     <field name='partner_id' type='row'/>
                     <field name='toughness' type='row'/>
                 </pivot>`;
-            return createMockViewResult("pivot", arch, Stage);
+            return editView(params, "pivot", arch);
         } else if (editViewCount === 2) {
             expect(params.operations[1].target.field_names[0]).toBe("name");
             const arch = `
@@ -114,7 +114,7 @@ test("switching column and row groupby fields in pivot editor", async () => {
                     <field name='partner_id' type='row'/>
                     <field name='toughness' type='row'/>
                 </pivot>`;
-            return createMockViewResult("pivot", arch, Stage);
+            return editView(params, "pivot", arch);
         } else if (editViewCount === 3) {
             expect(params.operations[2].target.field_names[0]).toBe("product_id");
             const arch = `
@@ -122,7 +122,7 @@ test("switching column and row groupby fields in pivot editor", async () => {
                     <field name='name' type='col'/>
                     <field name='product_id' type='row'/>
                 </pivot>`;
-            return createMockViewResult("pivot", arch, Stage);
+            return editView(params, "pivot", arch);
         }
     });
 

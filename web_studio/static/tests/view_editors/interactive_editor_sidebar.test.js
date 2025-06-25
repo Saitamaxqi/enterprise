@@ -14,7 +14,7 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { CodeEditor } from "@web/core/code_editor/code_editor";
 import { PivotEditorSidebar } from "@web_studio/client_action/view_editor/editors/pivot/pivot_editor";
-import { createMockViewResult, mountViewEditor } from "../view_editor_tests_utils";
+import { editView, mountViewEditor } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 class Partner extends models.Model {
@@ -109,7 +109,7 @@ test("folds/unfolds the existing fields into sidebar", async () => {
                 <field name='display_name'/>
             </group>
         </form>`;
-    onRpc("/web_studio/edit_view", () => createMockViewResult("form", arch, Partner));
+    onRpc("/web_studio/edit_view", (request) => editView(request, "form", arch));
 
     await mountViewEditor({
         type: "form",
@@ -142,9 +142,9 @@ test("change widget binary to image", async () => {
     Partner._fields.image = fields.Binary();
     const arch = `<form><field name='image'/></form>`;
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect.step("edit_view RPC has been called");
-        return createMockViewResult("form", arch, Partner);
+        return editView(request, "form", arch);
     });
 
     await mountViewEditor({
@@ -177,10 +177,10 @@ test("update sidebar after edition", async () => {
             </group>
         </form>`;
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect(".o_web_studio_sidebar input[name=string]").toHaveValue("test");
         expect.step("editView");
-        return createMockViewResult("form", arch, Partner);
+        return editView(request, "form", arch);
     });
 
     await mountViewEditor({
@@ -262,7 +262,7 @@ test("default value for new field name", async () => {
                 /^x_studio_float_field_.*$/
             );
         }
-        return createMockViewResult("form", arch, Partner);
+        return editView(params, "form", arch);
     });
 
     await contains(".o_web_studio_new_fields .o_web_studio_field_char").dragAndDrop(
@@ -290,7 +290,7 @@ test("remove starting underscore from new field value", async () => {
             type: "char",
             string: "Hello",
         };
-        return createMockViewResult("form", arch, Partner);
+        return editView(params, "form", arch);
     });
 
     onRpc("/web_studio/rename_field", () => true);
@@ -436,10 +436,10 @@ test("autofocus field label in the sidebar", async () => {
         arch: `<form><field name="display_name"/><field name="date"/></form>`,
     });
 
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         expect.step("edit_view");
         const newArch = `<form><field name="display_name" class="custom-class"/><field name="date"/></form>`;
-        return createMockViewResult("form", newArch, Partner);
+        return editView(request, "form", newArch);
     });
 
     expect(".o_web_studio_sidebar .nav-link.o_web_studio_new").toBeFocused();

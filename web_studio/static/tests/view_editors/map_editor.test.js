@@ -11,7 +11,7 @@ import {
     onRpc,
 } from "@web/../tests/web_test_helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { createMockViewResult, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
+import { editView, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -92,7 +92,7 @@ test("marker popup fields in editor sidebar", async () => {
                 <field name='description' string='Description'/>
             </map>`;
 
-        return createMockViewResult("map", arch, Partner);
+        return editView(params, "map", arch);
     });
 
     await getService("action").doAction({

@@ -17,6 +17,7 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { getDefaultConfig } from "@web/views/view";
 
+import { registerInlineViewArchs } from "@web/../tests/_framework/mock_server/mock_model";
 import { EditionFlow } from "@web_studio/client_action/editor/edition_flow";
 import { ViewEditor } from "@web_studio/client_action/view_editor/view_editor";
 import { useStudioServiceAsReactive } from "@web_studio/studio_service";
@@ -60,23 +61,22 @@ class ViewEditorParent extends Component {
 }
 
 /**
- * @param {string} type
+ * @param {Request | { model: string, view_id: number | false }} params
+ * @param {string} viewType
  * @param {string} arch
- * @param {import("@web/../tests/web_test_helpers")["models"]["Model"]} model
  */
-export async function createMockViewResult(type, arch, model) {
-    const { models } = MockServer.current;
-    return {
-        models: Object.fromEntries(
-            Object.entries(models).map(([name, model]) => [name, { fields: model._fields }])
-        ),
-        views: {
-            [type]: {
-                arch,
-                model: model._name,
-            },
-        },
-    };
+export async function editView(params, viewType, arch) {
+    if (params instanceof Request) {
+        ({ params } = await params.json());
+    }
+    const { model: modelName, view_id: viewId } = params;
+    const model = MockServer.env[modelName];
+    registerInlineViewArchs(modelName, {
+        [[viewType, viewId]]: arch,
+    });
+    const result = model.get_views([[viewId || false, viewType]]);
+    result.models[modelName].fields = model.fields_get(); // return all fields
+    return result;
 }
 
 export function disableHookAnimation() {

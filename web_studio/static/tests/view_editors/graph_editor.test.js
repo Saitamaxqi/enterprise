@@ -16,7 +16,7 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { CodeEditor } from "@web/core/code_editor/code_editor";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { createMockViewResult, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
+import { editView, handleDefaultStudioRoutes } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -77,7 +77,7 @@ test("switching chart types in graph editor", async () => {
                     <field name='name' type='col'/>
                     <field name='char_field' type='row'/>
                 </graph>`;
-            return createMockViewResult("graph", arch, Stage);
+            return editView(params, "graph", arch);
         } else if (editViewCount === 2) {
             expect.step(params.operations[1].new_attrs.type);
             const arch = `
@@ -85,14 +85,14 @@ test("switching chart types in graph editor", async () => {
                     <field name='name' type='col'/>
                     <field name='char_field' type='row'/>
                 </graph>`;
-            return createMockViewResult("graph", arch, Stage);
+            return editView(params, "graph", arch);
         } else {
             const arch = `
                 <graph string='Opportunities'>
                     <field name='name' type='col'/>
                     <field name='char_field' type='row'/>
                 </graph>`;
-            return createMockViewResult("graph", arch, Stage);
+            return editView(params, "graph", arch);
         }
     });
 

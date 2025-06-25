@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@odoo/hoot";
-import { animationFrame, Deferred } from "@odoo/hoot-mock";
 import { queryAllTexts } from "@odoo/hoot-dom";
+import { animationFrame, Deferred } from "@odoo/hoot-mock";
 import { onMounted } from "@odoo/owl";
 import {
     contains,
@@ -17,8 +17,8 @@ import { CodeEditor } from "@web/core/code_editor/code_editor";
 describe.current.tags("desktop");
 
 import {
-    createMockViewResult,
     disableHookAnimation,
+    editView,
     mountViewEditor,
 } from "@web_studio/../tests/view_editor_tests_utils";
 import { KanbanEditorSidebar } from "@web_studio/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar";
@@ -121,7 +121,7 @@ test("templates without a main node are wrapped in a main node by the editor", a
 });
 
 test("kanban structures display depends if element is present in the view", async () => {
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         // in this test, we result with a completely different template
         const newArch = `
                 <kanban>
@@ -137,7 +137,7 @@ test("kanban structures display depends if element is present in the view", asyn
                     </templates>
                 </kanban>
             `;
-        return createMockViewResult("kanban", newArch, Coucou);
+        return editView(request, "kanban", newArch);
     });
     await mountViewEditor({
         type: "kanban",
@@ -243,7 +243,7 @@ test("adding an aside element calls the right operation", async () => {
                     </templates>
                 </kanban>
             `;
-        return createMockViewResult("kanban", newArch, Coucou);
+        return editView(params, "kanban", newArch);
     });
     await mountViewEditor({
         type: "kanban",
@@ -281,7 +281,7 @@ test("adding a footer element calls the right operation", async () => {
                     </templates>
                 </kanban>
             `;
-        return createMockViewResult("kanban", newArch, Coucou);
+        return editView(params, "kanban", newArch);
     });
     await mountViewEditor({
         type: "kanban",
@@ -350,7 +350,7 @@ test("adding a colorpicker inside the menu", async () => {
                         </templates>
                     </kanban>
                 `;
-        return createMockViewResult("kanban", newArch, Coucou);
+        return editView(params, "kanban", newArch);
     });
     await mountViewEditor({
         type: "kanban",
@@ -405,7 +405,7 @@ test("adding a colorpicker when menu is not present", async () => {
                         </templates>
                     </kanban>
                 `;
-        return createMockViewResult("kanban", newArch, Coucou);
+        return editView(params, "kanban", newArch);
     });
     await mountViewEditor({
         type: "kanban",
@@ -450,7 +450,7 @@ test("can_open attribute can be edited from the sidebar", async () => {
                 </templates>
             </kanban>
         `;
-        return createMockViewResult("kanban", newArch, Coucou);
+        return editView(params, "kanban", newArch);
     });
     await mountViewEditor({
         type: "kanban",
@@ -683,7 +683,7 @@ test("grouped kanban fold_field can be change for custom model", async () => {
     }
 
     let nbEditView = 0;
-    onRpc("/web_studio/edit_view", () => {
+    onRpc("/web_studio/edit_view", (request) => {
         nbEditView++;
         if (nbEditView === 1) {
             const newArch = `
@@ -695,7 +695,7 @@ test("grouped kanban fold_field can be change for custom model", async () => {
                     </templates>
                 </kanban>
             `;
-            return createMockViewResult("kanban", newArch, Lead);
+            return editView(request, "kanban", newArch);
         } else if (nbEditView === 2) {
             const newArch = `
                 <kanban default_group_by="custom_stage_id">
@@ -706,7 +706,7 @@ test("grouped kanban fold_field can be change for custom model", async () => {
                     </templates>
                 </kanban>
             `;
-            return createMockViewResult("kanban", newArch, Lead);
+            return editView(request, "kanban", newArch);
         }
     });
 
@@ -786,7 +786,7 @@ test("sortby and orderby field in kanban sidebar", async () => {
                 </templates>
             </kanban>
         `;
-        return createMockViewResult("kanban", newArch, Coucou);
+        return editView(params, "kanban", newArch);
     });
     await mountViewEditor({
         type: "kanban",

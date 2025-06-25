@@ -3,7 +3,7 @@ import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { contains, defineModels, fields, models, onRpc } from "@web/../tests/web_test_helpers";
 import { pick } from "@web/core/utils/objects";
-import { createMockViewResult, mountViewEditor } from "../view_editor_tests_utils";
+import { editView, mountViewEditor } from "../view_editor_tests_utils";
 
 describe.current.tags("desktop");
 
@@ -120,7 +120,7 @@ test("delete a field", async () => {
             },
             type: "remove",
         });
-        return createMockViewResult("search", "<search />", Partner);
+        return editView(params, "search", "<search />");
     });
 
     expect("[data-studio-xpath]").toHaveCount(1);
@@ -198,7 +198,7 @@ test("many2many field can be dropped in 'Group by' sections", async () => {
         expect.step("edit_view");
         const { params } = await request.json();
         expect(params.operations[0].node.attrs.context).toBe("{'group_by': 'message_ids'}");
-        return createMockViewResult("search", arch, Partner);
+        return editView(params, "search", arch);
     });
 
     expect(".o-web-studio-search--groupbys [data-studio-xpath]").toHaveCount(1);
@@ -279,7 +279,7 @@ test("move a date/datetime field in search filter dropdown", async () => {
         const { params } = await request.json();
         expect(params.operations[0].node.tag).toBe("filter");
         expect(params.operations[0].node.attrs.date).toBe("start");
-        return createMockViewResult("search", arch, Partner);
+        return editView(params, "search", arch);
     });
 
     expect(
@@ -322,7 +322,7 @@ test("empty search editor: drag a groupby", async () => {
                     <filter name="studio_group_by_abcdef" string="Last Updated on" context="{'group_by': 'write_date'}" />
                 </group>
             </search>`;
-        return createMockViewResult("search", arch, Partner);
+        return editView(params, "search", arch);
     });
 
     await contains(
@@ -355,7 +355,7 @@ test("integer field can be dropped in 'Group by' sections", async () => {
                     <filter name='groupby_id' domain='[]' context="{'group_by':'id'}"/>
                 </group>
             </search>`;
-        return createMockViewResult("search", arch, Partner);
+        return editView(params, "search", arch);
     });
 
     expect(".o-web-studio-search--groupbys [data-studio-xpath]").toHaveCount(0);
