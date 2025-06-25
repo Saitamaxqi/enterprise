@@ -5,8 +5,7 @@
         <button class="btn btn-light flex-shrink-0 align-self-start p-0 me-2"
             t-on-click="onAiClick"
             title="Refresh value">
-            <!-- todo: use icon from ai app -->
-            <img src="/ai_fields/static/src/ai_icon.png" width="20" alt="ai icon"/>
+            <img src="/ai/static/description/icon.png" width="20" alt="ai icon"/>
         </button>
     </t>
 
@@ -115,8 +114,7 @@
                 <button class="btn btn-light flex-shrink-0 align-self-start p-0 me-2"
                     t-on-click="() => this.onAiClick(propertyConfiguration.name)"
                     title="Refresh value">
-                    <!-- todo: use icon from ai app -->
-                    <img src="/ai_fields/static/src/ai_icon.png" width="20" alt="ai icon"/>
+                    <img src="/ai/static/description/icon.png" width="20" alt="ai icon"/>
                 </button>
                 <div class="flex-fill">$0</div>
             </div>

@@ -34,7 +34,7 @@
         </t>
         <div t-if="!['char', 'text', 'html'].includes(state.fieldType)" class="alert alert-info mt-3">
             <t t-out="selectedField.label"/> fields won't update automatically - Click the
-            <img src="/ai_fields/static/src/ai_icon.png" width="20" alt="ai icon" class="rounded"/>
+            <img src="/ai/static/description/icon.png" width="20" alt="ai icon" class="rounded"/>
             button to run your prompt.
         </div>
         <h5 class="mt-3">
