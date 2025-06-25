@@ -10,7 +10,6 @@ class HrPayslipRun(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'hr.payroll.payment.report.wizard',
             'view_mode': 'form',
-            'view_id': 'hr_payslip_payment_report_view_form',
             'views': [(False, 'form')],
             'target': 'new',
             'context': {
