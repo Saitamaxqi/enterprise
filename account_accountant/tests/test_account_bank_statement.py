@@ -1,6 +1,5 @@
 from .common import TestBankRecWidgetCommon
 from odoo import Command, fields
-from odoo.exceptions import UserError
 from odoo.tests import tagged
 
 
@@ -411,21 +410,6 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': self.account_revenue_1.id, 'amount_currency': -500.0, 'currency_id': self.company_data['currency'].id, 'balance': -500.0, 'reconciled': False},
             {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': -500.0, 'currency_id': self.company_data['currency'].id, 'balance': -500.0, 'reconciled': False},
         ])
-
-    def test_adding_same_aml_twice(self):
-        st_line = self._create_st_line(2000.0)
-        inv_line = self._create_invoice_line(
-            'out_invoice',
-            invoice_line_ids=[{'price_unit': 1000.0}],
-        )
-        st_line.set_line_bank_statement_line(inv_line.id)
-        self.assertRecordValues(st_line.line_ids, [
-            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 2000.0, 'currency_id': self.company_data['currency'].id, 'balance': 2000.0, 'reconciled': False},
-            {'account_id': inv_line.account_id.id, 'amount_currency': -1000.0, 'currency_id': self.company_data['currency'].id, 'balance': -1000.0, 'reconciled': True},
-            {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': -1000.0, 'currency_id': self.company_data['currency'].id, 'balance': -1000.0, 'reconciled': False},
-        ])
-        with self.assertRaises(UserError, msg='You are trying to reconcile some entries that are already reconciled.'):
-            st_line.set_line_bank_statement_line(inv_line.id)
 
     def test_res_partner_bank_find_create_multi_account(self):
         """ Make sure that we can save multiple bank accounts for a partner. """

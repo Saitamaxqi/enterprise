@@ -889,6 +889,15 @@ class AccountBankStatementLine(models.Model):
             :param move_lines_ids: A list of IDs for the move lines to be added to the bank statement line.
         """
         self.ensure_one()
+        # We do not want to set a line that is already reconciled, otherwise a user error would be raised. The order
+        # is there to keep the same order as the one received in move_line_ids
+        move_lines = self.env['account.move.line'].search([
+            ('id', 'in', move_lines_ids),
+            ('reconciled', '=', False),
+        ], order="sequence DESC")
+        if not move_lines:
+            return
+
         _liquidity_line, _suspense_lines, other_lines = self._seek_for_lines()
 
         transaction_amount, transaction_currency, journal_amount, journal_currency, company_amount, company_currency = self._get_accounting_amounts_and_currencies()
@@ -899,7 +908,6 @@ class AccountBankStatementLine(models.Model):
         open_amount_currency = transaction_amount
         total_early_payment_discount = 0.0
         early_pay_aml_values_list = []
-        move_lines = self.env['account.move.line'].browse(move_lines_ids)
 
         for line in other_lines + move_lines:
             # move_lines are the lines coming from the reconcile button and other_lines are the lines from the bank
