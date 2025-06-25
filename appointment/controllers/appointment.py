@@ -323,8 +323,8 @@ class AppointmentController(http.Controller):
             - hide_select_dropdown: True if the user select dropdown should be hidden. (e.g. an operator has been selected before)
             Even if hidden, it can still be in the view and used to update availabilities according to the selected user in the js.
         """
-        filter_staff_user_ids = json.loads(kwargs.get('filter_staff_user_ids') or '[]')
-        filter_resource_ids = json.loads(kwargs.get('filter_resource_ids') or '[]')
+        filter_staff_user_ids = json.loads(unquote_plus(kwargs.get('filter_staff_user_ids') or '[]'))
+        filter_resource_ids = json.loads(unquote_plus(kwargs.get('filter_resource_ids') or '[]'))
         users_possible = self._get_possible_staff_users(appointment_type, filter_staff_user_ids)
         user_forced = self._get_forced_staff_user(appointment_type, users_possible)
         resources_possible = self._get_possible_resources(appointment_type, filter_resource_ids)
