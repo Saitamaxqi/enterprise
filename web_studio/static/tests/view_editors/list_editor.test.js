@@ -1431,6 +1431,7 @@ test("Default group by field in sidebar", async () => {
     expect(queryAllTexts(".o_select_menu_item")).toEqual([
         "Created on",
         "Display name",
+        "Id",
         "Last Modified on",
     ]);
 

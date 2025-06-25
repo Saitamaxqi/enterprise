@@ -121,7 +121,7 @@ export class ListEditorSidebar extends Component {
         return fieldsToChoices(
             this.viewEditorModel.fields,
             this.viewEditorModel.GROUPABLE_TYPES,
-            (field) => field.store
+            (field) => field.groupable
         );
     }
 

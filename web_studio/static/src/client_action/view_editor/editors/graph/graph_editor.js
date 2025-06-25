@@ -69,7 +69,7 @@ export class GraphEditorSidebar extends Component {
         return fieldsToChoices(
             this.viewEditorModel.fields,
             this.viewEditorModel.GROUPABLE_TYPES,
-            (field) => field.store && field.name !== this.modelParams.groupBy[1]
+            (field) => field.groupable && field.name !== this.modelParams.groupBy[1]
         );
     }
 
@@ -77,7 +77,7 @@ export class GraphEditorSidebar extends Component {
         return fieldsToChoices(
             this.viewEditorModel.fields,
             this.viewEditorModel.GROUPABLE_TYPES,
-            (field) => field.store && field.name !== this.modelParams.groupBy[0]
+            (field) => field.groupable && field.name !== this.modelParams.groupBy[0]
         );
     }
 
@@ -85,7 +85,7 @@ export class GraphEditorSidebar extends Component {
         return fieldsToChoices(
             this.viewEditorModel.fields,
             ["integer", "float", "monetary"],
-            (field) => field.store && field.name !== "id"
+            (field) => field.aggregator && field.name !== "id"
         );
     }
 }

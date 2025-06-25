@@ -152,7 +152,7 @@ test("indicate that regular stored field(except date/datetime) can not be droppe
 });
 
 test("indicate that ungroupable field can not be dropped in 'Filters' and 'Group by' sections", async () => {
-    Partner._fields.age = fields.Integer({ store: false });
+    Partner._fields.age = fields.Integer({ groupable: false });
     await mountViewEditor({
         type: "search",
         resModel: "partner",

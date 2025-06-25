@@ -1,6 +1,7 @@
 import { rpc, rpcBus } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { SearchModel } from "@web/search/search_model";
+import { GROUPABLE_TYPES } from "@web/search/utils/misc";
 import {
     computeXpath,
     getNodesFromXpath,
@@ -126,7 +127,7 @@ export class ViewEditorModel extends Reactive {
 
         this._editionFlow = editionFlow;
 
-        this.GROUPABLE_TYPES = ["many2one", "char", "boolean", "selection", "date", "datetime"];
+        this.GROUPABLE_TYPES = [...GROUPABLE_TYPES];
         this.MEASURABLE_TYPES = ["integer", "float", "monetary"];
 
         this._activeNodeXpath = undefined;

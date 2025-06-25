@@ -444,7 +444,7 @@ function fieldCanBeFilter(field) {
 }
 
 function fieldCanBeGroupable(field) {
-    return GROUPABLE_TYPES.includes(field.type) && field.store;
+    return GROUPABLE_TYPES.includes(field.type) && field.groupable;
 }
 
 const disabledDropClass = "o-web-studio-search--drop-disable";

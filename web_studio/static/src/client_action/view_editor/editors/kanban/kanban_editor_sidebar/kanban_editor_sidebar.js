@@ -148,7 +148,7 @@ export class KanbanEditorSidebar extends Component {
             choices: fieldsToChoices(
                 this.viewEditorModel.fields,
                 this.viewEditorModel.GROUPABLE_TYPES,
-                (field) => field.store
+                (field) => field.groupable
             ),
             required: false,
         };
@@ -173,7 +173,7 @@ export class KanbanEditorSidebar extends Component {
         return fieldsToChoices(
             this.viewEditorModel.fields,
             this.viewEditorModel.GROUPABLE_TYPES.concat(this.viewEditorModel.MEASURABLE_TYPES),
-            (field) => field.store
+            (field) => field.sortable
         );
     }
 

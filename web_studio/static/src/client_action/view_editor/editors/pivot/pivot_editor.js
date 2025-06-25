@@ -114,7 +114,7 @@ export class PivotEditorSidebar extends Component {
             this.viewEditorModel.fields,
             this.viewEditorModel.GROUPABLE_TYPES,
             (field) =>
-                field.store &&
+                field.groupable &&
                 ![this.archInfo.rowGroupBys[0], this.archInfo.rowGroupBys[1]].includes(field.name)
         );
     }
@@ -124,7 +124,7 @@ export class PivotEditorSidebar extends Component {
             this.viewEditorModel.fields,
             this.viewEditorModel.GROUPABLE_TYPES,
             (field) =>
-                field.store &&
+                field.groupable &&
                 ![this.archInfo.colGroupBys[0], this.archInfo.rowGroupBys[1]].includes(field.name)
         );
     }
@@ -134,7 +134,7 @@ export class PivotEditorSidebar extends Component {
             this.viewEditorModel.fields,
             this.viewEditorModel.GROUPABLE_TYPES,
             (field) =>
-                field.store &&
+                field.groupable &&
                 ![this.archInfo.colGroupBys[0], this.archInfo.rowGroupBys[0]].includes(field.name)
         );
     }

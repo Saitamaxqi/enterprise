@@ -37,7 +37,7 @@ class Product extends models.Model {
 class Stage extends models.Model {
     _name = "stage";
 
-    name = fields.Char();
+    name = fields.Char({ groupable: true });
     partner_id = fields.Many2one({ relation: "partner", string: "partner_id" });
     product_id = fields.Many2one({ relation: "product", string: "product_id" });
     toughness = fields.Selection({
@@ -178,7 +178,7 @@ test("switching column and row groupby fields in pivot editor", async () => {
 
     // change the column field value to Name
     await contains(".o_web_studio_sidebar [name='column_groupby'] button").click();
-    await contains(".o-dropdown-item:contains(Name)").click();
+    await contains(".o-dropdown-item:contains(Name):not(:contains(Display))").click();
 
     expect.verifySteps(["edit_view"]);
     expect(".o_web_studio_sidebar [name='column_groupby'] .o_select_menu").toHaveText("Name");

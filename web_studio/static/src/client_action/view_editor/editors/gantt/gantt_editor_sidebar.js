@@ -81,7 +81,7 @@ export class GanttEditorSidebar extends Component {
 
     get fieldsChoices() {
         return Object.values(this.modelParams.fields)
-            .filter((f) => f.store && this.viewEditorModel.GROUPABLE_TYPES.includes(f.type))
+            .filter((f) => f.groupable && this.viewEditorModel.GROUPABLE_TYPES.includes(f.type))
             .map((f) => ({
                 label: f.string,
                 value: f.name,

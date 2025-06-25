@@ -52,6 +52,8 @@ class Partner extends models.Model {
 
 class Task extends models.Model {
     _name = "task";
+
+    display_name = fields.Char({ sortable: false });
     int_field = fields.Integer();
     float_field = fields.Float();
     monetary_field = fields.Monetary({ currency_field: "" });
