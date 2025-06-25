@@ -28,7 +28,7 @@
                                 <field name="provider_type" readonly="1"/>
                             </group>
                             <group>
-                                <field name="last_refresh" string="Last refresh" readonly="1" invisible="not provider_data"/>
+                                <field name="last_refresh" readonly="1" invisible="not provider_data"/>
                                 <field name="next_refresh" readonly="1" invisible="not provider_data or not auto_sync"/>
                                 <field name="expiring_synchronization_date" readonly="1" invisible="not provider_data"/>
                                 <field name="company_id" readonly="1" groups="base.group_multi_company"/>
