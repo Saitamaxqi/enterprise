@@ -111,7 +111,7 @@
         <xpath expr="//PropertyValue" position="replace">
             <div t-if="!props.readonly and propertyConfiguration.ai and propertyConfiguration.system_prompt"
                 class="d-flex">
-                <button class="btn btn-light flex-shrink-0 align-self-start p-0 me-2"
+                <button class="btn btn-light d-flex flex-shrink-0 align-self-baseline p-0 m-0 me-2"
                     t-on-click="() => this.onAiClick(propertyConfiguration.name)"
                     title="Refresh value">
                     <img src="/ai/static/description/icon.png" width="20" alt="ai icon"/>
