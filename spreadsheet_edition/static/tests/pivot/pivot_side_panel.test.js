@@ -1,5 +1,6 @@
 import { defineSpreadsheetModels, Partner } from "@spreadsheet/../tests/helpers/data";
 import { describe, expect, getFixture, test, beforeEach } from "@odoo/hoot";
+import { runAllTimers } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { registries, stores } from "@odoo/o-spreadsheet";
 import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
@@ -315,7 +316,9 @@ test("add column dimension", async function () {
     });
     await openSidePanel(model, env, pivotId);
     await contains(".add-dimension.o-button").click();
-    await contains(".o-popover .o-autocomplete-value").click();
+    await contains(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='bar'] button"
+    ).click();
     await contains(".pivot-defer-update .o-checkbox").click();
     const definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
     expect(definition.columns).toEqual([{ fieldName: "bar", order: "asc" }]);
@@ -332,11 +335,59 @@ test("add row dimension", async function () {
     });
     await openSidePanel(model, env, pivotId);
     await contains(".add-dimension.o-button:eq(1)").click();
-    await contains(".o-popover .o-autocomplete-value").click();
+    await contains(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='bar'] button"
+    ).click();
     await contains(".pivot-defer-update .o-checkbox").click();
     const definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
     expect(definition.columns).toEqual([]);
     expect(definition.rows).toEqual([{ fieldName: "bar", order: "asc" }]);
+});
+
+test("add column dimension on a related model", async function () {
+    const { model, env, pivotId } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+            <pivot>
+                <field name="probability" type="measure"/>
+            </pivot>
+        `,
+    });
+    await openSidePanel(model, env, pivotId);
+    await contains(".add-dimension.o-button").click();
+    await contains(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='product_id'] .o_model_field_selector_popover_item_relation"
+    ).click();
+    await contains(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='active'] button"
+    ).click();
+    await contains(".pivot-defer-update .o-checkbox").click();
+    const definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
+    expect(definition.columns).toEqual([{ fieldName: "product_id.active", order: "asc" }]);
+    expect(definition.rows).toEqual([]);
+    expect(".pivot-dimension:first .o-fw-bold").toHaveText("Product > Active");
+});
+
+test("add row dimension on a related model", async function () {
+    const { model, env, pivotId } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+            <pivot>
+                <field name="probability" type="measure"/>
+            </pivot>
+        `,
+    });
+    await openSidePanel(model, env, pivotId);
+    await contains(".add-dimension.o-button:eq(1)").click();
+    await contains(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='product_id'] .o_model_field_selector_popover_item_relation"
+    ).click();
+    await contains(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='active'] button"
+    ).click();
+    await contains(".pivot-defer-update .o-checkbox").click();
+    const definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
+    expect(definition.columns).toEqual([]);
+    expect(definition.rows).toEqual([{ fieldName: "product_id.active", order: "asc" }]);
+    expect(".pivot-dimension:first .o-fw-bold").toHaveText("Product > Active");
 });
 
 test("select dimensions with arrow keys", async function () {
@@ -350,21 +401,30 @@ test("select dimensions with arrow keys", async function () {
     const fixture = getFixture();
     await openSidePanel(model, env, pivotId);
     await contains(".add-dimension.o-button").click();
-    let options = [...fixture.querySelectorAll(".o-popover .o-autocomplete-dropdown > div")];
-    expect(options.every((el) => !el.className.includes("o-autocomplete-value-focus"))).toBe(true);
-    await contains(".o-popover input").press("ArrowDown");
-    options = [...fixture.querySelectorAll(".o-popover .o-autocomplete-dropdown > div")];
-    expect(options[0].className.includes("o-autocomplete-value-focus")).toBe(true);
-    expect(options[1].className.includes("o-autocomplete-value-focus")).toBe(false);
-    await contains(".o-popover input").press("ArrowDown");
-    options = [...fixture.querySelectorAll(".o-popover .o-autocomplete-dropdown > div")];
-    expect(options[0].className.includes("o-autocomplete-value-focus")).toBe(false);
-    expect(options[1].className.includes("o-autocomplete-value-focus")).toBe(true);
-    await contains(".o-popover input").press("ArrowUp");
-    options = [...fixture.querySelectorAll(".o-popover .o-autocomplete-dropdown > div")];
-    expect(options[0].className.includes("o-autocomplete-value-focus")).toBe(true);
-    expect(options[1].className.includes("o-autocomplete-value-focus")).toBe(false);
-    await contains(".o-popover input").press("Enter");
+    let options = [
+        ...fixture.querySelectorAll(
+            ".o_popover_field_selector .o_model_field_selector_popover_item"
+        ),
+    ];
+    expect(options[0].className.includes("active")).toBe(true);
+    expect(options[1].className.includes("active")).toBe(false);
+    await contains(".o_model_field_selector_popover_search input").press("ArrowDown");
+    options = [
+        ...fixture.querySelectorAll(
+            ".o_popover_field_selector .o_model_field_selector_popover_item"
+        ),
+    ];
+    expect(options[0].className.includes("active")).toBe(false);
+    expect(options[1].className.includes("active")).toBe(true);
+    await contains(".o_model_field_selector_popover_search input").press("ArrowUp");
+    options = [
+        ...fixture.querySelectorAll(
+            ".o_popover_field_selector .o_model_field_selector_popover_item"
+        ),
+    ];
+    expect(options[0].className.includes("active")).toBe(true);
+    expect(options[1].className.includes("active")).toBe(false);
+    await contains(".o_model_field_selector_popover_search input").press("Enter");
     await contains(".pivot-defer-update .o-checkbox").click();
     const definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
     expect(definition.columns).toEqual([{ fieldName: "bar", order: "asc" }]);
@@ -375,36 +435,19 @@ test("escape key closes the autocomplete popover", async function () {
     const { model, env, pivotId } = await createSpreadsheetWithPivot();
     await openSidePanel(model, env, pivotId);
     await contains(".add-dimension.o-button").click();
-    expect(".o-popover input").toHaveCount(1);
-    await contains(".o-popover input").press("Escape");
-    expect(".o-popover input").toHaveCount(0);
+    expect(".o_model_field_selector_popover_search input").toHaveCount(1);
+    await contains(".o_model_field_selector_popover_search input").press("Escape");
+    expect(".o_model_field_selector_popover_search input").toHaveCount(0);
 });
 
 test("add pivot dimension input autofocus", async function () {
     const { model, env, pivotId } = await createSpreadsheetWithPivot();
     await openSidePanel(model, env, pivotId);
     await contains(".add-dimension.o-button").click();
-    expect(".o-popover input").toBeFocused();
-    await contains(".o-popover input").press("Escape");
+    expect(".o_model_field_selector_popover_search input").toBeFocused();
+    await contains(".o_model_field_selector_popover_search input").press("Escape");
     await contains(".add-dimension.o-button").click();
-    expect(".o-popover input").toBeFocused();
-});
-
-test("clicking the add button toggles the fields popover", async function () {
-    const { model, env, pivotId } = await createSpreadsheetWithPivot({
-        arch: /*xml*/ `
-            <pivot>
-                <field name="probability" type="measure"/>
-            </pivot>
-        `,
-    });
-    await openSidePanel(model, env, pivotId);
-    const fixture = getFixture();
-    const addButton = fixture.querySelectorAll(".add-dimension.o-button")[1];
-    await contains(addButton).click();
-    expect(".o-popover").toHaveCount(1);
-    await contains(addButton).click();
-    expect(".o-popover").toHaveCount(0);
+    expect(".o_model_field_selector_popover_search input").toBeFocused();
 });
 
 test("add and search dimension", async function () {
@@ -435,11 +478,15 @@ test("add and search dimension", async function () {
     await openSidePanel(model, env, pivotId);
     await contains(".pivot-defer-update input").click();
     await contains(".add-dimension.o-button").click();
-    await contains(".o-popover input").edit("foo"); // does not confirm because there are more than one field
-    await contains(".o-popover input").edit("fooba");
+    await contains(".o_model_field_selector_popover_search input").edit("fooba", {
+        confirm: false,
+    });
+    await runAllTimers();
+    await animationFrame();
+    await contains(".o_model_field_selector_popover_search input").press("Enter");
     expect(model.getters.getPivotCoreDefinition(pivotId).columns).toEqual([]);
     expect(model.getters.getPivotCoreDefinition(pivotId).rows).toEqual([]);
-    await contains(".pivot-defer-update .o-button-link").click();
+    await contains(".pivot-defer-update input").click();
     expect(
         JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId))).columns
     ).toEqual([{ fieldName: "foobar", order: "asc" }]);

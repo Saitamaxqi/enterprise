@@ -1,10 +1,12 @@
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { describe, expect, test } from "@odoo/hoot";
+import { tick } from "@odoo/hoot-mock";
 import { stores } from "@odoo/o-spreadsheet";
 import { Partner } from "@spreadsheet/../tests/helpers/data";
 import { createSpreadsheetWithPivot } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { makeStoreWithModel } from "@spreadsheet/../tests/helpers/stores";
 import { fields } from "@web/../tests/web_test_helpers";
+import { updatePivot } from "@spreadsheet/../tests/helpers/commands";
 
 const { PivotSidePanelStore } = stores;
 
@@ -278,6 +280,19 @@ test("non measure fields are filtered and sorted", async () => {
     expect(store.measureFields.length).toBe(5);
     const measures = ["__count", "dummy_float", "dummy_many2one", "dummy_monetary", "probability"];
     expect(store.measureFields.map((m) => m.name)).toEqual(measures);
+});
+
+test("relational field path are not valid measures", async () => {
+    const { model, pivotId } = await createSpreadsheetWithPivot();
+    updatePivot(model, pivotId, {
+        rows: [{ fieldName: "product_id.currency_id", order: "asc" }],
+        columns: [],
+    });
+    await tick();
+    const { store } = makeStoreWithModel(model, PivotSidePanelStore, pivotId);
+    expect(store.measureFields.map((field) => field.name).includes("product_id.currency_id")).toBe(
+        false
+    );
 });
 
 test("update preserves sorting", async function () {
