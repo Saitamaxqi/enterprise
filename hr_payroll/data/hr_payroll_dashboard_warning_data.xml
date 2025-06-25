@@ -150,7 +150,7 @@ if payslips_with_negative_net:
             <field name="evaluation_code">
 employees_wo_id = self.env['hr.employee'].search([
     ('identification_id', '=', False),
-    ('company_id', 'in', self._context.get('allowed_company_ids')),
+    ('company_id', 'in', self.env.context.get('allowed_company_ids')),
 ])
 if employees_wo_id:
     warning_count = len(employees_wo_id)
@@ -165,7 +165,7 @@ if employees_wo_id:
             <field name="evaluation_code">
 employees_wo_bnk_acc = self.env['hr.employee'].search([
     ('bank_account_id', '=', False),
-    ('company_id', 'in', self._context.get('allowed_company_ids')),
+    ('company_id', 'in', self.env.context.get('allowed_company_ids')),
 ])
 if employees_wo_bnk_acc:
     warning_count = len(employees_wo_bnk_acc)
