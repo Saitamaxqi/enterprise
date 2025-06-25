@@ -157,7 +157,7 @@ export class DocumentService {
     }
 
     isFolderSharable(folder) {
-        return folder && typeof folder.id === "number" && !folder.shortcut_document_id;
+        return folder && typeof folder.id === "number";
     }
 
     async openDialogRename(documentId) {
