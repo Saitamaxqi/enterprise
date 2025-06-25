@@ -243,7 +243,7 @@ class ResPartner(models.Model):
         self.ensure_one()
         if not options:
             options = {}
-        if not options.get('join_invoices', options['followup_line'].join_invoices):
+        if not options.get('join_invoices', options.get('followup_line', self.followup_line_id).join_invoices):
             return self.env['account.move']
         invoices_to_print = self.unreconciled_aml_ids.move_id.filtered(lambda l: l.is_invoice(include_receipts=True))
         if options.get('manual_followup'):

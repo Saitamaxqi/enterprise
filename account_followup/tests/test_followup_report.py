@@ -6,6 +6,7 @@ from unittest.mock import patch
 from odoo.tests import Form, tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.addons.account_followup.tests.common import TestAccountFollowupCommon
+from odoo.tools.misc import file_open
 from odoo import Command, fields
 
 
@@ -996,3 +997,31 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
             )
             self.assertEqual(self.partner_a.total_due, 800)
             self.assertEqual(self.partner_a.total_overdue, 300)
+
+    def test_action_report_followup(self):
+        def _run_wkhtmltopdf(*args, **kwargs):
+            return file_open('base/tests/minimal.pdf', 'rb').read()
+
+        followup_line = self.env['account_followup.followup.line'].create({
+            'company_id': self.env.company.id,
+            'name': 'First Reminder',
+            'delay': 15,
+            'send_email': True,
+        })
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 500,
+                'tax_ids': [],
+            })]
+        })
+        invoice.action_post()
+
+        self.assertPartnerFollowup(self.partner_a, 'in_need_of_action', followup_line)
+
+        with patch.object(self.env.registry['ir.actions.report'], '_run_wkhtmltopdf', _run_wkhtmltopdf):
+            followup_letter = self.env['ir.actions.report'].with_context(force_report_rendering=True)._render_qweb_pdf('account_followup.report_followup_print_all', self.partner_a.id)[0]
+        self.assertTrue(followup_letter)
