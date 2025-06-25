@@ -53,7 +53,9 @@ async function iotReportActionHandler(action, options, env) {
             const actionWizard = await orm.call("ir.actions.report", "get_action_wizard", args);
             await env.services.action.doAction(actionWizard);
         } else {
+            env.services.ui.block();
             await printReport(env, args, deviceSettings.selectedDevices);
+            env.services.ui.unblock();
 
             // We close here to prevent premature closure if the device selection modal is displayed.
             env.services.action.doAction({ type: "ir.actions.act_window_close" }, { onClose });
