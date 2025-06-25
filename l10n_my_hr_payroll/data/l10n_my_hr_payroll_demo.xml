@@ -29,6 +29,7 @@
         <field name="company_id" ref="base.demo_company_my"/>
         <field name="image_1920" type="base64" file="l10n_my_hr_payroll/static/img/hr_employee_kah_yoon_ooi.jpg"/>
         <field name="sex">male</field>
+        <field name="structure_type_id" ref="l10n_my_hr_payroll.structure_type_employee_my"/>
     </record>
 
     <record id="res_partner_xiu_mei_lee" model="res.partner">

@@ -744,6 +744,7 @@
         <field name="date_version" eval="DateTime.today() + relativedelta(years=-1, month=1, day=1)"/>
         <field name="contract_date_start" eval="DateTime.today() + relativedelta(years=-1, month=1, day=1)"/>
         <field name="wage">7540</field>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="wage_on_signature">7540</field>
         <field name="ip_wage_rate">25</field>
         <field name="contract_template_id" ref="l10n_be_hr_contract_salary.contract_template_be_cdi_experienced_developer"/>

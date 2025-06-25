@@ -152,6 +152,15 @@
         <field name="study_field">Engineering</field>
         <field name="study_school">Abu Dhabi University</field>
         <field name="marital">single</field>
+        <field name="bank_account_id" ref="l10n_ae_hr_payroll.res_partner_bank_account_aisha"/>
+        <field name="job_id" ref="hr.job_developer"/>
+        <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
+        <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">20000</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="contract_date_start" eval="datetime(2020, 3, 16).date()"/>
+        <field name="date_version" eval="datetime(2020, 3, 16).date()"/>
     </record>
 
     <record id="hr_employee_saeed" model="hr.employee">
@@ -194,19 +203,6 @@
         <field name="hr_responsible_id" ref="base.user_demo"/>
         <field name="contract_date_start" eval="datetime(2022, 6, 1).date()"/>
         <field name="date_version" eval="datetime(2022, 6, 1).date()"/>
-    </record>
-
-    <record id="hr_employee_aisha" model="hr.employee">
-        <field name="bank_account_id" ref="l10n_ae_hr_payroll.res_partner_bank_account_aisha"/>
-        <field name="job_id" ref="hr.job_developer"/>
-        <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
-        <field name="company_id" ref="base.demo_company_ae"/>
-        <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
-        <field name="wage_type">monthly</field>
-        <field name="wage">20000</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="contract_date_start" eval="datetime(2020, 3, 16).date()"/>
-        <field name="date_version" eval="datetime(2020, 3, 16).date()"/>
     </record>
 
     <function model="hr.version" name="generate_work_entries">

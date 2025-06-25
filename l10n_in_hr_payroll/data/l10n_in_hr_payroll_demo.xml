@@ -236,7 +236,7 @@
             <field name="l10n_in_uan">387438790384</field>
             <field name="l10n_in_esic_number">93487475300284657</field>
             <field name="l10n_in_pan">KUPYH9876I</field>
-            <field name="structure_type_id" ref="hr.structure_type_worker"/>
+            <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_worker"/>
             <field name="wage_type">hourly</field>
             <field name="hourly_wage">250</field>
             <field name="wage" eval="15000"/>

@@ -50,6 +50,7 @@
         <field name="image_1920" type="base64" file="hr_contract_salary/static/img/hr_employee_max_durand.jpg"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sex">male</field>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <record id="res_partner_laurie_poiret" model="res.partner">
@@ -192,6 +193,7 @@
         <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_be').id)], limit=1)"/>
         <field name="rd_percentage">100</field>
+        <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
     </record>
 
     <function name="create_version" model="hr.employee">
