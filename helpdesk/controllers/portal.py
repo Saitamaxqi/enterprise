@@ -184,7 +184,7 @@ class CustomerPortal(portal.CustomerPortal):
         if not ticket_sudo.team_id.allow_portal_ticket_closing:
             raise UserError(_("The team does not allow ticket closing through portal"))
 
-        if not ticket_sudo.closed_by_partner:
+        if not ticket_sudo.closed_by_partner and request.httprequest.method == 'GET':
             closing_stage = ticket_sudo.team_id._get_closing_stage()
             if ticket_sudo.stage_id != closing_stage:
                 ticket_sudo.write({'stage_id': closing_stage[0].id, 'closed_by_partner': True})
