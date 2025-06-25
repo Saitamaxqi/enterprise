@@ -31,8 +31,25 @@
     *:focus {
         outline: none;
     }
-    .o_data_row[focused] td {
-        background-color: #e3e3e3 !important;
+    .o_data_row {
+        &[focused] td {
+          background-color: #e3e3e3 !important;
+        }
+        .o_documents_list_actions {
+            display: none;
+        }
+        &:hover .o_documents_list_actions {
+            display: flex;
+            justify-content: flex-end;
+
+            i {
+                opacity: 0.3;
+                &:hover {
+                    cursor: pointer;
+                    opacity: 1;
+                }
+            }
+        }
     }
 }
 
