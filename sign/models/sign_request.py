@@ -84,7 +84,7 @@ class SignRequest(models.Model):
     @api.depends('template_id')
     def _compute_template_document_ids(self):
         for sign_request in self:
-            sign_request.template_document_ids = sign_request.template_id.document_ids
+            sign_request.template_document_ids = sign_request.template_id.sudo().document_ids
 
     @api.constrains('reminder_enabled', 'reminder')
     def _check_reminder(self):

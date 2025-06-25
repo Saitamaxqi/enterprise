@@ -113,4 +113,8 @@ test("show completed documents download dropdown when state is signed", async ()
             message: "should have correct download URL for a single document",
         }
     );
+
+    expect(".o_sign_download_certificate_dropdown_item").toHaveAttribute("href", "/sign/download/5/abc/log", {
+        message: "should have correct download URL for a certificate",
+    });
 });

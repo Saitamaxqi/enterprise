@@ -18,8 +18,12 @@
                             <t t-esc="doc.name"/>
                         </DropdownItem>
                     </t>
+                    <div role="separator" class="dropdown-divider"/>
+                    <DropdownItem class="'o_sign_download_certificate_dropdown_item'" attrs="{href: `/sign/download/${signInfo.get('documentId')}/${signInfo.get('signRequestToken')}/log`}">
+                        Certificate
+                    </DropdownItem>
                 </t>
-                <t t-if="signInfo.get('needToSign')">
+                <t t-else="">
                     <t t-if="(signInfo.get('original_documents')||[]).length > 1">
                         <DropdownItem class="'o_sign_download_all_original_documents_dropdown_item'" attrs="{href: `/sign/download/${signInfo.get('documentId')}/${signInfo.get('signRequestToken')}/origin`}">
                             All Documents (zip)

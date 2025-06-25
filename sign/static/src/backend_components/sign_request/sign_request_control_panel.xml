@@ -5,7 +5,7 @@
             <t t-set-slot="control-panel-always-buttons">
                 <button t-if="signInfo.get('needToSign')" type="button" class="btn btn-primary me-2 o_sign_sign_directly" t-on-click="signDocument">Sign Now</button>
                 <button t-if="nextTemplate &amp;&amp; nextTemplate.template" type="button" class="btn btn-primary me-2" t-on-click="goToNextDocument">Next Document</button>
-                <SignRequestDocumentsDropdown t-if="signInfo.get('signRequestState') == 'signed' || signInfo.get('needToSign')"/>
+                <SignRequestDocumentsDropdown t-if="shouldShowDownloadDropdown"/>
             </t>
             <t t-if="allowCancel" t-set-slot="control-panel-additional-actions">
                 <Dropdown>

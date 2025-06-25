@@ -8,6 +8,10 @@ import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 
+/**
+ * This Component serves as both a widget in sign_request form view (data fetch needed)
+ * and as a normal component in the control panel (uses existing data from signInfo).
+ */
 export class SignRequestDocumentsDropdown extends Component {
     static template = "sign.SignRequestDocumentsDropdown";
     static components = {
@@ -24,56 +28,67 @@ export class SignRequestDocumentsDropdown extends Component {
         super.setup();
         this.signInfo = useService("signInfo");
         this.orm = useService("orm");
-
         onWillStart(async () => {
-            if (this.props.id) {
+            // Check if we're in a view context where we need to fetch sign request data
+            if (this.props.record?.context?.active_id) {
+                // if active_id is present, we're in the form view context where we need to fetch sign request data
+                // because signInfo service is not initialized with the required data
                 await this.fetchSignRequestData();
             }
+            // Fetch the actual documents (original or completed)
             await this.fetchSignRequestDocuments();
         });
     }
 
+    /**
+     * Fetch sign request data from the database
+     * In the form view context, the signInfo service doesn't have the required data (documentId,
+     * access_token, state) so we need to fetch it from the record context.
+     */
     async fetchSignRequestData() {
-        const completedDocuments = this.props.record.data.completed_document_ids;
-        if (completedDocuments && completedDocuments.records) {
-            const documentId = completedDocuments.records.length > 0 ? completedDocuments.records[0].resId : null;
-            if (documentId) {
-                const completedDocData = await this.orm.read(
-                    'sign.completed.document',
-                    [documentId],
-                    ['sign_request_id']
-                );
-                const signRequestId = completedDocData[0].sign_request_id[0];
-                if (signRequestId) {
-                    const signRequestData = await this.orm.read(
-                        'sign.request',
-                        [signRequestId],
-                        ['access_token', 'state']
-                    );
-                    if (signRequestData) {
-                        this.signInfo.set({
-                            documentId: signRequestId,
-                            signRequestToken: signRequestData[0].access_token,
-                            signRequestState: signRequestData[0].state,
-                        });
-                    }
-                }
+        const signRequestId = this.props.record.context.active_id;
+        if (signRequestId) {
+            const signRequestData = await this.orm.read(
+                'sign.request',
+                [signRequestId],
+                ['access_token', 'state']
+            );
+            if (signRequestData) {
+                // Initialize signInfo with the fetched data
+                this.signInfo.set({
+                    documentId: signRequestId,
+                    signRequestToken: signRequestData[0].access_token,
+                    signRequestState: signRequestData[0].state,
+                });
             }
         }
     }
 
+    /**
+     * Fetch sign request documents (original or completed)
+     */
     async fetchSignRequestDocuments() {
-        const { original_documents } = await rpc(
-            `/sign/get_original_documents/${this.signInfo.get('documentId')}/${this.signInfo.get('signRequestToken')}`
-        );
-        this.signInfo.set({ original_documents });
-        if (this.signInfo.get('signRequestState') === 'signed') {
-            const {completed_documents} = await rpc(
-                `/sign/get_completed_documents/${this.signInfo.get('documentId')}/${this.signInfo.get('signRequestToken')}`
+        const signRequestState = this.signInfo?.get('signRequestState');
+        const documentId = this.signInfo?.get('documentId');
+        const signRequestToken = this.signInfo?.get('signRequestToken');
+
+        if (!signRequestState || !documentId || !signRequestToken) return;
+
+        if (signRequestState === 'signed') {
+            // Fetch completed (signed) documents
+            const { completed_documents } = await rpc(
+                `/sign/get_completed_documents/${documentId}/${signRequestToken}`
             );
             this.signInfo.set({ completed_documents });
+        } else {
+            // Fetch original (unsigned) documents
+            const { original_documents } = await rpc(
+                `/sign/get_original_documents/${documentId}/${signRequestToken}`
+            );
+            this.signInfo.set({ original_documents });
         }
     }
 }
 
+// Register this component as a field widget to use in the sign_request form view
 registry.category("fields").add("sign_request_documents_dropdown", {component: SignRequestDocumentsDropdown});
