@@ -178,7 +178,7 @@ beforeEach(() => {
 // Those tests rely on hidden view to be in CSS: display: none
 describe("basic flow with home menu", () => {
     stepAllNetworkCalls();
-    onRpc("/web/dataset/call_kw/partner/get_formview_action", () => ({
+    onRpc("partner", "get_formview_action", () => ({
         type: "ir.actions.act_window",
         res_model: "partner",
         view_type: "form",
@@ -255,7 +255,7 @@ describe("basic flow with home menu", () => {
         await contains('.o_field_widget[name="parent_id"] .o_external_button', {
             visible: false,
         }).click();
-        expect.verifySteps(["get_views", "web_read"]);
+        expect.verifySteps(["get_formview_action", "get_views", "web_read"]);
         expect(".o_form_view").toHaveCount(1);
         expect(".o_breadcrumb .active").toHaveText("Second record");
         // The third one is the active one
@@ -280,7 +280,7 @@ describe("basic flow with home menu", () => {
         await contains('.o_field_widget[name="parent_id"] .o_external_button', {
             visible: false,
         }).click();
-        expect.verifySteps(["get_views", "web_read"]);
+        expect.verifySteps(["get_formview_action", "get_views", "web_read"]);
         await goToHomeMenu();
         expect.verifySteps([]);
         expect(".o_menu_toggle").toHaveClass("o_menu_toggle_back");
@@ -307,7 +307,7 @@ describe("basic flow with home menu", () => {
         await contains('.o_field_widget[name="parent_id"] .o_external_button', {
             visible: false,
         }).click();
-        expect.verifySteps(["get_views", "web_read"]);
+        expect.verifySteps(["get_formview_action", "get_views", "web_read"]);
         await contains(".o_menu_toggle").click();
 
         // can't click again too soon because of the mutex in home_menu

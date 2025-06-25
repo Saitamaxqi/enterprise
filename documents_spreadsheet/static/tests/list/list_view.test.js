@@ -1097,12 +1097,11 @@ test("List cells are highlighted when hovering the list menu item", async functi
 test("Inserting a grouped list ignore groups", async function () {
     const serverData = getBasicServerData();
     Partner._fields.foo.sortable = true;
-    onRpc("partner", "web_read_group", async ({ kwargs, parent }) => {
+    onRpc("partner", "web_read_group", ({ kwargs }) => {
         if (kwargs.groupby) {
             // The mock server cannot handle orderby count
             kwargs.order = "";
         }
-        return parent();
     });
     const { model } = await createSpreadsheetFromListView({
         actions: async (fixture) => {

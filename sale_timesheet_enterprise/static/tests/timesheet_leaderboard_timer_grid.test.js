@@ -12,11 +12,11 @@ let rankingData;
 defineTimesheetModels();
 
 async function initAndOpenView(showIndicator = true, showLeaderboard = true) {
-    onRpc("get_timesheet_ranking_data", async (request) => {
+    onRpc("get_timesheet_ranking_data", ({ args }) => {
         if (!showIndicator) {
             return {};
         }
-        const leaderboardData = rankingData[request.args[0]];
+        const leaderboardData = rankingData[args[0]];
         leaderboardData.show_leaderboard = showLeaderboard;
         if (!showLeaderboard) {
             leaderboardData.leaderboard = [
@@ -25,11 +25,11 @@ async function initAndOpenView(showIndicator = true, showLeaderboard = true) {
         }
         return leaderboardData;
     });
-    onRpc("read", async (request) => {
+    onRpc("read", ({ args }) => {
         if (
-            request.args[1].length === 2 &&
-            request.args[1][0] === "timesheet_show_rates" &&
-            request.args[1][1] === "timesheet_show_leaderboard"
+            args[1].length === 2 &&
+            args[1][0] === "timesheet_show_rates" &&
+            args[1][1] === "timesheet_show_leaderboard"
         ) {
             return [
                 {

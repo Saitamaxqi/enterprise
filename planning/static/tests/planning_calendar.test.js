@@ -109,8 +109,8 @@ test("planning calendar view: copy previous week", async () => {
         expect.step("copy_previous_week()");
         return {};
     });
-    onRpc("auto_plan_ids", async function () {
-        await this.env["planning.slot"].write([2], { resource_id: 1 });
+    onRpc("auto_plan_ids", function () {
+        this.env["planning.slot"].write([2], { resource_id: 1 });
         return { open_shift_assigned: [2] };
     });
     await mountWithCleanup(WebClient);

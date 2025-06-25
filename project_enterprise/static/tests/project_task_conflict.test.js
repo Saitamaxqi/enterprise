@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, edit, press, queryAll } from "@odoo/hoot-dom";
+import { click, edit, press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 import { contains, mailModels } from "@mail/../tests/mail_test_helpers";
@@ -67,16 +67,12 @@ beforeEach(() => {
 });
 
 test("Unassigned tasks will show when search for assignee", async () => {
-    onRpc("project.task", "get_gantt_data", async (args) => {
-        if (args.method === "get_gantt_data") {
-            const domain = (args.kwargs.domain || []).map((d) => {
-                if (d instanceof Array && d.length === 3 && d[0] === "user_ids.name") {
-                    return ["user_ids", "=", 1];
-                }
-                return d;
-            });
-            args.kwargs.domain = domain;
-        }
+    onRpc("project.task", "get_gantt_data", ({ kwargs }) => {
+        kwargs.domain = (kwargs.domain || []).map((d) =>
+            Array.isArray(d) && d.length === 3 && d[0] === "user_ids.name"
+                ? ["user_ids", "=", 1]
+                : d
+        );
     });
 
     await mountGanttView({
@@ -215,8 +211,8 @@ test("Tasks in conflicting are highlighted, while non-conflicting tasks are in m
 
     await contains(".o_gantt_pill", { count: 5 });
     await contains(".o_gantt_pill[class*='opacity-25']", { count: 3 });
-    expect(queryAll(".o_gantt_pill.opacity-25")).toHaveText(/Task (5|3|4)/i);
-    expect(queryAll(".o_gantt_pill:not(.opacity-25)")).toHaveText(/Task (1|2)/i);
+    expect(".o_gantt_pill.opacity-25").toHaveText(/Task (5|3|4)/i);
+    expect(".o_gantt_pill:not(.opacity-25)").toHaveText(/Task (1|2)/i);
     removeFacet("Tasks in Conflict");
     await contains(".o_gantt_pill", { count: 5 });
     await contains(".o_gantt_pill[class*='opacity-25']", { count: 0 });

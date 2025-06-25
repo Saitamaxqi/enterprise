@@ -84,16 +84,14 @@ test("Pivot sidebar should display display name measures", async () => {
         },
     });
 
-    onRpc("ir.model.fields", "web_search_read", async () => {
-        return {
-            records: [
-                {
-                    id: 1234,
-                    display_name: "Age",
-                },
-            ],
-        };
-    });
+    onRpc("ir.model.fields", "web_search_read", () => ({
+        records: [
+            {
+                id: 1234,
+                display_name: "Age",
+            },
+        ],
+    }));
 
     await mountViewEditor({
         type: "pivot",
@@ -111,9 +109,7 @@ test("folds/unfolds the existing fields into sidebar", async () => {
                 <field name='display_name'/>
             </group>
         </form>`;
-    onRpc("/web_studio/edit_view", () => {
-        return createMockViewResult("form", arch, Partner);
-    });
+    onRpc("/web_studio/edit_view", () => createMockViewResult("form", arch, Partner));
 
     await mountViewEditor({
         type: "form",

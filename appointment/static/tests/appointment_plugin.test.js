@@ -43,9 +43,6 @@ beforeEach(() => {
             return super.onEditorLoad(...arguments);
         },
     });
-});
-
-beforeEach(() => {
     mockService("dialog", {
         add(dialogClass, props) {
             return props.insertLink(linkUrl);

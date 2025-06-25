@@ -338,8 +338,8 @@ test("add one2many field", async () => {
             </group></form>`,
     });
 
-    onRpc("ir.model.fields", "name_search", async (params) => {
-        expect(params.kwargs.domain).toEqual([
+    onRpc("ir.model.fields", "name_search", ({ kwargs }) => {
+        expect(kwargs.domain).toEqual([
             "&",
             "&",
             "&",
@@ -358,9 +358,9 @@ test("add one2many field", async () => {
         ];
     });
 
-    onRpc("ir.model.fields", "search_count", async (params) => {
+    onRpc("ir.model.fields", "search_count", ({ args }) => {
         expect.step("search_count ir.model.fields");
-        expect(params.args).toEqual([
+        expect(args).toEqual([
             [
                 ["relation", "=", "partner"],
                 ["ttype", "=", "many2one"],
@@ -390,8 +390,8 @@ test("add one2many field", async () => {
 });
 
 test("add a one2many field without many2one", async () => {
-    onRpc("ir.model.fields", "search_count", async (params) => {
-        expect(params.args).toEqual([
+    onRpc("ir.model.fields", "search_count", ({ args }) => {
+        expect(args).toEqual([
             [
                 ["relation", "=", "partner"],
                 ["ttype", "=", "many2one"],

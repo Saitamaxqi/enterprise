@@ -1002,11 +1002,11 @@ test("edit one2many form view (2 level) and check chatter allowed", async () => 
         },
     ]);
     handleDefaultStudioRoutes();
-    onRpc("/web/dataset/call_kw/ir.model/studio_model_infos", () => ({
+    onRpc("ir.model", "studio_model_infos", () => ({
         is_mail_thread: true,
         record_ids: [],
     }));
-    onRpc("name_search", async ({ kwargs }) => {
+    onRpc("name_search", ({ kwargs }) => {
         expect(kwargs.domain).toEqual(
             [
                 ["relation", "=", "partner"],

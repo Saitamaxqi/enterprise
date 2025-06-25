@@ -6,8 +6,8 @@ import { defineModels, getService, onRpc } from "@web/../tests/web_test_helpers"
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { addColumns, deleteColumns, setCellContent } from "@spreadsheet/../tests/helpers/commands";
 
-import { mountQualitySpreadsheetAction } from "./helpers/webclient_helpers";
 import { defineQualitySpreadsheetModels } from "./helpers/data";
+import { mountQualitySpreadsheetAction } from "./helpers/webclient_helpers";
 
 defineQualitySpreadsheetModels();
 defineModels(mailModels);
@@ -15,43 +15,44 @@ defineModels(mailModels);
 describe("quality check spreadsheet action", () => {
     test("fail with an empty cell", async () => {
         const checkId = 1;
-        onRpc("/web/dataset/call_kw/quality.check/do_fail", async function (request, args) {
-            const { params } = await request.json();
-            expect(params.args).toEqual([checkId]);
-            expect.step("do_fail");
+        onRpc("quality.check", "do_fail", ({ args, method }) => {
+            expect(args).toEqual([checkId]);
+            expect.step(method);
             return true;
         });
         await mountQualitySpreadsheetAction({ check_id: checkId });
         await click("button:contains(Save in The check name)");
         await animationFrame();
-        expect.verifySteps(["do_fail"])
+        expect.verifySteps(["do_fail"]);
     });
 
     test("pass with a truthy cell", async () => {
         const checkId = 1;
-        onRpc("/web/dataset/call_kw/quality.check/do_pass", async function (request, args) {
-            const { params } = await request.json();
-            expect(params.args).toEqual([checkId]);
-            expect.step("do_pass");
+        onRpc("quality.check", "do_pass", ({ args, method }) => {
+            expect(args).toEqual([checkId]);
+            expect.step(method);
             return true;
         });
         const { model } = await mountQualitySpreadsheetAction({ check_id: checkId });
         setCellContent(model, "A1", "1");
         await click("button:contains(Save in The check name)");
         await animationFrame();
-        expect.verifySteps(["do_pass"])
+        expect.verifySteps(["do_pass"]);
     });
 
     test("pass wizard with a truthy cell, do next action", async () => {
         const qualityCheckWizardId = 1;
         const nextCheckSpreadsheetId = 1111;
-        onRpc(`/spreadsheet/data/quality.check.spreadsheet/${nextCheckSpreadsheetId}`, async function (request, args) {
-            expect.step("join next check")
-        }, { pure: true });
-        onRpc("/web/dataset/call_kw/quality.check.wizard/do_pass", async function (request, args) {
-            const { params } = await request.json();
+        onRpc(
+            `/spreadsheet/data/quality.check.spreadsheet/${nextCheckSpreadsheetId}`,
+            () => {
+                expect.step("join next check");
+            },
+            { pure: true }
+        );
+        onRpc("quality.check.wizard", "do_pass", (params) => {
             expect(params.args).toEqual([qualityCheckWizardId]);
-            expect.step("do_pass");
+            expect.step(params.method);
             // return the next action
             return {
                 type: "ir.actions.client",
@@ -63,34 +64,32 @@ describe("quality check spreadsheet action", () => {
             };
         });
         const { model } = await mountQualitySpreadsheetAction({
-            quality_check_wizard_id: qualityCheckWizardId
+            quality_check_wizard_id: qualityCheckWizardId,
         });
         setCellContent(model, "A1", "1");
         await click("button:contains(Save in The check name)");
         await animationFrame();
-        expect.verifySteps(["do_pass", "join next check"])
+        expect.verifySteps(["do_pass", "join next check"]);
     });
 
     test("result cell is moved when adding column", async () => {
         const checkId = 1;
-        onRpc("/web/dataset/call_kw/quality.check/do_pass", async function (request, args) {
-            const { params } = await request.json();
-            expect(params.args).toEqual([checkId]);
-            expect.step("do_pass");
+        onRpc("quality.check", "do_pass", ({ args, method }) => {
+            expect(args).toEqual([checkId]);
+            expect.step(method);
             return true;
         });
-        onRpc("/web/dataset/call_kw/quality.check.spreadsheet/write", async function (request, args) {
-            const { params } = await request.json();
-            expect(params.args[1].check_cell).toBe("B1");
+        onRpc("quality.check.spreadsheet", "write", ({ args }) => {
+            expect(args[1].check_cell).toBe("B1");
             expect.step("write");
             return true;
         });
         const { model } = await mountQualitySpreadsheetAction({ check_id: checkId });
         setCellContent(model, "A1", "1");
-        addColumns(model, "before", "A", 1)
+        addColumns(model, "before", "A", 1);
         await click("button:contains(Save in The check name)");
         await animationFrame();
-        expect.verifySteps(["do_pass"])
+        expect.verifySteps(["do_pass"]);
         // leave the spreadsheet by going to another
         getService("action").doAction({
             type: "ir.actions.client",
@@ -98,28 +97,27 @@ describe("quality check spreadsheet action", () => {
             params: {
                 spreadsheet_id: 1111,
             },
-        })
+        });
         await animationFrame();
-        expect.verifySteps(["write"])
+        expect.verifySteps(["write"]);
     });
 
     test("result cell can be removed", async () => {
         const checkId = 1;
-        onRpc("/web/dataset/call_kw/quality.check/do_pass", async function (request, args) {
-            expect.step("do_pass");
+        onRpc("quality.check", "do_pass", ({ method }) => {
+            expect.step(method);
             return true;
         });
-        onRpc("/web/dataset/call_kw/quality.check.spreadsheet/write", async function (request, args) {
-            const { params } = await request.json();
-            expect(params.args[1].check_cell).toBe("#REF");
+        onRpc("quality.check.spreadsheet", "write", ({ args }) => {
+            expect(args[1].check_cell).toBe("#REF");
             expect.step("write");
             return true;
         });
         const { model } = await mountQualitySpreadsheetAction({ check_id: checkId });
-        deleteColumns(model, ["A"])
+        deleteColumns(model, ["A"]);
         await click("button:contains(Save in The check name)");
         await animationFrame();
-        expect.verifySteps(["do_pass"])
+        expect.verifySteps(["do_pass"]);
         // leave the spreadsheet by going to another
         getService("action").doAction({
             type: "ir.actions.client",
@@ -127,52 +125,56 @@ describe("quality check spreadsheet action", () => {
             params: {
                 spreadsheet_id: 1111,
             },
-        })
+        });
         await animationFrame();
-        expect.verifySteps(["write"])
+        expect.verifySteps(["write"]);
     });
 
     test("invalid check cell is equivalent to no condition", async () => {
         const checkId = 1;
-        onRpc("/spreadsheet/data/quality.check.spreadsheet/*", async function (request, args) {
-            return {
+        onRpc(
+            "/spreadsheet/data/quality.check.spreadsheet/*",
+            () => ({
                 data: {},
                 name: "spreadsheet name",
                 revisions: [],
                 isReadonly: false,
                 quality_check_display_name: "The check name",
                 quality_check_cell: "not a valid cell reference",
-            };
-        }, { pure: true });
-        onRpc("/web/dataset/call_kw/quality.check/do_pass", async function (request, args) {
-            expect.step("do_pass");
+            }),
+            { pure: true }
+        );
+        onRpc("quality.check", "do_pass", ({ method }) => {
+            expect.step(method);
             return true;
         });
         await mountQualitySpreadsheetAction({ check_id: checkId });
         await click("button:contains(Save in The check name)");
         await animationFrame();
-        expect.verifySteps(["do_pass"])
+        expect.verifySteps(["do_pass"]);
     });
 
     test("no check cell is equivalent to no condition", async () => {
         const checkId = 1;
-        onRpc("/spreadsheet/data/quality.check.spreadsheet/*", async function (request, args) {
-            return {
+        onRpc(
+            "/spreadsheet/data/quality.check.spreadsheet/*",
+            () => ({
                 data: {},
                 name: "spreadsheet name",
                 revisions: [],
                 isReadonly: false,
                 quality_check_display_name: "The check name",
                 quality_check_cell: false, // False = no value in the py orm
-            };
-        }, { pure: true });
-        onRpc("/web/dataset/call_kw/quality.check/do_pass", async function (request, args) {
-            expect.step("do_pass");
+            }),
+            { pure: true }
+        );
+        onRpc("quality.check", "do_pass", ({ method }) => {
+            expect.step(method);
             return true;
         });
         await mountQualitySpreadsheetAction({ check_id: checkId });
         await click("button:contains(Save in The check name)");
         await animationFrame();
-        expect.verifySteps(["do_pass"])
+        expect.verifySteps(["do_pass"]);
     });
 });

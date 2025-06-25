@@ -38,8 +38,7 @@ const openPreparedView = async (size) => {
         }
         asyncStep(`${route} - ${JSON.stringify(args)}`);
     });
-    onRpc(({ method, model, args, kwargs }) => {
-        const route = `/web/dataset/call_kw/${model}/${method}`;
+    onRpc(({ kwargs, route }) => {
         if (ROUTES_TO_IGNORE.includes(route)) {
             return;
         }

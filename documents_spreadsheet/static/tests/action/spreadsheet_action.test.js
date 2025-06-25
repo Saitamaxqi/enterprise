@@ -338,7 +338,7 @@ test("menu > copy", async function () {
             if (method === "copy") {
                 expect.step("copy");
                 expect(args[0]).toEqual([2]);
-                expect("default" in kwargs).toBe(true);
+                expect(kwargs).toInclude("default");
             }
         },
     });

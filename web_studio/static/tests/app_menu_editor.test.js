@@ -102,7 +102,7 @@ test("edit menu dialog: create menu", async () => {
 test("drag/drop to reorganize menus", async () => {
     expect.assertions(3);
 
-    onRpc("ir.ui.menu", "customize", async ({ kwargs }) => {
+    onRpc("ir.ui.menu", "customize", ({ kwargs }) => {
         expect(kwargs.to_delete).toEqual([]);
         expect(kwargs.to_move).toEqual({
             11: {

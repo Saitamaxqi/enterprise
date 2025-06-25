@@ -1,17 +1,11 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { dragoverFiles, dropFiles } from "@web/../tests/utils";
-import {
-    asyncStep,
-    mountView,
-    onRpc,
-    waitForSteps,
-    MockServer,
-} from "@web/../tests/web_test_helpers";
+import { mountView, onRpc } from "@web/../tests/web_test_helpers";
 import { defineSignModels, signModels } from "./mock_server/mock_models/sign_model";
 
 const { IrAttachment, SignDocument, SignTemplate } = signModels;
 
-beforeEach(async () => {
+beforeEach(() => {
     IrAttachment._records = [
         {
             id: 1,
@@ -53,28 +47,24 @@ test("Drop to upload file in kanban", async () => {
     fileInput.files = dataTransfer.files;
     await dragoverFiles(".o_content", dataTransfer.files);
     await dropFiles(".o_dropzone", dataTransfer.files);
-    onRpc("/web/dataset/call_kw/sign.template/create_from_attachment_data", async (request) => {
-        asyncStep("attachment create");
-        const values = await request.json();
-        if (values.params.method === "create_from_attachment_data") {
-            expect(values.params.model).toBe("sign.template");
-            expect(values.params.args.length).toBe(2);
-            const currentEnv = MockServer.current.env;
-            const attachmentID = currentEnv["ir.attachment"].create({
-                name: values.params.args[0][0].name,
-                res_model: values.params.model,
-                datas: values.params.args[0][0].datas,
-            });
-            const signTemplateID = currentEnv[values.params.model].create({
-                active: true,
-            });
-            currentEnv["sign.document"].create({
-                template_id: signTemplateID,
-                attachment_id: attachmentID,
-            });
-            return [signTemplateID];
-        }
+    onRpc("sign.template", "create_from_attachment_data", function ({ args, model }) {
+        expect.step("attachment create");
+        expect(model).toBe("sign.template");
+        expect(args).toHaveLength(2);
+        const attachmentID = this.env["ir.attachment"].create({
+            name: args[0][0].name,
+            res_model: model,
+            datas: args[0][0].datas,
+        });
+        const signTemplateID = this.env[model].create({
+            active: true,
+        });
+        this.env["sign.document"].create({
+            template_id: signTemplateID,
+            attachment_id: attachmentID,
+        });
+        return [signTemplateID];
     });
     expect(".o_dropzone").toHaveCount(1);
-    await waitForSteps(["attachment create"]);
+    await expect.waitForSteps(["attachment create"]);
 });

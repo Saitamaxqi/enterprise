@@ -581,8 +581,8 @@ test(`Today style with unavailabilities ("week": "day:half")`, async () => {
         },
     ];
 
-    onRpc("get_gantt_data", async ({ parent }) => {
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent }) => {
+        const result = parent();
         result.unavailabilities.__default = { false: unavailabilities };
         return result;
     });
@@ -619,9 +619,9 @@ test("Today style of group rows", async () => {
     ];
     Tasks._records = [Tasks._records[3]]; // id: 4
 
-    onRpc("get_gantt_data", async ({ parent }) => {
+    onRpc("get_gantt_data", ({ parent }) => {
         expect.step("get_gantt_data");
-        const result = await parent();
+        const result = parent();
         result.unavailabilities.project_id = { 1: unavailabilities };
         return result;
     });
@@ -1508,9 +1508,9 @@ test("consolidation and unavailabilities", async () => {
             stop: "2018-12-20 14:00:00",
         },
     ];
-    onRpc("get_gantt_data", async ({ parent, kwargs }) => {
+    onRpc("get_gantt_data", ({ parent, kwargs }) => {
         expect.step("get_gantt_data");
-        const result = await parent();
+        const result = parent();
         expect(kwargs.unavailability_fields).toEqual(["user_id"]);
         result.unavailabilities.user_id = { 1: unavailabilities };
         return result;

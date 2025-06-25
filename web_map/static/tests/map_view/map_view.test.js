@@ -529,10 +529,7 @@ describe("map_view_desktop", () => {
         Task._records = TEST_RECORDS.task.oneRecord;
         Partner._records = TEST_RECORDS.partner.noCoordinatesGoodAddress;
 
-        onRpc("/web/dataset/call_kw/res.partner/update_latitude_longitude", async (request) => {
-            const {
-                params: { args },
-            } = await request.json();
+        onRpc("res.partner", "update_latitude_longitude", ({ args }) => {
             expect(args[0]).toHaveLength(1, {
                 message: "There should be one record needing caching",
             });
@@ -567,10 +564,7 @@ describe("map_view_desktop", () => {
 
         Task._records = TEST_RECORDS.task.oneRecord;
         Partner._records = TEST_RECORDS.partner.noCoordinatesGoodAddress;
-        onRpc("/web/dataset/call_kw/res.partner/update_latitude_longitude", async (request) => {
-            const {
-                params: { args },
-            } = await request.json();
+        onRpc("res.partner", "update_latitude_longitude", ({ args }) => {
             expect(args[0]).toHaveLength(1, {
                 message: "There should be one record needing caching",
             });
@@ -738,10 +732,7 @@ describe("map_view_desktop", () => {
 
         Task._records = TEST_RECORDS.task.twoRecords;
         Partner._records = TEST_RECORDS.partner.twoRecordsAddressNoCoordinates;
-        onRpc("/web/dataset/call_kw/res.partner/update_latitude_longitude", async (request) => {
-            const {
-                params: { args },
-            } = await request.json();
+        onRpc("res.partner", "update_latitude_longitude", ({ args }) => {
             expect(args[0]).toHaveLength(2, {
                 message: "Should have 2 record needing caching",
             });
@@ -1221,7 +1212,7 @@ describe("map_view_desktop", () => {
             },
         });
 
-        onRpc("web_resequence", async ({ model, args, kwargs }) => {
+        onRpc("web_resequence", ({ model, args, kwargs }) => {
             const [ids] = args;
             const { field_name: fieldName, offset } = kwargs;
             expect.step(`resequence ${model} ${fieldName} ${offset} ${ids}`);

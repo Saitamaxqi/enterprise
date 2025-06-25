@@ -2572,8 +2572,8 @@ test("unavailabilities fetched with right parameters", async () => {
 });
 
 test("progress bars fetched with the right start/stop dates", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        const result = parent();
         expect.step([kwargs.start_date, kwargs.stop_date]);
         result.progress_bars.user_id = {
             1: { value: 50, max_value: 100 },

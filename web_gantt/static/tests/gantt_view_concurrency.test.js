@@ -111,7 +111,7 @@ test("concurrent range switches return with gantt unavailabilities", async () =>
     let firstReloadProm = null;
     let reloadProm = null;
     onRpc("get_gantt_data", async ({ parent }) => {
-        const result = await parent();
+        const result = parent();
         result.unavailabilities.__default = { false: unavailabilities.shift() };
         await reloadProm;
         return result;

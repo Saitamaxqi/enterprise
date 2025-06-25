@@ -1,8 +1,8 @@
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { getHighlightsFromStore } from "@documents_spreadsheet/../tests/helpers/store_helpers";
-import { describe, expect, getFixture, test, beforeEach } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
+import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-dom";
 import { getBasicPivotArch } from "@spreadsheet/../tests/helpers/data";
 import {
     getZoneOfInsertedDataSource,

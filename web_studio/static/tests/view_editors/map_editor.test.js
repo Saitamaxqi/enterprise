@@ -144,9 +144,9 @@ test("map additional fields domain", async () => {
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 
-    onRpc("ir.model.fields", "name_search", async (params) => {
+    onRpc("ir.model.fields", "name_search", ({ kwargs }) => {
         expect.step("name_search");
-        expect(params.kwargs.domain).toEqual([
+        expect(kwargs.domain).toEqual([
             "&",
             "&",
             ["model", "=", "task"],

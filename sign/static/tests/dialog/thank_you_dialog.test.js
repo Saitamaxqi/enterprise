@@ -37,7 +37,7 @@ defineMailModels();
 beforeEach(() => {
     onRpc("/sign/sign_request_state/23/abc", () => "draft");
     onRpc("/sign/sign_request_items", () => []);
-    onRpc("/web/dataset/call_kw/sign.request/get_close_values", () => ({
+    onRpc("sign.request", "get_close_values", () => ({
         label: "Close",
         action: {
             type: "ir.actions.act_window",

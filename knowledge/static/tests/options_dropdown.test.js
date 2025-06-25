@@ -291,7 +291,7 @@ test("Open Version History", async () => {
 });
 
 test("Send Article to Trash", async () => {
-    onRpc("knowledge.article", "action_redirect_to_parent", async () => ({
+    onRpc("knowledge.article", "action_redirect_to_parent", () => ({
         action: "redirect to parent",
     }));
     mockService("action", {

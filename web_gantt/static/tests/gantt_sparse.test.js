@@ -385,9 +385,9 @@ test("empty sparse gantt with unavailabilities", async () => {
             stop: "2018-12-19 23:00:00",
         },
     ];
-    onRpc("get_gantt_data", async ({ parent, kwargs }) => {
-        expect.step("get_gantt_data");
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent, kwargs, method }) => {
+        expect.step(method);
+        const result = parent();
         expect(kwargs.unavailability_fields).toEqual([]);
         result.unavailabilities.__default = { false: unavailabilities };
         return result;
@@ -411,9 +411,9 @@ test("sparse gantt with unavailabilities", async () => {
             stop: "2018-12-19 23:00:00",
         },
     ];
-    onRpc("get_gantt_data", async ({ parent, kwargs }) => {
-        expect.step("get_gantt_data");
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent, kwargs, method }) => {
+        expect.step(method);
+        const result = parent();
         expect(kwargs.unavailability_fields).toEqual([]);
         result.unavailabilities.__default = { false: unavailabilities };
         return result;
@@ -437,9 +437,9 @@ test("sparse grouped gantt with unavailabilities", async () => {
             stop: "2018-12-19 23:00:00",
         },
     ];
-    onRpc("get_gantt_data", async ({ parent, kwargs }) => {
-        expect.step("get_gantt_data");
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent, kwargs, method }) => {
+        expect.step(method);
+        const result = parent();
         expect(kwargs.unavailability_fields).toEqual(["user_id"]);
         result.unavailabilities.user_id = { 1: unavailabilities };
         return result;
@@ -463,9 +463,9 @@ test("sparse gantt with consolidation with unavailabilities", async () => {
             stop: "2018-12-19 23:00:00",
         },
     ];
-    onRpc("get_gantt_data", async ({ parent, kwargs }) => {
-        expect.step("get_gantt_data");
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent, kwargs, method }) => {
+        expect.step(method);
+        const result = parent();
         expect(kwargs.unavailability_fields).toEqual(["user_id"]);
         result.unavailabilities.user_id = { 1: unavailabilities };
         return result;

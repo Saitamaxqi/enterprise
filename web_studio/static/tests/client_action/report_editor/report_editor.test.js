@@ -1,18 +1,18 @@
-import { expect, test, describe } from "@odoo/hoot";
+import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { describe, expect, test } from "@odoo/hoot";
+import { hover, waitFor } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
+import { Component, onWillRender, useState, xml } from "@odoo/owl";
 import {
-    mountWithCleanup,
     contains,
-    mockService,
     makeMockEnv,
+    mockService,
+    mountWithCleanup,
     onRpc,
 } from "@web/../tests/web_test_helpers";
-import { Component, onWillRender, useState, xml } from "@odoo/owl";
-import { ReportEditorModel } from "@web_studio/client_action/report_editor/report_editor_model";
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { defineStudioEnvironment } from "../../studio_tests_context";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
-import { hover, waitFor } from "@odoo/hoot-dom";
+import { ReportEditorModel } from "@web_studio/client_action/report_editor/report_editor_model";
+import { defineStudioEnvironment } from "../../studio_tests_context";
 
 describe.current.tags("desktop");
 
@@ -65,15 +65,12 @@ test("setting is in edition doesn't produce intempestive renders", async () => {
 
 test("reports tab disabled when no record", async () => {
     defineStudioEnvironment();
-    onRpc("/web/dataset/call_kw/ir.model/studio_model_infos", async (request) => {
-        const methArgs = (await request.json()).params;
-        return {
-            is_mail_thread: true,
-            record_ids: [],
-            name: "Custom Partner Model",
-            model: methArgs.args[0],
-        };
-    });
+    onRpc("ir.model", "studio_model_infos", ({ args }) => ({
+        is_mail_thread: true,
+        record_ids: [],
+        name: "Custom Partner Model",
+        model: args[0],
+    }));
     await mountWithCleanup(WebClientEnterprise);
     await contains("a.o_app[data-menu-xmlid=app_1]").click();
     await contains(".o_web_studio_navbar_item").click();

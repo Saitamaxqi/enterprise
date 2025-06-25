@@ -172,9 +172,7 @@ beforeEach(() => {
     mockDate("2017-01-30 00:00:00");
 });
 
-onRpc("grid_unavailability", () => {
-    return {};
-});
+onRpc("grid_unavailability", () => ({}));
 onRpc("has_group", () => true);
 
 describe.tags("desktop");
@@ -1243,9 +1241,7 @@ describe("grid_view_desktop", () => {
 
     test("dialog should not close when clicking the link to many2one field", async () => {
         // create an action manager to test the interactions with the search view
-        onRpc("/web/dataset/call_kw/task/get_formview_id", (route, args) => {
-            return false;
-        });
+        onRpc("task", "get_formview_id", () => false);
         await mountWithCleanup(WebClient);
         await getService("action").doAction({
             res_model: "analytic.line",

@@ -88,7 +88,7 @@ export function disableHookAnimation() {
 }
 
 export function handleDefaultStudioRoutes() {
-    onRpc("/web/dataset/call_kw/ir.model/studio_model_infos", () => ({
+    onRpc("ir.model", "studio_model_infos", () => ({
         is_mail_thread: false,
         is_mail_activity: false,
         state: "base",

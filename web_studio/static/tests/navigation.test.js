@@ -202,7 +202,7 @@ test("user context is unpolluted when entering studio in error", async () => {
         },
     });
 
-    onRpc("partner", "get_views", async ({ kwargs }) => {
+    onRpc("partner", "get_views", ({ kwargs }) => {
         const context = kwargs.context;
         const options = kwargs.options;
         expect.step(
@@ -228,7 +228,7 @@ test("user context is unpolluted when entering studio in error", async () => {
 });
 
 test("user context is not polluted when getting views", async () => {
-    onRpc("partner", "get_views", async ({ kwargs }) => {
+    onRpc("partner", "get_views", ({ kwargs }) => {
         const context = kwargs.context;
         const options = kwargs.options;
         expect.step(
@@ -246,8 +246,8 @@ test("user context is not polluted when getting views", async () => {
         };
     });
 
-    onRpc("web_search_read", async (params) => {
-        expect.step(`web_search_read, context studio: "${params.kwargs.context.studio}"`);
+    onRpc("web_search_read", ({ kwargs }) => {
+        expect.step(`web_search_read, context studio: "${kwargs.context.studio}"`);
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -425,8 +425,8 @@ test("kanban in studio should always ignore sample data", async () => {
 });
 
 test("entering a kanban keeps the user's domain", async () => {
-    onRpc("web_search_read", async (params) => {
-        expect.step(`${params.method}: ${JSON.stringify(params.kwargs.domain)}`);
+    onRpc("web_search_read", ({ kwargs, method }) => {
+        expect.step(`${method}: ${JSON.stringify(kwargs.domain)}`);
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -456,10 +456,10 @@ test("entering a kanban keeps the user's domain", async () => {
 
 test("open Studio with editable form view and check context propagation", async () => {
     expect.assertions(4);
-    onRpc("pony", "onchange", async ({ kwargs }) => {
+    onRpc("pony", "onchange", ({ kwargs }) => {
         expect(kwargs.context.default_name).toBe("foo");
     });
-    onRpc("partner", "onchange", async ({ kwargs }) => {
+    onRpc("partner", "onchange", ({ kwargs }) => {
         expect(kwargs.context).not.toInclude("default_name");
     });
 
@@ -575,7 +575,7 @@ test("leaving studio with a pending rendering in Studio", async () => {
         }
     });
 
-    onRpc("web_read", async (params) => {
+    onRpc("web_read", (params) => {
         if (makeItWait) {
             return [{ id: params.args[0], size: "big" }];
         }
@@ -623,8 +623,8 @@ test("auto-save feature works in studio (not editing a view)", async () => {
         ],
     }));
 
-    onRpc("web_save", async (params) => {
-        expect.step(`web_save: ${params.model}: ${JSON.stringify(params.args)}`);
+    onRpc("web_save", ({ args, model }) => {
+        expect.step(`web_save: ${model}: ${JSON.stringify(args)}`);
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -650,9 +650,9 @@ test("auto-save feature works in studio (not editing a view)", async () => {
 
 test("load with active_id active_ids", async () => {
     expect.assertions(2);
-    onRpc("onchange", async (params) => {
+    onRpc("onchange", ({ kwargs }) => {
         expect.step("onchange");
-        expect(params.kwargs.context).toEqual({
+        expect(kwargs.context).toEqual({
             active_id: 1,
             active_ids: [1],
             allowed_company_ids: [1],
@@ -673,12 +673,12 @@ test("load with active_id active_ids", async () => {
 });
 
 test("can edit ir.actions.act_window without id", async () => {
-    onRpc("get_formview_action", async (params) => ({
+    onRpc("get_formview_action", ({ args }) => ({
         type: "ir.actions.act_window",
         res_model: "pony",
         target: "current",
         views: [[false, "form"]],
-        res_id: params.args[0][0],
+        res_id: args[0][0],
     }));
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();

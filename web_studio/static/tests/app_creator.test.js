@@ -36,19 +36,15 @@ test("app creator: standard flow with model creation", async () => {
         return true;
     });
 
-    onRpc("ir.attachment", "read", async () => {
-        return [{ datas: sampleIconUrl }];
-    });
+    onRpc("ir.attachment", "read", () => [{ datas: sampleIconUrl }]);
 
     onRpc(
         "/web/binary/upload_attachment",
-        async (request) => {
+        () => {
             expect.step("upload_attachment");
             return [{ id: 666 }];
         },
-        {
-            pure: true,
-        }
+        { pure: true }
     );
 
     mockService("ui", {
@@ -183,8 +179,8 @@ test("app creator: has 'lines' options to auto-create a one2many", async () => {
 test("app creator: debug flow with existing model", async () => {
     serverState.debug = "1";
 
-    onRpc("ir.model", "name_search", async (params) => {
-        expect(params.kwargs.domain).toEqual([
+    onRpc("ir.model", "name_search", ({ kwargs }) => {
+        expect(kwargs.domain).toEqual([
             "&",
             "&",
             ["transient", "=", false],

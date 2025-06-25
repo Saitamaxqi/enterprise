@@ -70,7 +70,7 @@ test("Can create a geo chart on countries", async function () {
         sheetId,
         col: 0,
         row: 0,
-        offset: {x: 0, y: 0},
+        offset: { x: 0, y: 0 },
         definition: {
             type: "geo",
             title: { text: "test" },
@@ -97,7 +97,7 @@ test("Can create a geo chart on countries", async function () {
 test("Can create a geo chart on US states", async function () {
     // Ideally we'd want to rely on the records in the mockServer, but the mocked searchRead don't seems to work
     // with domain [["country_id.code", "=", "US"]] ...
-    onRpc("/web/dataset/call_kw/res.country.state/search_read", () => [
+    onRpc("res.country.state", "search_read", () => [
         { name: "California", code: "CA" },
         { name: "Texas", code: "TX" },
         { name: "New York", code: "NY" },
@@ -114,7 +114,7 @@ test("Can create a geo chart on US states", async function () {
         sheetId,
         col: 0,
         row: 0,
-        offset: {x: 0, y: 0},
+        offset: { x: 0, y: 0 },
         definition: {
             type: "geo",
             region: "usa",

@@ -225,9 +225,9 @@ test("Controls: rendering is mobile friendly", async () => {
 });
 
 test("Progressbar: check the progressbar percentage visibility.", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        expect.step("get_gantt_data");
-        const result = await parent();
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        expect.step(method);
+        const result = parent();
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             1: { value: 50, max_value: 100 },
@@ -273,9 +273,9 @@ test("Progressbar: check the progressbar percentage visibility.", async () => {
 });
 
 test("Progressbar: grouped row", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        expect.step("get_gantt_data");
-        const result = await parent();
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        expect.step(method);
+        const result = parent();
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             1: { value: 50, max_value: 100 },

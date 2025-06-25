@@ -17,8 +17,8 @@ test("add a gantt view", async () => {
         expect(params.view_type).toBe("gantt");
     });
 
-    onRpc("fields_get", async (params) => {
-        expect(params.model).toBe("partner");
+    onRpc("fields_get", ({ model }) => {
+        expect(model).toBe("partner");
     });
 
     await mountWithCleanup(WebClientEnterprise);

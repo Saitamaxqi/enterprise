@@ -13,7 +13,7 @@ defineMailModels();
 test("simple rendering", async () => {
     patchWithCleanup(user, { userId: 1 });
 
-    onRpc("/web/dataset/call_kw/sign.request.item/send_signature_accesses", () => {
+    onRpc("sign.request.item", "send_signature_accesses", () => {
         expect.step("send_messages");
         return true;
     });

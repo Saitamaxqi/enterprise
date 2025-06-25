@@ -30,16 +30,9 @@ import { Domain } from "@web/core/domain";
 import { redirect } from "@web/core/utils/urls";
 import { WebClient } from "@web/webclient/webclient";
 
-import {
-    definePlanningModels,
-    planningModels
-} from "./planning_mock_models";
+import { definePlanningModels, planningModels } from "./planning_mock_models";
 
-const {
-    PlanningSlot,
-    ResourceResource,
-    HrEmployee,
-} = planningModels;
+const { PlanningSlot, ResourceResource, HrEmployee } = planningModels;
 
 describe.current.tags("desktop");
 
@@ -69,7 +62,7 @@ const getProgressBars = () => ({
 });
 
 async function recurrenceDeletionTemplate(mode) {
-    onRpc("planning.slot", "action_address_recurrency", async ({ args }) => {
+    onRpc("planning.slot", "action_address_recurrency", ({ args }) => {
         expect.step(`Recurency Delete in mode ${args[1]}`);
         return true;
     });
@@ -242,11 +235,11 @@ test('add record in empty gantt with sample="1"', async function () {
     });
 
     expect(".o_gantt_view .o_content").toHaveClass("o_view_sample_data");
-    const rowHeaders = queryAll(".o_gantt_row_headers .o_gantt_row_header");
-    expect(rowHeaders.length).toBeGreaterThan(2);
-    const firstRowHeader = rowHeaders[0];
-    expect(firstRowHeader).toHaveText("Open Shifts");
-    expect(firstRowHeader).not.toHaveClass("o_sample_data_disabled");
+    expect(queryAll(".o_gantt_row_headers .o_gantt_row_header").length).toBeGreaterThan(2);
+    expect(".o_gantt_row_headers .o_gantt_row_header:first").toHaveText("Open Shifts");
+    expect(".o_gantt_row_headers .o_gantt_row_header:first").not.toHaveClass(
+        "o_sample_data_disabled"
+    );
 
     await clickCell("01", "December 2018", "Open Shifts");
     await contains(".modal .o_form_view .o_field_widget[name=name] input").edit("new shift");
@@ -406,8 +399,8 @@ test("reload data after having unlink a record in planning_form", async function
 
 test("progress bar has the correct unit", async () => {
     const makeViewArgs = _getCreateViewArgsForGanttViewTotalsTests();
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        const result = parent();
         expect(kwargs.progress_bar_fields).toEqual(["resource_id"]);
         result.progress_bars = getProgressBars();
         return result;
@@ -486,8 +479,8 @@ test("the grouped gantt view is coloured correctly and the occupancy percentage 
     ];
 
     onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
-    onRpc("get_gantt_data", async ({ parent }) => {
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent }) => {
+        const result = parent();
         result.progress_bars = getProgressBars();
         return result;
     });
@@ -726,9 +719,9 @@ test("Test highlight shifts added by executed action", async function () {
         },
     ];
 
-    onRpc("action_copy_previous_week", async function () {
+    onRpc("action_copy_previous_week", function () {
         if (this.env["planning.slot"].length === 2) {
-            const newSlotId = await this.env["planning.slot"].create({
+            const newSlotId = this.env["planning.slot"].create({
                 name: "shift 3",
                 start_datetime: "2022-10-07 16:00:00",
                 end_datetime: "2022-10-07 18:00:00",
@@ -738,8 +731,8 @@ test("Test highlight shifts added by executed action", async function () {
         }
         return false;
     });
-    onRpc("auto_plan_ids", async function () {
-        await this.env["planning.slot"].write([2], { resource_id: 1 });
+    onRpc("auto_plan_ids", function () {
+        this.env["planning.slot"].write([2], { resource_id: 1 });
         return { open_shift_assigned: [2] };
     });
     onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
@@ -852,8 +845,8 @@ test("Verify Hours in Planning Dialog When Clicking 'New' Button for Off Days in
             ],
         },
     };
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent }) => {
+        const result = parent();
         result.unavailabilities = unavailabilities;
         return result;
     });

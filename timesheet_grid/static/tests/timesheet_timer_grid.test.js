@@ -1,5 +1,7 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import {
+    advanceTime,
+    animationFrame,
     click,
     edit,
     hover,
@@ -11,9 +13,9 @@ import {
     queryAllTexts,
     queryFirst,
     queryText,
+    runAllTimers,
+    waitFor,
 } from "@odoo/hoot-dom";
-import { advanceTime, animationFrame, delay, runAllTimers } from "@odoo/hoot-mock";
-import { Domain } from "@web/core/domain";
 import {
     clickFieldDropdown,
     getService,
@@ -25,10 +27,11 @@ import {
     toggleMenuItem,
     toggleSearchBarMenu,
 } from "@web/../tests/web_test_helpers";
+import { Domain } from "@web/core/domain";
 import { WebClient } from "@web/webclient/webclient";
 
-import { defineTimesheetModels, HRTimesheet, ProjectProject } from "./hr_timesheet_models";
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
+import { defineTimesheetModels, HRTimesheet, ProjectProject } from "./hr_timesheet_models";
 
 defineTimesheetModels();
 beforeEach(() => {
@@ -1080,8 +1083,7 @@ test("hr.timesheet (grid)(timer): start button is always in focus", async () => 
     // Click on a clickable button/action should be accessible and should not be disturbed
     // Force focus must not disturb other clicks
     await click(".o_grid_row:not(.o_grid_row_title, .o_grid_row_timer)");
-    await delay(50);
-    expect(".o_grid_component div input").toBeFocused();
+    await expect(waitFor(".o_grid_component div input")).resolves.toBeFocused();
 
     // Click on body which doesn't have any fields/actions must make Start button to come in focus
     await click(document.body);

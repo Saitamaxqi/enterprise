@@ -12,17 +12,17 @@ import {
     onRpc,
 } from "@web/../tests/web_test_helpers";
 import {
-    SELECTORS,
     clickCell,
     dragPill,
     getGridContent,
     hoverGridCell,
     mountGanttView,
+    SELECTORS,
 } from "@web_gantt/../tests/web_gantt_test_helpers";
 
 import {
-    projectModels,
     defineProjectModels,
+    projectModels,
     ProjectProject,
 } from "@project/../tests/project_models";
 
@@ -182,8 +182,8 @@ test('Empty groupby "Assigned To" and "Project" can be rendered', async function
 });
 
 test("progress bar has the correct unit", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
+    onRpc("get_gantt_data", ({ kwargs, parent }) => {
+        const result = parent();
         expect(kwargs.progress_bar_fields).toEqual(["user_ids"]);
         result.progress_bars.user_ids = {
             100: { value: 100, max_value: 100 },

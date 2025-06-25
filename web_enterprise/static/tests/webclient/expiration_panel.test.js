@@ -49,7 +49,7 @@ test("Expiration Panel one app installed, buy subscription", async () => {
         storeData: true, // used by subscription service to know whether mail is installed
         warning: "admin",
     });
-    onRpc("/web/dataset/call_kw/res.users/search_count", () => 7);
+    onRpc("res.users", "search_count", () => 7);
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
     await runAllTimers();
@@ -128,7 +128,7 @@ test("Expiration Panel one app installed, try several times to register subscrip
         expect(args[0]).toHaveLength(0);
         return true;
     });
-    onRpc("/web/dataset/call_kw/res.users/search_count", () => 7);
+    onRpc("res.users", "search_count", () => 7);
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 
@@ -607,9 +607,7 @@ test("One app installed, different locale (arabic)", async () => {
         warning: "admin",
     });
     serverState.lang = "ar-001";
-    onRpc("get_param", () => {
-        return "2019-11-09 12:00:00";
-    });
+    onRpc("get_param", () => "2019-11-09 12:00:00");
     onRpc("update_notification", () => true);
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();

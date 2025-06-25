@@ -510,7 +510,7 @@ test("buttons can be edited when being selected", async () => {
 });
 
 test("grouped kanban editor", async () => {
-    onRpc("web_read_group", async ({ kwargs }) => {
+    onRpc("web_read_group", ({ kwargs }) => {
         expect.step("web_read_group");
         expect(kwargs.limit).toBe(1);
     });
@@ -710,11 +710,11 @@ test("grouped kanban fold_field can be change for custom model", async () => {
         }
     });
 
-    onRpc("ir.model.fields", "web_search_read", (params) => []);
+    onRpc("ir.model.fields", "web_search_read", () => []);
 
-    onRpc("ir.model.fields", "write", (params) => {
-        expect(params.args[0][0]).toBe(999);
-        expect(params.args[1]).toEqual({ group_expand: true });
+    onRpc("ir.model.fields", "write", ({ args }) => {
+        expect(args[0][0]).toBe(999);
+        expect(args[1]).toEqual({ group_expand: true });
         return true;
     });
 

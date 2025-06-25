@@ -298,9 +298,9 @@ test("No progress bar when no option set.", async () => {
 });
 
 test("Progress bar rpc is triggered when option set.", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
-        expect.step("get_gantt_data");
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        const result = parent();
+        expect.step(method);
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             1: { value: 50, max_value: 100 },
@@ -342,8 +342,8 @@ test("Progress bar component will not render when hovering cells of the same row
             onRendered(() => expect.step("rendering progress bar"));
         },
     });
-    onRpc("get_gantt_data", async ({ parent }) => {
-        const result = await parent();
+    onRpc("get_gantt_data", ({ parent }) => {
+        const result = parent();
         result.progress_bars.user_id = {
             1: { value: 50, max_value: 100 },
             2: { value: 25, max_value: 200 },
@@ -367,9 +367,9 @@ test("Progress bar component will not render when hovering cells of the same row
 });
 
 test("Progress bar when multilevel grouped.", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
-        expect.step("get_gantt_data");
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        const result = parent();
+        expect.step(method);
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             1: { value: 50, max_value: 100 },
@@ -408,9 +408,9 @@ test("Progress bar when multilevel grouped.", async () => {
 });
 
 test("Progress bar warning when max_value is zero", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
-        expect.step("get_gantt_data");
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        const result = parent();
+        expect.step(method);
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             1: { value: 50, max_value: 0 },
@@ -435,9 +435,9 @@ test("Progress bar warning when max_value is zero", async () => {
 });
 
 test("Progress bar when value less than hour", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
-        expect.step("get_gantt_data");
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        const result = parent();
+        expect.step(method);
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             1: { value: 0.5, max_value: 100 },
@@ -459,9 +459,9 @@ test("Progress bar when value less than hour", async () => {
 });
 
 test("Progress bar danger when ratio > 100", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
-        expect.step("get_gantt_data");
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        const result = parent();
+        expect.step(method);
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             1: { value: 150, max_value: 100 },
@@ -501,9 +501,9 @@ test("Falsy search field will return an empty rows", async () => {
 });
 
 test("Search field return rows with progressbar", async () => {
-    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
-        const result = await parent();
-        expect.step("get_gantt_data");
+    onRpc("get_gantt_data", ({ kwargs, method, parent }) => {
+        const result = parent();
+        expect.step(method);
         expect(kwargs.progress_bar_fields).toEqual(["user_id"]);
         result.progress_bars.user_id = {
             2: { value: 25, max_value: 200 },

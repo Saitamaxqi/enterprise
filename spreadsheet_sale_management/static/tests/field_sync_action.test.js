@@ -10,14 +10,14 @@ import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { setCellContent } from "@spreadsheet/../tests/helpers/commands";
 import { getCellContent } from "@spreadsheet/../tests/helpers/getters";
 
+import { helpers, stores } from "@odoo/o-spreadsheet";
+import { addFieldSync } from "./helpers/commands";
 import {
     defineSpreadsheetSaleModels,
     getSaleOrderSpreadsheetData,
     SaleOrderSpreadsheet,
 } from "./helpers/data";
 import { mountSaleOrderSpreadsheetAction } from "./helpers/webclient_helpers";
-import { addFieldSync } from "./helpers/commands";
-import { stores, helpers } from "@odoo/o-spreadsheet";
 
 const { HighlightStore, DelayedHoveredCellStore } = stores;
 const { toZone } = helpers;
@@ -28,9 +28,8 @@ defineModels(mailModels);
 describe("field sync action", () => {
     test("write on sale order when leaving action", async () => {
         const orderId = 1;
-        onRpc("/web/dataset/call_kw/sale.order/write", async function (request, args) {
-            const { params } = await request.json();
-            const [orderIds, vals] = params.args;
+        onRpc("sale.order", "write", ({ args }) => {
+            const [orderIds, vals] = args;
             expect(orderIds).toEqual([orderId]);
             expect(vals).toEqual({
                 order_line: [
@@ -51,7 +50,7 @@ describe("field sync action", () => {
     });
 
     test("don't write on sale order with no order_id param", async () => {
-        onRpc("/web/dataset/call_kw/sale.order/write", async (request, args) => {
+        onRpc("sale.order", "write", () => {
             expect.step("write-sale-order");
         });
         const spreadsheetId = 1;
@@ -78,7 +77,7 @@ describe("field sync action", () => {
     test("auto resize list columns", async () => {
         onRpc(
             "/spreadsheet/data/sale.order.spreadsheet/*",
-            async (request, args) => {
+            () => {
                 const data = getSaleOrderSpreadsheetData();
                 const commands = [
                     {
