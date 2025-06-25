@@ -31,6 +31,7 @@ export class SelectPrinterFormController extends FormController {
             ];
             setReportIdInBrowserLocalStorage(args[0], deviceOptions);
             await printReport(this.env, args, deviceOptions.selectedDevices);
+            this.env.bus.trigger("printer-selected", this.props.context.print_id);
 
             this.onClickViewButton(params);
         } else {

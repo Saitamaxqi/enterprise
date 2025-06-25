@@ -52,6 +52,19 @@ async function iotReportActionHandler(action, options, env) {
             // Open IoT devices selection wizard
             const actionWizard = await orm.call("ir.actions.report", "get_action_wizard", args);
             await env.services.action.doAction(actionWizard);
+
+            // We do this to ensure the handler only returns once the printer
+            // has been selected and is printing. Otherwise, if multiple reports
+            // try to print in a row you cannot select the printer as the popup disappears.
+            await new Promise((resolve) => {
+                const onPrinterSelected = (event) => {
+                    if (event.detail === args[3]) {
+                        env.bus.removeEventListener("printer-selected", onPrinterSelected);
+                        resolve();
+                    }
+                };
+                env.bus.addEventListener("printer-selected", onPrinterSelected);
+            });
         } else {
             env.services.ui.block();
             await printReport(env, args, deviceSettings.selectedDevices);
