@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
 
 from odoo import api, models, fields, _
-
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import SQL
 
 
 class BacsDdi(models.Model):
@@ -26,7 +25,6 @@ class BacsDdi(models.Model):
         'unique(name)',
         "Direct Debit Instruction identifier must be unique! Please choose another one.",
     )
-
 
     name = fields.Char(string='Identifier', required=True, help="The unique identifier of this DDI.", default=lambda self: datetime.now().strftime('%f%S%M%H%d%m%y'), copy=False)
     partner_id = fields.Many2one(comodel_name='res.partner', string='Customer', required=True, check_company=True, help="Customer whose payments are to be managed by this DDI.")
@@ -95,7 +93,7 @@ class BacsDdi(models.Model):
         self.env['account.move'].flush_model(['move_type'])
         self.env['account.payment'].flush_model(['bacs_ddi_id'])
 
-        self._cr.execute('''
+        query_res = self.env.execute_query_dict(SQL("""
             SELECT
                 payment.bacs_ddi_id,
                 ARRAY_AGG(rel.invoice_id) AS invoice_ids
@@ -103,15 +101,14 @@ class BacsDdi(models.Model):
             JOIN account_move__account_payment rel ON rel.payment_id = payment.id
             WHERE payment.bacs_ddi_id IN %s
             GROUP BY payment.bacs_ddi_id
-        ''', [tuple(stored_ddis)])
-        query_res = dict((mandate_id, invoice_ids) for mandate_id, invoice_ids in self._cr.fetchall())
+        """, tuple(stored_ddis)))
 
         for mandate in self:
             invoice_ids = query_res.get(mandate.id, [])
             mandate.paid_invoice_ids = [(6, 0, invoice_ids)]
             mandate.paid_invoices_len = len(invoice_ids)
 
-        self._cr.execute('''
+        query_res = self.env.execute_query_dict(SQL("""
             SELECT
                 payment.bacs_ddi_id,
                 ARRAY_AGG(payment.id) AS payment_ids
@@ -123,8 +120,7 @@ class BacsDdi(models.Model):
             AND move.state = 'posted'
             AND method.code = 'bacs_dd'
             GROUP BY payment.bacs_ddi_id
-        ''')
-        query_res = dict((mandate_id, payment_ids) for mandate_id, payment_ids in self._cr.fetchall())
+        """))
 
         for mandate in self:
             payment_ids = query_res.get(mandate.id, [])

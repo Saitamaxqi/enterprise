@@ -46,7 +46,7 @@ class AccountBatchPayment(models.Model):
         return self.with_context(xml_export=False).validate_batch()
 
     def validate_batch(self):
-        if not self.payment_method_code == 'sepa_ct' or not self.account_online_link_payments_enabled or self._context.get('xml_export'):
+        if self.payment_method_code != 'sepa_ct' or not self.account_online_link_payments_enabled or self.env.context.get('xml_export'):
             return super().validate_batch()
 
         action = self._check_batch_validity()

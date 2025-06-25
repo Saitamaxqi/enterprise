@@ -345,7 +345,8 @@ class Data_MergeRecord(models.Model):
         :returns a dict with table name as keys and the list of fields referenced as values
         :rtype: dict
         """
-        query = """
+        self.env.flush_all()
+        return dict(self.env.execute_query(SQL("""
             SELECT cl1.relname as table, array_agg(att1.attname) as columns
             FROM pg_constraint as con, pg_class as cl1, pg_class as cl2, pg_attribute as att1, pg_attribute as att2
             WHERE con.conrelid = cl1.oid
@@ -359,11 +360,7 @@ class Data_MergeRecord(models.Model):
                 AND att2.attrelid = cl2.oid
                 AND con.contype = 'f'
                 AND cl2.relname = %s
-            GROUP BY cl1.relname"""
-
-        self.env.flush_all()
-        self._cr.execute(query, (table, ))
-        return {r[0]:r[1] for r in self._cr.fetchall()}
+            GROUP BY cl1.relname""", table)))
 
     @api.model
     def _update_foreign_keys(self, destination, source):

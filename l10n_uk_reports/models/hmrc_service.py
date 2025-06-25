@@ -60,7 +60,7 @@ class HmrcService(models.AbstractModel):
                 else: #In case no error was thrown, but an error is indicated
                     if response.get('error'):
                         self._clean_tokens(user)
-                        self._cr.commit() # Even with the raise, we want to commit the cleaning of the tokens in the db
+                        self.env.cr.commit()  # Even with the raise, we want to commit the cleaning of the tokens in the db
                         raise UserError(_(
                             'There was a problem refreshing the tokens.  Please log in again. %(error)s',
                             error=response.get('message'),
