@@ -13,11 +13,14 @@ class ProjectProject(models.Model):
     total_budget_amount = fields.Monetary('Total planned amount', compute='_compute_budget', default=0, export_string_translation=False)
     total_budget_progress = fields.Float("Budget Spent", compute="_compute_budget", export_string_translation=False)
 
+    def _get_budget_analytic_account_domain(self):
+        return Domain.OR([
+            [(account.plan_id._column_name(), '=', account.id)] for account in self.account_id
+        ])
+
     def _compute_budget(self):
         budget_items = self.env['budget.line'].sudo()._read_group(
-            [
-                ('account_id', 'in', self.account_id.ids),
-            ],
+            domain=self._get_budget_analytic_account_domain(),
             groupby=['account_id'],
             aggregates=['budget_amount:sum', 'achieved_amount:sum'],
         )
@@ -36,7 +39,7 @@ class ProjectProject(models.Model):
     def action_view_budget_lines(self, domain=None):
         self.ensure_one()
         budget_lines = self.env['budget.line'].search(Domain.AND([
-            [('account_id', '=', self.account_id.id), ('budget_analytic_id.state', 'in', ['confirmed', 'done'])],
+            [(self.account_id.plan_id._column_name(), '=', self.account_id.id), ('budget_analytic_id.state', 'in', ['confirmed', 'done'])],
             domain or [],
         ]))
         return {
@@ -71,7 +74,7 @@ class ProjectProject(models.Model):
             return
         budget_lines = self.env['budget.line'].sudo()._read_group(
             [
-                ('account_id', '=', self.account_id.id),
+                (self.account_id.plan_id._column_name(), '=', self.account_id.id),
                 ('budget_analytic_id', '!=', False),
                 ('budget_analytic_id.state', 'in', ['confirmed', 'done']),
             ],

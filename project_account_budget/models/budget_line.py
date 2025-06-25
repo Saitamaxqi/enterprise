@@ -11,5 +11,6 @@ class BudgetLine(models.Model):
         defaults = super().default_get(fields)
         if self.env.context.get('project_update'):
             project = self.env['project.project'].browse(self.env.context.get('active_id'))
-            defaults[project.account_id.plan_id._column_name()] = project.account_id.id
+            if project.account_id:
+                defaults[project.account_id.plan_id._column_name()] = project.account_id.id
         return defaults
