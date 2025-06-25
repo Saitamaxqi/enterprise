@@ -11,7 +11,8 @@ class ResCompany(models.Model):
     totals_below_sections = fields.Boolean(
         compute='_compute_totals_below_sections', store=True,
         string='Add totals below sections',
-        help='When ticked, totals and subtotals appear below the sections of the report.')
+        help='When ticked, totals and subtotals appear below the sections of the report.',
+        readonly=False)
 
     account_return_periodicity = fields.Selection(
         selection=PERIODS,
