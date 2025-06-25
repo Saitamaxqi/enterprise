@@ -39,12 +39,13 @@ registry.category("web_tour.tours").add("document_delete_tour", {
             content: "Check that we are in Folder1",
         },
         {
-            trigger: '.o_kanban_record:contains("Chouchou")',
-            content: "Select a file",
-            run: "click",
+            trigger: '.o_record_selected:contains("Chouchou")',
+            content: "Check that Chouchou is selected.",
         },
         {
-            trigger: '.o_record_selected:contains("Chouchou")',
+            trigger: "div[title='Close (Esc)']",
+            content: "Check that the preview was open and close it",
+            run: "click",
         },
         {
             trigger: ".o_control_panel_actions button:contains('Actions')",

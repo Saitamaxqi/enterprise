@@ -388,7 +388,7 @@ function useDocumentsViewFilePreviewer({
             });
         // If there is a scrollbar we don't want it whenever the previewer is opened
         if (component.root.el) {
-            component.root.el.querySelector(".o_documents_view").classList.add("overflow-hidden");
+            component.root.el.querySelector(".o_documents_view")?.classList.add("overflow-hidden");
         }
         const selectedDocument = documentsRecords.find(
             (rec) => rec.id === (mainDocument || documents[0]).resId
