@@ -11,6 +11,8 @@ class HrPayslipInput(models.Model):
 
     name = fields.Char(string="Description")
     payslip_id = fields.Many2one('hr.payslip', string='Pay Slip', required=True, ondelete='cascade', index=True)
+    employee_id = fields.Many2one('hr.employee', related='payslip_id.employee_id')
+    date_from = fields.Date(related='payslip_id.date_from')
     sequence = fields.Integer(required=True, index=True, default=10)
     input_type_id = fields.Many2one('hr.payslip.input.type', string='Type', required=True, domain="[('id', 'in', _allowed_input_type_ids)]")
     _allowed_input_type_ids = fields.Many2many('hr.payslip.input.type', related='payslip_id.struct_id.input_line_type_ids')

@@ -114,6 +114,13 @@
         parent="menu_hr_payroll_report"/>
 
     <menuitem
+        id="menu_hr_payslip_input_action_report"
+        name="Payslip Other Inputs"
+        action="hr_payslip_input_action_report"
+        sequence="14"
+        parent="menu_hr_payroll_report"/>
+
+    <menuitem
         id="menu_hr_payroll_master_report"
         name="Master Report"
         action="action_hr_payroll_master_report"
