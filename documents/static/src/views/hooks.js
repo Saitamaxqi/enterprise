@@ -234,9 +234,7 @@ export function useDocumentView(helpers) {
                     default_folder_id: env.searchModel.getSelectedFolderId(),
                     default_res_id: props.context.default_res_id || false,
                     default_res_model: props.context.default_res_model || false,
-                    ...(folderId === "COMPANY"
-                        ? { default_owner_id: false }
-                        : {}),
+                    ...(folderId === "COMPANY" ? { default_owner_id: false } : {}),
                 },
                 fullscreen: env.isSmall,
                 onClose: async () => {

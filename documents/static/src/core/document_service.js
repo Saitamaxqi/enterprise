@@ -404,10 +404,7 @@ export class DocumentService {
                     return;
                 }
                 const view = this.action.currentController?.props.type;
-                if (
-                    chatterContainer &&
-                    ["kanban", "list"].includes(view)
-                ) {
+                if (chatterContainer && ["kanban", "list"].includes(view)) {
                     const selectedRecordClass =
                         view === "kanban"
                             ? ".o_kanban_record.o_record_selected"

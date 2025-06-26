@@ -53,12 +53,12 @@ export const useDraggableDocuments = makeDraggableHook({
             ? ref.el.querySelectorAll(".o_kanban_record:not(.o_kanban_ghost)")
             : ref.el.querySelectorAll(".o_data_row");
         this.selectedElements = Array.from(allElements).filter((el) =>
-            this.draggedRecords.all.includes(parseInt(el.dataset.valueId)),
+            this.draggedRecords.all.includes(parseInt(el.dataset.valueId))
         );
         for (const selectedEl of this.selectedElements) {
             const sourceRect = selectedEl.getBoundingClientRect();
             const sourceName = model.root.records.find(
-                (r) => r.data.id === parseInt(selectedEl.dataset.valueId),
+                (r) => r.data.id === parseInt(selectedEl.dataset.valueId)
             ).data.name;
             this.initialPositions.push({
                 initialTop: sourceRect.top,
@@ -100,9 +100,15 @@ export const useDraggableDocuments = makeDraggableHook({
             ) {
                 const valueEl = ev.target.closest(".o_search_panel_category_value");
                 const targetFolder = model.env.searchModel.getFolderById(
-                    parseInt(valueEl.dataset.valueId) || valueEl.dataset.valueId,
+                    parseInt(valueEl.dataset.valueId) || valueEl.dataset.valueId
                 );
-                this._checkTargetValidity(targetFolder, model, current.dragMessage, current.dragMessageText, true);
+                this._checkTargetValidity(
+                    targetFolder,
+                    model,
+                    current.dragMessage,
+                    current.dragMessageText,
+                    true
+                );
                 if (!ev.ctrlKey && targetFolder.rootId === "MY") {
                     ref.el.classList.add("o_documents_dnd_shortcut");
                 } else if (!ev.ctrlKey) {
@@ -141,9 +147,14 @@ export const useDraggableDocuments = makeDraggableHook({
         // Target Folders Event Handlers
         const onTargetFolderPointerEnter = (ev) => {
             const targetFolder = model.env.searchModel.getFolderById(
-                parseInt(ev.currentTarget.dataset.valueId) || ev.currentTarget.dataset.valueId,
+                parseInt(ev.currentTarget.dataset.valueId) || ev.currentTarget.dataset.valueId
             );
-            this._checkTargetValidity(targetFolder, model, current.dragMessage, current.dragMessageText);
+            this._checkTargetValidity(
+                targetFolder,
+                model,
+                current.dragMessage,
+                current.dragMessageText
+            );
 
             callHandler("onTargetPointerEnter", {
                 target: ev.currentTarget,
@@ -201,17 +212,26 @@ export const useDraggableDocuments = makeDraggableHook({
         if (targetElement.dataset.valueId === "TRASH") {
             if (
                 this.draggedRecords.movableRecordIds.length &&
-                (await toggleArchive(model, model.root.resModel, this.draggedRecords.movableRecordIds, true))
+                (await toggleArchive(
+                    model,
+                    model.root.resModel,
+                    this.draggedRecords.movableRecordIds,
+                    true
+                ))
             ) {
                 model.notification.add(
-                    _t("%s document(s) sent to trash.", this.draggedRecords.movableRecordIds.length),
-                    { type: "success" },
+                    _t(
+                        "%s document(s) sent to trash.",
+                        this.draggedRecords.movableRecordIds.length
+                    ),
+                    { type: "success" }
                 );
             }
             model.env.searchModel._reloadSearchModel(true);
             return;
         }
-        const targetFolderId = parseInt(targetElement.dataset.valueId) || targetElement.dataset.valueId;
+        const targetFolderId =
+            parseInt(targetElement.dataset.valueId) || targetElement.dataset.valueId;
         const sourceFolder = model.env.searchModel.getSelectedFolder();
         const targetFolder = model.env.searchModel.getFolderById(targetFolderId);
 
@@ -223,7 +243,7 @@ export const useDraggableDocuments = makeDraggableHook({
             await model.documentService.moveOrCreateShortcut(
                 this.draggedRecords,
                 targetFolderId === "MY" ? false : targetFolderId,
-                true,
+                true
             );
             model.env.searchModel._reloadSearchModel(true);
             return;
@@ -237,7 +257,7 @@ export const useDraggableDocuments = makeDraggableHook({
         await model.documentService.moveOrCreateShortcut(
             this.draggedRecords,
             targetFolderId,
-            ref.el.classList.contains("o_documents_dnd_shortcut"),
+            ref.el.classList.contains("o_documents_dnd_shortcut")
         );
 
         model.load();
@@ -262,11 +282,16 @@ export const useDraggableDocuments = makeDraggableHook({
     _createDnDElement(recordData, documentsCount) {
         const docCountPill =
             documentsCount > 1
-                ? `<div class="o_documents_dnd_pill bg-success border border-light rounded-circle p-1 text-center">${escape(documentsCount)}</div>`
+                ? `<div class="o_documents_dnd_pill bg-success border border-light rounded-circle p-1 text-center">${escape(
+                      documentsCount
+                  )}</div>`
                 : "";
-        return new DOMParser().parseFromString(`
+        return new DOMParser().parseFromString(
+            `
             <span class="o_documents_dnd o_documents_dnd_info d-flex p-2">
-                <i class="o_documents_mimetype_icon o_image" data-mimetype=${escape(recordData.mimetype)} title=${escape(recordData.mimetype)}></i>
+                <i class="o_documents_mimetype_icon o_image" data-mimetype=${escape(
+                    recordData.mimetype
+                )} title=${escape(recordData.mimetype)}></i>
                 <span class="o_documents_dnd_text ps-2">${escape(recordData.display_name)}</span>
                 <div class="o_documents_dnd_pill_container d-flex position-absolute top-0 start-100 translate-middle">
                     <div class="o_documents_dnd_pill o_documents_dnd_modifier bg-info border border-light rounded-circle p-1">
@@ -275,19 +300,31 @@ export const useDraggableDocuments = makeDraggableHook({
                     ${docCountPill}
                 </div>
             </span>
-        `, "text/html").body.firstChild;
+        `,
+            "text/html"
+        ).body.firstChild;
     },
 
     _checkTargetValidity(targetFolder, model, dragMessage, dragMessageText, reset = false) {
         let errorMessage = "";
-        if ((this.isInvalidTarget = !targetFolder || ["RECENT", "SHARED"].includes(targetFolder.id))) {
-            errorMessage = _t("You can't create shortcuts in nor move documents to this special folder.");
-        } else if (this.isInvalidTarget = this.draggedRecords.nonMovableRecordIds.length && targetFolder.id === "TRASH") {
-            errorMessage = _t("There is at least one document you cannot move to trash in your selection.");
+        if (
+            (this.isInvalidTarget = !targetFolder || ["RECENT", "SHARED"].includes(targetFolder.id))
+        ) {
+            errorMessage = _t(
+                "You can't create shortcuts in nor move documents to this special folder."
+            );
+        } else if (
+            (this.isInvalidTarget =
+                this.draggedRecords.nonMovableRecordIds.length && targetFolder.id === "TRASH")
+        ) {
+            errorMessage = _t(
+                "There is at least one document you cannot move to trash in your selection."
+            );
         } else if (
             (this.isInvalidTarget =
                 targetFolder.user_permission !== "edit" &&
-                (targetFolder.id === "COMPANY" && !model.documentService.userIsDocumentManager))
+                targetFolder.id === "COMPANY" &&
+                !model.documentService.userIsDocumentManager)
         ) {
             errorMessage = _t("You don't have the rights to write in this folder.");
         } else if (
@@ -295,7 +332,7 @@ export const useDraggableDocuments = makeDraggableHook({
                 model.env.searchModel
                     .getFolderAndParents(targetFolder)
                     .map((f) => f.id)
-                    .includes(recordId),
+                    .includes(recordId)
             ))
         ) {
             errorMessage = _t("You cannot move a folder into itself or a children.");
