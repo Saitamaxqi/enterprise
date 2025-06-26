@@ -49,7 +49,7 @@ export class AICommandPalette {
     async fetch() {
         this.agents = await this.orm.searchRead(
             "ai.agent",
-            [],
+            [["is_system_agent", "=", false]],
             ["id", "name", "subtitle", "partner_id"],
             {load: false}
         );

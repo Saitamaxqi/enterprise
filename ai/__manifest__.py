@@ -25,6 +25,7 @@
         'views/mail_template_views.xml',
         'data/ir_cron.xml',
         'data/ai_composer_data.xml',
+        'data/ai_agent_data.xml',
         'wizard/mail_compose_message_views.xml',
     ],
     'demo': [

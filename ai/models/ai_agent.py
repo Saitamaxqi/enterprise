@@ -136,7 +136,9 @@ class AIAgent(models.Model):
         string="Topics",
         help="A topic includes instructions and tools that guide Odoo AI in helping the user complete their tasks.",
     )
-    partner_id = fields.Many2one('res.partner', required=True, ondelete='cascade')
+    partner_id = fields.Many2one('res.partner', required=True, ondelete='cascade', index=True)
+
+    is_system_agent = fields.Boolean('System Agent', default=False)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -171,6 +173,13 @@ class AIAgent(models.Model):
                 agent._process_urls()
 
         return result
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_system_agent(self):
+        """Prevent deletion of system agents."""
+        system_agents = self.filtered('is_system_agent')
+        if system_agents:
+            raise UserError(_("System agents cannot be deleted."))
 
     @api.constrains('urls')
     def _check_url(self):
@@ -315,6 +324,12 @@ class AIAgent(models.Model):
         if not last_cron_time or last_cron_time < fields.Datetime.now() - timedelta(minutes=3):
             self.env.ref('ai.ir_cron_generate_embedding')._trigger()
 
+    def get_direct_response(self, prompt: str, context_message: str = ""):
+        """Get a direct response from the agent's provider LLM without chat history or channel creation."""
+        self.ensure_one()
+        response = self._generate_response(prompt=prompt, context_message=context_message)
+        return response
+
     def generate_response(self, prompt: str):
         for agent in self:
             prompt = html_to_inner_content(prompt)
@@ -355,11 +370,11 @@ class AIAgent(models.Model):
         if channel:
             channel.sudo().unlink()
 
-    def _generate_response(self, prompt, discuss_channel_id):
+    def _generate_response(self, prompt, discuss_channel_id=None, context_message=""):
         self.ensure_one()
         response_temperature = TEMPERATURE_MAP[self.response_style]
-        chat_history = self._retrieve_chat_history(discuss_channel_id)
-        messages = self._prepare_chat_messages(prompt=prompt)
+        chat_history = self._retrieve_chat_history(discuss_channel_id) if discuss_channel_id else []
+        messages = self._prepare_chat_messages(prompt=prompt, context_message=context_message)
 
         full_conversation = chat_history + messages
         functions_descriptions = self._generate_functions_descriptions()
@@ -409,7 +424,7 @@ class AIAgent(models.Model):
         chat_history.reverse()
         return chat_history
 
-    def _prepare_chat_messages(self, prompt):
+    def _prepare_chat_messages(self, prompt, context_message=""):
         self.ensure_one()
         today_date = fields.Date.context_today(self)
         system_content = self.system_prompt or "You are a RAG assistant."
@@ -427,7 +442,7 @@ class AIAgent(models.Model):
                 messages.append(
                     {'role': 'system', 'content': f"Additional topic instructions:\n{topic_instructions}."})
 
-        context = ""
+        context = context_message
         all_attachments = self.attachment_ids + self.url_attachment_ids
         if all_attachments:
             response = LLMApiService(env=self.env, provider='openai').get_embedding(input=prompt)
