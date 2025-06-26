@@ -45,7 +45,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
         if incomplete_partner_to_records:
             error = _("The following customer(s) need to have a zip, state and country when using Avatax:")
             partner_errors = [
-                _(
+                self.env._(
                     "- %(partner_name)s (ID: %(partner_id)s) on %(record_list)s",
                     partner_name=partner.display_name,
                     partner_id=partner.id,
