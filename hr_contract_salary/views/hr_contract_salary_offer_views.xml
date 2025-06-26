@@ -226,6 +226,14 @@
         </field>
     </record>
 
+    <record id="action_view_contract_statbutton" model="ir.actions.act_window">
+        <field name="name">Contract Details</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr.view_employee_form"/>
+        <field name="target">current</field>
+    </record>
+
     <menuitem
         id="menu_salary_package_offer"
         action="hr_contract_salary_offer_action"
