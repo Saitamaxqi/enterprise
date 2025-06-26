@@ -39,10 +39,10 @@ class HrReferralLinkToShare(models.TransientModel):
             if wizard.job_id and not wizard.job_id.utm_campaign_id
         ]
         if jobs_without_campaign:
-            utm_campaign_ids = self.env['utm.campaign'].create([
-                {'name': _('Referral: %(name)s', name=job.name)}
-                for job in jobs_without_campaign
-            ]).ids
+            utm_campaign = []
+            for job in jobs_without_campaign:
+                utm_campaign.append({'name': _('Referral: %(name)s', name=job.name)})
+            utm_campaign_ids = self.env['utm.campaign'].create(utm_campaign).ids
             for utm_campaign_id, job in zip(utm_campaign_ids, jobs_without_campaign):
                 job.utm_campaign_id = utm_campaign_id
 

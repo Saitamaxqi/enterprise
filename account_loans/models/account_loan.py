@@ -292,9 +292,10 @@ class AccountLoan(models.Model):
                 reclassification_reversed_move.reversed_entry_id = reclassification_move
                 reclassification_reversed_move.message_post(body=_('This entry has been reversed from %s', reclassification_move._get_html_link()))
 
-            reclassification_moves._message_log_batch(
-                bodies={move.id: _('This entry has been %s', reverse._get_html_link(title=_("reversed"))) for move, reverse in zip(reclassification_moves, reclassification_reversed_moves)}
-            )
+            bodies = {}
+            for move, reverse in zip(reclassification_moves, reclassification_reversed_moves):
+                bodies[move.id] = _('This entry has been %s', reverse._get_html_link(title=_("reversed")))
+            reclassification_moves._message_log_batch(bodies=bodies)
 
             if any(m.state != 'posted' for m in payment_moves | reclassification_moves | reclassification_reversed_moves):
                 loan.state = 'running'
