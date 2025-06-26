@@ -409,7 +409,8 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
     def test_sub_commission_transfer(self):
         # Ensure transfer logs are taken into account
         with freeze_time('2024-06-01'):
-            sub = self.subscription.copy()  #  monthly
+            #  monthly
+            sub = self.subscription.copy()
             sub.user_id = self.commission_user_1.id
 
             self.sub_product_tmpl.subscription_rule_ids.filtered(lambda s: s.plan_id == self.plan_month).fixed_price = 100

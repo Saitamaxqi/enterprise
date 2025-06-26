@@ -36,22 +36,7 @@ class SaleCommissionAchievementReport(models.Model):
 
     @api.model
     def _get_filtered_order_log_cte(self, users=None, teams=None):
-        date_from = None
-        date_to = None
-        if self.env.context.get('active_target_ids'):
-            target_ids = self.env['sale.commission.plan.target'].sudo().browse(self.env.context['active_target_ids'])
-            date_from = min(target_ids.mapped('date_from'))
-            date_to = max(target_ids.mapped('date_to'))
-
-        elif self.env.context.get('active_plan_ids'):
-            plan_ids = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_ids'])
-            date_from = min(plan_ids.mapped('date_from'))
-            date_to = max(plan_ids.mapped('date_to'))
-        company_count = len(self.env.companies.ids)
-        if company_count == 1:
-            company_condition = f"AND company_id = {self.env.companies.id}"
-        else:
-            company_condition = f"AND company_id IN {tuple(self.env.companies.ids)}"
+        date_from, date_to, company_condition = self._get_achievement_default_dates()
         today = fields.Date.today().strftime('%Y-%m-%d')
         date_from_condition = f"""AND event_date >= '{datetime.strftime(date_from, "%Y-%m-%d")}'""" if date_from else ""
         query = f"""
