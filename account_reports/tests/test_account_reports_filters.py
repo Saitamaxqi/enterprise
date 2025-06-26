@@ -1575,7 +1575,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
         # When the tax report isn't linked to a return type, it should fallback on 'this_month'
         self._assert_filter_date(
             generic_tax_report,
-            {},
+            {'no_report_reroute': True},
             {
                 'string': 'Sep 2024',
                 'period_type': 'month',
@@ -1595,7 +1595,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {},
+            {'no_report_reroute': True},
             {
                 'string': 'Aug 2024',
                 'period_type': 'month',
@@ -1610,7 +1610,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'period': -8, 'filter': 'previous_return_period'}},
+            {'date': {'period': -8, 'filter': 'previous_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Jan 2024',
                 'period_type': 'month',
@@ -1627,7 +1627,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'period': -1, 'filter': 'previous_return_period'}},
+            {'date': {'period': -1, 'filter': 'previous_return_period'}, 'no_report_reroute': True},
             {
                 'string': '2023',
                 'period_type': 'fiscalyear',
@@ -1645,7 +1645,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {},
+            {'no_report_reroute': True},
             {
                 'string': '01/01/2024 - 06/30/2024',
                 'period_type': 'return_period',
@@ -1663,7 +1663,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2024-08-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2024-08-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Aug 2024',
                 'period_type': 'month',
@@ -1678,7 +1678,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2023-08-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2023-08-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Aug 2023',
                 'period_type': 'month',
@@ -1693,7 +1693,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2021-08-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2021-08-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Aug 2021',
                 'period_type': 'month',
@@ -1708,7 +1708,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2025-08-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2025-08-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Aug 2025',
                 'period_type': 'month',
@@ -1723,7 +1723,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2025-02-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2025-02-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Feb 2025',
                 'period_type': 'month',
@@ -1738,7 +1738,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2024-12-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2024-12-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Dec 2024',
                 'period_type': 'month',
@@ -1753,7 +1753,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2023-11-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2023-11-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Nov 2023',
                 'period_type': 'month',
@@ -1768,7 +1768,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2023-03-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2023-03-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Mar 2023',
                 'period_type': 'month',
@@ -1784,7 +1784,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
         return_type.deadline_periodicity = 'trimester'
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2023-03-01', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2023-03-01', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Jan - Mar 2023',
                 'period_type': 'quarter',
@@ -1799,7 +1799,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
 
         self._assert_filter_date(
             generic_tax_report,
-            {'date': {'date_to': '2022-12-31', 'filter': 'custom_return_period'}},
+            {'date': {'date_to': '2022-12-31', 'filter': 'custom_return_period'}, 'no_report_reroute': True},
             {
                 'string': 'Oct - Dec 2022',
                 'period_type': 'quarter',
