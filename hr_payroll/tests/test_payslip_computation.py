@@ -236,8 +236,7 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date_end': Date.to_string(end + relativedelta(days=1)),
         })
 
-        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.richard_emp.id]))
-        payslip_run.generate_payslips(versions.ids)
+        payslip_run.generate_payslips(employee_ids=[self.richard_emp.id])
 
         payslip = self.env['hr.payslip'].search([
             ('employee_id', '=', self.richard_emp.id),

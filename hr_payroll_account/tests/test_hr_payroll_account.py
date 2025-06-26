@@ -150,8 +150,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         self.assertEqual(self.payslip_run.state, '01_draft', 'State not changed!')
 
         # I select employees and generate payslips by clicking on Select button wizard.
-        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id]))
-        self.payslip_run.generate_payslips(versions.ids)
+        self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id])
 
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
@@ -177,8 +176,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         """ Checking the process of payslip run when you create payslip in a payslip run and you validate the payslip(s). """
 
         # I select employees and generate payslips by clicking on Select button wizard.
-        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id]))
-        self.payslip_run.generate_payslips(versions.ids)
+        self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id])
 
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
@@ -204,8 +202,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         """ Checking the process of payslip run when you create payslip in a payslip run and you cancel the payslip(s). """
 
         # I select employees and generate payslips by clicking on Select button wizard.
-        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id]))
-        self.payslip_run.generate_payslips(versions.ids)
+        self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id])
 
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')
@@ -231,8 +228,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         """ Checking the process of payslip run when you create payslip in a payslip run and you cancel a payslip and confirm another. """
 
         # I select employees and generate payslips by clicking on Select button wizard.
-        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id]))
-        self.payslip_run.generate_payslips(versions.ids)
+        self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id])
 
         # Test only with payslip that were just generated. Remove the payslip from setup
         self.payslip_run.write({'slip_ids': [(3, self.hr_payslip_john.id)]})
@@ -264,8 +260,7 @@ class TestHrPayrollAccount(TestHrPayrollAccountCommon):
         """ Checking the process of payslip run when you create payslip in a payslip run and you cancel a payslip and after you confirm the payslip run. """
 
         # I select employees and generate payslips by clicking on Select button wizard.
-        versions = self.env["hr.version"].search(self.payslip_run._get_valid_versions_domain(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id]))
-        self.payslip_run.generate_payslips(versions.ids)
+        self.payslip_run.generate_payslips(employee_ids=[self.hr_employee_john.id, self.hr_employee_mark.id])
 
         # I verify if the payslip run has payslip(s).
         self.assertTrue(len(self.payslip_run.slip_ids) > 0, 'Payslip(s) not added!')

@@ -80,8 +80,7 @@ class TestSEPAFile(AccountTestInvoicingCommon):
 
         self.employee.action_trust_bank_accounts()
 
-        versions = self.env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[self.employee.id]))
-        payslip_run.generate_payslips(versions.ids)
+        payslip_run.generate_payslips(employee_ids=[self.employee.id])
         payslip_run.action_validate()
 
         sepa_wizard = (self.env['hr.payroll.payment.report.wizard'].with_company(self.company).create({

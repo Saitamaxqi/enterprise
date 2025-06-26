@@ -55,8 +55,7 @@ def _generate_payslips(env):
                 })
             payslip_runs = env['hr.payslip.run'].create(payslis_values)
             for payslip_run in payslip_runs:
-                versions = env["hr.version"].search(payslip_run._get_valid_versions_domain(employee_ids=[employee.id for employee in employees]))
-                payslip_run.generate_payslips(versions.ids)
+                payslip_run.generate_payslips(employee_ids=[employee.id for employee in employees])
             _logger.info('Validating payslips')
             # after many insertions in work_entries, table statistics may be broken.
             # In this case, query plan may be randomly suboptimal leading to slow search

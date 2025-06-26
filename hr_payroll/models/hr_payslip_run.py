@@ -113,7 +113,7 @@ class HrPayslipRun(models.Model):
             name += " - " + structure_id.name
         return name
 
-    def _get_valid_versions_domain(self, date_start=None, date_end=None, structure_id=None, company_id=None, employee_ids=None):
+    def _get_valid_versions(self, date_start=None, date_end=None, structure_id=None, company_id=None, employee_ids=None):
         date_start = date_start or self.date_start
         date_end = date_end or self.date_end
         structure = self.env["hr.payroll.structure"].browse(structure_id) if structure_id else self.structure_id
@@ -159,8 +159,7 @@ class HrPayslipRun(models.Model):
                     # Take only the first version of the first contract founded
                     employee_valid_versions |= version
             valid_versions |= employee_valid_versions
-        domain = [('id', 'in', valid_versions.ids)]
-        return domain
+        return valid_versions.ids
 
     @api.depends("structure_id")
     def _compute_schedule_pay(self):
@@ -251,23 +250,26 @@ class HrPayslipRun(models.Model):
 
     def action_payroll_hr_version_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):
         action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_payroll_hr_version_list_view_payrun')
-        action['domain'] = self._get_valid_versions_domain(
+        action['domain'] = [("id", "in", self._get_valid_versions(
             fields.Date.from_string(date_start),
             fields.Date.from_string(date_end),
             structure_id,
             company_id,
-        )
+        ))]
         return action
 
-    def generate_payslips(self, versions):
+    def generate_payslips(self, version_ids=None, employee_ids=None):
         self.ensure_one()
 
-        if not versions:
+        if employee_ids and not version_ids:
+            version_ids = self._get_valid_versions(employee_ids=employee_ids)
+
+        if not version_ids:
             raise UserError(self.env._("You must select employee(s) version(s) to generate payslip(s)."))
 
-        Payslip = self.env['hr.payslip']
+        valid_versions = self.env["hr.version"].browse(version_ids)
 
-        valid_versions = self.env["hr.version"].browse(versions)
+        Payslip = self.env['hr.payslip']
 
         if self.structure_id:
             valid_versions = valid_versions.filtered(lambda c: c.structure_type_id.id == self.structure_id.type_id.id)
@@ -307,7 +309,7 @@ class HrPayslipRun(models.Model):
 
         default_values = Payslip.default_get(Payslip.fields_get())
         payslips_vals = []
-        for version in valid_versions:
+        for version in valid_versions[::-1]:
             values = default_values | {
                 'name': self.env._('New Payslip'),
                 'employee_id': version.employee_id.id,

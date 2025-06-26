@@ -2604,8 +2604,7 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
             "date_start": str(first_of_month),
             "date_end": str(end_of_month)
         })
-        employee_domain = batch.sudo()._get_employees_domain()
-        batch.sudo().generate_payslips(cls.env['hr.employee'].search(employee_domain).ids)
+        batch.sudo().generate_payslips(batch.sudo()._get_valid_versions())
         batch.sudo().action_validate()
         cls.env.flush_all()
         return batch

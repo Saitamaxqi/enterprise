@@ -48,7 +48,7 @@ export class VersionPayrunListController extends ListController {
                 "generate_payslips",
                 [ids],
                 {
-                    versions: selectedVersions,
+                    version_ids: selectedVersions,
                 });
             if (this.props.context.raw_record) {
                 await this.openPayslips(ids);
