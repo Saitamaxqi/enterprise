@@ -119,7 +119,7 @@ test("make custom field use ai", async () => {
             expect(params.values.ai).toBe(true);
             return { system_prompt: "" };
         } else if (editCount === 2) {
-            expect(params.values.system_prompt).toBe("<p>My prompt<br></p>");
+            expect(params.values.system_prompt).toBe("<p>My prompt</p>");
         } else if (editCount === 3) {
             expect(params.values.ai).toBe(false);
         }
@@ -185,7 +185,7 @@ test("insert ai field", async () => {
         expect(params.operations[0].node.field_description.type).toBe("char");
         expect(params.operations[0].node.field_description.ai).toBe(true);
         expect(params.operations[0].node.field_description.system_prompt).toBe(
-            "<p>My prompt<br></p>",
+            "<p>My prompt</p>",
         );
         expect(params.operations[0].node.attrs.widget).toBe("ai_char");
     });
@@ -231,7 +231,7 @@ test("insert selection ai field", async () => {
         expect(params.operations[0].node.field_description.selection).toEqual([["val1", "val1"]]);
         expect(params.operations[0].node.field_description.ai).toBe(true);
         expect(params.operations[0].node.field_description.system_prompt).toBe(
-            "<p>My prompt<br></p>",
+            "<p>My prompt</p>",
         );
         expect(params.operations[0].node.attrs.widget).toBe("ai_selection");
     });
@@ -286,7 +286,7 @@ test("insert relational ai field", async () => {
         expect(params.operations[0].node.field_description.relation_id).toBe(1);
         expect(params.operations[0].node.field_description.ai).toBe(true);
         expect(params.operations[0].node.field_description.system_prompt).toBe(
-            "<p>My prompt<br></p>",
+            "<p>My prompt</p>",
         );
         expect(params.operations[0].node.attrs.widget).toBe("ai_many2one");
     });
