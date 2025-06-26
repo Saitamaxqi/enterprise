@@ -38,23 +38,23 @@ export class StockBarcodeKanbanRenderer extends KanbanRenderer {
             if (this.packageEnabled) {
                 return _t(
                     "Scan a %(bold_start)s transfer%(bold_end)s, a %(bold_start)s product%(bold_end)s, a %(bold_start)s lot %(bold_end)s or a %(bold_start)s package %(bold_end)s to filter your records",
-                    { bold_start: markup("<b>"), bold_end: markup("</b>") }
+                    { bold_start: markup`<b>`, bold_end: markup`</b>` }
                 );
             }
             return _t(
                 "Scan a %(bold_start)s transfer%(bold_end)s, a %(bold_start)s product%(bold_end)s, or a %(bold_start)s lot %(bold_end)s to filter your records",
-                { bold_start: markup("<b>"), bold_end: markup("</b>") }
+                { bold_start: markup`<b>`, bold_end: markup`</b>` }
             );
         }
         if (this.packageEnabled) {
             return _t(
                 "Scan a %(bold_start)s transfer%(bold_end)s, a %(bold_start)s product%(bold_end)s, or a %(bold_start)s package %(bold_end)s to filter your records",
-                { bold_start: markup("<b>"), bold_end: markup("</b>") }
+                { bold_start: markup`<b>`, bold_end: markup`</b>` }
             );
         }
         return _t(
             "Scan a %(bold_start)s transfer %(bold_end)s or a %(bold_start)s product %(bold_end)s to filter your records",
-            { bold_start: markup("<b>"), bold_end: markup("</b>") }
+            { bold_start: markup`<b>`, bold_end: markup`</b>` }
         );
     }
 }

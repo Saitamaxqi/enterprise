@@ -3,7 +3,6 @@ import { BackorderDialog } from "../components/backorder_dialog";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { Deferred } from "@web/core/utils/concurrency";
 import { _t } from "@web/core/l10n/translation";
-import { escape } from "@web/core/utils/strings";
 import { user } from "@web/core/user";
 import { markup } from "@odoo/owl";
 import { SignatureDialog } from "@web/core/signature/signature_dialog";
@@ -553,7 +552,9 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     get displaySignatureButton() {
         return (
-            this.record.picking_type_code === "outgoing" && !this.record.signature && this.groups.group_stock_sign_delivery
+            this.record.picking_type_code === "outgoing" &&
+            !this.record.signature &&
+            this.groups.group_stock_sign_delivery
         );
     }
 
@@ -747,7 +748,7 @@ export default class BarcodePickingModel extends BarcodeModel {
     }
 
     get displayReturnButton() {
-        return this.resModel === 'stock.picking' && this.isDone;
+        return this.resModel === "stock.picking" && this.isDone;
     }
 
     get useScanSourceLocation() {
@@ -1201,10 +1202,9 @@ export default class BarcodePickingModel extends BarcodeModel {
                     backorders.length === 1
                         ? _t("Following backorder was created:")
                         : _t("Following backorders were created:");
-                this.validateMessage = `<div>
-                    <p>${escape(this.validateMessage)}<br>${escape(phrase)}</p>
+                this.validateMessage = markup`<div>
+                    <p>${this.validateMessage}<br>${phrase}</p>
                 </div>`;
-                this.validateMessage = markup(this.validateMessage);
             }
             // If all is OK, displays a notification and goes back to the previous page.
             this.notification(this.validateMessage, { type: "success", buttons });
@@ -1642,7 +1642,10 @@ export default class BarcodePickingModel extends BarcodeModel {
             }
             return res;
         }, {});
-        return this.orm.call("stock.move", "post_barcode_process", [this.moveIds, quantitiesByMove]);
+        return this.orm.call("stock.move", "post_barcode_process", [
+            this.moveIds,
+            quantitiesByMove,
+        ]);
     }
 
     async _processLocationDestination(barcodeData) {

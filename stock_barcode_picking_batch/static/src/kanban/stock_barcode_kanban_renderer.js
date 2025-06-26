@@ -34,6 +34,8 @@ patch(StockBarcodeKanbanRenderer.prototype, {
             "get_action_picking_tree_ready_kanban",
             [this.activeId]
         );
+        // markup: help is coming from HTML field on ir.actions.actions
+        action.help = markup(action.help);
         return this.displayAction(action);
     },
 
@@ -46,11 +48,12 @@ patch(StockBarcodeKanbanRenderer.prototype, {
             "action_picking_batch_barcode_kanban",
             [this.activeId]
         );
+        // markup: help is coming from HTML field on ir.actions.actions
+        action.help = markup(action.help);
         return this.displayAction(action);
     },
 
     displayAction(action) {
-        action.help = markup(action.help);
         return this.actionService.doAction(action, {
             stackPosition: "replaceCurrentAction",
             additionalContext: this.props.list.evalContext,
