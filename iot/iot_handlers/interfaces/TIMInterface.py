@@ -32,9 +32,8 @@ else:
     DEP_LIB_PATH = file_path('iot_drivers/iot_handlers/lib/tim')
     USR_LIB_PATH = '/usr/lib'
     try:
-        with helpers.writable():
-            subprocess.call([f'sudo cp {DEP_LIB_PATH}/{TIMAPI_DEPENDANCY_LIB_V} {USR_LIB_PATH}'], shell=True)
-            subprocess.call([f'sudo ln -fs {USR_LIB_PATH}/{TIMAPI_DEPENDANCY_LIB_V} {USR_LIB_PATH}/{TIMAPI_DEPENDANCY_LIB}'], shell=True)
+        subprocess.call([f'sudo cp {DEP_LIB_PATH}/{TIMAPI_DEPENDANCY_LIB_V} {USR_LIB_PATH}'], shell=True)
+        subprocess.call([f'sudo ln -fs {USR_LIB_PATH}/{TIMAPI_DEPENDANCY_LIB_V} {USR_LIB_PATH}/{TIMAPI_DEPENDANCY_LIB}'], shell=True)
     except subprocess.CalledProcessError as e:
         _logger.error("Failed to link the TIM SDK dependent library: %s", e.output)
 
