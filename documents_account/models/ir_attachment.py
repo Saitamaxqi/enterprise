@@ -21,7 +21,7 @@ class IrAttachment(models.Model):
                 not self.env.context.get('no_document')
                 and (
                     move.move_type == 'entry'
-                    or move.attachment_ids and attachment.mimetype == 'application/xml'
+                    or attachment.mimetype == 'application/xml'
                 )
             ):
                 move._update_or_create_document(attachment.id)

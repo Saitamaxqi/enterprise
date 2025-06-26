@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import base64
+from unittest.mock import patch
 
 from odoo import Command
 from odoo.addons.documents_account.tests.common import DocumentsAccountTestCommon, TEXT, PDF
 from odoo.exceptions import UserError
 from odoo.tests.common import tagged
+from odoo.addons.account.tests.test_account_move_send import TestAccountMoveSendCommon
+from odoo.addons.documents.models.documents_document import DocumentsDocument
 
 
 @tagged('post_install', '-at_install', 'test_document_bridge')
@@ -450,7 +453,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         self.assertFalse(documents, "pdf should not be attached if not main attachment")
         attachment_pdf.register_as_main_attachment(force=False)
         documents = self.env['documents.document'].search([('attachment_id', '=', attachment_pdf.id)])
-        self.assertTrue(documents, "Pdf registered as main attachment did not create a document")
+        self.assertEqual(len(documents), 1, "Pdf registered as main attachment did not create a single document")
         setting.unlink()
 
     def test_embeddable_server_action_domain(self):
@@ -527,3 +530,27 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
             set((get_server_actions_for_company(company_2) - pre_existing[company_2]).mapped('name')),
             {'multi', f'multi {company_2.name}', 'single', f'single {company_2.name}'}
         )
+
+
+@tagged('post_install_l10n', 'post_install', '-at_install')
+class TestAccountMoveSendDocument(DocumentsAccountTestCommon, TestAccountMoveSendCommon):
+
+    def test_send_and_print_document_creation(self):
+        """
+        Makes sure the documents are created when attaching pdf and xml to the move
+        """
+        self.env.user.company_id.documents_account_settings = True
+        folder_test = self.env['documents.document'].create({'name': 'Bills', 'type': 'folder'})
+        move = self.init_invoice("out_invoice", amounts=[1000], post=True)
+        setting = self.env['documents.account.folder.setting'].create({
+            'folder_id': folder_test.id,
+            'journal_id': move.journal_id.id,
+        })
+
+        wizard = self.create_send_and_print(move)
+        wizard.action_send_and_print()
+        attachments = move.attachment_ids | move.invoice_pdf_report_id
+        documents = self.env['documents.document'].search([('attachment_id', 'in', attachments.ids)])
+        self.assertEqual(len(documents), len(attachments), "Each move attachment should create a corresponding document")
+        with patch.object(DocumentsDocument, '_get_is_multipage', return_value=False):
+            setting.unlink()
