@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { Component, markup, onWillStart, onWillUnmount } from "@odoo/owl";
+import { Component, onWillStart, onWillUnmount } from "@odoo/owl";
 import { useInactivity } from "../use_inactivity";
 
 export class RegisterPage extends Component {
@@ -40,10 +40,6 @@ export class RegisterPage extends Component {
                 sessionStorage.removeItem("visitorCreated");
             }
         });
-    }
-
-    get markupValue() {
-        return markup(this.props.plannedVisitorData.plannedVisitorMessage);
     }
 }
 

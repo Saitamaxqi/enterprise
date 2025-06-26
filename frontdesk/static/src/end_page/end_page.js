@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { Component, markup } from "@odoo/owl";
+import { Component } from "@odoo/owl";
 import { useInactivity } from "../use_inactivity";
 
 export class EndPage extends Component {
@@ -17,10 +17,6 @@ export class EndPage extends Component {
         if (!this.props.isMobile) {
             useInactivity(() => this.props.onClose(), 15000);
         }
-    }
-
-    get markupValue() {
-        return markup(this.props.plannedVisitorData?.plannedVisitorMessage);
     }
 }
 

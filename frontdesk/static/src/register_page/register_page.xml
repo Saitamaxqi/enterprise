@@ -5,7 +5,7 @@
         <div class="text-center">
             <h1 class="display-6 mb-0">You have been registered!</h1>
             <div class="mt-2 fs-5 text-break opacity-50">
-                <t t-if="props.plannedVisitorData?.plannedVisitorMessage" t-out="markupValue"/>
+                <t t-if="props.plannedVisitorData?.plannedVisitorMessage" t-out="props.plannedVisitorData.plannedVisitorMessage"/>
                 <t t-else="">
                     Please have a seat.
                     <t t-if="props.hostData">

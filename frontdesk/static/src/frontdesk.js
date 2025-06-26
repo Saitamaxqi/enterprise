@@ -11,6 +11,8 @@ import { QuickCheckIn } from "@frontdesk/quick_check_in/quick_check_in";
 
 import { Component, useState, onWillStart, markup } from "@odoo/owl";
 
+import { isHtmlEmpty } from "@web/core/utils/html";
+
 export class Frontdesk extends Component {
     static template = "frontdesk.Frontdesk";
     static components = {
@@ -29,6 +31,7 @@ export class Frontdesk extends Component {
         currentLang: String,
     };
     setup() {
+        this.isHtmlEmpty = isHtmlEmpty;
         this.state = useState({
             currentComponent: !this.props.isMobile ? WelcomePage : VisitorForm,
             plannedVisitors: [],
@@ -54,6 +57,8 @@ export class Frontdesk extends Component {
     async onWillStart() {
         this.frontdeskData = await rpc(`${this.frontdeskUrl}/get_frontdesk_data`);
         this.station = this.frontdeskData.station[0];
+        // markup: description is coming from HTML field on frontdesk.frontdesk
+        this.station.description = this.station.description ? markup(this.station.description) : "";
     }
 
     /* This method updates the plannedVisitors */
@@ -69,6 +74,10 @@ export class Frontdesk extends Component {
      */
     async _getPlannedVisitors() {
         this.state.plannedVisitors = await rpc(`${this.frontdeskUrl}/get_planned_visitors`);
+        for (const visitor of this.state.plannedVisitors) {
+            // markup: message is coming from HTML field on frontdesk.visitor
+            visitor.message = visitor.message ? markup(visitor.message) : "";
+        }
     }
 
     /* This method creates the visitor in the backend through rpc call */
@@ -145,7 +154,7 @@ export class Frontdesk extends Component {
 
     /**
      * @param {number} plannedVisitorId
-     * @param {string|false} plannedVisitorMessage
+     * @param {string||ReturnType<import("@odoo/owl").markup>} plannedVisitorMessage
      * @param {Array} plannedVisitorHosts
      */
     setPlannedVisitorData(plannedVisitorId, plannedVisitorMessage, plannedVisitorHosts) {
@@ -263,10 +272,6 @@ export class Frontdesk extends Component {
             plannedVisitors: this.state.plannedVisitors,
             theme: this.station.theme,
         };
-    }
-
-    get markupValue() {
-        return markup(this.station.description);
     }
 }
 
