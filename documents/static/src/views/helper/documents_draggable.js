@@ -1,7 +1,9 @@
+import { markup } from "@odoo/owl";
+
 import { _t } from "@web/core/l10n/translation";
 import { closestScrollableX, closestScrollableY } from "@web/core/utils/scrolling";
 import { DRAGGED_CLASS } from "@web/core/utils/draggable_hook_builder";
-import { escape } from "@web/core/utils/strings";
+import { createDocumentFragmentFromContent } from "@web/core/utils/html";
 import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
 import { toggleArchive } from "@documents/views/hooks";
 
@@ -282,17 +284,12 @@ export const useDraggableDocuments = makeDraggableHook({
     _createDnDElement(recordData, documentsCount) {
         const docCountPill =
             documentsCount > 1
-                ? `<div class="o_documents_dnd_pill bg-success border border-light rounded-circle p-1 text-center">${escape(
-                      documentsCount
-                  )}</div>`
+                ? markup`<div class="o_documents_dnd_pill bg-success border border-light rounded-circle p-1 text-center">${documentsCount}</div>`
                 : "";
-        return new DOMParser().parseFromString(
-            `
+        return createDocumentFragmentFromContent(markup`
             <span class="o_documents_dnd o_documents_dnd_info d-flex p-2">
-                <i class="o_documents_mimetype_icon o_image" data-mimetype=${escape(
-                    recordData.mimetype
-                )} title=${escape(recordData.mimetype)}></i>
-                <span class="o_documents_dnd_text ps-2">${escape(recordData.display_name)}</span>
+                <i class="o_documents_mimetype_icon o_image" data-mimetype=${recordData.mimetype} title=${recordData.mimetype}></i>
+                <span class="o_documents_dnd_text ps-2">${recordData.display_name}</span>
                 <div class="o_documents_dnd_pill_container d-flex position-absolute top-0 start-100 translate-middle">
                     <div class="o_documents_dnd_pill o_documents_dnd_modifier bg-info border border-light rounded-circle p-1">
                         <i class="fa fa-external-link-square"></i>
@@ -300,9 +297,7 @@ export const useDraggableDocuments = makeDraggableHook({
                     ${docCountPill}
                 </div>
             </span>
-        `,
-            "text/html"
-        ).body.firstChild;
+        `).body.firstChild;
     },
 
     _checkTargetValidity(targetFolder, model, dragMessage, dragMessageText, reset = false) {

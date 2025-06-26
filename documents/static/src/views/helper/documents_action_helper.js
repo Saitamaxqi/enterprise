@@ -1,6 +1,5 @@
 import { useService } from "@web/core/utils/hooks";
 import { Component, markup, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
-import { escape } from "@web/core/utils/strings";
 import { _t } from "@web/core/l10n/translation";
 
 export class DocumentsActionHelper extends Component {
@@ -49,7 +48,7 @@ export class DocumentsActionHelper extends Component {
                         return _t("Select a folder to upload a document");
                 }
             })();
-            return markup(`<p class="o_view_nocontent_smiling_face">${escape(helpMessage)}</p>`);
+            return markup`<p class="o_view_nocontent_smiling_face">${helpMessage}</p>`;
         }
         return this.props.noContentHelp;
     }

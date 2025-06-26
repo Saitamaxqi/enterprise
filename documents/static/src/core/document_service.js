@@ -270,9 +270,9 @@ export class DocumentService {
                       records.movableRecordIds.length
                   );
         if (records.nonMovableRecordIds.length) {
-            message += _t("<br/>At least one document hasn't been moved.");
+            message = markup`${message}<br/>{_t("At least one document hasn't been moved.")}`;
         }
-        this.notification.add(markup(message), {
+        this.notification.add(message, {
             type: records.nonMovableRecordIds.length ? "warning" : "success",
         });
     }

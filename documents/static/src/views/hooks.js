@@ -3,7 +3,7 @@ import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { escape } from "@web/core/utils/strings";
+import { htmlJoin } from "@web/core/utils/html";
 import { useSetupAction } from "@web/search/action_hook";
 import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { PdfManager } from "@documents/owl/components/pdf_manager/pdf_manager";
@@ -581,11 +581,9 @@ export function useEmbeddedAction() {
             if (result && typeof result === "object") {
                 if (Object.prototype.hasOwnProperty.call(result, "warning")) {
                     notification.add(
-                        markup(
-                            `<ul>${result["warning"]["documents"]
-                                .map((d) => `<li>${escape(d)}</li>`)
-                                .join("")}</ul>`
-                        ),
+                        markup`<ul>${htmlJoin(
+                            result["warning"]["documents"].map((d) => markup`<li>${d}</li>`)
+                        )}</ul>`,
                         {
                             title: result["warning"]["title"],
                             type: "danger",
