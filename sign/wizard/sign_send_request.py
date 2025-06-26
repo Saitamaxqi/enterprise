@@ -69,8 +69,16 @@ class SignSendRequest(models.TransientModel):
             signer_ids.append((0, 0, signer_vals))
         return signer_ids
 
+    def _selection_target_model(self):
+        return [(model.model, model.name) for model in self.env['ir.model'].sudo().search(
+            [
+                ('model', '!=', 'sign.request'),
+                ('is_mail_thread', '=', 'True'),
+            ]
+        )]
+
     activity_id = fields.Many2one('mail.activity', 'Linked Activity', readonly=True)
-    reference_doc = fields.Char(string="Linked to", readonly=True)
+    reference_doc = fields.Reference(string="Linked to", selection='_selection_target_model', readonly=True)
     has_default_template = fields.Boolean()
     template_id = fields.Many2one(
         'sign.template', required=True, ondelete='cascade',
@@ -112,6 +120,27 @@ class SignSendRequest(models.TransientModel):
         """
         Helper method to define default signer (see hr_recruitment_sign/wizard/sign_send_request.py).
         """
+        if self.reference_doc or self.env.context.get('default_reference_doc'):
+            ref = self.reference_doc
+            # If the reference document has a direct partner, such as in the contacts module.
+            if ref._name == 'res.partner':
+                return ref.id
+
+            # return the partner_id of the reference document
+            partner = 'partner_id' in ref and ref.partner_id
+            if partner:
+                return partner.id
+
+            # If the reference document has an user_id, some modules like MRP etc.
+            user = 'user_id' in ref and ref.user_id
+            if user and user.partner_id:
+                return user.partner_id.id
+
+            # If the reference document has an employee_id, some modules like hr_recruitment, expense, etc.
+            employee = 'employee_id' in ref and ref.employee_id
+            if employee and employee.work_contact_id:
+                return employee.work_contact_id.id
+
         return self.env.context.get("default_signer_id", self.env.user.partner_id.id)
 
     @api.onchange('template_id', 'set_sign_order')
@@ -176,6 +205,9 @@ class SignSendRequest(models.TransientModel):
         message = self.message
         message_cc = self.message_cc
         attachment_ids = self.attachment_ids
+        reference_doc = None
+        if self.reference_doc:
+            reference_doc = f"{self.reference_doc._name},{self.reference_doc.id}"
         sign_request = self.env['sign.request'].create({
             'template_id': template_id,
             'request_item_ids': [Command.create({
@@ -191,7 +223,7 @@ class SignSendRequest(models.TransientModel):
             'validity': self.validity,
             'reminder': self.reminder,
             'reminder_enabled': self.reminder_enabled,
-            'reference_doc': self.reference_doc or self.env.context.get('default_reference_doc'),
+            'reference_doc': reference_doc or self.env.context.get('default_reference_doc'),
             'certificate_reference': self.certificate_reference,
         })
         sign_request.message_subscribe(partner_ids=cc_partner_ids)
