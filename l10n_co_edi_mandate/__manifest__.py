@@ -5,7 +5,7 @@
     'category': 'Accounting/Localizations/EDI',
     'summary': 'Colombian EDI Mandate Invoicing extension',
     'author': 'Odoo Sa',
-    'depends': ['l10n_co_edi'],
+    'depends': ['l10n_co_dian'],
     'auto_install': True,
     'data': [
         'views/account_move_views.xml',
