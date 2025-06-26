@@ -1772,8 +1772,8 @@
     </record>
 
     <record id="hr_holidays_allocation_pl_al" model="hr.leave.allocation">
-        <field name="name">Parental Leaves</field>
-        <field name="holiday_status_id" ref="hr_holidays.hr_holiday_status_dv"/>
+        <field name="name">Maternity Time Off</field>
+        <field name="holiday_status_id" ref="hr_holidays.l10n_be_leave_type_maternity"/>
         <field name="number_of_days">10</field>
         <field name="employee_id" ref="employee_al"/>
         <field name="date_from" eval="time.strftime('%Y-01-01')"/>
