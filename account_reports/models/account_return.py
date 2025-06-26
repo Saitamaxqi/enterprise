@@ -641,7 +641,7 @@ class AccountReturn(models.Model):
     ####  State Actions
     ####################################################################################################
     def try_auto_review(self):
-        for account_return in self:
+        for account_return in self.filtered(lambda r: r.state == 'new'):
             if account_return.unresolved_check_count == 0 and account_return.check_ids.filtered(lambda r: r.bypassed):
                 account_return.action_review()
 
