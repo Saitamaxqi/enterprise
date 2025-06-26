@@ -127,20 +127,26 @@ class AccountOnlineAccount(models.Model):
             if journal.account_online_link_id:
                 journal.account_online_link_id.unlink()
 
-            # If currency of journal doesn't match the bank account's, look if the journal already has an entry in it.
-            # If it doesn't, set the journal's currency to bank account's currency if the journal is still empty.
-            # If it doesn't because it is not set (currency_id is not a required field on account_journal), then
-            # check if the existing entries use the same currency as the bank account. If it's the case, write the currency
-            # on the journal.
-            # Otherwise, prevent the assignment from happening.
+            # Ensure the journal's currency matches the bank account's currency.
             if self.currency_id.id != journal.currency_id.id:
-                existing_entries = self.env['account.bank.statement.line'].search([('journal_id', '=', journal.id)])
-                if not existing_entries or (not journal.currency_id and self.currency_id == existing_entries.currency_id):
-                    journal.currency_id = self.currency_id.id
-                else:
+                # If the journal already has entries in a different currency, raise an error.
+                statement_lines_in_other_currency = self.env['account.bank.statement.line'].search_count([
+                    ('journal_id', '=', journal.id),
+                    ('currency_id', 'not in', (False, self.currency_id.id)),
+                ], limit=1)
+                if statement_lines_in_other_currency:
                     raise UserError(_("Journal %(journal_name)s has been set up with a different currency and already has existing entries. "
                                       "You can't link selected bank account in %(currency_name)s to it",
                                       journal_name=journal.name, currency_name=self.currency_id.name))
+                else:
+                    # If the journal's default bank account has entries in a differente currency, silently do nothing to avoid an error.
+                    move_lines_in_other_currency = self.env['account.move.line'].search_count([
+                        ('account_id', '=', journal.default_account_id.id),
+                        ('currency_id', '!=', self.currency_id.id),
+                    ], limit=1)
+                    if not move_lines_in_other_currency:
+                        # If not set yet and there are no conflicting entries, set it.
+                        journal.currency_id = self.currency_id.id
         elif existing_journal:
             journal = existing_journal
         else:

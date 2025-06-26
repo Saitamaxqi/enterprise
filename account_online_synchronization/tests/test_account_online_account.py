@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from freezegun import freeze_time
 from unittest.mock import patch
 
-from odoo import fields, tools
+from odoo import Command, fields, tools
 from odoo.addons.account_online_synchronization.tests.common import AccountOnlineSynchronizationCommon
 from odoo.tests import tagged
 
@@ -13,6 +13,22 @@ _logger = logging.getLogger(__name__)
 
 @tagged('post_install', '-at_install')
 class TestAccountOnlineAccount(AccountOnlineSynchronizationCommon):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.bank_account_id = cls.env['account.account'].create({
+            'name': 'Bank Account',
+            'account_type': 'asset_cash',
+            'code': cls.env['account.account']._search_new_account_code('BNK100'),
+        })
+        cls.bank_journal = cls.env['account.journal'].create({
+            'name': 'A bank journal',
+            'default_account_id': cls.bank_account_id.id,
+            'type': 'bank',
+            'code': 'OFB1',
+        })
 
     @freeze_time('2023-08-01')
     def test_get_filtered_transactions(self):
@@ -325,3 +341,119 @@ class TestAccountOnlineAccount(AccountOnlineSynchronizationCommon):
         self.assertEqual(action['params']['mode'], 'link')
         self.assertNotEqual(action['id'], link_id)
         self.assertEqual(len(self.env['account.online.link'].search([('id', '=', link_id)])), 0)
+
+    @patch("odoo.addons.account_online_synchronization.models.account_online.AccountOnlineLink._update_connection_status", return_value={})
+    def test_assign_journal_with_currency_on_account_online_account(self, patched_update_connection_status):
+        self.env['account.move'].create([
+            {
+                'move_type': 'entry',
+                'date': fields.Date.from_string('2025-06-25'),
+                'journal_id': self.bank_journal.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'a line',
+                        'account_id': self.bank_account_id.id,
+                        'debit': 100,
+                        'currency_id': self.company_data['currency'].id,
+                    }),
+                    Command.create({
+                        'name': 'another line',
+                        'account_id': self.company_data['default_account_expense'].id,
+                        'credit': 100,
+                        'currency_id': self.company_data['currency'].id,
+                    }),
+                ],
+            },
+            {
+                'move_type': 'entry',
+                'date': fields.Date.from_string('2025-06-26'),
+                'journal_id': self.bank_journal.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'a line',
+                        'account_id': self.bank_account_id.id,
+                        'debit': 220,
+                        'currency_id': self.company_data['currency'].id,
+                    }),
+                    Command.create({
+                        'name': 'another line',
+                        'account_id': self.company_data['default_account_expense'].id,
+                        'credit': 220,
+                        'currency_id': self.company_data['currency'].id,
+                    }),
+                ],
+            },
+        ])
+
+        self.account_online_account.currency_id = self.company_data['currency'].id
+        self.account_online_account.with_context(active_id=self.bank_journal.id, active_model='account.journal')._assign_journal()
+        self.assertEqual(
+            self.bank_journal.currency_id.id,
+            self.company_data['currency'].id,
+        )
+        self.assertEqual(
+            self.bank_journal.default_account_id.currency_id.id,
+            self.company_data['currency'].id,
+        )
+
+    @patch("odoo.addons.account_online_synchronization.models.account_online.AccountOnlineLink._update_connection_status", return_value={})
+    def test_set_currency_on_journal_when_existing_currencies_on_move_lines(self, patched_update_connection_status):
+        bank_account_id = self.env['account.account'].create({
+            'name': 'Bank Account',
+            'account_type': 'asset_cash',
+            'code': self.env['account.account']._search_new_account_code('BNK100'),
+        })
+        bank_journal = self.env['account.journal'].create({
+            'name': 'A bank journal',
+            'default_account_id': bank_account_id.id,
+            'type': 'bank',
+            'code': 'OFB2',
+        })
+
+        self.env['account.move'].create([
+            {
+                'move_type': 'entry',
+                'date': fields.Date.from_string('2025-06-25'),
+                'journal_id': bank_journal.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'a line',
+                        'account_id': bank_account_id.id,
+                        'debit': 100,
+                        'currency_id': self.other_currency.id,
+                    }),
+                    Command.create({
+                        'name': 'another line',
+                        'account_id': self.company_data['default_account_expense'].id,
+                        'credit': 100,
+                        'currency_id': self.other_currency.id,
+                    }),
+                ],
+            },
+            {
+                'move_type': 'entry',
+                'date': fields.Date.from_string('2025-06-26'),
+                'journal_id': bank_journal.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'a line',
+                        'account_id': bank_account_id.id,
+                        'debit': 220,
+                        'currency_id': self.company_data['currency'].id,
+                    }),
+                    Command.create({
+                        'name': 'another line',
+                        'account_id': self.company_data['default_account_expense'].id,
+                        'credit': 220,
+                        'currency_id': self.company_data['currency'].id,
+                    }),
+                ],
+            },
+        ])
+
+        self.account_online_account.currency_id = self.company_data['currency'].id
+        self.account_online_account.with_context(active_id=bank_journal.id, active_model='account.journal')._assign_journal()
+
+        # Silently ignore the error and don't set currency on the journal and on the account
+        self.assertEqual(bank_journal.currency_id.id, False)
+        self.assertEqual(bank_journal.default_account_id.currency_id.id, False)
