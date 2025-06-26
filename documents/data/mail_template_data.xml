@@ -359,5 +359,33 @@
             <field name="lang">{{ object.lang }}</field>
             <field name="auto_delete" eval="True"/>
         </record>
+
+        <template id="folder_notification_move_in">
+            <p t-if="len(documents) == 1">
+                <span t-out="documents[0].display_name"/> was moved inside this folder.
+            </p>
+            <t t-else="">
+                <p>The following documents were moved inside this folder:</p>
+                <ul>
+                    <li t-foreach="documents" t-as="document">
+                        <span t-out="document.display_name"/>
+                    </li>
+                </ul>
+            </t>
+        </template>
+
+        <template id="folder_notification_move_out">
+            <p t-if="len(documents) == 1">
+                <span t-out="documents[0].display_name"/> was been moved outside this folder.
+            </p>
+            <t t-else="">
+                <p>The following documents were moved outside this folder:</p>
+                <ul>
+                    <li t-foreach="documents" t-as="document">
+                        <span t-out="document.display_name"/>
+                    </li>
+                </ul>
+            </t>
+        </template>
     </data>
 </odoo>

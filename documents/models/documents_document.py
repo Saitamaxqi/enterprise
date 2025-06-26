@@ -69,7 +69,8 @@ class DocumentsDocument(models.Model):
     previous_attachment_ids = fields.Many2many('ir.attachment', string="History")
 
     # Document
-    name = fields.Char('Name', copy=True, store=True, compute='_compute_name_and_preview', readonly=False, translate=True)
+    name = fields.Char('Name', copy=True, store=True, compute='_compute_name_and_preview', readonly=False,
+                       translate=True, tracking=True)
     active = fields.Boolean(default=True, string="Active")
     thumbnail = fields.Binary(
         readonly=False, store=True, attachment=True, compute='_compute_thumbnail', recursive=True)
@@ -2150,6 +2151,7 @@ class DocumentsDocument(models.Model):
         pinned_folders_start = self.filtered('is_company_root_folder')
 
         previous_owner_access_to_keep = {}
+        documents_per_initial_active = {}
 
         if (owner_id := vals.get('owner_id')) is not None:
             if not is_manager and any(d.owner_id != self.env.user for d in self):
@@ -2159,7 +2161,8 @@ class DocumentsDocument(models.Model):
             documents_changing_owner = self.filtered(lambda d: d.owner_id and d.owner_id.id != owner_id)
             previous_owner_access_to_keep.update(documents_changing_owner.grouped('owner_id'))
 
-        new_parent_folder, documents_to_move = self.browse(), self.browse()
+        new_parent_folder = self.browse()
+        documents_to_move, documents_to_move_per_initial_folder = self.browse(), self.browse()
 
         if folder_id := vals.get('folder_id'):
             new_parent_folder = self.browse(folder_id)
@@ -2187,11 +2190,14 @@ class DocumentsDocument(models.Model):
                     or doc.folder_id and not doc.folder_id.active and (not to_active or doc.folder_id not in self)
                 ):
                     raise UserError(_("It is not possible to move archived documents."))
+            documents_to_move_per_initial_folder = documents_to_move.grouped('folder_id')
 
-        if vals.get('active') is False:
-            if self.env.user.share:
-                raise UserError(_("You are not allowed to (un)archive documents."))
-            self.check_access('unlink')  # As archived gc leads to unlink after `deletion_delay` days.
+        if to_active := vals.get('active') is not None:
+            if to_active is False:
+                if self.env.user.share:
+                    raise UserError(_("You are not allowed to (un)archive documents."))
+                self.check_access('unlink')  # As archived gc leads to unlink after `deletion_delay` days.
+            documents_per_initial_active = self.grouped('active')
 
         attachment_id = vals.get('attachment_id')
         if attachment_id:
@@ -2266,10 +2272,24 @@ class DocumentsDocument(models.Model):
             self.attachment_id.check_access('read')
 
         if (new_active := vals.get('active')) is not None:
-            if not new_active and self.sudo().search([('id', 'child_of', self.ids), ('active', '=', True)]):
-                raise UserError(_('Operation not supported. Please use "Move to Trash" / `action_archive` instead.'))
-            if new_active and self.sudo().search([('id', 'parent_of', self.ids), ('active', '=', False)]):
-                raise UserError(_('Operation not supported. Please use "Restore" / `action_unarchive` instead.'))
+            if not new_active:
+                if self.sudo().search([('id', 'child_of', self.ids), ('active', '=', True)]):
+                    raise UserError(_('Operation not supported. Please use "Move to Trash" / `action_archive` instead.'))
+                if archived_documents := documents_per_initial_active.get(True):  # Log moved to trash instead of "archived"
+                    for folder, children in archived_documents.filtered('folder_id').grouped('folder_id').items():
+                        folder.sudo(self.env.user in children.owner_id).message_post(
+                            body=_('The following documents have been sent to trash: %(documents)s.',
+                                   documents=', '.join(children.mapped('display_name')))
+                        )
+            elif new_active:
+                if self.sudo().search([('id', 'parent_of', self.ids), ('active', '=', False)]):
+                    raise UserError(_('Operation not supported. Please use "Restore" / `action_unarchive` instead.'))
+                if restored_documents := documents_per_initial_active.get(False):  # Log restored instead of "unarchived"
+                    for folder, children in restored_documents.filtered('folder_id').grouped('folder_id').items():
+                        folder.sudo(self.env.user in children.owner_id).message_post(
+                            body=_('The following documents have been restored from the trash: %(documents)s.',
+                                   documents=', '.join(children.mapped('display_name')))
+                        )
 
         if not is_manager and self.filtered('is_company_root_folder') != pinned_folders_start:
             raise AccessError(_("Only Documents Managers can create in company folder."))
@@ -2299,6 +2319,18 @@ class DocumentsDocument(models.Model):
             # Propagate folder company unless passed as well (already done)
             if 'company_id' not in vals:
                 documents_to_sync._update_company(new_parent_folder.company_id.id)
+
+        if new_parent_folder and documents_to_move:
+            for folder, documents in documents_to_move.grouped('folder_id').items():
+                folder.message_post_with_source(
+                    source_ref='documents.folder_notification_move_in',
+                    render_values={"documents": documents},
+                )
+            for folder, documents in documents_to_move_per_initial_folder.items():
+                folder.message_post_with_source(
+                    source_ref='documents.folder_notification_move_out',
+                    render_values={"documents": documents},
+                )
 
         return write_result
 
