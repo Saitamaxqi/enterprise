@@ -4,9 +4,9 @@ import ctypes
 import os
 import logging
 import subprocess
-from platform import system
 
 from odoo.addons.iot_drivers.interface import Interface
+from odoo.addons.iot_drivers.tools.system import IS_WINDOWS
 from odoo.addons.iot_drivers.tools import helpers
 from odoo.tools.misc import file_path
 from odoo.addons.iot_drivers.iot_handlers.lib.ctypes_terminal_driver import import_ctypes_library
@@ -23,7 +23,7 @@ helpers.download_from_url(DOWNLOAD_URL, TIMAPI_ZIP_PATH)
 helpers.unzip_file(TIMAPI_ZIP_PATH, f'{LIB_PATH}/tim')
 
 # Make TIM SDK dependency libraries visible for the linker
-if system() == 'Windows':
+if IS_WINDOWS:
     LIB_PATH = file_path('iot_drivers/iot_handlers/lib')
     os.environ['PATH'] = file_path('iot_drivers/iot_handlers/lib/tim') + os.pathsep + os.environ['PATH']
 else:
@@ -39,7 +39,7 @@ else:
         _logger.error("Failed to link the TIM SDK dependent library: %s", e.output)
 
 # Import Odoo Timapi Library
-LIB_NAME = 'libsix_odoo_w.dll' if system() == 'Windows' else 'libsix_odoo_l.so'
+LIB_NAME = 'libsix_odoo_w.dll' if IS_WINDOWS else 'libsix_odoo_l.so'
 TIMAPI = import_ctypes_library('tim', LIB_NAME)
 
 # --- Setup library prototypes ---

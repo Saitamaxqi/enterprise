@@ -5,13 +5,13 @@ import ctypes
 import datetime
 import logging
 from abc import abstractmethod
-from platform import system
 from queue import Queue
 from time import sleep
 
 
 from odoo.addons.iot_drivers.driver import Driver
 from odoo.addons.iot_drivers.event_manager import event_manager
+from odoo.addons.iot_drivers.tools.system import IS_WINDOWS
 from odoo.tools.misc import file_path
 
 _logger = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ def import_ctypes_library(lib_subfolder, lib_name):
     Example: if the library is located under "iot_drivers/iot_handlers/lib/ctep/libeasyctep.so", then
     lib_subfolder = "ctep" and lib_name = "libeasyctep.so"
     """
-    if system() == 'Windows':
+    if IS_WINDOWS:
         supported_lib_extensions = '.dll'
         import_library_method = ctypes.WinDLL
     else:

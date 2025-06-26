@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from platform import system
 import ctypes
 from time import sleep
 from logging import getLogger
 
+from odoo.addons.iot_drivers.tools.system import IS_WINDOWS
 from odoo.addons.iot_drivers.iot_handlers.lib.ctypes_terminal_driver import CtypesTerminalDriver, import_ctypes_library, CTYPES_BUFFER_SIZE, create_ctypes_string_buffer
 
 
@@ -13,7 +13,7 @@ _logger = getLogger(__name__)
 CANCELLED_BY_POS = 2 # Error code returned when you press "cancel" in PoS
 
 # Load library
-LIB_NAME = 'libsix_odoo_w.dll' if system() == 'Windows' else 'libsix_odoo_l.so'
+LIB_NAME = 'libsix_odoo_w.dll' if IS_WINDOWS else 'libsix_odoo_l.so'
 TIMAPI = import_ctypes_library('tim', LIB_NAME)
 
 # int six_cancel_transaction(t_terminal_manager *terminal_manager)
