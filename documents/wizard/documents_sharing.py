@@ -1,9 +1,9 @@
 from odoo import fields, models, _
 
 
-class DocumentsAccessInvite(models.TransientModel):
-    _name = 'documents.access.invite'
-    _description = "Documents Access Invite"
+class DocumentsSharing(models.TransientModel):
+    _name = 'documents.sharing'
+    _description = "Documents Sharing"
 
     document_id = fields.Many2one('documents.document', string="Documents", required=True)
     partner_ids = fields.Many2many('res.partner', required=True)

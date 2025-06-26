@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="documents_access_invite_view_form" model="ir.ui.view">
-        <field name="name">documents.access.invite.view.form</field>
-        <field name="model">documents.access.invite</field>
+    <record id="documents_sharing_view_form" model="ir.ui.view">
+        <field name="name">documents.sharing.view.form</field>
+        <field name="model">documents.sharing</field>
         <field name="arch" type="xml">
             <form class="o_document_invite_wizard">
                 <sheet>

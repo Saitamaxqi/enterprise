@@ -211,7 +211,7 @@ export class DocumentsPermissionPanel extends Component {
             {
                 name: this.panelTitle,
                 type: "ir.actions.act_window",
-                res_model: "documents.access.invite",
+                res_model: "documents.sharing",
                 views: [[false, "form"]],
                 target: "new",
             },

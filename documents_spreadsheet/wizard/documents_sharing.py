@@ -1,8 +1,8 @@
 from odoo import _, api, fields, models
 
 
-class DocumentsAccessInvite(models.TransientModel):
-    _inherit = "documents.access.invite"
+class DocumentsSharing(models.TransientModel):
+    _inherit = "documents.sharing"
 
     error_message_spreadsheet = fields.Char(
         string="Error Message", compute="_compute_error_message_spreadsheet")

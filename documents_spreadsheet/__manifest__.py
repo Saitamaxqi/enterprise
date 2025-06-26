@@ -14,7 +14,7 @@
         'views/spreadsheet_template_views.xml',
         'views/sharing_templates.xml',
         'views/res_config_settings_views.xml',
-        'wizard/documents_access_invite_views.xml',
+        'wizard/documents_sharing_views.xml',
         'wizard/save_spreadsheet_template.xml',
     ],
     'demo': [
