@@ -25,26 +25,26 @@ class AppointmentType(models.Model):
         Returns onboarding template names and all linked necessary rendering information.
         '''
         return {
-            'personal_meeting': {
-                'description': _("Share this link to let others book a meeting in your calendar"),
+            'meeting': {
+                'description': _("Let others book a meeting in your calendar"),
                 'icon': '/appointment/static/src/img/guy.svg',
-                'template_key': 'personal_meeting',
-                'title': _("Personal Meeting"),
+                'template_key': 'meeting',
+                'title': _("Meeting"),
             },
             'video_call': {
-                'description': _("Schedule 30-minute calls in virtual rooms"),
+                'description': _("Schedule a video meeting in a virtual room with one or more participants"),
                 'icon': '/appointment/static/src/img/headset.svg',
                 'template_key': 'video_call',
                 'title': _("Video Call"),
             },
             'table_booking': {
-                'description': _("Let customers book tables (bars, restaurants, etc.)"),
+                'description': _("Let customers book a table in your restaurant or bar"),
                 'icon': '/appointment/static/src/img/foods.svg',
                 'template_key': 'table_booking',
                 'title': _("Table Booking"),
             },
             'book_resource': {
-                'description': _("Book a resource for a specific time slot (e.g. tennis court, etc.)"),
+                'description': _("Let customers book a resource such as a room, a tennis court, etc."),
                 'icon': '/appointment/static/src/img/clock.svg',
                 'template_key': 'book_resource',
                 'title': _("Book a Resource"),
@@ -52,8 +52,8 @@ class AppointmentType(models.Model):
         }
 
     def _get_appointment_type_template_values(self, template_key):
-        if template_key == 'personal_meeting':
-            return self._prepare_personal_meeting_template_values()
+        if template_key == 'meeting':
+            return self._prepare_meeting_template_values()
         elif template_key == 'video_call':
             return self._prepare_video_call_template_values()
         elif template_key == 'table_booking':
@@ -66,9 +66,9 @@ class AppointmentType(models.Model):
         return 'discuss'
 
     @api.model
-    def _prepare_personal_meeting_template_values(self):
+    def _prepare_meeting_template_values(self):
         return {
-            'name': _('Personal Meeting'),
+            'name': _('Meeting'),
             'appointment_duration': 1.0,
             'assign_method': 'resource_time',
             'avatars_display': 'show',

@@ -8,13 +8,13 @@ class AppointmentType(models.Model):
     def get_appointment_type_templates_data(self):
         return super().get_appointment_type_templates_data() | {
             'paid_consultation': {
-                'description': _("Make sure customers pay before they can take a slot in your calendar"),
+                'description': _("Let customers book a paid slot in your calendar with you"),
                 'icon': '/appointment_account_payment/static/src/img/rfq.svg',
                 'template_key': 'paid_consultation',
                 'title': _("Paid Consultation"),
             },
             'paid_seats': {
-                'description': _("Make customers pay a fee per person when booking your resources"),
+                'description': _("Let customers book a fee per person for activities such as a theater, etc."),
                 'icon': '/appointment_account_payment/static/src/img/chair.svg',
                 'template_key': 'paid_seats',
                 'title': _("Paid Seats"),
