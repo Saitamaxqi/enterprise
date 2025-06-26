@@ -1,6 +1,6 @@
 import secrets
 
-from odoo import models
+from odoo import api, models
 
 
 class IotChannel(models.AbstractModel):
@@ -19,6 +19,7 @@ class IotChannel(models.AbstractModel):
 
         return ws_channel
 
+    @api.model
     def send_message(self, message, message_type='iot_action'):
         """Send a message to a device via websocket.
 

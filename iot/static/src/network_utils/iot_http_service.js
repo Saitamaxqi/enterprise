@@ -3,6 +3,7 @@ import { post } from "@iot_base/network_utils/http";
 import { uuid } from "@web/core/utils/strings";
 import { IotWebsocket } from "@iot/network_utils/iot_websocket";
 import { _t } from "@web/core/l10n/translation";
+import { IotWebRtc } from "./iot_webrtc";
 
 /**
  * Class to handle IoT actions
@@ -16,12 +17,14 @@ export class IotAction {
      *
      * @param {import("@iot_base/network_utils/longpolling").IotLongpolling} longpolling Longpolling service
      * @param {import("@iot/network_utils/iot_websocket").IotWebsocket} websocket Websocket service
+     * @param {import("@iot/network_utils/iot_webrtc").IotWebRtc} webRtc WebRTC service
      * @param notification Notification service
      * @param orm ORM service
      */
-    constructor(longpolling, websocket, notification, orm) {
+    constructor(longpolling, websocket, webRtc, notification, orm) {
         this.longpolling = longpolling;
         this.websocket = websocket;
+        this.webRtc = webRtc;
         this.notification = notification;
         this.orm = orm;
     }
@@ -56,6 +59,10 @@ export class IotAction {
 
         // Define the connection types in the order of executions to try
         const connectionTypes = [
+            async () => {
+                await this.webRtc.onMessage(identifier, deviceIdentifier, actionId, onSuccess, onFailure);
+                await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, actionId);
+            },
             async () => {
                 if (
                     this.longpollingFailedTimestamp &&
@@ -93,6 +100,7 @@ export const iotHttpService = {
 
     start(env, { notification, orm, bus_service, iot_longpolling }) {
         const iotWebsocket = new IotWebsocket({ bus_service, orm });
+        const iotWebRtc = new IotWebRtc(bus_service, iotWebsocket);
 
         const longpolling = {
             sendMessage: iot_longpolling.sendMessage.bind(iot_longpolling),
@@ -102,9 +110,15 @@ export const iotHttpService = {
         const websocket = {
             sendMessage: iotWebsocket.sendMessage.bind(iotWebsocket),
             onMessage: iotWebsocket.onMessage.bind(iotWebsocket),
-        }
+        };
 
-        const iotAction = new IotAction(iot_longpolling, iotWebsocket, notification, orm);
+        const iotAction = new IotAction(
+            iot_longpolling,
+            iotWebsocket,
+            iotWebRtc,
+            notification,
+            orm
+        );
         const action = iotAction.action.bind(iotAction);
 
         // Expose only those functions to the environment

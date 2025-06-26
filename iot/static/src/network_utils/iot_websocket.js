@@ -28,7 +28,7 @@ export class IotWebsocket {
         messageId ??= uuid();
 
         await this.orm.call("iot.channel", "send_message", [
-            0, { iot_identifiers: [iotBoxIdentifier], session_id: messageId, ...message }, messageType
+            { iot_identifiers: [iotBoxIdentifier], session_id: messageId, ...message }, messageType
         ]);
 
         return messageId;

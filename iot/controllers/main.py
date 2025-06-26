@@ -11,6 +11,8 @@ import pprint
 import textwrap
 import zipfile
 
+from werkzeug.exceptions import NotFound
+
 from odoo import http
 from odoo.http import request, Response, Stream
 from odoo.modules import get_module_path
@@ -134,6 +136,25 @@ class IoTController(http.Controller):
                 'action_args': kwargs.get('action_args', {})
             },
         }, message_type='operation_confirmation')
+
+    @http.route('/iot/box/webrtc_answer', type='jsonrpc', auth='public')
+    def iot_box_webrtc_answer(self, iot_box_identifier, answer):
+        """Called by the IoT Box after receiving a WebRTC offer from a user.
+        The IoT box sends its WebRTC answer and we forward it to the user so
+        they can establish the connection.
+
+        :param iot_box_identifier: The identifier (serial number) of the IoT box
+        :param answer: The WebRTC answer object
+        """
+        box = self._search_box(iot_box_identifier)
+        if not box:
+            _logger.warning("No IoT Box found with identifier: '%s'. Request ignored", iot_box_identifier)
+            raise NotFound()
+
+        request.env['iot.channel'].send_message({
+            'iot_box_identifier': iot_box_identifier,
+            'answer': answer,
+        }, message_type='webrtc_answer')
 
     @http.route('/iot/setup', type='jsonrpc', auth='public')
     def update_box(self, iot_box, devices):
