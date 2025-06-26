@@ -20,11 +20,7 @@ class StockMove(models.Model):
                     'incoming_moves': lambda m: m.location_id == m.company_id.rental_loc_id,
                     'outgoing_moves': lambda m: m.location_dest_id == m.company_id.rental_loc_id
                 }
-                outgoing_done_moves = sale_line.move_ids.filtered(lambda m: m.location_dest_id == m.company_id.rental_loc_id and m.state == 'done')
                 incoming_done_moves = sale_line.move_ids.filtered(lambda m: m.location_id == m.company_id.rental_loc_id and m.state == 'done')
-                if outgoing_done_moves:
-                    amount_kits_delivered = outgoing_done_moves._compute_kit_quantities(sale_line.product_id, sale_line.product_uom_qty, bom, filters)
-                    sale_line.qty_delivered = -amount_kits_delivered    # because we only use outgoing moves, it will always return a negative value
                 if incoming_done_moves:
                     amount_kits_returned = incoming_done_moves._compute_kit_quantities(sale_line.product_id, sale_line.product_uom_qty, bom, filters)
                     current_qty_returned = amount_kits_returned - sale_line.qty_returned

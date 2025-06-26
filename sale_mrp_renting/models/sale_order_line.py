@@ -21,3 +21,29 @@ class SaleOrderLine(models.Model):
             qty_to_compute = outgoing_moves._compute_kit_quantities(self.product_id, order_qty, bom, filters)
             qty = bom.product_uom_id._compute_quantity(qty_to_compute, self.product_uom_id)
         return qty
+
+    def _compute_qty_delivered(self):
+        if not self._are_rental_pickings_enabled():
+            return super()._compute_qty_delivered()
+        todo_ids = []
+        self.fetch(['is_rental', 'product_id'])
+        for line in self:
+            product = line.product_id
+            if not (line.is_rental and 'phantom' in product.bom_ids.mapped('type')):
+                todo_ids.append(line.id)
+            elif outgoing_done_moves := line.move_ids.filtered(
+                lambda m: m.state == 'done' and m.location_dest_id == m.company_id.rental_loc_id,
+            ):
+                bom = self.env['mrp.bom']._bom_find(product, bom_type='phantom')[product]
+                filters = {
+                    'incoming_moves': lambda m: m.location_id == m.company_id.rental_loc_id,
+                    'outgoing_moves': lambda m: m.location_dest_id == m.company_id.rental_loc_id,
+                }
+                amount_kits_delivered = outgoing_done_moves._compute_kit_quantities(
+                    product, line.product_uom_qty, bom, filters,
+                )
+                # Because we only use outgoing moves, it will always return a negative value
+                line.qty_delivered = -amount_kits_delivered
+            else:
+                line.qty_delivered = 0
+        return super(SaleOrderLine, self.browse(todo_ids))._compute_qty_delivered()

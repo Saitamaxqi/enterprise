@@ -43,6 +43,7 @@ class TestRentalKits(TestRentalCommon):
 
     def test_flow_1(self):
         rental_order_1 = self.sale_order_id.copy()
+        rental_line_1 = rental_order_1.order_line
         rental_order_1.order_line.write({'product_uom_qty': 3, 'is_rental': True})
         rental_order_1.rental_start_date = self.rental_start_date
         rental_order_1.rental_return_date = self.rental_return_date
@@ -69,6 +70,11 @@ class TestRentalKits(TestRentalCommon):
         outgoing_picking.move_ids[1].quantity = 2
         Form.from_action(self.env, outgoing_picking.button_validate()).save().process()
         self.assertEqual(rental_order_1.order_line.qty_delivered, 1)
+        self.env.add_to_compute(rental_line_1._fields['qty_delivered'], rental_line_1)
+        self.assertEqual(
+            rental_line_1.qty_delivered, 1,
+            "Quantity delivered shouldn't change after recompute",
+        )
 
         outgoing_picking_2 = rental_order_1.picking_ids.filtered(lambda p: p.state == 'assigned' and p.picking_type_code == 'outgoing')
         self.assertEqual(outgoing_picking_2.move_ids.mapped('product_uom_qty'), [1.0, 2.0])
@@ -82,6 +88,11 @@ class TestRentalKits(TestRentalCommon):
         outgoing_picking_2.move_ids[1].quantity = 2
         Form.from_action(self.env, outgoing_picking_2.button_validate()).save().process()
         self.assertEqual(rental_order_1.order_line.qty_delivered, 2)
+        self.env.add_to_compute(rental_line_1._fields['qty_delivered'], rental_line_1)
+        self.assertEqual(
+            rental_line_1.qty_delivered, 2,
+            "Quantity delivered shouldn't change after recompute",
+        )
 
         incoming_picking.move_ids[0].quantity = 1
         incoming_picking.move_ids[1].quantity = 2
