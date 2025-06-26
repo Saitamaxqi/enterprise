@@ -76,7 +76,7 @@ patch(SalaryPackage.prototype, {
                 "hide_details": true,
             });
             const wishlistModalEl = this.el.querySelector("main[name='wishlist_modal_body']");
-            wishlistModalEl.innerHTML = "";
+            wishlistModalEl.textContent = "";
             wishlistModalEl.appendChild(modal_body);
         }
         const $submit_button = $("button#hr_cs_submit");

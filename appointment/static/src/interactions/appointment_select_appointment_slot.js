@@ -369,7 +369,7 @@ export class appointmentSlotSelect extends Interaction {
     }
 
     onClickShowCalendar(ev) {  
-        this.el.querySelector('.o_appointment_no_slot_overall_helper').innerHTML = "";
+        this.el.querySelector('.o_appointment_no_slot_overall_helper').textContent = "";
         this.el.querySelector('div.o_appointment_calendar').classList.remove('d-none');
         this.el.querySelector('div.o_appointment_calendar_form').classList.remove('d-none');
         localStorage.setItem("appointment.upcoming_events_ignore_until",
