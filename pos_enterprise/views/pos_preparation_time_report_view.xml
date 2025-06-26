@@ -5,7 +5,7 @@
         <field name="model">preparation.time.report</field>
         <field name="arch" type="xml">
             <search string="Preparation Time Report">
-                <filter name="last_30_days" string="Last 30 Days" domain="[('create_date', '&gt;', (context_today() - datetime.timedelta(days=30)))]"/>
+                <filter name="last_30_days" string="Last 30 Days" domain="[('create_date', '&gt;', '-30d')]"/>
             </search>
         </field>
     </record>

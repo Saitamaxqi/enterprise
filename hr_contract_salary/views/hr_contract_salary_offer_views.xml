@@ -170,7 +170,7 @@
                 <filter name="employees" domain="[('employee_id', '!=', False)]" string="Employees"/>
                 <filter name="applicants" domain="[('applicant_id', '!=', False)]" string="Applicants"/>
                 <separator/>
-                <filter name="expired" domain="[('offer_end_date', '&lt;', context_today().strftime('%%Y-%%m-%%d'))]" string="Expired"/>
+                <filter name="expired" domain="[('offer_end_date', '&lt;', 'today')]" string="Expired"/>
                 <separator/>
                 <filter name="refused" domain="[('state', '=', 'refused')]" string="Refused"/>
                 <group string="Group By">

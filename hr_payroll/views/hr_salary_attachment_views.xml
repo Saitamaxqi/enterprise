@@ -118,7 +118,7 @@
                 <filter string="Active" name="active_this_year"
                     domain="[
                         '&amp;', ('state', '=', 'open'),
-                                 ('date_start', '&lt;=', (context_today().strftime('%Y-%m-%d')))
+                                 ('date_start', '&lt;=', ('today'))
                     ]"/>
                 <filter string="Refunds" name="search_is_refund" domain="[('is_refund', '=', True)]"/>
                 <filter string="Employee" name="employee_id_group" context="{'group_by': 'employee_ids'}"/>

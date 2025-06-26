@@ -189,11 +189,11 @@
                 <filter string="Done" name="done" domain="[('state', '=', 'done')]"/>
                 <separator/>
                 <filter string="Completed" name="current"
-                        domain="[('date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                        domain="[('date_to', '&gt;', 'today')]"/>
                 <filter string="Ongoing" name="current"
-                        domain="[('date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                        domain="[('date_from', '&lt;', 'today'), ('date_to', '&gt;', 'today')]"/>
                 <filter string="Upcoming" name="current"
-                        domain="[('date_from', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                        domain="[('date_from', '&gt;', 'today')]"/>
                 <group string="Group By">
                     <filter string="Periodicity" name="periodicity" context="{'group_by':'periodicity'}"/>
                     <filter string="Type" name="type" context="{'group_by':'type'}"/>

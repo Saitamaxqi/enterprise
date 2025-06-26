@@ -79,21 +79,9 @@
                 <filter string="Failed Messages" name="filter_state_error"
                     domain="[('state', '=', 'error')]"/>
                 <separator/>
-                <filter string="Last Week" name="last_week" domain="[(
-                    'create_date','&gt;=', (
-                        context_today() - datetime.timedelta(days=7)
-                        ).strftime('%Y-%m-%d')
-                    )]"/>
-                <filter string="Last Month" name="last_month" domain="[(
-                    'create_date','&gt;=', (
-                        context_today() - datetime.timedelta(days=30)
-                        ).strftime('%Y-%m-%d')
-                    )]"/>
-                <filter string="Last Year" name="Last Year" domain="[(
-                    'create_date','&gt;=', (
-                        context_today() - datetime.timedelta(days=365)
-                        ).strftime('%Y-%m-%d')
-                    )]"/>
+                <filter string="Last Week" name="last_week" domain="[('create_date','&gt;=', 'today -7d')]"/>
+                <filter string="Last Month" name="last_month" domain="[('create_date','&gt;=', 'today -30d')]"/>
+                <filter string="Last Year" name="Last Year" domain="[('create_date','&gt;=', 'today -365d')]"/>
                 <separator/>
                 <filter string="Create Date" name="filter_create_date" date="create_date"/>
                 <group string="Group By">

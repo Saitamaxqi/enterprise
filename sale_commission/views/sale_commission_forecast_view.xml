@@ -8,12 +8,12 @@
                 <field name="user_id" string="Salesperson"/>
                 <field name="team_id" string="Sales Team"/>
                 <filter name="date_this_month" string="This Month" domain="[
-                        ('target_id.date_to', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(day=1), datetime.time(0,0,0)).to_utc())),
-                        ('target_id.date_to', '&lt;=', (datetime.datetime.combine(context_today() + relativedelta(months=1, day=1), datetime.time(0,0,0)).to_utc())),
+                        ('target_id.date_to', '&gt;=', '=1d'),
+                        ('target_id.date_to', '&lt;', '=1d +1m'),
                     ]"/>
                 <filter name="date_this_year" string="This Year" domain="[
-                        ('target_id.date_to', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(month=1, day=1), datetime.time(0,0,0)).to_utc())),
-                        ('target_id.date_to', '&lt;=', (datetime.datetime.combine(context_today() + relativedelta(years=1, month=1, day=1), datetime.time(0,0,0)).to_utc())),
+                        ('target_id.date_to', '&gt;=', '=1d =1m'),
+                        ('target_id.date_to', '&lt;', '=1d =1m +1y'),
                     ]"/>
                 <group string="Group By">
                     <filter string="Sales Team" name="team_id" context="{'group_by':'team_id'}"/>

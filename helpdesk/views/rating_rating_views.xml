@@ -135,7 +135,7 @@
                 <filter name="rating_text" position="move"/>
             </filter>
             <filter name="rated_on_last_7_days" position="before">
-                <filter name="rated_on_today" string="Today" domain="[('rated_on', '&gt;', datetime.datetime.combine(context_today() - datetime.timedelta(days=1), datetime.time(23, 59, 59)).to_utc())]"/>
+                <filter name="rated_on_today" string="Today" domain="[('rated_on', '&gt;=', 'today')]"/>
             </filter>
         </field>
     </record>

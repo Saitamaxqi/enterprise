@@ -50,10 +50,10 @@
                            domain="[
                                ('type', '=', 'transaction'),
                                '|',
-                               ('expiry_date', '&gt;', date or context_today().strftime('%Y-%m-%d')),
+                               ('expiry_date', '&gt;', date or 'today'),
                                ('expiry_date', '=', None),
                                '|',
-                               ('start_date', '&lt;=', date or context_today().strftime('%Y-%m-%d')),
+                               ('start_date', '&lt;=', date or 'today'),
                                ('start_date', '=', None)
                            ]"/>
                 </list>

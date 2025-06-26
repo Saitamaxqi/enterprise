@@ -39,7 +39,7 @@
                 <separator/>
                 <filter string="Overdue"
                         name="checks_payments_overdue_filter"
-                        domain="[('is_matched', '=', False), ('is_sent', '=', True), ('date', '&lt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                        domain="[('is_matched', '=', False), ('is_sent', '=', True), ('date', '&lt;=', 'today')]"/>
                 <separator/>
             </filter>
         </field>

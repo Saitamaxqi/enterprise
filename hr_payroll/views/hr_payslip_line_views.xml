@@ -91,8 +91,8 @@
                 <field name="date_from"/>
                 <filter string="Is Register" name="has_partner" domain="[('partner_id', '!=', False)]"/>
                 <separator/>
-                <filter string="Last Month" name="last_month" domain="[('date_from', '&gt;=', (context_today() + relativedelta(months=-1)).strftime('%Y-%m-%d'))]"/>
-                <filter string="Last Quarter" name="last_quarter" domain="[('date_from', '&gt;=', (context_today() + relativedelta(months=-3)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Last Month" name="last_month" domain="[('date_from', '&gt;=', 'today -1m')]"/>
+                <filter string="Last Quarter" name="last_quarter" domain="[('date_from', '&gt;=', 'today -3m')]"/>
                 <group col="8" colspan="4" string="Group By">
                     <filter string="Salary Rule Category" name="category_id" context="{'group_by':'category_id'}"/>
                     <filter string="Contribution Register" name="group_by_partner_id" context="{'group_by':'partner_id'}"/>

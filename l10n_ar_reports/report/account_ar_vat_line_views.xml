@@ -28,7 +28,7 @@
                     <filter name="groupby_document_type_id" string="Document Type" context="{'group_by': 'document_type_id'}"/>
                     <filter name="groupby_company_id" string="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
                </group>
-               <filter name="filter_date_last_month" invisible="1" string="Date: Last month" domain="[('date', '&lt;', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d')), ('date', '&gt;=', (context_today() + relativedelta(months=-1, day=1)).strftime('%Y-%m-%d'))]"/>
+               <filter name="filter_date_last_month" invisible="1" string="Date: Last month" domain="[('date', '&lt;', 'today +1d'), ('date', '&gt;=', '=1d -1m')]"/>
             </search>
          </field>
     </record>

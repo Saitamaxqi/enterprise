@@ -156,16 +156,16 @@
                     <field name="type_id"/>
                     <field name="state"/>
                     <field name="date_submission"/>
-                    <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False), ('date_to', '&lt;', context_today())]"/>
+                    <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False), ('date_to', '&lt;', 'today')]"/>
                     <filter name="done_returns" string="Done" domain="[('is_completed', '=', True)]"/>
                     <filter name="groupby_deadline" string="Deadline" context="{'group_by': 'date_deadline:month'}"/>
                     <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
                     <separator/>
                     <filter invisible="1" string="My Activities" name="filter_activities_my" domain="[('activity_user_id', '=', uid)]"/>
                     <separator invisible="1"/>
-                    <filter invisible="1" string="Late Activities" name="activities_overdue" domain="[('activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]" help="Show all records whose next activity date is past"/>
-                    <filter invisible="1" string="Today Activities" name="activities_today" domain="[('activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all" domain="[('activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter invisible="1" string="Late Activities" name="activities_overdue" domain="[('activity_date_deadline', '&lt;', 'today')]" help="Show all records whose next activity date is past"/>
+                    <filter invisible="1" string="Today Activities" name="activities_today" domain="[('activity_date_deadline', '=', 'today')]"/>
+                    <filter invisible="1" string="Future Activities" name="activities_upcoming_all" domain="[('activity_date_deadline', '&gt;', 'today')]"/>
                 </search>
             </field>
         </record>

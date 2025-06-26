@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='message_needaction']" position="after">
                 <filter string="Upcoming Appraisals" name="next_appraisal"
-                    domain="[('next_appraisal_date', '&lt;', (context_today() + relativedelta(days=90)).strftime('%Y-%m-%d'))]"/>
+                    domain="[('next_appraisal_date', '&lt;', '+90d')]"/>
             </xpath>
             <xpath expr="//filter[@name='group_start']" position="after">
                 <filter name="group_next_appraisal" string="Next Appraisal" domain="[]" context="{'group_by': 'next_appraisal_date'}"/>

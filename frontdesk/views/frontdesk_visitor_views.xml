@@ -192,8 +192,7 @@
                 <filter string="Drink to Serve" name="drink_to_serve"
                     domain="[('drink_ids', '!=', False), ('served', '=', False), ('state', '!=', 'canceled')]"/>
                 <filter string="Today" name="today"
-                    domain="[('check_in', '&gt;=', datetime.datetime.combine(context_today(),
-                    datetime.time(0,0,0))), ('check_in', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    domain="[('check_in', '&gt;=', 'today'), ('check_in', '&lt;', 'today +1d')]"/>
                 <filter string="Date" name="check_in" date="check_in"/>
                 <separator/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>

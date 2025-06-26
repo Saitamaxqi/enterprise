@@ -111,8 +111,8 @@
                     <field name="create_date"/>
                     <field name="date_closed"/>
                     <filter string="Last 365 Days Applicant" name="year" domain="[
-                        ('create_date', '>=', (context_today() + relativedelta(days=-365)).strftime('%Y-%m-%d')),
-                        ('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                        ('create_date', '>=', 'today -365d'),
+                        ('create_date', '&lt;', 'today +1d')]"/>
                     <separator/>
                     <separator/>
                     <filter name="filter_create_date" date="create_date" string="Application Date"/>

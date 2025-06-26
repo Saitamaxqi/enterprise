@@ -63,8 +63,8 @@
                     <field name="name" filter_domain="[('name', 'ilike', self)]"/>
                     <field name="date_from"/>
                     <filter string="Last 365 Days Payslip" name="year" domain="[
-                        ('date_from', '>=', (context_today() + relativedelta(days=-365)).strftime('%Y-%m-%d')),
-                        ('date_from', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                        ('date_from', '>=', 'today -365d'),
+                        ('date_from', '&lt;', 'today')]"/>
                     <separator/>
                     <filter name="filter_date_from" date="date_from"/>
                     <group string="Group By">

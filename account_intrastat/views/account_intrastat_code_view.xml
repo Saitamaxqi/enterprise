@@ -28,10 +28,10 @@
                     <field name="supplementary_unit"/>
                     <filter string="Active" domain="[
                         '|',
-                        ('expiry_date', '&gt;', context_today().strftime('%Y-%m-%d')),
+                        ('expiry_date', '&gt;', 'today'),
                         ('expiry_date', '=', None),
                         '|',
-                        ('start_date', '&lt;=', context_today().strftime('%Y-%m-%d')),
+                        ('start_date', '&lt;=', 'today'),
                         ('start_date', '=', None)
                     ]" name="in_use"/>
                     <filter string="Commodity" domain="[('type','=','commodity')]" name="type_commodity"/>

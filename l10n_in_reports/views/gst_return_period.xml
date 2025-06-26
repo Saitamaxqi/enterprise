@@ -366,11 +366,12 @@
         <field name="arch" type="xml">
             <search>
                 <filter name="recent_period_filter" string="Recent Period" domain="[
-                    '|',
-                    ('start_date', 'in', [context_today().strftime('%Y-%m-01'), (context_today() - relativedelta(months=1)).strftime('%Y-%m-01')]),
+                    '|', '|',
+                    ('start_date', '=', '=1d'),
+                    ('start_date', '=', '=1d +1m'),
                     '&amp;', '&amp;',
-                    ('start_date', '&gt;=', (context_today() - relativedelta(months=5)).strftime('%Y-%m-01')),
-                    ('end_date', '&lt;', (context_today() + relativedelta(months=3)).strftime('%Y-%m-01')),
+                    ('start_date', '&gt;=', '=1d -5m'),
+                    ('end_date', '&lt;', '=1d +3m'),
                     ('periodicity', '=', 'trimester')]"/>
                 <filter name="groupby_gstr3b_status" context="{'group_by' : 'gstr3b_status'}"/>
             </search>

@@ -49,8 +49,8 @@
                 <field name="date_end"/>
                 <field name="state"/>
                 <filter string="Last 365 Days Applicant" name="year" domain="[
-                    ('date_begin', '>=', (context_today() + relativedelta(days=-365)).strftime('%Y-%m-%d')),
-                    ('date_begin', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
+                    ('date_begin', '>=', '-365d'),
+                    ('date_begin', '&lt;', 'today +1d')]"/>
                 <separator/>
                 <separator/>
                 <filter name="filter_date_begin" date="date_begin"/>

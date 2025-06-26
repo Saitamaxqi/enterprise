@@ -98,10 +98,10 @@
                 <filter string="Open" domain="[('stage_id.fold', '=', False)]" name="is_open"/>
                 <filter string="Closed" domain="[('stage_id.fold', '=', True)]" name="is_close"/>
                 <filter name="closed_on" string="Closed On" date="close_date">
-                    <filter name="closed_on_today" string="Today" domain="[('close_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=1), datetime.time(23, 59, 59)).to_utc())]"/>
-                    <filter name="closed_on_last_7_days" string="Last 7 Days" domain="[('close_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=7), datetime.time(23, 59, 59)).to_utc())]"/>
-                    <filter name="closed_on_last_30_days" string="Last 30 Days" domain="[('close_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=30), datetime.time(23, 59, 59)).to_utc())]"/>
-                    <filter name="closed_on_last_365_days" string="Last 365 Days" domain="[('close_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=365), datetime.time(23, 59, 59)).to_utc())]"/>
+                    <filter name="closed_on_today" string="Today" domain="[('close_date', '&gt;=', 'today')]"/>
+                    <filter name="closed_on_last_7_days" string="Last 7 Days" domain="[('close_date', '&gt;=', 'today -7d + 1d')]"/>
+                    <filter name="closed_on_last_30_days" string="Last 30 Days" domain="[('close_date', '&gt;=', 'today -30d + 1d')]"/>
+                    <filter name="closed_on_last_365_days" string="Last 365 Days" domain="[('close_date', '&gt;=', 'today -365d + 1d')]"/>
                 </filter>
                 <separator />
                 <filter name="rating_satisfied" string="Happy" domain="[('rating_avg', '&gt;', 3.66)]" groups="helpdesk.group_use_rating"/>
@@ -109,10 +109,10 @@
                 <filter name="dissatisfied" string="Unhappy" domain="[('rating_avg', '&lt;', 2.33), ('rating_last_value', '!=', 0.0)]" groups="helpdesk.group_use_rating"/>
                 <separator/>
                 <filter string="Creation Date" date="create_date" name="creation_date">
-                    <filter name="create_date_today" string="Today" domain="[('create_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=1), datetime.time(23, 59, 59)).to_utc())]"/>
-                    <filter name="create_date_last_7_days" string="Last 7 Days" domain="[('create_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=7), datetime.time(23, 59, 59)).to_utc())]"/>
-                    <filter name="create_date_last_30_days" string="Last 30 Days" domain="[('create_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=30), datetime.time(23, 59, 59)).to_utc())]"/>
-                    <filter name="create_date_last_365_days" string="Last 365 Days" domain="[('create_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=365), datetime.time(23, 59, 59)).to_utc())]"/>
+                    <filter name="create_date_today" string="Today" domain="[('create_date', '&gt;=', 'today')]"/>
+                    <filter name="create_date_last_7_days" string="Last 7 Days" domain="[('create_date', '&gt;=', 'today -7d + 1d')]"/>
+                    <filter name="create_date_last_30_days" string="Last 30 Days" domain="[('create_date', '&gt;=', 'today -30d + 1d')]"/>
+                    <filter name="create_date_last_365_days" string="Last 365 Days" domain="[('create_date', '&gt;=', 'today -365d + 1d')]"/>
                 </filter>
                 <separator/>
                 <filter string="Archived" domain="[('active', '=', False)]" name="archive"/>
@@ -157,12 +157,12 @@
                     domain="[('activity_user_id', '=', uid)]"/>
                 <separator invisible="1"/>
                 <filter invisible="1" string="Late Activities" name="activities_overdue"
-                    domain="[('activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    domain="[('activity_date_deadline', '&lt;', 'today')]"
                     help="Show all records whose next activity date is past"/>
                 <filter invisible="1" string="Today Activities" name="activities_today"
-                    domain="[('activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    domain="[('activity_date_deadline', '=', 'today')]"/>
                 <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
-                    domain="[('activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                    domain="[('activity_date_deadline', '&gt;', 'today')]"/>
             </filter>
         </field>
     </record>
@@ -187,12 +187,12 @@
                     domain="[('activity_user_id', '=', uid)]"/>
                 <separator invisible="1"/>
                 <filter invisible="1" string="Late Activities" name="activities_overdue"
-                    domain="[('activity_date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"
+                    domain="[('activity_date_deadline', '&lt;', 'today')]"
                     help="Show all records whose next activity date is past"/>
                 <filter invisible="1" string="Today Activities" name="activities_today"
-                    domain="[('activity_date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    domain="[('activity_date_deadline', '=', 'today')]"/>
                 <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
-                    domain="[('activity_date_deadline', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                    domain="[('activity_date_deadline', '&gt;', 'today')]"/>
                 <separator/>
                 <filter string="SLA Failed" name="sla_failed" domain="[('sla_fail','!=',False)]" groups="helpdesk.group_use_sla"/>
                 <group string="Group By">

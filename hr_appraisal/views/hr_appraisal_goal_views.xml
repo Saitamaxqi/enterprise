@@ -115,7 +115,7 @@
                 <filter string="In Progress" name="in_progress" domain="[('progression', 'in', ('000','025','050','075'))]"/>
                 <filter string="Done" name="completed" domain="[('progression', '=', '100')]"/>
                 <separator/>
-                <filter string="Late" name="filter_late" domain="[('deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Late" name="filter_late" domain="[('deadline', '&lt;', 'today')]"/>
                 <filter string="Created On" name="filter_create_date" date="create_date"/>
                 <filter string="Deadline" name="filter_deadline" date="deadline"/>
                 <filter string='Deadline' name="deadline_group"  context="{'group_by': 'deadline'}"/>
