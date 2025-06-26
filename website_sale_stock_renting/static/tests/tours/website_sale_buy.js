@@ -79,7 +79,11 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
         },
         tourUtils.goToCheckout(),
         tourUtils.confirmOrder(),
-        ...tourUtils.payWithTransfer({ redirect: true }),
+        ...tourUtils.payWithTransfer({
+            redirect: true,
+            expectUnloadPage: true,
+            waitFinalizeYourPayment: true,
+        }),
     ]
 });
 

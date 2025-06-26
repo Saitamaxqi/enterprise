@@ -22,6 +22,7 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_wishlist", {
             content: "click on add to cart",
             trigger: ".o_wish_add",
             run: "click",
+            expectUnloadPage: true,
         },
         tourUtils.goToCart({ quantity: 1 }),
         {
