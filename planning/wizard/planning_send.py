@@ -57,7 +57,7 @@ class PlanningSend(models.TransientModel):
         employee_ids_without_work_email = self.employee_ids.filtered(lambda employee: not employee.work_email).ids
         if not employee_ids_without_work_email:
             return None
-        context = dict(self._context, force_email=True, form_view_ref='planning.hr_employee_view_form_simplified')
+        context = dict(self.env.context, force_email=True, form_view_ref='planning.hr_employee_view_form_simplified')
         return {
             'relation': 'hr.employee',
             'res_ids': employee_ids_without_work_email,

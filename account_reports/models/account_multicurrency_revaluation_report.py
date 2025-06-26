@@ -127,7 +127,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
             'multi': 'True',
             'target': 'new',
             'context': {
-                **self._context,
+                **self.env.context,
                 'multicurrency_revaluation_report_options': options,
             },
         }
@@ -373,8 +373,8 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
             search_condition=query.where_clause,
             select_part_not_an_exchange_move_id=select_part_not_an_exchange_move_id,
         )
-        self._cr.execute(full_query)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(full_query)
+        query_res_lines = self.env.cr.dictfetchall()
 
         rslt = []
         for query_res in query_res_lines:

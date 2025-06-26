@@ -64,7 +64,7 @@ class L10n_AuPayslipYtd(models.Model):
 
     def _auto_init(self):
         super()._auto_init()
-        create_index(self._cr, 'l10n_au_payslip_ytd_employee_date', 'l10n_au_payslip_ytd', ["employee_id", "start_date"])
+        create_index(self.env.cr, 'l10n_au_payslip_ytd_employee_date', 'l10n_au_payslip_ytd', ["employee_id", "start_date"])
 
     def _fiscal_start_date(self):
         for rec in self:

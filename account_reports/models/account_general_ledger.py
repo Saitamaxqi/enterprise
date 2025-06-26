@@ -59,7 +59,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             'views': [(view_id, 'form')],  # view_id will be False in case the default view is needed
             'res_model': target_record._name,
             'res_id': target_record.id,
-            'context': self._context,
+            'context': self.env.context,
         }
 
         if view_id is not None:

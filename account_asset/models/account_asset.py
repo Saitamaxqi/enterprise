@@ -513,7 +513,7 @@ class AccountAsset(models.Model):
         for vals in vals_list:
             if 'state' in vals and vals['state'] != 'draft' and not (set(vals) - set({'account_depreciation_id', 'account_depreciation_expense_id', 'journal_id'})):
                 raise UserError(_("Some required values are missing"))
-            if self._context.get('default_state') != 'model' and vals.get('state') != 'model':
+            if self.env.context.get('default_state') != 'model' and vals.get('state') != 'model':
                 vals['state'] = 'draft'
         new_recs = super(AccountAsset, self.with_context(mail_create_nolog=True)).create(vals_list)
         # if original_value is passed in vals, make sure the right value is set (as a different original_value may have been computed by _compute_value())
@@ -813,7 +813,7 @@ class AccountAsset(models.Model):
             'views': [(self.env.ref('account.view_move_tree').id, 'list'), (False, 'form')],
             'type': 'ir.actions.act_window',
             'domain': [('id', 'in', self.depreciation_move_ids.ids)],
-            'context': dict(self._context, create=False),
+            'context': dict(self.env.context, create=False),
         }
 
     def open_related_entries(self):
@@ -994,7 +994,7 @@ class AccountAsset(models.Model):
         if len(self) == 1:
             view_mode = ['form']
         views = [v for v in [(False, 'list'), (False, 'form')] if v[1] in view_mode]
-        ctx = dict(self._context)
+        ctx = dict(self.env.context)
         ctx.pop('default_move_type', None)
         action = {
             'name': _('Asset'),

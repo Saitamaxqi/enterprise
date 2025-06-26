@@ -47,8 +47,8 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
             total_values_dict.setdefault(column_group_key, dict.fromkeys(number_keys, 0.0))
 
         full_query = SQL(" UNION ALL ").join(query_list)
-        self._cr.execute(full_query)
-        results = self._cr.dictfetchall()
+        self.env.cr.execute(full_query)
+        results = self.env.cr.dictfetchall()
         for result in results:
             # Iterate over these results in order to fill the move_info_dict dictionary
             move_id = result['id']

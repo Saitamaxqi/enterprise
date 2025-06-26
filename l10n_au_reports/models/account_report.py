@@ -183,8 +183,8 @@ class L10n_AuReportHandler(models.AbstractModel):
             query_list.append(SQL("(%s)", query))
 
         full_query = SQL(" UNION ALL ").join(query_list)
-        self._cr.execute(full_query)
-        results = self._cr.dictfetchall()
+        self.env.cr.execute(full_query)
+        results = self.env.cr.dictfetchall()
 
         # small optional sanity check
         if raise_warning:

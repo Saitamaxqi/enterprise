@@ -67,7 +67,7 @@ class ResUsers(models.Model):
                     The output of this method will be: [[1, 3], [4], [2]]
         :rtype: List[List[int]]
         """
-        tz = timezone(self._context.get('tz') or 'UTC')
+        tz = timezone(self.env.context.get('tz') or 'UTC')
         start_dt = fields.Datetime.now().astimezone(tz)
         end_dt = start_dt + relativedelta.relativedelta(days=7, hour=23, minute=59, second=59)
         workers_per_first_working_date = defaultdict(list)

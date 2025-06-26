@@ -11,7 +11,7 @@ class ProjectTask(models.Model):
     @api.model
     def get_empty_list_help(self, help_message):
         default_alias = self.env.ref("project_enterprise_hr.mail_alias_todo", raise_if_not_found=False)
-        if default_alias and self.env.company.alias_domain_id and self._context.get('show_todo_mail_helper', False):
+        if default_alias and self.env.company.alias_domain_id and self.env.context.get('show_todo_mail_helper', False):
             bounce_mail = default_alias.alias_name + "@" + self.env.company.alias_domain_id.name
             help_message += Markup("<p>%s</p>") % (
                 _(

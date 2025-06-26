@@ -112,11 +112,11 @@ class L10nBgReportsTaxReportHandler(models.AbstractModel):
             tag_ids=list(tax_tags.keys()),
         )
 
-        self._cr.execute(query)
+        self.env.cr.execute(query)
 
         data = []
 
-        for query_res in self._cr.dictfetchall():
+        for query_res in self.env.cr.dictfetchall():
             data.append(build_result(query_res, tax_tags))
 
         return data

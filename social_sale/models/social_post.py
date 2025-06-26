@@ -34,8 +34,8 @@ class SocialPost(models.Model):
                             AND line.display_type = 'product'
                         GROUP BY move.source_id
                         """
-            self._cr.execute(query, [tuple(self.source_id.ids), tuple(self.env.companies.ids)])
-            query_res = self._cr.dictfetchall()
+            self.env.cr.execute(query, [tuple(self.source_id.ids), tuple(self.env.companies.ids)])
+            query_res = self.env.cr.dictfetchall()
             mapped_data = {datum['source_id']: datum['price_subtotal'] for datum in query_res}
 
             for post in self:

@@ -1422,8 +1422,8 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                     group_by=SQL("%s,", groupby_field_sql) if groupby_field_sql else SQL(),
                     )
 
-        self._cr.execute(query)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        query_res_lines = self.env.cr.dictfetchall()
 
         reversed_entry_ids = {res_line['reversed_entry_id'] for res_line in query_res_lines if res_line['reversed_entry_id']}
         reversed_moves_dict = self.env['account.move'].browse(reversed_entry_ids).grouped('id')

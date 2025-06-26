@@ -57,7 +57,7 @@ class CalendarEvent(models.Model):
                 'default_partner_ids': [],
                 'default_duration': 2,
                 'default_total_capacity_reserved': 2,
-                "search_default_appointment_type_id": self._context.get("appointment_type_id"),
+                "search_default_appointment_type_id": self.env.context.get("appointment_type_id"),
                 "no_breadcrumbs": True,
                 'hide_no_content_helper': True,
                 'from_pos_booking': True,

@@ -354,7 +354,7 @@ class WhatsappMessage(models.Model):
                             'msg_uid': msg_uid
                         })
                 if with_commit:
-                    self._cr.commit()
+                    self.env.cr.commit()
 
     def _handle_error(self, failure_type=False, whatsapp_error_code=False, error_message=False):
         """ Format and write errors on the message. """

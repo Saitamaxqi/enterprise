@@ -556,7 +556,7 @@ class PlanningSlot(models.Model):
         user_tz = pytz.timezone(self.env.user.tz
             or (resource.employee_id and resource.employee_id.tz)
             or resource.tz
-            or self._context.get('tz')
+            or self.env.context.get('tz')
             or self.env.user.company_id.resource_calendar_id.tz
             or 'UTC'
         )
@@ -589,7 +589,7 @@ class PlanningSlot(models.Model):
         user_tz = pytz.timezone(self.env.user.tz
                                 or (employee and employee.tz)
                                 or resource_id.tz
-                                or self._context.get('tz')
+                                or self.env.context.get('tz')
                                 or self.env.user.company_id.resource_calendar_id.tz
                                 or 'UTC')
 
@@ -606,7 +606,7 @@ class PlanningSlot(models.Model):
             calendar_id = resource.calendar_id or company.resource_calendar_id
             work_interval = calendar_id._work_intervals_batch(start, end)[False]
             intervals = [(date_start, date_stop) for date_start, date_stop, attendance in work_interval]
-            if not intervals and not self._context.get('planning_keep_default_datetime', False):
+            if not intervals and not self.env.context.get('planning_keep_default_datetime', False):
                 # If we are outside working hours, we do not edit the start/end_datetime
                 # Return the start/end times back at UTC and remove the tzinfo from the object
                 return self._get_non_working_days_bounds(start, end, resource)
@@ -764,7 +764,7 @@ class PlanningSlot(models.Model):
                                                                                        previous_template_id,
                                                                                        res.get('template_reset'))
         else:
-            if 'start_datetime' in fields_list and not self._context.get('planning_keep_default_datetime', False):
+            if 'start_datetime' in fields_list and not self.env.context.get('planning_keep_default_datetime', False):
                 start_datetime = fields.Datetime.from_string(res.get('start_datetime')) if res.get('start_datetime') else self._default_start_datetime()
                 end_datetime = fields.Datetime.from_string(res.get('end_datetime')) if res.get('end_datetime') else self._default_end_datetime()
                 start = pytz.utc.localize(start_datetime)
@@ -838,7 +838,7 @@ class PlanningSlot(models.Model):
             user_tz = pytz.timezone(
                 self.env.user.tz
                 or resource.tz
-                or self._context.get('tz')
+                or self.env.context.get('tz')
                 or self.env.user.company_id.resource_calendar_id.tz
                 or 'UTC'
             )
@@ -1212,8 +1212,8 @@ class PlanningSlot(models.Model):
     @api.model
     def auto_plan_ids(self, view_domain):
         # We need to make sure we have a specified either one shift in particular or a period to look into.
-        assert self._context.get('planning_slot_id') or (
-            self._context.get('default_start_datetime') and self._context.get('default_end_datetime')
+        assert self.env.context.get('planning_slot_id') or (
+            self.env.context.get('default_start_datetime') and self.env.context.get('default_end_datetime')
         ), "`default_start_datetime` and `default_end_datetime` attributes should be in the context"
 
         # Our goal is to assign empty shifts in this period. So first, let's get them all!
@@ -1479,8 +1479,8 @@ class PlanningSlot(models.Model):
             return [{}]
 
         # Get default start/end datetime if any.
-        default_start_datetime = (fields.Datetime.to_datetime(self._context.get('default_start_datetime')) or datetime.min).replace(tzinfo=pytz.utc)
-        default_end_datetime = (fields.Datetime.to_datetime(self._context.get('default_end_datetime')) or datetime.max).replace(tzinfo=pytz.utc)
+        default_start_datetime = (fields.Datetime.to_datetime(self.env.context.get('default_start_datetime')) or datetime.min).replace(tzinfo=pytz.utc)
+        default_end_datetime = (fields.Datetime.to_datetime(self.env.context.get('default_end_datetime')) or datetime.max).replace(tzinfo=pytz.utc)
 
         if self.env.context.get('current_scale') not in ['week', 'month']:
             start_datetime = max(default_start_datetime, start_datetime.replace(tzinfo=pytz.utc))
@@ -1595,7 +1595,7 @@ class PlanningSlot(models.Model):
         employee_ids_without_work_email = employees.filtered(lambda employee: not employee.work_email).ids
         if not employee_ids_without_work_email:
             return None
-        context = dict(self._context)
+        context = dict(self.env.context)
         context['force_email'] = True
         context['form_view_ref'] = 'planning.hr_employee_view_form_email'
         return {
@@ -1967,7 +1967,7 @@ class PlanningSlot(models.Model):
         return (self.env.user.tz
                 or self.employee_id.tz
                 or self.resource_id.tz
-                or self._context.get('tz')
+                or self.env.context.get('tz')
                 or self.company_id.resource_calendar_id.tz
                 or 'UTC')
 
@@ -2035,7 +2035,7 @@ class PlanningSlot(models.Model):
 
     def _read_group_role_id(self, roles, domain):
         dom_tuples = [(dom[0], dom[1]) for dom in domain if isinstance(dom, list) and len(dom) == 3]
-        if self._context.get('planning_expand_role') and ('start_datetime', '<') in dom_tuples and ('end_datetime', '>') in dom_tuples:
+        if self.env.context.get('planning_expand_role') and ('start_datetime', '<') in dom_tuples and ('end_datetime', '>') in dom_tuples:
             if ('role_id', '=') in dom_tuples or ('role_id', 'ilike') in dom_tuples:
                 filter_domain = self._expand_domain_m2o_groupby(domain, 'role_id')
                 return self.env['planning.role'].search(filter_domain)
@@ -2059,7 +2059,7 @@ class PlanningSlot(models.Model):
 
     def _expand_domain_dates(self, domain):
         filters = []
-        delta = get_timedelta(1, self._context.get("scale", "week"))
+        delta = get_timedelta(1, self.env.context.get("scale", "week"))
         for dom in domain:
             if len(dom) == 3 and dom[0] == 'start_datetime' and dom[1] == '<':
                 max_date = dom[2] if dom[2] else datetime.now()
@@ -2103,7 +2103,7 @@ class PlanningSlot(models.Model):
         employee_url_map.update(employee_with_backend._planning_get_url(start_datetime.date(), end_datetime.date()))
 
         cal_url = self._get_slot_resource_urls()
-        view_context = dict(self._context)
+        view_context = dict(self.env.context)
         view_context.update({
             'open_shift_available': not self.employee_id,
             'mail_subject': self.env._('Planning: new open shift available on'),
@@ -2494,8 +2494,8 @@ class PlanningSlot(models.Model):
     def gantt_resource_employees_working_periods(self, rows):
         if not self.env.user.has_group('planning.group_planning_manager'):
             return rows
-        start_time = fields.Datetime.to_datetime(self._context.get('default_start_datetime'))
-        end_time = fields.Datetime.to_datetime(self._context.get('default_end_datetime'))
+        start_time = fields.Datetime.to_datetime(self.env.context.get('default_start_datetime'))
+        end_time = fields.Datetime.to_datetime(self.env.context.get('default_end_datetime'))
         row_per_employee_id = {}
         for row in rows:
             if ("rows" in row):

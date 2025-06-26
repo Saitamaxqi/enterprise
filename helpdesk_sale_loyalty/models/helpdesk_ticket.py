@@ -23,7 +23,7 @@ class HelpdeskTicket(models.Model):
             'res_model': 'loyalty.card',
             'view_mode': 'list,form',
             'domain': [('id', 'in', self.coupon_ids.ids)],
-            'context': dict(self._context, create=False, edit=False, default_company_id=self.company_id.id),
+            'context': dict(self.env.context, create=False, edit=False, default_company_id=self.company_id.id),
         }
         if self.coupons_count == 1:
             action.update({

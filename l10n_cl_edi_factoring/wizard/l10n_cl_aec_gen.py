@@ -151,7 +151,7 @@ class AECGenerator(models.TransientModel):
         return account_entry
 
     def create_aec(self):
-        moves = self.env['account.move'].browse(self._context.get('active_ids'))
+        moves = self.env['account.move'].browse(self.env.context.get('active_ids'))
         new_moves = []
         for move in moves:
             new_moves.append(self._l10n_cl_create_aec(move, self.partner_id, self.invoice_date_due))

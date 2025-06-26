@@ -127,7 +127,7 @@ class DocumentsDocument(models.Model):
         # loop (because of the "multi" server action). When it is the case, we try
         # to redirect to a list of all created invoices instead of just the last
         # one, using the context.
-        context = dict(self._context, default_move_type=move_type)
+        context = dict(self.env.context, default_move_type=move_type)
         documents_active_ids = context.get('documents_active_ids')
         if context.get('active_model') != 'documents.document' or not documents_active_ids:
             invoice_ids = invoices.ids

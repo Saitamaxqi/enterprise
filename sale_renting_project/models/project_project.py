@@ -9,10 +9,10 @@ class ProjectProject(models.Model):
 
     def _get_sale_orders_domain(self, all_sale_orders):
         domain = super()._get_sale_orders_domain(all_sale_orders)
-        rental_filter = [('is_rental_order', '=', self._context.get('is_rental_order', False))]
+        rental_filter = [('is_rental_order', '=', self.env.context.get('is_rental_order', False))]
         return Domain.AND([domain, rental_filter])
 
     def _get_view_action(self):
-        if self._context.get('is_rental_order'):
+        if self.env.context.get('is_rental_order'):
             return self.env["ir.actions.act_window"]._for_xml_id("sale_renting.rental_order_action")
         return super()._get_view_action()

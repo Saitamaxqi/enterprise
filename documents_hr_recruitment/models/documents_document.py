@@ -32,7 +32,7 @@ class DocumentsDocument(models.Model):
             'view_mode': 'list,form',
             'views': [(False, "list"), (False, "form")],
             'domain': [('id', 'in', applicants.ids)],
-            'context': self._context,
+            'context': self.env.context,
         }
         if len(applicants) == 1:
             action.update(

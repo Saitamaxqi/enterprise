@@ -125,7 +125,7 @@ class L10n_Mx_Xml_PolizasXml_Polizas_Wizard(models.TransientModel):
     @property
     def _options(self):
         """ Get the options from the context """
-        return self._context.get('l10n_mx_xml_polizas_generation_options', {})
+        return self.env.context.get('l10n_mx_xml_polizas_generation_options', {})
 
     # ------------------------------
     #
@@ -246,7 +246,7 @@ class L10n_Mx_Xml_PolizasXml_Polizas_Wizard(models.TransientModel):
         self.env['account.move.line'].flush_model()
         self.env.cr.execute(query)
 
-        result = self._cr.dictfetchall()
+        result = self.env.cr.dictfetchall()
 
         return result
 

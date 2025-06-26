@@ -65,8 +65,8 @@ class L10n_ThPndReportHandler(models.AbstractModel):
             search_condition=query.where_clause,
         )
 
-        self._cr.execute(query)
-        res = self._cr.fetchall()
+        self.env.cr.execute(query)
+        res = self.env.cr.fetchall()
 
         return res
 

@@ -85,6 +85,6 @@ class ResPartner(models.Model):
             'parent_id': main_partner.id,
             'type': 'invoice',
         })
-        duplicated_partners_vat = self._context.get('duplicated_partners_vat', [])
+        duplicated_partners_vat = self.env.context.get('duplicated_partners_vat', [])
         remaining_vats = [pvat for pvat in duplicated_partners_vat if pvat != main_partner.vat]
         return self.env['account.ec.sales.report.handler']._get_duplicated_vat_partners(remaining_vats)

@@ -21,7 +21,7 @@ class L10n_BeWorkEntryDailyBenefitReport(models.Model):
     benefit_name = fields.Char('Benefit Name', readonly=True)
 
     def init(self):
-        drop_view_if_exists(self._cr, self._table)
+        drop_view_if_exists(self.env.cr, self._table)
         statement = SQL("""
             CREATE OR REPLACE VIEW %s AS (
                     SELECT work_entry.employee_id,
@@ -46,4 +46,4 @@ class L10n_BeWorkEntryDailyBenefitReport(models.Model):
                     HAVING sum(date_part('hour'::text, LEAST(day_serie.day_serie + '1 day'::interval, timezone(calendar.tz::text, work_entry.date_stop::timestamp with time zone)) - GREATEST(day_serie.day_serie, timezone(calendar.tz::text, work_entry.date_start::timestamp with time zone)))) > 0::double precision
             );
         """, SQL.identifier(self._table))
-        self._cr.execute(statement)
+        self.env.cr.execute(statement)

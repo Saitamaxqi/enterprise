@@ -24,9 +24,9 @@ class AccountIntrastatReportHandler(models.AbstractModel):
         self._check_date_range(options)
         report._init_currency_table(options)
         query = self._get_intrastat_report_query(report, options, 'intrastat_grouping')
-        self._cr.flush()
-        self._cr.execute(query)
-        return self._cr.dictfetchall()
+        self.env.cr.flush()
+        self.env.cr.execute(query)
+        return self.env.cr.dictfetchall()
 
     @api.model
     def be_intrastat_export_to_csv(self, options):

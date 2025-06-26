@@ -159,7 +159,7 @@ class L10n_PeStockPleWizard(models.TransientModel):
             ('create_date', '<', self.date_from),
         ]
         where_query = self.env['stock.valuation.layer']._where_calc(domain)
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             """
                 SELECT SUM(quantity)
                 FROM %(from_clause)s
@@ -169,7 +169,7 @@ class L10n_PeStockPleWizard(models.TransientModel):
             where_clause=where_query.where_clause,
         ))
 
-        valuation_data = self._cr.dictfetchall()
+        valuation_data = self.env.cr.dictfetchall()
         quantity = valuation_data[0]['sum']
         if not quantity:
             return {}
@@ -225,7 +225,7 @@ class L10n_PeStockPleWizard(models.TransientModel):
             ('create_date', '<', self.date_from),
         ]
         where_query = self.env['stock.valuation.layer']._where_calc(domain)
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             f"""
                 WITH latest_unit_cost AS (
                     SELECT DISTINCT ON ("stock_valuation_layer"."product_id")
@@ -270,7 +270,7 @@ class L10n_PeStockPleWizard(models.TransientModel):
             where_clause=where_query.where_clause,
         ))
         data = []
-        for line in self._cr.dictfetchall():
+        for line in self.env.cr.dictfetchall():
             quantity = line['sum']
             if quantity <= 0:
                 continue
@@ -385,4 +385,4 @@ class L10n_PeStockPleWizard(models.TransientModel):
                           )
 
         self.env.cr.execute(qu)
-        return self._cr.dictfetchall()
+        return self.env.cr.dictfetchall()

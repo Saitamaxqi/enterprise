@@ -35,7 +35,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             product_template_name = self.env['product.template']._field_to_sql('product_template', 'name')
             uom_name = self.env['uom.uom']._field_to_sql('uom', 'name')
             base_uom_name = self.env['uom.uom']._field_to_sql('base_uom', 'name')
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 '''
                 SELECT
                     product.id,
@@ -64,7 +64,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 encountered_product_ids=tuple(encountered_product_ids)
             ))
 
-            product_vals_list = self._cr.dictfetchall()
+            product_vals_list = self.env.cr.dictfetchall()
             duplicate_product_ids = set()
             empty_product_ids = set()
             for product_code, grouped_products in groupby(product_vals_list, key=lambda product: product['default_code']):

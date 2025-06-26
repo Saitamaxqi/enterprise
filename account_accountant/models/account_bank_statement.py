@@ -49,7 +49,7 @@ class AccountBankStatement(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         statements = super().create(vals_list)
-        if not self._context.get('skip_pdf_attachment_generation'):
+        if not self.env.context.get('skip_pdf_attachment_generation'):
             statements.filtered(lambda statement: statement.is_complete and (
                 not statement.attachment_ids
                 or not any(attachment.mimetype == 'application/pdf' for attachment in statement.attachment_ids)
@@ -74,7 +74,7 @@ class AccountBankStatementLine(models.Model):
 
     def action_save_new(self):
         action = self.env['ir.actions.act_window']._for_xml_id('account_accountant.action_bank_statement_line_form_bank_rec_widget')
-        action['context'] = {'default_journal_id': self._context['default_journal_id']}
+        action['context'] = {'default_journal_id': self.env.context['default_journal_id']}
         return action
 
     ####################################################
@@ -189,7 +189,7 @@ class AccountBankStatementLine(models.Model):
         # partner mapping
         self.env['account.reconcile.model'].flush_model()
         self.flush_recordset(['journal_id', 'transaction_details', 'payment_ref', 'company_id'])
-        self._cr.execute(SQL("""
+        self.env.cr.execute(SQL("""
             WITH matching_journal_ids AS (
                     SELECT account_reconcile_model_id,
                            ARRAY_AGG(account_journal_id) AS ids
@@ -237,7 +237,7 @@ class AccountBankStatementLine(models.Model):
              AND reco_model.mapped_partner_id IS NOT NULL
             """, reco_models.ids, tuple(self.ids)))
 
-        for st_line_id, mapped_partner_id in self._cr.fetchall():
+        for st_line_id, mapped_partner_id in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             st_line.partner_id = mapped_partner_id
 
@@ -253,7 +253,7 @@ class AccountBankStatementLine(models.Model):
             'amount_residual', 'reconciled', 'ref', 'move_name',
         ])
         self.flush_recordset(['payment_ref', 'partner_id', 'company_id'])
-        self._cr.execute(SQL("""
+        self.env.cr.execute(SQL("""
             SELECT st_line.id AS st_line_id,
                    ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS all_aml_ids,
                    SUM(aml.amount_residual) AS total_residual,
@@ -316,7 +316,7 @@ class AccountBankStatementLine(models.Model):
         # process then remove matched statement lines
         processed_st_line_ids = set()
         lines_to_assign_models_ids = set()
-        for st_line_id, all_aml_ids, total_residual, ref_aml_ids in self._cr.fetchall():
+        for st_line_id, all_aml_ids, total_residual, ref_aml_ids in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             if total_residual == st_line.amount:
                 st_line.set_line_bank_statement_line(all_aml_ids)
@@ -382,7 +382,7 @@ class AccountBankStatementLine(models.Model):
             'move_id', 'partner_id', 'company_id', 'currency_id',
             'amount', 'foreign_currency_id', 'amount_currency', 'payment_ref'
         ])
-        self._cr.execute(SQL('''
+        self.env.cr.execute(SQL('''
              -- Either the partner is set, and
              SELECT st_line.id AS st_line_id,
                     MIN(aml.id) AS aml_id
@@ -464,7 +464,7 @@ class AccountBankStatementLine(models.Model):
         ''', tuple(remaining_st_line_ids), tuple(remaining_st_line_ids)))
 
         # process then remove matched statement lines
-        for st_line_id, aml_id in self._cr.fetchall():
+        for st_line_id, aml_id in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             st_line.set_line_bank_statement_line(aml_id)
             if st_line.currency_id.is_zero(st_line.amount_residual):

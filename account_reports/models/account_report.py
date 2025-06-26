@@ -1556,7 +1556,7 @@ class AccountReport(models.Model):
     def _init_options_search_bar(self, options, previous_options):
         if self.search_bar:
             options['search_bar'] = True
-            if 'default_filter_accounts' not in self._context and 'filter_search_bar' in previous_options:
+            if 'default_filter_accounts' not in self.env.context and 'filter_search_bar' in previous_options:
                 options['filter_search_bar'] = previous_options['filter_search_bar']
 
     ####################################################
@@ -2192,8 +2192,8 @@ class AccountReport(models.Model):
         return query
 
     def _create_report_budget_temp_table(self, options):
-        self._cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name='account_report_budget_temp_aml'")
-        if self._cr.fetchone():
+        self.env.cr.execute("SELECT 1 FROM information_schema.tables WHERE table_name='account_report_budget_temp_aml'")
+        if self.env.cr.fetchone():
             return
 
         stored_aml_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report({
@@ -2207,7 +2207,7 @@ class AccountReport(models.Model):
             'credit': SQL("CASE WHEN (amount < 0) THEN -amount else 0 END"),
         })
 
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             """
                 -- Create a temporary table, dropping not null constraints because we're not filling those columns
                 CREATE TEMPORARY TABLE IF NOT EXISTS account_report_budget_temp_aml () inherits (account_move_line) ON COMMIT DROP;
@@ -2249,7 +2249,7 @@ class AccountReport(models.Model):
                 ('company_ids', 'in', self.get_report_company_ids(options)),
                 ('internal_group', 'in', ['income', 'expense']),
             ])
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 """
                 -- Insert dynamic combinations of account_id and budget_id into the temporary table
                 INSERT INTO account_report_budget_temp_aml (%(stored_aml_fields)s, budget_id)
@@ -2473,7 +2473,7 @@ class AccountReport(models.Model):
             'views': [(view_id, 'form')], # view_id will be False in case the default view is needed
             'res_model': target_record._name,
             'res_id': target_record.id,
-            'context': self._context,
+            'context': self.env.context,
         }
 
         if view_id is not None:
@@ -3779,10 +3779,10 @@ class AccountReport(models.Model):
             tail_query=tail_query,
         )
 
-        self._cr.execute(sql)
+        self.env.cr.execute(sql)
 
         rslt = {formula_expr: [] if current_groupby else {'result': 0, 'has_sublines': False} for formula_expr in formulas_dict.items()}
-        for query_res in self._cr.dictfetchall():
+        for query_res in self.env.cr.dictfetchall():
 
             formula = query_res['formula']
             rslt_dict = {'result': query_res['balance'], 'has_sublines': query_res['aml_count'] > 0}
@@ -3872,8 +3872,8 @@ class AccountReport(models.Model):
 
             # Fetch the results.
             formula_rslt = []
-            self._cr.execute(query)
-            all_query_res = self._cr.dictfetchall()
+            self.env.cr.execute(query)
+            all_query_res = self.env.cr.dictfetchall()
 
             total_sum = 0
             for query_res in all_query_res:
@@ -4065,13 +4065,13 @@ class AccountReport(models.Model):
             order_by_sql=SQL('ORDER BY %s', current_groupby_aml_sql) if current_groupby_aml_sql else SQL(),
             tail_query=tail_query if not tail_query_additional_groupby_where_sql else SQL(),
         )
-        self._cr.execute(query)
+        self.env.cr.execute(query)
 
         # Parse result
         rslt = {}
 
         res_by_prefix_account_id = {}
-        for query_res in self._cr.dictfetchall():
+        for query_res in self.env.cr.dictfetchall():
             # Done this way so that we can run similar code for groupby and non-groupby
             grouping_key = query_res['grouping_key'] if current_groupby else None
             account_id = query_res['account_id']
@@ -5750,7 +5750,7 @@ class AccountReport(models.Model):
             # Make sure -0.0 becomes 0.0
             value = abs(value)
 
-        if self._context.get('no_format'):
+        if self.env.context.get('no_format'):
             return value
 
         formatted_amount = formatLang(self.env, value, **formatLang_params)
@@ -5841,7 +5841,7 @@ class AccountReport(models.Model):
                 io.BytesIO(action_report._run_wkhtmltopdf(
                     bodies,
                     footer=footer.decode(),
-                    landscape=is_landscape or self._context.get('force_landscape_printing'),
+                    landscape=is_landscape or self.env.context.get('force_landscape_printing'),
                     specific_paperformat_args={
                         'data-report-margin-top': 10,
                         'data-report-header-spacing': 10,

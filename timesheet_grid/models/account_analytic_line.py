@@ -269,9 +269,9 @@ class AccountAnalyticLine(models.Model):
             is_timesheet_approver = self.env.user.has_group('hr_timesheet.group_hr_timesheet_approver')
             employees = self.env['hr.employee'].with_context(active_test=False).search([
                 ('id', 'in', self.employee_id.ids),
-                ('user_id', '!=', self._uid),
-                '|', ('parent_id.user_id', '=', self._uid),
-                '|', ('timesheet_manager_id', 'in', [False, self._uid]),
+                ('user_id', '!=', self.env.uid),
+                '|', ('parent_id.user_id', '=', self.env.uid),
+                '|', ('timesheet_manager_id', 'in', [False, self.env.uid]),
                 '|', ('id', 'in', self.env.user.employee_id.subordinate_ids.ids),
                 '&', ('parent_id', '=', False), ('timesheet_manager_id', '=', False),
             ])
@@ -330,7 +330,7 @@ class AccountAnalyticLine(models.Model):
             'res_model': 'account.analytic.line',
             'views': [(self.env.ref('timesheet_grid.timesheet_view_form_user_grid').id, 'form')],
             'context': {
-                **self._context,
+                **self.env.context,
                 'default_unit_amount': value,
                 'is_timesheet': True,
             },
@@ -371,9 +371,9 @@ class AccountAnalyticLine(models.Model):
         elif len(non_validated_timesheets) == 1:
             non_validated_timesheets[measure_field_name] += value
         else:
-            project_id = self._context.get('default_project_id', False)
+            project_id = self.env.context.get('default_project_id', False)
             field_name, model_name = self._get_timesheet_field_and_model_name()
-            field_value = self._context.get(f'default_{field_name}', False)
+            field_value = self.env.context.get(f'default_{field_name}', False)
             if not project_id and field_value:
                 project_id = self.env[model_name].browse(field_value).project_id.id
             if not project_id:
@@ -442,7 +442,7 @@ class AccountAnalyticLine(models.Model):
             project = task.project_id or self.env['project.project'].browse(self._get_favorite_project_id())
         result = bool(project) and project.check_can_start_timer()
         if result is True:
-            if "default_date" in self._context:
+            if "default_date" in self.env.context:
                 self = self.with_context(default_date=fields.Date.today())
             timesheet = self.create({
                 **vals,
@@ -471,7 +471,7 @@ class AccountAnalyticLine(models.Model):
             timesheet = self.create(self._get_new_timesheet_timer_vals())
             timesheet.action_timer_start()
         elif not self.user_timer_id.timer_start and self.display_timer:
-            if self.date != fields.Date.context_today(self) and not self._context.get('_from_action_timer'):
+            if self.date != fields.Date.context_today(self) and not self.env.context.get('_from_action_timer'):
                 timesheet = self.create(self._get_new_timesheet_timer_vals())
                 timesheet.with_context(_from_action_timer=True).action_timer_start()
             else:
@@ -667,10 +667,10 @@ class AccountAnalyticLine(models.Model):
             return expression.AND([
                 domain,
                 [
-                    ('user_id', '!=', self._uid),
-                    '|', ('employee_id.timesheet_manager_id', 'in', [False, self._uid]),
+                    ('user_id', '!=', self.env.uid),
+                    '|', ('employee_id.timesheet_manager_id', 'in', [False, self.env.uid]),
                     '|', ('employee_id', 'in', self.env.user.employee_id.subordinate_ids.ids),
-                    '|', ('employee_id.parent_id.user_id', '=', self._uid),
+                    '|', ('employee_id.parent_id.user_id', '=', self.env.uid),
                     '&', ('employee_id.timesheet_manager_id', '=', False), ('employee_id.parent_id', '=', False),
                 ],
             ])

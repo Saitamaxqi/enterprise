@@ -151,10 +151,10 @@ class ProductProduct(models.Model):
     def action_product_forecast_report(self):
         action = super().action_product_forecast_report()
 
-        if not self._context.get('fsm_task_id', False):
+        if not self.env.context.get('fsm_task_id', False):
             return action
 
-        task = self.env['project.task'].browse(self._context['fsm_task_id'])
+        task = self.env['project.task'].browse(self.env.context['fsm_task_id'])
         if task.sale_order_id:
             warehouse_id = task.sale_order_id.warehouse_id.id
         elif self.env.user.property_warehouse_id:

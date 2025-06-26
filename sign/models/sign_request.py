@@ -169,7 +169,7 @@ class SignRequest(models.Model):
             sign_request._populate_constant_items()
             self.env['sign.log'].sudo().create({'sign_request_id': sign_request.id, 'action': 'create'})
 
-        if not self._context.get('no_sign_mail'):
+        if not self.env.context.get('no_sign_mail'):
             sign_requests.send_signature_accesses()
         return sign_requests
 

@@ -100,7 +100,7 @@ class TestHelpdeskFlow(HelpdeskCommon):
             # the helpdesk user takes the ticket
             ticket1.user_id = self.helpdesk_user
             # we verify the ticket is correctly assigned
-            self.assertEqual(ticket1.user_id.id, ticket1._uid, "Assignation for ticket not correct")
+            self.assertEqual(ticket1.user_id.id, ticket1.env.uid, "Assignation for ticket not correct")
             self.assertEqual(ticket1.assign_hours, 17, "Assignation time for ticket not correct")
 
         with self._ticket_patch_now('2019-01-10 15:00:00'):

@@ -195,7 +195,7 @@ class AccountMove(models.Model):
             for move in move_batch:
                 move.l10n_in_update_move_using_irn()
             if not modules.module.current_test:
-                self._cr.commit()
+                self.env.cr.commit()
 
     # ========================================
     # Import Vendor Bills and Credit Notes

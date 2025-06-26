@@ -91,8 +91,8 @@ class AccountDebitNote(models.TransientModel):
             default_values['line_ids'] = [[5, 0, 0], [0, 0, {
                 'account_id': move.journal_id.default_account_id.id,
                 'name': _('Where it says: %(original_text)s should say: %(corrected_text)s',
-                    original_text=self._context.get('default_l10n_cl_original_text'),
-                    corrected_text=self._context.get('default_l10n_cl_corrected_text')),
+                    original_text=self.env.context.get('default_l10n_cl_original_text'),
+                    corrected_text=self.env.context.get('default_l10n_cl_corrected_text')),
                 'quantity': 1,
                 'price_unit': 0.0,
             }]]

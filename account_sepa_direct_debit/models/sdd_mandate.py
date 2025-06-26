@@ -151,7 +151,7 @@ class SddMandate(models.Model):
             self.payment_ids = False
             return
 
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             """
             SELECT payment.sdd_mandate_id,
                    ARRAY_AGG(DISTINCT move.id) AS invoice_ids
@@ -167,7 +167,7 @@ class SddMandate(models.Model):
             self.ids,
             tuple(self.env['account.move'].get_invoice_types()),
         ))
-        results = dict(self._cr.fetchall())
+        results = dict(self.env.cr.fetchall())
 
         for mandate in self:
             invoice_ids = results.get(mandate.id, [])

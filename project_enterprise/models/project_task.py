@@ -366,10 +366,10 @@ class ProjectTask(models.Model):
                AND t2.date_deadline > t1.planned_date_begin
           GROUP BY t1.id
 	    """
-        self._cr.execute(query, (tuple(self.ids),))
+        self.env.cr.execute(query, (tuple(self.ids),))
         depends_on_names_for_id = {
             group['id']: group['depends_on_names']
-            for group in self._cr.dictfetchall()
+            for group in self.env.cr.dictfetchall()
         }
         for task in self:
             depends_on_names = depends_on_names_for_id.get(task.id)
@@ -553,8 +553,8 @@ class ProjectTask(models.Model):
         additional_users = self._get_additional_users(domain)
         if additional_users:
             return additional_users
-        start_date = self._context.get('gantt_start_date')
-        scale = self._context.get('gantt_scale')
+        start_date = self.env.context.get('gantt_start_date')
+        scale = self.env.context.get('gantt_scale')
         if not (start_date and scale) or any(elem.field_expr == 'user_ids' for elem in Domain(domain).iter_conditions()):
             return additional_users
         domain = filter_domain_leaf(domain, lambda field: field not in ['planned_date_begin', 'date_deadline', 'state'])
@@ -573,7 +573,7 @@ class ProjectTask(models.Model):
         return self.search(domain_expand).user_ids.filtered(lambda user: user.active) | self.env.user
 
     def _group_expand_user_ids_domain(self, domain_expand):
-        project_id = self._context.get('default_project_id')
+        project_id = self.env.context.get('default_project_id')
         if project_id:
             domain_expand = expression.OR([[
                 ('project_id', '=', project_id),
@@ -589,10 +589,10 @@ class ProjectTask(models.Model):
 
     @api.model
     def _group_expand_project_ids(self, projects, domain):
-        start_date = self._context.get('gantt_start_date')
-        scale = self._context.get('gantt_scale')
-        default_project_id = self._context.get('default_project_id')
-        is_my_task = self._context.get('my_tasks')
+        start_date = self.env.context.get('gantt_start_date')
+        scale = self.env.context.get('gantt_scale')
+        default_project_id = self.env.context.get('default_project_id')
+        is_my_task = self.env.context.get('my_tasks')
         if not (start_date and scale) or default_project_id:
             return projects
         domain = self._expand_domain_dates(domain)
@@ -607,8 +607,8 @@ class ProjectTask(models.Model):
 
     @api.model
     def _group_expand_partner_ids(self, partners, domain):
-        start_date = self._context.get('gantt_start_date')
-        scale = self._context.get('gantt_scale')
+        start_date = self.env.context.get('gantt_start_date')
+        scale = self.env.context.get('gantt_scale')
         if not (start_date and scale):
             return partners
         domain = self._expand_domain_dates(domain)
@@ -622,7 +622,7 @@ class ProjectTask(models.Model):
         for dom in domain:
             if len(dom) == 3 and dom[0] == 'date_deadline' and dom[1] == '>=':
                 min_date = dom[2] if isinstance(dom[2], datetime) else datetime.strptime(dom[2], '%Y-%m-%d %H:%M:%S')
-                min_date = min_date - get_timedelta(1, self._context.get('gantt_scale'))
+                min_date = min_date - get_timedelta(1, self.env.context.get('gantt_scale'))
                 filters.append((dom[0], dom[1], min_date))
             else:
                 filters.append(dom)
@@ -727,7 +727,7 @@ class ProjectTask(models.Model):
         old_vals_per_task_id = {}
 
         company = self.company_id if len(self.company_id) == 1 else self.env.company
-        tz_info = self._context.get('tz') or 'UTC'
+        tz_info = self.env.context.get('tz') or 'UTC'
 
         user_to_assign = self.env['res.users']
 
@@ -754,9 +754,9 @@ class ProjectTask(models.Model):
         valid_intervals_per_user = self._web_gantt_get_valid_intervals(date_start, fetch_date_end, users, [], True)
         dependent_tasks_end_dates = self._fetch_last_date_end_from_dependent_task_for_all_tasks(tz_info)
 
-        scale = self._context.get("gantt_scale", "week")
+        scale = self.env.context.get("gantt_scale", "week")
         # In week and month scale, the precision set is used. In day scale we force the half day precison.
-        cell_part_from_context = self._context.get("cell_part")
+        cell_part_from_context = self.env.context.get("cell_part")
         cell_part = cell_part_from_context if scale in ["week", "month"] and cell_part_from_context in [1, 2, 4] else 2
         # In year scale, cells represent a month, a typical full-time work schedule involves around 160 to 176 hours per month
         delta_hours = 160 if scale == "year" else 24 / cell_part
@@ -1244,7 +1244,7 @@ class ProjectTask(models.Model):
 
     def _web_gantt_move_candidates(self, start_date_field_name, stop_date_field_name, dependency_field_name, dependency_inverted_field_name, search_forward, candidates_ids, consume_buffer, vals):
         self.ensure_one()
-        tz_info = self._context.get('tz') or 'UTC'
+        tz_info = self.env.context.get('tz') or 'UTC'
 
         old_vals_per_pill_id = self.web_gantt_init_old_vals_per_pill_id(vals)
         if 'user_ids' in vals:
@@ -1634,7 +1634,7 @@ class ProjectTask(models.Model):
             :return: A dictionary with the field_name of tasks as key and list of records.
         """
         results = {}
-        project_id = self._context.get('default_project_id', False)
+        project_id = self.env.context.get('default_project_id', False)
         # get domains
         result_domain = self._prepare_domains_for_all_deadlines(date_start, date_end)
         project_domain = result_domain['project']

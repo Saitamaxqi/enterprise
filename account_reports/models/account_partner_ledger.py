@@ -203,19 +203,19 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
 
         groupby_partners = {}
 
-        self._cr.execute(query)
-        for res in self._cr.dictfetchall():
+        self.env.cr.execute(query)
+        for res in self.env.cr.dictfetchall():
             assign_sum(res)
 
         # Correct the sums per partner, for the lines without partner reconciled with a line having a partner
         query = self._get_sums_without_partner(options)
 
-        self._cr.execute(query)
+        self.env.cr.execute(query)
         totals = {}
         for total_field in ['debit', 'credit', 'amount', 'balance']:
             totals[total_field] = {col_group_key: 0 for col_group_key in options['column_groups']}
 
-        for row in self._cr.dictfetchall():
+        for row in self.env.cr.dictfetchall():
             totals['debit'][row['column_group_key']] += row['debit']
             totals['credit'][row['column_group_key']] += row['credit']
             totals['amount'][row['column_group_key']] += row['amount']
@@ -329,13 +329,13 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 search_condition=query.where_clause,
             ))
 
-        self._cr.execute(SQL(" UNION ALL ").join(queries))
+        self.env.cr.execute(SQL(" UNION ALL ").join(queries))
 
         init_balance_by_col_group = {
             partner_id: {column_group_key: {} for column_group_key in options['column_groups']}
             for partner_id in partner_ids
         }
-        for result in self._cr.dictfetchall():
+        for result in self.env.cr.dictfetchall():
             init_balance_by_col_group[result['partner_id']][result['column_group_key']] = result
 
         return init_balance_by_col_group
@@ -632,8 +632,8 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         if limit:
             query = SQL('%s LIMIT %s ', query, limit)
 
-        self._cr.execute(query)
-        for aml_result in self._cr.dictfetchall():
+        self.env.cr.execute(query)
+        for aml_result in self.env.cr.dictfetchall():
             if aml_result['key'] == 'indirectly_linked_aml':
 
                 # Append the line to the partner found through the reconciliation.

@@ -17,7 +17,7 @@ class IrActionsReport(models.Model):
 
     @api.model
     def _render_qweb_html(self, report_ref, docids, data=None):
-        if self._context.get("studio"):
+        if self.env.context.get("studio"):
             data = data or dict()
             data["studio"] = True
             data['report_type'] = 'pdf'

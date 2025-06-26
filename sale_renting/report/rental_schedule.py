@@ -16,7 +16,7 @@ class SaleRentalSchedule(models.Model):
 
     @api.model
     def _read_group_product_ids(self, products, domain):
-        if self._context.get('restrict_renting_products'):
+        if self.env.context.get('restrict_renting_products'):
             return products
         all_rental_products = products.search(
             [('rent_ok', '=', True), ('type', '!=', 'combo')], limit=81

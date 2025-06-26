@@ -231,23 +231,23 @@ class Data_MergeModel(models.Model):
                 )
 
                 try:
-                    self._cr.execute(sql)
+                    self.env.cr.execute(sql)
                 except psycopg2.errors.UndefinedFunction:
                     raise UserError(self.env._('Missing required PostgreSQL extension: unaccent')) from None
 
-                rows = self._cr.fetchall()
+                rows = self.env.cr.fetchall()
                 ids = ids + [row[1] for row in rows]
 
             # Fetches the IDs of all the records who already matched (and are not merged),
             # as well as the discarded ones.
             # This prevents creating twice the same groups.
-            self._cr.execute("""
+            self.env.cr.execute("""
                 SELECT
                     ARRAY_AGG(res_id ORDER BY res_id ASC)
                 FROM data_merge_record
                 WHERE model_id = %s
                 GROUP BY group_id""", [dm_model.id])
-            done_groups_res_ids = [set(x[0]) for x in self._cr.fetchall()]
+            done_groups_res_ids = [set(x[0]) for x in self.env.cr.fetchall()]
 
             _logger.info('Query identification done after %s' % str(timeit.default_timer() - t1))
             t1 = timeit.default_timer()

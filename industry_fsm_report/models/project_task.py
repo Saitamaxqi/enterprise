@@ -105,8 +105,8 @@ class ProjectTask(models.Model):
 
     @api.model
     def _group_expand_worksheet_template_id(self, worksheets, domain):
-        start_date = self._context.get('gantt_start_date')
-        scale = self._context.get('gantt_scale')
+        start_date = self.env.context.get('gantt_start_date')
+        scale = self.env.context.get('gantt_scale')
         if not (start_date and scale):
             return worksheets
         domain = self._expand_domain_dates(domain)

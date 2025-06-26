@@ -10,7 +10,7 @@ class HrTimesheetStopTimerConfirmationWizard(models.Model):
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
-        timesheet = self.env['account.analytic.line'].browse(self._context.get('default_timesheet_id', False))
+        timesheet = self.env['account.analytic.line'].browse(self.env.context.get('default_timesheet_id', False))
         if timesheet:
             res['timesheet_name'] = timesheet.name if timesheet.name != "/" else ""
             if timesheet.user_timer_id:

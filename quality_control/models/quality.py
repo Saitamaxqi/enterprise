@@ -388,7 +388,7 @@ class QualityCheck(models.Model):
         else:
             action = self.env["ir.actions.actions"]._for_xml_id("quality_control.quality_alert_action_check")
             action['domain'] = [('id', 'in', self.alert_ids.ids)]
-            action['context'] = dict(self._context, default_check_id=self.id)
+            action['context'] = dict(self.env.context, default_check_id=self.id)
             return action
 
     def action_open_quality_check_wizard(self, current_check_id=None):

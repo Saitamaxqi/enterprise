@@ -119,7 +119,7 @@ class AccountSaftImportWizard(models.TransientModel):
         currency = self.env['res.currency'].with_context(active_test=False).search([('name', '=', default_currency_code.text)])
 
         account_diff_balance = {}
-        self._cr.execute("""
+        self.env.cr.execute("""
                     SELECT account.id,
                            SUM(aml.balance) AS balance
                       FROM account_move_line AS aml
@@ -131,7 +131,7 @@ class AccountSaftImportWizard(models.TransientModel):
                   GROUP BY account.id
                 """, [self.company_id.id, start_date])
         existing_balances = defaultdict(dict)
-        for balance_row in self._cr.dictfetchall():
+        for balance_row in self.env.cr.dictfetchall():
             existing_balances[balance_row['id']] = balance_row['balance']
 
         for account_dict in map_accounts.values():

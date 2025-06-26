@@ -427,8 +427,8 @@ class AccountAssetReportHandler(models.AbstractModel):
             include_draft=options.get('all_entries', False),
         )
 
-        self._cr.execute(sql)
-        results = self._cr.dictfetchall()
+        self.env.cr.execute(sql)
+        results = self.env.cr.dictfetchall()
         return results
 
     def _report_expand_unfoldable_line_assets_report_prefix_group(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):

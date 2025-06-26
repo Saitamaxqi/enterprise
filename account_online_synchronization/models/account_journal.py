@@ -376,7 +376,7 @@ class AccountJournal(models.Model):
 
     def open_action(self):
         # Extends 'account_accountant'
-        if not self._context.get('action_name') and self.type == 'bank' and self.bank_statements_source == 'online_sync':
+        if not self.env.context.get('action_name') and self.type == 'bank' and self.bank_statements_source == 'online_sync':
             self._consume_connection_state_details()
             return self.env['account.bank.statement.line']._action_open_bank_reconciliation_widget(
                 default_context={'search_default_journal_id': self.id},

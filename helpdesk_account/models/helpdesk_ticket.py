@@ -23,7 +23,7 @@ class HelpdeskTicket(models.Model):
             'res_model': 'account.move',
             'view_mode': 'list,form',
             'domain': [('id', 'in', self.invoice_ids.ids)],
-            'context': dict(self._context, default_partner_id=self.partner_id.id, default_move_type='out_refund', create=False)
+            'context': dict(self.env.context, default_partner_id=self.partner_id.id, default_move_type='out_refund', create=False)
         }
         if self.invoices_count == 1:
             action.update({

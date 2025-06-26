@@ -14,7 +14,7 @@ class HelpdeskSla(models.Model):
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)
         if 'team_id' in fields_list or 'stage_id' in fields_list:
-            default_team_id = self._context.get('default_team_id')
+            default_team_id = self.env.context.get('default_team_id')
             team = self.env['helpdesk.team'].browse(default_team_id)
             if not default_team_id:
                 defaults['team_id'] = team.id
@@ -57,7 +57,7 @@ class HelpdeskSla(models.Model):
     @api.depends('team_id')
     @api.depends_context('with_team_name')
     def _compute_display_name(self):
-        if not self._context.get('with_team_name'):
+        if not self.env.context.get('with_team_name'):
             return super()._compute_display_name()
         for sla in self:
             sla.display_name = f'{sla.name} - {sla.team_id.name}'

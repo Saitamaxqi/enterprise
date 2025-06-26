@@ -241,8 +241,8 @@ class IntrastatReportGoodsCustomHandler(models.AbstractModel):
 
     def _ee_get_query_res(self, options):
         query, params = self._prepare_query(options)
-        self._cr.execute(query, params)
-        query_res = self._cr.dictfetchall()
+        self.env.cr.execute(query, params)
+        query_res = self.env.cr.dictfetchall()
         query_res = self._fill_missing_values(query_res)
         query_res = self._ee_prepare_values_for_export(query_res)
         return query_res

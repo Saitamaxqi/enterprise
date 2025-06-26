@@ -9,8 +9,8 @@ class BaseDocumentLayout(models.TransientModel):
     def _get_render_information(self, styles):
         res = super()._get_render_information(styles)
         if (
-            self._context.get('active_model', '') == 'project.task'
-            and self._context.get('active_id')
+            self.env.context.get('active_model', '') == 'project.task'
+            and self.env.context.get('active_id')
             and res['doc'].worksheet_template_id
         ):
             task = res['doc']

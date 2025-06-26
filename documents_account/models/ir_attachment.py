@@ -18,7 +18,7 @@ class IrAttachment(models.Model):
             # - xml file after it has been succesfully registered as move attachment
             # Only in the case where the 'no_document' flag is set to False
             if (
-                not self._context.get('no_document')
+                not self.env.context.get('no_document')
                 and (
                     move.move_type == 'entry'
                     or move.attachment_ids and attachment.mimetype == 'application/xml'

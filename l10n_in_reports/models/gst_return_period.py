@@ -292,8 +292,8 @@ class L10n_InGstReturnPeriod(models.Model):
             context = {
                 'default_company_id': company.id,
                 'dialog_size': 'medium',
-                'active_id': self._context.get('active_id', self.id),
-                'active_model': self._context.get('active_model', 'l10n_in.gst.return.period'),
+                'active_id': self.env.context.get('active_id', self.id),
+                'active_model': self.env.context.get('active_model', 'l10n_in.gst.return.period'),
                 'next_gst_action': next_gst_action,
             } if next_gst_action else False
             form = self.env.ref("l10n_in_reports.view_get_otp_gstr_validate_send_otp")
@@ -312,7 +312,7 @@ class L10n_InGstReturnPeriod(models.Model):
 
     @api.ondelete(at_uninstall=False)
     def _restrict_delete_on_gstr_status(self):
-        if self._context.get('force_delete'):
+        if self.env.context.get('force_delete'):
             _logger.info(
                 'Force deleted GST Return Period %s by %s (%s)',
                 self.ids,
@@ -1256,7 +1256,7 @@ class L10n_InGstReturnPeriod(models.Model):
         for return_period in process_gstr1:
             return_period.send_gstr1()
             if len(process_gstr1) > 1:
-                self._cr.commit()
+                self.env.cr.commit()
         if process_gstr1:
             self.env.ref("l10n_in_reports.ir_cron_to_check_gstr1_status")._trigger(fields.Datetime.now() + timedelta(minutes=1))
         if len(process_gstr1) != len(gstr1_sending):

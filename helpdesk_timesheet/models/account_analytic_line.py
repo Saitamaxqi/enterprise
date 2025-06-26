@@ -140,7 +140,7 @@ class AccountAnalyticLine(models.Model):
         super()._update_existing_timers(vals)
 
     def _get_timesheet_field_and_model_name(self):
-        if self._context.get('default_helpdesk_ticket_id', False):
+        if self.env.context.get('default_helpdesk_ticket_id', False):
             return 'helpdesk_ticket_id', 'helpdesk.ticket'
         return super()._get_timesheet_field_and_model_name()
 

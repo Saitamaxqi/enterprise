@@ -175,7 +175,7 @@ class IrModel(models.Model):
 
     @api.model
     def name_create(self, name):
-        if self._context.get('studio'):
+        if self.env.context.get('studio'):
             (main_model, _) = self.studio_model_create(name)
             return main_model.id, main_model.display_name
         return super().name_create(name)
@@ -612,7 +612,7 @@ class IrModelFields(models.Model):
 
     @property
     def _rec_names_search(self):
-        if self._context.get('studio'):
+        if self.env.context.get('studio'):
             return ['name', 'field_description', 'model', 'model_id.name']
         return ['field_description']
 

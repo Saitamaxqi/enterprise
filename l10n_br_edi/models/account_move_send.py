@@ -95,4 +95,4 @@ class AccountMoveSend(models.AbstractModel):
                     invoice.l10n_br_edi_error = False
 
                 if self._can_commit():
-                    self._cr.commit()
+                    self.env.cr.commit()

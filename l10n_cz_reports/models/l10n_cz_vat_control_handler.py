@@ -263,8 +263,8 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
             orderby_clause=SQL("ORDER BY %s", SQL(", ").join(groupby_clauses)) if groupby_clauses else SQL(),
             tail_query=SQL(tail_query),
         )
-        self._cr.execute(query)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        query_res_lines = self.env.cr.dictfetchall()
 
         if not current_groupby:
             return build_result_dict(query_res_lines)

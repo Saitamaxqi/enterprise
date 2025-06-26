@@ -289,7 +289,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         )
 
         self.env.cr.execute(sql_query)
-        query_results = self._cr.dictfetchall()
+        query_results = self.env.cr.dictfetchall()
 
         # Don't expand individual AMLs in the Initial Balance
         disable_expand = bool((not next_groupby or next_groupbys[0] == 'id') and options['trial_balance_column_type'] == 'initial_balance')

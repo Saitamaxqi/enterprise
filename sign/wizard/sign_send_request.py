@@ -225,6 +225,6 @@ class SignSendRequest(models.TransientModel):
         request = self.create_request()
         if self.activity_id:
             self._activity_done()
-        if self._context.get('sign_all'):
+        if self.env.context.get('sign_all'):
             return request.go_to_signable_document(request.request_item_ids)
         return request.go_to_signable_document()

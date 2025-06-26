@@ -694,7 +694,7 @@ class HelpdeskTeam(models.Model):
                 ('rating', '>=', RATING_LIMIT_MIN),
                 ('consumed', '=', True),
             ])
-            tickets = HelpdeskTicket.search([('id', 'in', helpdesk_ratings.mapped('res_id')), ('user_id', '=', self._uid)])
+            tickets = HelpdeskTicket.search([('id', 'in', helpdesk_ratings.mapped('res_id')), ('user_id', '=', self.env.uid)])
             today_rating_stat = {'count': 0.0, 'score': 0.0}
             rating_stat = {**today_rating_stat}
             for rating in helpdesk_ratings:
@@ -843,11 +843,11 @@ class HelpdeskTeam(models.Model):
 
     def action_view_rating_today(self):
         #  call this method of on click "Customer Rating" button on dashbord for today rating of teams tickets
-        return self.search([('member_ids', 'in', self._uid)])._action_view_rating(period='today', user_id=self._uid)
+        return self.search([('member_ids', 'in', self.env.uid)])._action_view_rating(period='today', user_id=self.env.uid)
 
     def action_view_rating_7days(self):
         #  call this method of on click "Customer Rating" button on dashbord for last 7days rating of teams tickets
-        return self.search([('member_ids', 'in', self._uid)])._action_view_rating(period='seven_days', user_id=self._uid)
+        return self.search([('member_ids', 'in', self.env.uid)])._action_view_rating(period='seven_days', user_id=self.env.uid)
 
     def action_view_team_rating(self):
         self.ensure_one()
@@ -999,7 +999,7 @@ class HelpdeskTeam(models.Model):
     def action_view_helpdesk_rating(self):
         action = self.env['ir.actions.act_window']._for_xml_id('helpdesk.rating_rating_action_helpdesk')
 
-        ticket_ids = self.env['helpdesk.ticket']._search([('team_id.company_id', 'in', self._context.get('allowed_company_ids'))])
+        ticket_ids = self.env['helpdesk.ticket']._search([('team_id.company_id', 'in', self.env.context.get('allowed_company_ids'))])
         action['domain'] = expression.AND([
             ast.literal_eval(action.get('domain', '[]')),
             [('res_id', 'in', list(ticket_ids))],

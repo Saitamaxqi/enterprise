@@ -48,7 +48,7 @@ class AccountJournal(models.Model):
         })
 
     def open_action_batch_payment(self):
-        ctx = self._context.copy()
+        ctx = self.env.context.copy()
         ctx.update({'journal_id': self.id, 'default_journal_id': self.id})
         return {
             'name': _('Create Batch Payment'),

@@ -161,7 +161,7 @@ class WhatsappAccount(models.Model):
     def _add_ir_log(self, name, message, func=''):
         self.ensure_one()
         self.env.flush_all()
-        db_name = self._cr.dbname
+        db_name = self.env.cr.dbname
         # Use a new cursor to avoid rollback that could be caused by an upper method
         try:
             db_registry = Registry(db_name)

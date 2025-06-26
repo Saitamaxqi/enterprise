@@ -75,8 +75,8 @@ class BritishCISTaxReportCustomHandler(models.AbstractModel):
                 )
             )
 
-        self._cr.execute(SQL(" UNION ALL ").join(queries))
-        result = self._cr.dictfetchall()
+        self.env.cr.execute(SQL(" UNION ALL ").join(queries))
+        result = self.env.cr.dictfetchall()
         unregistered_partners = list({
             id for column_group_result in result
             for id in column_group_result['unregistered_partners']

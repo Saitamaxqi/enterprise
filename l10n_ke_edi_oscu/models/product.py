@@ -445,7 +445,7 @@ class ProductUnspscCode(models.Model):
             for code, code_dict in cls_list.items() if code not in existing_codes.mapped('code')
         ])
         if new_codes:
-            self._cr.execute(SQL("""
+            self.env.cr.execute(SQL("""
                 INSERT INTO ir_model_data
                 (name, res_id, module, model, noupdate)
                 SELECT concat('unspsc_code_', code), id, 'product_unspsc', 'product.unspsc.code', 't'

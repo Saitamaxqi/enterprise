@@ -35,7 +35,7 @@ class AccountJournal(models.Model):
 
     def open_sdd_payments(self):
         # return action 'Direct debit payments to collect' with context forged
-        ctx = self._context.copy()
+        ctx = self.env.context.copy()
         ctx.update({'default_journal_id': self.id, 'search_default_journal_id': self.id})
         action = self.env['ir.actions.act_window']._for_xml_id('account_sepa_direct_debit.action_sdd_payments_to_collect')
         action.update({'context': ctx})

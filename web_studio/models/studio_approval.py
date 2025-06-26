@@ -227,10 +227,10 @@ class StudioApprovalRule(models.Model):
 
     def default_get(self, fields_list):
         vals = super().default_get(fields_list)
-        default_model_name = self._context.get("default_model_name")
+        default_model_name = self.env.context.get("default_model_name")
         if default_model_name and "model_id" in fields_list and not vals.get("model_id"):
             vals["model_id"] = self.env["ir.model"]._get(default_model_name)
-        default_action_xmlid = self._context.get("default_action_xmlid")
+        default_action_xmlid = self.env.context.get("default_action_xmlid")
         if default_action_xmlid and "action_id" in fields_list and not vals.get("action_id"):
             action_id = self._parse_action_from_button(default_action_xmlid)
             if action_id:
@@ -729,8 +729,8 @@ class StudioApprovalRule(models.Model):
     def _clean_context(self):
         """Remove `active_test` from the context, if present."""
         # we *never* want archived rules to be applied, ensure a clean context
-        if 'active_test' in self._context:
-            new_ctx = self._context.copy()
+        if 'active_test' in self.env.context:
+            new_ctx = self.env.context.copy()
             new_ctx.pop('active_test')
             self = self.with_context(new_ctx)
         return self

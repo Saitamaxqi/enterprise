@@ -37,7 +37,7 @@ class AccountReconcileModel(models.Model):
         self.check_access('read')
         self.env['account.reconcile.model'].flush_model()
         self.env['account.bank.statement.line'].flush_model()
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             """
             WITH matching_journal_ids AS (
                     SELECT account_reconcile_model_id,
@@ -101,7 +101,7 @@ class AccountReconcileModel(models.Model):
             lang=self.env.lang,
             statement_lines=tuple(statement_line_ids),
         ))
-        query_result = self._cr.fetchall()
+        query_result = self.env.cr.fetchall()
         return {
             st_line_id: [
                 {'id': model_id, 'display_name': model_name}
@@ -117,7 +117,7 @@ class AccountReconcileModel(models.Model):
             return
         self.env['account.reconcile.model'].flush_model()
         statement_lines.flush_recordset(['journal_id', 'amount', 'amount_residual', 'transaction_details', 'payment_ref', 'partner_id', 'company_id'])
-        self._cr.execute(SQL("""
+        self.env.cr.execute(SQL("""
             WITH matching_journal_ids AS (
                     SELECT account_reconcile_model_id,
                            ARRAY_AGG(account_journal_id) AS ids
@@ -203,7 +203,7 @@ class AccountReconcileModel(models.Model):
            WHERE st_line.id IN %s
         """, tuple(self.ids), tuple(statement_lines.ids)))
 
-        query_result = self._cr.fetchall()
+        query_result = self.env.cr.fetchall()
 
         processed_st_line_ids = set()
         # apply the found suitable reco models on the statement lines

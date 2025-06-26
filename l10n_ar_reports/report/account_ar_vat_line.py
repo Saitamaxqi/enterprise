@@ -69,7 +69,7 @@ class AccountArVatLine(models.Model):
         return self.move_id.get_formview_action()
 
     def init(self):
-        cr = self._cr
+        cr = self.env.cr
         tools.drop_view_if_exists(cr, self._table)
         # we use tax_ids for base amount instead of tax_base_amount for two reasons:
         # * zero taxes do not create any aml line, so we can't get base for them with tax_base_amount

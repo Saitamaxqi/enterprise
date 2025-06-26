@@ -52,7 +52,7 @@ class AccountJournal(models.Model):
         # EXTENDS account
         # set default action for liquidity journals in dashboard
 
-        if self.type in ('bank', 'cash', 'credit') and not self._context.get('action_name'):
+        if self.type in ('bank', 'cash', 'credit') and not self.env.context.get('action_name'):
             self.ensure_one()
             return self.env['account.bank.statement.line']._action_open_bank_reconciliation_widget(
                 default_context={

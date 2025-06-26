@@ -138,7 +138,7 @@ class CzechVIESSummaryReportCustomHandler(models.AbstractModel):
             orderby_clause=SQL("ORDER BY %s", groupby_clause),
             tail_query=SQL(tail_query),
         )
-        self._cr.execute(query)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        query_res_lines = self.env.cr.dictfetchall()
 
         return build_result(query_res_lines)

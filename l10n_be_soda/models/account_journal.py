@@ -73,7 +73,7 @@ class AccountJournal(models.Model):
             ref = "%s-%s-%s/%s" % (parsed_attachment.find('.//Source').text, parsed_attachment.find('.//SeqNumber').text, account_period[:4], account_period[4:])
             existing_move = self.env['account.move'].search([('ref', '=', ref)])
             if existing_move:
-                if self._context.get('raise_no_imported_file', True):
+                if self.env.context.get('raise_no_imported_file', True):
                     raise UserError(
                         _('The entry %(entry)s has already been uploaded (%(existing_entry)s).', entry=ref, existing_entry=existing_move.name))
                 else:

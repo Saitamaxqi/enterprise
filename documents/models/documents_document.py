@@ -1954,7 +1954,7 @@ class DocumentsDocument(models.Model):
         if (
             res_model
             and issubclass(self.pool[res_model], self.pool['documents.mixin'])
-            and not self._context.get('no_document')
+            and not self.env.context.get('no_document')
         ):
             return self.env[res_model]._prepare_document_create_values_for_linked_records(
                 res_model, vals_list, pre_vals_list)

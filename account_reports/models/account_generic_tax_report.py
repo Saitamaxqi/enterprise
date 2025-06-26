@@ -165,7 +165,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
         company_ids = report.get_report_company_ids(options)
         company_domain = self.env['account.tax']._check_company_domain(company_ids)
         company_where_query = self.env['account.tax'].with_context(active_test=False)._where_calc(company_domain)
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             '''
                 SELECT
                     account_tax.id,
@@ -182,7 +182,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
         ))
         group_of_taxes_info = {}
         child_to_group_of_taxes = {}
-        for row in self._cr.dictfetchall():
+        for row in self.env.cr.dictfetchall():
             row['to_expand'] = row['child_types'] != ['none']
             group_of_taxes_info[row['id']] = row
             for child_id in row['child_tax_ids']:
@@ -207,7 +207,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
             query = report._get_report_query(options, 'strict_range')
 
             # Fetch the base amounts.
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 '''
                 SELECT
                     tax.id AS tax_id,
@@ -253,7 +253,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
             ))
 
             group_of_taxes_with_extra_base_amount = set()
-            for row in self._cr.dictfetchall():
+            for row in self.env.cr.dictfetchall():
                 is_tax_line = bool(row['src_tax_id'])
                 if is_tax_line:
                     if row['src_group_tax_id'] \
@@ -298,7 +298,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                                            ON account_move_line.tax_repartition_line_id = repartition.id""")
                 group_by_deductible = SQL(', repartition.use_in_tax_closing, SIGN(repartition.factor_percent)')
 
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 '''
                 SELECT
                     tax.id AS tax_id,
@@ -332,7 +332,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                 group_by_deductible=group_by_deductible,
             ))
 
-            for row in self._cr.dictfetchall():
+            for row in self.env.cr.dictfetchall():
                 # Manage group of taxes.
                 # In case the group of taxes is mixing multiple taxes having a type_tax_use != 'none', consider
                 # them instead of the group.
@@ -405,7 +405,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
             # It could happen when dealing with group of taxes for example.
             row_keys = set()
 
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 '''
                 SELECT
                     %(select_clause)s,
@@ -428,7 +428,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                 groupby_query=SQL(',').join(groupby_query_list),
             ))
 
-            for row in self._cr.dictfetchall():
+            for row in self.env.cr.dictfetchall():
                 node = res
 
                 # tuple of values used to prevent adding multiple times the same base amount.
@@ -673,7 +673,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
             tax_affecting_base_domain,
         ))
 
-        ctx = self._context.copy()
+        ctx = self.env.context.copy()
         ctx.update({'search_default_group_by_account': 2, 'expand': 1})
 
         return {

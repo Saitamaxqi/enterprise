@@ -74,7 +74,7 @@ class PosOrder(models.Model):
                 category_ids.update(line.product_id.pos_categ_ids.ids)
             return {'change': True, 'sound': False, 'category_ids': category_ids}
 
-        order_line_filter = self._context.get('ppc_order_line_filter', lambda x: True)
+        order_line_filter = self.env.context.get('ppc_order_line_filter', lambda x: True)
         # create a dictionary with the key as a tuple of product_id, internal_note and attribute_value_ids
         for pdis_line in pdis_lines:
             key = (pdis_line.product_id.id, pdis_line.internal_note or '[]', json.dumps(pdis_line.attribute_value_ids.ids), pdis_line.pos_order_line_uuid)

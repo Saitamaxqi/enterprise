@@ -110,7 +110,7 @@ class HelpdeskTicket(models.Model):
             'res_model': 'stock.picking',
             'view_mode': 'list,form',
             'domain': [('id', 'in', self.picking_ids.ids)],
-            'context': dict(self._context, create=False, default_company_id=self.company_id.id)
+            'context': dict(self.env.context, create=False, default_company_id=self.company_id.id)
         }
         if self.pickings_count == 1:
             action.update({

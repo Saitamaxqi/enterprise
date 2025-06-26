@@ -25,8 +25,8 @@ class CustomerStatementCustomHandler(models.AbstractModel):
         partners = options.get('partner_ids', [])
         if not partners:
             report = self.env['account.report'].browse(options['report_id'])
-            self._cr.execute(self._get_query_sums(report, options))
-            partners = [row['groupby'] for row in self._cr.dictfetchall() if row['groupby']]
+            self.env.cr.execute(self._get_query_sums(report, options))
+            partners = [row['groupby'] for row in self.env.cr.dictfetchall() if row['groupby']]
         return self.env['res.partner'].browse(partners)
 
     def action_send_statements(self, options):

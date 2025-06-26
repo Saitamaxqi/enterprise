@@ -214,7 +214,7 @@ class AppraisalAskFeedback(models.TransientModel):
             template = self.env['mail.template'].create(values)
 
             if record.attachment_ids:
-                attachments = record.env['ir.attachment'].sudo().browse(record.attachment_ids.ids).filtered(lambda a: a.create_uid.id == record._uid)
+                attachments = record.env['ir.attachment'].sudo().browse(record.attachment_ids.ids).filtered(lambda a: a.create_uid.id == record.env.uid)
                 if attachments:
                     attachments.write({'res_model': template._name, 'res_id': template.id})
                 template.attachment_ids |= record.attachment_ids

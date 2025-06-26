@@ -7,8 +7,8 @@ class PaymentLinkWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        res_id = self._context.get('active_id')
-        res_model = self._context.get('active_model')
+        res_id = self.env.context.get('active_id')
+        res_model = self.env.context.get('active_model')
 
         # This ensures that taxes are up-to-date and the required information is set so the customer clicking
         # the payment link won't see an error.

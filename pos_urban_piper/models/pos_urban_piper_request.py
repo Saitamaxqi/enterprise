@@ -413,7 +413,7 @@ class UrbanPiperClient:
         """
         Change store status in urban piper.
         """
-        provider_name = self.config._context.get('provider_name')
+        provider_name = self.config.env.context.get('provider_name')
         platforms = [provider_name] if provider_name else [p.technical_name for p in self.config.urbanpiper_delivery_provider_ids]
         if platforms:
             payload = {

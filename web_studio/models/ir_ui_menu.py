@@ -20,7 +20,7 @@ class IrUiMenu(models.Model):
         """ When renaming a menu will rename the windows action.
         """
         for menu in self:
-            if menu._context.get('studio') and 'name' in vals and menu.action:
+            if menu.env.context.get('studio') and 'name' in vals and menu.action:
                 menu.action.name = vals['name']
         return super().write(vals)
 
@@ -80,7 +80,7 @@ class IrUiMenu(models.Model):
         )
         # look for a studio config menu in the submenus
         parent_path = '%s/' % root_id
-        config_menu = self.with_context(self._context).search([
+        config_menu = self.with_context(self.env.context).search([
             ('parent_path', 'like', parent_path), ('is_studio_configuration', '=', True)
         ])
         if not config_menu:

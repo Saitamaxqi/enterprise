@@ -45,4 +45,4 @@ class AccountMoveSend(models.AbstractModel):
                         invoice.message_post(body=Markup('<p>%s</p>') % error['message'])
 
                 if self._can_commit():
-                    self._cr.commit()
+                    self.env.cr.commit()

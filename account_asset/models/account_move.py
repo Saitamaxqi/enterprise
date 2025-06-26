@@ -376,7 +376,7 @@ class AccountMoveLine(models.Model):
             tax_details_query = self._get_query_tax_details_from_domain(domain)
 
             self.flush_model()
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 '''
                 SELECT
                     tdq.base_line_id,
@@ -392,7 +392,7 @@ class AccountMoveLine(models.Model):
                 base_line_ids=tuple(self.ids),
             ))
 
-            res = {row['base_line_id']: row['sum'] for row in self._cr.dictfetchall()}
+            res = {row['base_line_id']: row['sum'] for row in self.env.cr.dictfetchall()}
 
         for record in self:
             record.non_deductible_tax_value = res.get(record._origin.id, 0.0)

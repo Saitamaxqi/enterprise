@@ -117,8 +117,8 @@ class HrRecruitmentReport(models.Model):
             WHERE a.company_id IN %s
             GROUP BY p.name
         """
-        self._cr.execute(query, [tuple(self.env.context['allowed_company_ids'])])
-        result = self._cr.dictfetchall()
+        self.env.cr.execute(query, [tuple(self.env.context['allowed_company_ids'])])
+        result = self.env.cr.dictfetchall()
 
         parsed_result = [
             {

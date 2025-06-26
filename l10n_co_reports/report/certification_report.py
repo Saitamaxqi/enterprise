@@ -15,7 +15,7 @@ class ReportL10n_Co_ReportsReport_Certification(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         docs = []
         partner_doc = None
-        options = self._context.get('options')
+        options = self.env.context.get('options')
         report = self.env['account.report'].browse(options['report_id'])
         lines = report._filter_out_folded_children(report._get_lines(options))
 

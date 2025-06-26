@@ -109,7 +109,7 @@ class QualityCheckWizard(models.TransientModel):
                 from_failure_form=False,
                 default_qty_tested=check_id.qty_to_test,
             )
-        if self._context.get('button_validate_picking_ids', False):
+        if self.env.context.get('button_validate_picking_ids', False):
             self.with_context(clean_context(self.env.context)).check_ids.picking_id.button_validate()
         return action
 

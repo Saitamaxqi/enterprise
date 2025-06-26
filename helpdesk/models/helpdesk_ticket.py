@@ -406,7 +406,7 @@ class HelpdeskTicket(models.Model):
     @api.depends('ticket_ref', 'partner_name')
     @api.depends_context('with_partner')
     def _compute_display_name(self):
-        display_partner_name = self._context.get('with_partner', False)
+        display_partner_name = self.env.context.get('with_partner', False)
         ticket_with_name = self.filtered('name')
         for ticket in ticket_with_name:
             name = ticket.name

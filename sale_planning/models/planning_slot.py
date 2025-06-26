@@ -100,7 +100,7 @@ class PlanningSlot(models.Model):
         if sale_line_ids:
             # search method is used rather than browse since the order needs to be handled
             return sale_lines.search([('id', 'in', sale_line_ids)])
-        elif self._context.get('planning_expand_sale_line_id') and ('start_datetime', '<=') in dom_tuples and ('end_datetime', '>=') in dom_tuples:
+        elif self.env.context.get('planning_expand_sale_line_id') and ('start_datetime', '<=') in dom_tuples and ('end_datetime', '>=') in dom_tuples:
             if ('sale_line_id', '=') in dom_tuples or ('sale_line_id', 'ilike') in dom_tuples:
                 filter_domain = self._expand_domain_m2o_groupby(domain, 'sale_line_id')
                 return sale_lines.search(filter_domain)
@@ -570,7 +570,7 @@ class PlanningSlot(models.Model):
     @api.model
     def auto_plan_ids(self, view_domain):
         res = super().auto_plan_ids(view_domain)
-        if self._context.get('planning_slot_id'):
+        if self.env.context.get('planning_slot_id'):
             # It means we are looking to assign one shift in particular to an available resource, which we do in planning.
             res["sale_line_planned"] = []
             return res

@@ -26,7 +26,7 @@ class HrEmployee(models.Model):
         return 0
 
     def _compute_l10n_ae_annual_leave_days(self):
-        self._cr.execute("""
+        self.env.cr.execute("""
             SELECT
                 sum(h.number_of_days) AS days,
                 sum(CASE WHEN h.type = 'allocation' THEN h.number_of_days ELSE 0 END) AS total_days_allocated,
@@ -49,7 +49,7 @@ class HrEmployee(models.Model):
                 s.l10n_ae_is_annual_leave = TRUE
             GROUP BY h.employee_id""", (tuple(self.ids),))
 
-        employees_remaining_annual_leaves = {row['employee_id']: (row['total_days_allocated'], row['days']) for row in self._cr.dictfetchall()}
+        employees_remaining_annual_leaves = {row['employee_id']: (row['total_days_allocated'], row['days']) for row in self.env.cr.dictfetchall()}
         for record in self:
             record.l10n_ae_annual_leave_days_taken = 0
             record.l10n_ae_annual_leave_days_total = 0

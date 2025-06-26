@@ -17,7 +17,7 @@ class StudioMixin(models.AbstractModel):
     @api.model_create_multi
     def create(self, vals_list):
         res = super().create(vals_list)
-        if self._context.get('studio') and not self._context.get('install_mode'):
+        if self.env.context.get('studio') and not self.env.context.get('install_mode'):
             for ob in res:
                 ob.create_studio_model_data(ob.display_name)
         return res
@@ -25,7 +25,7 @@ class StudioMixin(models.AbstractModel):
     def write(self, vals):
         res = super(StudioMixin, self).write(vals)
 
-        if self._context.get('studio') and not self._context.get('install_mode'):
+        if self.env.context.get('studio') and not self.env.context.get('install_mode'):
             for record in self:
                 record.create_studio_model_data(record.display_name)
 

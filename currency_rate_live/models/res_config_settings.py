@@ -230,7 +230,7 @@ class ResCompany(models.Model):
                 parse_results = parse_function(active_currencies)
                 companies._generate_currency_rates(parse_results)
             except Exception as error:
-                if self._context.get('suppress_errors'):
+                if self.env.context.get('suppress_errors'):
                     _logger.warning(error)
                     _logger.warning('Unable to connect to the online exchange rate platform %s. The web service may be temporarily down. Please try again in a moment.', currency_provider)
                     rslt = False
@@ -271,7 +271,7 @@ class ResCompany(models.Model):
 
             if not rate_info:
                 msg = _("Your main currency (%s) is not supported by this exchange rate provider. Please choose another one.", company.currency_id.name)
-                if self._context.get('suppress_errors'):
+                if self.env.context.get('suppress_errors'):
                     _logger.warning(msg)
                     continue
                 else:

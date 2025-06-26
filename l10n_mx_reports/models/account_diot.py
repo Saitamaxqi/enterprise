@@ -96,7 +96,7 @@ class L10n_MxReportHandler(models.AbstractModel):
         tags = report.line_ids.expression_ids._get_matching_tags()
 
         tail_query = report._get_engine_query_tail(offset, limit)
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             """
             WITH raw_results as (
                 SELECT

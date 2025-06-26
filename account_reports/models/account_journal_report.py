@@ -117,8 +117,8 @@ class AccountJournalReportHandler(models.AbstractModel):
             case_statement=self._get_payment_lines_filter_case_statement(options),
             groupby_clause=groupby_clause
         )
-        self._cr.execute(query)
-        query_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        query_lines = self.env.cr.dictfetchall()
         result_lines = []
 
         for query_line in query_lines:
@@ -654,11 +654,11 @@ class AccountJournalReportHandler(models.AbstractModel):
             tag_name=self.env['account.account.tag']._field_to_sql('tag', 'name')
         )
 
-        self._cr.execute(query)
+        self.env.cr.execute(query)
         result = {}
 
         # Grouping by journal_id then move_id
-        for entry in self._cr.dictfetchall():
+        for entry in self.env.cr.dictfetchall():
             result.setdefault(entry['journal_id'], {})
             result[entry['journal_id']].setdefault(entry['move_id'], [])
             result[entry['journal_id']][entry['move_id']].append(entry)
@@ -1000,8 +1000,8 @@ class AccountJournalReportHandler(models.AbstractModel):
             table=query.from_clause,
             search_conditions=query.where_clause,
         )
-        self._cr.execute(query)
-        result = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        result = self.env.cr.dictfetchall()
         init_balance = result[0]['balance'] if len(result) >= 1 else 0
         return init_balance
 
@@ -1133,7 +1133,7 @@ class AccountJournalReportHandler(models.AbstractModel):
             FROM tag_info
             ORDER BY country_name, name
         """, country_name=country_name, tag_name=tag_name, table_references=query.from_clause, search_condition=query.where_clause)
-        self._cr.execute(query)
+        self.env.cr.execute(query)
         query_res = self.env.cr.fetchall()
 
         res = {}

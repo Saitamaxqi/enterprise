@@ -21,8 +21,8 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
         # Options is needed otherwise some elements added in the post processor go on the total line
         options['ignore_totals_below_sections'] = True
         options['no_xlsx_currency_code_columns'] = True
-        if 'active_id' in self._context and self._context.get('active_model') == 'account.journal':
-            options['bank_reconciliation_report_journal_id'] = self._context['active_id']
+        if 'active_id' in self.env.context and self.env.context.get('active_model') == 'account.journal':
+            options['bank_reconciliation_report_journal_id'] = self.env.context['active_id']
         elif 'bank_reconciliation_report_journal_id' in previous_options:
             options['bank_reconciliation_report_journal_id'] = previous_options['bank_reconciliation_report_journal_id']
         else:
@@ -112,8 +112,8 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
             groupby_sql=SQL("GROUP BY %s", groupby_field_sql) if groupby_field_sql else SQL(),
         )
 
-        self._cr.execute(query_sql)
-        query_res_lines = self._cr.fetchall()
+        self.env.cr.execute(query_sql)
+        query_res_lines = self.env.cr.fetchall()
 
         if not current_groupby:
             return self._build_custom_engine_result(amount=query_res_lines[-1][1], amount_currency_id=journal_currency.id)
@@ -251,8 +251,8 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
             group_by=groupby_field_sql if current_groupby else SQL('st_line.id'),  # Same key in the groupby because we can't put a null key in a group by
         )
 
-        self._cr.execute(query)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        query_res_lines = self.env.cr.dictfetchall()
 
         return self._compute_result(query_res_lines, current_groupby, build_result_dict)
 
@@ -347,8 +347,8 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
             is_receipt=SQL("account_move_line.balance > 0") if internal_type == "receipts" else SQL("account_move_line.balance < 0"),
             group_by=groupby_field_sql if current_groupby else SQL('account_move_line.account_id'),  # Same key in the groupby because we can't put a null key in a group by
         )
-        self._cr.execute(query)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        query_res_lines = self.env.cr.dictfetchall()
 
         return self._compute_result(query_res_lines, current_groupby, build_result_dict)
 

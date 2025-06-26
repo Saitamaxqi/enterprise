@@ -323,7 +323,7 @@ class SaleOrder(models.Model):
         super()._compute_access_url()
         for order in self:
             # Quotations are handled in the quotation menu
-            if order.is_subscription and order.subscription_state in SUBSCRIPTION_PROGRESS_STATE + SUBSCRIPTION_CLOSED_STATE and not self._context.get('force_sale_url'):
+            if order.is_subscription and order.subscription_state in SUBSCRIPTION_PROGRESS_STATE + SUBSCRIPTION_CLOSED_STATE and not self.env.context.get('force_sale_url'):
                 order.access_url = '/my/subscriptions/%s' % order.id
 
     def _compute_start_date(self):
@@ -1319,7 +1319,7 @@ class SaleOrder(models.Model):
         if not mail_ctx:
             mail_ctx = {}
         billing_details = self._next_billing_details()
-        return {**self._context, **mail_ctx, 'next_invoice_amount': billing_details['next_invoice_amount'],
+        return {**self.env.context, **mail_ctx, 'next_invoice_amount': billing_details['next_invoice_amount'],
                                                 'total_amount': self.amount_total,
                                                 'currency_name': self.currency_id.name,
                                                 'responsible_email': self.user_id.email,

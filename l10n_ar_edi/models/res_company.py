@@ -123,7 +123,7 @@ class ResCompany(models.Model):
         # been validated or not. This because when we request a token we can not generate a new one until the last
         # one expires.
         if not self.env.context.get('l10n_ar_invoice_skip_commit'):
-            self._cr.commit()
+            self.env.cr.commit()
         _logger.info("Successful Authenticated with AFIP.")
 
         return connection

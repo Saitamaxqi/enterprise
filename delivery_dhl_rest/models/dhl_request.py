@@ -51,7 +51,7 @@ class DHLProvider:
 
         # The street isn't required if we compute the rate with a partial delivery address in the
         # express checkout flow.
-        if not recipient.street and not recipient.street2 and not recipient._context.get(
+        if not recipient.street and not recipient.street2 and not recipient.env.context.get(
             'express_checkout_partial_delivery_address', False
         ):
             recipient_required_field.append('street')

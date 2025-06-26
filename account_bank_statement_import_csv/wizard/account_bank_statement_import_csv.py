@@ -14,7 +14,7 @@ class Base_ImportImport(models.TransientModel):
     @api.model
     def get_fields_tree(self, model, depth=FIELDS_RECURSION_LIMIT):
         fields_list = super().get_fields_tree(model, depth=depth)
-        if self._context.get('bank_stmt_import', False):
+        if self.env.context.get('bank_stmt_import', False):
             add_fields = [{
                 'id': 'balance',
                 'name': 'balance',
@@ -49,7 +49,7 @@ class Base_ImportImport(models.TransientModel):
     def _parse_import_data(self, data, import_fields, options):
         # EXTENDS base
         data = super()._parse_import_data(data, import_fields, options)
-        journal_id = self._context.get('default_journal_id')
+        journal_id = self.env.context.get('default_journal_id')
         bank_stmt_import = options.get('bank_stmt_import')
         if not journal_id or not bank_stmt_import:
             return data

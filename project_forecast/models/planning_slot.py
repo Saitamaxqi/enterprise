@@ -28,7 +28,7 @@ class PlanningSlot(models.Model):
 
     def _read_group_project_id(self, projects, domain):
         dom_tuples = [(dom[0], dom[1]) for dom in domain if isinstance(dom, list) and len(dom) == 3]
-        if self._context.get('planning_expand_project') and ('start_datetime', '<') in dom_tuples and ('end_datetime', '>') in dom_tuples:
+        if self.env.context.get('planning_expand_project') and ('start_datetime', '<') in dom_tuples and ('end_datetime', '>') in dom_tuples:
             if ('project_id', '=') in dom_tuples or ('project_id', 'ilike') in dom_tuples:
                 filter_domain = self._expand_domain_m2o_groupby(domain, 'project_id')
                 return self.env['project.project'].search(filter_domain)

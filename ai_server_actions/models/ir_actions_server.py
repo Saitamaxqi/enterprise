@@ -27,8 +27,8 @@ class IrActionsServer(models.Model):
         if self - ai_actions:
             super(IrActionsServer, self - ai_actions)._run_action_object_write(eval_context)
 
-        if self._context.get("onchange_self"):
-            records = self._context["onchange_self"]
+        if self.env.context.get("onchange_self"):
+            records = self.env.context["onchange_self"]
         else:
             records = eval_context.get("record") or eval_context["model"]
             records |= eval_context.get("records") or eval_context["model"]

@@ -1388,7 +1388,7 @@ class AccountReturn(models.Model):
             self.env['res.partner'].flush_model()
             self.env['res.country.group'].flush_model()
 
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 """
                 SELECT ARRAY_AGG(move.id)
                 FROM account_move move
@@ -1421,7 +1421,7 @@ class AccountReturn(models.Model):
                 date_to=fields.Date.to_string(self.date_to),
             ))
 
-            country_error_move_ids = self._cr.fetchone()[0]
+            country_error_move_ids = self.env.cr.fetchone()[0]
             country_error_moves_count = len(country_error_move_ids or [])
 
             review_action = {

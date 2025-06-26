@@ -202,7 +202,7 @@ class UrbanPiperTestOrderWizard(models.TransientModel):
         api_key = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_apikey', False)
         if not api_key:
             self.env['ir.config_parameter'].sudo().set_param('pos_urban_piper.urbanpiper_apikey', 'demo')
-        config_id = self.env['pos.config'].browse(self._context.get('config_id'))
+        config_id = self.env['pos.config'].browse(self.env.context.get('config_id'))
         if not config_id.current_session_id:
             msg += _('Please start a POS session first.\n')
         if not config_id.urbanpiper_store_identifier:

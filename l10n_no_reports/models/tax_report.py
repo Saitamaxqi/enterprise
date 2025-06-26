@@ -107,7 +107,7 @@ class L10n_NoTaxReportHandler(models.AbstractModel):
         acc_tag_name = self.env['account.account.tag'].with_context(lang='en_US')._field_to_sql('tag', 'name')
         tax_name = self.env['account.tax']._field_to_sql('tax', 'name')
 
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             '''
             SELECT
                 /* Take the opposite to reflect amounts due to and owed by the tax authorities */
@@ -140,7 +140,7 @@ class L10n_NoTaxReportHandler(models.AbstractModel):
             acc_tag_name=acc_tag_name,
         ))
 
-        tax_details_list = self._cr.dictfetchall()
+        tax_details_list = self.env.cr.dictfetchall()
         tax_total = sum(row['tax_amount'] for row in tax_details_list)
         return {
             'tax_total': tax_total,

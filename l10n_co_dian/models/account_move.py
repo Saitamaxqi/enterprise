@@ -187,7 +187,7 @@ class AccountMove(models.Model):
         doc = self._l10n_co_dian_send_invoice_xml(xml)
         if doc.state == 'invoice_rejected':
             if self.env['account.move.send']._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             raise UserError(_("Error(s) when sending the document to the DIAN:\n- %s",
                               "\n- ".join(doc.message_json['errors']) or doc.message_json['status']))
 

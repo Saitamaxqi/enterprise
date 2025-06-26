@@ -139,7 +139,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                           )
 
         self.env.cr.execute(qu)
-        lines_data = self._cr.dictfetchall()
+        lines_data = self.env.cr.dictfetchall()
 
         data = []
         ple = self.env["l10n_pe.tax.ple.report.handler"]

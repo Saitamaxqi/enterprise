@@ -2155,7 +2155,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if cfdi_values.get('errors'):
             on_failure("\n".join(cfdi_values['errors']))
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         root_company = cfdi_values['root_company']
@@ -2164,7 +2164,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if cfdi_values.get('errors'):
             on_failure("\n".join(cfdi_values['errors']))
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         # == CFDI values ==
@@ -2172,7 +2172,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if cfdi_values.get('errors'):
             on_failure("\n".join(cfdi_values['errors']))
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         # == Generate the CFDI ==
@@ -2196,7 +2196,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             if append_values.get('errors'):
                 on_failure("\n".join(append_values['errors']))
                 if self._can_commit():
-                    self._cr.commit()
+                    self.env.cr.commit()
                 return
             cfdi = append_values['cfdi']
 
@@ -2227,7 +2227,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
                 cfdi_str=cfdi_str,
             )
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         # == Check PAC ==
@@ -2239,14 +2239,14 @@ Content-Disposition: form-data; name="xml"; filename="xml"
                 cfdi_str=cfdi_str,
             )
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         # == Success ==
         on_success(cfdi_values, cfdi_filename, sign_results['cfdi_str'], populate_return=populate_return)
 
         if self._can_commit():
-            self._cr.commit()
+            self.env.cr.commit()
 
     def _cancel_api(self, company, cancel_reason, on_failure, on_success):
         """ Common way to cancel a document.
@@ -2262,7 +2262,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if cfdi_values.get('errors'):
             on_failure("\n".join(cfdi_values['errors']))
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         root_company = cfdi_values['root_company']
@@ -2271,7 +2271,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if cfdi_values.get('errors'):
             on_failure("\n".join(cfdi_values['errors']))
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         # == Check credentials ==
@@ -2280,7 +2280,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if credentials.get('errors'):
             on_failure("\n".join(credentials['errors']))
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         # == Check PAC ==
@@ -2296,14 +2296,14 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if cancel_results.get('errors'):
             on_failure("\n".join(cancel_results['errors']))
             if self._can_commit():
-                self._cr.commit()
+                self.env.cr.commit()
             return
 
         # == Success ==
         on_success()
 
         if self._can_commit():
-            self._cr.commit()
+            self.env.cr.commit()
 
     # -------------------------------------------------------------------------
     # SAT
@@ -2379,7 +2379,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         self._update_document_sat_state(sat_results['value'], error=sat_results.get('error'))
 
         if self._can_commit():
-            self._cr.commit()
+            self.env.cr.commit()
 
         return sat_results
 

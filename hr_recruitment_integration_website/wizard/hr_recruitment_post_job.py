@@ -69,7 +69,7 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
         if self.post_html and warning:
             additional_ctx = {
                 'active_id': self.id,
-                'from_global_view': self._context.get('from_global_view', False),
+                'from_global_view': self.env.context.get('from_global_view', False),
             }
             raise RedirectWarning(
                 message=_('The Job Description will be replaced with the generated one, do you want to continue?'),

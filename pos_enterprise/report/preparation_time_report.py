@@ -60,4 +60,4 @@ class PreparationTimeReport(models.Model):
 
     def init(self):
         """Initialize the SQL View for the report."""
-        self._cr.execute(self._select())
+        self.env.cr.execute(self._select())

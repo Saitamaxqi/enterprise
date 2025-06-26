@@ -11,7 +11,7 @@ class IrModelData(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        if self._context.get('studio'):
+        if self.env.context.get('studio'):
             for vals in vals_list:
                 vals['studio'] = True
         return super().create(vals_list)
@@ -20,14 +20,14 @@ class IrModelData(models.Model):
         """ When editing an ir.model.data with Studio, we put it in noupdate to
                 avoid the customizations to be dropped when upgrading the module.
         """
-        if self._context.get('studio'):
+        if self.env.context.get('studio'):
             vals['noupdate'] = True
             vals['studio'] = True
         return super(IrModelData, self).write(vals)
 
     def _build_insert_xmlids_values(self):
         values = super()._build_insert_xmlids_values()
-        if self._context.get('studio'):
+        if self.env.context.get('studio'):
             values['studio'] = 'true'
         return values
 

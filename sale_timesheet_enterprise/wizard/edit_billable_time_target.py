@@ -61,7 +61,7 @@ class EditBillableTimeTarget(models.Model):
             if field.store and field.type not in ['many2many', 'one2many'] and name not in ['id', 'name'])
 
     def init(self):
-        tools.drop_view_if_exists(self._cr, self._table)
+        tools.drop_view_if_exists(self.env.cr, self._table)
         self.env.cr.execute(
             f"""
                 CREATE OR REPLACE VIEW {self._table} AS (

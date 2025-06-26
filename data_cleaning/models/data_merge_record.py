@@ -66,7 +66,7 @@ class Data_MergeRecord(models.Model):
         if operator not in ('in', 'ilike', 'like', 'any'):
             raise NotImplementedError()
 
-        cr = self._cr
+        cr = self.env.cr
         # flush in case record was just created but not yet in database
         self.env['data_merge.model'].flush_model()
         restrict_model_ids = self.env.context.get('data_merge_model_ids')
@@ -438,7 +438,7 @@ class Data_MergeRecord(models.Model):
                     sql_column = SQL.identifier(query_dict['column'])
                     for rec_id in source_ids:
                         try:
-                            with self._cr.savepoint():
+                            with self.env.cr.savepoint():
                                 self.env.execute_query(SQL(
                                     """
                                     UPDATE %(table)s o
@@ -496,13 +496,13 @@ class Data_MergeRecord(models.Model):
             q = query % model
             for rec_id in source_ids:
                 try:
-                    with self._cr.savepoint():
+                    with self.env.cr.savepoint():
                         params = {
                             'destination_id': destination.id,
                             'record_id': rec_id,
                             'model': destination._name
                         }
-                        self._cr.execute(q, params)
+                        self.env.cr.execute(q, params)
                 except psycopg2.errors.UniqueViolation:
                     _logger.warning('Query %s failed, due to an unique constraint', query)
                 except psycopg2.IntegrityError as e:
@@ -511,10 +511,10 @@ class Data_MergeRecord(models.Model):
                     raise ValidationError(_('Query Failed.'))
 
         # Company-dependent fields
-        with self._cr.savepoint():
+        with self.env.cr.savepoint():
             for fname, field in destination._fields.items():
                 if field.company_dependent:
-                    self._cr.execute(SQL(
+                    self.env.cr.execute(SQL(
                         # TODO check if orderby is needed to get deterministic result
                         """
                         UPDATE %(table)s

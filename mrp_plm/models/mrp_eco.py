@@ -217,7 +217,7 @@ class MrpEco(models.Model):
     stage_id = fields.Many2one(
         'mrp.eco.stage', 'Stage', ondelete='restrict', copy=False, domain="[('type_ids', 'in', type_id)]",
         group_expand='_read_group_stage_ids', tracking=True,
-        default=lambda self: self.env['mrp.eco.stage'].search([('type_ids', 'in', self._context.get('default_type_id'))], limit=1))
+        default=lambda self: self.env['mrp.eco.stage'].search([('type_ids', 'in', self.env.context.get('default_type_id'))], limit=1))
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company)
     tag_ids = fields.Many2many('mrp.eco.tag', string='Tags')
     priority = fields.Selection([
@@ -648,8 +648,8 @@ class MrpEco(models.Model):
         in the Kanban view, even if there is no ECO in that stage
         """
         search_domain = []
-        if self._context.get('default_type_ids'):
-            search_domain = [('type_ids', 'in', self._context['default_type_ids'])]
+        if self.env.context.get('default_type_ids'):
+            search_domain = [('type_ids', 'in', self.env.context['default_type_ids'])]
 
         stage_ids = stages.sudo()._search(search_domain, order=stages._order)
         return stages.browse(stage_ids)

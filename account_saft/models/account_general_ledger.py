@@ -171,13 +171,13 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             table_references=query.from_clause,
             search_condition=query.where_clause,
         )
-        self._cr.execute(query)
+        self.env.cr.execute(query)
 
         journal_vals_map = {}
         move_vals_map = {}
         inbound_types = self.env['account.move'].get_inbound_types(include_receipts=True)
         while True:
-            batched_line_vals = self._cr.dictfetchmany(10**4)
+            batched_line_vals = self.env.cr.dictfetchmany(10**4)
             if not batched_line_vals:
                 break
             for line_vals in batched_line_vals:
@@ -236,7 +236,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         query = report._get_report_query(options, 'strict_range')
         tax_details_query = self.env['account.move.line']._get_query_tax_details(query.from_clause, query.where_clause)
         tax_name = self.env['account.tax']._field_to_sql('tax', 'name')
-        self._cr.execute(SQL('''
+        self.env.cr.execute(SQL('''
             SELECT
                 tax_detail.base_line_id,
                 tax_line.currency_id,
@@ -253,7 +253,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             JOIN account_tax tax ON tax.id = tax_detail.tax_id
             GROUP BY tax_detail.base_line_id, tax_line.currency_id, tax.id
         ''', tax_name=tax_name, tax_details_query=tax_details_query))
-        for tax_vals in self._cr.dictfetchall():
+        for tax_vals in self.env.cr.dictfetchall():
             line_vals = values['tax_detail_per_line_map'][tax_vals['base_line_id']]
             line_vals['tax_detail_vals_list'].append({
                 **tax_vals,
@@ -325,7 +325,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         if all_partners:
             domain = [('partner_id', 'in', tuple(all_partners.ids))]
             query = report._get_report_query(new_options, 'strict_range', domain=domain)
-            self._cr.execute(SQL(
+            self.env.cr.execute(SQL(
                 '''
                 SELECT
                     account_move_line.partner_id,
@@ -340,7 +340,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 search_condition=query.where_clause,
             ))
 
-            for partner_id, balance in self._cr.fetchall():
+            for partner_id, balance in self.env.cr.fetchall():
                 res['partner_detail_map'][partner_id]['type'] = 'customer' if balance >= 0.0 else 'supplier'
 
         for partner_vals in partner_vals_list:

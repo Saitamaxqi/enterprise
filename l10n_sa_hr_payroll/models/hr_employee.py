@@ -19,7 +19,7 @@ class HrEmployee(models.Model):
         """
         if not self:
             return {}
-        self._cr.execute("""
+        self.env.cr.execute("""
             SELECT
                 sum(h.number_of_days) AS days,
                 h.employee_id
@@ -39,7 +39,7 @@ class HrEmployee(models.Model):
                 s.requires_allocation = TRUE AND
                 h.employee_id in %s
             GROUP BY h.employee_id""", (tuple(self.ids),))
-        return {row['employee_id']: row['days'] for row in self._cr.dictfetchall()}
+        return {row['employee_id']: row['days'] for row in self.env.cr.dictfetchall()}
 
     def _compute_l10n_sa_leaves_count_compensable(self):
         remaining = self._l10n_sa_get_remaining_leaves_compensable()

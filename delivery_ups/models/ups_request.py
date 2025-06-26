@@ -191,7 +191,7 @@ class UPSRequest():
             res.append('State')
         # The street isn't required if we compute the rate with a partial delivery address in the
         # express checkout flow.
-        if not ship_to.street and not ship_to.street2 and not ship_to._context.get(
+        if not ship_to.street and not ship_to.street2 and not ship_to.env.context.get(
             'express_checkout_partial_delivery_address', False
         ):
             res.append('Street')
@@ -218,7 +218,7 @@ class UPSRequest():
                 return _('Packages %s do not have a positive shipping weight.', ', '.join(packages_without_weight.mapped('display_name')))
         # The phone isn't required if we compute the rate with a partial delivery address in the
         # express checkout flow.
-        if not phone and not ship_to._context.get(
+        if not phone and not ship_to.env.context.get(
             'express_checkout_partial_delivery_address', False
         ):
             res.append('Phone')
@@ -226,7 +226,7 @@ class UPSRequest():
             return _("The recipient address is missing or wrong.\n(Missing field(s) : %s)", ",".join(res))
         # The phone isn't required if we compute the rate with a partial delivery address in the
         # express checkout flow.
-        if not ship_to._context.get(
+        if not ship_to.env.context.get(
             'express_checkout_partial_delivery_address', False
         ) and len(self._clean_phone_number(phone)) < 10:
             return str(UPS_ERROR_MAP.get('120213'))

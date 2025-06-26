@@ -181,7 +181,7 @@ class AccountCashFlowReportHandler(models.AbstractModel):
         where_clause = "account_journal.id IN %s" if selected_journal_ids else "account_journal.type IN ('bank', 'cash', 'general')"
         where_params = [tuple(selected_journal_ids)] if selected_journal_ids else []
 
-        self._cr.execute(f'''
+        self.env.cr.execute(f'''
             SELECT
                 array_remove(ARRAY_AGG(DISTINCT account_account.id), NULL),
                 array_remove(ARRAY_AGG(DISTINCT account_payment_method_line.payment_account_id), NULL)
@@ -196,7 +196,7 @@ class AccountCashFlowReportHandler(models.AbstractModel):
             WHERE {where_clause}
         ''', where_params)
 
-        res = self._cr.fetchall()[0]
+        res = self.env.cr.fetchall()[0]
         payment_account_ids = set((res[0] or []) + (res[1] or []))
 
         if not payment_account_ids:
@@ -260,9 +260,9 @@ class AccountCashFlowReportHandler(models.AbstractModel):
                 search_condition=query.where_clause,
             ))
 
-        self._cr.execute(SQL(' UNION ALL ').join(queries))
+        self.env.cr.execute(SQL(' UNION ALL ').join(queries))
 
-        return self._cr.dictfetchall()
+        return self.env.cr.dictfetchall()
 
     def _get_liquidity_moves(self, report, options, payment_account_ids, cash_flow_tag_ids):
         ''' Fetch all information needed to compute lines from liquidity moves.
@@ -367,9 +367,9 @@ class AccountCashFlowReportHandler(models.AbstractModel):
                 date_to=column_group_options['date']['date_to'],
             ))
 
-        self._cr.execute(SQL(' UNION ALL ').join(queries))
+        self.env.cr.execute(SQL(' UNION ALL ').join(queries))
 
-        for aml_data in self._cr.dictfetchall():
+        for aml_data in self.env.cr.dictfetchall():
             reconciled_aml_groupby_account.setdefault(aml_data['account_id'], {})
             reconciled_aml_groupby_account[aml_data['account_id']].setdefault(aml_data['column_group_key'], {
                 'column_group_key': aml_data['column_group_key'],
@@ -458,9 +458,9 @@ class AccountCashFlowReportHandler(models.AbstractModel):
                 partial_amount=report._currency_table_apply_rate(SQL("account_partial_reconcile.amount")),
             ))
 
-        self._cr.execute(SQL(' UNION ALL ').join(queries))
+        self.env.cr.execute(SQL(' UNION ALL ').join(queries))
 
-        for aml_data in self._cr.dictfetchall():
+        for aml_data in self.env.cr.dictfetchall():
             reconciled_percentage_per_move[aml_data['column_group_key']].setdefault(aml_data['move_id'], {})
             reconciled_percentage_per_move[aml_data['column_group_key']][aml_data['move_id']].setdefault(aml_data['account_id'], [0.0, 0.0])
             reconciled_percentage_per_move[aml_data['column_group_key']][aml_data['move_id']][aml_data['account_id']][0] += aml_data['balance']
@@ -495,9 +495,9 @@ class AccountCashFlowReportHandler(models.AbstractModel):
                 account_ids=tuple(reconciled_account_ids[column['column_group_key']]) or (None,)
             ))
 
-        self._cr.execute(SQL(' UNION ALL ').join(queries))
+        self.env.cr.execute(SQL(' UNION ALL ').join(queries))
 
-        for aml_data in self._cr.dictfetchall():
+        for aml_data in self.env.cr.dictfetchall():
             if aml_data['account_id'] in reconciled_percentage_per_move[aml_data['column_group_key']][aml_data['move_id']]:
                 reconciled_percentage_per_move[aml_data['column_group_key']][aml_data['move_id']][aml_data['account_id']][1] += aml_data['balance']
 
@@ -542,9 +542,9 @@ class AccountCashFlowReportHandler(models.AbstractModel):
                 move_ids=tuple(reconciled_percentage_per_move[column['column_group_key']].keys()) or (None,)
             ))
 
-        self._cr.execute(SQL(' UNION ALL ').join(queries))
+        self.env.cr.execute(SQL(' UNION ALL ').join(queries))
 
-        for aml_data in self._cr.dictfetchall():
+        for aml_data in self.env.cr.dictfetchall():
             aml_column_group_key = aml_data['column_group_key']
             aml_move_id = aml_data['move_id']
             aml_account_id = aml_data['account_id']

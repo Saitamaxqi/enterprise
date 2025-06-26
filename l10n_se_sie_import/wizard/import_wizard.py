@@ -671,7 +671,7 @@ class L10n_SeSieImportWizard(models.TransientModel):
         query.add_join('JOIN', alias='account', table='account_account', condition=SQL('aml.account_id = account.id'))
         account_code = self.env['account.account']._field_to_sql('account', 'code', query)
 
-        self._cr.execute(SQL("""
+        self.env.cr.execute(SQL("""
             SELECT %(account_code)s AS code,
                    aml.date,
                    SUM(aml.balance) AS balance,
@@ -688,7 +688,7 @@ class L10n_SeSieImportWizard(models.TransientModel):
             company_id=company.id
         ))
         existing_balances = defaultdict(dict)
-        for balance_row in self._cr.dictfetchall():
+        for balance_row in self.env.cr.dictfetchall():
             existing_balances[balance_row['code']].update({(balance_row['date'], balance_row['ref']): balance_row['balance']})
 
         dates = set()

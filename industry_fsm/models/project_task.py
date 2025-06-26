@@ -20,9 +20,9 @@ class ProjectTask(models.Model):
     @api.model
     def default_get(self, fields_list):
         context = dict(self.env.context)
-        is_fsm_mode = self._context.get('fsm_mode')
+        is_fsm_mode = self.env.context.get('fsm_mode')
         fsm_project = False
-        if is_fsm_mode and 'project_id' in fields_list and not self._context.get('default_parent_id'):
+        if is_fsm_mode and 'project_id' in fields_list and not self.env.context.get('default_parent_id'):
             company_id = self.env.context.get('default_company_id') or self.env.company.id
             fsm_project = self.env['project.project'].search([('is_fsm', '=', True), ('company_id', '=', company_id)], order='sequence, name, id', limit=1)
             if fsm_project:
@@ -180,13 +180,13 @@ class ProjectTask(models.Model):
     @api.model
     def _group_expand_project_ids(self, projects, domain):
         res = super()._group_expand_project_ids(projects, domain)
-        if self._context.get('fsm_mode'):
+        if self.env.context.get('fsm_mode'):
             search_on_comodel = self._search_on_comodel(domain, "project_id", "project.project", [('is_fsm', '=', True)])
             res &= search_on_comodel
         return res
 
     def _group_expand_user_ids_domain(self, domain_expand):
-        if self._context.get('fsm_mode'):
+        if self.env.context.get('fsm_mode'):
             new_domain_expand = expression.OR([[
                 ('is_closed', '=', False),
                 ('planned_date_begin', '=', False),
@@ -443,7 +443,7 @@ class ProjectTask(models.Model):
 
     def action_preview_worksheet(self):
         self.ensure_one()
-        source = 'fsm' if self._context.get('fsm_mode', False) else 'project'
+        source = 'fsm' if self.env.context.get('fsm_mode', False) else 'project'
         return {
             'type': 'ir.actions.act_url',
             'target': 'self',
@@ -500,7 +500,7 @@ class ProjectTask(models.Model):
 
     def _prepare_domains_for_all_deadlines(self, date_start, date_end):
         domain = super()._prepare_domains_for_all_deadlines(date_start, date_end)
-        if self._context.get('fsm_mode'):
+        if self.env.context.get('fsm_mode'):
             domain['project'] = expression.AND([
                 domain['project'],
                 [('is_fsm', '=', True)]

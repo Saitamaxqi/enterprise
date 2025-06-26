@@ -100,7 +100,7 @@ class WebsiteControllerPage(models.Model):
     _inherit = ['studio.mixin', "website.controller.page"]
 
     def _default_name(self):
-        default_model = self._context.get("default_model")
+        default_model = self.env.context.get("default_model")
         if default_model:
             model = self.env["ir.model"]._get(default_model)
             return model.name
@@ -122,12 +122,12 @@ class WebsiteControllerPage(models.Model):
                 rec.use_menu = False
                 rec.auto_single_page = False
             else:
-                rec.use_menu = self._context.get("default_use_menu", False)
-                rec.auto_single_page = self._context.get("default_auto_single_page", False)
+                rec.use_menu = self.env.context.get("default_use_menu", False)
+                rec.auto_single_page = self.env.context.get("default_auto_single_page", False)
 
     @api.model_create_multi
     def create(self, vals_list):
-        if not self._context.get("website_studio.create_page"):
+        if not self.env.context.get("website_studio.create_page"):
             return super().create(vals_list)
 
         Website = self.env["website"]
@@ -184,7 +184,7 @@ class WebsiteControllerPage(models.Model):
         view = template_record.copy({'website_id': website_id, 'key': key, "model": model.model})
 
         arch = template_record.arch.replace(template, key)
-        if self._context.get("website_studio.create_page") and model:
+        if self.env.context.get("website_studio.create_page") and model:
             arch = self._replace_arch_placeholders(arch, model)
 
         view.with_context(lang=None).write({

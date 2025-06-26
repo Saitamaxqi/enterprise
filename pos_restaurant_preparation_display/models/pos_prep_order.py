@@ -8,7 +8,7 @@ class PosPrepOrder(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        course_id = self._context.get('po_course_id', None)
+        course_id = self.env.context.get('po_course_id', None)
         if course_id:
             for vals in vals_list:
                 if not vals.get('pos_course_id', None):

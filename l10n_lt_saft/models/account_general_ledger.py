@@ -81,7 +81,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
         # The balance dating from earlier periods are computed as opening
         # The balance up to the end of the current period are computed as closing
-        self._cr.execute(SQL(
+        self.env.cr.execute(SQL(
             '''
             SELECT DISTINCT
                 account_move_line.partner_id,
@@ -102,7 +102,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         ))
 
         partners_accounts = {}
-        for vals in self._cr.dictfetchall():
+        for vals in self.env.cr.dictfetchall():
             partner_id = vals['partner_id']
             account_code = vals['code']
             partner_account_code_balances = partners_accounts.setdefault(partner_id, {}).setdefault(account_code, {

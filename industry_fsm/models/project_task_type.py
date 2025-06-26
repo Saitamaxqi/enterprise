@@ -10,7 +10,7 @@ class ProjectTaskType(models.Model):
         # Call super first to take into account the context
         default_project_ids = super()._get_default_project_ids()
         default_user_id = self.env.context.get('default_user_id')  # To check if it is a personal stage
-        if self._context.get('fsm_mode') and not default_project_ids and not default_user_id:
+        if self.env.context.get('fsm_mode') and not default_project_ids and not default_user_id:
             default_project = self.env['project.project'].search([('is_fsm', '=', True)])
             default_project_ids = default_project.ids
         return default_project_ids

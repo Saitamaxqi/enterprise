@@ -224,8 +224,8 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             limit=limit,
             warnings=warnings,
         )
-        self._cr.execute(query)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        query_res_lines = self.env.cr.dictfetchall()
         query_res_lines = self._fill_missing_values(query_res_lines)
 
         all_res_per_grouping_key = {}

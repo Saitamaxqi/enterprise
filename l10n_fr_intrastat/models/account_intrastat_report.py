@@ -43,7 +43,7 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
             'type': 'ir.actions.act_window',
             'res_id': False,
             'target': 'new',
-            'context': dict(self._context, l10n_fr_intrastat_export_options=options),
+            'context': dict(self.env.context, l10n_fr_intrastat_export_options=options),
         }
 
     @api.model

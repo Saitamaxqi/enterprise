@@ -31,10 +31,10 @@ class L10n_ClReportHandler(models.AbstractModel):
             subtotals_dict[column_group_key] = dict.fromkeys([col['expression_label'] for col in column_group_options['columns']], 0.0)
 
         full_query = SQL(" UNION ALL ").join(query_list)
-        self._cr.execute(full_query)
+        self.env.cr.execute(full_query)
 
         # Fill lines and subtotals dictionaries
-        for result in self._cr.dictfetchall():
+        for result in self.env.cr.dictfetchall():
             account_id = result['id']
             column_group_key = result['column_group_key']
 

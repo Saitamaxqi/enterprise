@@ -187,7 +187,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             # This creates a new cursor to make sure the log is committed even when an
             # exception is thrown later in this request.
             self.env.flush_all()
-            dbname = self._cr.dbname
+            dbname = self.env.cr.dbname
             with Registry(dbname).cursor() as cr:
                 env = api.Environment(cr, SUPERUSER_ID, {})
                 env['ir.logging'].create({

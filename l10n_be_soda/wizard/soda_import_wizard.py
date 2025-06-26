@@ -112,7 +112,7 @@ class SodaImportWizard(models.TransientModel):
         action_vals = {
             'res_model': 'account.move',
             'type': 'ir.actions.act_window',
-            'context': self._context,
+            'context': self.env.context,
         }
         if not moves:
             return False

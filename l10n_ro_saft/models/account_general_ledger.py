@@ -672,8 +672,8 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             raise UserError(_('The SAF-T Asset Declaration cannot be generated if the currency of the company is not RON'))
 
         query = self._l10n_ro_saft_query_assets_values(options)
-        self._cr.execute(query)
-        asset_lines = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        asset_lines = self.env.cr.dictfetchall()
 
         # Assign the gross increases sub assets to their main asset (parent)
         parent_lines = []
@@ -836,8 +836,8 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         }
 
         query = self._l10n_ro_saft_query_asset_transactions_values(options)
-        self._cr.execute(query)
-        for transaction in self._cr.dictfetchall():
+        self.env.cr.execute(query)
+        for transaction in self.env.cr.dictfetchall():
             transaction['asset_transaction_id'] = transaction['move_id']
             transaction['asset_transaction_type'] = asset_transaction_type.get(transaction['asset_move_type'], 130)
             transaction['description'] = transaction['move_name']

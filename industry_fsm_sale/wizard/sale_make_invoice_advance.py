@@ -9,7 +9,7 @@ class SaleAdvancePaymentInv(models.TransientModel):
 
     def _create_invoices(self, sale_orders):
         invoices = super()._create_invoices(sale_orders)
-        so_task_mapping = self._context.get('industry_fsm_message_post_task_id')
+        so_task_mapping = self.env.context.get('industry_fsm_message_post_task_id')
         if so_task_mapping:
             for invoice in invoices:
                 for so in invoice.line_ids.sale_line_ids.order_id:

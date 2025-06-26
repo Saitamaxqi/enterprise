@@ -29,7 +29,7 @@ class Account_ReportsExportWizard(models.TransientModel):
             # We create one export format object per available export type of the report,
             # with the right generation function associated to it.
             # This is done so to allow selecting them as Many2many tags in the wizard.
-            for button_dict in self._context.get('account_report_generation_options', {}).get('buttons', []):
+            for button_dict in self.env.context.get('account_report_generation_options', {}).get('buttons', []):
                 if button_dict.get('file_export_type'):
                     self.env['account_reports.export.wizard.format'].create({
                         'name': button_dict['file_export_type'],

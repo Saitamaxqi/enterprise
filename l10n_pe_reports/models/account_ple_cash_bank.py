@@ -118,7 +118,7 @@ class AccountCashFlowReportHandler(models.AbstractModel):
         ):
             self.env[model].flush_model()
         self.env.cr.execute(sql)
-        lines_data = self._cr.dictfetchall()
+        lines_data = self.env.cr.dictfetchall()
 
         data = []
         period = options['date']['date_from'].replace('-', '')
@@ -237,7 +237,7 @@ class AccountCashFlowReportHandler(models.AbstractModel):
         ):
             self.env[model].flush_model()
         self.env.cr.execute(sql)
-        lines_data = self._cr.dictfetchall()
+        lines_data = self.env.cr.dictfetchall()
 
         data = []
         period = options['date']['date_from'].replace('-', '')

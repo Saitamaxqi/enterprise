@@ -115,7 +115,7 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
 
     def action_generate_export(self):
         self.ensure_one()
-        ctx = self._context
+        ctx = self.env.context
         ctx_options = ctx.get("l10n_it_xml_export_monthly_tax_report_options", {})
         report_id = ctx_options.get("report_id")
         if report_id:

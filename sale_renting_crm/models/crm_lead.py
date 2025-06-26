@@ -86,7 +86,7 @@ class CrmLead(models.Model):
             'domain': [("opportunity_id", "=", self.id), ('is_rental_order', '=', True)]
         })
 
-        if not self._context.get('is_rental_order'):
+        if not self.env.context.get('is_rental_order'):
             action['domain'].append(("state", "in", ["draft", "sent"]))
             orders = self.rental_order_ids.filtered(lambda l: l.state in ("draft", "sent"))
         else:

@@ -75,7 +75,7 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
 
         # 2) Make the lines
         unfold_all = options['export_mode'] == 'print' or options.get('unfold_all')
-        for res in self._cr.dictfetchall():
+        for res in self.env.cr.dictfetchall():
             line_id = report._get_generic_line_id('', '', markup=str(res['taxable_month']))
             month_lines.append({
                 'id': line_id,

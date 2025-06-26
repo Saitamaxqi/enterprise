@@ -454,7 +454,7 @@ class MarketingActivity(models.Model):
             seen = set()
             return [x for x in seq if x not in seen and not seen.add(x)]
         res_ids = _uniquify_list(traces.mapped('res_id'))
-        ctx = dict(clean_context(self._context), default_marketing_activity_id=self.ids[0], active_ids=res_ids)
+        ctx = dict(clean_context(self.env.context), default_marketing_activity_id=self.ids[0], active_ids=res_ids)
         mailing = self.mass_mailing_id.sudo().with_context(ctx)
         now = self.env.cr.now()
 
@@ -577,6 +577,6 @@ class MarketingActivity(models.Model):
         action.update({
             'display_name': _('Participants of %(activity)s (%(filter)s)', activity=self.name, filter=view_filter),
             'domain': [('id', 'in', participants.ids)],
-            'context': dict(self._context, create=False)
+            'context': dict(self.env.context, create=False)
         })
         return action

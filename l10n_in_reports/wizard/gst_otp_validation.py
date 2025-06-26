@@ -62,7 +62,7 @@ class L10n_InGstOtpValidation(models.TransientModel):
             "res_id": self.id,
             "views": [[form.id, "form"]],
             "target": "new",
-            "context": self._context,
+            "context": self.env.context,
         }
 
     def validate_otp(self):
@@ -100,11 +100,11 @@ class L10n_InGstOtpValidation(models.TransientModel):
                 }
             }
         response = self.validate_otp()
-        next_gst_action = self._context.get('next_gst_action')
-        active_model = self._context.get('active_model')
+        next_gst_action = self.env.context.get('next_gst_action')
+        active_model = self.env.context.get('active_model')
         if next_gst_action and active_model:
             response_message = False
-            record = self.env[active_model].browse(self._context.get('active_id'))
+            record = self.env[active_model].browse(self.env.context.get('active_id'))
             if next_gst_action == "fetch_irn_from_account_move" and active_model == 'account.move':
                 response_message = record.l10n_in_update_move_using_irn()
             elif active_model == 'l10n_in.gst.return.period':

@@ -152,7 +152,7 @@ class SocialPostTemplate(models.Model):
         for post in self:
             if post.image_ids:
                 attachments = self.env['ir.attachment'].sudo().browse(post.image_ids.ids).filtered(
-                    lambda a: a.res_model == self._name and not a.res_id and a.create_uid.id == self._uid)
+                    lambda a: a.res_model == self._name and not a.res_id and a.create_uid.id == self.env.uid)
                 if attachments:
                     attachments.write({'res_id': post.id})
 

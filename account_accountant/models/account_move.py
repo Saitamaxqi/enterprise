@@ -119,7 +119,7 @@ class AccountMove(models.Model):
     def action_post(self):
         # EXTENDS 'account' to trigger the CRON auto-reconciling the statement lines.
         res = super().action_post()
-        if self.statement_line_id and not self._context.get('skip_statement_line_cron_trigger'):
+        if self.statement_line_id and not self.env.context.get('skip_statement_line_cron_trigger'):
             self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
         return res
 
@@ -459,8 +459,8 @@ class AccountMoveLine(models.Model):
 
     def _order_to_sql(self, order, query, alias=None, reverse=False):
         sql_order = super()._order_to_sql(order, query, alias, reverse)
-        preferred_aml_residual_value = self._context.get('preferred_aml_value')
-        preferred_aml_currency_id = self._context.get('preferred_aml_currency_id')
+        preferred_aml_residual_value = self.env.context.get('preferred_aml_value')
+        preferred_aml_currency_id = self.env.context.get('preferred_aml_currency_id')
         if preferred_aml_residual_value and preferred_aml_currency_id and order == self._order:
             currency = self.env['res.currency'].browse(preferred_aml_currency_id)
             # using round since currency.round(55.55) = 55.550000000000004
@@ -482,7 +482,7 @@ class AccountMoveLine(models.Model):
     def copy_data(self, default=None):
         data_list = super().copy_data(default=default)
         for line, values in zip(self, data_list):
-            if 'move_reverse_cancel' in self._context:
+            if 'move_reverse_cancel' in self.env.context:
                 values['deferred_start_date'] = line.deferred_start_date
                 values['deferred_end_date'] = line.deferred_end_date
         return data_list
@@ -712,7 +712,7 @@ class AccountMoveLine(models.Model):
         return wizard._action_open_wizard() if (wizard.is_write_off_required or wizard.force_partials) else wizard.reconcile()
 
     def _get_predict_postgres_dictionary(self):
-        lang = self._context.get('lang') and self._context.get('lang')[:2]
+        lang = self.env.context.get('lang') and self.env.context.get('lang')[:2]
         return {'fr': 'french'}.get(lang, 'english')
 
     @api.model

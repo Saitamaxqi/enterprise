@@ -69,8 +69,8 @@ class LibroDiarioReportCustomHandler(models.AbstractModel):
                 search_condition=query.where_clause,
             ))
 
-        self._cr.execute(SQL(' UNION ALL ').join(queries))
-        return self._cr.dictfetchall()
+        self.env.cr.execute(SQL(' UNION ALL ').join(queries))
+        return self.env.cr.dictfetchall()
 
     def _get_domain(self, report, options, line_dict_id=None):
         domain = super()._get_domain(report, options, line_dict_id=line_dict_id)

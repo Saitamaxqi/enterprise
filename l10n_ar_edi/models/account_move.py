@@ -214,7 +214,7 @@ class AccountMove(models.Model):
             # in Odoo for consistency, this way if an error ocurrs later in another invoice we will have the ones
             # correctly validated in AFIP in Odoo (CAE, Result, xml response/request).
             if not self.env.context.get('l10n_ar_invoice_skip_commit'):
-                self._cr.commit()
+                self.env.cr.commit()
 
         if error_invoice:
             if error_invoice.exists():

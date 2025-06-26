@@ -27,7 +27,7 @@ class HrExpense(models.Model):
         default='miscellaneous')
 
     def _get_predict_postgres_dictionary(self):
-        lang = self._context.get('lang') and self._context.get('lang')[:2]
+        lang = self.env.context.get('lang') and self.env.context.get('lang')[:2]
         return {'fr': 'french'}.get(lang, 'english')
 
     def _predict_field(self, sql_query, description, category):

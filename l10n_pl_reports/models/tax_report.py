@@ -62,7 +62,7 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
             'type': 'ir.actions.act_window',
             'res_id': new_wizard.id,
             'target': 'new',
-            'context': dict(self._context, l10n_pl_reports_generation_options=options),
+            'context': dict(self.env.context, l10n_pl_reports_generation_options=options),
         }
 
     @api.model

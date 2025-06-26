@@ -19,7 +19,7 @@ class AccountReport(models.Model):
         """
         self.ensure_one()
         new_context = {
-            **self._context,
+            **self.env.context,
             'account_report_generation_options': options,
             'default_report_id': self.id,
         }

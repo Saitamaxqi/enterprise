@@ -37,7 +37,7 @@ class StockQuantPackage(models.Model):
         # Limit the number of records to load if param is set.
         records_limit = int(self.env['ir.config_parameter'].sudo().get_param('stock_barcode.usable_packages_limit'))
         packages = self.env['stock.quant.package'].search(usable_packages_domain, limit=records_limit, order='create_date desc')
-        loc_ids = self._context.get('pack_locs')
+        loc_ids = self.env.context.get('pack_locs')
         if loc_ids:
             packages |= self.env['stock.quant.package'].search([('location_id', 'in', loc_ids)])
         return packages

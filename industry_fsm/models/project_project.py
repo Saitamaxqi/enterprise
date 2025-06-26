@@ -106,7 +106,7 @@ class ProjectProject(models.Model):
         for project, vals in zip(self, vals_list):
             if self.env.context.get('copy_from_template') and self.env.context.get('default_is_fsm'):
                 # For a FSM project to be created from template company_id is required constraint
-                vals['company_id'] = self._context.get('default_company_id') or project.company_id.id or self.env.company.id
+                vals['company_id'] = self.env.context.get('default_company_id') or project.company_id.id or self.env.company.id
         return vals_list
 
     @api.model_create_multi

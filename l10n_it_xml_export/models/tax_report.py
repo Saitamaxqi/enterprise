@@ -31,7 +31,7 @@ class ItalianReportCustomHandler(models.AbstractModel):
             'res_model': 'l10n_it_xml_export.monthly.tax.report.xml.export.wizard',
             'type': 'ir.actions.act_window',
             'target': 'new',
-            'context': dict(self._context, l10n_it_xml_export_monthly_tax_report_options=options),
+            'context': dict(self.env.context, l10n_it_xml_export_monthly_tax_report_options=options),
         }
 
     def export_tax_report_to_xml(self, options):

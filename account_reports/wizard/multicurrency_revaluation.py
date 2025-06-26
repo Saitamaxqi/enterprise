@@ -23,7 +23,7 @@ class AccountMulticurrencyRevaluationWizard(models.TransientModel):
         required=True,
         readonly=False,
     )
-    date = fields.Date(default=lambda self: self._context['multicurrency_revaluation_report_options']['date']['date_to'], required=True)
+    date = fields.Date(default=lambda self: self.env.context['multicurrency_revaluation_report_options']['date']['date_to'], required=True)
     reversal_date = fields.Date(required=True)
     expense_provision_account_id = fields.Many2one(
         comodel_name='account.account',
@@ -50,9 +50,9 @@ class AccountMulticurrencyRevaluationWizard(models.TransientModel):
     def default_get(self, default_fields):
         rec = super().default_get(default_fields)
         if 'reversal_date' in default_fields:
-            report_options = self._context['multicurrency_revaluation_report_options']
+            report_options = self.env.context['multicurrency_revaluation_report_options']
             rec['reversal_date'] = fields.Date.to_date(report_options['date']['date_to']) + relativedelta(days=1)
-        if not self._context.get('revaluation_no_loop') and not self.with_context(revaluation_no_loop=True)._get_move_vals()['line_ids']:
+        if not self.env.context.get('revaluation_no_loop') and not self.with_context(revaluation_no_loop=True)._get_move_vals()['line_ids']:
             raise UserError(_("No adjustment needed"))
         return rec
 
@@ -119,7 +119,7 @@ class AccountMulticurrencyRevaluationWizard(models.TransientModel):
         report = self.env.ref('account_reports.multicurrency_revaluation_report')
         included_line_id = report.line_ids.filtered(lambda l: l.code == 'multicurrency_included').id
         generic_included_line_id = report._get_generic_line_id('account.report.line', included_line_id)
-        options = {**self._context['multicurrency_revaluation_report_options'], 'unfold_all': False}
+        options = {**self.env.context['multicurrency_revaluation_report_options'], 'unfold_all': False}
         report_lines = report._get_lines(options)
         move_lines = []
 

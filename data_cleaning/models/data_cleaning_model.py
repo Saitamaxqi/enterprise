@@ -80,12 +80,12 @@ class Data_CleaningModel(models.Model):
     def _clean_records_format_phone(self, **kwargs):
         self.ensure_one()
 
-        self._cr.execute("""
+        self.env.cr.execute("""
             SELECT res_id, data_cleaning_rule_id
             FROM data_cleaning_record
             JOIN data_cleaning_record_data_cleaning_rule_rel
             ON data_cleaning_record_data_cleaning_rule_rel.data_cleaning_record_id = data_cleaning_record.id""")
-        existing_rows = self._cr.fetchall()
+        existing_rows = self.env.cr.fetchall()
 
         field = kwargs['field_name']
         records = self.env[self.res_model_name].search([(field, 'not in', [False, ''])])
@@ -158,8 +158,8 @@ class Data_CleaningModel(models.Model):
                         cleaning_model_id=cleaning_model.id,
                         active_cond=active_cond
                     )
-                    self._cr.execute(query)
-                    for r in self._cr.fetchall():
+                    self.env.cr.execute(query)
+                    for r in self.env.cr.fetchall():
                         records_to_create.append({
                             'res_id': r[0],
                             'rule_ids': field_action['rule_ids'],

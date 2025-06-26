@@ -221,8 +221,8 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             tail_query=tail_query,
         )
 
-        self._cr.execute(query)
-        all_query_res = self._cr.dictfetchall()
+        self.env.cr.execute(query)
+        all_query_res = self.env.cr.dictfetchall()
 
         if not current_groupby:
             return build_result_dict(all_query_res, partners_vat_map)
@@ -283,8 +283,8 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             vat_amounts_where=vat_amounts_where,
         )
 
-        self._cr.execute(query)
-        return dict(self._cr.fetchall())
+        self.env.cr.execute(query)
+        return dict(self.env.cr.fetchall())
 
     def _get_warning_partners(self, report, options):
         """
@@ -344,8 +344,8 @@ class L10n_BePartnerVatHandler(models.AbstractModel):
             be_format=be_format,
             be_country_id=be_country_id,
         )
-        self._cr.execute(query)
-        return [r[0] for r in self._cr.fetchall()]
+        self.env.cr.execute(query)
+        return [r[0] for r in self.env.cr.fetchall()]
 
     def _get_turnover_query(self, options, excluded_tax_ids, query, partner_ids=None) -> tuple[SQL, SQL]:
         turnover_from = SQL(

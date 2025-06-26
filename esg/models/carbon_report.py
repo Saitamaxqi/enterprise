@@ -135,8 +135,8 @@ class CarbonReportHandler(models.AbstractModel):
             query_tail=report._get_engine_query_tail(offset, limit),
         )
 
-        self._cr.execute(report_sql)
-        query_res_lines = self._cr.dictfetchall()
+        self.env.cr.execute(report_sql)
+        query_res_lines = self.env.cr.dictfetchall()
 
         gas_labels = [gas_opt['code'] for gas_opt in options['carbon_report_selected_gas']] + ['co2e']
         if not current_groupby:
@@ -146,7 +146,7 @@ class CarbonReportHandler(models.AbstractModel):
                 source.id: source.parent_id.id or None
                 for source in self.env['esg.emission.source'].sudo().search([])
             }
-            highest_emission_source_in_hierarchy = self._context.get('highest_emission_source_in_hierarchy')
+            highest_emission_source_in_hierarchy = self.env.context.get('highest_emission_source_in_hierarchy')
             totals_including_child_sources = {}  # in the form {source_id: {gas: value}}
             sources_with_sublines = set()
 
