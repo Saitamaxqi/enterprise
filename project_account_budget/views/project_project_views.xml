@@ -11,10 +11,10 @@
                 <field name="total_budget_progress" invisible="1"/>
                 <t t-if="record.account_id and record.total_budget_amount.raw_value">
                     <t t-set="budget_progress" t-value="record.total_budget_progress.raw_value"/>
-                    <t t-if="budget_progress == -1.0" t-set="budget_title" t-value="'Budget allocated'"/>
-                    <t t-elif="budget_progress &gt;= 0.25" t-set="budget_title" t-value="'Budget on track'"/>
-                    <t t-elif="budget_progress &gt;= 0" t-set="budget_title" t-value="'Budget soon overspent'"/>
-                    <t t-else="" t-set="budget_title" t-value="'Budget overspent'"/>
+                    <t t-if="budget_progress == -1.0" t-set="budget_title">Budget allocated</t>
+                    <t t-elif="budget_progress &gt;= 0.25" t-set="budget_title">Budget on track</t>
+                    <t t-elif="budget_progress &gt;= 0" t-set="budget_title">Budget soon overspent</t>
+                    <t t-else="" t-set="budget_title">Budget overspent</t>
                     <i role="img" aria-label="Budget"
                         t-attf-class="ms-1 fa fa-usd text-{{ budget_progress == -1.0 ? 'muted' : budget_progress &gt;= 0.25 ? 'success' : budget_progress &gt;= 0 ? 'warning' : 'danger' }}"
                         t-att-title="budget_title"
