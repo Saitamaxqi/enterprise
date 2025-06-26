@@ -69,12 +69,6 @@ class TestMrpWorkorderHrValuation(TestMrpValuationCommon):
         def assert_employee_cost(expected_employee_cost):
             self.assertEqual(mo.move_finished_ids.stock_valuation_layer_ids.remaining_value, 10 + expected_employee_cost, f'Workcenter cost (10) + Employee cost ({expected_employee_cost})')
             self.assertEqual(mo.move_finished_ids.stock_valuation_layer_ids.unit_cost, 10 + expected_employee_cost, f'Workcenter cost (10) + Employee cost ({expected_employee_cost})')
-            # Test that mrp_cost_structure report is correctly calculated with employee cost
-            self.env.flush_all()  # Need to flush for mrp report
-            report_cost = self.env['report.mrp_account_enterprise.mrp_cost_structure']._get_report_values(docids=mo.id)['lines'][0]
-            self.assertEqual(report_cost['total_cost_operations'], 10 + expected_employee_cost)
-            report_overview = self.env['report.mrp.report_mo_overview'].get_report_values(mo.id)
-            self.assertEqual(report_overview['data']['operations']['details'][1]['unit_cost'], expected_employee_cost)
 
         self.employee_center.employee_costs_hour = 50
 

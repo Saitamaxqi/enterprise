@@ -18,7 +18,6 @@ Analytic Accounting in MRP
         'security/ir.model.access.csv',
         'security/mrp_account_enterprise_security.xml',
         'views/mrp_account_view.xml',
-        'views/cost_structure_report.xml',
         'reports/mrp_report_views.xml',
         ],
     'demo': ['demo/mrp_account_demo.xml'],
