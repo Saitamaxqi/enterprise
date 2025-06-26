@@ -31,6 +31,7 @@
                         <widget name="iot_download_logs" btn_name="Download Logs" btn_class="primary"/>
                         <widget name="iot_restart_odoo" btn_name="Restart Odoo" btn_class="secondary"/>
                         <widget groups="iot.group_iot_admin" name="iot_reset_password" btn_name="Reset Password" btn_class="secondary"/>
+                        <widget groups="iot.group_iot_admin" name="iot_remote_debug" btn_name="Remote Debug" btn_class="secondary"/>
                     </t>
                 </header>
                 <sheet>

@@ -115,11 +115,13 @@ class IoTController(http.Controller):
         if not box:
             _logger.warning("No IoT Box found with identifier: '%s'. Request ignored", iot_box_identifier)
             return
-        iot_device = request.env["iot.device"].sudo().search(
-            [('identifier', '=', device_identifier), ('iot_id', '=', box.id)], limit=1
-        )
 
-        if not iot_device:
+        if (
+            device_identifier
+            and not request.env["iot.device"].sudo().search(
+                [('identifier', '=', device_identifier), ('iot_id', '=', box.id)], limit=1
+            )
+        ):
             _logger.warning(
                 "No IoT device found with identifier '%s' (iot_box_identifier: %s). Request ignored",
                 device_identifier, iot_box_identifier
