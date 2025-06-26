@@ -34,6 +34,50 @@ class SaleCommissionAchievementReport(models.Model):
         """
         return query
 
+    @api.model
+    def _get_filtered_order_log_cte(self, users=None, teams=None):
+        date_from = None
+        date_to = None
+        if self.env.context.get('active_target_ids'):
+            target_ids = self.env['sale.commission.plan.target'].sudo().browse(self.env.context['active_target_ids'])
+            date_from = min(target_ids.mapped('date_from'))
+            date_to = max(target_ids.mapped('date_to'))
+
+        elif self.env.context.get('active_plan_ids'):
+            plan_ids = self.env['sale.commission.plan'].sudo().browse(self.env.context['active_plan_ids'])
+            date_from = min(plan_ids.mapped('date_from'))
+            date_to = max(plan_ids.mapped('date_to'))
+        company_count = len(self.env.companies.ids)
+        if company_count == 1:
+            company_condition = f"AND company_id = {self.env.companies.id}"
+        else:
+            company_condition = f"AND company_id IN {tuple(self.env.companies.ids)}"
+        today = fields.Date.today().strftime('%Y-%m-%d')
+        date_from_condition = f"""AND event_date >= '{datetime.strftime(date_from, "%Y-%m-%d")}'""" if date_from else ""
+        query = f"""
+        filtered_order_logs AS (
+            SELECT
+                    id,
+                    order_id,
+                    plan_id,
+                    amount_signed,
+                    team_id,
+                    company_id,
+                    user_id,
+                    currency_id,
+                    event_date,
+                    effective_date,
+                    create_date
+              FROM sale_order_log
+             WHERE 1=1
+               {company_condition}
+               {'AND user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
+               {'AND team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
+               {date_from_condition}
+               AND event_date <= '{datetime.strftime(date_to, "%Y-%m-%d") if date_to else today}'
+        ),
+        """
+        return query
 
     @api.model
     def _get_sale_order_log_rates(self):
@@ -74,6 +118,7 @@ class SaleCommissionAchievementReport(models.Model):
     def _subscription_lines(self, users=None, teams=None):
         return f"""
 {self._get_subscription_currency_rates()}
+{self._get_filtered_order_log_cte(users=users, teams=teams)}
 subscription_rules AS (
     SELECT
         COALESCE(scpu.date_from, scp.date_from) AS date_from,
@@ -101,16 +146,20 @@ subscription_rules AS (
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id) AS company_id,
-        log.order_id AS related_res_id,
+        MAX(log.order_id) AS related_res_id,
         -- create_date because _update_effective_date could update several logs at the same time
-        MAX(log.create_date) AS entropy_date
+        -- transfers are created in the same transaction, we need to distinguish them too. We do it based on the sign
+        CASE
+            WHEN SUM(log.amount_Signed) > 0 THEN MAX(log.create_date) + INTERVAL '1 minute'
+            ELSE MAX(log.create_date) - INTERVAL '1 minute'
+        END AS entropy_date
+
     FROM subscription_rules rules
-    CROSS JOIN sale_order_log log
+    JOIN filtered_order_logs log ON log.team_id=rules.team_id
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
     JOIN currency_rate cr ON cr.company_id=log.company_id
     WHERE rules.team_rule
       {self._get_company_condition('log', alias=True)}
-      AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
       AND log.team_id = rules.team_id
     {'AND log.team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
@@ -129,15 +178,19 @@ subscription_rules AS (
         {self.env.company.currency_id.id} AS currency_id,
         MAX(log.event_date) AS date,
         MAX(rules.company_id) AS company_id,
-        log.order_id AS related_res_id,
-        MAX(log.write_date) AS entropy_date
+        MAX(log.order_id) AS related_res_id,
+        -- create_date because _update_effective_date could update several logs at the same time
+        -- transfers are created in the same transaction, we need to distinguish them too. We do it based on the sign
+        CASE
+            WHEN SUM(log.amount_Signed) > 0 THEN MAX(log.create_date) + INTERVAL '1 minute'
+            ELSE MAX(log.create_date) - INTERVAL '1 minute'
+        END AS entropy_date
     FROM subscription_rules rules
-    CROSS JOIN sale_order_log log
+        JOIN filtered_order_logs log ON log.user_id=rules.user_id
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
     JOIN currency_rate cr ON cr.company_id=log.company_id
     WHERE NOT rules.team_rule
       {self._get_company_condition('log', alias=True)}
-      AND log.event_type != '3_transfer'
       AND (rules.recurring_plan_id IS NULL OR log.plan_id = rules.recurring_plan_id)
       AND log.user_id = rules.user_id
     {'AND log.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}

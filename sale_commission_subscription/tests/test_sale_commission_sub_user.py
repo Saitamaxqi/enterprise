@@ -1,11 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
-from freezegun import freeze_time
 from unittest.mock import patch
 
-from odoo import Command, fields
-from odoo.tests import tagged
+from odoo import Command
+from odoo.tests import freeze_time, tagged
 from odoo.exceptions import UserError
 
 from odoo.addons.sale_commission_subscription.tests.common import TestSaleSubscriptionCommissionCommon
@@ -406,3 +405,70 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             # remove duplicates
             achievement_ids = set(achievements.ids)
             self.assertEqual(len(achievement_ids), 3, "Three achievements should have different ids")
+
+    def test_sub_commission_transfer(self):
+        # Ensure transfer logs are taken into account
+        with freeze_time('2024-06-01'):
+            sub = self.subscription.copy()  #  monthly
+            sub.user_id = self.commission_user_1.id
+
+            self.sub_product_tmpl.subscription_rule_ids.filtered(lambda s: s.plan_id == self.plan_month).fixed_price = 100
+            self.sub_product_tmpl.subscription_rule_ids.filtered(lambda s: s.plan_id == self.plan_year).fixed_price = 1000
+            sub.order_line = [Command.clear()]
+            sub.order_line = [
+            (0, 0, {
+                'name': self.product.name,
+                'product_id': self.product.id,
+                'product_uom_qty': 1.0,
+            })]
+            sub.start_date = False
+            sub.next_invoice_date = False
+            self.commission_plan_sub.achievement_ids = self.env['sale.commission.plan.achievement'].create([{
+                'type': 'mrr',
+                'rate': 0.8,
+                'plan_id': self.commission_plan_sub.id,
+                'recurring_plan_id': self.plan_month.id,
+            }, {
+                'type': 'mrr',
+                'rate': 1,
+                'plan_id': self.commission_plan_sub.id,
+                'recurring_plan_id': self.plan_year.id,
+            }])
+            self.commission_plan_sub.action_approve()
+            self.flush_tracking()
+            sub.require_payment = False
+            sub.action_confirm()
+            self.flush_tracking()
+            sub._create_recurring_invoice()
+
+        with freeze_time('2024-07-01'):
+            self.flush_tracking()
+            action = sub.prepare_renewal_order()
+            renewal_so = self.env['sale.order'].browse(action['res_id'])
+            renewal_so.plan_id = self.plan_year.id
+            self.flush_tracking()
+            renewal_so.action_confirm()
+            self.flush_tracking()
+            renewal_so._create_recurring_invoice()
+            self.flush_tracking()
+            order_log_ids = sub.order_log_ids.sorted('event_date')
+            sub_data = [
+                (log.event_type, log.event_date, log.subscription_state, log.amount_signed, log.recurring_monthly, log.effective_date)
+                for log in order_log_ids]
+
+            self.assertEqual(sub_data, [('0_creation', datetime.date(2024, 6, 1), '1_draft', 100, 100, datetime.date(2024, 6, 1)),
+                                        ('3_transfer', datetime.date(2024, 7, 1), '5_renewed', -100.0, 0.0, datetime.date(2024, 7, 1))])
+            order_log_ids = renewal_so.order_log_ids.sorted('event_date')
+            renew_data = [
+                (log.event_type, log.event_date, log.subscription_state, log.amount_signed, log.recurring_monthly, log.effective_date)
+                for log in order_log_ids]
+
+            self.assertEqual(renew_data, [('3_transfer', datetime.date(2024, 7, 1), '2_renewal', 100.0, 100.0, datetime.date(2024, 7, 1)),
+                                          ('15_contraction', datetime.date(2024, 7, 1), '3_progress', -16.67, 83.33, datetime.date(2024, 7, 1))])
+
+            self.env.invalidate_all()
+            achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+            commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
+            self.assertEqual(len(achievements), 4, 'We should have 4 ahcievements: creation, 2 transfer and one contraction')
+            self.assertEqual(sum(achievements.mapped('achieved')), 83.33, '80 - 80 + 100 - 16.87')
+            self.assertEqual(sum(commissions.mapped('commission')), 83.33, "Commission = achieved in this case")
