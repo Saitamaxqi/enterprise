@@ -11,7 +11,7 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { Deferred } from "@web/core/utils/concurrency";
-import { escape } from "@web/core/utils/strings";
+import { htmlReplaceAll } from "@web/core/utils/html";
 
 export class Voip {
     bus = new EventBus();
@@ -236,7 +236,7 @@ export class Voip {
      * not block the UI.
      */
     triggerError(message, { isNonBlocking = false, title, button } = {}) {
-        const safeText = markup(escape(message).replaceAll("\n", "<br>"));
+        const safeText = htmlReplaceAll(message, "\n", markup`<br>`);
         this.error = { title, text: safeText, isNonBlocking, button };
     }
 

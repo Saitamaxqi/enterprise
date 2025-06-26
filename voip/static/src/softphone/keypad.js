@@ -165,7 +165,7 @@ export class Keypad extends Component {
         return { length, firstResult, searchResultsBySearchField };
     }
 
-    /** @returns {string} ⚠ markup */
+    /** @returns {ReturnType<markup>} */
     get firstSuggestion() {
         const suggestion = this.calleeSuggestions.firstResult;
         const isMatchByName = suggestion.id.endsWith("(by name)");
@@ -361,14 +361,18 @@ export class Keypad extends Component {
 /**
  * @param {string} str
  * @param {string} substr
- * @returns {string} ⚠ markup
+ * @returns {ReturnType<markup>|string}
  */
 export function highlightMatch(str, substr) {
     const { start, end, match } = normalizedMatch(str, substr);
     if (!match) {
         return "";
     }
-    return markup`${str.slice(0, start)}<span class="o-voip-highlighted-letter fw-bolder">${match}</span>${str.slice(end)}`;
+    return htmlJoin([
+        str.slice(0, start),
+        markup`<span class="o-voip-highlighted-letter fw-bolder">${match}</span>`,
+        str.slice(end),
+    ]);
 }
 
 function highlightT9Match(name, t9) {
@@ -395,7 +399,7 @@ function highlightT9Match(name, t9) {
         return "";
     }
     return htmlJoin([
-        markup(`<span class="o-voip-highlighted-letter fw-bolder">`),
+        markup`<span class="o-voip-highlighted-letter fw-bolder">`,
         ...nameAsArr.slice(0, matchEnd),
         markup`</span>`,
         ...nameAsArr.slice(matchEnd),
