@@ -184,7 +184,9 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="110" NumCta="110" Desc="Employment subsidy to be applied" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="110.01" NumCta="110.01" Desc="Employment subsidy to be applied" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="113" NumCta="113" Desc="Tax credit" Nivel="1" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="113.01" NumCta="113.01" Desc="VAT receivable" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="113.02" NumCta="113.02" Desc="Income tax to recover" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="113.08" NumCta="113.08" Desc="Other taxes in favour" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115" NumCta="115" Desc="Inventory" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115.01" NumCta="115.01" Desc="Inventory" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115.02" NumCta="115.02" Desc="Raw materials and materials" Nivel="2" Natur="D"/>
@@ -228,6 +230,11 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="211.01" NumCta="211.01" Desc="Employer's IMSS provision payable" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="211.02" NumCta="211.02" Desc="Provision for SAR payable" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="211.03" NumCta="211.03" Desc="Infonavit provision payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213" NumCta="213" Desc="Taxes and duties payable" Nivel="1" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.01" NumCta="213.01" Desc="VAT payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.02" NumCta="213.02" Desc="IEPS payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.03" NumCta="213.03" Desc="Income tax payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.07" NumCta="213.07" Desc="Other taxes payable" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216" NumCta="216" Desc="Taxes withheld" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216.01" NumCta="216.01" Desc="Taxes withheld from income tax on wages and salaries" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216.03" NumCta="216.03" Desc="Withholding of income tax for leasing" Nivel="2" Natur="A"/>
@@ -308,7 +315,9 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="110" NumCta="110" Desc="Employment subsidy to be applied" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="110.01" NumCta="110.01" Desc="Employment subsidy to be applied" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="113" NumCta="113" Desc="Tax credit" Nivel="1" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="113.01" NumCta="113.01" Desc="VAT receivable" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="113.02" NumCta="113.02" Desc="Income tax to recover" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="113.08" NumCta="113.08" Desc="Other taxes in favour" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115" NumCta="115" Desc="Inventory" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115.01" NumCta="115.01" Desc="Inventory" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115.02" NumCta="115.02" Desc="Raw materials and materials" Nivel="2" Natur="D"/>
@@ -352,6 +361,11 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="211.01" NumCta="211.01" Desc="Employer's IMSS provision payable" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="211.02" NumCta="211.02" Desc="Provision for SAR payable" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="211.03" NumCta="211.03" Desc="Infonavit provision payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213" NumCta="213" Desc="Taxes and duties payable" Nivel="1" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.01" NumCta="213.01" Desc="VAT payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.02" NumCta="213.02" Desc="IEPS payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.03" NumCta="213.03" Desc="Income tax payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="213.07" NumCta="213.07" Desc="Other taxes payable" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216" NumCta="216" Desc="Taxes withheld" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216.01" NumCta="216.01" Desc="Taxes withheld from income tax on wages and salaries" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216.03" NumCta="216.03" Desc="Withholding of income tax for leasing" Nivel="2" Natur="A"/>
