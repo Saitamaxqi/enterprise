@@ -14,7 +14,7 @@ const oldGetOptionalCombinationInfoParam = VariantMixin._getOptionalCombinationI
 VariantMixin._getOptionalCombinationInfoParam = function ($product) {
     const result = oldGetOptionalCombinationInfoParam.apply(this, arguments);
 
-    Object.assign(result, this._getSerializedRentingDates($product));
+    Object.assign(result, this._getSerializedRentingDates($product[0]));
 
     return result;
 };

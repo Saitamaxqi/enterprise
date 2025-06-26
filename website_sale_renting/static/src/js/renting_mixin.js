@@ -21,10 +21,11 @@ export const RentingMixin = {
      *
      * @param {DateTime} startDate
      * @param {DateTime} endDate
+     * @param {Number} productId
      * @private
      */
-    _getInvalidMessage(startDate, endDate, productId = false) {
-        let message;
+    _getInvalidMessage(startDate, endDate, productId=0) {
+        let message = "";
         if (!this.rentingUnavailabilityDays || !this.rentingMinimalTime) {
             return message;
         }
@@ -75,8 +76,8 @@ export const RentingMixin = {
             if (!(e instanceof ConversionError)) {
                 throw e;
             }
-            const $defaultDate = this.el.querySelector('input[name="default_' + inputName + '"]');
-            return $defaultDate && deserializeDateTime($defaultDate.value, { tz: this.websiteTz });
+            const defaultDate = this.el.querySelector('input[name="default_' + inputName + '"]');
+            return defaultDate && deserializeDateTime(defaultDate.value, { tz: this.websiteTz });
         }
     },
 
@@ -84,11 +85,11 @@ export const RentingMixin = {
      * Get the renting pickup and return dates from the website sale renting daterange picker object.
      *
      * @private
-     * @param {$.Element} $product
+     * @param {HTMLElement} product
      */
-    _getRentingDates($product) {
-        const [startDate] = ($product || this.$el).find("input[name=renting_start_date]");
-        const [endDate] = ($product || this.$el).find("input[name=renting_end_date]");
+    _getRentingDates(product) {
+        const startDate = (product || this.el).querySelector('input[name=renting_start_date]');
+        const endDate = (product || this.el).querySelector('input[name=renting_end_date]');
         if (startDate || endDate) {
             let startDateValue = this._getDateFromInputOrDefault(startDate, "startDate", "start_date");
             let endDateValue = this._getDateFromInputOrDefault(endDate, "endDate", "end_date");
@@ -108,10 +109,10 @@ export const RentingMixin = {
      * Return serialized dates from `_getRentingDates`. Used for client-server exchange.
      *
      * @private
-     * @param {$.Element} $product
+     * @param {HTMLElement} product
      */
-    _getSerializedRentingDates($product) {
-        const { start_date, end_date } = this._getRentingDates($product);
+    _getSerializedRentingDates(product) {
+        const { start_date, end_date } = this._getRentingDates(product);
         if (start_date && end_date) {
             return {
                 start_date: serializeDateTime(start_date),

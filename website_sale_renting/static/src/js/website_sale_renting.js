@@ -28,7 +28,7 @@ WebsiteSale.include({
         this.$('[data-bs-toggle="tooltip"]').tooltip();
     },
 
-    async _check_new_dates_on_cart(){
+    async _checkNewDatesOnCart() {
         const { start_date, end_date, values } = await rpc(
             '/shop/cart/update_renting',
             this._getSerializedRentingDates()
@@ -94,10 +94,10 @@ WebsiteSale.include({
     /**
      * Update the instance value when the renting constraints changes.
      *
-     * @param {Event} _event
-     * @param {object} info
+     * @param {CustomEvent} event
      */
-    _onRentingConstraintsChanged(_event, info) {
+    _onRentingConstraintsChanged(event) {
+        const info = event.detail;
         if (info.rentingUnavailabilityDays) {
             this.rentingUnavailabilityDays = info.rentingUnavailabilityDays;
         }
@@ -113,11 +113,10 @@ WebsiteSale.include({
      * Handler to call the function which toggles the disabled class
      * depending on the $parent element and the availability of the current combination.
      *
-     * @param {Event} _event event
-     * @param {HTMLElement} parent parent element
-     * @param {Boolean} isCombinationAvailable whether the combination is available
+     * @param {CustomEvent} event event
      */
-    _onToggleDisable(_event, parent, isCombinationAvailable) {
+    _onToggleDisable(event) {
+        const { parent, isCombinationAvailable } = event.detail;
         this._toggleDisable($(parent), isCombinationAvailable);
     },
 
@@ -182,15 +181,20 @@ WebsiteSale.include({
         return result;
     },
 
-    _onDatePickerApply: function (ev, { start_date, end_date }) {
-        if (document.querySelector(".oe_cart")) {
-            if (start_date && end_date) {
-                this._check_new_dates_on_cart();
+    /**
+     * @param {CustomEvent} event
+     */
+    _onDatePickerApply(event) {
+        const { startDate, endDate } = event.detail;
+        if (document.querySelector('.oe_cart')) {
+            if (startDate && endDate) {
+                this._checkNewDatesOnCart();
             }
-        } else if (document.querySelector(".o_website_sale_shop_daterange_picker")) {
-            this._addDatesToQuery(start_date, end_date);
+        } else if (document.querySelector('.o_website_sale_shop_daterange_picker')) {
+            this._addDatesToQuery(startDate, endDate);
         }
     },
+
     /**
      * Redirect to the shop page with the appropriate dates as search params.
      */
@@ -202,7 +206,6 @@ WebsiteSale.include({
             searchParams.set("end_date", serializeDateTime(end_date));
         }
         window.location = `/shop?${searchParams}`;
-        this.isRedirecting = true;
     },
 
     _onDatePickerClear: function (ev) {

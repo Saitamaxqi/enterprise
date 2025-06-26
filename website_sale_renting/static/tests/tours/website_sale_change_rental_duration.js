@@ -13,8 +13,8 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
     steps: () => [
         ...tourUtils.searchProduct("computer", { select: true }),
         {
-            content: "Wait computer informations are loaded",
-            trigger: "img.product_detail_img[src*='Computer']",
+            content: "Wait for the daterange picker to be initialized",
+            trigger: '.o_daterange_picker[data-has-default-dates]',
         },
         {
             content: "Open daterangepicker",
@@ -77,14 +77,18 @@ registry.category('web_tour.tours').add('date_based_rental_duration', {
     steps: () => [
         ...tourUtils.searchProduct("Computer", { select: true }),
         {
+            content: "Wait for the daterange picker to be initialized",
+            trigger: '.o_daterange_picker[data-has-default-dates]',
+        },
+        {
             content: "Select the return date",
             trigger: 'input[name=renting_end_date]',
-            run: `edit ${getFutureDate(2)}`,
+            run: `edit ${getFutureDate(2)} && press Enter`,
         },
         {
             content: "Rent for 2 days",
             trigger: 'input[name=renting_start_date]',
-            run: `edit ${getFutureDate(1)}`,
+            run: `edit ${getFutureDate(1)} && press Enter`,
         },
         {
             content: "Add to cart",

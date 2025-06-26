@@ -55,9 +55,4 @@
             </div>
         </xpath>
     </template>
-    <record id="website_sale_renting.s_rental_search_000_js" model="ir.asset">
-        <field name="name">Rental Search 000 JS</field>
-        <field name="bundle">web.assets_frontend</field>
-        <field name="path">website_sale_renting/static/src/snippets/s_rental_search/000.js</field>
-    </record>
 </odoo>

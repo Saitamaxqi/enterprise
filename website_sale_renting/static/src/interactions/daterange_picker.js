@@ -1,54 +1,46 @@
-import { deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
-import { rpc } from "@web/core/network/rpc";
-import publicWidget from '@web/legacy/js/public/public_widget';
+import { Interaction } from '@web/public/interaction';
+import { registry } from '@web/core/registry';
+import { areDatesEqual, deserializeDateTime, serializeDateTime } from '@web/core/l10n/dates';
+import { rpc } from '@web/core/network/rpc';
 import { msecPerUnit, RentingMixin } from '@website_sale_renting/js/renting_mixin';
 
 const { DateTime } = luxon;
 
-publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(RentingMixin, {
-    selector: '.o_website_sale_daterange_picker',
-    disabledInEditableMode: true,
-    rentingAvailabilities: {},
+export class DaterangePicker extends Interaction {
+    static selector = '.o_website_sale_daterange_picker';
+    rentingAvailabilities = {};
+
+    setup() {
+        // Whether this daterange picker is available on /shop.
+        this.isShopDatePicker = this.el.classList.contains('o_website_sale_shop_daterange_picker');
+        this.disableDateTimePickers = [];
+    }
 
     /**
      * During start, load the renting constraints to validate renting pickup and return dates.
-     *
-     * @override
      */
-    willStart() {
-        return this._super.apply(this, arguments).then(() => {
-            return this._loadRentingConstraints();
-        });
-    },
+    async willStart() {
+        await this._loadRentingConstraints();
+    }
 
     /**
      * Start the website_sale daterange picker and save in the instance the value of the default
      * renting pickup and return dates, which could be undefined.
-     *
-     * @override
      */
-    async start() {
-        await this._super(...arguments);
-        // Whether this is the daterange picker that is available on /shop/
-        this.isShopDatePicker = this.el.classList.contains("o_website_sale_shop_daterange_picker");
+    start() {
         this.startDate = this._getDefaultRentingDate('start_date');
         this.endDate = this._getDefaultRentingDate('end_date');
-        this.disableDateTimePickers = [];
-        this.el.querySelectorAll(".o_daterange_picker").forEach((el) => {
-            this._initSaleRentingDateRangePicker(el);
-        });
+        this.el.querySelectorAll('.o_daterange_picker').forEach(
+            (el) => this._initSaleRentingDateRangePicker(el)
+        );
         this._verifyValidPeriod();
-    },
+    }
 
-    /**
-     * @override
-     */
     destroy() {
         for (const disableDateTimePicker of this.disableDateTimePickers) {
             disableDateTimePicker();
         }
-        return this._super(...arguments);
-    },
+    }
 
     /**
      * Checks if the default renting dates are set.
@@ -59,7 +51,7 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         return (this._getSearchDefaultRentingDate('start_date') && this._getSearchDefaultRentingDate('end_date'))
                ||
                (this.el.querySelector('input[name="default_start_date"]') && this.el.querySelector('input[name="default_end_date"]'));
-    },
+    }
 
     /**
      * Load renting constraints.
@@ -70,71 +62,71 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
      * @private
      */
     async _loadRentingConstraints() {
-        return rpc("/rental/product/constraints").then((constraints) => {
-            this.rentingUnavailabilityDays = constraints.renting_unavailabity_days;
-            this.rentingMinimalTime = constraints.renting_minimal_time;
-            this.websiteTz = constraints.website_tz;
-            this._triggerRentingConstraintsChanged({
-                rentingUnavailabilityDays: this.rentingUnavailabilityDays,
-                rentingMinimalTime: this.rentingMinimalTime,
-                websiteTz: this.websiteTz,
-            });
+        const constraints = await this.waitFor(rpc('/rental/product/constraints'));
+        this.rentingUnavailabilityDays = constraints.renting_unavailabity_days;
+        this.rentingMinimalTime = constraints.renting_minimal_time;
+        this.websiteTz = constraints.website_tz;
+        this._triggerRentingConstraintsChanged({
+            rentingUnavailabilityDays: this.rentingUnavailabilityDays,
+            rentingMinimalTime: this.rentingMinimalTime,
+            websiteTz: this.websiteTz,
         });
-    },
+    }
 
     /**
      * Initialize renting date input and attach to it a daterange picker object.
      *
      * A method is attached to the daterange picker in order to handle the changes.
      *
-     * @param {HTMLElement} dateInput
+     * @param {HTMLElement} el
      * @private
      */
     _initSaleRentingDateRangePicker(el) {
         const hasDefaultDates = Boolean(this._hasDefaultDates());
         el.dataset.hasDefaultDates = hasDefaultDates;
         const value =
-            this.isShopDatePicker && !hasDefaultDates ? ["", ""] : [this.startDate, this.endDate];
+            this.isShopDatePicker && !hasDefaultDates ? ['', ''] : [this.startDate, this.endDate];
         const datetimeWebsiteTz = DateTime.now().setZone(this.websiteTz);
-        this.disableDateTimePickers.push(this.call(
-            "datetime_picker",
-            "create",
+        this.disableDateTimePickers.push(this.services['datetime_picker'].create(
             {
                 target: el,
                 pickerProps: {
                     value,
                     range: true,
-                    type: this._isDurationWithHours() ? "datetime" : "date",
+                    type: this._isDurationWithHours() ? 'datetime' : 'date',
                     minDate: DateTime.min(datetimeWebsiteTz, this.startDate),
                     maxDate: DateTime.max(datetimeWebsiteTz.plus({ years: 3 }), this.endDate),
                     isDateValid: this._isValidDate.bind(this),
-                    dayCellClass: (date) => this._isCustomDate(date).join(" "),
+                    dayCellClass: (date) => this._isCustomDate(date).join(' '),
                     tz: this.websiteTz,
                 },
-                onApply: ([start_date, end_date]) => {
-                    this.startDate = start_date;
-                    this.endDate = end_date;
+                onApply: ([startDate, endDate]) => {
+                    if (areDatesEqual([this.startDate, this.endDate], [startDate, endDate])) {
+                        return;
+                    }
+                    this.startDate = startDate;
+                    this.endDate = endDate;
                     this._verifyValidPeriod();
-                    this.$("input[name=renting_start_date]").change();
-                    this.$el.trigger("daterangepicker_apply", {
-                        start_date,
-                        end_date,
-                    });
+                    this.el.querySelector('input[name=renting_start_date]')
+                        .dispatchEvent(new Event('change', { bubbles: true }));
+                    this.el.dispatchEvent(new CustomEvent(
+                        'daterangepicker_apply', { detail: { startDate, endDate }, bubbles: true },
+                    ));
                 },
                 getInputs: () => [
-                    el.querySelector("input[name=renting_start_date]"),
-                    el.querySelector("input[name=renting_end_date]"),
+                    el.querySelector('input[name=renting_start_date]'),
+                    el.querySelector('input[name=renting_end_date]'),
                 ],
             },
         ).enable());
-    },
+    }
 
     async _fetchProductAvailabilities(productId, minDate, maxDate) {
-        const result = await rpc("/rental/product/availabilities", {
+        const result = await this.waitFor(rpc('/rental/product/availabilities', {
             product_id: productId,
             min_date: minDate,
             max_date: maxDate,
-        });
+        }));
         this.rentingAvailabilities[productId] = [];
         if (result.renting_availabilities?.length) {
             this.rentingAvailabilities[productId] = result.renting_availabilities.map(
@@ -148,12 +140,11 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
                 }
             );
         }
-        return result;
-    },
+        // `preparation_time` is only populated/used in website_sale_stock_renting. It has no effect
+        // in website_sale_renting, but we keep it here for simplicity.
+        this.preparationTime = result.preparation_time;
+    }
 
-    // ------------------------------------------
-    // Utils
-    // ------------------------------------------
     /**
      * Get the default renting date from the hidden input filled server-side.
      *
@@ -183,7 +174,7 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         // get the first available date based on this.rentingUnavailabilityDays
         const date = DateTime.now().plus({ days: 1, hours: 1 }).set({minutes: 0, seconds: 0 });
         return this._getFirstAvailableDate(date);
-    },
+    }
 
     /**
      * Get the default renting date for the given input from the search params.
@@ -193,7 +184,7 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
      */
     _getSearchDefaultRentingDate(inputName) {
         return new URLSearchParams(window.location.search).get(inputName);
-    },
+    }
 
     /**
      * Check if the date is valid.
@@ -205,7 +196,7 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
      */
     _isValidDate(date) {
         return !this.rentingUnavailabilityDays[date.weekday];
-    },
+    }
 
     /**
      * Set Custom CSS to a given daterangepicker cell
@@ -232,7 +223,7 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
             }
         }
         return result;
-    },
+    }
 
     /**
      * Verify that the dates given in the daterange picker are valid and display a message if not.
@@ -247,10 +238,18 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         } else {
             this.el.parentElement.querySelector('.o_renting_warning').classList.remove('d-block');
         }
-        $('.oe_website_sale').trigger('toggle_disable', [this._getParentElement(), !message]);
-        this.el.dispatchEvent(new CustomEvent('toggle_search_btn', { bubbles: true, detail: message }));
+        document.querySelector('.oe_website_sale')?.dispatchEvent(new CustomEvent(
+            'toggle_disable',
+            { detail: {
+                parent: this.el.closest('form'),
+                isCombinationAvailable: !message,
+            }},
+        ));
+        this.el.dispatchEvent(new CustomEvent(
+            'toggle_search_btn', { bubbles: true, detail: message }
+        ));
         return !message;
-    },
+    }
 
     /**
      * Get the product id from the dom if not initialized.
@@ -259,18 +258,15 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         if (!this.productId) {
             const productSelector = [
                 'input[type="hidden"][name="product_id"]',
-                'input[type="radio"][name="product_id"]:checked'
+                'input[type="radio"][name="product_id"]:checked',
             ];
-            const form = this._getParentElement();
+            const form = this.el.closest('form');
             const productInput = form && form.querySelector(productSelector.join(', '));
             this.productId = productInput && parseInt(productInput.value);
         }
         return this.productId;
-    },
+    }
 
-    _getParentElement() {
-        return this.el.closest('form');
-    },
     /**
      * Get the first available date based on this.rentingUnavailabilityDays.
      * @private
@@ -282,11 +278,13 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
             counter++;
         }
         return date;
-    },
+    }
 
     _triggerRentingConstraintsChanged(vals) {
-        $('.oe_website_sale').trigger('renting_constraints_changed', vals || {});
-    },
+        document.querySelector('.oe_website_sale')?.dispatchEvent(new CustomEvent(
+            'renting_constraints_changed', { detail: vals || {} }
+        ));
+    }
 
     /**
      * Update the renting availabilities dict with the unavailabilities of the current product
@@ -298,18 +296,23 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
         if (!productId || this.rentingAvailabilities[productId]) {
             return;
         }
-        const result = await this._fetchProductAvailabilities(
+        await this.waitFor(this._fetchProductAvailabilities(
             productId,
             serializeDateTime(luxon.DateTime.now()),
-            serializeDateTime(luxon.DateTime.now().plus({years: 3}))
-        );
-        this.preparationTime = result.preparation_time;
+            serializeDateTime(luxon.DateTime.now().plus({ years: 3 }))
+        ));
         this._triggerRentingConstraintsChanged({
             rentingAvailabilities: this.rentingAvailabilities,
             preparationTime: this.preparationTime,
         });
         this._verifyValidPeriod();
-    },
-});
+    }
+}
 
-export default publicWidget.registry.WebsiteSaleDaterangePicker;
+// TODO(loti): temporary hack. RentingMixin should be converted to a class after converting/deleting
+// VariantMixin.
+Object.assign(DaterangePicker.prototype, RentingMixin);
+
+registry
+    .category('public.interactions')
+    .add('website_sale_renting.daterange_picker', DaterangePicker);

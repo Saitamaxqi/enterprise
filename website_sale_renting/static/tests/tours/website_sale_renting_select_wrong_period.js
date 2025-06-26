@@ -34,7 +34,8 @@ registry
                 expectUnloadPage: true,
             },
             {
-                trigger: "#product_detail_main #product_details:contains(computer)",
+                content: "Wait for the daterange picker to be initialized",
+                trigger: '.o_daterange_picker[data-has-default-dates]',
             },
             {
                 content: 'Pick an invalid start date',

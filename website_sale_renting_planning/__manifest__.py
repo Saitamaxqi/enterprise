@@ -10,7 +10,7 @@ appropriate views and selling choices.
     'depends': ['website_sale_renting', 'sale_renting_planning'],
     'assets': {
         'web.assets_frontend': [
-            'website_sale_renting_planning/static/src/js/*.js',
+            'website_sale_renting_planning/static/src/interactions/**/*',
         ],
     },
     'auto_install': True,

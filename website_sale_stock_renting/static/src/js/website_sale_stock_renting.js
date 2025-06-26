@@ -4,6 +4,7 @@ WebsiteSale.include({
     events: Object.assign({}, WebsiteSale.prototype.events, {
         'change input[type="hidden"][name="product_id"]': "_onVariantChanged",
     }),
+
     /**
      * Override of `_updateRootProduct` to trigger a change_product_id event on the daterange
      * pickers.
@@ -16,25 +17,24 @@ WebsiteSale.include({
      */
     _updateRootProduct(form) {
         this._super(...arguments);
-        const $dateRangeRenting = $('.o_website_sale_daterange_picker');
-        if ($dateRangeRenting.length) {
-            $dateRangeRenting.trigger(
-                'change_product_id', {product_id: this.rootProduct.productId}
-            );
-        }
+        const dateRangeRenting = this.el.querySelector('.o_website_sale_daterange_picker');
+        dateRangeRenting?.dispatchEvent(new CustomEvent(
+            'change_product_id', { detail: { productId: this.rootProduct.productId }}
+        ));
     },
+
     /**
      * Override to trigger a change_product_id event for variant availabilities check.
      *
      * @override
      */
     _onVariantChanged() {
-        const productIdElement = $('input[type="hidden"][name="product_id"]');
-        const $dateRangeRenting = $(".o_website_sale_daterange_picker");
-        if ($dateRangeRenting.length && productIdElement) {
-            $dateRangeRenting.trigger("change_product_id", {
-                product_id: parseInt(productIdElement.val(), 10),
-            });
+        const productIdElement = this.el.querySelector('input[type="hidden"][name="product_id"]');
+        const dateRangeRenting = this.el.querySelector('.o_website_sale_daterange_picker');
+        if (dateRangeRenting && productIdElement) {
+            dateRangeRenting.dispatchEvent(new CustomEvent(
+                'change_product_id', { detail: { productId: parseInt(productIdElement.value) }}
+            ));
         }
     },
 
@@ -43,8 +43,9 @@ WebsiteSale.include({
      *
      * @override
      */
-    _onRentingConstraintsChanged(event, info) {
+    _onRentingConstraintsChanged(event) {
         this._super.apply(this, arguments);
+        const info = event.detail;
         if (info.rentingAvailabilities) {
             this.rentingAvailabilities = info.rentingAvailabilities;
         }
