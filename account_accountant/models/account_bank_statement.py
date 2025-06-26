@@ -6,7 +6,7 @@ from markupsafe import Markup
 from dateutil.relativedelta import relativedelta
 from itertools import product
 
-from odoo import Command, _, api, fields, models, SUPERUSER_ID
+from odoo import Command, _, api, fields, models, modules, SUPERUSER_ID
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL
@@ -156,24 +156,34 @@ class AccountBankStatementLine(models.Model):
                 st_lines = st_lines[:batch_size]
             return st_lines, remaining_line_id
 
-        def stopping_condition():
+        def is_limit_time_exceeded():
             if batch_size and limit_time:
                 # cron limitations only make sense if we have both a batch_size and a limit_time
                 return fields.Datetime.now().timestamp() - start_time.timestamp() > limit_time
             # the cron won't be limited, and we'll process all the statement lines never processed before
-            return True
+            return False
 
         remaining_line_id = None
 
         start_time = fields.Datetime.now()
-        while stopping_condition():
-            # compute the statement lines to reconcile in this batch size
-            st_lines, remaining_line_id = compute_st_lines_to_reconcile(company_id=company_id)
+        while not is_limit_time_exceeded():
+            try:
+                # compute the statement lines to reconcile in this batch size
+                st_lines, remaining_line_id = compute_st_lines_to_reconcile(company_id=company_id)
 
-            if not st_lines:
-                return
+                if not st_lines:
+                    return
 
-            st_lines._try_auto_reconcile_statement_lines(company_id=company_id)
+                st_lines._try_auto_reconcile_statement_lines(company_id=company_id)
+            except Exception as e:  # noqa: BLE001
+                if not modules.module.current_test:
+                    self.env.cr.rollback()
+                st_lines.cron_last_check = fields.Datetime.now()
+                _logger.warning("Error while processing statement lines: %s", e)
+
+            # Commit if we can, in case an issue arises later.
+            if not modules.module.current_test:
+                self.env.cr.commit()
 
         if remaining_line_id:
             # If some statement lines couldn't be processed because of the cron limits, manually re-trigger the cron
