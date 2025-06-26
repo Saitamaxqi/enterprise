@@ -472,7 +472,7 @@ class AccountEdiFormat(models.Model):
             try:
                 response_state = response['estado']
                 response_checks = response['comprobantes'] and response['comprobantes']['comprobante'] or []
-            except AttributeError as err:
+            except (AttributeError, TypeError) as err:
                 return warnings or [_("SRI response unexpected: %s", err)], 'warning' if warnings else 'error', None, None
 
             # Parse govt's response for errors or response state
@@ -526,7 +526,7 @@ class AccountEdiFormat(models.Model):
             return auth_state, auth_num, auth_date, zeep_errors, zeep_warnings
         try:
             response_auth_list = response['autorizaciones'] and response['autorizaciones']['autorizacion'] or []
-        except AttributeError as err:
+        except (AttributeError, TypeError) as err:
             return auth_state, auth_num, auth_date, [_("SRI response unexpected: %s", err)], zeep_warnings
 
         errors = []
