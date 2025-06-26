@@ -306,6 +306,7 @@ class AccountBankStatementLine(models.Model):
                AND aml.company_id = st_line.company_id
                AND aml.reconciled = false
                AND acc.reconcile = true
+               AND NOT acc.account_type IN ('asset_cash', 'liability_credit_card')
                AND acc.active
                AND ((st_line.amount > 0 and aml.balance > 0) OR (st_line.amount < 0 and aml.balance < 0))
                AND (aml.parent_state in ('draft', 'posted'))
