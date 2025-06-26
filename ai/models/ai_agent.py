@@ -23,7 +23,7 @@ _logger = logging.getLogger(__name__)
 
 # Pre-prompts and constants
 SELECTION_MODELS = {
-    'openai': [('gpt-3.5-turbo', "GPT-3.5 Turbo"), ('gpt-4', "GPT-4")],
+    'openai': [('gpt-3.5-turbo', "GPT-3.5 Turbo"), ('gpt-4', "GPT-4"), ('gpt-4o', "GPT-4o"), ('gpt-4.1', "GPT-4.1"), ('gpt-4.1-mini', "GPT-4.1 Mini")],
     'google': [('gemini', "Gemini")],
 }
 
@@ -107,7 +107,7 @@ class AIAgent(models.Model):
     llm_model = fields.Selection(
         selection=_get_llm_model_selection,
         string="LLM Model",
-        default='gpt-4',
+        default='gpt-4o',
         required=True,
     )
     restrict_to_sources = fields.Boolean(
