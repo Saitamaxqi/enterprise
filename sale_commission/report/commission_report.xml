@@ -10,6 +10,7 @@
                 <field name="date_to" string="Period"/>
                 <field name="payment_date" optional="hide"/>
                 <field name="forecast" readonly="0" optional="hide"/>
+                <field name="notes" readonly="0" optional="hide"/>
                 <field name="target_amount" invisible="target_amount == 0" sum="Total Target"/>
                 <field name="achieved" sum="Total achieved"/>
                 <field name="achieved_rate" widget="percentage" optional="hide" invisible="target_amount == 0"/>

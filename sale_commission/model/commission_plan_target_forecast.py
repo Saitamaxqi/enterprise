@@ -16,6 +16,7 @@ class SaleCommissionPlanTargetForecast(models.Model):
     team_id = fields.Many2one('crm.team', related='user_id.sale_team_id', depends=['user_id'], store=True)
     amount = fields.Monetary("Forecast", default=0, currency_field='currency_id')
     currency_id = fields.Many2one('res.currency', related='plan_id.currency_id')
+    notes = fields.Text("Notes")
 
     @api.model_create_multi
     def create(self, vals_list):

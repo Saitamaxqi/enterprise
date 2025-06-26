@@ -28,6 +28,7 @@ class SaleCommissionReport(models.Model):
     payment_date = fields.Date("Payment Date", readonly=True)
     forecast = fields.Monetary("Forecast", readonly=True, currency_field='currency_id')
     date_to = fields.Date(related='target_id.date_to')
+    notes = fields.Text(related='forecast_id.notes', readonly=True)
 
     @api.model
     def _search(self, domain, *args, **kwargs):
@@ -72,20 +73,28 @@ class SaleCommissionReport(models.Model):
 
     def write(self, vals):
         # /!\ Do not call super as the table doesn't exist
-        if 'forecast' in vals:
-            amount = vals['forecast']
+        if 'forecast' in vals or 'notes' in vals:
+            forecast = vals.get('forecast')
+            notes = vals.get('notes')
             for line in self:
                 if line.forecast_id:
-                    line.sudo().forecast_id.amount = amount
+                    if forecast:
+                        line.sudo().forecast_id.amount = forecast
+                    if notes:
+                        line.sudo().forecast_id.notes = notes
                 else:
                     line.forecast_id = self.env['sale.commission.plan.target.forecast'].sudo().create({
                         'target_id': line.target_id.id,
-                        'amount': amount,
+                        'amount': forecast or 0,
                         'plan_id': line.plan_id.id,
                         'user_id': line.user_id.id,
+                        'notes': notes or False,
                     })
             # Update the field's cache otherwise the field reset to the original value on the field
-            self.env.cache._set_field_cache(self, self._fields.get('forecast')).update(dict.fromkeys(self.ids, amount))
+            if forecast:
+                self.env.cache._set_field_cache(self, self._fields.get('forecast')).update(dict.fromkeys(self.ids, forecast))
+            if notes:
+                self.env.cache._set_field_cache(self, self._fields.get('notes')).update(dict.fromkeys(self.ids, notes))
         return True
 
     def _get_date_range(self):
@@ -133,7 +142,8 @@ achievement AS (
         MAX(era.amount) AS amount,
         MAX(era.date_to) AS payment_date,
         MAX(scpf.id) AS forecast_id,
-        MAX(scpf.amount) AS forecast
+        MAX(scpf.amount) AS forecast,
+        MAX(scpf.notes) AS notes
         FROM sale_commission_plan_target era
         LEFT JOIN sale_commission_plan_user u
             ON u.plan_id=era.plan_id
@@ -177,6 +187,7 @@ achievement AS (
         CASE WHEN SUM(a.amount) > 0 THEN SUM(a.achieved) / (SUM(a.amount) * cr.rate) ELSE NULL END AS achieved_rate,
         SUM(a.amount) * cr.rate AS target_amount,
         SUM(a.forecast) * cr.rate AS forecast,
+        MAX(a.notes) AS notes,
         COUNT(1) AS ct
     FROM achievement a
     LEFT JOIN currency_rate cr
