@@ -46,13 +46,6 @@ export class BankRecReconcileDialogListController extends ListController {
 export class BankRecReconcileDialogListRenderer extends ListRenderer {
     static template = "account_accountant.BankRecReconcileDialogListRenderer";
     static recordRowTemplate = "account_accountant.BankRecReconcileDialogListRenderer.RecordRow";
-    async onCellClicked(record, column, ev, newWindow) {
-        if (this.props.list.selection.length) {
-            this.toggleRecordSelection(record);
-            return;
-        }
-        await super.onCellClicked(record, column, ev, newWindow);
-    }
 
     async openMoveView(record) {
         this.env.services.action.doAction({
