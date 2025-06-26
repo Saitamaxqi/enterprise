@@ -6,10 +6,10 @@
         <field name="model">sign.template</field>
         <field name="inherit_id" ref="sign.sign_template_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='tag_ids']" position="after">
-                <field name="folder_id" options="{'no_create_edit': True}"/>
-                <field name="documents_tag_ids" widget="many2many_tags" options="{'no_create': True}"/>
-            </xpath>
+            <field name="redirect_url_text" position="after">
+                <field name="folder_id" options="{'no_create_edit': True}" string="Documents folder"/>
+                <field name="documents_tag_ids" widget="many2many_tags" options="{'no_create': True}" string="Documents tags"/>
+            </field>
         </field>
     </record>
 

@@ -161,20 +161,15 @@
                             <field name="active" invisible="1"/>
                             <field name="responsible_count" invisible="1"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Tags"/>
-                        </group>
-                        <group>
                             <field name="redirect_url" widget="url"/>
                             <field name="redirect_url_text"  invisible="not redirect_url" required="bool(redirect_url)"/>
+                        </group>
+                        <group>
                             <field name="authorized_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="group_ids" groups="sign.manage_template_access" widget="many2many_tags" />
                             <field name="user_id" domain="[('share', '=', False)]" groups="sign.manage_template_access" options="{'no_open': True}"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Fields" name="signatures">
-                            <field name="sign_item_ids" readonly="1"/>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
         </field>
