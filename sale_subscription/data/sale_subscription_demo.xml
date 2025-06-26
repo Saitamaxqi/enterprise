@@ -91,6 +91,7 @@
             <field name="list_price">200.0</field>
             <field name="invoice_policy">delivery</field>
             <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="description_sale">Monthly lease for city or business driving</field>
             <field name="image_1920" type="base64" file="sale_subscription/static/img/product_car_leasing.jpg"/>
         </record>
 
