@@ -6,7 +6,6 @@ import { localization } from "@web/core/l10n/localization";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { useService } from "@web/core/utils/hooks";
 import { GanttRenderer } from "@web_gantt/gantt_renderer";
-import { escape } from "@web/core/utils/strings";
 import { MilestonesPopover } from "./milestones_popover";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { TaskGanttRendererControls } from "./task_gantt_renderer_controls";
@@ -211,11 +210,7 @@ export class TaskGanttRenderer extends GanttRenderer {
     getNotificationOnSmartSchedule(warningString, old_vals_per_task_id) {
         this.closeNotificationFn?.();
         this.closeNotificationFn = this.notificationService.add(
-            markup(
-                `<i class="fa btn-link fa-check"></i><span class="ms-1">${escape(
-                    warningString
-                )}</span>`
-            ),
+            markup`<i class="fa btn-link fa-check"></i><span class="ms-1">${warningString}</span>`,
             {
                 type: "success",
                 sticky: true,
