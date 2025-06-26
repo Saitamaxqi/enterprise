@@ -2,7 +2,6 @@ import { _t } from "@web/core/l10n/translation";
 import { markup, onMounted, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { escape } from "@web/core/utils/strings";
 import { FormController } from "@web/views/form/form_controller";
 import { formView } from "@web/views/form/form_view";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
@@ -42,9 +41,7 @@ export class PlanningFormController extends FormController {
         if ("repeat" in changes && record.data["repeat"]) {
             const message = _t("Recurring shifts created");
             this.notification.add(
-                markup(
-                    `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(message)}</span>`
-                ),
+                markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${message}</span>`,
                 { type: "success" }
             );
         }
@@ -122,7 +119,7 @@ export class PlanningFormController extends FormController {
             // then the shift should be saved as a template too.
             const message = _t("Shift saved as template");
             this.notification.add(
-                markup(`<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(message)}</span>`),
+                markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${message}</span>`,
                 { type: "success" },
             );
         }

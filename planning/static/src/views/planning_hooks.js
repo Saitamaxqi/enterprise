@@ -2,7 +2,6 @@ import { _t } from "@web/core/l10n/translation";
 import { markup, useEnv, onWillUnmount, useEffect } from "@odoo/owl";
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { useService } from "@web/core/utils/hooks";
-import { escape } from "@web/core/utils/strings";
 
 /**
  * @param {Object} params
@@ -49,11 +48,9 @@ export class PlanningControllerActions {
         ]);
         if (result) {
             const notificationRemove = this.notifications.add(
-                markup(
-                    `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(_t(
-                        "Previous week's shifts copied"
-                    ))}</span>`
-                ),
+                markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${_t(
+                    "Previous week's shifts copied"
+                )}</span>`,
                 {
                     type: "success",
                     sticky: true,
@@ -69,11 +66,9 @@ export class PlanningControllerActions {
                             );
                             this.toggleHighlightPlannedFilter(false);
                             this.notifications.add(
-                                markup(
-                                    `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(_t(
-                                        "Previous week's copied shifts removed"
-                                    ))}</span>`
-                                ),
+                                markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${_t(
+                                    "Previous week's copied shifts removed"
+                                )}</span>`,
                                 { type: 'success' },
                             );
                             notificationRemove();
@@ -128,11 +123,7 @@ export class PlanningControllerActions {
         }
         let multipleClickProtection = false;
         const notificationRemove = this.notifications.add(
-            markup(
-                `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(
-                    this.autoPlanSuccessNotification()
-                )}</span>`
-            ),
+            markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${this.autoPlanSuccessNotification()}</span>`,
             {
                 type: "success",
                 sticky: true,
@@ -152,11 +143,9 @@ export class PlanningControllerActions {
                             );
                             await this.reload();
                             this.notifications.add(
-                                markup(
-                                    `<i class="fa fa-fw fa-check"></i><span class="ms-1">${escape(
-                                        this.autoPlanRollbackSuccessNotification()
-                                    )}</span>`
-                                ),
+                                markup`<i class="fa fa-fw fa-check"></i><span class="ms-1">${
+                                    this.autoPlanRollbackSuccessNotification()
+                                }</span>`,
                                 { type: "success" }
                             );
                             this.toggleHighlightPlannedFilter(false);
