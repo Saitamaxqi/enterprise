@@ -14,17 +14,21 @@ registry.category("web_tour.tours").add('website_appointment_tour', {
         trigger: '.o-kanban-button-new',
         run: "click",
     }, {
+        content: 'Select Meeting Template',
+        trigger: '.o_appointment_template_card:contains("Let others book a meeting in your calendar")',
+        run: "click",
+    }, {
         content: 'Set name of appointment type',
         trigger: '#name_0',
         run: "edit Test",
     }, {
-        content: 'Set max scheduled days',
-        trigger: '#max_schedule_days_0',
-        run: "edit 45",
-    }, {
         content: 'Open the options tab',
         trigger: 'a[name="options"]',
         run: "click",
+    }, {
+        content: 'Set max scheduled days',
+        trigger: '#max_schedule_days_0',
+        run: "edit 45",
     }, {
         content: 'Checked the allow_guests',
         trigger: '#allow_guests_0',

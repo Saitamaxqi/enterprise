@@ -1,5 +1,6 @@
 import { registry } from "@web/core/registry";
 import { listView } from "@web/views/list/list_view";
+import { AppointmentTypeListController} from "@appointment/views/list/list_controller";
 import { AppointmentBookingListRenderer, AppointmentTypeListRenderer} from "@appointment/views/list/list_renderer";
 
 export const AppointmentBookingListView = {
@@ -11,6 +12,7 @@ registry.category("views").add("appointment_booking_list", AppointmentBookingLis
 
 export const AppointmentTypeListView = {
     ...listView,
+    Controller: AppointmentTypeListController,
     Renderer: AppointmentTypeListRenderer,
 };
 

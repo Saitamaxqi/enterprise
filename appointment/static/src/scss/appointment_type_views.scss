@@ -3,29 +3,34 @@
 .o_appointment_helper {
     .o_appointment_helper_templates {
         pointer-events: auto;
-        .o_appointment_helper_template {
-            min-height: 15vh;
-            &, * {
-                transition: all .15s;
-            }
-            &:hover {  // On hovering, display img and text in enterprise color
-                background-color: var(--o-color-4);
-                box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.05);
-                border-color: $o-enterprise-color !important;
-                * {
-                    color: $o-enterprise-color !important;
-                }
-                img {
-                    filter: brightness(1.05);
-                }
-                .card-body {
-                    background-color: var(--o-color-4) !important;
-                }
-            }
-        }
     }
     .o_nocontent_help {
         margin-top: 10vh;
+    }
+}
+
+/*                 Backend Template Cards
+ **********************************************************/
+.o_appointment_template_picker, .o_appointment_helper {
+    .o_appointment_template_card {
+        min-height: 15vh;
+        &, * {
+            transition: all .15s;
+        }
+        &:hover {  // On hovering, display img and text in enterprise color
+            background-color: var(--o-color-4);
+            box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.05);
+            border-color: $o-enterprise-color !important;
+            * {
+                color: $o-enterprise-color !important;
+            }
+            img {
+                filter: brightness(1.05);
+            }
+            .card-body {
+                background-color: var(--o-color-4) !important;
+            }
+        }
     }
 }
 

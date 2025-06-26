@@ -125,7 +125,7 @@
         <field name="name">appointment.type.form</field>
         <field name="model">appointment.type</field>
         <field name="arch" type="xml">
-            <form string="Appointment Type">
+            <form string="Appointment Type" js_class="appointment_type_form_view">
                 <field name="active" invisible="1"/>
                 <field name="is_published" invisible="1"/>
                 <header>
