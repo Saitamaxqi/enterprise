@@ -9,7 +9,6 @@ defineWhatsAppModels();
 test("WhatsApp channel chat windows should have whatsapp icon", async () => {
     const pyEnv = await startServer();
     const partnerId = pyEnv["res.partner"].create({ name: "WhatsApp User" });
-    pyEnv["res.users"].create({ partner_id: partnerId });
     pyEnv["discuss.channel"].create({
         name: "WhatsApp 1",
         channel_type: "whatsapp",
