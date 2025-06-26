@@ -12,7 +12,7 @@
                     <field string="Leads" name="lead_count" widget="statinfo"/>
                 </button>
             </xpath>
-            <xpath expr="//field[@name='reminder_ids']" position="before">
+            <xpath expr="//group[@name='options_left_details']" position="inside">
                 <field name="lead_create" groups="sales_team.group_sale_manager"/>
             </xpath>
         </field>

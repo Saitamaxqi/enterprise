@@ -67,9 +67,9 @@ class AppointmentType(models.Model):
     location = fields.Char(
         'Location formatted', compute='_compute_location', compute_sudo=True,
         help='Location formatted for one line uses')
-    event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Videoconference Link", default="discuss",
+    event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Video Link", default="discuss",
         help="Defines the type of video call link that will be used for the generated events. Keep it empty to prevent generating meeting url.")
-    allow_guests = fields.Boolean(string='Allow Guests', help="Let attendees invite guests when registering a meeting.")
+    allow_guests = fields.Boolean(string='Allow invitations', help="Let attendees invite guests when registering a meeting.")
     manual_confirmation_percentage = fields.Float("Capacity Percentage",
         help="""Activate manual confirmation only if the user/resource total capacity reserved exceeds this percentage.""")
     manage_capacity = fields.Boolean("Manage Capacities",
@@ -101,7 +101,7 @@ class AppointmentType(models.Model):
         help="How users and resources will be assigned to meetings customers book on your website.")
     avatars_display = fields.Selection(
         [('hide', 'No Picture'), ('show', 'Show Pictures')],
-        string='Front-End Display', compute='_compute_avatars_display', readonly=False, store=True,
+        string='Display pictures', compute='_compute_avatars_display', readonly=False, store=True,
         help="""Display the Users'/Resources' picture on the Website.""")
     category = fields.Selection([
         ('recurring', 'Regular'),
@@ -120,8 +120,8 @@ class AppointmentType(models.Model):
          string="Schedule", readonly=False, compute="_compute_category_slot_scheduling"
     )
     category_time_display = fields.Selection([
-        ('recurring_fields', 'Available now'),
-        ('punctual_fields', 'Within a date range')],
+        ('recurring_fields', 'Within the next'),
+        ('punctual_fields', 'On specific dates')],
         string="Displayed category time fields", compute="_compute_category_time_display", readonly=False)
     country_ids = fields.Many2many(
         'res.country', 'appointment_type_country_rel', string='Allowed Countries',
@@ -153,10 +153,10 @@ class AppointmentType(models.Model):
         default=lambda self: self.env['calendar.alarm'].search([('default_for_new_appointment_type', '=', True)]))
     schedule_based_on = fields.Selection([
         ('users', 'Users'),
-        ('resources', 'Resources (e.g. Tables, Courts, Rooms, ...)')],
+        ('resources', 'Resources')],
         string="Book", default="users", required=True)
     slot_ids = fields.One2many('appointment.slot', 'appointment_type_id', 'Availabilities', copy=True)
-    slot_creation_interval = fields.Float('Create a slot every', default=1.0,
+    slot_creation_interval = fields.Float('Create slot every', default=1.0,
         help="Starting from the beginning of the time slot, Odoo will create a new slot at regular intervals based on the time specified here.")
 
     # Staff Users Management

@@ -20,7 +20,7 @@
         <field name="model">appointment.type</field>
         <field name="inherit_id" ref="appointment.appointment_type_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='appointment_tz']" position="before">
+            <xpath expr="//group[@name='options_left_details']" position="inside">
                 <field name="website_id" groups="website.group_multi_website"/>
             </xpath>
             <xpath expr="//div[hasclass('oe_button_box')]/button[@name='action_calendar_meetings']" position="after">
