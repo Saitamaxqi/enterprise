@@ -6,6 +6,12 @@ from odoo import models
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    def _should_be_locked(self):
+        self.ensure_one()
+        if self.env.context.get('fsm_create_sale_order'):
+            return False
+        return super()._should_be_locked()
+
     def _get_product_catalog_order_data(self, products, **kwargs):
         product_catalog = super()._get_product_catalog_order_data(products, **kwargs)
         if not self.env.context.get('fsm_task_id'):

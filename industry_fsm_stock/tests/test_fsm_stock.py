@@ -181,7 +181,7 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
             'location_id': cls.warehouse.lot_stock_id.id,
         }]).action_apply_inventory()
 
-    def test_fsm_flow(self):
+    def _test_fsm_flow(self):
         '''
             3 delivery step
             1. Add product and lot on SO
@@ -215,6 +215,15 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         self.assertEqual(move.quantity, 3, "We deliver 3 (even they are only 2 in stock)")
 
         self.assertEqual(self.task.sale_order_id.picking_ids.mapped('state'), ['done', 'done', 'done'], "Pickings should be set as done")
+
+    def test_fsm_flow_without_auto_done(self):
+        self._test_fsm_flow()
+
+    def test_fsm_with_auto_done(self):
+        """ The settings to automatically lock SO upon confirmation
+        should never be applied to sales orders for FSM tasks. """
+        self.project_user.group_ids += self.env.ref('sale.group_auto_done_setting')
+        self._test_fsm_flow()
 
     def test_fsm_mixed_pickings(self):
         '''

@@ -169,9 +169,19 @@ class ProjectTask(models.Model):
         sale_order = self.sale_order_id
         if self.env.user.has_group('project.group_project_user'):
             sale_order = self.sale_order_id.sudo()
-        sale_order.action_confirm()
+        sale_order.with_context(fsm_create_sale_order=True).action_confirm()
 
     def action_fsm_view_material(self):
         action = super().action_fsm_view_material()
         action['context'].update({"warehouse_id": self.env.user._get_default_warehouse_id().id})
         return action
+
+    def action_fsm_validate(self, stop_running_timers=False):
+        """Since SOs for FSM tasks are confirmed right after creation
+           and this blocks the creation of pickings,
+           we do not lock sales orders for FSM tasks after confirmation.
+           Instead, we lock the SOs when we mark the FSM task as done."""
+        res = super().action_fsm_validate(stop_running_timers)
+        if res is True:
+            self.sudo().sale_order_id.filtered(lambda so: so._should_be_locked()).action_lock()
+        return res
