@@ -4,7 +4,7 @@
 <template id="report_termination_holiday_n1" inherit_id="hr_payroll.report_payslip" primary="True">
     <xpath expr="//h2[@id='payslip_name']/span" position="replace">
         <span>
-            Holiday Certificate : Exercise <t t-out="(o.version_id.date_start-relativedelta(years=2)).strftime('%Y')"/> - Holiday year <t t-out="(o.version_id.date_start-relativedelta(years=1)).strftime('%Y')"/>
+            Holiday Certificate : Exercise <t t-out="(o.date_to-relativedelta(years=1)).strftime('%Y')"/> - Holiday year <t t-out="o.date_to.strftime('%Y')"/>
         </span>
     </xpath>
     <div id="worked_days_table" position="replace"/>
@@ -22,7 +22,7 @@
 <template id="report_termination_holiday_n" inherit_id="hr_payroll.report_payslip" primary="True">
     <xpath expr="//h2[@id='payslip_name']/span" position="replace">
         <span>
-            Holiday Certificate : Exercise <t t-out="(o.version_id.date_start-relativedelta(years=1)).strftime('%Y')"/> - Holiday year <t t-out="o.version_id.date_start.strftime('%Y')"/>
+            Holiday Certificate : Exercise <t t-out="o.date_to.strftime('%Y')"/> - Holiday year <t t-out="(o.date_to+relativedelta(years=1)).strftime('%Y')"/>
         </span>
     </xpath>
     <div id="worked_days_table" position="replace"/>
