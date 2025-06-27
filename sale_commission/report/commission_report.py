@@ -180,7 +180,7 @@ achievement AS (
     LEFT JOIN currency_rate cr
         ON cr.company_id = a.company_id
     GROUP BY
-        a.plan_id, a.user_id, a.company_id, a.currency_id, cr.rate, {self._get_date_range()}
+        a.plan_id, a.user_id, a.company_id, cr.rate, {self._get_date_range()}
 )
 SELECT
     a.*,
