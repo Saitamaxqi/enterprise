@@ -48,7 +48,7 @@
         <xpath expr="//input[@name='o_delivery_radio']" position="attributes">
             <attribute name="t-att-data-ups-cod">dm.allow_cash_on_delivery</attribute>
         </xpath>
-        <xpath expr="//label[@t-field='dm.name']" position="after">
+        <label name="o_delivery_method_label" position="after">
             <t t-if="dm.delivery_type == 'ups' and dm.ups_bill_my_account">
                 <span name="ups_bill_my_account" class="ml4 position-relative">
                     <t t-if="not order.partner_ups_carrier_account">
@@ -70,7 +70,7 @@
                     </t>
                 </span>
             </t>
-        </xpath>
+        </label>
     </template>
 
     <template id="payment_method_form" inherit_id="payment.method_form">

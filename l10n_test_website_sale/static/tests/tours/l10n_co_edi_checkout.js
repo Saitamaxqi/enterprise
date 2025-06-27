@@ -67,7 +67,7 @@ registry.category("web_tour.tours").add("test_checkout_id_nit", {
             expectUnloadPage: true,
         },
         {
-            trigger: "h4:contains(delivery address)",
+            trigger: "h5:contains(delivery address)",
         },
     ],
 });
@@ -134,7 +134,7 @@ registry.category("web_tour.tours").add("test_checkout_other_id", {
             expectUnloadPage: true,
         },
         {
-            trigger: "h4:contains(delivery address)",
+            trigger: "h5:contains(delivery address)",
         },
     ],
 });
