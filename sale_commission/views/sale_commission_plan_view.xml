@@ -75,7 +75,7 @@
                         <group>
                             <label for="date_from" string="Effective Period"/>
                             <div class="d-inline-flex">
-                                <field name="date_from" string="Date" widget="daterange" options="{'end_date_field': 'date_to'}" readonly="state != 'draft'" force_save="1"/>
+                                <field name="date_from" string="Date" widget="daterange" options="{'end_date_field': 'date_to'}" required="1" readonly="state != 'draft'" force_save="1"/>
                             </div>
                             <field name="periodicity" string="Target Frequency" readonly="state != 'draft'" force_save="1"/>
                         </group>
