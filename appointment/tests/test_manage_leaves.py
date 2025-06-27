@@ -51,7 +51,8 @@ class AppointmentManageLeaveTest(AppointmentCommon):
             })],
             'resource_ids': resources.ids,
             'schedule_based_on': 'resources',
-            'assign_method': 'time_resource',
+            'is_auto_assign': False,
+            'is_date_first': True,
         }).with_user(self.env.user)
 
         with freeze_time(start_monday):

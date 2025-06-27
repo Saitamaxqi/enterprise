@@ -29,7 +29,6 @@
                 </nav>
             </div>
             <div class="oe_structure container o_appointment o_appointment_payment">
-                <t t-set="is_chosen_assign_method" t-value="appointment_type.assign_method != 'time_auto_assign'"/>
                 <t t-set="based_on_users" t-value="appointment_type.schedule_based_on == 'users'"/>
                 <t t-set="staff_user" t-value="booking.staff_user_id"/>
                 <t t-set="resources" t-value="booking.booking_line_ids.appointment_resource_id"/>

@@ -36,12 +36,12 @@
         <xpath expr="//t[@t-set='o_portal_fullwidth_alert']" position="replace"/>
         <xpath expr="//t[@t-call='appointment.staff_user_select']" position="attributes">
             <attribute name="t-if">
-                appointment_type.assign_method == 'resource_time' and based_on_users and not skip_resource_selection
+                is_manual_assign_user_resource_first and based_on_users and not skip_resource_selection
             </attribute>
         </xpath>
         <xpath expr="//div[@name='resource_select']" position="attributes">
             <attribute name="t-if">
-                appointment_type.assign_method == 'resource_time' and not based_on_users and not skip_resource_selection
+                is_manual_assign_user_resource_first and not based_on_users and not skip_resource_selection
             </attribute>
         </xpath>
         <xpath expr="//t[@t-call='appointment.appointment_progress_bar']" position="before">
@@ -54,7 +54,7 @@
         <xpath expr="//t[@t-set='selectionPossible']" position="after">
             <!-- Selection is no longer possible if a selection screen was shown beforehand -->
             <t t-set="selectionPossible"
-               t-value="selectionPossible and not (appointment_type.assign_method == 'resource_time' and appointment_type.avatars_display == 'show')"/>
+               t-value="selectionPossible and not (is_manual_assign_user_resource_first and appointment_type.avatars_display == 'show')"/>
         </xpath>
     </template>
 
@@ -65,8 +65,9 @@
 
     <template id="appointment_progress_bar" inherit_id="appointment.appointment_progress_bar">
         <xpath expr="//a[contains(@t-att-class, 'step==STEP_TIME')]" position="before">
+            <t t-set="is_manual_assign_user_resource_first" t-value="not appointment_type.is_auto_assign and not appointment_type.is_date_first"/>
             <t t-set="STEP_OPERATOR_SELECT" t-value="10"/>
-            <t t-set="show_operator_select" t-value="step==STEP_OPERATOR_SELECT or appointment_type.avatars_display == 'show' and appointment_type.assign_method == 'resource_time' and len(users_or_resources_possible) > 1"/>
+            <t t-set="show_operator_select" t-value="step==STEP_OPERATOR_SELECT or appointment_type.avatars_display == 'show' and is_manual_assign_user_resource_first and len(users_or_resources_possible) > 1"/>
             <t t-if="show_operator_select">
                 <li class="d-flex align-items-center">
                     <a t-att-class="'text-decoration-none text-truncate ' + (step==STEP_OPERATOR_SELECT and 'fw-bold text-reset cursor-default' or step&gt;STEP_OPERATOR_SELECT and ' ' or 'cursor-default text-muted')"

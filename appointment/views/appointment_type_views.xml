@@ -198,6 +198,12 @@
                                 options="{'no_quick_create': True, 'edit_tags': True}"
                                 invisible="schedule_based_on == 'users'"
                                 placeholder="Select Resources..."/>
+                            <field name="is_auto_assign" invisible="1"/>
+                            <field name="is_date_first" invisible="1"/>
+                            <field name="assignment_method" widget="radio" options="{'horizontal': true}"
+                                invisible="staff_user_count &lt;= 1 and resource_count &lt;= 1"/>
+                            <field name="select_first" widget="radio" options="{'horizontal': true}"
+                                invisible="is_auto_assign or (staff_user_count &lt;= 1 and resource_count &lt;= 1)"/>
                             <label for="manage_capacity"/>
                             <div class="d-flex">
                                 <field name="manage_capacity" class="oe_inline"/>
@@ -220,7 +226,6 @@
                                     <span invisible="schedule_based_on != 'resources'">resource</span>
                                 </div>
                             </div>
-                            <field name="assign_method" widget="radio" required="1" invisible="staff_user_count &lt;= 1 and resource_count &lt;= 1"/>
                         </group>
                     </group>
                     <notebook>

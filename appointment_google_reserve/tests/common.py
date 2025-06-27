@@ -33,7 +33,8 @@ class GoogleReserveCommon(AppointmentCommon):
         ):
             cls.apt_type_resource_google = cls.env['appointment.type'].create({
                 'appointment_tz': 'UTC',
-                'assign_method': 'time_auto_assign',
+                'is_auto_assign': True,
+                'is_date_first': True,
                 'location_id': cls.test_location.id,
                 'min_schedule_hours': 1.0,
                 'max_schedule_days': 5,
@@ -51,7 +52,8 @@ class GoogleReserveCommon(AppointmentCommon):
 
             cls.apt_type_staff_google = cls.env['appointment.type'].create({
                 'appointment_tz': 'UTC',
-                'assign_method': 'time_auto_assign',
+                'is_auto_assign': True,
+                'is_date_first': True,
                 'location_id': cls.test_location.id,
                 'min_schedule_hours': 1.0,
                 'max_schedule_days': 5,

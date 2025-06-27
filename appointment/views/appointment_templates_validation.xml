@@ -84,7 +84,7 @@
                                     <t t-out="event.duration" t-options="{'widget': 'duration', 'unit': 'hour', 'round': 'minute'}"/>
                                 </div>
                             </div>
-                            <div t-if="not based_on_users and (appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show') and
+                            <div t-if="not based_on_users and (not appointment_type.is_auto_assign or appointment_type.avatars_display == 'show') and
                                 (appointment_type.manage_capacity or
                                     (len(resources) == 1 and appointment_type.avatars_display == 'hide' and is_html_empty(resources[0].description))
                                 )" class="row mb-4">
@@ -204,7 +204,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 px-md-4">
-                            <t t-if="appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show'"
+                            <t t-if="not appointment_type.is_auto_assign or appointment_type.avatars_display == 'show'"
                                 t-call="appointment.appointment_validated_card"/>
                         </div>
                     </div>

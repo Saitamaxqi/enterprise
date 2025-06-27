@@ -35,7 +35,7 @@ class AppointmentType(models.Model):
             'allow_guests': True,
             'appointment_duration': 0.5,
             'slot_creation_interval': 0.5,
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'avatars_display': 'hide',
             'event_videocall_source': False,
             'has_payment_step': True,
@@ -48,7 +48,8 @@ class AppointmentType(models.Model):
     def _prepare_paid_seats_template_values(self):
         return {
             'appointment_duration': 1.0,
-            'assign_method': 'time_resource',
+            'is_auto_assign': False,
+            'is_date_first': True,
             'event_videocall_source': False,
             'has_payment_step': True,
             'location_id': self.env.company.partner_id.id,

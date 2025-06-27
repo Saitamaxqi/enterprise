@@ -15,7 +15,7 @@ class AppointmentType(models.Model):
     _inherit = "appointment.type"
 
     # field overrides
-    assign_method = fields.Selection(compute="_compute_assign_method", store=True, readonly=False)
+    is_auto_assign = fields.Boolean(compute="_compute_is_auto_assign", store=True, readonly=False)
 
     # google reserve fields
     google_reserve_enable = fields.Boolean("Enable Google Booking")
@@ -29,7 +29,7 @@ class AppointmentType(models.Model):
                                               copy=False,
                                               groups="appointment.group_appointment_manager")
 
-    @api.constrains('google_reserve_enable', 'category', 'assign_method')
+    @api.constrains('google_reserve_enable', 'category', 'is_auto_assign')
     def _check_appointment_category_for_google_reserve(self):
         for appointment_type in self.filtered('google_reserve_enable'):
             if appointment_type.category in ('custom', 'punctual'):
@@ -38,7 +38,7 @@ class AppointmentType(models.Model):
                     appointment_category=appointment_type.category,
                     appointment_type_name=appointment_type.name,
                 ))
-            if appointment_type.assign_method != 'time_auto_assign':
+            if not appointment_type.is_auto_assign:
                 raise ValidationError(_(
                     "%(appointment_type_name)s: The Google Bookings integration only works in the auto-assign mode.",
                     appointment_type_name=appointment_type.name,
@@ -54,12 +54,10 @@ class AppointmentType(models.Model):
                 ))
 
     @api.depends('google_reserve_enable')
-    def _compute_assign_method(self):
+    def _compute_is_auto_assign(self):
         for appointment_type in self:
             if appointment_type.google_reserve_enable:
-                appointment_type.assign_method = 'time_auto_assign'
-            elif not appointment_type.assign_method:
-                appointment_type.assign_method = 'resource_time'
+                appointment_type.is_auto_assign = True
 
     @api.model_create_multi
     def create(self, vals_list):

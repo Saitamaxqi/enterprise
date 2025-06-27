@@ -337,16 +337,22 @@ class AppointmentController(http.Controller):
         resource_selected_id = int(resource_selected_id) if resource_selected_id else False
 
         if appointment_type.schedule_based_on == 'users':
-            if appointment_type.assign_method == 'resource_time' and users_possible:
+            if (not appointment_type.is_auto_assign and
+                not appointment_type.is_date_first and
+                users_possible
+            ):
                 if staff_user_id and staff_user_id in users_possible.ids:
                     user_selected = request.env['res.users'].sudo().browse(staff_user_id)
                 user_default = users_possible[0]
-            elif appointment_type.assign_method == 'time_auto_assign' and len(users_possible) == 1:
+            elif appointment_type.is_auto_assign and len(users_possible) == 1:
                 user_default = users_possible[0]
         elif resources_possible:
-            if resource_selected_id and resource_selected_id in resources_possible.ids and appointment_type.assign_method != 'time_resource':
+            if (resource_selected_id and
+                resource_selected_id in resources_possible.ids and
+                not (appointment_type.is_date_first and not appointment_type.is_auto_assign)
+            ):
                 resource_selected = request.env['appointment.resource'].sudo().browse(resource_selected_id)
-            elif appointment_type.assign_method == 'resource_time':
+            elif not appointment_type.is_auto_assign and not appointment_type.is_date_first:
                 resource_default = resources_possible[0]
         if appointment_type.manage_capacity:
             if appointment_type.schedule_based_on == 'users':
@@ -399,7 +405,7 @@ class AppointmentController(http.Controller):
     def _get_possible_resources(self, appointment_type, filter_resource_ids):
         """
         This method filters the resources of given appointment_type using filter_resource_ids that are possible to pick.
-        If no filter exist and assign method is different than 'time_auto_assign', we allow all resources existing on the appointment type.
+        If no filter exist and assignment method is different than 'auto', we allow all resources existing on the appointment type.
 
         :param appointment_type_id: the appointment_type_id of the appointment type that we want to access
         :param filter_resource_ids: list of resource ids used to filter the ones of the appointment_types.

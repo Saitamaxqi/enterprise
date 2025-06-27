@@ -96,7 +96,7 @@ class AppointmentCommon(MailCase, common.HttpCase):
         cls.apt_type_bxls_2days = cls.env['appointment.type'].create({
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'category': 'recurring',
             'location_id': cls.staff_user_bxls.partner_id.id,
             'name': 'Bxls Appt Type',
@@ -117,7 +117,8 @@ class AppointmentCommon(MailCase, common.HttpCase):
         cls.apt_type_manage_capacity_users = cls.env['appointment.type'].create({
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_resource',
+            'is_auto_assign': False,
+            'is_date_first': True,
             'category': 'recurring',
             'location_id': cls.staff_user_bxls.partner_id.id,
             'name': 'Bxls Appt Type with capacity',
@@ -137,7 +138,7 @@ class AppointmentCommon(MailCase, common.HttpCase):
 
         cls.apt_type_resource = cls.env['appointment.type'].create({
             'appointment_tz': 'UTC',
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'min_schedule_hours': 1.0,
             'max_schedule_days': 5,
             'name': 'Test',

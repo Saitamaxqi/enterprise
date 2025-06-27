@@ -56,7 +56,7 @@ class AppointmentType(models.Model):
             asked_capacity, booking_line_values, duration,
             appointment_invite, guests, name, customer, staff_user, start, stop
         )
-        if self.assign_method == 'time_auto_assign' and self.lead_create and staff_user and customer != staff_user.partner_id:
+        if self.is_auto_assign and self.lead_create and staff_user and customer != staff_user.partner_id:
             active_lead = self.env['crm.lead'].sudo().search([
                 ('user_id', '=', staff_user.id),
                 ('stage_id.is_won', '=', False),

@@ -16,7 +16,7 @@
         <field name="slot_creation_interval">0.5</field>
         <field name="max_schedule_days">14</field>
         <field name="schedule_based_on">resources</field>
-        <field name="assign_method">time_auto_assign</field>
+        <field name="is_auto_assign" eval="True"/>
         <field name="manage_capacity" eval="True"/>
         <field name="auto_confirm" eval="True"/>
         <field name="manual_confirmation_percentage">0.8</field>

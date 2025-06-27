@@ -61,7 +61,7 @@ class AppointmentUITest(AppointmentUICommon):
             data=json.dumps({
                 'params': {
                     'context': {
-                        'default_assign_method': 'time_resource',
+                        'default_is_auto_assign': True,
                     },
                 }
             }),
@@ -72,7 +72,7 @@ class AppointmentUITest(AppointmentUICommon):
 
         appointment_type = self.env['appointment.type'].browse(result['appointment_type_id'])
         # All default context fields should be ignored because of clean_context()
-        self.assertEqual(appointment_type.assign_method, 'resource_time')
+        self.assertFalse(appointment_type.is_auto_assign)
 
     @users('apt_manager')
     def test_route_apt_type_create_custom(self):
@@ -133,7 +133,7 @@ class AppointmentUITest(AppointmentUICommon):
                 'params': {
                     'slots': unique_slots,
                     'context': {
-                        'default_assign_method': 'time_resource',
+                        'default_is_auto_assign': True,
                     },
                 }
             }),
@@ -144,7 +144,7 @@ class AppointmentUITest(AppointmentUICommon):
 
         appointment_type = self.env['appointment.type'].browse(result['appointment_type_id'])
         # The default context fields should be ignored as the fields are not whitelisted
-        self.assertEqual(appointment_type.assign_method, 'resource_time')
+        self.assertFalse(appointment_type.is_auto_assign)
 
     def test_share_appointment_type(self):
         self._create_invite_test_data()
@@ -458,7 +458,8 @@ class AppointmentUITest(AppointmentUICommon):
                 'end_hour': slot_time.hour + 1,
             })],
             'avatars_display': 'hide',
-            'assign_method': 'resource_time',
+            'is_auto_assign': False,
+            'is_date_first': False,
         }])
 
         invite = self.env['appointment.invite'].create({

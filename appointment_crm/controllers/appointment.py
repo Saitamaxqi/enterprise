@@ -8,7 +8,7 @@ class AppointmentCrmController(AppointmentController):
         """ Fetch the staff user from the leads linked to the visitor's partner if the appointment_type
         has a random staff user selection. """
         forced_user = super()._get_forced_staff_user(appointment_type, possible_staff_users)
-        if forced_user or not appointment_type.lead_create or appointment_type.assign_method != 'time_auto_assign':
+        if forced_user or not appointment_type.lead_create or not appointment_type.is_auto_assign:
             return forced_user
 
         if partner := self._get_customer_partner():

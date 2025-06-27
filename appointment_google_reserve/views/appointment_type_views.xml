@@ -39,15 +39,18 @@
                     </group>
                 </page>
             </page>
-            <xpath expr="//field[@name='assign_method']" position="attributes">
+            <xpath expr="//field[@name='assignment_method']" position="attributes">
                 <attribute name="invisible">google_reserve_enable</attribute>
             </xpath>
-            <xpath expr="//field[@name='assign_method']" position="after">
-                <label for="assign_method" invisible="not google_reserve_enable"/>
+            <xpath expr="//field[@name='assignment_method']" position="after">
+                <label for="assignment_method" invisible="not google_reserve_enable"/>
                 <div invisible="not google_reserve_enable">
-                    <field name="assign_method" readonly="1" class="oe_inline"/>
+                    <field name="assignment_method" readonly="1" class="oe_inline"/>
                     <i class="ms-2 fa fa-info-circle" title="Required for Google Reserve"/>
                 </div>
+            </xpath>
+            <xpath expr="//field[@name='select_first']" position="attributes">
+                <attribute name="invisible" add="google_reserve_enable" separator=" or "/>
             </xpath>
         </field>
     </record>
