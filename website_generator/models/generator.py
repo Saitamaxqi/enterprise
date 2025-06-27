@@ -39,6 +39,9 @@ STATUS_MESSAGES = {
     'error_attachment_not_found': _lt("Attachment not found"),
     'errror_website_not_supported': _lt("Website not supported"),
     'error_website_blocked': _lt("Website blocked or unreachable"),
+    'error_navigation_timeout': _lt("The requested url took too long to load and is probably unreachable from the server"),
+    'error_url_redirection': _lt("The requested url redirected to another url, try again with the redirected url"),
+    'error_duplicated_request': _lt("The same request has just been made, please wait before sending another identical request"),
 }
 
 logger = logging.getLogger(__name__)
