@@ -5,7 +5,7 @@
         <field name="name">hr.payslip.worked_days.list</field>
         <field name="model">hr.payslip.worked_days</field>
         <field name="arch" type="xml">
-            <list string="Payroll Analysis">
+            <list string="Payroll Analysis" create="false" edit="false">
                 <field name="employee_id" widget="many2one_avatar_employee"/>
                 <field name="payslip_id" optional="show"/>
                 <field name="name"/>
