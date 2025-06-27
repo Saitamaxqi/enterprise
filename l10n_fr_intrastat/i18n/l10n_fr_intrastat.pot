@@ -16,10 +16,43 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_return.py:0
+msgid "Intrastat thresholds may change annually. Verify that your transactions exceed the threshold for reporting."
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_return.py:0
+msgid "Verify that each good is assigned the right unit of measure."
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_return.py:0
+msgid "Verify that each item has the appropriate code and description according to the CN (Combined Nomenclature) codes."
+msgstr ""
+
+#. module: l10n_fr_intrastat
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.res_config_settings_view_form
 msgid ""
 "<span class=\"fa fa-lg fa-building-o ms-2\" title=\"Values set here are "
 "company-specific.\"/>"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.intrastat_submission_wizard_form
+msgid "<span>Download your Intrastat return</span><br/>"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model:ir.model,name:l10n_fr_intrastat.model_account_return
+msgid "Accounting Return"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model:ir.model,name:l10n_fr_intrastat.model_account_return_type
+msgid "Accounting Return Type"
 msgstr ""
 
 #. module: l10n_fr_intrastat
@@ -52,6 +85,12 @@ msgid "Check Company Data"
 msgstr ""
 
 #. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_return.py:0
+msgid "Commodity codes configuration"
+msgstr ""
+
+#. module: l10n_fr_intrastat
 #: model:ir.model,name:l10n_fr_intrastat.model_res_company
 msgid "Companies"
 msgstr ""
@@ -62,12 +101,19 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.intrastat_submission_wizard_form
+msgid "Confirm and send the form"
+msgstr ""
+
+#. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__create_date
 msgid "Created on"
 msgstr ""
 
@@ -85,13 +131,17 @@ msgstr ""
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_goods_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_services_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_return__display_name
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_return_type__display_name
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.intrastat_submission_wizard_form
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.l10n_fr_intrastat_export_wizard
 msgid "Download XML"
 msgstr ""
@@ -124,10 +174,29 @@ msgstr ""
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_goods_report_handler__id
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_intrastat_services_report_handler__id
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_return__id
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_account_return_type__id
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__id
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__id
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_res_config_settings__id
 msgid "ID"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__instructions
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.intrastat_submission_wizard_form
+msgid "Instructions"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model:account.return.type,name:l10n_fr_intrastat.l10n_fr_intrastat_goods_return_type
+msgid "Intrastat (Goods)"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model:account.return.type,name:l10n_fr_intrastat.l10n_fr_intrastat_services_return_type
+msgid "Intrastat (Services)"
 msgstr ""
 
 #. module: l10n_fr_intrastat
@@ -138,6 +207,17 @@ msgstr ""
 #. module: l10n_fr_intrastat
 #: model:ir.model,name:l10n_fr_intrastat.model_account_intrastat_services_report_handler
 msgid "Intrastat Services Report Custom Handler"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model:ir.model,name:l10n_fr_intrastat.model_l10n_fr_intrastat_intrastat_submission_wizard
+msgid "Intrastat Submission Wizard"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_return.py:0
+msgid "Intrastat Thresholds"
 msgstr ""
 
 #. module: l10n_fr_intrastat
@@ -154,12 +234,19 @@ msgstr ""
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.intrastat_submission_wizard_form
+msgid "Log in to the"
 msgstr ""
 
 #. module: l10n_fr_intrastat
@@ -201,6 +288,12 @@ msgid "Missing transport code for journal entries"
 msgstr ""
 
 #. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_return.py:0
+msgid "Only an Accounting Administrator can reset a tax return"
+msgstr ""
+
+#. module: l10n_fr_intrastat
 #: model:ir.model,name:l10n_fr_intrastat.model_l10n_fr_intrastat_export_wizard
 msgid "Options for the export of Intrastat in France"
 msgstr ""
@@ -219,9 +312,24 @@ msgid ""
 msgstr ""
 
 #. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.intrastat_submission_wizard_form
+msgid "Prodouane portal"
+msgstr ""
+
+#. module: l10n_fr_intrastat
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
 msgid "Products with no commodity code"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.account_return_kanban_view
+msgid "Reset"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_intrastat_submission_wizard__return_id
+msgid "Return"
 msgstr ""
 
 #. module: l10n_fr_intrastat
@@ -256,6 +364,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
 msgid "There is no line to export with the selected options"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_return.py:0
+msgid "Unit of measure configuration"
+msgstr ""
+
+#. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.intrastat_submission_wizard_form
+msgid "Upload the XML file"
 msgstr ""
 
 #. module: l10n_fr_intrastat

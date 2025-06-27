@@ -175,11 +175,17 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             ),
         ])._post()
 
-        send_vat_wizard = self.env['l10n_fr_reports.send.vat.report'].create({
+        may_return = self.env['account.return'].create({
+            'name': "May return",
             'date_from': '2024-05-01',
             'date_to': '2024-05-31',
-            'report_id': self.report.id,
-            'test_interchange': True,
+            'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
+            'company_id': self.env.company.id,
+        })
+
+        send_vat_wizard_action = may_return.action_submit()
+        send_vat_wizard = self.env[send_vat_wizard_action['res_model']].browse(send_vat_wizard_action['res_id'])
+        send_vat_wizard.write({
             'bank_account_line_ids': [
                 Command.create({
                     'bank_partner_id': self.bank_partner.id,
@@ -242,18 +248,12 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             edi_vals['declarations'][0]['identif']['zones'],
         )
 
-        may_return = self.env['account.return'].create({
-            'name': "May return",
-            'date_from': '2024-05-01',
-            'date_to': '2024-05-31',
-            'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
-            'company_id': self.env.company.id,
-        })
         with self.allow_pdf_render():
             may_return.action_validate(bypass_failing_tests=True)
 
         with patch.object(self.env.registry['l10n_fr_reports.send.vat.report'], '_send_xml_to_aspone', return_value=[]):
-            send_vat_wizard.send_vat_return()
+            with self.allow_pdf_render():
+                send_vat_wizard.send_vat_return()
             report_line_26 = self.env.ref('l10n_fr_account.tax_report_26_external')
             line_26_values = next(
                 line for line in self.report._get_lines(options)
@@ -487,19 +487,6 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             ),
         ])._post()
 
-        send_vat_wizard = self.env['l10n_fr_reports.send.vat.report'].create({
-            'date_from': '2024-05-01',
-            'date_to': '2024-05-31',
-            'report_id': self.report.id,
-            'test_interchange': True,
-            'bank_account_line_ids': [
-                Command.create({
-                    'bank_partner_id': self.bank_partner.id,
-                    'vat_amount': 667,
-                }),
-            ],
-        })
-
         # Create a VAT return for May in order to export EDI Report
         may_return = self.env['account.return'].create({
             'name': "May return",
@@ -507,6 +494,19 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             'date_to': '2024-05-31',
             'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
             'company_id': self.env.company.id,
+        })
+        send_vat_wizard = self.env['l10n_fr_reports.send.vat.report'].create({
+            'date_from': '2024-05-01',
+            'date_to': '2024-05-31',
+            'report_id': self.report.id,
+            'return_id': may_return.id,
+            'test_interchange': True,
+            'bank_account_line_ids': [
+                Command.create({
+                    'bank_partner_id': self.bank_partner.id,
+                    'vat_amount': 667,
+                }),
+            ],
         })
         with self.allow_pdf_render():
             may_return.action_validate(bypass_failing_tests=True)
@@ -524,7 +524,8 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
         }
 
         with patch.object(self.env.registry['account.report.async.document'], '_get_fr_webservice_answer', return_value=mock_aspone_response):
-            send_vat_wizard.send_vat_return()
+            with self.allow_pdf_render():
+                send_vat_wizard.send_vat_return()
 
             self.assertEqual(len(send_vat_wizard.report_async_document_ids), 2)
 

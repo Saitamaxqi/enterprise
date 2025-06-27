@@ -190,6 +190,9 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         comodel_name='account.report',
         required=True,
     )
+    return_id = fields.Many2one(
+        comodel_name='account.return',
+    )
     is_vat_due = fields.Boolean(compute='_compute_vat_amount')
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
     vat_amount = fields.Monetary(compute='_compute_vat_amount')
@@ -678,6 +681,13 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         deposit_uid = ''
         if response['responseType'] == 'SUCCESS' and not response['response']['errorResponse']:
             deposit_uid = response['response']['successfullResponse']['depositId']
+
+            if self.return_id:
+                # If there are no errors when sending, we put the return state as submitted
+                self.return_id.write({
+                    'state': 'submitted',
+                    'is_completed': True,
+                })
 
         if not deposit_uid:
             raise ValidationError(_("Error occured while sending the report to the government : '%(response)s'", response=str(response)))

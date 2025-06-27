@@ -34,7 +34,10 @@ class L10n_Fr_IntrastatExportWizard(models.TransientModel):
         options = self.env.context['l10n_fr_intrastat_export_options']
         options['l10n_fr_intrastat_wizard_id'] = self.id
         report = self.env['account.report'].browse(options['report_id'])
-        return report.export_file(options, 'l10n_fr_intrastat_export_to_xml')
+        next_action = None
+        if return_id := self.env['account.return'].browse(options.get('return_id')):
+            next_action = self.env['l10n_fr_intrastat.intrastat.submission.wizard']._open_submission_wizard(return_id)
+        return report.export_file(options, 'l10n_fr_intrastat_export_to_xml', next_action=next_action)
 
     @api.depends('export_type')
     def _compute_export_type(self):

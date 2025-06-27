@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, models
+from odoo import _, api, models
 
 
 class AccountReturn(models.Model):
@@ -12,6 +12,12 @@ class AccountReturn(models.Model):
             return date_to + relativedelta(days=19)
 
         return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
+
+    def _get_state_field(self):
+        # EXTENDS account_reports
+        if self.type_external_id == 'l10n_fr_reports.vat_return_type':
+            return 'generic_state_review_submit'
+        return super()._get_state_field()
 
     def _postprocess_vat_closing_entry_results(self, company, options, results):
         # OVERRIDE
@@ -32,3 +38,16 @@ class AccountReturn(models.Model):
             return self._vat_closing_entry_results_rounding(company, options, results, rounding_accounts, vat_results_summary)
 
         return super()._postprocess_vat_closing_entry_results(company, options, results)
+
+    def action_submit(self):
+        # EXTENDS account_reports
+        if self.type_external_id == 'l10n_fr_reports.vat_return_type':
+            l10n_fr_vat_report = self.env['l10n_fr_reports.send.vat.report'].create({
+                'report_id': self.type_id.report_id.id,
+                'return_id': self.id,
+                'date_from': self.date_from,
+                'date_to': self.date_to,
+            })
+            return l10n_fr_vat_report._get_records_action(name=_("EDI VAT"), target='new', res_id=l10n_fr_vat_report.id)
+
+        return super().action_submit()
