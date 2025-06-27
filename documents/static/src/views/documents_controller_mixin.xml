@@ -1,45 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-    <div t-name="documents.DocumentsViews.ControlPanel" class="o_cp_buttons d-flex gap-1" role="toolbar" aria-label="Control panel buttons" t-ref="cpButtons">
+    <t t-name="documents.DocumentsViews.ControlPanel">
         <t t-set="isShareable" t-value="hasShareDocuments()"/>
         <t t-set="folder" t-value="this.env.searchModel.getSelectedFolder()"/>
 
-        <div class="btn-group me-1">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-hotkey="c">
+        <Dropdown>
+            <button type="button" class="btn btn-primary o-dropdown-caret" data-hotkey="c">
                 New
             </button>
-            <ul class="dropdown-menu o_documents_main_buttons">
+            <t t-set-slot="content">
                 <input type="file" multiple="true" t-ref="uploadFileInput" class="o_input_file o_hidden" t-on-change.stop="onFileInputChange"/>
-                <button type="button" class="btn btn-link dropdown-item o_documents_kanban_upload"
-                    t-att-disabled="!canUploadInFolder(folder)"
-                    t-on-click.prevent="() => this.uploadFileInputRef.el.click()" data-hotkey="a">
-                    <i class="fa fa-upload me-2"/>
+                <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_upload'"
+                    onSelected="() => this.uploadFileInputRef.el.click()"
+                    attrs="{'data-hotkey': 'a', disabled: !canUploadInFolder(folder)}">
+                    <i class="fa fa-upload fa-fw me-1"/>
                     <span>Upload</span>
-                </button>
-                <button type="button" class="btn btn-link dropdown-item o_documents_kanban_request"
+                </DropdownItem>
+                <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_request'"
                     t-if="userIsInternal"
-                    t-att-disabled="!canUploadInFolder(folder) || folder.id === 'COMPANY'"
-                    t-on-click.prevent="onClickDocumentsRequest" data-hotkey="r">
-                    <i class="fa fa-paper-plane-o me-2"/>
+                    onSelected="onClickDocumentsRequest"
+                    attrs="{'data-hotkey': 'r', disabled: !canUploadInFolder(folder) || folder.id === 'COMPANY'}">
+                    <i class="fa fa-paper-plane-o fa-fw me-1"/>
                     <span>Request</span>
-                </button>
-                <button type="button" class="btn btn-link dropdown-item o_documents_kanban_url"
+                </DropdownItem>
+                <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_url'"
                     t-if="userIsInternal"
-                    t-att-disabled="!canUploadInFolder(folder)"
-                    t-on-click.prevent="onClickDocumentsAddUrl" data-hotkey="l">
-                    <i class="fa fa-link me-2"/>
+                    onSelected="onClickDocumentsAddUrl"
+                    attrs="{'data-hotkey': 'l', disabled: !canUploadInFolder(folder)}">
+                    <i class="fa fa-link fa-fw me-1"/>
                     <span>Link</span>
-                </button>
+                </DropdownItem>
                 <t t-if="userIsInternal and canUploadInFolder(folder)">
-                    <div class="dropdown-divider"/>
-                    <button type="button" t-on-click.prevent="onClickAddFolder"
-                        class="btn btn-link dropdown-item o_documents_kanban_workspace" data-hotkey="w"
-                    >
-                        <i class="fa fa-folder me-2"/>
+                    <div role="separator" class="dropdown-divider"/>
+                    <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_workspace'"
+                        onSelected="onClickAddFolder"
+                        attrs="{'data-hotkey': 'w'}">
+                        <i class="fa fa-folder fa-fw me-1"/>
                         <span>Folder</span>
-                    </button>
+                    </DropdownItem>
                 </t>
-            </ul>
-        </div>
-    </div>
+            </t>
+        </Dropdown>
+    </t>
 </templates>

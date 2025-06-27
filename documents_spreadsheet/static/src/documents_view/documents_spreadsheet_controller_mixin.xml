@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <t t-name="spreadsheet.DocumentsViews.Buttons" t-inherit="documents.DocumentsViews.ControlPanel" t-inherit-mode="extension">
-        <xpath expr="//button[hasclass('o_documents_kanban_url')]" position="after">
-            <button type="button" class="btn btn-link dropdown-item o_documents_kanban_spreadsheet"
+        <xpath expr="//DropdownItem[@onSelected='onClickDocumentsAddUrl']" position="after">
+            <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_spreadsheet'"
                 t-if="userIsInternal"
-                t-att-disabled="!canUploadInFolder(folder)"
-                t-on-click.prevent="onClickCreateSpreadsheet" data-hotkey="x">
-                <div class="d-inline me-1"><t t-call="spreadsheet_edition.SpreadsheetIcon"/></div>
+                onSelected="() => this.onClickCreateSpreadsheet()"
+                attrs="{'data-hotkey': 'x', disabled: !canUploadInFolder(folder)}">
+                <i class="me-2"><t t-call="spreadsheet_edition.SpreadsheetIcon"/></i>
                 <span>Spreadsheet</span>
-            </button>
+            </DropdownItem>
         </xpath>
     </t>
 </templates>

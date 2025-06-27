@@ -3,9 +3,14 @@ import { DocumentsControllerMixin } from "@documents/views/documents_controller_
 import { preSuperSetup, useDocumentView } from "@documents/views/hooks";
 import { useEffect, useRef, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { Dropdown } from "@web/core/dropdown/dropdown";
 
 export class DocumentsListController extends DocumentsControllerMixin(ListController) {
     static template = "documents.DocumentsListController";
+    static components = {
+        ...ListController.components,
+        Dropdown,
+    };
     setup() {
         preSuperSetup();
         super.setup(...arguments);

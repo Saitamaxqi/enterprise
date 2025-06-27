@@ -40,7 +40,7 @@ registry.category("web_tour.tours").add("spreadsheet_create_empty_sheet", {
             run: "click",
         },
         {
-            trigger: ".o_cp_buttons:contains('New') .dropdown-toggle",
+            trigger: ".o_control_panel_main_buttons button:contains('New')",
             content: "Open dropdown",
             run: "click",
         },

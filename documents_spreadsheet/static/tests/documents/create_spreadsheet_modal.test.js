@@ -99,8 +99,8 @@ async function initTestEnvWithBlankSpreadsheet(params = {}) {
 }
 
 async function openTemplateDialog() {
-    await contains(`.o_control_panel .btn-group .dropdown-toggle`).click();
-    await contains(`.o_control_panel .btn-group .o_documents_kanban_spreadsheet`).click();
+    await contains(`.o_control_panel_main_buttons .dropdown-toggle`).click();
+    await contains(`.o-dropdown--menu .dropdown-item.o_documents_kanban_spreadsheet`).click();
 }
 
 const dialogSelector = ".o-spreadsheet-templates-dialog";

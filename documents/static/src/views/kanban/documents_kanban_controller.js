@@ -3,9 +3,14 @@ import { DocumentsControllerMixin } from "@documents/views/documents_controller_
 import { onWillRender, useEffect, useRef, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
+import { Dropdown } from "@web/core/dropdown/dropdown";
 
 export class DocumentsKanbanController extends DocumentsControllerMixin(KanbanController) {
     static template = "documents.DocumentsKanbanView";
+    static components = {
+        ...KanbanController.components,
+        Dropdown,
+    };
     setup() {
         preSuperSetup();
         super.setup(...arguments);
