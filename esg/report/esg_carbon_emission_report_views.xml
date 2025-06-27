@@ -7,14 +7,14 @@
             <list multi_edit="1" editable="bottom" js_class="esg_carbon_emission_list">
                 <field name="date" widget="esg_list_daterange" width="200px" options="{'end_date_field': 'date_end'}" readonly="id &lt; 0"/>
                 <field name="name" readonly="id &lt; 0"/>
-                <field name="partner_id" readonly="1" options="{'no_open': True}"/>
+                <field name="partner_id" optional="show" readonly="1" options="{'no_open': True}"/>
                 <field name="esg_emission_factor_id"/>
-                <field name="quantity" readonly="id &lt; 0"/>
+                <field name="quantity" optional="show" readonly="id &lt; 0"/>
                 <field name="uom_id" optional="hide" required="id > 0 and compute_method == 'physically'" readonly="id &lt; 0" options="{'no_open': True}"/>
                 <field name="currency_id" optional="hide" required="id > 0 and compute_method == 'monetary'" readonly="id &lt; 0" options="{'no_open': True}"/>
-                <field name="price_subtotal" readonly="1" invisible="id > 0"/>
+                <field name="price_subtotal" optional="show" readonly="1" invisible="id > 0"/>
                 <field name="esg_emissions_value" sum="Total Emissions (kgCO₂e)" readonly="1" width="200px"/>
-                <field name="esg_uncertainty_absolute_value" readonly="1" width="200px"/>
+                <field name="esg_uncertainty_absolute_value" optional="show" readonly="1" width="200px"/>
                 <field name="esg_uncertainty_value" readonly="1" widget="percentage" optional="hide"/>
                 <field name="move_id" readonly="1" optional="show" widget="many2one"/>
                 <field name="account_id" optional="hide" readonly="1" options="{'no_open': True}"/>
