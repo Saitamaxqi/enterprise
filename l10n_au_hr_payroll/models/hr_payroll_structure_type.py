@@ -10,3 +10,14 @@ class HrPayrollStructureType(models.Model):
         "hr.payslip.input.type",
         string="Default Allowances",
         help="Default allowances for this structure type")
+
+    def _get_selection_schedule_pay(self):
+        if self.env.company.country_code == 'AU':
+            return [
+                ('quarterly', 'Quarterly'),
+                ('monthly', 'Monthly'),
+                ('bi-weekly', 'Fortnightly'),
+                ('weekly', 'Weekly'),
+                ('daily', 'Daily'),
+            ]
+        return super()._get_selection_schedule_pay()

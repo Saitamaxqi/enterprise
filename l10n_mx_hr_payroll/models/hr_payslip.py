@@ -60,7 +60,7 @@ class HrPayslip(models.Model):
 
         if self.struct_id.code == "MX_REGULAR":
             coefficients = self._rule_parameter('l10n_mx_schedule_table')
-            days_in_period = coefficients[self.version_id.l10n_mx_schedule_pay or 'monthly']
+            days_in_period = coefficients[self.version_id.schedule_pay or 'monthly']
 
             start_date = max(self.date_from, self.version_id.date_start)
             end_date = min(self.date_to, self.version_id.date_end) if self.version_id.date_end else self.date_to
@@ -75,15 +75,15 @@ class HrPayslip(models.Model):
         if self.country_code == 'MX':
 
             if self.struct_id.code == "MX_REGULAR":
-                schedule = self.version_id.l10n_mx_schedule_pay
+                schedule = self.version_id.schedule_pay
                 if schedule == '10_days':
                     return relativedelta(days=9)
                 elif schedule == '14_days':
                     return relativedelta(days=13)
-                elif schedule == 'bi_weekly':
+                elif schedule == 'bi-weekly':
                     days_in_month = calendar.monthrange(self.date_from.year, self.date_from.month)[1]
                     return relativedelta(day=15 if self.date_from.day <= 15 else days_in_month)
-                elif schedule == 'bi_monthly':
+                elif schedule == 'bi-monthly':
                     return relativedelta(months=2, days=-1)
 
             elif self.struct_id.code in ["MX_CHRISTMAS", "MX_PTU"]:
@@ -96,14 +96,14 @@ class HrPayslip(models.Model):
             today = date.today()
 
             if self.struct_id.code == "MX_REGULAR":
-                schedule = self.version_id.l10n_mx_schedule_pay
+                schedule = self.version_id.schedule_pay
                 if schedule == '14_days':
                     week_day = today.weekday()
                     return today + relativedelta(days=-week_day)
-                elif schedule == 'bi_weekly':
+                elif schedule == 'bi-weekly':
                     is_second_half = math.floor((today.day - 1) / 15)
                     return today.replace(day=16) if is_second_half else today.replace(day=1)
-                elif schedule == 'bi_monthly':
+                elif schedule == 'bi-monthly':
                     current_year_slice = math.ceil(today.month / 2)
                     return today.replace(day=1, month=(current_year_slice - 1) * 2 + 1)
 

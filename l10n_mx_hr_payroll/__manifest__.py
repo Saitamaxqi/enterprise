@@ -33,8 +33,6 @@ Mexican Payroll Rules.
         'views/l10n_mx_hr_infonavit_views.xml',
         'views/hr_contract_template_views.xml',
         'views/hr_employee_views.xml',
-        'views/hr_payroll_structure_type_views.xml',
-        'views/hr_payroll_structure_views.xml',
     ],
     'demo': [
         'data/l10n_mx_hr_payroll_demo.xml',

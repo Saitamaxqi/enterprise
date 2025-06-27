@@ -119,7 +119,7 @@ result = version.l10n_mx_gasoline_amount or version.l10n_mx_transport_amount or 
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-schedule_number_days = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay]
+schedule_number_days = payslip._rule_parameter('l10n_mx_schedule_table')[version.schedule_pay]
 
 if version.wage * 12 >= result_rules['ANNUAL_SOCIAL_PROVISION']['total']:
     monthly_amount = payslip._rule_parameter('l10n_mx_uma') * 30.4
@@ -411,7 +411,7 @@ result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
+month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
 result = version.wage * payslip._rule_parameter('l10n_mx_exemption_saving_fund_salary') * month_to_period_ratio
         </field>
         <field name="appears_on_payslip" eval="False"/>
@@ -429,7 +429,7 @@ result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
+month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
 result = payslip._rule_parameter('l10n_mx_uma') * 30.4 * payslip._rule_parameter('l10n_mx_exemption_saving_fund_monthly_uma') * month_to_period_ratio
         </field>
         <field name="appears_on_payslip" eval="False"/>
@@ -447,7 +447,7 @@ result = version.l10n_mx_savings_fund
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
+month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
 result = min(version.l10n_mx_savings_fund * month_to_period_ratio, result_rules['SAVINGS_FUND_SALARY_LIMIT']['total'], result_rules['SAVINGS_FUND_LIMIT_UMA']['total'])
         </field>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
@@ -571,7 +571,7 @@ if gross:
         result = - (amount + previous_ISR)
     else:
         # without adjustment
-        isr_table = isr_tables[version.l10n_mx_schedule_pay]
+        isr_table = isr_tables[version.schedule_pay]
         low, high, fix, rate = find_rates(gross, isr_table)
         result = -((categories['GROSS'] - low) * rate + fix)
 else:
@@ -678,9 +678,9 @@ daily_uma = payslip._rule_parameter('l10n_mx_uma')
 uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
 daily_subsidy = uma_percentage_for_subsidy * daily_uma
 
-if version.l10n_mx_schedule_pay == 'monthly':
+if version.schedule_pay == 'monthly':
     result = round(daily_subsidy * 30.4)
-elif version.l10n_mx_schedule_pay == 'bi_monthly':
+elif version.schedule_pay == 'bi-monthly':
     result = round(daily_subsidy * 30.4) * 2
 else:
     last_day_of_month = payslip.date_from + relativedelta(day=31)
@@ -710,7 +710,7 @@ daily_uma = payslip._rule_parameter('l10n_mx_uma')
 uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
 daily_subsidy = uma_percentage_for_subsidy * daily_uma
 
-if version.l10n_mx_schedule_pay in ['monthly', 'bi_monthly']:
+if version.schedule_pay in ['monthly', 'bi-monthly']:
     result = 0
 else:
     first_day_of_month = payslip.date_to + relativedelta(day=1)
@@ -739,7 +739,7 @@ daily_uma = payslip._rule_parameter('l10n_mx_uma')
 uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
 monthly_subsidy = round(uma_percentage_for_subsidy * daily_uma * 30.4)
 
-if version.l10n_mx_schedule_pay in ['monthly', 'bi_monthly']:
+if version.schedule_pay in ['monthly', 'bi-monthly']:
     result = 0
 else:
     payslips = version.env['hr.payslip'].search([

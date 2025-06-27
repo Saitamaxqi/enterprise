@@ -5,6 +5,7 @@ from . import hr_departure_reason
 from . import hr_payslip
 from . import hr_employee
 from . import hr_salary_attachment
+from . import hr_payroll_structure_type
 from . import hr_payslip_run
 from . import res_bank
 from . import res_company

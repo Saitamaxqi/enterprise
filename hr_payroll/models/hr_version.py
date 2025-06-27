@@ -2,27 +2,20 @@
 
 from datetime import date, datetime
 from collections import defaultdict
+import pytz
+
 from odoo import _, api, fields, models
 from odoo.fields import Domain
-
-import pytz
 
 
 class HrVersion(models.Model):
     _inherit = 'hr.version'
     _description = 'Employee Contract'
 
-    schedule_pay = fields.Selection([
-        ('annually', 'Annually'),
-        ('semi-annually', 'Semi-annually'),
-        ('quarterly', 'Quarterly'),
-        ('bi-monthly', 'Bi-monthly'),
-        ('monthly', 'Monthly'),
-        ('semi-monthly', 'Semi-monthly'),
-        ('bi-weekly', 'Bi-weekly'),
-        ('weekly', 'Weekly'),
-        ('daily', 'Daily')],
+    schedule_pay = fields.Selection(
+        selection=lambda self: self.env['hr.payroll.structure.type']._get_selection_schedule_pay(),
         compute='_compute_schedule_pay', store=True, readonly=False, groups="hr.group_hr_user", default='monthly')
+    show_schedule_pay = fields.Boolean(compute='_compute_show_schedule_pay', groups="hr.group_hr_user")
     resource_calendar_id = fields.Many2one(default=lambda self: self.env.company.resource_calendar_id,
         help='''Employee's working schedule.
         When left empty, the employee is considered to have a fully flexible schedule, allowing them to work without any time limit, anytime of the week.
@@ -77,6 +70,11 @@ class HrVersion(models.Model):
                 version.work_time_rate = 1
             else:
                 version.work_time_rate = hours_per_week / (hours_per_week_ref or hours_per_week)
+
+    def _compute_show_schedule_pay(self):
+        number_of_possibilities = len(self.env['hr.payroll.structure.type']._get_selection_schedule_pay())
+        for version in self:
+            version.show_schedule_pay = number_of_possibilities > 1
 
     def _compute_payslips_count(self):
         count_data = self.env['hr.payslip']._read_group(

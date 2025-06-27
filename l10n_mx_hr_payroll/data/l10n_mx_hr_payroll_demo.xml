@@ -286,7 +286,7 @@
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
         <field name="work_entry_source">calendar</field>
         <field name="l10n_mx_holiday_bonus_rate">25</field>
-        <field name="l10n_mx_schedule_pay">bi_weekly</field>
+        <field name="schedule_pay">bi-weekly</field>
         <field name="l10n_mx_payment_period_vouchers">in_period</field>
         <field name="l10n_mx_meal_voucher_amount">3000</field>
         <field name="l10n_mx_transport_amount">2000</field>
@@ -352,7 +352,7 @@
         <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-7, month=1, day=1))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
         <field name="work_entry_source">calendar</field>
-        <field name="l10n_mx_schedule_pay">bi_weekly</field>
+        <field name="schedule_pay">bi-weekly</field>
         <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 
@@ -402,7 +402,7 @@
         <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
         <field name="work_entry_source">calendar</field>
-        <field name="l10n_mx_schedule_pay">bi_weekly</field>
+        <field name="schedule_pay">bi-weekly</field>
         <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 

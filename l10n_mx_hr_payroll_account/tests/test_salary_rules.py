@@ -31,7 +31,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_payslip(payslip, payslip_results)
 
     def test_02_payslip_isr_monthly_adjustment(self):
-        self.contract.write({'l10n_mx_schedule_pay': 'bi_weekly'})
+        self.contract.write({'schedule_pay': 'bi-weekly'})
 
         previous_payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 15))
         previous_payslip_results = {'BASIC': 25000.0, 'HOLIDAY_TO_SUB': 0.0, 'GROSS_WITHOUT_HOLIDAY': 25000.0, 'HOLIDAYS_ON_TIME': 0.0, 'GROSS': 25000.0, 'ISR': -4769.95, 'INT_DAY_WAGE_BASE': 1734.97, 'INT_DAY_WAGE_OTHER': 0.0, 'INT_DAY_WAGE_COMMISSIONS': 0.0, 'INT_DAY_WAGE': 1734.97, 'RISK_IMSS_EMPLOYER': 130.12, 'DIS_FIX_IMSS_EMPLOYER': 317.44, 'DIS_ADD_IMSS_EMPLOYER': 234.92, 'DIS_ADD_IMSS_EMPLOYEE': -85.43, 'DIS_MED_IMSS_EMPLOYER': 273.26, 'DIS_MED_IMSS_EMPLOYEE': -97.59, 'DIS_MON_IMSS_EMPLOYER': 182.17, 'DIS_MON_IMSS_EMPLOYEE': -65.06, 'DIS_LIF_IMSS_EMPLOYER': 455.43, 'DIS_LIF_IMSS_EMPLOYEE': -162.65, 'RETIRE_IMSS_EMPLOYER': 520.49, 'CEAV_IMSS_EMPLOYER': 1387.37, 'CEAV_IMSS_EMPLOYEE': -292.78, 'NURSERY_IMSS_EMPLOYER': 260.25, 'INFONAVIT_IMSS_EMPLOYER': 1301.23, 'IMSS_EMPLOYEE_TOTAL': 703.51, 'IMSS_EMPLOYER_TOTAL': 5062.69, 'NET': 19526.54, 'PROVISIONS_CHRISTMAS_BONUS': 1024.59, 'PERIOD_PROVISIONS_CHRISTMAS_BONUS': 1024.59, 'PROVISIONS_HOLIDAY_BONUS': 0.0, 'PERIOD_PROVISIONS_HOLIDAY_BONUS': 0.0, 'PROVISIONS_VACATIONS_BONUS': 16684.88, 'PERIOD_PROVISIONS_VACATIONS_BONUS': 16684.88}
@@ -43,7 +43,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_payslip(payslip, payslip_results)
 
     def test_03_payslip_isr_yearly_adjustment(self):
-        self.contract.write({'l10n_mx_schedule_pay': 'bi_weekly'})
+        self.contract.write({'schedule_pay': 'bi-weekly'})
 
         for i in range(12):
             first_half_month_payslip = self._generate_payslip(date(2024, i+1, 1), date(2024, i+1, 15))
@@ -65,7 +65,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_regular_payslip_complete_case(self):
         self.contract.write({
-            'l10n_mx_schedule_pay': 'bi_weekly',
+            'schedule_pay': 'bi-weekly',
             'l10n_mx_meal_voucher_amount': 3000,
             'l10n_mx_transport_amount': 2000,
             'l10n_mx_gasoline_amount': 1000,
@@ -79,7 +79,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_regular_payslip_subsidy(self):
         self.contract.write({
             'wage': 10000,
-            'l10n_mx_schedule_pay': 'bi_weekly',
+            'schedule_pay': 'bi-weekly',
             'l10n_mx_savings_fund': 5000,
             'l10n_mx_holiday_bonus_rate': 25,
         })

@@ -38,6 +38,8 @@
                 <div class="mb-3" invisible="schedule_pay != 'bi-weekly'">/ two weeks</div>
                 <div class="mb-3" invisible="schedule_pay != 'weekly'">/ week</div>
                 <div class="mb-3" invisible="schedule_pay != 'daily'">/ day</div>
+                <div class="mb-3" invisible="schedule_pay != '10_days'">/ 10 days</div>
+                <div class="mb-3" invisible="schedule_pay != '14_days'">/ 14 days</div>
             </xpath>
         </field>
     </record>

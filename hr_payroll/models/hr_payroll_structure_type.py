@@ -10,20 +10,24 @@ class HrPayrollStructureType(models.Model):
     _description = 'Salary Structure Type'
     _order = 'sequence, id'
 
+    def _get_selection_schedule_pay(self):
+        return [
+            ('annually', 'Annually'),
+            ('semi-annually', 'Semi-annually'),
+            ('quarterly', 'Quarterly'),
+            ('bi-monthly', 'Bi-monthly'),
+            ('monthly', 'Monthly'),
+            ('semi-monthly', 'Semi-monthly'),
+            ('bi-weekly', 'Bi-weekly'),
+            ('weekly', 'Weekly'),
+            ('daily', 'Daily'),
+        ]
+
     sequence = fields.Integer(default=10)
     name = fields.Char('Structure Type', required=True)
-    default_schedule_pay = fields.Selection([
-        ('annually', 'Annually'),
-        ('semi-annually', 'Semi-annually'),
-        ('quarterly', 'Quarterly'),
-        ('bi-monthly', 'Bi-monthly'),
-        ('monthly', 'Monthly'),
-        ('semi-monthly', 'Semi-monthly'),
-        ('bi-weekly', 'Bi-weekly'),
-        ('weekly', 'Weekly'),
-        ('daily', 'Daily'),
-    ], string='Scheduled Pay', default='monthly',
-    help="Defines the frequency of the wage payment.")
+    default_schedule_pay = fields.Selection(
+        selection=lambda self: self._get_selection_schedule_pay(), string='Scheduled Pay', default='monthly',
+        help="Defines the frequency of the wage payment.")
     struct_ids = fields.One2many('hr.payroll.structure', 'type_id', string="Structures")
     default_struct_id = fields.Many2one('hr.payroll.structure', string="Pay Structure")
     default_work_entry_type_id = fields.Many2one(

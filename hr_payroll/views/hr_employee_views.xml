@@ -53,7 +53,7 @@
             </field>
             <xpath expr="//label[@for='wage']" position="before">
                 <field name="wage_type"/>
-                <field name="schedule_pay"/>
+                <field name="schedule_pay" invisible="not show_schedule_pay"/>
                 <label for="hourly_wage" invisible="wage_type != 'hourly'"/>
                 <div class="o_row" name="hourly_wage" invisible="wage_type != 'hourly'">
                     <field name="hourly_wage" class="o_hr_narrow_field"/>
@@ -72,6 +72,8 @@
                 <div class="mb-3" invisible="schedule_pay != 'bi-weekly'">/ two weeks</div>
                 <div class="mb-3" invisible="schedule_pay != 'weekly'">/ week</div>
                 <div class="mb-3" invisible="schedule_pay != 'daily'">/ day</div>
+                <div class="mb-3" invisible="schedule_pay != '10_days'">/ 10 days</div>
+                <div class="mb-3" invisible="schedule_pay != '14_days'">/ 14 days</div>
             </xpath>
             
             <field name="resource_calendar_id" position="attributes">
