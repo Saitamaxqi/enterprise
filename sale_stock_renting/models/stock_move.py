@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models
+from odoo.fields import Domain
 
 
 class StockMove(models.Model):
@@ -18,15 +19,15 @@ class StockMove(models.Model):
         if (
             self.env['res.groups']._is_feature_enabled('sale_stock_renting.group_rental_stock_picking')
             and rental_loc
-            and self.sale_line_id
             and self.sale_line_id.order_id.is_rental_order
             and self.location_dest_id.id in (rental_loc.id, rental_loc.location_id.id)
         ):
-            index_to_insert = domain.index(('location_dest_id', '=', self.location_dest_id.id))
-            domain.pop(index_to_insert)
-            domain.insert(index_to_insert, ('location_dest_id', '=', rental_loc.id))
-            domain.insert(index_to_insert, ('location_dest_id', '=', rental_loc.location_id.id))
-            domain.insert(index_to_insert, '|')
+            # optimize to make sure we have only to check the 'in' condition
+            domain = Domain(domain).optimize(self.env['stock.picking']).map_conditions(
+                lambda cond: Domain('location_dest_id', 'in', {rental_loc.id, rental_loc.location_id.id}.union(cond.value))
+                if cond.field_expr == 'location_dest_id' and cond.operator == 'in'
+                else cond
+            )
         return domain
 
     def _prepare_procurement_values(self):

@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.osv.expression import AND
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 
 
 class QualityPoint(models.Model):
@@ -12,7 +11,7 @@ class QualityPoint(models.Model):
     @api.model
     def _get_domain_for_production(self, quality_points_domain):
         quality_points_domain = super()._get_domain_for_production(quality_points_domain)
-        return AND([quality_points_domain, [('operation_id', '=', False)]])
+        return Domain.AND((quality_points_domain, Domain('operation_id', '=', False)))
 
     @api.constrains('measure_on', 'picking_type_ids')
     def _check_picking_type_ids(self):

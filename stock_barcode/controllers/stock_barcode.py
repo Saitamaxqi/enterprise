@@ -7,7 +7,7 @@ from collections import defaultdict
 from odoo import fields, http, _
 from odoo.http import request
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import pdf, split_every
 from odoo.tools.misc import file_open
 from odoo.addons.stock_barcode.models.epc_encoder import EpcScheme
@@ -146,7 +146,7 @@ class StockBarcodeController(http.Controller):
         request.update_env(context=context)
         barcodes_by_model = kwargs.get('barcodes_by_model')
         domains_by_model = kwargs.get('domains_by_model', {})
-        universal_domain = domains_by_model.get('all')
+        universal_domain = Domain(domains_by_model.get('all') or Domain.TRUE)
         fetch_quant = kwargs.get('fetch_quants')
         nomenclature = request.env.company.nomenclature_id
         result = defaultdict(list)
@@ -165,39 +165,30 @@ class StockBarcodeController(http.Controller):
             if not barcodes:
                 continue
             barcode_field = request.env[model_name]._barcode_field
-            domain = [(barcode_field, 'in', barcodes)]
+            domain = Domain(barcode_field, 'in', barcodes)
 
             if nomenclature.is_gs1_nomenclature:
                 # If we use GS1 nomenclature, the domain might need some adjustments.
-                converted_barcodes_domain = []
+                converted_barcodes_domains = []
                 unconverted_barcodes = []
                 for barcode in set(barcodes):
                     try:
                         # If barcode is digits only, cut off the padding to keep the original barcode only.
                         barcode = str(int(barcode))
-                        if converted_barcodes_domain:
-                            converted_barcodes_domain = expression.OR([
-                                converted_barcodes_domain,
-                                [(barcode_field, 'ilike', barcode)]
-                            ])
-                        else:
-                            converted_barcodes_domain = [(barcode_field, 'ilike', barcode)]
+                        converted_barcodes_domains.append(Domain(barcode_field, 'ilike', barcode))
                     except ValueError:
                         unconverted_barcodes.append(barcode)
                         pass  # Barcode isn't digits only.
-                if converted_barcodes_domain:
-                    domain = converted_barcodes_domain
+                if converted_barcodes_domains:
+                    domain = Domain.OR(converted_barcodes_domains)
                     if unconverted_barcodes:
-                        domain = expression.OR([
-                            domain,
-                            [(barcode_field, 'in', unconverted_barcodes)]
-                        ])
+                        domain |= Domain(barcode_field, 'in', unconverted_barcodes)
             # Adds additionnal domain if applicable.
             domain_for_this_model = domains_by_model.get(model_name)
             if domain_for_this_model:
-                domain = expression.AND([domain, domain_for_this_model])
+                domain &= Domain(domain_for_this_model)
             if universal_domain:
-                domain = expression.AND([domain, universal_domain])
+                domain &= universal_domain
             # Search for barcodes' records.
             records = request.env[model_name].search(domain)
             fetched_data = self._get_records_fields_stock_barcode(records)

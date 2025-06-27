@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class MrpBom(models.Model):
@@ -84,11 +83,11 @@ class MrpBom(models.Model):
 
     def _get_active_version(self):
         self.ensure_one()
-        domain = [('version', '>=', self.version)]
+        domain = Domain('version', '>=', self.version)
         if self.product_id:
-            domain = expression.AND([domain, [('product_id', '=', self.product_id.id)]])
+            domain &= Domain('product_id', '=', self.product_id.id)
         else:
-            domain = expression.AND([domain, [('product_tmpl_id', '=', self.product_tmpl_id.id)]])
+            domain &= Domain('product_tmpl_id', '=', self.product_tmpl_id.id)
         boms = self.with_context(active_test=False).search(domain, order='version, id')
         previous_boms = self
         for bom in boms:
@@ -171,12 +170,12 @@ class MrpBomLine(models.Model):
             self._bom_line_change({'product_qty': 0.0}, operation)
             operation = 'add'
         self._bom_line_change(vals, operation)
-        return super(MrpBomLine, self).write(vals)
+        return super().write(vals)
 
     def unlink(self):
         # It will create update rebase line.
         self._bom_line_change({'product_qty': 0.0})
-        return super(MrpBomLine, self).unlink()
+        return super().unlink()
 
     def _get_sync_values(self):
         if not self:

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import json
 import uuid
 
@@ -10,7 +8,7 @@ from odoo import api, models, fields, _
 from odoo.addons.base.models.ir_qweb import keep_query
 from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import CANCELLATION_REASON_SELECTION, CFDI_DATE_FORMAT
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 from .product_template import MX_PACKAGING_CATALOG
 
@@ -336,7 +334,7 @@ class StockPicking(models.Model):
         for picking in self:
             picking.l10n_mx_edi_update_sat_needed = bool(
                 picking.l10n_mx_edi_document_ids.filtered_domain(
-                    expression.OR(self.env['l10n_mx_edi.document']._get_update_sat_status_domains(from_cron=False))
+                    Domain.OR(self.env['l10n_mx_edi.document']._get_update_sat_status_domains(from_cron=False))
                 )
             )
 

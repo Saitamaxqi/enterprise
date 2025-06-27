@@ -317,7 +317,7 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         self.assertEqual(quality_check.move_id.quantity, 1)
         self.assertEqual(finished_sn.quality_check_qty, 2)
         domain_sn_qc = ['|', ('lot_id', 'in', finished_sn.ids), ('finished_lot_id', 'in', finished_sn.ids)]
-        self.assertEqual(finished_sn.action_open_quality_checks()['domain'], domain_sn_qc)
+        self.assertEqual(list(finished_sn.action_open_quality_checks()['domain']), domain_sn_qc)
 
 
 @tagged('post_install', '-at_install')

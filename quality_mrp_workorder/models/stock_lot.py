@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class StockLot(models.Model):
@@ -9,5 +9,5 @@ class StockLot(models.Model):
 
     def _get_quality_check_domain(self, prod_lot):
         domain = super()._get_quality_check_domain(prod_lot)
-        domain = expression.OR([domain, [('finished_lot_id', 'in', prod_lot.ids)]])
+        domain = Domain.OR([domain, [('finished_lot_id', 'in', prod_lot.ids)]])
         return domain

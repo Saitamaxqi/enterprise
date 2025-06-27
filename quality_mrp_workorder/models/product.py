@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
+from odoo.fields import Domain
 from odoo.tools import SQL
-from odoo.osv.expression import AND
 
 
 class ProductTemplate(models.Model):
@@ -12,7 +11,7 @@ class ProductTemplate(models.Model):
     def action_see_quality_control_points(self):
         action = super().action_see_quality_control_points()
         action['context'].update({'search_default_quality_points': 1})
-        action['domain'] = AND([action['domain'], ['|', '|', ('operation_id', '=', False), ('bom_id', '=', False), ('bom_active', '=', True)]])
+        action['domain'] = Domain.AND([action['domain'], ['|', '|', ('operation_id', '=', False), ('bom_id', '=', False), ('bom_active', '=', True)]])
         return action
 
     def action_see_quality_checks(self):
@@ -27,7 +26,7 @@ class ProductProduct(models.Model):
     def action_see_quality_control_points(self):
         action = super().action_see_quality_control_points()
         action['context'].update({'search_default_quality_points': 1})
-        action['domain'] = AND([action['domain'], ['|', '|', ('operation_id', '=', False), ('bom_id', '=', False), ('bom_active', '=', True)]])
+        action['domain'] = Domain.AND([action['domain'], ['|', '|', ('operation_id', '=', False), ('bom_id', '=', False), ('bom_active', '=', True)]])
         return action
 
     def action_see_quality_checks(self):

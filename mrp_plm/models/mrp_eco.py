@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
@@ -6,9 +5,9 @@ from random import randint
 
 import ast
 
-from odoo import api, fields, models, tools, Command, _
-from odoo.osv import expression
+from odoo import api, fields, models, tools, _
 from odoo.exceptions import UserError, ValidationError
+from odoo.fields import Command, Domain
 
 
 class MrpEcoType(models.Model):
@@ -75,7 +74,7 @@ class MrpEcoApprovalTemplate(models.Model):
 
     @api.constrains('user_ids', 'stage_id')
     def _check_unique_user_stage(self):
-        domain = expression.OR([
+        domain = Domain.OR([
             [('id', '!=', record.id),
             ('stage_id', '=', record.stage_id.id),
             ('user_ids', 'in', record.user_ids.ids)]
@@ -740,24 +739,24 @@ class MrpEco(models.Model):
 
     def action_new_revision(self):
         for eco in self:
-            domain = [('res_model', '=', 'product.template'), ('res_id', '=', eco.product_tmpl_id.id)]
+            domain = Domain([('res_model', '=', 'product.template'), ('res_id', '=', eco.product_tmpl_id.id)])
             if eco.type == 'bom':
                 if eco.production_id:
                     # This ECO was generated from a MO. Uses it MO as base for the revision.
                     eco.new_bom_id = eco.production_id._create_revision_bom(eco.will_update_version)
                 if not eco.new_bom_id:
                     eco.new_bom_id = eco.bom_id.sudo().copy(default={
-                        'version': eco.will_update_version and eco.bom_id.version + 1 or eco.bom_id.version,
+                        'version': eco.bom_id.version + eco.will_update_version,
                         'active': False,
                         'previous_bom_id': eco.bom_id.id,
                     })
                 if eco.bom_id.product_id:
-                    domain = expression.OR([domain, ['&', ('res_model', '=', 'product.product'), ('res_id', 'in', eco.bom_id.product_id.ids)]])
+                    domain |= Domain(['&', ('res_model', '=', 'product.product'), ('res_id', 'in', eco.bom_id.product_id.ids)])
                 else:
-                    domain = expression.OR([domain, ['&', ('res_model', '=', 'product.product'), ('res_id', 'in', self.env["product.product"].search([('product_tmpl_id', 'in', eco.product_tmpl_id.ids)]).ids)]])
-                domain = expression.AND([domain, [('attached_on_mrp', '=', 'bom')]])
+                    domain |= Domain(['&', ('res_model', '=', 'product.product'), ('res_id', 'in', self.env["product.product"].search([('product_tmpl_id', 'in', eco.product_tmpl_id.ids)]).ids)])
+                domain &= Domain('attached_on_mrp', '=', 'bom')
             else:
-                domain = expression.OR([domain, ['&', ('res_model', '=', 'product.product'), ('res_id', 'in', self.env["product.product"].search([('product_tmpl_id', 'in', eco.product_tmpl_id.ids)]).ids)]])
+                domain |= Domain(['&', ('res_model', '=', 'product.product'), ('res_id', 'in', self.env["product.product"].search([('product_tmpl_id', 'in', eco.product_tmpl_id.ids)]).ids)])
             docs = self.env['product.document'].search(domain)
             for doc in docs:
                 doc.copy({'res_model': 'mrp.eco', 'res_id': eco.id, 'origin_attachment_id': doc.ir_attachment_id.id})

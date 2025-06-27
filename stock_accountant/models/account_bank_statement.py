@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 from odoo import models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class AccountBankStatementLine(models.Model):
@@ -18,5 +17,5 @@ class AccountBankStatementLine(models.Model):
         accounts = (categories.mapped('property_stock_account_input_categ_id') +
                     categories.mapped('property_stock_account_output_categ_id'))
         if accounts:
-            return expression.AND([domain, [('account_id', 'not in', tuple(set(accounts.ids)))]])
+            return Domain.AND([domain, [('account_id', 'not in', tuple(set(accounts.ids)))]])
         return domain

@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, api
-from odoo.osv import expression
 
 
 class StockQuantPackage(models.Model):
