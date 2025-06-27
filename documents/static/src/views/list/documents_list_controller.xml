@@ -4,10 +4,8 @@
         <xpath expr="//Layout" position="attributes">
             <attribute name="className">(model.useSampleModel ? 'o_view_sample_data' : '') + ' o_documents_content'</attribute>
         </xpath>
-        <xpath expr="//Layout" position="inside">
-            <t t-set-slot="control-panel-create-button">
-                <t t-call="documents.DocumentsViews.ControlPanel"/>
-            </t>
+        <xpath expr="//t[@t-set-slot='control-panel-create-button']" position="inside">
+            <t t-call="documents.DocumentsViews.ControlPanel"/>
         </xpath>
         <xpath expr="//Layout/t[@t-component='props.Renderer']" position="attributes">
             <attribute name="previewStore">documentStates.previewStore</attribute>
