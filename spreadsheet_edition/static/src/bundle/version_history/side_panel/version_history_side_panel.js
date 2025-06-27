@@ -6,7 +6,7 @@ const { Section } = components;
 
 export class VersionHistorySidePanel extends Component {
     static template = "spreadsheet_edition.VersionHistory";
-    static props = { 
+    static props = {
         onCloseSidePanel: Function,
         getRevisions: Function,
         forkHistory: Function,
@@ -15,7 +15,7 @@ export class VersionHistorySidePanel extends Component {
         loadToRevision: Function,
         getCurrentRevisionId: Function,
         getLocale: Function,
-     };
+    };
     static components = {
         VersionHistoryItem,
         Section,

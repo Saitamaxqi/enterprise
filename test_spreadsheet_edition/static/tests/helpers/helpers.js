@@ -8,7 +8,7 @@ import {
     getSpreadsheetActionEnv,
 } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
 import { SpreadsheetTestAction } from "@test_spreadsheet_edition/spreadsheet_test_action";
-import { VersionHistoryAction } from "@spreadsheet_edition/bundle/actions/version_history/version_history_action";
+import { VersionHistoryAction } from "@spreadsheet_edition/bundle/version_history/version_history_action";
 import { SpreadsheetTest, getDummyBasicServerData } from "./data";
 import { getPyEnv } from "@spreadsheet/../tests/helpers/data";
 import { session } from "@web/session";

@@ -12,20 +12,15 @@ import { Model } from "@odoo/o-spreadsheet";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
 import { SpreadsheetComponent } from "@spreadsheet/actions/spreadsheet_component";
-import { SpreadsheetName } from "../control_panel/spreadsheet_name";
+import { SpreadsheetName } from "../actions/control_panel/spreadsheet_name";
 import { VersionHistorySidePanel } from "./side_panel/version_history_side_panel";
-import {
-    useSpreadsheetCurrencies,
-    useSpreadsheetLocales,
-    useSpreadsheetThumbnail,
-} from "../../hooks";
-import { formatToLocaleString } from "../../helpers/misc";
+import { useSpreadsheetCurrencies, useSpreadsheetLocales, useSpreadsheetThumbnail } from "../hooks";
+import { formatToLocaleString } from "../helpers/misc";
 import { router } from "@web/core/browser/router";
 import { RestoreVersionConfirmationDialog } from "./restore_version_dialog/restore_version_dialog";
 import { OdooDataProvider } from "@spreadsheet/data_sources/odoo_data_provider";
-import { SpreadsheetNavbar } from "../../components/spreadsheet_navbar/spreadsheet_navbar";
+import { SpreadsheetNavbar } from "../components/spreadsheet_navbar/spreadsheet_navbar";
 import { deepCopy } from "@web/core/utils/objects";
-
 
 export class VersionHistoryAction extends Component {
     static template = "spreadsheet_edition.VersionHistoryAction";
@@ -248,7 +243,10 @@ export class VersionHistoryAction extends Component {
             );
         }
         this.odooDataProvider = new OdooDataProvider(this.env);
-        this.odooDataProvider.addEventListener("data-source-updated", this._dataSourceBind.bind(this));
+        this.odooDataProvider.addEventListener(
+            "data-source-updated",
+            this._dataSourceBind.bind(this)
+        );
     }
 
     /**

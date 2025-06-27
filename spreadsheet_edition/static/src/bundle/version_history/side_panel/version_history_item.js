@@ -2,10 +2,9 @@ import { Component, useRef, useState, useEffect } from "@odoo/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { components } from "@odoo/o-spreadsheet";
 
-import { formatToLocaleString } from "../../../helpers/misc";
+import { formatToLocaleString } from "../../helpers/misc";
 import { _t } from "@web/core/l10n/translation";
 import { pyToJsLocale } from "@web/core/l10n/utils";
-
 
 export class VersionHistoryItem extends Component {
     static template = "spreadsheet_edition.VersionHistoryItem";
@@ -38,7 +37,6 @@ export class VersionHistoryItem extends Component {
                 });
             }
         });
-
     }
 
     get revision() {
@@ -56,9 +54,7 @@ export class VersionHistoryItem extends Component {
     }
 
     get isLatestVersion() {
-        return (
-            this.props.getRevisions()[0].nextRevisionId === this.revision.nextRevisionId
-        );
+        return this.props.getRevisions()[0].nextRevisionId === this.revision.nextRevisionId;
     }
 
     renameRevision(newName) {
