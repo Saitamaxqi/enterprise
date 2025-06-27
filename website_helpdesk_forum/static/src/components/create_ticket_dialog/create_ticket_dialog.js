@@ -1,6 +1,5 @@
 import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
-import { escape, sprintf } from "@web/core/utils/strings";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { Component, useState, onWillStart, markup, useRef } from "@odoo/owl";
@@ -48,10 +47,10 @@ export class CreateTicketDialog extends Component {
             return;
         }
         const response = await this._createTicket();
-        const message = markup(sprintf(
-            escape(_t('Helpdesk ticket %s has been successfully created for this forum post.')),
-            `<b>#${escape(response.ticket)}</b>`,
-        ));
+        const message = _t(
+            "Helpdesk ticket %(ticket)s has been successfully created for this forum post.",
+            { ticket: markup`<b>#${response.ticket}</b>` }
+        );
         this.notification.add(message, { type: "success" });
         this.props.close();
     }
