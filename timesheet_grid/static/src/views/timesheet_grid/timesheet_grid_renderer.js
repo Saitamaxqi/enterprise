@@ -1,6 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
 import { deserializeDate } from "@web/core/l10n/dates";
-import { escape } from "@web/core/utils/strings";
 import { GridRenderer } from "@web_grid/views/grid_renderer";
 import { onWillStart, markup } from "@odoo/owl";
 
@@ -201,8 +200,6 @@ export class TimesheetGridRenderer extends GridRenderer {
     _getNoContentHelper() {
         const noActivitiesFound = _t("No timesheets found. Let's create one!");
         const noContentTimesheetHelper = _t("Keep track of your working hours by project every day and bill your customers for that time.");
-        return markup(
-            `<p class='o_view_nocontent_smiling_face'>${escape(noActivitiesFound)}</p><p>${escape(noContentTimesheetHelper)}</p>`
-        );
+        return markup`<p class='o_view_nocontent_smiling_face'>${noActivitiesFound}</p><p>${noContentTimesheetHelper}</p>`;
     }
 }
