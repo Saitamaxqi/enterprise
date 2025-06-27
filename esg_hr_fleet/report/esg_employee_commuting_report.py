@@ -8,6 +8,7 @@ class EsgEmployeeCommutingReport(models.Model):
 
     driver_id = fields.Many2one('res.partner', readonly=True)
     vehicle_id = fields.Many2one('fleet.vehicle', readonly=True)
+    company_id = fields.Many2one('res.company', readonly=True)
     date_from = fields.Date('Date', readonly=True)
     date_to = fields.Date(readonly=True)
     co2 = fields.Float('gCO₂/km', readonly=True)
@@ -22,8 +23,9 @@ class EsgEmployeeCommutingReport(models.Model):
                     ROW_NUMBER() OVER () AS id,
                     log.vehicle_id,
                     log.driver_id,
-                    month_start AS date_from,
+                    v.company_id,
                     rc.weekly_days_at_office,
+                    month_start::DATE AS date_from,
                     (month_start + INTERVAL '1 month - 1 day')::DATE AS date_to,
                     v.co2,
                     SUM(
@@ -52,6 +54,13 @@ class EsgEmployeeCommutingReport(models.Model):
                     date_trunc('month', COALESCE(log.date_end, NOW() AT TIME ZONE 'utc')),
                     '1 month'::INTERVAL
                 )) g(month_start) ON TRUE
-                GROUP BY log.driver_id, log.vehicle_id, month_start, v.co2, ve.distance_home_work, rc.weekly_days_at_office
+                GROUP BY
+                    log.driver_id,
+                    log.vehicle_id,
+                    v.company_id,
+                    month_start,
+                    v.co2,
+                    ve.distance_home_work,
+                    rc.weekly_days_at_office
             )
         """)

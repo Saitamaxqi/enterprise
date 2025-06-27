@@ -8,6 +8,7 @@
     ],
     'data': [
         'data/esg_hr_fleet_data.xml',
+        'security/esg_hr_fleet_security.xml',
         'security/ir.model.access.csv',
         'report/esg_employee_commuting_report_views.xml',
         'views/esg_menus.xml',
