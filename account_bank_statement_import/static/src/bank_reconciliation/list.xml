@@ -1,6 +1,6 @@
 <templates id="template" xml:space="preserve">
     <t t-name="account.BankRecListUploadButtons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary">
-        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+        <xpath expr="." position="inside">
             <t t-if="showUploadButton" t-call="account.AccountViewUploadButton"/>
         </xpath>
     </t>

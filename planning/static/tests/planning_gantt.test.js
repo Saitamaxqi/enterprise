@@ -733,7 +733,7 @@ test("Test highlight shifts added by executed action", async function () {
     });
 
     await click(
-        ".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down"
+        ".o_control_panel_main_buttons button > i.fa-caret-down"
     );
     await animationFrame();
 
@@ -764,7 +764,7 @@ test("Test highlight shifts added by executed action", async function () {
     expect(rows.map((r) => r.title)).toEqual(["Open Shifts", "Resource 1"]);
 
     await click(
-        ".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down"
+        ".o_control_panel_main_buttons button > i.fa-caret-down"
     );
     await animationFrame();
     await click(".o_popover.dropdown-menu .o_gantt_button_auto_plan"); // click on copy button in desktop view

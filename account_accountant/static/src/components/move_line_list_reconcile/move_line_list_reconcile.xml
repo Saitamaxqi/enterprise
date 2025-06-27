@@ -3,7 +3,7 @@
 <templates>
 
     <t t-name="account_accountant.ListViewReconcile.Buttons" t-inherit="web.ListView.Buttons" t-inherit-mode="primary">
-        <xpath expr="//div[hasclass('o_list_buttons')]" position="inside">
+        <xpath expr="." position="inside">
             <button class="btn btn-primary"
                     t-on-click="() => this.openAutoReconcileWizard()"
                     groups="account.group_account_user">

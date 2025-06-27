@@ -3,7 +3,7 @@
 <templates xml:space="preserve">
 
     <t t-name="planning.PlanningGanttView.Buttons" t-inherit="web_gantt.GanttView.Buttons">
-        <xpath expr="//div" position="inside">
+        <xpath expr="." position="inside">
             <div class="btn-group">
                 <div class="btn-group d-block">
                     <button t-if="model.metaData.canEdit"

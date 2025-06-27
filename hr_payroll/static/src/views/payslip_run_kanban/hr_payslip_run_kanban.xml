@@ -38,7 +38,7 @@
     </t>
 
     <t t-name="PayrunKanbanView.Buttons" t-inherit="web.KanbanView.Buttons" t-inherit-mode="primary">
-        <xpath expr="//div[@t-if='props.showButtons']" position="inside">
+        <xpath expr="." position="inside">
             <button t-on-click="openOffCycle" class="btn btn-secondary">See Off-Cycle</button>
         </xpath>
     </t>

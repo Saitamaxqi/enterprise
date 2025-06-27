@@ -446,7 +446,7 @@
     </t>
 
     <div t-name="StreamPostKanbanView.buttons" t-inherit="web.KanbanView.Buttons">
-        <xpath expr="//div[hasclass('o_cp_buttons')]" position="inside">
+        <xpath expr="." position="inside">
             <button type="button" class="btn btn-primary o_stream_post_kanban_new_stream" t-on-click.prevent="_onNewStream">
                 Add Stream
             </button>
