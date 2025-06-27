@@ -128,5 +128,5 @@ class MailActivity(models.Model):
                 phone_numbers_by_activity[activity] = phone
         return phone_numbers_by_activity
 
-    def _to_store_defaults(self):
-        return [*super()._to_store_defaults(), "country_code_from_phone", "phone", "user_id"]
+    def _to_store_defaults(self, target):
+        return [*super()._to_store_defaults(target), "country_code_from_phone", "phone", "user_id"]

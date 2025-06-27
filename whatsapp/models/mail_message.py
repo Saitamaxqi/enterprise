@@ -28,8 +28,8 @@ class MailMessage(models.Model):
             })
             self._bus_send_reaction_group(reaction_content)
 
-    def _to_store_defaults(self):
-        return super()._to_store_defaults() + ["whatsappStatus"]
+    def _to_store_defaults(self, target):
+        return super()._to_store_defaults(target) + ["whatsappStatus"]
 
     def _to_store(self, store: Store, fields, **kwargs):
         super()._to_store(store, [field for field in fields if field != "whatsappStatus"], **kwargs)

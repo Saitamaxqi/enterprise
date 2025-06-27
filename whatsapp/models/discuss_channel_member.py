@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 
 from odoo import api, models
 from odoo.osv import expression
+from odoo.addons.mail.tools.discuss import Store
 
 
 class DiscussChannelMember(models.Model):
@@ -31,6 +32,8 @@ class DiscussChannelMember(models.Model):
         )
         members_to_be_unpinned.unpin_dt = datetime.now()
         for member in members_to_be_unpinned:
-            member._bus_send_store(
-                member.channel_id, {"close_chat_window": True, "is_pinned": False}
-            )
+            Store(
+                member.channel_id,
+                {"close_chat_window": True, "is_pinned": False},
+                bus_channel=member._bus_channel(),
+            ).bus_send()

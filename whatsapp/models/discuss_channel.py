@@ -163,7 +163,7 @@ class DiscussChannel(models.Model):
                 })
         if messages.author_id == self.whatsapp_partner_id:
             self.last_wa_mail_message_id = new_msg
-            self._bus_send_store(self, "whatsapp_channel_valid_until")
+            Store(self, "whatsapp_channel_valid_until", bus_channel=self).bus_send()
         if whatsapp_message_vals:
             self.env['whatsapp.message'].create(whatsapp_message_vals)._send_message()
 
@@ -279,7 +279,7 @@ class DiscussChannel(models.Model):
             }])
             message_body = Markup(f'<div class="o_mail_notification">{_("joined the channel")}</div>')
             new_member.channel_id.message_post(body=message_body, message_type="notification", subtype_xmlid="mail.mt_comment")
-            self._bus_send_store(Store(new_member).add(self, "member_count"))
+            Store(new_member, bus_channel=self).add(self, "member_count").bus_send()
         return Store(self).get_result()
 
     # ------------------------------------------------------------
@@ -297,8 +297,8 @@ class DiscussChannel(models.Model):
             return
         super()._action_unfollow(partner, guest, post_leave_message)
 
-    def _to_store_defaults(self, for_current_user=True):
-        return super()._to_store_defaults(for_current_user=for_current_user) + [
+    def _to_store_defaults(self, target):
+        return super()._to_store_defaults(target) + [
             "whatsapp_channel_valid_until",
             Store.One("whatsapp_partner_id", []),
             # sudo: discuss.channel - reading wa_account_id is allowed for multi-company users

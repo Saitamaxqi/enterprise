@@ -820,7 +820,7 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
                 'app_uid': 'contact',
                 'name': 'odoo account',
                 'notify_user_ids': cls.user_wa_admin.ids,
-                'phone_uid': '1234567890',
+                'phone_uid': '12345678910',
                 'token': 'team leader',
             },
             {

@@ -43,7 +43,7 @@ class KnowledgeThreadController(ThreadController):
             messages = res.pop("messages")
             output[thread_id] = {
                 **res,
-                "data": Store(messages, for_current_user=True).get_result(),
+                "data": Store(messages).get_result(),
                 "messages": messages.ids,
             }
         return output
