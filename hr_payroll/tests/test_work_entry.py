@@ -41,14 +41,13 @@ class TestWorkEntry(TestPayslipBase):
 
     def test_time_extra_work_entry(self):
         start = datetime(2015, 11, 1, 10, 0, 0)
-        end = datetime(2015, 11, 1, 17, 0, 0)
         work_entry = self.env['hr.work.entry'].create({
             'name': '1',
             'employee_id': self.richard_emp.id,
             'version_id': self.richard_emp.version_id.id,
             'work_entry_type_id': self.work_entry_type.id,
-            'date_start': start,
-            'date_stop': end,
+            'date': start.date(),
+            'duration': 7,
         })
         work_entry.action_validate()
 

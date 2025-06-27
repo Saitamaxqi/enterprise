@@ -42,14 +42,15 @@ class TestPayrollExpense(TestHrPayrollAccountCommon, TestExpenseCommon):
             'structure_type_id': cls.hr_structure_type.id,
         })
         cls.expense_contract = cls.expense_employee.version_id
-        cls.expense_work_entry = cls.env['hr.work.entry'].create({
+        work_entry_vals = cls.env['hr.version']._generate_work_entries_postprocess([{
             'name': 'Work Entry',
             'employee_id': cls.expense_employee.id,
             'date_start': cls.frozen_today - relativedelta(days=1),
             'date_stop': cls.frozen_today,
             'version_id': cls.expense_contract.id,
             'state': 'validated',
-        })
+        }])
+        cls.expense_work_entry = cls.env['hr.work.entry'].create(work_entry_vals)
         cls.expense_payslip_input = cls.env.ref('hr_payroll_expense.expense_other_input')
         expense_payslip_tax_account = cls.env['account.account'].create({
                 'name': 'Rental Tax',

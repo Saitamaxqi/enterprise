@@ -75,8 +75,8 @@ class L10nUsAdpExport(models.Model):
     def _get_work_entry_domain(self):
         self.ensure_one()
         return [
-            ('date_start', '<=', self.end_date),
-            ('date_start', '>=', self.start_date),
+            ('date', '<=', self.end_date),
+            ('date', '>=', self.start_date),
             ('company_id', '=', self.company_id.id),
             ('employee_id', 'in', self.employee_ids.ids),
         ]

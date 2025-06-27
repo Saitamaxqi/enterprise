@@ -91,9 +91,9 @@ class TestWorkEntryPlanning(TransactionCase):
         self.contract.generate_work_entries(date(2021, 9, 1), date(2021, 9, 30))
         work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
         # One work entry per slot
-        self.assertEqual(len(work_entries), len(slots))
+        self.assertEqual(len(work_entries), len(slots) / 2)
         # Each slot should have been assigned to one work entry
-        self.assertEqual(len(work_entries.mapped('planning_slot_id')), len(slots.ids))
+        self.assertEqual(len(work_entries.mapped('planning_slot_id')), len(slots.ids) / 2)
 
     def test_slot_within_period(self):
         # Tests that a slot created/published within the already generated period
@@ -163,7 +163,7 @@ class TestWorkEntryPlanning(TransactionCase):
         self.contract.generate_work_entries(date(2021, 9, 1), date(2021, 9, 30))
         work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
         self.assertTrue(work_entries)
-        self.assertEqual(work_entries.duration, slot.allocated_hours)
+        self.assertEqual(sum(work_entries.mapped('duration')), slot.allocated_hours)
 
     def test_invalid_contract(self):
         # Tests that slots don't generate work entries if the contract isn't in planning mode
@@ -211,7 +211,7 @@ class TestWorkEntryPlanning(TransactionCase):
             'name': 'Mission Impossible: Distribute Gifts',
             'employee_id': employee2.id,
             'version_id': employee2.version_id.id,
-            'date_start': datetime(2021, 9, 15, 14, 0, 0),
-            'date_stop': datetime(2021, 9, 15, 17, 0, 0),
+            'date': date(2021, 9, 15),
+            'duration': 3,
         })
         planning_slots._create_work_entries()

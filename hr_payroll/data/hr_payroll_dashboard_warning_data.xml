@@ -76,8 +76,8 @@ start_month = date.today().replace(day=1)
 next_month = start_month + relativedelta(months=1)
 work_entries_in_conflict = self.env['hr.work.entry'].search_count([
     ('state', '=', 'conflict'),
-    ('date_stop', '&gt;=', start_month),
-    ('date_start', '&lt;', next_month)])
+    ('date', '&gt;=', start_month),
+    ('date', '&lt;', next_month)])
 if work_entries_in_conflict:
     warning_count = work_entries_in_conflict
     warning_action = 'hr_work_entry.hr_work_entry_action_conflict'

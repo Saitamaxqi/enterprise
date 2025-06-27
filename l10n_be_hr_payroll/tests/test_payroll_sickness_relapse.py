@@ -351,8 +351,8 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
 
         work_entries.action_validate()
 
-        paid_date = work_entries.filtered(lambda entry: entry.date_start.day == 15)
-        unpaid_date = work_entries.filtered(lambda entry: entry.date_start.day == 29)
+        paid_date = work_entries.filtered(lambda entry: entry.date.day == 15)
+        unpaid_date = work_entries.filtered(lambda entry: entry.date.day == 29)
 
         work_entry_paid_code = set(paid_date.mapped("code"))
         work_entry_unpaid_code = set(unpaid_date.mapped("code"))
@@ -434,8 +434,8 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
 
         work_entries.action_validate()
 
-        paid_date = work_entries.filtered(lambda entry: entry.date_start.day == 9)
-        unpaid_date = work_entries.filtered(lambda entry: entry.date_start.day == 12)
+        paid_date = work_entries.filtered(lambda entry: entry.date.day == 9)
+        unpaid_date = work_entries.filtered(lambda entry: entry.date.day == 12)
         work_entry_paid_code = set(paid_date.mapped("code"))
         work_entry_unpaid_code = set(unpaid_date.mapped("code"))
 

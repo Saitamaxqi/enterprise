@@ -10,9 +10,9 @@
                 <field name="employee_id" filter_domain="[('employee_id', 'ilike', self)]"/>
                 <field name="department_id" filter_domain="[('department_id', 'ilike', self)]"/>
                 <field name="state" filter_domain="[('state', 'ilike', self)]" />
-                <field name="date_start" />
+                <field name="date" />
                 <separator/>
-                <filter string="Current month" name="filter_date_start" date="date_start" default_period="month"/>
+                <filter string="Current month" name="filter_date" date="date" default_period="month"/>
                 <separator/>
                 <filter string="Validated" name="filter_work_entry_validated" domain="[('state', '=', 'validated')]"/>
                 <group>
@@ -44,7 +44,7 @@
                 <field name="employee_id" widget="many2one_avatar_employee"/>
                 <field name="department_id" optional="show"/>
                 <field name="work_entry_type_id" optional="hide"/>
-                <field name="date_start" optional="show"/>
+                <field name="date" optional="show"/>
                 <field name="number_of_days" optional="show" sum="Sum of Days"/>
                 <field name="state" optional="hide"/>
                 <field name="company_id" optional="show" groups="base.group_multi_company"/>
@@ -59,7 +59,7 @@
         <field name="search_view_id" ref="hr_work_entry_report_view_search"/>
         <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
         <field name="context">{
-            'search_default_filter_date_start': True,
+            'search_default_filter_date': True,
             'search_default_filter_work_entry_validated': True,
             'group_default_work_entry_type_id': True
         }</field>

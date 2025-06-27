@@ -132,7 +132,7 @@ class HrPayslip(models.Model):
         date_to = datetime.combine(self.date_to, datetime.max.time())
         remainig_work_entries_domain = domain & Domain('leave_id.date_from', '<', self.date_from)
         work_entries_dict = self.env['hr.work.entry']._read_group(
-            self.version_id._get_work_hours_domain(date_from, date_to, domain=remainig_work_entries_domain, inside=True),
+            self.version_id._get_work_hours_domain(date_from, date_to, domain=remainig_work_entries_domain),
             ['leave_id', 'work_entry_type_id'],
             ['duration:sum'],
         )

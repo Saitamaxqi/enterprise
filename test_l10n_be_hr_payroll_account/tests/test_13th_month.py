@@ -102,15 +102,15 @@ class Test13thMonth(TestPayslipBase):
         self.update_version(date(2015, 1, 24))
         work_entries = self.employee.version_ids.generate_work_entries(date(2018, 12, 31), date(2019, 12, 31))
         unpaid_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_unpaid_leave')
-        work_entry = self.env['hr.work.entry'].create({
+        work_entry = self.env['hr.work.entry'].create([{
             'name': 'Unpaid work entry',
             'employee_id': self.employee.id,
             'version_id': self.version.id,
             'work_entry_type_id': unpaid_work_entry_type.id,
-            'date_start': datetime(2019, 3, 1, 7, 0),
-            'date_stop': datetime(2019, 3, 10, 18, 0),
-        })  # 6 days * 8 hours = 48 hours
-        work_entries.filtered(lambda r: r.date_start >= datetime(2019, 3, 1, 7, 0) and r.date_stop <= datetime(2019, 3, 10, 18, 0)).write({'state': 'cancelled'})
+            'date': date(2019, 3, day),
+            'duration': 8,
+        } for day in [1, 4, 5, 6, 7, 8]])  # 6 days * 8 hours = 48 hours
+        work_entries.filtered(lambda r: date(2019, 3, 1) <= r.date <= date(2019, 3, 10)).write({'state': 'cancelled'})
         work_entries.filtered(lambda r: r.state == 'confirmed').action_validate()
         work_entry.action_validate()
         # In 2019: 261 days * 8h = 2088 hours

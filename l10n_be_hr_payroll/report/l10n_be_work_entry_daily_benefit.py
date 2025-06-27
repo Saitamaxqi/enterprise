@@ -25,25 +25,29 @@ class L10n_BeWorkEntryDailyBenefitReport(models.Model):
         statement = SQL("""
             CREATE OR REPLACE VIEW %s AS (
                     SELECT work_entry.employee_id,
-                           GREATEST(day_serie.day_serie, timezone(calendar.tz::text, work_entry.date_start::timestamp with time zone))::date AS day,
+                           work_entry.date AS day,
                            advantage.benefit_name,
                            1 AS id
 
                       FROM hr_work_entry work_entry
                       JOIN hr_version version ON work_entry.version_id = version.id
-                                                AND work_entry.active
-                                                AND work_entry.state::TEXT = ANY (ARRAY ['draft'::CHARACTER VARYING::TEXT, 'validated'::CHARACTER VARYING::TEXT])
+                       AND work_entry.active
+                       AND work_entry.state::TEXT = ANY (ARRAY ['draft', 'validated'])
                       JOIN resource_calendar calendar ON version.resource_calendar_id = calendar.id
                       JOIN hr_work_entry_type ON work_entry.work_entry_type_id = hr_work_entry_type.id
-                                              AND (hr_work_entry_type.meal_voucher = TRUE OR hr_work_entry_type.private_car = TRUE OR hr_work_entry_type.representation_fees = TRUE)
-                CROSS JOIN LATERAL generate_series(date_trunc('day'::text, work_entry.date_start), date_trunc('day'::text, work_entry.date_stop), '1 day'::interval) day_serie(day_serie)
-                CROSS JOIN LATERAL ( VALUES ('meal_voucher'::text,hr_work_entry_type.meal_voucher), ('private_car'::text,hr_work_entry_type.private_car), ('representation_fees'::text,hr_work_entry_type.representation_fees)) advantage(benefit_name, is_applicable)
-
+                       AND (
+                            hr_work_entry_type.meal_voucher = TRUE OR
+                            hr_work_entry_type.private_car = TRUE OR
+                            hr_work_entry_type.representation_fees = TRUE
+                       )
+                CROSS JOIN LATERAL (
+                            VALUES
+                                ('meal_voucher'::text,hr_work_entry_type.meal_voucher),
+                                ('private_car'::text,hr_work_entry_type.private_car),
+                                ('representation_fees'::text,hr_work_entry_type.representation_fees)
+                        ) AS advantage(benefit_name, is_applicable)
                      WHERE advantage.is_applicable
-
                   GROUP BY 1,2,3
-
-                    HAVING sum(date_part('hour'::text, LEAST(day_serie.day_serie + '1 day'::interval, timezone(calendar.tz::text, work_entry.date_stop::timestamp with time zone)) - GREATEST(day_serie.day_serie, timezone(calendar.tz::text, work_entry.date_start::timestamp with time zone)))) > 0::double precision
             );
         """, SQL.identifier(self._table))
         self.env.cr.execute(statement)

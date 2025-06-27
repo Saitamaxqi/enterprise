@@ -1,8 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import date, datetime
-
-from pytz import UTC, timezone
+from datetime import date
 
 from odoo.fields import Command
 from odoo.tests.common import tagged
@@ -180,8 +178,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'name': 'OT',
             'employee_id': self.saudi_employee.id,
             'version_id': self.saudi_employee.version_id.id,
-            'date_start': datetime(2024, 1, 1, 18, 0, tzinfo=timezone(self.tz)).astimezone(tz=UTC).replace(tzinfo=None),
-            'date_stop': datetime(2024, 1, 1, 22, 0, tzinfo=timezone(self.tz)).astimezone(tz=UTC).replace(tzinfo=None),
+            'date': date(2024, 1, 1),
+            'duration': 4,
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_overtime').id,
         })
         work_entry.action_validate()

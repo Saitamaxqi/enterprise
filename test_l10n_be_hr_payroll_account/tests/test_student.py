@@ -61,24 +61,16 @@ class TestStudent(AccountTestInvoicingCommon):
     def test_student(self):
         # CASE: Worked 6 days
         attendance_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        vals_list = [
-            (datetime(2020, 9, 1, 9, 0), datetime(2020, 9, 1, 18, 0)),
-            (datetime(2020, 9, 2, 9, 0), datetime(2020, 9, 2, 18, 0)),
-            (datetime(2020, 9, 3, 9, 0), datetime(2020, 9, 3, 18, 0)),
-            (datetime(2020, 9, 4, 9, 0), datetime(2020, 9, 4, 18, 0)),
-            (datetime(2020, 9, 7, 9, 0), datetime(2020, 9, 7, 18, 0)),
-            (datetime(2020, 9, 8, 9, 0), datetime(2020, 9, 8, 18, 0)),
-        ]
-        work_entries = self.env['hr.work.entry'].create([{
+        self.env['hr.work.entry'].create([{
             'name': 'Attendance',
             'employee_id': self.employee.id,
             'version_id': self.contract.id,
             'work_entry_type_id': attendance_work_entry_type.id,
-            'date_start': vals[0],
-            'date_stop': vals[1],
+            'date': date(2020, 9, day),
+            'duration': 9,
             'company_id': self.env.company.id,
             'state': 'draft',
-        } for vals in vals_list])
+        } for day in [1, 2, 3, 4, 7, 8]])
 
         payslip = self.env['hr.payslip'].with_context(allowed_company_ids=self.env.company.ids).create({
             'name': 'Test Payslip',

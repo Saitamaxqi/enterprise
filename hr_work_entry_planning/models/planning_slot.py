@@ -34,13 +34,13 @@ class PlanningSlot(models.Model):
             'employee_id', 'work_entry_source',
             'contract_date_start', 'contract_date_end', 'date_generated_from', 'date_generated_to'
         ])
-        self.env['hr.work.entry'].flush_model(['employee_id', 'date_start', 'date_stop'])
+        self.env['hr.work.entry'].flush_model(['employee_id', 'date'])
         self.env.cr.execute("""
             SELECT slot.id as id,
                    ARRAY_AGG(DISTINCT version.id) as version_ids,
                    ARRAY_AGG(DISTINCT hwe.id) as work_entry_ids,
-                   COALESCE(MIN(hwe.date_start), slot.start_datetime) as start,
-                   COALESCE(MAX(hwe.date_stop), slot.end_datetime) as stop
+                   slot.start_datetime as start,
+                   slot.end_datetime as stop
               FROM planning_slot slot
               JOIN hr_employee employee
                 ON slot.employee_id = employee.id AND
@@ -59,8 +59,8 @@ class PlanningSlot(models.Model):
                     version.contract_date_end >= slot.start_datetime)
          LEFT JOIN hr_work_entry hwe
                 ON hwe.employee_id = slot.employee_id AND
-                   hwe.date_start <= slot.end_datetime AND
-                   hwe.date_stop >= slot.start_datetime
+                   hwe.date <= slot.end_datetime::date AND
+                   hwe.date >= slot.start_datetime::date
              WHERE slot.id in %s
           GROUP BY slot.id
         """, [tuple(self_with_employee.ids)])
@@ -80,6 +80,7 @@ class PlanningSlot(models.Model):
                 continue
             contracts = self.env['hr.version'].sudo().browse(version_ids)
             work_entries_vals_list.extend(contracts._get_work_entries_values(period[0], period[1]))
+        work_entries_vals_list = self.env['hr.version']._generate_work_entries_postprocess(work_entries_vals_list)
         self.env['hr.work.entry'].sudo().create(work_entries_vals_list)
 
     @api.model_create_multi
@@ -110,3 +111,23 @@ class PlanningSlot(models.Model):
         # Archive linked work entries upon deleting slots
         self.env['hr.work.entry'].sudo().search([('planning_slot_id', 'in', self.ids)]).write({'active': False})
         return super().unlink()
+
+    def _get_planning_duration(self, date_start, date_stop):
+        '''
+        If the interval(date_start, date_stop) is equal to the planning_slot's interval, return the slot's allocated hours.
+        If the interval(date_start, date_stop) is a subset of the planning_slot's interval,
+        a new (non saved) planning_slot will be created to compute the duration according to planning rules.
+        If the interval(date_start, date_stop) is not fully inside of the planning_slot's interval the behaviour is undefined
+
+        :return: The real duration according to the planning app
+        :rtype: number
+        '''
+        self.ensure_one()
+        if self.start_datetime == date_start and self.end_datetime == date_stop:
+            return self.allocated_hours
+        new_slot = self.env['planning.slot'].new({
+            **self.read(['employee_id', 'company_id', 'allocated_percentage', 'resource_id'])[0],
+            'start_datetime': date_start,
+            'end_datetime': date_stop,
+        })
+        return new_slot.allocated_hours

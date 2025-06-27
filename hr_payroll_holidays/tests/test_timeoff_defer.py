@@ -179,13 +179,11 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             ('company_id', '=', self.env.company.id),
             ('state', '=', 'draft'),
             ('work_entry_type_id', '=', self.leave_type.work_entry_type_id.id),
-            ('date_start', '>=', Datetime.to_datetime('2022-02-01')),
-            ('date_stop', '<=', datetime.combine(Datetime.to_datetime('2022-02-28'), datetime.max.time()))
+            ('date', '>=', Datetime.to_datetime('2022-02-01')),
+            ('date', '<=', datetime.combine(Datetime.to_datetime('2022-02-28'), datetime.max.time()))
         ])
-        self.assertEqual(reported_work_entries[0].date_start, datetime(2022, 2, 1, 7, 0))
-        self.assertEqual(reported_work_entries[0].date_stop, datetime(2022, 2, 1, 11, 0))
-        self.assertEqual(reported_work_entries[1].date_start, datetime(2022, 2, 1, 12, 0))
-        self.assertEqual(reported_work_entries[1].date_stop, datetime(2022, 2, 1, 16, 0))
+        self.assertEqual(reported_work_entries[0].date, date(2022, 2, 1))
+        self.assertEqual(reported_work_entries[0].duration, 8)
 
     def test_report_to_next_month_overlap(self):
         """
@@ -223,15 +221,13 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             ('company_id', '=', self.env.company.id),
             ('state', '=', 'draft'),
             ('work_entry_type_id', '=', self.leave_type.work_entry_type_id.id),
-            ('date_start', '>=', Datetime.to_datetime('2022-02-01')),
-            ('date_stop', '<=', datetime.combine(Datetime.to_datetime('2022-02-28'), datetime.max.time()))
+            ('date', '>=', Datetime.to_datetime('2022-02-01')),
+            ('date', '<=', datetime.combine(Datetime.to_datetime('2022-02-28'), datetime.max.time()))
         ])
-        self.assertEqual(len(reported_work_entries), 6)
-        self.assertEqual(list({we.date_start.day for we in reported_work_entries}), [1, 2, 3])
-        self.assertEqual(reported_work_entries[0].date_start, datetime(2022, 2, 1, 7, 0))
-        self.assertEqual(reported_work_entries[0].date_stop, datetime(2022, 2, 1, 11, 0))
-        self.assertEqual(reported_work_entries[1].date_start, datetime(2022, 2, 1, 12, 0))
-        self.assertEqual(reported_work_entries[1].date_stop, datetime(2022, 2, 1, 16, 0))
+        self.assertEqual(len(reported_work_entries), 3)
+        self.assertEqual(list({we.date.day for we in reported_work_entries}), [1, 2, 3])
+        self.assertEqual(reported_work_entries[0].date, date(2022, 2, 1))
+        self.assertEqual(reported_work_entries[0].duration, 8)
 
     def test_report_to_next_month_not_enough_days(self):
         # If the time off contains too many days to be reported to next months, raise
@@ -327,12 +323,12 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             ('company_id', '=', self.env.company.id),
             ('state', '=', 'draft'),
             ('work_entry_type_id', '=', self.leave_type.work_entry_type_id.id),
-            ('date_start', '>=', Datetime.to_datetime('2022-02-01')),
-            ('date_stop', '<=', datetime.combine(Datetime.to_datetime('2022-02-28'), datetime.max.time()))
+            ('date', '>=', Datetime.to_datetime('2022-02-01')),
+            ('date', '<=', datetime.combine(Datetime.to_datetime('2022-02-28'), datetime.max.time()))
         ])
         self.assertEqual(len(reported_work_entries), 1)
-        self.assertEqual(reported_work_entries[0].date_start, datetime(2022, 2, 1, 7, 0))
-        self.assertEqual(reported_work_entries[0].date_stop, datetime(2022, 2, 1, 11, 0))
+        self.assertEqual(reported_work_entries[0].date, date(2022, 2, 1))
+        self.assertEqual(reported_work_entries[0].duration, 8)
 
     def test_defer_next_month_double_time_off(self):
         """
@@ -372,18 +368,15 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             ('company_id', '=', self.env.company.id),
             ('state', '=', 'draft'),
             ('work_entry_type_id', '=', self.leave_type.work_entry_type_id.id),
-            ('date_start', '>=', Datetime.to_datetime('2023-07-01')),
-            ('date_stop', '<=', datetime.combine(Datetime.to_datetime('2023-07-31'), datetime.max.time()))
+            ('date', '>=', Datetime.to_datetime('2023-07-01')),
+            ('date', '<=', datetime.combine(Datetime.to_datetime('2023-07-31'), datetime.max.time()))
         ])
-        # The length of reported work entries is 16 because we are generating records for 8 days of leave.
-        # Each day is divided into two parts, morning and afternoon, resulting in a total of 16 work entries.
+        # The length of reported work entries is 8 because we are generating records for 8 days of leave.
         # These leaves cover the period from July 3rd to July 12th, excluding July 1st and 2nd as they are designated holidays.
-        self.assertEqual(len(july_work_entries), 16)
-        self.assertEqual(list({we.date_start.day for we in july_work_entries}), [3, 4, 5, 6, 7, 10, 11, 12])
-        self.assertEqual(july_work_entries[0].date_start, datetime(2023, 7, 3, 6, 0))
-        self.assertEqual(july_work_entries[0].date_stop, datetime(2023, 7, 3, 10, 0))
-        self.assertEqual(july_work_entries[1].date_start, datetime(2023, 7, 3, 11, 0))
-        self.assertEqual(july_work_entries[1].date_stop, datetime(2023, 7, 3, 15, 0))
+        self.assertEqual(len(july_work_entries), 8)
+        self.assertEqual(list({we.date.day for we in july_work_entries}), [3, 4, 5, 6, 7, 10, 11, 12])
+        self.assertEqual(july_work_entries[0].date, date(2023, 7, 3))
+        self.assertEqual(july_work_entries[0].duration, 8)
 
     def test_leave_overlaping_over_2_month(self):
         """
@@ -449,7 +442,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
 
         # Ensure the timeoff work entries have been deferred on June and that May stays untouched
         self.assertEqual(len(june_work_entries.filtered(lambda we: we.work_entry_type_id.code == 'OVERLAPING101')),
-                         20, "There should only have 20 OVERLAPING101 work entry deferred (2 Work entry per leave day)")
+                         10, "There should only have 10 OVERLAPING101 work entry deferred (1 Work entry per leave day)")
 
         # Ensure the worked days lines gets computed correctly on June payslip
         june_payslip_batch = self.env['hr.payslip.run'].create({
@@ -547,7 +540,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
         self.assertEqual(set(june_work_entries.work_entry_type_id.mapped('code')),
                          {'WORK100', 'OVERLAPING101'}, "June work entries should contain the deferred work entries from May")
         self.assertEqual(len(june_work_entries.filtered(lambda we: we.work_entry_type_id.code == 'OVERLAPING101')),
-                         18, "There should only have 18 OVERLAPING101 work entry deferred (2 Work entry per leave day)")
+                         9, "There should only have 9 OVERLAPING101 work entry deferred (1 Work entry per leave day)")
 
         # Ensure the worked days lines gets computed correctly on June payslip
         june_payslip_batch = self.env['hr.payslip.run'].create({

@@ -6,11 +6,11 @@ class HrWorkEntryReport(models.Model):
     _name = 'hr.work.entry.report'
     _description = 'Work Entries Analysis Report'
     _auto = False
-    _order = 'date_start desc'
+    _order = 'date desc'
 
     number_of_days = fields.Float('Days', readonly=True)
 
-    date_start = fields.Datetime('Date Start', readonly=True)
+    date = fields.Date('Date', readonly=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     department_id = fields.Many2one('hr.department', 'Department', readonly=True)
     employee_id = fields.Many2one('hr.employee', 'Employee', readonly=True)
@@ -32,7 +32,7 @@ class HrWorkEntryReport(models.Model):
         query = """
         SELECT
             we.id,
-            we.date_start,
+            we.date,
             we.work_entry_type_id,
             we.employee_id,
             we.department_id,
@@ -45,8 +45,7 @@ class HrWorkEntryReport(models.Model):
                 id,
                 employee_id,
                 version_id,
-                date_start,
-                date_stop,
+                date,
                 work_entry_type_id,
                 department_id,
                 company_id,

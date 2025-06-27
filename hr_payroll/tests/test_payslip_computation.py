@@ -227,8 +227,8 @@ class TestPayslipComputation(TestPayslipContractBase):
             'employee_id': self.richard_emp.id,
             'version_id': self.contract_cdd.id,
             'work_entry_type_id': self.work_entry_type.id,
-            'date_start': start,
-            'date_stop': end,
+            'date': start.date(),
+            'duration': 7,
         })
         work_entry.action_validate()
         payslip_run = self.env['hr.payslip.run'].create({
@@ -252,14 +252,14 @@ class TestPayslipComputation(TestPayslipContractBase):
 
     def test_payslip_generation_with_overtime_work_rate(self):
         """ Test the computation of overtime amount in the payslip as per rate. """
-        work_entry = self.env['hr.work.entry'].create({
+        work_entry = self.env['hr.work.entry'].create(self.env['hr.version']._generate_work_entries_postprocess([{
             'name': 'Overtime Work',
             'employee_id': self.richard_emp.id,
             'version_id': self.contract_cdi.id,
             'work_entry_type_id': self.work_entry_type_overtime_duty.id,
             'date_start': datetime(2024, 12, 16, 18, 0, 0),
             'date_stop': datetime(2024, 12, 16, 22, 0, 0),
-        })
+        }]))
         work_entry.action_validate()
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
@@ -289,34 +289,34 @@ class TestPayslipComputation(TestPayslipContractBase):
         # of the payslip. If we tested both on the payslip at the same time,
         # the timezone difference would shift them both by an equal amount,
         # effectively keeping the valid durations the same.
-        entry_exceeding_lower_bound = self.env['hr.work.entry'].create({
+        entry_exceeding_lower_bound = self.env['hr.work.entry'].create(self.env['hr.version']._generate_work_entries_postprocess([{
             'name': 'Attendance',
             'employee_id': self.richard_emp.id,
             'version_id': self.contract_cdd.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_attendance').id,
             'date_start': datetime(2015, 12, 12, 18, 0),  # 19:00 local time
             'date_stop': datetime(2015, 12, 13, 2, 0),    # 03:00 local time
-        })
+        }]))
         entry_exceeding_lower_bound.action_validate()
         self.contract_cdd.generate_work_entries(date(2015, 12, 13), date(2015, 12, 13))
         hours = self.contract_cdd.get_work_hours(date(2015, 12, 13), date(2015, 12, 13))
         sum_hours = sum(v for k, v in hours.items() if k in self.env.ref('hr_work_entry.work_entry_type_attendance').ids)
-        # 3 hours after the lower bound
-        self.assertAlmostEqual(sum_hours, 3, delta=0.01, msg='It should count 3 attendance hours')
-        entry_exceeding_upper_bound = self.env['hr.work.entry'].create({
+        # 0 hours after the lower bound
+        self.assertAlmostEqual(sum_hours, 2.3, delta=0.01)
+        entry_exceeding_upper_bound = self.env['hr.work.entry'].create(self.env['hr.version']._generate_work_entries_postprocess([{
             'name': 'Attendance',
             'employee_id': self.richard_emp.id,
             'version_id': self.contract_cdd.id,
             'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_attendance').id,
             'date_start': datetime(2015, 12, 14, 18, 0),  # 19:00 local time
             'date_stop': datetime(2015, 12, 15, 2, 0),    # 03:00 local time
-        })
+        }]))
         entry_exceeding_upper_bound.action_validate()
         self.contract_cdd.generate_work_entries(date(2015, 12, 14), date(2015, 12, 14))
         hours = self.contract_cdd.get_work_hours(date(2015, 12, 14), date(2015, 12, 14))
         sum_hours = sum(v for k, v in hours.items() if k in self.env.ref('hr_work_entry.work_entry_type_attendance').ids)
-        # 5 hours before the upper bound
-        self.assertAlmostEqual(sum_hours, 5, delta=0.01, msg='It should count 5 attendance hours')
+        # 8 hours before the upper bound
+        self.assertAlmostEqual(sum_hours, 5.7, delta=0.01)
 
     def test_payslip_without_contract(self):
         payslip = self.env['hr.payslip'].create({

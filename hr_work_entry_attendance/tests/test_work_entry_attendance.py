@@ -54,21 +54,18 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         # Monday -> 08:00 -> 12:00 and 13:00 -> 20:00
         self.contract.generate_work_entries(date(2022, 9, 18), date(2022, 9, 19))
         sunday = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id),
-                                                   ('date_stop', '<', week_day)])
+                                                   ('date', '<', week_day)])
 
         monday = self.env["hr.work.entry"].search([('employee_id', '=', self.employee.id),
-                                                   ('date_start', '>=', week_day)])
+                                                   ('date', '>=', week_day)])
 
         self.assertEqual(len(sunday), 1)
-        self.assertEqual(sunday.date_start, datetime(2022, 9, 18, 8, 0, 0))
-        self.assertEqual(sunday.date_stop, datetime(2022, 9, 18, 20, 0, 0))
+        self.assertEqual(sunday.date, date(2022, 9, 18))
+        self.assertEqual(sunday.duration, 12)
 
-        self.assertEqual(len(monday), 2)
-        self.assertEqual(monday[0].date_start, datetime(2022, 9, 19, 8, 0, 0))
-        self.assertEqual(monday[0].date_stop, datetime(2022, 9, 19, 12, 0, 0))
-
-        self.assertEqual(monday[1].date_start, datetime(2022, 9, 19, 13, 0, 0))
-        self.assertEqual(monday[1].date_stop, datetime(2022, 9, 19, 20, 0, 0))
+        self.assertEqual(len(monday), 1)
+        self.assertEqual(monday.date, date(2022, 9, 19))
+        self.assertEqual(monday.duration, 11)
 
         # set flexible hours on the employee contract
         self.contract.resource_calendar_id.flexible_hours = True
@@ -85,10 +82,10 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         # Tuesday -> 08:00 -> 20:00
         self.contract.generate_work_entries(date(2022, 9, 20), date(2022, 9, 21))
         tuesday = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id),
-                                                   ('date_start', '>=', flex_day)])
+                                                   ('date', '>=', flex_day)])
         self.assertEqual(len(tuesday), 1)
-        self.assertEqual(tuesday.date_start, datetime(2022, 9, 20, 8, 0, 0))
-        self.assertEqual(tuesday.date_stop, datetime(2022, 9, 20, 20, 0, 0))
+        self.assertEqual(tuesday.date, date(2022, 9, 20))
+        self.assertEqual(tuesday.duration, 12)
 
     def test_timezones(self):
         """ Basic check that timezones do not cause weird behaviors:
@@ -107,13 +104,12 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
 
         we = self.env["hr.work.entry"].search([
             ('employee_id', '=', self.employee.id),
-            ('date_start', '>=', monday_morning_tokyo)
+            ('date', '>=', monday_morning_tokyo)
         ])
 
         self.assertEqual(len(we), 1)
-        self.assertEqual(we.date_start, datetime(2024, 10, 20, 22, 0, 0))
-        self.assertEqual(we.date_stop, datetime(2024, 10, 21, 6, 0, 0))
-        self.assertEqual(we.date_start.tzinfo, None)
+        self.assertEqual(we.date, date(2024, 10, 21))
+        self.assertEqual(we.duration, 8)
 
     def test_attendance_within_period(self):
         # Tests that an attendance created within an already generated period generates a work entry
@@ -170,7 +166,7 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
             },
         ])
         work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
-        self.assertEqual(len(work_entries), 8)
+        self.assertEqual(len(work_entries), 4)
 
     def test_unlink(self):
         # Tests that the work entry is archived when unlinking an attendance
@@ -224,7 +220,7 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
 
         employee.generate_work_entries(datetime(2024, 9, 1), datetime(2024, 9, 30))
         result_entries = self.env['hr.work.entry'].search([('employee_id', '=', employee.id)])
-        self.assertEqual(len(result_entries), 1, 'One work entries should be generated')
+        self.assertEqual(len(result_entries), 2, 'Two work entries should be generated')
 
         self.env['hr.attendance'].create({
             'employee_id': employee.id,
@@ -233,4 +229,4 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         })
         employee.generate_work_entries(datetime(2024, 9, 1), datetime(2024, 9, 30))
         result_entries = self.env['hr.work.entry'].search([('employee_id', '=', employee.id)])
-        self.assertEqual(len(result_entries), 2, 'Two work entry should be generated')
+        self.assertEqual(len(result_entries), 3, 'Two work entry should be generated')

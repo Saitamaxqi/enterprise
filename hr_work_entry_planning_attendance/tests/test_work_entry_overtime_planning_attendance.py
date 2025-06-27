@@ -39,14 +39,14 @@ class HrWorkEntryContractTest(HttpCase, TransactionCase):
             'check_out': datetime(2024, 7, 16, 18, 0, 0),
         })
 
-        work_entries = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('date_start')
-        another_work_entry = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('date_start')
+        work_entries = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('work_entry_type_id')
+        another_work_entry = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('work_entry_type_id')
         self.assertEqual(len(work_entries), 2)
-        self.assertEqual(work_entries[0].date_start, datetime(2024, 7, 16, 8, 0))
-        self.assertEqual(work_entries[0].date_stop, datetime(2024, 7, 16, 16, 0))
+        self.assertEqual(work_entries[0].date, date(2024, 7, 16))
+        self.assertEqual(work_entries[0].duration, 7)
         self.assertEqual(work_entries[0].work_entry_type_id, self.attendance_type)
-        self.assertEqual(work_entries[1].date_start, datetime(2024, 7, 16, 16, 0))
-        self.assertEqual(work_entries[1].date_stop, datetime(2024, 7, 16, 18, 0))
+        self.assertEqual(work_entries[1].date, date(2024, 7, 16))
+        self.assertEqual(work_entries[1].duration, 2)
         self.assertEqual(work_entries[1].work_entry_type_id, self.overtime_type)
 
         # should not generate the work entry becuase the work entry for that woking day is already generated
@@ -60,11 +60,11 @@ class HrWorkEntryContractTest(HttpCase, TransactionCase):
         })
         self.contract.overtime_from_attendance = False
 
-        work_entries = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('date_start')
-        another_work_entry = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('date_start')
+        work_entries = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('work_entry_type_id')
+        another_work_entry = self.contract.generate_work_entries(date(2024, 7, 1), date(2024, 7, 31)).sorted('work_entry_type_id')
         self.assertEqual(len(work_entries), 1)
-        self.assertEqual(work_entries[0].date_start, datetime(2024, 7, 16, 8, 0))
-        self.assertEqual(work_entries[0].date_stop, datetime(2024, 7, 16, 16, 0))
+        self.assertEqual(work_entries[0].date, date(2024, 7, 16))
+        self.assertEqual(work_entries[0].duration, 7)
         self.assertEqual(work_entries[0].work_entry_type_id, self.attendance_type)
 
         # should not generate the work entry becuase the work entry for that woking day is already generated

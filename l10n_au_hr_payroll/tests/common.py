@@ -56,7 +56,6 @@ class TestPayrollCommon(TransactionCase):
             "l10n_au_child_support_deduction": 0,
             "l10n_au_withholding_variation": 'none',
             "l10n_au_withholding_variation_amount": 0,
-            "resource_calendar_id": cls.resource_calendar.id,
             "date_version": date(2023, 1, 1),
             "contract_date_start": date(2023, 1, 1),
             "contract_date_end": False,

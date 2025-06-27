@@ -270,30 +270,14 @@ class HrVersion(models.Model):
         action['context'] = repr(self.env.context)
         return action
 
-    def _get_work_hours_domain(self, date_from, date_to, domain=None, inside=True):
-        domain = Domain.AND([
+    def _get_work_hours_domain(self, date_from, date_to, domain=None):
+        return Domain.AND([
             domain or Domain.TRUE,
             Domain('state', 'in', ['validated', 'draft']),
             Domain('version_id', 'in', self.ids),
+            Domain('date', '>=', date_from),
+            Domain('date', '<=', date_to),
         ])
-        if inside:
-            domain &= Domain('date_start', '>=', date_from) & Domain('date_stop', '<=', date_to)
-        else:
-            domain &= Domain([
-                '|', '|',
-                '&', '&',
-                    ('date_start', '>=', date_from),
-                    ('date_start', '<', date_to),
-                    ('date_stop', '>', date_to),
-                '&', '&',
-                    ('date_start', '<', date_from),
-                    ('date_stop', '<=', date_to),
-                    ('date_stop', '>', date_from),
-                '&',
-                    ('date_start', '<', date_from),
-                    ('date_stop', '>', date_to),
-            ])
-        return domain
 
     def _preprocess_work_hours_data(self, work_data, date_from, date_to):
         """
@@ -308,22 +292,15 @@ class HrVersion(models.Model):
         assert not isinstance(date_from, datetime)
         assert not isinstance(date_to, datetime)
 
-        date_from = datetime.combine(fields.Datetime.to_datetime(date_from), datetime.min.time())
-        date_to = datetime.combine(fields.Datetime.to_datetime(date_to), datetime.max.time())
         work_data = defaultdict(int)
 
-        versions_by_company_tz = defaultdict(lambda: self.env['hr.version'])
+        versions_by_company = defaultdict(lambda: self.env['hr.version'])
         for version in self:
-            # Need to use the tuple (company_id, tz) as the key to avoid issues with different
-            # version timezones for the same company.
-            versions_by_company_tz[
-                version.company_id,
-                (version.resource_calendar_id).tz
-            ] += version
+            versions_by_company[version.company_id] += version
 
         # We don't need the timezone immediately here, but we need the uniqueness
         # of the key so that we can guarantee one timezone per set of versions.
-        for (company, _unused), versions in versions_by_company_tz.items():
+        for company, versions in versions_by_company.items():
             work_data_tz = versions.with_company(company).sudo()._get_work_hours(date_from, date_to, domain=domain)
             for work_entry_type_id, hours in work_data_tz.items():
                 work_data[work_entry_type_id] += hours
@@ -335,52 +312,21 @@ class HrVersion(models.Model):
         for a version between two dates.
         If called on multiple versions, sum work amounts of each version.
 
-        Precondition: the set of versions that this method is called on
-        must have the same timezone.
         :param date_from: The start date
         :param date_to: The end date
         :returns: a dictionary {work_entry_id: hours_1, work_entry_2: hours_2}
         """
-        assert isinstance(date_from, datetime)
-        assert isinstance(date_to, datetime)
+        assert not isinstance(date_from, datetime)
+        assert not isinstance(date_to, datetime)
 
-        tzs = set((self.resource_calendar_id or self.employee_id.resource_calendar_id).mapped('tz'))
-        assert len(tzs) == 1
-        version_tz_name = tzs.pop()
-        tz = pytz.timezone(version_tz_name) if version_tz_name else pytz.utc
-        utc = pytz.timezone('UTC')
-        date_from_tz = tz.localize(date_from).astimezone(utc).replace(tzinfo=None)
-        date_to_tz = tz.localize(date_to).astimezone(utc).replace(tzinfo=None)
-
-        # First, found work entry that didn't exceed interval.
         work_entries = self.env['hr.work.entry']._read_group(
-            self._get_work_hours_domain(date_from_tz, date_to_tz, domain=domain, inside=True),
+            self._get_work_hours_domain(date_from, date_to, domain=domain),
             ['work_entry_type_id'],
             ['duration:sum']
         )
         work_data = defaultdict(int)
         work_data.update({work_entry_type.id: duration_sum for work_entry_type, duration_sum in work_entries})
         self._preprocess_work_hours_data(work_data, date_from, date_to)
-
-        # Second, find work entry that exceeds interval and compute right duration.
-        work_entries = self.env['hr.work.entry'].search(self._get_work_hours_domain(date_from_tz, date_to_tz, domain=domain, inside=False))
-
-        for work_entry in work_entries:
-            local_date_start = utc.localize(work_entry.date_start).astimezone(tz).replace(tzinfo=None)
-            local_date_stop = utc.localize(work_entry.date_stop).astimezone(tz).replace(tzinfo=None)
-            date_start = max(date_from, local_date_start)
-            date_stop = min(date_to, local_date_stop)
-            if work_entry.work_entry_type_id.is_leave:
-                version = work_entry.version_id
-                calendar = version.resource_calendar_id
-                employee = version.employee_id
-                version_data = employee._get_work_days_data_batch(
-                    date_start, date_stop, compute_leaves=False, calendar=calendar
-                )[employee.id]
-
-                work_data[work_entry.work_entry_type_id.id] += version_data.get('hours', 0)
-            else:
-                work_data[work_entry.work_entry_type_id.id] += work_entry._get_work_duration(date_start, date_stop)  # Number of hours
         return work_data
 
     def _get_default_work_entry_type_id(self):
@@ -412,6 +358,11 @@ class HrVersion(models.Model):
             if expired_version.employee_id.id not in new_versions_grouped_by_employee:
                 nearly_expired_versions_without_new_versions |= expired_version
         return nearly_expired_versions_without_new_versions
+
+    @api.model
+    def _generate_work_entries_postprocess_adapt_to_calendar(self, vals):
+        res = super()._generate_work_entries_postprocess_adapt_to_calendar(vals)
+        return res and not vals.get('is_credit_time')
 
     @api.model_create_multi
     def create(self, vals_list):

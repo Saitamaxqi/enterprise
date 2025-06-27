@@ -19,18 +19,6 @@ class HrWorkEntry(models.Model):
     def _get_leaves_entries_outside_schedule(self):
         return super()._get_leaves_entries_outside_schedule().filtered(lambda w: not w.is_credit_time)
 
-    def _get_duration_is_valid(self):
-        return super()._get_duration_is_valid() and not self.is_credit_time
-
-    def _get_work_duration(self, date_start, date_stop):
-        """
-        Returns the amount of hours worked from date_start to date_stop related to the work entry.
-
-        This method is meant to be overriden, see hr_work_entry_attendance
-        """
-        dt = date_stop - date_start
-        return dt.days * 24 + dt.seconds / 3600
-
     def _check_undefined_slots(self, interval_start, interval_end):
         """
         Check if a time slot in the given interval is not covered by a work entry

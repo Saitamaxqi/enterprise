@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from datetime import date, datetime
+from datetime import date
 
 from odoo.tests.common import TransactionCase, tagged
 
@@ -8,13 +8,13 @@ from odoo.tests.common import TransactionCase, tagged
 class TestL10nUsHrPayrollADPExport(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        def create_work_entry(employee, work_entry_type, start, stop):
+        def create_work_entry(employee, work_entry_type, date, duration):
             a = {
                 'name': 'Work entry test',
                 'employee_id': employee.id,
                 'work_entry_type_id': work_entry_type.id,
-                'date_start': start,
-                'date_stop': stop,
+                'date': date,
+                'duration': duration,
                 'company_id': cls.us_company.id,
                 'state': 'validated'
             }
@@ -77,33 +77,32 @@ class TestL10nUsHrPayrollADPExport(TransactionCase):
             if i not in hourly_sick_days:
                 work_entries.append(create_work_entry(cls.hourly_employee,
                                                       cls.work_100_work_entry,
-                                                      datetime(2024, 1, i, 8, 0, 0),
-                                                      datetime(2024, 1, i, 18, 0, 0)))
+                                                      date(2024, 1, i),
+                                                      10))
                 work_entries.append(create_work_entry(cls.hourly_employee,
                                                       cls.overtime_work_entry,
-                                                      datetime(2024, 1, i, 18, 0, 0),
-                                                      datetime(2024, 1, i, 20, 0, 0)))
+                                                      date(2024, 1, i),
+                                                      2))
             else:
                 work_entries.append(create_work_entry(cls.hourly_employee,
                                                       cls.adp_work_entry_sick,
-                                                      datetime(2024, 1, i, 8, 0, 0),
-                                                      datetime(2024, 1, i, 18, 0, 0)))
+                                                      date(2024, 1, i),
+                                                      10))
 
             if i not in monthly_holidays:
                 work_entries.append(create_work_entry(cls.monthly_employee,
                                                       cls.work_100_work_entry,
-                                                      datetime(2024, 1, i, 8, 0, 0),
-                                                      datetime(2024, 1, i, 17, 0, 0)))
+                                                      date(2024, 1, i),
+                                                      9))
             else:
                 work_entries.append(create_work_entry(cls.monthly_employee,
                                                       cls.adp_work_entry_holidays,
-                                                      datetime(2024, 1, i, 8, 0, 0),
-                                                      datetime(2024, 1, i, 17, 0, 0)))
+                                                      date(2024, 1, i),
+                                                      9))
 
         cls.work_entry_ids = cls.env['hr.work.entry'].create(work_entries)
 
     def test_export(self):
-
         adp_export = self.env['l10n.us.adp.export'].with_company(self.us_company).create({
             'start_date': date(2024, 1, 1),
             'end_date': date(2024, 1, 31),

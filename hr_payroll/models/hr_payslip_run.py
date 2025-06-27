@@ -314,8 +314,8 @@ class HrPayslipRun(models.Model):
         all_work_entries = dict(self.env['hr.work.entry']._read_group(
             domain=[
                 ('employee_id', 'in', valid_versions.employee_id.ids),
-                ('date_start', '<=', self.date_end),
-                ('date_stop', '>=', self.date_start),
+                ('date', '<=', self.date_end),
+                ('date', '>=', self.date_start),
             ],
             groupby=['version_id'],
             aggregates=['id:recordset'],

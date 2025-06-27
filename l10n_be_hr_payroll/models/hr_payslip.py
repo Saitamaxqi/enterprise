@@ -459,14 +459,14 @@ class HrPayslip(models.Model):
             work_entries = self.env['hr.work.entry'].search([
                 ('state', 'in', ['validated', 'draft']),
                 ('employee_id', '=', self.employee_id.id),
-                ('date_start', '>=', date_from),
-                ('date_stop', '<=', date_to),
+                ('date', '>=', date_from),
+                ('date', '<=', date_to),
                 ('work_entry_type_id.code', 'in', unpaid_sick_codes),
-            ], order="date_start asc")
+            ], order="date asc")
             days_count, valid_sick_hours = 0, 0
             valid_days = set()
             for work_entry in work_entries:
-                work_entry_date = work_entry.date_start.date()
+                work_entry_date = work_entry.date
                 if work_entry_date in valid_days:
                     valid_sick_hours += work_entry.duration
                 elif days_count < 60:

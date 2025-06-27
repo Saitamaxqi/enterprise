@@ -569,10 +569,9 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         work_data = defaultdict(lambda: [0, 0])  # [days, hours]
         number_of_hours_full_day = self.resource_calendar_id._get_max_number_of_hours(date_from, date_to)
 
-        # First, found work entry that didn't exceed interval.
         work_entries = self.env['hr.work.entry']._read_group(
-            self._get_work_hours_domain(date_from, date_to, domain=domain, inside=True),
-            ['date_start:day', 'work_entry_type_id'],
+            self._get_work_hours_domain(date_from, date_to, domain=domain),
+            ['date:day', 'work_entry_type_id'],
             ['duration:sum']
         )
 
@@ -591,28 +590,6 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
             else:
                 work_data['half', work_entry_type_id][0] += 0.5
                 work_data['half', work_entry_type_id][1] += duration_sum
-
-        # Second, find work entry that exceeds interval and compute right duration.
-        work_entries = self.env['hr.work.entry'].search(self._get_work_hours_domain(date_from, date_to, domain=domain, inside=False))
-
-        for work_entry in work_entries:
-            date_start = max(date_from, work_entry.date_start)
-            date_stop = min(date_to, work_entry.date_stop)
-            if work_entry.work_entry_type_id.is_leave:
-                version = work_entry.version_id
-                calendar = version.resource_calendar_id
-                employee = version.employee_id
-                contract_data = employee._get_work_days_data_batch(
-                    date_start, date_stop, compute_leaves=False, calendar=calendar
-                )[employee.id]
-                if float_compare(contract_data.get('hours', 0), number_of_hours_full_day, 2) != -1:
-                    work_data['full', work_entry.work_entry_type_id.id][0] += 1
-                    work_data['full', work_entry.work_entry_type_id.id][1] += work_entry.duration
-                else:
-                    work_data['half', work_entry.work_entry_type_id.id][1] += work_entry.duration
-            else:
-                dt = date_stop - date_start
-                work_data['half', work_entry.work_entry_type_id.id][1] += dt.days * 24 + dt.seconds / 3600  # Number of hours
         return work_data
 
     # override to add work_entry_type from leave

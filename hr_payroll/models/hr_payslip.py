@@ -511,8 +511,8 @@ class HrPayslip(models.Model):
         work_entries = self.env['hr.work.entry']
         for regular_payslip in regular_payslips:
             work_entries |= self.env['hr.work.entry'].search([
-                ('date_start', '<=', regular_payslip.date_to),
-                ('date_stop', '>=', regular_payslip.date_from),
+                ('date', '<=', regular_payslip.date_to),
+                ('date', '>=', regular_payslip.date_from),
                 ('employee_id', '=', regular_payslip.employee_id.id),
             ])
         if work_entries:
@@ -1192,10 +1192,9 @@ class HrPayslip(models.Model):
         generate_from = min(p.date_from for p in valid_slips) + relativedelta(days=-1)
         generate_to = max(p.date_to for p in valid_slips) + relativedelta(days=1)
         self.version_id.filtered('resource_calendar_id').generate_work_entries(generate_from, generate_to)
-
         work_entries = self.env['hr.work.entry'].search([
-            ('date_stop', '<=', generate_to),
-            ('date_start', '>=', generate_from),
+            ('date', '<=', generate_to),
+            ('date', '>=', generate_from),
             ('version_id', 'in', self.version_id.ids),
         ])
         work_entries_by_version = defaultdict(lambda: self.env['hr.work.entry'])

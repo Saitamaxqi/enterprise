@@ -47,7 +47,7 @@ class TestSdworxExportLogic(TestSdworxExportCommon):
             'holiday_status_id': self.leave_type_day.id,
             'request_date_from': leave_date,
             'request_date_to': leave_date,
-        })
+        }).action_approve()
 
         content = self._generate_and_get_content(self.employee_georges, 6, 2025)
         expected_leave_line = "11111110000001K20250609T0100760"

@@ -19,8 +19,8 @@
         <field name="arch" type="xml">
             <gantt js_class="work_entries_gantt"
                    string="Work Entries"
-                   date_start="date_start"
-                   date_stop="date_stop"
+                   date_start="date"
+                   date_stop="date"
                    color="color"
                    default_group_by='employee_id'
                    decoration-secondary="state == 'validated'"
@@ -33,9 +33,9 @@
                    sample="1">
                 <templates>
                     <div t-name="gantt-popover">
-                        <t t-out="date_start.toFormat('f ')"/>
+                        <t t-out="date.toFormat('f ')"/>
                         <i class="fa fa-long-arrow-right" title="Arrow"/>
-                        <t t-out="date_stop.toFormat(' f')"/>
+                        <t t-out="date.toFormat(' f')"/>
                     </div>
                 </templates>
                 <field name="color"/>

@@ -57,7 +57,7 @@ class TestPayrollPerformance(TestPayslipBase):
         self.create_work_entry(datetime(2018, 1, 1, 11, 0), datetime(2018, 1, 1, 17, 0))
 
         with self.assertQueryCount(__system__=6, admin=8):
-            work_entry.write({'date_stop': datetime(2018, 1, 1, 13, 0)})
+            work_entry.write({'date': datetime(2018, 1, 2)})
 
     @users('__system__', 'admin')
     @warmup
@@ -67,7 +67,7 @@ class TestPayrollPerformance(TestPayslipBase):
         self.create_work_entry(datetime(2018, 1, 1, 11, 0), datetime(2018, 1, 1, 17, 0))
 
         with self.assertQueryCount(__system__=6, admin=8):
-            (work_entry_1 | work_entry_2).write({'date_stop': datetime(2018, 1, 1, 13, 0)})
+            (work_entry_1 | work_entry_2).write({'date': datetime(2018, 1, 2)})
 
     @users('__system__', 'admin')
     @warmup

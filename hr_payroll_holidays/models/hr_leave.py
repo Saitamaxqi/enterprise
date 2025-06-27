@@ -108,8 +108,8 @@ class HrLeave(models.Model):
             leave_work_entries = self.env['hr.work.entry'].search([
                 ('employee_id', '=', leave.employee_id.id),
                 ('company_id', '=', self.env.company.id),
-                ('date_start', '>=', leave.date_from),
-                ('date_stop', '<=', leave.date_to),
+                ('date', '>=', leave.date_from),
+                ('date', '<=', leave.date_to),
                 # We are deferring workentry that have been reported as 'Attendance' but shouldn't have
                 ('work_entry_type_id.is_leave', '=', False),
             ])
@@ -117,8 +117,8 @@ class HrLeave(models.Model):
                 ('employee_id', '=', leave.employee_id.id),
                 ('company_id', '=', self.env.company.id),
                 ('state', '=', 'draft'),
-                ('date_start', '>=', Datetime.to_datetime(leave.date_from + relativedelta(day=1, months=1))),
-                ('date_stop', '<=', datetime.combine(Datetime.to_datetime(leave.date_to + relativedelta(day=31, months=1)), datetime.max.time()))
+                ('date', '>=', Datetime.to_datetime(leave.date_from + relativedelta(day=1, months=1))),
+                ('date', '<=', datetime.combine(Datetime.to_datetime(leave.date_to + relativedelta(day=31, months=1)), datetime.max.time()))
             ])
             if not next_month_work_entries:
                 raise UserError(_('The next month work entries are not generated yet or are validated already for time off %s', leave.display_name))

@@ -1978,8 +1978,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         for we in work_entries:
             self.assertEqual(
                 we.work_entry_type_id,
-                work_entries_expected_results[(we.date_start.day, we.date_start.month)],
-                'On %s/%s, expected work entry type %s, got %s instead' % (we.date_start.day, we.date_start.month, work_entries_expected_results[(we.date_start.day, we.date_start.month)].name, we.work_entry_type_id.name))
+                work_entries_expected_results[we.date.day, we.date.month],
+                'On %s/%s, expected work entry type %s, got %s instead' % (we.date.day, we.date.month, work_entries_expected_results[we.date.day, we.date.month].name, we.work_entry_type_id.name))
 
         september_payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -2100,7 +2100,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }
 
         for w in work_entries:
-            self.assertEqual(w.work_entry_type_id, work_entries_expected_results.get((w.date_start.day, w.date_start.month)))
+            self.assertEqual(w.work_entry_type_id, work_entries_expected_results.get((w.date.day, w.date.month)))
 
         september_payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -2204,7 +2204,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }
 
         for w in work_entries:
-            self.assertEqual(w.work_entry_type_id, work_entries_expected_results.get((w.date_start.day, w.date_start.month)))
+            self.assertEqual(w.work_entry_type_id, work_entries_expected_results.get((w.date.day, w.date.month)))
 
         september_payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -2363,8 +2363,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         for we in work_entries:
             self.assertEqual(
                 we.work_entry_type_id,
-                work_entries_expected_results[(we.date_start.day, we.date_start.month)],
-                'On %s/%s, expected work entry type %s, got %s instead' % (we.date_start.day, we.date_start.month, work_entries_expected_results[(we.date_start.day, we.date_start.month)].name, we.work_entry_type_id.name))
+                work_entries_expected_results[we.date.day, we.date.month],
+                'On %s/%s, expected work entry type %s, got %s instead' % (we.date.day, we.date.month, work_entries_expected_results[we.date.day, we.date.month].name, we.work_entry_type_id.name))
         work_entries.action_validate()
 
         september_payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -2500,7 +2500,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }
 
         for w in work_entries:
-            self.assertEqual(w.work_entry_type_id, work_entries_expected_results.get((w.date_start.day, w.date_start.month)))
+            self.assertEqual(w.work_entry_type_id, work_entries_expected_results.get((w.date.day, w.date.month)))
         work_entries.action_validate()
 
         september_payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -2622,8 +2622,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         for we in work_entries:
             self.assertEqual(
                 we.work_entry_type_id,
-                work_entries_expected_results[(we.date_start.day, we.date_start.month)],
-                'On %s/%s, expected work entry type %s, got %s instead' % (we.date_start.day, we.date_start.month, work_entries_expected_results[(we.date_start.day, we.date_start.month)].name, we.work_entry_type_id.name))
+                work_entries_expected_results[we.date.day, we.date.month],
+                'On %s/%s, expected work entry type %s, got %s instead' % (we.date.day, we.date.month, work_entries_expected_results[we.date.day, we.date.month].name, we.work_entry_type_id.name))
 
         september_payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -3020,7 +3020,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         work_entries = self.contract.generate_work_entries(datetime.date(2020, 11, 1), datetime.date(2020, 11, 30))
         sick_work_entries = work_entries.filtered(lambda we: we.work_entry_type_id == self.sick_time_off_type.work_entry_type_id)
-        self.assertEqual(len(sick_work_entries), 4)
+        self.assertEqual(len(sick_work_entries), 2)
 
     def test_accounting_entries(self):
         # Test case: Create 2 payslips (1 classic / 1 low salary)
@@ -5288,8 +5288,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         for we in work_entries:
             self.assertEqual(
                 we.work_entry_type_id,
-                work_entries_expected_results[(we.date_start.day, we.date_start.month)],
-                'On %s/%s, expected work entry type %s, got %s instead' % (we.date_start.day, we.date_start.month, work_entries_expected_results[(we.date_start.day, we.date_start.month)].name, we.work_entry_type_id.name))
+                work_entries_expected_results[we.date.day, we.date.month],
+                'On %s/%s, expected work entry type %s, got %s instead' % (we.date.day, we.date.month, work_entries_expected_results[we.date.day, we.date.month].name, we.work_entry_type_id.name))
 
         april_payslip = self._generate_payslip(datetime.date(2022, 4, 1), datetime.date(2022, 4, 30))
 

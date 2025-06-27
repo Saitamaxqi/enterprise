@@ -502,8 +502,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
                 "work_entry_type_id": self.env.ref(work_entry_type).id,
                 "employee_id": self.employee_2.id,
                 "version_id": self.contract_2.id,
-                "date_start": start,
-                "date_stop": start + relativedelta(hours=duration),
+                "date": start,
                 "duration": duration,
                 "state": state,
             }])
@@ -514,11 +513,11 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         })
 
         # Work Entries, For simplicty, Leaves handled as work entries
-        create_work_entry("hr_work_entry.work_entry_type_overtime", datetime(2024, 10, 1, 9), 3)
-        create_work_entry("hr_work_entry.l10n_au_work_entry_type_other", datetime(2024, 10, 3, 9), 4, "validated")
-        create_work_entry("hr_work_entry.l10n_au_work_entry_type_parental", datetime(2024, 10, 4, 9), 3, "validated")
-        create_work_entry("hr_work_entry.l10n_au_work_entry_type_compensation", datetime(2024, 10, 5, 9), 4)
-        create_work_entry("hr_work_entry.l10n_au_work_entry_type_defence", datetime(2024, 10, 6, 9), 3, "validated")
+        create_work_entry("hr_work_entry.work_entry_type_overtime", date(2024, 10, 1), 3)
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_other", date(2024, 10, 3), 4, "validated")
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_parental", date(2024, 10, 4), 3, "validated")
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_compensation", date(2024, 10, 5), 4)
+        create_work_entry("hr_work_entry.l10n_au_work_entry_type_defence", date(2024, 10, 6), 3, "validated")
 
         input_lines = [
             ('l10n_au_hr_payroll.input_leaves_cashed_out_in_service', 200.2),

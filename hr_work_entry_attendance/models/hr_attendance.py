@@ -46,14 +46,15 @@ class HrAttendance(models.Model):
                         work_entries_vals_list += contract._get_work_entries_values(datetime.combine(end_date, time.min), end_stamp)
 
         if work_entries_vals_list:
+            work_entries_vals_list = self.env['hr.version']._generate_work_entries_postprocess(work_entries_vals_list)
             new_work_entries = self.env['hr.work.entry'].sudo().create(work_entries_vals_list)
             if new_work_entries:
                 # Fetch overlapping work entries, grouped by employees
                 start = min((datetime.combine(a.check_in, time.min) for a in self if a.check_in), default=False)
                 stop = max((datetime.combine(a.check_out, time.max) for a in self if a.check_out), default=False)
                 work_entry_groups = self.env['hr.work.entry'].sudo()._read_group([
-                    ('date_start', '<', stop),
-                    ('date_stop', '>', start),
+                    ('date', '<', stop),
+                    ('date', '>', start),
                     ('employee_id', 'in', self.employee_id.ids),
                 ], ['employee_id'], ['id:recordset'])
                 work_entries_by_employee = {

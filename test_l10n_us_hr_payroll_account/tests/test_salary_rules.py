@@ -93,7 +93,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # An Hourly employee  (with a wage of $25 USD per hour)
         # Benefits: Healthcare contributions, no pre-tax retirement
 
-        self.env['hr.work.entry'].create([{
+        self.env['hr.work.entry'].create(self.env['hr.version']._generate_work_entries_postprocess([{
             'name': 'Overtime Hours (Paid at 150%)',
             'employee_id': self.employee.id,
             'version_id': self.contract.id,
@@ -138,7 +138,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_stop': datetime.datetime(2023, 1, 15, 0),
             'company_id': self.env.company.id,
             'state': 'draft',
-        }])
+        }]))
 
         self.env['resource.calendar.leaves'].create([{
             'name': "Absence",

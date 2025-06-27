@@ -131,12 +131,12 @@ class TestCreditTime(AccountTestInvoicingCommon):
         date_stop = datetime.date(2020, 3, 31)
         work_entries = (self.original_contract | new_contract).generate_work_entries(date_start, date_stop)
         # The work entries are generated until today, so only take those from march
-        work_entries = work_entries.filtered(lambda w: w.date_start.month == 3)
+        work_entries = work_entries.filtered(lambda w: w.date.month == 3)
 
         work_entries_1 = work_entries.filtered(lambda w: w.version_id == self.original_contract)
         work_entries_2 = work_entries.filtered(lambda w: w.version_id == new_contract)
-        self.assertEqual(len(work_entries_1), 6) # 2, 3, 4 March Morning - Afternoon
-        self.assertEqual(len(work_entries_2), 38) # 5-6 (2), 9-13 (5), 16-20 (5), 23-27 (5), 30-31 (2) March Morning - Afternoon
+        self.assertEqual(len(work_entries_1), 3)  # 2, 3, 4 March
+        self.assertEqual(len(work_entries_2), 19)  # 5-6 (2), 9-13 (5), 16-20 (5), 23-27 (5), 30-31 (2) March
 
         # Generate Payslip
         payslip_run = self.env["hr.payslip.run"].create({
@@ -261,17 +261,17 @@ class TestCreditTime(AccountTestInvoicingCommon):
         date_stop = datetime.date(2020, 3, 31)
         work_entries = (self.original_contract | new_contract).generate_work_entries(date_start, date_stop)
         # The work entries are generated until today, so only take those from march
-        work_entries = work_entries.filtered(lambda w: w.date_start.month == 3)
+        work_entries = work_entries.filtered(lambda w: w.date.month == 3)
 
         work_entries_1 = work_entries.filtered(lambda w: w.version_id == self.original_contract)
         work_entries_2 = work_entries - work_entries_1
-        self.assertEqual(len(work_entries_1), 6) # 2, 3, 4 March Morning - Afternoon
+        self.assertEqual(len(work_entries_1), 3)  # 2, 3, 4 March
         self.assertEqual(work_entries_1.mapped('work_entry_type_id'), self.env.ref('hr_work_entry.work_entry_type_attendance'))
-        self.assertEqual(len(work_entries_2), 38) # 5-6 (2), 9-13 (5), 16-20 (5), 23-27 (5), 30-31 (2) March Morning - Afternoon
+        self.assertEqual(len(work_entries_2), 19)  # 5-6 (2), 9-13 (5), 16-20 (5), 23-27 (5), 30-31 (2) March
         attendance_we = work_entries_2.filtered(lambda w: w.work_entry_type_id == self.env.ref('hr_work_entry.work_entry_type_attendance'))
         credit_time_we = work_entries_2.filtered(lambda w: w.work_entry_type_id == self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time'))
-        self.assertEqual(len(credit_time_we), 6) # 11,18,25 Morning - Afternoon
-        self.assertEqual(len(attendance_we), 32) # Remaining days
+        self.assertEqual(len(credit_time_we), 3)  # 11,18,25
+        self.assertEqual(len(attendance_we), 16)  # Remaining days
 
         payslip_run = self.env["hr.payslip.run"].create({
             "date_start": "2020-03-01",

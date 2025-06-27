@@ -1,9 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import timedelta
 from collections import defaultdict
 import pytz
 
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.tools.intervals import Intervals
 
 
@@ -53,3 +54,24 @@ class HrVersion(models.Model):
         mapped_intervals = {r: Intervals(intervals[r], keep_distinct=True) for r in resource_ids}
         mapped_intervals.update(super()._get_attendance_intervals(start_dt, end_dt))
         return mapped_intervals
+
+    @api.model
+    def _generate_work_entries_postprocess(self, vals_list):
+        new_vals_list = []
+        for vals in vals_list:
+            if not vals.get('planning_slot_id') or not vals.get('date_start') or not vals.get('date_stop'):
+                new_vals_list.append(vals)
+                continue
+            dt_start = vals.pop('date_start')
+            dt_stop = vals.pop('date_stop')
+            date_start = dt_start.date()
+            date_stop = dt_stop.date()
+            slot = self.env['planning.slot'].browse(vals['planning_slot_id'])
+            number_of_days = (date_stop - date_start).days + 1
+            allocated_hours = slot._get_planning_duration(dt_start, dt_stop)
+            for i in range(number_of_days):
+                new_vals = vals.copy()
+                new_vals['date'] = date_start + timedelta(days=i)
+                new_vals['duration'] = allocated_hours / number_of_days
+                new_vals_list.append(new_vals)
+        return super()._generate_work_entries_postprocess(new_vals_list)

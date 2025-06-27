@@ -163,14 +163,16 @@ class TestPayslipBase(TransactionCase):
 
     def create_work_entry(self, start, stop, work_entry_type=None):
         work_entry_type = work_entry_type or self.work_entry_type
-        return self.env['hr.work.entry'].create({
+        work_entry_vals = [{
             'version_id': self.richard_emp.version_ids[0].id,
             'name': "Work entry %s-%s" % (start, stop),
             'date_start': start,
             'date_stop': stop,
             'employee_id': self.richard_emp.id,
             'work_entry_type_id': work_entry_type.id,
-        })
+        }]
+        work_entry_vals = self.env['hr.version']._generate_work_entries_postprocess(work_entry_vals)
+        return self.env['hr.work.entry'].create(work_entry_vals)
 
 
 class TestPayslipContractBase(TestPayslipBase):

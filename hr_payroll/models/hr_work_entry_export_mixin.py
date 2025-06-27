@@ -1,22 +1,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from base64 import b64encode
-from datetime import datetime, time, timedelta
+from datetime import datetime, time
 from calendar import monthrange
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import NamedTuple
 
 from odoo import api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
 from odoo.fields import Domain
 from odoo.tools import format_date
-
-
-class SplittedWorkEntry(NamedTuple):
-    start: datetime
-    stop: datetime
-    work_entry: models.Model
 
 
 @dataclass
@@ -115,8 +108,8 @@ class HrWorkEntryExportMixin(models.AbstractModel):
         relevant_work_entries_by_employee = dict(self.env['hr.work.entry']._read_group(
             domain=[
                 ('employee_id', 'in', employee_ids),
-                ('date_start', '<=', self.period_stop),
-                ('date_stop', '>=', self.period_start),
+                ('date', '<=', self.period_stop),
+                ('date', '>=', self.period_start),
                 ('state', 'in', ['draft', 'validated', 'conflict']),
             ],
             groupby=['employee_id'],
@@ -224,39 +217,6 @@ class HrWorkEntryExportEmployeeMixin(models.AbstractModel):
             for line in lines:
                 line.work_entry_ids = relevant_work_entries_by_employee.get(line.employee_id)
 
-    def _split_work_entries_on_midnight(self, limit_start=None, limit_stop=None):
-        """ Split work entries that span multiple days into multiple work entries that each span a single day.
-        the work entries are sorted by date_start given _order of hr.work.entry
-
-        :param limit_start: Optional start date to limit the split
-        :param limit_stop: Optional stop date to limit the split
-        :return: A list of SplittedWorkEntry(start, stop, work_entry) (pseudo record set)
-        """
-        self.ensure_one()
-        splitted_work_entries = []
-        for work_entry in self.work_entry_ids:
-            start = max(work_entry.date_start, datetime.combine(limit_start, time.min)) \
-                if limit_start else work_entry.date_start
-            stop = min(work_entry.date_stop, datetime.combine(limit_stop, time.max)) \
-                if limit_stop else work_entry.date_stop
-
-            if start.date() == stop.date():
-                splitted_work_entries.append(SplittedWorkEntry(start, stop, work_entry))
-                continue
-
-            midnight_after_start = datetime.combine(start.date() + timedelta(days=1), time.min)
-            splitted_work_entries.append(SplittedWorkEntry(midnight_after_start, stop, work_entry))
-
-            current_start = datetime.combine(start.date(), time.min) + timedelta(days=1)
-            day_before_stop = datetime.combine(stop.date() - timedelta(days=1), time.max)
-            while current_start < day_before_stop:
-                next_midnight = datetime.combine(current_start, time.max)
-                splitted_work_entries.append(SplittedWorkEntry(next_midnight, next_midnight, work_entry))
-                current_start += timedelta(days=1)
-
-            splitted_work_entries.append(SplittedWorkEntry(current_start, stop, work_entry))
-        return splitted_work_entries
-
     def _get_work_entries_by_day_and_code(self, limit_start=None, limit_stop=None):
         """ Group work entries by day and code.
 
@@ -265,17 +225,15 @@ class HrWorkEntryExportEmployeeMixin(models.AbstractModel):
         :return: A defaultdict {date: defaultdict {code: WorkEntryCollection {work_entries, duration}}}
         """
         self.ensure_one()
-        work_entry_intervals = self._split_work_entries_on_midnight(limit_start, limit_stop)
         work_entries_by_day_and_code = defaultdict(lambda: defaultdict(lambda: WorkEntryCollection(
             work_entries=self.env['hr.work.entry'],
             duration=0,
         )))
-        for work_entry_interval in work_entry_intervals:
-            date = work_entry_interval.start.date()
-            code = work_entry_interval.work_entry.work_entry_type_id.code
-            work_entries_by_day_and_code[date][code].work_entries |= work_entry_interval.work_entry
-            work_entries_by_day_and_code[date][code].duration += (
-                work_entry_interval.stop - work_entry_interval.start).total_seconds()
+        for work_entry in self.work_entry_ids:
+            date = work_entry.date
+            code = work_entry.work_entry_type_id.code
+            work_entries_by_day_and_code[date][code].work_entries |= work_entry
+            work_entries_by_day_and_code[date][code].duration += work_entry.duration * 3600
         return work_entries_by_day_and_code
 
     def check_work_entries(self):
