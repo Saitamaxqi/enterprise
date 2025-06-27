@@ -15,6 +15,6 @@ patch(TicketScreen.prototype, {
                 destinationOrder.l10n_pe_edi_refund_reason = payload.l10n_pe_edi_refund_reason;
             }
         }
-        super.addAdditionalRefundInfo(...arguments);
+        await super.addAdditionalRefundInfo(...arguments);
     },
 });
