@@ -118,3 +118,20 @@ test("show completed documents download dropdown when state is signed", async ()
         message: "should have correct download URL for a certificate",
     });
 });
+
+test("do not crash when loading with false create_uid or state", async () => {
+    const config = {
+        tag: tag,
+        actionContext: {
+            create_uid: false,
+            state: false,
+        }
+    };
+
+    await createDocumentWebClient(config);
+
+    await getService("action").doAction(9);
+
+    expect(".o_last_breadcrumb_item").toHaveCount(1);
+    expect(".o_last_breadcrumb_item").toHaveText("A Client Action", { message: "should display document name" });
+});

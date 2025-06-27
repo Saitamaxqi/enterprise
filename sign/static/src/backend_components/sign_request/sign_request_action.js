@@ -35,10 +35,10 @@ export class SignRequest extends Component {
         const context = action?.context;
 
         this.signInfo.reset({
-            documentId: context.id || action.params.id,
-            signRequestToken: context.token || action.params.token, // token could be sign.request.item's token if signabledocument
-            createUid: context.create_uid || action.params.create_uid,
-            signRequestState: context.state || action.params.state,
+            documentId: context.id || (action.params && action.params.id),
+            signRequestToken: context.token || (action.params && action.params.token), // token could be sign.request.item's token if signabledocument
+            createUid: context.create_uid || (action.params && action.params.create_uid),
+            signRequestState: context.state || (action.params && action.params.state),
             requestItemStates: context.request_item_states,
             needToSign: context.need_to_sign,
             todayFormattedDate: context.today_formatted_date,
