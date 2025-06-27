@@ -1460,8 +1460,8 @@ class HrPayslip(models.Model):
 
     def action_edit_payslip_lines(self):
         self.ensure_one()
-        if not self.env.user.has_group('hr_payroll.group_hr_payroll_manager'):
-            raise UserError(_('This action is restricted to payroll managers only.'))
+        if not self.env.user.has_group('hr_payroll.group_hr_payroll_user'):
+            raise UserError(_('This action is restricted to payroll officers only.'))
         if self.state == 'done':
             raise UserError(_('This action is forbidden on validated payslips.'))
         wizard = self.env['hr.payroll.edit.payslip.lines.wizard'].create({

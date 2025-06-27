@@ -38,7 +38,7 @@
         name="Reporting"
         parent="hr_work_entry_enterprise.menu_hr_payroll_root"
         sequence="70"
-        groups="hr_payroll.group_hr_payroll_manager"/>
+        groups="hr_payroll.group_hr_payroll_user"/>
 
     <!-- **** Employees **** -->
     <menuitem
