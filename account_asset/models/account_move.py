@@ -71,10 +71,8 @@ class AccountMove(models.Model):
         for move in self:
             asset = move.asset_id or move.reversed_entry_id.asset_id  # reversed moves are created before being assigned to the asset
             if asset:
-                account_internal_group = 'expense'
-                asset_depreciation = sum(
-                    move.line_ids.filtered(lambda l: l.account_id.internal_group == account_internal_group or l.account_id == asset.account_depreciation_expense_id).mapped('balance')
-                )
+                depreciation_lines = move._get_asset_depreciation_line()
+                asset_depreciation = sum(depreciation_lines.mapped('balance'))
                 # Special case of closing entry - only disposed assets of type 'purchase' should match this condition
                 # The condition on len(move.line_ids) is to avoid the case where there is only one depreciation move, and it is not a disposal move
                 # The condition will be matched because a disposal move from a disposal move will always have more than 2 lines, unlike a normal depreciation move
@@ -107,12 +105,10 @@ class AccountMove(models.Model):
     # -------------------------------------------------------------------------
     def _inverse_depreciation_value(self):
         for move in self:
-            asset = move.asset_id
-            amount = abs(move.depreciation_value)
-            account = asset.account_depreciation_expense_id
+            depreciation_lines = set(move._get_asset_depreciation_line())
             move.write({'line_ids': [
                 Command.update(line.id, {
-                    'balance': amount if line.account_id == account else -amount,
+                    'balance': move.depreciation_value * (1 if line in depreciation_lines else -1),
                 })
                 for line in move.line_ids
             ]})
@@ -313,6 +309,10 @@ class AccountMove(models.Model):
             'company_id': asset.company_id.id,
         }
         return move_vals
+
+    def _get_asset_depreciation_line(self):
+        asset = self.asset_id
+        return self.line_ids.filtered(lambda line: line.account_id.internal_group == 'expense' or line.account_id == asset.account_depreciation_expense_id)
 
     @api.depends('line_ids.asset_ids')
     def _compute_asset_ids(self):

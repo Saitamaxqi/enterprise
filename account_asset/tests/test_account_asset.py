@@ -845,6 +845,109 @@ class TestAccountAsset(TestAccountReportsCommon):
         self.update_form_values(asset_form)
         asset_form.save()
 
+    def test_negative_asset_balance_inversion(self):
+        """
+        Test that an asset with a negative original value generates depreciation moves
+        with inverted balances (i.e., credit instead of debit) compared to a positive asset.
+        Also check that manual adjustments to depreciation values correctly reflect in invoice lines.
+        """
+        asset_account = self.company_data['default_account_assets'].id
+        expense_account = self.company_data['default_account_expense'].id
+        asset = self.env['account.asset'].create({
+            'name': "Test Asset",
+            'original_value': -10000,
+            'account_depreciation_id': asset_account,
+            'account_depreciation_expense_id': expense_account,
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'prorata_computation_type': 'none',
+        })
+        asset.compute_depreciation_board()
+
+        # Test that the depreciations are created upon validation of the asset according to the default values
+        self.assertEqual(len(asset.depreciation_move_ids), 5)
+        for move in asset.depreciation_move_ids:
+            self.assertEqual(move.depreciation_value, -2000)
+
+        with Form(asset) as asset_form:
+            with asset_form.depreciation_move_ids.edit(4) as line_edit:
+                line_edit.depreciation_value = -1000.0
+            with asset_form.depreciation_move_ids.edit(3) as line_edit:
+                line_edit.depreciation_value = -3000.0
+        self.update_form_values(asset_form)
+
+        self.assertRecordValues(asset.depreciation_move_ids[0].line_ids, [
+            {'account_id': asset_account, 'balance': 1000.0},
+            {'account_id': expense_account, 'balance': -1000.0},
+        ])
+
+        self.assertRecordValues(asset.depreciation_move_ids[1].line_ids, [
+            {'account_id': asset_account, 'balance': 3000.0},
+            {'account_id': expense_account, 'balance': -3000.0},
+        ])
+
+    def test_asset_change_depreciation_expense_account(self):
+        """Check computation of depreciation_value is correct even when expense account was changed"""
+        self.env['account.move'].search([('state', '=', 'draft')]).unlink()  # allow setting the lock date below
+        asset = self.env['account.asset'].create({
+            'name': 'Test asset',
+            'acquisition_date': '2011-07-01',
+            'original_value': 1000.0,
+            'account_asset_id': self.company_data['default_account_assets'].id,
+            'account_depreciation_id': self.company_data['default_account_assets'].id,
+            'account_depreciation_expense_id': self.company_data['default_account_expense'].id,
+        })
+        asset.validate()
+
+        sorted_depreciation_moves = asset.depreciation_move_ids.sorted(lambda l: l.date)
+        td = fields.Date.to_date
+        self.assertRecordValues(sorted_depreciation_moves, [
+            {'date': td('2011-12-31'), 'depreciation_value': 100},
+            {'date': td('2012-12-31'), 'depreciation_value': 200},
+            {'date': td('2013-12-31'), 'depreciation_value': 200},
+            {'date': td('2014-12-31'), 'depreciation_value': 200},
+            {'date': td('2015-12-31'), 'depreciation_value': 200},
+            {'date': td('2016-12-31'), 'depreciation_value': 100},
+        ])
+
+        # Simulate life cycle of the asset by doing the following:
+        # - Auto posting of depreciation move at their planned date
+        # - Change the depreciation expense account after depreciation entry for 3rd period is posted
+        # - Set a lock date after each period so that changing the depreciation expense account
+        #   does not modify the account from expense line on existing posted depreciation entries
+        new_depreciation_expense_account = asset.account_depreciation_expense_id.copy()
+        for period, depreciation_move in enumerate(sorted_depreciation_moves):
+            with self.subTest(period=period, depreciation_date=depreciation_move.date), freeze_time(depreciation_move.date):
+                with self.enter_registry_test_mode():
+                    self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
+
+                if period == 3:
+                    asset.account_depreciation_expense_id = new_depreciation_expense_account
+
+                # Ensure expense line of depreciation entry use the right account
+                expense_line = depreciation_move.line_ids.filtered(lambda line: line.account_id.internal_group == "expense")
+                if period > 2:
+                    self.assertEqual(expense_line.account_id, new_depreciation_expense_account)
+                else:
+                    self.assertEqual(expense_line.account_id, self.company_data['default_account_expense'])
+
+                lock_wiz = self.env["account.change.lock.date"].create({"fiscalyear_lock_date": depreciation_move.date})
+                with freeze_time('9999-12-31'):
+                    lock_wiz.change_lock_date()
+
+        # Force recomputation of depreciation_value (this would fail due to unbalanced entry in case
+        #   we consider only the asset's expense account in the inverse function)
+        depreciation_field = self.env['account.move']._fields['depreciation_value']
+        self.env.add_to_compute(depreciation_field, sorted_depreciation_moves)
+
+        self.assertRecordValues(sorted_depreciation_moves, [
+            {'date': td('2011-12-31'), 'depreciation_value': 100},
+            {'date': td('2012-12-31'), 'depreciation_value': 200},
+            {'date': td('2013-12-31'), 'depreciation_value': 200},
+            {'date': td('2014-12-31'), 'depreciation_value': 200},
+            {'date': td('2015-12-31'), 'depreciation_value': 200},
+            {'date': td('2016-12-31'), 'depreciation_value': 100},
+        ])
+
     def test_asset_from_entry_line_form(self):
         """Test that the asset is correcly created from a move line"""
 
