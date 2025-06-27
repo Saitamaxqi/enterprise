@@ -2,7 +2,6 @@ import { _t } from "@web/core/l10n/translation";
 import { Domain } from "@web/core/domain";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { escape } from "@web/core/utils/strings";
 import { useDebounced } from "@web/core/utils/timing";
 import { useVirtualGrid } from "@web/core/virtual_grid_hook";
 import { Field } from "@web/views/fields/field";
@@ -159,7 +158,9 @@ export class GridRenderer extends Component {
     getRowPosition(row, isCreateInlineRow = false) {
         const rowIndex = row ? this.props.rows.findIndex((r) => r.id === row.id) : 0;
         const section = row && row.getSection();
-        const sectionDisplayed = Boolean(section && (section.value || this.props.sections.length > 1));
+        const sectionDisplayed = Boolean(
+            section && (section.value || this.props.sections.length > 1)
+        );
         let rowPosition = this.rowsGap + rowIndex + 1 + (sectionDisplayed ? section.sectionId : 0);
         if (isCreateInlineRow) {
             rowPosition += 1;
@@ -252,15 +253,19 @@ export class GridRenderer extends Component {
     getSectionColumnsClasses(column, row) {
         const isToday = column.isToday;
         return {
-            'bg-info bg-opacity-50': isToday,
-            'bg-200 border-top': !isToday,
-            'bg-opacity-75': this.getUnavailableClass(column) === 'o_grid_unavailable' && row.cells[column.id].value === 0,
-        }
+            "bg-info bg-opacity-50": isToday,
+            "bg-200 border-top": !isToday,
+            "bg-opacity-75":
+                this.getUnavailableClass(column) === "o_grid_unavailable" &&
+                row.cells[column.id].value === 0,
+        };
     }
 
     getSectionCellsClasses(column, row) {
         return {
-            'text-opacity-25' : row.cells[column.id].value === 0 || this.getUnavailableClass(column) === 'o_grid_unavailable',
+            "text-opacity-25":
+                row.cells[column.id].value === 0 ||
+                this.getUnavailableClass(column) === "o_grid_unavailable",
         };
     }
 
@@ -272,17 +277,17 @@ export class GridRenderer extends Component {
         const value = row.cells[column.id].value;
         const isTextDanger = this.isTextDanger(row, column);
         return {
-            'text-bg-view': isEven && value >= 0 && !isTextDanger,
-            'text-900': !isEven && value >= 0 && !isTextDanger,
-            'text-danger': value < 0 || isTextDanger,
-        }
+            "text-bg-view": isEven && value >= 0 && !isTextDanger,
+            "text-900": !isEven && value >= 0 && !isTextDanger,
+            "text-danger": value < 0 || isTextDanger,
+        };
     }
 
     getCellsClasses(column, row, section, isEven) {
         return {
             ...this.getTextColorClasses(column, row, isEven),
-            'o_grid_cell_today': column.isToday,
-            'fst-italic': row.isAdditionalRow,
+            o_grid_cell_today: column.isToday,
+            "fst-italic": row.isAdditionalRow,
         };
     }
 
@@ -290,13 +295,13 @@ export class GridRenderer extends Component {
      * @param {GridSection | GridRow} section
      */
     _getTotalCellBgColor(section) {
-        return 'text-bg-800';
+        return "text-bg-800";
     }
 
     getSectionTotalRowClass(section, grandTotal) {
         return {
             [this._getTotalCellBgColor(section)]: true,
-            'text-opacity-25': grandTotal === 0,
+            "text-opacity-25": grandTotal === 0,
         };
     }
 
@@ -323,23 +328,25 @@ export class GridRenderer extends Component {
     getFieldAdditionalProps(fieldName) {
         return {
             name: fieldName,
-            type: this.props.widgetPerFieldName[fieldName] || this.props.model.fieldsInfo[fieldName].type,
+            type:
+                this.props.widgetPerFieldName[fieldName] ||
+                this.props.model.fieldsInfo[fieldName].type,
         };
     }
 
     getCellsTextClasses(column, row) {
         return {
-            'text-900 text-opacity-25': row.cells[column.id].value === 0,
-        }
+            "text-900 text-opacity-25": row.cells[column.id].value === 0,
+        };
     }
 
     getTotalCellsTextClasses(row, grandTotal) {
         return {
-            'fst-italic': row.isAdditionalRow,
-            'text-bg-200': grandTotal >= 0,
-            'bg-danger text-bg-danger': grandTotal < 0,
-            'text-opacity-50': grandTotal === 0,
-        }
+            "fst-italic": row.isAdditionalRow,
+            "text-bg-200": grandTotal >= 0,
+            "bg-danger text-bg-danger": grandTotal < 0,
+            "text-opacity-50": grandTotal === 0,
+        };
     }
 
     onCreateInlineClick(section) {
@@ -356,13 +363,14 @@ export class GridRenderer extends Component {
         }
         this.shouldFocusOnToday = false;
         const { navigationInfo, columnFieldIsDate } = this.props.model;
-        if (this.isMobile || !columnFieldIsDate || navigationInfo.range.name != "month"){
+        if (this.isMobile || !columnFieldIsDate || navigationInfo.range.name != "month") {
             return;
         }
         const rendererEl = this.rendererRef.el;
         const todayEl = rendererEl.querySelector("div.o_grid_column_title.fw-bolder");
         if (todayEl) {
-            rendererEl.parentElement.scrollLeft = todayEl.offsetLeft - rendererEl.offsetWidth / 2 + todayEl.offsetWidth / 2;
+            rendererEl.parentElement.scrollLeft =
+                todayEl.offsetLeft - rendererEl.offsetWidth / 2 + todayEl.offsetWidth / 2;
         }
     }
 
@@ -620,9 +628,7 @@ export class GridRenderer extends Component {
     /** Return grid cell action helper when no records are found. */
     _getNoContentHelper() {
         const noActivitiesFound = _t("No activities found");
-        return  markup(
-            `<p class='o_view_nocontent_smiling_face'>${escape(noActivitiesFound)}</p>`
-        );
+        return markup`<p class='o_view_nocontent_smiling_face'>${noActivitiesFound}</p>`;
     }
 
     onMagnifierGlassClick(section, column) {

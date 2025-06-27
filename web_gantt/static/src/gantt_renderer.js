@@ -25,7 +25,7 @@ import { zipWith } from "@web/core/utils/arrays";
 import { KeepLast } from "@web/core/utils/concurrency";
 import { useService } from "@web/core/utils/hooks";
 import { omit, pick } from "@web/core/utils/objects";
-import { escape, nbsp } from "@web/core/utils/strings";
+import { nbsp } from "@web/core/utils/strings";
 import { debounce, throttleForAnimation } from "@web/core/utils/timing";
 import { url } from "@web/core/utils/urls";
 import { parseXML } from "@web/core/utils/xml";
@@ -1233,7 +1233,11 @@ export class GanttRenderer extends Component {
             };
             fallbackSchedule = this.model.getSchedule(fallbackParams);
             if (this.isAutoPlan) {
-                await this.model.rescheduleAccordingToDependency(record.id, schedule, this.rescheduleAccordingToDependencyCallback.bind(this));
+                await this.model.rescheduleAccordingToDependency(
+                    record.id,
+                    schedule,
+                    this.rescheduleAccordingToDependencyCallback.bind(this)
+                );
             } else {
                 await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);
             }
@@ -3001,9 +3005,7 @@ export class GanttRenderer extends Component {
         this.closeNotificationFn?.();
         const icon = isWarning ? "fa-warning" : "fa-check";
         this.closeNotificationFn = this.notificationService.add(
-            markup(
-                `<i class="fa ${icon}"></i><span class="ms-1">${escape(result["message"])}</span>`
-            ),
+            markup`<i class="fa ${icon}"></i><span class="ms-1">${result["message"]}</span>`,
             {
                 type: result["type"],
                 sticky: true,

@@ -3,7 +3,6 @@ import { markup } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { browser } from "@web/core/browser/browser";
 import { isDisplayStandalone } from "@web/core/browser/feature_detection";
-import { escape } from "@web/core/utils/strings";
 
 export async function shareUrl() {
     await navigator
@@ -23,12 +22,11 @@ export function shareUrlMenuItem(env) {
         type: "item",
         hide: env.isSmall || !isDisplayStandalone(),
         id: "share_url",
-        description: markup(
-            `<div class="d-flex align-items-center justify-content-between">
-                <span>${escape(_t("Share"))}</span>
+        description: markup`
+            <div class="d-flex align-items-center justify-content-between">
+                <span>${_t("Share")}</span>
                 <span class="fa fa-share-alt"></span>
-            </div>`
-        ),
+            </div>`,
         callback: shareUrl,
         sequence: 25,
     };

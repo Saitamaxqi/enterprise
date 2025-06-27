@@ -204,7 +204,7 @@ test("no content helper from action when no data and sample mode", async () => {
     await mountGanttView({
         resModel: "tasks",
         arch: `<gantt date_start="start" date_stop="stop" sample="1"/>`,
-        noContentHelp: markup(`<p class="hello">click to add a partner</p>`),
+        noContentHelp: markup`<p class="hello">click to add a partner</p>`,
     });
     expect(SELECTORS.noContentHelper).toHaveCount(1);
     expect(`${SELECTORS.noContentHelper} p.hello:contains(add a partner)`).toHaveCount(1);
