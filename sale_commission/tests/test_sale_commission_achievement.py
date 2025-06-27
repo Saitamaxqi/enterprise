@@ -60,3 +60,49 @@ class TestSaleSubCommissionUser(TestSaleCommissionCommon):
         manager_commissions = commissions.filtered(lambda c: c.user_id == self.commission_manager)
         self.assertAlmostEqual(sum(user_commissions.mapped('achieved')), 1900, msg="The user gets the amount (2000 - 100)")
         self.assertAlmostEqual(sum(manager_commissions.mapped('achieved')), 2100, msg="The user gets the amount (2000 - 100)")
+
+    @freeze_time("2024-04-01")
+    def test_achievement_report_partner_id(self):
+        """Ensure achievement lines carry the correct partner_id from sale order and invoice."""
+        self.commission_plan_user.write({
+            'periodicity': 'month',
+            'type': 'achieve',
+            'user_type': 'person',
+        })
+        self.commission_plan_user.action_approve()
+
+        self.commission_plan_user.achievement_ids = self.env['sale.commission.plan.achievement'].create([{
+            'type': 'amount_invoiced',
+            'rate': 0.1,
+            'plan_id': self.commission_plan_user.id,
+        }])
+
+        self.commission_user_1.sale_team_id = self.team_commission
+
+        so = self.env['sale.order'].create({
+            'partner_id': self.partner.id,
+            'user_id': self.commission_user_1.id,
+            'order_line': [Command.create({
+                'product_id': self.commission_product_1.id,
+                'product_uom_qty': 5,
+                'price_unit': 100,
+            })],
+            'team_id': self.commission_user_1.sale_team_id.id,
+        })
+        so.action_confirm()
+
+        invoice = so._create_invoices()
+        invoice._post()
+
+        self.env.invalidate_all()
+
+        achievements = self.env['sale.commission.achievement.report'].search([
+            ('plan_id', '=', self.commission_plan_user.id),
+            ('related_res_model', '=', 'account.move'),
+            ('related_res_id', '=', invoice.id),
+        ])
+        self.assertTrue(achievements, "There should be at least one achievement line from invoice.")
+        self.assertEqual(
+            achievements.partner_id, invoice.partner_id,
+            f"Expected partner {invoice.partner_id.name} but got {achievements.partner_id.name} on achievement line"
+        )

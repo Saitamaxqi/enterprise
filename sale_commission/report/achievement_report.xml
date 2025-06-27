@@ -11,6 +11,7 @@
                 <field name="date" optional="hide"/>
                 <field name="target_id"/>
                 <field name="related_res_id" string="Source"/>
+                <field name="partner_id" optional="show"/>
                 <field name="currency_id" optional="hide"/>
                 <field name="achieved" sum="Total Achieved"/>
             </list>

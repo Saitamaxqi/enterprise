@@ -21,6 +21,7 @@ class SaleCommissionAchievementReport(models.Model):
     currency_id = fields.Many2one('res.currency', "Currency", readonly=True)
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
     date = fields.Date(string="Date", readonly=True)
+    partner_id = fields.Many2one('res.partner', "Customer", readonly=True)
 
     related_res_model = fields.Char(readonly=True)
     related_res_id = fields.Many2oneReference("Related", model_field='related_res_model', readonly=True)
@@ -152,7 +153,8 @@ SELECT
     cl.plan_id,
     cl.related_res_model,
     cl.related_res_id,
-    cl.date::date AS date
+    cl.date::date AS date,
+    cl.partner_id
 FROM commission_lines cl
 JOIN sale_commission_plan_target era
     ON cl.plan_id = era.plan_id
@@ -195,7 +197,8 @@ JOIN sale_commission_plan_target era
                     company_id,
                     user_id,
                     date_order,
-                    write_date
+                    write_date,
+                    partner_id
               FROM sale_order
              WHERE state = 'sale'
                {company_condition}
@@ -224,7 +227,8 @@ JOIN sale_commission_plan_target era
                     company_id,
                     invoice_user_id,
                     date,
-                    write_date
+                    write_date,
+                    partner_id
               FROM account_move
              WHERE move_type IN ('out_invoice', 'out_refund')
                AND state = 'posted'
@@ -270,6 +274,7 @@ JOIN sale_commission_plan_target era
           MAX(fm.date) AS date,
           MAX(rules.company_id) AS company_id,
           fm.id AS related_res_id,
+          MAX(fm.partner_id) AS partner_id,
           MAX(fm.write_date) as entropy_date
         """
 
@@ -309,6 +314,7 @@ JOIN sale_commission_plan_target era
     def _select_sales(self):
         return """
           fo.id AS related_res_id,
+          MAX(fo.partner_id) AS partner_id,
           MAX(fo.write_date) as entropy_date
         """
 
@@ -396,6 +402,8 @@ achievement_commission_lines_add AS (
         fa.date AS date,
         scp.company_id,
         fa.id AS related_res_id,
+        -- achievement don't involve a customer; needed to match UNION structure with other sources
+        NULL::integer AS partner_id,
         MAX(fa.write_date) AS entropy_date,
         'sale.commission.achievement' AS related_res_model
     FROM filtered_adjustments fa
@@ -430,6 +438,8 @@ achievement_commission_lines_rem AS (
         fa.date AS date,
         scp.company_id,
         fa.id AS related_res_id,
+        -- achievement don't involve a customer; needed to match UNION structure with other sources
+        NULL::integer AS partner_id,
         MAX(fa.write_date) AS entropy_date,
         'sale.commission.achievement' AS related_res_model
     FROM filtered_adjustments fa

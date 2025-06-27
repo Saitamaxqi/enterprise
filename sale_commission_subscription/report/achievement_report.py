@@ -132,6 +132,7 @@ subscription_rules AS (
         MAX(log.event_date) AS date,
         MAX(rules.company_id) AS company_id,
         MAX(log.order_id) AS related_res_id,
+        MAX(so.partner_id) AS partner_id,
         -- create_date because _update_effective_date could update several logs at the same time
         -- transfers are created in the same transaction, we need to distinguish them too. We do it based on the sign
         CASE
@@ -141,6 +142,7 @@ subscription_rules AS (
 
     FROM subscription_rules rules
     JOIN filtered_order_logs log ON log.team_id=rules.team_id
+    JOIN sale_order so ON so.id = log.order_id
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
     JOIN currency_rate cr ON cr.company_id=log.company_id
     WHERE rules.team_rule
@@ -164,6 +166,7 @@ subscription_rules AS (
         MAX(log.event_date) AS date,
         MAX(rules.company_id) AS company_id,
         MAX(log.order_id) AS related_res_id,
+        MAX(so.partner_id) AS partner_id,
         -- create_date because _update_effective_date could update several logs at the same time
         -- transfers are created in the same transaction, we need to distinguish them too. We do it based on the sign
         CASE
@@ -172,6 +175,7 @@ subscription_rules AS (
         END AS entropy_date
     FROM subscription_rules rules
         JOIN filtered_order_logs log ON log.user_id=rules.user_id
+    JOIN sale_order so ON so.id = log.order_id
     JOIN sub_rate_query log_rate ON log_rate.currency_id=log.currency_id AND log_rate.company_id=log.company_id
     JOIN currency_rate cr ON cr.company_id=log.company_id
     WHERE NOT rules.team_rule
