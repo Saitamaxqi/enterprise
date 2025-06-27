@@ -1042,7 +1042,14 @@ class TestRentalPicking(TestRentalCommon):
         computation. """
         self.product_id.stock_quant_ids.sudo().unlink()
         date = Date.today() + timedelta(days=7)
+        self.partner_1 = self.env['res.partner'].create({
+            'name': 'Julia Agrolait',
+            'email': 'julia@agrolait.example.com',
+        })
 
+        self.product_id.write({
+            'seller_ids': [Command.create({'partner_id': self.partner_1.id, 'delay': 0})],
+        })
         rental_order_1 = self.sale_order_id.copy()
         rental_order_1.order_line.write({'product_uom_qty': 1, 'is_rental': True})
         rental_order_1.rental_start_date = Datetime.now() + timedelta(days=2)

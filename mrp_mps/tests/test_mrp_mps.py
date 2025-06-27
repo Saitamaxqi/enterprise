@@ -36,17 +36,22 @@ class TestMpsMps(common.TransactionCase):
         super().setUpClass()
 
         cls.mps_dates_month = cls.env.company._get_date_range()
+        cls.manufacture_route = cls.env.ref('mrp.route_warehouse0_manufacture')
+
         cls.table = cls.env['product.product'].create({
             'name': 'Table',
             'is_storable': True,
+            'route_ids': [Command.set([cls.manufacture_route.id])],
         })
         cls.drawer = cls.env['product.product'].create({
             'name': 'Drawer',
             'is_storable': True,
+            'route_ids': [Command.set([cls.manufacture_route.id])],
         })
         cls.table_leg = cls.env['product.product'].create({
             'name': 'Table Leg',
             'is_storable': True,
+            'route_ids': [Command.set([cls.manufacture_route.id])],
         })
         cls.screw = cls.env['product.product'].create({
             'name': 'Screw',
