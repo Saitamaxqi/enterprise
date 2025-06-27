@@ -104,8 +104,6 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
                 pickerProps: {
                     value,
                     range: true,
-                    buttonClass: "btn-sm",
-                    popoverButtonClass: "btn-light",
                     type: this._isDurationWithHours() ? "datetime" : "date",
                     minDate: DateTime.min(datetimeWebsiteTz, this.startDate),
                     maxDate: DateTime.max(datetimeWebsiteTz.plus({ years: 3 }), this.endDate),
