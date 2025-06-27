@@ -20,7 +20,7 @@
     </cfdi:Impuestos>
     <cfdi:Complemento>
 
-        <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="00000000-0000-0000-0000-000000000001" FechaTimbrado="___ignore___" NoCertificadoSAT="___ignore___" RfcProvCertif="___ignore___" SelloCFD="___ignore___" SelloSAT="___ignore___"/>
+        <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="___ignore___" FechaTimbrado="___ignore___" NoCertificadoSAT="___ignore___" RfcProvCertif="___ignore___" SelloCFD="___ignore___" SelloSAT="___ignore___"/>
 
     </cfdi:Complemento>
 </cfdi:Comprobante>
