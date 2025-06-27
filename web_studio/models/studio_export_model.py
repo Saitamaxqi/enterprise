@@ -4,6 +4,7 @@ from ast import literal_eval
 
 from odoo import _, api, fields, models
 from odoo.fields import Command, Domain
+from odoo.addons.web_studio.wizard.studio_export_wizard import FIELDS_TO_EXPORT
 
 # List of preset models to export when the preset action is triggered.
 # This list may include specific defaults for each model.
@@ -346,6 +347,8 @@ class StudioExportModel(models.Model):
                 )
 
             for field_name, field in RecordModel._fields.items():
+                if field_name in fields_not_to_export:
+                    continue
                 # exclude computed fields that can't impact the import
                 # exclude one2many fields
                 # exclude many2x if comodel is not to export
@@ -368,6 +371,7 @@ class StudioExportModel(models.Model):
             if RecordModel._parent_store:
                 fields_not_to_export.add("parent_path")
 
+            fields_not_to_export -= set(FIELDS_TO_EXPORT.get(record.model_name, []))
             excluded_fields = self.env["ir.model.fields"].search(
                 [
                     ("model_id", "=", record.model_id.id),

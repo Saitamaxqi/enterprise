@@ -3,7 +3,7 @@ from odoo import Command
 from odoo.tests import tagged
 from odoo.tests.common import BaseCase, HttpCase
 from odoo.addons.web_studio.controllers.export import StudioExporter
-from odoo.addons.web_studio.wizard.studio_export_wizard import _find_circular_dependencies
+from odoo.addons.web_studio.wizard.studio_export_wizard import _find_circular_dependencies, FIELDS_TO_EXPORT
 from odoo.addons.http_routing.tests.common import MockRequest
 
 
@@ -166,6 +166,14 @@ class TestExport(HttpCase):
             arch_filters = etree.fromstring(content)
             records = arch_filters.findall('record')
             self.assertEqual(len(records), 1, "Only the active filter should be exported.")
+
+    def test_fields_to_export_are_not_excluded(self):
+        for model, fields_to_export in FIELDS_TO_EXPORT.items():
+            export_model = self.env["studio.export.model"].create({
+                "model_id": self.env["ir.model"]._get(model).id,
+            })
+            excluded_fields = export_model.excluded_fields.mapped("name")
+            self.assertEqual(set(fields_to_export), set(fields_to_export) - set(excluded_fields))
 
 
 @tagged("post_install", "-at_install")
