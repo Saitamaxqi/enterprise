@@ -6,7 +6,7 @@ import { StreamPostTwitterQuote } from './stream_post_twitter_quote';
 import { debounce } from "@web/core/utils/timing";
 import { rpc } from "@web/core/network/rpc";
 import { patch } from "@web/core/utils/patch";
-import { escape, sprintf } from "@web/core/utils/strings";
+import { sprintf } from "@web/core/utils/strings";
 import { useService } from '@web/core/utils/hooks';
 import { markup, useEffect } from "@odoo/owl";
 
@@ -77,12 +77,8 @@ patch(StreamPostKanbanRecord.prototype, {
                 });
             })
             .catch((error) => {
-                const postLink = escape(this.record.post_link.value);
-                const escapedError = escape(error.data.message);
-                const errorBody = /\bx\.com\b/.test(escapedError)
-                    ? markup(
-                        `<a href="${postLink}" target="_blank" class="text-info text-opacity-100">${escapedError}</a>`
-                    )
+                const errorBody = /\bx\.com\b/.test(error.data.message)
+                    ? markup`<a href="${this.record.post_link.value}" target="_blank" class="text-info text-opacity-100">${error.data.message}</a>`
                     : error.data.message;
                 this.dialog.add(StreamPostCommentsTwitter, {
                     ...modalInfo,

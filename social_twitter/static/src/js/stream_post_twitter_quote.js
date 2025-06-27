@@ -5,7 +5,7 @@ import { SocialPostFormatterMixin } from '@social/js/social_post_formatter_mixin
 import { Dialog } from '@web/core/dialog/dialog';
 import { sprintf } from '@web/core/utils/strings';
 import { useService } from '@web/core/utils/hooks';
-import { Component, markup, useState } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 
 export class StreamPostTwitterQuote extends SocialPostFormatterMixin(Component) {
     static template = "social_twitter.TwitterQuoteDialog";
@@ -48,7 +48,7 @@ export class StreamPostTwitterQuote extends SocialPostFormatterMixin(Component) 
     }
 
     _formatCommentStreamPost(message) {
-        return markup(this._formatPost(message));
+        return this._formatPost(message);
     }
 
     get originalPost() {

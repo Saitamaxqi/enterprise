@@ -1,5 +1,4 @@
 import { _t } from "@web/core/l10n/translation";
-import { escape } from "@web/core/utils/strings";
 import { FileUploader } from "@web/views/fields/file_handler";
 import { useAutofocus, useService } from "@web/core/utils/hooks";
 import { useEmojiPicker } from "@web/core/emoji_picker/emoji_picker";
@@ -111,11 +110,11 @@ export class StreamPostCommentsReply extends Component {
             }
             if (comment.error) {
                 this.notification.add(
-                    markup(
-                        _t("Something went wrong while posting the comment.") +
-                            "<br/><br/>" +
-                            escape(comment.error)
-                    ),
+                    markup`
+                        ${_t("Something went wrong while posting the comment.")}
+                        <br/><br/>
+                        ${comment.error}
+                    `,
                     { type: "danger" }
                 );
             } else {

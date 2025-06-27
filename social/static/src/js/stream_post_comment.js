@@ -4,9 +4,8 @@ import { StreamPostCommentsReply } from './stream_post_comments_reply';
 
 import { rpc } from "@web/core/network/rpc";
 import { ConfirmationDialog } from '@web/core/confirmation_dialog/confirmation_dialog';
-import { escape } from '@web/core/utils/strings';
 import { useService } from '@web/core/utils/hooks';
-import { Component, markup, useState } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 
 export class StreamPostComment extends SocialPostFormatterMixin(Component) {
     static template = "social.StreamPostComment";
@@ -68,12 +67,8 @@ export class StreamPostComment extends SocialPostFormatterMixin(Component) {
     // Utils
     //-------
 
-    _htmlEscape(message) {
-        return escape(message);
-    }
-
     formatComment(commentMessage) {
-        return markup(this._formatPost(commentMessage));
+        return this._formatPost(commentMessage);
     }
 
     //----------

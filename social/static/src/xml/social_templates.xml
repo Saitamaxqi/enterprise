@@ -267,7 +267,7 @@
 
                         <div t-if="comment.message || comment.attachment"
                             t-attf-class="d-flex flex-grow-1 {{ bubble_design and comment.message ? 'bg-200 py-1 ps-3 pe-1 me-2 o_social_bubble_radius' : '' }}">
-                            <t t-set="originalMessage" t-value="_htmlEscape(comment.message)"/>
+                            <t t-set="originalMessage" t-value="comment.message"/>
                             <div t-attf-class="d-flex flex-grow-1 justify-content-start align-items-center">
                                 <div>
                                     <div class="o_social_comment_text text-break"

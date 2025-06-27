@@ -18,7 +18,7 @@ test("Facebook Message", () => {
         "Hello @[542132] Odoo-Social, check this out: https://www.odoo.com?utm=mail&param=1 #crazydeals #odoo";
     const finalMessage = SocialPostFormatterMixinBase._formatPost(testMessage);
 
-    expect(finalMessage).toEqual(
+    expect(finalMessage.toString()).toEqual(
         [
             "Hello",
             "<a href='/social_facebook/redirect_to_profile/42/542132?name=Odoo-Social' target='_blank'>Odoo-Social</a>,",
@@ -41,7 +41,7 @@ test("Instagram Message", () => {
         "Hello @Odoo.Social, check this out: https://www.odoo.com #crazydeals #odoo";
     const finalMessage = SocialPostFormatterMixinBase._formatPost(testMessage);
 
-    expect(finalMessage).toEqual(
+    expect(finalMessage.toString()).toEqual(
         [
             "Hello",
             "<a href='https://www.instagram.com/Odoo.Social' target='_blank'>@Odoo.Social</a>,",
@@ -63,7 +63,7 @@ test("LinkedIn Message", () => {
     const testMessage = "Hello, check this out: https://www.odoo.com {hashtag|#|crazydeals} #odoo";
     const finalMessage = SocialPostFormatterMixinBase._formatPost(testMessage);
 
-    expect(finalMessage).toEqual(
+    expect(finalMessage.toString()).toEqual(
         [
             "Hello, check this out:",
             "<a href='https://www.odoo.com' class='text-truncate' target='_blank' rel='noreferrer noopener'>https://www.odoo.com</a>",
@@ -84,7 +84,7 @@ test("Twitter Message", () => {
         "Hello @Odoo-Social, check this out: https://www.odoo.com #crazydeals #odoo";
     const finalMessage = SocialPostFormatterMixinBase._formatPost(testMessage);
 
-    expect(finalMessage).toEqual(
+    expect(finalMessage.toString()).toEqual(
         [
             "Hello",
             "<a href='https://twitter.com/Odoo-Social' target='_blank'>@Odoo-Social</a>,",
@@ -106,7 +106,7 @@ test("YouTube Message", () => {
     const testMessage = "Hello, check this out: https://www.odoo.com #crazydeals #odoo";
     const finalMessage = SocialPostFormatterMixinBase._formatPost(testMessage);
 
-    expect(finalMessage).toEqual(
+    expect(finalMessage.toString()).toEqual(
         [
             "Hello, check this out:",
             "<a href='https://www.odoo.com' class='text-truncate' target='_blank' rel='noreferrer noopener'>https://www.odoo.com</a>",

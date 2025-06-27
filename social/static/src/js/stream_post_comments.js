@@ -8,7 +8,7 @@ import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
-import { Component, markup, useSubEnv, useState } from "@odoo/owl";
+import { Component, useSubEnv, useState } from "@odoo/owl";
 
 export class StreamPostComments extends SocialPostFormatterMixin(Component) {
     static template = "social.StreamPostComments";
@@ -106,7 +106,7 @@ export class StreamPostComments extends SocialPostFormatterMixin(Component) {
     }
 
     _formatCommentStreamPost(message) {
-        return markup(this._formatPost(message));
+        return this._formatPost(message);
     }
 
     _formatStreamPostForEdition(message) {

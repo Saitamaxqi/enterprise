@@ -1,4 +1,8 @@
-import { formatText } from '@mail/js/emojis_mixin';
+import { formatText } from "@mail/js/emojis_mixin";
+
+import { markup } from "@odoo/owl";
+
+import { htmlReplace } from "@web/core/utils/html";
 
 export const SocialPostFormatterRegex = {
     REGEX_AT: /\B@([\w\dÀ-ÿ-.]+)/g,
@@ -7,24 +11,28 @@ export const SocialPostFormatterRegex = {
 };
 
 export const SocialPostFormatterMixinBase = {
-
     /**
      * Add emojis support
      * Wraps links, #hashtag and @tag around anchors
      * Regex from: https://stackoverflow.com/questions/19484370/how-do-i-automatically-wrap-text-urls-in-anchor-tags
      *
-     * @param {String} value
+     * @param {string|ReturnType<markup>} value
+     * @returns {string|ReturnType<markup>} value
      * @private
      */
     _formatPost(value) {
         // add emojis support and escape HTML
         value = formatText(value);
-
         // highlight URLs
-        value = value.replace(
-            SocialPostFormatterRegex.REGEX_URL,
-            "<a href='$&' class='text-truncate' target='_blank' rel='noreferrer noopener'>$&</a>");
-
+        value = htmlReplace(value, SocialPostFormatterRegex.REGEX_URL, (url) => {
+            /**
+             * markup: value is a Markup object (either escaped inside htmlReplace or flagged safe),
+             * `url` is directly coming from this value, and the regex doesn't do anything crazy to
+             * unescape it.
+             */
+            url = markup(url);
+            return markup`<a href='${url}' class='text-truncate' target='_blank' rel='noreferrer noopener'>${url}</a>`;
+        });
         return value;
     },
 
