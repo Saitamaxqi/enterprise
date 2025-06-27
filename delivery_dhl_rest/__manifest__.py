@@ -2,7 +2,7 @@
 {
     'name': "DHL Express Shipping",
     'description': "Send your shippings through DHL and track them online",
-    'category': 'Inventory/Delivery',
+    'category': 'Shipping Connectors',
     'version': '1.0',
     'application': True,
     'depends': ['stock_delivery', 'mail'],
