@@ -302,6 +302,39 @@ class AccountTestSIE4Import(AccountTestInvoicingCommon):
         )
         self.assertSequenceEqual(imported_moves.line_ids.mapped("balance"), (300.0, -300.0))
 
+    def test_sie4_import_move_with_several_objects_in_object_list(self):
+        self.wizard.attachment_file = base64.b64encode(b"""
+            #VER A 1 20240104 "move 1"
+            {
+                #TRANS 1060 {8 "204498" 10 "93425"} 100.0
+                #TRANS 2030 {8 "204498" 10 "93425"} -100.0
+            }
+            #VER A 2 20240105 "move 2"
+            {
+                #TRANS 1030 {} 200.0
+                #TRANS 2019 {8 "204498" 10 "93425"} -200.0
+            }
+            #VER A 3 20240106 "move 3"
+            {
+                #TRANS 1039 {8 "204498" 10 "93425"} 300.0
+                #TRANS 2020 {} -300.0
+            }
+        """)
+        self.wizard.action_import_sie4()
+
+        imported_moves = self.env['account.move'].search([('company_id', '=', self.company_id.id)])
+        common_values = {
+            'move_type': 'entry',
+            'state': 'draft',
+            'journal_id': self.journal_misc_id,
+        }
+        self.assertRecordValues(imported_moves, [
+            {'name': "MISC/2024/01/0003", 'ref': "Imported from SIE4 - move 3", 'date': fields.Date.from_string('2024-01-6'), **common_values},
+            {'name': "MISC/2024/01/0002", 'ref': "Imported from SIE4 - move 2", 'date': fields.Date.from_string('2024-01-5'), **common_values},
+            {'name': "MISC/2024/01/0001", 'ref': "Imported from SIE4 - move 1", 'date': fields.Date.from_string('2024-01-4'), **common_values},
+        ])
+        self.assertSequenceEqual(imported_moves.line_ids.mapped('balance'), (300.0, -300.0, 200.0, -200.0, 100.0, -100.0))
+
     # --------------------------------------------------------------------------
     # Import Key Algorithm Tests
     # --------------------------------------------------------------------------
