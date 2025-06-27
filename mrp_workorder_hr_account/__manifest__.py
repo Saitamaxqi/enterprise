@@ -9,6 +9,7 @@
     'description': """ """,
 
     'depends': ['mrp_workorder', 'mrp_account_enterprise'],
+    'data': ['report/mrp_report_views.xml'],
 
     'installable': True,
     'auto_install': True,

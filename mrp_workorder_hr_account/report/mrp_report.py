@@ -70,8 +70,14 @@ class MrpReport(models.Model):
                         CASE
                             WHEN wo.costs_hour != 0.0 AND wo.costs_hour IS NOT NULL THEN wo.costs_hour
                             ELSE COALESCE(wc.costs_hour, 0.0) END                                       AS op_costs_hour,
-                        COALESCE(SUM(t.duration), 0.0)                                                  AS op_duration,
-                        COALESCE(SUM(t.duration / 60. * t.employee_cost), 0.0)                                         AS emp_costs
+                        CASE
+                            WHEN wo.duration_expected != 0.0 AND wo.duration_expected IS NOT NULL AND wo.cost_mode = 'estimated'
+                            THEN wo.duration_expected
+                            ELSE COALESCE(SUM(t.duration), 0.0) END                                     AS op_duration,
+                        CASE
+                            WHEN wo.duration_expected != 0.0 AND wo.duration_expected IS NOT NULL AND wo.cost_mode = 'estimated'
+                            THEN wo.duration_expected / 60. * wo.employee_costs_hour
+                            ELSE COALESCE(SUM(t.duration / 60. * t.employee_cost), 0.0) END             AS emp_costs
                     FROM mrp_production AS mo
                     LEFT JOIN mrp_workorder wo ON wo.production_id = mo.id
                     LEFT JOIN mrp_workcenter_productivity t ON t.workorder_id = wo.id

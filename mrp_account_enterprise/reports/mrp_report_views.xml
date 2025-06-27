@@ -70,13 +70,13 @@
                                 <field name="product_id"/>
                                 <field name="unit_cost"/>
                                 <field name="unit_component_cost"/>
-                                <field name="unit_operation_cost" groups="mrp.group_mrp_routings"/>
+                                <field name="unit_operation_cost" string="Average Workcenter Cost / Unit" groups="mrp.group_mrp_routings"/>
                             </group>
                             <group>
                                 <field name="qty_produced"/>
                                 <field name="total_cost"/>
                                 <field name="component_cost"/>
-                                <field name="operation_cost" groups="mrp.group_mrp_routings"/>
+                                <field name="operation_cost" string="Total Workcenter Cost" groups="mrp.group_mrp_routings"/>
                                 <field name="byproduct_cost" groups="mrp.group_mrp_byproducts"/>
                             </group>
                         </group>

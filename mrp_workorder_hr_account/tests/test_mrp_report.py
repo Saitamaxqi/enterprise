@@ -99,3 +99,45 @@ class TestMrpReportEmployeeCost(TestMrpCommon):
                 'expected_total_cost_unit':       150.0
             } for _ in range(2)]
         )
+
+    def test_mrp_report_estimated_cost(self):
+        """ Test that the mrp report correctly computes estimated costs. """
+        self.workcenter_2.write({
+            'costs_hour': 20,
+            'employee_costs_hour': 33,
+        })
+        self.bom_4.operation_ids.write({
+            'time_mode': 'manual',
+            'time_cycle': 60,
+            'cost_mode': 'estimated',
+        })
+        estimated_cost_bom = self.bom_4.copy()
+        estimated_cost_bom.operation_ids.cost_mode = 'estimated'
+
+        mo = self.env['mrp.production'].create({
+            'product_qty': 2,
+            'bom_id': self.bom_4.id,
+        })
+        mo.action_assign()
+        mo.button_plan()
+        mo.workorder_ids.button_start()
+        mo.workorder_ids.record_production()
+        mo.workorder_ids.duration = 10
+        mo.move_raw_ids.quantity = 1
+        mo.move_raw_ids.picked = True
+        mo.button_mark_done()
+
+        self.env.flush_all()
+        self.assertRecordValues(
+            self.env['mrp.report'].search([('production_id', '=', mo.id)]),
+            [{
+                'duration': 120.0,
+                'employee_cost': 66.0,
+                'operation_cost': 40.0,
+                'total_cost': 106.0,
+                'unit_duration': 60.0,
+                'unit_employee_cost': 33.0,
+                'unit_operation_cost': 20.0,
+                'unit_cost': 53.0,
+            }]
+        )
