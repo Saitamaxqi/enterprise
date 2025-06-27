@@ -3,7 +3,7 @@ import base64
 from odoo import Command
 from odoo.addons.sale.tests.common import SaleCommon
 
-from .common_exports import StudioExportCase
+from .common_exports import StudioExportCase, StudioExportSerializer
 
 
 class TestStudioExports(StudioExportCase):
@@ -325,6 +325,38 @@ class TestStudioExports(StudioExportCase):
                 <field name="binary_data" type="base64" file="studio_customization/static/src/binary/test_studio_export_model1/{some_record.id}-binary_data"/>
             </record>
             </odoo>""",
+        )
+
+    def test_export_model_non_attachment_binary_field(self):
+        self.create_customization(
+            "ir.model.fields",
+            name="x_test_binary",
+            ttype="binary",
+            model_id=self.env["ir.model"]._get("res.partner").id,
+            state="manual",
+            depends="name",
+            compute="for partner in self: partner['x_test_binary'] = [{'key': 'value'}]",
+            field_description="Test Binary Field",
+            store=False,
+        )
+        partner = self.env["res.partner"].create({
+            "name": "Test Partner Binary Field",
+        })
+        self.assertEqual(partner.x_test_binary, [{'key': 'value'}])
+        wizard_data = self.env["studio.export.wizard.data"].create(
+            [{"model": partner._name, "res_id": partner.id}]
+        )
+        wizard = self.env["studio.export.wizard"].create({
+            "default_export_data": [Command.set(wizard_data.ids)],
+        })
+        export_info = wizard.get_export_info()
+        studio_module = self.env["ir.module.module"].get_studio_module()
+        self.exporter = StudioExportSerializer(self.env, studio_module, export_info)
+        self._export_cache = {}
+        self._export_iter = iter(self.exporter.serialize())
+        self.assertFileContains(
+            f"static/src/binary/res_partner/{partner.id}-x_test_binary",
+            "[{'key': 'value'}]"
         )
 
     def test_export_model_with_many2one_attachment(self):

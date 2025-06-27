@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import binascii
 import functools
 import pprint
 import textwrap
@@ -511,7 +512,10 @@ class StudioExportUtils:
                 # create files for binary fields
                 if field.type == 'binary' and record[field.name]:
                     value = record[field.name]
-                    binary_data = b64decode(value)
+                    try:
+                        binary_data = b64decode(value)
+                    except (binascii.Error, TypeError):
+                        binary_data = value.decode('utf-8') if isinstance(value, bytes) else str(value)
                     binary_files.append((self.get_binary_field_file_name(field, record), binary_data))
 
                 # handle relational fields
