@@ -25,7 +25,8 @@
                 <field name="helpdesk_ticket_id" string="Ticket"
                     invisible="not has_helpdesk_team or task_id"
                     readonly="readonly_timesheet"
-                    optional="hide" groups="helpdesk_timesheet.group_use_helpdesk_timesheet"/>
+                    optional="hide" groups="helpdesk_timesheet.group_use_helpdesk_timesheet"
+                    context="{'default_project_id': project_id}"/>
                 <field name="helpdesk_ticket_id" column_invisible="True"/>
             </xpath>
         </field>
@@ -50,7 +51,7 @@
             <xpath expr="//span[@name='task_id_wrapper']" position="after">
                 <span class="text-truncate" t-att-title="record.helpdesk_ticket_id.value"
                     groups="helpdesk_timesheet.group_use_helpdesk_timesheet">
-                    <field name="helpdesk_ticket_id" />
+                    <field name="helpdesk_ticket_id" context="{'default_project_id': project_id}"/>
                 </span>
             </xpath>
         </field>
@@ -82,7 +83,7 @@
                 <field name="helpdesk_ticket_id" string="Ticket"
                     invisible="display_task"
                     readonly="readonly_timesheet"
-                    context="{'search_default_my_ticket': True, 'search_default_is_open': True, 'search_view_ref': 'helpdesk.helpdesk_ticket_view_search_analysis'}"
+                    context="{'search_default_my_ticket': True, 'search_default_is_open': True, 'search_view_ref': 'helpdesk.helpdesk_ticket_view_search_analysis', 'default_project_id': project_id}"
                     options="{'no_open': True}" groups="helpdesk_timesheet.group_use_helpdesk_timesheet"/>
             </xpath>
             <xpath expr="//field[@name='task_id']" position="attributes">
@@ -217,7 +218,7 @@
                         'search_default_is_open': True,
                         'search_view_ref': 'helpdesk.helpdesk_ticket_view_search_analysis',
                         'form_view_ref': 'helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet_restrict_teams',
-                        'restrict_team_timesheet': True,
+                        'default_project_id': project_id,
                     }"
                     groups="helpdesk_timesheet.group_use_helpdesk_timesheet"
                 />

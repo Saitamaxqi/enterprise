@@ -9,6 +9,7 @@
                 fieldInfo="props.fields['helpdesk_ticket_id']"
                 placeholder="props.fields['helpdesk_ticket_id'].placeholder"
                 t-if="hasHelpdeskProject"
+                context="{'default_project_id': props.timesheet.data.project_id.id}"
             />
         </xpath>
         <xpath expr='//Field[@name="&apos;task_id&apos;"]' position="attributes">
