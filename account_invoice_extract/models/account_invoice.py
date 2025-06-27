@@ -4,10 +4,11 @@ import logging
 import re
 from difflib import SequenceMatcher
 from stdnum.eu.vat import guess_country
+from psycopg2.errors import UniqueViolation
 
 from odoo import api, fields, models, Command
 from odoo.addons.iap.tools import iap_tools
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ConcurrencyError
 from odoo.tools import _, float_compare
 from odoo.tools.misc import clean_context, formatLang
 
@@ -388,7 +389,14 @@ class AccountMove(models.Model):
         for field, val in (self.extract_prefill_data or {}).items():
             if field not in values:
                 values[field] = val
-        return self.env["res.partner"].with_context(clean_context(self.env.context)).create(values)
+
+        values['is_created_by_ocr'] = True
+        try:
+            return self.env["res.partner"].with_context(clean_context(self.env.context)).create(values)
+        except UniqueViolation:
+            # The partner has been created in another concurrent transaction.
+            # Use the retrying mechanism to see it.
+            raise ConcurrencyError("Duplicated OCR partner")
 
     def _find_partner_id_with_name(self, partner_name):
         if not partner_name:
