@@ -56,12 +56,16 @@ class AppointmentType(models.Model):
     appointment_duration_formatted = fields.Char(
         'Appointment Duration Formatted ', compute='_compute_appointment_duration_formatted', readonly=True,
         help='Appointment Duration formatted in words')
-    appointment_manual_confirmation = fields.Boolean("Manual Confirmation",
-        help="""Do not automatically accept meetings created from the appointment.
-            The appointment is still considered as reserved for the slots availability.""")
     appointment_tz = fields.Selection(
         _tz_get, string='Timezone', required=True, default=lambda self: self.env.user.tz or 'UTC',
         help="Timezone where appointment take place")
+    auto_confirm = fields.Boolean("Auto Confirm", default=True,
+        help="""Automatically confirm appointments at creation, up to the given percentage of the total capacity reserved.
+            If unchecked, the appointments will be created as requests and will need manual confirmation.
+            Requested appointments are still considered as reserved for the slots availability""")
+    # Technical field. True when bookings will always be confirmed
+    # e.g. 1.0 manual_confirmation_percentage and auto_confirm True
+    is_always_confirm = fields.Boolean(compute="_compute_is_always_confirm")
     image_1920 = fields.Image("Background Image")  # image.mixin override
     location_id = fields.Many2one('res.partner', string='Location')
     location = fields.Char(
@@ -70,8 +74,9 @@ class AppointmentType(models.Model):
     event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Video Link", default="discuss",
         help="Defines the type of video call link that will be used for the generated events. Keep it empty to prevent generating meeting url.")
     allow_guests = fields.Boolean(string='Allow invitations', help="Let attendees invite guests when registering a meeting.")
-    manual_confirmation_percentage = fields.Float("Capacity Percentage",
-        help="""Activate manual confirmation only if the user/resource total capacity reserved exceeds this percentage.""")
+    manual_confirmation_percentage = fields.Float("Capacity Percentage", default=1.0,
+        help="""Bookings will not be automatically confirmed once the total
+        reserved user/resource capacity exceeds this percentage of total capacity.""")
     manage_capacity = fields.Boolean("Manage Capacities",
         help="""Manage the maximum amount of people a user/resource can handle (e.g. Table for 6 persons, ...)""")
     max_bookings = fields.Integer("Total Bookings", compute="_compute_max_bookings", default=1, store=True, readonly=False,
@@ -332,6 +337,14 @@ class AppointmentType(models.Model):
                 )
             else:
                 record.location = record.location_id.name or ''
+
+    @api.depends('auto_confirm', 'manage_capacity', 'manual_confirmation_percentage')
+    def _compute_is_always_confirm(self):
+        for appointment_type in self:
+            appointment_type.is_always_confirm = appointment_type.auto_confirm and (
+                not appointment_type.manage_capacity
+                or (float_compare(appointment_type.manual_confirmation_percentage, 1.0, 3) == 0)
+            )
 
     @api.depends('schedule_based_on')
     def _compute_resource_ids(self):
@@ -613,26 +626,27 @@ class AppointmentType(models.Model):
         }
 
     def _get_default_appointment_status(self, start_dt, stop_dt, capacity_reserved):
-        """ Get the status of the appointment based on users/resources and the manual confirmation option.
+        """ Get the status of the appointment based on users/resources and the auto confirm option.
         :param datetime start_dt: start datetime of appointment (in naive UTC)
         :param datetime stop_dt: stop datetime of appointment (in naive UTC)
         :param int capacity_reserved: capacity reserved by the customer for the appointment
         """
         self.ensure_one()
         default_state = 'booked'
-        if self.appointment_manual_confirmation and self.manage_capacity:
-            bookings_data = self.env['appointment.booking.line'].sudo()._read_group([
-                ('appointment_type_id', '=', self.id),
-                ('event_start', '<', stop_dt),
-                ('event_stop', '>', start_dt)
-            ], [], ['capacity_used:sum'])
-            capacity_already_used = bookings_data[0][0]
-            total_capacity_used = capacity_already_used + capacity_reserved
-            total_capacity = self.resource_total_capacity if self.schedule_based_on == 'resources' else self.user_capacity
-            if float_compare(total_capacity_used / total_capacity, self.manual_confirmation_percentage, 2) > 0:
+        if not self.is_always_confirm:
+            if not self.auto_confirm:
                 default_state = 'request'
-        elif self.appointment_manual_confirmation:
-            default_state = 'request'
+            elif self.manage_capacity:
+                bookings_data = self.env['appointment.booking.line'].sudo()._read_group([
+                    ('appointment_type_id', '=', self.id),
+                    ('event_start', '<', stop_dt),
+                    ('event_stop', '>', start_dt)
+                ], [], ['capacity_used:sum'])
+                capacity_already_used = bookings_data[0][0]
+                total_capacity_used = capacity_already_used + capacity_reserved
+                total_capacity = self.resource_total_capacity if self.schedule_based_on == 'resources' else self.user_capacity
+                if float_compare(total_capacity_used / total_capacity, self.manual_confirmation_percentage, 2) > 0:
+                    default_state = 'request'
         return default_state
 
     def _slots_generate(self, first_day, last_day, timezone, reference_date=None):

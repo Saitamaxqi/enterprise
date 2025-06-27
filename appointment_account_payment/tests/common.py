@@ -29,7 +29,6 @@ class AppointmentAccountPaymentCommon(AppointmentCommon, HttpCase):
             'staff_user_ids': [(4, cls.staff_user_bxls.id)],
             **paid_apt_common_values,
         }, {
-            'appointment_manual_confirmation': False,
             'name': 'Paid Appointment Type - Resource',
             'manage_capacity': True,
             'schedule_based_on': 'resources',

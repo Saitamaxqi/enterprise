@@ -299,12 +299,12 @@ class AppointmentUITest(AppointmentUICommon):
             "capacity": 4,
             "name": "Resource",
         }])
-        self.apt_type_resource.sudo().write({
-            "appointment_manual_confirmation": True,
-            "manual_confirmation_percentage": 0.5,  # Set Manual Confirmation at 50%
-        })
+
         phone_question = self.apt_type_resource._get_main_phone_question()
         self.assertTrue(phone_question)
+        self.assertTrue(self.apt_type_resource.auto_confirm)
+        self.apt_type_resource.sudo().manual_confirmation_percentage = 0.5  # Set Manual Confirmation at 50%
+
         appointment_data = {
             "asked_capacity": 4,
             "available_resource_ids": [resource.id],
@@ -390,7 +390,7 @@ class AppointmentUITest(AppointmentUICommon):
     @users('apt_manager')
     def test_appointment_staff_user_manual_confirmation(self):
         """ Check that appointment and attendee status are correctly
-        set based on the appointment_manual_confirmation field"""
+        set based on the auto_confirm field"""
         self.authenticate(self.env.user.login, self.env.user.login)
         phone_question = self.apt_type_resource._get_main_phone_question()
         self.assertTrue(phone_question)
@@ -403,14 +403,16 @@ class AppointmentUITest(AppointmentUICommon):
             f'question_{phone_question.id}': '2025550999',
             'staff_user_id': self.staff_user_bxls.id,
         }
-        self.assertFalse(self.apt_type_bxls_2days.appointment_manual_confirmation)
+        self.assertTrue(self.apt_type_bxls_2days.auto_confirm)
+        self.assertTrue(self.apt_type_bxls_2days.is_always_confirm)
         res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
         self.assertEqual(res.status_code, 200, "Response should be OK")
         self.assertEqual(len(self.apt_type_bxls_2days.meeting_ids), 1)
         self.assertEqual(self.apt_type_bxls_2days.meeting_ids[0].appointment_status, "booked")
         self.assertTrue(all(attendee.state == 'accepted' for attendee in self.apt_type_bxls_2days.meeting_ids.attendee_ids))
 
-        self.apt_type_bxls_2days.appointment_manual_confirmation = True
+        self.apt_type_bxls_2days.auto_confirm = False
+        self.assertFalse(self.apt_type_bxls_2days.is_always_confirm)
         event_values['datetime_str'] = '2022-02-14 12:00:00'
         res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
         self.assertEqual(res.status_code, 200, "Response should be OK")

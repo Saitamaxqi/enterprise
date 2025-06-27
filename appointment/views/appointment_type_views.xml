@@ -296,14 +296,14 @@
                                             <span>by visitor</span>
                                         </div>
                                     </div>
-                                    <label for="appointment_manual_confirmation"/>
+                                    <label for="auto_confirm"/>
                                     <div class="d-flex">
-                                        <field name="appointment_manual_confirmation" class="oe_inline"/>
-                                        <div invisible="not appointment_manual_confirmation or not manage_capacity">
+                                        <field name="auto_confirm" class="oe_inline"/>
+                                        <div invisible="not auto_confirm or not manage_capacity">
                                             <span>
-                                                when over
+                                                up to
                                                 <field name="manual_confirmation_percentage" class="oe_inline o_input_4ch mx-1" widget="percentage"/>
-                                                total capacity
+                                                of max capacity
                                             </span>
                                         </div>
                                     </div>
