@@ -67,9 +67,6 @@
                 <field name="production_id" invisible="1"/>
                 <field name="finished_lot_id" invisible="not finished_lot_id" groups="stock.group_production_lot"/>
             </field>
-            <xpath expr="//field[@name='lot_id']" position="after">
-                <field name="lot_id" invisible="not workorder_id" groups="stock.group_production_lot" string="Component Lot/Serial"/>
-            </xpath>
             <xpath expr="//field[@name='measure_on']" position="after">
                 <field name="operation_id" string="Work Order Operation" invisible="not operation_id" groups="mrp.group_mrp_routings"/>
             </xpath>
