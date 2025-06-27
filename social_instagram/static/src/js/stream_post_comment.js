@@ -1,8 +1,6 @@
 import { StreamPostComment } from '@social/js/stream_post_comment';
 import { StreamPostCommentsReplyInstagram } from './stream_post_comments_reply';
 
-import { sprintf } from '@web/core/utils/strings';
-
 export class StreamPostCommentInstagram extends StreamPostComment {
 
     //--------
@@ -10,12 +8,11 @@ export class StreamPostCommentInstagram extends StreamPostComment {
     //--------
 
     get authorPictureSrc() {
-        return sprintf('https://graph.facebook.com/v17.0/%s/picture',
-            this.originalPost.instagram_facebook_author_id.raw_value);
+        return `https://graph.facebook.com/v17.0/${encodeURIComponent(this.originalPost.instagram_facebook_author_id.raw_value)}/picture`;
     }
 
     get link() {
-        return sprintf('https://www.instagram.com/%s', encodeURI(this.comment.from.name));
+        return `https://www.instagram.com/${encodeURIComponent(this.comment.from.name)}`;
     }
 
     get authorLink() {

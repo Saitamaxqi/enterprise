@@ -1,8 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
+import { url } from "@web/core/utils/urls";
 import { StreamPostComment } from '@social/js/stream_post_comment';
 import { StreamPostCommentsReplyTwitter } from './stream_post_comments_reply';
-
-import { sprintf } from '@web/core/utils/strings';
 
 export class StreamPostCommentTwitter extends StreamPostComment {
 
@@ -15,11 +14,11 @@ export class StreamPostCommentTwitter extends StreamPostComment {
     }
 
     get link() {
-        return sprintf('https://www.twitter.com/%s/statuses/%s', encodeURIComponent(this.comment.from.id), encodeURIComponent(this.comment.id));
+        return `https://www.twitter.com/${encodeURIComponent(this.comment.from.id)}/statuses/${encodeURIComponent(this.comment.id)}`;
     }
 
     get authorLink() {
-        return sprintf('https://twitter.com/intent/user?user_id=%s', encodeURIComponent(this.comment.from.id));
+        return url("https://twitter.com/intent/user", { user_id: this.comment.from.id });
     }
 
     get isAuthor() {

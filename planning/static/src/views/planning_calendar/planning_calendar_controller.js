@@ -3,7 +3,6 @@ import { CalendarController } from "@web/views/calendar/calendar_controller";
 import { usePlanningControllerActions } from "../planning_hooks";
 import { _t } from "@web/core/l10n/translation";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
-import { sprintf } from "@web/core/utils/strings";
 import {
     PlanningCalendarSidePanel
 } from "./planning_calendar_side_panel/planning_calendar_side_panel";
@@ -57,7 +56,7 @@ export class PlanningCalendarController extends CalendarController {
                     resModel: this.model.resModel,
                     resId: record.id || false,
                     context: newContext,
-                    title: record.id ? sprintf(_t("Open: %s"), record.title) : _t("New Event"),
+                    title: record.id ? _t("Open: %s", record.title) : _t("New Event"),
                     viewId: this.model.formViewId,
                 },
                 {

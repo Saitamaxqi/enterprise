@@ -11,7 +11,6 @@ import {
 } from "@web_studio/client_action/view_editor/editors/xml_utils";
 import { EventBus, markRaw, useEnv, reactive, toRaw } from "@odoo/owl";
 import { user } from "@web/core/user";
-import { sprintf } from "@web/core/utils/strings";
 import { parseXML } from "@web/core/utils/xml";
 import { viewTypeToString } from "@web_studio/studio_service";
 import {
@@ -465,7 +464,7 @@ export class ViewEditorModel extends Reactive {
         );
 
         const x2ManyEditionInfo = {
-            name: sprintf("Subview %s", viewTypeToString(viewType)),
+            name: `Subview ${viewTypeToString(viewType)}`,
             context,
             resModel,
             resId: resIds[0],

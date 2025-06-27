@@ -6,7 +6,6 @@ import { StreamPostTwitterQuote } from './stream_post_twitter_quote';
 import { debounce } from "@web/core/utils/timing";
 import { rpc } from "@web/core/network/rpc";
 import { patch } from "@web/core/utils/patch";
-import { sprintf } from "@web/core/utils/strings";
 import { useService } from '@web/core/utils/hooks';
 import { markup, useEffect } from "@odoo/owl";
 
@@ -93,7 +92,7 @@ patch(StreamPostKanbanRecord.prototype, {
 
     async _onTwitterTweetLike() {
         const userLikes = this.record.twitter_user_likes.raw_value;
-        rpc(sprintf('/social_twitter/%s/like_tweet', this.record.stream_id.raw_value), {
+        rpc(`/social_twitter/${encodeURIComponent(this.record.stream_id.raw_value)}/like_tweet`, {
             tweet_id: this.record.twitter_tweet_id.raw_value,
             like: !userLikes
         });
@@ -111,8 +110,8 @@ patch(StreamPostKanbanRecord.prototype, {
     },
 
     _onTwitterRetweet(ev) {
-        rpc(sprintf('/social_twitter/%s/%s', this.record.stream_id.raw_value,
-                 this.record.twitter_can_retweet.raw_value ? 'retweet' : 'unretweet'), {
+        const action = this.record.twitter_can_retweet.raw_value ? "retweet" : "unretweet";
+        rpc(`/social_twitter/${encodeURIComponent(this.record.stream_id.raw_value)}/${action}`, {
             tweet_id: this.record.twitter_tweet_id.raw_value,
             stream_id: this.record.stream_id.raw_value,
         }).then((result) => {

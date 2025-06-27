@@ -2,8 +2,6 @@ import { StreamPostComment } from '@social/js/stream_post_comment';
 import { StreamPostCommentsReplyFacebook } from './stream_post_comments_reply';
 import { formatFacebookReactions } from './utils';
 
-import { sprintf } from '@web/core/utils/strings';
-
 export class StreamPostCommentFacebook extends StreamPostComment {
 
     //--------
@@ -12,8 +10,7 @@ export class StreamPostCommentFacebook extends StreamPostComment {
 
     get authorLink() {
         if (this.comment.from.id) {
-            return sprintf('/social_facebook/redirect_to_profile/%s/%s?name=%s',
-                encodeURIComponent(this.props.mediaSpecificProps.accountId), encodeURIComponent(this.comment.from.id), encodeURIComponent(this.comment.from.name));
+            return `/social_facebook/redirect_to_profile/${encodeURIComponent(this.props.mediaSpecificProps.accountId)}/${encodeURIComponent(this.comment.from.id)}?name=${encodeURIComponent(this.comment.from.name)}`;
         } else {
             return "#";
         }
@@ -40,7 +37,7 @@ export class StreamPostCommentFacebook extends StreamPostComment {
     }
 
     get link() {
-        return sprintf('https://www.facebook.com/%s', this.comment.id);
+        return `https://www.facebook.com/${encodeURIComponent(this.comment.id)}`;
     }
 
     /**

@@ -2,7 +2,6 @@ import { StreamPostComment } from '@social/js/stream_post_comment';
 import { StreamPostCommentsReplyLinkedin } from './stream_post_comments_reply';
 
 import { rpc } from "@web/core/network/rpc";
-import { sprintf } from '@web/core/utils/strings';
 
 export class StreamPostCommentLinkedin extends StreamPostComment {
 
@@ -34,7 +33,7 @@ export class StreamPostCommentLinkedin extends StreamPostComment {
 
     get link() {
         let activityUrn = this.comment.id.split('(')[1].split(',')[0];
-        return sprintf('https://www.linkedin.com/feed/update/%s?commentUrn=%s', encodeURIComponent(activityUrn), encodeURIComponent(this.comment.id));
+        return `https://www.linkedin.com/feed/update/${encodeURIComponent(activityUrn)}?commentUrn=${encodeURIComponent(this.comment.id)}`;
     }
 
     get authorLink() {

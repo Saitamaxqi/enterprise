@@ -1,6 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
 import { astToFormula, UIPlugin, tokenize } from "@odoo/o-spreadsheet";
-import { sprintf } from "@web/core/utils/strings";
 import { getFirstListFunction, getNumberOfListFormulas } from "@spreadsheet/list/list_helpers";
 
 export class ListAutofillPlugin extends UIPlugin {
@@ -90,7 +89,7 @@ export class ListAutofillPlugin extends UIPlugin {
             .map((arg) => this.getters.evaluateFormula(this.getters.getActiveSheetId(), arg));
         const listId = evaluatedArgs[0];
         if (!this.getters.isExistingList(listId)) {
-            return sprintf(_t("Missing list #%s"), listId);
+            return _t("Missing list #%s", listId);
         }
         if (isColumn || functionName === "ODOO.LIST.HEADER") {
             const fieldName = functionName === "ODOO.LIST" ? evaluatedArgs[2] : evaluatedArgs[1];

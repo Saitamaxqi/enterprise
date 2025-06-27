@@ -1,7 +1,6 @@
 import options from "@web_editor/js/editor/snippets.options";
 import { _t } from "@web/core/l10n/translation";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
-import { sprintf } from "@web/core/utils/strings";
 
 const IR_MODEL_SPEC = {
     model: {},
@@ -42,7 +41,7 @@ options.registry.WebsiteFormEditor.include({
     },
 
     _getNewFormLabel(model) {
-        return sprintf(_t("Create %s"), model.name);
+        return _t("Create %s", model.name);
     },
 
     _makeSelectAction() {
