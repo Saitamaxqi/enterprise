@@ -39,5 +39,8 @@
         'point_of_sale.assets_prod_dark': [
             'web_gantt/static/src/**/*.dark.scss',
         ],
+       'web.assets_unit_tests': [
+            'pos_appointment/static/tests/unit/data/**/*'
+        ],
     }
 }

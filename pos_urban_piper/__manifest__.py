@@ -29,6 +29,9 @@ This module integrates with UrbanPiper to receive and manage orders from various
         'web.assets_tests': [
             'pos_urban_piper/static/tests/tours/**/*',
         ],
+        'web.assets_unit_tests': [
+            'pos_urban_piper/static/tests/unit/data/**/*'
+        ],
     },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

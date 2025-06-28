@@ -22,7 +22,7 @@ Enhancements for the Point of Sale UrbanPiper module. Includes features such as 
         'pos_preparation_display.assets': [
             'pos_urban_piper_enhancements/static/src/pos_preparation_display_override/**/*',
             'pos_urban_piper/static/src/utils.js',
-        ]
+        ],
     },
     'auto_install': True,
     'author': 'Odoo S.A.',

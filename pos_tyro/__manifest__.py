@@ -20,6 +20,9 @@
             'pos_tyro/static/src/app/**/*',
             'pos_tyro/static/src/overrides/**/*',
         ],
+        'web.assets_unit_tests': [
+            'pos_tyro/static/tests/unit/data/**/*'
+        ],
     },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

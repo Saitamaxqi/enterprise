@@ -26,5 +26,8 @@
         'web.assets_tests': [
             'pos_restaurant_appointment/static/tests/tours/**/*',
         ],
+        'web.assets_unit_tests': [
+            'pos_restaurant_appointment/static/tests/unit/data/**/*'
+        ],
     }
 }
