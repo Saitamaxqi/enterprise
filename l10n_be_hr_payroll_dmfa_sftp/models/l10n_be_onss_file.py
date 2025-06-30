@@ -111,7 +111,7 @@ class L10nBeOnssFile(models.Model):
 
     file_content = fields.Text(compute='_compute_file_content', store=True)
 
-    onss_declaration_id = fields.Many2one('l10n.be.onss.declaration')
+    onss_declaration_id = fields.Many2one('l10n.be.onss.declaration', index=True)
     employee_id = fields.Many2one('hr.employee')
     company_id = fields.Many2one('res.company', related="onss_declaration_id.company_id", store=True)
 

@@ -4,7 +4,7 @@ from odoo import _, models, fields
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    closing_return_id = fields.Many2one(comodel_name='account.return')
+    closing_return_id = fields.Many2one(comodel_name='account.return', index='btree_not_null')
 
     def action_open_tax_return(self):
         action = self.env['account.return'].action_open_tax_return_view(additional_return_domain=[('id', '=', self.closing_return_id.id)])

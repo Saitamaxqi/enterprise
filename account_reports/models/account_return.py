@@ -1857,7 +1857,7 @@ class AccountReturnCheck(models.Model):
     )
 
     # Return related
-    return_id = fields.Many2one(comodel_name='account.return', string="Account Return", required=True, ondelete="cascade")
+    return_id = fields.Many2one(comodel_name='account.return', string="Account Return", required=True, index=True, ondelete="cascade")
     return_state = fields.Char(string="Return State", related="return_id.state", store=True)
     return_name = fields.Char(string="Return Name", related="return_id.name")
     date_deadline = fields.Date("Deadline", related="return_id.date_deadline")

@@ -17,7 +17,7 @@ class L10nBeOnssDeclaration(models.Model):
     _description = 'ONSS Declaration'
 
     name = fields.Char(compute='_compute_name', store=True)
-    dmfa_id = fields.Many2one('l10n_be.dmfa', required=True)
+    dmfa_id = fields.Many2one('l10n_be.dmfa', required=True, index=True)
     company_id = fields.Many2one('res.company', related="dmfa_id.company_id", store=True)
     environment = fields.Selection(
         selection=[

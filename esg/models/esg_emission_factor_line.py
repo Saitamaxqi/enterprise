@@ -8,7 +8,7 @@ class EsgEmissionFactorLine(models.Model):
     _description = 'Emission Factor Line'
     _inherit = ['mail.thread']
 
-    esg_emission_factor_id = fields.Many2one('esg.emission.factor', string='Emission Factor')
+    esg_emission_factor_id = fields.Many2one('esg.emission.factor', string='Emission Factor', index=True)
     activity_type_id = fields.Many2one('esg.activity.type', string='Activity Type', tracking=True)
     gas_id = fields.Many2one('esg.gas', required=True, tracking=True)
     quantity = fields.Float(string='kg', default=1.0, required=True, tracking=True, digits=(16, 8))  # Fixing the digits for a correct display in tracking values.

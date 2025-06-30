@@ -6,7 +6,7 @@ class EsgAssignationLine(models.Model):
     _name = 'esg.assignation.line'
     _description = 'Assignation Line'
 
-    esg_emission_factor_id = fields.Many2one('esg.emission.factor', string='Emission Factor')
+    esg_emission_factor_id = fields.Many2one('esg.emission.factor', string='Emission Factor', index=True)
     account_id = fields.Many2one(
         'account.account',
         groups='account.group_account_invoice',

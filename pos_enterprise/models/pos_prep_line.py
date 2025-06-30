@@ -6,7 +6,7 @@ class PosPrepLine(models.Model):
     _description = 'Pos Preparation Line'
     _inherit = ['pos.load.mixin']
 
-    prep_order_id = fields.Many2one('pos.prep.order', string='Preparation Order', required=True, ondelete='cascade')
+    prep_order_id = fields.Many2one('pos.prep.order', string='Preparation Order', required=True, index=True, ondelete='cascade')
     quantity = fields.Float('Quantity', required=True)
     cancelled = fields.Float("Quantity of cancelled product")
     pos_order_line_uuid = fields.Char(help="Original pos order line UUID")
