@@ -2374,6 +2374,33 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             self.assertTrue(self.product.id in product_ids.ids)
             self.assertTrue(self.product2.id in product_ids.ids)
 
+    def test_upsell_invoice_line_description(self):
+        self.plan_year.billing_first_day = True
+        with freeze_time("06/30/2025"):
+            subscription = self.env['sale.order'].create({
+                'partner_id': self.partner.id,
+                'plan_id': self.plan_year.id,
+                'order_line': [
+                    Command.create({
+                        'name': self.product.name,
+                        'product_id': self.product.id,
+                        'product_uom_qty': 2.0,
+                        'product_uom_id': self.product.uom_id.id,
+                        'price_unit': 12,
+                        })],
+            })
+            subscription.plan_id = self.plan_year
+            subscription.action_confirm()
+            subscription._cron_recurring_create_invoice()
+            invoice = subscription._create_invoices()
+            invoice.action_post()
+            action = subscription.prepare_upsell_order()
+            upsell = self.env['sale.order'].browse(action['res_id'])
+            upsell.action_confirm()
+            line = upsell.order_line[0]._prepare_invoice_line()
+
+            self.assertIn("550 days 06/30/2025 to 12/31/2026", line['name'])
+
 
     def test_churn_discount_removal(self):
         """ Test the following flow:

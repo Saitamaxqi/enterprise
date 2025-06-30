@@ -396,6 +396,9 @@ class SaleOrderLine(models.Model):
                 duration = _('%s days', number_of_days)
                 res['price_unit'] = res['price_unit'] * ratio
 
+            if self.order_id.subscription_state == '7_upsell' and self.order_id.plan_id.billing_first_day:
+                duration = _('%s days', number_of_days)
+
             description = res.get('name') or self.name
             if self.recurring_invoice:
                 format_start = format_date(self.env, new_period_start, lang_code=lang_code)
