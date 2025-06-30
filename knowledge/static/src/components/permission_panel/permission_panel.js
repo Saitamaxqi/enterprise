@@ -115,6 +115,10 @@ export class PermissionPanel extends Component {
         return this.data.user_can_write;
     }
 
+    get userIsInternalEditor() {
+        return this.userIsAdmin || (this.userIsInternal && this.userCanEdit);
+    }
+
     get visibilities() {
         return { everyone: _t("Everyone"), members: _t("Members only") };
     }

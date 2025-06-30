@@ -152,13 +152,11 @@ class KnowledgeArticle extends models.ServerModel {
         for (const record of this) {
             record.user_can_write =
                 user.isAdmin ||
-                ((await user.hasGroup("base.group_user")) &&
-                    (record.user_permission === "write" ||
-                        members.some(
-                            (member) =>
-                                member.partner_id === serverState.partnerId &&
-                                member.permission === "write"
-                        )));
+                record.user_permission === "write" ||
+                members.some(
+                    (member) =>
+                        member.partner_id === serverState.partnerId && member.permission === "write"
+                );
         }
     }
 

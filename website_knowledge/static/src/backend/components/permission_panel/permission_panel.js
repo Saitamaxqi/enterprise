@@ -5,7 +5,7 @@ import { CopyButton } from "@web/core/copy_button/copy_button";
 
 patch(PermissionPanel.prototype, {
     onWebsitePublishedClick() {
-        if (!this.userCanEdit) {
+        if (!this.userIsInternalEditor) {
             return;
         }
         this.toggleWebsitePublished();
