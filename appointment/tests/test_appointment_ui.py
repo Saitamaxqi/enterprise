@@ -35,6 +35,16 @@ class AppointmentUICommon(AppointmentCommon, common.HttpCase):
         )
         cls.portal_user = cls._create_portal_user()
 
+    def _fetch_appointment_page_info_from_invite(self, invite):
+        page = self.url_open(invite.book_url)
+        arch = html.fromstring(page.text)
+
+        [slots_form] = arch.xpath("//form[@id='slots_form']")
+        [selected_user_option] = slots_form.xpath("//*[@id='selectStaffUser']/*[@selected]")
+        [slots_calendar] = arch.xpath("//*[@id='calendar']")
+
+        return slots_form, selected_user_option, slots_calendar
+
 @tagged('appointment_ui', '-at_install', 'post_install')
 class AppointmentUITest(AppointmentUICommon):
 
@@ -438,84 +448,6 @@ class AppointmentUITest(AppointmentUICommon):
         self.assertEqual(third_meeting.appointment_status, "request")
         self.assertTrue(all(attendee.state == 'accepted' for attendee in third_meeting.attendee_ids))
 
-    @freeze_time('2022-02-14T7:00:00')
-    def test_get_appointment_type_page_view(self):
-        """ Test if the appointment_type_page always shows available slots if there are some. """
-        now = self.reference_monday
-        user_admin = self.env.ref('base.user_admin')
-        slot_time = now.replace(hour=9, minute=0, second=0, microsecond=0) + timedelta(days=1)
-
-        staff_users = self.std_user | user_admin
-        appointment_type = self.env['appointment.type'].create([{
-            'name': 'Type Test Appointment View',
-            'schedule_based_on': 'users',
-            'staff_user_ids': staff_users.ids,
-            'min_schedule_hours': 1.0,
-            'max_schedule_days': 5,
-            'slot_ids': [(0, 0, {
-                'weekday': str(slot_time.isoweekday()),
-                'start_hour': slot_time.hour,
-                'end_hour': slot_time.hour + 1,
-            })],
-            'show_avatars': False,
-            'is_auto_assign': False,
-            'is_date_first': False,
-        }])
-
-        invite = self.env['appointment.invite'].create({
-            'appointment_type_ids': appointment_type.ids,
-        })
-
-        def render_appointment_page():
-            page = self.url_open(invite.book_url)
-            arch = html.fromstring(page.text)
-
-            [slots_form] = arch.xpath("//form[@id='slots_form']")
-            [selected_user_option] = slots_form.xpath("//*[@id='selectStaffUser']/*[@selected]")
-            [slots_calendar] = arch.xpath("//*[@id='calendar']")
-
-            return slots_form, selected_user_option, slots_calendar
-
-        slots_form, selected_user_option, slots_calendar = render_appointment_page()
-        self.assertIn(
-            int(selected_user_option.attrib['value']),
-            staff_users.ids,
-            f"Selected user must be one of {staff_users.ids}"
-        )
-        self.assertFalse(
-            'd-none' in slots_form.getparent().attrib['class'],
-            "Staff user selector should be visible")
-        self.assertTrue(
-            slots_calendar.getchildren(),
-            "Slots calendar should be visible")
-
-        # create an event to make the first staff user busy and remove its available slots
-        selected_staff_user = self.env['res.users'].browse(int(selected_user_option.attrib['value']))
-        remaining_staff_user = staff_users - selected_staff_user
-        self._create_meetings(selected_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
-
-        slots_form, selected_user_option, slots_calendar = render_appointment_page()
-        self.assertEqual(
-            int(selected_user_option.attrib['value']),
-            remaining_staff_user.id,
-            f"Selected user should be user with ID: {remaining_staff_user.id}")
-        self.assertFalse(
-            'd-none' in slots_form.getparent().attrib['class'],
-            "Staff user selector should be visible")
-        self.assertTrue(
-            slots_calendar.getchildren(),
-            "Slots calendar should be visible")
-
-        # create another event to make both staff user busy and remove all slots
-        self._create_meetings(remaining_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
-        slots_form, _, slots_calendar = render_appointment_page()
-        self.assertTrue(
-            'd-none' in slots_form.getparent().attrib['class'],
-            "Staff user selector should not be visible")
-        self.assertFalse(
-            slots_calendar.getchildren(),
-            "Slots calendar should not be visible")
-
 @tagged('appointment_ui', '-at_install', 'post_install')
 class CalendarTest(AppointmentUICommon):
 
@@ -609,3 +541,75 @@ class CalendarTest(AppointmentUICommon):
         res = self.url_open(cancel_meeting_url, data=cancel_meeting_data)
         self.assertEqual(res.status_code, 200)
         self.assertFalse(event.active)
+
+
+@tagged('appointment_ui')
+class AppointmentUIAtInstallTest(AppointmentUICommon):
+
+    @freeze_time('2022-02-14T7:00:00')
+    def test_get_appointment_type_page_view(self):
+        """ Test if the appointment_type_page always shows available slots if there are some. """
+        now = self.reference_monday
+        user_admin = self.env.ref('base.user_admin')
+        slot_time = now.replace(hour=9, minute=0, second=0, microsecond=0) + timedelta(days=1)
+
+        staff_users = self.std_user | user_admin
+        appointment_type = self.env['appointment.type'].create([{
+            'name': 'Type Test Appointment View',
+            'schedule_based_on': 'users',
+            'staff_user_ids': staff_users.ids,
+            'min_schedule_hours': 1.0,
+            'max_schedule_days': 5,
+            'slot_ids': [(0, 0, {
+                'weekday': str(slot_time.isoweekday()),
+                'start_hour': slot_time.hour,
+                'end_hour': slot_time.hour + 1,
+            })],
+            'show_avatars': False,
+            'is_auto_assign': False,
+            'is_date_first': False,
+        }])
+
+        invite = self.env['appointment.invite'].create({
+            'appointment_type_ids': appointment_type.ids,
+        })
+
+        slots_form, selected_user_option, slots_calendar = self._fetch_appointment_page_info_from_invite(invite)
+        self.assertIn(
+            int(selected_user_option.attrib['value']),
+            staff_users.ids,
+            f"Selected user must be one of {staff_users.ids}"
+        )
+        self.assertFalse(
+            'd-none' in slots_form.getparent().attrib['class'],
+            "Staff user selector should be visible")
+        self.assertTrue(
+            slots_calendar.getchildren(),
+            "Slots calendar should be visible")
+
+        # create an event to make the first staff user busy and remove its available slots
+        selected_staff_user = self.env['res.users'].browse(int(selected_user_option.attrib['value']))
+        remaining_staff_user = staff_users - selected_staff_user
+        self._create_meetings(selected_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
+
+        slots_form, selected_user_option, slots_calendar = self._fetch_appointment_page_info_from_invite(invite)
+        self.assertEqual(
+            int(selected_user_option.attrib['value']),
+            remaining_staff_user.id,
+            f"Selected user should be user with ID: {remaining_staff_user.id}")
+        self.assertFalse(
+            'd-none' in slots_form.getparent().attrib['class'],
+            "Staff user selector should be visible")
+        self.assertTrue(
+            slots_calendar.getchildren(),
+            "Slots calendar should be visible")
+
+        # create another event to make both staff user busy and remove all slots
+        self._create_meetings(remaining_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
+        slots_form, _, slots_calendar = self._fetch_appointment_page_info_from_invite(invite)
+        self.assertTrue(
+            'd-none' in slots_form.getparent().attrib['class'],
+            "Staff user selector should not be visible")
+        self.assertFalse(
+            slots_calendar.getchildren(),
+            "Slots calendar should not be visible")
