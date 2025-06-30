@@ -427,7 +427,17 @@ class HrPayslip(models.Model):
         return res
 
     def action_payslip_draft(self):
-        return self.write({'state': 'draft'})
+        self.env['ir.attachment'].sudo().search([
+            ('res_model', '=', 'hr.payslip'),
+            ('res_id', 'in', self.ids),
+            ('res_field', '=', 'payment_report'),
+        ]).unlink()
+        return self.write({
+            'payment_report': False,
+            'payment_report_filename': False,
+            'payment_report_date': False,
+            'state': 'draft'
+        })
 
     def _get_pdf_reports(self):
         default_report = self.env.ref('hr_payroll.action_report_payslip')

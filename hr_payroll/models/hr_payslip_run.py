@@ -219,7 +219,20 @@ class HrPayslipRun(models.Model):
     def action_draft(self):
         if self.slip_ids.filtered(lambda s: s.state == 'paid'):
             raise ValidationError(self.env._('You cannot reset a pay run to draft if some of the payslips have already been paid.'))
-        self.slip_ids.write({'state': 'draft'})
+        self.env['ir.attachment'].sudo().search([
+            ('res_model', '=', 'hr.payslip.run'),
+            ('res_id', 'in', self.ids),
+            ('res_field', '=', 'payment_report')
+        ]).unlink()
+        self.write({
+            'payment_report': False,
+            'payment_report_filename': False,
+            'payment_report_format': False,
+            'payment_report_date': False,
+        })
+        self.slip_ids.write({
+            'state': 'draft',
+        })
 
     def action_payment_report(self, export_format='csv'):
         self.ensure_one()
