@@ -2,6 +2,7 @@
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+from collections import defaultdict
 
 from odoo import api, fields, models, _
 from odoo.fields import Datetime
@@ -19,6 +20,13 @@ class HrLeave(models.Model):
         copy=False, default='normal', required=True, tracking=True)
 
     employee_registration_number = fields.Char(related="employee_id.registration_number")
+
+    @api.depends('state', 'employee_id', 'department_id')
+    def _compute_can_back_to_approve(self):
+        super()._compute_can_back_to_approve()
+        leaves_in_payslip = self._check_leave_in_payslip()
+        for holiday in self:
+            holiday.can_back_to_approve = holiday.can_back_to_approve and leaves_in_payslip[holiday]
 
     def _action_validate(self, check_state=True):
         # Get employees payslips
@@ -50,6 +58,12 @@ class HrLeave(models.Model):
     def action_refuse(self):
         res = super().action_refuse()
         self.sudo()._recompute_payslips()
+        return res
+
+    def _move_validate_leave_to_confirm(self):
+        res = super()._move_validate_leave_to_confirm()
+        self.sudo()._recompute_payslips()
+        self.write({'payslip_state': 'normal'})
         return res
 
     def _action_user_cancel(self, reason=None):
@@ -138,6 +152,26 @@ class HrLeave(models.Model):
         # Should change payslip_state to 'done' at the same time
         self.activity_feedback(['hr_payroll_holidays.mail_activity_data_hr_leave_to_defer'])
 
+    def _check_leave_in_payslip(self):
+        payslips = self.env['hr.payslip'].sudo().search([
+            ('employee_id', 'in', self.employee_id.ids),
+            ('date_from', '<=', max(self.mapped('date_to'))),
+            ('date_to', '>=', min(self.mapped('date_from'))),
+            ('state', 'in', ['done', 'paid']),
+        ])
+        leaves_in_payslip = defaultdict(bool)
+        for leave in self:
+            if not any(
+                    p.employee_id == leave.employee_id and
+                    p.date_from <= leave.date_to.date() and
+                    p.date_to >= leave.date_from.date() and
+                    p.is_regular
+                    for p in payslips
+            ):
+                leaves_in_payslip[leave] = True
+
+        return leaves_in_payslip
+
     def _check_uncovered_by_validated_payslip(self):
         payslips = self.env['hr.payslip'].sudo().search([
             ('employee_id', 'in', self.employee_id.ids),
@@ -145,7 +179,6 @@ class HrLeave(models.Model):
             ('date_to', '>=', min(self.mapped('date_from'))),
             ('state', 'in', ['done', 'paid']),
         ])
-
         for leave in self:
             if any(
                     p.employee_id == leave.employee_id and

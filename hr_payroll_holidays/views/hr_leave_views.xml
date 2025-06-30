@@ -33,7 +33,7 @@
                 <field name="payslip_state" widget="state_selection"
                     options="{'hide_label': False}" class="ms-auto mb-2" invisible="state == 'cancel' or not id"/>
             </xpath>
-            <button name="action_refuse" position="before">
+            <button name="action_back_to_approval" position="before">
                 <button
                     string="Report to Next Month"
                     name="action_report_to_next_month"
