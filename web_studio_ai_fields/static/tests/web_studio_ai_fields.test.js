@@ -11,8 +11,10 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { mountViewEditor } from "@web_studio/../tests/view_editor_tests_utils";
 
-import { before, expect, test } from "@odoo/hoot";
+import { before, describe, expect, test } from "@odoo/hoot";
 import { queryOne, waitFor } from "@odoo/hoot-dom";
+
+describe.current.tags("desktop");
 
 class Dummy extends models.Model {
     _name = "dummy";

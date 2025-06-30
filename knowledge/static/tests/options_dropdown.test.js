@@ -6,6 +6,7 @@ import {
     defineModels,
     fields,
     getKwArgs,
+    getMockEnv,
     makeMockServer,
     mockService,
     models,
@@ -186,6 +187,9 @@ test("Add Properties", async () => {
     // add properties button should be disabled on root articles
     await openOptionsDropdown();
     expect(".dropdown-item:contains('Add Properties')").toHaveClass("o_disabled_option");
+    if (getMockEnv().isSmall) {
+        await click(".o_bottom_sheet_backdrop");
+    }
     await click(".o_article_name:contains('c')");
     await waitFor(".o_article_active .o_article_name:contains('c')");
     // add properties shouldn't be disabled anymore
@@ -196,6 +200,9 @@ test("Add Properties", async () => {
     // add properties button shouldn't be shown anymore
     await openOptionsDropdown();
     expect(".dropdown-item:contains('Add Properties')").toHaveCount(0);
+    if (getMockEnv().isSmall) {
+        await click(".o_bottom_sheet_backdrop");
+    }
     // add properties button should be shown after closing the properties (no property created)
     await click(".o_knowledge_header .btn-properties");
     await openOptionsDropdown();

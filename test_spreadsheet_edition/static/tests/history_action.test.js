@@ -336,7 +336,7 @@ test("Side panel > make copy", async function () {
     await contains(`${revisionSelector}:eq(1)`).click();
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
 
-    const menuItems = document.querySelectorAll(".o_popover .o-dropdown-item");
+    const menuItems = document.querySelectorAll(".o-dropdown--menu .o-dropdown-item");
     await contains(menuItems[0]).click();
     expect.verifySteps(["forking"]);
 });
@@ -416,7 +416,7 @@ test("Side panel > restore revision and confirm", async function () {
     });
     await contains(`${revisionSelector}:eq(1)`).click();
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
-    await contains(".o_popover .o-dropdown-item:eq(1)").click();
+    await contains(".o-dropdown--menu .o-dropdown-item:eq(1)").click();
     await contains(".o_dialog .btn-primary").click();
 
     expect.verifySteps(["restored"]);
@@ -444,7 +444,7 @@ test("Side panel > restore revision and cancel", async function () {
     });
     await contains(`${revisionSelector}:eq(1)`).click();
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
-    await contains(".o_popover .o-dropdown-item:eq(1)").click();
+    await contains(".o-dropdown--menu .o-dropdown-item:eq(1)").click();
     await contains(".o_dialog footer .btn:eq(2)").click();
 
     expect(".o_dialog").toHaveCount(0);
@@ -479,7 +479,7 @@ test("Side panel > restore revision but copy instead", async function () {
     });
     await contains(`${revisionSelector}:eq(1)`).click();
     await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
-    await contains(".o_popover .o-dropdown-item:eq(1)").click();
+    await contains(".o-dropdown--menu .o-dropdown-item:eq(1)").click();
     await contains(".o_dialog footer .btn:eq(1)").click();
 
     expect.verifySteps(["forking"]);
