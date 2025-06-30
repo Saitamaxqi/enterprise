@@ -149,6 +149,7 @@ function prepareRegistry(filterRegistry) {
         "orm",
         "field",
         "name",
+        "tree_processor",
         "http",
         "home_menu",
         "menu",
