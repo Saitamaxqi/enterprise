@@ -842,7 +842,7 @@ registry.category("web_tour.tours").add("web_studio_test_create_model_with_click
             run: "click",
         },
         {
-            trigger: ".o_form_view",
+            trigger: ".o_form_view.check",
         },
         {
             trigger: ".o_web_studio_navbar_item button:enabled",
@@ -872,8 +872,8 @@ registry.category("web_tour.tours").add("web_studio_test_create_model_with_click
             run: "click",
         },
         {
-            content: "Wait the modal is closed before continue",
-            trigger: "body:not(:has(.modal))",
+            content: "Wait for the new model to be created",
+            trigger: ".o_web_studio_editor_manager .o_form_view:not(.check)",
         },
         {
             trigger: ".o_web_studio_leave",

@@ -40,6 +40,7 @@ class SimpleNewModelDialog extends Component {
     }
 
     confirm(data = {}) {
+        this.props.close();
         return this._confirm(data);
     }
 

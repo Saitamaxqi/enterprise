@@ -697,6 +697,13 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                         timeout=200)
 
     def test_create_model_with_clickable_stages(self):
+        self.testView.arch = '''
+             <form class="check">
+                 <group>
+                     <field name="name" required="True" />
+                 </group>
+             </form>
+        '''
         self.start_tour("/odoo?debug=tests", 'web_studio_test_create_model_with_clickable_stages', login="admin", timeout=200)
 
     def test_enter_x2many_edition_with_multiple_subviews(self):

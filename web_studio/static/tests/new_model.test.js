@@ -1,7 +1,7 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
 import { edit } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { animationFrame, Deferred } from "@odoo/hoot-mock";
 import {
     contains,
     defineMenus,
@@ -24,11 +24,13 @@ test("Add New Model", async () => {
             xmlid: "app_1",
         },
     ]);
+    const def = new Deferred();
 
     onRpc("/web_studio/create_new_menu", async (request) => {
         const { params } = await request.json();
         expect(params.menu_name).toBe("ABCD");
         expect(params.model_options).toEqual(["use_sequence", "use_mail", "use_active"]);
+        await def;
         return { action_id: 99999 };
     });
 
@@ -57,5 +59,7 @@ test("Add New Model", async () => {
 
     await contains(".o_web_studio_model_configurator_next").click();
     expect(".o_web_studio_model_configurator").toHaveCount(0);
-    expect.verifySteps(["loadAction 99999"]);
+    expect(".o_web_studio_new_model_modal").toHaveCount(0);
+    def.resolve();
+    await expect.waitForSteps(["loadAction 99999"]);
 });
