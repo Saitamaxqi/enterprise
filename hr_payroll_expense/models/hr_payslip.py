@@ -101,7 +101,7 @@ class HrPayslip(models.Model):
         # group by employee
         expenses_by_employee = expenses_sudo.grouped('employee_id')
         for slip_sudo in self.sudo():
-            payslip_expenses = expenses_by_employee.get(slip_sudo.employee_id, self.env['hr.payslip'])
+            payslip_expenses = expenses_by_employee.get(slip_sudo.employee_id, self.env['hr.expense'])
             if not slip_sudo.struct_id.rule_ids.filtered(lambda rule: rule.code == 'EXPENSES'):
                 continue
             if slip_sudo.expense_ids and clear_existing:
