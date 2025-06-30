@@ -89,7 +89,7 @@ class HrContractSalaryOffer(models.Model):
     @api.depends('contract_template_id')
     def _compute_l10n_be_canteen_cost(self):
         for offer in self:
-            offer.l10n_be_canteen_cost = self.contract_template_id.l10n_be_canteen_cost
+            offer.l10n_be_canteen_cost = offer.contract_template_id.l10n_be_canteen_cost
 
     @api.depends('applicant_id.partner_id', 'employee_id', 'car_id')
     def _compute_assigned_car_warning(self):
