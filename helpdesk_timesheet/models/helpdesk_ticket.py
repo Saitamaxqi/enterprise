@@ -16,7 +16,6 @@ class HelpdeskTicket(models.Model):
                 return team_id
         return super()._default_team_id()
 
-    team_id = fields.Many2one(default=_default_team_id)
     project_id = fields.Many2one(
         "project.project", related="team_id.project_id", readonly=True, store=True, index='btree_not_null')
     timesheet_ids = fields.One2many('account.analytic.line', 'helpdesk_ticket_id', 'Timesheets',

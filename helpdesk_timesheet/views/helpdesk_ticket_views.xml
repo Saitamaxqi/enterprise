@@ -98,6 +98,7 @@
         <field name='name'>helpdesk.ticket.form.inherit.timesheet.restrict.teams</field>
         <field name="model">helpdesk.ticket</field>
         <field name="inherit_id" ref="helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet"/>
+        <field name="mode">primary</field>
         <field name="arch" type="xml">
             <field name="team_id" position="attributes">
                 <attribute name="domain">[('use_helpdesk_timesheet', '=', True)]</attribute>
