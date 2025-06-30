@@ -511,7 +511,7 @@
             "cumulatedStart": false,
             "fillArea": true,
             "fieldMatching": {
-              "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+              "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
               "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
               "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
               "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -896,7 +896,7 @@
     "1": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -932,7 +932,7 @@
     "2": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": -1 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": -1 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -968,7 +968,7 @@
     "3": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1004,7 +1004,7 @@
     "4": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": -1 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": -1 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1040,7 +1040,7 @@
     "5": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1077,7 +1077,7 @@
     "6": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": -1 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": -1 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1114,7 +1114,7 @@
     "7": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1157,7 +1157,7 @@
     "8": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1200,7 +1200,7 @@
     "9": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1247,7 +1247,7 @@
     "10": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1290,7 +1290,7 @@
     "11": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1333,7 +1333,7 @@
     "12": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1376,7 +1376,7 @@
     "13": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },
@@ -1419,7 +1419,7 @@
     "14": {
       "type": "ODOO",
       "fieldMatching": {
-        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "date", "offset": 0 },
+        "77bc36ef-1319-4784-891f-950545059abc": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "dafc928e-1d51-4f33-9975-fc3bb76f5d9d": { "chain": "country_id", "type": "many2one" },
         "53afc2d9-ddfa-445a-9beb-ecfc2e8a90ce": { "chain": "tag_ids", "type": "many2many" },
         "43ab094a-2100-4110-a618-7b2513d38901": { "chain": "lost_reason_id", "type": "many2one" },

@@ -522,7 +522,7 @@
             "verticalAxisPosition": "left",
             "stacked": true,
             "fieldMatching": {
-              "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+              "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
               "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
               "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
               "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -563,7 +563,7 @@
             "verticalAxisPosition": "left",
             "stacked": true,
             "fieldMatching": {
-              "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+              "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
               "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
               "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
               "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -681,7 +681,7 @@
             "verticalAxisPosition": "left",
             "stacked": false,
             "fieldMatching": {
-              "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date" },
+              "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime" },
               "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
               "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
               "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -918,7 +918,7 @@
     "1": {
       "type": "ODOO",
       "fieldMatching": {
-        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
         "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
         "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -944,7 +944,7 @@
     "2": {
       "type": "ODOO",
       "fieldMatching": {
-        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
         "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
         "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -970,7 +970,7 @@
     "5": {
       "type": "ODOO",
       "fieldMatching": {
-        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
         "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
         "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -1002,7 +1002,7 @@
     "6": {
       "type": "ODOO",
       "fieldMatching": {
-        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
         "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
         "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -1034,7 +1034,7 @@
     "7": {
       "type": "ODOO",
       "fieldMatching": {
-        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
         "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
         "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
@@ -1066,7 +1066,7 @@
     "8": {
       "type": "ODOO",
       "fieldMatching": {
-        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "date", "offset": 0 },
+        "f93b0b68-4ddf-4141-b8e7-9e666c54bc45": { "chain": "create_date", "type": "datetime", "offset": 0 },
         "2a7d8441-ed48-4fb4-a2cf-87ba86b068b6": { "chain": "job_id", "type": "many2one" },
         "a5279de1-3e92-4dbd-8897-06d34b7ce62a": { "chain": "user_id", "type": "many2one" },
         "f1bc3bcb-c60a-4222-82c5-1dad28754122": { "chain": "medium_id", "type": "many2one" },
