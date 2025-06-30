@@ -451,7 +451,7 @@ class HrContractSalary(main.HrContractSalary):
         else:
             gross_to_compare = result['new_gross']
 
-        if minimum_gross_wage and gross_to_compare < minimum_gross_wage:
+        if minimum_gross_wage and gross_to_compare < minimum_gross_wage and offer.country_code == 'BE':
             result['configurator_warning'] = _("Your monthly gross wage is below the minimum legal amount %(min_gross)s €", min_gross=minimum_gross_wage)
 
         if benefits['version'].get('fold_wishlist_car_total_depreciated_cost', False) and 'wishlist_car_total_depreciated_cost' in benefits['version']:
