@@ -1238,6 +1238,21 @@ test("range will not exceed 10 years", async () => {
     expect(getGridContent().range).toBe("From: 03/01/2010 to: 02/28/2020");
 });
 
+test("range with identical startDate and stopDate", async () => {
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt date_start="start" date_stop="stop"/>
+        `,
+    });
+    expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
+    await selectCustomRange({ startDate: "2019-03-28", stopDate: "2019-03-28" });
+    expect(getGridContent().range).toBe("From: 03/28/2019 to: 03/28/2019");
+    await focusToday();
+    await ganttControlsChanges();
+    expect(getGridContent().range).toBe("From: 12/20/2018 to: 12/20/2018");
+});
+
 test("popover-template with an added footer", async () => {
     expect.assertions(9);
     onRpc("unlink", ({ model, method, args }) => {

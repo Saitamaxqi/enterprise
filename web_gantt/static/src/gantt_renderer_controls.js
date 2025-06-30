@@ -64,10 +64,14 @@ export class GanttRendererControls extends Component {
         this.state.focusDate = DateTime.local().startOf("day");
         if (this.state.rangeId === "custom") {
             const diff = diffColumn(this.state.startDate, this.state.stopDate, "day");
-            const n = Math.floor(diff / 2);
-            const m = diff - n;
-            this.state.startDate = this.state.focusDate.minus({ day: n });
-            this.state.stopDate = this.state.focusDate.plus({ day: m - 1 });
+            if (diff === 0) {
+                this.state.startDate = this.state.stopDate = this.state.focusDate;
+            } else {
+                const n = Math.floor(diff / 2);
+                const m = diff - n;
+                this.state.startDate = this.state.focusDate.minus({ day: n });
+                this.state.stopDate = this.state.focusDate.plus({ day: m - 1 });
+            }
         } else {
             Object.assign(
                 this.state,
