@@ -42,7 +42,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
 
         # If both the documents have same folder, open that folder.
         action = account_move_test_1.action_view_documents_account_move()
-        self.assertEqual(action['context']['searchpanel_default_folder_id'], self.folder_a.id, "The 'folder A' should be the default.")
+        self.assertEqual(action['context']['searchpanel_default_user_folder_id'], str(self.folder_a.id), "The 'folder A' should be the default.")
 
         # If both the documents have different folder, open the 'All' folder.
         folder_test = self.env['documents.document'].create({'name': 'folder_test', 'type': 'folder'})
@@ -50,7 +50,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         document.folder_id = folder_test.id
 
         action = account_move_test_1.action_view_documents_account_move()
-        self.assertFalse(action['context']['searchpanel_default_folder_id'], "The 'All' folder should be the default.")
+        self.assertFalse(action['context']['searchpanel_default_user_folder_id'], "The 'All' folder should be the default.")
 
     def test_bridge_folder_workflow(self):
         """

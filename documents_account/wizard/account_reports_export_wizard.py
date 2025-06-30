@@ -36,7 +36,7 @@ class Account_ReportsExportWizard(models.TransientModel):
             'res_model': 'documents.document',
             'domain': [],
             'context': {
-                'searchpanel_default_folder_id': self.folder_id.id,
+                'searchpanel_default_user_folder_id': str(self.folder_id.id),
                 'searchpanel_default_tag_ids': self.tag_ids.ids,
             },
             'view_id': self.env.ref('documents.document_view_kanban').id,

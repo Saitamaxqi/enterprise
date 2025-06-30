@@ -52,7 +52,7 @@ class HrEmployee(models.Model):
         # Documents created within that action will be 'assigned' to the employee
         # Also makes sure that the views starts on the hr_holder
         action['context'] = {
-            'searchpanel_default_folder_id': self.hr_employee_folder_id.id,
+            'searchpanel_default_user_folder_id': str(self.hr_employee_folder_id.id),
             'default_res_id': self.id,
             'default_res_model': 'hr.employee',
         }

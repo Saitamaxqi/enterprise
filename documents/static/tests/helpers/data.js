@@ -45,6 +45,7 @@ export class DocumentsDocument extends models.Model {
     previous_attachment_ids = fields.Many2many({ string: "History", relation: "ir.attachment" });
     tag_ids = fields.Many2many({ relation: "documents.tag" });
     folder_id = fields.Many2one({ relation: "documents.document" });
+    user_folder_id = fields.Char({ string: "Parent" });
     res_model = fields.Char({ string: "Model (technical)" });
     attachment_id = fields.Many2one({ relation: "ir.attachment" });
     company_id = fields.Many2one({ relation: "res.company" });
@@ -127,10 +128,22 @@ export class DocumentsDocument extends models.Model {
         return;
     }
 
-    action_move_documents(recordIds, folderId) {
-        for (const record of this.browse(recordIds)) {
-            record.folder_id = folderId;
+    /**
+     * Override to implement _search_user_folder_id search method
+     */
+    web_search_read() {
+        const domain = arguments[0].domain;
+        if (domain?.length > 0) {
+            const folderLeafIdx = domain.findIndex((leaf) => leaf[0] === "user_folder_id");
+            if (folderLeafIdx !== -1) {
+                domain.splice(folderLeafIdx, 1, [
+                    "user_folder_id",
+                    domain[folderLeafIdx][1],
+                    domain[folderLeafIdx][2].toString(),
+                ]);
+            }
         }
+        return super.web_search_read(...arguments);
     }
 
     action_move_folder(folder, target, before_folder_id = false) {
@@ -141,8 +154,8 @@ export class DocumentsDocument extends models.Model {
     /**
      * @override to avoid super() not working for us.
      */
-    search_panel_select_range() {
-        const result = { parent_field: this._parent_name };
+    search_panel_select_range(fieldName) {
+        const result = { parent_field: "user_folder_id" };
         result.values = [
             {
                 bold: true,
@@ -203,7 +216,7 @@ export class DocumentsDocument extends models.Model {
                 "create_activity_type_id",
                 "description",
                 "display_name",
-                "folder_id",
+                "user_folder_id",
                 "id",
                 "is_access_via_link_hidden",
                 "is_folder",
@@ -214,17 +227,11 @@ export class DocumentsDocument extends models.Model {
                 "user_permission",
             ]
         )) {
-            if (record.folder_id) {
-                record.folder_id = record.folder_id[0];
-            } else {
-                record.folder_id = !record.owner_id
-                    ? "COMPANY"
-                    : record.owner_id[0] === serverState.userId
-                    ? "MY"
-                    : "SHARED";
+            if (!isNaN(record.user_folder_id)) {
+                record.user_folder_id = Number(record.user_folder_id);
             }
             if (!record.active) {
-                record.folder_id = "TRASH";
+                record.user_folder_id = "TRASH";
             }
             if (record.alias_tag_ids) {
                 record.alias_tag_ids = record.alias_tag_ids.map((id) => {
@@ -302,13 +309,23 @@ export function makeDocumentRecordData(id, name, data = {}) {
         type: "binary",
     };
     const documentType = data.type || defaultValues.type;
+    const user_folder_id =
+        data.user_folder_id ||
+        (data.folder_id
+            ? data.folder_id.toString()
+            : data.owner_id
+            ? data.owner_id === serverState.userId
+                ? "MY"
+                : "SHARED"
+            : "COMPANY");
     return {
         ...defaultValues,
-        id: id,
+        id,
         access_token: `accessToken${strippedName}`,
         is_folder: documentType === "folder",
-        name: name,
+        name,
         type: documentType,
+        user_folder_id,
         ...data,
     };
 }

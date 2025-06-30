@@ -163,7 +163,8 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
             allowed_company_ids=self.company_allowed.ids
         )
         self.assertEqual(member_view_link_edit.user_permission, 'edit')
-        shortcut = member_view_link_edit.action_create_shortcut(False)
+        shortcut = member_view_link_edit.with_user(self.internal_user).action_create_shortcut(
+            location_user_folder_id='MY')
         self.assertEqual(shortcut.company_id, self.company_allowed)
         member_view_link_edit.company_id = self.company_disabled
         self.assertFalse(Documents_with_ctx.search([('id', '=', shortcut.id)]))
@@ -230,7 +231,7 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
         self.folder_b.folder_id = self.folder_a
         self.folder_b.company_id = self.company_allowed
         self.folder_b.children_ids.company_id = self.company_allowed
-        shortcut = self.folder_b.with_user(self.doc_user).action_create_shortcut(False)
+        shortcut = self.folder_b.with_user(self.doc_user).action_create_shortcut(location_user_folder_id='MY')
         self.folder_a.company_id = False
         self.assertFalse((self.folder_b | self.folder_b.children_ids).company_id)
         self.assertEqual(

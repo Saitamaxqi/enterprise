@@ -47,13 +47,10 @@ export class DocumentService {
         const documentId =
             Number(urlSearch.documents_init_document_id) || documents_init?.document_id;
         this.documentIdToRestoreOnce = documentId;
-        const initFolderId = urlSearch.documents_init_folder_id;
-        const folderId = ["MY", "COMPANY", "SHARED", "TRASH"].includes(initFolderId)
-            ? initFolderId
-            : Number(initFolderId) || documents_init?.folder_id;
-        this._initData = { documentId, folderId, openPreview };
-        if (this._initData.folderId) {
-            browser.localStorage.setItem("searchpanel_documents_document", this._initData.folderId);
+        const userFolderId = urlSearch.documents_init_user_folder_id;
+        this._initData = { documentId, userFolderId, openPreview };
+        if (userFolderId) {
+            browser.localStorage.setItem("searchpanel_documents_document", userFolderId);
         }
         this.getSelectionActions = null;
     }
@@ -248,10 +245,11 @@ export class DocumentService {
                         this.dialog.add(AccessRightsUpdageConfirmationDialog, {
                             destinationFolder: targetFolder,
                             confirm: async () => {
-                                await this.orm.call("documents.document", "action_move_documents", [
+                                await this.orm.write(
+                                    "documents.document",
                                     records.movableRecordIds,
-                                    targetFolderId,
-                                ]);
+                                    { folder_id: targetFolderId }
+                                );
                                 resolve(true);
                             },
                             cancel: () => resolve(false),
@@ -261,10 +259,9 @@ export class DocumentService {
                         return;
                     }
                 } else {
-                    await this.orm.call("documents.document", "action_move_documents", [
-                        records.movableRecordIds,
-                        targetFolderId,
-                    ]);
+                    await this.orm.write("documents.document", records.movableRecordIds, {
+                        folder_id: targetFolderId,
+                    });
                 }
             }
             if (records.nonMovableRecordIds.length) {
@@ -286,9 +283,9 @@ export class DocumentService {
                 { type: "warning" }
             );
         }
-        await this.orm.call("documents.document", "action_set_as_company_root", [
-            records.movableRecordIds,
-        ]);
+        await this.orm.write("documents.document", records.movableRecordIds, {
+            user_folder_id: "COMPANY",
+        });
         let message =
             records.movableRecordIds.length === 1
                 ? _t("The document/folder has been moved to the Company root.")
@@ -475,7 +472,7 @@ export class DocumentService {
                 buildFormData: (formData) => {
                     if (context) {
                         for (const key of [
-                            "default_owner_id",
+                            "default_user_folder_id",
                             "default_partner_id",
                             "default_res_id",
                             "default_res_model",

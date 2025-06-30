@@ -287,7 +287,9 @@ test("Drag and Drop - Check permission when dropping documents", async function 
 });
 
 test("Drag and Drop - Check access rights confirmation popup when moving from kanban view", async function () {
-    onRpc("action_move_documents", () => {
+    onRpc("documents.document", "write", ({ args }) => {
+        expect(args[0][0]).toBe(2);
+        expect(args[1].folder_id).toBe(5);
         expect.step("action_move_documents");
     });
     const documents = [
@@ -747,6 +749,25 @@ test("Export action is not available in file viewer ", async function () {
     ).click();
     await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
     await waitForNone(".o-dropdown-item:contains('Export')");
+});
+
+test("Control panel cog menu visibility", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        makeDocumentRecordData(2, "Request", { folder_id: 1 }),
+    ]);
+    const { name: folder1Name } = serverData["documents.document"][0];
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+    await waitFor(".o_kanban_renderer");
+
+    await contains(".o_search_panel_label_title:contains('Company')").click();
+    await waitFor(".o_last_breadcrumb_item:contains('Company')");
+    //  There should be no cog menu on Company
+    await waitForNone(".o_cp_action_menus", {});
+    // There should be one on Company roots
+    await contains(`.o_kanban_record:contains('${folder1Name}')`).click();
+    await waitFor(`.o_last_breadcrumb_item:contains('${folder1Name}')`);
+    expect(`.o_cp_action_menus`).toHaveCount(1);
 });
 
 test("Select a range with SHIFT key", async () => {

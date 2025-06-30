@@ -27,8 +27,10 @@
                 <filter string="Image/Video" name="image_video_documents" domain="['|', ('mimetype', 'ilike', 'image'), ('mimetype', 'ilike', 'video')]"/>
                 <filter string="URL" name="url_documents" domain="[('type', '=', 'url')]"/>
                 <filter string="Hide shortcuts" name="no_shortcuts" domain="[('shortcut_document_id', '=', False)]"/>
-                <separator/>
                 <filter string="Requested Documents" name="requested_filter" domain="[('type', '=', 'binary'), ('attachment_id', '=', False)]"/>
+                <separator/>
+                <filter string="In My Drive" name="my_drive_filter" domain="[('user_folder_id', 'child_of', 'MY')]"/>
+                <filter string="In Company" name="my_drive_filter" domain="[('user_folder_id', 'child_of', 'COMPANY')]"/>
                 <separator/>
                 <field name="type"/>
                 <group>
@@ -40,7 +42,7 @@
                     <filter string="File Extension" name="filter_file_extension" domain="[]" context="{'group_by': 'file_extension'}"/>
                 </group>
                 <searchpanel class="o_documents_search_panel">
-                    <field name="folder_id" string="Folders"/>
+                    <field name="user_folder_id" string="Folders"/>
                 </searchpanel>
             </search>
         </field>
@@ -58,6 +60,7 @@
                 <field name="attachment_id"/>
                 <field name="res_id"/>
                 <field name="folder_id"/>
+                <field name="user_folder_id"/>
                 <field name="lock_uid"/>
                 <field name="type"/>
                 <field name="shortcut_document_id"/>
@@ -253,6 +256,7 @@
                 <field name="type" width="25px" widget="documents_type_icon" nolabel="1"/>
                 <field name="name" required="True" readonly="False"/>
                 <field name="folder_id" optional="show"/>
+                <field name="user_folder_id" column_invisible="True"/>
                 <field name="display_name" column_invisible="1"/>
                 <field name="owner_id" widget="many2one_avatar_user" optional="show"/>
                 <field name="partner_id" optional="show"/>

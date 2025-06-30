@@ -439,6 +439,8 @@ class TestCaseDocuments(TransactionCaseDocuments):
         # Can't simply move archived documents
         with self.assertRaises(UserError):
             folder_3.folder_id = folder_2
+        with self.assertRaises(UserError):
+            folder_3.user_folder_id = str(folder_2.id)
 
         # Move is allowed if specifying `active` as well (without children) *if the current folder is active*
         with self.assertRaises(UserError):
@@ -571,6 +573,15 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.assertFalse(copied_document.res_model)
         self.assertEqual(copied_document.attachment_id.res_id, copied_document.id)
         self.assertEqual(copied_document.attachment_id.res_model, "documents.document")
+
+    def test_copy_shortcut(self):
+        """Check that copying shortcuts works as intended."""
+        manager_shortcut = self.document_txt.with_user(self.document_manager).action_create_shortcut()
+        self.assertTrue(manager_shortcut.folder_id)
+        self.assertEqual(manager_shortcut.copy({'user_folder_id': 'MY'}).user_folder_id, 'MY')
+        self.assertEqual(manager_shortcut.copy({'user_folder_id': 'COMPANY'}).user_folder_id, 'COMPANY')
+        self.assertEqual(manager_shortcut.copy({'user_folder_id': str(manager_shortcut.folder_id.id)}).user_folder_id,
+                         str(manager_shortcut.folder_id.id))
 
     def test_embedding_actions(self):
         """Check that embedded actions name is translated."""
@@ -768,9 +779,10 @@ class TestCaseDocuments(TransactionCaseDocuments):
                 })
 
     def test_document_shortcut_to_my_drive(self):
-        shortcut_1 = self.document_txt.action_create_shortcut(location_folder_id=self.folder_b.id)
-        shortcut_2 = shortcut_1.action_create_shortcut(location_folder_id=False)
+        shortcut_1 = self.document_txt.action_create_shortcut(location_user_folder_id=self.folder_b.id)
+        shortcut_2 = shortcut_1.with_user(self.internal_user).action_create_shortcut(location_user_folder_id='MY')
         self.assertEqual(shortcut_2.folder_id.id, False)
+        self.assertEqual(shortcut_2.with_user(self.internal_user).user_folder_id, 'MY')
 
     def test_document_upload_from_chatter(self):
         folder = self.env['documents.document'].create([
@@ -782,7 +794,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
             'res_model': 'documents.document',
             'res_id': folder.id,
         })
-        self.assertNotEqual(attachment.name, folder.name,'the folder name should not change')
+        self.assertNotEqual(attachment.name, folder.name, 'the folder name should not change')
 
     def test_document_toggle_lock(self):
         """ Test unlocking of the documents when the user_permission is set to edit. """

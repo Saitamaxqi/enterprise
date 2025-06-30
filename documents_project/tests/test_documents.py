@@ -97,7 +97,7 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
 
     def test_project_task_access_document(self):
         """
-        Tests that 'MissingRecord' error should not be rasied when trying to switch
+        Tests that 'MissingRecord' error should not be raised when trying to switch
         workspace for a non-existing document.
 
         - The 'active_id' here is the 'id' of a non-existing document.
@@ -106,7 +106,7 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
         """
         missing_id = self.env['documents.document'].search([], order='id DESC', limit=1).id + 1
         result = self.env['documents.document'].with_context(
-            active_id=missing_id, active_model='project.task').search_panel_select_range('folder_id')
+            active_id=missing_id, active_model='project.task').search_panel_select_range('user_folder_id')
         self.assertTrue(result)
 
     def test_copy_project(self):

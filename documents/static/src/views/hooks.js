@@ -236,13 +236,8 @@ export function useDocumentView(helpers) {
             action.doAction("documents.action_folder_form", {
                 additionalContext: {
                     default_type: "folder",
-                    default_folder_id: currentFolder || false,
-                    ...(currentFolder === "COMPANY"
-                        ? {
-                              default_access_internal: "edit",
-                              default_owner_id: false,
-                          }
-                        : {}),
+                    default_user_folder_id: currentFolder.toString(),
+                    ...(currentFolder === "COMPANY" ? { default_access_internal: "edit" } : {}),
                 },
                 fullscreen: env.isSmall,
                 onClose: async () => {
@@ -492,10 +487,9 @@ function useDocumentsViewFileUpload() {
      * the document's attachment by the given single file (binary accessToken).
      */
     const uploadFiles = async ({ files, accessToken, context }) => {
-        if (env.searchModel.getSelectedFolderId() === "COMPANY") {
-            // to upload in the COMPANY folder, we need to set Odoobot as owner
-            // (value will be passed as string, so we need to use 0 instead of false)
-            context.default_owner_id = "0";
+        const selectedUserFolderId = env.searchModel.getSelectedFolderId() || "MY"; // False='ALL'
+        if (["COMPANY", "MY"].includes(selectedUserFolderId)) {
+            context.default_user_folder_id = selectedUserFolderId;
         }
         await documentService.uploadDocument(files, accessToken, context);
     };

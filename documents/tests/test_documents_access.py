@@ -465,32 +465,33 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             folder_a_as_internal.action_update_access_rights(partners={self.internal_user.partner_id: ('edit', None)})
         folder_a_as_internal.sudo().action_update_access_rights(partners={self.internal_user.partner_id: ('edit', None)})
 
-    def test_action_move_documents(self):
-        """Check that documents can be moved to new location and have their rights updated."""
+    @users('documents@example.com')
+    def test_moving_documents(self):
+        """Check that documents can be moved to a new location and have their rights updated."""
         self.folder_b.write({
             'access_internal': 'none',
             'access_via_link': 'none',
         })
         self.folder_a.write({'access_via_link': 'view'})
-        self.folder_a_a.action_move_documents(folder_id=self.folder_b.id)
+        self.folder_a_a.folder_id = self.folder_b.id
         self.assertEqual(self.folder_a_a.folder_id, self.folder_b)
 
-        self.folder_b.action_move_documents(folder_id=self.folder_a.id)
+        self.folder_b.folder_id = self.folder_a.id
 
         self.assertEqual(self.folder_b.folder_id, self.folder_a)
         self.assertEqual(self.folder_b.access_internal, 'view', 'Internal access should have been updated.')
         self.assertEqual(self.folder_b.access_via_link, 'view', 'link access should have been updated.')
 
         self.document_gif.folder_id = False
-        shortcut = self.folder_b.action_create_shortcut(False)
-        self.document_gif.action_move_documents(shortcut.id)
+        shortcut = self.folder_b.with_user(self.doc_user).action_create_shortcut(location_user_folder_id='MY')
+        self.document_gif.folder_id = shortcut.id
         self.assertEqual(self.document_gif.folder_id, self.folder_b)
 
         doc_shortcut = self.document_gif.action_create_shortcut(shortcut.id)
         self.assertEqual(doc_shortcut.folder_id, self.folder_b)
 
         # making a shortcut of a shortcut use the target instead
-        shortcut = shortcut.action_create_shortcut(False)
+        shortcut = shortcut.action_create_shortcut(location_user_folder_id='MY')
         self.assertEqual(shortcut.shortcut_document_id, self.folder_b)
 
         # Can't move out if not editor on folder
@@ -500,7 +501,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             self.document_gif.with_user(self.internal_user).folder_id = self.folder_a
 
         with self.assertRaises(AccessError):
-            self.document_gif.with_user(self.internal_user).action_move_documents(self.folder_a.id)
+            self.document_gif.with_user(self.internal_user).folder_id = self.folder_a.id
 
         # Unless user is the owner
         self.document_gif.owner_id = self.internal_user
@@ -642,7 +643,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         })
         # or create a shortcut inside
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_folder_id=self.folder_a.id
+            location_user_folder_id=str(self.folder_a.id)
         )
         self.assertEqual(shortcut.folder_id, self.folder_a)
         # Managers can unpin by moving to another root folder
@@ -689,7 +690,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             self.assertFalse(self.document_manager.partner_id & child_access_before.partner_id)
 
         # managers pins from their drive
-        self.folder_a.with_user(self.document_manager).action_set_as_company_root()
+        self.folder_a.with_user(self.document_manager).user_folder_id = "COMPANY"
         self.assertEqual(
             (self.document_manager | self.internal_user).partner_id,
             self.folder_a.access_ids.filtered(lambda a: a.role).partner_id)
@@ -715,7 +716,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             self.assertFalse(self.doc_user.partner_id & child_access_before.partner_id)
 
         # managers can pin accessible folders (here in other user's drive)
-        self.folder_b.with_user(self.document_manager).action_set_as_company_root()
+        self.folder_b.with_user(self.document_manager).user_folder_id = "COMPANY"
         # previous owner is added as member
         self.assertEqual(
             (self.doc_user | self.internal_user).partner_id,
@@ -735,10 +736,10 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         self.folder_a.with_user(self.internal_user).check_access('write')
         with self.assertRaises(AccessError):
-            self.folder_a.with_user(self.internal_user).action_set_as_company_root()
+            self.folder_a.with_user(self.internal_user).user_folder_id = "COMPANY"
 
         # with SUDO, a normal user can pin a folder
-        self.folder_a.with_user(self.internal_user).sudo().action_set_as_company_root()
+        self.folder_a.with_user(self.internal_user).sudo().user_folder_id = "COMPANY"
         # with SUDO, a normal user can move a pinned a folder
         self.folder_a.with_user(self.internal_user).sudo().owner_id = self.internal_user
 
@@ -876,7 +877,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         See also ``test_access_via_link_from_parent_folder``.
         """
         self._assert_no_members(self.folder_b)
-        self.folder_b.action_move_documents(self.folder_a.id)
+        self.folder_b.folder_id = self.folder_a.id
         self.folder_a.owner_id = False
 
         self.assertEqual(self.folder_a.access_internal, 'view')
@@ -891,7 +892,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self._assert_raises_check_access_rule(self.document_txt.with_user(self.portal_user), 'read')
 
         # Create a shortcut to document_txt in folder_a
-        shortcut = self.document_txt.action_create_shortcut(location_folder_id=self.folder_a.id)
+        shortcut = self.document_txt.action_create_shortcut(location_user_folder_id=self.folder_a.id)
 
         self._assert_raises_check_access_rule(shortcut.with_user(self.portal_user), 'read',
                                               "Shortcut shouldn't be visible as source is inaccessible")
@@ -957,7 +958,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         # Access via access_internal
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_folder_id=self.folder_a.id
+            location_user_folder_id=self.folder_a.id
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.action_update_access_rights(access_internal='none')
@@ -970,7 +971,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.document_txt.action_update_access_rights(
             partners={self.internal_user.partner_id: ('view', False)})
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_folder_id=self.folder_a.id
+            location_user_folder_id=self.folder_a.id
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.action_update_access_rights(partners={self.internal_user.partner_id: (False, False)})
@@ -981,7 +982,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         # Access via ownership
         self.document_txt.owner_id = self.internal_user
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_folder_id=self.folder_a.id
+            location_user_folder_id=self.folder_a.id
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.owner_id = self.document_manager
@@ -993,7 +994,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         Doc_as_internal = self.env['documents.document'].with_user(self.internal_user)
         # Check in SUDO to remove the added `user_permission` domain from the access rules
         Doc_as_internal_sudo = Doc_as_internal.sudo()
-        shortcut = self.document_txt.action_create_shortcut(location_folder_id=self.folder_a.id)
+        shortcut = self.document_txt.action_create_shortcut(location_user_folder_id=self.folder_a.id)
 
         # Check edit access on the shortcut when we can only read the target
         self.document_txt.action_update_access_rights(access_internal='view', access_via_link='none')
@@ -1051,7 +1052,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             'last_access_date': fields.Datetime.now(),
         }])
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_folder_id=self.folder_a.id)
+            location_user_folder_id=self.folder_a.id)
         self.assertEqual(self.document_txt.with_user(self.internal_user).user_permission, 'view')
         self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'edit')
         self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'edit')]))
@@ -1063,6 +1064,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
 
     @mute_logger('odoo.addons.base.models.ir_rule')
+    @users('documents@example.com')
     def test_access_rights_shortcuts_propagation(self):
         """Test that we update shortcuts if we have edit access on the document"""
         target = self.env['documents.document'].create({
@@ -1113,9 +1115,9 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         shortcut = self.env['documents.document'].search([('id', 'child_of', root.id), ('name', '=', 'Shortcut')])
         sub_folder = self.env['documents.document'].search([('id', 'child_of', root.id), ('name', '=', 'Sub-folder')])
         sub_file = self.env['documents.document'].search([('id', 'child_of', root.id), ('name', '=', 'Sub-file')])
-        shortcut_1 = file_1.action_create_shortcut(False)
-        shortcut_2 = file_2.action_create_shortcut(False)
-        shortcut_3 = file_3.action_create_shortcut(False)
+        shortcut_1 = file_1.action_create_shortcut(location_user_folder_id='MY')
+        shortcut_2 = file_2.action_create_shortcut(location_user_folder_id='MY')
+        shortcut_3 = file_3.action_create_shortcut(location_user_folder_id='MY')
         self.assertEqual(shortcut_1.access_internal, 'edit')
         self.assertEqual(shortcut_2.access_internal, 'view')
         self.assertEqual(shortcut_3.access_internal, 'none')
@@ -1168,7 +1170,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.assertEqual(get_access(shortcut_2), False)
         self.assertEqual(get_access(shortcut_3), False)
 
-        # The members update is done only from the target to the shortcut,
+        # The members' update is done only from the target to the shortcut,
         # and not from the shortcut to the target
         self.assertEqual(get_access(target), False)
         self.assertEqual(get_access(shortcut), False)
@@ -1187,7 +1189,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_copy_document_access(self):
-        """ Test that the copy method of document also copy access right. """
+        """ Test that the copy method of Document also copies access rights. """
         IN_ONE_DAY = fields.Datetime.now() + datetime.timedelta(days=1)
         documents = self.document_gif | self.document_txt
 

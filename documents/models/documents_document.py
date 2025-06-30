@@ -6,7 +6,7 @@ import re
 import string
 import uuid
 from ast import literal_eval
-from collections import Counter, OrderedDict, defaultdict
+from collections import OrderedDict, defaultdict
 
 import requests
 from dateutil.relativedelta import relativedelta
@@ -22,6 +22,7 @@ from odoo.tools.image import image_process
 from odoo.tools.mimetypes import get_extension
 from odoo.tools.misc import clean_context
 from odoo.tools.pdf import PdfFileReader, PdfReadError
+
 from odoo.addons.mail.tools import link_preview
 
 _logger = logging.getLogger(__name__)
@@ -130,9 +131,10 @@ class DocumentsDocument(models.Model):
 
     # Folder = parent document
     parent_path = fields.Char(index=True)  # see '_parent_store' implementation in the ORM for details
-    folder_id = fields.Many2one('documents.document', string="Folder", ondelete="set null", tracking=True,
+    folder_id = fields.Many2one('documents.document', string='Folder', ondelete='set null', tracking=True,
                                 domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]",
                                 required=False, index=True)
+    user_folder_id = fields.Char(string='Parent', compute='_compute_user_folder_id', search='_search_user_folder_id')
     children_ids = fields.One2many('documents.document', 'folder_id')
 
     deletion_delay = fields.Integer("Deletion delay", compute="_compute_deletion_delay",
@@ -301,8 +303,10 @@ class DocumentsDocument(models.Model):
                 for document in root_documents
                 if document.owner_id in unauthorized_owners_sudo
             ]
-            raise ValidationError(_("The following user(s) cannot own root documents/folders: \n- %(lines)s",
-                lines="\n-".join(f'{user_name}: {doc_name}' for user_name, doc_name in users_documents_list)))
+            raise ValidationError(
+                _("The following user(s) cannot own root documents/folders: \n- %(lines)s",
+                  lines="\n-".join(f'{user_name}: {doc_name}' for user_name, doc_name in users_documents_list))
+            )
 
     def _get_unauthorized_root_document_owners_sudo(self):
         """ Return sudo'ed documents records as only used by system process."""
@@ -334,6 +338,123 @@ class DocumentsDocument(models.Model):
         if operator != 'in':
             return NotImplemented
         return [('type', '=', 'folder'), ('folder_id', '=', False), ('owner_id', '=', False)]
+
+    @api.depends_context('uid')
+    @api.depends('folder_id', 'folder_id.user_permission', 'owner_id', 'active')
+    def _compute_user_folder_id(self):
+        SHARED = 'SHARED' if not self.env.user.share else False
+        self.user_folder_id = False  # Inaccessible
+        active_documents = self.filtered('active')
+        (self - active_documents).user_folder_id = "TRASH"
+        for document in active_documents.filtered(lambda d: d.user_permission != 'none'):
+            if document.folder_id:
+                if document.folder_id.user_permission != 'none':
+                    document.user_folder_id = str(document.folder_id.id)
+                else:
+                    document.user_folder_id = SHARED
+            elif self.env.user.share:
+                document.user_folder_id = False
+            elif not document.owner_id:
+                document.user_folder_id = 'COMPANY'
+            elif document.owner_id == self.env.user:
+                document.user_folder_id = 'MY'  # Root of user's drive
+            else:
+                document.user_folder_id = SHARED  # Root of another user's drive
+
+    def _search_user_folder_id(self, operator, operand):
+        """Search domain for user_folder_id virtual folder_id.
+
+        Note that searching in "RECENT" is allowed for practicality w.r.t. webclient
+        even though no record will have "RECENT" as computed `user_folder_id`
+        """
+        if operator not in ('in', 'child_of'):
+            return NotImplemented
+        values = {operand} if isinstance(operand, str) else set(operand)
+        if 'TRASH' in values:
+            # Would need `active_test=False` in context
+            raise UserError(_("Searching on TRASH is not supported."))
+        domain_parts = []
+        folder_ids = []
+        for value in values:
+            if isinstance(value, int):
+                value = str(value)
+            elif not isinstance(value, str):
+                raise UserError(_("Invalid search operand."))
+            if not value and self.env.user.share:
+                domain_parts.append(Domain("folder_id", "=", False) | Domain('folder_id', 'not any', []))
+            elif not value:
+                domain_parts.append(Domain.FALSE)
+            elif value == "COMPANY":
+                domain_parts.append(Domain('folder_id', '=', False) & Domain('owner_id', '=', False))
+            elif value == "MY":
+                domain_parts.append(Domain('folder_id', '=', False) & Domain('owner_id', '=', self.env.user.id))
+            elif value == "RECENT":
+                domain_parts.append(Domain(
+                    'access_ids', 'any',
+                    Domain('partner_id', '=', self.env.user.partner_id.id) & Domain('last_access_date', '!=', False)))
+            elif value == "SHARED":
+                # Find records without permission on folder_id as directly searching on user_permission = 'none' is not allowed.
+                domain_parts.append(
+                    Domain('folder_id', '!=', False) & Domain('folder_id', 'not any', [])
+                    | Domain("folder_id", "=", False) & Domain("owner_id", "not in", [self.env.user.id, False])
+                )
+            elif value.isnumeric():
+                folder_ids.append(int(value))
+            else:
+                raise UserError(_("Unknown searched value %s", value))
+
+        if folder_ids:
+            domain_parts.append(Domain('folder_id', 'in', folder_ids))
+
+        domain = Domain.OR(domain_parts)
+
+        if operator == 'child_of':
+            # as ('id', 'child_of', domain') doesn't work, and for performance reasons.
+            # (rules will be applied on final domain)
+            top_level = self.with_context(active_test=False).sudo().search_fetch(domain, ['type'])
+            top_level_folders = top_level.filtered(lambda d: d.type == 'folder')
+            return Domain('id', 'in', top_level.ids) | Domain('folder_id', 'child_of', top_level_folders.ids)
+        return domain
+
+    @api.model
+    def _clean_vals_for_user_folder_id(self, vals):
+        """Update vals to integrate `user_folder_id`.
+
+        This allows to
+          * Override context-provided values if `user_folder_id` is defined
+          * Handle constraints on moving only on `folder_id` and `owner_id` instead
+            of duplicating them for `user_folder_id`
+        :param dict vals: Values for record
+        :raises UserError: on invalid new `user_folder_id` or conflict with `folder_id`
+           or `owner_id` in `vals`
+        """
+        user_folder_id = vals.get('user_folder_id')
+        if not user_folder_id:
+            return
+
+        if user_folder_id == "COMPANY":
+            new_vals = {'owner_id': False, 'folder_id': False}
+        elif user_folder_id == "MY":
+            if not self.env.user.active:
+                raise UserError(_("Inactive user cannot create/move in 'My Drive'."))
+            new_vals = {'owner_id': self.env.user.id, 'folder_id': False}
+        elif user_folder_id == "RECENT":
+            raise UserError(_("Documents cannot be created or moved in 'Recent'."))
+        elif user_folder_id == "SHARED":
+            raise UserError(_("Documents cannot be created or moved in 'Shared With Me'."))
+        elif user_folder_id == "TRASH":
+            raise UserError(_("Documents cannot be created or moved in the trash."))
+        elif user_folder_id.isnumeric():
+            new_vals = {"folder_id": int(user_folder_id)}
+        else:
+            raise UserError(_("Unexpected user_folder_id value %s", user_folder_id))
+
+        message = _("Conflicting values passed with user_folder_id.")
+        if (folder_id := vals.get('folder_id')) and folder_id != new_vals['folder_id']:
+            raise UserError(message)
+        if (owner_id := vals.get('owner_id')) and owner_id != new_vals['owner_id']:
+            raise UserError(message)
+        vals.update(new_vals)
 
     @api.depends('attachment_id', 'url', 'shortcut_document_id')
     def _compute_name_and_preview(self):
@@ -748,37 +869,25 @@ class DocumentsDocument(models.Model):
     def get_previewable_file_extensions(self):
         return {'bmp', 'mp4', 'mp3', 'png', 'jpg', 'jpeg', 'pdf', 'gif', 'txt', 'wav'}
 
-    def action_move_documents(self, folder_id):
-        """Move document to new parent folder or none (my drive or company)
-
-        :param int|bool folder_id: new parent folder id
-        """
-        self.folder_id = self.browse(folder_id)
-
     def action_move_folder(self, target, before_folder_id=False):
-        """Unlike action_move_documents, move one folder to the given position
-        and update its sequence. If no parent_folder is given, check whether the
+        """Move one folder to the given position and update its sequence.
+        If no parent_folder is given, check whether the
         parent is 'COMPANY' or 'MY'. If no before_folder is given, place it as
         last child of its parent (last root if no parent is given)
 
-        :param str|int target: id of the new parent folder or 'COMPANY' or 'MY'
+        :param str|int target: user_folder_id of the new parent folder
         :param int|bool before_folder_id: id of the folder before which to move
         """
         self.ensure_one()
         if self.type != 'folder' or not self.active:
             return
 
-        values = {'folder_id': False}
-        sibling_folders_domain = Domain('type', '=', 'folder') & Domain('id', '!=', self.id)
-
-        if target == "COMPANY":
-            self.action_set_as_company_root()  # Changes owner and updates access rights if necessary
-            sibling_folders_domain &= Domain('owner_id', '=', False) & Domain('folder_id', '=', False)
-        elif target == "MY":
-            sibling_folders_domain &= Domain('owner_id', '=', self.env.user.id) & Domain('folder_id', '=', False)
-        else:
-            sibling_folders_domain &= Domain('folder_id', '=', target)
-            values['folder_id'] = target
+        values = {'user_folder_id': target}
+        sibling_folders_domain = (
+            Domain('type', '=', 'folder')
+            & Domain('id', '!=', self.id)
+            & Domain('user_folder_id', '=', target)
+        )
 
         # If before_folder is indeed a sibling given the passed target (as it could have been moved by someone else),
         # assign its current sequence value to the current record and shift the following folders to keep ordering.
@@ -812,11 +921,6 @@ class DocumentsDocument(models.Model):
                 raise AccessError(_("You are not allowed to change ownerships of documents you do not own."))
         self.owner_id = new_user_id
 
-    def action_set_as_company_root(self):
-        """Set documents as company_root, give editor role to current owner without propagation to children."""
-        documents_to_update = self.filtered(lambda d: d.folder_id or d.owner_id)
-        documents_to_update.write({'owner_id': False, 'folder_id': False})
-
     @api.model
     def _ensure_user_role_without_propagation(self, role, documents_per_user):
         """Set role membership without propagating to children."""
@@ -833,23 +937,33 @@ class DocumentsDocument(models.Model):
             if (owner.partner_id, document) not in existing_access_values
         ])
 
-    def action_create_shortcut(self, location_folder_id=None):
-        """Create a shortcut to self in a specific folder or as sibling
+    def action_create_shortcut(self, location_user_folder_id=None):
+        """Create a shortcut to self in a specific user_folder or as a sibling.
 
-        :param int | None location_folder_id: Optional: where to create the shortcut.
+        :param int | str | None location_user_folder_id: Optional: where to create the shortcut.
         """
         if not self.ids:
-            return
+            return self.browse()
 
-        if len(self.folder_id.ids) > 1 and location_folder_id is None:
+        if len(self.folder_id.ids) > 1 and location_user_folder_id is None:
             raise UserError(_("A destination is required when creating multiple shortcuts at once."))
+        if location_user_folder_id is False:
+            raise UserError(_('Ambiguous shortcut target location.'))
+        if location_user_folder_id is not None:
+            try:
+                location_folder_id = int(location_user_folder_id)
+            except ValueError:  # Company, My => False
+                location_folder_id = False
+        else:
+            location_folder_id = None
+
         location = self.browse(location_folder_id) if location_folder_id is not None else self.folder_id
         if self.shortcut_document_id:
             targets = self.filtered(lambda d: not d.shortcut_document_id) | self.shortcut_document_id
-            return targets.action_create_shortcut(location.id)
+            return targets.action_create_shortcut(str(location.id) if location else location_user_folder_id)
 
         if location_folder_id and location.shortcut_document_id:
-            return self.action_create_shortcut(location.shortcut_document_id.id)
+            return self.action_create_shortcut(str(location.shortcut_document_id.id))
 
         if location and location.user_permission != 'edit':
             raise AccessError(_("You are not allowed to write in this folder."))
@@ -857,7 +971,7 @@ class DocumentsDocument(models.Model):
         self.check_access('read')
 
         return self.sudo().create([{
-            "folder_id": location.id,
+            "user_folder_id": str(location.id) if location else location_user_folder_id,
             "shortcut_document_id": document.id,
             "access_internal": document.access_internal or 'view',
             "access_via_link": document.access_via_link or 'none',
@@ -1573,6 +1687,8 @@ class DocumentsDocument(models.Model):
 
     def copy_data(self, default=None):
         default = dict(default or {})
+        if 'user_folder_id' in default:
+            self._clean_vals_for_user_folder_id(default)
         vals_list = super().copy_data(default=default)
         if 'name' not in default:
             for document, vals in zip(self, vals_list):
@@ -1600,13 +1716,9 @@ class DocumentsDocument(models.Model):
         skip_documents = self.env.context.get('documents_copy_folders_only')
 
         shortcuts = self.filtered('shortcut_document_id')
-        if not skip_documents:
-            for destination, targets in shortcuts.grouped('folder_id').items():
-                if not self.env.su and destination and destination.user_permission != 'edit':
-                    # create the shortcut in "My Drive" (owner is set automatically to the current user)
-                    destination = self.browse()
-
-                new_shortcuts = targets.action_create_shortcut(destination.id)
+        if shortcuts and not skip_documents:
+            for destination, targets in self._get_copy_shortcuts_destinations(shortcuts, default):
+                new_shortcuts = targets.action_create_shortcut(location_user_folder_id=destination)
                 for new_shortcut, target in zip(new_shortcuts, targets):
                     new_shortcut.name = _("%s (copy)", target.name)
                     new_documents[documents_order[target.id]] = new_shortcut
@@ -1687,6 +1799,36 @@ class DocumentsDocument(models.Model):
         if default and 'attachment_id' in default:
             return self.env['documents.document']
         return self.filtered('attachment_id')
+
+    def _get_copy_shortcuts_destinations(self, shortcuts, default):
+        """Integrate copy `default` and access rights to return valid destinations for shortcuts to copy."""
+        default = default or {}
+        folder_id = default.get('folder_id')
+        user_folder_id = default.get('user_folder_id')
+        prefetch_ids = None
+        candidates = {}
+
+        if user_folder_id:
+            if user_folder_id.isnumeric():
+                candidates[self.browse(int(user_folder_id))] = shortcuts
+            else:
+                return ((user_folder_id, shortcuts),)
+        elif folder_id is not None:
+            candidates[self.browse(folder_id)] = shortcuts
+        else:
+            candidates = shortcuts.grouped('folder_id')
+            prefetch_ids = shortcuts.folder_id.ids
+
+        targets_per_destination = defaultdict(self.browse)
+        for destination, destination_shortcuts in candidates.items():
+            if isinstance(destination, str):
+                pass
+            elif not self.env.su and destination and destination.with_prefetch(prefetch_ids).user_permission != 'edit':
+                destination = 'MY'
+            else:
+                destination = str(destination.id)
+            targets_per_destination[destination] |= destination_shortcuts
+        return targets_per_destination.items()
 
     @api.model
     def _get_fields_to_recompute(self, depends):
@@ -1841,7 +1983,7 @@ class DocumentsDocument(models.Model):
                     self._fields[key].related and self._fields[key].related.split('.')[0] == 'attachment_id']
             attachment_dict = {key: vals.pop(key) for key in keys if key in vals}
             attachment = self.env['ir.attachment'].browse(vals.get('attachment_id'))
-
+            self._clean_vals_for_user_folder_id(vals)
             if attachment and attachment_dict:
                 attachment.write(attachment_dict)
             elif attachment_dict:
@@ -1979,6 +2121,8 @@ class DocumentsDocument(models.Model):
     def write(self, vals):
         if 'shortcut_document_id' in vals:
             raise UserError(_("Shortcuts cannot change target document."))
+
+        self._clean_vals_for_user_folder_id(vals)
 
         is_manager = self.env.is_admin() or self.env.user.has_group('documents.group_documents_manager')
         pinned_folders_start = self.filtered('is_company_root_folder')
@@ -2154,7 +2298,12 @@ class DocumentsDocument(models.Model):
 
     @api.model
     def search_panel_select_range(self, field_name, **kwargs):
-        if field_name == 'folder_id':
+        def convert_user_folder_ids_to_int(vals):
+            """Convert user_folder_id to int where applicable to construct categoryTree matching on id of parent."""
+            if (user_folder_id := vals['user_folder_id']) and user_folder_id.isnumeric():
+                vals['user_folder_id'] = int(user_folder_id)
+
+        if field_name == 'user_folder_id':
             enable_counters = kwargs.get('enable_counters', False)
             search_panel_fields = self._get_search_panel_fields()
             domain = Domain('type', '=', 'folder')
@@ -2164,17 +2313,17 @@ class DocumentsDocument(models.Model):
                     domain & Domain('folder_id', 'child_of', unique_folder_id),
                     search_panel_fields,
                 )
-                accessible_folder_ids = {rec['id'] for rec in values}
+                map(convert_user_folder_ids_to_int, values)
                 for record in values:
-                    if folder_id := record['folder_id']:
-                        record['folder_id'] = folder_id[0] if folder_id[0] in accessible_folder_ids else False
+                    if record['id'] == unique_folder_id:
+                        record['user_folder_id'] = False  # Set as root
+                        break
                 return {
-                    'parent_field': 'folder_id',
+                    'parent_field': 'user_folder_id',
                     'values': values,
                 }
 
             records = self.env['documents.document'].search_read(domain, search_panel_fields)
-            accessible_folder_ids = {rec['id'] for rec in records}
             alias_tag_data = {}
             if not self.env.user.share:
                 alias_tag_ids = {alias_tag_id for rec in records for alias_tag_id in rec['alias_tag_ids']}
@@ -2200,9 +2349,9 @@ class DocumentsDocument(models.Model):
             targets_user_permission = {t.id: t.user_permission for t in targets}
 
             values_range = OrderedDict()
-            shared_root_id = "SHARED" if not self.env.user.share else False
             for record in records:
                 record_id = record['id']
+                convert_user_folder_ids_to_int(record)
                 if not self.env.user.share:
                     record['alias_tag_ids'] = [alias_tag_data[tag_id] for tag_id in record['alias_tag_ids']]
                 if enable_counters:
@@ -2210,27 +2359,10 @@ class DocumentsDocument(models.Model):
                     record['__count'] = image_element['__count'] if image_element else 0
                 if record['shortcut_document_id']:
                     record['target_user_permission'] = targets_user_permission[record['shortcut_document_id'][0]]
-                folder_id = record['folder_id']
-                if folder_id:
-                    folder_id = folder_id[0]
-                    if folder_id not in accessible_folder_ids:
-                        if record['shortcut_document_id']:
-                            continue
-                        folder_id = shared_root_id
-                elif record['owner_id'] and record['owner_id'][0] == self.env.user.id:
-                    folder_id = "MY"
-                elif record['owner_id'] or self.env.user.share:
-                    if record['shortcut_document_id']:
-                        continue
-                    folder_id = shared_root_id
-                else:
-                    folder_id = "COMPANY"
-
-                record['folder_id'] = folder_id
                 values_range[record_id] = record
 
             if enable_counters:
-                self._search_panel_global_counters(values_range, 'folder_id')
+                self._search_panel_global_counters(values_range, 'user_folder_id')
 
             special_roots = []
             if not self.env.user.share:
@@ -2241,7 +2373,7 @@ class DocumentsDocument(models.Model):
                             'display_name': _("Company"),
                             'id': 'COMPANY',
                             'description': _("Common roots for all company users."),
-                            'user_permission': 'view',
+                            'user_permission': 'edit' if self.env.user.has_group('documents.group_documents_manager') else 'view',
                         }, {
                             'display_name': _("My Drive"),
                             'id': 'MY',
@@ -2264,7 +2396,7 @@ class DocumentsDocument(models.Model):
                 ]
 
             return {
-                'parent_field': 'folder_id',
+                'parent_field': 'user_folder_id',
                 'values': list(values_range.values()) + special_roots,
             }
 
@@ -2375,9 +2507,9 @@ class DocumentsDocument(models.Model):
 
     @api.model
     def _get_search_panel_fields(self):
-        """Returns the list of fields used by the search panel."""
+        """Return the list of fields used by the search panel."""
         search_panel_fields = ['access_internal', 'access_token', 'access_via_link', 'active', 'company_id',
-                               'description', 'display_name', 'folder_id', 'is_access_via_link_hidden',
+                               'description', 'display_name', 'user_folder_id', 'is_access_via_link_hidden',
                                'is_company_root_folder', 'is_favorited', 'mail_alias_domain_count',
                                'owner_id', 'shortcut_document_id', 'user_permission']
         if not self.env.user.share:

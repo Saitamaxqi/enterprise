@@ -74,11 +74,11 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         if ([false, "TRASH", "RECENT"].includes(this.env.searchModel.getSelectedFolderId())) {
             context.inFolder =
                 this.props.record.data.folder_id?.display_name ||
-                (this.props.record.data?.owner_id?.id === user.userId
-                    ? _t("My Drive")
-                    : this.props.record.data?.owner_id
-                    ? _t("Shared with me")
-                    : _t("Company"));
+                {
+                    MY: _t("My Drive"),
+                    COMPANY: _t("Company"),
+                    SHARED: _t("Shared with me"),
+                }[this.props.record.data.user_folder_id];
         }
         context.mimetype = this.props.record.shortcutTarget.data.mimetype;
         context.documentEmailContent = this.contentState.documentEmailContent;

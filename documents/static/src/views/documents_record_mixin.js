@@ -176,15 +176,11 @@ export const DocumentsRecordMixin = (component) =>
             } else if (this.shortcutTarget.data.type === "folder") {
                 // Using doc data shortcut_document_id because isContainer record does not (need to) load shortcutTarget.
                 folderId = this.data.shortcut_document_id?.id || this.shortcutTarget.data.id;
-            } else if (this.shortcutTarget.data.folder_id) {
-                folderId = this.shortcutTarget.data.folder_id.id;
-            } else if (!this.shortcutTarget.data.owner_id.id) {
-                folderId = "COMPANY";
-            } else if (this.shortcutTarget.data.owner_id.id === user.userId) {
-                folderId = "MY";
-            }
-            if (!folderId || !this.model.env.searchModel.getFolderById(folderId)) {
-                folderId = "SHARED"; // Inaccessible folder
+            } else {
+                folderId = this.shortcutTarget.data.user_folder_id;
+                if (!isNaN(folderId)) {
+                    folderId = parseInt(folderId);
+                }
             }
             this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
             this.model.originalSelection = [this.shortcutTarget.resId];

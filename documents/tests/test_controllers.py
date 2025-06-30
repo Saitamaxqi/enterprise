@@ -984,18 +984,21 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
                 {'name': 'restricted_shared_link', 'folder_id': restricted_folder.id, 'access_via_link': 'view'},
             ])
         )
-        (internal_folder | company_portal).sudo().action_set_as_company_root()
+        (internal_folder | company_portal).sudo().user_folder_id = "COMPANY"
         archived_doc, archived_folder = archived = doc_as_demo.create([
             {'type': doc_type, 'name': f'Archived {doc_type}'} for doc_type in ('binary', 'folder')
         ])
         archived_doc_shortcut, archived_folder_shortcut = archived.action_create_shortcut()
         archived.action_archive()
 
+        for user in (self.user_portal, self.user_manager):
+            ShareRoute._upsert_last_access_date(self.env(user=user), shared_via_link)
+
         for document, user, expected_folder_id, expected_document_id in [
             (demo_personal, self.user_demo, 'MY', demo_personal.id),
             (demo_personal, self.user_portal, False, demo_personal.id),
-            (demo_personal, self.user_manager, 'SHARED', demo_personal.id),  # as would any other internal user
-            (company_portal, self.user_demo, 'COMPANY', company_portal.id),
+            (demo_personal, self.user_manager, False, demo_personal.id),
+            (company_portal, self.user_demo, 'COMPANY', company_portal.id),  # as would any other internal user
             (company_portal, self.user_portal, False, company_portal.id),
             (company_child_portal, self.user_demo, internal_folder.id, company_child_portal.id),
             (company_child_portal, self.user_portal, False, company_child_portal.id),
@@ -1015,7 +1018,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             document.invalidate_recordset()
             with self.subTest(document_name=document.name, username=user.name):
                 data = ShareRoute._documents_get_init_data(document.with_user(user), user)
-                self.assertEqual(data['folder_id'], expected_folder_id)
+                self.assertEqual(data['user_folder_id'], str(expected_folder_id) if expected_folder_id else expected_folder_id)
                 self.assertEqual(data.get('document_id'), expected_document_id)
 
     def test_from_access_token(self):
@@ -1059,6 +1062,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
                 data={
                     'csrf_token': http.Request.csrf_token(self),
                     'allowed_company_ids': f'[{comp.id}]',
+                    'user_folder_id': 'COMPANY',
                 },
                 files={'ufile': ('testingfile.txt', BytesIO(b"Hello"), 'text/plain')},
                 allow_redirects=False,
@@ -1072,6 +1076,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
                 data={
                     'csrf_token': http.Request.csrf_token(self),
                     'allowed_company_ids': f'[{main_company.id}]',
+                    'user_folder_id': 'COMPANY',
                 },
                 files={'ufile': ('testingfile2.txt', BytesIO(b"Hello2"), 'text/plain')},
                 allow_redirects=False,

@@ -111,17 +111,7 @@ class ShareRoute(http.Controller):
         skip_log = skip_log or request.env.user._is_public()
         if not skip_log:
             for doc_sudo in filter(bool, (document_sudo, document_sudo.shortcut_document_id)):
-                if access := request.env['documents.access'].sudo().search([
-                    ('partner_id', '=', request.env.user.partner_id.id),
-                    ('document_id', '=', doc_sudo.id),
-                ]):
-                    access.last_access_date = fields.Datetime.now()
-                else:
-                    request.env['documents.access'].sudo().create([{
-                        'document_id': doc_sudo.id,
-                        'partner_id': request.env.user.partner_id.id,
-                        'last_access_date': fields.Datetime.now(),
-                    }])
+                cls._upsert_last_access_date(request.env, doc_sudo)
 
         # Shortcut
         if follow_shortcut:
@@ -144,6 +134,21 @@ class ShareRoute(http.Controller):
             return Doc
 
         return document_sudo
+
+    @classmethod
+    def _upsert_last_access_date(cls, env, document):
+        """Set or update last_access_date to now() for env user, WITHOUT ACCESS RIGHT CHECK."""
+        if access := env['documents.access'].sudo().search([
+            ('partner_id', '=', env.user.partner_id.id),
+            ('document_id', '=', document.id),
+        ]):
+            access.last_access_date = fields.Datetime.now()
+        else:
+            env['documents.access'].sudo().create({
+                'document_id': document.id,
+                'partner_id': env.user.partner_id.id,
+                'last_access_date': fields.Datetime.now(),
+            })
 
     def _make_zip(self, name, documents):
         """
@@ -372,32 +377,16 @@ class ShareRoute(http.Controller):
             return {}
 
         document.ensure_one()
-        documents_init = {}
-
-        # If the document is archived, we open the TRASH
+        documents_init = {'user_folder_id': document.user_folder_id, 'document_id': document.id}
         if not document.active:
-            documents_init['folder_id'] = 'TRASH'
-            documents_init['document_id'] = document.id
+            pass
         # Shortcuts to archived folders behave like binary documents because these folders cannot be browsed.
-        elif document.type != 'folder' or document.shortcut_document_id and not document.shortcut_document_id.active:
-            parent = document.folder_id
-            shared_root = False if user.share else "SHARED"  # Portal don't have 'Shared with me'
-            # If the user does not have access to the parent folder, we open it in the "SHARED" folder.
-            if parent:
-                documents_init['folder_id'] = parent.id if parent.user_permission in {'view', 'edit'} else shared_root
-            else:
-                documents_init['folder_id'] = (
-                    "MY" if document.owner_id == user
-                    else "COMPANY" if not user.share and not document.owner_id
-                    else shared_root
-                )
-            documents_init['document_id'] = document.id
+        elif document.type == "folder" and (not document.shortcut_document_id or document.shortcut_document_id.active):
+            documents_init = {'user_folder_id': str(document.id)}
+        else:
             target = document.shortcut_document_id or document
             if document.type == 'binary' and target.attachment_id:
                 documents_init['open_preview'] = True
-        else:
-            documents_init['folder_id'] = document.id
-
         return documents_init
 
     @http.route('/documents/avatar/<access_token>',
@@ -563,6 +552,7 @@ class ShareRoute(http.Controller):
         self,
         ufile,
         access_token='',
+        user_folder_id='',
         owner_id='',
         partner_id='',
         res_id='',
@@ -576,13 +566,17 @@ class ShareRoute(http.Controller):
         :param access_token: the access token to a folder in which to
             create new documents, or the access token to an existing
             document where to upload/replace its attachment.
-            A falsy value means no folder_id and is allowed for
-            internal users to upload at the root of "My Drive".
+            A falsy value means no folder_id and is allowed to
+            enable authorized users to upload at the root of
+            user_folder_id (My Drive for internal users, Company for
+            documents managers)
         :param owner_id, partner_id, res_id, res_model: field values
             when creating new documents, for internal users only
         """
         if allowed_company_ids:
             request.update_context(allowed_company_ids=json.loads(allowed_company_ids))
+        if access_token and user_folder_id or not access_token and user_folder_id not in {'COMPANY', 'MY'}:
+            raise BadRequest("Incorrect token/user_folder_id values")
         is_internal_user = request.env.user._is_internal()
         if is_internal_user and not access_token:
             document_sudo = request.env['documents.document'].sudo()
@@ -604,7 +598,7 @@ class ShareRoute(http.Controller):
 
         if is_internal_user:
             with replace_exceptions(ValueError, by=BadRequest):
-                owner_id = int(owner_id) if owner_id else request.env.user.id
+                owner_id = int(owner_id) if owner_id else request.env.user.id if not user_folder_id else None
                 partner_id = int(partner_id) if partner_id else None
                 res_id = int(res_id) if res_id else False
         elif owner_id or partner_id or res_id or res_model:
@@ -617,7 +611,7 @@ class ShareRoute(http.Controller):
 
         previous_attachment_id = document_sudo.attachment_id
         document_ids = self._documents_upload(
-            document_sudo, files, owner_id, partner_id, res_id, res_model)
+            document_sudo, files, owner_id, user_folder_id, partner_id, res_id, res_model)
         if document_sudo.type != 'folder' and len(document_ids) == 1:
             document_sudo = document_sudo.browse(document_ids)
 
@@ -629,7 +623,7 @@ class ShareRoute(http.Controller):
             return request.make_json_response(document_ids)
 
     def _documents_upload(self,
-            document_sudo, files, owner_id, partner_id, res_id, res_model):
+            document_sudo, files, owner_id, user_folder_id, partner_id, res_id, res_model):
         """ Replace an existing document or upload a new one. """
         is_internal_user = request.env.user._is_internal()
 
@@ -652,6 +646,7 @@ class ShareRoute(http.Controller):
             document_ids.append(document_sudo.id)
         else:
             folder_sudo = document_sudo
+            location = {'user_folder_id': user_folder_id} if user_folder_id else {'folder_id': folder_sudo.id}
             for file in files:
                 document_sudo = self._documents_upload_create_write(folder_sudo, {
                     'attachment_id': AttachmentSudo._from_request_file(
@@ -659,7 +654,7 @@ class ShareRoute(http.Controller):
                     ).id,
                     'type': 'binary',
                     'access_via_link': 'none' if folder_sudo.access_via_link in (False, 'none') else 'view',
-                    'folder_id': folder_sudo.id,
+                    **location,
                     'owner_id': owner_id,
                     'res_model': res_model or False,
                     'res_id': res_id,

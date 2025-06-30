@@ -95,11 +95,11 @@ export class DocumentsDetailsPanel extends Component {
     }
 
     get rootFolderPlaceholder() {
-        return this.props.record.data?.owner_id.id === user.userId
-            ? _t("My Drive")
-            : this.props.record.data?.owner_id
-            ? _t("Shared with me")
-            : _t("Company");
+        return {
+            MY: _t("My Drive"),
+            COMPANY: _t("Company"),
+            SHARED: _t("Shared with me"),
+        }[this.props.record.data?.user_folder_id];
     }
 
     get activeCompanies() {

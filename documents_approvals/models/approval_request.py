@@ -49,7 +49,7 @@ class ApprovalRequest(models.Model):
     def action_get_attachment_view(self):
         if not self.company_id.documents_approvals_settings:
             return super().action_get_attachment_view()
-
+        default_user_folder_id = str(folder.id) if (folder := self._get_document_folder()) else False
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'documents.document',
@@ -63,7 +63,7 @@ class ApprovalRequest(models.Model):
                 ('res_id', 'in', self.ids),
             ],
             'context': {
-                'searchpanel_default_folder_id': self._get_document_folder().id,
+                'searchpanel_default_user_folder_id': default_user_folder_id,
                 'default_res_model': 'approval.request',
                 'default_res_id': self.ids[0],
             },

@@ -9,6 +9,7 @@ export const basicDocumentsKanbanArch = /* xml */ `
         <field name="access_token"/>
         <field name="mimetype"/>
         <field name="folder_id"/>
+        <field name="user_folder_id"/>
         <field name="company_id"/>
         <field name="owner_id"/>
         <field name="partner_id"/>

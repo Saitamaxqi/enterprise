@@ -153,12 +153,12 @@ class ProjectProject(models.Model):
     def action_view_documents_project(self):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id("documents.document_action_preference")
+        default_user_folder_id = str(self.documents_folder_id.id) if self.documents_folder_id else False
         return action | {
             'view_mode': 'kanban,list',
             'context': {
                 'active_id': self.id,
                 'active_model':  'project.project',
-                'documents_unique_folder_id': True,
-                'searchpanel_default_folder_id': self.documents_folder_id.id,
+                'searchpanel_default_user_folder_id': default_user_folder_id,
             }
         }

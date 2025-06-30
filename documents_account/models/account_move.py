@@ -123,11 +123,14 @@ class AccountMove(models.Model):
         self.ensure_one()
         domain = [('res_model', '=', self._name), ('res_id', '=', self.id)]
         documents = self.env['documents.document'].search(domain)
-        folder_ids = documents.folder_id.ids
-        default_folder_id = folder_ids[0] if len(folder_ids) == 1 else False
+        default_user_folder_id = (
+            documents[0].user_folder_id
+            if len(set(documents.mapped('user_folder_id'))) == 1
+            else False
+        )
 
         return {
             **self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference'),
             'domain': domain,
-            'context': {'searchpanel_default_folder_id': default_folder_id},
+            'context': {'searchpanel_default_user_folder_id': default_user_folder_id},
         }

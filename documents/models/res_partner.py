@@ -26,7 +26,7 @@ class ResPartner(models.Model):
             'domain': [('partner_id', '=', self.id)],
             'context': {
                 'default_partner_id': self.id,
-                'searchpanel_default_folder_id': False,
+                'searchpanel_default_user_folder_id': False,
             },
         }
 

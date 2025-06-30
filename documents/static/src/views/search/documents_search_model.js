@@ -3,7 +3,6 @@ import { SearchModel } from "@web/search/search_model";
 import { browser } from "@web/core/browser/browser";
 import { router } from "@web/core/browser/router";
 import { Domain } from "@web/core/domain";
-import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 
 
@@ -37,7 +36,7 @@ export class DocumentsSearchModel extends SearchModel {
 
         await super.load(config);
 
-        let folderId = router.current.folder_id || this.getSelectedFolderId();
+        let folderId = router.current.user_folder_id || this.getSelectedFolderId();
 
         if (folderId) {
             const folderSection = this.getSections()[0];
@@ -91,8 +90,13 @@ export class DocumentsSearchModel extends SearchModel {
     _extractSearchDefaultsFromGlobalContext() {
         const { searchDefaults, searchPanelDefaults } =
             super._extractSearchDefaultsFromGlobalContext(...arguments);
-        if (searchPanelDefaults.folder_id && !this.globalContext.no_documents_unique_folder_id) {
-            this.globalContext['documents_unique_folder_id'] = searchPanelDefaults.folder_id;
+        if (
+            searchPanelDefaults.user_folder_id &&
+            !this.globalContext.no_documents_unique_folder_id
+        ) {
+            this.globalContext["documents_unique_folder_id"] = Number(
+                searchPanelDefaults.user_folder_id
+            );
         }
         return { searchDefaults, searchPanelDefaults };
     }
@@ -148,7 +152,9 @@ export class DocumentsSearchModel extends SearchModel {
         const folderSection = this.getSections()[0];
         while (folder) {
             folders.push(folder);
-            folder = folder.folder_id ? folderSection.values.get(folder.folder_id) : false;
+            folder = folder.folder_id
+                ? folderSection.values.get(folder.folder_id)
+                : folderSection.values.get(folder.user_folder_id);
         }
         return folders;
     }
@@ -193,16 +199,6 @@ export class DocumentsSearchModel extends SearchModel {
     }
 
     /**
-     * Updates the folder id of a record matching the given value.
-     * @param {number[]} recordIds
-     * @param {number} valueId
-     */
-    async updateRecordFolderId(recordIds, valueId) { // todo: CHECK IF USED
-        await this.orm.call("documents.document", "action_move_documents", [recordIds, valueId]);
-        this.trigger("update");
-    }
-
-    /**
      * Updates the tag ids of a record matching the given value.
      * @param {number[]} recordIds
      * @param {number} valueId
@@ -239,64 +235,41 @@ export class DocumentsSearchModel extends SearchModel {
     }
 
     /**
-     * Make sure we use the correct domain instead of folder_id = 'COMPANY', 'MY', ....
+     * Optimize searches
      * @override
      */
     _getCategoryDomain() {
-        const folderCategory = this.categories.find((cat) => cat.fieldName === "folder_id");
-        if (folderCategory.activeValueId === "COMPANY") {
-            return [
-                ["folder_id", "=", false],
-                ["owner_id", "=", false],
-            ];
+        const userFolderCategory = this.categories.find(
+            (cat) => cat.fieldName === "user_folder_id"
+        );
+        if (["COMPANY", "MY", "RECENT"].includes(userFolderCategory.activeValueId)) {
+            return [["user_folder_id", "=", userFolderCategory.activeValueId]];
         }
-        if (folderCategory.activeValueId === "TRASH") {
+        if (userFolderCategory.activeValueId === "TRASH") {
             return [["active", "=", false]];
         }
-        if (folderCategory.activeValueId === "MY") {
-            return [
-                ["folder_id", "=", false],
-                ["owner_id", "=", user.userId],
-            ];
-        }
-        if (folderCategory.activeValueId === "SHARED") {
+        if (userFolderCategory.activeValueId === "SHARED") {
             return Domain.and([
                 [["shortcut_document_id", "=", false]], // no need to show them, the target will be here (or nested)
-                Domain.or([
-                    Domain.and([
-                        [["folder_id", "=", false]],
-                        [["owner_id", "not in", [user.userId, false]]],
-                    ]),
-                    // a non-accessible parent would still be found with its id (not False), and using `not any` (not, !=, 'none')
-                    // is much simpler than implementing searching for 'user permission', '=', 'none'
-                    // (the != 'none' will be added because of the access rules).
-                    Domain.and([[['folder_id', '!=', false]], [['folder_id', 'not any', []]]]),
-                ])
+                [["user_folder_id", "=", "SHARED"]],
             ]).toList();
         }
-        if (folderCategory.activeValueId === "RECENT") {
-            return [['access_ids', 'any', [['partner_id', '=', user.partnerId], ['last_access_date', '!=', false]]]];
-        }
-        if (!folderCategory.activeValueId) {
+        if (!userFolderCategory.activeValueId) {
             if (this.context.documents_unique_folder_id) {
                 return [["id", "child_of", this.context.documents_unique_folder_id]];
             }
             return [];
         }
         const folder = this.getSelectedFolder();
-        const folderIdToOpen = folder?.shortcut_document_id?.length ?
-            folder.shortcut_document_id[0] :
-            folderCategory.activeValueId;
+        const folderIdToOpen = folder?.shortcut_document_id?.length
+            ? folder.shortcut_document_id[0]
+            : userFolderCategory.activeValueId;
         const result = super._getCategoryDomain();
         const folderLeafIdx = result.findIndex(
-            (leaf) => leaf[0] === "folder_id" && leaf[1] === "child_of"
+            (leaf) => leaf[0] === "user_folder_id" && leaf[1] === "="
         );
         if (folderLeafIdx !== -1) {
-            result.splice(
-                folderLeafIdx,
-                1,
-                ...[["folder_id", "=", folderIdToOpen]],
-            );
+            result.splice(folderLeafIdx, 1, ...[["folder_id", "=", folderIdToOpen]]);
         }
         return result;
     }
@@ -365,9 +338,9 @@ export class DocumentsSearchModel extends SearchModel {
                 ? JSON.parse(storageItem)
                 : storageItem;
         if (
-            ["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(category.activeValueId)
-            || (valueIds.includes(category.activeValueId)
-                && this._isCategoryValueReachable(category, category.activeValueId))
+            ["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(category.activeValueId) ||
+            (valueIds.includes(category.activeValueId) &&
+                this._isCategoryValueReachable(category, category.activeValueId))
         ) {
             return;
         }
@@ -383,7 +356,9 @@ export class DocumentsSearchModel extends SearchModel {
             if (newSection) {
                 category.activeValueId = newSection.id || valueIds[Number(valueIds.length > 1)];
             } else {
-                category.activeValueId = this.documentService.userIsInternal ? "COMPANY" : valueIds[0];
+                category.activeValueId = this.documentService.userIsInternal
+                    ? "COMPANY"
+                    : valueIds[0];
             }
             browser.localStorage.setItem("searchpanel_documents_document", category.activeValueId);
         } else {

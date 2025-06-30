@@ -154,8 +154,8 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         """ Test that opening the document app from an employee (hr app) is opening it in the right context. """
         action = self.employee.action_open_documents()
         context = action['context']
-        self.assertTrue('searchpanel_default_folder_id' in context)
-        self.assertEqual(context['searchpanel_default_folder_id'], self.employee.hr_employee_folder_id.id)
+        self.assertTrue('searchpanel_default_user_folder_id' in context)
+        self.assertEqual(context['searchpanel_default_user_folder_id'], str(self.employee.hr_employee_folder_id.id))
         self.assertEqual(context['default_res_model'], 'hr.employee')
         self.assertEqual(context['default_res_id'], self.employee.id)
         self.assertFalse('default_partner_id' in context)

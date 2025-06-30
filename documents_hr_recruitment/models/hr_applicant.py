@@ -41,7 +41,7 @@ class HrApplicant(models.Model):
     def action_open_attachments(self):
         if not self.company_id.documents_recruitment_settings:
             return super().action_open_attachments()
-
+        default_user_folder_id = str(folder.id) if (folder := self._get_document_folder()) else False
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'documents.document',
@@ -55,7 +55,7 @@ class HrApplicant(models.Model):
                         ('res_id', 'in', self.ids),
             ],
             'context': {
-                'searchpanel_default_folder_id': self._get_document_folder().id,
+                'searchpanel_default_user_folder_id': default_user_folder_id,
                 'default_res_model': 'hr.applicant',
                 'default_res_id': self.ids[0],
             },

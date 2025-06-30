@@ -149,7 +149,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                         "documents.document",
                         "action_create_shortcut",
                         [draggingFolderId],
-                        { location_folder_id: parentFolderId === "MY" ? false : parentFolderId }
+                        { location_user_folder_id: parentFolderId }
                     );
                     return this.env.searchModel._reloadSearchModel(true);
                 }

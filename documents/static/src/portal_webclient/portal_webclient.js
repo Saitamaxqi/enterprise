@@ -18,8 +18,8 @@ export class PortalWebclientWebClient extends Component {
             const action = await this.action.loadAction("documents.document_action_portal");
             action.path = "documents"; // To get the standard URL
             this.action.doAction(action, {
-                additionalContext: initData["folder_id"]
-                    ? { searchpanel_default_folder_id: initData["folder_id"] }
+                additionalContext: initData.userFolderId
+                    ? { searchpanel_default_user_folder_id: initData.userFolderId }
                     : {},
                 stackPosition: "replaceCurrentAction",
             });

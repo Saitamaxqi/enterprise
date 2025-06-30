@@ -48,7 +48,7 @@ class FleetVehicle(models.Model):
         action['context'] = {
             'default_res_id': self.id,
             'default_res_model': self._name,
-            'searchpanel_default_folder_id': fleet_folder.id,
+            'searchpanel_default_user_folder_id': str(fleet_folder.id) if fleet_folder else False,
             'searchpanel_default_tag_ids': fleet_tags.ids,
         }
         return action
