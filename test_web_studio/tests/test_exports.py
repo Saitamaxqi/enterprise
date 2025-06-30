@@ -14,7 +14,6 @@ class TestStudioExports(StudioExportCase):
         custom_field = self.create_customization(
             "ir.model.fields",
             name="x_studio_max_temp",
-            complete_name="Max temperature",
             ttype="integer",
             model_id=custom_model.id,
         )
@@ -89,7 +88,6 @@ class TestStudioExports(StudioExportCase):
             "data/ir_model_fields.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(custom_field)}" model="ir.model.fields" context="{{'studio': True}}">
-                <field name="complete_name">Max temperature</field>
                 <field name="ttype">integer</field>
                 <field name="copied" eval="True"/>
                 <field name="field_description">X Studio Max Temp</field>
@@ -151,7 +149,6 @@ class TestStudioExports(StudioExportCase):
         self.create_customization(
             "ir.model.fields",
             name="x_studio_max_temp",
-            complete_name="Max temperature",
             ttype="integer",
             model_id=custom_model.id,
         )
@@ -169,7 +166,6 @@ class TestStudioExports(StudioExportCase):
         self.create_customization(
             "ir.model.fields",
             name="x_studio_max_temp",
-            complete_name="Max temperature",
             ttype="integer",
             model_id=custom_model.id,
         )

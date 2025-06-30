@@ -149,7 +149,6 @@ FIELDS_TO_EXPORT = {
         "perm_write",
     ],
     "ir.model.fields": [
-        "complete_name",
         "compute",
         "copied",
         "depends",
