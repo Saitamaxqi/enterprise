@@ -163,7 +163,9 @@ class EasypostRequest():
         shipment = {
             'order[shipments][%d][parcel][weight]' % shipment_id: carrier._easypost_convert_weight(delivery_package.weight),
             'order[shipments][%d][options][label_format]' % shipment_id: label_format,
-            'order[shipments][%d][options][label_date]' % shipment_id: datetime.datetime.now().isoformat()
+            'order[shipments][%d][options][label_date]' % shipment_id: datetime.datetime.now().isoformat(),
+            'order[shipments][%d][options][print_custom_1]' % shipment_id:
+                delivery_package.picking_id.display_name if delivery_package.picking_id else delivery_package.order_id.display_name,
         }
         # If this is not an EasyPost predefined package, then we give the dimensions.
         packages = carrier._easypost_get_services_and_package_types()[0]
