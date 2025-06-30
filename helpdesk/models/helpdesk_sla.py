@@ -23,7 +23,7 @@ class HelpdeskSla(models.Model):
             defaults['stage_id'] = stages and stages.ids[0] or team.stage_ids and team.stage_ids.ids[-1]
         return defaults
 
-    name = fields.Char(required=True, index=True, translate=True)
+    name = fields.Char(required=True, translate=True)
     description = fields.Html('SLA Policy Description', translate=True)
     active = fields.Boolean('Active', default=True)
     team_id = fields.Many2one('helpdesk.team', 'Helpdesk Team', required=True)
