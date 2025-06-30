@@ -1354,8 +1354,8 @@ class AccountMove(models.Model):
         ):
             for values in dictionary.values():
                 if 'base' in values:
-                    values['base'] = self.currency_id.round(values['base'])
-                values['importe'] = self.currency_id.round(values['importe'])
+                    values['base'] = float_round(values['base'], 6)
+                values['importe'] = float_round(values['importe'], 6)
 
         for key in (
             'total_traslados_base_iva0',

@@ -20,9 +20,9 @@
 				</pago20:DoctoRelacionado>
 				<pago20:ImpuestosP>
 					<pago20:TrasladosP>
-						<pago20:TrasladoP BaseP="4000.00" ImpuestoP="002" TipoFactorP="Exento"/>
-						<pago20:TrasladoP BaseP="8000.00" ImporteP="0.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000"/>
-						<pago20:TrasladoP BaseP="12000.00" ImporteP="1920.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000"/>
+						<pago20:TrasladoP BaseP="4000.000000" ImpuestoP="002" TipoFactorP="Exento"/>
+						<pago20:TrasladoP BaseP="8000.000000" ImporteP="0.000000" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000"/>
+						<pago20:TrasladoP BaseP="12000.000000" ImporteP="1920.000000" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000"/>
 					</pago20:TrasladosP>
 				</pago20:ImpuestosP>
 			</pago20:Pago>

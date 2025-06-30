@@ -18,7 +18,7 @@
 				</pago20:DoctoRelacionado>
 				<pago20:ImpuestosP>
 					<pago20:TrasladosP>
-						<pago20:TrasladoP BaseP="4000.00" ImpuestoP="002" TipoFactorP="Exento"/>
+						<pago20:TrasladoP BaseP="4000.000000" ImpuestoP="002" TipoFactorP="Exento"/>
 					</pago20:TrasladosP>
 				</pago20:ImpuestosP>
 			</pago20:Pago>

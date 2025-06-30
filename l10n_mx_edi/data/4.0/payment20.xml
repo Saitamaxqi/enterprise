@@ -126,8 +126,8 @@
                             <pago20:TrasladosP t-if="traslados_list">
                                 <t t-foreach="traslados_list" t-as="tax_values">
                                     <pago20:TrasladoP
-                                        t-att-BaseP="format_float(tax_values['base'])"
-                                        t-att-ImporteP="format_float(tax_values['importe'])"
+                                        t-att-BaseP="format_float(tax_values['base'], precision=6)"
+                                        t-att-ImporteP="format_float(tax_values['importe'], precision=6)"
                                         t-att-ImpuestoP="tax_values['impuesto']"
                                         t-att-TipoFactorP="tax_values['tipo_factor']"
                                         t-att-TasaOCuotaP="format_float(tax_values['tasa_o_cuota'], precision=6)"

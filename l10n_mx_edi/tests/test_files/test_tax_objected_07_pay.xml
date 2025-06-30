@@ -24,7 +24,7 @@
 						<pago20:RetencionP ImporteP="108.00" ImpuestoP="001"/>
 					</pago20:RetencionesP>
 					<pago20:TrasladosP>
-						<pago20:TrasladoP BaseP="1000.00" ImporteP="80.00" ImpuestoP="003" TipoFactorP="Tasa" TasaOCuotaP="0.080000"/>
+						<pago20:TrasladoP BaseP="1000.000000" ImporteP="80.000000" ImpuestoP="003" TipoFactorP="Tasa" TasaOCuotaP="0.080000"/>
 					</pago20:TrasladosP>
 				</pago20:ImpuestosP>
 			</pago20:Pago>

@@ -18,7 +18,7 @@
 				</pago20:DoctoRelacionado>
 				<pago20:ImpuestosP>
 					<pago20:TrasladosP>
-						<pago20:TrasladoP BaseP="523.45" ImporteP="14.02" ImpuestoP="003" TipoFactorP="Cuota" TasaOCuotaP="0.026777"/>
+						<pago20:TrasladoP BaseP="523.450000" ImporteP="14.020000" ImpuestoP="003" TipoFactorP="Cuota" TasaOCuotaP="0.026777"/>
 					</pago20:TrasladosP>
 				</pago20:ImpuestosP>
 			</pago20:Pago>
