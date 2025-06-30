@@ -28,11 +28,11 @@
                                 <input type="text" name="final_yearly_costs" applies-on="version" t-att-value="version.final_yearly_costs" class="d-none" disabled="disabled"/>
                                 <t t-call="hr_contract_salary.salary_package_benefits"/>
                                 <t t-call="hr_contract_salary.salary_package_sidebar"/>
+                                <t t-call="hr_contract_salary.salary_package_personal_information"/>
                             </div>
                         </div>
                     </section>
 
-                    <t t-call="hr_contract_salary.salary_package_personal_information"/>
                     <t t-call="hr_contract_salary.salary_package_next_step_button"/>
                     <div role="dialog" id="hr_cs_modal" class="modal fade" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -278,7 +278,7 @@
             </t>
             <div name="salary_package_resume"/>
             <t t-if="submit">
-                <div class="row">
+                <div class="d-flex flex-column">
                     <button type="button" id="hr_cs_submit" class="btn btn-primary hr_cs_btn_submit" name="submit1">Review Contract &amp; Sign</button>
                     <button type="button" class="btn btn-secondary" name="feedback" data-bs-toggle="collapse" data-bs-target="#feedback-form">
                         <i class="fa fa-comment"/> Feedback
