@@ -10,7 +10,5 @@ class MailTemplateAI(models.Model):
 
     def _check_can_be_rendered(self, fnames=None, render_options=None):
         """Override to ensure that the prompts are not evaluated during checks."""
-        if not render_options:
-            render_options = {}
-        render_options["eval_ai_prompts"] = False
+        render_options = {**(render_options or {}), 'eval_ai_prompts': False}
         return super()._check_can_be_rendered(fnames=fnames, render_options=render_options)
