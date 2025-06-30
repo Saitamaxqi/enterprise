@@ -14,7 +14,7 @@ from odoo.tools.image import image_data_uri
 from werkzeug.exceptions import NotFound
 from werkzeug.wsgi import get_current_url
 from urllib.parse import urlparse, parse_qs
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class SignContract(Sign):
@@ -69,6 +69,7 @@ class SignContract(Sign):
         # Both applicant/employee and HR responsible have signed
         if request_item.sign_request_id.nb_closed == 2:
             current_employee_version = version.employee_id.version_id
+            current_employee_version.contract_date_end = version.contract_date_start - timedelta(days=1)
             if current_employee_version.date_version >= version.date_version:
                 # then remplace the current version with the new one signed
                 current_employee_version.write({'active': False})
