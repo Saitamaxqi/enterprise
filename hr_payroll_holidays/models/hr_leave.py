@@ -110,6 +110,8 @@ class HrLeave(models.Model):
                 ('company_id', '=', self.env.company.id),
                 ('date_start', '>=', leave.date_from),
                 ('date_stop', '<=', leave.date_to),
+                # We are deferring workentry that have been reported as 'Attendance' but shouldn't have
+                ('work_entry_type_id.is_leave', '=', False),
             ])
             next_month_work_entries = self.env['hr.work.entry'].search([
                 ('employee_id', '=', leave.employee_id.id),
