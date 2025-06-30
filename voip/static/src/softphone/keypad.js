@@ -51,6 +51,7 @@ export class Keypad extends Component {
         });
         this.ui = useService("ui");
         this.regionNames = new Intl.DisplayNames(user.lang, { type: "region" });
+        this.softphone = useService("voip").softphone;
         useEffect(
             (shouldFocusInput) => {
                 if (shouldFocusInput && this.inputRef.el && !this.voip.error) {

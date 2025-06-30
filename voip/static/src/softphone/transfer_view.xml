@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <templates>
 <t t-name="voip.TransferView">
-    <div class="o-voip-TransferView h-100 w-100 overflow-hidden">
+    <div class="o-voip-TransferView d-flex flex-column h-100 w-100 overflow-hidden">
         <t t-if="softphone.inCallView.transferView.activeView === 'keypad'">
             <Keypad
                 state="props.state.keypad"
@@ -12,7 +12,7 @@
                     <ActionButton
                         icon="'oi-transfer'"
                         name.translate="Transfer"
-                        type="'success'"
+                        type="scope.isSmall ? 'outline-success' : 'success'"
                         onClick="() => this.transfer(scope.contact)"
                         isSmall="scope.isSmall"
                         hideLabel="scope.isSmall"
@@ -26,7 +26,7 @@
                     <ActionButton
                         icon="'oi-transfer'"
                         name.translate="Transfer"
-                        type="'success'"
+                        type="scope.isSmall ? 'outline-success' : 'success'"
                         onClick="() => this.transfer(scope.contact)"
                         isSmall="scope.isSmall"
                         hideLabel="scope.isSmall"

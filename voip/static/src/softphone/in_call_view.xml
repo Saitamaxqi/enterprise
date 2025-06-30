@@ -8,7 +8,7 @@
         <t t-elif="activeView === 'transfer'">
             <TransferView state="softphone.inCallView.transferView"/>
         </t>
-        <div class="o-voip-InCallView-pad grid m-3" t-att-class="{ 'mt-0': activeView === 'transfer' }">
+        <div class="o-voip-InCallView-pad grid p-3" t-att-class="{ 'pt-0': activeView === 'transfer' }">
             <t t-if="activeView === 'default' and !isKeypadOpen">
                 <ActionButton name.translate="Transfer" icon="'oi-transfer'" inCallPad="true" extraClass="'g-col-6'" onClick.bind="onClickTransfer" disabled="props.call.state !== 'ongoing'"/>
                 <ActionButton name.translate="Hold" icon="'fa-pause'" type="'secondary'" inCallPad="true" extraClass="isOnHold ? 'g-col-6 active' : 'g-col-6'" disabled="props.call.state !== 'ongoing'" onClick.bind="onClickHold"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <templates>
 <t t-name="voip.Keypad">
-    <div class="o-voip-Keypad d-flex flex-column justify-content-between flex-grow-1 w-100 h-100">
+    <div class="o-voip-Keypad d-flex flex-column justify-content-between flex-grow-1 row-gap-3 w-100" t-att-class="{ 'pb-3 overflow-auto': softphone.inCallView.activeView === 'transfer' }">
         <t t-if="!props.state.showMore or calleeSuggestions.length lte 1">
             <div>
                 <t t-call="o-voip-Keypad-searchBar"/>
@@ -45,7 +45,7 @@
 </t>
 
 <t t-name="o-voip-Keypad-numpad">
-    <div class="o-voip-Keypad-numpad grid" t-att-class="{ 'px-3': !props.dtmf }">
+    <div class="o-voip-Keypad-numpad grid px-3">
         <t t-foreach="keys" t-as="key" t-key="key.key">
             <!-- ⚠ align-items-stretch necessary for proper alignment on Safari -->
             <button class="btn btn-light d-flex flex-column align-items-stretch g-col-4 gap-1 p-1" t-att-class="{ 'justify-content-center': key.icon }" t-on-click="() => this.onClickKey(key.key)" t-on-touchend.prevent="() => this.onClickKey(key.key)">
