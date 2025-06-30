@@ -28,5 +28,8 @@
         'web.assets_backend': [
             'hr_contract_salary_payroll/static/src/js/tours/*.js',
         ],
+        'web.assets_tests': [
+            'hr_contract_salary_payroll/static/tests/tours/*.js',
+        ],
     }
 }

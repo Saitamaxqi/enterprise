@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime, time
 
-from odoo import _
 from odoo.addons.hr_contract_salary.controllers import main
-from odoo.http import route, request
+from odoo.http import request
 from odoo.tools.float_utils import float_compare
 
 
@@ -23,6 +21,7 @@ class HrContractSalary(main.HrContractSalary):
         return request.env['hr.payslip'].sudo().create({
             'employee_id': new_version.employee_id.id,
             'version_id': new_version.id,
+            'date_from': new_version.contract_date_start,
             'struct_id': new_version.structure_type_id.default_struct_id.id,
             'company_id': new_version.employee_id.company_id.id,
             'name': 'Payslip Simulation',
@@ -148,7 +147,7 @@ class HrContractSalary(main.HrContractSalary):
             value = round(line_values[resume_line.code][payslip.id]['total'], 2)
             resume_explanation = False
             if resume_line.code == 'GROSS' and new_version.wage_type == 'hourly':
-                resume_explanation = _('This is the gross calculated for the current month with a total of %s hours.', work_days_data.get('hours', 0))
+                resume_explanation = self.env._('This is the gross calculated for the current month with a total of %s hours.', work_days_data.get('hours', 0))
             result['resume_lines_mapped'][_get_period_name(resume_line.category_id, new_version)][resume_line.code] = (resume_line.name, value, new_version.company_id.currency_id.symbol, resume_explanation, new_version.company_id.currency_id.position, resume_line.uom)
             if resume_line.impacts_monthly_total:
                 monthly_total += value / 12.0 if resume_line.category_id.periodicity == 'yearly' else value
