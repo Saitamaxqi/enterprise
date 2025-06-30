@@ -19,7 +19,7 @@ class HelpdeskStage(models.Model):
     description = fields.Text(translate=True)
     sequence = fields.Integer(export_string_translation=False, default=10)
     fold = fields.Boolean(
-        'Folded in Kanban',
+        'Folded',
         help='Tickets in a folded stage are considered as closed.')
     team_ids = fields.Many2many(
         'helpdesk.team', relation='team_stage_rel', string='Helpdesk Teams',
