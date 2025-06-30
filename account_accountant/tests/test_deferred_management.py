@@ -203,10 +203,13 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
     @freeze_time('2023-03-15')
     def test_deferred_invoice_reset_to_draft_with_audit_trail(self):
         """
-        Test that the deferred entries are deleted when the invoice is reset to draft.
+        Test that the deferred entries in draft are deleted when the invoice is reset to draft
+        and the posted deferred entries are cancelled.
         """
-        invoice = self.create_invoice('out_invoice', [(self.revenue_accounts[0], 1680, '2023-03-01', '2023-04-30')], date='2023-03-15')
+        invoice = self.create_invoice('out_invoice', [(self.revenue_accounts[0], 1680, '2023-02-01', '2023-04-30')], date='2023-03-15')
+        posted_deferred_entries = invoice.deferred_move_ids.filtered(lambda move: move.state == 'posted')
         draft_deferred_move_ids = invoice.deferred_move_ids.filtered(lambda move: move.state =="draft")
+        self.assertEqual(len(posted_deferred_entries), 2)
         self.assertEqual(len(draft_deferred_move_ids), 2)
 
         # Try with restricted mode
@@ -216,6 +219,8 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         # Assert that the draft moves no longer exist
         remaining_draft_moves = self.env['account.move'].search([('id', 'in', draft_deferred_move_ids.ids)])
         self.assertFalse(remaining_draft_moves)
+        # The posted deferred entries should be cancelled
+        self.assertEqual(len(posted_deferred_entries.filtered(lambda move: move.state == 'cancel')), 2)
 
     def assert_invoice_lines(self, move, expected_values, source_account, deferred_account):
         deferred_moves = move.deferred_move_ids.sorted('date')
