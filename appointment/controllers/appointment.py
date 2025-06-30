@@ -20,9 +20,12 @@ from odoo.http import request, route
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as dtf, email_normalize
 from odoo.tools.mail import is_html_empty
 from odoo.tools.misc import babel_locale_parse, get_lang
+from odoo.tools.translate import LazyTranslate
 from odoo.addons.base.models.ir_qweb import keep_query
 from odoo.addons.base.models.res_partner import _tz_get
 from odoo.addons.phone_validation.tools import phone_validation
+
+_lt = LazyTranslate(__name__)
 
 
 def _formated_weekdays(locale):
@@ -77,7 +80,7 @@ class AppointmentController(http.Controller):
         )
 
     @route(['/appointment', '/appointment/page/<int:page>'],
-           type='http', auth="public", website=True, sitemap=True)
+           type='http', auth="public", website=True, sitemap=True, list_as_website_content=_lt("Appointments"))
     def appointment_type_index(self, page=1, **kwargs):
         """
         Display the appointments to choose (the display depends of a custom option called 'Card Design')

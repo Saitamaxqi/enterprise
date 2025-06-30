@@ -12,6 +12,9 @@ from odoo.http import request
 from odoo.addons.website.controllers import form, main
 from odoo.addons.base.models.ir_qweb_fields import nl2br, nl2br_enclose
 from odoo.tools import html2plaintext
+from odoo.tools.translate import LazyTranslate
+
+_lt = LazyTranslate(__name__)
 
 
 class WebsiteHelpdesk(http.Controller):
@@ -22,7 +25,7 @@ class WebsiteHelpdesk(http.Controller):
             'main_object': team,
         }
 
-    @http.route(['/helpdesk', '/helpdesk/<model("helpdesk.team"):team>'], type='http', auth="public", website=True, sitemap=True)
+    @http.route(['/helpdesk', '/helpdesk/<model("helpdesk.team"):team>'], type='http', auth="public", website=True, sitemap=True, list_as_website_content=_lt('Helpdesk'))
     def website_helpdesk_teams(self, team=None, **kwargs):
         search = kwargs.get('search')
 
