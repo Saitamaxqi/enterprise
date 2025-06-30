@@ -173,7 +173,6 @@ class TestHR(AccountTestInvoicingCommon):
         self.assertEqual(allocation_no_validation.state, 'refuse')
 
         # Holiday user approve allocation
-        allocation_no_validation.action_set_to_confirm()
         allocation_no_validation.action_approve()
         self.assertEqual(allocation_no_validation.state, 'validate')
         self.assertEqual(allocation_no_validation.approver_id, self.hr_holidays_user.employee_id)
