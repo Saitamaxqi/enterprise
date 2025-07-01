@@ -222,7 +222,7 @@ class HrContractSalaryBenefitType(models.Model):
     _description = 'Contract Benefit Type'
     _order = 'sequence'
 
-    name = fields.Char()
+    name = fields.Char(translate=True)
     periodicity = fields.Selection([
         ('monthly', 'Monthly'),
         ('yearly', 'Yearly'),

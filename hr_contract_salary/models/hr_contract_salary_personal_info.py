@@ -94,7 +94,7 @@ class HrContractSalaryPersonalInfoType(models.Model):
     _description = 'Salary Package Personal Info Type'
     _order = 'sequence'
 
-    name = fields.Char()
+    name = fields.Char(translate=True)
     sequence = fields.Integer(default=100)
 
 

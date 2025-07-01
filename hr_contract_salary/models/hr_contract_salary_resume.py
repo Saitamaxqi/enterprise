@@ -9,7 +9,7 @@ class HrContractSalaryResumeCategory(models.Model):
     _description = 'Salary Package Resume Category'
     _order = 'sequence'
 
-    name = fields.Char()
+    name = fields.Char(translate=True)
     sequence = fields.Integer(default=100)
     periodicity = fields.Selection([
         ('monthly', 'Monthly'),
@@ -24,7 +24,7 @@ class HrContractSalaryResume(models.Model):
     def _get_available_fields(self):
         return [(field, description['string']) for field, description in self.env['hr.version'].fields_get().items()]
 
-    name = fields.Char()
+    name = fields.Char(translate=True)
     sequence = fields.Integer(default=100)
     value_type = fields.Selection([
         ('fixed', 'Fixed Value'),
