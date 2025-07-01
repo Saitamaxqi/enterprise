@@ -63,7 +63,7 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
 
         with freeze_time("2022-01-01 13:00:00"):
             # We now fully sign the offer to see if the vehicle to order is created correctly
-            self.start_tour("/", 'hr_contract_salary_tour_counter_sign', login='admin', timeout=350, step_delay=300)
+            self.start_tour("/", 'hr_contract_salary_tour_counter_sign', login='admin', timeout=350)
             new_version = self.env['hr.version'].search([('name', 'ilike', 'Mitchell Admin 3')])
             self.assertTrue(new_version, 'A contract has been created')
             vehicle = self.env['fleet.vehicle'].search([('company_id', '=', self.company_id.id), ('model_id', '=', self.model_corsa.id)])
