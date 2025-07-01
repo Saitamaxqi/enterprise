@@ -1,7 +1,6 @@
 import { expect, test } from "@odoo/hoot";
-import { click } from "@odoo/hoot-dom";
 
-import { mountView, fields, onRpc } from "@web/../tests/web_test_helpers";
+import { contains, mountView, fields, onRpc } from "@web/../tests/web_test_helpers";
 
 import { defineProjectModels, ProjectProject } from "@project/../tests/project_models";
 
@@ -39,7 +38,7 @@ test("fsm project.project (form) show template action", async () => {
         context: { fsm_mode: true },
     });
 
-    await click(".o_form_button_create");
+    await contains(".o_form_button_create").click();
 
     expect("button.dropdown-item:contains('Fsm Project Template')").toHaveCount(1, {
         message: "Only FSM project templates should be shown in the dropdown.",
