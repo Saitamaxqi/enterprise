@@ -2230,6 +2230,12 @@ Content-Disposition: form-data; name="xml"; filename="xml"
                 self.env.cr.commit()
             return
 
+        # == Commit before sending to PAC ==
+        # This ensures the `l10n_mx_edi_post_time` is written to DB regardless of whether
+        # an exception happens when calling the PAC.
+        if self._can_commit():
+            self.env.cr.commit()
+
         # == Check PAC ==
         sign_results = self._get_pac_method_map()['sign'][pac_name](credentials, cfdi_str)
         if sign_results.get('errors'):
