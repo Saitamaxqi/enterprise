@@ -267,7 +267,7 @@ export default class BarcodePickingModel extends BarcodeModel {
             }
             line.result_package_id = result_package_id;
         }
-        if (!location_id && this.lastScanned.sourceLocation) {
+        if (!args.dontUpdateSourceLocation && !location_id && this.lastScanned.sourceLocation) {
             line.location_id = this.lastScanned.sourceLocation;
             if (line.package_id && line.package_id.location_id != line.location_id.id) {
                 line.package_id = false;
@@ -1052,6 +1052,7 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     async _assignEmptyPackage(line, resultPackage) {
         const fieldsParams = this._convertDataToFieldsParams({ resultPackage });
+        fieldsParams.dontUpdateSourceLocation = true;
         const parentLine = this._getParentLine(line);
         const targetLines = parentLine ? parentLine.lines : [line];
         for (const subline of targetLines) {

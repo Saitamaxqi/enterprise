@@ -137,7 +137,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 2, package_id=package2)
         self.assertEqual(package2.location_id.id, self.stock_location.id)
 
-        self.start_tour("/odoo/barcode", 'test_internal_picking_from_scratch_with_package', login='admin', timeout=1800000)
+        self.start_tour("/odoo/barcode", 'test_internal_picking_from_scratch_with_package', login='admin')
 
         self.assertEqual(len(self.package.quant_ids), 2)
         self.assertEqual(self.package.location_id.id, self.shelf2.id)
@@ -682,6 +682,20 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.assertRecordValues(move.move_line_ids, [
             {'lot_id': sn.id, 'product_id': self.productlot1.id, 'quantity': 1, 'package_id': package2.id, 'result_package_id': False},
         ])
+
+    def test_delivery_pack_from_different_location(self):
+        """ Ensures that when lines from different source location are packed,
+        their source location is unchanged."""
+        group_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        group_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'group_ids': [Command.link(group_multi_loc.id)]})
+        self.env.user.write({'group_ids': [Command.link(group_pack.id)]})
+        self.picking_type_out.restrict_scan_source_location = 'mandatory'
+        # Create an empty package (will be scanned during the tour.)
+        self.env['stock.quant.package'].create({
+            'name': 'pack-test',
+        })
+        self.start_tour('/odoo/barcode', 'test_delivery_pack_from_different_location', login='admin')
 
     def test_delivery_reserved_1(self):
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})

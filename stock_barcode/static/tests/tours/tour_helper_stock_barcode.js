@@ -245,6 +245,25 @@ export function assertLineQty(lineOrIndex, expectedQuantityWithUOM) {
     assert(qtyText, expectedQuantityWithUOM, errorMessage);
 }
 
+/**
+ * Checks the result package assigned to a line. The expected package can be let
+ * empty to check there is no result package assigned on the line.
+ * @param {(HTMLElement|integer)} lineOrIndex @see _getLineOrFail
+ * @param {string} [expectedPackageName]
+ */
+export function assertLineResultPackage(lineOrIndex, expectedPackageName = false) {
+    const line = _getLineOrFail(lineOrIndex, "Can't check the line's result package");
+    const resultPackageEl = line.querySelector(".result-package");
+    if (!resultPackageEl) {
+        if (expectedPackageName) {
+            fail(`There is no result package: ${expectedPackageName} expected`);
+        }
+    } else {
+        const linePackageName = resultPackageEl.innerText;
+        assert(linePackageName, expectedPackageName, "Not the expected result package");
+    }
+}
+
 export function assertLineSourceIsNotVisible(lineOrIndex) {
     const line = _getLineOrFail(lineOrIndex);
     const sourceElement = line.parentNode.querySelector(".o_barcode_location_line");

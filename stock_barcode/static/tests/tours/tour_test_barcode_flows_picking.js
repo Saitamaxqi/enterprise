@@ -1063,6 +1063,41 @@ registry.category("web_tour.tours").add("test_delivery_lot_with_package_delivery
     ],
 });
 
+registry.category("web_tour.tours").add("test_delivery_pack_from_different_location", {
+    steps: () => [
+        { trigger: ".o_stock_barcode_main_menu", run: "scan WHOUT" },
+        // Scan first source location then scan a product.
+        { trigger: ".o_scan_message.o_scan_src", run: "scan LOC-01-01-00" },
+        { trigger: ".o_scan_message.o_scan_product", run: "scan product1" },
+        // Scan second source location then scan a product.
+        { trigger: ".o_barcode_line.o_selected", run: "scan LOC-01-02-00" },
+        { trigger: ".o_barcode_line:not(.o_selected)", run: "scan product1" },
+        {
+            content: "Check lines source location before to scan the package.",
+            trigger: ".o_barcode_line:nth-child(2).o_selected",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineSourceLocation(0, "WH/Stock/Section 1");
+                helper.assertLineResultPackage(0);
+                helper.assertLineSourceLocation(1, "WH/Stock/Section 2");
+                helper.assertLineResultPackage(1);
+            },
+        },
+        // Scan an empty package and check the lines' source weren't changed.
+        { trigger: ".o_barcode_line.o_selected", run: "scan pack-test" },
+        {
+            trigger: ".o_barcode_line .result-package",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineSourceLocation(0, "WH/Stock/Section 1");
+                helper.assertLineResultPackage(0, "pack-test");
+                helper.assertLineSourceLocation(1, "WH/Stock/Section 2");
+                helper.assertLineResultPackage(1, "pack-test");
+            },
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_delivery_reserved_1", {
     steps: () => [
         // test that picking note properly pops up + close it
@@ -6715,71 +6750,74 @@ registry.category("web_tour.tours").add("test_description_picking_tour", {
 
 registry.category("web_tour.tours").add("test_no_validate_no_dest_package", {
     steps: () => [
-    {
-        trigger: "button.o_button_operations",
-        run: "click",
-    },
-    {
-        trigger: ".o_kanban_record:contains(Internal)",
-        run: "click",
-    },
-    {
-        trigger: "button.o-kanban-button-new",
-        run: "click",
-    },
-    {
-        trigger: ".o_barcode_client_action",
-        run: "scan LOC-01-00-00"
-    },
-    {
-        trigger: ".o_barcode_client_action",
-        run: "scan Pack1"
-    },
-    {
-        trigger: ".btn.o_validate_page",
-        run: "click",
-    },
-    {
-        trigger: ".o_notification_bar.bg-danger",
-        run: () => {
-            helper.assertErrorMessage("Destination location must be scanned");
+        {
+            trigger: "button.o_button_operations",
+            run: "click",
         },
-    },
-]});
+        {
+            trigger: ".o_kanban_record:contains(Internal)",
+            run: "click",
+        },
+        {
+            trigger: "button.o-kanban-button-new",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan LOC-01-00-00",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan Pack1",
+        },
+        {
+            trigger: ".btn.o_validate_page",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification_bar.bg-danger",
+            run: () => {
+                helper.assertErrorMessage("Destination location must be scanned");
+            },
+        },
+    ],
+});
 
-registry.category("web_tour.tours").add("test_qty_after_uom_update_picking_tour", { steps: () => [
-    {
-        trigger: ".o_stock_barcode_main_menu",
-        run: "scan receipt_test",
-    },
-    // Click the pencil to edit the line
-    {
-        trigger: ".o_barcode_line .o_edit",
-        run: "click",
-    },
-    // Open the UoM dropdown
-    {
-        trigger: ".o_field_widget[name='product_uom_id'] input",
-        run: "click",
-    },
-    // Select the 'Units' UoM
-    {
-        trigger: ".ui-menu-item > a:contains('Units')",
-        run: "click",
-    },
-    {
-        trigger: ".o_digipad_increment",
-        run: "click",
-    },
-    // Save the changes
-    {
-        trigger: ".o_barcode_control .o_save",
-        run: "click",
-    },
-    {
-        trigger: ".o_barcode_line",
-        run: () => {
-            helper.assertLineQty(0, "1/120 Units");
+registry.category("web_tour.tours").add("test_qty_after_uom_update_picking_tour", {
+    steps: () => [
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan receipt_test",
         },
-    },
-]});
+        // Click the pencil to edit the line
+        {
+            trigger: ".o_barcode_line .o_edit",
+            run: "click",
+        },
+        // Open the UoM dropdown
+        {
+            trigger: ".o_field_widget[name='product_uom_id'] input",
+            run: "click",
+        },
+        // Select the 'Units' UoM
+        {
+            trigger: ".ui-menu-item > a:contains('Units')",
+            run: "click",
+        },
+        {
+            trigger: ".o_digipad_increment",
+            run: "click",
+        },
+        // Save the changes
+        {
+            trigger: ".o_barcode_control .o_save",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line",
+            run: () => {
+                helper.assertLineQty(0, "1/120 Units");
+            },
+        },
+    ],
+});
