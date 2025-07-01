@@ -34,7 +34,7 @@
             </button>
             <header position="inside">
                 <field name="current_date_version" invisible="1"/>
-                <button name="action_generate_offer" type="object" string="Generate Offer" invisible="current_date_version &gt; date_version" groups="hr.group_hr_manager" class="btn-secondary"/>
+                <button name="action_generate_offer" type="object" string="Generate Offer" invisible="current_date_version &gt; date_version or salary_offers_count > 0" groups="hr.group_hr_manager" class="btn-secondary"/>
             </header>
             <group name="contract" position="inside">
                 <field name="originated_offer_id" readonly="1" invisible="not originated_offer_id"/>
