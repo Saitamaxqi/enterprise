@@ -7,7 +7,7 @@ from io import BytesIO
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.misc import format_date
 
@@ -21,14 +21,14 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
     @api.model
     def default_get(self, field_list=None):
         if self.env.company.country_id.code != "BE":
-            raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
+            raise UserError(self.env._('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
         return super().default_get(field_list)
 
-    # Source: https://www.nbb.be/fr/centrale-des-bilans/etablir/modeles-des-comptes-annuels/bilan-social
-    # Introduction: https://www.nbb.be/doc/ba/socialbalance/avis_cnc_2009_12.pdf
-    # Q&A about social balance sheet: https://www.nbb.be/doc/ba/socialbalance/avis_cnc_s100.pdf
-    # Explanations about trainings: https://www.nbb.be/doc/ba/socialbalance/avis_cnc_2009_12.pdf
-    # Blank complete scheme example: https://www.nbb.be/doc/ba/socialbalance/models/bilan_social_c_20121201.pdf
+    # Source: https://www.nbb.be/fr/centrale-des-bilans/etablir-et-deposer/que-faut-il-deposer/modeles/modeles-pour-societes
+    # Introduction: https://www.nbb.be/doc/ba/models/social%20balance/avis_cnc_2009_12.pdf
+    # Q&A about social balance sheet: https://www.nbb.be/doc/ba/models/social%20balance/avis_cnc_s100.pdf
+    # Explanations about trainings: https://www.nbb.be/doc/ba/models/social%20balance/avis_cnc_2009_12.pdf
+    # Blank complete scheme example: https://www.nbb.be/doc/ba/models/ent/2023/standaardmodellen/release_2021_fr_modele_c_societes_a_capital_v8.pdf
 
     date_from = fields.Date(default=lambda s: fields.Date.today() + relativedelta(day=1, month=1, years=-1))
     date_to = fields.Date(default=lambda s: fields.Date.today() + relativedelta(day=31, month=12, years=-1))
@@ -49,10 +49,10 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
     def _get_report_data(self):
         self.ensure_one()
         number_of_months_period = (self.date_to.year - self.date_from.year) * 12 + self.date_to.month - self.date_from.month + 1
-        contracts = self.env['hr.employee']._get_all_versions_with_contract_overlap_with_period(self.date_from, self.date_to, states=['open', 'close'])
+        contracts = self.env['hr.employee']._get_all_versions_with_contract_overlap_with_period(self.date_from, self.date_to)
         invalid_employees = contracts.employee_id.filtered(lambda e: e.sex not in ['male', 'female'])
         if invalid_employees:
-            raise UserError(_('Please configure a sex (either male or female) for the following employees:\n\n%s', '\n'.join(invalid_employees.mapped('name'))))
+            raise UserError(self.env._('Please configure a sex (either male or female) for the following employees:\n\n%s', '\n'.join(invalid_employees.mapped('name'))))
 
         reports_data = {}
         max_int_len = len(str(number_of_months_period + 1))
@@ -175,7 +175,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             for payslip in payslips:
                 sex = payslip.employee_id.sex
                 if sex not in ['male', 'female']:
-                    raise UserError(_('Please configure a sex (either male or female) for the following employee: %s', payslip.employee_id.name))
+                    raise UserError(self.env._('Please configure a sex (either male or female) for the following employee: %s', payslip.employee_id.name))
                 calendar = payslip.version_id.resource_calendar_id
                 contract_type = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
                 gross = round(line_values['GROSS'][payslip.id]['total'], 2) - round(line_values['IP.PART'][payslip.id]['total'], 2)
@@ -199,7 +199,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             # SECTION 105-113, 120, 121, 130-134: At the end of the exercice
             workers_data = collections.defaultdict(lambda: dict(full=0, part=0, fte=0))
 
-            end_contracts = self.env['hr.employee']._get_all_versions_with_contract_overlap_with_period(self.date_to, self.date_to, states=['open', 'close'])
+            end_contracts = self.env['hr.employee']._get_all_versions_with_contract_overlap_with_period(self.date_to, self.date_to)
             end_contracts = end_contracts.filtered(lambda c: c.contract_type_id != cip)
 
             cdi = self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_cdi')
@@ -237,14 +237,14 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             for contract in end_contracts:
                 if contract.contract_type_id not in mapped_types:
-                    _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
+                    _logger.info(self.env._("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
                     continue
                 structure_type = contract.structure_type_id
                 if cip and contract.contract_type_id == cip:
                     # CIP Contracts are considered as trainees
                     structure_type = cp200_students
                 if structure_type not in mapped_categories:
-                    _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CP200 Employees or Student", contract_name=contract.name, employee=contract.employee_id.name))
+                    _logger.info(self.env._("The contract %(contract_name)s for %(employee)s is not of one the following types: CP200 Employees or Student", contract_name=contract.name, employee=contract.employee_id.name))
                     continue
 
                 sex = contract.employee_id.sex
@@ -259,7 +259,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 workers_data[contract_type]['fte'] += 1 * calendar.work_time_rate / 100.0
 
                 if (sex, contract.employee_id.certificate) not in mapped_certificates:
-                    raise UserError(_("The employee %s doesn't have a specified certificate", contract.employee_id.name))
+                    raise UserError(self.env._("The employee %s doesn't have a specified certificate", contract.employee_id.name))
                 sex_code = '120' if sex == 'male' else '121'
                 workers_data[sex_code][contract_time] += 1
                 workers_data[sex_code]['fte'] += 1 * calendar.work_time_rate / 100.0
@@ -305,7 +305,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 employee = payslip.employee_id
                 contract = payslip.version_id
                 if contract.contract_type_id not in in_mapped_types:
-                    _logger.info(_("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
+                    _logger.info(self.env._("The contract %(contract_name)s for %(employee)s is not of one the following types: CDI, CDD. Replacement, For a clearly defined work", contract_name=contract.name, employee=contract.employee_id.name))
                     continue
                 calendar = contract.resource_calendar_id
                 contract_time = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
@@ -382,7 +382,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
     def print_report(self):
         report_data = self._get_report_data()
-        filename = _(
+        filename = self.env._(
             'SocialBalance-%(date_from)s-%(date_to)s.pdf',
             date_from=format_date(self.env, self.date_from),
             date_to=format_date(self.env, self.date_to))
@@ -395,7 +395,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
         self.state = 'done'
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Social Balance Sheet'),
+            'name': self.env._('Social Balance Sheet'),
             'res_model': self._name,
             'view_mode': 'form',
             'res_id': self.id,
@@ -407,7 +407,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
         output = BytesIO()
         import xlsxwriter  # noqa: PLC0415
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        sbs_worksheet = workbook.add_worksheet(_('Social Balance Sheet'))
+        sbs_worksheet = workbook.add_worksheet(self.env._('Social Balance Sheet'))
 
         # styling
         style_header = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center', 'bottom': 1})
@@ -421,34 +421,34 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
         triple_column_width = 3 * column_width
 
         # company worksheet
-        company_header = _('Identification of the company')
+        company_header = self.env._('Identification of the company')
         company_data = {
             'name': {
-                'header': _('Name'),
+                'header': self.env._('Name'),
                 'value': self.company_id.name,
             },
             'vat': {
-                'header': _('VAT Number'),
+                'header': self.env._('VAT Number'),
                 'value': self.company_id.vat,
             },
             'onss': {
-                'header': _('ONSS Number'),
+                'header': self.env._('ONSS Number'),
                 'value': self.company_id.onss_registration_number,
             },
             'established': {
-                'header': _('Established on'),
+                'header': self.env._('Established on'),
                 'value': self.create_date.strftime("%d %B %Y at %H:%M:%S"),
             },
             'joint_committees': {
-                'header': _('Number of joint committees'),
+                'header': self.env._('Number of joint committees'),
                 'value': 20000,
             },
             'period': {
-                'header': _('Period'),
-                'value': _('%(date_from)s to %(date_to)s', date_from=self.date_from.strftime("%d %B %Y"), date_to=self.date_to.strftime("%d %B %Y")),
+                'header': self.env._('Period'),
+                'value': self.env._('%(date_from)s to %(date_to)s', date_from=self.date_from.strftime("%d %B %Y"), date_to=self.date_to.strftime("%d %B %Y")),
             },
             'currency': {
-                'header': _('Currency'),
+                'header': self.env._('Currency'),
                 'value': self.company_id.currency_id.name,
             },
         }
@@ -463,7 +463,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
         reports_data = self._get_report_data()
         for report_name, report_data in reports_data.items():
             if report_name != 'social_balance_sheet':
-                current_worksheet = workbook.add_worksheet(_(
+                current_worksheet = workbook.add_worksheet(self.env._(
                     'SBS %(month)s %(year)s',
                     month=report_data['month'],
                     year=report_data['year']))
@@ -480,7 +480,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             data_1000 = {
                 '1001': {
-                    'header': _('Average number of full-time workers'),
+                    'header': self.env._('Average number of full-time workers'),
                     'values': [
                         1001,
                         report_data['1001_total'],
@@ -489,7 +489,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '1002': {
-                    'header': _('Average number of part-time workers'),
+                    'header': self.env._('Average number of part-time workers'),
                     'values': [
                         1002,
                         report_data['1002_total'],
@@ -498,7 +498,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '1003': {
-                    'header': _('Average number of total workers or FTEs'),
+                    'header': self.env._('Average number of total workers or FTEs'),
                     'values': [
                         1003,
                         report_data['1003_total'],
@@ -507,7 +507,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '1011': {
-                    'header': _('Actual number of hours worked full time'),
+                    'header': self.env._('Actual number of hours worked full time'),
                     'values': [
                         1011,
                         report_data['1011_total'],
@@ -516,7 +516,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '1012': {
-                    'header': _('Actual number of hours worked part-time'),
+                    'header': self.env._('Actual number of hours worked part-time'),
                     'values': [
                         1012,
                         report_data['1012_total'],
@@ -525,7 +525,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '1013': {
-                    'header': _('Total actual number of hours worked or FTE'),
+                    'header': self.env._('Total actual number of hours worked or FTE'),
                     'values': [
                         1013,
                         report_data['1013_total'],
@@ -549,11 +549,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             data_102 = {
                 'full_time': {
                     'full_time': {
-                        'header': _('Full Time'),
+                        'header': self.env._('Full Time'),
                         'values': ['', '', ''],
                     },
                     'total_gross': {
-                        'header': _('Total Gross'),
+                        'header': self.env._('Total Gross'),
                         'values': [
                             report_data['102']['total_gross']['male']['full']
                             + report_data['102']['total_gross']['female']['full'],
@@ -562,11 +562,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'salaries_paid': {
-                        'header': _('Salaries paid in relation to previous years'),
+                        'header': self.env._('Salaries paid in relation to previous years'),
                         'values': ['', '', ''],
                     },
                     'reimbursed_expenses': {
-                        'header': _('Reimbursed Expenses'),
+                        'header': self.env._('Reimbursed Expenses'),
                         'values': [
                             report_data['102']['reimbursed_expenses']['male']['full']
                             + report_data['102']['reimbursed_expenses']['female']['full'],
@@ -575,15 +575,15 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'reimbursed_expenses_code_330': {
-                        'header': _('Reimbursed Expenses (Code 330)'),
+                        'header': self.env._('Reimbursed Expenses (Code 330)'),
                         'values': ['', '', ''],
                     },
                     'foreign_expenses': {
-                        'header': _('Foreign Expenses'),
+                        'header': self.env._('Foreign Expenses'),
                         'values': ['', '', ''],
                     },
                     'private_car': {
-                        'header': _('Private Car'),
+                        'header': self.env._('Private Car'),
                         'values': [
                             report_data['102']['private_car']['male']['full']
                             + report_data['102']['private_car']['female']['full'],
@@ -592,7 +592,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'public_transport': {
-                        'header': _('Public Transportation'),
+                        'header': self.env._('Public Transportation'),
                         'values': [
                             report_data['102']['public_transport']['male']['full']
                             + report_data['102']['public_transport']['female']['full'],
@@ -601,15 +601,15 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'mobility_bonus': {
-                        'header': _('Mobility Bonus'),
+                        'header': self.env._('Mobility Bonus'),
                         'values': ['', '', ''],
                     },
                     'withdrawal_not_retained': {
-                        'header': _('Withdrawal not retained'),
+                        'header': self.env._('Withdrawal not retained'),
                         'values': ['', '', ''],
                     },
                     'onss_employer': {
-                        'header': _('ONNS Employer'),
+                        'header': self.env._('ONNS Employer'),
                         'values': [
                             report_data['102']['onss_employer']['male']['full']
                             + report_data['102']['onss_employer']['female']['full'],
@@ -618,23 +618,23 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'overseas_social_security': {
-                        'header': _('Overseas Social Security'),
+                        'header': self.env._('Overseas Social Security'),
                         'values': ['', '', ''],
                     },
                     'youth_hiring_plan': {
-                        'header': _('Youth Hiring Plan'),
+                        'header': self.env._('Youth Hiring Plan'),
                         'values': ['', '', ''],
                     },
                     'employer_contribution_to_fund': {
-                        'header': _('Employer contribution to the fund'),
+                        'header': self.env._('Employer contribution to the fund'),
                         'values': ['', '', ''],
                     },
                     'other_employer_contributions': {
-                        'header': _('Other employer contributions'),
+                        'header': self.env._('Other employer contributions'),
                         'values': ['', '', ''],
                     },
                     'total_full_time_code_1021': {
-                        'header': _('Total Full Time (code 1021)'),
+                        'header': self.env._('Total Full Time (code 1021)'),
                         'values': [
                             report_data['102']['total']['male']['full']
                             + report_data['102']['total']['female']['full'],
@@ -645,11 +645,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 },
                 'part_time': {
                     'part_time': {
-                        'header': _('Part Time'),
+                        'header': self.env._('Part Time'),
                         'values': ['', '', ''],
                     },
                     'total_gross': {
-                        'header': _('Total Gross'),
+                        'header': self.env._('Total Gross'),
                         'values': [
                             report_data['102']['total_gross']['male']['part']
                             + report_data['102']['total_gross']['female']['part'],
@@ -658,11 +658,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'salaries_paid': {
-                        'header': _('Salaries paid in relation to previous years'),
+                        'header': self.env._('Salaries paid in relation to previous years'),
                         'values': ['', '', ''],
                     },
                     'reimbursed_expenses': {
-                        'header': _('Reimbursed Expenses'),
+                        'header': self.env._('Reimbursed Expenses'),
                         'values': [
                             report_data['102']['reimbursed_expenses']['male']['part']
                             + report_data['102']['reimbursed_expenses']['female']['part'],
@@ -671,15 +671,15 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'reimbursed_expenses_code_330': {
-                        'header': _('Reimbursed Expenses (Code 330)'),
+                        'header': self.env._('Reimbursed Expenses (Code 330)'),
                         'values': ['', '', ''],
                     },
                     'foreign_expenses': {
-                        'header': _('Foreign Expenses'),
+                        'header': self.env._('Foreign Expenses'),
                         'values': ['', '', ''],
                     },
                     'private_car': {
-                        'header': _('Private Car'),
+                        'header': self.env._('Private Car'),
                         'values': [
                             report_data['102']['private_car']['male']['part']
                             + report_data['102']['private_car']['female']['part'],
@@ -688,7 +688,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'public_transport': {
-                        'header': _('Public Transportation'),
+                        'header': self.env._('Public Transportation'),
                         'values': [
                             report_data['102']['public_transport']['male']['part']
                             + report_data['102']['public_transport']['female']['part'],
@@ -697,15 +697,15 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'mobility_bonus': {
-                        'header': _('Mobility Bonus'),
+                        'header': self.env._('Mobility Bonus'),
                         'values': ['', '', ''],
                     },
                     'withdrawal_not_retained': {
-                        'header': _('Withdrawal not retained'),
+                        'header': self.env._('Withdrawal not retained'),
                         'values': ['', '', ''],
                     },
                     'onss_employer': {
-                        'header': _('ONNS Employer'),
+                        'header': self.env._('ONNS Employer'),
                         'values': [
                             report_data['102']['onss_employer']['male']['part']
                             + report_data['102']['onss_employer']['female']['part'],
@@ -714,23 +714,23 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'overseas_social_security': {
-                        'header': _('Overseas Social Security'),
+                        'header': self.env._('Overseas Social Security'),
                         'values': ['', '', ''],
                     },
                     'youth_hiring_plan': {
-                        'header': _('Youth Hiring Plan'),
+                        'header': self.env._('Youth Hiring Plan'),
                         'values': ['', '', ''],
                     },
                     'employer_contribution_to_fund': {
-                        'header': _('Employer contribution to the fund'),
+                        'header': self.env._('Employer contribution to the fund'),
                         'values': ['', '', ''],
                     },
                     'other_employer_contributions': {
-                        'header': _('Other employer contributions'),
+                        'header': self.env._('Other employer contributions'),
                         'values': ['', '', ''],
                     },
                     'total_part_time_code_1022': {
-                        'header': _('Total Part Time (code 1022)'),
+                        'header': self.env._('Total Part Time (code 1022)'),
                         'values': [
                             report_data['102']['total']['male']['part']
                             + report_data['102']['total']['female']['part'],
@@ -741,7 +741,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 },
                 'total': {
                     'total_full_time_part_time_code_1023': {
-                        'header': _('Total Full Time + Part Time (code 1023)'),
+                        'header': self.env._('Total Full Time + Part Time (code 1023)'),
                         'values': [
                             report_data['102']['total']['male']['part']
                             + report_data['102']['total']['female']['part']
@@ -776,7 +776,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             data_103 = {
                 'full_time': {
-                    'header': _('Full Time'),
+                    'header': self.env._('Full Time'),
                     'values': [
                         report_data['103']['male'] + report_data['103']['female'],
                         report_data['103']['male'],
@@ -799,7 +799,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             data_eoe = {
                 '105': {
                     'number_of_workers': {
-                        'header': _('Number of Workers'),
+                        'header': self.env._('Number of Workers'),
                         'values': [
                             105,
                             report_data['105']['full'],
@@ -810,11 +810,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 },
                 '11x': {
                     'by_contract_type': {
-                        'header': _('By Contract Type'),
+                        'header': self.env._('By Contract Type'),
                         'values': ['', '', '', ''],
                     },
                     'permanent_contract_cdi': {
-                        'header': _('Permanent contract (CDI)'),
+                        'header': self.env._('Permanent contract (CDI)'),
                         'values': [
                             110,
                             report_data['110']['full'],
@@ -823,7 +823,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'fixed_term_contract_cdd': {
-                        'header': _('Fixed-term contract (CDD)'),
+                        'header': self.env._('Fixed-term contract (CDD)'),
                         'values': [
                             111,
                             report_data['111']['full'],
@@ -832,7 +832,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'contract_execution_clearly_defined_work': {
-                        'header': _('Contract for the execution of a clearly defined work'),
+                        'header': self.env._('Contract for the execution of a clearly defined work'),
                         'values': [
                             112,
                             report_data['112']['full'],
@@ -841,7 +841,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'replacement_contract': {
-                        'header': _('Replacement contract'),
+                        'header': self.env._('Replacement contract'),
                         'values': [
                             113,
                             report_data['113']['part'],
@@ -852,13 +852,13 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 },
                 'by_sex': {
                     'by_sex': {
-                        'header': _('By sex'),
+                        'header': self.env._('By sex'),
                         'values': ['', '', '', ''],
                     },
                 },
                 'male': {
                     'male': {
-                        'header': _('Male'),
+                        'header': self.env._('Male'),
                         'values': [
                             120,
                             report_data['120']['full'],
@@ -867,7 +867,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'primary_education': {
-                        'header': _('Primary education'),
+                        'header': self.env._('Primary education'),
                         'values': [
                             1200,
                             report_data['1200']['full'],
@@ -876,7 +876,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'secondary_education': {
-                        'header': _('Secondary education'),
+                        'header': self.env._('Secondary education'),
                         'values': [
                             1201,
                             report_data['1201']['full'],
@@ -885,7 +885,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'non_university_higher_education': {
-                        'header': _('Non-university higher education'),
+                        'header': self.env._('Non-university higher education'),
                         'values': [
                             1202,
                             report_data['1202']['full'],
@@ -894,7 +894,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'university_education': {
-                        'header': _('University education'),
+                        'header': self.env._('University education'),
                         'values': [
                             1203,
                             report_data['1203']['full'],
@@ -905,7 +905,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 },
                 'female': {
                     'female': {
-                        'header': _('Female'),
+                        'header': self.env._('Female'),
                         'values': [
                             121,
                             report_data['121']['full'],
@@ -914,7 +914,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'primary_education': {
-                        'header': _('Primary education'),
+                        'header': self.env._('Primary education'),
                         'values': [
                             1210,
                             report_data['1210']['full'],
@@ -923,7 +923,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'secondary_education': {
-                        'header': _('Secondary education'),
+                        'header': self.env._('Secondary education'),
                         'values': [
                             1211,
                             report_data['1211']['full'],
@@ -932,7 +932,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'non_university_higher_education': {
-                        'header': _('Non-university higher education'),
+                        'header': self.env._('Non-university higher education'),
                         'values': [
                             1212,
                             report_data['1212']['full'],
@@ -941,7 +941,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'university_education': {
-                        'header': _('University education'),
+                        'header': self.env._('University education'),
                         'values': [
                             1213,
                             report_data['1213']['full'],
@@ -952,11 +952,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 },
                 'by_professional_category': {
                     'by_professional_category': {
-                        'header': _('By professional category'),
+                        'header': self.env._('By professional category'),
                         'values': ['', '', '', ''],
                     },
                     'management_staff': {
-                        'header': _('Management staff'),
+                        'header': self.env._('Management staff'),
                         'values': [
                             130,
                             report_data['130']['full'],
@@ -965,7 +965,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'employees': {
-                        'header': _('Employees'),
+                        'header': self.env._('Employees'),
                         'values': [
                             134,
                             report_data['134']['full'],
@@ -974,7 +974,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'workers': {
-                        'header': _('Workers'),
+                        'header': self.env._('Workers'),
                         'values': [
                             132,
                             report_data['132']['full'],
@@ -983,7 +983,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                         ],
                     },
                     'others': {
-                        'header': _('Others'),
+                        'header': self.env._('Others'),
                         'values': [
                             133,
                             report_data['133']['full'],
@@ -997,7 +997,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             for inner_dictionary in data_eoe.values():
                 for data in inner_dictionary.values():
                     current_line += 1
-                    if data['header'].startswith(_('By')):
+                    if data['header'].startswith(self.env._('By')):
                         current_worksheet.write(current_line, 0, data['header'], style_special_vertical_header)
                         for j, value in enumerate(data['values']):
                             current_worksheet.write(current_line, j + 1, value, style_special_normal)
@@ -1014,7 +1014,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             data_200 = {
                 '205': {
-                    'header': _('Total'),
+                    'header': self.env._('Total'),
                     'values': [
                         205,
                         report_data['205']['full'],
@@ -1023,7 +1023,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '210': {
-                    'header': _('Permanent contract (CDI)'),
+                    'header': self.env._('Permanent contract (CDI)'),
                     'values': [
                         210,
                         report_data['210']['full'],
@@ -1032,7 +1032,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '211': {
-                    'header': _('Fixed-term contract (CDD)'),
+                    'header': self.env._('Fixed-term contract (CDD)'),
                     'values': [
                         211,
                         report_data['211']['full'],
@@ -1041,7 +1041,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '212': {
-                    'header': _('Contract for the execution of a clearly defined work'),
+                    'header': self.env._('Contract for the execution of a clearly defined work'),
                     'values': [
                         212,
                         report_data['212']['full'],
@@ -1050,7 +1050,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '213': {
-                    'header': _('Replacement contract'),
+                    'header': self.env._('Replacement contract'),
                     'values': [
                         213,
                         report_data['213']['full'],
@@ -1073,7 +1073,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             data_300 = {
                 '305': {
-                    'header': _('Total'),
+                    'header': self.env._('Total'),
                     'values': [
                         305,
                         report_data['305']['full'],
@@ -1082,7 +1082,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '310': {
-                    'header': _('Permanent contract (CDI)'),
+                    'header': self.env._('Permanent contract (CDI)'),
                     'values': [
                         310,
                         report_data['310']['full'],
@@ -1091,7 +1091,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '311': {
-                    'header': _('Fixed-term contract (CDD)'),
+                    'header': self.env._('Fixed-term contract (CDD)'),
                     'values': [
                         311,
                         report_data['311']['full'],
@@ -1100,7 +1100,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '312': {
-                    'header': _('Contract for the execution of a clearly defined work'),
+                    'header': self.env._('Contract for the execution of a clearly defined work'),
                     'values': [
                         312,
                         report_data['312']['full'],
@@ -1109,7 +1109,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '313': {
-                    'header': _('Replacement contract'),
+                    'header': self.env._('Replacement contract'),
                     'values': [
                         313,
                         report_data['313']['full'],
@@ -1118,11 +1118,11 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 'by_reason_for_termination_of_the_contract': {
-                    'header': _('By reason for termination of the contract'),
+                    'header': self.env._('By reason for termination of the contract'),
                     'values': ['', '', '', ''],
                 },
                 '340': {
-                    'header': _('Pension'),
+                    'header': self.env._('Pension'),
                     'values': [
                         340,
                         report_data['340']['full'],
@@ -1131,7 +1131,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '341': {
-                    'header': _('Unemployment with company supplement'),
+                    'header': self.env._('Unemployment with company supplement'),
                     'values': [
                         341,
                         report_data['341']['full'],
@@ -1140,7 +1140,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '342': {
-                    'header': _('Dismissal'),
+                    'header': self.env._('Dismissal'),
                     'values': [
                         342,
                         report_data['342']['full'],
@@ -1149,7 +1149,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '343': {
-                    'header': _('Another reason'),
+                    'header': self.env._('Another reason'),
                     'values': [
                         343,
                         report_data['343']['full'],
@@ -1172,7 +1172,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             data_580 = {
                 '58x1': {
-                    'header': _('Number of Affected Employees'),
+                    'header': self.env._('Number of Affected Employees'),
                     'values': [
                         5801,
                         report_data['5801'],
@@ -1181,7 +1181,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x2': {
-                    'header': _('Number of completed training hours'),
+                    'header': self.env._('Number of completed training hours'),
                     'values': [
                         5802,
                         report_data['5802'],
@@ -1190,7 +1190,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x3': {
-                    'header': _('Net cost to the business'),
+                    'header': self.env._('Net cost to the business'),
                     'values': [
                         5803,
                         report_data['5803'],
@@ -1199,7 +1199,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x31': {
-                    'header': _('Gross cost directly linked to training'),
+                    'header': self.env._('Gross cost directly linked to training'),
                     'values': [
                         58031,
                         report_data['58031'],
@@ -1208,7 +1208,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x32': {
-                    'header': _('Contributions paid and payments to collective funds'),
+                    'header': self.env._('Contributions paid and payments to collective funds'),
                     'values': [
                         58032,
                         report_data['58032'],
@@ -1217,7 +1217,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x33': {
-                    'header': _('Grants and other financial benefits received (to be deducted)'),
+                    'header': self.env._('Grants and other financial benefits received (to be deducted)'),
                     'values': [
                         58033,
                         report_data['58033'],
@@ -1240,7 +1240,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             data_582 = {
                 '58x1': {
-                    'header': _('Number of Affected Employees'),
+                    'header': self.env._('Number of Affected Employees'),
                     'values': [
                         5821,
                         report_data['5821'],
@@ -1249,7 +1249,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x2': {
-                    'header': _('Number of completed training hours'),
+                    'header': self.env._('Number of completed training hours'),
                     'values': [
                         5822,
                         report_data['5822'],
@@ -1258,7 +1258,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x3': {
-                    'header': _('Net cost to the business'),
+                    'header': self.env._('Net cost to the business'),
                     'values': [
                         5823,
                         report_data['5823'],
@@ -1281,7 +1281,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             data_584 = {
                 '58x1': {
-                    'header': _('Number of Affected Employees'),
+                    'header': self.env._('Number of Affected Employees'),
                     'values': [
                         5841,
                         report_data['5841'],
@@ -1290,7 +1290,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x2': {
-                    'header': _('Number of completed training hours'),
+                    'header': self.env._('Number of completed training hours'),
                     'values': [
                         5842,
                         report_data['5842'],
@@ -1299,7 +1299,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     ],
                 },
                 '58x3': {
-                    'header': _('Net cost to the business'),
+                    'header': self.env._('Net cost to the business'),
                     'values': [
                         5843,
                         report_data['5843'],
@@ -1319,7 +1319,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
         workbook.close()
 
         base64_xlsx = base64.encodebytes(output.getvalue())
-        filename = _(
+        filename = self.env._(
             'SocialBalance-%(date_from)s-%(date_to)s.xlsx',
             date_from=format_date(self.env, self.date_from),
             date_to=format_date(self.env, self.date_to))
@@ -1329,7 +1329,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Social Balance Sheet'),
+            'name': self.env._('Social Balance Sheet'),
             'res_model': self._name,
             'view_mode': 'form',
             'res_id': self.id,

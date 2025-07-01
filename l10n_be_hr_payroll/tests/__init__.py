@@ -10,3 +10,4 @@ from . import test_payroll_consecutive_leaves
 from . import test_payroll_eco_vouchers
 from . import test_hr_leave
 from . import test_payroll_withholding_taxes_with_child_allowances
+from . import test_payroll_social_balance_sheet
