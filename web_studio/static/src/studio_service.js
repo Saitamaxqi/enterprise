@@ -73,6 +73,9 @@ function isStudioEditable(action) {
             // @see SELF_READABLE_FIELDS.
             return false;
         }
+        if (action.res_model === "account.bank.statement.line") {
+            return false; // bank reconciliation isn't editable
+        }
         return action.res_model ? true : false;
     }
     return false;
