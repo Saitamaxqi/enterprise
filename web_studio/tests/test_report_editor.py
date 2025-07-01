@@ -946,7 +946,7 @@ class TestReportEditorUIUnit(HttpCase):
            <t t-call="web_studio.test_report_document" ws-call-key="2" ws-view-id="{self.main_view.id}">
              <t t-name="web_studio.test_report_document" ws-view-id="{self.main_view_document.id}">
                <div>
-                 <p t-field="doc.name" oe-expression-readable="Name"/>
+                 <p t-field="doc.name" data-oe-expression-readable="Name"/>
                </div>
                <p>
                  <br/>

@@ -1,7 +1,14 @@
 import { setupEditor } from "@html_editor/../tests/_helpers/editor";
 import { getContent } from "@html_editor/../tests/_helpers/selection";
 import { before, describe, expect, test } from "@odoo/hoot";
-import { hover, queryAll, queryFirst } from "@odoo/hoot-dom";
+import {
+    hover,
+    manuallyDispatchProgrammaticEvent,
+    press,
+    queryAll,
+    queryFirst,
+    queryOne,
+} from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { contains } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
@@ -29,13 +36,24 @@ before(() => {
     }
 });
 
-import { QWebPlugin } from "@html_editor/others/qweb_plugin";
 import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
-import { QWebTablePlugin } from "@web_studio/client_action/report_editor/report_editor_wysiwyg/qweb_table_plugin";
+import { QWebTablePlugin } from "@web_studio/client_action/report_editor/report_editor_wysiwyg/editor_plugins/qweb_table_plugin";
+import {
+    QWebPlugin,
+    TablePlugin,
+    ToolbarPlugin,
+} from "@web_studio/client_action/report_editor/report_editor_wysiwyg/editor_plugins/editor_plugins";
 
-const REPORT_EDITOR_PLUGINS = [...MAIN_PLUGINS, QWebPlugin, QWebTablePlugin];
+const REPORT_EDITOR_PLUGINS_MAP = Object.fromEntries(MAIN_PLUGINS.map((cls) => [cls.id, cls]));
+Object.assign(REPORT_EDITOR_PLUGINS_MAP, {
+    [QWebPlugin.id]: QWebPlugin,
+    [QWebTablePlugin.id]: QWebTablePlugin,
+    [TablePlugin.id]: TablePlugin,
+    [ToolbarPlugin.id]: ToolbarPlugin,
+});
+
 const baseConfig = {
-    Plugins: REPORT_EDITOR_PLUGINS,
+    Plugins: Object.values(REPORT_EDITOR_PLUGINS_MAP),
     classList: ["odoo-editor-qweb"],
 };
 
@@ -349,4 +367,72 @@ test("move outside table menu shouldn't remove it if the menu is close, we shoul
     await animationFrame();
     expect(".o-overlay-container .o-we-table-menu").toHaveCount(0);
     expect(".o-dropdown-item").toHaveCount(0);
+});
+
+test("push and remove readable expression as text node", async () => {
+    const { editor, el } = await setupEditor(
+        `<div>a<span t-field="doc.field" data-oe-expression-readable="human > expr"></span></div>`,
+        getEditorOptions()
+    );
+    expect(getContent(el)).toBe(
+        `<div class="o-paragraph">a<span t-field="doc.field" data-oe-expression-readable="human > expr" data-oe-protected="true" contenteditable="false">human > expr</span></div>`
+    );
+
+    expect(getContent(editor.getElContent())).toBe(
+        '<div>a<span t-field="doc.field" data-oe-expression-readable="human > expr"></span></div>'
+    );
+});
+
+test("select all t-field", async () => {
+    const { el } = await setupEditor(
+        `<div>a<span t-field="doc.field" data-oe-expression-readable="human > expr"></span></div>`,
+        getEditorOptions()
+    );
+    await contains(":iframe span[t-field]").click();
+    expect(getContent(el)).toBe(
+        `<div class="o-paragraph">a[<span t-field="doc.field" data-oe-expression-readable="human > expr" data-oe-protected="true" contenteditable="false">human > expr</span>]</div>`
+    );
+});
+
+test("copy t-field", async () => {
+    const options = getEditorOptions();
+    // Disable iframe for now: seems that hoot.press doesn't properly handle it.
+    options.props.iframe = false;
+
+    const { editor, el } = await setupEditor(
+        `<div>a<span t-field="doc.field" data-oe-expression-readable="human ... expr"></span></div>`,
+        options
+    );
+    await contains("span[t-field]").click();
+    const clipboardData = new DataTransfer();
+    await press(["ctrl", "c"], { dataTransfer: clipboardData });
+    expect(clipboardData.getData("application/vnd.odoo.odoo-editor")).toBe(
+        `<div><span t-field="doc.field" data-oe-expression-readable="human ... expr" data-oe-protected="true" contenteditable="false"></span></div>`
+    );
+
+    editor.shared.selection.setSelection({ anchorNode: queryOne(".odoo-editor-editable div") });
+    await manuallyDispatchProgrammaticEvent(el, "paste", { clipboardData });
+
+    expect(getContent(el)).toBe(
+        `<div class="o-paragraph"><span contenteditable="false" data-oe-protected="true" data-oe-expression-readable="human ... expr" t-field="doc.field">human ... expr</span>[]a<span t-field="doc.field" data-oe-expression-readable="human ... expr" data-oe-protected="true" contenteditable="false">human ... expr</span></div>`
+    );
+});
+
+test("disable formatting stuff on t-att-class and t-att-style (and their format counterparts", async () => {
+    await setupEditor(
+        `<div>a<span t-field="doc.field" data-oe-expression-readable="human > expr" t-att-class="expr_class"></span></div>`,
+        getEditorOptions()
+    );
+    await contains(":iframe span[t-field]").click();
+    await contains(".o-we-toolbar [name=expand_toolbar]").click();
+    const allDisabled = queryAll(".o-we-toolbar button:disabled");
+    expect(allDisabled.map((el) => el.title)).toEqual([
+        "Select font style",
+        "Select font size",
+        "Toggle bold",
+        "Toggle italic",
+        "Toggle underline",
+        "Toggle strikethrough",
+        "Add a link",
+    ]);
 });

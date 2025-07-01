@@ -31,16 +31,15 @@ import { memoizeOnce } from "@web_studio/client_action/utils";
 import { ReportEditorIframe } from "../report_editor_iframe";
 import { Editor } from "@html_editor/editor";
 import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
-import { QWebPlugin } from "@html_editor/others/qweb_plugin";
 import { nodeSize } from "@html_editor/utils/position";
 import { closestElement } from "@html_editor/utils/dom_traversal";
-import { QWebTablePlugin } from "./qweb_table_plugin";
+import { QWebTablePlugin } from "./editor_plugins/qweb_table_plugin";
 import { visitNode } from "../utils";
-import { TablePlugin } from "@html_editor/main/table/table_plugin";
 import { withSequence } from "@html_editor/utils/resource";
 import { ReportRecordNavigation } from "../report_editor_xml/report_record_navigation";
 import { CheckBox } from "@web/core/checkbox/checkbox";
 import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
+import { QWebPlugin, TablePlugin, ToolbarPlugin } from "./editor_plugins/editor_plugins";
 
 class __Record extends _Record.components._Record {
     setup() {
@@ -184,23 +183,12 @@ const CUSTOM_BRANDING_ATTR = [
     "o-diff-key",
 ];
 
-class _TablePlugin extends TablePlugin {
-    static id = TablePlugin.id;
-    _insertTable() {
-        const table = super._insertTable(...arguments);
-        if (closestElement(table, "[t-call='web.external_layout']")) {
-            table.removeAttribute("class");
-            table.classList.add("table", "o_table", "table-borderless");
-        }
-        return table;
-    }
-}
-
 const REPORT_EDITOR_PLUGINS_MAP = Object.fromEntries(MAIN_PLUGINS.map((cls) => [cls.id, cls]));
 Object.assign(REPORT_EDITOR_PLUGINS_MAP, {
     [QWebPlugin.id]: QWebPlugin,
     [QWebTablePlugin.id]: QWebTablePlugin,
-    [TablePlugin.id]: _TablePlugin,
+    [TablePlugin.id]: TablePlugin,
+    [ToolbarPlugin.id]: ToolbarPlugin,
 });
 
 export class ReportEditorWysiwyg extends Component {
@@ -290,7 +278,6 @@ export class ReportEditorWysiwyg extends Component {
         editable.querySelectorAll("[ws-view-id]").forEach((el) => {
             el.setAttribute("contenteditable", "true");
         });
-
         const editor = new Editor(
             {
                 Plugins: Object.values(REPORT_EDITOR_PLUGINS_MAP),
@@ -667,7 +654,7 @@ export class ReportEditorWysiwyg extends Component {
 
                 const span = doc.createElement("span");
                 span.setAttribute(
-                    "oe-expression-readable",
+                    "data-oe-expression-readable",
                     fieldString || `field: "${qwebVar}.${fieldNameChain}"`
                 );
                 span.textContent = defaultValue;

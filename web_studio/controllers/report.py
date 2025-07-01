@@ -142,7 +142,7 @@ def _html_to_client_compliant(tree):
 def _cleanup_from_client(tree):
     tree = _to_qweb(tree)
     for node in tree.iter(etree.Element):
-        for att in ("oe-context", "oe-expression-readable"):
+        for att in ("oe-context", "data-oe-expression-readable"):
             node.attrib.pop(att, None)
         if node.tag == "img" and "t-att-src" in node.attrib:
             node.attrib.pop("src", None)
@@ -328,13 +328,13 @@ def _guess_qweb_variables(tree, report, qcontext):
         if "t-field" in node.attrib:
             expr = node.get("t-field")
             human_readable = expr_to_simple_chain(expr, env, report.model, qcontext) or "Field"
-            node.set("oe-expression-readable", human_readable)
+            node.set("data-oe-expression-readable", human_readable)
 
         tout = [att for att in ("t-out", "t-esc") if att in node.attrib]
         if tout and not node.get(tout[0]) == "0":
             expr = node.get(tout[0])
             human_readable = expr_to_simple_chain(expr, env, report.model, qcontext) or "Expression"
-            node.set("oe-expression-readable", human_readable)
+            node.set("data-oe-expression-readable", human_readable)
 
         if node.tag == "img" and ("t-att-src" in node.attrib):
             src = node.get("t-att-src")

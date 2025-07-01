@@ -4,7 +4,7 @@ import { Component, reactive } from "@odoo/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { _t } from "@web/core/l10n/translation";
-import { visitNode } from "../utils";
+import { visitNode } from "../../utils";
 
 /**
  * @typedef {Object} CellInfo
