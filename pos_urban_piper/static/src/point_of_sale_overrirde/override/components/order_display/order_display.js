@@ -1,6 +1,7 @@
 import { OrderDisplay } from "@point_of_sale/app/components/order_display/order_display";
 import { patch } from "@web/core/utils/patch";
 import { useState } from "@odoo/owl";
+import { usePos } from "@point_of_sale/app/hooks/pos_hook";
 
 patch(OrderDisplay, {
     props: {
@@ -13,6 +14,7 @@ patch(OrderDisplay, {
 patch(OrderDisplay.prototype, {
     setup() {
         super.setup(...arguments);
+        this.pos = usePos();
         this.state = useState({ remainingTime: 0 });
         this.state.remainingTime = this._computeRemainingTime();
         this.interval = setInterval(() => {
@@ -30,5 +32,14 @@ patch(OrderDisplay.prototype, {
 
     get showTimer() {
         return this.props.orderAcceptTime && this.order?.state !== "paid";
+    },
+
+    changePrepTime(order, increment) {
+        order.prep_time = Math.max(0, order.prep_time + (increment ? 5 : -5));
+    },
+
+    onInputChangePrepTime(order, inputTime, event) {
+        order.prep_time = Math.max(0, parseInt(inputTime || 0));
+        event.target.value = order.prep_time;
     },
 });

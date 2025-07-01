@@ -64,6 +64,15 @@ export function fetchDeliveryData() {
     ];
 }
 
+export function clickPrepTime() {
+    return [
+        {
+            trigger: `.increment-btn`,
+            run: "click",
+        },
+    ];
+}
+
 export function orderHasText(orderNumber, text) {
     return [
         {

@@ -8,7 +8,7 @@ class PosConfig(models.Model):
     urbanpiper_minimum_preparation_time = fields.Integer(
         string='Minimum Preparation Time (Minutes)',
         help='The minimum amount of time the customer must wait for the order to be prepared.',
-        default=45,
+        default=20,
         required=True,
     )
 

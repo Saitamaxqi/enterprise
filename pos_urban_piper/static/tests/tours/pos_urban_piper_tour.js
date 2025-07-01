@@ -96,6 +96,28 @@ registry.category("web_tour.tours").add("test_payment_method_close_session", {
         ].flat(),
 });
 
+registry.category("web_tour.tours").add("OrderPrepTime", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            UrbanPiper.fetchDeliveryData(),
+            UrbanPiper.checkNewOrderCount(1),
+            UrbanPiper.onDropdownStatus("New"),
+            UrbanPiper.clickPrepTime(),
+            UrbanPiper.clickPrepTime(),
+            UrbanPiper.orderButtonClick("Accept"),
+            UrbanPiper.fetchDeliveryData(),
+            UrbanPiper.checkNewOrderCount(0),
+            UrbanPiper.orderHasText("001", "Acknowledged"),
+            UrbanPiper.orderHasText("001", "Just Eat"),
+            TicketScreen.selectOrder("001"),
+            UrbanPiper.orderButtonClick("Mark as ready"),
+            UrbanPiper.fetchDeliveryData(),
+            UrbanPiper.orderHasText("001", "Food Ready"),
+        ].flat(),
+});
+
 registry.category("web_tour.tours").add("test_reject_order", {
     steps: () =>
         [

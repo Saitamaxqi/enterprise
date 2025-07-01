@@ -76,6 +76,9 @@ patch(TicketScreen.prototype, {
             status,
             code,
             urban_piper_test,
+            {
+                orderPrepTime: order.prep_time,
+            },
         ]);
         return response;
     },

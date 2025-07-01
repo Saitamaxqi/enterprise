@@ -220,7 +220,7 @@ class PosConfig(models.Model):
             up.configure_webhook()
             up.urbanpiper_store_status_update(status=status)
 
-    def order_status_update(self, order_id, new_status, code=None, urban_piper_test=False):
+    def order_status_update(self, order_id, new_status, code=None, urban_piper_test=False, extra_args={}):
         """
         Update order status from urban piper webhook
         """
@@ -230,10 +230,11 @@ class PosConfig(models.Model):
             self._make_order_payment(order)
         up = UrbanPiperClient(self)
         is_success, message = False, ''
+        order.prep_time = extra_args.get('orderPrepTime', 0)
         if urban_piper_test or (order.delivery_provider_id.technical_name in ['careem'] and new_status == 'Food Ready'):
             is_success = True
         else:
-            is_success, message = up.request_status_update(order.delivery_identifier, new_status, code)
+            is_success, message = up.request_status_update(order.delivery_identifier, new_status, order.prep_time, code)
         if is_success:
             order.write({
                 'delivery_status': const.ORDER_STATUS_MAPPING[new_status][1],

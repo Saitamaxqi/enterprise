@@ -404,15 +404,19 @@ class UrbanPiperClient:
         response_json = self._make_api_request(endpoint, method='POST', data=payload)
         return response_json
 
-    def request_status_update(self, order_id, new_status, code=None):
+    def request_status_update(self, order_id, new_status, prep_time, code=None):
         """
         Update status in Urban Piper
         """
         endpoint = f'external/api/v1/orders/{order_id}/status/'
         payload = {
             'new_status': new_status,
-            'reason_code': code
+            'reason_code': code,
         }
+        if new_status == "Acknowledged":
+            payload['extra'] = {
+                'prep_time_mins': prep_time,
+            }
         response_json = self._make_api_request(endpoint, method='PUT', data=payload)
         if response_json:
             if response_json.get('status') == 'success':

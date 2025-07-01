@@ -9,5 +9,28 @@
                 </div>
             </div>
         </xpath>
+        <xpath expr="//div[hasclass('tax-info')]" position="before">
+            <div t-if="this.pos.router.state.current == 'TicketScreen' and this.props.order.delivery_provider_id and this.props.order.delivery_status == 'placed'" class="d-flex align-items-center gap-2 my-2">
+                <t t-set="currentOrder" t-value="this.props.order"/>
+                <button
+                    type="button"
+                    class="btn btn-secondary btn-sm px-3 fs-2"
+                    t-on-click="() => this.changePrepTime(currentOrder, false)">
+                    －
+                </button>
+                <input
+                    type="number"
+                    class="form-control text-center form-control-sm fs-2"
+                    t-att-value="this.props.order.prep_time"
+                    t-on-blur="(event) => this.onInputChangePrepTime(currentOrder, event.target.value, event)"/>
+                <button
+                    type="button"
+                    class="increment-btn btn btn-secondary m-0 btn-sm px-3 fs-2"
+                    t-on-click="() => this.changePrepTime(currentOrder, true)">
+                    ＋
+                </button>
+                <span class="fs-3">Min(s)</span>
+            </div>
+        </xpath>
     </t>
 </templates>
