@@ -26,7 +26,7 @@
             <input type="text" class="o-voip-Keypad-input form-control border-0 fw-bold text-center" t-att-class="inputFontSizeClass" t-att-readonly="props.state.showMore" t-ref="input-ref" t-model="props.state.input.value" t-att-data-value="props.state.input.value" t-on-keydown="onKeydown" t-on-input="onInputDebounced"/>
         </div>
         <t t-if="props.state.input.value and !props.state.showMore and !props.dtmf">
-            <button class="btn btn-light position-absolute end-0 top-50 translate-middle-y d-flex p-2" title="Backspace" t-on-touchend.prevent="(ev) => ev.target.click()" t-on-click="onClickBackspace">
+            <button class="btn btn-light position-absolute end-0 top-50 translate-middle-y d-flex p-2" title="Backspace" t-on-touchend.prevent="onClickBackspace" t-on-click="onClickBackspace">
                 <i class="oi oi-backspace-o fa-2x" aria-hidden="true"/>
             </button>
         </t>
@@ -48,7 +48,7 @@
     <div class="o-voip-Keypad-numpad grid" t-att-class="{ 'px-3': !props.dtmf }">
         <t t-foreach="keys" t-as="key" t-key="key.key">
             <!-- ⚠ align-items-stretch necessary for proper alignment on Safari -->
-            <button class="btn btn-light d-flex flex-column align-items-stretch g-col-4 gap-1 p-1" t-att-class="{ 'justify-content-center': key.icon }" t-on-click="() => this.onClickKey(key.key)" t-on-touchend.prevent="(ev) => ev.target.click()">
+            <button class="btn btn-light d-flex flex-column align-items-stretch g-col-4 gap-1 p-1" t-att-class="{ 'justify-content-center': key.icon }" t-on-click="() => this.onClickKey(key.key)" t-on-touchend.prevent="() => this.onClickKey(key.key)">
                 <i t-if="key.icon" t-attf-class="fa {{ key.icon }}"/>
                 <span t-else="" class="o-voip-Keypad-digit fw-bolder lh-1" t-esc="key.key"/>
                 <span t-if="key.letters" class="smaller fw-bold opacity-50" t-esc="key.letters"/>
