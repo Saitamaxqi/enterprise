@@ -4,6 +4,7 @@ from math import floor
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 from odoo.http import request
 from odoo.tools import format_amount
 
@@ -57,16 +58,17 @@ class ProductTemplate(models.Model):
         all_pricings = self.env['product.pricelist.item'].search(
             domain, order=self.env['product.pricelist.item']._get_recurring_rules_order()
         )
-        if not all_pricings and pricelist:
-            # If the current pricelist has no recurring rules, the recurring price (and plans) will
-            # be decided by the recurring rules not linked to a specific pricelist.
+        if pricelist:
+            # Add the rules not restricted to a specific pricelist, only for the plans that had no
+            # rule for the current pricelist.
             domain = self.env['product.pricelist']._get_applicable_rules_domain(
                 products=variant or self,
                 date=fields.Datetime.now(),
                 any_plan=True,
             )
-            all_pricings = self.env['product.pricelist.item'].search(
-                domain, order=self.env['product.pricelist.item']._get_recurring_rules_order()
+            all_pricings |= self.env['product.pricelist.item'].search(
+                Domain.AND([domain, [('plan_id', 'not in', all_pricings.plan_id.ids)]]),
+                order=self.env['product.pricelist.item']._get_recurring_rules_order()
             )
 
         found_plan_ids = set()
