@@ -221,14 +221,14 @@ class HrPayslip(models.Model):
         header = (
             f'PHF{header_data["payment_set_code"]}{header_data["ref"]:<12}{header_data["payment_date"]:%Y%m%d}'
             f'{acc_number + "SA" + header_data["currency"]:<35}'
-            f'{header_data["currency"]}{header_data["payslips_count"]:07}{int(header_data["amount_total"] * 100):017}'
+            f'{header_data["currency"]}{header_data["payslips_count"]:07}{round(header_data["amount_total"] * 100):017}'
             f'{"":<1}{"":<311}\n'
         )
         datas = []
         for payment in payments_data:
             datas.append(
                 f'PD{payment["bank_code"]:<3}{payment["type"].upper()}{payment["autopay_field"]:<34}'
-                f'{int(payment["amount"] * 100):017}{payment["identifier"]:<35}{payment["ref"]:<35}'
+                f'{round(payment["amount"] * 100):017}{payment["identifier"]:<35}{payment["ref"]:<35}'
                 f'{payment["bank_account_name"]:<140}{"":<130}'
             )
         data = '\n'.join(datas)
