@@ -2312,3 +2312,53 @@ registry.category("web_tour.tours").add("web_studio_add_field_into_empty_group_b
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_create_action_in_form_view", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view .o_form_editable",
+            run: "click",
+        },
+        buttonToogleStudio,
+        ...addActionButtonSteps("web_studio_custom_action_name", "Test Action"),
+        {
+            trigger: ".o_web_studio_leave a",
+            run: "click",
+        },
+        ...stepNotInStudio(".o_form_view"),
+    ],
+});
+
+registry.category("web_tour.tours").add("web_studio_test_remove_action_in_form_view", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view .o_form_editable",
+            run: "click",
+        },
+        buttonToogleStudio,
+        {
+            trigger: 'button[studioxpath="/form[1]/header[1]/button[1]"]',
+            run: "click",
+        },
+        {
+            trigger: "button.o_web_studio_remove",
+            run: "click",
+        },
+        {
+            trigger: "footer.modal-footer>button.btn-primary",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_leave a",
+            run: "click",
+        },
+    ],
+});

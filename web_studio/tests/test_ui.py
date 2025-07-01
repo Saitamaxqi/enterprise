@@ -2113,3 +2113,25 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             </xpath>
         </data>
         """)
+
+    def test_deleted_action_in_form_view(self):
+        model = self.env["ir.model"]._get("res.partner")
+
+        action = self.env['ir.actions.server'].sudo().create({
+            'name': 'Test Action',
+            'model_id': model.id,
+            'binding_model_id': model.id,
+            'state': 'code',
+            'code': 'pass',
+        })
+
+        self.env["ir.model.data"].create({
+            "name": "Test_Action",
+            "model": "ir.actions.server",
+            "res_id": action.id,
+            "noupdate": True,
+        })
+
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_create_action_in_form_view', login="admin")
+        action.unlink()
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_remove_action_in_form_view', login="admin")

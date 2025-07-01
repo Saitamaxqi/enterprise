@@ -56,7 +56,8 @@ class StudioApprovalRule(models.Model):
         try:
             return int(str_action)
         except ValueError:
-            return self.env.ref(str_action).id
+            action = self.env.ref(str_action, raise_if_not_found=False)
+            return action and action.id
 
     def _group_expand_notification_order(self, options, domain):
         return sorted(set(options).union({'1', '2', '3', '4'}))
