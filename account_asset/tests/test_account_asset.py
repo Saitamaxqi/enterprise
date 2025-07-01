@@ -3142,7 +3142,7 @@ class TestAccountAsset(TestAccountReportsCommon):
         asset_model_b.company_id = branch_b['company']
 
         # We need to set both branch's asset models on the parent company's asset account.
-        self.company_data['default_account_assets'].asset_model_ids = asset_model_a + asset_model_b
+        self.company_data['default_account_assets'].sudo().asset_model_ids = asset_model_a + asset_model_b
         self.company_data['default_account_assets'].create_asset = 'draft'
 
         vendor_bill = self.env['account.move'].with_company(branch_a['company']).create({
