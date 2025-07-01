@@ -169,7 +169,7 @@ test("input font size classes update dynamically when input changes", async () =
     await contains(".o-voip-Keypad-input.fs-3:not(.fs-1):not(.fs-2)");
 });
 
-test("Search works for name, phone number, and T9 input", async () => {
+test("Search by T9 code works", async () => {
     const pyEnv = await startServer();
     pyEnv["res.partner"].create([
         { name: "John Doe", phone: "+1234567890", t9_name: " 5646 363" },
@@ -179,21 +179,43 @@ test("Search works for name, phone number, and T9 input", async () => {
     await start();
     await click(".o_menu_systray [title='Open Softphone']");
     await click(".o-voip-Softphone nav button:contains(Keypad)");
-    // First test T9 search with no results to catch any potential errors
-    await edit("99999");
+    // T9 search with no results
+    await insertText(".o-voip-Keypad-input", "99999");
     await contains(".o-voip-Keypad .d-flex.flex-column.mx-3", { count: 0 });
-    // Clear and test T9 search that should find results
-    await edit("5646");
+    // T9 search that should find results
+    await insertText(".o-voip-Keypad-input", "5646", { replace: true });
     await contains(".o-voip-Keypad button:contains(John Doe)");
-    // Clear and test name search (letter input)
-    await edit("John");
-    await contains(".o-voip-Keypad button:contains(John Doe)");
-    // Clear and test phone number search
-    await edit("123456");
-    await contains(".o-voip-Keypad button:contains(123456)");
-    // Test T9 search for partial name match
-    await edit("76484");
+    // T9 search for last name match
+    await insertText(".o-voip-Keypad-input", "76484", { replace: true });
     await contains(".o-voip-Keypad button:contains(Jane Smith)");
+});
+
+test("Search by name works", async () => {
+    const pyEnv = await startServer();
+    pyEnv["res.partner"].create([
+        { name: "John Doe", phone: "+1234567890" },
+        { name: "Jane Smith", phone: "+1987654321" },
+        { name: "Bob Wilson", phone: "+1122334455" },
+    ]);
+    await start();
+    await click(".o_menu_systray [title='Open Softphone']");
+    await click(".o-voip-Softphone nav button:contains(Keypad)");
+    await insertText(".o-voip-Keypad-input", "John");
+    await contains(".o-voip-Keypad button:contains(John Doe)");
+});
+
+test("Search by phone number works", async () => {
+    const pyEnv = await startServer();
+    pyEnv["res.partner"].create([
+        { name: "John Doe", phone: "+1234567890" },
+        { name: "Jane Smith", phone: "+1987654321" },
+        { name: "Bob Wilson", phone: "+1122334455" },
+    ]);
+    await start();
+    await click(".o_menu_systray [title='Open Softphone']");
+    await click(".o-voip-Softphone nav button:contains(Keypad)");
+    await insertText(".o-voip-Keypad-input", "123456");
+    await contains(".o-voip-Keypad button:contains(123456)");
 });
 
 test("T9 search does not match when contact has falsy t9_name", async () => {
