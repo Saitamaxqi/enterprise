@@ -104,16 +104,11 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
     }
 
     /**
-     * @param {Number[]} value
+     * @param {Number[]} resIds
      */
-    async onValuesSelected(resIds) {
-        const displayNames = await this.nameService.loadDisplayNames(
-            this.store.filter.modelName,
-            resIds
-        );
+    onValuesSelected(resIds) {
         this.store.update({
             defaultValue: resIds.length ? resIds : undefined,
-            displayNames: Object.values(displayNames),
         });
     }
 
