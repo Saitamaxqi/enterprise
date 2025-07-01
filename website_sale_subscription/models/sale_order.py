@@ -32,10 +32,8 @@ class SaleOrder(models.Model):
         if not self.order_line.filtered(lambda sol: sol.product_id.recurring_invoice):
             self.plan_id = False
 
-    def _show_all_pricing(self):
-        if not self or not self.order_line or (not self.plan_id and not self.order_line.filtered(lambda sol: sol.product_id.recurring_invoice)):
-            return "both"
-        elif self.plan_id:
-            return "recurring"
-        elif not self.plan_id:
-            return "onetime"
+    def _has_one_time_sale(self):
+        return (
+            not self.plan_id
+            and any(line.product_id.recurring_invoice for line in self.order_line)
+        )

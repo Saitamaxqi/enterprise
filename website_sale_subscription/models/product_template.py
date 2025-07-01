@@ -93,8 +93,7 @@ class ProductTemplate(models.Model):
                 'is_subscription': True,
                 'is_plan_possible': False,
                 'pricings': False,
-                'allow_one_time_sale': self.allow_one_time_sale,
-                'show_all_pricing': request.cart._show_all_pricing(),
+                'allow_one_time_sale': not request.cart.plan_id and self.allow_one_time_sale,
             })
             return res
 
@@ -188,10 +187,8 @@ class ProductTemplate(models.Model):
             'prevent_zero_price_sale': website.prevent_zero_price_sale and currency.is_zero(
                 unit_price,
             ),
-            'allow_one_time_sale': self.allow_one_time_sale,
-            'product_type': self.type,
-            'show_all_pricing': request.cart._show_all_pricing(),
-            'currency_symbol': self.env.company.currency_id.symbol
+            'allow_one_time_sale': not request.cart.plan_id and self.allow_one_time_sale,
+            'allow_recurring': not request.cart._has_one_time_sale(),
         }
 
     # Search bar

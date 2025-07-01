@@ -548,6 +548,7 @@ class SaleOrder(models.Model):
         for order in self:
             order.display_late = order.subscription_state in SUBSCRIPTION_PROGRESS_STATE and order.next_invoice_date and order.next_invoice_date < today
 
+    # FIXME ARJ should it be adapted to one-time sale ?
     @api.depends('order_line', 'order_line.recurring_invoice')
     def _compute_has_recurring_line(self):
         recurring_product_orders = self.order_line.filtered(lambda l: l.product_id.recurring_invoice).order_id
