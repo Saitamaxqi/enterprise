@@ -138,7 +138,7 @@ class HrPayslipRun(models.Model):
         )
         all_employee_versions = defaultdict(list)
         for employee, _, version in all_versions:
-            all_employee_versions[employee].append(version)
+            all_employee_versions[employee] += [*version]
         valid_versions = self.env["hr.version"]
         for employee_versions in all_employee_versions.values():
             employee_valid_versions = self.env["hr.version"]
