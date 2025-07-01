@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <menuitem id="menu_action_account_report_assets"
-              name="Depreciation Schedule"
+              name="Assets"
               action="action_account_report_assets"
-              parent="account.account_reports_management_menu"
+              parent="account_reports.account_audit_inventory_entries_menu"
               groups="account.group_account_readonly"/>
 </odoo>

@@ -5,7 +5,7 @@
             <field name="name">account.return.kanban</field>
             <field name="model">account.return</field>
             <field name="arch" type="xml">
-                <kanban js_class="account_return_kanban" on_create="account_reports.action_create_account_return">
+                <kanban js_class="account_return_kanban" on_create="account_reports.action_create_account_return" options="{'allowed_categories': ['account_return']}">
                     <field name="state"/>
                     <field name="is_tax_return"/>
                     <field name="check_ids"/>
@@ -19,6 +19,8 @@
                     <field name="show_amount_to_pay"/>
                     <field name="date_submission"/>
                     <field name="days_to_deadline"/>
+                    <field name="return_type_category"/>
+                    <field name="manually_created"/>
 
                     <t t-name="card" class="p-0 w-100">
                         <div class="w-100 p-2 px-3" >
@@ -33,7 +35,7 @@
                                             <span invisible="context.get('in_checks_view') or unresolved_check_count != 0 or resolved_check_count &lt;= 0" class="oe_stat_text ps-0 text-success">Passed</span>
                                         </div>
                                     </div>
-                                    <div class="row o_field_widget" t-att-class="{'text-black': (record.days_to_deadline.raw_value &gt;= 0) or record.date_submission.raw_value or record.is_completed.raw_value, 'text-danger': (record.days_to_deadline.raw_value &lt; 0) and !record.date_submission.raw_value and !record.is_completed.raw_value}">
+                                    <div class="row o_field_widget" t-att-class="{'text-black': (record.days_to_deadline.raw_value &gt;= 0) or record.date_submission.raw_value or record.is_completed.raw_value, 'text-danger': (record.days_to_deadline.raw_value &lt; 0) and !record.date_submission.raw_value and !record.is_completed.raw_value}" invisible="return_type_category == 'audit'">
                                         <t t-if="!record.date_submission.raw_value">
                                             <span class="oe_stat_text pe-1 text-black">Deadline: </span><field class="oe_stat_value ps-0" name="date_deadline"/>
                                         </t>
@@ -47,9 +49,9 @@
                                     </div>
                                 </div>
 
-                                <div id="account_tax_return_amount" class="col-12 col-lg-2 px-lg-0 d-flex align-items-center" >
+                                <div id="account_tax_return_amount" class="col-12 col-lg-2 px-lg-0 d-flex align-items-center">
                                     <field name="amount_to_pay_currency_id" invisible="1"/>
-                                    <h2 id="return_amount_to_pay" class="o_account_return_amount" invisible="not show_amount_to_pay or not is_main_company_active"><field name="amount_to_pay"/></h2>
+                                    <h2 id="return_amount_to_pay" class="o_account_return_amount" invisible="not show_amount_to_pay or not is_main_company_active or return_type_category == 'audit'"><field name="amount_to_pay"/></h2>
                                 </div>
 
                                 <!-- States bar -->
@@ -60,6 +62,8 @@
                                     <t id="account_tax_return_states" t-set="states"
                                        t-value="[{value: 'reviewed', display:reviewedLabel}, {value: 'submitted', display:submittedLabel}, {value: 'paid', display:paidLabel}]"/>
                                     <t t-if="record.type_external_id.raw_value == 'account_reports.annual_corporate_tax_return_type'" t-set="states" t-value="[{value: 'reviewed', display:reviewedLabel}, {value: 'submitted', display:submittedLabel}]"/>
+                                    <t t-if="record.type_external_id.raw_value == false || record.return_type_category.raw_value === 'audit'" t-set="states" t-value="[{value: 'reviewed', display:reviewedLabel}]"/>
+
                                     <t t-set="index" t-value="states.findIndex((state) => state.value === record.state.raw_value)"/>
                                     <t t-foreach="states" t-as="state" t-key="state.value">
                                         <div class="state-container" t-att-class="{'active': index &gt;= state_index || record.is_completed.raw_value}">
@@ -80,12 +84,12 @@
 
                                     <t t-if="!record.report_opened_once.raw_value and record.state.raw_value == 'reviewed' and record.is_report_set.raw_value">
                                         <button class="btn btn-primary" type="object" name="action_open_report"><field name="report_name"/></button>
-                                        <button invisible="not context.get('in_checks_view') or is_completed or not is_main_company_active"
+                                        <button invisible="not context.get('in_checks_view') or not type_external_id or is_completed or not is_main_company_active"
                                                 class="btn btn-secondary" type="object" name="action_submit">Submit</button>
                                     </t>
                                     <t t-else="">
                                         <button invisible="not is_report_set" class="btn btn-secondary" type="object" name="action_open_report"><field name="report_name"/></button>
-                                        <button invisible="not context.get('in_checks_view') or is_completed or state != 'reviewed' or not is_main_company_active"
+                                        <button invisible="not context.get('in_checks_view') or not type_external_id or is_completed or state != 'reviewed' or not is_main_company_active"
                                                 class="btn btn-primary" type="object" name="action_submit">Submit</button>
                                     </t>
 
@@ -93,7 +97,7 @@
                                     </t>
                                     <t id="default_buttons" t-else="">
                                         <button invisible="not context.get('in_checks_view') or state != 'new' or is_completed or not is_main_company_active or unresolved_check_count" class="btn btn-primary" type="object" name="action_validate">Validate</button>
-                                        <button invisible="not context.get('in_checks_view') or state != 'submitted' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_pay">Pay</button>
+                                        <button invisible="not context.get('in_checks_view') or not type_external_id or state != 'submitted' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_pay">Pay</button>
                                     </t>
 
                                     <div class="dropdown show dropdown-sm" invisible="not is_main_company_active">
@@ -105,10 +109,11 @@
                                             <a invisible="state != 'new' or is_completed or (type_external_id == 'account_reports.annual_corporate_tax_return_type')" class="dropdown-item" type="object" name="action_mark_completed" string="Mark as Completed"/>
                                             <a invisible="not has_move_entries or state not in ('reviewed', 'submitted', 'paid')" class="dropdown-item" type="object" name="action_view_entry" string="View Entry"/>
 
-                                            <a invisible="not (manually_created and state == 'new')" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
+                                            <a invisible="context.get('in_checks_view') or not (manually_created and state == 'new')" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
 
                                             <!-- Reset should be last-->
                                             <a invisible="state == 'new' and not is_completed or not is_tax_return" class="dropdown-item" type="object" name="action_reset_tax_return_common" string="Reset"/>
+                                            <a invisible="state == 'new' and not is_completed or type_external_id" class="dropdown-item" type="object" name="action_reset_custom_return" string="Reset"/>
                                             <a invisible="state == 'new' and not is_completed or type_external_id != 'account_reports.annual_corporate_tax_return_type'" class="dropdown-item" type="object" name="action_reset_annual_closing" string="Reset"/>
                                         </div>
                                     </div>
@@ -151,6 +156,8 @@
                     <field name="type_id"/>
                     <field name="state"/>
                     <field name="date_submission"/>
+                    <filter name="unarchived_returns" string="Unarchived" domain="[('is_completed', '=', False)]"/>
+                    <filter name="archived_returns" string="Archived" domain="[('is_completed', '!=', False)]"/>
                     <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False), ('date_to', '&lt;', 'today')]"/>
                     <filter name="done_returns" string="Done" domain="[('is_completed', '=', True)]"/>
                     <filter name="groupby_deadline" string="Deadline" context="{'group_by': 'date_deadline:month'}"/>
@@ -165,16 +172,6 @@
             </field>
         </record>
 
-        <record id="account_return_type_list_view" model="ir.ui.view">
-            <field name="name">account.return.type.list.view</field>
-            <field name="model">account.return.type</field>
-            <field name="arch" type="xml">
-                <list>
-                    <field name="display_name"/>
-                </list>
-            </field>
-        </record>
-
         <record id="action_server_open_view_account_return" model="ir.actions.server">
             <field name="name">Open Tax Return</field>
             <field name="model_id" ref="model_account_return"/>
@@ -186,7 +183,10 @@
             <field name="name">Tax Return</field>
             <field name="res_model">account.return</field>
             <field name="view_mode">kanban,calendar,search</field>
+            <field name="domain">[('return_type_category', '=', 'account_return')]</field>
             <field name="path">tax-return</field>
+            <field name="view_id" ref="account_reports.account_return_kanban_view"/>
+            <field name="search_view_id" ref="account_reports.account_return_search_view"/>
             <field name="context">{'search_default_groupby_deadline': 1, 'search_default_todo_returns': 1, 'max_number_opened_groups': 100000}</field>
         </record>
 

@@ -46,6 +46,16 @@
                             maxCharacters: 80,
                         }"/>
 
+                        <AccountReturnSelectionBadge
+                            t-if="this.accountStatus.record"
+                            options="this.accountStatusBadgeOptions"
+                            record="this.accountStatus.record"
+                            readonly="false"
+                            name="'status'"
+                            class="'ms-2'"
+                            size="'small'"
+                            />
+
                         <t t-if="props.line.visible_annotations?.length">
                             <button
                                 tabindex="-1"

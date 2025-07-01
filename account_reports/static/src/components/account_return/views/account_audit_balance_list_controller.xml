@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <t t-name="account_reports.account_audit_balance_list_controller" t-inherit="web.ListView">
+        <xpath expr="//SelectionBox" position="before">
+            <div t-if="this.model.root.selection.length &gt; 1" t-on-click="openJournalItems">
+                <button class="btn btn-secondary">
+                    <i class="fa fa-list me-1"></i>
+                    <span>Journal Items</span>
+                </button>
+            </div>
+        </xpath>
+    </t>
+</templates>

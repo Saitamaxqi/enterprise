@@ -31,6 +31,7 @@ from . import account_fiscal_position
 from . import account_customer_statement
 from . import account_followup_report
 from . import account_return
-from . import res_users
 from . import mail_activity
 from . import mail_tracking_value
+from . import account_audit_account_status
+from . import chart_template

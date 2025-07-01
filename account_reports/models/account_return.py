@@ -1,8 +1,10 @@
+import ast
 import base64
 import datetime
+import uuid
 from collections import defaultdict
 from markupsafe import Markup
-
+from datetime import date
 from dateutil.relativedelta import relativedelta
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
@@ -27,6 +29,18 @@ MONTHS_PER_PERIOD = {
     'monthly': 1,
 }
 
+CHECK_TYPES = [
+    ('check', "Check"),
+    ('file', "Upload Document"),
+]
+
+INITIAL_RESULT_BY_CHECK_TYPE = {
+    'check': 'failure',
+    'file': 'manual',
+}
+
+LIMIT_CHECK_ENTRIES = 21
+
 
 def check_company_domain_account_return(self, companies):
     company_ids = models.to_record_ids(companies)
@@ -38,23 +52,42 @@ def check_company_domain_account_return(self, companies):
 
 class AccountReturnType(models.Model):
     _name = "account.return.type"
+    _inherit = ['mail.thread']
     _description = "Accounting Return Type"
 
-    name = fields.Char(string="Name", required=True, translate=True)
-    report_id = fields.Many2one(string="Report", comodel_name='account.report', index='btree')
-    report_country_id = fields.Many2one(related='report_id.country_id')
+    name = fields.Char(string="Name", required=True, translate=True, tracking=True)
+    category = fields.Selection(
+        selection=[
+            ('account_return', "Tax Return"),
+            ('audit', "Audit"),
+        ],
+        default='account_return',
+        required=True,
+        tracking=True,
+    )
+    report_id = fields.Many2one(string="Report", comodel_name='account.report', index='btree', tracking=True)
+    report_country_id = fields.Many2one(string="Report Country", related='report_id.country_id')
     # country_id allows creating automatically the return for the country of the report and isn't mandatory as
     # some returns may need to be generated regardless of the country of the company or for multiples such as Europe.
     # and some returns may need to add conditions for it to be generated such as a minimum amount of tax to be paid.
-    country_id = fields.Many2one(comodel_name='res.country', string="Return Type Country")
-    payment_partner_bank_id = fields.Many2one(comodel_name='res.partner.bank', string="Payment Partner Bank")
-    payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id')
+    country_id = fields.Many2one(comodel_name='res.country', string="Country", tracking=True)
+    payment_partner_bank_id = fields.Many2one(comodel_name='res.partner.bank', string="Payment Partner Bank", tracking=True)
+    payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id', tracking=True)
 
     deadline_periodicity = fields.Selection(
         selection=PERIODS,
         string="Periodicity",
+        tracking=True,
+        company_dependent=True,
     )
-    deadline_start_date = fields.Date(string="Start Date", help="Used to describe the day and month of the deadline based on the periodicity.")
+    default_deadline_periodicity = fields.Selection(selection=PERIODS, string="Default Periodicity")
+    deadline_start_date = fields.Date(
+        string="Start Date",
+        help="Used to compute covered period based on the selected periodicity.",
+        tracking=True,
+        company_dependent=True,
+    )
+    default_deadline_start_date = fields.Date(string="Default Start Date")
 
     def _can_return_exist(self, company, tax_unit=False):
         """ Returns whether a return can exist for this type with the provided company and tax units. This is used to know which returns need
@@ -124,6 +157,7 @@ class AccountReturnType(models.Model):
         all_return_that_might_be_deleted = self.env['account.return'].sudo().search([
             ('date_lock', '=', False),
             ('is_completed', '=', False),
+            ('manually_created', '=', False),
             *return_root_company_domain,
         ])
         for return_to_check in all_return_that_might_be_deleted:
@@ -144,7 +178,13 @@ class AccountReturnType(models.Model):
         for report_type in self.env['account.return.type'].sudo().search([('country_id', '=', country_id.id)]):
             report_type._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
-    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, forced_date_from=None, forced_date_to=None):
+    @api.onchange('category')
+    def _onchange_category(self):
+        for return_type in self:
+            if return_type.category == 'audit':
+                return_type.with_company(self.env.company).deadline_periodicity = 'year'
+
+    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, forced_date_from=None, forced_date_to=None, allow_duplicates=False):
         """
         Creates or updates the tax returns (possibly deleting the 'new' ones, if needed) for the provided main_company and tax_unit, so that all the
         returns are created from the start of the current fiscal year, up to one year after the current date.
@@ -210,7 +250,7 @@ class AccountReturnType(models.Model):
         while date_pointer < date_to and (deadline_date <= next_year or has_forced_dates):
             period_date_from, period_date_to = self._get_period_boundaries(main_company, date_pointer)
             deadline_date = self.env['account.return']._evaluate_deadline(main_company, self, type_xml_id, period_date_from, period_date_to)
-            if main_company.account_opening_date <= deadline_date <= next_year or has_forced_dates:
+            if (main_company.account_opening_date or date.min) <= deadline_date <= next_year or has_forced_dates:
                 periods.append((period_date_from, period_date_to))
             date_pointer = period_date_to + relativedelta(days=1)
 
@@ -220,7 +260,7 @@ class AccountReturnType(models.Model):
             ('date_to', '>=', date_from),
             ('date_from', '<=', date_to),
         ])
-        if existing_returns:
+        if existing_returns and not allow_duplicates:
             existing_periods = {(account_return.date_from, account_return.date_to): self.env['account.return'].sudo() for account_return in existing_returns}
             for account_return in existing_returns:
                 existing_periods[account_return.date_from, account_return.date_to] |= account_return
@@ -276,7 +316,7 @@ class AccountReturnType(models.Model):
 
         return self.env['account.return'].sudo().create(create_vals_list)
 
-    def _try_create_return_for_period(self, date_in_period, main_company, tax_unit):
+    def _try_create_return_for_period(self, date_in_period, main_company, tax_unit, allow_duplicates=False):
         period_start, period_end = self._get_period_boundaries(main_company, date_in_period)
         existing_return = self.env['account.return'].search([
             *self.env['account.return']._check_company_domain(main_company),
@@ -291,7 +331,7 @@ class AccountReturnType(models.Model):
         if existing_return.company_ids != expected_companies:
             existing_return.company_ids = expected_companies
 
-        if not existing_return:
+        if not existing_return or allow_duplicates:
             self.env['account.return'].create([{
                 'name': self._get_return_name(main_company, period_start, period_end),
                 'date_from': period_start,
@@ -335,7 +375,7 @@ class AccountReturnType(models.Model):
 
     def _get_periodicity(self, company):
         self.ensure_one()
-        return self.deadline_periodicity or company.account_return_periodicity
+        return self.with_company(company).deadline_periodicity or company.account_return_periodicity
 
     def _get_start_date(self):
         self.ensure_one()
@@ -349,7 +389,7 @@ class AccountReturnType(models.Model):
         return MONTHS_PER_PERIOD[self._get_periodicity(company)]
 
     def _get_start_date_elements(self, main_company):
-        start_date = self._get_start_date()
+        start_date = self.with_company(main_company)._get_start_date()
         return start_date.day, start_date.month
 
     def _get_period_boundaries(self, company_id, date):
@@ -453,6 +493,7 @@ class AccountReturn(models.Model):
     date_lock = fields.Date(string="Lock Date")
     date_submission = fields.Date(string="Submission Date")
     check_ids = fields.One2many(comodel_name='account.return.check', inverse_name='return_id', string="Checks")
+    check_count = fields.Integer(string="Checks Count", compute="_compute_check_count")
     unresolved_check_count = fields.Integer(string="Issues", compute="_compute_unresolved_check_count")
     resolved_check_count = fields.Integer(string="Passed", compute="_compute_resolved_check_count")
     manually_created = fields.Boolean(string="Manually Created")
@@ -471,6 +512,51 @@ class AccountReturn(models.Model):
     report_name = fields.Char(string="Report Name", related="type_id.report_id.display_name")
     show_companies = fields.Boolean(compute="_compute_show_companies")
     is_main_company_active = fields.Boolean(compute="_compute_is_main_company_active")
+    return_type_category = fields.Selection(related="type_id.category")
+
+    # Audit
+    audit_status = fields.Selection(
+        selection=[
+            ('ongoing', "Ongoing"),
+            ('done', "Done"),
+            ('paused', "Paused"),
+        ],
+        default='ongoing',
+        required=True,
+        tracking=True,
+    )
+    audit_return_state = fields.Selection(
+        string="Audit State",
+        selection=[
+            ('new', 'New'),
+            ('reviewed', 'Reviewed'),
+        ],
+        default='new',
+        help="The state of the return for audit",
+        tracking=True,
+    )
+    audit_account_status_ids = fields.One2many(string="Account Status", comodel_name='account.audit.account.status', inverse_name='audit_id')
+    audit_balances_count = fields.Integer(string="Balances Count", compute="_compute_audit_balances_count")
+    audit_balances_completed_count = fields.Integer(string="Completed Balances Count", compute="_compute_audit_balances_completed_count")
+    skipped_check_cycles = fields.Char(string="Skipped Check Cycles")
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+
+        account_status_create_vals = []
+        for record in records:
+            if record.return_type_category == 'audit':
+                accounts = self.env['account.account'].search_read(self.env['account.account']._check_company_domain(record.company_ids), ['id'])
+                account_status_create_vals += [
+                    {
+                        'audit_id': record.id,
+                        'account_id': account['id'],
+                    } for account in accounts
+                ]
+
+        self.env['account.audit.account.status'].create(account_status_create_vals)
+        return records
 
     def write(self, vals):
         result = super().write(vals)
@@ -478,6 +564,10 @@ class AccountReturn(models.Model):
             if record._get_state_field() in vals:
                 if record.date_from <= fields.Date.end_of(fields.Date.context_today(record), "month"):
                     record.refresh_checks(force_bypassed=True)
+
+            if 'audit_status' in vals:
+                if record.audit_status in ('ongoing', 'paused'):
+                    record.audit_return_state = 'new'
         return result
 
     @api.model
@@ -549,19 +639,24 @@ class AccountReturn(models.Model):
         for record in self:
             record.amount_to_pay_currency_id = record.tax_unit_id.main_company_id.currency_id or record.company_id.currency_id
 
+    @api.depends('check_ids')
+    def _compute_check_count(self):
+        for record in self:
+            record.check_count = len(record.check_ids)
+
     @api.depends('state', 'check_ids.state', 'check_ids.result', 'check_ids.bypassed')
     def _compute_unresolved_check_count(self):
         for record in self:
             failed_count = 0
             for check in record.check_ids:
-                failed_count += 1 if check.result in ('failure', 'manual') and not check.bypassed and check.state == record.state else 0
+                failed_count += 1 if check.result in ('failure', 'manual') and not check.bypassed else 0
 
             record.unresolved_check_count = failed_count
 
     @api.depends('check_ids', 'unresolved_check_count', 'state')
     def _compute_resolved_check_count(self):
         for record in self:
-            record.resolved_check_count = len(record.check_ids.filtered(lambda check: check.state == record.state)) - record.unresolved_check_count
+            record.resolved_check_count = len(record.check_ids) - record.unresolved_check_count
 
     @api.depends('type_id')
     def _compute_type_external_id(self):
@@ -584,6 +679,16 @@ class AccountReturn(models.Model):
         today = fields.Date.context_today(self)
         for record in self:
             record.days_to_deadline = (record.date_deadline - today).days
+
+    @api.depends('audit_account_status_ids')
+    def _compute_audit_balances_count(self):
+        for record in self:
+            record.audit_balances_count = len(record.audit_account_status_ids)
+
+    @api.depends('audit_account_status_ids')
+    def _compute_audit_balances_completed_count(self):
+        for record in self:
+            record.audit_balances_completed_count = len(record.audit_account_status_ids.filtered(lambda r: r.status in ('reviewed', 'supervised')))
 
     @api.model
     def _get_return_from_report_options(self, options):
@@ -629,7 +734,8 @@ class AccountReturn(models.Model):
     @api.model
     def get_next_return_for_dashboard(self, journal_id=False):
         additional_domain = [
-            ('date_deadline', '<=', fields.Date.today() + relativedelta(months=1))
+            ('date_deadline', '<=', fields.Date.today() + relativedelta(months=1)),
+            ('return_type_category', '=', 'account_return'),
         ]
         return_ids = self.get_next_returns_ids(journal_id=journal_id, additional_domain=additional_domain, allow_multiple_by_types=True)
 
@@ -677,6 +783,20 @@ class AccountReturn(models.Model):
             return_action['domain'] = additional_return_domain
         return return_action
 
+    def action_open_audit_return(self):
+        self.ensure_one()
+        return {
+            **self.with_context(active_id=self.id, active_model=self._name).env["ir.actions.act_window"]._for_xml_id('account_reports.action_view_account_audit_checks'),
+            'domain': [('return_id', '=', self.id)],
+            'context': {
+                'account_return_view_id': self.env.ref('account_reports.account_return_kanban_view').id,
+                'search_default_groupby_cycle': 1,
+                'active_model': 'account.return',
+                'active_id': self.id,
+                'max_number_opened_groups': 100000,
+            }
+        }
+
     def _get_pay_wizard(self):
         """
         To be overridden in l10n which want to open a specific wizard on pay
@@ -705,6 +825,8 @@ class AccountReturn(models.Model):
         self.ensure_one()
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
             return 'generic_state_review_submit'
+        elif self.return_type_category == 'audit':
+            return 'audit_return_state'
         return 'generic_state_tax_report'
 
     def action_validate(self, bypass_failing_tests=False):
@@ -868,6 +990,9 @@ class AccountReturn(models.Model):
         valid_moves = self.filtered(lambda account_return: account_return.manually_created and account_return.state == 'new')
         valid_moves.unlink()
 
+    def action_archive(self):
+        self.active = False
+
     def _reset_checks_for_states(self, states):
         checks_to_reset = self.check_ids.filtered(lambda check: check.state in states)
         checks_to_reset.write({
@@ -966,6 +1091,14 @@ class AccountReturn(models.Model):
         self.is_completed = False
         return True
 
+    def action_reset_custom_return(self):
+        if self.state == 'reviewed':
+            self._reset_checks_for_states([self.state, 'new'])
+            self.state = 'new'
+
+        self.is_completed = False
+        return True
+
     def action_reset_annual_closing(self):
         self.ensure_one()
 
@@ -997,6 +1130,12 @@ class AccountReturn(models.Model):
         if self.state != 'new':
             raise UserError(_("You can only revert a completed return if the previous state was new."))
         self.is_completed = True
+
+    def action_mark_uncompleted(self):
+        self.ensure_one()
+        if not self.is_completed:
+            raise UserError(_("You can only unarchive a completed return."))
+        self.is_completed = False
 
     def action_view_entry(self):
         self.ensure_one()
@@ -1361,6 +1500,7 @@ class AccountReturn(models.Model):
                 check_codes_to_ignore = set(record.check_ids.filtered(lambda x: x.state == record.state and x.bypassed and not force_bypassed).mapped('code'))
 
                 rslt = record._run_checks(check_codes_to_ignore)
+                rslt += record._execute_template_checks(check_codes_to_ignore)
 
                 checks_by_code = record.check_ids.grouped(lambda x: x.code)
                 for vals in rslt:
@@ -1375,6 +1515,99 @@ class AccountReturn(models.Model):
         # To override in order to run checks in other custom-made states
         self.ensure_one()
         return self.state == 'new'
+
+    def _execute_template_checks(self, codes_to_ignore):
+        def filter_template(template):
+            return template.code not in codes_to_ignore \
+                and (not template.country_ids or self.company_id.account_fiscal_country_id in template.country_ids)
+        return_type = self.type_id
+        check_templates = self.env['account.return.check.template'].search([
+            ('return_type', '=', return_type.id),
+            ('cycle', 'not in', (self.skipped_check_cycles or '').split(',')),
+        ])
+
+        existing_checks_from_template = self.check_ids.filtered(lambda r: r.template_id)
+        existing_check_by_template_id = {
+            check.template_id: check for check in existing_checks_from_template
+        }
+
+        vals_list = []
+
+        for template in check_templates.filtered(filter_template):
+            action = template.action_id
+            vals_dict = {
+                'code': template.code,
+                'name': template.name,
+                'message': template.description,
+                'type': template.type,
+                'action': False,
+            }
+
+            if action:
+                action_record = self.env[action.sudo().type].browse(action.sudo().id)
+                vals_dict['action'] = action_record._get_action_dict()
+
+            initial_result = template._get_initial_result()
+
+            if template not in existing_check_by_template_id:
+                vals_dict.update({
+                    'template_id': template.id,
+                    'result': initial_result,
+                })
+            elif existing_check_by_template_id[template].type != template.type:
+                # If the existing check type does not match we have to reset the result
+                vals_dict['result'] = initial_result
+                if existing_check_by_template_id[template].type == 'file' and existing_check_by_template_id[template].attachment_ids:
+                    existing_check_by_template_id[template].attachment_ids.unlink()
+
+            if template.activity_type:
+                current_template_activities = self.activity_ids.filtered(lambda act: act.summary == template.name)
+                activities_to_unlink = current_template_activities.filtered(lambda act: act.state != 'done')
+                activities_kept = current_template_activities - activities_to_unlink
+                activities_to_unlink.unlink()
+                if not activities_kept:
+                    self.activity_schedule(activity_type_id=template.activity_type.id, summary=template.name, note=template.description)
+
+            if template.type == 'check' and template.model:
+                model = self.env[template.model]
+                domain = []
+                if template.domain:
+                    domain = ast.literal_eval(template.domain)
+                domain = [
+                    *domain,
+                    ('date', '>=', fields.Date.to_string(self.date_from)),
+                    ('date', '<=', fields.Date.to_string(self.date_to)),
+                    ('company_id', 'in', self.company_ids.ids),
+                ]
+                entries = model.sudo().search(domain, limit=LIMIT_CHECK_ENTRIES)
+                if entries:
+                    if not action:
+                        if action := template._get_default_check_action_from_model():
+                            action['domain'] = [
+                                *action.get('domain', []),
+                                *domain
+                            ]
+                        else:
+                            action = {
+                                'type': 'ir.actions.act_window',
+                                'name': template.name,
+                                'view_mode': 'list',
+                                'res_model': template.model,
+                                'domain': domain,
+                                'views': [[False, 'list'], [False, 'form']],
+                            }
+                    vals_dict.update({
+                        'action': action,
+                        'records_count': len(entries),
+                        'records_name': model._description,
+                        'result': initial_result,
+                    })
+                else:
+                    vals_dict['result'] = 'success'
+
+            vals_list.append(vals_dict)
+
+        return vals_list
 
     def _run_checks(self, check_codes_to_ignore):
         """
@@ -1414,9 +1647,8 @@ class AccountReturn(models.Model):
 
             checks.append({
                 'name': _("Company data"),
-                'message': _("""
-                    Missing company details (like VAT number or country) can cause errors in your report,
-                    such as using the wrong VAT rate, wrongly exempting transactions.
+                'message': _("""Missing company details (like VAT number or country) can cause errors in your report,
+such as using the wrong VAT rate, wrongly exempting transactions.
                 """),
                 'code': 'check_company_data',
                 'records_count': invalid_fields_count,
@@ -1451,7 +1683,7 @@ class AccountReturn(models.Model):
                 ('date', '>=', fields.Date.to_string(self.date_from)),
                 ('state', '=', 'posted'),
             ]
-            bills_without_attachments_count = self.env['account.move'].sudo().search_count(domain, limit=21)
+            bills_without_attachments_count = self.env['account.move'].sudo().search_count(domain, limit=LIMIT_CHECK_ENTRIES)
 
             review_action = {
                 'type': 'ir.actions.act_window',
@@ -1665,7 +1897,7 @@ class AccountReturn(models.Model):
                 ('date', '>=', fields.Date.to_string(self.date_from)),
                 ('deferred_original_move_ids', '!=', False),
             ]
-            deferred_entries_count = self.env['account.move'].sudo().search_count(domain, limit=21)
+            deferred_entries_count = self.env['account.move'].sudo().search_count(domain, limit=LIMIT_CHECK_ENTRIES)
             if not deferred_entries_count:
                 checks.append({
                     'name': _("Deferred Entries"),
@@ -1861,7 +2093,7 @@ class AccountReturn(models.Model):
             ('date', '>=', fields.Date.to_string(self.date_from)),
         ]
 
-        unreconciled_bank_entries_count = self.env['account.bank.statement.line'].sudo().search_count(domain, limit=21)
+        unreconciled_bank_entries_count = self.env['account.bank.statement.line'].sudo().search_count(domain, limit=LIMIT_CHECK_ENTRIES)
 
         review_action = {
             'type': 'ir.actions.act_window',
@@ -1893,7 +2125,11 @@ class AccountReturn(models.Model):
             'res_model': 'account.return.check',
             'view_mode': 'kanban',
             'context': {
-                'account_return_id': self.id,
+                'active_model': self._name,
+                'active_id': self.id,
+                'active_ids': [self.id],
+                'account_return_view_id': self.env.ref('account_reports.account_return_kanban_view').id,
+                'max_number_opened_groups': 100000,
             },
             'domain': [['return_id', '=', self.id]],
             'views': [(self.env.ref('account_reports.account_return_check_kanban_view').id, 'kanban')],
@@ -1908,7 +2144,7 @@ class AccountReturn(models.Model):
         ]
         if exclude_entries:
             domain += [('move_type', '!=', 'entry')]
-        draft_entries_count = self.env['account.move'].sudo().search_count(domain, limit=21)
+        draft_entries_count = self.env['account.move'].sudo().search_count(domain, limit=LIMIT_CHECK_ENTRIES)
 
         review_action = {
             'type': 'ir.actions.act_window',
@@ -1936,10 +2172,21 @@ class AccountReturnCheck(models.Model):
     _order = "result, bypassed, name, id"
 
     code = fields.Char(string="Check ID", required=True)
+    type = fields.Selection(
+        selection=CHECK_TYPES,
+        string="Type",
+        default='check',
+        required=True,
+    )
+    template_id = fields.Many2one(
+        comodel_name='account.return.check.template',
+        string="Template",
+        ondelete='set null',
+    )
 
     # Refreshed fields
     name = fields.Char(string="Name", required=True)
-    message = fields.Char(string="Description")
+    message = fields.Text(string="Description")
     state = fields.Char(string="Return State To Check For", default='new', required=True)
     records_count = fields.Integer(readonly=True)
     records_name = fields.Char()
@@ -1952,6 +2199,10 @@ class AccountReturnCheck(models.Model):
         ],
         default='manual',
         required=True,
+    )
+    attachment_ids = fields.Many2many(
+        comodel_name='ir.attachment',
+        string="Attachment",
     )
 
     # Return related
@@ -1968,7 +2219,23 @@ class AccountReturnCheck(models.Model):
     show_supervise = fields.Boolean(string="Show Supervise", compute='_compute_show_supervise')
     show_invalidate = fields.Boolean(string="Show Invalidate", compute='_compute_show_invalidate')
 
-    notes = fields.Html()
+    cycle = fields.Selection(related="template_id.cycle")
+
+    def write(self, vals):
+        result = super().write(vals)
+
+        for check in self:
+            if 'type' in vals:
+                check.bypassed = False
+
+            type = vals.get('type', check.type)
+            if type != 'file' and check.attachment_ids:
+                check.attachment_ids.unlink()
+
+            if 'attachment_ids' in vals and type == 'file':
+                check.bypassed = bool(check.attachment_ids)
+
+        return result
 
     @api.constrains('code')
     def _check_code(self):
@@ -1996,10 +2263,96 @@ class AccountReturnCheck(models.Model):
             is_only_approved = check.approver_id and not check.supervisor_id
             check.show_invalidate = is_admin and check.bypassed or is_only_approved
 
+    def _get_evaluation_context(self):
+        def generate_journals_options():
+            options = self.env.ref('account_reports.trial_balance_report').get_options({})
+            journals = options.get('journals', [])
+            for journal in journals:
+                if journal['model'] == 'account.journal':
+                    journal['selected'] = journal['type'] == 'cash'
+                elif journal['model'] == 'account.journal.group':
+                    journal['selected'] = False
+            return journals
+
+        company = self.return_id.company_id
+        return {
+            'active_id': self.return_id.id,
+            'active_ids': [self.return_id.id],
+            'active_model': self.return_id._name,
+            'return_start_date': fields.Date.to_string(self.return_id.date_from),
+            'return_end_date': fields.Date.to_string(self.return_id.date_to),
+            'return_last_month_start': fields.Date.to_string(fields.Date.start_of(self.return_id.date_to, 'month')),
+            'ref': lambda xml_id: self.env.ref(xml_id).id,
+            'internal_transfer_account_id': company.transfer_account_id.id,
+            'currency_exhange_difference_account_ids': (company.income_currency_exchange_account_id.id, company.expense_currency_exchange_account_id.id),
+            'company_currency_id': company.currency_id.id,
+            'cash_journal_options': generate_journals_options(),
+        }
+
+    def _parse_expression(self, value, context):
+        """
+        This parser extracts the expression such as context, domain, or params from string.
+
+        The parser's main role is to interpret these values and apply transformations to specific keys using the evaluation context.
+        This approach ensures safety by only evaluating values through the evaluation context, avoiding arbitrary code execution.
+        Only predefined context actions (e.g., ref()) are allowed.
+        """
+        try:
+            tree = ast.parse(value, mode="eval")
+        except (SyntaxError, ValueError):
+            raise ValidationError(_("Invalid code"))
+
+        transformer = CheckActionExpressionTransformer(context)
+        transformed_tree = transformer.visit(tree)
+        return ast.literal_eval(transformed_tree)
+
     def action_review(self):
+        """
+        Preprocess and return the action that must be triggered when clicking a check.
+        Actions to review can either come from data or from code, the ones from data will have their domains and contexts as strings.
+        Therefore, we need to evaluate them with an additional context see: _get_evaluation_context.
+        """
         self.ensure_one()
+
         if self.action:
-            return self.action
+            action = {
+                **self.action
+            }
+
+            evaluation_context = self._get_evaluation_context()
+
+            if 'context' in self.action and isinstance(self.action['context'], str):
+                action['context'] = self._parse_expression(self.action['context'], evaluation_context)
+
+            if 'domain' in self.action and isinstance(self.action['domain'], str):
+                action['domain'] = self._parse_expression(self.action['domain'], evaluation_context)
+
+            if 'params' in self.action and isinstance(self.action['params'], str):
+                action['params'] = self._parse_expression(self.action['params'], evaluation_context)
+
+            if self.template_id:
+                if self.template_id.additional_action_domain:
+                    action['domain'] = [
+                        *(action.get('domain', []) or []),
+                        *self._parse_expression(self.template_id.additional_action_domain, evaluation_context),
+                    ]
+
+                if self.template_id.additional_action_context:
+                    action['context'] = {
+                        **(action.get('context', {}) or {}),
+                        **self._parse_expression(self.template_id.additional_action_context, evaluation_context),
+                    }
+
+                if self.template_id.additional_action_params and action.get('type') == 'ir.actions.client':
+                    action['params'] = {
+                        **(action.get('params', {}) or {}),
+                        **self._parse_expression(self.template_id.additional_action_params, evaluation_context),
+                    }
+
+            action['active_id'] = self.return_id.id
+            action['active_model'] = self.return_id._name
+
+            return action
 
     def action_validate_check(self):
         self.ensure_one()
@@ -2104,3 +2457,109 @@ class AccountReturnCheck(models.Model):
                 changes=Markup("").join(messages),
             )
             self.return_id.message_post(body=body)
+
+    def action_open_document(self):
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/web/content/{self.attachment_ids.id}",
+            "target": "download",
+        }
+
+    def action_unlink_attachments(self):
+        self.ensure_one()
+        self.attachment_ids.unlink()
+        self.bypassed = False
+        return True
+
+
+class AccountReturnCheckTemplate(models.Model):
+    _name = "account.return.check.template"
+    _description = "Account Return Check Template"
+
+    name = fields.Char(string="Title", required=True, translate=True)
+    code = fields.Char(string="Code", default=lambda r: f"_template_check_{uuid.uuid4()}", copy=False)
+    return_type = fields.Many2one(comodel_name='account.return.type', string="Tax Return/Audit", required=True)
+    country_ids = fields.Many2many(comodel_name='res.country', string='Applicable Countries')
+    cycle = fields.Selection(
+        selection=[
+            ('regulatory_compliance', "Regulatory compliance"),
+            ('treasury_financing', "Treasury and financing"),
+            ('purchases', "Purchases"),
+            ('operating_expenses', "Operating expenses"),
+            ('sales', "Sales"),
+            ('inventory', "Inventory"),
+            ('fixed_assets', "Fixed assets"),
+            ('payroll', "Payroll"),
+            ('state', "Government"),
+            ('equity', "Equity"),
+            ('other', "Others"),
+        ],
+        string="Cycle",
+        default='other',
+        required=True
+    )
+    type = fields.Selection(
+        selection=CHECK_TYPES,
+        default='check',
+        required=True,
+    )
+
+    action_id = fields.Many2one(
+        comodel_name='ir.actions.actions',
+        string="Action on Click",
+        help="Overrides the default action based on the model and domain.",
+    )
+    additional_action_domain = fields.Char(string="Additional Action Domain")
+    additional_action_context = fields.Char(string="Additional Action Context")
+    additional_action_params = fields.Char(string="Additional Action Params")
+    activity_type = fields.Many2one(comodel_name='mail.activity.type', string="Activities")
+
+    description = fields.Text(string="Description", translate=True)
+    model = fields.Selection(selection=lambda r: r._get_model_selection(), string="Model")
+    domain = fields.Char(string="Domain")
+
+    def _get_initial_result(self):
+        self.ensure_one()
+        return INITIAL_RESULT_BY_CHECK_TYPE.get(self.type, 'failure') if self.type != 'check' or self.model else 'manual'
+
+    def _get_model_selection(self):
+        return [
+            ('account.move.line', self.env['account.move.line']._description),
+            ('account.move', self.env['account.move']._description),
+            ('account.bank.statement.line', self.env['account.bank.statement.line']._description),
+            ('account.payment', self.env['account.payment']._description),
+        ]
+
+    def _get_default_check_action_from_model(self):
+        if self.model == 'account.bank.statement.line':
+            return {
+                'type': 'ir.actions.act_window',
+                'name': _("Bank Matching"),
+                'res_model': 'account.bank.statement.line',
+                'view_mode': 'kanban,list',
+                'search_view_id': self.env.ref('account_accountant.view_bank_statement_line_search_bank_rec_widget').id,
+                'views': [[self.env.ref('account_accountant.view_bank_statement_line_kanban_bank_rec_widget').id, 'kanban'], [False, 'list']],
+                'domain': [('state', '!=', 'cancel')],
+            }
+
+        return False
+
+
+class CheckActionExpressionTransformer(ast.NodeTransformer):
+    def __init__(self, evaluation_context):
+        self.evaluation_context = evaluation_context
+
+    def visit_Name(self, node):
+        if node.id in self.evaluation_context:
+            return ast.Constant(self.evaluation_context[node.id])
+        return node
+
+    def get_call_args(self, ast_arguments):
+        args = []
+        for ast_arg in ast_arguments:
+            args.append(ast.literal_eval(self.visit(ast_arg)))
+        return args
+
+    def visit_Call(self, node):
+        if node.func.id in self.evaluation_context:
+            return ast.Constant(self.evaluation_context[node.func.id](*self.get_call_args(node.args)))

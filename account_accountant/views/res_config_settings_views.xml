@@ -36,6 +36,10 @@
                 <setting groups="base.group_no_one" company_dependent="1" help="Record cost of goods sold in your journal entries">
                     <field name="use_anglo_saxon"/>
                 </setting>
+
+                <setting groups="account.group_account_manager" help="Enable Auto Transfers">
+                    <field name="module_account_auto_transfer" widget="upgrade_boolean"/>
+                </setting>
             </block>
             <block id="invoicing_settings" position="inside">
                 <setting company_dependent="1" help="To enhance authenticity, add a signature to your invoices">

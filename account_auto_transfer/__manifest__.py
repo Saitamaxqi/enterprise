@@ -16,7 +16,6 @@ Manage automatic transfers between your accounts.
         'data/cron.xml',
         'views/transfer_model_views.xml',
     ],
-    'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

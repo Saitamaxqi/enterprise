@@ -28,7 +28,7 @@ class TestAccountReturn(TestAccountReportsCommon):
         cls.basic_return_type = cls.env['account.return.type'].create({
             'name': 'VAT Return (Generic)',
             'report_id': cls.env.ref('account.generic_tax_report').id,
-            'deadline_start_date': '2024-01-01'
+            'default_deadline_start_date': '2024-01-01'
         })
 
         cls.startClassPatcher(freeze_time('2024-01-01'))
@@ -58,6 +58,34 @@ class TestAccountReturn(TestAccountReportsCommon):
                     f"Current date_to:  {account_return.date_to}",
                     f"Expected date_to: {dates_tuple[1]}",
                 ]
+        if errors:
+            self.fail('\n'.join(errors))
+
+    def assert_checks_equal(self, account_return, expected_check_dicts):
+        checks_by_code = {
+            account_return_check.code: account_return_check
+            for account_return_check in account_return.check_ids
+        }
+
+        errors = []
+        for expected_check_dict in expected_check_dicts:
+            if 'code' not in expected_check_dict:
+                raise KeyError("'code' is mandatory.")
+            if expected_check_dict['code'] not in checks_by_code:
+                errors.append(f"\n==== Code '{expected_check_dicts['code']}' missing in return check ====")
+            else:
+                current_check = checks_by_code[expected_check_dict['code']]
+                current_check_errors = []
+                for key, value in expected_check_dict.items():
+                    if current_check[key] != value:
+                        current_check_errors.append(f"{key} are different: '{value}' != '{current_check[key]}'")
+
+                if current_check_errors:
+                    errors += [
+                        f"\n==== Error in check with code: '{current_check.code}' ====",
+                        *current_check_errors,
+                    ]
+
         if errors:
             self.fail('\n'.join(errors))
 
@@ -568,19 +596,268 @@ class TestAccountReturn(TestAccountReportsCommon):
         })
         self.assertEqual(wizard.show_warning_wrong_dates, False)
 
-    def test_return_manual_creation_wizard_warning_existing_return(self):
-        wizard = self.env['account.return.creation.wizard'].create([{
-            'date_from': '2023-12-01',
-            'date_to': '2023-12-31',
-            'return_type_id': self.basic_return_type.id,
+    def test_account_return_check_template_basic(self):
+        # 1. Create audit return type
+        audit_return_type = self.env['account.return.type'].create([{
+            'category': 'audit',
+            'default_deadline_periodicity': 'year',
+            'default_deadline_start_date': '2024-01-01',
+            'name': "Audit",
         }])
 
-        self.assertEqual(wizard.show_warning_existing_return, False)
-        wizard.action_create_manual_account_returns()
+        audit_return_type.with_company(self.env.company).deadline_periodicity = 'year'
 
-        new_wizard = self.env['account.return.creation.wizard'].create([{
-            'date_from': '2023-12-01',
-            'date_to': '2023-12-31',
-            'return_type_id': self.basic_return_type.id,
+        # 2. Create check templates
+        mail_activity_type = self.env.ref('mail.mail_activity_data_email')
+        templates = self.env['account.return.check.template'].create([
+            {   # Manual Check with activity
+                'name': "Check 1",
+                'code': '_template_checks_1',
+                'return_type': audit_return_type.id,
+                'type': 'check',
+                'model': False,
+                'activity_type': mail_activity_type.id,
+            },
+            {   # Auto Check Failing
+                'name': "Check 2",
+                'code': '_template_checks_2',
+                'return_type': audit_return_type.id,
+                'type': 'check',
+                'model': 'account.move',
+                'domain': "[('state', '=', 'draft')]",
+                'cycle': 'equity',
+            },
+            {   # Auto Check Succeeding
+                'name': "Check 3",
+                'code': '_template_checks_3',
+                'return_type': audit_return_type.id,
+                'type': 'check',
+                'model': 'account.move',
+                'domain': "[('amount_total', '=', 94329.90)]",
+            },
+            {   # Upload File
+                'name': "Check 4",
+                'code': '_template_checks_4',
+                'return_type': audit_return_type.id,
+                'type': 'file',
+            }
+        ])
+
+        # 3. Create audit return
+        account_return = audit_return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-12-31'))
+
+        self.assertEqual(len(account_return), 1, "Only one return should be created for a period of one year using an annual return type.")
+
+        # 4. Create draft invoice
+        self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-01-01')
+
+        # 5. Refresh checks
+        account_return.refresh_checks(force_bypassed=True)
+
+        self.assertEqual(len(account_return.check_ids), 4)
+
+        self.assertEqual(account_return.activity_ids[0].activity_type_id, mail_activity_type)
+
+        account_return.refresh_checks(force_bypassed=True)
+
+        self.assertEqual(len(account_return.check_ids), 4)
+        self.assertEqual(len(account_return.activity_ids), 1)
+
+        self.assert_checks_equal(
+            account_return,
+            [
+                {   # Manual Check with activity
+                    'name': "Check 1",
+                    'code': '_template_checks_1',
+                    'message': False,
+                    'type': 'check',
+                    'result': 'manual',
+                    'return_id': account_return,
+                    'template_id': templates[0],
+                },
+                {   # Auto Check Failing
+                    'name': "Check 2",
+                    'code': '_template_checks_2',
+                    'message': False,
+                    'type': 'check',
+                    'result': 'failure',
+                    'return_id': account_return,
+                    'cycle': 'equity',
+                    'template_id': templates[1],
+                },
+                {   # Auto Check Succeeding
+                    'name': "Check 3",
+                    'code': '_template_checks_3',
+                    'message': False,
+                    'type': 'check',
+                    'result': 'success',
+                    'bypassed': False,
+                    'return_id': account_return,
+                    'template_id': templates[2],
+                },
+                {   # Upload File
+                    'name': "Check 4",
+                    'code': '_template_checks_4',
+                    'message': False,
+                    'type': 'file',
+                    'result': 'manual',
+                    'return_id': account_return,
+                    'cycle': 'other',
+                    'template_id': templates[3],
+                }
+        ])
+
+    def test_account_return_check_template_file(self):
+        return_type = self.env['account.return.type'].create([{
+            'category': 'audit',
+            'default_deadline_periodicity': 'year',
+            'default_deadline_start_date': '2024-01-01',
+            'name': "Audit",
         }])
-        self.assertEqual(new_wizard.show_warning_existing_return, True)
+        return_type.with_company(self.env.company).deadline_periodicity = 'year'
+
+        template = self.env['account.return.check.template'].create([
+            {   # Upload File
+                'name': "Check 1",
+                'code': '_template_checks_1',
+                'return_type': return_type.id,
+                'type': 'file',
+            }
+        ])
+
+        account_return = return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-12-31'))
+
+        account_return.refresh_checks(force_bypassed=True)
+
+        self.assert_checks_equal(
+            account_return,
+            [
+                {
+                    'name': "Check 1",
+                    'code': '_template_checks_1',
+                    'type': 'file',
+                    'result': 'manual',
+                    'return_id': account_return,
+                    'template_id': template,
+                }
+        ])
+
+        attachment = self.env['ir.attachment'].create({
+            'res_model': 'account.return.check',
+            'res_id': account_return.check_ids[0].id,
+            'name': 'attachment',
+            'company_id': self.env.company.id,
+        })
+
+        account_return.check_ids[0].attachment_ids |= attachment
+
+        self.assert_checks_equal(
+            account_return,
+            [
+                {
+                    'name': "Check 1",
+                    'code': '_template_checks_1',
+                    'type': 'file',
+                    'result': 'manual',
+                    'bypassed': True,
+                    'return_id': account_return,
+                    'template_id': template,
+                }
+        ])
+
+        account_return.check_ids[0].action_unlink_attachments()
+
+        self.assert_checks_equal(
+            account_return,
+            [
+                {
+                    'name': "Check 1",
+                    'code': '_template_checks_1',
+                    'type': 'file',
+                    'result': 'manual',
+                    'bypassed': False,
+                    'return_id': account_return,
+                    'template_id': template,
+                }
+        ])
+
+    def test_account_return_check_template_changing_type(self):
+        return_type = self.env['account.return.type'].create([{
+            'category': 'audit',
+            'default_deadline_periodicity': 'year',
+            'default_deadline_start_date': '2024-01-01',
+            'name': "Audit",
+        }])
+        return_type.with_company(self.env.company).deadline_periodicity = 'year'
+
+        template = self.env['account.return.check.template'].create([
+            {   # Upload File
+                'name': "Check 1",
+                'code': '_template_checks_1',
+                'return_type': return_type.id,
+                'type': 'file',
+            }
+        ])
+
+        account_return = return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-12-31'))
+
+        account_return.refresh_checks(force_bypassed=True)
+
+        attachment = self.env['ir.attachment'].create({
+            'res_model': 'account.return.check',
+            'res_id': account_return.check_ids[0].id,
+            'name': 'attachment',
+            'company_id': self.env.company.id,
+        })
+
+        account_return.check_ids[0].attachment_ids |= attachment
+
+        self.assert_checks_equal(
+            account_return,
+            [
+                {
+                    'name': "Check 1",
+                    'code': '_template_checks_1',
+                    'type': 'file',
+                    'result': 'manual',
+                    'bypassed': True,
+                    'return_id': account_return,
+                    'template_id': template,
+                    'attachment_ids': attachment,
+                }
+            ]
+        )
+
+        template.type = 'check'
+        account_return.refresh_checks(force_bypassed=True)
+
+        self.assert_checks_equal(
+            account_return,
+            [
+                {
+                    'code': '_template_checks_1',
+                    'type': 'check',
+                    'result': 'manual',
+                    'bypassed': False,
+                    'attachment_ids': self.env['ir.attachment'],
+                }
+            ]
+        )
+
+        template.type = 'file'
+        account_return.refresh_checks(force_bypassed=True)
+
+        self.assert_checks_equal(
+            account_return,
+            [
+                {
+                    'code': '_template_checks_1',
+                    'type': 'file',
+                    'result': 'manual',
+                    'attachment_ids': self.env['ir.attachment'],
+                }
+            ]
+        )

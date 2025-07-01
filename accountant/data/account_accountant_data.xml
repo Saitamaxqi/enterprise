@@ -17,6 +17,9 @@
         <record id="account.menu_finance_entries" model="ir.ui.menu">
             <field name="parent_id" ref="menu_accounting"/>
         </record>
+        <record id="account.account_audit_menu" model="ir.ui.menu">
+            <field name="parent_id" ref="menu_accounting"/>
+        </record>
         <record id="account.menu_finance_reports" model="ir.ui.menu">
             <field name="parent_id" ref="menu_accounting"/>
         </record>

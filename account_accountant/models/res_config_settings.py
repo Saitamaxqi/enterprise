@@ -72,6 +72,8 @@ class ResConfigSettings(models.TransientModel):
         help='Method used to compute the amount of deferred entries',
     )
 
+    module_account_auto_transfer = fields.Boolean(string="Enable Auto Transfer")
+
     @api.depends('sign_invoice')
     def _compute_module_sign_status(self):
         sign_installed = 'sign' in self.env['ir.module.module']._installed()

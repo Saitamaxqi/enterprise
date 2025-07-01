@@ -13,14 +13,6 @@
         position: relative;
     }
 
-    .return-group-header {
-        margin-top: 10px;
-        width: calc(100% - 1vw);
-        font-weight: 700;
-        font-size: 1rem;
-        padding: 10px;
-    }
-
     .o_kanban_record .fa-clock-o {
         opacity: 0;
         transition: opacity 0.2s ease;

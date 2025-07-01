@@ -24,6 +24,7 @@ Keeps track of depreciations, and creates corresponding journal entries.
         'data/assets_report.xml',
         'data/account_report_actions.xml',
         'data/menuitems.xml',
+        'data/account_return_check_template.xml',
     ],
     'demo': [
         'demo/account_asset_demo.xml',

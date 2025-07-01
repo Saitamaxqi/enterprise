@@ -19,6 +19,8 @@ Keeps track of loans, and creates corresponding journal entries.
         'views/account_asset_group_views.xml',
         'views/account_loan_views.xml',
         'views/account_move_views.xml',
+
+        'data/account_return_check_template.xml',
     ],
     'demo': [
         'demo/account_loans_demo.xml',

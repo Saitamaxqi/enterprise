@@ -15,6 +15,13 @@ class AccountReturnCreationWizard(models.TransientModel):
         readonly=True,
         default=lambda self: self.env.company,
     )
+    category = fields.Selection(
+        selection=[
+            ('account_return', "Tax Return"),
+            ('audit', "Audit"),
+        ],
+        default='account_return',
+    )
     available_return_type_ids = fields.Many2many(
         string="Available Return Type",
         comodel_name='account.return.type',
@@ -29,23 +36,47 @@ class AccountReturnCreationWizard(models.TransientModel):
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
     show_warning_wrong_dates = fields.Boolean(compute='_compute_warnings')
-    show_warning_existing_return = fields.Boolean(compute='_compute_warnings')
 
+    regulatory_compliance = fields.Boolean(string="Regulatory compliance", default=True)
+    treasury_financing = fields.Boolean(string="Treasury and financing", default=True)
+    purchases = fields.Boolean(string="Purchases", default=True)
+    operating_expenses = fields.Boolean(string="Operating expenses", default=True)
+    sales = fields.Boolean(string="Sales", default=True)
+    inventory = fields.Boolean(string="Inventory", default=True)
+    fixed_assets = fields.Boolean(string="Fixed assets", default=True)
+    payroll = fields.Boolean(string="Payroll", default=True)
+    government = fields.Boolean(string="Government", default=True)
+    equity = fields.Boolean(string="Equity", default=True)
+    other = fields.Boolean(string="Others", default=True)
+
+    @api.onchange('return_type_id')
+    def _onchange_return_type_id(self):
+        today = fields.Date.context_today(self)
+        if self.return_type_id:
+            period_months = self.return_type_id._get_periodicity_months_delay(self.company_id)
+            shifted_date = today - relativedelta(months=period_months)
+            self.date_from, self.date_to = self.return_type_id._get_period_boundaries(self.company_id, shifted_date)
+        else:
+            self.date_from = self.date_to = False
+
+    @api.depends('category')
     def _compute_available_return_type(self):
-        country_return_type_map = defaultdict(
-            lambda: self.env['account.return.type'],
-            self.env['account.return.type']._read_group(
-                domain=[],
-                groupby=['report_country_id'],
-                aggregates=['id:recordset'],
-            )
+        return_type_by_country_and_category = self.env['account.return.type']._read_group(
+            domain=[],
+            groupby=['report_country_id', 'category'],
+            aggregates=['id:recordset'],
         )
+        country_return_type_map = defaultdict(
+            lambda: defaultdict(lambda: self.env['account.return.type']))
+
+        for country, category, returns in return_type_by_country_and_category:
+            country_return_type_map[country][category] |= returns
 
         generic_tax_report = self.env.ref('account.generic_tax_report')
 
         for wizard in self:
             # For the company country, takes all the return types
-            wizard_country_return_types = country_return_type_map[wizard.company_id.account_fiscal_country_id]
+            wizard_country_return_types = country_return_type_map[wizard.company_id.account_fiscal_country_id][wizard.category]
 
             # For the foreign fiscal positions, takes only the VAT return types
             foreign_vat_fpos_countries = self.env['account.fiscal.position'].search([
@@ -55,10 +86,10 @@ class AccountReturnCreationWizard(models.TransientModel):
 
             foreign_return_types = self.env['account.return.type']
             for foreign_country in foreign_vat_fpos_countries:
-                foreign_return_types |= country_return_type_map[foreign_country].filtered(lambda rt: rt.report_id.root_report_id == generic_tax_report)
+                foreign_return_types |= country_return_type_map[foreign_country][wizard.category].filtered(lambda rt: rt.report_id.root_report_id == generic_tax_report)
 
             # Finally, includes the return types not linked to any country
-            return_types_without_country = country_return_type_map[self.env['res.country']]
+            return_types_without_country = country_return_type_map[self.env['res.country']][wizard.category]
 
             # remove the generic tax report return type if company country tax return type available
             has_current_country_tax_return_type = wizard_country_return_types.filtered(lambda rt: rt.report_id.root_report_id == generic_tax_report)
@@ -69,18 +100,8 @@ class AccountReturnCreationWizard(models.TransientModel):
 
     @api.depends('date_from', 'date_to', 'return_type_id')
     def _compute_warnings(self):
-        returns_companies_map = {
-            (date_from, date_to, type_id): returns.mapped('company_ids')
-            for date_from, date_to, type_id, returns in self.env['account.return']._read_group(
-                domain=[],
-                groupby=['date_from:day', 'date_to:day', 'type_id'],
-                aggregates=['id:recordset'],
-            )
-        }
-
         for wizard in self:
             wizard.show_warning_wrong_dates = False
-            wizard.show_warning_existing_return = False
 
             if not wizard.date_from or not wizard.date_to or not wizard.return_type_id:
                 continue
@@ -96,11 +117,6 @@ class AccountReturnCreationWizard(models.TransientModel):
                     wizard.show_warning_wrong_dates = True
                     break
 
-                # check if a return already exists in this period
-                companies_with_return_in_period = returns_companies_map.get((period_start, period_end, wizard.return_type_id), self.env['res.company'])
-                if wizard.company_id in companies_with_return_in_period:
-                    wizard.show_warning_existing_return = True
-
                 date_pointer = period_end + relativedelta(days=1)
                 first_period = False
 
@@ -108,18 +124,11 @@ class AccountReturnCreationWizard(models.TransientModel):
             if date_pointer - relativedelta(days=1) != wizard.date_to:
                 wizard.show_warning_wrong_dates = True
 
-            # only display at most one warning
-            if wizard.show_warning_wrong_dates:
-                wizard.show_warning_existing_return = False
-
     def action_create_manual_account_returns(self):
         self.ensure_one()
 
         if self.show_warning_wrong_dates:
             raise UserError(_("The selected range doesn't match any fiscal period."))
-
-        if self.show_warning_existing_return:
-            raise UserError(_("A return already exists for the selected period."))
 
         all_branch_companies_with_same_vat = self.company_id._get_branches_with_same_vat()
         root_company = sorted(all_branch_companies_with_same_vat, key=lambda comp: len(comp.parent_path.split('/')))[0]
@@ -129,6 +138,24 @@ class AccountReturnCreationWizard(models.TransientModel):
         if not company.has_access('write'):
             raise UserError(_("You are trying to create returns for a company you don't have access to, please select it in the company selector"))
 
-        returns_created = self.return_type_id._try_create_returns_for_fiscal_year(company, tax_unit, forced_date_from=self.date_from, forced_date_to=self.date_to)
+        returns_created = self.return_type_id._try_create_returns_for_fiscal_year(company, tax_unit, forced_date_from=self.date_from, forced_date_to=self.date_to, allow_duplicates=True)
+        returns_created.skipped_check_cycles = ','.join(
+            field for field in [
+                'regulatory_compliance', 'treasury_financing', 'purchases',
+                'operating_expenses', 'sales', 'inventory', 'fixed_assets',
+                'payroll', 'government', 'equity', 'other'
+            ] if not self[field]
+        )
         returns_created.refresh_checks()
+        if len(returns_created) == 1:
+            action = returns_created[0].action_open_account_return() if self.category == 'account_return' else returns_created[0].action_open_audit_return()
+
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'action_return_close_wizard',
+                'params': {
+                    'next_action': action
+                }
+            }
+
         return True

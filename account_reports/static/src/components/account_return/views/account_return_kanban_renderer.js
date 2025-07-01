@@ -1,12 +1,11 @@
 import { useService, useBus } from "@web/core/utils/hooks";
 import { isNull } from "@web/views/utils";
 import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
-import { useEffect } from "@odoo/owl";
 import {AccountReturnKanbanRecord} from "./account_return_kanban_record";
-const { DateTime } = luxon;
+import { AccountReturnBaseKanbanRenderer } from "./account_return_base_kanban_renderer";
 
 
-export class AccountReturnKanbanRenderer extends KanbanRenderer {
+export class AccountReturnKanbanRenderer extends AccountReturnBaseKanbanRenderer {
     static template="account_reports.account_return_kanban_renderer";
 
     static props = [
@@ -22,7 +21,6 @@ export class AccountReturnKanbanRenderer extends KanbanRenderer {
         super.setup();
         this.orm = useService("orm");
         this.actionService = useService("action");
-        useEffect(() => {this.runAllReturnChecks()}, () => []);
 
         useBus(this.env.bus, "return_reload_model", (ev) => {
             const recordIds = ev.detail.resIds;
@@ -41,31 +39,6 @@ export class AccountReturnKanbanRenderer extends KanbanRenderer {
         if (!action)
             return
         return this.actionService.doAction(action);
-    }
-
-    async runAllReturnChecks() {
-        const additionalDomain = [
-            ['date_from', '<=', DateTime.now().endOf("month").toISODate()]
-        ]
-
-        const returnIds = await this.orm.call(
-            'account.return',
-            'get_next_returns_ids',
-            [
-                null,
-                additionalDomain,
-                true, //allow_multiple_by_types
-            ],
-        );
-
-        await this.orm.call(
-            'account.return',
-            'refresh_checks',
-            [returnIds]
-        );
-
-        // reload records
-        await this.props.list.model.load();
     }
 
     get records() {

@@ -14,6 +14,7 @@
         'views/account_account_views.xml',
         'views/account_disallowed_expenses_category_views.xml',
         'views/account_disallowed_expenses_report_views.xml',
+        'data/account_return_check_template.xml',
     ],
     'installable': True,
     'auto_install': True,

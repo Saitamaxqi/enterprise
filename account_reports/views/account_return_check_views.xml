@@ -11,6 +11,9 @@
                     <field name="result"/>
                     <field name="action"/>
                     <field name="bypassed"/>
+                    <field name="type"/>
+                    <field name="attachment_ids"/>
+                    <field name="cycle"/>
                     <field name="return_id"/> <!-- mandatory -->
 
                     <templates>
@@ -47,14 +50,17 @@
                                             </span>
                                         </div>
                                         <div invisible="not message" class="row text-muted">
-                                            <field name="message" class="mt-2"/>
+                                            <field name="message" widget="text" class="mt-2"/>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-4 h-full d-flex justify-content-end align-items-center my-auto">
                                         <field name="approver_supervisor_ids" widget="kanban.many2many_avatar_user_approver" readonly="True" class="mt-1 me-2"/>
-                                        <button string="Validate" name="action_validate_check" invisible="result == 'success' or approver_id" type="object" class="btn btn-secondary me-2" />
-                                        <button string="Supervise" name="action_validate_check" invisible="not show_supervise" type="object" class="btn btn-primary me-2"/>
-                                        <button string="Invalidate" name="action_invalidate_check" invisible="not show_invalidate" type="object" class="btn btn-secondary me-2"/>
+                                        <button string="Validate" name="action_validate_check" invisible="result == 'success' or approver_id or type == 'file'" type="object" class="btn btn-secondary me-2" />
+                                        <button string="Supervise" name="action_validate_check" invisible="not show_supervise or type == 'file'" type="object" class="btn btn-secondary me-2"/>
+                                        <button string="Invalidate" name="action_invalidate_check" invisible="not show_invalidate or type == 'file'" type="object" class="btn btn-secondary me-2"/>
+                                        <widget invisible="type != 'file' or attachment_ids" name="account_return_check_file_uploader"/>
+                                        <widget invisible="type != 'file' or not attachment_ids" name="account_return_check_attachment_viewer"/>
+                                        <button invisible="type != 'file' or not attachment_ids" type="object" class="btn-link fa-lg text-dark ms-1" title="delete" icon="fa-trash" name="action_unlink_attachments"/>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +75,16 @@
             <field name="model">account.return.check</field>
             <field name="arch" type="xml">
                 <search>
+                    <field name="result"/>
                     <field name="name"/>
+                    <field name="type"/>
+                    <field name="bypassed"/>
+                    <field name="return_id"/>
+                    <field name="template_id"/>
+
+                    <filter name="passed_checks" string="Passed" domain="['|', ('result', '=', 'success'), ('bypassed', '=', True)]"/>
+                    <filter name="todo_checks" string="Failed" domain="[('result', '!=', 'success'), ('bypassed', '=', False)]"/>
+                    <filter name="groupby_cycle" string="Cycle" context="{'group_by': 'cycle'}"/>
                 </search>
             </field>
         </record>

@@ -99,6 +99,11 @@ class AccountReport(models.Model):
     # Fields used for send reports by cron
     send_and_print_values = fields.Json(copy=False)
 
+    # Account Audit Status
+    allow_account_audit_status_on_lines = fields.Boolean(string="Allow Account Audit Status On Lines",
+        compute=lambda x: x._compute_report_option_filter('filter_account_type', 'disabled'), readonly=False,
+        precompute=True, store=True, depends=['root_report_id'])
+
     @api.constrains('custom_handler_model_id')
     def _validate_custom_handler_model(self):
         for report in self:
@@ -413,6 +418,21 @@ class AccountReport(models.Model):
         else:
             options['journals'].extend(next(iter(company_journals_map.values()), []))
 
+    def _init_options_audit(self, options, previous_options):
+        if not self.allow_account_audit_status_on_lines:
+            return
+
+        main_company = self._get_sender_company_for_export(options)
+
+        audit_return = self.env['account.return'].search_read([
+            ('return_type_category', '=', 'audit'),
+            ('company_id', '=', main_company.id),
+            ('date_to', '=', options['date']['date_to']),
+            ('date_from', '=', options['date']['date_from'] or True),
+        ], limit=1, fields=['id'])
+
+        options.setdefault('audit', {})
+        options['audit']['id'] = audit_return[0]['id'] if len(audit_return) > 0 else False
 
     def _init_options_journals_names(self, options, previous_options, additional_journals_domain=None):
         all_journals = [
@@ -2091,6 +2111,7 @@ class AccountReport(models.Model):
             self._init_options_integer_rounding: 70,
             self._init_options_journals: 80,
             self._init_options_journals_names: 90,
+            self._init_options_audit: 100,
 
             'default': 200,
 
@@ -2681,6 +2702,9 @@ class AccountReport(models.Model):
         # Unfold lines (static or dynamic) if necessary and add totals below section to dynamic lines
         lines = self._fully_unfold_lines_if_needed(lines, options)
 
+        if self.allow_account_audit_status_on_lines:
+            lines = self._add_account_status_on_lines(lines, options)
+
         if self.custom_handler_model_id:
             lines = self.env[self.custom_handler_model_name]._custom_line_postprocessor(self, options, lines)
 
@@ -2807,6 +2831,37 @@ class AccountReport(models.Model):
             i += 1
 
         return lines
+
+    def _add_account_status_on_lines(self, lines, options):
+        if not options['audit']['id']:
+            return lines
+
+        accounts_to_search = set()
+        for line in lines:
+            model, id = self._get_model_info_from_id(line['id'])
+            if model == 'account.account':
+                accounts_to_search.add(id)
+
+        account_statuses = self.env['account.audit.account.status'].search_read(
+            domain=[
+                ('audit_id', '=', options['audit']['id']),
+                ('account_id', 'in', tuple(accounts_to_search)),
+            ],
+            fields=['id', 'account_id', 'audit_id', 'status']
+        )
+
+        account_statuses = {
+            account_status['account_id'][0]: account_status
+            for account_status in account_statuses
+        }
+
+        for line in lines:
+            model, id = self._get_model_info_from_id(line['id'])
+            if id in account_statuses:
+                line['account_status'] = account_statuses[id]
+
+        return lines
+
 
     def _generate_total_below_section_line(self, section_line_dict):
         return {
@@ -5327,6 +5382,9 @@ class AccountReport(models.Model):
 
         lines = self._expand_unfoldable_line(expand_function_name, line_dict_id, groupby, options, progress, offset, horizontal_split_side)
         lines = self._fully_unfold_lines_if_needed(lines, options)
+
+        if self.allow_account_audit_status_on_lines:
+            lines = self._add_account_status_on_lines(lines, options)
 
         if self.custom_handler_model_id:
             lines = self.env[self.custom_handler_model_name]._custom_line_postprocessor(self, options, lines)
