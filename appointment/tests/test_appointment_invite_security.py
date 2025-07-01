@@ -73,7 +73,7 @@ class TestAppointmentInviteSecurity(AppointmentSecurityCommon):
 
         # Can create a share link.
         test_share_link = self.env['appointment.invite'].create({
-            'appointment_type_ids': self.apt_type_apt_user,
+            'appointment_type_ids': self.apt_type_internal_user,
         })
 
         # Can only write on share link created by himself.
