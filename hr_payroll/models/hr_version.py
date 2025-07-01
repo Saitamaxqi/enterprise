@@ -50,7 +50,7 @@ class HrVersion(models.Model):
         'hr.work.entry.type', string='Part Time Work Entry Type',
         domain=[('is_leave', '=', True)],
         help="The work entry type used when generating work entries to fit full time working schedule.", groups="hr.group_hr_user")
-    is_non_resident = fields.Boolean(string='Non-resident', help='If recipient lives in a foreign country', groups="hr.group_hr_user")
+    is_non_resident = fields.Boolean(string='Non-resident', help='If the employee is not a legal resident of the country where they are employed', groups="hr.group_hr_user")
     disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr.group_hr_user", tracking=True)
 
     @api.depends('structure_type_id')
