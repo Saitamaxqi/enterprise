@@ -70,7 +70,7 @@ class StockMove(models.Model):
         (self - ke_moves).l10n_ke_oscu_flow_type_code = False
 
         for move in ke_moves:
-            if move.scrapped:
+            if move.location_dest_usage == 'inventory':
                 move.l10n_ke_oscu_flow_type_code = '15'      # Discarding Outgoing
                 continue
 

@@ -202,8 +202,7 @@ export class MrpDisplay extends Component {
             for (const move of record.data.move_raw_ids.records) {
                 if (
                     move.data.product_barcode === barcode &&
-                    move.data.manual_consumption &&
-                    !move.data.scrapped
+                    move.data.manual_consumption
                 ) {
                     return move.component.onClick();
                 }

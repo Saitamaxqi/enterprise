@@ -2370,15 +2370,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         picking.action_confirm()
         url = self._get_client_action_url(picking.id)
         self.start_tour(url, 'test_scrap_change_source_location', login='admin')
-        scrap_location = self.env['stock.location'].search([
-            ('scrap_location', '=', 'True'),
-            ('company_id', '=', self.env.company.id),
-        ])
+        scrap_location_id = self.env['stock.location'].search_read([('usage', '=', 'inventory'), ('company_id', '=', self.env.company.id)], fields=['id'], limit=1)[0].get('id')
         self.assertRecordValues(
             lot1.quant_ids,
             [
                 {'location_id': self.shelf1.id, 'quantity': 0},
-                {'location_id': scrap_location.id, 'quantity': 15},
+                {'location_id': scrap_location_id, 'quantity': 15},
                 {'location_id': self.ref('stock.stock_location_output'), 'quantity': 10},
             ]
         )

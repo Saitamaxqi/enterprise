@@ -3345,15 +3345,7 @@
         "&",
         ["state", "=", "done"],
         "|",
-        "|",
-        "|",
         ["location_id.usage", "=", "inventory"],
-        "&",
-        ["location_id.scrap_location", "=", false],
-        ["location_id.usage", "=", "inventory"],
-        ["location_dest_id.usage", "=", "inventory"],
-        "&",
-        ["location_dest_id.scrap_location", "=", false],
         ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
@@ -3393,15 +3385,7 @@
         "&",
         ["state", "=", "done"],
         "|",
-        "|",
-        "|",
         ["location_id.usage", "=", "inventory"],
-        "&",
-        ["location_id.scrap_location", "=", false],
-        ["location_id.usage", "=", "inventory"],
-        ["location_dest_id.usage", "=", "inventory"],
-        "&",
-        ["location_dest_id.scrap_location", "=", false],
         ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
@@ -3441,8 +3425,8 @@
         "&",
         ["state", "=", "done"],
         "|",
-        ["location_id.scrap_location", "=", true],
-        ["location_dest_id.scrap_location", "=", true]
+        ["location_id.usage", "=", "inventory"],
+        ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
       "sortedColumn": {
@@ -3481,8 +3465,8 @@
         "&",
         ["state", "=", "done"],
         "|",
-        ["location_id.scrap_location", "=", true],
-        ["location_dest_id.scrap_location", "=", true]
+        ["location_id.usage", "=", "inventory"],
+        ["location_dest_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
       "sortedColumn": {

@@ -540,7 +540,7 @@ class SaleOrderLine(models.Model):
     def _get_outgoing_incoming_moves(self, strict=True):
         outgoing_moves, incoming_moves = super()._get_outgoing_incoming_moves(strict)
         if self.is_rental and self._are_rental_pickings_enabled():
-            for move in self.move_ids.filtered(lambda r: r.state != 'cancel' and not r.scrapped and self.product_id == r.product_id):
+            for move in self.move_ids.filtered(lambda r: r.state != 'cancel' and r.location_dest_usage != 'inventory' and self.product_id == r.product_id):
                 if (
                         strict and move.location_dest_id == self.company_id.rental_loc_id or
                         not strict and move.location_id._child_of(self.order_id.warehouse_id.lot_stock_id)

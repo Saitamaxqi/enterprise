@@ -202,9 +202,10 @@ class MrpReport(models.Model):
                     SUM(sm.value)                                                                 AS total
                 FROM mrp_production AS mo
                 LEFT JOIN stock_move AS sm on sm.raw_material_production_id = mo.id
+                LEFT JOIN stock_location AS dest_loc ON sm.location_dest_id = dest_loc.id
                 WHERE mo.state = 'done'
                     AND (sm.state = 'done' or sm.state IS NULL)
-                    AND (sm.scrapped != 't' or sm.scrapped IS NULL)
+                    AND dest_loc.usage != 'inventory'
                 GROUP BY
                     mo.id
             ) comp_cost ON comp_cost.mo_id = mo.id
@@ -246,11 +247,12 @@ class MrpReport(models.Model):
                     COALESCE(SUM(sm.cost_share), 0.0) / 100.0 AS byproduct_cost_share
                 FROM stock_move AS sm
                 LEFT JOIN mrp_production AS mo ON sm.production_id = mo.id
+                LEFT JOIN stock_location AS dest_loc ON sm.location_dest_id = dest_loc.id
                 WHERE
                     mo.state = 'done'
                     AND sm.state = 'done'
                     AND sm.quantity != 0
-                    AND sm.scrapped != 't'
+                    AND dest_loc.usage != 'inventory'
                 GROUP BY mo.id
             ) cost_share ON cost_share.mo_id = mo.id
         """
@@ -269,12 +271,13 @@ class MrpReport(models.Model):
                 JOIN product_product AS product ON product.id = sm.product_id
                 JOIN product_template AS template ON template.id = product.product_tmpl_id
                 JOIN uom_uom AS uom_prod ON uom_prod.id = template.uom_id
+                LEFT JOIN stock_location AS dest_loc ON sm.location_dest_id = dest_loc.id
                 WHERE
                     mo.state = 'done'
                     AND sm.state = 'done'
                     AND sm.quantity != 0
                     AND mo.product_id = sm.product_id
-                    AND (sm.scrapped != 't' or sm.scrapped IS NULL)
+                    AND dest_loc.usage != 'inventory'
                 GROUP BY mo.id
             ) prod_qty ON prod_qty.mo_id = mo.id
         """
