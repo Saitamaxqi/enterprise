@@ -194,7 +194,7 @@ class AccountMove(models.Model):
                 period_start, period_end = period_start + reset_day_1, period_end + reset_day_1
             line_diff = self._get_deferred_diff_dates(line_end, line_start)
             period_diff = self._get_deferred_diff_dates(period_end, period_start)
-            return period_diff / line_diff * balance if line_diff >= 1 else balance
+            return period_diff / line_diff * balance if line_diff else balance
 
     @api.model
     def _get_deferred_amounts_by_line(self, lines, periods, deferred_type):
