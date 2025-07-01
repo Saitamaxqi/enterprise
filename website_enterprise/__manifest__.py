@@ -12,6 +12,7 @@ This module overrides community website features and introduces enterprise look 
         'data/website_data.xml',
         'views/snippets/snippets.xml',
         'views/website_enterprise_templates.xml',
+        'views/res_config_settings_views.xml',
     ],
     'installable': True,
     'auto_install': True,

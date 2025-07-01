@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, _
+from odoo import api, models
 from odoo.exceptions import UserError
 
 
@@ -9,9 +9,6 @@ class Website(models.Model):
 
     @api.model
     def import_website(self, **kwargs):
-        if not self.is_website_generator_available():
-            raise UserError(_("The website scraper service is currently unavailable."))
-
         vals = {
             'target_url': self._normalize_domain_url(kwargs['url']),
         }
