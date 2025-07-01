@@ -266,7 +266,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
     def _commit_avatax_taxes(self):
         self._change_avatax_state('commit')
-        return super()._uncommit_external_taxes()
 
     def _uncommit_external_taxes(self):
         self._change_avatax_state('uncommit')
