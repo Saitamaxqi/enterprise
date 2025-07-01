@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:10+0000\n"
+"PO-Revision-Date: 2025-07-01 12:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,6 +29,11 @@ msgstr ""
 #. module: account_disallowed_expenses
 #: model_terms:ir.actions.act_window,help:account_disallowed_expenses.action_account_disallowed_expenses_category_list
 msgid "Add a Disallowed Expenses Category"
+msgstr ""
+
+#. module: account_disallowed_expenses
+#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_total_amount
+msgid "Base Total"
 msgstr ""
 
 #. module: account_disallowed_expenses
@@ -71,22 +76,6 @@ msgid "Current Rate"
 msgstr ""
 
 #. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__rate
-msgid "Deductibility (%)"
-msgstr ""
-
-#. module: account_disallowed_expenses
-#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_deductible_amount
-msgid "Deductible Amount"
-msgstr ""
-
-#. module: account_disallowed_expenses
-#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_disallowed_amount
-msgid "Disallowed Amount"
-msgstr ""
-
-#. module: account_disallowed_expenses
-#: model:ir.ui.menu,name:account_disallowed_expenses.menu_action_account_report_de
 #: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_form
 msgid "Disallowed Expenses"
 msgstr ""
@@ -109,7 +98,6 @@ msgstr ""
 
 #. module: account_disallowed_expenses
 #: model:account.report,name:account_disallowed_expenses.disallowed_expenses_report
-#: model:ir.actions.client,name:account_disallowed_expenses.action_account_report_de
 msgid "Disallowed Expenses Report"
 msgstr ""
 
@@ -127,9 +115,25 @@ msgid "Display Name"
 msgstr ""
 
 #. module: account_disallowed_expenses
+#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_deductible_amount
+msgid "Fiscal Amount"
+msgstr ""
+
+#. module: account_disallowed_expenses
 #: model:ir.actions.act_window,name:account_disallowed_expenses.action_account_disallowed_expenses_category_list
 #: model:ir.ui.menu,name:account_disallowed_expenses.menu_action_account_disallowed_expenses_category_list
 msgid "Fiscal Categories"
+msgstr ""
+
+#. module: account_disallowed_expenses
+#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__rate
+msgid "Fiscal Rate (%)"
+msgstr ""
+
+#. module: account_disallowed_expenses
+#: model:ir.actions.client,name:account_disallowed_expenses.action_account_report_de
+#: model:ir.ui.menu,name:account_disallowed_expenses.menu_action_account_report_de
+msgid "Fiscal Report"
 msgstr ""
 
 #. module: account_disallowed_expenses
@@ -217,11 +221,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_disallowed_expenses/report/account_disallowed_expenses_report.py:0
 msgid "Total"
-msgstr ""
-
-#. module: account_disallowed_expenses
-#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_total_amount
-msgid "Total Amount"
 msgstr ""
 
 #. module: account_disallowed_expenses

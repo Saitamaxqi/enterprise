@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ai_calendar
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-01 12:10+0000\n"
+"PO-Revision-Date: 2025-07-01 12:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ai_calendar
+#: model:ir.model,name:ai_calendar.model_calendar_event
+msgid "Calendar Event"
+msgstr ""
+
+#. module: ai_calendar
+#: model:ir.actions.server,name:ai_calendar.calendar_action_create_calendar_event
+msgid "Create a Calendar Event"
+msgstr ""
+
+#. module: ai_calendar
+#: model:ir.model.fields,field_description:ai_calendar.field_calendar_event__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ai_calendar
+#: model:ir.model.fields,field_description:ai_calendar.field_calendar_event__id
+msgid "ID"
+msgstr ""

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"PO-Revision-Date: 2025-07-03 12:21+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -77,6 +77,11 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__a/a_isda
 msgid "A/A ISDA"
+msgstr ""
+
+#. module: account_loans
+#: model:ir.model,name:account_loans.model_account_return
+msgid "Accounting Return"
 msgstr ""
 
 #. module: account_loans
@@ -283,6 +288,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__display_name
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__display_name
 #: model:ir.model.fields,field_description:account_loans.field_account_move__display_name
+#: model:ir.model.fields,field_description:account_loans.field_account_return__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -374,6 +380,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__id
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__id
 #: model:ir.model.fields,field_description:account_loans.field_account_move__id
+#: model:ir.model.fields,field_description:account_loans.field_account_return__id
 msgid "ID"
 msgstr ""
 
@@ -579,6 +586,7 @@ msgstr ""
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
+#: code:addons/account_loans/models/account_return.py:0
 #: model:ir.actions.act_window,name:account_loans.action_view_account_loans
 #: model:ir.ui.menu,name:account_loans.menu_action_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_list_view
@@ -651,6 +659,15 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan__message_has_error_counter
 msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: account_loans
+#. odoo-python
+#: code:addons/account_loans/models/account_return.py:0
+msgid ""
+"Odoo manages your amortizations automatically. No loans were found for this "
+"period. Ensure your loans are properly registered for automatic "
+"amortizations calculation."
 msgstr ""
 
 #. module: account_loans

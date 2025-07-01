@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_work_entry_contract_planning_attendance
+# 	* hr_work_entry_planning_attendance
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:10+0000\n"
+"PO-Revision-Date: 2025-07-01 12:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,17 +15,17 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: hr_work_entry_contract_planning_attendance
-#: model:ir.model.fields,field_description:hr_work_entry_contract_planning_attendance.field_hr_contract__display_name
+#. module: hr_work_entry_planning_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_planning_attendance.field_hr_version__display_name
 msgid "Display Name"
 msgstr ""
 
-#. module: hr_work_entry_contract_planning_attendance
-#: model:ir.model,name:hr_work_entry_contract_planning_attendance.model_hr_contract
+#. module: hr_work_entry_planning_attendance
+#: model:ir.model,name:hr_work_entry_planning_attendance.model_hr_version
 msgid "Employee Contract"
 msgstr ""
 
-#. module: hr_work_entry_contract_planning_attendance
-#: model:ir.model.fields,field_description:hr_work_entry_contract_planning_attendance.field_hr_contract__id
+#. module: hr_work_entry_planning_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_planning_attendance.field_hr_version__id
 msgid "ID"
 msgstr ""

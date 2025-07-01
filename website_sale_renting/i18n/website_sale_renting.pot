@@ -4,26 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
-"PO-Revision-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-07-01 12:13+0000\n"
+"PO-Revision-Date: 2025-07-01 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: website_sale_renting
-#. odoo-python
-#: code:addons/website_sale_renting/models/sale_order.py:0
-msgid ""
-"\n"
-"                The new period is not valid for some products of your cart.\n"
-"                Your changes on the rental period are not taken into account.\n"
-"            "
-msgstr ""
 
 #. module: website_sale_renting
 #. odoo-python
@@ -167,6 +157,11 @@ msgid ""
 msgstr ""
 
 #. module: website_sale_renting
+#: model_terms:ir.ui.view,arch_db:website_sale_renting.suggested_products_list
+msgid "<span class=\"ps-1\">per</span>"
+msgstr ""
+
+#. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.price_dynamic_filter_template_product_product
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_products_price
 msgid "<span>/</span>"
@@ -180,7 +175,6 @@ msgstr ""
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_item
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_products_price
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.suggested_products_list
 msgid "<span>per</span>"
 msgstr ""
 
@@ -191,16 +185,13 @@ msgstr ""
 
 #. module: website_sale_renting
 #. odoo-javascript
-#: code:addons/website_sale_renting/static/src/snippets/s_rental_search/options.js:0
+#: code:addons/website_sale_renting/static/src/plugins/rental_search_option_plugin.js:0
 msgid "All"
 msgstr ""
 
 #. module: website_sale_renting
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
-msgid "Applies to all rented items"
-msgstr ""
-
-#. module: website_sale_renting
+#. odoo-javascript
+#: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Attribute Filter"
 msgstr ""
@@ -216,11 +207,8 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: website_sale_renting
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.snippet_options
-msgid "Datepicker"
-msgstr ""
-
-#. module: website_sale_renting
+#. odoo-javascript
+#: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Day"
 msgstr ""
@@ -271,6 +259,8 @@ msgid "Go to your cart"
 msgstr ""
 
 #. module: website_sale_renting
+#. odoo-javascript
+#: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Hour"
 msgstr ""
@@ -353,7 +343,14 @@ msgid "Rent Online"
 msgstr ""
 
 #. module: website_sale_renting
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.cart_summary
+#. odoo-javascript
+#: code:addons/website_sale_renting/static/src/plugins/product_page_list_option.xml:0
+#: model_terms:ir.ui.view,arch_db:website_sale_renting.snippet_options
+msgid "Rental Date"
+msgstr ""
+
+#. module: website_sale_renting
+#: model_terms:ir.ui.view,arch_db:website_sale_renting.cart_summary_total
 msgid "Rental Period"
 msgstr ""
 
@@ -417,6 +414,14 @@ msgid "Sunday"
 msgstr ""
 
 #. module: website_sale_renting
+#. odoo-python
+#: code:addons/website_sale_renting/models/sale_order.py:0
+msgid ""
+"The new period is not valid for some products of your cart. Your changes on "
+"the rental period are not taken into account."
+msgstr ""
+
+#. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 msgid "The period must be the same for all the products in your cart."
 msgstr ""
@@ -461,6 +466,8 @@ msgid "Timezone"
 msgstr ""
 
 #. module: website_sale_renting
+#. odoo-javascript
+#: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Timing"
 msgstr ""

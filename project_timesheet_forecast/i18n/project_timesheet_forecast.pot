@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:10+0000\n"
+"PO-Revision-Date: 2025-07-01 12:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,11 +43,6 @@ msgid "Allow timesheets"
 msgstr ""
 
 #. module: project_timesheet_forecast
-#: model:ir.model,name:project_timesheet_forecast.model_account_analytic_line
-msgid "Analytic Line"
-msgstr ""
-
-#. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__user_id
 msgid "Assigned to"
 msgstr ""
@@ -64,7 +59,6 @@ msgid "Date"
 msgstr ""
 
 #. module: project_timesheet_forecast
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_account_analytic_line__display_name
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_ir_ui_menu__display_name
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__display_name
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__display_name
@@ -107,7 +101,6 @@ msgid "Group By"
 msgstr ""
 
 #. module: project_timesheet_forecast
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_account_analytic_line__id
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_ir_ui_menu__id
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__id
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__id
@@ -180,13 +173,23 @@ msgid "Planning"
 msgstr ""
 
 #. module: project_timesheet_forecast
+#: model:ir.actions.act_window,name:project_timesheet_forecast.project_timesheet_forecast_report_action
+#: model:ir.model,name:project_timesheet_forecast.model_project_timesheet_forecast_report_analysis
+#: model:ir.ui.menu,name:project_timesheet_forecast.menu_project_timesheet_forecast_report_analysis
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_analysis_view_tree
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_graph
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_pivot
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
+msgid "Planning / Timesheets Analysis"
+msgstr ""
+
+#. module: project_timesheet_forecast
 #: model:ir.model,name:project_timesheet_forecast.model_planning_analysis_report
 msgid "Planning Analysis Report"
 msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model,name:project_timesheet_forecast.model_planning_slot
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_account_analytic_line__slot_id
 msgid "Planning Shift"
 msgstr ""
 
@@ -251,32 +254,9 @@ msgid "Timesheet"
 msgstr ""
 
 #. module: project_timesheet_forecast
-#: model:ir.model,name:project_timesheet_forecast.model_project_timesheet_forecast_report_analysis
-msgid "Timesheet & Planning Statistics"
-msgstr ""
-
-#. module: project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_graph
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_pivot
-msgid "Timesheet and Planning Analysis"
-msgstr ""
-
-#. module: project_timesheet_forecast
 #. odoo-python
 #: code:addons/project_timesheet_forecast/models/planning_slot.py:0
 msgid "Timesheets"
-msgstr ""
-
-#. module: project_timesheet_forecast
-#: model:ir.actions.act_window,name:project_timesheet_forecast.project_timesheet_forecast_report_action
-#: model:ir.ui.menu,name:project_timesheet_forecast.menu_project_timesheet_forecast_report_analysis
-msgid "Timesheets / Planning Analysis"
-msgstr ""
-
-#. module: project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_analysis_view_tree
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
-msgid "Timesheets and Planning Analysis"
 msgstr ""
 
 #. module: project_timesheet_forecast

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
-"PO-Revision-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"PO-Revision-Date: 2025-07-01 12:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -57,13 +57,14 @@ msgstr ""
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_order__delivery_datetime
+#: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_prep_order__delivery_datetime
 msgid "Delivery Datetime"
 msgstr ""
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_config__display_name
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_order__display_name
-#: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_preparation_display_order__display_name
+#: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_prep_order__display_name
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__display_name
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_product_template__display_name
@@ -97,7 +98,7 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_config__id
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_order__id
-#: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_preparation_display_order__id
+#: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_prep_order__id
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__id
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_product_template__id
@@ -130,7 +131,7 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_config__urbanpiper_minimum_preparation_time
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_res_config_settings__pos_urbanpiper_minimum_preparation_time
-msgid "Minimum Preparation Time (Seconds)"
+msgid "Minimum Preparation Time (Minutes)"
 msgstr ""
 
 #. module: pos_urban_piper_enhancements
@@ -164,18 +165,18 @@ msgid "Point of Sale accociated to this timing"
 msgstr ""
 
 #. module: pos_urban_piper_enhancements
+#: model:ir.model,name:pos_urban_piper_enhancements.model_pos_prep_order
+msgid "Pos Preparation Order"
+msgstr ""
+
+#. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_pos_store_timing
 msgid "Pos Store Timings"
 msgstr ""
 
 #. module: pos_urban_piper_enhancements
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper_enhancements.res_config_settings_view_form_pos_urban_piper_enhancements
-msgid "Preparation Time(seconds)"
-msgstr ""
-
-#. module: pos_urban_piper_enhancements
-#: model:ir.model,name:pos_urban_piper_enhancements.model_pos_preparation_display_order
-msgid "Preparation orders"
+msgid "Preparation Time"
 msgstr ""
 
 #. module: pos_urban_piper_enhancements
@@ -284,4 +285,9 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__weekday
 msgid "Week Day"
+msgstr ""
+
+#. module: pos_urban_piper_enhancements
+#: model_terms:ir.ui.view,arch_db:pos_urban_piper_enhancements.res_config_settings_view_form_pos_urban_piper_enhancements
+msgid "minutes"
 msgstr ""

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-07-01 12:11+0000\n"
+"PO-Revision-Date: 2025-07-01 12:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,6 @@ msgid "# of Payslips"
 msgstr ""
 
 #. module: hr_payroll_account
-#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid ""
 "<span class=\"o_stat_text\" invisible=\"move_state != 'draft'\">Journal Entry <br/>(Draft)</span>\n"
@@ -33,6 +32,14 @@ msgstr ""
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.view_move_form_inherit
 msgid "<span class=\"o_stat_text\">Payslip</span>"
+msgstr ""
+
+#. module: hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
+msgid ""
+"<span invisible=\"move_state != 'draft'\">Journal Entry <br/>(Draft)</span>\n"
+"                    <span invisible=\"move_state != 'posted'\">Journal Entry <br/>(Posted)</span>\n"
+"                    <span invisible=\"move_state != 'cancel'\">Journal Entry <br/>(Canceled)</span>"
 msgstr ""
 
 #. module: hr_payroll_account
@@ -47,7 +54,7 @@ msgid "Account Payslip Houserental"
 msgstr ""
 
 #. module: hr_payroll_account
-#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_contract_view_form
+#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_salary_rule_view_form
 msgid "Accounting"
 msgstr ""
@@ -64,9 +71,9 @@ msgid "Adjustment Entry"
 msgstr ""
 
 #. module: hr_payroll_account
-#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract__analytic_account_id
-#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract_history__analytic_account_id
+#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_employee__analytic_account_id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__analytic_account_id
+#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_version__analytic_account_id
 msgid "Analytic Account"
 msgstr ""
 
@@ -81,6 +88,11 @@ msgstr ""
 #: model:ir.model,name:hr_payroll_account.model_res_partner_bank
 #: model:ir.ui.menu,name:hr_payroll_account.menu_hr_employee_bank_account
 msgid "Bank Accounts"
+msgstr ""
+
+#. module: hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:hr_payroll_account.view_partner_bank_tree_inherit
+msgid "Bank Identifier Code"
 msgstr ""
 
 #. module: hr_payroll_account
@@ -103,11 +115,6 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
-
-#. module: hr_payroll_account
-#: model:ir.model,name:hr_payroll_account.model_hr_contract_history
-msgid "Contract history"
 msgstr ""
 
 #. module: hr_payroll_account
@@ -154,14 +161,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_move__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_payment__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_payment_register__display_name
-#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract__display_name
-#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract_history__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_payment_report_wizard__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_structure__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip_line__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip_run__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__display_name
+#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_version__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_res_company__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:hr_payroll_account.field_res_partner_bank__display_name
@@ -169,7 +175,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: hr_payroll_account
-#: model:ir.model,name:hr_payroll_account.model_hr_contract
+#: model:ir.model,name:hr_payroll_account.model_hr_version
 msgid "Employee Contract"
 msgstr ""
 
@@ -202,6 +208,11 @@ msgid ""
 msgstr ""
 
 #. module: hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
+msgid "Generated Journal Entries"
+msgstr ""
+
+#. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payroll_payment_report_wizard
 msgid "HR Payroll Payment Report Wizard"
 msgstr ""
@@ -218,14 +229,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_move__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_payment__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_payment_register__id
-#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract__id
-#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract_history__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_payment_report_wizard__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_structure__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip_line__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip_run__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__id
+#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_version__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_res_company__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_res_config_settings__id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_res_partner_bank__id
@@ -299,6 +309,11 @@ msgid "Pay"
 msgstr ""
 
 #. module: hr_payroll_account
+#: model:ir.model,name:hr_payroll_account.model_hr_payslip_run
+msgid "Pay Run"
+msgstr ""
+
+#. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip
 msgid "Pay Slip"
 msgstr ""
@@ -312,11 +327,6 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_payment
 msgid "Payments"
-msgstr ""
-
-#. module: hr_payroll_account
-#: model:ir.model,name:hr_payroll_account.model_hr_payslip_run
-msgid "Payslip Batches"
 msgstr ""
 
 #. module: hr_payroll_account

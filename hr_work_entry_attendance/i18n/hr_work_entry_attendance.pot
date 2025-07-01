@@ -1,13 +1,13 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_work_entry_contract_attendance
+# 	* hr_work_entry_attendance
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:10+0000\n"
+"PO-Revision-Date: 2025-07-01 12:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -15,8 +15,9 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model.fields,help:hr_work_entry_contract_attendance.field_hr_contract__work_entry_source
+#. module: hr_work_entry_attendance
+#: model:ir.model.fields,help:hr_work_entry_attendance.field_hr_employee__work_entry_source
+#: model:ir.model.fields,help:hr_work_entry_attendance.field_hr_version__work_entry_source
 msgid ""
 "\n"
 "        Defines the source for work entries generation\n"
@@ -27,65 +28,78 @@ msgid ""
 "    "
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model,name:hr_work_entry_contract_attendance.model_hr_attendance
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_work_entry__attendance_id
+#. module: hr_work_entry_attendance
+#: model:ir.model.fields,help:hr_work_entry_attendance.field_hr_employee__overtime_from_attendance
+#: model:ir.model.fields,help:hr_work_entry_attendance.field_hr_version__overtime_from_attendance
+msgid "Add extra hours from attendances to the working entries"
+msgstr ""
+
+#. module: hr_work_entry_attendance
+#: model:ir.model,name:hr_work_entry_attendance.model_hr_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_work_entry__attendance_id
 msgid "Attendance"
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model.fields.selection,name:hr_work_entry_contract_attendance.selection__hr_contract__work_entry_source__attendance
+#. module: hr_work_entry_attendance
+#: model:ir.model.fields.selection,name:hr_work_entry_attendance.selection__hr_version__work_entry_source__attendance
 msgid "Attendances"
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_attendance__display_name
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_contract__display_name
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_work_entry__display_name
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_work_entry_regeneration_wizard__display_name
+#. module: hr_work_entry_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_attendance__display_name
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_version__display_name
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_work_entry__display_name
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_work_entry_regeneration_wizard__display_name
 msgid "Display Name"
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model,name:hr_work_entry_contract_attendance.model_hr_contract
+#. module: hr_work_entry_attendance
+#: model:ir.model,name:hr_work_entry_attendance.model_hr_version
 msgid "Employee Contract"
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model,name:hr_work_entry_contract_attendance.model_hr_work_entry
+#. module: hr_work_entry_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_employee__overtime_from_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_version__overtime_from_attendance
+msgid "Extra hours"
+msgstr ""
+
+#. module: hr_work_entry_attendance
+#: model:ir.model,name:hr_work_entry_attendance.model_hr_work_entry
 msgid "HR Work Entry"
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_attendance__id
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_contract__id
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_work_entry__id
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_work_entry_regeneration_wizard__id
+#. module: hr_work_entry_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_attendance__id
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_version__id
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_work_entry__id
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_work_entry_regeneration_wizard__id
 msgid "ID"
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model,name:hr_work_entry_contract_attendance.model_hr_work_entry_regeneration_wizard
+#. module: hr_work_entry_attendance
+#: model:ir.model,name:hr_work_entry_attendance.model_hr_work_entry_regeneration_wizard
 msgid "Regenerate Employee Work Entries"
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
+#. module: hr_work_entry_attendance
 #. odoo-python
-#: code:addons/hr_work_entry_contract_attendance/models/hr_attendance.py:0
+#: code:addons/hr_work_entry_attendance/models/hr_attendance.py:0
 msgid ""
 "This attendance record is linked to a validated working entry. You can't "
 "delete it."
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
+#. module: hr_work_entry_attendance
 #. odoo-python
-#: code:addons/hr_work_entry_contract_attendance/models/hr_attendance.py:0
+#: code:addons/hr_work_entry_attendance/models/hr_attendance.py:0
 msgid ""
 "This attendance record is linked to a validated working entry. You can't "
 "modify it."
 msgstr ""
 
-#. module: hr_work_entry_contract_attendance
-#: model:ir.model.fields,field_description:hr_work_entry_contract_attendance.field_hr_contract__work_entry_source
+#. module: hr_work_entry_attendance
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_employee__work_entry_source
+#: model:ir.model.fields,field_description:hr_work_entry_attendance.field_hr_version__work_entry_source
 msgid "Work Entry Source"
 msgstr ""

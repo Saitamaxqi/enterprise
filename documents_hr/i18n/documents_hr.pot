@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-07-01 12:11+0000\n"
+"PO-Revision-Date: 2025-07-01 12:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,23 +21,8 @@ msgid "<i class=\"fa fa-download fa-fw\"/> Download file"
 msgstr ""
 
 #. module: documents_hr
-#: model:mail.template,body_html:documents_hr.mail_template_document_folder_link
-msgid ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin:0px auto;\"><tbody>\n"
-"        <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
-"            Dear <t t-esc=\"object.name\"/>, your personal documents access link is available for you.<br/><br/>\n"
-"            You'll find all your personal HR documents in this folder.<br/><br/>\n"
-"            Please keep this link secure.<br/><br/>\n"
-"            <div style=\"text-align: center; padding: 16px 0px 16px 0px; font-size: 14px;\">\n"
-"                <a t-attf-href=\"{{ object._get_documents_link_url() }}\" target=\"_blank\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
-"                    Your Documents\n"
-"                </a>\n"
-"            </div>\n"
-"            Have a nice day,<br/>\n"
-"            The HR Team\n"
-"        </td></tr>\n"
-"    </tbody></table>\n"
-"                "
+#: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+msgid "<span class=\"o_form_label\">Default tags</span>"
 msgstr ""
 
 #. module: documents_hr
@@ -66,18 +51,30 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model,name:documents_hr.model_hr_departure_wizard
-msgid "Departure Wizard"
+#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_contracts_tags
+msgid "Contracts"
 msgstr ""
 
 #. module: documents_hr
+#: model:documents.tag,name:documents_hr.documents_hr_tag_contracts
+msgid "Contracts (HR)"
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_documents_document__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_documents_redirect__display_name
-#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_documents_tag__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_hr_version__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_res_users__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model,name:documents_hr.model_documents_document
+msgid "Document"
 msgstr ""
 
 #. module: documents_hr
@@ -97,6 +94,11 @@ msgid "Documents"
 msgstr ""
 
 #. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_contracts_tags
+msgid "Documents Hr Contracts Tags"
+msgstr ""
+
+#. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_settings
 msgid "Documents Hr Settings"
 msgstr ""
@@ -113,11 +115,14 @@ msgid "Employee"
 msgstr ""
 
 #. module: documents_hr
+#: model:ir.model,name:documents_hr.model_hr_version
+msgid "Employee Contract"
+msgstr ""
+
+#. module: documents_hr
 #. odoo-python
-#: code:addons/documents_hr/models/hr_employee.py:0
-msgid ""
-"Employee's related user and private email must be set to use \"Send Access Link\" function:\n"
-"%s"
+#: code:addons/documents_hr/models/res_company.py:0
+msgid "Employees"
 msgstr ""
 
 #. module: documents_hr
@@ -126,8 +131,10 @@ msgid "Employees Documents"
 msgstr ""
 
 #. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_employee_folder_id
+#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_employee_folder_id
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
-msgid "Folder"
+msgid "Employees Folder"
 msgstr ""
 
 #. module: documents_hr
@@ -136,13 +143,13 @@ msgid "HR"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_folder
-msgid "HR Folder"
+#: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_folder_id
+msgid "HR Employee Folder"
 msgstr ""
 
 #. module: documents_hr
-#: model:mail.template,name:documents_hr.mail_template_document_folder_link
-msgid "HR: Document Access Link"
+#: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_folder
+msgid "HR Folder"
 msgstr ""
 
 #. module: documents_hr
@@ -151,13 +158,27 @@ msgid "Human Resources"
 msgstr ""
 
 #. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_documents_document__id
 #: model:ir.model.fields,field_description:documents_hr.field_documents_redirect__id
-#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__id
+#: model:ir.model.fields,field_description:documents_hr.field_documents_tag__id
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__id
+#: model:ir.model.fields,field_description:documents_hr.field_hr_version__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_users__id
 msgid "ID"
+msgstr ""
+
+#. module: documents_hr
+#. odoo-python
+#: code:addons/documents_hr/models/documents_document.py:0
+msgid "Impossible to delete employee subfolders"
+msgstr ""
+
+#. module: documents_hr
+#. odoo-javascript
+#: code:addons/documents_hr/static/src/components/settings_document_permission_widget.xml:0
+msgid "Manage Employee Access to employee folder"
 msgstr ""
 
 #. module: documents_hr
@@ -166,30 +187,13 @@ msgid "My documents"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__send_hr_documents_access_link
-msgid "Send Access Link"
+#: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+msgid "Root Folder"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__send_documents_enabled
-msgid "Send Docs"
-msgstr ""
-
-#. module: documents_hr
-#: model:ir.actions.server,name:documents_hr.ir_actions_server_send_access_link
-msgid "Send HR Documents Access Link"
-msgstr ""
-
-#. module: documents_hr
-#: model:ir.model.fields,help:documents_hr.field_hr_departure_wizard__send_hr_documents_access_link
-msgid ""
-"Send a share link to the private email of the employee with all the HR files"
-" he owns in Documents app"
-msgstr ""
-
-#. module: documents_hr
-#: model:mail.template,description:documents_hr.mail_template_document_folder_link
-msgid "Sent manually when recording an employee departure"
+#: model:documents.tag,name:documents_hr.document_tag_signature_request
+msgid "Signature Request"
 msgstr ""
 
 #. module: documents_hr
@@ -198,17 +202,8 @@ msgid "Size:"
 msgstr ""
 
 #. module: documents_hr
-#. odoo-python
-#: code:addons/documents_hr/models/hr_employee.py:0
-msgid "The access link has been sent to the employee."
-msgstr ""
-
-#. module: documents_hr
-#. odoo-python
-#: code:addons/documents_hr/wizard/hr_departure_wizard.py:0
-msgid ""
-"The following employees have no private email or user on record and will not be sent a link to their documents:\n"
-" %s"
+#: model:ir.model,name:documents_hr.model_documents_tag
+msgid "Tag"
 msgstr ""
 
 #. module: documents_hr
@@ -217,37 +212,30 @@ msgid "User"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_hr_departure_wizard__warning_message
-msgid "Warning Message"
-msgstr ""
-
-#. module: documents_hr
 #. odoo-python
-#: code:addons/documents_hr/models/hr_employee.py:0
-msgid "You can not send the documents link to the employee."
+#: code:addons/documents_hr/models/documents_tag.py:0
+msgid ""
+"You cannot delete this tag as it is used to link employee contracts and "
+"signatures."
 msgstr ""
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/hr_employee.py:0
 msgid ""
-"You must set a work contact address on the Employee in order to use "
+"You must configure the HR Employee folder in document settings to use "
 "Document's features."
-msgstr ""
-
-#. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_folder
-msgid "hr default workspace"
-msgstr ""
-
-#. module: documents_hr
-#: model:mail.template,subject:documents_hr.mail_template_document_folder_link
-msgid "{{ object.name }}, your personal documents access link is available"
 msgstr ""
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/hr_employee.py:0
-#, python-format
-msgid "You must set a Human Resources Documents Workspace in your Settings to use this feature."
+msgid ""
+"You must have a contact linked to the employee in order to use Document's "
+"features."
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_folder
+msgid "hr default workspace"
 msgstr ""

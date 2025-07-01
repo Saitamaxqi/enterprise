@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
-"PO-Revision-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-07-01 12:13+0000\n"
+"PO-Revision-Date: 2025-07-01 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -105,6 +105,12 @@ msgstr ""
 msgid ""
 "Tracks that are 'default favorited' can be blacklisted and the visitor is "
 "removed from push reminders."
+msgstr ""
+
+#. module: website_event_track_social
+#. odoo-python
+#: code:addons/website_event_track_social/models/website_visitor.py:0
+msgid "Unsupported 'Not In' operation on track push enabled tracks"
 msgstr ""
 
 #. module: website_event_track_social

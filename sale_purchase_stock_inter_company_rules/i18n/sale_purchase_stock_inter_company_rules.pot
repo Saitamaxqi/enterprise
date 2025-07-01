@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
-"PO-Revision-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"PO-Revision-Date: 2025-07-01 12:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -93,8 +93,12 @@ msgstr ""
 
 #. module: sale_purchase_stock_inter_company_rules
 #: model:ir.model.fields,field_description:sale_purchase_stock_inter_company_rules.field_res_company__intercompany_sync_delivery_receipt
-#: model:ir.model.fields,field_description:sale_purchase_stock_inter_company_rules.field_res_config_settings__intercompany_sync_delivery_receipt
 msgid "Synchronize Deliveries to your Receipts"
+msgstr ""
+
+#. module: sale_purchase_stock_inter_company_rules
+#: model:ir.model.fields,field_description:sale_purchase_stock_inter_company_rules.field_res_config_settings__intercompany_sync_delivery_receipt
+msgid "Synchronize Stock Moves"
 msgstr ""
 
 #. module: sale_purchase_stock_inter_company_rules

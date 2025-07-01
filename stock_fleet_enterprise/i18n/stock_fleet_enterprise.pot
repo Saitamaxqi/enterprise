@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
-"PO-Revision-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-07-01 12:13+0000\n"
+"PO-Revision-Date: 2025-07-01 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +16,21 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: stock_fleet_enterprise
+#: model_terms:ir.ui.view,arch_db:stock_fleet_enterprise.stock_picking_batch_view_kanban
+msgid ""
+"<span class=\"mx-2\">\n"
+"                                    <i class=\"fa fa-long-arrow-right mx-2\" title=\"Arrow\"/>\n"
+"                                </span>"
+msgstr ""
+
+#. module: stock_fleet_enterprise
 #: model:ir.model,name:stock_fleet_enterprise.model_stock_picking_batch
 msgid "Batch Transfer"
+msgstr ""
+
+#. module: stock_fleet_enterprise
+#: model_terms:ir.ui.view,arch_db:stock_fleet_enterprise.stock_picking_batch_view_form_plan_batch
+msgid "Detailed Operations"
 msgstr ""
 
 #. module: stock_fleet_enterprise
@@ -31,6 +44,11 @@ msgid "Display Name"
 msgstr ""
 
 #. module: stock_fleet_enterprise
+#: model_terms:ir.ui.view,arch_db:stock_fleet_enterprise.view_stock_picking_batch_gantt
+msgid "Edit"
+msgstr ""
+
+#. module: stock_fleet_enterprise
 #: model:ir.model.fields,field_description:stock_fleet_enterprise.field_stock_picking_batch__id
 msgid "ID"
 msgstr ""
@@ -38,7 +56,14 @@ msgstr ""
 #. module: stock_fleet_enterprise
 #: model:ir.actions.act_window,name:stock_fleet_enterprise.stock_picking_action_view_map
 #: model_terms:ir.ui.view,arch_db:stock_fleet_enterprise.stock_picking_batch_form
+#: model_terms:ir.ui.view,arch_db:stock_fleet_enterprise.stock_picking_batch_view_form_plan_batch
 msgid "Map"
+msgstr ""
+
+#. module: stock_fleet_enterprise
+#. odoo-python
+#: code:addons/stock_fleet_enterprise/models/stock_picking_batch.py:0
+msgid "Plan Batch"
 msgstr ""
 
 #. module: stock_fleet_enterprise

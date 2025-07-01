@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-07-03 12:23+0000\n"
+"PO-Revision-Date: 2025-07-03 12:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,33 +47,13 @@ msgid "Convert Project Tasks to Tickets"
 msgstr ""
 
 #. module: helpdesk_timesheet
-#: model:ir.model,name:helpdesk_timesheet.model_helpdesk_ticket_create_timesheet
-msgid "Create Timesheet from ticket"
-msgstr ""
-
-#. module: helpdesk_timesheet
 #: model:ir.model,website_form_label:helpdesk_timesheet.model_helpdesk_ticket
 msgid "Create a Ticket"
 msgstr ""
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__create_date
-msgid "Created on"
-msgstr ""
-
-#. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
 msgid "Days Spent"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_create_timesheet_view_form
-msgid "Delete"
 msgstr ""
 
 #. module: helpdesk_timesheet
@@ -83,22 +63,11 @@ msgid "Department"
 msgstr ""
 
 #. module: helpdesk_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_create_timesheet_view_form
-msgid "Describe your activity..."
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__description
-msgid "Description"
-msgstr ""
-
-#. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_account_analytic_line__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_sla_report_analysis__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_team__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_convert_wizard__display_name
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_report_analysis__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_task_convert_wizard__display_name
@@ -119,6 +88,7 @@ msgstr ""
 
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_helpdesk_team
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__team_id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__helpdesk_team
 msgid "Helpdesk Team"
 msgstr ""
@@ -142,7 +112,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_team__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_convert_wizard__id
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_report_analysis__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_task_convert_wizard__id
@@ -153,21 +122,6 @@ msgstr ""
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.timesheet_table
 msgid "Issue with new portal system"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__write_date
-msgid "Last Updated on"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_create_timesheet_view_form
-msgid "Log Time"
 msgstr ""
 
 #. module: helpdesk_timesheet
@@ -189,17 +143,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/helpdesk_timesheet/models/helpdesk_team.py:0
 msgid "New"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#. odoo-python
-#: code:addons/helpdesk_timesheet/models/project_project.py:0
-msgid "Operation not supported"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
-msgid "Pause"
 msgstr ""
 
 #. module: helpdesk_timesheet
@@ -229,23 +172,8 @@ msgid "Recorded"
 msgstr ""
 
 #. module: helpdesk_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
-msgid "Resume"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_create_timesheet_view_form
-msgid "Resume Timer"
-msgstr ""
-
-#. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_helpdesk_sla_report_analysis
 msgid "SLA Status Analysis"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_create_timesheet_view_form
-msgid "Save time"
 msgstr ""
 
 #. module: helpdesk_timesheet
@@ -271,23 +199,19 @@ msgstr ""
 #. module: helpdesk_timesheet
 #. odoo-javascript
 #: code:addons/helpdesk_timesheet/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.js:0
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__ticket_id
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.hr_timesheet_line_search_inherit_helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.hr_timesheet_line_tree_my_inherit_helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.report_timesheet_ticket
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.timesheet_table
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.timesheet_view_form_inherit
+#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.view_calendar_account_analytic_line
+#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.view_calendar_account_analytic_line_multi_create
 msgid "Ticket"
 msgstr ""
 
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_helpdesk_ticket_report_analysis
 msgid "Ticket Analysis"
-msgstr ""
-
-#. module: helpdesk_timesheet
-#: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__ticket_id
-msgid "Ticket for which we are creating a sales order"
 msgstr ""
 
 #. module: helpdesk_timesheet
@@ -304,13 +228,7 @@ msgid "Tickets"
 msgstr ""
 
 #. module: helpdesk_timesheet
-#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_create_timesheet__time_spent
-msgid "Time"
-msgstr ""
-
-#. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__total_hours_spent
-#: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_create_timesheet_view_form
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
 msgid "Time Spent"
 msgstr ""
@@ -331,6 +249,11 @@ msgstr ""
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
 msgid "Timesheet Activities"
+msgstr ""
+
+#. module: helpdesk_timesheet
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__timesheet_unit_amount
+msgid "Timesheet Unit Amount"
 msgstr ""
 
 #. module: helpdesk_timesheet

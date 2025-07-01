@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"PO-Revision-Date: 2025-07-01 12:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,6 @@ msgstr ""
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_production_schedule_form_view
 msgid "<span invisible=\"enable_batch_size\">No Batch Size</span>"
-msgstr ""
-
-#. module: mrp_mps
-#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_production_schedule_form_view
-msgid "<span invisible=\"enable_max_replenish\">No Maximum</span>"
 msgstr ""
 
 #. module: mrp_mps
@@ -298,11 +293,6 @@ msgid "Enable Batch Size"
 msgstr ""
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__enable_max_replenish
-msgid "Enable Max Replenish"
-msgstr ""
-
-#. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__excessive_replenishment
 msgid "Excessive Replenishment"
 msgstr ""
@@ -484,11 +474,6 @@ msgstr ""
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_report_menu
 #: model:ir.ui.menu,name:mrp_mps.stock_mrp_mps_report_menu
 msgid "Master Production Schedule"
-msgstr ""
-
-#. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__max_to_replenish_qty
-msgid "Maximum to Replenish"
 msgstr ""
 
 #. module: mrp_mps
@@ -865,15 +850,6 @@ msgid ""
 "The master schedule translates your sales and demand forecasts into a production and purchase planning for each component.\n"
 "                    It ensures everything gets scheduled on time, based on constraints such as: safety stock, production capacity, lead times.\n"
 "                    It's the perfect tool to support your S&OP meetings."
-msgstr ""
-
-#. module: mrp_mps
-#: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__max_to_replenish_qty
-msgid ""
-"The maximum replenishment you would like to launch for each period in the "
-"MPS. This is only applied for the period defined in the settings. Note that "
-"if the demand is higher than that amount, the remaining quantity will be "
-"transferred to the next period automatically."
 msgstr ""
 
 #. module: mrp_mps

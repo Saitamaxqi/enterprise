@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"PO-Revision-Date: 2025-07-01 12:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,44 +17,45 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/call_model.js:0
-msgid "%(minutes)s min %(seconds)s sec"
+#: code:addons/voip/static/src/softphone/keypad.js:0
+#: code:addons/voip/static/src/softphone/tab_entry.js:0
+msgid "%(country)s flag"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/call_model.js:0
-msgid "%(minutes)s minutes"
+msgid "%(hours)s:%(minutes)s:%(seconds)s"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/call_model.js:0
-msgid "%(seconds)s seconds"
+msgid "%(minutes)s:%(seconds)s"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/call_model.js:0
-msgid "1 minute"
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "%(status)s - %(timer)s"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/call_model.js:0
-msgid "1 second"
+#: code:addons/voip/static/src/softphone/keypad.js:0
+msgid "%s others…"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/call_model.js:0
-msgid "2 minutes"
+#: code:addons/voip/static/src/softphone/keypad.js:0
+msgid "1 other…"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/call_model.js:0
-msgid "2 seconds"
+#: code:addons/voip/static/src/softphone/keypad.js:0
+msgid "2 others…"
 msgstr ""
 
 #. module: voip
@@ -83,7 +84,23 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
+#: code:addons/voip/static/src/softphone/call_invitation.xml:0
+msgid "Accept the call"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Activities"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/address_book.xml:0
+#: code:addons/voip/static/src/softphone/call_invitation.xml:0
+#: code:addons/voip/static/src/softphone/call_summary.xml:0
+#: code:addons/voip/static/src/softphone/history.xml:0
+#: code:addons/voip/static/src/softphone/keypad.xml:0
 #: model:ir.model,name:voip.model_mail_activity
 msgid "Activity"
 msgstr ""
@@ -127,10 +144,10 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/activities_tab.js:0
+#: code:addons/voip/static/src/softphone/agenda.js:0
 msgid ""
-"Are you sure you want to delete this activity? It will be lost forever, "
-"which is quite a long time 😔"
+"Are you sure you want to delete this activity? It will be lost forever! (A "
+"long time!)"
 msgstr ""
 
 #. module: voip
@@ -141,7 +158,21 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/numpad.xml:0
+#: code:addons/voip/static/src/softphone/dnd_selector.js:0
+#: code:addons/voip/static/src/softphone/dnd_selector.xml:0
+msgid "Available"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/keypad.xml:0
+#: code:addons/voip/static/src/softphone/tab.xml:0
+msgid "Back"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "Backspace"
 msgstr ""
 
@@ -149,9 +180,37 @@ msgstr ""
 #. odoo-javascript
 #. odoo-python
 #: code:addons/voip/models/voip_queue_mixin.py:0
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-#: code:addons/voip/static/src/softphone/softphone.js:0
+#: code:addons/voip/static/src/softphone/address_book.xml:0
+#: code:addons/voip/static/src/softphone/agenda.xml:0
+#: code:addons/voip/static/src/softphone/call_summary.xml:0
+#: code:addons/voip/static/src/softphone/dialer.xml:0
+#: code:addons/voip/static/src/softphone/history.xml:0
+#: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "Call"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/call_summary.js:0
+msgid "Call Missed (%(time)s)"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/call_summary.js:0
+msgid "Call cancelled (%(time)s)"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/call_summary.js:0
+msgid "Call declined (%(time)s)"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.js:0
+msgid "Call ended (%(duration)s)"
 msgstr ""
 
 #. module: voip
@@ -169,6 +228,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__should_call_from_another_device
 msgid "Call from another device"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.js:0
+msgid "Call rejected"
 msgstr ""
 
 #. module: voip
@@ -196,8 +261,8 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
-msgid "Calling %(phone number)s"
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Calling…"
 msgstr ""
 
 #. module: voip
@@ -209,14 +274,14 @@ msgstr ""
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/devise_selection_dialog.xml:0
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
+#: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Cancel"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/activities_tab.xml:0
-msgid "Cancel the activity"
+#: code:addons/voip/static/src/softphone/history.js:0
+msgid "Cancelled call"
 msgstr ""
 
 #. module: voip
@@ -227,12 +292,6 @@ msgid ""
 "microphone, please allow it and try again. Otherwise, make sure that this "
 "website is running over HTTPS and that your browser is not set to deny "
 "access to media devices."
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-msgid "Change input device"
 msgstr ""
 
 #. module: voip
@@ -259,25 +318,24 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
-msgid "Close Numpad"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
 #: code:addons/voip/static/src/web/voip_systray_item.js:0
 msgid "Close Softphone"
 msgstr ""
 
 #. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-msgid "Close details"
+#: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
+msgid "Company"
 msgstr ""
 
 #. module: voip
-#: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
-msgid "Company"
+#: model:ir.model.fields,help:voip.field_mail_activity__country_code_from_phone
+#: model:ir.model.fields,help:voip.field_res_partner__country_code_from_phone
+#: model:ir.model.fields,help:voip.field_res_users__country_code_from_phone
+#: model:ir.model.fields,help:voip.field_voip_call__country_code_from_phone
+#: model:ir.model.fields,help:voip.field_voip_country_code_mixin__country_code_from_phone
+msgid ""
+"Computes the country ISO code (e.g. be for Belgium) from the phone number dialing code (e.g. +32), if any.\n"
+"Useful for displaying the flag associated with a phone number."
 msgstr ""
 
 #. module: voip
@@ -294,6 +352,14 @@ msgid "Connecting…"
 msgstr ""
 
 #. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/address_book.xml:0
+#: code:addons/voip/static/src/softphone/agenda.xml:0
+#: code:addons/voip/static/src/softphone/call_invitation.xml:0
+#: code:addons/voip/static/src/softphone/call_summary.xml:0
+#: code:addons/voip/static/src/softphone/history.xml:0
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
+#: code:addons/voip/static/src/softphone/keypad.xml:0
 #: model:ir.model,name:voip.model_res_partner
 #: model:ir.model.fields,field_description:voip.field_voip_call__partner_id
 msgid "Contact"
@@ -301,19 +367,31 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Contacts"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/contacts_tab.xml:0
+#: code:addons/voip/static/src/softphone/address_book.xml:0
 msgid "Contacts with a phone number will be shown here."
+msgstr ""
+
+#. module: voip
+#: model:ir.model,name:voip.model_voip_country_code_mixin
+msgid "Country Code Mixin"
 msgstr ""
 
 #. module: voip
 #: model:ir.model,website_form_label:voip.model_res_partner
 msgid "Create a Customer"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/address_book.xml:0
+msgid "Create a new contact"
 msgstr ""
 
 #. module: voip
@@ -336,8 +414,8 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-msgid "Customer"
+#: code:addons/voip/static/src/softphone/contact_info.js:0
+msgid "Default profile picture"
 msgstr ""
 
 #. module: voip
@@ -362,6 +440,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_res_users__display_name
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__display_name
 #: model:ir.model.fields,field_description:voip.field_voip_call__display_name
+#: model:ir.model.fields,field_description:voip.field_voip_country_code_mixin__display_name
 #: model:ir.model.fields,field_description:voip.field_voip_provider__display_name
 #: model:ir.model.fields,field_description:voip.field_voip_queue_mixin__display_name
 msgid "Display Name"
@@ -369,20 +448,68 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-msgid "Documents"
+#: code:addons/voip/static/src/softphone/dnd_selector.js:0
+#: code:addons/voip/static/src/softphone/dnd_selector.xml:0
+msgid "Do Not Disturb"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields,field_description:voip.field_res_users_settings__do_not_disturb_until_dt
+msgid "Do Not Disturb until"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
+#: code:addons/voip/static/src/softphone/dnd_selector.js:0
+msgid "Do Not Disturb until %(time)s"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/dnd_selector.js:0
+msgid "Do Not Disturb until I turn it back on"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.xml:0
+msgid "Done"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.js:0
+msgid "Due: %(date)s"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.js:0
+msgid "Due: Today"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.js:0
+msgid "Due: Tomorrow"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.js:0
+msgid "Due: Yesterday"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Edit"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
-msgid "End Call"
+#: code:addons/voip/static/src/softphone/history.xml:0
+msgid "Email"
 msgstr ""
 
 #. module: voip
@@ -392,14 +519,8 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/transfer_popover.xml:0
-msgid "Enter number or name"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/numpad.xml:0
-msgid "Enter the number…"
+#: code:addons/voip/static/src/softphone/history.js:0
+msgid "Ended unexpectedly"
 msgstr ""
 
 #. module: voip
@@ -429,20 +550,20 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.xml:0
-msgid "Hang up but keep call in queue"
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
+msgid "Hang up"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.js:0
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Hold"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/activities_tab.js:0
-msgid "Hold on!"
+#: code:addons/voip/static/src/softphone/agenda.js:0
+msgid "Hold your horses!"
 msgstr ""
 
 #. module: voip
@@ -461,6 +582,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_res_users__id
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__id
 #: model:ir.model.fields,field_description:voip.field_voip_call__id
+#: model:ir.model.fields,field_description:voip.field_voip_country_code_mixin__id
 #: model:ir.model.fields,field_description:voip.field_voip_provider__id
 #: model:ir.model.fields,field_description:voip.field_voip_queue_mixin__id
 msgid "ID"
@@ -480,6 +602,11 @@ msgid ""
 msgstr ""
 
 #. module: voip
+#: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
+msgid "If set, VoIP will be in Do Not Disturb mode until this time."
+msgstr ""
+
+#. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__external_device_number
 msgid ""
 "If the \"Call from another device\" option is enabled, calls placed in Odoo "
@@ -488,14 +615,9 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/web/voip_systray_item.xml:0
+#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.js:0
-msgid "In call for: %(minutes)s:%(seconds)s"
 msgstr ""
 
 #. module: voip
@@ -505,8 +627,14 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/call_invitation.xml:0
-msgid "Incoming call from…"
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Incoming call"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/dnd_selector.js:0
+msgid "Incoming calls will be muted"
 msgstr ""
 
 #. module: voip
@@ -520,6 +648,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_res_users__has_call_in_queue
 #: model:ir.model.fields,field_description:voip.field_voip_queue_mixin__has_call_in_queue
 msgid "Is in the Call Queue"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
+#: code:addons/voip/static/src/softphone/softphone.js:0
+msgid "Keypad"
 msgstr ""
 
 #. module: voip
@@ -540,25 +675,33 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/call_summary.js:0
+msgid "Lasted: %(duration)s"
+msgstr ""
+
+#. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:voip.res_user_form
+#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Manage Providers"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-msgid "Mark as done"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/activities_tab.js:0
-msgid "Missclicked, sorry."
+#: code:addons/voip/static/src/softphone/agenda.js:0
+msgid "Missclicked, sorry"
 msgstr ""
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__missed
 msgid "Missed"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.js:0
+msgid "Missed call"
 msgstr ""
 
 #. module: voip
@@ -569,25 +712,15 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/activity/activity_patch.xml:0
-msgid "Mobile:"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.js:0
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Mute"
 msgstr ""
 
 #. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/keypad.js:0
 #: model:ir.model.fields,field_description:voip.field_voip_provider__name
 msgid "Name"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
-msgid "Next Activities"
 msgstr ""
 
 #. module: voip
@@ -600,39 +733,64 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/activities_tab.xml:0
+#: code:addons/voip/static/src/softphone/agenda.xml:0
+msgid "No call activities found"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "No calls scheduled for today 😎"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/activities_tab.xml:0
-#: code:addons/voip/static/src/softphone/contacts_tab.xml:0
-#: code:addons/voip/static/src/softphone/recent_tab.xml:0
+#: code:addons/voip/static/src/softphone/address_book.xml:0
+msgid "No contacts found"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.xml:0
+msgid "No recent calls found"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/tab.xml:0
 msgid "No search results 💔"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-msgid "On Hold"
+#: code:addons/voip/static/src/softphone/tab.js:0
+msgid "Nothing to see here 😔"
 msgstr ""
 
 #. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
+msgid "On hold"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.js:0
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__ongoing
 msgid "Ongoing"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.js:0
-msgid "Open Numpad"
+#: code:addons/voip/static/src/web/voip_systray_item.js:0
+msgid "Open Softphone"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/web/voip_systray_item.js:0
-msgid "Open Softphone"
+#: code:addons/voip/static/src/softphone/agenda.xml:0
+msgid "Open related record"
 msgstr ""
 
 #. module: voip
@@ -663,8 +821,8 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/activity/activity_patch.xml:0
-msgid "Phone:"
+#: code:addons/voip/static/src/softphone/keypad.js:0
+msgid "Phone number"
 msgstr ""
 
 #. module: voip
@@ -694,6 +852,18 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
+#: code:addons/voip/static/src/softphone/tab_entry.xml:0
+msgid "Profile picture"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/contact_info.js:0
+msgid "Profile picture of %(user)s"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Recent"
 msgstr ""
@@ -707,6 +877,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__should_auto_reject_incoming_calls
 msgid "Reject incoming calls"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/call_invitation.xml:0
+msgid "Reject the call"
 msgstr ""
 
 #. module: voip
@@ -729,7 +905,7 @@ msgstr ""
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
-msgid "Remember?"
+msgid "Remember my choice"
 msgstr ""
 
 #. module: voip
@@ -745,13 +921,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.js:0
-msgid "Resume"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.js:0
+#: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Ringing…"
 msgstr ""
 
@@ -762,14 +932,30 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-msgid "Schedule Activity"
+#: code:addons/voip/static/src/softphone/address_book.xml:0
+#: code:addons/voip/static/src/softphone/call_invitation.xml:0
+#: code:addons/voip/static/src/softphone/call_summary.xml:0
+#: code:addons/voip/static/src/softphone/history.xml:0
+#: code:addons/voip/static/src/softphone/keypad.xml:0
+msgid "Schedule an activity"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.xml:0
-msgid "Search"
+#: code:addons/voip/static/src/softphone/tab.xml:0
+msgid "Search…"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/agenda.xml:0
+msgid "See all other activities"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.xml:0
+msgid "See your contact list"
 msgstr ""
 
 #. module: voip
@@ -780,7 +966,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
+#: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Send e-mail"
 msgstr ""
 
@@ -798,8 +984,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/voip/models/voip_queue_mixin.py:0
 msgid ""
-"Some documents cannot be added to the call queue as they do not have a phone"
-" number set: %(record_names)s"
+"Some leads can’t be added to the call queue since they do not have a phone number set. The fixer-uppers: %(record_names)s.\n"
+"Let’s add the missing numbers and start the dialing party!"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/error_screen.js:0
+msgid "Something went wrong 😵‍💫"
 msgstr ""
 
 #. module: voip
@@ -810,12 +1002,6 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__state
 msgid "State"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
-msgid "Tell us how to make the call:"
 msgstr ""
 
 #. module: voip
@@ -859,6 +1045,16 @@ msgstr ""
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the connection cannot be made. Please check your configuration.\n"
 "(Reason received: %(reasonPhrase)s)"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields,help:voip.field_res_partner__t9_name
+#: model:ir.model.fields,help:voip.field_res_users__t9_name
+msgid ""
+"The partner's name, encoded as the digits that correspond to the letters on an old cell phone keypad.\n"
+"Useful for searching for partners based on this field.\n"
+"Spaces are preserved, characters that can't be encoded are replaced with an 'x'.\n"
+"T9 stands for Text on 9 keys, it comes from the name of the original technology on old cell phones."
 msgstr ""
 
 #. module: voip
@@ -914,27 +1110,39 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.xml:0
-#: code:addons/voip/static/src/softphone/transfer_popover.xml:0
+#: code:addons/voip/static/src/softphone/history.js:0
+msgid "Today"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
+#: code:addons/voip/static/src/softphone/transfer_view.xml:0
 msgid "Transfer"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/transfer_popover.xml:0
-msgid "Transfer to"
+#: code:addons/voip/static/src/softphone/dnd_selector.js:0
+msgid "Until %(time)s"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/web/voip_systray_item.js:0
-msgid "Unfold Softphone"
+#: code:addons/voip/static/src/softphone/dnd_selector.js:0
+msgid "Until I turn it back on"
 msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/correspondence_details.js:0
-msgid "Unmute"
+#: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
+msgid "Use VoIP"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
+msgid "Use an external device"
 msgstr ""
 
 #. module: voip
@@ -948,20 +1156,29 @@ msgid "User Settings"
 msgstr ""
 
 #. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
-msgid "Using VoIP"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
-msgid "Using device's phone"
-msgstr ""
-
-#. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
 msgid "VOIP Queue support"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/call_invitation.xml:0
+msgid "View caller information"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/address_book.xml:0
+#: code:addons/voip/static/src/softphone/call_summary.xml:0
+#: code:addons/voip/static/src/softphone/keypad.xml:0
+msgid "View contact information"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.xml:0
+#: code:addons/voip/static/src/softphone/in_call_view.xml:0
+msgid "View customer details"
 msgstr ""
 
 #. module: voip
@@ -970,8 +1187,6 @@ msgid "Visible to all"
 msgstr ""
 
 #. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/softphone/softphone.xml:0
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1039,8 +1254,14 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/activities_tab.js:0
-msgid "Yes, do it."
+#: code:addons/voip/static/src/softphone/agenda.js:0
+msgid "Yes, I know what I'm doing"
+msgstr ""
+
+#. module: voip
+#. odoo-javascript
+#: code:addons/voip/static/src/softphone/history.js:0
+msgid "Yesterday"
 msgstr ""
 
 #. module: voip
@@ -1053,7 +1274,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/softphone/recent_tab.xml:0
+#: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Your call history is empty! Make a call now and have it listed here 💡"
 msgstr ""
 
@@ -1062,22 +1283,4 @@ msgstr ""
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid ""
 "Your login details are not set correctly. Please contact your administrator."
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/core/call_model.js:0
-msgid "less than a second"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
-msgid "phone"
-msgstr ""
-
-#. module: voip
-#. odoo-javascript
-#: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
-msgid "voip"
 msgstr ""

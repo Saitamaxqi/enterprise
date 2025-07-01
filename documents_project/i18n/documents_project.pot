@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-07-03 12:23+0000\n"
+"PO-Revision-Date: 2025-07-03 12:23+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -101,6 +101,7 @@ msgstr ""
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__display_name
+#: model:ir.model.fields,field_description:documents_project.field_documents_tag__display_name
 #: model:ir.model.fields,field_description:documents_project.field_project_project__display_name
 #: model:ir.model.fields,field_description:documents_project.field_res_company__display_name
 #: model:ir.model.fields,field_description:documents_project.field_res_config_settings__display_name
@@ -153,6 +154,7 @@ msgstr ""
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__id
+#: model:ir.model.fields,field_description:documents_project.field_documents_tag__id
 #: model:ir.model.fields,field_description:documents_project.field_project_project__id
 #: model:ir.model.fields,field_description:documents_project.field_res_company__id
 #: model:ir.model.fields,field_description:documents_project.field_res_config_settings__id
@@ -214,6 +216,11 @@ msgid "Remove tag \"Validated\""
 msgstr ""
 
 #. module: documents_project
+#: model:ir.model,name:documents_project.model_documents_tag
+msgid "Tag"
+msgstr ""
+
+#. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/project_project.py:0
 msgid ""
@@ -233,8 +240,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
 msgid ""
-"The \"%s\" folder is required by the Project application and cannot be "
-"deleted."
+"This action can't be performed, as it would remove the folders used by the following projects:\n"
+"%(projects)s\n"
+"To continue, choose different folders or turn off the Documents feature for these projects."
 msgstr ""
 
 #. module: documents_project
@@ -254,6 +262,12 @@ msgid ""
 "%s\n"
 "\n"
 "Please update the company of those projects, or leave the company of this folder empty."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "Uh-oh! The project app needs the \"%s\" folder, so you can’t delete it."
 msgstr ""
 
 #. module: documents_project

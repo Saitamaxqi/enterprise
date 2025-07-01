@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-07-01 12:11+0000\n"
+"PO-Revision-Date: 2025-07-01 12:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -58,11 +58,4 @@ msgstr ""
 #. module: event_enterprise
 #: model_terms:ir.ui.view,arch_db:event_enterprise.event_event_view_map
 msgid "Venue"
-msgstr ""
-
-#. module: event_enterprise
-#: model:ir.model.fields,help:event_enterprise.field_event_registration__event_begin_date
-msgid ""
-"When the event is scheduled to take place (expressed in your local timezone "
-"on the form view)."
 msgstr ""

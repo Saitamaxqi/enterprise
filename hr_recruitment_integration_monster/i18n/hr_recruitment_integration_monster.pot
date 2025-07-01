@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-07-01 12:11+0000\n"
+"PO-Revision-Date: 2025-07-01 12:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -244,12 +244,6 @@ msgid "ID"
 msgstr ""
 
 #. module: hr_recruitment_integration_monster
-#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_company__hr_recruitment_monster_username
-#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_config_settings__hr_recruitment_monster_username
-msgid "Monster Identifier"
-msgstr ""
-
-#. module: hr_recruitment_integration_monster
 #: model:ir.model,name:hr_recruitment_integration_monster.model_res_partner_industry
 msgid "Industry"
 msgstr ""
@@ -322,6 +316,18 @@ msgid "Monster ID of the contract type."
 msgstr ""
 
 #. module: hr_recruitment_integration_monster
+#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_company__hr_recruitment_monster_username
+#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_config_settings__hr_recruitment_monster_username
+msgid "Monster Identifier"
+msgstr ""
+
+#. module: hr_recruitment_integration_monster
+#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_company__hr_recruitment_monster_password
+#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_config_settings__hr_recruitment_monster_password
+msgid "Monster Password"
+msgstr ""
+
+#. module: hr_recruitment_integration_monster
 #. odoo-python
 #: code:addons/hr_recruitment_integration_monster/models/hr_recruitment_platform.py:0
 msgid ""
@@ -350,10 +356,8 @@ msgid "Other/Not Classified"
 msgstr ""
 
 #. module: hr_recruitment_integration_monster
-#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_company__hr_recruitment_monster_password
-#: model:ir.model.fields,field_description:hr_recruitment_integration_monster.field_res_config_settings__hr_recruitment_monster_password
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_monster.res_config_settings_view_form
-msgid "Monster Password"
+msgid "Password"
 msgstr ""
 
 #. module: hr_recruitment_integration_monster

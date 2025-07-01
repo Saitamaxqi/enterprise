@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
-"PO-Revision-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"PO-Revision-Date: 2025-07-01 12:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,12 +38,16 @@ msgstr ""
 #. module: project_account_budget
 #. odoo-javascript
 #: code:addons/project_account_budget/static/src/components/project_right_side_panel/project_right_side_panel.xml:0
-msgid "Add Budget"
+msgid "Actual"
 msgstr ""
 
 #. module: project_account_budget
 #. odoo-javascript
 #: code:addons/project_account_budget/static/src/components/project_right_side_panel/project_right_side_panel.xml:0
+msgid "Add Budget"
+msgstr ""
+
+#. module: project_account_budget
 #: model_terms:ir.ui.view,arch_db:project_account_budget.project_update_default_description
 msgid "Allocated"
 msgstr ""
@@ -69,9 +73,22 @@ msgstr ""
 
 #. module: project_account_budget
 #: model_terms:ir.ui.view,arch_db:project_account_budget.project_project_kanban_view_inherited
-msgid ""
-"Budget {{ budget_progress >= 0.25 ? 'on track' : budget_progress >= 0 ? "
-"'soon overspent' : 'overspent' }}"
+msgid "Budget allocated"
+msgstr ""
+
+#. module: project_account_budget
+#: model_terms:ir.ui.view,arch_db:project_account_budget.project_project_kanban_view_inherited
+msgid "Budget on track"
+msgstr ""
+
+#. module: project_account_budget
+#: model_terms:ir.ui.view,arch_db:project_account_budget.project_project_kanban_view_inherited
+msgid "Budget overspent"
+msgstr ""
+
+#. module: project_account_budget
+#: model_terms:ir.ui.view,arch_db:project_account_budget.project_project_kanban_view_inherited
+msgid "Budget soon overspent"
 msgstr ""
 
 #. module: project_account_budget
@@ -87,11 +104,23 @@ msgid "Compare expected and actual revenues and costs."
 msgstr ""
 
 #. module: project_account_budget
+#. odoo-javascript
+#: code:addons/project_account_budget/static/src/components/project_right_side_panel/project_right_side_panel.xml:0
+msgid "Difference"
+msgstr ""
+
+#. module: project_account_budget
 #: model:ir.model.fields,field_description:project_account_budget.field_budget_analytic__display_name
 #: model:ir.model.fields,field_description:project_account_budget.field_budget_line__display_name
 #: model:ir.model.fields,field_description:project_account_budget.field_project_project__display_name
 #: model:ir.model.fields,field_description:project_account_budget.field_project_update__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: project_account_budget
+#. odoo-javascript
+#: code:addons/project_account_budget/static/src/components/project_right_side_panel/project_right_side_panel.xml:0
+msgid "Forecast"
 msgstr ""
 
 #. module: project_account_budget
@@ -130,15 +159,11 @@ msgid "Project Update"
 msgstr ""
 
 #. module: project_account_budget
-#. odoo-javascript
-#: code:addons/project_account_budget/static/src/components/project_right_side_panel/project_right_side_panel.xml:0
 #: model_terms:ir.ui.view,arch_db:project_account_budget.project_update_default_description
 msgid "Remaining"
 msgstr ""
 
 #. module: project_account_budget
-#. odoo-javascript
-#: code:addons/project_account_budget/static/src/components/project_right_side_panel/project_right_side_panel.xml:0
 #: model_terms:ir.ui.view,arch_db:project_account_budget.project_update_default_description
 msgid "Spent"
 msgstr ""

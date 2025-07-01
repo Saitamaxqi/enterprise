@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
-"PO-Revision-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"PO-Revision-Date: 2025-07-01 12:12+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -29,43 +29,8 @@ msgid ""
 msgstr ""
 
 #. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_kanban_inherited
-#: model_terms:ir.ui.view,arch_db:project_enterprise.view_task_kanban_inherited
-msgid ""
-"<i class=\"fa fa-long-arrow-right mx-2 oe_read_only\" aria-label=\"Arrow "
-"icon\" title=\"Arrow\" invisible=\"not planned_date_begin\"/>"
-msgstr ""
-
-#. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
-msgid "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
-msgstr ""
-
-#. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
-msgstr ""
-
-#. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
-msgid "<span class=\"fst-italic text-muted\"><i class=\"fa fa-lock\"/> Private</span>"
-msgstr ""
-
-#. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
-msgid "<strong>Allocated Time — </strong>"
-msgstr ""
-
-#. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
-msgid "<strong>Assignees — </strong>"
-msgstr ""
-
-#. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
-msgid "<strong>Customer — </strong>"
 msgstr ""
 
 #. module: project_enterprise
@@ -74,23 +39,8 @@ msgid "<strong>Deadline:</strong>"
 msgstr ""
 
 #. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
-msgid "<strong>Milestone — </strong>"
-msgstr ""
-
-#. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Planned Date:</strong>"
-msgstr ""
-
-#. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
-msgid "<strong>Project Manager — </strong>"
-msgstr ""
-
-#. module: project_enterprise
-#: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
-msgid "<strong>Project — </strong>"
 msgstr ""
 
 #. module: project_enterprise
@@ -122,12 +72,6 @@ msgid "Create a Task"
 msgstr ""
 
 #. module: project_enterprise
-#. odoo-javascript
-#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer_controls.xml:0
-msgid "Critical Path"
-msgstr ""
-
-#. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__partner_id
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
@@ -154,18 +98,18 @@ msgid "Display Name"
 msgstr ""
 
 #. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
+msgid "Failed to undo reschedule"
+msgstr ""
+
+#. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_project__id
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__id
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task_recurrence__id
 #: model:ir.model.fields,field_description:project_enterprise.field_report_project_task_user__id
 #: model:ir.model.fields,field_description:project_enterprise.field_res_users__id
 msgid "ID"
-msgstr ""
-
-#. module: project_enterprise
-#. odoo-javascript
-#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer_controls.xml:0
-msgid "Longest path between tasks matching the current filter"
 msgstr ""
 
 #. module: project_enterprise
@@ -180,22 +124,6 @@ msgstr ""
 msgid ""
 "One parameter is missing to use this method. You should give a start and end"
 " dates."
-msgstr ""
-
-#. module: project_enterprise
-#. odoo-python
-#: code:addons/project_enterprise/models/project_task.py:0
-msgid ""
-"Operation not supported, you should always compare dependency_warning to "
-"True or False."
-msgstr ""
-
-#. module: project_enterprise
-#. odoo-python
-#: code:addons/project_enterprise/models/project_task.py:0
-msgid ""
-"Operation not supported, you should always compare planning_overlap to True "
-"or False."
 msgstr ""
 
 #. module: project_enterprise
@@ -278,6 +206,36 @@ msgstr ""
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task_recurrence
 msgid "Task Recurrence"
+msgstr ""
+
+#. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
+msgid "Task could not be removed"
+msgstr ""
+
+#. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
+msgid "Task duplicated"
+msgstr ""
+
+#. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
+msgid "Task removed"
+msgstr ""
+
+#. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
+msgid "Task reschedule undone"
+msgstr ""
+
+#. module: project_enterprise
+#. odoo-javascript
+#: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
+msgid "Task rescheduled"
 msgstr ""
 
 #. module: project_enterprise
@@ -365,6 +323,11 @@ msgstr ""
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_res_users
 msgid "User"
+msgstr ""
+
+#. module: project_enterprise
+#: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
+msgid "View Tasks"
 msgstr ""
 
 #. module: project_enterprise

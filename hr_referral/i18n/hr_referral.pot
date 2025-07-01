@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"PO-Revision-Date: 2025-07-01 12:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -190,6 +190,11 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: hr_referral
+#: model:res.groups,name:hr_referral.group_hr_referral_manager
+msgid "Administrator"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__name
 msgid "Alert"
 msgstr ""
@@ -218,6 +223,11 @@ msgid "All"
 msgstr ""
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
+msgid "All Employees"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__points
 msgid ""
 "Amount of points that the referent will receive when the applicant will "
@@ -228,6 +238,8 @@ msgstr ""
 #: model:ir.model,name:hr_referral.model_hr_applicant
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_points__applicant_id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__applicant_id
+#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_filter
+#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_tree
 msgid "Applicant"
 msgstr ""
 
@@ -375,7 +387,13 @@ msgid "Configuration"
 msgstr ""
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_onboarding_tree
+msgid "Confirm"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_campaign_wizard__target
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
 msgid "Contacted Employees"
 msgstr ""
 
@@ -501,6 +519,11 @@ msgid "Direct Referral"
 msgstr ""
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_onboarding_tree
+msgid "Discard"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__dismissed_user_ids
 msgid "Dismissed User"
 msgstr ""
@@ -552,7 +575,6 @@ msgstr ""
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_send_mail__email_to
-#: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_campaign_wizard__sending_method__work_email
 msgid "Email"
 msgstr ""
 
@@ -655,11 +677,6 @@ msgstr ""
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
-
-#. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_onboarding_tree
-msgid "Force Onboarding"
 msgstr ""
 
 #. module: hr_referral
@@ -860,6 +877,11 @@ msgid "Is Follower"
 msgstr ""
 
 #. module: hr_referral
+#: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__is_gift_manager
+msgid "Is Gift Manager"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_link_to_share__job_id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__job_id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_send_mail__job_id
@@ -1001,11 +1023,6 @@ msgstr ""
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__linkedin_clicks
 msgid "Linkedin Clicks"
-msgstr ""
-
-#. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "Mail"
 msgstr ""
 
 #. module: hr_referral
@@ -1242,8 +1259,8 @@ msgid "Product Name"
 msgstr ""
 
 #. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "Publish & Send"
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_job_form_inherit_hr_referral
+msgid "Promote"
 msgstr ""
 
 #. module: hr_referral
@@ -1279,11 +1296,6 @@ msgid "Referer"
 msgstr ""
 
 #. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_filter
-msgid "Referral"
-msgstr ""
-
-#. module: hr_referral
 #. odoo-python
 #: code:addons/hr_referral/models/hr_job.py:0
 msgid "Referral %(user)s: %(job_url)s"
@@ -1306,7 +1318,6 @@ msgid "Referral Background"
 msgstr ""
 
 #. module: hr_referral
-#: model:ir.actions.server,name:hr_referral.action_hr_job_launch_referral_campaign
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_kanban_inherit_referral
 msgid "Referral Campaign"
 msgstr ""
@@ -1392,6 +1403,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 #: model:ir.ui.menu,name:hr_referral.menu_hr_referral_root
+#: model:res.groups.privilege,name:hr_referral.res_groups_privilege_recruitment
 #: model_terms:ir.ui.view,arch_db:hr_referral.res_config_settings_view__form
 msgid "Referrals"
 msgstr ""
@@ -1429,6 +1441,7 @@ msgstr ""
 #. module: hr_referral
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
+#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_onboarding_tree
 msgid "Restart Onboarding"
 msgstr ""
 
@@ -1479,17 +1492,6 @@ msgid "Rewards"
 msgstr ""
 
 #. module: hr_referral
-#: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_campaign_wizard__sending_method__work_phone
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "SMS"
-msgstr ""
-
-#. module: hr_referral
-#: model:ir.model.fields,field_description:hr_referral.field_hr_referral_campaign_wizard__sms_body
-msgid "SMS Content"
-msgstr ""
-
-#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
@@ -1510,8 +1512,8 @@ msgid "See Job Offer"
 msgstr ""
 
 #. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "Select employees"
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_applicant_view_form_inherit_referral
+msgid "Select the user that send us the applicant"
 msgstr ""
 
 #. module: hr_referral
@@ -1555,11 +1557,6 @@ msgstr ""
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_sms_view_form
 msgid "Send SMS"
-msgstr ""
-
-#. module: hr_referral
-#: model:ir.model.fields,field_description:hr_referral.field_hr_referral_campaign_wizard__sending_method
-msgid "Sending Method"
 msgstr ""
 
 #. module: hr_referral
@@ -1621,6 +1618,7 @@ msgid "Sorry, your referral %s has been refused in the recruitment process."
 msgstr ""
 
 #. module: hr_referral
+#: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__source_id
 #: model:ir.model.fields,field_description:hr_referral.field_res_users__utm_source_id
 msgid "Source"
 msgstr ""
@@ -1701,10 +1699,10 @@ msgid ""
 msgstr ""
 
 #. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
+#: model:ir.model.fields,help:hr_referral.field_hr_applicant__source_id
 msgid ""
-"This job position is not published. \n"
-"                    The referral campaign will automatically publish it."
+"This is the source of the link, e.g. Search Engine, another domain, or name "
+"of email list"
 msgstr ""
 
 #. module: hr_referral
@@ -1735,8 +1733,13 @@ msgstr ""
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_onboarding_tree
 msgid ""
-"This will make the onboarding visible to all employees who have already seen"
-" it. Do you want to continue?"
+"This will make the onboarding process visible to all users who have "
+"previously completed it. Do you want to proceed?"
+msgstr ""
+
+#. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
+msgid "To"
 msgstr ""
 
 #. module: hr_referral
@@ -1774,15 +1777,6 @@ msgstr ""
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward_report__cost
 msgid "Unit Cost"
-msgstr ""
-
-#. module: hr_referral
-#. odoo-python
-#: code:addons/hr_referral/models/hr_applicant.py:0
-msgid ""
-"Unsupported search on field is_accessible_to_current_user: %(operator)s "
-"operator & %(value)s value. Only = and != operator and boolean values are "
-"supported."
 msgstr ""
 
 #. module: hr_referral

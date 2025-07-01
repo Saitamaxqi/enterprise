@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
-"PO-Revision-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-07-01 12:13+0000\n"
+"PO-Revision-Date: 2025-07-01 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,19 +41,19 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/kanban/kanban_header_patch.js:0
+#: code:addons/web_enterprise/static/src/views/view_components/group_config_menu_patch.js:0
 msgid "Automations"
 msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Build new apps from scratch"
 msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Build new reports"
 msgstr ""
 
@@ -73,19 +73,19 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Create automation rules"
 msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Customize Reports"
 msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Customize any screen"
 msgstr ""
 
@@ -103,13 +103,13 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Define webhooks"
 msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Discard"
 msgstr ""
 
@@ -167,13 +167,13 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Install Odoo Studio and its dependencies"
 msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Learn More"
 msgstr ""
 
@@ -203,13 +203,20 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_systray_item.xml:0
+msgid "Odoo Studio"
+msgstr ""
+
+#. module: web_enterprise
+#. odoo-javascript
 #: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.js:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_systray_item.js:0
 msgid "Odoo Studio - Add new fields to any view"
 msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/kanban/kanban_header_patch.js:0
+#: code:addons/web_enterprise/static/src/views/view_components/group_config_menu_patch.js:0
 msgid "Odoo Studio - Customize workflows in minutes"
 msgstr ""
 
@@ -289,7 +296,7 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Start using Odoo Studio"
 msgstr ""
 
@@ -354,7 +361,7 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Unleash the power of Odoo Studio:"
 msgstr ""
 
@@ -371,7 +378,7 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Want to tailor-make your Odoo?"
 msgstr ""
 
@@ -410,7 +417,7 @@ msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
+#: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "and more!"
 msgstr ""
 

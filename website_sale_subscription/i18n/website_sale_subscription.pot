@@ -4,16 +4,26 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
-"PO-Revision-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-07-01 12:13+0000\n"
+"PO-Revision-Date: 2025-07-01 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: website_sale_subscription
+#: model_terms:ir.ui.view,arch_db:website_sale_subscription.subscription_one_time_sale
+msgid "<span class=\"me-2 fw-bold\">Deliver every:</span>"
+msgstr ""
+
+#. module: website_sale_subscription
+#: model_terms:ir.ui.view,arch_db:website_sale_subscription.subscription_one_time_sale
+msgid "<span>With Regular Delivery</span>"
+msgstr ""
 
 #. module: website_sale_subscription
 #: model:ir.model.fields,field_description:website_sale_subscription.field_product_product__display_name
@@ -29,6 +39,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_sale_subscription.field_sale_order__id
 #: model:ir.model.fields,field_description:website_sale_subscription.field_sale_order_line__id
 msgid "ID"
+msgstr ""
+
+#. module: website_sale_subscription
+#. odoo-python
+#: code:addons/website_sale_subscription/models/sale_order.py:0
+msgid "No suitable subscription pricing found for this product."
+msgstr ""
+
+#. module: website_sale_subscription
+#: model_terms:ir.ui.view,arch_db:website_sale_subscription.subscription_one_time_sale
+msgid "One Time Purchase"
+msgstr ""
+
+#. module: website_sale_subscription
+#. odoo-javascript
+#: code:addons/website_sale_subscription/static/src/xml/pricing_view.xml:0
+msgid "One-Time"
 msgstr ""
 
 #. module: website_sale_subscription

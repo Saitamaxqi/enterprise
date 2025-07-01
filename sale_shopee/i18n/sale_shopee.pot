@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"PO-Revision-Date: 2025-07-01 12:09+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -376,6 +376,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_account__display_name
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__display_name
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__display_name
+#: model:ir.model.fields,field_description:sale_shopee.field_stock_move__display_name
 #: model:ir.model.fields,field_description:sale_shopee.field_stock_picking__display_name
 msgid "Display Name"
 msgstr ""
@@ -471,6 +472,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_account__id
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__id
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__id
+#: model:ir.model.fields,field_description:sale_shopee.field_stock_move__id
 #: model:ir.model.fields,field_description:sale_shopee.field_stock_picking__id
 msgid "ID"
 msgstr ""
@@ -939,8 +941,8 @@ msgstr ""
 
 #. module: sale_shopee
 #. odoo-python
-#: code:addons/sale_shopee/models/shopee_shop.py:0
-msgid "Shopee move: %(name)s"
+#: code:addons/sale_shopee/models/stock_move.py:0
+msgid "Shopee move: %s"
 msgstr ""
 
 #. module: sale_shopee
@@ -989,6 +991,11 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__status
 msgid "Status"
+msgstr ""
+
+#. module: sale_shopee
+#: model:ir.model,name:sale_shopee.model_stock_move
+msgid "Stock Move"
 msgstr ""
 
 #. module: sale_shopee

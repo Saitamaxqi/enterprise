@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-07-01 12:11+0000\n"
+"PO-Revision-Date: 2025-07-01 12:11+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,13 +19,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid "%(job)s on %(platform)s"
-msgstr ""
-
-#. module: hr_recruitment_integration_base
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
-msgid ""
-"<span class=\"o_stat_value\">New</span>\n"
-"                            <span class=\"o_stat_text\">Job Board</span>"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -89,8 +82,18 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model,name:hr_recruitment_integration_base.model_hr_applicant
+msgid "Applicant"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__apply_method
 msgid "Apply Method"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model,website_form_label:hr_recruitment_integration_base.model_hr_applicant
+msgid "Apply for a Job"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -250,6 +253,16 @@ msgid "Data"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__date_from
+msgid "Date From"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__date_to
+msgid "Date To"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__daily
 msgid "Day"
 msgstr ""
@@ -274,6 +287,7 @@ msgid "Description"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_applicant__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__display_name
@@ -295,6 +309,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__job_apply_mail
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__apply_method__email
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 msgid "Email"
 msgstr ""
 
@@ -302,6 +317,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/wizard/hr_recruitment_post.py:0
 msgid "Email is required if the apply method is 'Send an email'.\n"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
+msgid "End Date"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -356,6 +376,7 @@ msgid "Hour"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_applicant__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__id
@@ -412,6 +433,12 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_is_follower
 msgid "Is Follower"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job__date_from
+msgid ""
+"Is set, update applicants availability once hired for that specific mission."
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -516,6 +543,11 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__salary_min
 msgid "Minimum Salary"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
+msgid "Mission Dates"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -627,6 +659,11 @@ msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
+msgid "Post on Job Boards"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
 msgid "Posts"
 msgstr ""
 
@@ -719,6 +756,7 @@ msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
 msgid "Start Date"
 msgstr ""
 
