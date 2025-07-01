@@ -20,7 +20,6 @@ class HrEmployee(models.Model):
     end_notice_period = fields.Date("End notice period", groups="hr.group_hr_user", copy=False, tracking=True)
     first_contract_in_company = fields.Date("First contract in company", groups="hr.group_hr_user", copy=False)
 
-    certificate = fields.Selection(selection_add=[('civil_engineer', 'Master: Civil Engineering')])
     l10n_be_scale_seniority = fields.Integer(string="Seniority at Hiring", groups="hr.group_hr_user", tracking=True)
 
     # The attestation for the year of the first contract date
@@ -63,6 +62,24 @@ class HrEmployee(models.Model):
     double_pay_line_ids = fields.One2many(
         'l10n.be.double.pay.recovery.line', 'employee_id',
         string='Previous Occupations', groups="hr_payroll.group_hr_payroll_user")
+
+    def _get_certificate_selection(self):
+        if self.env.company.country_id.code != "BE":
+            return super()._get_certificate_selection()
+        certificate_selection = [
+            ('primary', self.env._('Primary School')),
+            ('lower_secondary', self.env._('Lower Secondary')),
+            ('higher_secondary', self.env._('Higher Secondary'))
+        ]
+        civil_engineer_added = False
+        for selection in super()._get_certificate_selection():
+            certificate_selection += [selection]
+            if selection[0] == 'master':
+                certificate_selection += [('civil_engineer', self.env._('Master: Civil Engineering'))]
+                civil_engineer_added = True
+        if not civil_engineer_added:
+            certificate_selection += [('civil_engineer', self.env._('Master: Civil Engineering'))]
+        return certificate_selection
 
     @api.depends('version_ids.date_version', 'version_ids.contract_date_start', 'version_ids.contract_date_end')
     def _compute_first_contract_year(self):

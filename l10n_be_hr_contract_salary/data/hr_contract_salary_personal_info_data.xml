@@ -109,6 +109,12 @@
         <field name="personal_info_id" ref="hr_contract_salary_personal_info_marital"/>
         <field name="hide_children" eval="True"/>
     </record>
+    <record id="hr_contract_salary_personal_info_marital_separation" model="hr.contract.salary.personal.info.value">
+        <field name="name">Judicially Separated</field>
+        <field name="value">separated</field>
+        <field name="personal_info_id" ref="hr_contract_salary_personal_info_marital"/>
+        <field name="hide_children" eval="True"/>
+    </record>
 
     <record id="hr_contract_salary_personal_info_disabled_spouse_bool" model="hr.contract.salary.personal.info">
         <field name="name">Disabled Spouse</field>

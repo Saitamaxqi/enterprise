@@ -17,21 +17,7 @@ class HrEmployee(models.Model):
         help="Thirteen-digit AS number assigned by the Central Compensation Office (CdC)", tracking=True)
 
     l10n_ch_children = fields.One2many('l10n.ch.hr.employee.children', 'employee_id', groups="hr_payroll.group_hr_payroll_user")
-    certificate = fields.Selection(selection_add=[
-        ('universityBachelor', 'Swiss: University College Bachelor (university, ETH)'),
-        ('universityMaster', 'Swiss: University College Master (university, ETH)'),
-        ('higherEducationMaster', 'Swiss: University of Applied Sciences Master'),
-        ('higherEducationBachelor', 'Swiss: University of Applied Sciences Bachelor'),
-        ('higherVocEducation', 'Swiss: Higher Vocational Education'),
-        ('higherVocEducationMaster', 'Swiss: Higher Vocational Education Master'),
-        ('higherVocEducationBachelor', 'Swiss: Higher Vocational Education Bachelor'),
-        ('teacherCertificate', 'Swiss: Teaching certificate at different levels'),
-        ('universityEntranceCertificate', 'Swiss: Matura'),
-        ('vocEducationCompl', 'Swiss: Complete learning attested by a federal certificate of capacity (CFC)'),
-        ('enterpriseEducation', 'Swiss: In-company training only'),
-        ('mandatorySchoolOnly', 'Swiss: Compulsory schooling, without full vocational training'),
-        ('doctorate', 'Swiss: Doctorate, habilitation'),
-    ], ondelete={
+    certificate = fields.Selection(ondelete={
         'universityBachelor': 'set default',
         'universityMaster': 'set default',
         'higherEducationMaster': 'set default',
@@ -69,6 +55,25 @@ class HrEmployee(models.Model):
         vals = super().write(vals)
         self._create_or_update_snapshot()
         return vals
+
+    def _get_certificate_selection(self):
+        if self.env.company.country_id.code != "CH":
+            return super()._get_certificate_selection()
+        return super()._get_certificate_selection() + [
+            ('universityBachelor', self.env._('Swiss: University College Bachelor (university, ETH)')),
+            ('universityMaster', self.env._('Swiss: University College Master (university, ETH)')),
+            ('higherEducationMaster', self.env._('Swiss: University of Applied Sciences Master')),
+            ('higherEducationBachelor', self.env._('Swiss: University of Applied Sciences Bachelor')),
+            ('higherVocEducation', self.env._('Swiss: Higher Vocational Education')),
+            ('higherVocEducationMaster', self.env._('Swiss: Higher Vocational Education Master')),
+            ('higherVocEducationBachelor', self.env._('Swiss: Higher Vocational Education Bachelor')),
+            ('teacherCertificate', self.env._('Swiss: Teaching certificate at different levels')),
+            ('universityEntranceCertificate', self.env._('Swiss: Matura')),
+            ('vocEducationCompl', self.env._('Swiss: Complete learning attested by a federal certificate of capacity (CFC)')),
+            ('enterpriseEducation', self.env._('Swiss: In-company training only')),
+            ('mandatorySchoolOnly', self.env._('Swiss: Compulsory schooling, without full vocational training')),
+            ('doctorate', self.env._('Swiss: Doctorate, habilitation')),
+        ]
 
     @api.depends("name")
     def _compute_l10n_ch_legal_name(self):

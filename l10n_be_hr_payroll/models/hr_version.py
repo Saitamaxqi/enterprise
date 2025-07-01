@@ -242,6 +242,13 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         whitelisted_fields = super()._get_whitelist_fields_from_template()
         return whitelisted_fields + ['ip', 'ip_wage_rate']
 
+    def _get_marital_status_selection(self):
+        if self.env.company.country_id.code != "BE":
+            return super()._get_marital_status_selection()
+        return super()._get_marital_status_selection() + [
+            ("separated", self.env._("Judicially Separated"))
+        ]
+
     @api.depends('disabled_children_bool', 'disabled_children_number', 'children')
     def _compute_dependent_children(self):
         for version in self:
