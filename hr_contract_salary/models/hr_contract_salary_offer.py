@@ -257,14 +257,16 @@ class HrContractSalaryOffer(models.Model):
 
     def action_view_contract(self):
         self.ensure_one()
-        version_id = self.employee_version_id.id or self.env['hr.version'].search([("applicant_id", "=", self.applicant_id.id)], limit=1).id
+        version = self.env['hr.version'].search([('originated_offer_id', '=', self.id)], limit=1) or \
+                  self.employee_version_id or \
+                  self.env['hr.version'].search([("applicant_id", "=", self.applicant_id.id)], limit=1)
         return {
             'type': 'ir.actions.act_window',
             'view_mode': 'form',
             'res_model': 'hr.employee',
             'res_id': self.employee_id.id,
             'target': 'current',
-            'context': {'version_id': version_id}
+            'context': {'version_id': version.id}
         }
 
     def _mail_get_partners(self, introspect_fields=False):
