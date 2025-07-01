@@ -13,17 +13,20 @@ from odoo.addons.account_sepa_direct_debit.tests.common import SDDTestCommon
 class SDDTest(SDDTestCommon):
     def test_sdd(self):
         # The invoices should have payments and in payment state thanks to the mandate
+        payments_agrolait = self.invoice_agrolait.reconciled_payment_ids
         self.assertEqual(self.invoice_agrolait.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have payments and in payment state thanks to the mandate')
-        self.assertEqual(self.invoice_agrolait.matched_payment_ids.sdd_mandate_id, self.mandate_agrolait)
-        self.assertEqual(self.mandate_agrolait.payment_ids, self.invoice_agrolait.matched_payment_ids, 'The mandate should be linked to the payment')
+        self.assertEqual(payments_agrolait.sdd_mandate_id, self.mandate_agrolait)
+        self.assertEqual(self.mandate_agrolait.payment_ids, payments_agrolait, 'The mandate should be linked to the payment')
+        payments_china_export = self.invoice_china_export.reconciled_payment_ids
         self.assertEqual(self.invoice_china_export.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have have payments and in payment state thanks to the mandate')
-        self.assertEqual(self.invoice_china_export.matched_payment_ids.sdd_mandate_id, self.mandate_china_export)
-        self.assertEqual(self.mandate_china_export.payment_ids, self.invoice_china_export.matched_payment_ids, 'The mandate should be linked to the payment')
+        self.assertEqual(payments_china_export.sdd_mandate_id, self.mandate_china_export)
+        self.assertEqual(self.mandate_china_export.payment_ids, payments_china_export, 'The mandate should be linked to the payment')
+        payments_no_bic = self.invoice_no_bic.reconciled_payment_ids
         self.assertEqual(self.invoice_no_bic.payment_state, self.env['account.move']._get_invoice_in_payment_state(), 'This invoice should have payments and in payment state thanks to the mandate')
-        self.assertEqual(self.invoice_no_bic.matched_payment_ids.sdd_mandate_id, self.mandate_no_bic)
-        self.assertEqual(self.mandate_no_bic.payment_ids, self.invoice_no_bic.matched_payment_ids, 'The mandate should be linked to the payment')
+        self.assertEqual(payments_no_bic.sdd_mandate_id, self.mandate_no_bic)
+        self.assertEqual(self.mandate_no_bic.payment_ids, payments_no_bic, 'The mandate should be linked to the payment')
         # Reconcile the payments, to have the invoices fully paid
-        payments = (self.invoice_agrolait + self.invoice_china_export + self.invoice_no_bic).matched_payment_ids
+        payments = (self.invoice_agrolait + self.invoice_china_export + self.invoice_no_bic).reconciled_payment_ids
         self.reconcile_payments(payments)
         self.env.invalidate_all()  # Since field is used only in UI, Invalidate the cache for field recomputation, simulating UI view change
         self.assertEqual(self.mandate_agrolait.paid_invoice_ids, self.invoice_agrolait, 'The mandate should be linked to the paid invoice')
@@ -36,7 +39,7 @@ class SDDTest(SDDTestCommon):
         self.assertEqual(self.mandate_no_bic.state, 'closed', 'A one-off mandate should be closed after accepting a payment')
 
         # Test when cancelling a payment
-        payment_agrolait = self.invoice_agrolait._get_reconciled_payments()
+        payment_agrolait = self.invoice_agrolait.reconciled_payment_ids
         payment_agrolait.action_draft()
         payment_agrolait.move_id.line_ids.remove_move_reconcile()
         self.assertEqual(self.invoice_agrolait.payment_state, 'not_paid')
@@ -45,10 +48,10 @@ class SDDTest(SDDTestCommon):
         self.sdd_company_bank_journal.debit_sepa_pain_version = 'pain.008.001.08'
 
         for invoice in (self.invoice_agrolait, self.invoice_no_bic):
-            payment = invoice.matched_payment_ids
+            payment = invoice.reconciled_payment_ids
             payment.generate_xml(self.sdd_company, fields.Date.today(), True)
 
-        payment = self.invoice_china_export.matched_payment_ids
+        payment = self.invoice_china_export.reconciled_payment_ids
 
         # Checks that an error is thrown if the city name is missing
         self.partner_china_export.write({'city': False, 'country_id': self.country_china})
@@ -261,7 +264,7 @@ class SDDTest(SDDTestCommon):
         )
         wizard.action_create_payments()
 
-        self.assertRecordValues(invoices.matched_payment_ids.sorted('partner_id'), [
+        self.assertRecordValues(invoices.reconciled_payment_ids.sorted('partner_id'), [
             {'partner_id': self.partner_agrolait.id},
             {'partner_id': self.partner_china_export.id},
         ])
@@ -282,7 +285,7 @@ class SDDTest(SDDTestCommon):
             })
         )
         wizard.action_create_payments()
-        payments = invoices.matched_payment_ids
+        payments = invoices.reconciled_payment_ids
         self.assertEqual(len(payments), 1, "Only one payment should be created.")
         self.assertEqual(payments.partner_id, self.partner_agrolait, "The payment should be for the 'Agrolait' partner since it have a valid mandate.")
 
