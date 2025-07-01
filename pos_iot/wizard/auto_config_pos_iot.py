@@ -52,7 +52,7 @@ class AutoConfigPoSIoT(models.TransientModel):
                         continue
 
                 if device.type == 'scanner':
-                    pos_config.iface_scanner_ids.append(device)
+                    pos_config.iface_scanner_ids |= device
                 elif device.type in device_types:
                     pos_config[device_types[device.type]] = device
 
