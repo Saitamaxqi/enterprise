@@ -1518,3 +1518,36 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': inv_line.account_id.id, 'amount_currency': -100.0, 'currency_id': self.other_currency.id, 'balance': -50.0, 'reconciled': True},
             {'account_id': inv_line2.account_id.id, 'amount_currency': -50.0, 'currency_id': self.company_data['currency'].id, 'balance': -50.0, 'reconciled': True},
         ])
+
+    def test_delete_line_with_reco_model(self):
+        reco_model = self.env['account.reconcile.model'].create({
+            'name': 'test reco model',
+            'match_journal_ids': [Command.set([self.company_data['default_journal_bank'].id])],
+            'match_label': 'contains',
+            'match_label_param': 'blblbl',
+            'line_ids': [Command.create({'account_id': self.company_data['default_account_revenue'].id})],
+        })
+        st_line = self._create_st_line(
+            500.0,
+            date='2020-01-01',
+            payment_ref='blblbl',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+        reco_model._apply_reconcile_models(st_line)
+        self.assertEqual(
+            st_line.line_ids[-1].reconcile_model_id,
+            reco_model,
+            "The test reco model should be assigned",
+        )
+        reco_model._trigger_reconciliation_model(st_line)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 500.0, 'balance': 500.0, 'reconciled': False},
+            {'account_id': self.company_data['default_account_revenue'].id, 'amount_currency': -500.0, 'balance': -500.0, 'reconciled': False},
+        ])
+        st_line.delete_reconciled_line(st_line.line_ids[-1].id)
+        self.assertEqual(
+            st_line.line_ids[-1].reconcile_model_id,
+            reco_model,
+            "The test reco model should be assigned on the new suspense line",
+        )
