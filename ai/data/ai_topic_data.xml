@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ai.ai_topic_natural_language_query" model="ai.topic">
+        <field name="name">Natural Language Search</field>
+        <field name="description">Collection of tools to support the natural language search feature</field>
+        <field name="instructions"></field>
+        <field name="tool_ids" eval="[(6, 0, [
+            ref('ir_actions_server_get_menu_details'),
+            ref('ir_actions_server_get_fields'),
+            ref('ir_actions_server_open_menu_list'),
+            ref('ir_actions_server_open_menu_kanban'),
+            ref('ir_actions_server_open_menu_pivot'),
+            ref('ir_actions_server_open_menu_graph'),
+            ref('ir_actions_server_compute_report_measures'),
+        ])]"/>
+    </record>
+</odoo>

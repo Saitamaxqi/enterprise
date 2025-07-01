@@ -1,9 +1,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
 import logging
+import json
 import lxml.html
 
-from datetime import timedelta
+from ast import literal_eval
+from collections import defaultdict
+from datetime import datetime, timedelta
+from lxml import etree
 from textwrap import dedent
 try:
     from markdown2 import markdown
@@ -11,9 +15,12 @@ except ImportError:
     markdown = None
 
 from odoo import _, api, Command, fields, models
+from odoo.fields import Domain
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import file_open, html_sanitize, SQL, is_html_empty
+from odoo.tools import file_open, html_sanitize, SQL, is_html_empty, ormcache
+from odoo.http import request
 from odoo.tools.mail import html_to_inner_content
+from odoo.tools.misc import submap
 
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.ai.utils.url_scraping import URLScraper
@@ -68,6 +75,132 @@ PREPROMPTS = {
         - If your response doesn't make use of the context, don't list the attachments.
     """).strip(),
 }
+
+
+def compute_report_measures(fields, field_attrs=None, active_measures=None, sum_aggregator_only=False):
+    """
+    Python equivalent of the JavaScript computeReportMeasures function.
+
+    Args:
+        fields (dict): Dictionary of field definitions from fields_get()
+        field_attrs (dict): Dictionary of field attributes with visibility info
+        active_measures (list): List of active measure field names
+        sum_aggregator_only (bool): Only include fields with 'sum' aggregator
+
+    Returns:
+        dict: Ordered dictionary of measures with their field definitions
+    """
+    if field_attrs is None:
+        field_attrs = {}
+    if active_measures is None:
+        active_measures = []
+
+    # Start with the count measure
+    measures = {"__count": {"name": "__count", "string": "Count", "type": "integer"}}
+
+    # Process regular fields
+    for field_name, field in fields.items():
+        if field_name == "id":
+            continue
+
+        # Check if field is invisible
+        field_attr = field_attrs.get(field_name, {})
+        if field_attr.get("isInvisible", False):
+            continue
+
+        # Check if field is numeric and has aggregator
+        if field.get("type") in ["integer", "float", "monetary"]:
+            aggregator = field.get("aggregator")
+            if aggregator:
+                if sum_aggregator_only and aggregator != "sum":
+                    continue
+                # Filter field to only include the keys we want
+                filtered_field = submap(field, ["type", "aggregator", "name", "string", "sortable"])
+                measures[field_name] = filtered_field
+
+    # Add active measures to the measure list
+    # This is rarely necessary, but can be useful for functional fields
+    # with overridden read_group methods
+    for measure in active_measures:
+        if measure not in measures and measure in fields:
+            # Filter field to only include the keys we want
+            filtered_field = submap(fields[measure], ["type", "aggregator", "name", "string", "sortable"])
+            measures[measure] = filtered_field
+
+    # Override field strings from field_attrs if provided
+    for field_name, field_attr in field_attrs.items():
+        if field_attr.get("string") and field_name in measures:
+            measures[field_name] = dict(measures[field_name])
+            measures[field_name]["string"] = field_attr["string"]
+
+    # Sort measures: Count is always last, others alphabetically by string
+    def sort_key(item):
+        field_name, field_def = item
+        if field_name == "__count":
+            return 1, ""  # Count goes last
+        return 0, field_def.get("string", "").lower()
+
+    sorted_measures = sorted(measures.items(), key=sort_key)
+    return dict(sorted_measures)
+
+
+def clean_search_view_xml(search_view_arch):
+    """Clean and restructure search view XML for AI consumption."""
+    if not search_view_arch:
+        return ""
+
+    # Parse XML
+    tree = etree.fromstring(search_view_arch)
+
+    # Create new clean structure
+    clean_tree = etree.Element("search")
+
+    # 1. Add searchable fields (excluding only those with invisible="1")
+    searchable_fields_elem = etree.SubElement(clean_tree, "searchable_fields")
+    for field in tree.xpath(".//field[@name and not(@invisible='1') and not(ancestor::group)]"):
+        # Copy only essential attributes
+        clean_field = etree.SubElement(searchable_fields_elem, "field")
+        for attr in ["name", "string", "filter_domain", "operator"]:
+            if field.get(attr):
+                clean_field.set(attr, field.get(attr))
+
+    # 2. Add filters grouped by separators (excluding those with invisible="1")
+    filters_elem = etree.SubElement(clean_tree, "filters")
+
+    # Process filters in groups separated by separators
+    current_group = None
+    for elem in tree:
+        if elem.tag == "separator":
+            # Start a new group on separator
+            current_group = None
+        elif elem.tag == "filter" and elem.get("name") and elem.get("invisible") != "1":
+            # Skip filters that are inside <group> elements (those are groupbys)
+            if elem.getparent().tag != "group":
+                if current_group is None:
+                    current_group = etree.SubElement(filters_elem, "group")
+                clean_filter = etree.SubElement(current_group, "filter")
+                for attr in ["name", "string", "domain", "date"]:
+                    if elem.get(attr):
+                        clean_filter.set(attr, elem.get(attr))
+
+    # 3. Add groupby filters with extracted field information
+    groupbys_elem = etree.SubElement(clean_tree, "groupbys")
+    for group in tree.xpath(".//group"):
+        for filter_elem in group.xpath(".//filter[@name and not(@invisible='1')]"):
+            if filter_elem.get("context") and "group_by" in filter_elem.get("context"):
+                clean_filter = etree.SubElement(groupbys_elem, "filter")
+                clean_filter.set("name", filter_elem.get("name"))
+                if filter_elem.get("string"):
+                    clean_filter.set("string", filter_elem.get("string"))
+
+                # Extract the actual field name from the context
+                context_str = filter_elem.get("context")
+                context_dict = literal_eval(context_str)
+                if "group_by" in context_dict:
+                    clean_filter.set("group_by_field", context_dict["group_by"])
+
+    # Return compact XML string
+    return etree.tostring(clean_tree, encoding="unicode", pretty_print=False)
 
 
 class AIAgent(models.Model):
@@ -367,10 +500,12 @@ class AIAgent(models.Model):
         if not channel.exists():
             raise UserError(_("The discussion channel does not exist or has been deleted."))
 
-        prompt = html_to_inner_content(mail_message.body)
+        prompt = self._parse_user_message(mail_message)
+        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
         response = self.with_context(discuss_channel=channel)._generate_response(
             prompt=prompt,
             chat_history=self._retrieve_chat_history(channel),
+            extra_system_context=self._build_extra_system_context(),
         )
         for message in response or []:
             self._post_ai_response(channel, message)
@@ -408,6 +543,23 @@ class AIAgent(models.Model):
         ])
         if channel:
             channel.sudo().unlink()
+
+    @api.model
+    def action_ask_ai(self, user_prompt: str):
+        ask_ai_agent = self.env.ref('ai.ai_agent_natural_language_search')
+        channel = self.env['discuss.channel']._get_or_create_ai_chat(ask_ai_agent.partner_id)
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'agent_chat_action',
+            'params': {
+                'channelId': channel.id,
+                'user_prompt': user_prompt,
+            },
+        }
+
+    @api.model
+    def get_ask_ai_agent(self):
+        return self.env.ref('ai.ai_agent_natural_language_search').read(['id', 'name'])[0]
 
     def _post_ai_response(self, channel, message):
         formatted_message = message
@@ -602,3 +754,706 @@ class AIAgent(models.Model):
 
         agent = self.env['ai.agent'].search([("partner_id", "=", agent_partner_id)])
         return agent
+
+    def _parse_user_message(self, mail_message):
+        self.ensure_one()
+        agent_xml_id = self.get_external_id()[self.id]
+        if agent_xml_id == "ai.ai_agent_natural_language_search":
+            # Build context section
+            context_lines = ["<context>"]
+            # General session information
+            context_lines.append("  <session-info>")
+            context_lines.append(
+                f'    <user id="{self.env.user.id}" name="{self.env.user.display_name}" model="res.users"/>'
+            )
+            context_lines.append(
+                f'    <partner id="{self.env.user.partner_id.id}" name="{self.env.user.partner_id.name}" model="res.partner"/>'
+            )
+            context_lines.append(
+                f'    <company id="{self.env.company.id}" name="{self.env.company.name}" model="res.company"/>'
+            )
+            context_lines.append("  </session-info>")
+            context_lines.append("</context>")
+
+            # Build query section
+            raw_query = html_to_inner_content(mail_message.body)
+            query_lines = ["<query>", raw_query, "</query>"]
+
+            # Combine all sections
+            all_sections = context_lines + [""] + query_lines
+            final_prompt = "\n".join(all_sections)
+            return final_prompt
+        return html_to_inner_content(mail_message.body)
+
+    def _build_extra_system_context(self):
+        """Build extra system context based on the agent's configuration."""
+        self.ensure_one()
+        extra_context = []
+        if self.get_external_id()[self.id] == "ai.ai_agent_natural_language_search":
+            extra_context.append(self._get_available_menus())
+            extra_context.append(self._get_available_models())
+            extra_context.append(self._get_date_calculation_reference())
+
+        return "\n".join(extra_context) if extra_context else ""
+
+    @ormcache('self.env.uid', 'self.env.company.id')
+    def _get_available_menus(self):
+        """Get all menus accessible to the current user as CSV data."""
+        all_menus = self.env["ir.ui.menu"].load_web_menus(False)
+        root_menu_ids = set(all_menus["root"]["children"])
+
+        # Collect all non-root action menus
+        action_menus = []
+        for menu_id, web_menu in all_menus.items():
+            if menu_id == "root" or menu_id in root_menu_ids:
+                continue
+
+            # Only process menus with valid actions
+            if web_menu["actionModel"] == "ir.actions.act_window":
+                menu = self.env["ir.ui.menu"].browse(web_menu["id"])
+                app_menu = self.env["ir.ui.menu"].browse(web_menu["appID"])
+
+                if not menu.exists():
+                    continue
+
+                action = self.env["ir.actions.act_window"].browse(web_menu["actionID"])
+                if action.exists() and action.res_model:
+                    action_menus.append({
+                        "menu": menu,
+                        "web_menu": web_menu,
+                        "action": action,
+                        "app_menu": app_menu,
+                    })
+
+        # Menus are already ordered by sequence from load_web_menus(), but we still need to sort
+        # by complete_name within each app to maintain proper hierarchy display
+        action_menus.sort(key=lambda m: (m["app_menu"].sequence, m["menu"].complete_name))
+
+        csv_result = "id|app|complete_name|model|model_description|available_view_types|default_view_type\n"
+
+        for menu_data in action_menus:
+            menu = menu_data["menu"]
+            action = menu_data["action"]
+
+            model_description = self.env[action.res_model]._description
+            available_view_types = [view[1] for view in action.views] if action.views else []
+            default_view_type = available_view_types[0] if available_view_types else "null"
+            if action.view_id:
+                default_view_type = action.view_id.type
+
+            csv_result += (
+                f"{menu.id}|"
+                f"{menu_data['app_menu'].name}|"
+                f"{menu.complete_name}|"
+                f"{action.res_model}|"
+                f"{model_description}|"
+                f"{','.join(available_view_types)}|"
+                f"{default_view_type}\n"
+            )
+
+        return dedent(f"""
+            ## Available Menus
+            Lists all menus accessible to the current user with their associated models and views.
+            Essential for finding the right menu to open based on user queries.
+
+            Format: CSV with pipe (|) delimiter
+            ```
+            id|app|complete_name|model|model_description|available_view_types|default_view_type
+            161|Accounting|Accounting/Customers/Invoices|account.move|Journal Entry|list,kanban,form,activity|list
+            456|Reporting|Reporting/Sales|sale.report|Sales Analysis|graph,pivot,list,form|graph
+            ```
+
+            Fields:
+            - `id`: Menu identifier (use this for opening menus)
+            - `app`: Root application name (e.g., Sales, Accounting, Reporting)
+            - `complete_name`: Full menu path with / separators
+            - `model`: Technical model name (e.g., 'sale.order', 'product.product')
+            - `model_description`: Human-readable model name
+            - `available_view_types`: Comma-separated supported views
+            - `default_view_type`: View shown when menu opens
+
+            ⚠️ IMPORTANT: This list does NOT include context, domain, or search_view details.
+            You MUST call get_menu_details tool to retrieve this information before opening any menu.
+
+            💡 Workflow:
+            1. Use this list to find relevant menus based on model and available views
+            2. Call get_menu_details tool with menu IDs to get context, domain, and search_view
+            3. Parse the returned details to understand available filters and groupbys
+            4. Call the appropriate open_menu_* tool with the parsed information
+
+            💡 Tip: Prioritize "Reporting" app menus for analytical queries requiring pivot/graph views.
+
+            {csv_result.strip()}
+
+            Note: Use the menu id from this list when calling open_menu_* tools.
+        """).strip()
+
+    @ormcache('self.env.uid', 'self.env.company.id')
+    def _get_available_models(self):
+        """Get all models accessible to the current user as CSV data, excluding transient and abstract models."""
+        # Get models the user has read access to
+        allowed_models = self.env["ir.model.access"]._get_allowed_models(mode="read")
+
+        # Get ir.model records for allowed models, excluding abstract and transient
+        search_domain = (
+            Domain("model", "in", list(allowed_models))
+            & Domain("transient", "=", False)
+            & Domain("abstract", "=", False)
+        )
+        model_records = self.env["ir.model"].sudo().search(search_domain, order="model")
+
+        # Get app ordering from web menus
+        all_menus = self.env["ir.ui.menu"].load_web_menus(False)
+        root_menu_ids = all_menus["root"]["children"]  # This is ordered by sequence
+
+        # Create app name to sequence mapping
+        app_sequence = {}
+        for idx, menu_id in enumerate(root_menu_ids):
+            if menu_id in all_menus:
+                app_menu = self.env["ir.ui.menu"].browse(all_menus[menu_id]["id"])
+                if app_menu.exists():
+                    # Get the technical name (usually matches module name)
+                    app_name = all_menus[menu_id].get("xmlid", "").split(".")[0]
+                    if app_name:
+                        app_sequence[app_name] = idx
+
+        # Group models by their main module/app
+        models_by_app = defaultdict(list)
+        for model_rec in model_records:
+            # Skip models without a proper registry entry
+            if model_rec.model not in self.env:
+                continue
+
+            model_obj = self.env[model_rec.model]
+            # Skip models that are actually abstract despite the flag
+            if model_obj._abstract or not model_obj._auto:
+                continue
+
+            # Determine the app/module (first module in the list)
+            modules = model_rec.modules.split(", ") if model_rec.modules else []
+            app = modules[0] if modules else "base"
+
+            models_by_app[app].append(
+                {
+                    "model": model_rec.model,
+                    "description": model_rec.name or model_obj._description,
+                }
+            )
+
+        # Build CSV result
+        csv_result = "model|description|module\n"
+
+        # Sort apps by their menu sequence, with unknown apps at the end
+        sorted_apps = sorted(
+            models_by_app.keys(), key=lambda x: (app_sequence.get(x, 999), x)
+        )
+
+        for app in sorted_apps:
+            for model_info in sorted(models_by_app[app], key=lambda x: x["model"]):
+                csv_result += (
+                    f"{model_info['model']}|{model_info['description']}|{app}\n"
+                )
+
+        return dedent(f"""
+            ## Available Models
+            Lists all models accessible to the current user.
+            Helps identify which models to inspect when building complex queries.
+
+            Format: CSV with pipe (|) delimiter
+            ```
+            model|description|module
+            sale.order|Sales Order|sale
+            project.project|Project|project
+            project.task|Task|project
+            res.partner|Contact|base
+            ```
+
+            Fields:
+            - `model`: Technical model name (e.g., 'sale.order', 'res.partner')
+            - `description`: Human-readable model name
+            - `module`: Primary module/app where model is defined
+
+            💡 Tip: When queries involve multiple entities, immediately call get_fields tool in PARALLEL for all relevant models to discover relationships efficiently.
+
+            {csv_result.strip()}
+        """).strip()
+
+    def _get_date_calculation_reference(self):
+        """Generate dynamic date calculation reference based on today's date."""
+        today = fields.Date.context_today(self)
+        today_dt = datetime.strptime(str(today), "%Y-%m-%d")
+
+        # Calculate various date references
+        yesterday = today_dt - timedelta(days=1)
+        tomorrow = today_dt + timedelta(days=1)
+        last_week_start = today_dt - timedelta(days=7)
+
+        # This week (Monday to Sunday)
+        days_since_monday = today_dt.weekday()
+        this_week_start = today_dt - timedelta(days=days_since_monday)
+        days_until_sunday = 6 - days_since_monday
+        this_week_end = today_dt + timedelta(days=days_until_sunday)
+
+        # This month (first to last day)
+        this_month_start = today_dt.replace(day=1)
+        # Get last day of current month
+        if today_dt.month == 12:
+            next_month_start = today_dt.replace(year=today_dt.year + 1, month=1, day=1)
+        else:
+            next_month_start = today_dt.replace(month=today_dt.month + 1, day=1)
+        this_month_end = next_month_start - timedelta(days=1)
+
+        # Last month
+        last_month_end = this_month_start - timedelta(days=1)
+        last_month_start = last_month_end.replace(day=1)
+
+        # Last 30 days
+        thirty_days_ago = today_dt - timedelta(days=30)
+
+        # This year (January 1 to December 31)
+        this_year_start = today_dt.replace(month=1, day=1)
+        this_year_end = today_dt.replace(month=12, day=31)
+
+        # Last year
+        last_year_start = this_year_start.replace(year=today_dt.year - 1)
+        last_year_end = this_year_start - timedelta(days=1)
+
+        # Current quarter (full quarter)
+        quarter = (today_dt.month - 1) // 3 + 1
+        quarter_starts = {
+            1: today_dt.replace(month=1, day=1),
+            2: today_dt.replace(month=4, day=1),
+            3: today_dt.replace(month=7, day=1),
+            4: today_dt.replace(month=10, day=1),
+        }
+        current_quarter_start = quarter_starts[quarter]
+
+        # Calculate end of current quarter
+        quarter_ends = {
+            1: today_dt.replace(month=3, day=31),
+            2: today_dt.replace(month=6, day=30),
+            3: today_dt.replace(month=9, day=30),
+            4: today_dt.replace(month=12, day=31),
+        }
+        current_quarter_end = quarter_ends[quarter]
+
+        # Last quarter
+        last_quarter = quarter - 1 if quarter > 1 else 4
+        last_quarter_year = today_dt.year if quarter > 1 else today_dt.year - 1
+        quarter_starts_months = {
+            1: 1,   # January
+            2: 4,   # April
+            3: 7,   # July
+            4: 10,  # October
+        }
+        quarter_ends = {
+            1: (3, 31),   # March 31
+            2: (6, 30),   # June 30
+            3: (9, 30),   # September 30
+            4: (12, 31),  # December 31
+        }
+        start_month = quarter_starts_months[last_quarter]
+        last_quarter_start = datetime(last_quarter_year, start_month, 1)
+        end_month, end_day = quarter_ends[last_quarter]
+        last_quarter_end = datetime(last_quarter_year, end_month, end_day)
+
+        return dedent(f"""
+            ## Date Calculation Quick Reference
+            Given today is {today}:
+            - "yesterday" = {yesterday.strftime('%Y-%m-%d')}
+            - "tomorrow" = {tomorrow.strftime('%Y-%m-%d')}
+            - "last week" = {last_week_start.strftime('%Y-%m-%d')} to {today}
+            - "this week" = {this_week_start.strftime('%Y-%m-%d')} to {this_week_end.strftime('%Y-%m-%d')}
+            - "last month" = {last_month_start.strftime('%Y-%m-%d')} to {last_month_end.strftime('%Y-%m-%d')}
+            - "this month" = {this_month_start.strftime('%Y-%m-%d')} to {this_month_end.strftime('%Y-%m-%d')}
+            - "last 30 days" = {thirty_days_ago.strftime('%Y-%m-%d')} to {today}
+            - "this year" = {this_year_start.strftime('%Y-%m-%d')} to {this_year_end.strftime('%Y-%m-%d')}
+            - "last year" = {last_year_start.strftime('%Y-%m-%d')} to {last_year_end.strftime('%Y-%m-%d')}
+            - "this quarter (Q{quarter})" = {current_quarter_start.strftime('%Y-%m-%d')} to {current_quarter_end.strftime('%Y-%m-%d')}
+            - "last quarter (Q{last_quarter})" = {last_quarter_start.strftime('%Y-%m-%d')} to {last_quarter_end.strftime('%Y-%m-%d')}
+
+            Use these exact dates when building custom domains for date-based queries.
+        """).strip()
+
+    def _ai_tool_get_fields(self, model_name, include_description=True):
+        if not isinstance(model_name, str):
+            return "Error: Model name must be a string."
+
+        if not model_name:
+            return "Error: Model name must be provided."
+
+        if model_name not in self.env:
+            return f"Error: Model '{model_name}' not found."
+
+        model = self.env[model_name]
+        model_fields = model.fields_get()
+        results = []
+
+        # Add header
+        if include_description:
+            results.append("field_name|display_name|type|sortable|description")
+        else:
+            results.append("field_name|display_name|type|sortable")
+
+        for field_name, field_info in model_fields.items():
+            if not model._fields[field_name]._description_searchable:
+                continue
+            field_type = field_info.get('type', 'unknown')
+            field_relation = field_info.get('relation', '')
+            field_display_name = field_info.get('string', '')
+            sortable = str(field_info.get('sortable', True)).lower()
+            if field_relation:
+                field_type += f"({field_relation})"
+            if field_type == 'selection':
+                selection_items = field_info.get('selection', [])
+                field_type += f"({dict(selection_items)})"
+            # Format as CSV with pipe delimiter: field_name|display_name|type|sortable|description
+            field_str = f"{field_name}|{field_display_name}|{field_type}|{sortable}"
+            if include_description:
+                if description := field_info.get('help', ''):
+                    # Replace any pipe characters in the description to avoid delimiter conflicts
+                    safe_description = description.replace('|', '&#124;')
+                    field_str += f"|{safe_description}"
+                else:
+                    field_str += "|"  # Empty description column for consistent format
+            results.append(field_str)
+
+        return "\n".join(results)
+
+    def _ai_tool_open_menu_list(self, menu_id, model_name, selected_filters, selected_groupbys, search, custom_domain=None):
+        menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
+        menu = menus.get(menu_id)
+        if not menu:
+            return f"Error: Menu with ID {menu_id} not found."
+        action = self.env["ir.actions.act_window"].browse(menu["action_id"])
+        if not action.exists():
+            return f"Error: The action associated with menu ID {menu_id} does not exist."
+
+        action_dict = action._get_action_dict()
+        if action_dict.get("res_model") != model_name:
+            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+
+        available_views = [view[1] for view in action_dict.get("views", [])]
+        if "list" not in available_views:
+            return f"Error: List view is not available for the action associated with menu ID {menu_id}."
+
+        # Validate custom domain if provided
+        domain_array = None
+        if custom_domain:
+            try:
+                domain_array = json.loads(custom_domain)
+                Domain(domain_array).optimize_full(self.env[model_name])
+            except json.JSONDecodeError as e:
+                return f"Error: Invalid JSON format for custom domain: {e}"
+            except ValueError as e:
+                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+
+        bus_data = {
+            "menuID": menu_id,
+            "selectedFilters": selected_filters,
+            "selectedGroupBys": selected_groupbys,
+            "search": search,
+        }
+        if domain_array is not None:
+            bus_data["customDomain"] = domain_array
+
+        self.env.user._bus_send("AI_OPEN_MENU_LIST", bus_data)
+
+    def _ai_tool_open_menu_kanban(self, menu_id, model_name, selected_filters, selected_groupbys, search, custom_domain=None):
+        menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
+        menu = menus.get(menu_id)
+        if not menu:
+            return f"Error: Menu with ID {menu_id} not found."
+        action = self.env["ir.actions.act_window"].browse(menu["action_id"])
+        if not action.exists():
+            return f"Error: The action associated with menu ID {menu_id} does not exist."
+
+        action_dict = action._get_action_dict()
+        if action_dict.get("res_model") != model_name:
+            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+
+        available_views = [view[1] for view in action_dict.get("views", [])]
+        if "kanban" not in available_views:
+            return f"Error: Kanban view is not available for the action associated with menu ID {menu_id}."
+
+        # Validate custom domain if provided
+        domain_array = None
+        if custom_domain:
+            try:
+                domain_array = json.loads(custom_domain)
+                Domain(domain_array).optimize_full(self.env[model_name])
+            except json.JSONDecodeError as e:
+                return f"Error: Invalid JSON format for custom domain: {e}"
+            except ValueError as e:
+                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+
+        bus_data = {
+            "menuID": menu_id,
+            "selectedFilters": selected_filters,
+            "selectedGroupBys": selected_groupbys,
+            "search": search,
+        }
+        if domain_array is not None:
+            bus_data["customDomain"] = domain_array
+
+        self.env.user._bus_send("AI_OPEN_MENU_KANBAN", bus_data)
+
+    def _ai_tool_open_menu_pivot(self, menu_id, model_name, selected_filters, row_groupbys, col_groupbys, measures, search, custom_domain=None):
+        menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
+        menu = menus.get(menu_id)
+        if not menu:
+            return f"Error: Menu with ID {menu_id} not found."
+        action = self.env["ir.actions.act_window"].browse(menu["action_id"])
+        if not action.exists():
+            return f"Error: The action associated with menu ID {menu_id} does not exist."
+
+        # Log menu and action details
+        menu_obj = self.env["ir.ui.menu"].browse(menu_id)
+        _logger.info("Opening pivot view for menu '%s' (ID: %s) with action '%s' (ID: %s)",
+                     menu_obj.name, menu_id, action.name, action.id)
+
+        action_dict = action._get_action_dict()
+        if action_dict.get("res_model") != model_name:
+            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+
+        # Parse measures and extract ordering information
+        parsed_measures = []
+        sorted_column = None
+        for measure_str in measures:
+            measure_parts = measure_str.strip().split()
+            measure_name = measure_parts[0]
+
+            if len(measure_parts) > 1:
+                order_part = measure_parts[1].lower()
+                if order_part in ['asc', 'desc']:
+                    order = order_part
+                    # Set the first measure with ordering as the sorted column
+                    if sorted_column is None:
+                        sorted_column = {
+                            'measure': measure_name,
+                            'order': order
+                        }
+                else:
+                    return f"Error: Invalid ordering specification '{measure_parts[1]}' for measure '{measure_name}'. Use 'asc' or 'desc'."
+
+            parsed_measures.append(measure_name)
+
+        # Validate measures
+        for measure in parsed_measures:
+            if measure != "__count" and measure not in self.env[model_name]._fields:
+                return f"Error: Measure '{measure}' not found in model '{model_name}' for menu ID {menu_id}."
+
+        # Check if pivot view is in available views
+        available_views = [view[1] for view in action_dict.get("views", [])]
+        if "pivot" not in available_views:
+            return f"Error: Pivot view is not available for the action associated with menu ID {menu_id}."
+
+        # Validate custom domain if provided
+        domain_array = None
+        if custom_domain:
+            try:
+                domain_array = json.loads(custom_domain)
+                Domain(domain_array).optimize_full(self.env[model_name])
+            except json.JSONDecodeError as e:
+                return f"Error: Invalid JSON format for custom domain: {e}"
+            except ValueError as e:
+                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+
+        bus_data = {
+            "menuID": menu_id,
+            "model": model_name,
+            "selectedFilters": selected_filters or [],
+            "rowGroupBys": row_groupbys or [],
+            "colGroupBys": col_groupbys or [],
+            "measures": parsed_measures or [],
+            "search": search or [],
+        }
+
+        # Add sorting information if available
+        if sorted_column:
+            bus_data["sortedColumn"] = sorted_column
+
+        # Add custom domain if provided
+        if domain_array is not None:
+            bus_data["customDomain"] = domain_array
+
+        self.env.user._bus_send("AI_OPEN_MENU_PIVOT", bus_data)
+
+    def _ai_tool_open_menu_graph(
+        self, menu_id, model_name, selected_filters, selected_groupbys, measure, mode, order, search,
+        stacked=False, cumulated=False, custom_domain=None):
+        """
+        Opens a graph view for the specified menu ID with the given parameters.
+        """
+        debug = request.session.debug if request else True
+        menus = self.env["ir.ui.menu"].load_menus(debug=debug)
+        menu = menus.get(menu_id)
+        if not menu:
+            return f"Error: Menu with ID {menu_id} not found."
+        action = self.env["ir.actions.act_window"].browse(menu["action_id"])
+        if not action.exists():
+            return f"Error: The action associated with menu ID {menu_id} does not exist."
+
+        # Log menu and action details
+        menu_obj = self.env["ir.ui.menu"].browse(menu_id)
+        _logger.info("Opening graph view for menu '%s' (ID: %s) with action '%s' (ID: %s)",
+                     menu_obj.name, menu_id, action.name, action.id)
+
+        action_dict = action._get_action_dict()
+        if action_dict.get("res_model") != model_name:
+            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+
+        # Validate measure
+        if measure != "__count" and measure not in self.env[model_name]._fields:
+            return f"Error: Measure '{measure}' not found in model '{model_name}' for menu ID {menu_id}."
+
+        # Validate mode
+        if mode not in ["bar", "line", "pie"]:
+            return f"Error: Invalid mode '{mode}'. Must be 'bar', 'line', or 'pie'."
+
+        # Validate order
+        if order not in ["ASC", "DESC"]:
+            return f"Error: Invalid order '{order}'. Must be 'ASC' or 'DESC'."
+
+        # Check if graph view is in available views
+        available_views = [view[1] for view in action_dict.get("views", [])]
+        if "graph" not in available_views:
+            return f"Error: Graph view is not available for the action associated with menu ID {menu_id}."
+
+        # Validate custom domain if provided
+        domain_array = None
+        if custom_domain:
+            try:
+                domain_array = json.loads(custom_domain)
+                Domain(domain_array).optimize_full(self.env[model_name])
+            except json.JSONDecodeError as e:
+                return f"Error: Invalid JSON format for custom domain: {e}"
+            except ValueError as e:
+                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+
+        bus_data = {
+            "menuID": menu_id,
+            "selectedFilters": selected_filters,
+            "groupBys": selected_groupbys or [],
+            "measure": measure,
+            "mode": mode,
+            "order": order,
+            "stacked": stacked,
+            "cumulated": cumulated,
+            "search": search or [],
+        }
+        if domain_array is not None:
+            bus_data["customDomain"] = domain_array
+
+        self.env.user._bus_send("AI_OPEN_MENU_GRAPH", bus_data)
+
+    def _ai_tool_compute_report_measures(self, menu_id, model):
+        if model not in self.env:
+            return f"Error: Model '{model}' not found."
+
+        menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
+        menu = menus.get(menu_id)
+        if not menu:
+            return f"Error: Menu with ID {menu_id} not found."
+
+        action = self.env["ir.actions.act_window"].browse(menu["action_id"])
+        if not action.exists():
+            return (
+                f"Error: The action associated with menu ID {menu_id} does not exist."
+            )
+
+        action_dict = action._get_action_dict()
+        if action_dict.get("res_model") != model:
+            return f"Error: The model '{model}' does not match the model of the action associated with menu ID {menu_id}."
+
+        # Get field definitions
+        model_obj = self.env[model]
+        fields = model_obj.fields_get()
+
+        # Get view information to determine field attributes
+        views = model_obj.get_views(
+            [*action_dict["views"]],
+            options={
+                "action_id": action.id,
+                "toolbar": False,
+            },
+        )["views"]
+
+        # Extract field attributes from pivot view if available
+        field_attrs = {}
+        pivot_view = views.get("pivot")
+        if pivot_view and pivot_view.get("arch"):
+            view_tree = etree.fromstring(pivot_view["arch"], None)
+            for field_element in view_tree.xpath(".//field"):
+                field_name = field_element.get("name")
+                if field_name:
+                    field_attrs[field_name] = {
+                        "isInvisible": field_element.get("invisible") == "1",
+                        "string": field_element.get("string"),
+                    }
+
+        # Compute measures using our Python implementation
+        measures = compute_report_measures(fields, field_attrs)
+
+        # Convert measures to CSV format with pipe delimiter
+        csv_result = "field_name|field_display_name|field_type|aggregator|sortable\n"
+
+        for field_name, field_info in measures.items():
+            field_display_name = field_info.get("string", "")
+            field_type = field_info.get("type", "")
+            aggregator = field_info.get("aggregator", "")
+            sortable = str(field_info.get("sortable", "")).lower()
+
+            csv_result += f"{field_name}|{field_display_name}|{field_type}|{aggregator}|{sortable}\n"
+
+        return csv_result.strip()
+
+    def _ai_tool_get_menu_details(self, menu_ids):
+        if not isinstance(menu_ids, list):
+            return "Error: menu_ids must be a list of menu IDs."
+
+        if not menu_ids:
+            return "Error: At least one menu ID must be provided."
+
+        # Load all menus to validate IDs
+        menus = self.env["ir.ui.menu"].load_menus(False)
+
+        csv_result = "menu_id|model|context|domain|search_view\n"
+
+        for menu_id in menu_ids:
+            if not isinstance(menu_id, (int, float)):
+                csv_result += f"{menu_id}|Error: Menu ID must be a number|\n"
+                continue
+
+            menu_id = int(menu_id)
+            menu = menus.get(menu_id)
+
+            if not menu:
+                csv_result += f"{menu_id}|Error: Menu not found|\n"
+                continue
+
+            action = self.env["ir.actions.act_window"].browse(menu["action_id"])
+            if not action.exists():
+                csv_result += f"{menu_id}|Error: Action not found|\n"
+                continue
+
+            # Get context and domain
+            context_str = str(action.context or {})
+            domain_str = str(action.domain or [])
+
+            search_view = self.env[action.res_model].get_view(action.search_view_id.id, 'search')
+            search_view_xml = clean_search_view_xml(search_view['arch']) if search_view else ""
+
+            # Escape the XML for CSV - replace quotes and newlines
+            if search_view_xml:
+                search_view_xml = search_view_xml.replace('\n', ' ').replace('\r', '')
+
+            csv_result += (
+                f"{menu_id}|"
+                f"{action.res_model}|"
+                f"{context_str}|"
+                f"{domain_str}|"
+                f"{search_view_xml}\n"
+            )
+
+        return csv_result.strip()

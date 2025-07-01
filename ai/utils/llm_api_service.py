@@ -285,6 +285,7 @@ class LLMApiService:
                 "name": tool_name,
                 "strict": True,
             } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()])
+            body["parallel_tool_calls"] = True
 
         llm_response = self._request(
             "post",
@@ -439,10 +440,10 @@ class LLMApiService:
         > https://json-schema.org/
         """
         AI_MAX_SUCCESSIVE_CALLS = int(self.env["ir.config_parameter"].sudo()
-            .get_param("ai.max_successive_calls", "5"))
+            .get_param("ai.max_successive_calls", "7"))
 
         AI_MAX_TOOL_CALLS_PER_CALL = int(self.env["ir.config_parameter"].sudo()
-            .get_param("ai.max_tool_calls_per_call", "5"))
+            .get_param("ai.max_tool_calls_per_call", "10"))
 
         if tools:
             tools = copy.deepcopy(tools)

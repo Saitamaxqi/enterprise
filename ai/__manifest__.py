@@ -15,6 +15,8 @@
     """,
     'depends': ['mail', 'attachment_indexation'],
     'data': [
+        'data/ir_actions_server_data.xml',
+        'data/ai_topic_data.xml',
         'security/ir.model.access.csv',
         'views/ai_agent_views.xml',
         'views/ai_topic_views.xml',
