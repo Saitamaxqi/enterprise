@@ -109,7 +109,8 @@ class TestKnowledgeArticleThreadPermissions(KnowledgeArticlePermissionsCase):
 
         self.assertMembers(self.private_article, 'none', {self.partner_employee_manager: 'write', self.env.user.partner_id: 'read'})
 
-        message = base_thread.message_post(body="Hello Everyone", partner_ids=[self.partner_employee.id, self.partner_employee_manager.id], tracking_value_ids=[1, 2, 3])
+        recipients = self.env.user.partner_id  # get only accessible partners
+        message = base_thread.message_post(body="Hello Everyone", partner_ids=recipients.ids, tracking_value_ids=[1, 2, 3])
         self.assertEqual(len(base_thread.sudo().message_ids), 2, "Portal user should be able to post a message")
         self.assertListEqual(message.sudo().tracking_value_ids.ids, [], "Tracking values should have been filltered")
 
