@@ -527,13 +527,10 @@ class ResPartner(models.Model):
 
         followup_contacts = self._get_all_followup_contacts() or self
 
-        if self.followup_line_id.send_email and not any(followup_contacts.mapped('email')):
-            return True
-
-        if self.followup_line_id.send_sms and not (any(followup_contacts.mapped('mobile'))
-                                            or any(followup_contacts.mapped('phone'))):
-            return True
-        return False
+        return (
+            (self.followup_line_id.send_email and not any(followup_contacts.mapped('email'))) or
+            (self.followup_line_id.send_sms and not any(followup_contacts.mapped('phone')))
+        )
 
     def action_manually_process_automatic_followups(self):
         partners_with_missing_info = self.env['res.partner']
