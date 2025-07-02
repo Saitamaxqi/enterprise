@@ -124,20 +124,23 @@ class SaleOrderLine(models.Model):
         """
             For SO service lines with slot generation, create the planning slot.
         """
-        self.env['planning.slot'].create(self._planning_slot_vals_list())
+        vals_list = self.filtered(lambda sol: sol._should_generate_planning_slot())._planning_slot_vals_list()
+        self.env['planning.slot'].create(vals_list)
+
+    def _should_generate_planning_slot(self):
+        return (
+            self.product_id.type == 'service'
+            and self.product_id.planning_enabled
+            and not self.planning_slot_ids.filtered(lambda shift: not shift.start_datetime)
+            and float_compare(
+                self.planning_hours_to_plan,
+                self.planning_hours_planned,
+                precision_digits=2
+            ) == 1
+        )
 
     def _planning_slot_vals_list(self):
-        vals_list = []
-        for so_line in self:
-            if (so_line.product_id.type == 'service'
-               and so_line.product_id.planning_enabled
-               and not so_line.planning_slot_ids.filtered(lambda shift: not shift.start_datetime)
-               and float_compare(
-                    so_line.planning_hours_to_plan,
-                    so_line.planning_hours_planned,
-                    precision_digits=2) == 1):
-                vals_list.append(so_line._planning_slot_values())
-        return vals_list
+        return [sol._planning_slot_values() for sol in self]
 
     def _planning_slot_values(self):
         return {

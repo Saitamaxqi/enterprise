@@ -131,3 +131,47 @@ class TestRentalPlanning(TestSalePlanning):
         so_rental.action_confirm()
         self.assertEqual(so_rental.planning_hours_planned, 8.0, 'Planned hours should be set when the shift is already scheduled.')
         self.assertEqual(so_rental.planning_hours_to_plan, 0.0, 'To Plan hours should be zero when the shift is already scheduled.')
+
+    def test_planning_rental_sol_slot_conflict(self):
+        '''
+        Steps:
+        1. Create a rental service product with `Plan Services` enabled.
+        2. Create a rental order with multiple lines for the same product.
+        3. Confirm the rental order.
+        4. Check the generated shifts - each resource should have only one shift at a time
+            if no resource available generate a open shift for that.
+        '''
+        self.planning_role_junior.resource_ids = [
+            Command.set((self.employee_joseph.resource_id + self.employee_bert.resource_id).ids)
+        ]
+        self.plannable_product.rent_ok = True
+
+        rental_order_1, rental_order_2 = self.env['sale.order'].with_context(in_rental_app=True).create([
+            {
+                'partner_id': self.planning_partner.id,
+                'rental_start_date': datetime(2024, 12, 19, 9, 0),
+                'rental_return_date': datetime(2024, 12, 19, 13, 0),
+                'order_line': [
+                    Command.create({'product_id': self.plannable_product.id, 'product_uom_qty': 1}),
+                    Command.create({'product_id': self.plannable_product.id, 'product_uom_qty': 1}),
+                ],
+            }, {
+                'partner_id': self.planning_partner.id,
+                'rental_start_date': datetime(2024, 12, 26, 14, 0),
+                'rental_return_date': datetime(2024, 12, 26, 17, 0),
+                'order_line': [
+                    Command.create({'product_id': self.plannable_product.id, 'product_uom_qty': 1}),
+                    Command.create({'product_id': self.plannable_product.id, 'product_uom_qty': 1}),
+                    Command.create({'product_id': self.plannable_product.id, 'product_uom_qty': 1}),
+                ],
+            },
+        ])
+
+        rental_order_1.action_confirm()
+        ro_1_slots = rental_order_1.order_line.planning_slot_ids
+        self.assertEqual(ro_1_slots.resource_id, self.employee_joseph.resource_id, 'The first shift should be assigned to joseph')
+        self.assertEqual(len(ro_1_slots.filtered(lambda slot: not slot.resource_id)), 1, 'The second shift should be an open shift')
+
+        rental_order_2.action_confirm()
+        self.assertEqual(len(rental_order_2.order_line.planning_slot_ids.resource_id), 2,
+                         'There should be 2 resources assigned to the shift')
