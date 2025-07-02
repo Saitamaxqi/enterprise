@@ -62,6 +62,9 @@
                     <span class="o_select_arrow d-block pe-2 pb-2"/>
                 </div>
             </t>
+            <t t-else="">
+                <t t-esc="options.find(opt => opt.id === value)?.value"/>
+            </t>
             <t t-if="editMode" t-call="sign.signItemConfiguration"/>
         </div>
     </div>
