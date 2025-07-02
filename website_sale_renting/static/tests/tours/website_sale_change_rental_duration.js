@@ -1,7 +1,7 @@
-/** @odoo-module **/
-
+import { delay } from "@odoo/hoot-dom";
 import { registry } from "@web/core/registry";
 import * as tourUtils from '@website_sale/js/tours/tour_utils';
+
 
 function getFutureDate(days) {
     days = (days ?? 0) + 7;
@@ -81,12 +81,20 @@ registry.category('web_tour.tours').add('date_based_rental_duration', {
         {
             content: "Select the return date",
             trigger: 'input[name=renting_end_date]',
-            run: `edit ${getFutureDate(2)} && press Enter`,
+            async run(helpers) {
+                await delay(1000);
+                await helpers.edit(getFutureDate(2));
+                await helpers.press("Tab");
+            },
         },
         {
             content: "Rent for 2 days",
             trigger: 'input[name=renting_start_date]',
-            run: `edit ${getFutureDate(1)} && press Enter`,
+            async run(helpers) {
+                await delay(1000);
+                await helpers.edit(getFutureDate(1));
+                await helpers.press("Tab");
+            },
         },
         {
             content: "Add to cart",
@@ -98,6 +106,10 @@ registry.category('web_tour.tours').add('date_based_rental_duration', {
             trigger: 'span.o_renting_details:contains(2 Days)',
         },
         tourUtils.goToCart(),
+        {
+            content: "Wait for cart to load",
+            trigger: '#shop_cart',
+        },
         ...tourUtils.assertCartAmounts({ untaxed: "40.00" }), // $ 20.00 per day
     ],
 });
