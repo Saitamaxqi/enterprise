@@ -35,9 +35,9 @@
                                     <strong class="me-2">Email:</strong>
                                     <span t-field="o.employee_id.work_email"/>
                                 </div>
-                                <div id="employee_job_title" t-if="o.version_id.job_title">
+                                <div id="employee_job_position" t-if="o.version_id.job_id">
                                     <strong class="me-2">Job Position:</strong>
-                                    <span t-field="o.version_id.job_title"/>
+                                    <span t-field="o.version_id.job_id"/>
                                 </div>
                                 <div id="employee_department" t-if="o.version_id.department_id">
                                     <strong class="me-2">Department:</strong>

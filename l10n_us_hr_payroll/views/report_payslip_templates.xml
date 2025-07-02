@@ -7,7 +7,7 @@
     </div>
 
     <div id="employee_email" position="replace"/>
-    <div id="employee_job_title" position="replace"/>
+    <div id="employee_job_position" position="replace"/>
     <div id="employee_department" position="replace"/>
     <div id="employee_marital" position="replace"/>
     <div id="employee_person_in_charge" position="replace"/>
@@ -102,7 +102,7 @@
         <td class="text-end"><strong t-out="('XXX-XX-' + o.employee_id.ssnid[-4:]) if o.employee_id.ssnid else ''"/></td>
     </tr>
 
-    <tr id="employee_job_title" position="replace"/>
+    <tr id="employee_job_position" position="replace"/>
     <tr id="employee_department" position="replace"/>
 
     <xpath expr="//tr[@id='pay_period']" position="after">

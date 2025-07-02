@@ -18,9 +18,9 @@
                         <td>Name:</td>
                         <td class="text-end"><strong t-field="o.employee_id"/></td>
                     </tr>
-                    <tr id="employee_job_title" t-if="o.version_id.job_title">
-                        <td>Job Title:</td>
-                        <td class="text-end"><strong t-field="o.version_id.job_title"/></td>
+                    <tr id="employee_job_position" t-if="o.version_id.job_id">
+                        <td>Job Position:</td>
+                        <td class="text-end"><strong t-field="o.version_id.job_id"/></td>
                     </tr>
                     <tr id="employee_department" t-if="o.version_id.department_id">
                         <td>Department:</td>
