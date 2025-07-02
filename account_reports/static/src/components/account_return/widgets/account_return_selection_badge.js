@@ -77,7 +77,7 @@ export class AccountReturnSelectionBadge extends Component {
     }
 
     get additionalClassName() {
-        return this.props.class;
+        return this.props.class || "";
     }
 
     get capsuleStyle() {

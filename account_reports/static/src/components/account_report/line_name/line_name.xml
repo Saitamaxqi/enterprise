@@ -56,16 +56,6 @@
                             size="'small'"
                             />
 
-                        <t t-if="props.line.visible_annotations?.length">
-                            <button
-                                tabindex="-1"
-                                class="btn btn_annotation"
-                                t-on-click="toggleAnnotationPopover"
-                            >
-                                <i class="fa fa-commenting"/>
-                            </button>
-                        </t>
-
                         <t t-if="hasCaretOptions">
                             <!-- Caret options -->
                             <Dropdown position="'right-start'">
@@ -79,18 +69,23 @@
                                                 <t t-out="caretOption.name"/>
                                             </DropdownItem>
                                         </t>
-
-                                        <t t-if="!props.line.visible_annotations?.length">
-                                            <div class="o-dropdown-item dropdown-item o-navigable"
-                                                 t-on-click="(ev) => this.addAnnotation(ev, props.line.id)"
-                                            >
-                                                Annotate
-                                            </div>
-                                        </t>
                                     </div>
                                 </t>
                             </Dropdown>
                         </t>
+
+                        <button
+                            tabindex="-1"
+                            class="btn btn_annotation"
+                            t-on-click="openChatter"
+                            t-if="this.props.line.chatter and !this.ui.isSmall"
+                            t-att-class="{
+                                'o_account_report_chatter_selected': isChatterSelected,
+                                'o_account_report_chatter_annoted': isChatterAnnotated,
+                            }">
+                            <i class="fa fa-commenting" t-if="isChatterSelected || isChatterAnnotated"/>
+                            <i class="fa fa-commenting-o" t-else=""/>
+                        </button>
 
                         <t data-id="line_buttons" t-if="!props.line['hide_line_buttons']"/>
                     </div>

@@ -3,8 +3,7 @@
 import { browser } from "@web/core/browser/browser";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-
-import { removeTaxGroupingFromLineId } from "@account_reports/js/util";
+import { useState } from "@odoo/owl";
 
 export class AccountReportController {
     constructor(action) {
@@ -12,6 +11,11 @@ export class AccountReportController {
         this.actionService = useService("action");
         this.dialog = useService("dialog");
         this.orm = useService("orm");
+        this.chatterState = useState({
+            model: undefined,
+            id: undefined,
+            lineId: undefined, // To identify the line when editing / deleting a message
+        });
     }
 
     async load(env) {
@@ -47,6 +51,13 @@ export class AccountReportController {
         const activeSectionPromise = this.displayReport(mainReportOptions['report_id']);
         this.preLoadClosedSections();
         await activeSectionPromise;
+
+        const chatterState = JSON.parse(
+            browser.sessionStorage.getItem(this.sessionChatterStateID())
+        );
+        this.chatterState.model = chatterState?.model;
+        this.chatterState.id = chatterState?.id;
+        this.chatterState.lineId = chatterState?.lineId;
     }
 
     getCacheKey(sectionsSourceId, reportId) {
@@ -286,10 +297,6 @@ export class AccountReportController {
         return this.data.report;
     }
 
-    get visibleAnnotations() {
-        return this.data.visible_annotations;
-    }
-
     //------------------------------------------------------------------------------------------------------------------
     // Generic data setters
     //------------------------------------------------------------------------------------------------------------------
@@ -310,10 +317,6 @@ export class AccountReportController {
         this.data.lines_order = value;
     }
 
-    set visibleAnnotations(value) {
-        this.data.visible_annotations = value;
-    }
-
     //------------------------------------------------------------------------------------------------------------------
     // Helpers
     //------------------------------------------------------------------------------------------------------------------
@@ -327,10 +330,6 @@ export class AccountReportController {
 
     get hasDebugColumn() {
         return Boolean(this.options.show_debug_column);
-    }
-
-    get hasVisibleAnnotations() {
-        return Boolean(this.visibleAnnotations.length);
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -568,15 +567,16 @@ export class AccountReportController {
         const targetLine = this.lines[lineIndex];
         let lastLineIndex = lineIndex + 1;
 
-        if (this.isLoadedLine(lineIndex))
+        const isLoadedLine = this.isLoadedLine(lineIndex);
+        if (isLoadedLine) {
             lastLineIndex = await this.unfoldLoadedLine(lineIndex);
-        else if (targetLine.expand_function) {
+        } else if (targetLine.expand_function) {
             lastLineIndex = await this.unfoldNewLine(lineIndex);
+            this.loadAnnotations(lineIndex + 1, lastLineIndex);
         }
 
         this.setLineVisibility(this.lines.slice(lineIndex + 1, lastLineIndex));
         targetLine.unfolded = true;
-        this.refreshVisibleAnnotations();
 
         // Update options
         if (!this.options.unfolded_lines.includes(targetLine.id))
@@ -601,8 +601,6 @@ export class AccountReportController {
         }
 
         targetLine.unfolded = false;
-
-        this.refreshVisibleAnnotations();
 
         // Update options
         this.options.unfolded_lines = this.options.unfolded_lines.filter(
@@ -673,60 +671,91 @@ export class AccountReportController {
     }
 
     //------------------------------------------------------------------------------------------------------------------
-    // Annotations
+    // Chatter
     //------------------------------------------------------------------------------------------------------------------
-    async refreshAnnotations() {
-        this.annotations = await this.orm.call("account.report", "get_annotations", [
-            this.action.context.report_id,
-            this.options,
-        ]);
+    sessionChatterStateID() {
+        return this.sessionOptionsID() + user.activeCompany.id.toString() + ".chatter";
+    }
 
+    async loadAnnotations(lineStartIndex = 0, lineEndIndex = this.lines.length) {
+        this.annotations = {
+            ...this.annotations,
+            ...(await this.orm.call("account.report", "get_annotations", [
+                this.action.context.report_id,
+                this.options,
+                this.lines.slice(lineStartIndex, lineEndIndex),
+            ])),
+        };
+
+        this.refreshVisibleAnnotations(lineStartIndex, lineEndIndex);
+    }
+
+    addAnnotation(messageId, resModel, resId, body) {
+        this.lines.forEach((line) => {
+            if (line.chatter?.model === resModel && line.chatter?.id === resId) {
+                this.annotations[line.id] = this.annotations[line.id] || [];
+                this.annotations[line.id].push({
+                    id: messageId,
+                    model: resModel,
+                    res_id: resId,
+                    body: body,
+                });
+                line.visible_annotations = true;
+            }
+        });
+    }
+
+    removeAnnotation(messageId) {
+        this.lines.forEach((line) => {
+            this.annotations[line.id] = (this.annotations[line.id] || []).filter((annotation) => annotation.id !== messageId);
+        });
         this.refreshVisibleAnnotations();
+    }
+
+    async toggleLineChatter(annotation) {
+        if (
+            this.chatterState.model === annotation.resModel &&
+            this.chatterState.id === annotation.resId &&
+            this.chatterState.lineId === annotation.line_id
+        ) {
+            this.closeChatter();
+        } else {
+            this.chatterState.model = annotation.resModel;
+            this.chatterState.id = annotation.resId;
+            this.chatterState.lineId = annotation.line_id;
+            browser.sessionStorage.setItem(
+                this.sessionChatterStateID(),
+                JSON.stringify({
+                    model: this.chatterState.model,
+                    id: this.chatterState.id,
+                    lineId: this.chatterState.lineId,
+                })
+            );
+        }
+    }
+
+    closeChatter() {
+        this.chatterState.model = undefined;
+        this.chatterState.id = undefined;
+        this.chatterState.lineId = undefined;
+        browser.sessionStorage.setItem(
+            this.sessionChatterStateID(),
+            JSON.stringify({
+                model: this.chatterState.model,
+                id: this.chatterState.id,
+                lineId: this.chatterState.lineId,
+            })
+        );
     }
 
     //------------------------------------------------------------------------------------------------------------------
     // Visibility
     //------------------------------------------------------------------------------------------------------------------
 
-    refreshVisibleAnnotations() {
-        const visibleAnnotations = new Proxy(
-            {},
-            {
-                get(target, name) {
-                    return name in target ? target[name] : [];
-                },
-                set(target, name, newValue) {
-                    target[name] = newValue;
-                    return true;
-                },
-            }
-        );
-
-        this.lines.forEach((line) => {
-            line["visible_annotations"] = [];
-            const lineWithoutTaxGrouping = removeTaxGroupingFromLineId(line.id);
-            if (line.visible && this.annotations[lineWithoutTaxGrouping]) {
-                for (const index in this.annotations[lineWithoutTaxGrouping]) {
-                    const annotation = this.annotations[lineWithoutTaxGrouping][index];
-                    visibleAnnotations[lineWithoutTaxGrouping] = [
-                        ...visibleAnnotations[lineWithoutTaxGrouping],
-                        { ...annotation },
-                    ];
-                    line["visible_annotations"].push({
-                        ...annotation,
-                    });
-                }
-            }
-
-            if (
-                line.visible_annotations &&
-                (!this.annotations[lineWithoutTaxGrouping] || !line.visible)
-            ) {
-                delete line.visible_annotations;
-            }
+    refreshVisibleAnnotations(lineStartIndex = 0, lineEndIndex = this.lines.length) {
+        this.lines.slice(lineStartIndex, lineEndIndex).forEach((line) => {
+            line.visible_annotations = this.annotations[line.id] && this.annotations[line.id].length > 0;
         });
-
-        this.visibleAnnotations = visibleAnnotations;
     }
 
     /**

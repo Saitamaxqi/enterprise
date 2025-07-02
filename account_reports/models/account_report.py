@@ -24,8 +24,9 @@ from odoo.addons.web.controllers.utils import clean_action
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
 from odoo.fields import Command, Domain
 from odoo.service.model import get_public_method
-from odoo.tools import date_utils, get_lang, float_is_zero, float_repr, SQL, parse_version, Query
+from odoo.tools import date_utils, get_lang, float_is_zero, float_repr, html2plaintext, SQL, parse_version, Query
 from odoo.tools.float_utils import float_round, float_compare
+from odoo.tools.mail import html_to_inner_content
 from odoo.tools.misc import file_path, format_date, formatLang
 from odoo.tools.safe_eval import expr_eval, safe_eval
 
@@ -56,37 +57,15 @@ class AccountReportAnnotation(models.Model):
     _name = 'account.report.annotation'
     _description = 'Account Report Annotation'
 
-    report_id = fields.Many2one('account.report', help="The id of the annotated report.", index='btree_not_null')
-    line_id = fields.Char(index=True, help="The id of the annotated line.")
-    text = fields.Char(string="The annotation's content.")
-    date = fields.Date(help="Date considered as annotated by the annotation.")
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        fiscal_positions_with_foreign_vat = self.env['account.fiscal.position'].search([('foreign_vat', '!=', False)], limit=1)
-        for annotation in vals_list:
-            if 'line_id' in annotation:
-                annotation['line_id'] = self._remove_tax_grouping_from_line_id(annotation['line_id'])
-
-        return super().create(vals_list)
-
-    def _remove_tax_grouping_from_line_id(self, line_id):
-        """
-        Remove the tax grouping from the line_id. This is needed because the tax grouping is not relevant for the annotation.
-        Tax grouping are any group using 'account.group' in the line_id.
-        """
-        return self.env['account.report']._build_line_id([
-            (markup, model, res_id)
-            for markup, model, res_id in self.env['account.report']._parse_line_id(line_id, markup_as_string=True)
-            if model != 'account.group'
-        ])
+    # This field is a OneToOne to a mail.message.
+    message_id = fields.Many2one('mail.message', string="Message", required=True)
+    date = fields.Date(help="Date considered as annotated by the annotation.", required=True)
 
 
 class AccountReport(models.Model):
     _inherit = 'account.report'
 
     horizontal_group_ids = fields.Many2many(string="Horizontal Groups", comodel_name='account.report.horizontal.group')
-    annotations_ids = fields.One2many(string="Annotations", comodel_name='account.report.annotation', inverse_name='report_id')
     return_type_ids = fields.One2many(string="Return Types", comodel_name='account.return.type', inverse_name='report_id')
 
     # Those fields allow case-by-case fine-tuning of the engine, for custom reports.
@@ -2769,6 +2748,9 @@ class AccountReport(models.Model):
         if options.get('export_mode') == 'print' and options.get('hide_0_lines'):
             lines = self._filter_out_0_lines(lines)
 
+        if options.get('export_mode') != 'file':
+            self._postprocess_chatter_for_annotations(lines)
+
         return lines
 
     @api.model
@@ -5271,32 +5253,86 @@ class AccountReport(models.Model):
 
         return dates_domain
 
-    def _build_annotations_domain(self, options):
-        domain = Domain('report_id', '=', options['report_id'])
-        if options.get('date'):
-            period_date_from = self._get_annotations_domain_date_from(options)
-            period_date_from = self._adjust_date_for_joined_comparison(options, period_date_from)
-            dates_domain = Domain('date', '>=', period_date_from) & Domain('date', '<=', options['date']['date_to'])
-            dates_domain = self._adjust_domain_for_unjoined_comparison(options, dates_domain)
-            domain &= Domain('date', '=', False) | dates_domain
-        return domain
-
-    def get_annotations(self, options):
+    def get_annotations(self, options, lines):
         """
         This method handles which annotations have to be displayed on the report.
         This decision is based on the different dates and mode of display of those dates in the report.
 
         param options: dict of options used to generate the report
+        param lines: list of lines of the report, used to build the domain for the annotations
         return: dict of lists containing for each annotated line_id of the report the list of annotations linked to it
         """
         self.ensure_one()
         annotations_by_line = defaultdict(list)
-        annotations = self.env['account.report.annotation'].search_read(self._build_annotations_domain(options))
+        line_dict_ids_by_record = defaultdict(set)
+        model_ids_map = defaultdict(set)
+        for line in lines:
+            if line.get('chatter'):
+                line_dict_ids_by_record[line['chatter']['model'], line['chatter']['id']].add(line['id'])
+                model_ids_map[line['chatter']['model']].add(line['chatter']['id'])
+
+        domain = Domain.OR([
+            Domain('message_id.model', '=', model) & Domain('message_id.res_id', 'in', ids)
+            for model, ids in model_ids_map.items()
+        ])
+        if options.get('date'):
+            period_date_from = self._get_annotations_domain_date_from(options)
+            period_date_from = self._adjust_date_for_joined_comparison(options, period_date_from)
+            dates_domain = Domain('date', '>=', period_date_from) & Domain('date', '<=', options['date']['date_to'])
+            dates_domain = self._adjust_domain_for_unjoined_comparison(options, dates_domain)
+            domain &= dates_domain
+
+        annotations = self.env['account.report.annotation'].search(domain)
+        to_remove_message_ids = set(annotations.message_id.sudo()._filter_empty().ids)
         for annotation in annotations:
-            line_id_without_tax_grouping = self.env['account.report.annotation']._remove_tax_grouping_from_line_id(annotation['line_id'])
-            annotation['create_date'] = annotation['create_date'].date()
-            annotations_by_line[line_id_without_tax_grouping].append(annotation)
+            message = annotation.message_id
+            if message.id in to_remove_message_ids:
+                continue
+            for line_id in line_dict_ids_by_record[message.model, message.res_id]:
+                annotations_by_line[line_id].append({
+                    'id': message.id,
+                    'model': message.model,
+                    'res_id': message.res_id,
+                    'date': annotation.date,
+                    'body': message.body,
+                    'create_date': annotation.create_date,
+                    'line_id': line_id,
+                })
         return annotations_by_line
+
+    @api.model
+    def _get_annotatable_models(self):
+        return {'account.account', 'account.move', 'account.tax'}
+
+    @api.model
+    def _postprocess_chatter_for_annotations(self, lines):
+        """ Add the chatter information on lines that can be annotated, so that it's then possible to open the right
+        chatter for that line.
+        """
+        aml_id_to_report_lines_map = defaultdict(list)
+        for line in lines:
+            if line.get('unfoldable'):
+                continue
+
+            model, record_id = self._get_model_info_from_id(line.get('id'))
+            if model == 'account.move.line':
+                aml_id_to_report_lines_map[record_id].append(line)
+            elif model in self._get_annotatable_models():
+                line['chatter'] = {
+                    'model': model,
+                    'id': record_id,
+                }
+
+        aml_id_to_account_move_id = {
+            line['id']: line['move_id'][0]
+            for line in self.env['account.move.line'].browse(aml_id_to_report_lines_map.keys()).read(['id', 'move_id'])
+        }
+        for aml_id, lines in aml_id_to_report_lines_map.items():
+            for line in lines:
+                line['chatter'] = {
+                    'model': 'account.move',
+                    'id': aml_id_to_account_move_id[aml_id],
+                }
 
     def get_report_information(self, options):
         """
@@ -5312,13 +5348,14 @@ class AccountReport(models.Model):
         # Convert all_column_groups_expression_totals to a json-friendly form (its keys are records)
         json_friendly_column_group_totals = self._get_json_friendly_column_group_totals(all_column_groups_expression_totals)
 
+        lines = self._get_lines(options, all_column_groups_expression_totals=all_column_groups_expression_totals, warnings=warnings)
         return {
             'caret_options': self._get_caret_options(),
             'column_headers_render_data': self._get_column_headers_render_data(options),
             'column_groups_totals': json_friendly_column_group_totals,
             'context': self.env.context,
-            'annotations': self.get_annotations(options),
-            'lines': self._get_lines(options, all_column_groups_expression_totals=all_column_groups_expression_totals, warnings=warnings),
+            'annotations': self.get_annotations(options, lines),
+            'lines': lines,
             'warnings': warnings,
             'report': {
                 'company_name': self.env.company.name,
@@ -5453,6 +5490,7 @@ class AccountReport(models.Model):
             lines = self.env[self.custom_handler_model_name]._custom_line_postprocessor(self, options, lines)
 
         self._format_column_values(options, lines)
+        self._postprocess_chatter_for_annotations(lines)
         return lines
 
     @api.readonly
@@ -5961,19 +5999,25 @@ class AccountReport(models.Model):
 
     def _build_annotations_list_for_pdf_export(self, date_options, lines, annotations_per_line_id):
         annotations_to_render = []
-        number = 0
+        record_to_number_map = {}
         for line in lines:
             if line_annotations := annotations_per_line_id.get(line['id']):
                 line['annotations'] = []
-                for annotation in line_annotations:
+                for annotation in sorted(line_annotations, key=lambda a: a['create_date']):
                     report_period_date_from = datetime.datetime.strptime(date_options['date_from'], '%Y-%m-%d').date()
                     report_period_date_to = datetime.datetime.strptime(date_options['date_to'], '%Y-%m-%d').date()
                     if not annotation['date'] or report_period_date_from <= annotation['date'] <= report_period_date_to:
-                        number += 1
+                        if (number := record_to_number_map.get((annotation['model'], annotation['id']))):
+                            line['annotations'].append(str(number))
+                            continue
+                        number = len(record_to_number_map) + 1
+                        record_to_number_map[annotation['model'], annotation['id']] = number
                         line['annotations'].append(str(number))
                         annotations_to_render.append({
                             'number': str(number),
-                            'text': annotation['text'],
+                            # wkhtmltopdf adds a <br> before tags such as p and div. This makes the first line of the body go down one line.
+                            # we are losing some formatting here, but annotations shouldn't have complicated tags in them.
+                            'body': markupsafe.Markup('<br/>').join(html2plaintext(annotation['body']).split("\n")),
                             'date': format_date(self.env, annotation['date']) if annotation['date'] else None,
                         })
         return annotations_to_render
@@ -6168,7 +6212,7 @@ class AccountReport(models.Model):
 
         print_mode_self = self.with_context(no_format=True)
         lines = self._filter_out_folded_children(print_mode_self._get_lines(options))
-        annotations = self.get_annotations(options)
+        annotations = self.get_annotations(options, lines)
 
         # For reports with lines generated for accounts, the account name and codes are shown in a single column.
         # To help user post-process the report if they need, we should in such a case split the account name and code in two columns.
@@ -6333,9 +6377,15 @@ class AccountReport(models.Model):
             # Write annotations.
             if annotations and (line_annotations := annotations.get(line['id'])):
                 line_annotation_text = []
+                record_to_number_map = {}
                 for line_annotation in line_annotations:
-                    line_annotation_text.append(f"{counter} - {line_annotation['text']}")
-                    counter += 1
+                    if (line_annotation['model'], line_annotation['id']) in record_to_number_map:
+                        counter = record_to_number_map[line_annotation['model'], line_annotation['id']]
+                    else:
+                        counter = len(record_to_number_map) + 1
+                        record_to_number_map[line_annotation['model'], line_annotation['id']] = counter
+
+                    line_annotation_text.append(f"{counter} - {html_to_inner_content(line_annotation['body'])}")
                 write_cell(sheet, annotations_x_offset, y + y_offset, "\n".join(line_annotation_text), annotation_format)
 
     def _add_xlsx_currency_codes_columns(self, options, lines):

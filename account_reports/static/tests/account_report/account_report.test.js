@@ -188,6 +188,9 @@ test("Test unfold loaded line", async() => {
                 mockRpcReport.getExpandedLineCallCount = (mockRpcReport.getExpandedLineCallCount || 0) + 1;
                 return getExpandedLinesMockResponse;
             }
+            if (method === "get_annotations") {
+                return [];
+            }
         }
     };
     onRpc(mockRpcReport);

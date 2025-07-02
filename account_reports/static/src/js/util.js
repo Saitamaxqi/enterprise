@@ -46,12 +46,3 @@ export function parseLineId(lineID, markupAsString = false) {
         ];
     });
 }
-
-export function removeTaxGroupingFromLineId(lineId) {
-    // Tax grouping is not relevant for annotations, so we remove it from the line id.
-    return buildLineId(
-        parseLineId(lineId, true).filter(([markup, model, value]) => {
-            return model !== "account.group";
-        })
-    );
-}

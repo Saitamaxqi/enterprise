@@ -1,6 +1,6 @@
 import { expect, test } from "@odoo/hoot";
 
-import { buildLineId, parseLineId, removeTaxGroupingFromLineId } from "@account_reports/js/util";
+import { buildLineId, parseLineId } from "@account_reports/js/util";
 
 test("can build a line id from a list of [markup, res_model, res_id]", () => {
     const values = [
@@ -45,12 +45,4 @@ test("can parse and rebuild a line id to have the same one", () => {
     const parsedLineId = parseLineId(genericId);
     const buildedGenericId = buildLineId(parsedLineId);
     expect(buildedGenericId).toBe(genericId);
-});
-
-test("can remove tax grouping by account group", () => {
-    const genericId =
-        '{"groupby": "account_group_id"}~account.group~22|~account.account~21|~account.move.line~20';
-    expect(removeTaxGroupingFromLineId(genericId)).toBe(
-        "~account.account~21|~account.move.line~20"
-    );
 });

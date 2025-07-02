@@ -2,9 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 # pylint: disable=C0326
 
-from odoo import Command, fields
+from odoo import fields
 
 from odoo.tests import tagged
+from odoo.tools import html2plaintext
 from odoo.addons.account.tests.common import AccountTestInvoicingHttpCommon
 
 @tagged('post_install', '-at_install')
@@ -65,28 +66,48 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
         self.start_tour("/odoo", 'account_reports', login=self.env.user.login)
 
     def test_account_reports_annotations_tours(self):
-        # Line ids
-        line_id_ta = self.report._get_generic_line_id('account.report.line', self.env.ref('account_reports.account_financial_report_total_assets0').id)
-        line_id_ca = self.report._get_generic_line_id('account.report.line', self.env.ref('account_reports.account_financial_report_current_assets_view0').id, parent_line_id=line_id_ta)
-        line_id_ba = self.report._get_generic_line_id('account.report.line', self.env.ref('account_reports.account_financial_report_bank_view0').id, parent_line_id=line_id_ca)
-        line_id_101401 = self.report._get_generic_line_id('account.account', self.account_101401.id, markup={'groupby': 'account_id'}, parent_line_id=line_id_ba)
-        line_id_cas = self.report._get_generic_line_id('account.report.line', self.env.ref('account_reports.account_financial_report_current_assets0').id, parent_line_id=line_id_ca)
-        line_id_101404 = self.report._get_generic_line_id('account.account', self.account_101404.id, markup={'groupby': 'account_id'}, parent_line_id=line_id_cas)
         # Create annotations
         date = fields.Date.today().strftime('%Y-%m-%d')
-        self.report.write({
-            'annotations_ids': [
-                Command.create({
-                    'line_id': line_id_101401,
-                    'text': 'Annotation 101401',
-                    'date': date,
-                }),
-                Command.create({
-                    'line_id': line_id_101404,
-                    'text': 'Annotation 101404',
-                    'date': date,
-                }),
-            ]
+        message = self.env['mail.message'].create({
+            'model': 'account.account',
+            'res_id': self.account_101401.id,
+            'body': 'Annotation 101401',
+            'date': date,
+            'author_id': self.env.user.partner_id.id,
+            'message_type': 'comment',
+            'subtype_id': self.env.ref('mail.mt_note').id,
+        })
+        self.env['account.report.annotation'].create({
+            'date': date,
+            'message_id': message.id,
+        })
+        message = self.env['mail.message'].create({
+            'model': 'account.account',
+            'res_id': self.account_101404.id,
+            'body': 'Annotation 101404',
+            'date': date,
+            'author_id': self.env.user.partner_id.id,
+            'message_type': 'comment',
+            'subtype_id': self.env.ref('mail.mt_note').id,
+        })
+        self.env['account.report.annotation'].create({
+            'date': date,
+            'message_id': message.id,
         })
 
         self.start_tour("/odoo", 'account_reports_annotations', login=self.env.user.login)
+
+    def test_account_reports_audit_tours(self):
+        self.start_tour("/odoo/action-account_reports.action_view_account_audit", 'account_reports_audit', login=self.env.user.login)
+
+        messages = self.env['mail.message'].search([
+            ('model', '=', 'account.account')
+        ])
+        annotations = self.env['account.report.annotation'].search([
+            ('message_id', 'in', messages.ids)
+        ])
+
+        self.assertEqual(len(messages), 1, "There should be one message created by the tour")
+        self.assertEqual(len(annotations), 1, "There should be one annotation created by the tour")
+        self.assertEqual(bool(annotations.date), True, "The message should be an annotation (pinned)")
+        self.assertEqual(html2plaintext(messages.body), "Annotation from the audit", "The message body should match the expected annotation text")

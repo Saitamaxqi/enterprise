@@ -2,7 +2,6 @@ import datetime
 import io
 import unittest
 
-from odoo import Command
 from odoo.tests import tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 
@@ -38,21 +37,20 @@ class TestAccountReportAnnotationsExport(TestAccountReportsCommon):
             ],
         })
         move.action_post()
-        # Get line_ids
-        line_id_ta = cls.report._get_generic_line_id('account.report.line', cls.env.ref('account_reports.account_financial_report_total_assets0').id)
-        line_id_ca = cls.report._get_generic_line_id('account.report.line', cls.env.ref('account_reports.account_financial_report_current_assets_view0').id, parent_line_id=line_id_ta)
-        line_id_ba = cls.report._get_generic_line_id('account.report.line', cls.env.ref('account_reports.account_financial_report_bank_view0').id, parent_line_id=line_id_ca)
-        line_id_bank = cls.report._get_generic_line_id('account.account', bank_default_account.id, markup={'groupby': 'account_id'}, parent_line_id=line_id_ba)
         # Create annotation
         date = datetime.datetime.strptime('2024-06-20', '%Y-%m-%d').date()
-        cls.report.write({
-            'annotations_ids': [
-                Command.create({
-                    'line_id': cls.env['account.report.annotation']._remove_tax_grouping_from_line_id(line_id_bank),
-                    'text': 'Papa a vu le fifi de lolo',
-                    'date': date,
-                }),
-            ]
+        message = cls.env['mail.message'].create({
+            'model': bank_default_account._name,
+            'res_id': bank_default_account.id,
+            'body': 'Papa a vu le fifi de lolo',
+            'date': date,
+            'author_id': cls.env.user.partner_id.id,
+            'message_type': 'comment',
+            'subtype_id': cls.env.ref('mail.mt_note').id,
+        })
+        cls.env['account.report.annotation'].create({
+            'date': date,
+            'message_id': message.id,
         })
 
     def read_xlsx_data(self, report_data):

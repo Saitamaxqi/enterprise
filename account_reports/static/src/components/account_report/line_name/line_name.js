@@ -1,10 +1,7 @@
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { useService } from "@web/core/utils/hooks";
-import { usePopover } from "@web/core/popover/popover_hook";
 import { Component, useState, useRef, useEffect } from "@odoo/owl";
-
-import { AccountReportAnnotationsPopover } from "@account_reports/components/account_report/line_name/popover/annotations_popover";
 
 import { RelationalModel } from "@web/model/relational_model/relational_model";
 
@@ -25,16 +22,11 @@ export class AccountReportLineName extends Component {
     setup() {
         this.action = useService("action");
         this.orm = useService("orm");
+        this.ui = useService("ui");
         this.controller = useState(this.env.controller);
-        this.annotationPopOver = usePopover(AccountReportAnnotationsPopover, {
-            setActiveElement: false,
-            position: "bottom",
-            animation: false,
-            closeOnClickAway: (target) => !target.closest(".annotation_popover"),
-        });
 
         this.lineNameCell = useRef("lineNameCell");
-        
+
         this.accountStatus = useState({ record: false });
         useEffect(()=> {
             this.loadAuditStatus();
@@ -57,7 +49,7 @@ export class AccountReportLineName extends Component {
                     required: false,
                 }
             }
-            
+
 
             const model = new RelationalModel(
                 this.env,
@@ -217,33 +209,25 @@ export class AccountReportLineName extends Component {
     }
 
     // -----------------------------------------------------------------------------------------------------------------
-    // Annotation
+    // Chatter
     // -----------------------------------------------------------------------------------------------------------------
-    get hasVisibleAnnotation() {
+    get isChatterAnnotated() {
         return this.props.line.visible_annotations;
     }
 
-    //------------------------------------------------------------------------------------------------------------------
-    // Annotation Popover
-    //------------------------------------------------------------------------------------------------------------------
-    async toggleAnnotationPopover() {
-        if (this.annotationPopOver.isOpen) {
-            this.annotationPopOver.close();
-        } else {
-            this.annotationPopOver.open(this.lineNameCell.el, {
-                controller: this.controller,
-                lineName: this,
-                lineID: this.props.line.id,
-            });
-        }
+    get isChatterSelected() {
+        return this.controller.chatterState.lineId === this.props.line.id;
     }
 
-    async addAnnotation(ev) {
-        this.annotationPopOver.open(this.lineNameCell.el, {
-            controller: this.controller,
-            lineName: this,
-            isAddingAnnotation: true,
-            lineID: this.props.line.id,
+    async openChatter() {
+        if (!this.props.line.chatter) {
+            return;
+        }
+
+        this.controller.toggleLineChatter({
+            resModel: this.props.line.chatter.model,
+            resId: this.props.line.chatter.id,
+            line_id: this.props.line.id,
         });
     }
 }

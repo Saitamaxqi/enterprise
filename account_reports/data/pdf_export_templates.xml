@@ -52,9 +52,7 @@
                      <ol class="o_annotation">
                         <t t-foreach="annotations" t-as="annotation">
                             <li>
-                                <t t-out="annotation.get('number')"/>.
-                                <t t-if="annotation.get('date')"><t t-out="annotation['date']"/> -</t>
-                                <t t-out="annotation.get('text')"/>
+                                <t t-out="annotation.get('number')"/>. <em><t t-out="annotation.get('date')"/></em> - <t t-out="annotation.get('body')"/>
                             </li>
                         </t>
                      </ol>

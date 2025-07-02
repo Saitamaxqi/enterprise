@@ -349,12 +349,30 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         general_ledger_custom_engine_line = self.env.ref('account_reports.general_ledger_custom_engine_line')
         processed_lines = []
         main_line_dict = None
+        account_move_lines = []
         for line in lines:
-            model, res_id = report._get_model_info_from_id(line['id'])
+            markup, model, res_id = report._parse_line_id(line['id'])[-1]
             if model == 'account.report.line' and res_id == general_ledger_custom_engine_line.id:
                 main_line_dict = line
             else:
                 processed_lines.append(line)
+
+            if (
+                model is None and markup == {'groupby': 'id_with_accumulated_balance'}
+                and not res_id.startswith('balance_line_') and options.get('export_mode') != 'file'
+            ):
+                line['chatter'] = {'id': json.loads(res_id)[1]}
+                account_move_lines.append(line)
+
+        if account_move_lines:
+            line_ids = (l['chatter']['id'] for l in account_move_lines)
+            account_moves = {
+                line['id']: line['move_id'][0]
+                for line in self.env['account.move.line'].browse(line_ids).read(['id', 'move_id'])
+            }
+            for line in account_move_lines:
+                line['chatter']['id'] = account_moves[line['chatter']['id']]
+                line['chatter']['model'] = 'account.move'
 
         if self.env.company.totals_below_sections and not options.get('ignore_totals_below_sections'):
             return processed_lines

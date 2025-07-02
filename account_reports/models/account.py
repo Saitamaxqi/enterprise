@@ -3,7 +3,6 @@
 
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
-import datetime
 
 from odoo import api, fields, models
 from odoo.tools import SQL, OrderedSet
@@ -27,27 +26,6 @@ class AccountAccount(models.Model):
     audit_status = fields.Selection(selection=STATUS_SELECTION, string="Status", compute="_compute_audit_status", inverse="_inverse_audit_status")
 
     account_status = fields.One2many(string="Account Status", comodel_name='account.audit.account.status', inverse_name='account_id')
-
-    def message_post(self, **kwargs):
-        message = super().message_post(**kwargs)
-
-        if working_file_id := self.env.context.get('working_file_id'):
-            working_file = self.env['account.return'].browse(working_file_id)
-            message.pinned_at = datetime.datetime.fromordinal(working_file.date_to.toordinal())
-        return message
-
-    def account_audit_open_form_view(self):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': self.display_name,
-            'res_model': 'account.account',
-            'res_id': self.id,
-            'view_mode': 'form',
-            'views': [[False, 'form']],
-            'context': {
-                'working_file_id': self.env.context.get('working_file_id'),
-            }
-        }
 
     def _common_audit_search(self, field_name, operator, value, previous=False):
         if isinstance(value, OrderedSet):

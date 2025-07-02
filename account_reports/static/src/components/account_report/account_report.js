@@ -14,6 +14,7 @@ import { AccountReportLine } from "@account_reports/components/account_report/li
 import { AccountReportLineCell } from "@account_reports/components/account_report/line_cell/line_cell";
 import { AccountReportLineName } from "@account_reports/components/account_report/line_name/line_name";
 import { AccountReportSearchBar } from "@account_reports/components/account_report/search_bar/search_bar";
+import { AccountReportChatter } from "@account_reports/components/mail/chatter";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { useSetupAction } from "@web/search/action_hook";
 
@@ -26,6 +27,7 @@ export class AccountReport extends Component {
         AccountReportButtonsBar,
         AccountReportCogMenu,
         AccountReportSearchBar,
+        AccountReportChatter,
     };
 
     static customizableComponents = [
@@ -57,6 +59,7 @@ export class AccountReport extends Component {
 
         this.orm = useService("orm");
         this.actionService = useService("action");
+        this.ui = useService("ui");
         this.controller = useState(new AccountReportController(this.props.action));
         this.initialQuery = this.props.action.context?.default_filter_accounts;
 
@@ -117,6 +120,18 @@ export class AccountReport extends Component {
             classes += " w-50 mx-2";
 
         return classes;
+    }
+
+    // -----------------------------------------------------------------------------------------------------------------
+    // Chatter
+    // -----------------------------------------------------------------------------------------------------------------
+    /**
+     * @param {KeyboardEvent} ev
+     */
+    onKeydown(ev) {
+        if (ev.key === "Escape") {
+            this.controller.closeChatter();
+        }
     }
 }
 

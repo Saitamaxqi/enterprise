@@ -33,7 +33,6 @@
     //------------------------------------------------------------------------------------------------------------------
     // Alert
     //------------------------------------------------------------------------------------------------------------------
-    .warnings { margin-bottom: 1rem }
     .alert {
         margin-bottom: 0;
         border-radius: 0;
@@ -54,7 +53,7 @@
         border-collapse: separate; //!\\ Allows to add padding to the table
         border-spacing: 0; //!\\ Removes default spacing between cells due to 'border-collapse: separate'
         font-size: 0.8rem;
-        margin: 0 auto 24px;
+        margin: 24px 24px;
         padding: 24px;
         width: auto;
         min-width: 800px;
@@ -85,7 +84,19 @@
                     &.muted { color: var(--AccountReport-muted-data-color, $o-gray-300) }
                     &:empty::after{ content: "\00a0" } //!\\ Prevents the collapse of empty table rows
                     &:empty { line-height: 1 }
-                    .btn_annotation { color: $o-enterprise-action-color }
+                    .btn_annotation {
+                        opacity: 0;
+                        color: $o-gray-400;
+
+                        &.o_account_report_chatter_selected {
+                            color: $o-enterprise-action-color !important;
+                        }
+
+                        &.o_account_report_chatter_selected,
+                        &.o_account_report_chatter_annoted {
+                            opacity: 1;
+                        }
+                    }
                 }
 
                 &:not(.empty) > td { border-bottom: 1px solid var(--AccountReport-fine-line-separator-color, $o-gray-200) }
@@ -114,6 +125,7 @@
                     .btn_dropdown { color: $o-enterprise-action-color }
                     .btn_foldable { color: $o-enterprise-action-color }
                     .btn_ellipsis { color: $o-enterprise-action-color }
+                    .btn_annotation { opacity: 1 }
                     .btn_annotation_go { color: $o-enterprise-action-color }
                     .btn_debug { color: $o-enterprise-action-color }
                 }
@@ -248,7 +260,6 @@
     .btn_foldable_empty:hover { cursor: default  }
     .btn_ellipsis > i { vertical-align: bottom }
     .btn_more { opacity: 1 }
-    .btn_annotation { margin-left: 6px }
     .btn_annotation_go { color: $o-gray-600 }
     .btn_annotation_delete {
         margin-left: 4px;
@@ -271,17 +282,26 @@
     .dropdown { display: inline }
 
     //------------------------------------------------------------------------------------------------------------------
-    // Annotation
+    // Chatter
     //------------------------------------------------------------------------------------------------------------------
-    .annotations {
-        border-top: 1px solid $o-gray-300;
-        font-size: 0.8rem;
-        padding: 24px 0;
+    .o_account_report_chatter {
+        border-left: 1px solid var(--border-color);
+        max-width: calc(#{$o-mail-Chatter-minWidth} + 20px + var(--Chatter-asideExtraWidth));
+        transition: max-width 0.2s ease-in-out;
 
-        > li {
-            line-height: 24px;
-            margin-left: 24px;
-            &:hover > button { color: $o-enterprise-action-color }
+        .o-mail-Chatter-topbar {
+            padding-top: 0.25rem;
+        }
+
+        &.o_account_report_chatter_hidden {
+            max-width: 0;
+            transition: max-width 0.2s ease-in-out;
+            height: 0 !important;
+
+            .o-mail-Chatter-top, .o-mail-Chatter-content{
+                --Chatter-default-padding-x: 0;
+                --ChatterAsideForm-padding-left: 0;
+            }
         }
     }
 }

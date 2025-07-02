@@ -107,7 +107,7 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
                 // Update records checks
                 const records = this.props.list.records;
                 if (records.length > 0) {
-                    const checkResults = this.orm.call("account.return", "refresh_checks", [this.currentReturnId, true])
+                    const checkResults = this.orm.call("account.return", "refresh_checks", [this.currentReturnId])
                     checkResults.then(async () => {
                         if (!this.destroyed) {
                             await this.props.list.model.load();

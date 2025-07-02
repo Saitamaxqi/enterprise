@@ -110,7 +110,7 @@
             <field name="name">account.audit.account.balances.list</field>
             <field name="model">account.account</field>
             <field name="arch" type="xml">
-                <list js_class="account_audit_balance_list" editable="top" create="0" edit="1" multi_edit="1" open_form_view="True" type="object" action="account_audit_open_form_view">
+                <list js_class="account_audit_balance_list" editable="top" create="0" edit="1" multi_edit="1" type="object">
                     <field name="audit_balance_show_warning" column_invisible="1"/>
                     <field name="audit_previous_balance_show_warning" column_invisible="1"/>
                     <field name="code" readonly="1"/>
@@ -142,9 +142,9 @@
                 <search>
                     <field name="name"/>
                     <field name="code"/>
-                    <field name="audit_debit"/> 
-                    <field name="audit_credit"/> 
-                    <field name="audit_balance"/> 
+                    <field name="audit_debit"/>
+                    <field name="audit_credit"/>
+                    <field name="audit_balance"/>
                     <field name="audit_previous_balance"/>
                     <field name="audit_var_n_1"/>
                     <field name="audit_var_percentage"/>
