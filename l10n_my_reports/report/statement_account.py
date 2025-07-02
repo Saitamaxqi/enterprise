@@ -14,5 +14,5 @@ class ReportL10n_My_ReportsReport_Statement_Account(models.AbstractModel):
             'doc_ids': ids,
             'doc_model': 'res.partner',
             'docs': self.env['res.partner'].browse(ids),
-            **data
+            **data,
         }

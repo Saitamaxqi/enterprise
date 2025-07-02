@@ -14,6 +14,7 @@ Base module for Malaysian reports
     ],
     'data': [
         "data/account_return_data.xml",
+        "data/sst_02_b1_report.xml",
         "views/account_followup_views.xml",
         'views/res_config_settings_view.xml',
         "report/statement_account_templates.xml",
