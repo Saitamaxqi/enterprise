@@ -216,6 +216,8 @@ class TestManual(common.TestUyEdi):
                 Command.create({'product_id': products[2].id, 'name': 'Custom Description'}),  # +80 chars with description
                 Command.create({'product_id': products[2].id, 'l10n_uy_edi_addenda_ids': [(6, 0, [addenda.id])]}),  # +80 chars with addenda
                 Command.create({'product_id': products[2].id, 'name': 'Custom Description', 'l10n_uy_edi_addenda_ids': [(6, 0, [addenda.id])]}),  # +80 chars with desc and addenda
+                Command.create({'product_id': products[0].id, 'name': False}),  # With description deleted by user
+                Command.create({'product_id': products[0].id, 'name': ''}),  # With a empty string as description
             ],
         )
 
@@ -264,6 +266,11 @@ class TestManual(common.TestUyEdi):
                     description,
                     "Addenda content missing in description for line with desc and addenda",
                 )
+            elif idx == 6 or idx == 7:  # With description deleted by user or ""
+                self.assertEqual(
+                    nom_item, "Product Without Description"[:80], "NomItem mismatch for line with deleted description"
+                )
+                self.assertEqual(description, "", "Description mismatch for line with deleted description")
 
     def test_120_e_ticket_final_consumer(self):
         """ Create/post/send an e-ticket and check that the pre-generated XML is the same as the one expected """

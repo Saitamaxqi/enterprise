@@ -692,7 +692,9 @@ class AccountMove(models.Model):
             nom_item = display_name[:80]
 
             # The description has the product name, so we do not include that part
-            description = display_name[80:] + aml.name.replace(display_name, '').replace('\n', '')
+            description = display_name[80:]
+            if aml.name:
+                description += aml.name.replace(display_name, '').replace('\n', '')
 
         if aml.l10n_uy_edi_addenda_ids:
             adenda = [" {%s}" % addenda.content if addenda.is_legend else " " + addenda.content for addenda in aml.l10n_uy_edi_addenda_ids]
