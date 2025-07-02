@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 SALE_ORDER_LINE_FIELDS = [
@@ -125,7 +125,7 @@ class SaleOrderSpreadsheet(models.Model):
     @api.readonly
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
-        domain = expression.AND([domain, [("order_id", "=", False)]])
+        domain = Domain.AND([domain, [("order_id", "=", False)]])
         return super().get_spreadsheets(domain, offset, limit)
 
     @api.model

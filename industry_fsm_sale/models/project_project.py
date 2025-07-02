@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.osv import expression
-from odoo.tools import OrderedSet, SQL
+from odoo.fields import Domain
+from odoo.tools import SQL
 
 
 class ProjectProject(models.Model):
@@ -114,7 +113,7 @@ class ProjectProject(models.Model):
         if 'fixed_rate' in values:
             values.discard('fixed_rate')
             domain = super()._search_pricing_type(operator, {'fixed_rate'})
-            domains.append(expression.AND([domain, [('is_fsm', operator, [False])]]))
+            domains.append(Domain.AND([domain, [('is_fsm', operator, [False])]]))
         if other_rates := {rate for rate in ('task_rate', 'employee_rate') if rate in values}:
             values.difference_update(other_rates)
             domain = super()._search_pricing_type(operator, other_rates)
@@ -124,10 +123,10 @@ class ProjectProject(models.Model):
             ]
             if len(other_rates) == 1:
                 fsm_domain.append(('sale_line_employee_ids', '!=' if 'employee_rate' in other_rates else '=', False))
-            domains.append(expression.OR([domain, fsm_domain]))
+            domains.append(Domain.OR([domain, fsm_domain]))
         if values:
             domains.append(super()._search_pricing_type(operator, values))
-        return expression.OR(domains)
+        return Domain.OR(domains)
 
     @api.depends('is_fsm')
     def _compute_sale_line_id(self):
@@ -158,14 +157,13 @@ class ProjectProject(models.Model):
             ]
             domain = include_additional_sale_orders \
                 if domain is None \
-                else expression.OR([domain, include_additional_sale_orders])
+                else Domain.OR([domain, include_additional_sale_orders])
         return super()._get_profitability_sale_order_items_domain(domain)
 
     def _get_additional_quotations_query(self, domain=None):
-        if domain is None:
-            domain = []
+        domain = Domain(domain or Domain.TRUE) & Domain('task_id', '!=', False)
         SaleOrder = self.env['sale.order']
-        query = SaleOrder._where_calc(expression.AND([domain, [('task_id', '!=', False)]]))
+        query = SaleOrder._where_calc(domain)
         SaleOrder._apply_ir_rules(query, 'read')
         task_alias = query.make_alias(SaleOrder._table, 'task_id')
         query.add_join("JOIN", task_alias, 'project_task', SQL(
@@ -189,11 +187,11 @@ class ProjectProject(models.Model):
                 'project.sale.line.employee.map': employee_mapping_domain,
             }
         else:
-            domain_per_model['project.project'] = expression.AND([
+            domain_per_model['project.project'] = Domain.AND([
                 domain_per_model.get('project.project', []),
                 basic_project_domain,
             ])
-            domain_per_model['project.sale.line.employee.map'] = expression.AND([
+            domain_per_model['project.sale.line.employee.map'] = Domain.AND([
                 domain_per_model.get('project.sale.line.employee.map', []),
                 employee_mapping_domain,
             ])

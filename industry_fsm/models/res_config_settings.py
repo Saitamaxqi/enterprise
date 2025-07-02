@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class ResConfigSettings(models.TransientModel):
@@ -23,7 +22,7 @@ class ResConfigSettings(models.TransientModel):
 
     @api.model
     def _get_basic_project_domain(self):
-        return expression.AND([super()._get_basic_project_domain(), [('is_fsm', '=', False)]])
+        return Domain.AND([super()._get_basic_project_domain(), [('is_fsm', '=', False)]])
 
     @api.depends('group_industry_fsm_quotations')
     def _compute_module_industry_fsm_sale(self):

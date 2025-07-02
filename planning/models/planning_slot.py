@@ -12,7 +12,7 @@ from werkzeug.urls import url_encode
 
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, SQL, float_utils, format_datetime
 from odoo.tools.date_utils import get_timedelta, sum_intervals
 from odoo.tools.intervals import Intervals
@@ -355,7 +355,7 @@ class PlanningSlot(models.Model):
     @api.model
     def _search_overlap_slot_count(self, operator, value):
         if operator == 'in':
-            return expression.OR(self._search_overlap_slot_count('=', v) for v in value)
+            return Domain.OR(self._search_overlap_slot_count('=', v) for v in value)
         if operator not in ['=', '>'] or not isinstance(value, int) or value != 0:
             raise NotImplementedError(self.env._('Operation not supported, you should always compare overlap_slot_count to 0 value with = or > operator.'))
 
@@ -1056,21 +1056,19 @@ class PlanningSlot(models.Model):
         """
         if recurrence_update == 'this':
             return
-        domain = [('id', 'not in', self.ids)]
+        domain = Domain('id', 'not in', self.ids)
         if recurrence_update == 'all':
-            domain = expression.AND([domain, [('recurrency_id', 'in', self.recurrency_id.ids)]])
+            domain &= Domain('recurrency_id', 'in', self.recurrency_id.ids)
         elif recurrence_update == 'subsequent':
             start_date_per_recurrency_id = {}
-            sub_domains = []
             for shift in self:
                 if shift.recurrency_id.id not in start_date_per_recurrency_id\
                     or shift.start_datetime < start_date_per_recurrency_id[shift.recurrency_id.id]:
                     start_date_per_recurrency_id[shift.recurrency_id.id] = shift.start_datetime
-            for recurrency_id, start_datetime in start_date_per_recurrency_id.items():
-                sub_domains.append([
-                    '&', ('recurrency_id', '=', recurrency_id), ('start_datetime', '>', start_datetime),
-                ])
-            domain = expression.AND([domain, expression.OR(sub_domains)])
+            domain &= Domain.OR(
+                Domain('recurrency_id', '=', recurrency_id) & Domain('start_datetime', '>', start_datetime)
+                for recurrency_id, start_datetime in start_date_per_recurrency_id.items()
+            )
         sibling_slots = self.env['planning.slot'].search(domain)
         self.recurrency_id.unlink()
         sibling_slots.unlink()
@@ -1218,7 +1216,7 @@ class PlanningSlot(models.Model):
 
         # Our goal is to assign empty shifts in this period. So first, let's get them all!
         open_shifts, min_start, max_end = self._read_group(
-            expression.AND([
+            Domain.AND([
                 view_domain,
                 [('resource_id', '=', False)],
             ]),
@@ -1607,11 +1605,9 @@ class PlanningSlot(models.Model):
     def _get_employees_to_send_slot(self):
         self.ensure_one()
         if not self.employee_id or not self.employee_id.work_email:
-            domain = [('company_id', '=', self.company_id.id), ('work_email', '!=', False)]
+            domain = Domain('company_id', '=', self.company_id.id) & Domain('work_email', '!=', False)
             if self.role_id:
-                domain = expression.AND([
-                    domain,
-                    ['|', ('planning_role_ids', '=', False), ('planning_role_ids', 'in', self.role_id.id)]])
+                domain &= Domain('planning_role_ids', '=', False) | Domain('planning_role_ids', 'in', self.role_id.id)
             return self.env['hr.employee'].sudo().search(domain)
         return self.employee_id
 
@@ -2014,22 +2010,22 @@ class PlanningSlot(models.Model):
             return self.env['resource.resource'].search([('id', 'in', resource_ids)])
         if self.env.context.get('planning_expand_resource') and ('start_datetime', '<') in dom_tuples and ('end_datetime', '>') in dom_tuples:
             # Search on the roles and resources
-            search_on_role_domain = []
-            search_on_ressource_domain = []
+            search_on_role_domain = Domain.TRUE
+            search_on_ressource_domain = Domain.TRUE
             if ('role_id', '=') in dom_tuples or ('role_id', 'ilike') in dom_tuples or ('role_id', 'in') in dom_tuples:
-                role_search_domain = self._expand_domain_m2o_groupby(domain, 'role_id')
+                role_search_domain = Domain(self._expand_domain_m2o_groupby(domain, 'role_id'))
                 role_ids = self.env["planning.role"].search(role_search_domain).ids
-                search_on_role_domain = [('role_ids', 'in', role_ids)]
+                search_on_role_domain = Domain('role_ids', 'in', role_ids)
             if ('resource_id', '=') in dom_tuples or ('resource_id', 'ilike') in dom_tuples or ('resource_id', 'in') in dom_tuples:
-                search_on_ressource_domain = self._expand_domain_m2o_groupby(domain, 'resource_id')
+                search_on_ressource_domain = Domain(self._expand_domain_m2o_groupby(domain, 'resource_id'))
             # Search on the slots
             filters = self._expand_domain_dates(domain)
             resources = self.env['planning.slot'].search(filters).mapped('resource_id')
-            search_on_expanded_dates = [('id', 'in', resources.ids)]
+            search_on_expanded_dates = Domain('id', 'in', resources.ids)
             # Merge the search domains
             if search_on_role_domain or search_on_ressource_domain:
-                search_domain = expression.AND([search_on_role_domain, search_on_ressource_domain])
-                return self.env["resource.resource"].search(expression.OR([search_domain, search_on_expanded_dates]))
+                search_domain = search_on_role_domain & search_on_ressource_domain
+                return self.env["resource.resource"].search(search_domain | search_on_expanded_dates)
             return self.env["resource.resource"].search(search_on_expanded_dates)
         return resources
 
@@ -2039,7 +2035,7 @@ class PlanningSlot(models.Model):
             if ('role_id', '=') in dom_tuples or ('role_id', 'ilike') in dom_tuples:
                 filter_domain = self._expand_domain_m2o_groupby(domain, 'role_id')
                 return self.env['planning.role'].search(filter_domain)
-            filters = expression.AND([[('role_id.active', '=', True)], self._expand_domain_dates(domain)])
+            filters = Domain.AND([[('role_id.active', '=', True)], self._expand_domain_dates(domain)])
             return self.env['planning.slot'].search(filters).mapped('role_id')
         return roles
 
@@ -2055,7 +2051,7 @@ class PlanningSlot(models.Model):
                     elif dom[1] == 'ilike':
                         rec_name = self.env[field.comodel_name]._rec_name
                         filter_domains.append([(rec_name, dom[1], dom[2])])
-        return expression.OR(filter_domains) if filter_domains else []
+        return Domain.OR(filter_domains) if filter_domains else Domain.TRUE
 
     def _expand_domain_dates(self, domain):
         filters = []

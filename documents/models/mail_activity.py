@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
 
-from odoo import api, models, fields, _
-from odoo.osv import expression
+from odoo import api, models, _
+from odoo.fields import Domain
 
 
 class MailActivity(models.Model):
@@ -91,9 +90,11 @@ class MailActivity(models.Model):
             ('request_activity_id', 'in', self.ids),
         ], ['requestee_partner_id'])
         new_expiration_date = datetime.combine(self[0].date_deadline, datetime.max.time())
-        self.env['documents.access'].search(expression.OR([[
-            ('document_id', '=', document_requestee_partner_id['id']),
-            ('partner_id', '=', document_requestee_partner_id['requestee_partner_id'][0]),
-            ('expiration_date', '<', new_expiration_date),
-        ] for document_requestee_partner_id in document_requestee_partner_ids
-        ])).expiration_date = new_expiration_date
+        self.env['documents.access'].search(Domain.OR(
+            [
+                ('document_id', '=', document_requestee_partner_id['id']),
+                ('partner_id', '=', document_requestee_partner_id['requestee_partner_id'][0]),
+                ('expiration_date', '<', new_expiration_date),
+            ]
+            for document_requestee_partner_id in document_requestee_partner_ids
+        )).expiration_date = new_expiration_date

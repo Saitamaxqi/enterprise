@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from ast import literal_eval
@@ -6,7 +5,7 @@ from collections import defaultdict
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Domain
 from odoo.tools.misc import unquote
 
 
@@ -14,7 +13,7 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     def _domain_sale_line_id(self):
-        domain = expression.AND([
+        domain = Domain.AND([
             self.env['sale.order.line']._sellable_lines_domain(),
             self.env['sale.order.line']._domain_sale_line_service(),
             [
@@ -145,9 +144,9 @@ class ProjectTask(models.Model):
             task.quotation_count = mapped_data.get(task.id, 0)
 
     def _compute_portal_quotation_count(self):
-        domain = [('task_id', 'in', self.ids)]
+        domain = Domain('task_id', 'in', self.ids)
         if self.env.user._is_portal():
-            domain = expression.AND([domain, [('state', '!=', 'draft')]])
+            domain &= Domain('state', '!=', 'draft')
         quotation_data = self.env['sale.order']._read_group(domain, ['task_id'], ['__count'])
         mapped_data = {task.id: count for task, count in quotation_data}
         for task in self:
@@ -400,7 +399,7 @@ class ProjectTask(models.Model):
 
         self = self.with_company(self.company_id)
 
-        domain = [
+        domain = Domain([
             ('company_id', 'in', [self.company_id.id, False]),
             ('sale_ok', '=', True),
             '|', ('type', '=', 'consu'),
@@ -408,9 +407,9 @@ class ProjectTask(models.Model):
                     ('type', '=', 'service'),
                     ('invoice_policy', '=', 'delivery'),
                     ('service_type', '=', 'manual'),
-        ]
+        ])
         if self.project_id and self.timesheet_product_id:
-            domain = expression.AND([domain, [('id', '!=', self.timesheet_product_id.id)]])
+            domain &= Domain('id', '!=', self.timesheet_product_id.id)
 
         kanban_view = self.env.ref('industry_fsm_sale.industry_fsm_sale_product_catalog_kanban_view')
         search_view = self.env.ref('industry_fsm_sale.industry_fsm_sale_product_catalog_inherit_search_view')

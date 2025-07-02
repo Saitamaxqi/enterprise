@@ -3,7 +3,7 @@
 from collections import defaultdict
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class PlanningSlot(models.Model):
@@ -27,12 +27,13 @@ class PlanningSlot(models.Model):
                 slot.project_id = self.env["project.project"].browse(self.env.context['default_project_id'])
 
     def _read_group_project_id(self, projects, domain):
-        dom_tuples = [(dom[0], dom[1]) for dom in domain if isinstance(dom, list) and len(dom) == 3]
+        domain = Domain(domain)
+        dom_tuples = [(cond.field_expr, cond.operator) for cond in domain.iter_conditions()]
         if self.env.context.get('planning_expand_project') and ('start_datetime', '<') in dom_tuples and ('end_datetime', '>') in dom_tuples:
             if ('project_id', '=') in dom_tuples or ('project_id', 'ilike') in dom_tuples:
                 filter_domain = self._expand_domain_m2o_groupby(domain, 'project_id')
                 return self.env['project.project'].search(filter_domain)
-            filters = expression.AND([[('project_id.active', '=', True)], self._expand_domain_dates(domain)])
+            filters = Domain.AND([[('project_id.active', '=', True)], self._expand_domain_dates(domain)])
             return self.env['planning.slot'].search(filters).mapped('project_id')
         return projects
 
@@ -58,16 +59,10 @@ class PlanningSlot(models.Model):
         return {'project_id': 'project_id', **values}
 
     def _get_domain_template_slots(self):
-        domain = super()._get_domain_template_slots()
-        domain = expression.AND([
-            domain,
-            ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)],
-        ])
+        domain = Domain(super()._get_domain_template_slots())
+        domain &= Domain('company_id', '=', [False, self.company_id.id])
         if self.project_id:
-            domain = expression.AND([
-                domain,
-                [('project_id', '=', self.project_id.id)],
-            ])
+            domain &= Domain('project_id', '=', self.project_id.id)
         return domain
 
     @api.depends('role_id', 'employee_id', 'project_id', 'company_id')

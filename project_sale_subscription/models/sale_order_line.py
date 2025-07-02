@@ -4,7 +4,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class SaleOrderLine(models.Model):
@@ -52,7 +52,7 @@ class SaleOrderLine(models.Model):
         return task
 
     def _get_product_from_sol_name_domain(self, product_name):
-        return expression.AND([
+        return Domain.AND([
             super()._get_product_from_sol_name_domain(product_name),
             [("recurring_invoice", "=", False)],
         ])

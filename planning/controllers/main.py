@@ -1,12 +1,10 @@
-
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licens
 
 import logging
 from odoo import http, _
+from odoo.fields import Domain
 from odoo.http import request
 from odoo.tools import format_duration
-from odoo.osv import expression
 
 import pytz
 from odoo.tools.misc import get_lang
@@ -20,6 +18,7 @@ try:
 except ImportError:
     _logger.warning("`vobject` Python module not found, vcard file generation disabled. Consider installing this module if you want to generate vcard files")
     vobject = None
+
 
 class ShiftController(http.Controller):
 
@@ -89,30 +88,24 @@ class ShiftController(http.Controller):
         open_slots = []
         unwanted_slots = []
 
-        domain = [
+        domain = Domain([
             ('start_datetime', '>=', planning_sudo.start_datetime),
             ('end_datetime', '<=', planning_sudo.end_datetime),
             ('state', '=', 'published'),
-        ]
+        ])
         if planning_sudo.include_unassigned:
-            domain = expression.AND([
-                domain,
-                [
-                    '|',
-                    ('employee_id', '=', employee_sudo.id),
-                    '|',
-                        ('resource_id', '=', False),
-                        ('request_to_switch', '=', True),
-                ],
+            domain &= Domain([
+                '|',
+                ('employee_id', '=', employee_sudo.id),
+                '|',
+                    ('resource_id', '=', False),
+                    ('request_to_switch', '=', True),
             ])
         else:
-            domain = expression.AND([
-                domain,
-                [
-                    '|',
-                        ('employee_id', '=', employee_sudo.id),
-                        ('request_to_switch', '=', True),
-                ],
+            domain &= Domain([
+                '|',
+                    ('employee_id', '=', employee_sudo.id),
+                    ('request_to_switch', '=', True),
             ])
         planning_slots = request.env['planning.slot'].sudo().search(domain, order='start_datetime asc')
         planning_slots.filtered(lambda s: s.is_past and s.request_to_switch).request_to_switch = False

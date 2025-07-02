@@ -3,7 +3,7 @@
 import pytz
 
 from odoo import _, api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class PlanningSlot(models.Model):
@@ -35,13 +35,13 @@ class PlanningSlot(models.Model):
         self.ensure_one()
         if not self.project_id:
             return None
-        domain = [
+        domain = Domain([
             ('employee_id', '=', self.employee_id.id),
             ('date', '>=', self.start_datetime.date()),
             ('date', '<=', self.end_datetime.date())
-        ]
+        ])
         if self.project_id:
-            domain = expression.AND([[('project_id', '=', self.project_id.id)], domain])
+            domain = Domain('project_id', '=', self.project_id.id) & domain
         return domain
 
     @api.depends('timesheet_ids')

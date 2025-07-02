@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, api
+from odoo.fields import Domain
 from odoo.addons.resource.models.utils import filter_domain_leaf
-from odoo.osv import expression
 
 
 class PlanningSlot(models.Model):
@@ -17,6 +16,7 @@ class PlanningSlot(models.Model):
         overriding
         _group_expand_resource_id adds 'resource_ids' in the domain corresponding to 'employee_skill_ids' fields already in the domain
         """
+        domain = Domain(domain)
         # 1. Transform the current domain to search hr.skill records
         skill_search_domain = filter_domain_leaf(
             domain,
@@ -38,8 +38,5 @@ class PlanningSlot(models.Model):
         # 3. Looking for corresponding resources
         matching_resource_ids = self.env['resource.resource']._search([('employee_id', 'in', matching_employee_ids)])
 
-        filtered_domain = expression.AND([
-            [('resource_id', 'in', matching_resource_ids)],
-            domain,
-        ])
+        filtered_domain = Domain('resource_id', 'in', matching_resource_ids) & domain
         return super()._group_expand_resource_id(resources, filtered_domain)

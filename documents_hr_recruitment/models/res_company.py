@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
-from odoo.osv import expression
+from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 class ResCompany(models.Model):
@@ -20,7 +19,6 @@ class ResCompany(models.Model):
         self._reset_default_documents_folder_id('documents_recruitment_settings', 'recruitment_folder_id', folder_id)
 
     def _get_used_folder_ids_domain(self, folder_ids):
-        return expression.OR([
-            super()._get_used_folder_ids_domain(folder_ids),
-            [('recruitment_folder_id', 'in', folder_ids), ('documents_recruitment_settings', '=', True)]
-        ])
+        return super()._get_used_folder_ids_domain(folder_ids) | (
+            Domain('recruitment_folder_id', 'in', folder_ids) & Domain('documents_recruitment_settings', '=', True)
+        )

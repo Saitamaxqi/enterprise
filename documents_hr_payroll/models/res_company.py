@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import _, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class ResCompany(models.Model):
@@ -34,10 +33,7 @@ class ResCompany(models.Model):
         return folders
 
     def _get_used_folder_ids_domain(self, folder_ids):
-        return expression.OR([
-            super()._get_used_folder_ids_domain(folder_ids),
-            [('worker_payroll_folder_id', 'in', folder_ids)]
-        ])
+        return super()._get_used_folder_ids_domain(folder_ids) | Domain('worker_payroll_folder_id', 'in', folder_ids)
 
     def _get_or_create_worker_payroll_folder(self):
         if not self.worker_payroll_folder_id:

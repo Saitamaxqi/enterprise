@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import heapq
 from pytz import utc, timezone
 from collections import defaultdict
 from datetime import timedelta, datetime
@@ -9,7 +8,6 @@ from odoo.tools.date_utils import get_timedelta
 
 from odoo import api, fields, models
 from odoo.fields import Domain
-from odoo.osv import expression
 from odoo.exceptions import UserError
 from odoo.tools import _, format_list, topological_sort, Query
 from odoo.tools.intervals import Intervals
@@ -562,26 +560,25 @@ class ProjectTask(models.Model):
             return search_on_comodel | self.env.user
         start_date = fields.Datetime.from_string(start_date)
         delta = get_timedelta(1, scale)
-        domain_expand = expression.AND([
-            self._group_expand_user_ids_domain([
+        domain_expand = (
+            Domain(self._group_expand_user_ids_domain([
                 ('planned_date_begin', '>=', start_date - delta),
                 ('date_deadline', '<', start_date + delta)
-            ]),
-            domain,
-        ])
+            ])) & domain
+        )
         return self.search(domain_expand).user_ids.filtered(lambda user: user.active) | self.env.user
 
     def _group_expand_user_ids_domain(self, domain_expand):
         project_id = self.env.context.get('default_project_id')
         if project_id:
-            domain_expand = expression.OR([[
+            domain_expand = Domain.OR([[
                 ('project_id', '=', project_id),
                 ('is_closed', '=', False),
                 ('planned_date_begin', '=', False),
                 ('date_deadline', '=', False),
             ], domain_expand])
         else:
-            domain_expand = expression.AND([[
+            domain_expand = Domain.AND([[
                 ('project_id', '!=', False),
             ], domain_expand])
         return domain_expand
@@ -1635,13 +1632,13 @@ class ProjectTask(models.Model):
         results = {}
         project_id = self.env.context.get('default_project_id', False)
         # get domains
-        result_domain = self._prepare_domains_for_all_deadlines(date_start, date_end)
-        project_domain = result_domain['project']
-        milestone_domain = result_domain['milestone']
+        result_domains = self._prepare_domains_for_all_deadlines(date_start, date_end)
+        project_domain = Domain(result_domains['project'])
+        milestone_domain = Domain(result_domains['milestone'])
 
         if project_id:
-            project_domain = expression.AND([project_domain, [('id', '=', project_id)]])
-            milestone_domain = expression.AND([milestone_domain, [('project_id', '=', project_id)]])
+            project_domain &= Domain('id', '=', project_id)
+            milestone_domain &= Domain('project_id', '=', project_id)
         results['project_id'] = self.env['project.project'].search_read(
             project_domain,
             ['id', 'name', 'date', 'date_start']

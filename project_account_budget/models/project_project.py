@@ -4,7 +4,7 @@ from collections import defaultdict
 import json
 
 from odoo import fields, models, _
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class ProjectProject(models.Model):
@@ -35,7 +35,7 @@ class ProjectProject(models.Model):
 
     def action_view_budget_lines(self, domain=None):
         self.ensure_one()
-        budget_lines = self.env['budget.line'].search(expression.AND([
+        budget_lines = self.env['budget.line'].search(Domain.AND([
             [('account_id', '=', self.account_id.id), ('budget_analytic_id.state', 'in', ['confirmed', 'done'])],
             domain or [],
         ]))

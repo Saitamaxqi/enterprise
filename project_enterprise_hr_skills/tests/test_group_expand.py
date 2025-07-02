@@ -1,9 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.fields import Datetime
-from odoo.osv import expression
+from odoo.fields import Datetime, Domain
 
-from odoo.addons.project.models.project_task import CLOSED_STATES
 from odoo.addons.project_enterprise.tests.test_task_gantt_view import TestTaskGanttView
 
 from odoo.tests import Form
@@ -70,15 +68,12 @@ class TestTaskGanttViewWithSkills(TestTaskGanttView):
             period for that project, whether or not is open.
         """
         super().test_empty_line_task_last_period()
-        domain = [
+        domain = Domain([
             ('project_id', '=', self.project_gantt_test_1.id),
             ('is_closed', '=', False),
-        ]
-
-        domain_with_skill = expression.AND([
-            domain,
-            [('user_skill_ids', 'ilike', self.fr_skill.name)],
         ])
+
+        domain_with_skill = domain & Domain('user_skill_ids', 'ilike', self.fr_skill.name)
         displayed_gantt_users = self.env['project.task'].with_context({
             'gantt_start_date': Datetime.to_datetime('2023-02-01'),
             'gantt_scale': 'month',
@@ -88,10 +83,7 @@ class TestTaskGanttViewWithSkills(TestTaskGanttView):
         self.assertFalse(self.user_gantt_test_2 in displayed_gantt_users, 'There should not be an empty line for test user 2')
         self.assertFalse(self.user_gantt_test_3 in displayed_gantt_users, 'There should not be an empty line for test user 3')
 
-        domain_with_skill = expression.AND([
-            domain,
-            [('user_skill_ids', 'ilike', self.en_skill.name)],
-        ])
+        domain_with_skill = domain & Domain('user_skill_ids', 'ilike', self.en_skill.name)
         displayed_gantt_users = self.env['project.task'].with_context({
             'gantt_start_date': Datetime.to_datetime('2023-02-01'),
             'gantt_scale': 'month',
@@ -101,10 +93,7 @@ class TestTaskGanttViewWithSkills(TestTaskGanttView):
         self.assertTrue(self.user_gantt_test_2 in displayed_gantt_users, 'There should be an empty line for test user 2')
         self.assertFalse(self.user_gantt_test_3 in displayed_gantt_users, 'There should not be an empty line for test user 3')
 
-        domain_with_skill = expression.AND([
-            domain,
-            [('user_skill_ids', 'ilike', self.es_skill.name)],
-        ])
+        domain_with_skill = domain & Domain('user_skill_ids', 'ilike', self.es_skill.name)
         displayed_gantt_users = self.env['project.task'].with_context({
             'gantt_start_date': Datetime.to_datetime('2023-02-01'),
             'gantt_scale': 'month',
@@ -121,11 +110,8 @@ class TestTaskGanttViewWithSkills(TestTaskGanttView):
             that task is open.
         """
         super().test_empty_line_task_last_period_all_tasks()
-        domain = [('is_closed', '=', False)]
-        domain_with_skill = expression.AND([
-            domain,
-            [('user_skill_ids', 'ilike', self.fr_skill.name)],
-        ])
+        domain = Domain('is_closed', '=', False)
+        domain_with_skill = domain & Domain('user_skill_ids', 'ilike', self.fr_skill.name)
         ProjectTask = self.env['project.task'].with_context({
             'gantt_start_date': Datetime.to_datetime('2023-01-02'),
             'gantt_scale': 'day',
@@ -136,20 +122,14 @@ class TestTaskGanttViewWithSkills(TestTaskGanttView):
         self.assertFalse(self.user_gantt_test_2 in displayed_gantt_users, 'There should not be an empty line for test user 2')
         self.assertFalse(self.user_gantt_test_3 in displayed_gantt_users, 'There should not be an empty line for test user 3')
 
-        domain_with_skill = expression.AND([
-            domain,
-            [('user_skill_ids', 'ilike', self.en_skill.name)],
-        ])
+        domain_with_skill = domain & Domain('user_skill_ids', 'ilike', self.en_skill.name)
         displayed_gantt_users = ProjectTask._group_expand_user_ids(None, domain_with_skill)
 
         self.assertTrue(self.user_gantt_test_1 in displayed_gantt_users, 'There should be an empty line for test user 1')
         self.assertTrue(self.user_gantt_test_2 in displayed_gantt_users, 'There should be an empty line for test user 2')
         self.assertFalse(self.user_gantt_test_3 in displayed_gantt_users, 'There should not be an empty line for test user 3')
 
-        domain_with_skill = expression.AND([
-            domain,
-            [('user_skill_ids', 'ilike', self.es_skill.name)],
-        ])
+        domain_with_skill = domain & Domain('user_skill_ids', 'ilike', self.es_skill.name)
         displayed_gantt_users = ProjectTask._group_expand_user_ids(None, domain_with_skill)
 
         self.assertFalse(self.user_gantt_test_1 in displayed_gantt_users, 'There should not be an empty line for test user 1')

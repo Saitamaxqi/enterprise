@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class ResCompany(models.Model):
@@ -22,7 +22,6 @@ class ResCompany(models.Model):
         self._reset_default_documents_folder_id('documents_fleet_settings', 'documents_fleet_folder', folder_id)
 
     def _get_used_folder_ids_domain(self, folder_ids):
-        return expression.OR([
-            super()._get_used_folder_ids_domain(folder_ids),
-            [('documents_fleet_folder', 'in', folder_ids), ('documents_fleet_settings', '=', True)]
-        ])
+        return super()._get_used_folder_ids_domain(folder_ids) | (
+            Domain('documents_fleet_folder', 'in', folder_ids) & Domain('documents_fleet_settings', '=', True)
+        )

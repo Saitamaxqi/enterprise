@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import base64
 import io
 import json
@@ -16,8 +14,8 @@ from werkzeug.exceptions import BadRequest, Forbidden
 
 from odoo import fields, http, _
 from odoo.exceptions import MissingError
+from odoo.fields import Domain
 from odoo.http import request, content_disposition
-from odoo.osv import expression
 from odoo.tools import replace_exceptions, str2bool, consteq
 
 from odoo.addons.documents.tools import attachment_read, is_mimetype_textual
@@ -37,26 +35,26 @@ class ShareRoute(http.Controller):
     @classmethod
     def _get_folder_children(cls, folder_sudo):
         if request.env.user._is_public():
-            permission_domain = expression.AND([
+            permission_domain = Domain.AND([
                 [('is_access_via_link_hidden', '=', False)],
                 [('access_via_link', 'in', ('edit', 'view'))],
                 # public user cannot access a request, unless access_via_link='edit'
-                expression.OR([
+                Domain.OR([
                     [('access_via_link', '=', 'edit')],
                     [('type', '!=', 'binary')],
-                    expression.OR([
+                    Domain.OR([
                         [('attachment_id', '!=', False)],
                         [('shortcut_document_id.attachment_id', '!=', False)],
                     ]),
                 ])
             ])
         else:
-            permission_domain = [('user_permission', '!=', 'none')]  # needed for search in sudo
+            permission_domain = Domain('user_permission', '!=', 'none')  # needed for search in sudo
 
-        children_sudo = request.env['documents.document'].sudo().search(expression.AND([
-            [('folder_id', '=', folder_sudo.id)],
-            permission_domain,
-        ]), order='name')
+        children_sudo = request.env['documents.document'].sudo().search(
+            Domain('folder_id', '=', folder_sudo.id) & permission_domain,
+            order='name',
+        )
 
         return children_sudo
 

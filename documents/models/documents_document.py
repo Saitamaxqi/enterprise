@@ -17,7 +17,6 @@ import odoo
 from odoo import _, api, Command, fields, models, SUPERUSER_ID
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.fields import Domain
-from odoo.osv import expression
 from odoo.tools import groupby, SQL
 from odoo.tools.image import image_process
 from odoo.tools.mimetypes import get_extension
@@ -474,11 +473,12 @@ class DocumentsDocument(models.Model):
             return Domain.FALSE
         searched_roles = list(searched_roles)
 
-        other_company = [('company_id', '!=', False), ('company_id', 'not in', self.env.user.company_ids.ids)]
-        allowed_or_no_company = [('company_id', 'in', [False] + self.env.companies.ids)]
-        any_except_disabled_company = expression.OR([
-            [('company_id', 'in', self.env.companies.ids)], [('company_id', 'not in', self.env.user.company_ids.ids)]
-        ])
+        other_company = Domain('company_id', '!=', False) & Domain('company_id', 'not in', self.env.user.company_ids.ids)
+        allowed_or_no_company = Domain('company_id', 'in', [False] + self.env.companies.ids)
+        any_except_disabled_company = (
+            Domain('company_id', 'in', self.env.companies.ids)
+            | Domain('company_id', 'not in', self.env.user.company_ids.ids)
+        )
 
         if self.env.user.has_group('documents.group_documents_system'):
             if searched_roles == ['view']:
@@ -487,84 +487,67 @@ class DocumentsDocument(models.Model):
 
         # Access from membership
         if searched_roles == ['view']:
-            access_level_domain = expression.OR([
-                [('role', '=', 'view'), ('document_id.access_via_link', 'in', ('none', 'view'))],
-                [('role', '=', False), ('document_id.access_via_link', '=', 'view')],
-            ])
+            access_level_domain = (
+                (Domain('role', '=', 'view') & Domain('document_id.access_via_link', 'in', ('none', 'view')))
+                | (Domain('role', '=', False) & Domain('document_id.access_via_link', '=', 'view'))
+            )
         elif searched_roles == ['edit']:
-            access_level_domain = expression.OR([
-                [('role', '=', 'edit')], [('document_id.access_via_link', '=', 'edit')]
-            ])
+            access_level_domain = Domain('role', '=', 'edit') | Domain('document_id.access_via_link', '=', 'edit')
         else:
-            access_level_domain = expression.OR([
-                [('role', 'in', ('view', 'edit'))], [('document_id.access_via_link', '!=', 'none')]
-            ])
-        access_domain = [('access_ids', 'any', expression.AND([
+            access_level_domain = Domain('role', 'in', ('view', 'edit')) | Domain('document_id.access_via_link', '!=', 'none')
+        access_domain = Domain('access_ids', 'any', Domain.AND((
             access_level_domain,
-            expression.AND([
-                [('partner_id', '=', self.env.user.partner_id.id)],
-                ['|', ('expiration_date', '=', False), ('expiration_date', '>', fields.Datetime.now())],
-            ]),
-        ]))]
+            Domain('partner_id', '=', self.env.user.partner_id.id),
+            Domain('expiration_date', '=', False) | Domain('expiration_date', '>', fields.Datetime.now()),
+        )))
 
         # Access from ownership
         if exclude_ownership:
             owner_domain = Domain.FALSE
         else:
-            owner_domain = expression.AND([
-                [('owner_id', '=', self.env.user.id)],
-                expression.OR([
-                    [('shortcut_document_id', '=', False)],
-                    [('shortcut_document_owner_id', '=', self.env.user.id)],
-                    # extend permission to edit on shortcuts when otherwise viewer (synced with target)
-                    # optimized to avoid recursive call if owner_domain is not going to be used (see below)
-                    # or if everything we need is already in `access_domain`
-                    self._search_user_permission('in', ['view'], exclude_ownership=True)
-                    if set(searched_roles) == {'edit'}
-                    else Domain.FALSE,
-                ]),
+            owner_domain = Domain('owner_id', '=', self.env.user.id) & Domain.OR([
+                [('shortcut_document_id', '=', False)],
+                [('shortcut_document_owner_id', '=', self.env.user.id)],
+                # extend permission to edit on shortcuts when otherwise viewer (synced with target)
+                # optimized to avoid recursive call if owner_domain is not going to be used (see below)
+                # or if everything we need is already in `access_domain`
+                self._search_user_permission('in', ['view'], exclude_ownership=True)
+                if set(searched_roles) == {'edit'}
+                else Domain.FALSE,
             ])
-        direct_domain = expression.AND([
-            any_except_disabled_company,
-            access_domain if 'edit' not in searched_roles else expression.OR([access_domain, owner_domain]),
-        ])
+        direct_domain = any_except_disabled_company & (
+            access_domain if 'edit' not in searched_roles else access_domain | owner_domain
+        )
 
         # Access form access_internal
         if self.env.user.has_group('documents.group_documents_manager'):
             if searched_roles == ['view']:
-                direct_domain = expression.AND([
-                    direct_domain,
-                    expression.OR([[('access_internal', '=', 'none')], other_company])
-                ])
+                direct_domain &= Domain('access_internal', '=', 'none') | other_company
             else:
-                direct_domain = expression.OR([
-                    direct_domain,
-                    expression.AND([[('access_internal', 'in', ('view', 'edit'))], allowed_or_no_company]),
-                ])
+                direct_domain |= Domain('access_internal', 'in', ('view', 'edit')) & allowed_or_no_company
         elif not self.env.user.share:
             if searched_roles == ['view']:
-                internal_domain = [('access_internal', '=', 'view'), ('access_via_link', 'in', ('none', 'view'))]
+                internal_domain = Domain('access_internal', '=', 'view') & Domain('access_via_link', 'in', ('none', 'view'))
             elif searched_roles == ['edit']:
-                internal_domain = expression.OR([
-                    [('access_internal', '=', 'edit')],
-                    expression.AND([[('access_internal', '=', 'view')], [('access_via_link', '=', 'edit')]]),
-                ])
+                internal_domain = Domain('access_internal', '=', 'edit') | (
+                    Domain('access_internal', '=', 'view') & Domain('access_via_link', '=', 'edit')
+                )
             else:
-                internal_domain = [('access_internal', 'in', ('view', 'edit'))]
-            direct_domain = expression.OR([direct_domain, expression.AND([internal_domain, allowed_or_no_company])])
+                internal_domain = Domain('access_internal', 'in', ('view', 'edit'))
+            direct_domain |= internal_domain & allowed_or_no_company
 
         if exclude_ownership:
             return direct_domain
 
         # Look one level up for links unless hidden
-        link_via_parent_domain = expression.AND([
+        link_via_parent_domain = Domain.AND([
             any_except_disabled_company,
             [('access_via_link', 'in', searched_roles)],
             [('is_access_via_link_hidden', '=', False)],
             [('folder_id', 'any', direct_domain)],
         ])
 
-        return expression.OR([direct_domain, link_via_parent_domain])
+        return direct_domain | link_via_parent_domain
 
     @api.depends('datas', 'mimetype')
     def _compute_is_multipage(self):
@@ -786,25 +769,25 @@ class DocumentsDocument(models.Model):
             return
 
         values = {'folder_id': False}
-        sibling_folders_domain = [('type', '=', 'folder'), ('id', '!=', self.id)]
+        sibling_folders_domain = Domain('type', '=', 'folder') & Domain('id', '!=', self.id)
 
         if target == "COMPANY":
             self.action_set_as_company_root()  # Changes owner and updates access rights if necessary
-            sibling_folders_domain += [('owner_id', '=', False), ('folder_id', '=', False)]
+            sibling_folders_domain &= Domain('owner_id', '=', False) & Domain('folder_id', '=', False)
         elif target == "MY":
-            sibling_folders_domain += [('owner_id', '=', self.env.user.id), ('folder_id', '=', False)]
+            sibling_folders_domain &= Domain('owner_id', '=', self.env.user.id) & Domain('folder_id', '=', False)
         else:
-            sibling_folders_domain += [('folder_id', '=', target)]
+            sibling_folders_domain &= Domain('folder_id', '=', target)
             values['folder_id'] = target
 
         # If before_folder is indeed a sibling given the passed target (as it could have been moved by someone else),
         # assign its current sequence value to the current record and shift the following folders to keep ordering.
         if before_folder := self.browse(before_folder_id):
-            located_after_domain = expression.OR([
-                [('sequence', '>', before_folder.sequence)],
-                [('sequence', '=', before_folder.sequence), ('id', '<=', before_folder_id)],
-            ])
-            folders_to_resequence_domain = expression.AND([sibling_folders_domain, located_after_domain])
+            located_after_domain = (
+                Domain('sequence', '>', before_folder.sequence)
+                | (Domain('sequence', '=', before_folder.sequence) & Domain('id', '<=', before_folder_id))
+            )
+            folders_to_resequence_domain = sibling_folders_domain & located_after_domain
             folders_to_resequence_sudo = self.sudo().search(folders_to_resequence_domain)
             if before_folder == folders_to_resequence_sudo[0]:
                 values['sequence'] = before_folder.sequence
@@ -837,10 +820,10 @@ class DocumentsDocument(models.Model):
     @api.model
     def _ensure_user_role_without_propagation(self, role, documents_per_user):
         """Set role membership without propagating to children."""
-        existing_access = self.env['documents.access'].sudo().search(expression.OR([
+        existing_access = self.env['documents.access'].sudo().search(Domain.OR(
             [('partner_id', '=', owner.partner_id.id), ('document_id', 'in', documents.ids)]
             for owner, documents in documents_per_user.items()
-        ]))
+        ))
         existing_access.role = role
         existing_access_values = {(a.partner_id, a.document_id) for a in existing_access}
         self.env['documents.access'].sudo().create([
@@ -992,14 +975,14 @@ class DocumentsDocument(models.Model):
                 continue
 
             # records that we might need to update
-            candidates_domain = [
+            candidates_domain = Domain([
                 (field, '!=', value),
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
                 ('id', 'child_of', self.ids),
-            ]
-            candidates_domain = expression.AND([candidates_domain, self._get_access_update_domain()])
+            ])
+            candidates_domain &= self._get_access_update_domain()
 
             candidates = self.with_context(active_test=False)._search(
                 candidates_domain).select('id', 'folder_id', 'shortcut_document_id', field)
@@ -1060,11 +1043,11 @@ class DocumentsDocument(models.Model):
                 values_to_update[role, expiration_date] |= partner
 
         # use `_search` to respect access rules and to use `_search_user_permission`
-        to_update_domain = [
+        to_update_domain = Domain([
             ('shortcut_document_id', '=', False),  # update "target -> shortcuts" but not "shortcut -> target"
             ('id', 'child_of', self.ids),
-        ]
-        to_update_domain = expression.AND([to_update_domain, self._get_access_update_domain()])
+        ])
+        to_update_domain &= self._get_access_update_domain()
 
         documents = self.with_context(active_test=False)._search(to_update_domain).select('id')
 
@@ -1145,14 +1128,14 @@ class DocumentsDocument(models.Model):
         :param int|bool company_id: Id to set or False
         """
         self.flush_model()
-        to_update_domain = expression.AND([
-            expression.OR([[('id', 'in', self.ids)], [('company_id', '!=', company_id)]]),
+        to_update_domain = Domain.AND((
+            Domain('id', 'in', self.ids) | Domain('company_id', '!=', company_id),
             # the update is done only "target -> shortcut",
             # but not "shortcut -> target"
             [('shortcut_document_id', '=', False)],
             [('id', 'child_of', self.ids)],
             [] if self.env.su else [('user_permission', '=', 'edit')],
-        ])
+        ))
         to_update = self.with_context(active_test=False)._search(to_update_domain).select('id')
         # update shortcuts in sudo to keep them synchronized
         shortcuts_union = SQL("""
@@ -1177,7 +1160,7 @@ class DocumentsDocument(models.Model):
         self.invalidate_model(['company_id', 'user_permission'])
 
     def _get_access_update_domain(self):
-        return [] if self.env.su else [('user_permission', '=', 'edit')]
+        return Domain.TRUE if self.env.su else Domain('user_permission', '=', 'edit')
 
     @api.model
     def get_documents_actions(self, folder_id):
@@ -1795,15 +1778,12 @@ class DocumentsDocument(models.Model):
         if not self_archived:
             return
         archived_top_parent_documents = self.env["documents.document"].sudo().search(
-            expression.AND([
-                [('id', 'parent_of', self_archived.ids)],
-                [('id', 'not in', self_archived.ids)],
-                [('active', '=', False)],
-                expression.OR([
-                    [('folder_id', '=', False)],
-                    [('folder_id.active', '=', True)],
-                ])
-            ])
+            Domain.AND((
+                Domain('id', 'parent_of', self_archived.ids),
+                Domain('id', 'not in', self_archived.ids),
+                Domain('active', '=', False),
+                Domain('folder_id', '=', False) | Domain('folder_id.active', '=', True),
+            ))
         ).sudo(False)
         if archived_top_parent_documents:
             raise UserError(_(
@@ -2158,11 +2138,11 @@ class DocumentsDocument(models.Model):
             if not self.env.user.share:
                 search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids', 'partner_id',
                                         'create_activity_type_id', 'create_activity_user_id']
-            domain = [('type', '=', 'folder')]
+            domain = Domain('type', '=', 'folder')
 
             if unique_folder_id := self.env.context.get('documents_unique_folder_id'):
                 values = self.env['documents.document'].search_read(
-                    expression.AND([domain, [('folder_id', 'child_of', unique_folder_id)]]),
+                    domain & Domain('folder_id', 'child_of', unique_folder_id),
                     search_panel_fields,
                 )
                 accessible_folder_ids = {rec['id'] for rec in values}
@@ -2188,11 +2168,11 @@ class DocumentsDocument(models.Model):
                 }
             domain_image = {}
             if enable_counters:
-                model_domain = expression.AND([
+                model_domain = Domain.AND([
                     kwargs.get('search_domain', []),
                     kwargs.get('category_domain', []),
                     kwargs.get('filter_domain', []),
-                    [(field_name, '!=', False)]
+                    Domain(field_name, '!=', False),
                 ])
                 domain_image = self._search_panel_domain_image(field_name, model_domain, enable_counters)
 

@@ -8,9 +8,9 @@ import zipfile
 
 from lxml import etree
 
-from odoo import _, Command, fields, models, api
+from odoo import _, fields, models, api
 from odoo.exceptions import UserError, AccessError, ValidationError
-from odoo.osv import expression
+from odoo.fields import Command, Domain
 from odoo.tools import consteq
 from odoo.tools.image import image_process
 from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
@@ -120,13 +120,10 @@ class DocumentsDocument(models.Model):
 
     def _get_access_update_domain(self):
         """Allow to change the access of the frozen folders / spreadsheets only if we open their share panel."""
-        return expression.AND([
-            super()._get_access_update_domain(),
-            expression.OR([
-                [('id', 'in', self.ids)],
-                [('handler', 'not in', ('frozen_folder', 'frozen_spreadsheet'))],
-            ]),
-        ])
+        return super()._get_access_update_domain() & (
+            Domain('id', 'in', self.ids)
+            | Domain('handler', 'not in', ('frozen_folder', 'frozen_spreadsheet'))
+        )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -300,7 +297,7 @@ class DocumentsDocument(models.Model):
         """
         # TODO: improve with _read_group to not fetch all records
         Contrib = self.env["spreadsheet.contributor"]
-        visible_docs = self.search(expression.AND([domain, [("handler", "in", ("spreadsheet", "frozen_spreadsheet"))]]))
+        visible_docs = self.search(Domain.AND([domain, [("handler", "in", ("spreadsheet", "frozen_spreadsheet"))]]))
         contribs = Contrib.search(
             [
                 ("document_id", "in", visible_docs.ids),
@@ -502,7 +499,7 @@ class DocumentsDocument(models.Model):
     @api.readonly
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
-        domain = expression.AND([domain, [("handler", "=", "spreadsheet")]])
+        domain = Domain.AND([domain, [("handler", "=", "spreadsheet")]])
         return {
             "records": self._get_spreadsheets_to_display(domain, offset, limit),
             "total": self.search_count(domain),

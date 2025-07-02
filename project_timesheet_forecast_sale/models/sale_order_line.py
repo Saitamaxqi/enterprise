@@ -3,7 +3,7 @@ from collections import defaultdict
 from datetime import datetime
 
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class SaleOrderLine(models.Model):
@@ -38,14 +38,15 @@ class SaleOrderLine(models.Model):
             if sol_without_validated_aal:
                 # Fill the domain with SOL which doesn't have validated timesheets (so no start_datetime constraint)
                 planning_domains.append([('sale_line_id', 'in', sol_without_validated_aal), ('start_datetime', '!=', False)])
-            planning_domain = expression.OR(planning_domains)
+            planning_domain = Domain.OR(planning_domains)
             # Search for the allocated hours on the slots in the domain
             group_allocated_hours = PlanningSlot.with_context(sale_planning_prevent_recompute=True)._read_group(
-                expression.AND([[('start_datetime', '!=', False),
+                Domain([
+                    ('start_datetime', '!=', False),
                     '|',
                     ('resource_id', '=', False),
-                    ('resource_type', '!=', 'material')], planning_domain]
-                ),
+                    ('resource_type', '!=', 'material'),
+                ]) & planning_domain,
                 ['sale_line_id'],
                 ['allocated_hours:sum'])
             mapped_allocated_hours = {sale_line.id: allocated_hours for sale_line, allocated_hours in group_allocated_hours}

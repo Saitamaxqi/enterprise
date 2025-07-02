@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from datetime import date, datetime, time
 
 from odoo import api, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class ResourceCalendarLeaves(models.Model):
@@ -18,7 +17,7 @@ class ResourceCalendarLeaves(models.Model):
             :returns: domain to get all slots in the leaves period.
         """
         if not self:
-            return expression.FALSE_DOMAIN
+            return Domain.FALSE
         global_leave_start_date = leave_start_date = datetime.combine(date.today(), time.max)
         global_leave_end_date = leave_end_date = datetime.combine(date(1970, 1, 1), time.min)
         resource_ids = set()
@@ -41,7 +40,7 @@ class ResourceCalendarLeaves(models.Model):
             ('resource_id', '!=', False),
         ]
         if resource_ids:
-            domain = expression.OR([
+            domain = Domain.OR([
                 [
                     ('start_datetime', '<=', leave_end_date),
                     ('end_datetime', '>=', leave_start_date),

@@ -1,6 +1,6 @@
-from odoo import api, models, _, Command
+from odoo import api, models, _
 from odoo.exceptions import UserError
-from odoo.osv.expression import AND
+from odoo.fields import Command, Domain
 
 
 class DocumentsDocument(models.Model):
@@ -55,7 +55,7 @@ class DocumentsDocument(models.Model):
         return template.go_to_custom_template(sign_directly_without_mail=True)
 
     def _get_gc_clear_bin_domain(self):
-        return AND([super()._get_gc_clear_bin_domain(), [("res_model", "!=", "sign.request")]])
+        return Domain.AND([super()._get_gc_clear_bin_domain(), [("res_model", "!=", "sign.request")]])
 
     @api.model
     def _data_embed_sign_create_sign_template_direct(self):

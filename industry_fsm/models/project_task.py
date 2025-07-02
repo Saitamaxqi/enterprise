@@ -2,12 +2,11 @@
 
 from ast import literal_eval
 from markupsafe import Markup
-from typing import Dict, List
 import pytz
 
-from odoo import Command, fields, models, api, _
+from odoo import fields, models, api, _
 from odoo.exceptions import UserError
-from odoo.osv import expression
+from odoo.fields import Command, Domain
 from odoo.tools import get_lang
 from odoo.tools.intervals import Intervals
 from odoo.tools.date_utils import sum_intervals
@@ -187,12 +186,12 @@ class ProjectTask(models.Model):
 
     def _group_expand_user_ids_domain(self, domain_expand):
         if self.env.context.get('fsm_mode'):
-            new_domain_expand = expression.OR([[
+            new_domain_expand = Domain.OR([[
                 ('is_closed', '=', False),
                 ('planned_date_begin', '=', False),
                 ('date_deadline', '=', False),
             ], domain_expand])
-            return expression.AND([new_domain_expand, [('is_fsm', '=', True)]])
+            return new_domain_expand & Domain('is_fsm', '=', True)
         else:
             return super()._group_expand_user_ids_domain(domain_expand)
 
@@ -349,7 +348,7 @@ class ProjectTask(models.Model):
             }
         return self.partner_id.action_partner_navigate()
 
-    def web_read(self, specification: Dict[str, Dict]) -> List[Dict]:
+    def web_read(self, specification: dict[str, dict]) -> list[dict]:
         if len(self) == 1 and 'partner_id' in specification and 'show_address_if_fsm' in specification['partner_id'].get('context', {}):
             specification['partner_id']['context']['show_address'] = self.is_fsm
         return super().web_read(specification)
@@ -460,7 +459,7 @@ class ProjectTask(models.Model):
     # ---------------------------------------------------------
 
     def _get_projects_to_make_billable_domain(self, additional_domain=None):
-        return expression.AND([
+        return Domain.AND([
             super()._get_projects_to_make_billable_domain(additional_domain),
             [('is_fsm', '=', False)],
         ])
@@ -492,7 +491,7 @@ class ProjectTask(models.Model):
         action = super().action_fsm_view_overlapping_tasks()
         if self.is_fsm:
             action['context']['fsm_mode'] = True
-            action['domain'] = expression.AND([
+            action['domain'] = Domain.AND([
                 action['domain'],
                 [('is_fsm', '=', True)],
             ])
@@ -501,11 +500,11 @@ class ProjectTask(models.Model):
     def _prepare_domains_for_all_deadlines(self, date_start, date_end):
         domain = super()._prepare_domains_for_all_deadlines(date_start, date_end)
         if self.env.context.get('fsm_mode'):
-            domain['project'] = expression.AND([
+            domain['project'] = Domain.AND([
                 domain['project'],
                 [('is_fsm', '=', True)]
             ])
-            domain['milestone'] = expression.AND([
+            domain['milestone'] = Domain.AND([
                 domain['milestone'],
                 [('project_id.is_fsm', '=', True)]
             ])

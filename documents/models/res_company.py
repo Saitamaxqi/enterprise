@@ -1,5 +1,5 @@
 from odoo import api, models
-from odoo.osv.expression import FALSE_DOMAIN
+from odoo.fields import Domain
 
 
 class Company(models.Model):
@@ -20,4 +20,4 @@ class Company(models.Model):
     @api.model
     def _get_used_folder_ids_domain(self, folder_ids):
         """Returns the domain for folders being used by a company for a documents bridge."""
-        return FALSE_DOMAIN
+        return Domain.FALSE

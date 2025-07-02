@@ -4,7 +4,7 @@ import json
 from collections import defaultdict
 
 from odoo import fields, models
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class ProjectProject(models.Model):
@@ -56,7 +56,7 @@ class ProjectProject(models.Model):
         return sequence_per_invoice_type
 
     def _get_profitability_aal_domain(self):
-        return expression.AND([
+        return Domain.AND([
             super()._get_profitability_aal_domain(),
             ['|', ('move_line_id', '=', False), ('move_line_id.subscription_id', '=', False)],
         ])
@@ -167,13 +167,13 @@ class ProjectProject(models.Model):
         ]
 
     def _get_profitability_sale_order_items_domain(self, domain=None):
-        return expression.AND([
+        return Domain.AND([
             super()._get_profitability_sale_order_items_domain(domain),
             [('order_id.is_subscription', '=', False)],
         ])
 
     def _get_items_from_invoices_domain(self, domain=None):
-        return expression.AND([
+        return Domain.AND([
             super()._get_items_from_invoices_domain(domain),
             [('subscription_id', '=', False)],
         ])
