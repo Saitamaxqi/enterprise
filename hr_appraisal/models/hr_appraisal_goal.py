@@ -14,7 +14,7 @@ class HrAppraisalGoal(models.Model):
     employee_ids = fields.Many2many(
         'hr.employee', 'hr_appraisal_goal_hr_employee_rel', 'hr_appraisal_goal_id',
         string="Employee", default=lambda self: self.env.user.employee_id, required=True, ondelete='cascade', tracking=True)
-    employee_autocomplete_ids = fields.Many2many('hr.employee', compute='_compute_is_manager')
+    employee_autocomplete_ids = fields.Many2many('hr.employee', compute='_compute_employee_autocomplete', compute_sudo=True)
     company_id = fields.Many2one(related='employee_ids.company_id')
     manager_ids = fields.Many2many(
         'hr.employee', 'hr_appraisal_goal_hr_employee_manager_rel', 'hr_appraisal_goal_id',
@@ -33,8 +33,12 @@ class HrAppraisalGoal(models.Model):
 
     @api.depends_context('uid')
     @api.depends('employee_ids')
-    def _compute_is_manager(self):
+    def _compute_employee_autocomplete(self):
         self.employee_autocomplete_ids = self.env.user.get_employee_autocomplete_ids()
+
+    @api.depends_context('uid')
+    @api.depends('employee_ids')
+    def _compute_is_manager(self):
         self.is_manager =\
             self.env.user.has_group('hr_appraisal.group_hr_appraisal_user')\
             or len(self.employee_autocomplete_ids) > 1

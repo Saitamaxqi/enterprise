@@ -70,7 +70,7 @@ class HrAppraisal(models.Model):
         domain="[('id', '!=', employee_id), ('active', '=', 'True'), '|', ('company_id', '=', False), ('company_id', 'in', allowed_company_ids)]")
     manager_user_ids = fields.Many2many('res.users', string="Manager Users", compute='_compute_user_manager_rights')
     is_manager = fields.Boolean(compute='_compute_user_manager_rights')
-    employee_autocomplete_ids = fields.Many2many('hr.employee', compute='_compute_user_manager_rights')
+    employee_autocomplete_ids = fields.Many2many('hr.employee', compute='_compute_employee_autocomplete', compute_sudo=True)
     waiting_feedback = fields.Boolean(
         string="Waiting Feedback from Employee/Managers", compute='_compute_waiting_feedback')
     employee_feedback = fields.Html(compute='_compute_employee_feedback', store=True, readonly=False, groups="hr_appraisal.group_hr_appraisal_user")
@@ -159,8 +159,12 @@ class HrAppraisal(models.Model):
 
     @api.depends_context('uid')
     @api.depends('manager_ids', 'employee_id', 'employee_id.parent_id')
-    def _compute_user_manager_rights(self):
+    def _compute_employee_autocomplete(self):
         self.employee_autocomplete_ids = self.env.user.get_employee_autocomplete_ids()
+
+    @api.depends_context('uid')
+    @api.depends('manager_ids', 'employee_id', 'employee_id.parent_id')
+    def _compute_user_manager_rights(self):
         for appraisal in self:
             appraisal.manager_user_ids = appraisal.manager_ids.user_id
             appraisal.is_manager =\
