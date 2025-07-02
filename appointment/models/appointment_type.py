@@ -543,6 +543,17 @@ class AppointmentType(models.Model):
             'target': 'self',
         }
 
+    def get_kanban_record_share_btn_url(self):
+        self.ensure_one()
+        existing_invitation = self.env['appointment.invite']._find_identical_config(self.ids, 'all_assigned_resources')
+        if existing_invitation:
+            return existing_invitation.book_url
+
+        return self.env['appointment.invite'].create([{
+            'appointment_type_ids': self.ids,
+            'resources_choice': 'all_assigned_resources'
+        }]).book_url
+
     # --------------------------------------
     # View Utils
     # --------------------------------------

@@ -46,7 +46,7 @@
                 min-width: 380px;
             }
         }
-        .row > div {
+        .row:not(.o_appointment_helper_templates):not(.o_appointment_template_card) > div {
             flex: 1 1 100% !important;
             max-width: 100% !important;
             margin: 5px 0 !important;
@@ -63,12 +63,13 @@
             > div.me-3 {
                 margin-right: 24px !important;
             }
+            &.o_appointment_kanban_buttons {
+                margin-top: 16px !important;
+                .o_widget_appointment_quick_share_button {
+                    margin-left: 0px !important;
+                }
+            }
         }
-    }
-
-    .appointment_type_action_toggler {
-        --KanbanRecord-padding-v: 12px;
-        --KanbanRecord-padding-h: 6px;
     }
 
     &.o_kanban_ungrouped {
@@ -79,20 +80,6 @@
         .o_kanban_record {
             width: 100%;
             margin: 0px;
-            .appointment_type_action_toggler {
-                @include media-breakpoint-up(sm) {
-                    right: 5% !important;
-                    top: 30% !important;
-                    .appointment_type_action_toggler_text {
-                        display: inline-block !important;
-                    }
-                }
-                .text-large {
-                    line-height: 1.1em;
-                    font-size: 120%;
-                    font-weight: 300;
-                }
-            }
             .o_appointment_kanban_card {
                 margin: 0;
                 border-top: 0 !important;
@@ -120,7 +107,7 @@
     // Ungrouped specific
     .o_appointment_kanban_card > div.row {
         @include media-breakpoint-up(sm) {
-            margin-right: 12rem;
+            margin-right: 4rem;
         }
         min-height: 4rem;
         .o_widget_web_ribbon {
@@ -135,9 +122,15 @@
             }
         }
         .text-large {
+            &.o_appointment_kanban_name {
+                font-size: 120%;
+            }
             line-height: 1.1em;
-            font-size: 120%;
+            font-size: 105%;
             font-weight: 300;
+            @include media-breakpoint-down(lg) {
+                font-size: 120%;
+            }
         }
     }
 

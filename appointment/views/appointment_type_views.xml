@@ -38,32 +38,18 @@
                 <field name="schedule_based_on"/>
                 <field name="sequence" widget="handle" groups="appointment.group_appointment_manager"/>
                 <templates>
-                    <t t-name="menu">
-                        <a role="menuitem" type="open" class="dropdown-item">
-                            <span class="fa fa-pencil"/> Edit
-                        </a>
-                        <a role="menuitem" type="object" name="action_customer_preview" class="dropdown-item">
-                            <span class="fa fa-globe"/> Preview
-                        </a>
-                        <a role="menuitem" type="object" name="action_share_invite" class="dropdown-item">
-                            <span class="fa fa-share-alt"/> Share
-                        </a>
-                        <a role="menuitem" type="delete" class="dropdown-item">
-                            <span class="fa fa-trash"/> Delete
-                        </a>
-                    </t>
                     <div t-name="card" class="o_appointment_kanban_card">
-                        <div class="row px-2">
+                        <div class="row gx-3">
                             <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
-                            <div class="col-lg-3 col-sm-5 col-11 py-0 my-auto text-large text-truncate">
-                                <span class="fw-bold o_appointment_kanban_ungrouped_name" t-att-title="record.name.value"><field name="name"/></span><br/>
+                            <div class="col-lg-3 col-sm-5 col-11 py-0 my-auto text-large o_appointment_kanban_name text-truncate">
+                                <span class="fw-bold" t-att-title="record.name.value"><field name="name"/></span><br/>
                             </div>
-                            <div class="col-lg-5 col-sm-7 col-12 py-0 mt-3 mb-2 my-lg-auto d-flex">
-                                <div class="align-self-center me-sm-0 me-3 text-large w-50 w-lg-50 text-nowrap">
+                            <div class="col-lg-4 col-sm-7 col-12 py-0 mt-3 mb-2 my-lg-auto d-flex">
+                                <div class="align-self-center me-sm-0 me-3 text-large w-50 text-nowrap">
                                     <field class="fw-normal" name="appointment_duration_formatted"/><br/>
-                                    <span>Duration</span>
+                                    <span class="fw-light">Duration</span>
                                 </div>
-                                <div class="my-sm-auto w-50 w-lg-75">
+                                <div class="my-sm-auto w-50 w-sm-75">
                                     <field name="staff_user_ids" widget="many2many_avatar_user" readonly="True" invisible="schedule_based_on != 'users'"/>
                                     <field name="resource_ids" widget="many2many_tags_avatar" readonly="True" invisible="schedule_based_on == 'users'"/>
                                 </div>
@@ -76,7 +62,7 @@
                                         <t t-else=""> Bookings</t>
                                     </span>
                                 </a><br/>
-                                <span>To Confirm</span>
+                                <span class="fw-light">To Confirm</span>
                             </div>
                             <div class="col-lg-1 col-sm-5 col-6 py-0 my-2 my-lg-auto mx-lg-auto text-large text-nowrap">
                                 <span class="fw-normal">
@@ -84,7 +70,7 @@
                                     <t t-if="record.schedule_based_on.raw_value == 'users'"> Meetings</t>
                                     <t t-else=""> Bookings</t>
                                 </span><br/>
-                                <span>Upcoming</span>
+                                <span class="fw-light">Upcoming</span>
                             </div>
                             <div class="col-lg-1 col-sm-5 col-6 py-0 my-2 my-lg-auto mx-lg-auto text-large text-nowrap">
                                 <span class="fw-normal">
@@ -92,7 +78,13 @@
                                     <t t-if="record.schedule_based_on.raw_value == 'users'"> Meetings</t>
                                     <t t-else=""> Bookings</t>
                                 </span><br/>
-                                <span>Total</span>
+                                <span class="fw-light">Total</span>
+                            </div>
+                            <div class="col-lg-2 col-12 pe-sm-0 py-0 mt-3 mb-2 my-lg-auto d-flex o_appointment_kanban_buttons">
+                                <widget name="appointment_quick_share_button" class="ms-lg-auto me-2"/>
+                                <button type="open" class="btn btn-secondary">
+                                    Configure
+                                </button >
                             </div>
                         </div>
                     </div>
