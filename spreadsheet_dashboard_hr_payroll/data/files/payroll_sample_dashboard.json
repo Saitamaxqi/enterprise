@@ -28,7 +28,7 @@
       },
       "merges": [],
       "cells": {
-        "A12": "[Payroll Analysis](odoo://view/{\"viewType\":\"graph\",\"action\":{\"domain\":[],\"context\":{\"group_by\":[],\"graph_measure\":\"net_wage\",\"graph_mode\":\"line\",\"graph_groupbys\":[\"date_from:month\"],\"graph_order\":null,\"graph_stacked\":true,\"graph_cumulated\":false},\"modelName\":\"hr.payroll.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Payroll Analysis\"})",
+        "A12": "[Payroll Analysis](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[],\"context\":{\"group_by\":[],\"pivot_measures\":[\"amount\", \"__count\"],\"pivot_column_groupby\":[\"date_from:month\"],\"pivot_row_groupby\":[\"salary_rule_id\"]},\"modelName\":\"hr.payslip.line\",\"views\":[[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Payroll Analysis\"})",
         "A29": "[Work Entries Analysis](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[],\"context\":{\"group_by\":[],\"pivot_measures\":[\"number_of_days\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"work_entry_type_id\"]},\"modelName\":\"hr.work.entry.report\",\"views\":[[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Work Entries Analysis\"})",
         "A30": "=_t(\"Work type\")",
         "B30": "=_t(\"Days\")"
