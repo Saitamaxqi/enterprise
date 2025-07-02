@@ -352,7 +352,8 @@ class StockBarcodeController(http.Controller):
         """
         corresponding_location = request.env['stock.location'].search([
             ('barcode', '=', barcode),
-            ('usage', '=', 'internal')
+            ('usage', '=', 'internal'),
+            ("company_id", "=", self._get_allowed_company_ids()[0])
         ], limit=1)
         if corresponding_location:
             internal_picking_type = request.env['stock.picking.type'].search([('code', '=', 'internal')])
