@@ -104,7 +104,9 @@ test("show completed documents download dropdown when state is signed", async ()
 
     expect(".o_sign_download_documents_dropdown").toHaveCount(1);
 
-    expect(".o_sign_download_single_document_dropdown_item").toHaveAttribute(
+    await click(".o_sign_download_documents_dropdown");
+    await animationFrame();
+    expect(".o-dropdown--menu .o_sign_download_single_document_dropdown_item").toHaveAttribute(
         "href",
         "/sign/download/5/abc/completed/1",
         {

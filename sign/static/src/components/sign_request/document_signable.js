@@ -56,6 +56,9 @@ export class Document extends Component {
         useEffect(
             () => {
                 this.getDataFromHTML();
+                if (!this.requestID) {
+                    return;
+                }
                 this.signInfo.set({
                     documentId: this.requestID,
                     signRequestToken: this.requestToken,

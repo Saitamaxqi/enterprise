@@ -5,9 +5,15 @@ import { useService } from "@web/core/utils/hooks";
 import { rpc } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 
 export class SignRequestDocumentsDropdown extends Component {
     static template = "sign.SignRequestDocumentsDropdown";
+    static components = {
+        Dropdown,
+        DropdownItem,
+    };
     static props = {
         ...standardFieldProps,
         name: { type: String, optional: true },
