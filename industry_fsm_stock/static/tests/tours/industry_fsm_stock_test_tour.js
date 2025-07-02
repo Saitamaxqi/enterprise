@@ -227,8 +227,8 @@ registry.category("web_tour.tours").add('industry_fsm_stock_test_tour', {
         run: "click",
     },
     {
-        content: 'Open the profile page',
-        trigger: '.dropdown-menu .dropdown-item[data-menu="settings"]',
+        content: 'Open My Preferences',
+        trigger: '.dropdown-menu .dropdown-item[data-menu="preferences"]',
         run: "click",
     },
     {

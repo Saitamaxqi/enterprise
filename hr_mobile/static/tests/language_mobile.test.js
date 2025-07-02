@@ -41,7 +41,7 @@ test("EmployeeProfileFormView should call native updateAccount method when savin
         type: "form",
         resModel: "users",
         arch: `
-            <form js_class="hr_employee_profile_form">
+            <form js_class="hr_user_preferences_form">
                 <sheet>
                     <field name="name"/>
                 </sheet>
