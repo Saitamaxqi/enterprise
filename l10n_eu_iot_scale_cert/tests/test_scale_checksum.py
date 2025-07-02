@@ -1,9 +1,11 @@
 import re
 
 from odoo.tests import HttpCase
-from odoo.addons.pos_iot.controllers.checksum import EXPECTED_CHECKSUM
+from odoo.tests.common import tagged
+from odoo.addons.l10n_eu_iot_scale_cert.controllers.expected_checksum import EXPECTED_CHECKSUM
 
 
+@tagged('post_install_l10n', 'post_install', '-at_install')
 class TestScaleChecksum(HttpCase):
     def test_checksum_matches_expected(self):
         self.authenticate("admin", "admin")

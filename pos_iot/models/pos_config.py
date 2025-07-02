@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
-from odoo.exceptions import UserError
-from odoo.tools import float_compare
+from odoo import api, fields, models
 
 
 class PosConfig(models.Model):
@@ -23,14 +21,6 @@ class PosConfig(models.Model):
 
     def _get_url_to_cache(self, debug):
         return super()._get_url_to_cache(debug) + self.env["ir.qweb"]._get_asset_links("web._assets_jquery", debug=debug)
-
-    @api.model
-    def _load_pos_data_read(self, records, config):
-        read_records = super()._load_pos_data_read(records, config)
-        if read_records:
-            is_eu_country = self.env.company.country_id in self.env.ref('base.europe').country_ids
-            read_records[0]["_is_eu_country"] = is_eu_country
-        return read_records
 
     @api.depends('iface_printer_id')
     def _compute_print_via_proxy(self):
@@ -65,14 +55,3 @@ class PosConfig(models.Model):
             return self.iface_display_id.iot_ip
         else:
             return super()._get_display_device_ip()
-
-    @api.model
-    def fix_rounding_for_scale_certification(self):
-        decimal_precision = self.env['decimal.precision'].search([('name', '=', 'Product Unit')])
-        if decimal_precision.digits < 3:
-            decimal_precision.digits = 3
-
-        if not self.env.user.has_group('uom.group_uom'):
-            self.env['res.config.settings'].create({
-                'group_uom': True,
-            }).execute()

@@ -4,19 +4,17 @@ from odoo import http
 from odoo.http import request
 from odoo.tools import file_open
 
-# This checksum is based on the contents of the scale related
-# files listed below.
-# Any change to these files will require re-certification with LNE.
-# DO NOT CHANGE IT WITHOUT CONTACTING THE POS TEAM FIRST!
-EXPECTED_CHECKSUM = "53e0cf6f5e4aec9838426426a876667103dd4c37855e8daea980357070f431bf"
 
 SCALE_FILES = [
-    'point_of_sale/static/src/app/screens/scale_screen/scale_service.js',
-    'point_of_sale/static/src/app/screens/scale_screen/scale_screen.js',
-    'point_of_sale/static/src/app/screens/scale_screen/scale_screen.xml',
+    'l10n_eu_iot_scale_cert/controllers/checksum.py',
+    'l10n_eu_iot_scale_cert/static/src/pos_overrides/components/scale_screen/certified_scale_service.js',
+    'l10n_eu_iot_scale_cert/static/src/pos_overrides/components/scale_screen/certified_scale_screen.js',
+    'l10n_eu_iot_scale_cert/static/src/pos_overrides/components/scale_screen/certified_scale_screen.xml',
+    'l10n_eu_iot_scale_cert/static/src/pos_overrides/components/order_receipt/certified_order_receipt.xml',
+    'l10n_eu_iot_scale_cert/static/src/pos_overrides/components/orderline/certified_orderline.xml',
     'iot_drivers/iot_handlers/drivers/serial_scale_driver.py',
-    'pos_iot/static/src/app/screens/scale_screen/scale_service.js',
 ]
+
 
 def calculate_scale_checksum():
     files_data = []
@@ -34,6 +32,7 @@ def calculate_scale_checksum():
         main_hash.update(content_hash.encode())
 
     return main_hash.hexdigest(), files_data
+
 
 class ChecksumController(http.Controller):
     @http.route('/scale_checksum', auth='user')

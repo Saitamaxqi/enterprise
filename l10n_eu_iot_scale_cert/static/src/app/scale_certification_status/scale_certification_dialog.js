@@ -11,6 +11,8 @@ export class ScaleCertificationDialog extends Component {
             type: Array,
             element: String,
         },
+        details: Object,
+        checksum: String,
         autoFix: { type: Function, optional: true },
         close: Function,
     };

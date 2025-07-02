@@ -19,14 +19,6 @@ patch(PosStore.prototype, {
 
         this._loadIotDevice(this.models["iot.device"].getAll());
         this.hardwareProxy.iotBoxes = this.models["iot.box"].getAll();
-
-        this.isScaleIconVisible =
-            this.config.iface_electronic_scale &&
-            this.config._is_eu_country &&
-            this.models["product.product"].some((product) => product.to_weight);
-        // TODO: We will not show any certification status until we have actually
-        //       been certified by LNE. At that point we will remove this line.
-        this.isScaleIconVisible = false;
     },
     _loadIotDevice(devices) {
         const iotLongpolling = this.env.services.iot_longpolling;
