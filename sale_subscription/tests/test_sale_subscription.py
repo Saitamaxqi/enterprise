@@ -2630,3 +2630,30 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(len(subscription.order_line), 1)
         self.assertEqual(subscription.order_line.product_uom_qty, 2.0,
                          "The recurring product's quantity should not be changed in subscription")
+
+    def test_sale_subscription_optional_product_discount(self):
+        """
+        Check that the discount on an optional product is correctly applied when the option is added to a SO.
+        """
+        subscription = self.env['sale.order'].create({
+            'name': "Test subscription",
+            'is_subscription': True,
+            'partner_id': self.partner.id,
+            'plan_id': self.plan_month.id,
+            'order_line': [
+                Command.create({
+                    'name': "Subscription product",
+                    'product_id': self.product.id,
+                    'product_uom_qty': 1,
+                }),
+            ],
+            'sale_order_option_ids': [
+                Command.create({
+                    'product_id': self.product2.id,
+                    'discount': 20,  # 20% discount
+                })
+            ],
+        })
+        subscription.sale_order_option_ids[0].button_add_to_order()
+
+        self.assertEqual(subscription.order_line.mapped("discount"), [0, 20])

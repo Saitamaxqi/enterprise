@@ -16,6 +16,6 @@ class SaleOrderOption(models.Model):
 
     def _get_values_to_add_to_order(self):
         res = super()._get_values_to_add_to_order()
-        if self.order_id.is_subscription:
+        if self.order_id.is_subscription and not self.discount:
             res.pop('discount')
         return res
