@@ -196,7 +196,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
                 ) AS amount_currency,
                 ARRAY_AGG(DISTINCT account_move_line.partner_id) AS partner_id,
                 ARRAY_AGG(account_move_line.payment_id) AS payment_id,
-                ARRAY_AGG(DISTINCT move.invoice_date) AS invoice_date,
+                ARRAY_AGG(DISTINCT account_move_line.invoice_date) AS invoice_date,
                 ARRAY_AGG(DISTINCT COALESCE(account_move_line.%(aging_date_field)s, account_move_line.date)) AS report_date,
                 ARRAY_AGG(DISTINCT %(account_code)s) AS account_name,
                 ARRAY_AGG(DISTINCT COALESCE(account_move_line.%(aging_date_field)s, account_move_line.date)) AS due_date,
@@ -208,7 +208,6 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
             FROM %(table_references)s
 
             JOIN account_journal journal ON journal.id = account_move_line.journal_id
-            JOIN account_move move ON move.id = account_move_line.move_id
             %(currency_table_join)s
 
             LEFT JOIN LATERAL (
