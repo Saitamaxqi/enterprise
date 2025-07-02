@@ -301,6 +301,21 @@ class TestL10nBREDI(TestL10nBREDICommon):
         set_new_attachments(self.invoice, invoice_1_submit_success_response)
         set_new_attachments(self.invoice, invoice_1_submit_success_response)
 
+    def test_finnfe_goal_mapping(self):
+        self.invoice.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_71")  # shippingLendingReturnIn
+        self.assertEqual(
+            self.invoice._l10n_br_prepare_invoice_payload()["header"]["goods"]["goal"],
+            "TransferBack",
+            "Goal should be overridden in this case."
+        )
+
+        self.invoice.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_51")  # itemsForRepairShippingOutbound
+        self.assertEqual(
+            self.invoice._l10n_br_prepare_invoice_payload()["header"]["goods"]["goal"],
+            "Normal",
+            "Goal should fall back on normal."
+        )
+
 
 @tagged("post_install_l10n", "post_install", "-at_install")
 class TestL10nBREDIServices(TestL10nBREDICommon):

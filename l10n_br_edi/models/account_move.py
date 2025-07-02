@@ -455,6 +455,37 @@ class AccountMove(models.Model):
 
     def _l10n_br_edi_get_goods_values(self):
         """Returns the appropriate (finNFe, goal) tuple for the goods section in the header."""
+        goal_to_operation_types = {
+            "Shipping": {
+                "itemsForManufacturingShippingInbound",
+                "salesOutsideTheEstablishmentReturnOfUnsoldGoods",
+            },
+            "TransferBack": {
+                "fairShippingInbound",
+                "fixedAssetInboundOfReturnForUseOutsideEstab",
+                "generalStorageShippingReturnInBound",
+                "generalStorageShippingReturnOutBound",
+                "itemsForManufacturingReturnsShippingIncoming",
+                "itemsForRepairReturnShippingInbound",
+                "itemsForRepairReturnShippingOutbound",
+                "itemsNotUsedForManufacReturnsShippingIncoming",
+                "itemsNotUsedForManufacReturnsShippingOutbound",
+                "returnOfDemonstrationShippingInbound",
+                "returnOfDemonstrationShippingOutbound",
+                "salesOutsideTheEstablishmentReturnOfUnsoldGoods",
+                "shippingLendingReturnIn",
+                "shippingLendingReturnOut",
+                "shippingReturnReturnablePackaging",
+                "showcaseItemsReturnsShippingInbound",
+                "symbolicTransferBackFormGeneralStorage",
+                "x925ManufactoringInBoundReturn",
+                "x925ManufactoringReturn",
+            },
+        }
+        for goal, operation_types in goal_to_operation_types.items():
+            if self.l10n_br_goods_operation_type_id.technical_name in operation_types:
+                return 1, goal
+
         if self.debit_origin_id:
             return 2, "Complementary"
         elif self.move_type in ("out_refund", "in_refund"):
