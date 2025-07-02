@@ -2,6 +2,7 @@
 import base64
 import json
 import logging
+import lxml.html
 from collections import defaultdict
 from datetime import timedelta
 from markupsafe import Markup
@@ -13,7 +14,7 @@ except ImportError:
 
 from odoo import _, api, Command, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import file_open, html_sanitize, SQL
+from odoo.tools import file_open, html_sanitize, SQL, is_html_empty
 from odoo.tools.mail import html_to_inner_content
 
 from ..utils.llm_api_service import LLMApiService
@@ -327,15 +328,14 @@ class AIAgent(models.Model):
     def get_direct_response(self, prompt: str, context_message: str = ""):
         """Get a direct response from the agent's provider LLM without chat history or channel creation."""
         self.ensure_one()
-        response = self._generate_response(prompt=prompt, context_message=context_message)
+        response = self._generate_response(prompt=prompt, extra_system_context=context_message)
         return response
 
     def generate_response(self, prompt: str):
         for agent in self:
             prompt = html_to_inner_content(prompt)
             channel = self.env['discuss.channel']._get_or_create_ai_chat(agent.partner_id)
-
-            response = agent._generate_response(prompt=prompt, discuss_channel_id=channel)
+            response = agent._generate_response(prompt=prompt, chat_history=self._retrieve_chat_history(channel))
             for message in response or []:
                 formatted_message = message
                 if markdown:
@@ -370,13 +370,13 @@ class AIAgent(models.Model):
         if channel:
             channel.sudo().unlink()
 
-    def _generate_response(self, prompt, discuss_channel_id=None, context_message=""):
+    def _generate_response(self, prompt, chat_history=None, extra_system_context=""):
         self.ensure_one()
         response_temperature = TEMPERATURE_MAP[self.response_style]
-        chat_history = self._retrieve_chat_history(discuss_channel_id) if discuss_channel_id else []
-        messages = self._prepare_chat_messages(prompt=prompt, context_message=context_message)
-
-        full_conversation = chat_history + messages
+        system_messages = self._build_system_context(extra_system_context=extra_system_context)
+        if rag_context := self._build_rag_context(prompt):
+            system_messages.extend(rag_context)
+        full_conversation = system_messages + (chat_history or []) + [{'role': 'user', 'content': prompt}]
         functions_descriptions = self._generate_functions_descriptions()
         provider = next((provider for provider, models in PROVIDERS_MODELS.items() if self.llm_model in models), None)
         if not provider:
@@ -424,7 +424,7 @@ class AIAgent(models.Model):
         chat_history.reverse()
         return chat_history
 
-    def _prepare_chat_messages(self, prompt, context_message=""):
+    def _build_system_context(self, extra_system_context: str = ""):
         self.ensure_one()
         today_date = fields.Date.context_today(self)
         system_content = self.system_prompt or "You are a RAG assistant."
@@ -442,7 +442,21 @@ class AIAgent(models.Model):
                 messages.append(
                     {'role': 'system', 'content': f"Additional topic instructions:\n{topic_instructions}."})
 
-        context = context_message
+        if self.restrict_to_sources:
+            messages.append({
+                'role': 'system',
+                'content': PREPROMPTS['restrict_to_sources']
+            })
+
+        if extra_system_context:
+            messages.append({'role': 'system', 'content': extra_system_context})
+
+        return messages
+
+    def _build_rag_context(self, prompt):
+        self.ensure_one()
+        messages = []
+        context = ""
         all_attachments = self.attachment_ids + self.url_attachment_ids
         if all_attachments:
             response = LLMApiService(env=self.env, provider='openai').get_embedding(input=prompt)
@@ -460,17 +474,8 @@ class AIAgent(models.Model):
                         referenced_attachments.add(embedding.attachment_id.name)
                 context += f"##References:\n{', '.join(referenced_attachments)}"
 
-        if self.restrict_to_sources:
-            messages.append({
-                'role': 'system',
-                'content': PREPROMPTS['restrict_to_sources']
-            })
-
         if context:
-            messages.append(
-                {'role': 'user', 'content': f"##Context information:\n\n{context}\n{PREPROMPTS['context']}"})
-
-        messages.append({'role': 'user', 'content': prompt})
+            messages.append({'role': 'system', 'content': f"##Context information:\n\n{context}\n{PREPROMPTS['context']}"})
         return messages
 
     def _generate_functions_descriptions(self):
@@ -542,3 +547,51 @@ class AIAgent(models.Model):
             percentage = int(processed_count / n_docs * 100) if n_docs else 0
 
             record.attachment_processing_percentage = percentage
+
+    def _eval_ai_prompts(self, rendered_html, remove_prompts=False, ai_context=""):
+        """Evaluate AI prompts in the given HTML content"""
+        if is_html_empty(rendered_html):
+            return rendered_html
+
+        Wrapper = rendered_html.__class__
+        root = lxml.html.fromstring(rendered_html)
+
+        prompt_containers = root.xpath("//div[hasclass('o_editor_prompt')]")
+
+        if not prompt_containers:
+            return Wrapper(rendered_html)
+
+        for container in prompt_containers:
+            prompt_content_elements = container.xpath(
+                ".//div[hasclass('o_editor_prompt_content')]"
+            )
+
+            if remove_prompts:
+                container.getparent().remove(container)
+                continue
+
+            if not prompt_content_elements:
+                container.getparent().remove(container)
+                continue
+
+            assert (
+                len(prompt_content_elements) == 1
+            ), "There should be only one prompt content element inside a prompt container."
+            prompt_text = prompt_content_elements[0].text_content().strip()
+
+            if not prompt_text:
+                container.getparent().remove(container)
+                continue
+
+            response = self._generate_response(prompt_text, extra_system_context=ai_context)
+
+            if not response:
+                container.getparent().remove(container)
+                continue
+
+            # Wrapped each line of the response in a <p> tag.
+            wrapped_content = "\n".join(f"<p>{content}</p>" for content in response[0].split("\n") if content.strip())
+            replacement_html_str = html_sanitize(wrapped_content, sanitize_attributes=True, sanitize_style=True)
+            container.getparent().replace(container, lxml.html.fromstring(replacement_html_str))
+
+        return Wrapper(lxml.html.tostring(root, encoding="unicode", method="html"))

@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from unittest.mock import patch
+
 from odoo import Command
 from odoo.addons.test_mail_enterprise.tests.common_ai import MailCommonAI
 from odoo.exceptions import AccessError
@@ -20,7 +22,7 @@ class TestMailComposeMessageAI(MailCommonAI):
     @users("employee")
     def test_composer_rendering_ai_prompt_multi(self):
         with self._patch_agent_generate_response(
-            response="Test response",
+            response=["Test response"],
             body_html=f"""<div><t t-out="object.name"/> +++ <t t-out="object.customer_id.name"/>{self._wrap_prompt("Test prompt")}</div>""",
         ):
             composer_form = Form(self.env['mail.compose.message'].with_context(
@@ -51,7 +53,7 @@ class TestMailComposeMessageAI(MailCommonAI):
     @users("employee")
     def test_composer_rendering_ai_prompt_single(self):
         with self._patch_agent_generate_response(
-            response="Test response",
+            response=["Test response"],
             body_html=f"""<div><t t-out="object.name"/> +++ <t t-out="object.customer_id.name"/>{self._wrap_prompt("Test prompt")}</div>""",
         ):
             with Form(self.env['mail.compose.message'].with_context(self._get_web_context(
@@ -67,7 +69,7 @@ class TestMailComposeMessageAI(MailCommonAI):
             body_html = f"""<div>{self._wrap_prompt('Greet <t t-out="object.name"/> and his buddy <t t-out="object.customer_id.name"/>')}</div>"""
             expected_html_to_eval = f"""<div>{self._wrap_prompt('Greet A and his buddy Cust A')}</div>"""
             with self._patch_agent_generate_response(
-                response="Test response",
+                response=["Test response"],
                 body_html=body_html,
             ):
                 composer_form = Form(self.env['mail.compose.message'].with_context(self._get_web_context(
@@ -86,7 +88,7 @@ class TestMailComposeMessageAI(MailCommonAI):
     def test_composer_dynamic_content_access_error(self):
         with self._patch_template_eval_prompts() as get_html_to_eval:
             with self._patch_agent_generate_response(
-                response="Test response",
+                response=["Test response"],
                 body_html=f"""<div>{self._wrap_prompt('<t t-out="object.name"/> +++ <t t-out="object.phone_number"/>')}</div>""",
             ):
                 # clear the user's groups to simulate no access rights to the models used in the template
@@ -104,3 +106,34 @@ class TestMailComposeMessageAI(MailCommonAI):
                     None,
                     msg="There should be no HTML to evaluate if the user has no access to the models used in the template.",
                 )
+
+    @mute_logger("odoo.addons.ai.models.mail_render_mixin")
+    @users("employee")
+    def test_composer_missing_composer_should_remove_prompts(self):
+        self.env.ref("ai.ai_mail_template_prompt_evaluator").sudo().unlink()
+        with self._patch_template_eval_prompts():
+            with self._patch_agent_generate_response(body_html=f"""<div>Test{self._wrap_prompt('Bla')}</div>"""):
+                composer_form = Form(self.env['mail.compose.message'].with_context(self._get_web_context(
+                    self.test_record,
+                    add_web=True,
+                    default_template_id=self.template.id,
+                )))
+                composer = composer_form.save()
+                self.assertEqual(composer.body, """<div>Test</div>""", msg="The body should not contain the prompt if the AI composer is missing.")
+
+    @mute_logger("odoo.addons.ai.models.mail_render_mixin")
+    @users("employee")
+    def test_composer_missing_default_agent_should_remove_prompts(self):
+        # Temporarily disable the ondelete constraint for testing
+        with patch.object(self.env.registry["ai.agent"], "_unlink_except_system_agent", lambda self: True):
+            self.env.ref("ai.ai_default_agent").sudo().unlink()
+
+        with self._patch_template_eval_prompts():
+            with self._patch_agent_generate_response(body_html=f"""<div>Test{self._wrap_prompt('Bla')}</div>"""):
+                composer_form = Form(self.env['mail.compose.message'].with_context(self._get_web_context(
+                    self.test_record,
+                    add_web=True,
+                    default_template_id=self.template.id,
+                )))
+                composer = composer_form.save()
+                self.assertEqual(composer.body, """<div>Test</div>""", msg="The body should not contain the prompt if the default agent is missing.")

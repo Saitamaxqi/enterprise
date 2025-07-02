@@ -43,17 +43,26 @@ class MailRenderMixinAI(models.AbstractModel):
         if not ai_composer:
             _logger.warning("The AI composer record used to evaluate AI prompts for mails is missing. The prompts are removed.")
 
+        default_agent = self.env.ref("ai.ai_default_agent", raise_if_not_found=False) or self.env["ai.agent"]
+        if not default_agent:
+            _logger.warning("The default AI agent is missing. The prompts are removed.")
+
         author = self.env.user.partner_id
         if self and 'author_id' in self and len(self) == 1:
             author = self.author_id
 
         for res_id in result:
-            result[res_id] = self.env["ai.composer"]._eval_ai_prompts(ai_composer, result[res_id], {
+            ai_context = ""
+            if ai_composer:
+                ai_context += ai_composer.default_prompt or ""
+                ai_context += "\n\nUse the following information when necessary to generate the response:\n\n"
                 # TODO: How about the recipients list?
-                "Sender": author.name,
+                ai_context += f"\nSender: {author.name}"
                 # `lang` is already set in the context by _render_field which calls this method.
-                "Recipient language": self.env.context.get("lang", "en_US"),
-            })
+                ai_context += f"\nRecipient language: {self.env.context.get('lang', 'en_US')}"
+            result[res_id] = default_agent._eval_ai_prompts(result[res_id],
+                                                            remove_prompts=not (ai_composer and default_agent),
+                                                            ai_context=ai_context)
 
         return result
 

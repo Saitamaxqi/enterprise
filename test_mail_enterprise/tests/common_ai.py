@@ -20,7 +20,7 @@ class MailCommonAI(TestMailComposer):
             return response
 
         with patch.object(
-            self.env.registry["ai.composer"],
+            self.env.registry["ai.agent"],
             "_generate_response",
             side_effect=_generate_response_patch,
         ):
@@ -31,16 +31,16 @@ class MailCommonAI(TestMailComposer):
     @contextmanager
     def _patch_template_eval_prompts(self):
         """Patch the _eval_ai_prompts method to capture the HTML to be evaluated."""
-        original_eval_prompts = self.env.registry["ai.composer"]._eval_ai_prompts
+        original_eval_prompts = self.env.registry["ai.agent"]._eval_ai_prompts
 
         html_to_eval = [None]
 
         def get_html_to_eval():
             return html_to_eval[0]
 
-        def _eval_ai_prompts_patch(self, ai_composer, html, *args, **kwargs):
+        def _eval_ai_prompts_patch(self, html, *args, **kwargs):
             html_to_eval[0] = html
-            return original_eval_prompts(self, ai_composer, html, *args, **kwargs)
+            return original_eval_prompts(self, html, *args, **kwargs)
 
-        with patch.object(self.env.registry["ai.composer"], "_eval_ai_prompts", _eval_ai_prompts_patch):
+        with patch.object(self.env.registry["ai.agent"], "_eval_ai_prompts", _eval_ai_prompts_patch):
             yield get_html_to_eval

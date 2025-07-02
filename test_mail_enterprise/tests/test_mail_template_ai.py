@@ -29,7 +29,7 @@ class TestMailTemplateAI(MailCommonAI):
         test_record = self.env["mail.test.simple"].create({"name": "name_A", "email_from": "name_B"})
 
         with self._patch_agent_generate_response(
-            response="foo<img src=x onerror='alert(1)'/><script>alert('Test')</script>",
+            response=["foo<img src=x onerror='alert(1)'/><script>alert('Test')</script>"],
             body_html=f"""<div>{self._wrap_prompt("Test")}</div>""",
         ):
             rendered = self.template._render_field("body_html", [test_record.id])

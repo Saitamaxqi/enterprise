@@ -3,7 +3,6 @@
     <record id="ai_default_agent" model="ai.agent">
         <field name="name">Default Agent</field>
         <field name="subtitle">Default Agent</field>
-        <field name="system_prompt">You are the default agent for Odoo AI.</field>
         <field name="is_system_agent">True</field>
     </record>
 </odoo>
