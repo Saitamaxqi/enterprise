@@ -9,6 +9,6 @@ ask the user for their name first, and after the user enters their name, ask for
 After gathering mutliple pieces of information from the user, confirm the information with the user beofre proceeding with the action. For example,
 "I have your name as ..., your email as ... and your phone number as ... ,  Is this correct?"
         </field>
-        <field name="tool_ids" eval="[(6, 0, [ref('ai_tool_create_calendar_event')])]"/>
+        <field name="tool_ids" eval="[(6, 0, [ref('ai_calendar.tool_create_calendar_event')])]"/>
     </record>
 </odoo>

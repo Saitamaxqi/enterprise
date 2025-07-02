@@ -1,5 +1,7 @@
 import { Thread } from "@mail/core/common/thread_model";
 import { patch } from "@web/core/utils/patch";
+import { RPCError } from "@web/core/network/rpc";
+import { _t } from "@web/core/l10n/translation";
 
 patch(Thread.prototype, {
     async post(body, postData = {}, extraData = {}) {
@@ -8,14 +10,31 @@ patch(Thread.prototype, {
         const orm = this.store.env.services.orm;
 
         if (correspondentPersona) {
-            const agents = await orm.searchRead(
+            const [agent] = await orm.searchRead(
                 "ai.agent",
                 [["partner_id", "=", correspondentPersona.id]],
                 ["id"]
             );
-            orm.call("ai.agent", "generate_response", [agents.map(({ id }) => id)], {
-                prompt: message.body,
-            });
+            if (!agent) {
+                return message;
+            }
+            try {
+                await orm.call("ai.agent", "generate_response", [agent.id], {
+                    mail_message_id: message.id,
+                });
+            } catch (error) {
+                if (error instanceof RPCError) {
+                    await orm.call("ai.agent", "post_error_message", [agent.id], {
+                        discuss_channel_id: this.id,
+                        error_message:
+                            error.data?.message ||
+                            _t("An error occurred while generating the AI response."),
+                    });
+                } else {
+                    throw error;
+                }
+            }
         }
+        return message;
     },
 });

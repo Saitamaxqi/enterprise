@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import json
 import os
 import requests
 import typing
@@ -236,5 +237,11 @@ class LLMApiService:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            _logger.warning("LLM API request to %s failed: %s", route, e)
+            message = f"LLM API request failed: {e!r}"
+            if e.response is not None:
+                try:
+                    message += f" {json.dumps(e.response.json(), indent=2)}"
+                except ValueError:  # catch JSON decode errors
+                    message += f" {e.response.text}"
+            _logger.warning(message)
             raise UserError(_("LLM API request failed: %s", e))

@@ -2,4 +2,6 @@
 from . import test_ai_agent
 from . import test_data
 from . import test_discuss_channel
+from . import test_instance_validation
 from . import test_llm_api_service
+from . import test_schema_validation

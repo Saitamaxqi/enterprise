@@ -8,7 +8,6 @@
         """,
     'depends': ['ai', 'calendar'],
     'data': [
-        'views/action_views.xml',
         'data/ai_tool_data.xml',
         'data/ai_topic_data.xml',
     ],

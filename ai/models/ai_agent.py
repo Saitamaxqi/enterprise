@@ -1,11 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
-import json
 import logging
 import lxml.html
-from collections import defaultdict
+import copy
+
 from datetime import timedelta
-from markupsafe import Markup
 from textwrap import dedent
 try:
     from markdown2 import markdown
@@ -17,8 +16,9 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools import file_open, html_sanitize, SQL, is_html_empty
 from odoo.tools.mail import html_to_inner_content
 
-from ..utils.llm_api_service import LLMApiService
-from ..utils.url_scraping import URLScraper
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.addons.ai.utils.url_scraping import URLScraper
+from odoo.addons.ai.utils.tools_schema.tools import call_ai_tool
 
 _logger = logging.getLogger(__name__)
 
@@ -165,6 +165,9 @@ class AIAgent(models.Model):
         return ai_agents
 
     def write(self, vals):
+        if 'partner_id' in vals:
+            raise ValidationError(_("The partner linked to an AI agent can't be changed"))
+
         result = super().write(vals)
         for agent in self:
             if 'attachment_ids' in vals:
@@ -331,23 +334,27 @@ class AIAgent(models.Model):
         response = self._generate_response(prompt=prompt, extra_system_context=context_message)
         return response
 
-    def generate_response(self, prompt: str):
-        for agent in self:
-            prompt = html_to_inner_content(prompt)
-            channel = self.env['discuss.channel']._get_or_create_ai_chat(agent.partner_id)
-            response = agent._generate_response(prompt=prompt, chat_history=self._retrieve_chat_history(channel))
-            for message in response or []:
-                formatted_message = message
-                if markdown:
-                    raw_html = markdown(message, extras=['fenced-code-blocks', 'tables', 'strike'])
-                    formatted_message = Markup(html_sanitize(raw_html))
-                channel.sudo().message_post(
-                    author_id=agent.partner_id.id,
-                    body=formatted_message,
-                    message_type='comment',
-                    silent=True,
-                    subtype_xmlid='mail.mt_comment'
-                )
+    def generate_response(self, mail_message_id: int):
+        self.ensure_one()
+        mail_message = self.env['mail.message'].browse(mail_message_id).exists()
+        if not mail_message:
+            raise UserError(_("The message does not exist or has been deleted."))
+
+        prompt = html_to_inner_content(mail_message.body)
+        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
+        response = self._generate_response(prompt=prompt, chat_history=self._retrieve_chat_history(channel))
+        for message in response or []:
+            self._post_ai_response(channel, message)
+
+    def post_error_message(self, error_message: str):
+        self.ensure_one()
+        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
+        response = self._generate_response(
+            prompt="Generate a message for the user stating that we are unable to process the request because of the following error: " + error_message,
+            chat_history=self._retrieve_chat_history(channel),
+            extra_system_context="Do not mention any technical terms or error codes in the generated message but be precise because the generated message will be used as info for potential retries of the request.")
+        for message in response or []:
+            self._post_ai_response(channel, message)
 
     def open_agent_chat(self):
         self.ensure_one()
@@ -370,6 +377,71 @@ class AIAgent(models.Model):
         if channel:
             channel.sudo().unlink()
 
+    def _get_openai_compatible_schema(self, schema):
+        input_schema = copy.deepcopy(schema["parameters"])
+        input_schema_properties = input_schema["properties"]
+        required_parameters = input_schema["required"]
+        for param_name, param_definition in input_schema_properties.items():
+            param_type = input_schema_properties[param_name]["type"]
+            # OpenAI function calling strict mode https://platform.openai.com/docs/guides/function-calling#strict-mode
+            # According to OpenAI docs on strict mode "Setting strict to true will ensure function calls reliably adhere
+            # to the function schema, instead of being best effort. We recommend always enabling strict mode."
+            # In strict mode, all parameters should be set as required. To denote that a parameter is optional,
+            # we set its type to 'anyOf' the original type or 'null'. So {'type': 'string'} becomes 'anyOf': [{'type': 'string'}, {'type': 'null'}].
+            # However, if the parameter type is object, it cannot be optional i.e. 'anyOf': [{'type': 'object'}, {'type': 'null'}].
+            # For an object parameter, the required attribute must be defined as a list of the names of the required properties of the object.
+            # i.e. 'required': [<property1_name>, <property2_name>, ..]. If the whole object is optional, required is set to an empty list  'required': []
+            if param_type != "object" and param_name not in required_parameters:
+                input_schema_properties[param_name]["anyOf"] = [
+                    {"type": param_type},
+                    {"type": "null"},
+                ]
+                input_schema_properties[param_name].pop("type")
+
+            # Openai function calling api doesn't support 'pattern' attribute
+            param_definition.pop("pattern", None)
+
+            if param_type == 'object':
+                object_required_properties = param_definition['required']
+                for property_name, property_definition in param_definition['properties'].items():
+                    if property_name not in object_required_properties:
+                        property_definition["anyOf"] = [
+                            {"type": property_definition['type']},
+                            {"type": "null"},
+                        ]
+                        property_definition.pop("type")
+
+                    property_definition.pop("pattern", None)
+
+        # For any object, all properties should be set as required.
+        for property_attributes in input_schema_properties.values():
+            if property_attributes.get("type") == "object":
+                property_attributes["additionalProperties"] = False
+                property_attributes["required"] = list(
+                    property_attributes["properties"].keys()
+                )
+
+        input_schema["required"] = list(input_schema_properties.keys())
+        openai_formatted_tool_description = {
+            "type": "function",
+            "function": {
+                "name": schema["name"],
+                "description": schema["description"],
+                "parameters": {
+                    **input_schema,
+                    "additionalProperties": False,
+                },
+                "strict": True,
+            },
+        }
+        return openai_formatted_tool_description
+
+    def _get_available_ai_tools(self, provider):
+        tools = [*self.topic_ids.tool_ids.mapped('schema')]
+        if provider == 'openai':
+            return [self._get_openai_compatible_schema(tool["function"]) for tool in tools]
+        return tools
+
     def _generate_response(self, prompt, chat_history=None, extra_system_context=""):
         self.ensure_one()
         response_temperature = TEMPERATURE_MAP[self.response_style]
@@ -377,16 +449,16 @@ class AIAgent(models.Model):
         if rag_context := self._build_rag_context(prompt):
             system_messages.extend(rag_context)
         full_conversation = system_messages + (chat_history or []) + [{'role': 'user', 'content': prompt}]
-        functions_descriptions = self._generate_functions_descriptions()
         provider = next((provider for provider, models in PROVIDERS_MODELS.items() if self.llm_model in models), None)
         if not provider:
             raise UserError(_("No provider found for the selected model"))
 
+        available_tools = self._get_available_ai_tools(provider)
         api_service = LLMApiService(env=self.env, provider=provider)
         api_response = api_service.get_completion(
             model=self.llm_model,
             messages=full_conversation,
-            tools=functions_descriptions,
+            tools=available_tools,
             temperature=response_temperature,
         )
 
@@ -403,22 +475,26 @@ class AIAgent(models.Model):
                     response_messages.append(api_response['content'])
                 # Check if the response contains a tool to call
                 if api_response.get('tool_calls'):
-                    messages = self._use_tools(tools_to_use=api_response['tool_calls'])
-                    full_conversation.extend(messages)
+                    tool_call_messages = [
+                        call_ai_tool(self.env['ai.tool'], tool_call)
+                        for tool_call in api_response['tool_calls']
+                    ]
+                    full_conversation.extend(tool_call_messages)
                     api_response = api_service.get_completion(
                         model=self.llm_model,
                         messages=full_conversation,
+                        tools=available_tools,
                         temperature=response_temperature)
                     response_processed = False
             return response_messages
 
-    def _retrieve_chat_history(self, discuss_channel_id, no_messages=20):
+    def _retrieve_chat_history(self, discuss_channel, no_messages=20):
         chat_history = [
             {
                 'content': message.body,
                 'role': 'assistant' if message.author_id.agent_ids else 'user'
             }
-            for message in discuss_channel_id.message_ids[:no_messages]
+            for message in discuss_channel.message_ids[:no_messages]
         ]
 
         chat_history.reverse()
@@ -477,56 +553,6 @@ class AIAgent(models.Model):
         if context:
             messages.append({'role': 'system', 'content': f"##Context information:\n\n{context}\n{PREPROMPTS['context']}"})
         return messages
-
-    def _generate_functions_descriptions(self):
-        functions_descriptions = []
-        for topic in self.topic_ids:
-            for ai_tool in topic.tool_ids:
-                ai_tool_input_schema = json.loads(ai_tool.input_schema)
-                functions_descriptions.append({
-                    'type': 'function',
-                    'function': {
-                        'name': ai_tool.formatted_name,
-                        'description': ai_tool.description,
-                        'parameters': {
-                            'type': 'object',
-                            'properties': self._extract_property_values(
-                                ai_tool_input_schema['properties'],
-                                property_values_to_extract=['type', 'description']
-                            ),
-                            'required': list(ai_tool_input_schema['properties'].keys()),
-                            'additionalProperties': False
-                        },
-                        'strict': True
-                    }
-                })
-        return functions_descriptions
-
-    def _extract_property_values(self, ai_tool_properties, property_values_to_extract):
-        properties = defaultdict(defaultdict)
-        for property_name in ai_tool_properties:
-            for value in property_values_to_extract:
-                properties[property_name][value] = ai_tool_properties[property_name][value]
-        return properties
-
-    def _use_tools(self, tools_to_use):
-        self.ensure_one()
-        tool_map = {}
-        for ai_tool in self.topic_ids.tool_ids:
-            tool_map[ai_tool.formatted_name] = ai_tool
-
-        tools_usage_results = []
-        for tool_to_use in tools_to_use:
-            tool_title = tool_to_use['function']['name']
-            tool_arguments = json.loads(
-                tool_to_use['function']['arguments'])
-            ai_tool = tool_map[tool_title]
-            tools_usage_results.append({
-                'role': 'tool',
-                'tool_call_id': tool_to_use['id'],
-                'content': ai_tool._use_tool(tool_arguments)
-            })
-        return tools_usage_results
 
     @api.depends("attachment_ids", "url_attachment_ids")
     def _compute_attachment_processing_percentage(self):

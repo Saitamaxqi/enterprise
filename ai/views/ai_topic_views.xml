@@ -26,7 +26,13 @@
                         </div>
                         <field name="instructions" placeholder="Explain to the Agent what they need to do..."/>
                         <field name="description" placeholder="Summarize what this topic does"/>
-                        <field name="tool_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}" placeholder="Select the tools linked to this topic"/>
+                        <field name="tool_ids" options="{'no_create': True, 'no_create_edit': True}">
+                            <list editable="bottom">
+                                <field name="display_name" string="Tool Name" />
+                                <field name="description"/>
+                                <field name="method_name" optional="hide"/>
+                            </list>
+                        </field>
                     </group>
                 </sheet>
             </form>
