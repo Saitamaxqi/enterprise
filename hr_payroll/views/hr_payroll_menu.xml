@@ -54,7 +54,7 @@
         name="Versions"
         action="hr.action_hr_version"
         parent="menu_hr_payroll_employees"
-        groups="base.group_no_one"
+        groups="hr_payroll.group_hr_payroll_user"
         sequence="20"/>
 
     <menuitem
