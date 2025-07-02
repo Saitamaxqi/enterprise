@@ -260,9 +260,9 @@ test("Check accounts statistics", async () => {
     expect(".o_social_stream_stat_box").toHaveCount(2, {
         message: "Kanban View should contain exactly 2 lines of account statistics.",
     });
-    // 3 because '50%' counts as a match (and 60M, and -20%)
-    // so if we want to check that there are no actual 0%, it means we want only 3 times "contains 0%"
-    expect(".o_social_stream_stat_box small:contains('0%')").toHaveCount(3, {
+    // 2 because '50%' and `60%` counts as a match
+    // so if we want to check that there are no actual 0%, it means we want only 2 times "contains 0%"
+    expect(".o_social_stream_stat_box small:contains('0%')").toHaveCount(2, {
         message: "Accounts with has_trends = false should not display trends.",
     });
     expect(".o_social_stream_stat_box b:contains('519')").toHaveCount(1, {
@@ -270,6 +270,9 @@ test("Check accounts statistics", async () => {
     });
     expect(".o_social_stream_stat_box small:contains('50%')").toHaveCount(1, {
         message: "Audience trend is correctly displayed.",
+    });
+    expect(".o_social_stream_stat_box small:contains('60%')").toHaveCount(1, {
+        message: "Engagement trend is correctly displayed.",
     });
 });
 
