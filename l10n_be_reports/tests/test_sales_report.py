@@ -128,3 +128,14 @@ class BelgiumSalesReportTest(AccountSalesReportCommon):
             ],
             options,
         )
+
+    @freeze_time('2019-12-31')
+    def test_ec_sales_report_month_only(self):
+        options = self.report.get_options({'date': {'date_to': '2025-06-30', 'mode': 'range', 'filter': 'custom_return_period'}})
+        xml_string = self.env[self.report.custom_handler_model_name].export_to_xml_sales_report(options)['file_content']
+        xml_tree = self.get_xml_tree_from_string(xml_string)
+
+        namespaces = {'ns2': 'http://www.minfin.fgov.be/IntraConsignment'}
+        month_node = xml_tree.find('.//ns2:Period/ns2:Month', namespaces)
+        self.assertIsNotNone(month_node, "The <ns2:Month> element was not found in the <ns2:Period> section.")
+        self.assertEqual(month_node.text, '6', "The <ns2:Month> element does not have the expected value.")
