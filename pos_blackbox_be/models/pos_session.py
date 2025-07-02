@@ -42,8 +42,9 @@ class PosSession(models.Model):
         read_records = super()._load_pos_data_read(records, config)
         if read_records and config.certified_blackbox_identifier:
             record = read_records[0]
-            record["_users_clocked_ids"] = self.users_clocked_ids.ids
-            record["_employees_clocked_ids"] = self.employees_clocked_ids.ids
+            session = self if self.exists() else self.env["pos.session"].browse(record["id"]).exists()
+            record["_users_clocked_ids"] = session.users_clocked_ids.ids if session else []
+            record["_employees_clocked_ids"] = session.employees_clocked_ids.ids if session else []
             if config.module_pos_hr:
                 employees_insz_or_bis_number = self.env['hr.employee'].sudo().search_read(config._employee_domain(config.current_user_id.id), ['id', 'insz_or_bis_number'])
                 insz_or_bis_number_per_employee_id = {employee['id']: employee['insz_or_bis_number'] for employee in employees_insz_or_bis_number}
