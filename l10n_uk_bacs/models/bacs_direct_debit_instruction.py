@@ -93,7 +93,7 @@ class BacsDdi(models.Model):
         self.env['account.move'].flush_model(['move_type'])
         self.env['account.payment'].flush_model(['bacs_ddi_id'])
 
-        query_res = self.env.execute_query_dict(SQL("""
+        query_res = dict(self.env.execute_query(SQL("""
             SELECT
                 payment.bacs_ddi_id,
                 ARRAY_AGG(rel.invoice_id) AS invoice_ids
@@ -101,14 +101,14 @@ class BacsDdi(models.Model):
             JOIN account_move__account_payment rel ON rel.payment_id = payment.id
             WHERE payment.bacs_ddi_id IN %s
             GROUP BY payment.bacs_ddi_id
-        """, tuple(stored_ddis)))
+        """, tuple(stored_ddis))))
 
         for mandate in self:
             invoice_ids = query_res.get(mandate.id, [])
             mandate.paid_invoice_ids = [(6, 0, invoice_ids)]
             mandate.paid_invoices_len = len(invoice_ids)
 
-        query_res = self.env.execute_query_dict(SQL("""
+        query_res = dict(self.env.execute_query(SQL("""
             SELECT
                 payment.bacs_ddi_id,
                 ARRAY_AGG(payment.id) AS payment_ids
@@ -120,7 +120,7 @@ class BacsDdi(models.Model):
             AND move.state = 'posted'
             AND method.code = 'bacs_dd'
             GROUP BY payment.bacs_ddi_id
-        """))
+        """)))
 
         for mandate in self:
             payment_ids = query_res.get(mandate.id, [])
