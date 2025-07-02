@@ -12,7 +12,11 @@ import { animationFrame } from "@odoo/hoot-mock";
 import { Component, onMounted, xml } from "@odoo/owl";
 
 import { mailModels, STORE_FETCH_ROUTES } from "@mail/../tests/mail_test_helpers";
-import { followRelation } from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
+import {
+    followRelation,
+    getTreeEditorContent,
+    SELECTORS,
+} from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 import {
     contains,
     defineActions,
@@ -1135,9 +1139,14 @@ test("edit one2many list view that uses parent key", async () => {
     );
 
     await contains(".o_web_studio_sidebar input#domain").click();
-    expect(".modal .modal-body").toHaveText(
-        "Match\nall\nof the following rules:\nDisplay name\nequals\nnot equals\ncontains\nnot contains\nis in\nis not in\nset\nnot set\nstarts with\nends with\nparent.display_name\nNew Rule"
-    );
+    expect(getTreeEditorContent()).toEqual([
+        { level: 0, value: "all" },
+        {
+            level: 1,
+            value: ["Display name", "is equal to", "parent.display_name"],
+        },
+    ]);
+    expect(SELECTORS.addNewRule).toHaveCount(1);
 
     // Close the modal and remove the domain on invisible attr
     await contains(".btn-close").click();
