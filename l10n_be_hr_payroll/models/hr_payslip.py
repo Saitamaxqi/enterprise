@@ -34,7 +34,7 @@ class HrPayslip(models.Model):
         res = super()._compute_input_line_ids()
         balance_by_employee = self._get_salary_advance_balances()
         for slip in self:
-            if not slip.employee_id or not slip.date_from or not slip.date_to:
+            if not slip.employee_id or not slip.date_from or not slip.date_to or slip.country_code != 'BE':
                 continue
             # If a double holiday pay should be recovered
             if slip.struct_id.code == 'CP200DOUBLE':
@@ -277,8 +277,10 @@ class HrPayslip(models.Model):
                 payslip.l10n_be_max_seizable_warning = False
 
     def _get_salary_advance_balances(self):
+        balance_by_employee = super()._get_salary_advance_balances()
         payslips_by_employee = self._read_group(
             domain=[
+                ('struct_id.country_id', '=', 'BE'),
                 ('state', 'in', ('done', 'paid')),
                 ('employee_id', 'in', self.employee_id.ids),
                 ('input_line_ids.code', 'in', ('SALARYADVREC', 'SALARYADV')),
@@ -286,7 +288,6 @@ class HrPayslip(models.Model):
             groupby=['employee_id'],
             aggregates=['id:recordset']
         )
-        balance_by_employee = defaultdict(float)
         for employee_id, payslips in payslips_by_employee:
             for input_line in chain.from_iterable(payslip.input_line_ids for payslip in payslips):
                 if input_line.code == 'SALARYADV':
@@ -294,6 +295,7 @@ class HrPayslip(models.Model):
                 elif input_line.code == 'SALARYADVREC':
                     balance_by_employee[employee_id] -= input_line.amount
         return balance_by_employee
+
     def _get_worked_day_lines_hours_per_day(self):
         self.ensure_one()
         if self.version_id.time_credit:

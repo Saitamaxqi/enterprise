@@ -1,12 +1,67 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, fields
+from odoo import api, fields, models
 
 
 class HrPayslip(models.Model):
     _inherit = 'hr.payslip'
 
     l10n_sa_wps_file_reference = fields.Char(string="WPS File Reference", copy=False)
+
+    @api.depends('employee_id', 'version_id', 'struct_id', 'date_from', 'date_to')
+    def _compute_input_line_ids(self):
+        res = super()._compute_input_line_ids()
+        balance_by_employee = self._get_salary_advance_balances()
+        sal_adv_type = self.env.ref('l10n_sa_hr_payroll.l10n_sa_input_salary_advance')
+        for slip in self:
+            if not slip.employee_id or not slip.date_from or not slip.date_to or slip.country_code != 'SA':
+                continue
+            if slip.struct_id.code == 'SALARYADVANDLOAN':
+                lines_to_remove = slip.input_line_ids.filtered(lambda x: x.input_type_id == sal_adv_type)
+                to_remove_vals = [(3, line.id, False) for line in lines_to_remove]
+                to_add_vals = [(0, 0, {
+                    'name': self.env._('Salary Advance'),
+                    'amount': 0,
+                    'input_type_id': sal_adv_type.id,
+                })]
+                slip.write({'input_line_ids': to_remove_vals + to_add_vals})
+            else:
+                balance = balance_by_employee[slip.employee_id]
+                if balance <= 0:
+                    continue
+                lines_to_remove = slip.input_line_ids.filtered(
+                    lambda x: x.input_type_id == sal_adv_type
+                )
+                to_remove_vals = [(3, line.id, False) for line in lines_to_remove]
+                to_add_vals = [(0, 0, {
+                    'name': self.env._('Salary Advance'),
+                    'amount': balance,
+                    'input_type_id': sal_adv_type.id,
+                })]
+                slip.write({'input_line_ids': to_remove_vals + to_add_vals})
+        return res
+
+    def _get_salary_advance_balances(self):
+        balance_by_employee = super()._get_salary_advance_balances()
+        payslips_by_employee = self._read_group(
+            domain=[
+                ('struct_id.country_id', '=', 'SA'),
+                ('state', 'in', ('done', 'paid')),
+                ('employee_id', 'in', self.employee_id.ids),
+                ('input_line_ids.code', '=', 'ADV'),
+            ],
+            groupby=['employee_id'],
+            aggregates=['id:recordset']
+        )
+        for employee_id, payslips in payslips_by_employee:
+            for input_line in payslips.input_line_ids:
+                if input_line.code != 'ADV':
+                    continue
+                if input_line.payslip_id.struct_id.code == 'SALARYADVANDLOAN':
+                    balance_by_employee[employee_id] += input_line.amount
+                else:
+                    balance_by_employee[employee_id] -= input_line.amount
+        return balance_by_employee
 
     def _get_data_files_to_update(self):
         # Note: file order should be maintained

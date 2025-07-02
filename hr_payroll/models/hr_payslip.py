@@ -143,6 +143,9 @@ class HrPayslip(models.Model):
     payment_report_date = fields.Date(readonly=True)
     ytd_computation = fields.Boolean(related='struct_id.ytd_computation')
 
+    def _get_salary_advance_balances(self):
+        return defaultdict(float)
+
     def _schedule_period_start(self, schedule, today, country_code=False):
         week_start = self.env["res.lang"]._get_data(code=self.env.user.lang).week_start
         if schedule == 'quarterly':
