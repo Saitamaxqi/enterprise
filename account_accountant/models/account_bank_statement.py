@@ -265,16 +265,16 @@ class AccountBankStatementLine(models.Model):
                             FROM regexp_matches(st_line.payment_ref, '\\w{2,5}/?\\d{4}/\\d+(?:/\\d+)?(?:-\\d+)?', 'g') AS match
                           ), '|') || ')\\M')
                           -- Second Rule, check for full match between aml ref and st_line label
-                          OR (LENGTH(aml.ref) >= 7 AND POSITION(aml.ref in st_line.payment_ref) > 0)
+                          OR (LENGTH(aml.ref) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(aml.ref, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)'))
                           -- Third Rule, check if there is a word longer than 16 characters matching both fields
                           OR aml.ref ~ ('\\m(' || array_to_string((
                             SELECT array_agg(regexp_replace(match[1], '([\\.+*?\\[\\]^$(){}=!<>|:])', '\\\1', 'g'))
                             FROM regexp_matches(st_line.payment_ref, '\\S{16,}', 'g') AS match
                           ), '|') || ')\\M')
                           -- Fourth Rule, full match with move_name
-                          OR (LENGTH(aml.move_name) >= 7 AND POSITION(aml.move_name in st_line.payment_ref) > 0)
+                          OR (LENGTH(aml.move_name) >= 7 AND st_line.payment_ref ~ ('\\m' || aml.move_name || '\\M'))
                           -- Fifth Rule, full match with payment_ref on move
-                          OR (LENGTH(move.payment_reference) >= 7 AND POSITION(move.payment_reference in st_line.payment_ref) > 0))
+                          OR (LENGTH(move.payment_reference) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(move.payment_reference, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)')))
                    ) AS ref_aml_ids
               FROM account_bank_statement_line st_line, account_move_line aml
          LEFT JOIN account_move move ON aml.move_id = move.id
@@ -293,13 +293,13 @@ class AccountBankStatementLine(models.Model):
                       SELECT array_agg(regexp_replace(match[1], '([\\.+*?\\[\\]^$(){}=!<>|:])', '\\\1', 'g'))
                       FROM regexp_matches(st_line.payment_ref, '\\w{2,5}/?\\d{4}/\\d+(?:/\\d+)?(?:-\\d+)?', 'g') AS match
                     ), '|') || ')\\M')
-                    OR (LENGTH(aml.ref) >= 7 AND POSITION(aml.ref in st_line.payment_ref) > 0)
+                    OR (LENGTH(aml.ref) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(aml.ref, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)'))
                     OR aml.ref ~ ('\\m(' || array_to_string((
                       SELECT array_agg(regexp_replace(match[1], '([\\.+*?\\[\\]^$(){}=!<>|:])', '\\\1', 'g'))
                       FROM regexp_matches(st_line.payment_ref, '\\S{16,}', 'g') AS match
                     ), '|') || ')\\M')
-                    OR (LENGTH(aml.move_name) >= 7 AND POSITION(aml.move_name in st_line.payment_ref) > 0)
-                    OR (LENGTH(move.payment_reference) >= 7 AND POSITION(move.payment_reference in st_line.payment_ref) > 0))
+                    OR (LENGTH(aml.move_name) >= 7 AND st_line.payment_ref ~ ('\\m' || aml.move_name || '\\M'))
+                    OR (LENGTH(move.payment_reference) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(move.payment_reference, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)')))
               )
                END
                AND st_line.move_id != aml.move_id

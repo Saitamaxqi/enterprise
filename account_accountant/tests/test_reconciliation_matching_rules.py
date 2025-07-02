@@ -87,12 +87,12 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             'line_ids': [Command.create({'partner_id': cls.partner_agrolait.id})],
         })
 
-    def _create_and_post_payment(self, amount=100, memo=None, post=True, **kwargs):
+    def _create_and_post_payment(self, amount=100, memo=None, post=True, partner=True, **kwargs):
         payment = self.env['account.payment'].create({
             'payment_type': 'inbound',
             'payment_method_id': self.env.ref('account.account_payment_method_manual_in').id,
             'partner_type': 'customer',
-            'partner_id': self.partner_a.id,
+            'partner_id': self.partner_a.id if partner else False,
             'amount': amount,
             'journal_id': self.company_data['default_journal_bank'].id,
             'memo': memo,
@@ -585,6 +585,17 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': payment.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
         ])
 
+    def test_matching_rules_for_full_match_on_aml_ref(self):
+        """Test reconciliation full match on aml ref"""
+        self._create_and_post_payment(amount=100, memo="000100000", partner=False)
+        bank_line_1 = self._create_st_line(amount=100, payment_ref='000000001000000000123')
+        bank_line_1._try_auto_reconcile_statement_lines()
+        # As aml.ref is only a part of a word in st_line.payment_ref, we can't reconcile
+        self.assertRecordValues(bank_line_1.line_ids, [
+            {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': bank_line_1.journal_id.suspense_account_id.id, 'balance': -100.0, 'reconciled': False},
+        ])
+
     def test_matching_rules_with_structured_ref(self):
         """Test reconciliation with structured ref, to be sure special char like '+' are well escaped in the query regex"""
         payment = self._create_and_post_payment(amount=100, memo="+++123/456/7890+++")
@@ -620,7 +631,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': payment.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
         ])
 
-    def test_matching_rules_with_empy_aml_move_name(self):
+    def test_matching_rules_with_empty_aml_move_name(self):
         """Test reconciliation if there is aml with empty move_name"""
         # The payment we want to match
         payment = self._create_and_post_payment(amount=100)
@@ -638,6 +649,16 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.assertRecordValues(bank_line_1.line_ids, [
             {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
             {'account_id': payment.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+        ])
+
+    def test_perfect_match_on_move_name(self):
+        """Test reconciliation for perfect match on move name"""
+        payment = self._create_and_post_payment(amount=100, partner=False)
+        bank_line_1 = self._create_st_line(amount=100, payment_ref=f"{payment.move_id.name}23")
+        bank_line_1._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(bank_line_1.line_ids, [
+            {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': bank_line_1.journal_id.suspense_account_id.id, 'balance': -100.0, 'reconciled': False},
         ])
 
     def test_matching_rules_payment_regex(self):
