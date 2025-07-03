@@ -49,11 +49,8 @@
         "web.assets_web_dark": [
             'marketing_automation/static/src/scss/*.dark.scss',
         ],
-        'web.qunit_suite_tests': [
-            'marketing_automation/static/tests/hierarchy_kanban_tests.js',
-        ],
         'web.assets_unit_tests': [
-            'marketing_automation/static/tests/campaign_picker.test.js'
+            'marketing_automation/static/tests/**/*',
         ],
     }
 }
