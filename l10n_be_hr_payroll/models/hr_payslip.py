@@ -713,7 +713,7 @@ class HrPayslip(models.Model):
         def convert_to_month(value):
             return float_round(value / 12.0, precision_rounding=0.01, rounding_method='DOWN')
 
-        employee = self.version_id.employee_id
+        version = self.version_id
         # PART 1: Withholding tax amount computation
         withholding_tax_amount = 0.0
 
@@ -734,52 +734,52 @@ class HrPayslip(models.Model):
             yearly_net_taxable_revenue = yearly_gross_revenue - self._rule_parameter('expense_deduction')
 
         # BAREME III: Non resident
-        if employee.is_non_resident:
+        if version.is_non_resident:
             basic_bareme = compute_basic_bareme(yearly_net_taxable_revenue)
             withholding_tax_amount = convert_to_month(basic_bareme)
         else:
             # BAREME I: Isolated or spouse with income
-            if employee.marital in ['divorced', 'single', 'widower'] or (employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status != 'without_income'):
+            if version.marital in ['divorced', 'single', 'widower'] or (version.marital in ['married', 'cohabitant'] and version.spouse_fiscal_status != 'without_income'):
                 basic_bareme = max(compute_basic_bareme(yearly_net_taxable_revenue) - self._rule_parameter('deduct_single_with_income'), 0.0)
                 withholding_tax_amount = convert_to_month(basic_bareme)
 
             # BAREME II: spouse without income
-            if employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status == 'without_income':
+            if version.marital in ['married', 'cohabitant'] and version.spouse_fiscal_status == 'without_income':
                 yearly_net_taxable_revenue_for_spouse = min(yearly_net_taxable_revenue * 0.3, self._rule_parameter('max_spouse_income'))
                 basic_bareme_1 = compute_basic_bareme(yearly_net_taxable_revenue_for_spouse)
                 basic_bareme_2 = compute_basic_bareme(yearly_net_taxable_revenue - yearly_net_taxable_revenue_for_spouse)
                 withholding_tax_amount = convert_to_month(max(basic_bareme_1 + basic_bareme_2 - 2 * self._rule_parameter('deduct_single_with_income'), 0))
 
         # Reduction for other family charges
-        if (employee.children and employee.dependent_children) or (employee.other_dependent_people and (employee.dependent_seniors or employee.dependent_juniors)):
-            if employee.marital in ['divorced', 'single', 'widower'] or (employee.spouse_fiscal_status != 'without_income'):
+        if (version.children and version.dependent_children) or (version.other_dependent_people and (version.dependent_seniors or version.dependent_juniors)):
+            if version.marital in ['divorced', 'single', 'widower'] or (version.spouse_fiscal_status != 'without_income'):
 
-                # if employee.marital in ['divorced', 'single', 'widower']:
+                # if version.marital in ['divorced', 'single', 'widower']:
                 #     withholding_tax_amount -= self._rule_parameter('isolated_deduction')
-                if employee.marital in ['divorced', 'single', 'widower'] and employee.dependent_children:
+                if version.marital in ['divorced', 'single', 'widower'] and version.dependent_children:
                     withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction')
-                if employee.disabled:
+                if version.disabled:
                     withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction')
-                if employee.other_dependent_people and employee.dependent_seniors:
-                    withholding_tax_amount -= self._rule_parameter('dependent_senior_deduction') * employee.dependent_seniors
-                if employee.other_dependent_people and employee.dependent_juniors:
-                    withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction') * employee.dependent_juniors
-                if employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status == 'low_income':
+                if version.other_dependent_people and version.dependent_seniors:
+                    withholding_tax_amount -= self._rule_parameter('dependent_senior_deduction') * version.dependent_seniors
+                if version.other_dependent_people and version.dependent_juniors:
+                    withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction') * version.dependent_juniors
+                if version.marital in ['married', 'cohabitant'] and version.spouse_fiscal_status == 'low_income':
                     withholding_tax_amount -= self._rule_parameter('spouse_low_income_deduction')
-                if employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status == 'low_pension':
+                if version.marital in ['married', 'cohabitant'] and version.spouse_fiscal_status == 'low_pension':
                     withholding_tax_amount -= self._rule_parameter('spouse_other_income_deduction')
-            if employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status == 'without_income':
-                if employee.disabled:
+            if version.marital in ['married', 'cohabitant'] and version.spouse_fiscal_status == 'without_income':
+                if version.disabled:
                     withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction')
-                if employee.disabled_spouse_bool:
+                if version.disabled_spouse_bool:
                     withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction')
-                if employee.other_dependent_people and employee.dependent_seniors:
-                    withholding_tax_amount -= self._rule_parameter('dependent_senior_deduction') * employee.dependent_seniors
-                if employee.other_dependent_people and employee.dependent_juniors:
-                    withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction') * employee.dependent_juniors
+                if version.other_dependent_people and version.dependent_seniors:
+                    withholding_tax_amount -= self._rule_parameter('dependent_senior_deduction') * version.dependent_seniors
+                if version.other_dependent_people and version.dependent_juniors:
+                    withholding_tax_amount -= self._rule_parameter('disabled_dependent_deduction') * version.dependent_juniors
 
         # Child Allowances
-        n_children = employee.dependent_children
+        n_children = version.dependent_children
         if n_children > 0:
             children_deduction = self._rule_parameter('dependent_basic_children_deduction')
             if n_children <= 8:
@@ -799,12 +799,13 @@ class HrPayslip(models.Model):
             return 0, 0, 0, 0, 0, 0
 
         categories = localdict['categories']
-        employee = self.version_id.employee_id
+        version = self.version_id
+        employee = version.employee_id
         wage = categories['BASIC']
-        if not wage or employee.is_non_resident:
+        if not wage or version.is_non_resident:
             return 0.0
 
-        if employee.marital in ['divorced', 'single', 'widower'] or (employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status == 'without_income'):
+        if version.marital in ['divorced', 'single', 'widower'] or (version.marital in ['married', 'cohabitant'] and version.spouse_fiscal_status == 'without_income'):
             rates = self._rule_parameter('cp200_monss_isolated')
             if not rates:
                 rates = [
@@ -816,7 +817,7 @@ class HrPayslip(models.Model):
             low, dummy, rate, basis, min_amount, max_amount = find_rate(wage, rates)
             return -min(max(basis + (wage - low + 0.01) * rate, min_amount), max_amount)
 
-        if employee.marital in ['married', 'cohabitant'] and employee.spouse_fiscal_status != 'without_income':
+        if version.marital in ['married', 'cohabitant'] and version.spouse_fiscal_status != 'without_income':
             rates = self._rule_parameter('cp200_monss_couple')
             if not rates:
                 rates = [
@@ -828,7 +829,7 @@ class HrPayslip(models.Model):
                 ]
             low, dummy, rate, basis, min_amount, max_amount = find_rate(wage, rates)
             if isinstance(max_amount, tuple):
-                if employee.spouse_fiscal_status in ['high_income', 'low_income']:
+                if version.spouse_fiscal_status in ['high_income', 'low_income']:
                     # conjoint avec revenus professionnels
                     max_amount = max_amount[0]
                 else:
@@ -1012,30 +1013,29 @@ class HrPayslip(models.Model):
         children_exoneration = self._rule_parameter('holiday_pay_pp_exoneration')
         children_reduction = self._rule_parameter('holiday_pay_pp_rate_reduction')
 
-        employee = self.version_id.employee_id
+        version = self.version_id
 
-        contract = self.version_id
-        monthly_revenue = contract._get_contract_wage()
+        monthly_revenue = version._get_contract_wage()
         # Count ANT in yearly remuneration
-        if contract.internet:
+        if version.internet:
             monthly_revenue += 5.0
-        if contract.mobile and not contract.internet:
+        if version.mobile and not version.internet:
             monthly_revenue += 4.0 + 5.0
-        if contract.mobile and contract.internet:
+        if version.mobile and version.internet:
             monthly_revenue += 4.0
-        if contract.has_laptop:
+        if version.has_laptop:
             monthly_revenue += 7.0
 
         yearly_revenue = monthly_revenue * (1 - 0.1307) * 12.0
 
-        if contract.transport_mode_car:
+        if version.transport_mode_car:
             if 'vehicle_id' in self:
                 yearly_revenue += self.vehicle_id._get_car_atn(date=self.date_from) * 12.0
             else:
-                yearly_revenue += contract.car_atn * 12.0
+                yearly_revenue += version.car_atn * 12.0
 
         # Exoneration
-        children = employee.dependent_children
+        children = version.dependent_children
         if children > 0 and yearly_revenue <= children_exoneration.get(children, children_exoneration[12]):
             yearly_revenue -= children_exoneration.get(children, children_exoneration[12]) - yearly_revenue
             yearly_revenue = max(yearly_revenue, 0)
@@ -1226,22 +1226,22 @@ class HrPayslip(models.Model):
             not all(day.work_entry_type_id.is_leave for day in worked_days.values())
             or self.env.context.get('salary_simulation')
         ):
-            contract = self.version_id
-            calendar = contract.resource_calendar_id
+            version = self.version_id
+            calendar = version.resource_calendar_id
             days_per_week = calendar._get_days_per_week()
             incapacity_attendances = calendar.attendance_ids.filtered(lambda a: a.work_entry_type_id.code == 'LEAVE281')
             if incapacity_attendances:
                 incapacity_hours = sum((attendance.hour_to - attendance.hour_from) for attendance in incapacity_attendances)
                 incapacity_hours = incapacity_hours / 2 if calendar.two_weeks_calendar else incapacity_hours
                 incapacity_rate = (1 - incapacity_hours / calendar.hours_per_week) if calendar.hours_per_week else 0
-                work_time_rate = contract.resource_calendar_id.work_time_rate * incapacity_rate
+                work_time_rate = version.resource_calendar_id.work_time_rate * incapacity_rate
             else:
-                work_time_rate = contract.resource_calendar_id.work_time_rate
+                work_time_rate = version.resource_calendar_id.work_time_rate
 
             threshold = 0 if ('OUT' in worked_days and worked_days['OUT'].number_of_hours) else self._get_representation_fees_threshold(localdict)
             if days_per_week and self.env.context.get('salary_simulation_full_time'):
-                result = contract.representation_fees
-            elif days_per_week and contract.representation_fees > threshold:
+                result = version.representation_fees
+            elif days_per_week and version.representation_fees > threshold:
                 # Only part of the representation costs are pro-rated because certain costs are fully
                 # covered for the company (teleworking costs, mobile phone, internet, etc., namely (for 2021):
                 # - 144.31 € (Tax, since 2021 - coronavirus)
@@ -1256,19 +1256,19 @@ class HrPayslip(models.Model):
                 # +-120 € of representation expenses which is then subject to prorating.
 
                 # Credit time, but with only half days (otherwise it's taken into account)
-                if contract.time_credit and work_time_rate and work_time_rate < 100 and (days_per_week == 5 or not self.representation_fees_missing_days):
-                    total_amount = threshold + (contract.representation_fees - threshold) * work_time_rate / 100
+                if version.time_credit and work_time_rate and work_time_rate < 100 and (days_per_week == 5 or not self.representation_fees_missing_days):
+                    total_amount = threshold + (version.representation_fees - threshold) * work_time_rate / 100
                 # Contractual part time
-                elif not contract.time_credit and work_time_rate < 100:
-                    total_amount = threshold + (contract.representation_fees - threshold) * work_time_rate / 100
+                elif not version.time_credit and work_time_rate < 100:
+                    total_amount = threshold + (version.representation_fees - threshold) * work_time_rate / 100
                 else:
-                    total_amount = contract.representation_fees
+                    total_amount = version.representation_fees
 
                 if total_amount > threshold:
                     daily_amount = (total_amount - threshold) * 3 / 13 / days_per_week
                     result = max(0, total_amount - daily_amount * self.representation_fees_missing_days)
             elif days_per_week:
-                result = contract.representation_fees
+                result = version.representation_fees
             else:
                 result = 0
         else:
