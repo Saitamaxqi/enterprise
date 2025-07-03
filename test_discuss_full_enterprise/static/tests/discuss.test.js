@@ -7,8 +7,11 @@ import {
     startServer,
 } from "@mail/../tests/mail_test_helpers";
 
+import { expectElementCount } from "@html_editor/../tests/_helpers/ui_expectations";
+
 import { describe, test } from "@odoo/hoot";
 import { press } from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
 
 describe.current.tags("desktop");
 defineMailModels();
@@ -24,4 +27,23 @@ test("Can use channel command /who", async () => {
     await insertText(".o-mail-Composer-input", "/who");
     await press("Enter");
     await contains(".o_mail_notification", { text: "You are alone in this channel." });
+});
+
+test("can handle command and disable mentions in AI composer", async () => {
+    const pyEnv = await startServer();
+    const channelId = pyEnv["discuss.channel"].create({
+        channel_type: "ai_composer",
+        name: "my-ai-composer",
+    });
+    pyEnv["discuss.channel"].create({ name: "my-channel" });
+    await start();
+    await openDiscuss(channelId);
+    await insertText(".o-mail-Composer-input", "/help");
+    await press("Enter");
+    await contains(".o-mail-Message");
+    await insertText(".o-mail-Composer-input", "@");
+    await animationFrame();
+    await expectElementCount(".o-mail-NavigableList-item", 0);
+    await insertText(".o-mail-Composer-input", "#", { replace: true });
+    await expectElementCount(".o-mail-NavigableList-item", 0);
 });

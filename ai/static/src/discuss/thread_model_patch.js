@@ -17,7 +17,7 @@ patch(Thread.prototype, {
     },
     async post() {
         const message = await super.post(...arguments);
-        if (this.channel_type === "ai_composer") {
+        if (this.channel_type === "ai_composer" && message?.body) {
             await this.generate(message.body, this.id);
         }
         return message;
