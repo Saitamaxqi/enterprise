@@ -2,9 +2,9 @@ import { SocialPostFormatterMixin } from "./social_post_formatter_mixin";
 
 import { markup } from "@odoo/owl";
 
-import { HtmlField, htmlField } from "@web_editor/js/backend/html_field";
+import { HtmlField, htmlField } from "@html_editor/fields/html_field";
 import { registry } from "@web/core/registry";
-import { setElementContent } from "@web/core/utils/html";
+import { createDocumentFragmentFromContent } from "@web/core/utils/html";
 
 export class FieldPostPreview extends SocialPostFormatterMixin(HtmlField) {
     static props = {
@@ -13,11 +13,12 @@ export class FieldPostPreview extends SocialPostFormatterMixin(HtmlField) {
     };
 
     get markupValue() {
-        const $html = $(this.props.record.data[this.props.name] + "");
-        $html.find(".o_social_preview_message").each((index, previewMessage) => {
-            setElementContent(previewMessage, this._formatPost(previewMessage.textContent.trim()));
-        });
-        return markup($html[0]?.outerHTML || "");
+        const value = this.props.record.data[this.props.name] || "";
+        const html = createDocumentFragmentFromContent(value);
+        for (const previewMessage of html.querySelectorAll(".o_social_preview_message")) {
+            previewMessage.innerHTML = this._formatPost(previewMessage.textContent.trim());
+        }
+        return markup(html.body.innerHTML);
     }
 }
 

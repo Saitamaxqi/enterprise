@@ -8,6 +8,7 @@ import { useService } from '@web/core/utils/hooks';
 import { Component, useState } from "@odoo/owl";
 
 export class StreamPostComment extends SocialPostFormatterMixin(Component) {
+    static props = ["*"];
     static template = "social.StreamPostComment";
 
     setup() {
