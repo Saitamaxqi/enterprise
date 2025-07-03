@@ -436,8 +436,8 @@ test("Document Request Upload", async function () {
 
 test("focus when selecting all - ctrl + a", async function () {
     const serverData = getDocumentsTestServerData([
-        makeDocumentRecordData(2, "Test Document", { folder_id: 1}),
-        makeDocumentRecordData(3, "Test Document 2", { folder_id: 1}),
+        makeDocumentRecordData(2, "Test Document", { folder_id: 1 }),
+        makeDocumentRecordData(3, "Test Document 2", { folder_id: 1 }),
     ]);
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();

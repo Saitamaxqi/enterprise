@@ -1,11 +1,11 @@
 import { markup } from "@odoo/owl";
 
-import { _t } from "@web/core/l10n/translation";
-import { closestScrollableX, closestScrollableY } from "@web/core/utils/scrolling";
-import { DRAGGED_CLASS } from "@web/core/utils/draggable_hook_builder";
-import { createDocumentFragmentFromContent } from "@web/core/utils/html";
-import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
 import { toggleArchive } from "@documents/views/hooks";
+import { _t } from "@web/core/l10n/translation";
+import { DRAGGED_CLASS } from "@web/core/utils/draggable_hook_builder";
+import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
+import { createDocumentFragmentFromContent } from "@web/core/utils/html";
+import { closestScrollableX, closestScrollableY } from "@web/core/utils/scrolling";
 
 export const useDraggableDocuments = makeDraggableHook({
     name: "useDraggableDocuments",
