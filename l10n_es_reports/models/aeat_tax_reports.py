@@ -1512,6 +1512,9 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
             invoice_period, invoice_year = self._retrieve_period_and_year(original_invoice.date, trimester=report_period[-1] == 'T')
 
+            if original_invoice.date <= datetime.strptime(report_date_to, '%Y-%m-%d').date() and original_invoice.date >= datetime.strptime(report_date_from, '%Y-%m-%d').date():
+                continue
+
             if f"{invoice_period}{invoice_year}" not in period_dict:
                 period_dict[f"{invoice_period}{invoice_year}"] = {
                     'old_balance': 0,

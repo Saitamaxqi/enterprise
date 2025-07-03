@@ -139,3 +139,57 @@ class TestBOEGeneration(TestEsAccountReportsCommon):
         # - and the previously declared tax base (1000.00).
         # Under REGISTRO DE RECTIFICACIONES https://www.boe.es/buscar/doc.php?id=BOE-A-2010-5098
         self.assertIn('20250300000000000000000000100000', boe_file['file_content'].decode('utf-8'))
+
+    @freeze_time('2025-05-15')
+    def test_boe_excludes_current_period_rectification_lines(self):
+        """
+        Test that moves from the current period are not included as rectification lines in the boe report
+        """
+        partner = self.env['res.partner'].create({
+            'name': 'Test',
+            'company_id': self.company_data['company'].id,
+            'company_type': 'company',
+            'country_id': self.env['res.country'].search([('code', '=', 'BE')]).id,
+            'vat': 'BE0477472701',
+        })
+        previous_period_invoice = self.init_invoice('out_invoice', partner=partner, amounts=[1000], invoice_date='2025-03-15')
+        previous_period_invoice.action_post()
+
+        credit_note_wizard_previous = self.env['account.move.reversal'].with_context({
+            'active_ids': previous_period_invoice.id,
+            'active_id': previous_period_invoice.id,
+            'active_model': 'account.move',
+        }).create({
+            'reason': 'modify',
+            'journal_id': previous_period_invoice.journal_id.id,
+        })
+        credit_note_wizard_previous.reverse_moves()
+
+        current_period_invoice = self.init_invoice('out_invoice', partner=partner, amounts=[1000], invoice_date='2025-05-15')
+        current_period_invoice.action_post()
+
+        credit_note_wizard_current = self.env['account.move.reversal'].with_context({
+            'active_ids': current_period_invoice.id,
+            'active_id': current_period_invoice.id,
+            'active_model': 'account.move',
+        }).create({
+            'reason': 'modify',
+            'journal_id': current_period_invoice.journal_id.id,
+        })
+        credit_note_wizard_current.reverse_moves()
+
+        report = self.env.ref('l10n_es_reports.mod_349')
+        options = self._generate_options(report, fields.Date.from_string('2025-05-01'), fields.Date.from_string('2025-05-31'))
+        wizard_action = self.env['l10n_es.mod349.tax.report.handler'].open_boe_wizard(options, '349')
+        wizard = self.env[wizard_action['res_model']].with_context(wizard_action['context']).create({})
+        options['l10n_es_reports_boe_wizard_id'] = wizard.id
+
+        boe_file = self.env['l10n_es.mod349.tax.report.handler'].export_boe(options)
+        # This string represents a rectification record included in the BOE export.
+        # It contains:
+        # - the year (2025),
+        # - the period (here 5 which is the current period),
+        # - the rectified tax base (0.00),
+        # - and the previously declared tax base (1000.00).
+        # Under REGISTRO DE RECTIFICACIONES https://www.boe.es/buscar/doc.php?id=BOE-A-2010-5098
+        self.assertNotIn('20250500000000000000000000100000', boe_file['file_content'].decode('utf-8'))
