@@ -11,8 +11,10 @@ import {
     getService,
     mountWithCleanup,
     onRpc,
+    patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
+import { download } from "@web/core/network/download";
 
 // Due to dependency with mail module, we have to define their models for our tests.
 defineModels(mailModels);
@@ -206,4 +208,37 @@ test("Test unfold loaded line", async() => {
 
     // Only one call to get_expanded_lines, as we unfolded/folded/unfolded the same line
     expect(mockRpcReport.getExpandedLineCallCount).toEqual(1);
+});
+
+test("can execute account report download actions", async function () {
+    patchWithCleanup(download, {
+        _download: async ({ url, data }) => {
+            expect.step(url);
+            expect(data).toEqual(
+                {
+                    model: "some_model",
+                    options: {
+                        someOption: true,
+                    },
+                    output_format: "pdf",
+                },
+                { message: "should give the correct data" }
+            );
+            return Promise.resolve();
+        },
+    });
+
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction({
+        data: {
+            model: "some_model",
+            options: {
+                someOption: true,
+            },
+            output_format: "pdf",
+        },
+        type: "ir_actions_account_report_download",
+    });
+
+    expect.verifySteps(["/account_reports"]);
 });
