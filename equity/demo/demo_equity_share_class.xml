@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_equity_share_class_ord" model="equity.share.class">
+        <field name="name">ORD</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="demo_equity_share_class_seed" model="equity.share.class">
+        <field name="name">Seed</field>
+        <field name="sequence">11</field>
+    </record>
+
+    <record id="demo_equity_share_class_a" model="equity.share.class">
+        <field name="name">Class A</field>
+        <field name="sequence">12</field>
+        <field name="share_votes">2</field>
+    </record>
+
+    <record id="demo_equity_share_class_b" model="equity.share.class">
+        <field name="name">Class B</field>
+        <field name="sequence">13</field>
+    </record>
+</odoo>

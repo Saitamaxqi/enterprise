@@ -1,0 +1,45 @@
+{
+    'name': 'Equity',
+    'version': '1.0',
+    'sequence': 31,
+    'category': 'Accounting/Accounting',
+    'author': 'Odoo S.A.',
+    'depends': ['portal'],
+    'data': [
+        'data/mail_templates.xml',
+        'security/equity_security.xml',
+        'security/ir.model.access.csv',
+        'views/equity_authorized_rep_views.xml',
+        'views/equity_reporting_views.xml',
+        'views/equity_share_class_views.xml',
+        'views/equity_valuation_views.xml',
+        'views/equity_transaction_views.xml',
+        'views/mail_compose_message_views.xml',
+        'views/res_partner_views.xml',
+        'views/equity_menuitem.xml',
+        'views/equity_portal_templates.xml',
+    ],
+    'demo': [
+        'demo/demo_equity_share_class.xml',
+        'demo/demo_equity_transaction.xml',
+        'demo/demo_equity_valuation.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'assets': {
+        'web.assets_backend': [
+            'equity/static/src/components/**/*.js',
+            'equity/static/src/components/**/*.xml',
+            'equity/static/src/components/**/*.scss',
+        ],
+        'web.assets_frontend': [
+            'equity/static/src/components/valuation_chart/*',
+            'equity/static/src/portal.scss',
+            'web/static/src/views/fields/formatters.js',
+        ],
+        'web._assets_core': [
+            'equity/static/src/share_class_ids_dropdown_menu.scss',
+        ],
+    },
+    'license': 'LGPL-3',
+}

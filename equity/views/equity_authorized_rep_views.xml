@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_equity_authorized_rep_filter" model="ir.ui.view">
+        <field name="name">equity.authorized.rep.filter</field>
+        <field name="model">equity.authorized.rep</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id" domain="[('is_company', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_equity_authorized_rep_list" model="ir.ui.view">
+        <field name="name">equity.authorized.rep.list</field>
+        <field name="model">equity.authorized.rep</field>
+        <field name="arch" type="xml">
+            <list string="Authorized Reps" editable="bottom">
+                <field name="partner_id"/>
+                <field name="person_id"/>
+                <field name="role"/>
+                <field name="note" placeholder="Explain their role"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_equity_authorized_rep" model="ir.actions.act_window">
+        <field name="name">Authorized Reps</field>
+        <field name="res_model">equity.authorized.rep</field>
+        <field name="path">auth-reps</field>
+        <field name="view_mode">list</field>
+        <field name="target">current</field>
+    </record>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <t t-name="equity.ValuationChartAction">
+        <div class="container h-100">
+            <ValuationChart
+                labels="this.chartData.labels"
+                data="this.chartData.data"
+            />
+        </div>
+    </t>
+</odoo>

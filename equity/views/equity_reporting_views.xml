@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_equity_cap_table" model="ir.actions.client">
+        <field name="name">Cap Table</field>
+        <field name="tag">equity.CapTable</field>
+        <field name="path">cap-table</field>
+    </record>
+
+    <record id="action_equity_valuation_graph" model="ir.actions.client">
+        <field name="name">Valuation</field>
+        <field name="tag">equity.ValuationChart</field>
+        <field name="path">valuation-graph</field>
+    </record>
+</odoo>

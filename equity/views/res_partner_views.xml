@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="equity_res_partner_view_buttons">
+        <field name="name">equity.res.partner.view.buttons</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="priority" eval="100"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    class="oe_stat_button" icon="fa-users"
+                    type="action" name="equity.action_equity_cap_table"
+                    groups="equity.group_equity_manager,equity.group_equity_viewer"
+                    invisible="not is_company">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="equity_shareholders_count"/>
+                        </span>
+                        <span class="o_stat_text">Shareholders</span>
+                    </div>
+                </button>
+                <button
+                    class="oe_stat_button" icon="fa-users"
+                    type="action" name="equity.action_equity_authorized_rep"
+                    groups="equity.group_equity_manager,equity.group_equity_viewer"
+                    invisible="not equity_authorized_rep_count"
+                    context="{'search_default_partner_id': id}">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="equity_authorized_rep_count"/>
+                        </span>
+                        <span class="o_stat_text">Authorized Reps</span>
+                    </div>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="equity_dashboard_res_partner">
+        <field name="name">equity.dashboard.res.partner</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban
+                create="0" delete="0" edit="0"
+                action="action_open_cap_table" type="object">
+                <templates>
+                    <t t-name="card">
+                        <div class="row mb4">
+                            <field name="name" class="fw-bold fs-5 col-8"/>
+                        </div>
+                        <footer>
+                            <a name="action_open_transaction_list" type="object">
+                                <field name="equity_transaction_count"/> Transactions
+                            </a>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_equity_dashboard_res_partner" model="ir.actions.act_window">
+        <field name="name">Equity</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban</field>
+        <field name="path">equity</field>
+        <field name="view_id" eval="ref('equity.equity_dashboard_res_partner')"/>
+        <field name="domain">[('equity_transaction_ids', '!=', False)]</field>
+    </record>
+</odoo>

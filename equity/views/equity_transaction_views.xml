@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_equity_transaction_search" model="ir.ui.view">
+        <field name="name">equity.transaction.search</field>
+        <field name="model">equity.transaction</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id" domain="[('is_company', '=', True)]"/>
+                <field name="subscriber_id" domain="[('is_company', '=', False)]"/>
+                <field name="seller_id" domain="[('is_company', '=', False)]"/>
+                <field name="share_class_id"/>
+
+                <filter string="To Exercise"
+                    name="to_exercise"
+                    domain="[('transaction_type', '=', 'option'), ('remaining_options', '>', 0), ('expiration_date', '>=', today)]"
+                />
+                <separator/>
+                <filter string="Options Exercise" name="type_exercise" domain="[('transaction_type', '=', 'share'), ('parent_transaction_id', '!=', False)]" context="{'default_transaction_type': 'share'}"/>
+                <filter string="Options Issuance" name="type_option" domain="[('transaction_type', '=', 'option')]" context="{'default_transaction_type': 'option'}"/>
+                <filter string="Shares Issuance" name="type_share" domain="[('transaction_type', '=', 'share'), ('parent_transaction_id', '=', False)]" context="{'default_transaction_type': 'share'}"/>
+                <filter string="Sale" name="type_sale" domain="[('transaction_type', '=', 'sale')]" context="{'default_transaction_type': 'sale'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_equity_transaction_list" model="ir.ui.view">
+        <field name="name">equity.transaction.list</field>
+        <field name="model">equity.transaction</field>
+        <field name="arch" type="xml">
+            <list string="Transactions">
+                <field name="equity_currency_id" column_invisible="1"/> <!-- Needed for monetary widget -->
+                <field name="date"/>
+                <field name="partner_id" optional="show"/>
+                <field name="subscriber_id"/>
+                <field name="seller_id" optional="hide"/>
+                <field name="transaction_type" string="Type"/>
+                <field name="securities"/>
+                <field name="remaining_options" optional="hide" width="150px"/>
+                <field name="share_class_id"/>
+                <field name="security_price" widget="monetary" width="150px"/>
+                <field name="transfer_amount" widget="monetary" width="150px"/>
+                <field name="attachment_number" widget="attachment_number" nolabel="1" readonly="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_equity_transaction_form" model="ir.ui.view">
+        <field name="name">equity.transaction.form</field>
+        <field name="model">equity.transaction</field>
+        <field name="arch" type="xml">
+            <form string="Transaction">
+                <header>
+                    <button name="action_transaction_seller_send"
+                        invisible="transaction_type != 'sale'"
+                        type="object"
+                        string="Send to Seller"
+                        class="oe_highlight"
+                        data-hotkey="u"/>
+                    <button name="action_transaction_subscriber_send"
+                        type="object"
+                        string="Send to Subscriber"
+                        class="oe_highlight"
+                        data-hotkey="y"/>
+                    <button
+                        name="equity.action_equity_valuation_form"
+                        type="action"
+                        string="New Valuation"
+                        context="{'default_partner_id': partner_id, 'default_date': date, 'default_share_price': security_price}"/>
+                </header>
+                <div class="alert alert-warning w-100 d-flex align-items-center gap-1" invisible="attachment_ids" role="alert">
+                    <span>Missing supporting documents! Attach them in the chatter.</span>
+                </div>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button
+                            class="oe_stat_button" icon="fa-level-up"
+                            type="object" name="action_open_parent_transaction_form"
+                            invisible="not parent_transaction_id">
+                            <span class="o_stat_text">Options Issuance</span>
+                        </button>
+                    </div>
+                    <field name="equity_currency_id" invisible="1"/> <!-- Needed for monetary widget -->
+                    <field name="subscriber_id_placeholder" invisible="1"/> <!-- Needed for placeholder_field -->
+                    <group class="d-flex flex-column">
+                        <field name="transaction_type" widget="selection_badge"/>
+                    </group>
+                    <group>
+                        <group id="left_group">
+                            <field name="date"/>
+                            <field name="seller_id" invisible="transaction_type != 'sale'" required="1"/>
+                            <field name="subscriber_id" options="{'placeholder_field': 'subscriber_id_placeholder'}" string="Buyer" invisible="transaction_type != 'sale'"/>
+                            <field name="subscriber_id" options="{'placeholder_field': 'subscriber_id_placeholder'}" invisible="transaction_type == 'sale'"/>
+                            <div class="o_td_label" invisible="transaction_type != 'option'">
+                                <label for="expiration_date"/>
+                            </div>
+                            <div class="d-flex" invisible="transaction_type != 'option'">
+                                <field name="expiration_date" required="1"/>
+                                <field name="expiration_diff" class="text-muted"/>
+                            </div>
+                        </group>
+                        <group id="right_group">
+                            <field name="partner_id"/>
+                            <div class="o_td_label">
+                                <label for="securities"/>
+                            </div>
+                            <div class="d-flex">
+                                <field name="securities"/>
+                                <field name="share_class_id" placeholder="Share Class" context="{
+                                    'transaction_id': id,
+                                    'transaction_type': transaction_type if not parent_transaction_id else 'exercise',
+                                    'transaction_date': date,
+                                    'partner_id': partner_id,
+                                    'subscriber_id': subscriber_id,
+                                    'seller_id': seller_id,
+                                }"/>
+                            </div>
+                            <field name="remaining_options" invisible="transaction_type != 'option'"/>
+                            <field name="invalid_securities_error" class="alert alert-warning" invisible="not invalid_securities_error" string="" role="alert"/>
+                            <field name="security_price" widget="monetary"/>
+                            <field name="transfer_amount" widget="monetary"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Vesting period, exercise deadline, etc."/>
+                    </group>
+                    <notebook>
+                        <page id="exercise_tabs"
+                            name="exercise_tabs"
+                            string="Exercises"
+                            invisible="transaction_type != 'option'">
+                            <field name="child_transaction_ids"
+                                mode="list,form"
+                                context="{
+                                           'default_transaction_type': 'share',
+                                           'default_date': date,
+                                           'default_partner_id': partner_id,
+                                           'default_subscriber_id': subscriber_id,
+                                           'default_securities': remaining_options,
+                                           'default_security_price': security_price,
+                                           'default_share_class_id': share_class_id,
+                                       }">
+                                <list editable="bottom" string="Exercise Transaction" open_form_view="True">
+                                    <control>
+                                        <create name="add_line_control" string="Add a line"/>
+                                    </control>
+                                    <field name="transaction_type" column_invisible="1"/> <!-- Needed for default_transaction_type -->
+                                    <field name="partner_id" column_invisible="1"/> <!-- Needed for default_partner_id -->
+                                    <field name="subscriber_id" column_invisible="1"/> <!-- Needed for default_subscriber_id -->
+                                    <field name="security_price" column_invisible="1"/> <!-- Needed for default_security_price -->
+                                    <field name="share_class_id" column_invisible="1"/> <!-- Needed for default_share_class_id -->
+                                    <field name="equity_currency_id" column_invisible="1"/> <!-- Needed for monetary widget -->
+
+                                    <field name="date"/>
+                                    <field name="securities" string="# Options"/>
+                                    <field name="transfer_amount" widget="monetary"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- Attachment preview -->
+                <div class="o_attachment_preview"/>
+                <!-- Chatter -->
+                <chatter reload_on_attachment="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_equity_transaction_pivot" model="ir.ui.view">
+         <field name="name">equity.transaction.form</field>
+         <field name="model">equity.transaction</field>
+         <field name="arch" type="xml">
+             <pivot string="Transactions" sample="1">
+                 <field name="share_class_id" type="col"/>
+                 <field name="partner_id" type="row"/>
+                 <field name="securities" type="measure"/>
+                 <field name="remaining_options" type="measure"/>
+             </pivot>
+         </field>
+    </record>
+
+    <record id="action_equity_transaction" model="ir.actions.act_window">
+        <field name="name">Transactions</field>
+        <field name="res_model">equity.transaction</field>
+        <field name="path">transactions</field>
+        <field name="view_mode">list,pivot,form</field>
+        <field name="search_view_id" ref="equity.view_equity_transaction_search"/>
+        <field name="target">current</field>
+    </record>
+</odoo>
