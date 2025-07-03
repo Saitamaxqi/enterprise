@@ -62,26 +62,28 @@ messageActionsRegistry
         title: _t("Log as Note"),
         onClick: (component) => component.props.thread.aiSpecialActions.logNote(component.props.message.body),
         sequence: 30,
-    })
-    .add("copy-message", {
-        condition: (component) => component.props.thread.channel_type === "ai_composer",
-        icon: "fa fa-copy",
-        title: _t("Copy to Clipboard"),
-        onClick: (component) => component.message.copyMessageText(),
-        sequence: 50,
     });
-    
+
 patch(messageActionsInternal, {
     condition(component, id, action) {
         const requiredActions = ["insertToComposer", "copy-message", "send-message-direct", "log-note-direct"];
         if (
-            component.props.thread?.channel_type === "ai_composer" && 
+            component.props.thread?.channel_type === "ai_composer" &&
             !requiredActions.includes(id)
         ) {
             return false
         } else if (component.message?.author?.im_status === "agent") {
             return false
         }
+        if (id === "copy-message") {
+            return super.condition(component, id, action) || component.props.thread?.channel_type === "ai_composer";
+        }
         return super.condition(component, id, action);
     },
+    sequence(component, id, action) {
+        if (id === "copy-message" && component.props.thread?.channel_type === "ai_composer") {
+            return 50;
+        }
+        return super.sequence(component, id, action);
+    }
 });
