@@ -19,6 +19,11 @@ class SignItemRole(models.Model):
     ], default=False, help="Force the signatory to identify using a second authentication method")
 
     change_authorized = fields.Boolean('Change Authorized', help="If checked, recipient of a document with this role can be changed after having sent the request. Useful to replace a signatory who is out of office, etc.")
+    assign_to = fields.Many2one(
+        'res.partner',
+        string='Assign to',
+        help="assign the current user or the customer as a signer by default",
+    )
 
     def write(self, vals):
         vals.pop('default', None)

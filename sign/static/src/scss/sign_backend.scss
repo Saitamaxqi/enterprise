@@ -211,15 +211,34 @@
         gap: 10px;
     }
 
-    .o_sign_item_count {
+    .o_sign_item_count,
+    .o_sign_profile_pic {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
-        width: 25px;
-        height: 25px;
         justify-content: center;
-        border-radius: 15px;
-        margin: auto;
-        padding: 4px;
+    }
+
+    .o_sign_item_count {
+        margin-left: 4px;
+        padding: 0;
+    }
+
+    .o_sign_profile_pic {
+        margin-right: 8px;
+    }
+
+    .o_sign_item_container {
+        display: flex;
+        align-items: center;
+        height: 30px;
+    }
+
+    .o_sign_item_container .fa-pencil {
+        width: 16px;
+        text-align: center;
     }
 
     .o_sign_sidebar_signer_name {

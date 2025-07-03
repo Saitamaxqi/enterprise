@@ -24,9 +24,21 @@
                         <t t-esc="state.roleName"/>
                     </span>
                 </span>
-                <i t-if="!props.hasSignRequests &amp; !props.isCollapsed" class="fa fa-pencil" t-on-click="onSignerNameTextClick"/>
-                <div t-attf-class="{{ 'o_color_responsible_' + props.colorId}} o_sign_item_count">
-                    <t t-out="props.itemsCount" />
+                <div class="o_sign_item_container">
+                    <i
+                        t-if="!props.hasSignRequests &amp; !props.isCollapsed"
+                        class="fa fa-pencil me-2"
+                        t-on-click="onSignerNameTextClick"
+                    />
+                    <img
+                        t-att-src="this.state.profilePic"
+                        alt="User"
+                        class="o_sign_profile_pic"
+                        t-if="this.state.profilePic"
+                    />
+                    <div t-attf-class="{{ 'o_color_responsible_' + props.colorId}} o_sign_item_count">
+                        <t t-out="props.itemsCount" />
+                    </div>
                 </div>
                 <t t-if="!props.hasSignRequests">
                     <div>

@@ -380,6 +380,7 @@
                         <field name="name" placeholder="e.g. Employee"/>
                         <field name="auth_method" string="Authentication" placeholder="By Email"/>
                         <field name="change_authorized" string="Can delegate"/>
+                        <field name="assign_to" string="Assign to"/>
                     </group>
                 </sheet>
             </form>

@@ -6,6 +6,7 @@ import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
+import { fileTypeMagicWordMap } from "@web/views/fields/image/image_field";
 
 export class SignTemplateSidebarRoleItems extends Component {
     static template = "sign.SignTemplateSidebarRoleItems";
@@ -29,15 +30,18 @@ export class SignTemplateSidebarRoleItems extends Component {
         itemsCount: { type: Number },
         hasSignRequests: { type: Boolean },
         onFieldNameInputKeyUp: { type: Function },
+        assignTo: { type: String, optional: true },
     };
 
     async setup() {
         this.orm = useService("orm");
         this.dialog = useService("dialog");
         this.roleInputRef = useRef('role_input');
+        const profilePic = this.getImageSrc(this.props.assignTo);
         this.state = useState({
             roleName: "",
             canEditSignerName: false,
+            profilePic: profilePic || "",
         });
         this.icon_type = {
             signature: "fa-pencil-square-o",
@@ -112,15 +116,41 @@ export class SignTemplateSidebarRoleItems extends Component {
         }
     }
 
+    async updateRoleNameAndAvatar(data) {
+        this.state.roleName = data.name;
+        const assignToId = data.assign_to?.id;
+        if (assignToId) {
+            const [partner] = await this.orm.call(
+                "res.partner",
+                "read",
+                [[assignToId], ["avatar_128", "avatar_1920"]]
+            );
+            const avatar = partner.avatar_128 || partner.avatar_1920;
+            if (avatar) {
+                this.state.profilePic = this.getImageSrc(avatar);
+            }
+        }
+    }
+
     async openSignRoleRecord() {
         this.dialog.add(FormViewDialog, {
             resId: this.props.roleId,
             resModel: "sign.item.role",
             size: "md",
-            title: _t("Signer Edition"),
-            onRecordSaved: ({ data }) => {
-                this.state.roleName = data.name;
+            title: _t("Signer Settings"),
+            onRecordSaved: async ({ data }) => {
+                await this.updateRoleNameAndAvatar(data);
             },
         });
     }
+
+    getImageSrc(assignTo) {
+        if (!assignTo) {
+            return
+        }
+        const magicChar = assignTo[0];
+        const format = fileTypeMagicWordMap[magicChar] || "png";
+        return `data:image/${format};base64,${assignTo}`;
+    }
+
 }

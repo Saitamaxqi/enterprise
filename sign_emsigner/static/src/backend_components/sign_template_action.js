@@ -104,6 +104,7 @@ patch(SignTemplateSidebarRoleItems.prototype, {
             title: _t("Signer Edition"),
             onRecordSaved: async ({ data }) => {
                 this.state.roleName = data.name;
+                await this.updateRoleNameAndAvatar(data);
                 const hasEmsignerRole = await this.hasEmsignerRole(this.props.propsForEmsigner);
                 if (hasEmsignerRole.role > 1 || hasEmsignerRole.document) {
                     this.dialog.add(ConfirmationDialog, {

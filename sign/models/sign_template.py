@@ -391,6 +391,7 @@ class SignTemplate(models.Model):
                 'id': idx,
                 'roleId': role.id,
                 'colorId': idx,
+                'assignTo': role.assign_to.avatar_128 or role.assign_to.avatar_1920,
             })
         return roles_info
 

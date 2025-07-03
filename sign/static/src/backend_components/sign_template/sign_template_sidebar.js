@@ -92,6 +92,7 @@ export class SignTemplateSidebar extends Component {
             onFieldNameInputKeyUp: (ev) => this.onFieldNameInputKeyUp(ev),
             itemsCount: signer.itemsCount,
             hasSignRequests: this.props.hasSignRequests,
+            assignTo: signer.assignTo,
         };
     }
 

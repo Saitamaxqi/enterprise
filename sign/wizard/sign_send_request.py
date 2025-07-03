@@ -98,11 +98,13 @@ class SignSendRequest(models.TransientModel):
                 }) for default_signing_order, signer in enumerate(self.signer_ids)]
             else:
                 for default_signing_order, role in enumerate(roles):
+                    # First signer logic
                     if default_signing_order == 0:
-                        # First signer is always the default signer
-                        partner_id = default_signer
+                        # If role has assign_to, use it; else use default_signer
+                        partner_id = role.assign_to.id if role.assign_to else default_signer
                     else:
-                        partner_id = False
+                        # For other roles, check assign_to
+                        partner_id = role.assign_to.id if role.assign_to else False
                     signer_vals = {
                         'role_id': role.id,
                         'partner_id': partner_id,
