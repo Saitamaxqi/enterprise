@@ -3,6 +3,7 @@
 import json
 import pytz
 import re
+import requests
 from datetime import datetime
 from dateutil.parser import isoparse
 try:
@@ -10,44 +11,136 @@ try:
 except ImportError:
     markdown = None
 
-from odoo import fields
+from odoo import fields, _
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.exceptions import UserError
 from odoo.tools import html_sanitize
 from odoo.tools.mail import html_to_inner_content
 
-FIELD_PROMPTS = {
-    'boolean': "The field is a boolean.",
-    'char': "The field is a char.",
-    'date': "The field is a date.",
-    'datetime': "The field is a datetime.",
-    'float': "The field is a float.",
-    'html': "The field is a HTML.",
-    'integer': "The field is an integer.",
-    'many2many': "The field is a multi-relation field (multiple records can be assigned to the field). You will receive valid records in the form: {id: Description}.",
-    'many2one': "The field is a relational field. You will receive valid records in the form: {id: Description}.",
-    'monetary': "The field is a monetary.",
-    'selection': "The field is a selection. Only the keys from the dictionary below which maps selection values to their display name, are valid values.",
-    'tags': "The field is a tags selection. Only the keys from the dictionary below which maps tags to their display names are valid values.",
-    'text': "The field is a multi-line text."
-}
+AI_FIELDS_INSTRUCTIONS = """# Identity
+You are an intelligent assistant integrated into an ERP system, specializing in generating accurate and relevant values for various data fields.
 
-GENERIC_PROMPT = """You are a field value generator for an ERP system. You must provide the appropriate value for a specific field (which might be to leave the field empty)."""
+# Instructions
+Your task is to resolve a single value for a specific ERP field based on the user's request or value description.
+
+## Input Format
+You will receive free-text prompts referring to ERP-related entities, values, or attributes, which may contain:
+- Field references: {field_name: value}
+- Record references: {id: name}
+
+## Output Format
+You must return a structured output:
+- `value`: the value to assign.
+- `could_not_resolve`: `true` if the value is missing, unverifiable, or cannot be determined reliably
+- `unresolved_cause`: a brief explanation if the request could not be resolved
+
+## Rules
+- Rely on internal knowledge only for unchanging historical facts. In all other cases, do a web search to retrieve the necessary information.
+- After searching, make sure the results truly match the user's request. If not, set `could_not_resolve` to `true`.
+- Do not guess, fabricate, or complete missing information based on assumptions. If a value cannot be determined reliably, set `could_not_resolve` to `true`.
+- Never include internal field names, record IDs, or system-specific labels in your final value.
+- Before resolving any value, verify that the entity (company, product, location, or other referenced subject) exists in reality or is verifiable.
+- If the entity is fictional, unknown, or unverifiable, do not attempt to guess or fabricate any values.
+- In such cases, set `value: null`, `could_not_resolve: true`, and include a `resolution_note`.
+"""
 
 OPENAI_ENDPOINT = '/v1/responses'
-OPENAI_MODEL = 'gpt-4.1-mini'
+OPENAI_MODEL = 'gpt-4.1'  # prompts are usually tweaked for a model. Double check behavior if changed.
 
 
-def get_ai_value(env, field_type, system_prompt, user_prompt, allowed_values):
-    """Query a LLM with the given prompts and return the cast value.
+class UnresolvedQuery(UserError):
+    pass
+
+
+def get_ai_value(env, field_type, user_prompt, allowed_values):
+    """Query a LLM with the given prompt and return the cast value.
 
     :param field_type: the field type for which the response should be cast
-    :param system_prompt: the "system" prompt to pass to the LLM
     :param user_prompt: the "user" prompt to pass to the LLM
     :param allowed_values: as set containing the values that are allowed
 
-    :return: the response of the LLM cast to the expected type if the value is allowed
+    :return: the value with the type expected for the given field type, or False if the value
+        could not be cast or is not in allowed_values
     """
     llm_api = LLMApiService(env, 'openai')
+    if field_type == 'boolean':
+        schema = {
+            'type': 'boolean',
+        }
+    elif field_type == 'char':
+        schema = {
+            'type': 'string',
+            'description': 'A short, concise string, without any Markdown formatting.'
+        }
+    elif field_type == 'date':
+        schema = {
+            'type': ['string', 'null'],
+            'format': 'date',
+            'description': 'A date (year, month and day should be correct), or null to leave empty',
+        }
+    elif field_type == 'datetime':
+        schema = {
+            'type': ['string', 'null'],
+            'format': 'date-time',
+            'description': 'A datetime (year, month and day should be correct), including the correct timezone or null to leave empty'
+        }
+    elif field_type == 'integer':
+        schema = {
+            'type': 'integer',
+            'description': "A whole number. If a number is expressed in words (e.g. '6.67 billion'), it must be converted into its full numeric form (e.g. '6670000000')"
+        }
+    elif field_type in ('float', 'monetary'):
+        schema = {
+            'type': 'number'
+        }
+    elif field_type == 'html':
+        schema = {
+            'type': 'string',
+            'description': 'A well-structured Markdown (it may contain tables). It will be converted to HTML after generation'
+        }
+    elif field_type == 'text':
+        schema = {
+            'type': 'string',
+            'description': 'A few sentences, without any Markdown formatting'
+        }
+    elif field_type == 'many2many':
+        schema = {
+            'type': 'array',
+            'items': {
+                'type': 'integer',
+                'enum': list(allowed_values)
+            },
+            'description': 'The list of IDs of records to select. Leave empty to leave the field empty'
+        }
+    elif field_type == 'many2one':
+        schema = {
+            'type': ['integer', 'null'],
+            'enum': list(allowed_values) + [None],
+            'description': 'The ID of the record to select. null to leave the field empty if no value matches the user query'
+        }
+    elif field_type == 'selection':
+        schema = {
+            'type': ['string', 'null'],
+            'enum': list(allowed_values) + [None],
+            'description': 'Key of the value to select. null to leave the field empty'
+        }
+    elif field_type == 'tags':
+        schema = {
+            'type': 'array',
+            'items': {
+                'type': 'string',
+                'enum': list(allowed_values)
+            },
+            'description': 'List of keys of the tags to select. Leave empty to leave the field empty'
+        }
+    else:
+        schema = {'type': 'text'}
+
+    instructions = f"{AI_FIELDS_INSTRUCTIONS}\n# Context\n"
+    if allowed_values:
+        instructions += f"Allowed Values: {json.dumps(allowed_values)}\n"
+    instructions += f"The current date is {datetime.now(pytz.utc).astimezone().isoformat()}"
+
     web_search_params = {
         'user_location':
         {
@@ -57,153 +150,120 @@ def get_ai_value(env, field_type, system_prompt, user_prompt, allowed_values):
         }
     } if (country_code := env.company.country_id.code) else {}
 
-    schema_value = {"type": "string"}
-    if field_type == 'boolean':
-        schema_value['type'] = 'boolean'
-    elif field_type == 'char':
-        schema_value['description'] = 'A short, concise string, without any Markdown formatting'
-    elif field_type == 'date':
-        schema_value['type'] = ['string', 'null']
-        schema_value['format'] = 'date'
-        schema_value['description'] = 'A full date (year, month and day should be correct). null to leave empty'
-    elif field_type == 'datetime':
-        schema_value['type'] = ['string', 'null']
-        schema_value['format'] = 'date-time'
-        schema_value['description'] = 'A full datetime (year, month and day should be correct), including the correct timezone'
-    elif field_type == 'integer':
-        schema_value['type'] = 'integer'
-        schema_value['description'] = "A whole number. If a number is expressed in words (e.g. '6.67 billion'), it must be converted into its full numeric form (e.g. '6670000000')"
-    elif field_type in ('float', 'monetary'):
-        schema_value['type'] = 'number'
-    elif field_type == 'html':
-        schema_value['description'] = 'A well-structured Markdown (it may contain tables). It will be converted to HTML after generation'
-    elif field_type == 'many2many':
-        schema_value['type'] = 'array'
-        schema_value['items'] = {'type': 'integer'}
-        schema_value['description'] = 'The list of IDs of records to select. Leave empty to leave the field empty'
-    elif field_type == 'many2one':
-        schema_value['type'] = ['integer', 'null']
-        schema_value['description'] = 'The ID of the record to select. null to leave the field empty'
-    elif field_type == 'selection':
-        schema_value['type'] = ['string', 'null']
-        schema_value['description'] = "Key of the value to select. null to leave the field empty"
-    elif field_type == 'tags':
-        schema_value['type'] = 'array'
-        schema_value['items'] = {'type': 'string'}
-        schema_value['description'] = "List of keys of the tags to select. Leave empty to leave the field empty"
-    elif field_type == 'text':
-        schema_value['description'] = 'A few sentences, without any Markdown formatting'
+    try:
+        llm_response = llm_api._request(
+            'post',
+            OPENAI_ENDPOINT,
+            llm_api._get_base_headers(),
+            body={
+                'model': OPENAI_MODEL,
+                'instructions': instructions,
+                'input': user_prompt,
+                'store': False,
+                'temperature': 0.2,
+                'text': {
+                    'format': {
+                        'type': 'json_schema',
+                        'description': 'Value to assign to the field',
+                        'name': 'generate_field_value',
+                        'schema': {
+                            'type': 'object',
+                            'properties': {
+                                'value': schema,
+                                'could_not_resolve': {
+                                    'type': 'boolean',
+                                    'description': 'True if the model could not confidently determine a value due to missing information, ambiguity, or unknown references in the input.'
+                                },
+                                'unresolved_cause': {
+                                    'type': ['string', 'null'],
+                                    'description': 'Short explanation of what is missing or why no value could be generated. Required if could_not_resolve is true.'
+                                },
+                            },
+                            'required': ['value', 'could_not_resolve', 'unresolved_cause'],
+                            'additionalProperties': False
+                        },
+                        'strict': True
+                    }
+                },
+                'tools': [{
+                    'type': 'web_search_preview',
+                    **web_search_params,
+                }],
+            }
+        )
+    except requests.exceptions.Timeout:
+        raise UserError(_("Oops, the request timed out."))
+    except requests.exceptions.ConnectionError:
+        raise UserError(_("Oops, the connection failed."))
 
-    llm_response = llm_api._request(
-        'post',
-        OPENAI_ENDPOINT,
-        llm_api._get_base_headers(),
-        body={
-            'model': OPENAI_MODEL,
-            'instructions': f"{system_prompt}\n# Context\nThe current date is {datetime.now(pytz.utc).astimezone().isoformat()}.",
-            'input': user_prompt,
-            'text': {
-                'format': {
-                  'type': 'json_schema',
-                  'description': 'Generate a value for a field',
-                  'name': 'generate_field_value',
-                  'schema': {
-                    'type': 'object',
-                    'properties': {
-                      'value': schema_value
-                    },
-                    'required': [
-                      'value'
-                    ],
-                    'additionalProperties': False
-                  },
-                  'strict': True
-                }
-              },
-            'tools': [{
-                'type': 'web_search_preview',
-                **web_search_params,
-            }],
-        }
-    )
+    if (error := llm_response.get('error')):
+        raise UserError(error.get('message'))
 
     if (
-        not llm_response
-        or llm_response.get('error')
-        or not (output := llm_response.get('output'))
+        not (output := llm_response.get('output'))
         or not (content := output[-1].get('content'))
         or not (response := content[0].get('text'))
         ):
-        return False
+        raise UserError(_("Oops, an unexpected error occurred."))
+
+    try:
+        response = json.loads(response, strict=False)
+    except json.JSONDecodeError:
+        raise UserError(_("Oops, the response could not be processed."))
+    if response.get('could_not_resolve'):
+        raise UnresolvedQuery(response.get('unresolved_cause'))
 
     return parse_ai_response(
-        json.loads(response, strict=False).get('value'),
+        response.get('value'),
         field_type,
         allowed_values,
     )
 
 
-def get_field_system_prompt(env, field, field_prompt=None):
-    """Get the system prompt to pass to the LLM and the allowed values for the given field.
-    This prompt is common for each record of the given field and defines the role, tone and
-    constraints that the LLM should adhere to.
+def get_field_allowed_vals(env, field, field_prompt=None):
+    """Get the allowed values for the given field.
 
-    :param field: the field from which to obtain the system prompt and allowed values
+    :param field: the field from which to obtain the allowed values
 
-    :return (str, set): The field's system prompt and the set of allowed values if the field
-        requires specific values
+    :return: The allowed values if the field requires specific values
     """
-    field_type = field.type
-    prompt = GENERIC_PROMPT + FIELD_PROMPTS[field_type]
-    if field_type == 'selection':
-        selection = field._selection
-        return prompt + str(selection), set(selection.keys())
-    elif field_type in ('many2one', 'many2many'):
-        records = parse_ai_prompt_records(env, field_prompt or field.ai, field.comodel_name)
-        return prompt, records
-    return prompt, False
+    if field.type == 'selection':
+        return field._selection
+    elif field.type in ('many2one', 'many2many'):
+        return parse_ai_prompt_records(env, field_prompt or field.ai, field.comodel_name)
+    return None
 
 
-def get_property_system_prompt(env, property_definition):
-    """Get the system prompt to pass to the LLM and the allowed values for the given property
-    definition. This prompt is common for each record of the given field and defines the role,
-    tone and constraints that the LLM should adhere to.
+def get_property_allowed_vals(env, property_definition):
+    """Get the allowed values for the given property field.
 
-    :param field: properties field
-    :param property_definition: the property definition from which to obtain the system prompt
-        and allowed values
+    :param property_definition: the property definition from which to obtain the allowed values
 
-    :return (str, set): The property's system prompt and the set of allowed values if the
-        property requires specific values
+    :return: the allowed values if the property requires specific values
     """
     property_type = property_definition.get('type')
-    prompt = GENERIC_PROMPT + FIELD_PROMPTS[property_type]
     if property_type == 'selection':
-        selection = dict(property_definition.get('selection') or {})
-        return prompt + str(selection), set(selection.keys())
+        return dict(property_definition.get('selection', {}))
     elif property_type in ('many2one', 'many2many'):
-        comodel = property_definition.get('comodel')
-        system_prompt = property_definition.get('system_prompt')
-        if not comodel or not system_prompt:
-            return prompt, set()
-        return prompt, parse_ai_prompt_records(env, system_prompt, comodel)
+        return parse_ai_prompt_records(env, property_definition.get('system_prompt'), property_definition.get('comodel'))
     elif property_type == 'tags':
-        tags = {name: label for name, label, color in (property_definition.get('tags') or [])}
-        return prompt + str(tags), set(tags.keys())
-    return prompt, False
+        return {name: label for name, label, color in (property_definition.get('tags') or [])}
+    return None
 
 
 def parse_ai_prompt_records(env, prompt, relation):
-    return set(env[relation].browse({int(m.group(1)) for m in re.finditer(r'{\s*([0-9]+)\s*:.*?}', prompt)}).exists().ids)
+    if not prompt or not relation:
+        return []
+    return list(env[relation].browse({int(m.group(1)) for m in re.finditer(r'{\s*([0-9]+)\s*:.*?}', prompt)}).exists().ids)
 
 
 def parse_ai_response(response, field_type, allowed_values):
     """Parse and cast a LLM response into the type expected for the given field type and checks
     that the value is in the set of allowed_values if given.
 
-    :param response: a LLM response (string)
-    :param field_type: the type of the field for which the response should be cast
-    :param allowed_values: a set of values that are allowed
+    :param response: a LLM response
+    :param str field_type: the type of the field for which the response should be cast
+    :param set allowed_values: a set of values that are allowed
 
     :return: the value with the type expected for the given field type, or False if the value
         could not be cast or is not in allowed_values

@@ -24,8 +24,6 @@ import { MonetaryField, monetaryField } from "@web/views/fields/monetary/monetar
 import { SelectionField, selectionField } from "@web/views/fields/selection/selection_field";
 import { TextField, textField } from "@web/views/fields/text/text_field";
 
-export const NO_AI_VALUE_MESSAGE = _t("Oops! Check your prompt and try again.");
-
 const AiFieldMixin = (fieldClass) => {
     return class extends fieldClass {
         setup() {
@@ -38,10 +36,7 @@ const AiFieldMixin = (fieldClass) => {
         }
 
         async onAiClick() {
-            const res = await this.props.record.computeAiField(this.props.name);
-            if (!res) {
-                this.notification.add(NO_AI_VALUE_MESSAGE, { type: "info" });
-            }
+            await this.props.record.computeAiField(this.props.name);
         }
     };
 };

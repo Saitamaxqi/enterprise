@@ -244,4 +244,4 @@ class LLMApiService:
                 except ValueError:  # catch JSON decode errors
                     message += f" {e.response.text}"
             _logger.warning(message)
-            raise UserError(_("LLM API request failed: %s", e))
+            raise

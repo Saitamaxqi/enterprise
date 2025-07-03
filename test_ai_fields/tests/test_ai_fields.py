@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from odoo import Command, fields
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.addons.ai_fields.tools import UnresolvedQuery
 from odoo.addons.base.tests.test_ir_cron import CronMixinCase
 from odoo.tests import TransactionCase, tagged
 from odoo.tools import SQL
@@ -96,7 +97,7 @@ class TestAiFields(TransactionCase):
     def test_ai_field_cron_fields(self):
         """Check that the cron only process NULL textual fields (that are in the ai_domain)."""
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body.get('input')}"})}]}]}
+            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body.get('input')}", 'is_resolved': True})}]}]}
 
         model = self.env["test.ai.fields.model"]
 
@@ -291,3 +292,75 @@ class TestAiFields(TransactionCase):
             self.enter_registry_test_mode():
             value = record.get_ai_property_value("properties.test_html", None)
         self.assertEqual(value, '<p><img src="x"></p>\n')
+
+    def test_ai_field_unresolved_request(self):
+        self.env['ir.model.fields'].create({
+            'name': 'x_ai_char',
+            'model_id': self.env['ir.model']._get('test.ai.fields.model').id,
+            'ttype': 'char',
+            'ai': True,
+            'system_prompt': 'Hello',
+        })
+        record = self.env['test.ai.fields.model']
+
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': 'Sorry', 'could_not_resolve': True, 'unresolved_cause': "Missing context"})}]}]}
+
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
+            self._mock_llm_api_get_token(), self.assertRaises(UnresolvedQuery) as cm_1:
+            record.get_ai_field_value('x_ai_char', None)
+        self.assertEqual(str(cm_1.exception), "Missing context")
+
+        record.write({"parent_id": self.env["test.ai.fields.parent"].create({"properties_definition": [{
+            'type': 'char',
+            'name': 'char',
+            'ai': True,
+            'system_prompt': 'Hello',
+        }]}).id})
+
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
+            self._mock_llm_api_get_token(), self.assertRaises(UnresolvedQuery) as cm_2:
+            record.get_ai_property_value('properties.char', None)
+        self.assertEqual(str(cm_2.exception), "Missing context")
+
+    def test_fill_ai_field_exception(self):
+        """Check that if an error occurs during the method filling the fields, an empty string is set so that field will not be reprocessed for the record"""
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': "", 'could_not_resolve': True, 'unresolved_cause': "missing context"})}]}]}
+
+        model = self.env["test.ai.fields.model"]
+        self.env["ir.model.fields"].create({"name": "x_ai_char", "ttype": "char", "ai": True, "system_prompt": "char prompt", "model_id": self.env["ir.model"]._get(model._name).id})
+        record = model.create({})
+        self.env.flush_all()
+        self.env.cr.execute(SQL("SELECT x_ai_char FROM test_ai_fields_model WHERE id = %s", record.id))
+        res = self.env.cr.fetchone()
+        self.assertEqual(res[0], None)
+        record._fill_ai_field(model._fields.get('x_ai_char'))
+        self.env.flush_all()
+        self.env.cr.execute(SQL("SELECT x_ai_char FROM test_ai_fields_model WHERE id = %s", record.id))
+        res = self.env.cr.fetchone()
+        self.assertEqual(res[0], "")
+
+    def test_fill_ai_property_exception(self):
+        """Check that if an error occurs during the method filling the properties, a falsy value is set so that the property will not be reprocessed for the record"""
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': "", 'could_not_resolve': True, 'unresolved_cause': "missing context"})}]}]}
+
+        parent = self.env["test.ai.fields.parent"].create({})
+        ai_char_p_def = {"type": "char", "name": "char", "ai": True, "system_prompt": 'hey'}
+        parent.write({"properties_definition": [ai_char_p_def]})
+
+        record = self.env["test.ai.fields.model"].create([
+            {"parent_id": parent.id, "properties": [{"type": "char", "name": "char"}]},
+
+        ])
+
+        self.env.flush_all()
+        self.env.cr.execute(SQL("SELECT properties FROM test_ai_fields_model WHERE id = %s", record.id))
+        res = self.env.cr.fetchone()
+        self.assertEqual(res[0], {})
+        record._fill_ai_property('properties', ai_char_p_def)
+        self.env.flush_all()
+        self.env.cr.execute(SQL("SELECT properties FROM test_ai_fields_model WHERE id = %s", record.id))
+        res = self.env.cr.fetchone()
+        self.assertEqual(res[0], {"char": False})

@@ -91,7 +91,7 @@ class TestAiFieldsAccess(TransactionCase):
         # Try to inject Qweb in selection options (they are added in the prompt)
         def _mocked_llm_api_get_request_selection(cls, method, endpoint, headers, body):
             self.assertNotIn("1337", str(body))
-            return {'output': [{'content': [{'text': ""}]}]}
+            return {'output': [{'content': [{'text': json.dumps({'value': ''})}]}]}
 
         self.record.parent_id.write({
             "properties_definition": [{
