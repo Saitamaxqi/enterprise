@@ -33,8 +33,15 @@ class ResCompany(models.Model):
     @ormcache('self.id')
     def _get_workers_count(self):
         self.ensure_one()
-        return len(self.env['hr.version'].search([
-            ('company_id', '=', self.id)]).filtered(lambda v: v.is_in_contract).employee_id)
+        today = fields.Date.today()
+        return self.env['hr.employee'].search_count([
+            ('company_id', '=', self.id),
+            ('current_version_id', '!=', False),
+            ('contract_date_start', '<=', today),
+            '|',
+                ('contract_date_end', '=', False),
+                ('contract_date_end', '>=', today),
+        ])
 
     @api.constrains('l10n_be_company_number')
     def _check_l10n_be_company_number(self):
