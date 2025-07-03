@@ -1,9 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date, datetime
-from pytz import timezone, UTC
 
+from pytz import UTC, timezone
+
+from odoo.fields import Command
 from odoo.tests.common import tagged
+
 from odoo.addons.hr_payroll_account.tests.common import TestPayslipValidationCommon
 
 
@@ -185,3 +188,81 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip.compute_sheet()
         payslip_results = {'BASIC': 10000.0, 'GOSI_COMP': -1222.0, 'GOSI_EMP': -1014.0, 'HOUALLOW': 400.0, 'OTALLOW': 150.0, 'TRAALLOW': 200.0, 'EOSP': 597.22, 'GROSS': 10750.0, 'NET': 9736.0}
         self._validate_payslip(payslip, payslip_results)
+
+    def test_salary_advance_payslip(self):
+        # Should not use `_generate_payslip` because we need to make sure that `ADV` input line is created with 0.0 amount
+        payslip = self.env['hr.payslip'].create([{
+            'name': "Test Payslip",
+            'employee_id': self.saudi_employee.id,
+            'version_id': self.saudi_employee.version_id.id,
+            'company_id': self.env.company.id,
+            'struct_id': self.env.ref('l10n_sa_hr_payroll.l10n_sa_salary_advance_and_loan').id,
+            'date_from': date(2024, 1, 1),
+            'date_to': date(2024, 1, 31),
+        }])
+
+        self.assertEqual(payslip.input_line_ids.filtered(lambda x: x.code == 'ADV').amount, 0.0)
+        payslip.input_line_ids.filtered(lambda x: x.code == 'ADV').amount = 2500.0
+
+        payslip.compute_sheet()
+        payslip_results = {'ADV': 2500.0, 'NET': 2500.0}
+        self._validate_payslip(payslip, payslip_results)
+
+    def test_saudi_payslip_after_salary_advance_payslip(self):
+        adv_payslip = self.env['hr.payslip'].create([{
+            'name': "Test Adv Payslip",
+            'employee_id': self.saudi_employee.id,
+            'version_id': self.saudi_employee.version_id.id,
+            'company_id': self.env.company.id,
+            'struct_id': self.env.ref('l10n_sa_hr_payroll.l10n_sa_salary_advance_and_loan').id,
+            'date_from': date(2024, 1, 1),
+            'date_to': date(2024, 1, 31),
+        }])
+
+        adv_payslip.input_line_ids.filtered(lambda x: x.code == 'ADV').amount = 2500.0
+        adv_payslip.compute_sheet()
+        adv_payslip.action_payslip_done()
+
+        payslip = self.env['hr.payslip'].create([{
+            'name': "Test Payslip",
+            'employee_id': self.saudi_employee.id,
+            'version_id': self.saudi_employee.version_id.id,
+            'company_id': self.env.company.id,
+            'struct_id': self.env.ref('l10n_sa_hr_payroll.ksa_saudi_employee_payroll_structure').id,
+            'date_from': date(2024, 2, 1),
+            'date_to': date(2024, 2, 29),
+        }])
+
+        self.assertEqual(payslip.input_line_ids.filtered(lambda x: x.code == 'ADV').amount, 2500.0)
+        payslip.compute_sheet()
+
+        self.assertEqual(payslip._get_line_values(['ADVDED'])['ADVDED'][payslip.id]['total'], -2500.0)
+
+    def test_salary_loan_payslip(self):
+        loan_attachment = self.env['hr.salary.attachment'].create({
+            'employee_ids': [Command.link(self.saudi_employee.id)],
+            'description': 'Car Loan',
+            'other_input_type_id': self.env.ref('l10n_sa_hr_payroll.l10n_sa_input_loan_deduction').id,
+            'date_start': date(2024, 1, 1),
+            'monthly_amount': 200,
+            'total_amount': 600,
+        })
+
+        loan_action = loan_attachment.action_create_loan_payslip()
+        loan_payslip = self.env['hr.payslip'].browse(loan_action['res_id'])
+        self.assertEqual(loan_payslip.input_line_ids.filtered(lambda x: x.code == 'LOAN_DEDUCTION').amount, 600.0)
+
+        payslip = self.env['hr.payslip'].create([{
+            'name': "Test Payslip",
+            'employee_id': self.saudi_employee.id,
+            'version_id': self.saudi_employee.version_id.id,
+            'company_id': self.env.company.id,
+            'struct_id': self.env.ref('l10n_sa_hr_payroll.ksa_saudi_employee_payroll_structure').id,
+            'date_from': date(2024, 1, 1),
+            'date_to': date(2024, 1, 31),
+        }])
+
+        self.assertEqual(payslip.input_line_ids.filtered(lambda x: x.code == 'LOAN_DEDUCTION').amount, 200.0)
+        payslip.compute_sheet()
+
+        self.assertEqual(payslip._get_line_values(['LOAN_DEDUCTION'])['LOAN_DEDUCTION'][payslip.id]['total'], -200.0)
