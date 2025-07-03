@@ -218,12 +218,14 @@ class AccountWinbooksImportWizard(models.TransientModel):
                             account_code = 300  # set Current Asset by default for deprecated accounts
                         for account_type in account_types:
                             if account_code in range(account_type['min'], account_type['max']):
-                                if rec.get('CENTRALID', '').startswith('C'):
+                                if rec.get('CENTRALID', '').startswith('C') or rec.get('CENTRALID', '').startswith('V01'):
                                     data['account_type'] = 'asset_receivable'
                                     data['reconcile'] = True
-                                elif rec.get('CENTRALID', '').startswith('S'):
+                                    data['non_trade'] = True
+                                elif rec.get('CENTRALID', '').startswith('S') or rec.get('CENTRALID', '').startswith('V03'):
                                     data['account_type'] = 'liability_payable'
                                     data['reconcile'] = True
+                                    data['non_trade'] = True
                                 else:
                                     data['account_type'] = account_type['id']
                                     data['reconcile'] = False
@@ -255,6 +257,13 @@ class AccountWinbooksImportWizard(models.TransientModel):
         for account, vat in account_tax.items():
             if vat in vatcode_data:
                 self.env['account.account'].browse(account_data[account]).write({'tax_ids': [(4, vatcode_data[vat])]})
+
+    def _post_process_tax(self, tax_ids, account_deprecated_ids):
+        """Post process the tax data in order to avoid deprecating accounts
+           used in repartition lines
+        """
+        account_deprecated_ids -= tax_ids.repartition_line_ids.filtered(lambda l: l.repartition_type == 'tax').account_id
+        return account_deprecated_ids
 
     def _import_journal(self, dbf_records):
         """Import journals from *_dbk*.dbf files.
@@ -355,6 +364,8 @@ class AccountWinbooksImportWizard(models.TransientModel):
         pdf_file_list = []
         for key, val in grouped.items():
             journal_id = self.env['account.journal'].browse(journal_data.get(key[1]))
+            if not journal_id:
+                continue
             bookyear = int(key[3], 36)
             if not bookyear or (self.only_open and bookyear not in param_data['openyears']):
                 continue
@@ -820,6 +831,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                 vat_recs = get_dbfrecords(lambda file: file.lower().endswith("_codevat.dbf"))
                 vatcode_data, tax_ids = self._import_vat(vat_recs, account_central)
 
+                account_deprecated_ids = self._post_process_tax(tax_ids, account_deprecated_ids)
                 self._post_process_account(account_data, vatcode_data, account_tax)
 
                 table_recs = get_dbfrecords(lambda file: file.lower().endswith("_table.dbf"))
