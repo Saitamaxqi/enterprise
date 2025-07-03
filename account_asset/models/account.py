@@ -13,8 +13,16 @@ class AccountAccount(models.Model):
         help="An asset wil be created for each asset model when this account is used on a vendor bill or a refund",
         tracking=True,
     )
-    create_asset = fields.Selection([('no', 'No'), ('draft', 'Create in draft'), ('validate', 'Create and validate')],
-                                    required=True, default='no', tracking=True)
+    create_asset = fields.Selection(
+        selection=[
+            ('no', 'No'),
+            ('draft', 'Create in draft'),
+            ('validate', 'Create and validate'),
+        ],
+        compute='_compute_create_asset', readonly=False, store=True,
+        required=True, precompute=True,
+        tracking=True,
+    )
     # specify if the account can generate asset depending on it's type. It is used in the account form view
     can_create_asset = fields.Boolean(compute="_compute_can_create_asset")
     form_view_ref = fields.Char(compute='_compute_can_create_asset')
@@ -33,3 +41,9 @@ class AccountAccount(models.Model):
         for record in self:
             if record.create_asset == 'no':
                 record.multiple_assets_per_line = False
+
+    @api.depends('asset_model_ids')
+    def _compute_create_asset(self):
+        for account in self:
+            if not account.create_asset or account.create_asset == 'no':
+                account.create_asset = 'draft' if account.asset_model_ids else 'no'
