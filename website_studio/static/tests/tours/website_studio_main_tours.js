@@ -1,4 +1,5 @@
 import { registry } from "@web/core/registry";
+import { changeOptionInPopover } from "@website/js/tours/tour_utils";
 
 registry.category("web_tour.tours").add("website_studio_listing_and_page", {
     url: "/odoo/action-studio?debug=1&mode=home_menu",
@@ -112,17 +113,7 @@ registry.category("web_tour.tours").add("website_studio_website_form", {
             trigger: ":iframe .odoo-editor-editable .s_website_form h2",
             run: "click",
         },
-        {
-            trigger: ".snippet-option-WebsiteFormEditor we-select:eq(0)",
-            run: "click",
-        },
-        {
-            trigger: ".snippet-option-WebsiteFormEditor we-select:eq(0).o_we_widget_opened"
-        },
-        {
-            trigger: ".snippet-option-WebsiteFormEditor we-button[data-select-action='website_studio.form_more_model']",
-            run: "click",
-        },
+        ...changeOptionInPopover("Form", "Action", "More models"),
         {
             trigger: ".modal .o_list_view"
         },
@@ -139,13 +130,13 @@ registry.category("web_tour.tours").add("website_studio_website_form", {
             run: "click",
         },
         {
-            trigger: "body:not(:has(.modal)) .o_we_user_value_widget[data-name='enable_website_form_access'].active"
+            trigger: "body:not(:has(.modal)) div[data-action-id='studioToggleFormAccess'] input:checked",
         },
         {
             trigger: ":iframe form[data-model_name='x_test_model']",
         },
         {
-            trigger: ".o_we_website_top_actions button[data-action='save']",
+            trigger: ".o-snippets-top-actions button[data-action='save']",
             run: "click",
         },
         {

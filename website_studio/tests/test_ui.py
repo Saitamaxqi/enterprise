@@ -5,8 +5,6 @@ from lxml import etree
 import odoo.tests
 from odoo import Command
 
-import unittest
-
 
 @odoo.tests.tagged('post_install', '-at_install')
 class TestUi(odoo.tests.HttpCase):
@@ -220,8 +218,6 @@ class TestUi(odoo.tests.HttpCase):
         monetary_field = listing_tree.xpath("//span[@t-field='record.x_studio_monetary']")
         self.assertEqual(len(monetary_field), 1)
 
-    # TODO master-mysterious-egg fix error
-    @unittest.skip("prepare mysterious-egg for merging")
     def test_website_form(self):
         self.create_empty_app()
 
