@@ -5,16 +5,16 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
-            <group name="salary" position="inside">
+            <group name="salary_left" position="inside">
                 <label for="l10n_sk_meal_voucher_employee" invisible="country_code != 'SK'"/>
                 <div class="o_row" invisible="country_code != 'SK'">
-                    <field name="l10n_sk_meal_voucher_employee" class="o_hr_narrow_field" nolabel="1"/>
-                    <span>€ / voucher</span>
+                    <field name="l10n_sk_meal_voucher_employee" widget="monetary" options="{'currency_field': 'currency_id'}" class="o_hr_narrow_field"/>
+                    <span>/ voucher</span>
                 </div>
                 <label for="l10n_sk_meal_voucher_employer" invisible="country_code != 'SK'"/>
                 <div class="o_row" invisible="country_code != 'SK'">
-                    <field name="l10n_sk_meal_voucher_employer" class="o_hr_narrow_field" nolabel="1"/>
-                    <span>€ / voucher</span>
+                    <field name="l10n_sk_meal_voucher_employer" widget="monetary" options="{'currency_field': 'currency_id'}" class="o_hr_narrow_field"/>
+                    <span>/ voucher</span>
                 </div>
             </group>
         </field>

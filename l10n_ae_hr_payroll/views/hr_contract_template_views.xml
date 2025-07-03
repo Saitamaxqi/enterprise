@@ -4,20 +4,20 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
-            <group name="salary" position="inside" >
+            <group name="salary_left" position="inside" >
                 <label for="l10n_ae_housing_allowance" invisible="country_code != 'AE'"/>
                 <div class="o_row" name="l10n_ae_housing_allowance" invisible="country_code != 'AE'">
-                    <field name="l10n_ae_housing_allowance" nolabel="1"/>
+                    <field name="l10n_ae_housing_allowance" class="o_hr_narrow_field"/>
                     <span>/ month</span>
                 </div>
                 <label for="l10n_ae_transportation_allowance" invisible="country_code != 'AE'"/>
                 <div class="o_row" name="l10n_ae_transportation_allowance" invisible="country_code != 'AE'">
-                    <field name="l10n_ae_transportation_allowance" nolabel="1"/>
+                    <field name="l10n_ae_transportation_allowance" class="o_hr_narrow_field"/>
                     <span>/ month</span>
                 </div>
                 <label for="l10n_ae_other_allowances" invisible="country_code != 'AE'"/>
                 <div class="o_row" name="l10n_ae_other_allowances" invisible="country_code != 'AE'">
-                    <field name="l10n_ae_other_allowances" nolabel="1"/>
+                    <field name="l10n_ae_other_allowances" class="o_hr_narrow_field"/>
                     <span>/ month</span>
                 </div>
             </group>
@@ -31,8 +31,11 @@
                     </group>
                 </group>
                 <group name="ae_eos" string="End Of Service" invisible="country_code != 'AE'">
-                    <field name="l10n_ae_is_computed_based_on_daily_salary"/>
-                    <field name="l10n_ae_eos_daily_salary" invisible="not l10n_ae_is_computed_based_on_daily_salary"/>
+                    <label for="l10n_ae_is_computed_based_on_daily_salary"/>
+                    <div name="o_row">
+                        <field name="l10n_ae_is_computed_based_on_daily_salary"/>
+                        <field name="l10n_ae_eos_daily_salary" invisible="not l10n_ae_is_computed_based_on_daily_salary" class="o_hr_narrow_field"/>
+                    </div>
                 </group>
             </group>
         </field>

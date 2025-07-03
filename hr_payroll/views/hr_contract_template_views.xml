@@ -12,6 +12,37 @@
         <field name="view_mode">form</field>
     </record>
 
+    <record id="hr_contract_template_view_form" model="ir.ui.view">
+        <field name="name">hr.contract.template.view.form.inherit.hr_payroll</field>
+        <field name="model">hr.version</field>
+        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
+        <field name="arch" type="xml">
+            <label for="wage" position="before">
+                <field name="wage_type"/>
+                <field name="schedule_pay"/>
+                <label for="hourly_wage" invisible="wage_type != 'hourly'"/>
+                <div class="o_row" name="hourly_wage" invisible="wage_type != 'hourly'">
+                    <field name="hourly_wage" class="o_hr_narrow_field"/>
+                    <span>/ hour</span>
+                </div>
+            </label>
+            <group name="salary_right" position="attributes">
+                <attribute name="invisible">wage_type == 'hourly'</attribute>
+            </group>
+            <group name="other" position="after">
+                <group name="part_time" string="Part time">
+                    <label for="time_credit"/>
+                    <div class="o_row">
+                        <field name="time_credit"/>
+                        <field name="work_time_rate" invisible="not time_credit" widget="percentage"/>
+                    </div>
+                    <field name="standard_calendar_id" invisible="not time_credit" help="The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."/>
+                    <field name="time_credit_type_id" invisible="not time_credit" required="time_credit"/>
+                </group>
+            </group>
+        </field>
+    </record>
+
     <record id="hr_version_payroll_list_view" model="ir.ui.view">
         <field name="name">hr.version.payroll.list</field>
         <field name="model">hr.version</field>

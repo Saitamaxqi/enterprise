@@ -16,6 +16,7 @@ Generic Payroll system Integrated with Accounting.
         'views/hr_payslip_run_views.xml',
         'views/hr_payslip_views.xml',
         'views/hr_employee_views.xml',
+        'views/hr_contract_template_views.xml',
         'views/hr_salary_rule_views.xml',
         'views/hr_payroll_structure_views.xml',
         'views/res_config_settings_views.xml',

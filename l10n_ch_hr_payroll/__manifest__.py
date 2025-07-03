@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -27,7 +26,6 @@ Switzerland Payroll Rules.
         'data/hr_payroll_structure_type_data.xml',
         'data/report_paperformat_data.xml',
         'data/hr_swiss_leave_types.xml',
-        # 'views/hr_payroll_report.xml',
         'data/hr_payroll_structure_data.xml',
         'data/hr_rule_parameters_data.xml',
         'data/hr_payslip_input_type_data.xml',
@@ -35,6 +33,7 @@ Switzerland Payroll Rules.
         'data/hr_contract_type_data.xml',
         'views/res_users_views.xml',
         'views/hr_employee_views.xml',
+        'views/hr_contract_template_views.xml',
         'views/l10n_ch_transmitter_mixin_views.xml',
         'views/res_config_settings_views.xml',
         'views/l10n_ch_location_unit_views.xml',

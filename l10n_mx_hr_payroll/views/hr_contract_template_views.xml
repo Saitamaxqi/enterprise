@@ -3,26 +3,33 @@
     <record id="hr_contract_template_view_form" model="ir.ui.view">
         <field name="name">hr.contract.template.view.form.inherit.l10_mx_hr_payroll</field>
         <field name="model">hr.version</field>
-        <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
+        <field name="inherit_id" ref="hr_payroll.hr_contract_template_view_form"/>
         <field name="arch" type="xml">
-            <group name="salary" position="inside">
+            <field name="schedule_pay" position="attributes">
+                <attribute name="invisible">country_code == 'MX'</attribute>
+            </field>
+            <field name="schedule_pay" position="after">
                 <field name="l10n_mx_schedule_pay" invisible="country_code != 'MX'" string="Schedule Pay"/>
+            </field>
+            <group name="salary_left" position="inside">
                 <label for="l10n_mx_holiday_bonus_rate" invisible="country_code != 'MX'" string="Holiday Bonus Rate"/>
                 <div class="o_row" invisible="country_code != 'MX'">
-                    <field name="l10n_mx_holiday_bonus_rate" class="o_hr_narrow_field" nolabel="1"/>
+                    <field name="l10n_mx_holiday_bonus_rate" class="o_hr_narrow_field"/>
                     <span>%</span>
                 </div>
-                <field name="l10n_mx_savings_fund" string="Savings Fund"/>
-                <field name="l10n_mx_external_annual_declaration" string="External Annual Declaration"/>
+                <field name="l10n_mx_savings_fund" string="Savings Fund" class="o_hr_narrow_field" invisible="country_code != 'MX'"/>
+                <field name="l10n_mx_external_annual_declaration" string="External Annual Declaration" invisible="country_code != 'MX'"/>
             </group>
 
             <!--Vouchers-->
-            <group name="salary" position="after">
-                <group string="Vouchers" invisible="country_code != 'MX'">
-                    <field name="l10n_mx_payment_period_vouchers" string="Payment Period"/>
-                    <field name="l10n_mx_meal_voucher_amount" string="Meal Vouchers"/>
-                    <field name="l10n_mx_transport_amount" string="Transport Vouchers"/>
-                    <field name="l10n_mx_gasoline_amount" string="Gasoline Vouchers"/>
+            <group name="salary_info" position="after">
+                <group>
+                    <group string="Vouchers" invisible="country_code != 'MX'">
+                        <field name="l10n_mx_payment_period_vouchers" string="Payment Period"/>
+                        <field name="l10n_mx_meal_voucher_amount" string="Meal Vouchers" class="o_hr_narrow_field"/>
+                        <field name="l10n_mx_transport_amount" string="Transport Vouchers" class="o_hr_narrow_field"/>
+                        <field name="l10n_mx_gasoline_amount" string="Gasoline Vouchers" class="o_hr_narrow_field"/>
+                    </group>
                 </group>
             </group>
 
@@ -41,16 +48,15 @@
                             <field name="percentage" invisible="infonavit_type != 'percentage'"/>
                         </list>
                     </field>
-                    <group string="Fonacot">
-                        <field name="l10n_mx_fonacot" nolabel="1" force_save="1">
-                            <list editable="bottom" decoration-muted="status == 'closed'">
-                                <field name="currency_id" column_invisible="1"/>
-                                <field name="status"/>
-                                <field name="extra_fixed_monthly_contribution" string="Extra Monthly Contribution" sum="Total Extra Monthly Contribution"/>
-                                <field name="monthly_import" sum="Total Monthly Import"/>
-                            </list>
-                        </field>
-                    </group>
+                    <separator string="Fonacot"/>
+                    <field name="l10n_mx_fonacot" nolabel="1" force_save="1">
+                        <list editable="bottom" decoration-muted="status == 'closed'">
+                            <field name="currency_id" column_invisible="1"/>
+                            <field name="status"/>
+                            <field name="extra_fixed_monthly_contribution" string="Extra Monthly Contribution" sum="Total Extra Monthly Contribution"/>
+                            <field name="monthly_import" sum="Total Monthly Import"/>
+                        </list>
+                    </field>
                 </page>
             </page>
 

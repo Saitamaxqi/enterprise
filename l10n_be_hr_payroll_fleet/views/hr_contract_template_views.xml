@@ -5,35 +5,30 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
-            <label for="transport_mode_car" position="replace">
-                <field name="transport_mode_car" invisible="1"/>
-                <label for="transport_mode_car"
-                    string="Catalog Company Car"
-                    invisible="wage_type == 'hourly' or country_code != 'BE'"
-                    groups="fleet.fleet_group_manager"/>
+            <label for="transport_mode_car" position="attributes">
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
+                <attribute name="string">Catalog Company Car</attribute>
             </label>
-            <div name="transport_mode_car" position="replace">
-                <div name="transport_mode_car" invisible="wage_type == 'hourly' or country_code != 'BE'"
-                    class="o_checkbox_optional_field"
-                    groups="fleet.fleet_group_manager">
-                    <field name="transport_mode_car" invisible="wage_type == 'hourly'" nolabel="1"/>
-                    <field name="car_id" nolabel="1" invisible="not transport_mode_car"/>
-                </div>
+            <div name="transport_mode_car" position="attributes">
+                <attribute name="class">o_checkbox_optional_field</attribute>
+                <attribute name="groups">fleet.fleet_group_manager</attribute>
             </div>
-            <xpath expr="//label[@for='fuel_card']" position="before">
-                <field name="new_car" invisible="1"/>
+            <field name="transport_mode_car" position="after">
+                <field name="car_id" invisible="not transport_mode_car"/>
+            </field>
+            <label for='fuel_card' position="before">
                 <label for="new_car" string="New Company Car"
                     groups="fleet.fleet_group_manager"
-                    invisible="wage_type == 'hourly' or country_code != 'BE'"/>
+                    invisible="wage_type == 'hourly'"/>
                 <div name="new_car_model_id_div"
                     class="o_checkbox_optional_field"
                     groups="fleet.fleet_group_manager"
-                    invisible="wage_type == 'hourly' or country_code != 'BE'">
-                    <field name="new_car" invisible="wage_type == 'hourly'" nolabel="1"/>
-                    <field name="new_car_model_id" invisible="not new_car" nolabel="1"/>
+                    invisible="wage_type == 'hourly'">
+                    <field name="new_car" invisible="wage_type == 'hourly'"/>
+                    <field name="new_car_model_id" invisible="not new_car"/>
                 </div>
                 <field name="ordered_car_id" invisible="not ordered_car_id"/>
-            </xpath>
+            </label>
             <xpath expr="//label[@for='fuel_card']" position="attributes">
                 <attribute name="invisible">(wage_type == 'hourly' or not transport_mode_car) and not new_car</attribute>
             </xpath>
@@ -48,24 +43,23 @@
             </field>
             <field name="car_atn" position="after">
                 <label for="transport_mode_bike" string="Catalog Company Bike"
-                    invisible="wage_type == 'hourly' or country_code != 'BE'"
+                    invisible="wage_type == 'hourly'"
                     groups="fleet.fleet_group_manager"/>
                 <div name="bike_id_div"
-                    invisible="wage_type == 'hourly' or country_code != 'BE'"
+                    invisible="wage_type == 'hourly'"
                     class="o_checkbox_optional_field"
                     groups="fleet.fleet_group_manager">
-                    <field name="transport_mode_bike" nolabel="1"/>
-                    <field name="bike_id" nolabel="1" invisible="not transport_mode_bike" required="transport_mode_bike"/>
+                    <field name="transport_mode_bike"/>
+                    <field name="bike_id" invisible="not transport_mode_bike" required="transport_mode_bike"/>
                 </div>
                 <label for="new_bike" string="New Company Bike"
                     groups="fleet.fleet_group_manager"
-                    invisible="wage_type == 'hourly' or country_code != 'BE'"/>
+                    invisible="wage_type == 'hourly'"/>
                 <div name="new_bike_model_id_div"
                     class="o_checkbox_optional_field"
-                    groups="fleet.fleet_group_manager"
-                    invisible="country_code != 'BE'">
-                    <field name="new_bike" invisible="wage_type == 'hourly'" nolabel="1"/>
-                    <field name="new_bike_model_id" invisible="not new_bike" required="new_bike" nolabel="1"/>
+                    groups="fleet.fleet_group_manager">
+                    <field name="new_bike" invisible="wage_type == 'hourly'"/>
+                    <field name="new_bike_model_id" invisible="not new_bike" required="new_bike"/>
                 </div>
             </field>
         </field>

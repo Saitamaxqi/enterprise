@@ -5,24 +5,32 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
-            <group name="salary" position="inside">
+            <group name="salary_info" position="inside">
                 <group string="Allowance" invisible="country_code != 'IN'">
                     <field name="l10n_in_driver_salay"/>
-                    <field name="l10n_in_house_rent_allowance_metro_nonmetro"/>
-                    <field name="l10n_in_supplementary_allowance"/>
-                    <field name="l10n_in_gratuity"/>
+                    <label for="l10n_in_house_rent_allowance_metro_nonmetro"/>
+                    <div class="o_row">
+                        <field name="l10n_in_house_rent_allowance_metro_nonmetro" class="o_hr_narrow_field"/>
+                        <span>%</span>
+                    </div>
+                    <field name="l10n_in_supplementary_allowance" class="o_hr_narrow_field"/>
+                    <field name="l10n_in_gratuity" class="o_hr_narrow_field"/>
                 </group>
                 <group string="Deduction" invisible="country_code != 'IN'">
                     <label for="l10n_in_tds" string="TDS"/>
                     <div class="d-flex gap-3">
-                        <field name="l10n_in_tds"/>
+                        <field name="l10n_in_tds" class="o_hr_narrow_field"/>
                         <button name="%(l10n_in_hr_payroll.action_tds_calculation)d" string="TDS Calculator" type="action" class="w-75 btn btn-secondary"/>
                     </div>
-                    <field name="l10n_in_provident_fund"/>
-                    <field name="l10n_in_voluntary_provident_fund"/>
-                    <field name="l10n_in_medical_insurance"/>
-                    <field name="l10n_in_leave_allowance"/>
-                    <field name="l10n_in_esic_amount"/>
+                    <field name="l10n_in_provident_fund" />
+                    <label for="l10n_in_voluntary_provident_fund"/>
+                    <div class="o_row">
+                        <field name="l10n_in_voluntary_provident_fund" class="o_hr_narrow_field"/>
+                        <span>%</span>
+                    </div>
+                    <field name="l10n_in_medical_insurance" class="o_hr_narrow_field"/>
+                    <field name="l10n_in_leave_allowance" class="o_hr_narrow_field"/>
+                    <field name="l10n_in_esic_amount" class="o_hr_narrow_field"/>
                 </group>
             </group>
         </field>

@@ -17,7 +17,7 @@
         'security/ir.model.access.csv',
         'wizard/hr_payroll_index_wizard_views.xml',
         'wizard/hr_payroll_edit_payslip_lines_wizard_views.xml',
-        'views/hr_contract_views.xml',
+        'views/hr_contract_template_views.xml',
         'views/hr_payroll_structure_views.xml',
         'views/hr_payroll_structure_type_views.xml',
         'views/hr_salary_rule_category_views.xml',
