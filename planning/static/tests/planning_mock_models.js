@@ -40,7 +40,9 @@ export class PlanningSlot extends models.Model {
     user_id = fields.Many2one({ relation: "res.users" });
     conflicting_slot_ids = fields.Many2many({ relation: "planning.slot" });
     resource_roles = fields.Many2many({ relation: "resource.resource" });
-    resource_color = fields.Integer({ related: 'resource_id.color' })
+    resource_color = fields.Integer({ related: 'resource_id.color' });
+
+    template_id = fields.Many2one({ relation: "planning.slot.template" });
 
     gantt_resource_employees_working_periods(rows) {
         const kwargs = getKwArgs(arguments, "rows");
@@ -106,8 +108,40 @@ export class PlanningRecurrency extends models.Model {
     repeat_interval = fields.Integer();
 }
 
+export class PlanningSlotTemplate extends models.Model {
+    _name = "planning.slot.template";
+
+    start_time = fields.Float();
+    end_time = fields.Float();
+    duration_days = fields.Integer();
+
+    _records = [
+        { id: 1, start_time: 9, end_time: 17, duration_days: 2 },
+    ];
+}
+
+class PlanningFilterResource extends models.Model {
+    _name = "planning.filter.resource";
+
+    resource_id = fields.Many2one({ relation: "resource.resource" });
+    checked = fields.Boolean();
+    resource_type = fields.Selection({
+        selection: [
+            ["user", "Human"],
+            ["material", "Material"],
+        ],
+    });
+}
+
 export class ResourceResource extends models.ServerModel {
     _name = "resource.resource";
+
+    resource_type = fields.Selection({
+        selection: [
+            ["user", "Human"],
+            ["material", "Material"],
+        ],
+    });
 }
 
 export class PlanningRole extends models.ServerModel {
@@ -118,6 +152,8 @@ export const planningModels = {
     ...hrModels,
     PlanningSlot,
     PlanningRecurrency,
+    PlanningSlotTemplate,
+    PlanningFilterResource,
     ResourceResource,
     PlanningRole,
 };
