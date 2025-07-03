@@ -27,12 +27,4 @@ Quality Base
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
-    'assets': {
-        'web.assets_backend': [
-            'quality/static/src/**/*',
-        ],
-        'web.qunit_suite_tests': [
-            'quality/static/tests/*.js',
-        ],
-    }
 }

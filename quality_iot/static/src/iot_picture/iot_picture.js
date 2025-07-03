@@ -1,15 +1,26 @@
+import { Component } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from '@web/core/registry';
-import { TabletImageField, tabletImageField } from "@quality/tablet_image_field/tablet_image_field";
-import { useIotDevice } from '@iot/iot_device_hook';
+import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from '@web/core/utils/hooks';
+import { ImageField, imageField } from '@web/views/fields/image/image_field';
+import { useIotDevice } from '@iot/iot_device_hook';
 
-export class TabletImageIoTField extends TabletImageField {
+class ImagePreviewDialog extends Component {
+    static components = { Dialog };
+    static template = "quality_iot.ImagePreviewDialog";
+    static props = {
+        src: String,
+        close: Function,
+    };
+}
+
+export class TabletImageIoTField extends ImageField {
     static template = "quality_iot.TabletImageIoTField";
     static props = {
-        ...TabletImageField.props,
-        ip_field: { type: String },
-        identifier_field: { type: String },
+        ...ImageField.props,
+        ip_field: { type: String, optional: true },
+        identifier_field: { type: String, optional: true },
     };
 
     setup() {
@@ -42,12 +53,9 @@ export class TabletImageIoTField extends TabletImageField {
             },
         });
     }
-    async onTakePicture(ev) {
+    async onTakePicture() {
         if (!this.getIotDevice) return;
 
-        // Stop propagating so that the FileUploader component won't open the file dialog.
-        ev.stopImmediatePropagation();
-        ev.preventDefault();
         this.notification.add(_t('Capturing image...'), { type: 'info' });
         try {
             const data = await this.getIotDevice().action({});
@@ -66,13 +74,19 @@ export class TabletImageIoTField extends TabletImageField {
             title: _t('Connection to device failed'),
         });
     }
+
+    openModal() {
+        this.dialog.add(ImagePreviewDialog, {
+            src: this.getUrl(this.props.name),
+        });
+    }
 }
 
 export const tabletImageIoTField = {
-    ...tabletImageField,
+    ...imageField,
     component: TabletImageIoTField,
     extractProps({ options }) {
-        const props = tabletImageField.extractProps(...arguments);
+        const props = imageField.extractProps(...arguments);
         props.ip_field = options.ip_field;
         props.identifier_field = options.identifier;
         return props;
