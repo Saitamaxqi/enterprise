@@ -180,6 +180,10 @@ test("Drag and Drop - Search panel expand folders", async function () {
         "Trash",
     ]);
     await cancel();
+
+    expect(queryAll(".o_record_temporary", { root: document.body })).toHaveCount(0, {
+        message: "temporary cards should have been cleaned up",
+    });
 });
 
 test("Drag and Drop - A folder into itself or its children", async function () {

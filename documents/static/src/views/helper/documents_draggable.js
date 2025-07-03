@@ -72,6 +72,7 @@ export const useDraggableDocuments = makeDraggableHook({
             tempEl.classList.add("o_record_temporary");
             this.tempDraggedElements.push(tempEl);
             document.body.append(tempEl);
+            addCleanup(() => tempEl.remove());
 
             tempEl.style.left = `${sourceRect.left}px`;
             tempEl.style.top = `${sourceRect.top}px`;
