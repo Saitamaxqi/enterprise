@@ -95,6 +95,50 @@ class AccountTestSIE4Import(AccountTestInvoicingCommon):
             'phone': '012-34 56 78',
         }])
 
+    def test_sie4_import_identification_without_previous_year(self):
+        self.wizard.write({
+            'import_opening_balance': True,
+        })
+        self.wizard.attachment_file = base64.b64encode(b"""
+            #SIETYP 4
+            #FNAMN "Swedish Series"
+            #ORGNR 555555-5555
+            #ADRESS "Siw Eriksson" "Box 1" "123 45 STORSTAD" "012-34 56 78"
+            #RAR 0 20240101 20241231
+            #TAXAR 2022
+            #VALUTA SEK
+            #KPTYP EUBAS97
+            #VER A 1 20240107 "1st item"
+            {
+                #TRANS 1060 {} 300.0
+                #TRANS 2030 {} -300.0
+            }
+            #IB 0 1030 200.0
+        """)
+        self.wizard.action_import_sie4()
+        imported_moves = self.env['account.move'].search([('company_id', '=', self.company_id.id)])
+        self.assertRecordValues(
+            imported_moves,
+            [
+                {
+                    "name": "MISC/2024/01/0001",
+                    "ref": "Imported from SIE4 - 1st item",
+                    "date": fields.Date.from_string("2024-01-07"),
+                    "move_type": "entry",
+                    "state": "draft",
+                    "journal_id": self.journal_misc_id,
+                },
+                {
+                    'name': 'MISC/2023/12/0001',
+                    'ref': 'SIE opening balance move 2023-12-31',
+                    'date': fields.Date.from_string("2023-12-31"),
+                    'journal_id': self.journal_misc_id,
+                    'move_type': 'entry',
+                    'state': 'draft'
+                }
+            ],
+        )
+
     def test_sie4_import_identification_with_missing_element_in_adress(self):
         self.wizard.attachment_file = base64.b64encode(b"""
             #SIETYP 4

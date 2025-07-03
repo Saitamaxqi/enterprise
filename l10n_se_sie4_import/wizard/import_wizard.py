@@ -2,7 +2,7 @@ import base64
 import csv
 import re
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, Command, fields, models, modules, tools
@@ -288,7 +288,10 @@ class SIE4ImportWizard(models.TransientModel):
         The dictionary fields other than the label are to be used as the parameter for its respective label methods.
         """
         sie4_bytes = base64.b64decode(self.attachment_file)
-        sie4_lines = sie4_bytes.decode('UTF-8').split('\n')
+        try:
+            sie4_lines = sie4_bytes.decode('UTF-8').split('\n')
+        except UnicodeDecodeError:
+            sie4_lines = sie4_bytes.decode('ISO-8859-1').split('\n')
         sie4_data = []
         idx = 0
 
@@ -374,7 +377,14 @@ class SIE4ImportWizard(models.TransientModel):
         It then compares the difference of the opening balance found in Odoo with the file.
         If any difference is found, it will then create an opening balance move with that sum difference.
         """
-        prev_date_to = data_map['dates']['-1']['date_to']
+        if '-1' in data_map['dates']:
+            prev_date_to = data_map['dates']['-1']['date_to']
+        else:
+            # Fallback: one day before the IB year start
+            ib_date_from = data_map['dates']['0']['date_from']
+            dt = datetime.strptime(ib_date_from, "%Y-%m-%d")
+            prev_date_to = (dt - timedelta(days=1)).strftime("%Y-%m-%d")
+
         account_codes = list(data_map['opening_balance_map'].keys())
         currency = self.company_id.currency_id
 
