@@ -107,16 +107,19 @@ class AccountMove(models.Model):
                     'message': _("An eTIMS payment method is required when confirming a purchase. "),
                     'blocking': True,
                 }
-            if move.move_type == 'out_refund' and not move.l10n_ke_reason_code_id:
-                messages['no_reason_code_warning'] = {
-                    'message': _("A KRA reason code is required when creating credit notes. "),
-                    'blocking': True,
-                }
-            if move.move_type == 'out_refund' and not move.reversed_entry_id:
-                messages['no_reversed_entry_warning'] = {
-                    'message': _("A credit note must be linked to a valid invoice. "),
-                    'blocking': True,
-                }
+
+            if move.move_type == 'out_refund':
+                if not move.l10n_ke_reason_code_id:
+                    messages['no_reason_code_warning'] = {
+                        'message': _("A KRA reason code is required when creating credit notes. "),
+                        'blocking': True,
+                    }
+                if not move.reversed_entry_id or not (move.reversed_entry_id.l10n_ke_oscu_invoice_number and move.reversed_entry_id.l10n_ke_oscu_receipt_number):
+                    messages['no_reversed_entry_warning'] = {
+                        'message': _("A credit note must be linked to an invoice that has already been submitted to eTIMS."),
+                        'blocking': True,
+                    }
+
             if product_lines.filtered(lambda line: not line.product_id):
                 messages['no_product_warning'] = {
                     'message': _("Some lines are missing a product where one must be set. "),
