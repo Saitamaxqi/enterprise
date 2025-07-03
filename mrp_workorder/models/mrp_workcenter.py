@@ -31,7 +31,7 @@ class MrpWorkcenter(models.Model):
 
     @api.model
     def get_employee_barcode(self, barcode):
-        return self.env['hr.employee'].search([("barcode", "=", barcode)], limit=1).id
+        return self.env['hr.employee'].sudo().search([("barcode", "=", barcode)], limit=1).id
 
     @api.depends('time_ids', 'time_ids.date_end', 'time_ids.loss_type')
     def _compute_working_state(self):

@@ -165,7 +165,7 @@ class HrEmployee(models.Model):
             self.login_user_employee()
 
         domain = ['|', ('company_id', '=', False), ('company_id', 'in', self.env.companies.ids)]
-        all_employees = self.search_read(domain, fields=['id', 'name', 'barcode'])
+        all_employees = self.search_read(domain, fields=['id', 'name'])
 
         all_employees_ids = {employee['id'] for employee in all_employees}
         employees_connected = list(filter(

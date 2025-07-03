@@ -15,7 +15,7 @@ export class MrpEmployeeDialog extends ConfirmationDialog {
         super.setup();
         this.imageBaseURL = `${browser.location.origin}/web/image?model=hr.employee&field=avatar_128&id=`;
         this.selected = useState({ ids: this.props.employees.connected.map((item) => item.id) });
-
+        this.orm = useService("orm");
         this.barcode = useService("barcode");
         useBus(this.barcode.bus, "barcode_scanned", (event) =>
             this._onBarcodeScanned(event.detail.barcode)
@@ -35,10 +35,10 @@ export class MrpEmployeeDialog extends ConfirmationDialog {
         return this.props.close();
     }
 
-    _onBarcodeScanned(barcode) {
-        const employee = this.props.employees.all.find((employee) => employee.barcode == barcode);
+    async _onBarcodeScanned(barcode) {
+        const employee = await this.orm.call("mrp.workcenter", "get_employee_barcode", [barcode])
         if (employee) {
-            this.toggleEmployee(employee.id);
+            this.toggleEmployee(employee);
         }
     }
 }

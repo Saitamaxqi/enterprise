@@ -848,3 +848,21 @@ registry.category("web_tour.tours").add("test_automatic_backorder_no_redirect", 
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_shop_floor_access", {
+    steps: () => [
+        {
+            trigger: ".o_app:contains(Shop Floor)",
+            run: 'click',
+        },
+        ...stepUtils.openWorkcentersSelector(),
+        ...stepUtils.addWorkcenterToDisplay("Workcenter1"),
+        ...stepUtils.confirmWorkcentersSelection(),
+        ...stepUtils.openEmployeesList(),
+        {
+            content: "scan a badge",
+            trigger: ".modal-body .o_mrp_operatos_dialog",
+            run: "scan 659898105101",
+        },
+    ],
+});

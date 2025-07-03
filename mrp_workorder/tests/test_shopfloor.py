@@ -657,3 +657,13 @@ class TestShopFloor(HttpCase):
             {'name': 'MOBACK-001', 'state': 'done'},
             {'name': 'MOBACK-002', 'state': 'done'},
         ])
+
+    def test_shop_floor_access(self):
+        mrp_partner = self.env['res.partner'].create({'name': 'mrp_user'})
+        self.env['res.users'].create({
+            'login': 'mrp_user',
+            'partner_id': mrp_partner.id,
+            'group_ids': [Command.set(self.env.ref('mrp.group_mrp_routings').ids)],
+        })
+        self.env['mrp.workcenter'].create({'name': 'Workcenter1'})
+        self.start_tour('/odoo', 'test_shop_floor_access', login='admin')
