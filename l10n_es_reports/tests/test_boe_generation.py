@@ -141,6 +141,59 @@ class TestBOEGeneration(TestEsAccountReportsCommon):
         self.assertIn('20250300000000000000000000100000', boe_file['file_content'].decode('utf-8'))
 
     @freeze_time('2025-05-15')
+    def test_only_include_credit_note_in_rectification_mod_349(self):
+        """
+        Test that in model 349 only the credit notes are included in the computation of the rectification line
+        """
+        partner = self.env['res.partner'].create({
+            'name': 'Test',
+            'company_id': self.company_data['company'].id,
+            'company_type': 'company',
+            'country_id': self.env['res.country'].search([('code', '=', 'BE')]).id,
+            'vat': 'BE0477472701',
+        })
+
+        invoice = self.init_invoice('out_invoice', partner=partner, amounts=[1000], invoice_date='2025-03-15')
+        invoice.action_post()
+
+        reversal_wizard = self.env['account.move.reversal'].with_context({
+            'active_ids': invoice.id,
+            'active_id': invoice.id,
+            'active_model': 'account.move',
+        }).create({
+            'reason': 'refund',
+            'journal_id': invoice.journal_id.id,
+        })
+        reversal = reversal_wizard.reverse_moves()
+        refund = self.env['account.move'].browse(reversal.get('res_id'))
+        refund.line_ids.write({'price_unit': 500.0})
+        refund.action_post()
+
+        self.env['account.payment.register'].with_context(active_model='account.move', active_ids=invoice.ids).create({
+            'amount': 250.0,
+        })._create_payments()
+
+        report = self.env.ref('l10n_es_reports.mod_349')
+        options = self._generate_options(report, fields.Date.from_string('2025-05-01'), fields.Date.from_string('2025-05-31'))
+        wizard_action = self.env['l10n_es.mod349.tax.report.handler'].open_boe_wizard(options, '349')
+        wizard = self.env[wizard_action['res_model']].with_context(wizard_action['context']).create({})
+        options['l10n_es_reports_boe_wizard_id'] = wizard.id
+
+        boe_file = self.env['l10n_es.mod349.tax.report.handler'].export_boe(options)
+
+        # Those strings represent a rectification record included in the BOE export.
+        # It contains:
+        # - the year (2025),
+        # - the period,
+        # - the rectified tax base (0.00),
+        # - and the previously declared tax base (1000.00).
+        # Under REGISTRO DE RECTIFICACIONES https://www.boe.es/buscar/doc.php?id=BOE-A-2010-5098
+
+        # Here the new value should be 500 and not 250 because the payment should not count in the rectification line
+        self.assertIn('20250300000000500000000000100000', boe_file['file_content'].decode('utf-8'))
+        self.assertNotIn('20250300000000250000000000100000', boe_file['file_content'].decode('utf-8'))
+
+    @freeze_time('2025-05-15')
     def test_boe_excludes_current_period_rectification_lines(self):
         """
         Test that moves from the current period are not included as rectification lines in the boe report

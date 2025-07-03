@@ -1336,13 +1336,15 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
                             result_dict['value'] -= res_line['amount_untaxed']
 
                         elif move_type == 'refund' and matching_move.date.strftime('%Y-%m-%d') < options['date']['date_from']:
-                            # If the linked move is in a previous period, we need to add the amount_residual of the linked move to the result
+                            # If the linked move is in a previous period, we need to add to the result the amount_total
+                            # of the linked move minus the sum of it's credit note
                             # To be sure we don't add a move value twice (in case there is multiple refunds for a same move),
                             # we add it to a list
+                            # In the case of the file export, we need the amount_total in order to write the rectification lines
                             if matching_move.id not in treated_moves:
                                 if float_is_zero(matching_move.amount_residual, precision_digits=2) and options.get('export_mode') == 'file':
                                     result_dict['value'] += matching_move.amount_total
-                                result_dict['value'] += matching_move.amount_residual
+                                result_dict['value'] += matching_move.amount_total - sum(refund.amount_total for refund in matching_move.reversal_move_ids)
                                 treated_moves.append(matching_move.id)
 
                     elif ((res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice') or
@@ -1523,7 +1525,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
             if original_invoice.id not in matched_moves:
                 period_dict[f"{invoice_period}{invoice_year}"]['old_balance'] += original_invoice.amount_total
-                period_dict[f"{invoice_period}{invoice_year}"]['new_balance'] += original_invoice.amount_residual
+                period_dict[f"{invoice_period}{invoice_year}"]['new_balance'] += original_invoice.amount_total - sum(refund.amount_total for refund in original_invoice.reversal_move_ids)
                 matched_moves.append(original_invoice.id)
 
         rslt = self._l10n_es_boe_format_string('')
