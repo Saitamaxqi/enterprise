@@ -133,7 +133,6 @@ patch(TicketScreen.prototype, {
                         await this.pos.sendOrderInPreparation(order, true);
                     }
                     await this._updateScreenState(order, "ACTIVE_ORDERS");
-                    await this._updateScreenState(order, "ACTIVE_ORDERS");
                     order.uiState.displayed = false;
                     if (order.id === this.pos.getOrder()?.id) {
                         const orderList = this._getOrderList();
