@@ -1,6 +1,5 @@
-import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { contains, defineModels, onRpc, serverState } from "@web/../tests/web_test_helpers";
 import { omit } from "@web/core/utils/objects";
-import { contains, defineModels, serverState, webModels } from "@web/../tests/web_test_helpers";
 
 import { describe, expect, test } from "@odoo/hoot";
 import { waitFor } from "@odoo/hoot-dom";
@@ -8,7 +7,7 @@ import { animationFrame } from "@odoo/hoot-mock";
 
 import {
     DocumentsModels,
-    getDocumentsTestServerData,
+    getDocumentsTestServerModelsData,
     makeDocumentRecordData,
 } from "@documents/../tests/helpers/data";
 import { makeDocumentsMockEnv } from "@documents/../tests/helpers/model";
@@ -16,14 +15,6 @@ import {
     basicDocumentsKanbanArch,
     mountDocumentsKanbanView,
 } from "@documents/../tests/helpers/views/kanban";
-
-describe.current.tags("desktop");
-
-defineModels({
-    ...webModels,
-    ...mailModels,
-    ...DocumentsModels,
-});
 
 const archWithTags = basicDocumentsKanbanArch.replace(
     '<field name="name"/>',
@@ -37,12 +28,6 @@ const archWithTags = basicDocumentsKanbanArch.replace(
         <field name="mail_alias_domain_count"/>
     `
 );
-
-const mockRPCIrModelDisplayNameFor = async function (route, args) {
-    if (args.model === "ir.model" && args.method === "display_name_for") {
-        return args.args[0].map((model) => ({ model, display_name: model }));
-    }
-};
 
 /**
  * Shortcut for details panel selector
@@ -63,12 +48,21 @@ const folderTestedValues = {
     create_activity_type_id: 1,
 };
 
-test("Details panel rendering for editors", async function () {
-    const serverData = getDocumentsTestServerData([
+describe.current.tags("desktop");
+
+defineModels(DocumentsModels);
+
+onRpc("ir.model", "display_name_for", ({ args }) =>
+    args[0].map((model) => ({ model, display_name: model }))
+);
+onRpc("/documents/touch/<access_token>", () => ({}));
+
+test("Details panel rendering for editors", async () => {
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Testing tags", { folder_id: 1, ...binaryTestedValues }),
         makeDocumentRecordData(3, "Testing container", { folder_id: 1, ...folderTestedValues }),
     ]);
-    await makeDocumentsMockEnv({ serverData, mockRPC: mockRPCIrModelDisplayNameFor });
+    await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView({ arch: archWithTags });
     await contains(".o_kanban_record:contains('Testing tags')").click();
     await contains(".o_control_panel_navigation .fa-info-circle").click();
@@ -92,8 +86,8 @@ test("Details panel rendering for editors", async function () {
     await waitFor(dp(".o_field_tags input[placeholder='Add an alias tag...']"));
 });
 
-test("Details panel rendering for viewers - m2o/m2m values", async function () {
-    const serverData = getDocumentsTestServerData([
+test("Details panel rendering for viewers - m2o/m2m values", async () => {
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Testing tags", {
             folder_id: 1,
             ...binaryTestedValues,
@@ -105,7 +99,7 @@ test("Details panel rendering for viewers - m2o/m2m values", async function () {
             user_permission: "view",
         }),
     ]);
-    await makeDocumentsMockEnv({ serverData, mockRPC: mockRPCIrModelDisplayNameFor });
+    await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView({ arch: archWithTags });
     await contains(".o_kanban_record:contains('Testing tags')").click();
     await contains(".o_control_panel_navigation .fa-info-circle").click();
@@ -127,8 +121,8 @@ test("Details panel rendering for viewers - m2o/m2m values", async function () {
     expect(dp("span:contains('No activity assignee')")).toHaveCount(1); // activity type
 });
 
-test("Details panel rendering for viewers - m2o/m2m pseudo-placeholders", async function () {
-    const serverData = getDocumentsTestServerData([
+test("Details panel rendering for viewers - m2o/m2m pseudo-placeholders", async () => {
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Testing tags", { folder_id: 1, user_permission: "view" }),
         makeDocumentRecordData(3, "Testing container", {
             folder_id: 1,
@@ -136,7 +130,7 @@ test("Details panel rendering for viewers - m2o/m2m pseudo-placeholders", async 
             user_permission: "view",
         }),
     ]);
-    await makeDocumentsMockEnv({ serverData, mockRPC: mockRPCIrModelDisplayNameFor });
+    await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView({ arch: archWithTags });
     await contains(".o_kanban_record:contains('Testing tags')").click();
     await contains(".o_control_panel_navigation .fa-info-circle").click();
@@ -155,12 +149,12 @@ test("Details panel rendering for viewers - m2o/m2m pseudo-placeholders", async 
     );
 });
 
-test("Details panel required document name", async function () {
-    const serverData = getDocumentsTestServerData([
+test("Details panel required document name", async () => {
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Testing file", { folder_id: 1 }),
         makeDocumentRecordData(3, "Testing folder", { folder_id: 1 }),
     ]);
-    await makeDocumentsMockEnv({ serverData, mockRPC: mockRPCIrModelDisplayNameFor });
+    await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView({ arch: archWithTags });
     await contains(".o_control_panel_navigation .fa-info-circle").click();
     for (const documentName of [
@@ -182,14 +176,14 @@ test("Details panel required document name", async function () {
     }
 });
 
-test("Details panel root folder placeholders", async function () {
-    const serverData = getDocumentsTestServerData([
+test("Details panel root folder placeholders", async () => {
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "In COMPANY"),
         makeDocumentRecordData(3, "In MY DRIVE", { owner_id: serverState.userId }),
         makeDocumentRecordData(4, "In SHARED WITH ME", { owner_id: serverState.odoobotId }),
         makeDocumentRecordData(5, "In COMPANY (readonly)", { user_permission: "view" }),
     ]);
-    await makeDocumentsMockEnv({ serverData, mockRPC: mockRPCIrModelDisplayNameFor });
+    await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView({ arch: archWithTags });
     await contains(".o_control_panel_navigation .fa-info-circle").click();
     // Edit mode

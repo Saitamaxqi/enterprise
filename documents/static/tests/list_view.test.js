@@ -1,21 +1,19 @@
-import { browser } from "@web/core/browser/browser";
+import { describe, expect, test } from "@odoo/hoot";
+import { waitFor, waitForNone } from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
 import {
     contains,
     defineModels,
     mountView,
     onRpc,
     patchWithCleanup,
-    webModels,
 } from "@web/../tests/web_test_helpers";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, test } from "@odoo/hoot";
-import { waitFor, waitForNone } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { browser } from "@web/core/browser/browser";
 
 import {
     DocumentsModels,
     getBasicPermissionPanelData,
-    getDocumentsTestServerData,
+    getDocumentsTestServerModelsData,
     makeDocumentRecordData,
 } from "./helpers/data";
 import { makeDocumentsMockEnv } from "./helpers/model";
@@ -25,11 +23,7 @@ import { getEnrichedSearchArch } from "./helpers/views/search";
 
 describe.current.tags("desktop");
 
-defineModels({
-    ...webModels,
-    ...mailModels,
-    ...DocumentsModels,
-});
+defineModels(DocumentsModels);
 
 /**
  * Shortcut for details panel selector
@@ -39,27 +33,23 @@ defineModels({
 const dp = (selector) => `.o_documents_details_panel ${selector}`;
 
 test("Open share with view user_permission", async function () {
-    onRpc("/documents/touch/accessTokenFolder1", () => true);
-    const serverData = getDocumentsTestServerData();
-    const { id: folder1Id, name: folder1Name } = serverData.models["documents.document"].records[0];
+    onRpc("/documents/touch/accessTokenFolder1", () => ({}));
+    onRpc("permission_panel_data", ({ args }) => {
+        expect(args[0]).toBe(folder1Id);
+        expect.step("permission_panel_data");
+        return getBasicPermissionPanelData({
+            access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
+        });
+    });
+    const serverData = getDocumentsTestServerModelsData();
+    const { id: folder1Id, name: folder1Name } = serverData["documents.document"][0];
     patchWithCleanup(browser.navigator.clipboard, {
         writeText: async (url) => {
             expect.step("Document url copied");
             expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenFolder1");
         },
     });
-    await makeDocumentsMockEnv({
-        serverData,
-        mockRPC: async function (route, args) {
-            if (args.method === "permission_panel_data") {
-                expect(args.args[0]).toEqual(folder1Id);
-                expect.step("permission_panel_data");
-                return getBasicPermissionPanelData({
-                    access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
-                });
-            }
-        },
-    });
+    await makeDocumentsMockEnv({ serverData });
     await mountView({
         type: "list",
         resModel: "documents.document",
@@ -74,38 +64,29 @@ test("Open share with view user_permission", async function () {
 });
 
 test("Right panel shows and updates focused or container record only", async function () {
-    onRpc("/documents/touch/accessTokenFolder1", () => true);
-    onRpc("/documents/touch/accessTokenFile1", () => true);
-    onRpc("/documents/touch/accessTokenFile2", () => true);
-    onRpc("/documents/touch/accessTokenFile3", () => true);
+    onRpc("/documents/touch/<access_token>", () => ({}));
 
     const file2Id = 3;
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "File 1", { attachment_id: 1, folder_id: 1 }),
         makeDocumentRecordData(file2Id, "File 2", { attachment_id: 2, folder_id: 1 }),
         makeDocumentRecordData(4, "File 3", { attachment_id: 3, folder_id: 1 }),
     ]);
-    serverData.models["ir.attachment"] = {
-        records: [
-            { id: 1, name: "One" },
-            { id: 2, name: "Two" },
-            { id: 3, name: "Three" },
-        ],
-    };
-    const { name: folder1Name } = serverData.models["documents.document"].records[0];
+    serverData["ir.attachment"] = [
+        { id: 1, name: "One" },
+        { id: 2, name: "Two" },
+        { id: 3, name: "Three" },
+    ];
+    const { name: folder1Name } = serverData["documents.document"][0];
     onRpc("web_save", ({ args }) => {
         if (args[0].length === 1 && args[0][0] === file2Id) {
             expect.step("edit_request_2");
         }
     });
-    await makeDocumentsMockEnv({
-        serverData,
-        mockRPC: async function (route, args) {
-            if (args.model === "ir.model" && args.method === "display_name_for") {
-                return args.args[0].map((model) => ({ model, display_name: model }));
-            }
-        },
-    });
+    onRpc("ir.model", "display_name_for", ({ args }) =>
+        args[0].map((model) => ({ model, display_name: model }))
+    );
+    await makeDocumentsMockEnv({ serverData });
     await mountView({
         type: "list",
         resModel: "documents.document",
@@ -152,28 +133,20 @@ test("Right panel shows and updates focused or container record only", async fun
 });
 
 test("Document actions are hidden when focused record is not selected", async function () {
-    onRpc("/documents/touch/accessTokenFolder1", () => true);
-    onRpc("/documents/touch/accessTokenFile1", () => true);
-    onRpc("/documents/touch/accessTokenFile2", () => true);
+    onRpc("/documents/touch/<access_token>", () => ({}));
+    onRpc("ir.model", "display_name_for", ({ args }) =>
+        args[0].map((model) => ({ model, display_name: model }))
+    );
 
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "File 1", { attachment_id: 1, folder_id: 1 }),
         makeDocumentRecordData(3, "File 2", { attachment_id: 2, folder_id: 1 }),
     ]);
-    serverData.models["ir.attachment"] = {
-        records: [
-            { id: 1, name: "One" },
-            { id: 2, name: "Two" },
-        ],
-    };
-    await makeDocumentsMockEnv({
-        serverData,
-        mockRPC: async function (route, args) {
-            if (args.model === "ir.model" && args.method === "display_name_for") {
-                return args.args[0].map((model) => ({ model, display_name: model }));
-            }
-        },
-    });
+    serverData["ir.attachment"] = [
+        { id: 1, name: "One" },
+        { id: 2, name: "Two" },
+    ];
+    await makeDocumentsMockEnv({ serverData });
     await mountView({
         type: "list",
         resModel: "documents.document",
@@ -218,7 +191,7 @@ test("only show common available actions", async function () {
 });
 
 test("Required document name", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Testing file", { folder_id: 1 }),
         makeDocumentRecordData(3, "Testing folder", { folder_id: 1 }),
     ]);

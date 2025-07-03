@@ -1,6 +1,6 @@
-import { getDocumentsTestServerData } from "@documents/../tests/helpers/data";
+import { getDocumentsTestServerModelsData } from "@documents/../tests/helpers/data";
 
-export const embeddedActionsServerData = getDocumentsTestServerData([
+export const embeddedActionsServerData = getDocumentsTestServerModelsData([
     {
         folder_id: 1,
         id: 2,
@@ -20,10 +20,8 @@ export const embeddedActionsServerData = getDocumentsTestServerData([
         available_embedded_actions_ids: [3],
     },
 ]);
-embeddedActionsServerData.models["ir.embedded.actions"] = {
-    records: [
-        { id: 1, name: "Action 1" },
-        { id: 2, name: "Action 2 only" },
-        { id: 3, name: "Action 2 and 3"},
-    ],
-};
+embeddedActionsServerData["ir.embedded.actions"] = [
+    { id: 1, name: "Action 1" },
+    { id: 2, name: "Action 2 only" },
+    { id: 3, name: "Action 2 and 3" },
+];

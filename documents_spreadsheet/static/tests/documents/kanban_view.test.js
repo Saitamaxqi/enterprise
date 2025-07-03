@@ -1,6 +1,7 @@
-import { DocumentsSearchPanel } from "@documents/views/search/documents_search_panel";
+import { getDocumentsTestServerModelsData } from "@documents/../tests/helpers/data";
 import { basicDocumentsKanbanArch } from "@documents/../tests/helpers/views/kanban";
-import { getDocumentsTestServerData } from "@documents/../tests/helpers/data";
+import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
+import { DocumentsSearchPanel } from "@documents/views/search/documents_search_panel";
 import {
     defineDocumentSpreadsheetModels,
     getMySpreadsheetPermissionPanelData,
@@ -8,7 +9,7 @@ import {
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { XLSX_MIME_TYPES } from "@documents_spreadsheet/helpers";
-import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
+import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { waitFor, waitForNone } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
@@ -22,26 +23,19 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 import { download } from "@web/core/network/download";
-import { deepEqual } from "@web/core/utils/objects";
 import { SearchPanel } from "@web/search/search_panel/search_panel";
-import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
 
 describe.current.tags("desktop");
 defineDocumentSpreadsheetModels();
 preloadBundle("spreadsheet.o_spreadsheet");
-
-let target;
 
 const basicDocumentKanbanArch = basicDocumentsKanbanArch.replace(
     `<field name="name"/>`,
     `<field name="name"/><field name="handler"/>`
 );
 
-/**
- * @returns {Object}
- */
 function getTestServerData(spreadsheetData = {}) {
-    return getDocumentsTestServerData([
+    const documentModels = getDocumentsTestServerModelsData([
         {
             id: 2,
             name: "My spreadsheet",
@@ -54,10 +48,14 @@ function getTestServerData(spreadsheetData = {}) {
             owner_id: serverState.userId,
         },
     ]);
+    return {
+        models: Object.fromEntries(
+            Object.entries(documentModels).map(([name, records]) => [name, { records }])
+        ),
+    };
 }
 
 beforeEach(() => {
-    target = getFixture();
     // Due to the search panel allowing double clicking on elements, the base
     // methods have a debounce time in order to not do anything on dblclick.
     // This patch removes those features
@@ -74,7 +72,9 @@ beforeEach(() => {
     });
 });
 
-test("download frozen spreadsheet", async function () {
+onRpc("/documents/touch/<access_token>", () => ({}));
+
+test("download frozen spreadsheet", async () => {
     const serverData = getTestServerData();
     // Only frozen spreadsheet can be downloaded in document.
     serverData.models["ir.attachment"] = { records: [{ id: 1 }] };
@@ -87,7 +87,7 @@ test("download frozen spreadsheet", async function () {
     patchWithCleanup(download, {
         _download: async (options) => {
             expect.step(options.url);
-            expect(deepEqual(options.data, {})).toBe(true);
+            expect(options.data).toEqual({});
         },
     });
     await mountView({
@@ -105,8 +105,7 @@ test("download frozen spreadsheet", async function () {
     expect.verifySteps(["/documents/content/accessTokenMyspreadsheet"]);
 });
 
-test("share a spreadsheet", async function () {
-    onRpc("/documents/touch/accessTokenMyspreadsheet", () => true);
+test("share a spreadsheet", async () => {
     const spreadsheetId = 2;
     const serverData = getTestServerData();
     patchWithCleanup(browser.navigator.clipboard, {
@@ -131,7 +130,7 @@ test("share a spreadsheet", async function () {
         arch: basicDocumentKanbanArch,
         searchViewArch: getEnrichedSearchArch(),
     });
-    expect(target.querySelector(".spreadsheet_share_dropdown")).toBe(null);
+    expect(".spreadsheet_share_dropdown").toHaveCount(0);
     await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click({
         ctrlKey: true,
     });
@@ -141,8 +140,7 @@ test("share a spreadsheet", async function () {
     expect.verifySteps(["permission_panel_data", "Document url copied"]);
 });
 
-test("Freeze&Share a spreadsheet", async function () {
-    onRpc("/documents/touch/accessTokenMyspreadsheet", () => true);
+test("Freeze&Share a spreadsheet", async () => {
     const spreadsheetId = 2;
     const frozenSpreadsheetId = 1337;
     const model = new Model();
@@ -182,7 +180,7 @@ test("Freeze&Share a spreadsheet", async function () {
         arch: basicDocumentKanbanArch,
         searchViewArch: getEnrichedSearchArch(),
     });
-    expect(target.querySelector(".spreadsheet_share_dropdown")).toBe(null);
+    expect(".spreadsheet_share_dropdown").toHaveCount(0);
     await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click({
         ctrlKey: true,
     });
@@ -191,7 +189,7 @@ test("Freeze&Share a spreadsheet", async function () {
     expect.verifySteps(["spreadsheet_shared", "permission_panel_data", "Document url copied"]);
 });
 
-test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async function () {
+test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async () => {
     const spreadsheetId = 10;
     const spreadsheetCopyId = 99;
     const serverData = getTestServerData();
@@ -232,7 +230,7 @@ test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", 
     expect.verifySteps(["spreadsheet_cloned", "action_open_spreadsheet"]);
 });
 
-test("open WPS-marked xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async function () {
+test("open WPS-marked xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async () => {
     const spreadsheetId = 10;
     const spreadsheetCopyId = 99;
     const serverData = getTestServerData();
@@ -274,7 +272,7 @@ test("open WPS-marked xlsx converts to o-spreadsheet, clone it and opens the spr
     expect.verifySteps(["spreadsheet_cloned", "action_open_spreadsheet"]);
 });
 
-test("open csv converts to o-spreadsheet, clone it and opens the spreadsheet", async function () {
+test("open csv converts to o-spreadsheet, clone it and opens the spreadsheet", async () => {
     const spreadsheetId = 1;
     const spreadsheetCopyId = 99;
     const serverData = getTestServerData();
@@ -316,9 +314,7 @@ test("open csv converts to o-spreadsheet, clone it and opens the spreadsheet", a
     expect.verifySteps(["spreadsheet_cloned", "action_open_spreadsheet"]);
 });
 
-test("download a frozen spreadsheet document while selecting requested document", async function () {
-    onRpc("/documents/touch/accessTokenMyspreadsheet", () => true);
-    onRpc("/documents/touch/accessTokenRequest", () => true);
+test("download a frozen spreadsheet document while selecting requested document", async () => {
     const serverData = getTestServerData();
     serverData.models["ir.attachment"] = { records: [{ id: 1 }] };
     serverData.models["documents.document"].records = [
@@ -345,7 +341,7 @@ test("download a frozen spreadsheet document while selecting requested document"
     patchWithCleanup(download, {
         _download: async (options) => {
             expect.step(options.url);
-            expect(deepEqual(options.data, {})).toBe(true);
+            expect(options.data).toEqual({});
         },
     });
     await mountView({
@@ -362,7 +358,7 @@ test("download a frozen spreadsheet document while selecting requested document"
     expect.verifySteps(["/documents/content/accessTokenMyspreadsheet"]);
 });
 
-test("can open spreadsheet while multiple documents are selected along with it", async function () {
+test("can open spreadsheet while multiple documents are selected along with it", async () => {
     const serverData = getTestServerData();
     serverData.models["ir.attachment"] = {
         records: [{ id: 1 }, { id: 2 }, { id: 3 }],
@@ -401,20 +397,18 @@ test("can open spreadsheet while multiple documents are selected along with it",
     mockActionService((action) => {
         expect.step(action.tag);
     });
-    const fixture = getFixture();
     await contains(".o_kanban_record:contains('demo-workspace')").click();
     await animationFrame();
 
-    const records = fixture.querySelectorAll(".o_kanban_record");
-    await contains(records[0].querySelector(".o_record_selector")).click();
-    await contains(records[1].querySelector(".o_record_selector")).click({ ctrlKey: true });
-    await contains(records[2].querySelector(".o_record_selector")).click({ ctrlKey: true });
+    await contains(".o_kanban_record:eq(0) .o_record_selector").click();
+    await contains(".o_kanban_record:eq(1) .o_record_selector").click({ ctrlKey: true });
+    await contains(".o_kanban_record:eq(2) .o_record_selector").click({ ctrlKey: true });
     await contains(".o_kanban_record:contains('spreadsheet') .oe_kanban_previewer").click();
     expect(".o-FileViewer").toHaveCount(0);
     expect.verifySteps(["action_open_spreadsheet"]);
 });
 
-test("spreadsheet should be skipped while toggling the preview in the FileViewer", async function () {
+test("spreadsheet should be skipped while toggling the preview in the FileViewer", async () => {
     const serverData = getTestServerData();
     serverData.models["ir.attachment"] = {
         records: [
@@ -469,9 +463,8 @@ test("spreadsheet should be skipped while toggling the preview in the FileViewer
     expect(".o-FileViewer-header div:first()").toHaveText("chihuahua");
 });
 
-test("Cannot download spreadsheets", async function () {
-    onRpc("/documents/touch/accessTokenFolder1", () => true);
-    const serverData = getDocumentsTestServerData([
+test("Cannot download spreadsheets", async () => {
+    const documentModels = getDocumentsTestServerModelsData([
         {
             folder_id: 1,
             id: 2,
@@ -491,6 +484,11 @@ test("Cannot download spreadsheets", async function () {
             name: "Spreadsheet",
         },
     ]);
+    const serverData = {
+        models: Object.fromEntries(
+            Object.entries(documentModels).map(([name, records]) => [name, { records }])
+        ),
+    };
     serverData.models["ir.attachment"] = {
         records: [
             { id: 1, name: "binary" },

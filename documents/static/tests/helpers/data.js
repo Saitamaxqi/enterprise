@@ -5,32 +5,44 @@ export class DocumentsDocument extends models.Model {
     _name = "documents.document";
     _parent_name = "folder_id";
 
-    id = fields.Integer({ string: "ID" });
-    name = fields.Char({ string: "Name" });
-    thumbnail = fields.Binary({ string: "Thumbnail" });
-    favorited_ids = fields.Many2many({ string: "Name", relation: "res.users" });
-    is_favorited = fields.Boolean({ string: "Name" });
-    is_folder = fields.Boolean({ string: "is_folder" }); // used for ordering
-    is_multipage = fields.Boolean({ string: "Is multipage" });
-    is_company_root_folder = fields.Boolean({ string: "Pinned to Company roots" });
-    mimetype = fields.Char({ string: "Mimetype" });
-    partner_id = fields.Many2one({ string: "Related partner", relation: "res.partner" });
-    owner_id = fields.Many2one({ string: "Owner", relation: "res.users" });
-    previous_attachment_ids = fields.Many2many({
-        string: "History",
-        relation: "ir.attachment",
+    access_internal = fields.Selection({
+        selection: [
+            ["edit", "Editor"],
+            ["view", "Viewer"],
+            ["none", "None"],
+        ],
+        default: "edit",
     });
-    tag_ids = fields.Many2many({ string: "Tags", relation: "documents.tag" });
-    folder_id = fields.Many2one({ string: "Folder", relation: "documents.document" });
+    activity_state = fields.Selection({
+        selection: [
+            ["overdue", "Overdue"],
+            ["today", "Today"],
+            ["planned", "Planned"],
+        ],
+    });
+    name = fields.Char();
+    thumbnail = fields.Binary();
+    favorited_ids = fields.Many2many({ relation: "res.users" });
+    is_favorited = fields.Boolean({ string: "Name" });
+    is_folder = fields.Boolean(); // used for ordering
+    is_multipage = fields.Boolean();
+
+    is_company_root_folder = fields.Boolean({ string: "Pinned to Company roots" });
+    is_editable_attachment = fields.Boolean();
+    mimetype = fields.Char();
+    partner_id = fields.Many2one({ string: "Related partner", relation: "res.partner" });
+    owner_id = fields.Many2one({ relation: "res.users" });
+    previous_attachment_ids = fields.Many2many({ string: "History", relation: "ir.attachment" });
+    tag_ids = fields.Many2many({ relation: "documents.tag" });
+    folder_id = fields.Many2one({ relation: "documents.document" });
     res_model = fields.Char({ string: "Model (technical)" });
     attachment_id = fields.Many2one({ relation: "ir.attachment" });
-    company_id = fields.Many2one({ string: "Company", relation: "res.company" });
-    active = fields.Boolean({ default: true, string: "Active" });
+    company_id = fields.Many2one({ relation: "res.company" });
+    active = fields.Boolean({ default: true });
     activity_ids = fields.One2many({ relation: "mail.activity" });
-    checksum = fields.Char({ string: "Checksum" });
-    file_extension = fields.Char({ string: "File extension" });
+    checksum = fields.Char();
+    file_extension = fields.Char();
     thumbnail_status = fields.Selection({
-        string: "Thumbnail status",
         selection: [
             ["present", "Present"],
             ["error", "Error"],
@@ -39,14 +51,13 @@ export class DocumentsDocument extends models.Model {
         ],
     });
     lock_uid = fields.Many2one({ relation: "res.users" });
-    message_attachment_count = fields.Integer({ string: "Message attachment count" });
+    message_attachment_count = fields.Integer();
     message_follower_ids = fields.One2many({ relation: "mail.followers" });
     message_ids = fields.One2many({ relation: "mail.message" });
     res_id = fields.Integer({ string: "Resource ID" });
     res_name = fields.Char({ string: "Resource Name" });
     res_model_name = fields.Char({ string: "Resource Model Name" });
     type = fields.Selection({
-        string: "Type",
         selection: [
             ["binary", "File"],
             ["url", "Url"],
@@ -54,13 +65,12 @@ export class DocumentsDocument extends models.Model {
         ],
         default: "binary",
     });
-    url = fields.Char({ string: "URL" });
+    url = fields.Char();
     url_preview_image = fields.Char({ string: "URL preview image" });
-    file_size = fields.Integer({ string: "File size" });
-    raw = fields.Char({ string: "Raw" });
-    access_token = fields.Char({ string: "Access token" });
+    file_size = fields.Integer();
+    raw = fields.Char();
+    access_token = fields.Char();
     user_permission = fields.Selection({
-        string: "User Permission",
         selection: [
             ["edit", "Editor"],
             ["view", "Viewer"],
@@ -74,7 +84,7 @@ export class DocumentsDocument extends models.Model {
     });
     alias_id = fields.Many2one({ relation: "mail.alias" });
     alias_domain_id = fields.Many2one({ relation: "mail.alias.domain" });
-    alias_name = fields.Char({ string: "Alias name" });
+    alias_name = fields.Char();
     alias_tag_ids = fields.Many2many({ relation: "documents.tag" });
     mail_alias_domain_count = fields.Integer();
     create_activity_type_id = fields.Many2one({ relation: "mail.activity.type" });
@@ -108,8 +118,7 @@ export class DocumentsDocument extends models.Model {
     }
 
     action_move_documents(recordIds, folderId) {
-        const records = this.filter((r) => recordIds.includes(r.id));
-        for (const record of records) {
+        for (const record of this.browse(recordIds)) {
             record.folder_id = folderId;
         }
     }
@@ -117,8 +126,8 @@ export class DocumentsDocument extends models.Model {
     /**
      * @override to avoid super() not working for us.
      */
-    search_panel_select_range(fieldName) {
-        const result = super.search_panel_select_range(...arguments);
+    search_panel_select_range() {
+        const result = { parent_field: this._parent_name };
         result.values = [
             {
                 bold: true,
@@ -165,52 +174,53 @@ export class DocumentsDocument extends models.Model {
                 id: "TRASH",
                 description: "Items in trash will be deleted forever after 30 days.",
             },
-            ...this.env["documents.document"]
-                .search_read([["type", "=", "folder"]])
-                .filter((r) => r.type === "folder")
-                .map((record) => {
-                    const recordValues = {};
-                    if (!record.folder_id) {
-                        recordValues.folder_id = !record.owner_id
-                            ? "COMPANY"
-                            : record.owner_id[0] === serverState.userId
-                            ? "MY"
-                            : "SHARED";
-                    } else {
-                        recordValues.folder_id = record.folder_id[0];
-                    }
-                    if (!record.active) {
-                        recordValues.folder_id = "TRASH";
-                    }
-                    if (record.alias_tag_ids) {
-                        recordValues.alias_tag_ids = record.alias_tag_ids.map((id) => {
-                            const tag = this.env["documents.tag"].search_read([["id", "=", id]])[0];
-                            return { id, color: tag.color, display_name: tag.name };
-                        });
-                    }
-                    [
-                        "alias_domain_id",
-                        "alias_name",
-                        "mail_alias_domain_count",
-                        "company_id",
-                        "create_activity_type_id",
-                        "owner_id",
-                        "partner_id",
-                        "description",
-                        "display_name",
-                        "id",
-                        "is_folder",
-                        "type",
-                        "user_permission",
-                    ].forEach((fieldName) => (recordValues[fieldName] = record[fieldName]));
-                    return recordValues;
-                }),
         ];
+        for (const record of this.search_read(
+            [["type", "=", "folder"]],
+            [
+                "active",
+                "alias_domain_id",
+                "alias_name",
+                "alias_tag_ids",
+                "company_id",
+                "create_activity_type_id",
+                "description",
+                "display_name",
+                "folder_id",
+                "id",
+                "is_folder",
+                "mail_alias_domain_count",
+                "owner_id",
+                "partner_id",
+                "type",
+                "user_permission",
+            ]
+        )) {
+            if (record.folder_id) {
+                record.folder_id = record.folder_id[0];
+            } else {
+                record.folder_id = !record.owner_id
+                    ? "COMPANY"
+                    : record.owner_id[0] === serverState.userId
+                    ? "MY"
+                    : "SHARED";
+            }
+            if (!record.active) {
+                record.folder_id = "TRASH";
+            }
+            if (record.alias_tag_ids) {
+                record.alias_tag_ids = record.alias_tag_ids.map((id) => {
+                    const [tag] = this.env["documents.tag"].browse(id);
+                    return { id, color: tag.color, display_name: tag.name };
+                });
+            }
+            result.values.push(record);
+        }
         return result;
     }
 
     toggle_lock(id) {
-        const record = this.env["documents.document"].filter((doc) => doc.id === id)[0];
+        const record = this.browse(id)[0];
         record.lock_uid = record.lock_uid ? false : serverState.odoobotId;
     }
 }
@@ -220,6 +230,7 @@ export class DocumentsTag extends models.Model {
 
     name = fields.Char({ string: "Tag Name" });
     color = fields.Integer({ default: 1 });
+    sequence = fields.Integer();
 }
 
 export class IrEmbeddedActions extends models.Model {
@@ -271,50 +282,50 @@ export function makeDocumentRecordData(id, name, data = {}) {
 /**
  * @returns {Object}
  */
-export function getDocumentsTestServerData(additionalRecords = []) {
+export function getDocumentsTestServerModelsData(additionalRecords = []) {
     return {
-        models: {
-            "res.users": {
-                records: [
-                    { name: "OdooBot", id: serverState.odoobotId },
-                    {
-                        name: serverState.partnerName,
-                        id: serverState.userId,
-                        active: true,
-                        partner_id: serverState.partnerId,
-                    },
-                ],
+        "res.users": [
+            { name: "OdooBot", id: serverState.odoobotId },
+            {
+                name: serverState.partnerName,
+                id: serverState.userId,
+                active: true,
+                partner_id: serverState.partnerId,
             },
-            "documents.document": {
-                records: [
-                    makeDocumentRecordData(1, "Folder 1", { type: "folder" }),
-                    ...additionalRecords,
-                ],
+        ],
+        "documents.document": [
+            makeDocumentRecordData(1, "Folder 1", { type: "folder" }),
+            ...additionalRecords,
+        ],
+        "documents.tag": [
+            {
+                id: 1,
+                name: "Colorless",
+                color: 0,
             },
-            "documents.tag": {
-                records: [
-                    {
-                        id: 1,
-                        name: "Colorless",
-                        color: 0,
-                    },
-                    {
-                        id: 2,
-                        name: "Colorful",
-                        color: 1,
-                    },
-                ],
+            {
+                id: 2,
+                name: "Colorful",
+                color: 1,
             },
-            "mail.alias": {
-                records: [{ id: 1, alias_name: "alias" }],
+        ],
+        "mail.alias": [
+            {
+                id: 1,
+                alias_name: "alias",
             },
-            "mail.alias.domain": {
-                records: [
-                    { id: 1, name: "odoo.com" },
-                    { id: 2, name: "runbot.odoo.com" },
-                ],
+        ],
+
+        "mail.alias.domain": [
+            {
+                id: 1,
+                name: "odoo.com",
             },
-        },
+            {
+                id: 2,
+                name: "runbot.odoo.com",
+            },
+        ],
     };
 }
 
@@ -362,7 +373,7 @@ export const DocumentsModels = {
 };
 
 export function getDocumentsModel(modelName) {
-    return Object.values(DocumentsModels).find((model) => model._name === modelName);
+    return Object.values(DocumentsModels).find((model) => model.getModelName() === modelName);
 }
 
 export const mimetypeExamplesBase64 = {

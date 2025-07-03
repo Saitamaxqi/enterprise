@@ -1,28 +1,22 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { waitFor } from "@odoo/hoot-dom";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
 import {
     contains,
     defineActions,
     defineModels,
     getService,
     mountWithCleanup,
-    webModels
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 
 import { DocumentsModels } from "@documents/../tests/helpers/data";
 import { makeDocumentsMockEnv } from "@documents/../tests/helpers/model";
+import { embeddedActionsServerData } from "@documents/../tests/helpers/test_server_data";
 import { basicDocumentsKanbanArch } from "@documents/../tests/helpers/views/kanban";
 import { basicDocumentsListArch } from "@documents/../tests/helpers/views/list";
 import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
-import { embeddedActionsServerData } from "@documents/../tests/helpers/test_server_data";
 
-defineModels({
-    ...webModels,
-    ...mailModels,
-    ...DocumentsModels,
-});
+defineModels(DocumentsModels);
 defineActions([
     {
         id: 1,
@@ -42,7 +36,7 @@ test("Keep showing actions on view switch", async function () {
         kanban: basicDocumentsKanbanArch,
         list: basicDocumentsListArch,
         [["search", false]]: getEnrichedSearchArch(),
-    }
+    };
     await makeDocumentsMockEnv({ serverData: embeddedActionsServerData });
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);

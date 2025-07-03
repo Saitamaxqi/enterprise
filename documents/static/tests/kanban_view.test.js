@@ -1,30 +1,28 @@
-import { browser } from "@web/core/browser/browser";
+import { describe, expect, test } from "@odoo/hoot";
+import {
+    keyDown,
+    queryAll,
+    queryAllTexts,
+    setInputFiles,
+    waitFor,
+    waitForNone,
+} from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
+import { inputFiles } from "@web/../tests/utils";
 import {
     contains,
     defineModels,
     mockService,
     onRpc,
     patchWithCleanup,
-    webModels,
+    toggleSearchBarMenu,
 } from "@web/../tests/web_test_helpers";
-import { inputFiles } from "@web/../tests/utils";
-import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { describe, expect, test } from "@odoo/hoot";
-import {
-    keyDown,
-    queryAll,
-    queryAllTexts,
-    queryFirst,
-    setInputFiles,
-    waitFor,
-    waitForNone,
-} from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { browser } from "@web/core/browser/browser";
 
 import {
     DocumentsModels,
     getBasicPermissionPanelData,
-    getDocumentsTestServerData,
+    getDocumentsTestServerModelsData,
     makeDocumentRecordData,
     mimetypeExamplesBase64,
 } from "./helpers/data";
@@ -34,21 +32,26 @@ import { basicDocumentsKanbanArch, mountDocumentsKanbanView } from "./helpers/vi
 
 import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { documentsClientThumbnailService } from "@documents/views/helper/documents_client_thumbnail_service";
-import { Deferred } from "@web/core/utils/concurrency";
 import { EventBus } from "@odoo/owl";
+import { Deferred } from "@web/core/utils/concurrency";
 
 describe.current.tags("desktop");
 
-defineModels({
-    ...webModels,
-    ...mailModels,
-    ...DocumentsModels,
-});
+defineModels(DocumentsModels);
 
 test("Open share with edit user_permission", async function () {
-    onRpc("/documents/touch/accessTokenFolder1", () => true);
-    const serverData = getDocumentsTestServerData();
-    const { id: folder1Id, name: folder1Name } = serverData.models["documents.document"].records[0];
+    onRpc("/documents/touch/accessTokenFolder1", () => ({}));
+    onRpc("permission_panel_data", ({ args }) => {
+        expect(args[0]).toBe(folder1Id);
+        expect.step("permission_panel_data");
+        return getBasicPermissionPanelData({
+            access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
+            access_internal: "edit",
+            user_permission: "edit",
+        });
+    });
+    const serverData = getDocumentsTestServerModelsData();
+    const { id: folder1Id, name: folder1Name } = serverData["documents.document"][0];
     patchWithCleanup(DocumentsPermissionPanel.prototype, {
         async onInviteMembersSelected(selectedPartners) {
             expect(selectedPartners.length).toEqual(1);
@@ -62,20 +65,7 @@ test("Open share with edit user_permission", async function () {
             expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenFolder1");
         },
     });
-    await makeDocumentsMockEnv({
-        serverData,
-        mockRPC: async function (route, args) {
-            if (args.method === "permission_panel_data") {
-                expect(args.args[0]).toEqual(folder1Id);
-                expect.step("permission_panel_data");
-                return getBasicPermissionPanelData({
-                    access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
-                    access_internal: "edit",
-                    user_permission: "edit",
-                });
-            }
-        },
-    });
+    await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
     await contains(`.o_kanban_record:contains(${folder1Name}) .o_record_selector`).click({
         ctrlKey: true,
@@ -91,10 +81,10 @@ test("Open share with edit user_permission", async function () {
 });
 
 test("Colorless-tags are also visible on cards", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Testing tags", { folder_id: 1, tag_ids: [1, 2] }),
     ]);
-    const { name: folder1Name } = serverData.models["documents.document"].records[0];
+    const { name: folder1Name } = serverData["documents.document"][0];
     const archWithTags = basicDocumentsKanbanArch.replace(
         '<field name="name"/>',
         '<field name="name"/>\n' +
@@ -128,7 +118,7 @@ test("Uploading from control panel", async () => {
             }
         },
     });
-    const serverData = getDocumentsTestServerData();
+    const serverData = getDocumentsTestServerModelsData();
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
     await contains("button.btn.btn-primary.o-dropdown:contains('New')").click();
@@ -145,14 +135,12 @@ test("Uploading from control panel", async () => {
 });
 
 test("Download button availability", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Request", { folder_id: 1 }),
         makeDocumentRecordData(3, "Binary", { attachment_id: 1, folder_id: 1 }),
     ]);
-    serverData.models["ir.attachment"] = {
-        records: [{ id: 1, name: "binary" }],
-    };
-    const { name: folder1Name } = serverData.models["documents.document"].records[0];
+    serverData["ir.attachment"] = [{ id: 1, name: "binary" }];
+    const { name: folder1Name } = serverData["documents.document"][0];
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
     await contains(`.o_kanban_record:contains(${folder1Name})`).click({ ctrlKey: true });
@@ -177,7 +165,7 @@ test("Download button availability", async function () {
 });
 
 test("Drag and Drop - Search panel expand folders", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Sub Folder", { folder_id: 1, type: "folder" }),
         makeDocumentRecordData(3, "Test Folder", { type: "folder" }),
     ]);
@@ -228,16 +216,16 @@ test("Drag and Drop - Search panel expand folders", async function () {
 });
 
 test("Drag and Drop - A folder into itself or its children", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Sub Folder", { folder_id: 1, type: "folder" }),
         makeDocumentRecordData(3, "Folder 2", { type: "folder" }),
     ]);
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
-    const folder1 = queryFirst(".o_kanban_record[data-value-id='1']");
-    const folder2 = queryFirst(".o_kanban_record[data-value-id='2']");
-    const folder3 = queryFirst(".o_kanban_record[data-value-id='3']");
+    const folder1 = ".o_kanban_record[data-value-id='1']";
+    const folder2 = ".o_kanban_record[data-value-id='2']";
+    const folder3 = ".o_kanban_record[data-value-id='3']";
 
     const { cancel, moveTo } = await contains(folder1).drag();
     await moveTo(folder2);
@@ -257,7 +245,7 @@ test("Drag and Drop - A folder into itself or its children", async function () {
 });
 
 test("Drag and Drop - After selecting multiple documents", async function () {
-    const serverData = getDocumentsTestServerData(
+    const serverData = getDocumentsTestServerModelsData(
         [1, 2, 3].map((idx) =>
             makeDocumentRecordData(idx + 1, `Test Document ${idx}`, { folder_id: 1 })
         )
@@ -265,8 +253,8 @@ test("Drag and Drop - After selecting multiple documents", async function () {
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
-    const document2 = queryFirst(".o_kanban_record[data-value-id='2']");
-    const document4 = queryFirst(".o_kanban_record[data-value-id='4']");
+    const document2 = ".o_kanban_record[data-value-id='2']";
+    const document4 = ".o_kanban_record[data-value-id='4']";
 
     await contains(document2).click({ ctrlKey: true });
     await contains(document4).click({ ctrlKey: true });
@@ -285,7 +273,7 @@ test("Drag and Drop - After selecting multiple documents", async function () {
 });
 
 test("Drag and Drop - Check permission when dropping documents", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Test Document 1"),
         makeDocumentRecordData(3, "Test Document 2", { user_permission: "view" }),
     ]);
@@ -296,19 +284,19 @@ test("Drag and Drop - Check permission when dropping documents", async function 
     await moveTo(".o_kanban_record[data-value-id='1']");
     await drop();
     await waitFor(".o_notification");
-    expect(queryAll(".o_notification_content").at(-1)).toHaveText("The document has been moved.");
+    expect(".o_notification_content:eq(-1)").toHaveText("The document has been moved.");
 
     ({ drop, moveTo } = await contains(".o_kanban_record[data-value-id='3']").drag());
     await moveTo(".o_kanban_record[data-value-id='1']");
     await drop();
     await waitFor(".o_notification");
-    expect(queryAll(".o_notification_content").at(-1)).toHaveText(
+    expect(".o_notification_content:eq(-1)").toHaveText(
         "At least one document could not be moved due to access rights."
     );
 });
 
 test("Drag and Drop - Drop multiple documents at once", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Test Document 1"),
         makeDocumentRecordData(3, "Test Document 2", { user_permission: "view" }),
     ]);
@@ -329,7 +317,9 @@ test("Drag and Drop - Drop multiple documents at once", async function () {
 });
 
 test("Drag and Drop - Drop document while holding CTRL", async function () {
-    const serverData = getDocumentsTestServerData([makeDocumentRecordData(2, "Test Document")]);
+    const serverData = getDocumentsTestServerModelsData([
+        makeDocumentRecordData(2, "Test Document"),
+    ]);
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
@@ -344,11 +334,11 @@ test("Drag and Drop - Drop document while holding CTRL", async function () {
     expect(".o_documents_dnd_modifier").toBeVisible(); // check after moveTo to be sure it's still visible
     await drop();
     await waitFor(".o_notification");
-    expect(queryAll(".o_notification_content").at(-1)).toHaveText("A shortcut has been created.");
+    expect(".o_notification_content:eq(-1)").toHaveText("A shortcut has been created.");
 });
 
 test("Drag and Drop - Dropping in 'My Drive' should create a shortcut", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Test Document", { folder_id: 1 }),
     ]);
     await makeDocumentsMockEnv({ serverData });
@@ -359,17 +349,17 @@ test("Drag and Drop - Dropping in 'My Drive' should create a shortcut", async fu
     expect(".o_documents_dnd_modifier").toBeVisible();
     await drop();
     await waitFor(".o_notification");
-    expect(queryAll(".o_notification_content").at(-1)).toHaveText("A shortcut has been created.");
+    expect(".o_notification_content:eq(-1)").toHaveText("A shortcut has been created.");
 });
 
 test("Lock action availability and check", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Binary", { folder_id: 1 }),
     ]);
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
-    const folder = queryFirst(".o_kanban_record[data-value-id='1']");
+    const folder = ".o_kanban_record[data-value-id='1']";
 
     // Folder should not be lockable
     await contains(folder).click({ ctrlKey: true });
@@ -421,7 +411,7 @@ test("Thumbnail: webp thumbnail generation", async function () {
         expect(params.thumbnail.startsWith("/9j/")).toEqual(true);
         return true;
     });
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(3, "Test Document", {
             thumbnail_status: "client_generated",
             attachment_id: 2,
@@ -429,9 +419,7 @@ test("Thumbnail: webp thumbnail generation", async function () {
             mimetype: "image/webp",
         }),
     ]);
-    serverData.models["ir.attachment"] = {
-        records: [{ id: 2, name: "binary" }],
-    };
+    serverData["ir.attachment"] = [{ id: 2, name: "binary" }];
     await makeDocumentsMockEnv({ serverData });
     patchWithCleanup(documentsClientThumbnailService, {
         _getLoadedImage() {
@@ -455,7 +443,7 @@ test("Document Request Upload", async function () {
         },
     });
 
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         {
             folder_id: 1,
             id: 2,
@@ -480,7 +468,7 @@ test("Document Request Upload", async function () {
 });
 
 test("focus when selecting all - ctrl + a", async function () {
-    const serverData = getDocumentsTestServerData([
+    const serverData = getDocumentsTestServerModelsData([
         makeDocumentRecordData(2, "Test Document", { folder_id: 1 }),
         makeDocumentRecordData(3, "Test Document 2", { folder_id: 1 }),
     ]);
@@ -492,12 +480,12 @@ test("focus when selecting all - ctrl + a", async function () {
     await keyDown(["Control", "a"]);
     await waitFor(".o_kanban_record[data-value-id='1']:focus");
     await waitFor(".o_selection_box");
-    expect(queryAll(".o_record_selected").length).toBe(3);
+    expect(".o_record_selected").toHaveCount(3);
 
     await keyDown(["Control", "a"]);
     await waitFor(".o_kanban_record[data-value-id='1']:focus");
     await waitFor(".o_searchview");
-    expect(queryAll(".o_record_selected").length).toBe(0);
+    expect(".o_record_selected").toHaveCount(0);
 
     // Focus another document first
     await contains(".o_kanban_record[data-value-id='3']").click();
@@ -506,4 +494,15 @@ test("focus when selecting all - ctrl + a", async function () {
 
     await keyDown(["Control", "a"]);
     await waitFor(".o_kanban_record[data-value-id='3']:focus");
+});
+
+test.tags("desktop");
+test("document selector: include archived checkbox should not be shown", async () => {
+    await mountDocumentsKanbanView();
+
+    await toggleSearchBarMenu();
+    await contains(".o_filter_menu .dropdown-item").click();
+    await waitFor(".o_tree_editor_condition");
+
+    expect(".form-switch label:contains(Include archived)").not.toHaveCount();
 });
