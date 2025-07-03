@@ -12,19 +12,19 @@
                             t-on-change="ev => this.onChangeRoleName(ev.target.value)"
                             t-on-blur="onSignerNameInputBlur"
                             t-on-keyup="ev => props.onFieldNameInputKeyUp(ev)"
+                            t-ref="role_input"
                         />
                     </div>
                 </div>
                 <span 
-                    t-attf-class="{{ (props.hasSignRequests || props.isCollapsed || !state.canEditSignerName) ? '' : 'd-none' }} o_sign_sidebar_signer_name d-flex align-items-center gap-2" 
-                    t-on-click="onSignerNameTextClick"
+                    t-attf-class="{{ (props.hasSignRequests || props.isCollapsed || !state.canEditSignerName) ? '' : 'd-none' }} o_sign_sidebar_signer_name d-flex align-items-center gap-2"
                     t-att-data-role-id="props.roleId"
                 >
                     <span t-att-title="state.roleName" class="mx-1">
                         <t t-esc="state.roleName"/>
                     </span>
                 </span>
-                <i t-if="!props.hasSignRequests &amp; !props.isCollapsed" class="fa fa-pencil"/>
+                <i t-if="!props.hasSignRequests &amp; !props.isCollapsed" class="fa fa-pencil" t-on-click="onSignerNameTextClick"/>
                 <div t-attf-class="{{ 'o_color_responsible_' + props.colorId}} o_sign_item_count">
                     <t t-out="props.itemsCount" />
                 </div>

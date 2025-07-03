@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, useRef } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { RecordSelector } from "@web/core/record_selectors/record_selector";
 import { _t } from "@web/core/l10n/translation";
@@ -34,6 +34,7 @@ export class SignTemplateSidebarRoleItems extends Component {
     async setup() {
         this.orm = useService("orm");
         this.dialog = useService("dialog");
+        this.roleInputRef = useRef('role_input');
         this.state = useState({
             roleName: "",
             canEditSignerName: false,
@@ -73,11 +74,21 @@ export class SignTemplateSidebarRoleItems extends Component {
     onSignerNameTextClick() {
         /* If the input is not focused, focus it. */
         if (!this.props.hasSignRequests && !this.props.isCollapsed) {
-            this.state.canEditSignerName = true;    
-            const input = document.querySelector(`input[data-role-id="${this.props.roleId}"]`);
-            setTimeout(() => {
-                input.focus();
-            }, 100);
+            this.state.canEditSignerName = true;
+            const input = this.roleInputRef.el;
+
+            const waitForVisibility = () => {
+                if (input && !input.parentElement.parentElement.classList.contains('d-none')) {
+                    // Input is visible, so we can focus
+                    input.focus();
+                    input.select();
+                } else {
+                    // Input is still hidden, keep checking in the next frame
+                    requestAnimationFrame(waitForVisibility);
+                }
+            };
+
+            waitForVisibility();
         }
     }
 

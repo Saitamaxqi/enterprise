@@ -24,13 +24,13 @@
                             />
                             <div t-attf-class="mx-1 o_sign_sidebar_document_name_text {{ document.id === this.state.editableDocumentId ? 'd-none' : '' }}"
                                 t-att-title="document.display_name"
-                                t-on-click="() => document.id === this.props.selectedDocumentId ? this.onDocumentNameTextClick(document.id) : this.onUpdateSelectedDocument(document.id)"
+                                t-on-click="() => document.id === this.props.selectedDocumentId ? null : this.onUpdateSelectedDocument(document.id)"
                             >
                                 <span t-att-title="document.display_name" class="text-truncate">
                                     <t t-esc="document.display_name"/>
                                 </span>
                             </div>
-                            <i t-if="document.id === this.props.selectedDocumentId" class="fa fa-pencil mx-1"/>
+                            <i t-if="!props.hasSignRequests" class="fa fa-pencil mx-1" t-on-click="() => this.onDocumentNameTextClick(document.id)"/>
                             <div t-if="this.props.documents.filter((doc) => !doc.deleted).length > 1">
                                 <Dropdown>
                                     <button class="btn o_sign_sidebar_icon">

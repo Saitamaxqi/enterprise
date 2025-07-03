@@ -123,9 +123,21 @@ export class SignTemplateSidebar extends Component {
     onDocumentNameTextClick(documentId) {
         this.state.editableDocumentId = documentId;
         const input = document.querySelector(`[data-document-id="${documentId}"]`);
-        setTimeout(() => {
-            input.focus();
-        }, 100);
+
+        // Polling function to check if the input is no longer `d-none`
+        const waitForVisibility = () => {
+            if (input && !input.classList.contains('d-none')) {
+                // Input is visible, so we can focus
+                input.focus();
+                input.select();
+            } else {
+                // Input is still hidden, keep checking in the next frame
+                requestAnimationFrame(waitForVisibility);
+
+            }
+        };
+
+        waitForVisibility();
     }
 
     async onRemoveDocument(documentId) {

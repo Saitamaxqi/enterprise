@@ -216,6 +216,11 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             run: "click",
         },
         {
+            content: "Click document name edit button",
+            trigger: ".o_sign_sidebar_document_name .fa-pencil:not(:visible)",
+            run: "click",
+        },
+        {
             content: "Change document name",
             trigger: ".o_sign_document_name_input",
             run: "edit new-document-name && click body",
