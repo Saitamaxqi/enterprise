@@ -1,4 +1,5 @@
 from datetime import date
+
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
 
@@ -46,15 +47,18 @@ class MarketingCampaign(models.Model):
         anniversary_arch = self.env['ir.ui.view']._render_template(
             anniversary_mailing_template.id,
         ) if anniversary_mailing_template else ''
+
+        one_year_ago = date.today() - relativedelta(years=1)
+        almost_one_year = one_year_ago + relativedelta(days=1)
+
+        domain = [
+            '&',
+            ('create_date', '>=', one_year_ago.strftime('%Y-%m-%d')),
+            ('create_date', '<', almost_one_year.strftime('%Y-%m-%d')),
+        ]
+
         campaign = self.env['marketing.campaign'].create({
-            'domain': (
-                '["&","&",'
-                '("create_date", ">=", datetime.datetime.combine(context_today() + relativedelta(years = -1), datetime.time(0, 0, 0)).to_utc().strftime("%Y-%m-%d %H:%M:%S")),'
-                '("create_date", "<=", datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc().strftime("%Y-%m-%d %H:%M:%S")),'
-                '"|",'
-                '("create_date", "<", datetime.datetime.combine(context_today() + relativedelta(days = -364), datetime.time(0, 0, 0)).to_utc().strftime("%Y-%m-%d %H:%M:%S")),'
-                '("create_date", ">", datetime.datetime.combine(context_today(), datetime.time(0, 0, 0)).to_utc().strftime("%Y-%m-%d %H:%M:%S"))]'
-            ),
+            'domain': repr(domain),
             'model_id': self.env['ir.model']._get_id('res.partner'),
             'name': _('Anniversary Discount'),
         })
