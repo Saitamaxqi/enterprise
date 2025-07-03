@@ -157,11 +157,11 @@ class L10n_MxReportHandler(models.AbstractModel):
         data_87 = [0] * 54
         for partner, values in partner_and_values_to_report.items():
             if not sum(values.get(x, 0) for x in (
-                'paid_8', 'paid_8_non_cred', 'refunds_8_n',
-                'paid_8_s', 'paid_8_s_nc', 'refunds_8_s',
-                'paid_16', 'paid_16_non_cred', 'refunds_16',
-                'importation_16', 'paid_16_imp_nc', 'refunds_16_imp',
-                'paid_16_imp_int', 'paid_16_imp_int_nc', 'refunds_16_imp_int',
+                'paid_8', 'paid_8_non_cred', 'paid_8_tax', 'paid_8_non_cred_tax', 'refunds_8_n',
+                'paid_8_s', 'paid_8_s_nc', 'paid_8_s_tax', 'paid_8_s_nc_tax', 'refunds_8_s',
+                'paid_16', 'paid_16_non_cred', 'paid_16_tax', 'paid_16_non_cred_tax', 'refunds_16',
+                'importation_16', 'paid_16_imp_nc', 'importation_16_tax', 'paid_16_imp_nc_tax', 'refunds_16_imp',
+                'paid_16_imp_int', 'paid_16_imp_int_nc', 'paid_16_imp_int_tax', 'paid_16_imp_int_nc_tax', 'refunds_16_imp_int',
                 'withheld', 'exempt', 'exempt_imp', 'paid_0', 'no_obj'
             )):
                 # don't report if there isn't any amount to report
@@ -217,17 +217,17 @@ class L10n_MxReportHandler(models.AbstractModel):
         data[15] += float(values.get('paid_16_imp_int_wnc', 0))  # 16% intangible imports +NC paid
         data[16] += float(values.get('refunds_16_imp_int', 0))  # 16% int imp refunds
         # Creditable VAT
-        data[17] += float(values.get('paid_8', 0))  # 8% Northern paid
-        data[19] += float(values.get('paid_8_s', 0))  # 8% Southern paid
-        data[21] += float(values.get('paid_16', 0))  # 16% VAT exclusive base
-        data[23] += float(values.get('importation_16', 0))  # 16% import VAT exclusive base
-        data[25] += float(values.get('paid_16_imp_int', 0))  # 16% int imp VAT exclusive base
+        data[17] += float(values.get('paid_8_tax', 0))  # 8% Northern paid
+        data[19] += float(values.get('paid_8_s_tax', 0))  # 8% Southern paid
+        data[21] += float(values.get('paid_16_tax', 0))  # 16% VAT exclusive base
+        data[23] += float(values.get('importation_16_tax', 0))  # 16% import VAT exclusive base
+        data[25] += float(values.get('paid_16_imp_int_tax', 0))  # 16% int imp VAT exclusive base
         # Non-creditable VAT
-        data[27] += float(values.get('paid_8_non_cred', 0))  # 8% Northern NC paid
-        data[31] += float(values.get('paid_8_s_nc', 0))  # 8% Southern NC paid
-        data[35] += float(values.get('paid_16_non_cred', 0))  # 16% NC paid
-        data[39] += float(values.get('paid_16_imp_nc', 0))  # 16% imports NC paid
-        data[43] += float(values.get('paid_16_imp_int_nc', 0))  # 16% non tangible imports NC paid
+        data[27] += float(values.get('paid_8_non_cred_tax', 0))  # 8% Northern NC paid
+        data[31] += float(values.get('paid_8_s_nc_tax', 0))  # 8% Southern NC paid
+        data[35] += float(values.get('paid_16_non_cred_tax', 0))  # 16% NC paid
+        data[39] += float(values.get('paid_16_imp_nc_tax', 0))  # 16% imports NC paid
+        data[43] += float(values.get('paid_16_imp_int_nc_tax', 0))  # 16% non tangible imports NC paid
         # Additional data
         data[47] += float(values.get('withheld', 0))  # DIOT:Retention base
         data[48] += float(values.get('exempt', 0))  # DIOT:Exempt base
@@ -262,7 +262,7 @@ class L10n_MxReportHandler(models.AbstractModel):
         lines = []
         for partner, values in partner_and_values_to_report.items():
             if not any(values.get(x) for x in (
-                'paid_16', 'paid_16_non_cred', 'paid_8', 'paid_8_non_cred', 'importation_16',
+                'paid_16_tax', 'paid_16_non_cred_tax', 'paid_8_tax', 'paid_8_non_cred_tax', 'importation_16_tax',
                 'paid_0', 'exempt', 'withheld', 'refunds_8_n', 'refunds_16', 'refunds_16_imp'
             )):
                 # don't report if there isn't any amount to report
@@ -286,9 +286,9 @@ class L10n_MxReportHandler(models.AbstractModel):
             data[30] = ''.join(self.str_format(partner.name)).encode('utf-8').strip().decode('utf-8') if is_foreign_partner else ''  # Name
             data[31] = values['country_code'] if is_foreign_partner else ''  # Country
             data[32] = ''.join(self.str_format(values['partner_nationality'])).encode('utf-8').strip().decode('utf-8') if is_foreign_partner else ''  # Nationality
-            data[33] = round(float(values.get('paid_16', 0))) or ''  # 16%
-            data[36] = round(float(values.get('paid_8', 0))) or ''  # 8%
-            data[39] = round(float(values.get('importation_16', 0))) or ''  # 16% - Importation
+            data[33] = round(float(values.get('paid_16_tax', 0))) or ''  # 16%
+            data[36] = round(float(values.get('paid_8_tax', 0))) or ''  # 8%
+            data[39] = round(float(values.get('importation_16_tax', 0))) or ''  # 16% - Importation
             data[44] = round(float(values.get('paid_0', 0))) or ''  # 0%
             data[45] = round(float(values.get('exempt', 0))) or ''  # Exempt
             data[46] = round(float(values.get('withheld', 0))) or ''  # Withheld
