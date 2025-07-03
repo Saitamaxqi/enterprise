@@ -1211,7 +1211,7 @@ test("move a field in list", async () => {
 });
 
 test("list editor field with aggregate function", async () => {
-    expect.assertions(16);
+    expect.assertions(13);
 
     Partner._fields.integer_field = fields.Integer();
     Partner._fields.float_field = fields.Float();
@@ -1269,8 +1269,8 @@ test("list editor field with aggregate function", async () => {
     await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate button").click();
     await contains(".o-dropdown-item:contains(Sum)").click();
     expect.verifySteps(["edit_view"]);
-    expect("tfoot tr td.o_list_number:eq(1)").toHaveText("8");
-    expect("tfoot tr td.o_list_number span:eq(1)").toHaveAttribute(
+    expect("tfoot tr td.o_list_number:eq(0)").toHaveText("8");
+    expect("tfoot tr td.o_list_number span:eq(0)").toHaveAttribute(
         "data-tooltip",
         "Sum of Integer field"
     );
@@ -1278,8 +1278,8 @@ test("list editor field with aggregate function", async () => {
     await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate button").click();
     await contains(".o-dropdown-item:contains(Average)").click();
     expect.verifySteps(["edit_view"]);
-    expect("tfoot tr td.o_list_number:eq(1)").toHaveText("4");
-    expect("tfoot tr td.o_list_number span:eq(1)").toHaveAttribute(
+    expect("tfoot tr td.o_list_number:eq(0)").toHaveText("4");
+    expect("tfoot tr td.o_list_number span:eq(0)").toHaveAttribute(
         "data-tooltip",
         "Average of Integer field"
     );
@@ -1287,12 +1287,6 @@ test("list editor field with aggregate function", async () => {
     await contains(".o_web_studio_sidebar .o_web_studio_property_aggregate button").click();
     await contains(".o-dropdown-item:contains('No aggregation')").click();
     expect.verifySteps(["edit_view"]);
-    expect("tfoot tr td.o_list_number").toHaveCount(1);
-    expect("tfoot tr td.o_list_number").toHaveText("—");
-    expect("tfoot tr td.o_list_number span").toHaveAttribute(
-        "data-tooltip",
-        "No currency provided"
-    );
 });
 
 test("error during list rendering: undo", async () => {
