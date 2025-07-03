@@ -296,7 +296,7 @@ class L10n_PeStockPleWizard(models.TransientModel):
                 continue
             unit_cost = line['latest_unit_cost'] if line['latest_unit_cost'] > 0 else '0.00'
             values.update({
-                'valuation': _get_stock_valuation(line['category']),
+                'valuation': _get_stock_valuation(line['category_id']),
                 'qty_in': quantity if quantity > 0 else '0.00',
                 'cost_in': unit_cost,
                 'value_in': (quantity * float(unit_cost)) or '0.00',
