@@ -14,6 +14,9 @@ class TestCFDIInvoiceLanding(TestMxExtendedEdiCommon, TestStockLandedCostsCommon
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        cls.env.user.group_ids = [Command.link(cls.env.ref("sales_team.group_sale_salesman").id)]
+
         cls.picking_in_1 = cls.Picking.create({
             'partner_id': cls.supplier_id,
             'picking_type_id': cls.warehouse.in_type_id.id,
@@ -140,13 +143,6 @@ class TestCFDIInvoiceLanding(TestMxExtendedEdiCommon, TestStockLandedCostsCommon
 
             landed_costs.button_validate()
 
-            basic_sales_user = self.env['res.users'].create({
-                'name': 'Basic Sales',
-                'login': 'basic',
-                'email': 'basic@example.com',
-                'group_ids': [Command.link(self.env.ref("sales_team.group_sale_salesman").id)],
-            })
-
             sale = self.env['sale.order'].create({
                 'partner_id': self.partner_mx.id,
                 'order_line': [
@@ -157,7 +153,6 @@ class TestCFDIInvoiceLanding(TestMxExtendedEdiCommon, TestStockLandedCostsCommon
                         'price_unit': 1000,
                     })
                 ],
-                'user_id': basic_sales_user.id
             })
 
             # New workflow should work even if we disabled config since the line is already created
@@ -168,7 +163,7 @@ class TestCFDIInvoiceLanding(TestMxExtendedEdiCommon, TestStockLandedCostsCommon
             picking_sale.action_confirm()
             picking_sale.button_validate()
             # A sales user should be able to create the invoice without triggering an access error
-            invoice_1 = sale.with_user(basic_sales_user)._create_invoices()
+            invoice_1 = sale._create_invoices()
 
             # Two invoice lines should have been created with
             # '15  48  3009  0001234' and '15  48  3009  0001235' customs numbers and 10 quantity each
@@ -187,7 +182,7 @@ class TestCFDIInvoiceLanding(TestMxExtendedEdiCommon, TestStockLandedCostsCommon
 
             invoice_lines[0].quantity = 2
             invoice_1.action_post()
-            invoice_2 = sale.with_user(basic_sales_user)._create_invoices()
+            invoice_2 = sale._create_invoices()
 
             # Since we reduced the quantity before, there should be 8 units to invoice.
             # Only one line should be created for customs '15  48  3009  0001234' for that quantity

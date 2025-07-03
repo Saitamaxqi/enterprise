@@ -1195,7 +1195,10 @@ class AccountMove(models.Model):
                     # Handle the case where the rounding method was changed between Odoo versions.
                     # This applies when an invoice's CFDI, generated in the previous version, is processed
                     # after the upgrade in the new version, resulting in the use of a deprecated rounding method.
-                    if all(tax_values[key] is not None for key in ('base', 'importe', 'tasa_o_cuota')):
+                    if (
+                        all(tax_values[key] is not None for key in ('base', 'importe', 'tasa_o_cuota'))
+                        and tax_values['tipo_factor'] == 'Tasa'
+                    ):
                         post_amounts_map = self.env['l10n_mx_edi.document']._get_post_fix_tax_amounts_map(
                             base_amount=tax_values['base'],
                             tax_amount=tax_values['importe'],

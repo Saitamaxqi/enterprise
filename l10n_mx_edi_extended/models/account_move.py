@@ -62,6 +62,18 @@ class AccountMove(models.Model):
     # CFDI
     # -------------------------------------------------------------------------
 
+    def _l10n_mx_edi_get_invoice_cfdi_base_lines(self, global_invoice=False):
+        # EXTENDS 'l10n_mx_edi'
+        base_lines, tax_lines = super()._l10n_mx_edi_get_invoice_cfdi_base_lines(global_invoice=global_invoice)
+        for base_line in base_lines:
+            invl = base_line['record']
+            base_line.update({
+                'l10n_mx_edi_qty_umt': invl.l10n_mx_edi_qty_umt,
+                'l10n_mx_edi_price_unit_umt': invl.l10n_mx_edi_price_unit_umt,
+                'l10n_mx_edi_custom_numbers': invl._l10n_mx_edi_get_custom_numbers(),
+            })
+        return base_lines, tax_lines
+
     def _l10n_mx_edi_add_invoice_cfdi_values(self, cfdi_values):
         # EXTENDS 'l10n_mx_edi'
         self.ensure_one()
@@ -195,11 +207,11 @@ class AccountMove(models.Model):
                 'price_unit_list': [],
                 'total': 0.0,
             })
-            for line_vals in cfdi_values['conceptos_list']:
-                line = line_vals['line']['record']
-                product_values_map[line.product_id]['quantity_list'].append(line.l10n_mx_edi_qty_umt)
-                product_values_map[line.product_id]['price_unit_list'].append(line.l10n_mx_edi_price_unit_umt)
-                product_values_map[line.product_id]['total'] += line_vals['importe']
+            for base_line in cfdi_values['base_lines']:
+                product = base_line['product_id']
+                product_values_map[product]['quantity_list'].append(base_line['l10n_mx_edi_qty_umt'])
+                product_values_map[product]['price_unit_list'].append(base_line['l10n_mx_edi_price_unit_umt'])
+                product_values_map[product]['total'] += base_line['l10n_mx_cfdi_values']['importe']
             ext_trade_values['total_usd'] = 0.0
             ext_trade_values['mercancia_list'] = []
             for product, product_values in product_values_map.items():
@@ -221,8 +233,9 @@ class AccountMove(models.Model):
                 ext_trade_values['total_usd'] += total_usd
         else:
             # Invoice lines.
-            for line_vals in cfdi_values['conceptos_list']:
-                line_vals['informacion_aduanera_list'] = line_vals['line']['record']._l10n_mx_edi_get_custom_numbers()
+            for base_line in cfdi_values['base_lines']:
+                base_line_cfdi_values = base_line['l10n_mx_cfdi_values']
+                base_line_cfdi_values['informacion_aduanera_list'] = base_line['l10n_mx_edi_custom_numbers']
 
 
 class AccountMoveLine(models.Model):

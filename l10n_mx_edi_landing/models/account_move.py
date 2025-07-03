@@ -14,17 +14,19 @@ class AccountMove(models.Model):
             return res
 
         customs_dates = self._l10n_mx_edi_get_formatted_date_per_customs_number()
-        for line_values in cfdi_values['conceptos_list']:
-            record = line_values['line']['record']
+        for base_line in cfdi_values['base_lines']:
+            record = base_line['record']
             if not record.l10n_mx_edi_can_use_customs_invoicing:
                 continue
+
+            base_line_cfdi_values = base_line['l10n_mx_cfdi_values']
             customs_numbers = record._l10n_mx_edi_get_custom_numbers()
-            formatted_dates = ",".join([
+            formatted_dates = ",".join(
                 customs_date for customs in customs_numbers
                 if (customs_date := customs_dates[customs])
-            ])
+            )
             if formatted_dates:
-                line_values['description'] += _("\nCustoms Number Date: %s", formatted_dates)
+                base_line_cfdi_values['description'] += _("\nCustoms Number Date: %s", formatted_dates)
 
         return res
 
