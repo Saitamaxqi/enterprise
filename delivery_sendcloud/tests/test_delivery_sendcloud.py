@@ -663,3 +663,19 @@ class TestDeliverySendCloud(TransactionCase):
     def test_sendcloud_sends_correct_delivery_type_for_amazon(self):
         amazon_expected_delivery_type = self.sendcloud._get_delivery_type()
         self.assertEqual(amazon_expected_delivery_type, 'test')
+
+    def test_picking_carrier_tracking_url(self):
+        """
+        Test that the manually setting the carrier tracking reference
+        on a picking does raise a UserError when trying to open the website URL.
+        """
+        picking = self.env['stock.picking'].create({
+            'partner_id': self.eu_partner.id,
+            'picking_type_id': self.env.ref('stock.picking_type_out').id,
+            'location_id': self.warehouse_id.lot_stock_id.id,
+            'location_dest_id': self.eu_partner.property_stock_customer.id,
+            'carrier_id': self.sendcloud.id,
+            'carrier_tracking_ref': 'test tracking ref',
+        })
+        with self.assertRaises(UserError):
+            picking.open_website_url()

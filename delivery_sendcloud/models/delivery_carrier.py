@@ -193,6 +193,8 @@ class DeliveryCarrier(models.Model):
 
     def sendcloud_get_tracking_link(self, picking):
         sendcloud = self._get_sendcloud()
+        if not picking.sendcloud_parcel_ref:
+            return
         # since there can be more than one id stored, comma seperated, only the first will be tracked
         parcel_id = picking.sendcloud_parcel_ref[0]
         if isinstance(parcel_id, list):  # Multicollo
