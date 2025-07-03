@@ -20,6 +20,7 @@
                                 <i t-if="filter.type === 'relation'" class="fa fa-link me-2"/>
                                 <i t-if="filter.type === 'text'" class="fa fa-font me-2"/>
                                 <i t-if="filter.type === 'boolean'" class="fa fa-toggle-off me-2"/>
+                                <i t-if="filter.type === 'selection'" class="fa fa-caret-down me-2"/>
                                 <span t-esc="filter.label" class="o-fw-bold o_side_panel_filter_label"/>
                             </div>
                             <i class="o-button-icon fa fa-trash pe-1 ps-2" t-on-click="() => this.deleteFilter(filter.id)" />
