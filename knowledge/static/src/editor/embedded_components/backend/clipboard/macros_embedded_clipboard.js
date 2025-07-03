@@ -1,4 +1,3 @@
-import { SIGNATURE_CLASS } from "@html_editor/main/signature_plugin";
 import {
     getEditableDescendants,
     getEmbeddedProps,
@@ -64,7 +63,7 @@ export class MacrosEmbeddedClipboardComponent extends EmbeddedClipboardComponent
         const rows = await this.orm.read("res.users", [user.userId], ["signature"]);
         const signature = renderToElement("html_editor.Signature", {
             signature: markup(rows[0]?.signature || ""),
-            signatureClass: SIGNATURE_CLASS,
+            signatureClass: "o-signature-container",
         });
 
         const dataTransfer = new DataTransfer();

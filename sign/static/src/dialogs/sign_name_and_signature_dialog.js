@@ -121,8 +121,7 @@ export class SignNameAndSignatureDialog extends Component {
         signatureImage: { type: String, optional: true },
         hash: String,
         onConfirm: Function,
-        onConfirmAll: Function,
-        onCancel: Function,
+        onConfirmAll: { type: Function, optional: true },
         close: Function,
     };
     static template = "sign.SignNameAndSignatureDialog";

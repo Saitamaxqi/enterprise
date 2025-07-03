@@ -307,9 +307,6 @@ export class SignablePDFIframe extends PDFIframe {
                     this.closeDialog();
                     this.handleInput();
                 },
-                onCancel: () => {
-                    this.closeDialog();
-                },
             },
             {
                 onClose: () => {

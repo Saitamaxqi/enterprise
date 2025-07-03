@@ -28,7 +28,6 @@ const mountSignNameAndSignatureDialog = async () => {
             hash,
             onConfirm: () => {},
             onConfirmAll: () => {},
-            onCancel: () => {},
             close: () => {},
         },
     });
@@ -103,7 +102,6 @@ test("sign name and signature dialog default font", async () => {
                 hash,
                 onConfirm: () => {},
                 onConfirmAll: () => {},
-                onCancel: () => {},
                 close: () => {},
             },
         });

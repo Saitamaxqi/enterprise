@@ -412,9 +412,6 @@ export class Document extends Component {
                     this.closeDialog();
                     this._signDocuments();
                 },
-                onCancel: () => {
-                    this.closeDialog();
-                },
             });
         } else if (this.isUnknownPublicUser) {
             this.closeFn = this.dialog.add(
