@@ -1,5 +1,5 @@
 import { onWillUpdateProps, useState } from "@odoo/owl";
-import { useDateTimePicker } from "@web/core/datetime/datetime_hook";
+import { useDateTimePicker } from "@web/core/datetime/datetime_picker_hook";
 import { useDropdownState } from "@web/core/dropdown/dropdown_hooks";
 import { formatDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";

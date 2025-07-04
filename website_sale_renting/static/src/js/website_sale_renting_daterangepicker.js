@@ -121,11 +121,11 @@ publicWidget.registry.WebsiteSaleDaterangePicker = publicWidget.Widget.extend(Re
                         end_date,
                     });
                 },
+                getInputs: () => [
+                    el.querySelector("input[name=renting_start_date]"),
+                    el.querySelector("input[name=renting_end_date]"),
+                ],
             },
-            () => [
-                el.querySelector("input[name=renting_start_date]"),
-                el.querySelector("input[name=renting_end_date]"),
-            ]
         ).enable());
     },
 

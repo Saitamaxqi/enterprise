@@ -1,7 +1,7 @@
-import { useDateTimePicker } from "@web/core/datetime/datetime_hook";
+import { Component } from "@odoo/owl";
+import { useDateTimePicker } from "@web/core/datetime/datetime_picker_hook";
 import { deserializeDateTime, today } from "@web/core/l10n/dates";
 import { user } from "@web/core/user";
-import { Component } from "@odoo/owl";
 
 export class DocumentsAccessExpirationDateBtn extends Component {
     static defaultProps = { editionMode: false };
