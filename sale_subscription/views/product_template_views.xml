@@ -45,6 +45,7 @@
                         name="subscription_rule_ids"
                         context="{
                             'form_view_ref': 'sale_subscription.product_pricelist_item_sale_subscription_view',
+                            'default_pricelist_id': False,
                         }"
                     >
                         <list default_order="pricelist_id, plan_id, fixed_price">
