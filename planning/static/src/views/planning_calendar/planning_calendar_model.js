@@ -147,23 +147,14 @@ export class PlanningCalendarModel extends CalendarModel {
             const [section] = this.filterSections;
             for (const date of dates) {
                 const rawRecord = this.buildRawRecord({ start: date }, {'batch_create_calendar': true, 'schedule': schedule});
-                let activeFilter = false;
                 for (const filter of section.filters) {
                     if (filter.active && filter.type === "record") {
-                        activeFilter = true;
                         records.push({
                             ...rawRecord,
                             ...values,
                             [section.fieldName]: filter.value,
                         });
                     }
-                }
-                // If no resource is selected by the user, create open shifts.
-                if (!section || !activeFilter) {
-                    records.push({
-                        ...rawRecord,
-                        ...values,
-                    });
                 }
             }
             await this.orm.call(this.meta.resModel, "create_batch_from_calendar", [[], records]);
