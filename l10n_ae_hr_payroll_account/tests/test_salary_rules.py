@@ -4,7 +4,6 @@ from datetime import date
 
 from odoo.fields import Command
 from odoo.tests import tagged
-
 from odoo.addons.hr_payroll_account.tests.common import TestPayslipValidationCommon
 
 
@@ -28,10 +27,25 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             }
         )
 
+        cls.work_entry_types = {
+            entry_type.code: entry_type
+            for entry_type in cls.env['hr.work.entry.type'].search([])
+        }
+
     def _get_input_line_amount(self, payslip, code):
         input_lines = payslip.input_line_ids.filtered(lambda line: line.code == code)
         amounts = input_lines.mapped('amount')
         return len(amounts), sum(amounts)
+
+    @classmethod
+    def _create_worked_days(cls, name=False, code=False, number_of_days=0, number_of_hours=0):
+        return Command.create({
+            'name': name,
+            'work_entry_type_id': cls.work_entry_types[code].id,
+            'code': code,
+            'number_of_days': number_of_days,
+            'number_of_hours': number_of_hours,
+        })
 
     def test_payslip_1(self):
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
@@ -226,3 +240,87 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         )
 
         self.assertEqual(payslip_3._get_line_values(['EOS'])['EOS'][payslip_3.id]['total'], 74_449.0, "End of Service calculation is incorrect")
+
+    def test_payslip_attendance_1(self):
+        if self.env['ir.module.module']._get('hr_payroll_attendance').state != 'installed':
+            self.skipTest("Skipping test because hr_payroll_attendance is not installed.")
+
+        self.employee.country_id = False
+        self.contract.write({
+            'contract_date_start': '2025-01-01',
+            'work_entry_source': 'attendance',
+            'wage': 5000,
+            'wage_type': 'monthly',
+            'l10n_ae_housing_allowance': 2000,
+            'l10n_ae_transportation_allowance': 1000,
+            'l10n_ae_other_allowances': 100,
+            'l10n_ae_is_dews_applied': False,
+        })
+
+        worked_days_vals = [
+            {'name': 'Unpaid', 'code': 'LEAVE90', 'number_of_hours': 16, 'number_of_days': 2},
+            {'name': 'Paid Time Off', 'code': 'LEAVE120', 'number_of_hours': 24, 'number_of_days': 3},
+            {'name': 'Sick Leave 50', 'code': 'AESICKLEAVE50', 'number_of_hours': 24, 'number_of_days': 3},
+            {'name': 'Out of Contract', 'code': 'OUT', 'number_of_hours': 32, 'number_of_days': 4},
+            {'name': 'Attendance', 'code': 'WORK100', 'number_of_hours': 88, 'number_of_days': 11},
+        ]
+
+        payslip = self._generate_payslip('2025-07-01', '2025-07-31')
+        payslip.write({
+            "worked_days_line_ids": [self._create_worked_days(**vals) for vals in worked_days_vals],
+        })
+        payslip.compute_sheet()
+        payslip_results = {
+            'BASIC': 2391.30,
+            'HOUALLOW': 956.52,
+            'TRAALLOW': 478.26,
+            'OTALLOW': 47.83,
+            'EOSP': 188.73,
+            'ALP': 436.76,
+            'AEPAID': 1056.48,
+            'AESPAID50': 528.24,
+            'GROSS': 5458.63,
+            'NET': 5458.63,
+        }
+        self._validate_payslip(payslip, payslip_results)
+
+    def test_payslip_attendance_2(self):
+        if self.env['ir.module.module']._get('hr_payroll_attendance').state != 'installed':
+            self.skipTest("Skipping test because hr_payroll_attendance is not installed.")
+
+        self.employee.country_id = False
+        self.contract.write({
+            'contract_date_start': '2025-01-01',
+            'work_entry_source': 'attendance',
+            'wage': 5000,
+            'hourly_wage': 44.02,
+            'wage_type': 'hourly',
+            'l10n_ae_housing_allowance': 2000,
+            'l10n_ae_transportation_allowance': 1000,
+            'l10n_ae_other_allowances': 100,
+            'l10n_ae_is_dews_applied': False,
+        })
+
+        worked_days_vals = [
+            {'name': 'Unpaid', 'code': 'LEAVE90', 'number_of_hours': 16, 'number_of_days': 2},
+            {'name': 'Paid Time Off', 'code': 'LEAVE120', 'number_of_hours': 24, 'number_of_days': 3},
+            {'name': 'Sick Leave 50', 'code': 'AESICKLEAVE50', 'number_of_hours': 24, 'number_of_days': 3},
+            {'name': 'Out of Contract', 'code': 'OUT', 'number_of_hours': 32, 'number_of_days': 4},
+            {'name': 'Attendance', 'code': 'WORK100', 'number_of_hours': 88, 'number_of_days': 11},
+        ]
+
+        payslip = self._generate_payslip('2025-06-01', '2025-06-30')
+        payslip.write({
+            "worked_days_line_ids": [self._create_worked_days(**vals) for vals in worked_days_vals]
+        })
+        payslip.compute_sheet()
+        payslip_results = {
+            'BASIC': 2391.30,
+            'EOSP': 188.73,
+            'ALP': 436.76,
+            'AEPAID': 1056.48,
+            'AESPAID50': 528.24,
+            'GROSS': 3976.02,
+            'NET': 3976.02,
+        }
+        self._validate_payslip(payslip, payslip_results)

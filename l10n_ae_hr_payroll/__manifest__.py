@@ -33,6 +33,7 @@ United Arab Emirates Payroll and End of Service rules.
         'data/hr_salary_rule_instant_pay_data.xml',
         'views/hr_contract_template_views.xml',
         'views/hr_employee_views.xml',
+        'data/hr_rule_parameter_data.xml',
         'views/hr_leave_type_views.xml',
         'views/res_bank_views.xml',
         'views/res_config_settings_view.xml',
