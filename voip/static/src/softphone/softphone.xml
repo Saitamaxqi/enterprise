@@ -12,7 +12,9 @@
             <t t-else="">
                 <DndSelector/>
             </t>
-            <button class="btn-close p-2" title="Close" t-on-click="onClickClose"/>
+            <button class="btn p-2 opacity-25 opacity-100-hover" title="Hide" t-on-click="onClickClose">
+                <i class="fa-lg oi oi-fw oi-minus" aria-hidden="true"/>
+            </button>
         </header>
         <div class="position-relative d-flex flex-column flex-grow-1 overflow-y-auto z-0">
             <t t-if="voip.error">

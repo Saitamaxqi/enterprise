@@ -18,7 +18,7 @@ test("Clicking on close button closes the softphone.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
     await contains(".o-voip-Softphone");
-    await click(".o-voip-Softphone button[title='Close']");
+    await click(".o-voip-Softphone button[title='Hide']");
     await contains(".o-voip-Softphone", { count: 0 });
 });
 
@@ -38,11 +38,11 @@ test("Search bar is focused after reopen the softphone.", async () => {
     await click(".o_menu_systray button[title='Open Softphone']");
     await click("button span:contains('Keypad')");
     await contains(".o-voip-Dialer input:focus");
-    await click(".o-voip-Softphone button[title='Close']");
+    await click(".o-voip-Softphone button[title='Hide']");
     await click(".o_menu_systray button[title='Open Softphone']");
     await contains(".o-voip-Dialer input:focus");
     await click("button span:contains('Recent')");
-    await click(".o-voip-Softphone button[title='Close']");
+    await click(".o-voip-Softphone button[title='Hide']");
     await click(".o_menu_systray button[title='Open Softphone']");
     await contains("input[placeholder='Search…']:focus");
 });
