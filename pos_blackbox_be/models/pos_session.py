@@ -38,22 +38,16 @@ class PosSession(models.Model):
         help="Sum of the amount of the corrections during the session"
     )
 
-    def load_data(self, models_to_load):
-        response = super().load_data(models_to_load)
-        if self.config_id.iface_fiscal_data_module and self.config_id.module_pos_hr:
-            employees = response['hr.employee']
-            employee_ids = [employee['id'] for employee in employees]
-            employees_insz_or_bis_number = self.env['hr.employee'].sudo().browse(employee_ids).read(['insz_or_bis_number'])
-            insz_or_bis_number_per_employee_id = {employee['id']: employee['insz_or_bis_number'] for employee in employees_insz_or_bis_number}
-            response['pos.session'][0]['_employee_insz_or_bis_number'] = insz_or_bis_number_per_employee_id
-        return response
-
     def _load_pos_data_read(self, records, config):
         read_records = super()._load_pos_data_read(records, config)
         if read_records and config.certified_blackbox_identifier:
             record = read_records[0]
             record["_users_clocked_ids"] = self.users_clocked_ids.ids
             record["_employees_clocked_ids"] = self.employees_clocked_ids.ids
+            if config.module_pos_hr:
+                employees_insz_or_bis_number = self.env['hr.employee'].sudo().search_read(config._employee_domain(config.current_user_id.id), ['id', 'insz_or_bis_number'])
+                insz_or_bis_number_per_employee_id = {employee['id']: employee['insz_or_bis_number'] for employee in employees_insz_or_bis_number}
+                record["_employee_insz_or_bis_number"] = insz_or_bis_number_per_employee_id
         return read_records
 
     @api.depends("order_ids")
