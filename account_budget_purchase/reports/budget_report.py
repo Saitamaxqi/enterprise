@@ -18,12 +18,15 @@ class BudgetReport(models.Model):
                                THEN ROUND(CAST((aml.quantity / uom_aml.factor) * uom_pol.factor AS NUMERIC), %(precision_digits)s)
                                ELSE COALESCE(aml.quantity, 0)
                           END
-                          * CASE WHEN aml.balance < 0 THEN -1 ELSE 1 END
+                          * CASE WHEN am.move_type = 'in_invoice' THEN 1
+                                 WHEN am.move_type = 'in_refund' THEN -1
+                                 ELSE 0 END
                       ) AS qty_invoiced,
                       pol.id AS pol_id
                  FROM purchase_order po
             LEFT JOIN purchase_order_line pol ON pol.order_id = po.id
             LEFT JOIN account_move_line aml ON aml.purchase_line_id = pol.id
+            LEFT JOIN account_move am ON aml.move_id = am.id
             LEFT JOIN uom_uom uom_aml ON uom_aml.id = aml.product_uom_id
             LEFT JOIN uom_uom uom_pol ON uom_pol.id = pol.product_uom_id
                 WHERE aml.parent_state = 'posted'

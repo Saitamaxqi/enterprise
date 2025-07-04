@@ -577,3 +577,39 @@ class TestCommittedAchievedAmount(TestAccountBudgetPurchaseCommon):
         # === Check filtered totals ===
         self.assertEqual(line.committed_amount, 1000.0, "Company A committed should be 1000")
         self.assertEqual(line.achieved_amount, 500.0, "Company A committed should be 1000")
+
+    def test_budget_analytic_expense_committed_amount_negative_price(self):
+        """ Test that po lines with negative unit price does not create committed amount
+            in budget report
+        """
+        # Reset to draft the existing purchase order
+        self.purchase_order.button_draft()
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'price_unit': 100,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+                Command.create({
+                    'product_id': self.product_b.id,
+                    'price_unit': -10,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                })],
+        })
+        purchase_order.button_confirm()
+        purchase_order.write({
+            'order_line': [
+                Command.update(purchase_order.order_line[0].id, {'qty_received': 1}),
+                Command.update(purchase_order.order_line[1].id, {'qty_received': 1}),
+            ]
+        })
+        purchase_order.action_create_invoice()
+        purchase_order.invoice_ids.write({'invoice_date': '2019-01-10'})
+        purchase_order.invoice_ids.action_post()
+
+        # The discount line should impact both amounts of the budget line
+        plan_a_line = self.budget_analytic_expense.budget_line_ids[0]
+        self.assertBudgetLine(plan_a_line, committed=90, achieved=90)
