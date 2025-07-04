@@ -387,7 +387,7 @@ class SendCloud:
         use_multicollo = carrier_id.sendcloud_use_batch_shipping and to_europe
         single_shipping = len(delivery_packages) == 1 or (use_multicollo and len(delivery_packages) <= 20)
         #Avg weight for multiple packages in single shipping, sendcloud multiplies it with number of packages
-        api_weight = shipping_weight/len(delivery_packages) if single_shipping else None
+        api_weight = int(shipping_weight / len(delivery_packages)) if single_shipping else None
 
         # Fetch shipping methods compatible with current picking
         shipping_methods = self._get_shipping_methods(picking.carrier_id, from_country, to_country, api_weight, is_return, from_postal_code=from_postal_code, to_postal_code=to_postal_code)
