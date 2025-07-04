@@ -337,12 +337,10 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
         })
 
     def _add_invoice_base_lines_vals(self, vals):
-        # OVERRIDE account.edi.xml.ubl_21
-        invoice = vals['invoice']
-        base_lines, _tax_lines = invoice._get_rounded_base_and_tax_lines()
-        for base_line in base_lines:
+        # EXTEND account.edi.xml.ubl_21
+        super()._add_invoice_base_lines_vals(vals)
+        for base_line in vals['base_lines']:
             self._transform_iva_withholding_base_amount(base_line)
-        vals['base_lines'] = base_lines
 
     def _transform_iva_withholding_base_amount(self, base_line):
         # Taxes with type '05' are retention taxes (15 %) that apply on the *tax amount* of a regular VAT tax
