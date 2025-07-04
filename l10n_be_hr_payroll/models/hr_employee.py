@@ -194,3 +194,15 @@ Earnings are made of professional income, remuneration, unemployment allocations
             return versions
         return versions.filtered(
             lambda c: c.company_id.country_id.code != 'BE' or (c.company_id.country_id.code == 'BE' and c.contract_type_id != pfi))
+
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get('current_version_id'):
+            self.current_version_id.filtered('contract_date_start')._trigger_l10n_be_next_activities()
+        return res
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        employees = super().create(vals_list)
+        employees.current_version_id.filtered('contract_date_start')._trigger_l10n_be_next_activities()
+        return employees

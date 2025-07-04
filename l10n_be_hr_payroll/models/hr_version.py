@@ -813,10 +813,10 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
 
     def _trigger_l10n_be_next_activities(self):
         employees_with_contract_domain = [
-            ('employee_id', 'in', self.mapped('employee_id').ids),
+            ('employee_id', 'in', self.employee_id.ids),
             ('id', 'not in', self.ids),
         ]
-        employees_already_started = self.env['hr.version'].search(employees_with_contract_domain).mapped('employee_id')
+        employees_already_started = self.env['hr.version'].search(employees_with_contract_domain).employee_id
         for version in self:
             if not version._is_struct_from_country('BE'):
                 continue
@@ -838,19 +838,6 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     def _get_hospital_insurance_amount(self):
         self.ensure_one()
         return self.insurance_amount
-
-    def write(self, vals):
-        res = super().write(vals)
-        # TODO: not sure about this one
-        if set(vals.keys()) != {'is_custom_job_title'}:
-            self._trigger_l10n_be_next_activities()
-        return res
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        contracts = super().create(vals_list)
-        contracts._trigger_l10n_be_next_activities()
-        return contracts
 
     def _get_fields_that_recompute_we(self):
         return super()._get_fields_that_recompute_we() + [
