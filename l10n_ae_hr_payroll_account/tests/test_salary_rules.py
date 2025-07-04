@@ -2,8 +2,10 @@
 
 from datetime import date
 
-from odoo.addons.hr_payroll_account.tests.common import TestPayslipValidationCommon
+from odoo.fields import Command
 from odoo.tests import tagged
+
+from odoo.addons.hr_payroll_account.tests.common import TestPayslipValidationCommon
 
 
 @tagged('post_install', 'post_install_l10n', '-at_install', 'payslips_validation')
@@ -145,3 +147,82 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         nbr_rec, amount_rec = self._get_input_line_amount(test_payslip_nov, "ADVREC")
         self.assertEqual(nbr_rec, 0)
         self.assertEqual(amount_rec, 0)
+
+    def test_end_of_service_salary_rule_1(self):
+        """
+        Test the end of service salary rule calculation.
+        The rule should consider the full 30 days compensation after completing the 6th year, not the 5th.
+        """
+        employee_1 = self.env['hr.employee'].create({
+            'name': 'Test Employee 1',
+            'contract_date_start': date(2014, 6, 4),
+            'date_version': date(2014, 6, 4),
+            'wage': 15_000.0,
+        })
+
+        departure_notice_1 = self.env['hr.departure.wizard'].create({
+            'employee_ids': [Command.link(employee_1.id)],
+            'departure_date': date(2017, 2, 19),
+            'departure_description': 'foo',
+            'set_date_end': True,
+        })
+        departure_notice_1.with_context(employee_termination=True).action_register_departure()
+
+        payslip_1 = self._generate_payslip(
+            date(2017, 2, 1),
+            date(2017, 2, 28),
+            employee_id=employee_1.id,
+            version_id=employee_1.version_id.id,
+        )
+
+        self.assertEqual(payslip_1._get_line_values(['EOS'])['EOS'][payslip_1.id]['total'], 28_432.0, "End of Service calculation is incorrect")
+
+    def test_end_of_service_salary_rule_2(self):
+        employee_2 = self.env['hr.employee'].create({
+            'name': 'Test Employee 2',
+            'contract_date_start': date(2019, 7, 22),
+            'date_version': date(2019, 7, 22),
+            'wage': 15_000.0,
+        })
+
+        departure_notice_2 = self.env['hr.departure.wizard'].create({
+            'employee_ids': [Command.link(employee_2.id)],
+            'departure_date': date(2025, 1, 8),
+            'departure_description': 'foo',
+            'set_date_end': True,
+        })
+        departure_notice_2.with_context(employee_termination=True).action_register_departure()
+
+        payslip_2 = self._generate_payslip(
+            date(2025, 1, 1),
+            date(2025, 1, 31),
+            employee_id=employee_2.id,
+            version_id=employee_2.version_id.id,
+        )
+
+        self.assertEqual(payslip_2._get_line_values(['EOS'])['EOS'][payslip_2.id]['total'], 57_365.0, "End of Service calculation is incorrect")
+
+    def test_end_of_service_salary_rule_3(self):
+        employee_3 = self.env['hr.employee'].create({
+            'name': 'Test Employee 3',
+            'contract_date_start': date(2018, 7, 22),
+            'date_version': date(2018, 7, 22),
+            'wage': 15_000.0,
+        })
+
+        departure_notice_3 = self.env['hr.departure.wizard'].create({
+            'employee_ids': [Command.link(employee_3.id)],
+            'departure_date': date(2025, 1, 8),
+            'departure_description': 'foo',
+            'set_date_end': True,
+        })
+        departure_notice_3.with_context(employee_termination=True).action_register_departure()
+
+        payslip_3 = self._generate_payslip(
+            date(2025, 1, 1),
+            date(2025, 1, 31),
+            employee_id=employee_3.id,
+            version_id=employee_3.version_id.id,
+        )
+
+        self.assertEqual(payslip_3._get_line_values(['EOS'])['EOS'][payslip_3.id]['total'], 74_449.0, "End of Service calculation is incorrect")

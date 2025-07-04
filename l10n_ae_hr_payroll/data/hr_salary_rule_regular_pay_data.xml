@@ -215,23 +215,31 @@ result_name = inputs['OTHER_DEDUCTIONS'].name
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
 result = 0
-start_date = version.contract_date_start
-end_date = version.date_end
-total_days = (end_date - start_date).days
+start_date = employee._get_first_version_date()
+end_date = version.contract_date_end
+diff = relativedelta(end_date, start_date)
+
 salary = 0
 if version.l10n_ae_is_computed_based_on_daily_salary:
     salary = version.l10n_ae_eos_daily_salary * 30
 else:
     salary = version.wage
+
+total_months = diff.years * 12 + diff.months
+intermediate_date = start_date + relativedelta(months=total_months)
+days_beyond_months = (end_date - intermediate_date).days
+
 compensation_day_21 = (salary / 30) * (21 / 365)
+compensation_month_21 = (salary / 30) * (21 / 12)
 compensation_day_30 = salary / 365
-days_beyond_5 = total_days - (5 * 365)
-if total_days &lt; 365:
+compensation_month_30 = salary / 12
+
+if total_months &lt; 12:
     result = 0
-elif total_days &lt; (5 * 365):
-    result = compensation_day_21 * total_days
+elif total_months &lt; (6 * 12):
+    result = ceil(compensation_month_21 * total_months) + ceil(compensation_day_21 * days_beyond_months)
 else:
-    result = (days_beyond_5 * compensation_day_30) + (compensation_day_21 * 5 * 365)
+    result = ceil(compensation_month_21 * 60) + ceil(compensation_month_30 * (total_months - 60)) + ceil(compensation_day_30 * days_beyond_months)
             </field>
             <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
         </record>
