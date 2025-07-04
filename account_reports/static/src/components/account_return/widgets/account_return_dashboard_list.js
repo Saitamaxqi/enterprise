@@ -15,6 +15,7 @@ export class AccountReturnDashboardList extends Component {
 
     setup() {
         this.orm = useService("orm");
+        this.action = useService("action");
         this.accountReturns = useState([]);
         onWillStart(this.fetchNextReturns);
     }
@@ -28,27 +29,28 @@ export class AccountReturnDashboardList extends Component {
         let deadlineClass = '';
 
         if (daysDiff < -1) {
-            deadlineDisplay = _t("Due on %s", formatDate(deadlineDate));
+            deadlineDisplay = formatDate(deadlineDate);
             deadlineClass = 'text-danger';
         } else if (daysDiff === -1) {
-            deadlineDisplay = _t("Due Yesterday");
+            deadlineDisplay = _t("Yesterday");
             deadlineClass = 'text-danger';
         } else if (daysDiff === 0) {
-            deadlineDisplay = _t("Due Today");
+            deadlineDisplay = _t("Today");
             deadlineClass = 'text-warning';
         } else if (daysDiff === 1) {
-            deadlineDisplay = _t("Due Tomorrow");
+            deadlineDisplay = _t("Tomorrow");
             deadlineClass = 'text-warning';
         } else if (daysDiff <= 5) {
-            deadlineDisplay = _t("Due in %s days", Math.round(daysDiff));
+            deadlineDisplay = _t("In %s days", Math.round(daysDiff));
             deadlineClass = 'text-warning';
         } else {
-            deadlineDisplay = _t("Due in %s days", Math.round(daysDiff));
+            deadlineDisplay = _t("In %s days", Math.round(daysDiff));
         }
 
         return {
             id: accountReturn.id,
             name: accountReturn.name,
+            type_id: accountReturn.type_id,
             deadline: formatDate(deadlineDate),
             deadlineDisplay,
             deadlineClass,
@@ -63,6 +65,31 @@ export class AccountReturnDashboardList extends Component {
         );
 
         this.accountReturns = returns.map(this.formatReturn);
+    }
+
+    /**
+     * Opens the Tax Return view filtered by return type.
+     * @param {Object} accountReturn - The account return object.
+     */
+    async openTaxReturn(accountReturn) {
+        const returnTypeId = accountReturn?.type_id || '';
+
+        // Open the filtered Tax Return view
+        this.action.doAction({
+            name: _t("Tax Return"),
+            type: 'ir.actions.act_window',
+            res_model: 'account.return',
+            views: [
+                [false, 'kanban'],
+                [false, 'calendar'],
+            ],
+            context: {
+                'search_default_groupby_deadline': 1,
+                'search_default_todo_returns': 1,
+                // Apply name filter using return type
+                'search_default_type_id': returnTypeId,
+            },
+        });
     }
 }
 

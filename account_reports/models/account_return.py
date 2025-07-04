@@ -596,6 +596,7 @@ class AccountReturn(models.Model):
                 'id': account_return.id,
                 'date_deadline': account_return.date_deadline,
                 'name': name,
+                'type_id': account_return.type_id.id,
             })
 
         dashboard_return_dicts.sort(key=lambda return_dict: return_dict['date_deadline'])
