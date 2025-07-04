@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import uuid
 
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, SUPERUSER_ID, _
@@ -19,6 +20,8 @@ class HrContractSalaryOffer(models.Model):
             contract = self.env['hr.contract'].browse(contract_id)
             result['employee_id'] = contract.employee_id.id
         for field in fields:
+            if field == 'access_token' and 'applicant_id' in result:
+                result['access_token'] = uuid.uuid4().hex
             if field.startswith('x_') and 'active_id' in self.env.context:
                 model = self.env.context.get('active_model')
                 if model == "hr.version" and field in self.env[model]:
