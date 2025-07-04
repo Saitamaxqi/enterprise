@@ -103,12 +103,6 @@ class ProductTemplate(models.Model):
             # User duplicating the template might not have access to pricings
             template_sudo = template.sudo()
 
-            if not template_sudo.product_variant_count > 1:
-                template_sudo.subscription_rule_ids.copy({
-                    'product_tmpl_id': template_copy.id
-                })
-                continue
-
             # Force the order to be on id, since the others keys will have the same value/order
             # This guarantees the order of the copied pricings is the same as the original ones
             # regardless of the 'id desc' in the _order of product.pricelist.item model.
@@ -132,6 +126,10 @@ class ProductTemplate(models.Model):
                     variant_specific_pricings,
                     lambda pricing: pricing.product_id.id
                 ):
+                    if product_id not in variant_mapping:
+                        # Pricings of inactive variants should not be copied
+                        # (removed combinations, archived products ...)
+                        continue
                     self.env['product.pricelist.item'].sudo().concat(*pricings).copy({
                         'product_tmpl_id': template_copy.id,
                         'product_id': variant_mapping.get(product_id),
