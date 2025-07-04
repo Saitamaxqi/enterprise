@@ -76,8 +76,20 @@ class PosUrbanPiperController(http.Controller):
     def webhook(self, event_type):
         if not consteq(request.httprequest.headers.get('X-Urbanpiper-Uuid'), request.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.uuid')):
             # Ignore request if it's not from the same database
+            request.env['pos.config'].log_xml(
+                "Rejected Webhook: X-Urbanpiper-Uuid: %s" % (request.httprequest.headers.get('X-Urbanpiper-Uuid')),
+                'urbanpiper_webhook_%s' % event_type,
+                'Urbanpiper Webhook - %s' % event_type
+            )
             return
         data = request.get_json_data()
+        # request data for order_placed and rider_status_update are already stored in the database
+        if event_type not in ['order_placed', 'rider_status_update']:
+            request.env['pos.config'].log_xml(
+                "UrbanPiper Webhook Received: %s" % json.dumps(data),
+                'urbanpiper_webhook_%s' % event_type,
+                'Urbanpiper Webhook - %s' % event_type
+            )
         if event_type == 'order_placed':
             self._handle_data(data, order_data_schema, self._create_order, event_type)
         elif event_type == 'order_status_update':
@@ -97,15 +109,27 @@ class PosUrbanPiperController(http.Controller):
                 ])
                 if not pos_config_sudo:
                     _logger.warning("UrbanPiper: Store not found for order %r", data['order'].get('id'))
-                    pos_config.log_xml("UrbanPiper: - %s" % (data), 'urbanpiper_webhook_store_not_found')
+                    pos_config.log_xml(
+                        "UrbanPiper: Store not found - %s" % data,
+                        'urbanpiper_webhook_store_not_found',
+                        'Urbanpiper Store Error'
+                    )
                     return exceptions.BadRequest()
                 if not pos_config_sudo.current_session_id:
                     _logger.warning("UrbanPiper: Session is not open for %r", pos_config_sudo.name)
-                    pos_config.log_xml("UrbanPiper: - %s" % (data), 'urbanpiper_webhook_session_not_open%s')
+                    pos_config.log_xml(
+                        "UrbanPiper: Session not open - %s" % data,
+                        'urbanpiper_webhook_session_not_open',
+                        'Urbanpiper Session Error'
+                    )
                     return exceptions.BadRequest()
             handler(data)
         else:
-            pos_config.log_xml("Payload - %s. Error - %s" % (data, error), 'urbanpiper_webhook_%s' % (event_type))
+            pos_config.log_xml(
+                "Payload - %s. Error - %s" % (data, error),
+                'urbanpiper_webhook_%s' % event_type,
+                'Urbanpiper Payload Validation Error'
+            )
             _logger.warning("UrbanPiper: %r", error)
 
     def reframe_notes(self, notes):
@@ -162,7 +186,11 @@ class PosUrbanPiperController(http.Controller):
         pos_delivery_provider = request.env['pos.delivery.provider'].sudo().search([('technical_name', '=', details['channel'])], limit=1)
         if not pos_delivery_provider:
             _logger.warning("UrbanPiper: Delivery provider not found for %r", details['channel'])
-            pos_config_sudo.log_xml("UrbanPiper: - %s" % (data), 'urbanpiper_webhook_delivery_provider_not_found')
+            pos_config_sudo.log_xml(
+                "UrbanPiper: Delivery provider not found - %s" % data,
+                'urbanpiper_webhook_delivery_provider_not_found',
+                'Urbanpiper Delivery Provider Error'
+            )
             return exceptions.BadRequest()
 
         lines = [self._create_order_line(line, pos_config_sudo) for line in order['items']]
@@ -175,7 +203,11 @@ class PosUrbanPiperController(http.Controller):
                 charge_product = request.env.ref('pos_urban_piper.product_packaging_charges', False)
             if not charge_product:
                 _logger.warning("UrbanPiper: Charge product not found for %r", charge_title)
-                pos_config_sudo.log_xml("UrbanPiper: - %s" % (data), 'urbanpiper_charge_product_not_found')
+                pos_config_sudo.log_xml(
+                    "UrbanPiper: Charge product not found - %s" % data,
+                    'urbanpiper_charge_product_not_found',
+                    'Urbanpiper Charge Product Error'
+                )
                 continue
             total_tax = request.env["account.tax"].browse(
                 [

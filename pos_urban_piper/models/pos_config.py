@@ -375,7 +375,7 @@ class PosConfig(models.Model):
         if msg:
             raise UserError(msg)
 
-    def log_xml(self, xml_string, func):
+    def log_xml(self, xml_string, func, name='Urbanpiper Logger'):
         self.env.flush_all()
         db_name = self.env.cr.dbname
 
@@ -383,13 +383,15 @@ class PosConfig(models.Model):
             with Registry(db_name).cursor() as cr:
                 env = api.Environment(cr, SUPERUSER_ID, {})
                 IrLogging = env['ir.logging']
-                IrLogging.sudo().create({'name': 'Urban piper error handler',
-                            'type': 'server',
-                            'dbname': db_name,
-                            'level': 'DEBUG',
-                            'message': xml_string,
-                            'path': 'Urbanpiper',
-                            'func': func,
-                            'line': 1})
+                IrLogging.sudo().create({
+                    'name': name,
+                    'type': 'server',
+                    'dbname': db_name,
+                    'level': 'DEBUG',
+                    'message': xml_string,
+                    'path': 'Urbanpiper',
+                    'func': func,
+                    'line': 1
+                })
         except psycopg2.Error:
             pass

@@ -39,6 +39,7 @@ class UrbanPiperClient:
         }
         urbanpiper_url = 'https://pos-int.urbanpiper.com/' if self.config.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.is_production_mode') == 'False' else 'https://api.urbanpiper.com/'
         access_url = urbanpiper_url + endpoint
+        pos_config = self.config
         try:
             # Make the API request
             response = self.session.request(method, access_url, json=data, headers=headers, timeout=timeout)
@@ -46,15 +47,35 @@ class UrbanPiperClient:
             response.raise_for_status()
             # Parse the response as JSON
             response_json = response.json()
+            pos_config.log_xml(
+                "API Request Successful:\nURL: %s \nMethod: %s \nPayload: %s \nResponse: %s" % (access_url, method, json.dumps(data), json.dumps(response_json)),
+                '_make_api_request',
+                'Urbanpiper API Success'
+            )
             return response_json
         except requests.exceptions.ConnectionError as error:
             _logger.warning('Connection Error: %r with the given URL %r', error, access_url)
+            pos_config.log_xml(
+                "Connection Error: %s \nURL: %s \nMethod: %s \nPayload: %s" % (error, access_url, method, json.dumps(data)),
+                '_make_api_request',
+                'Urbanpiper API Connection Error'
+            )
             return {'errors': {'timeout': 'Cannot reach the server. Please try again later.'}}
         except requests.exceptions.HTTPError as error:
             _logger.warning('HTTPError: %r', error)
+            pos_config.log_xml(
+                "HttpError: %s \nURL: %s \nMethod: %s \nPayload: %s" % (error, access_url, method, json.dumps(data)),
+                '_make_api_request',
+                'Urbanpiper API HTTP Error'
+            )
             return {'errors': {'HTTPError': str(error)}}
         except json.decoder.JSONDecodeError as error:
             _logger.warning('JSONDecodeError: %r', error)
+            pos_config.log_xml(
+                "JSONDecodeError: %s \nURL: %s \nMethod: %s \nPayload: %s" % (error, access_url, method, json.dumps(data)),
+                '_make_api_request',
+                'Urbanpiper API JSON Decode Error'
+            )
             return {'errors': {'JSONDecodeError': str(error)}}
 
     def configure_webhook(self):
