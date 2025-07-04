@@ -209,7 +209,7 @@
     <template id="product_template_message" inherit_id="website_sale.product">
         <xpath expr="//form[@t-if='product._is_add_to_cart_possible()']" position="after">
             <p t-elif="product.recurring_invoice" class="alert alert-warning">
-                This subscription is not compatible with the one(s) already in your cart.
+                This subscription is not compatible with the one already in your cart.
                 Please order them separately or empty your cart.
             </p>
         </xpath>
