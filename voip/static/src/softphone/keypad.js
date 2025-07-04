@@ -4,6 +4,7 @@ import { Component, markup, useEffect, useRef } from "@odoo/owl";
 
 import { KeypadModel } from "@voip/softphone/softphone_model";
 import { tabComponents } from "@voip/softphone/tab";
+import { isCurrentFocusEditable } from "@voip/utils/utils";
 
 import { _t } from "@web/core/l10n/translation";
 import { normalize, normalizedMatch } from "@web/core/l10n/utils";
@@ -54,7 +55,12 @@ export class Keypad extends Component {
         this.softphone = useService("voip").softphone;
         useEffect(
             (shouldFocusInput) => {
-                if (shouldFocusInput && this.inputRef.el && !this.voip.error) {
+                if (
+                    shouldFocusInput &&
+                    this.inputRef.el &&
+                    !this.voip.error &&
+                    !isCurrentFocusEditable()
+                ) {
                     this.inputRef.el.focus();
                     this.selection.restore();
                     this.props.state.input.focus = false;

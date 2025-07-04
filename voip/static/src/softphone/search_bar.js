@@ -1,5 +1,7 @@
 import { Component, useEffect, useRef } from "@odoo/owl";
 
+import { isCurrentFocusEditable } from "@voip/utils/utils";
+
 import { useService } from "@web/core/utils/hooks";
 
 /**
@@ -21,7 +23,7 @@ export class SearchBar extends Component {
         useEffect(
             (shouldFocus) => {
                 if (shouldFocus) {
-                    if (this.searchInput.el && !this.voip.error) {
+                    if (this.searchInput.el && !this.voip.error && !isCurrentFocusEditable()) {
                         this.searchInput.el.focus();
                     }
                     this.softphone.shouldFocus = false;
