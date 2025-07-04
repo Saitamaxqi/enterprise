@@ -1186,8 +1186,8 @@ class L10n_InGstReturnPeriod(models.Model):
                 "cess": AccountMove._l10n_in_round_value(d['cess']),
             } for d in paytx_json.values()]
 
-        AccountMoveLine = self.env['account.move.line']
-        AccountMove = self.env["account.move"]
+        AccountMoveLine = self.env['account.move.line'].sudo()
+        AccountMove = self.env["account.move"].sudo()
         tax_details_by_move = self._get_tax_details(self._get_section_domain('hsn'))
         hsn_json = self._get_gstr1_hsn_json(AccountMoveLine.search(self._get_section_domain('hsn')), tax_details_by_move)
         nil_json = _get_nil_json(AccountMoveLine.search(self._get_section_domain('nil')))
@@ -1234,7 +1234,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 raise ValidationError(_("Can not send GSTR-1 data because the required scheduled action '%s' is not active.\nPlease contact your system administrator.", cron_sudo.cron_name))
 
         self._check_config(next_gst_action='send_gstr1')
-        if not self.env['account.move.line'].search_count(self._get_section_domain('hsn'), limit=1):
+        if not self.env['account.move.line'].sudo().search_count(self._get_section_domain('hsn'), limit=1):
             raise ValidationError(_("There are no transactions available for the current period to send for GSTR-1 filing."))
         self.sudo().write({
             "gstr1_error": False,
