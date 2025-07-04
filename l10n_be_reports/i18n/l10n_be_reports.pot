@@ -1368,6 +1368,15 @@ msgid "The sum of the prorata uses must be 100%"
 msgstr ""
 
 #. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/models/account_281_50_form.py:0
+msgid ""
+"There are some inconsistencies in the partner-company association. The "
+"following partners should be accessible by their paired company: "
+"%(inconsistencies)s"
+msgstr ""
+
+#. module: l10n_be_reports
 #: model:ir.model.fields,help:l10n_be_reports.field_res_partner__citizen_identification
 #: model:ir.model.fields,help:l10n_be_reports.field_res_users__citizen_identification
 msgid ""

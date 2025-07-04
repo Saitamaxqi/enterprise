@@ -764,6 +764,21 @@ class TestResPartner(AccountTestInvoicingCommon):
         self.assertIn(form_3, self.partner_a.forms_281_50)
         self.assertNotIn(form_2, self.partner_a.forms_281_50)
 
+    def test_281_50_partner_with_invalid_company(self):
+        """Ensure that you can not create a form with a partner wich belong in an other company"""
+        # set partner_a to belong to an other company
+        self.partner_a.company_id = self.company_data_2['company']
+        with self.assertRaisesRegex(UserError, "There are some inconsistencies in the partner-company association. The following partners should be accessible by their paired company: partner_a: company_1_data"):
+            self.create_form28150(ref_year=2020)
+            self.partner_a.company_id = self.company_data_2['company']
+        # set partner_a to belong to a child company
+        branch = self.env['res.company'].create({
+            'name': "Branch A",
+            'parent_id': self.company_data['company'].id,
+        })
+        self.partner_a.company_id = branch
+        self.create_form28150(ref_year=2020)
+
     def test_325_and_281_50_should_raise_error_when_unlink_and_state_is_generated(self):
         form = self.create_form28150(ref_year=2020)
         with self.assertRaises(UserError):

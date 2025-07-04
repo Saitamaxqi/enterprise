@@ -16,7 +16,6 @@ class ResPartner(models.Model):
     forms_281_50 = fields.One2many(
         comodel_name='l10n_be.form.281.50',
         string='281.50 forms',
-        check_company=True,
         inverse_name='partner_id',
         copy=False,
         help="List of 281.50 forms for this partner"

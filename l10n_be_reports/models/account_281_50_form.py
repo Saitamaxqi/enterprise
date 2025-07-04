@@ -3,7 +3,7 @@
 import base64
 
 from odoo import _, fields, models, api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from .ONSS_country_mapping import ONSS_COUNTRY_CODE_MAPPING
 
 
@@ -232,6 +232,17 @@ class L10n_BeForm28150(models.Model):
     def _compute_partner_country(self):
         for form in self:
             form.partner_country = form.partner_id.country_id
+
+    @api.constrains('partner_id')
+    def _check_auto_partner_id_company(self):
+        inconsistencies = {form.partner_id.display_name: form.company_id.display_name for form in self if form.partner_id.company_id and form.partner_id.company_id not in form.company_id._accessible_branches()}
+        if inconsistencies:
+            raise ValidationError(
+                _(
+                    "There are some inconsistencies in the partner-company association. The following partners should be accessible by their paired company: %(inconsistencies)s",
+                    inconsistencies=", ".join([f"{key}: {value}" for key, value in inconsistencies.items()]),
+                )
+            )
 
     @api.ondelete(at_uninstall=False)
     def _unlink_only_if_state_not_generated_and_not_test(self):
