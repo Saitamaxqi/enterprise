@@ -120,6 +120,7 @@ class HrPayslipRun(models.Model):
         company = company_id or self.company_id.id
         version_domain = Domain([
             ('company_id', '=', company),
+            ('employee_id', '!=', False),
             ('contract_date_start', '<=', date_end),
             '|',
                 ('contract_date_end', '=', False),
