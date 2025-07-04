@@ -2,28 +2,15 @@
 <odoo>
     <template id="mail_template_body_welcome_template">
         <div class="o_layout oe_unremovable oe_unmovable bg-200 o_default_theme" data-name="Mailing">
-                <style id="design-element">.o_mail_wrapper h2 {
-                    font-weight: bolder;
-                }
-                .o_mail_wrapper p {
-                    color: rgb(108, 117, 125);
-                }
-                .o_mail_wrapper p > * {
-                    color: rgb(108, 117, 125);
-                }
-                .o_mail_wrapper li {
-                    color: rgb(108, 117, 125);
-                }
-                .o_mail_wrapper li > * {
-                    color: rgb(108, 117, 125);
-                }
-                .o_mail_wrapper hr {
-                    border-top-color: rgb(206, 212, 218) !important;
+                <style id="design-element">.o_layout .o_mail_wrapper .o_mail_wrapper_td {
+                    --h2-font-weight: bolder;
+                    --text-color: rgb(108, 117, 125);
+                    --separator-border-color: rgb(206, 212, 218) !important;
                 }</style>
                     <div class="container o_mail_wrapper o_mail_regular oe_unremovable">
                         <div class="row">
                             <div class="col o_mail_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selection_done">
-                                <div class="s_header_logo o_mail_block_header_logo o_mail_snippet_general pt16 pb16">
+                                <section class="s_header_logo o_mail_block_header_logo o_mail_snippet_general pt16 pb16">
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-lg-4"></div>
@@ -35,8 +22,8 @@
                                                 <div class="col-lg-4" style="text-align: right;"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="s_text_block o_mail_snippet_general pt40 pb16" style="padding-left: 15px; padding-right: 15px;">
+                                    </section>
+                                    <section class="s_text_block o_mail_snippet_general pt40 pb16" style="padding-left: 15px; padding-right: 15px;">
                                         <div class="container s_allow_columns">
                                             <h2>Thank you for joining us!</h2>
                                             <p>
@@ -54,11 +41,11 @@
                                                 <a role="button" t-att-href="db_host" class="btn btn-primary">LOGIN</a>
                                             </p>
                                         </div>
-                                    </div>
-                                    <div class="s_hr pt16 pb16" data-snippet="s_hr" data-name="Separator">
+                                    </section>
+                                    <section class="s_hr pt16 pb16" data-snippet="s_hr" data-name="Separator">
                                         <hr class="s_hr_1px s_hr_solid"/>
-                                    </div>
-                                    <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_left o_mail_snippet_general">
+                                    </section>
+                                    <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_left o_mail_snippet_general">
                                         <div class="container">
                                             <div class="row">
                                                 <div class="col-lg o_mail_footer_description">
@@ -91,7 +78,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </section>
                                 </div>
                             </div>
                     </div>

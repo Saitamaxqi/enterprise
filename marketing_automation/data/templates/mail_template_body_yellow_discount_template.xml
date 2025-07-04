@@ -3,42 +3,21 @@
    <template id="mail_template_body_yellow_discount_template">
         <div class="o_layout oe_unremovable oe_unmovable bg-200 o_solar_theme" data-name="Mailing">
                 <style id="design-element">
-                    .o_mail_wrapper h1 {
-                        font-weight: bolder;
-                    }
-                    .o_mail_wrapper h2 {
-                        font-weight: bolder;
-                    }
-                    .o_mail_wrapper h3 {
-                        font-size: 18px;
-                        font-weight: bolder;
-                    }
-                    .o_mail_wrapper a:not(.btn) {
-                        color: rgb(0, 0, 0);
-                    }
-                    .o_mail_wrapper a.btn.btn-link {
-                        color: rgb(0, 0, 0);
-                    }
-                    .o_mail_wrapper a.btn.btn-primary {
-                        background-color: rgb(0, 0, 0);
-                        border-color: rgb(0, 0, 0);
-                    }
-                    .o_mail_wrapper a.btn.btn-outline-primary {
-                        background-color: rgb(0, 0, 0);
-                        border-color: rgb(0, 0, 0);
-                    }
-                    .o_mail_wrapper a.btn.btn-fill-primary {
-                        background-color: rgb(0, 0, 0);
-                        border-color: rgb(0, 0, 0);
-                    }
-                    .o_mail_wrapper hr {
-                        width: 75%;
+                    .o_layout .o_mail_wrapper .o_mail_wrapper_td {
+                        --h1-font-weight: bolder;
+                        --h2-font-weight: bolder;
+                        --h3-font-weight: bolder;
+                        --h3-font-size: 18px;
+                        --link-color: rgb(0, 0, 0);
+                        --btn-primary-background-color: rgb(0, 0, 0);
+                        --btn-primary-border-color: rgb(0, 0, 0);
+                        --separator-width: 75%;
                     }
                 </style>
             <div class="container o_mail_wrapper o_mail_regular oe_unremovable">
                 <div class="row">
                     <div class="col o_mail_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selection_done">
-                        <div class="s_header_text_social o_mail_block_header_text_social o_mail_snippet_general pt16 pb16" data-snippet="s_mail_block_header_text_social" data-name="Left Text">
+                        <section class="s_header_text_social o_mail_block_header_text_social o_mail_snippet_general pt16 pb16" data-snippet="s_mail_block_header_text_social" data-name="Left Text">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-4 pt16 pb16">
@@ -59,8 +38,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="s_title o_mail_snippet_general pt72 pb80" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 187, 0) !important;">
+                        </section>
+                        <section class="s_title o_mail_snippet_general pt72 pb80" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 187, 0) !important;">
                             <div class="container s_allow_columns">
                                 <h1 style="text-align:center">
                                     <font style="font-size: 62px; background-color: rgb(255, 255, 255);">&#160;10% OFF&#160;</font>
@@ -68,8 +47,8 @@
                                     <font style="font-size: 62px; background-color: rgb(255, 255, 255);">&#160;SALES&#160;</font>
                                 </h1>
                             </div>
-                        </div>
-                        <div class="s_discount2 o_mail_block_discount2 o_mail_snippet_general pt32 pb32" data-name="Promo Code" style="padding-left: 15px; padding-right: 15px;">
+                        </section>
+                        <section class="s_discount2 o_mail_block_discount2 o_mail_snippet_general pt32 pb32" data-name="Promo Code" style="padding-left: 15px; padding-right: 15px;">
                             <h2 style="text-align: center;">GET 10%&#160;OFF</h2>
                             <p style="text-align: center;">
                                     Valid on all sales prices in our webshop.
@@ -90,11 +69,11 @@
                             <p style="text-align:center;">
                                 <a role="button" class="btn btn-primary btn-lg" t-att-href="company_website">Visit the website</a>
                             </p>
-                        </div>
-                        <div class="s_hr pt16 pb16" data-snippet="s_hr" data-name="Separator">
+                        </section>
+                        <section class="s_hr pt16 pb16" data-snippet="s_hr" data-name="Separator">
                             <hr class="s_hr_1px s_hr_solid"/>
-                        </div>
-                        <div class="s_features o_mail_snippet_general" data-snippet="s_features" data-name="Features">
+                        </section>
+                        <section class="s_features o_mail_snippet_general" data-snippet="s_features" data-name="Features">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-4 pt16 pb16" style="text-align:center;">
@@ -114,8 +93,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_left o_mail_snippet_general pt16 pb16" data-snippet="s_mail_block_footer_social_left" data-name="Footer Left" style="background-color: rgb(255, 187, 0) !important;">
+                        </section>
+                        <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_left o_mail_snippet_general pt16 pb16" data-snippet="s_mail_block_footer_social_left" data-name="Footer Left" style="background-color: rgb(255, 187, 0) !important;">
                             <div class="container">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -154,7 +133,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
                 </div>
             </div>
