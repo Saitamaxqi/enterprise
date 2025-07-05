@@ -6,6 +6,7 @@ from odoo import api, fields, models, _
 from odoo.fields import Domain
 from odoo.tools import is_html_empty, plaintext2html
 from odoo.tools.mimetypes import get_extension
+from odoo.addons.mail.tools.discuss import Store
 
 
 class DiscussChannel(models.Model):
@@ -177,3 +178,25 @@ class DiscussChannel(models.Model):
         return self.env['ir.qweb']._render('website_helpdesk_livechat.helpdesk_ticket_attachment_template', {
             'props': json.dumps({"fileData": attachment_data}),
         })
+
+    def _get_livechat_session_fields_to_store(self):
+        fields_to_store = super()._get_livechat_session_fields_to_store()
+        help_desk_ticket_ids = self.env["helpdesk.ticket"].search(
+            [
+                ("partner_id", "=", self.livechat_customer_partner_ids.id),
+            ],
+            limit=5,
+        )
+        fields_to_store.append(
+            Store.Many(
+                "livechat_customer_partner_ids",
+                [
+                    Store.Many(
+                        "helpdesk_ticket_ids",
+                        ["id", "name"],
+                        value=help_desk_ticket_ids,
+                    )
+                ],
+            ),
+        )
+        return fields_to_store

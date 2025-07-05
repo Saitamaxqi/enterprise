@@ -39,7 +39,7 @@ Features:
             'website_helpdesk_livechat/static/src/**/*',
         ],
         'mail.assets_public': [
-            'website_helpdesk_livechat/static/src/**/*',
+            'website_helpdesk_livechat/static/src/core/common/**/*',
         ],
         'web.assets_unit_tests': [
             'website_helpdesk_livechat/static/tests/**/*',
