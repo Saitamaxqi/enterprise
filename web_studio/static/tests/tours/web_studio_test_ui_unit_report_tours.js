@@ -1154,7 +1154,7 @@ registry.category("web_tour.tours").add("web_studio.test_error_at_loading_debug"
         },
         {
             trigger:
-                ".o-web-studio-report-container strong:contains(odoo.addons.base.models.ir_qweb.QWebException)",
+                ".o-web-studio-report-container strong:contains(odoo.addons.base.models.ir_qweb.QWebError)",
         },
     ],
 });
