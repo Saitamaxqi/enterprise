@@ -65,6 +65,20 @@ class TestSaleCommissionUser(TestSaleCommissionCommon):
         self.assertEqual(len(commissions), 24)
         self.assertEqual(sum(commissions.mapped('commission')), 80)
 
+        SO.date_order = "2024-02-01 10:00:00"  # First day of the monthly period
+        self.env.invalidate_all()
+        commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_user.id), ('date_to', '=', '2024-02-29')])
+        achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_user.id), ('date', '>=', '2024-02-01'), ('date', '<=', '2024-02-29')])
+        self.assertEqual(sum(commissions.mapped('achieved')), 80)
+        self.assertEqual(len(achievements), 1)
+
+        SO.date_order = "2024-02-29 10:00:00"  # Last day of the monthly period
+        self.env.invalidate_all()
+        commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_user.id), ('date_to', '=', '2024-02-29')])
+        achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_user.id), ('date', '>=', '2024-02-01'), ('date', '<=', '2024-02-29')])
+        self.assertEqual(sum(commissions.mapped('achieved')), 80)
+        self.assertEqual(len(achievements), 1)
+
         AM = SO._create_invoices()
         AM._post()
         self.env.invalidate_all()

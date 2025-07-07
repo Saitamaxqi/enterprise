@@ -152,12 +152,12 @@ SELECT
     cl.plan_id,
     cl.related_res_model,
     cl.related_res_id,
-    cl.date AS date
+    cl.date::date AS date
 FROM commission_lines cl
 JOIN sale_commission_plan_target era
     ON cl.plan_id = era.plan_id
-    AND cl.date >= era.date_from
-    AND cl.date <= era.date_to
+    AND cl.date::date >= era.date_from
+    AND cl.date::date <= era.date_to
 """
 
     @api.model

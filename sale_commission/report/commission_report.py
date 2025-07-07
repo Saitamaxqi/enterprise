@@ -151,8 +151,8 @@ achievement AS (
             AND COALESCE(u.date_to, era.date_to)>era.date_from
         LEFT JOIN commission_lines cl
         ON cl.plan_id = era.plan_id
-        AND cl.date >= era.date_from
-        AND cl.date <= era.date_to
+        AND cl.date::date >= era.date_from
+        AND cl.date::date <= era.date_to
         AND cl.user_id = u.user_id
     LEFT JOIN sale_commission_plan_target_forecast scpf
         ON (scpf.target_id = era.id AND u.user_id = scpf.user_id)
