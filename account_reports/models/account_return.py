@@ -607,6 +607,9 @@ class AccountReturn(models.Model):
 
         # Fiscal year is automatically setup with default values as it is a required field
         if not company.account_opening_date:
+            if not self.env.user.has_group('account.group_account_manager'):
+                raise UserError(_("You first need to define an opening date for your accounting. Please contact your administrator."))
+
             new_wizard = self.env['account.financial.year.op'].create([{'company_id': company.id}])
             return {
                 'type': 'ir.actions.act_window',
@@ -746,7 +749,7 @@ class AccountReturn(models.Model):
                 main_company = self.tax_unit_id.main_company_id or self.company_id
                 if (not report.country_id or report.country_id == main_company.account_fiscal_country_id) and (not main_company.tax_lock_date or self.date_to > main_company.tax_lock_date):
                     for company in self.company_ids:
-                        company.tax_lock_date = self.date_to
+                        company.sudo().tax_lock_date = self.date_to
                         self.env['account.report'].with_company(company)._generate_default_external_values(self.date_from, self.date_to, True)
 
                 # Generate the carryover values.
@@ -850,7 +853,7 @@ class AccountReturn(models.Model):
                 main_company = self.tax_unit_id.main_company_id or self.company_id
                 if report.country_id == main_company.account_fiscal_country_id and main_company.tax_lock_date and self.date_to <= main_company.tax_lock_date:
                     for company in self.company_ids:
-                        company.tax_lock_date = self.date_from + relativedelta(days=-1)
+                        company.sudo().tax_lock_date = self.date_from + relativedelta(days=-1)
 
                 self.amount_to_pay = 0
 
