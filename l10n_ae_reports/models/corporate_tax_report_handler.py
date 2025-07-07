@@ -16,5 +16,5 @@ class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
         return self.env['ir.actions.act_window']._for_xml_id('account.action_account_config')
 
     def _report_custom_engine_total_disallowed_expenses(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
-        lines = self.env['account.disallowed.expenses.report.handler']._get_query_results(options, primary_fields=['category_id'])
+        lines = self.env['account.fiscal.report.handler']._get_query_results(options, primary_fields=['category_id'])
         return {'balance': sum((next(iter(value.values()))['account_deductible_amount'] or 0) for value in lines.values()) if lines else 0}

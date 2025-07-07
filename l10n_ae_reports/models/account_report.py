@@ -8,5 +8,5 @@ class AccountReport(models.Model):
     def _get_audit_line_domain(self, column_group_options, expression, params):
         res = super()._get_audit_line_domain(column_group_options, expression, params)
         if expression.formula == '_report_custom_engine_total_disallowed_expenses':
-            res = Domain.AND([res, [('account_id.disallowed_expenses_category_id.id', '!=', False)]])
+            res = Domain.AND([res, [('account_id.fiscal_category_id.id', '!=', False)]])
         return res

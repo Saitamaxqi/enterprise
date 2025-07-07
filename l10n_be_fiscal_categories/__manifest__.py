@@ -1,24 +1,23 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Belgium - Disallowed Expenses Data',
+    'name': 'Belgium - Fiscal Categories Data',
     'version': '1.1',
     'category': 'Accounting/Accounting',
     'description': """
-Disallowed Expenses Data for Belgium
+Fiscal Categories Data for Belgium
     """,
     'depends': [
         'l10n_be',
-        'account_disallowed_expenses',
+        'account_fiscal_categories',
     ],
     'data': [
-        'data/account_disallowed_expenses.xml',
+        'data/account_fiscal_categories.xml',
     ],
     'installable': True,
     'auto_install': True,
     'website': 'https://www.odoo.com/app/accounting',
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
-    'post_init_hook': '_l10n_be_disallowed_expenses_post_init',
+    'post_init_hook': '_l10n_be_fiscal_categories_post_init',
 }

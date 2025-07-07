@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -9,12 +8,12 @@
 Disallowed Expenses Fleet Data for Belgium
     """,
     'depends': [
-        'account_disallowed_expenses_fleet',
-        'l10n_be_disallowed_expenses',
+        'account_fiscal_categories_fleet',
+        'l10n_be_fiscal_categories',
         'l10n_be_hr_payroll_fleet',
     ],
     'data': [
-        'data/account_disallowed_expenses.xml',
+        'data/account_fiscal_categories.xml',
         'views/fleet_vehicle_views.xml',
     ],
     'installable': True,

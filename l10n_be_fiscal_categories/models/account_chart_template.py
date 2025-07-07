@@ -7,5 +7,5 @@ class AccountChartTemplate(models.AbstractModel):
     _inherit = 'account.chart.template'
 
     @template('be', 'account.account')
-    def _get_be_disallowed_expenses_accounts(self):
-        return self._parse_csv('be', 'account.account', module='l10n_be_disallowed_expenses')
+    def _get_be_fiscal_accounts(self):
+        return self._parse_csv('be', 'account.account', module='l10n_be_fiscal_categories')

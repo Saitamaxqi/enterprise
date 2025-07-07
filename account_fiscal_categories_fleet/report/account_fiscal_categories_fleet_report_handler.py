@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, _
 from odoo.tools import SQL
 
 
-class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
-    _name = 'account.disallowed.expenses.fleet.report.handler'
-    _inherit = ['account.disallowed.expenses.report.handler']
-    _description = 'Disallowed Expenses Fleet Custom Handler'
+class AccountFiscalCategoriesFleetReportHandler(models.AbstractModel):
+    _name = 'account.fiscal.categories.fleet.report.handler'
+    _inherit = ['account.fiscal.report.handler']
+    _description = 'Fleet Fiscal Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
@@ -26,10 +25,11 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         )
         options['multi_rate_in_period'] = options.get('multi_rate_in_period') or bool(rg)
         options['custom_display_config']['components'] = {
-            'AccountReportFilters': 'DisallowedExpenseFleetFilters',
+            'AccountReportFilters': 'FiscalFleetFilters',
         }
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
+        super()._customize_warnings(report, options, all_column_groups_expression_totals, warnings)
         accounts = self.env['account.move.line']._read_group(
             [
                 ('date', '<=', options['date']['date_to']),
@@ -37,18 +37,18 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
                 ('parent_state', '=', 'posted'),
                 ('account_type', '=', 'expense'),
                 ('vehicle_id', '!=', None),
-                ('account_id.disallowed_expenses_category_id', '=', None),
+                ('account_id.fiscal_category_id', '=', None),
             ],
             ['account_id'],
         )
         if accounts:
-            warnings['account_disallowed_expenses_fleet.warning_missing_disallowed_category'] = {
+            warnings['account_fiscal_categories_fleet.warning_missing_fiscal_category'] = {
                 'alert_type': 'warning',
                 'args': [account[0].id for account in accounts],
             }
 
     def _get_query(self, options, line_dict_id=None) -> tuple[SQL, SQL, SQL, SQL, SQL, SQL]:
-        # EXTENDS account_disallowed_expenses.
+        # EXTENDS account_fiscal_categories.
         select, from_, where, group_by, order_by, order_by_rate = super()._get_query(options, line_dict_id)
         current = self._parse_line_id(options, line_dict_id)
         # assert lang in params
@@ -112,7 +112,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
                 # for those without a vehicle (which means grouping again by `vehicle_id` for those having one).
                 # NOTE: We can't directly `GROUP BY COALESCE(aml.vehicle_id, aml.account_id)` because it could
                 # group rows having a `vehicle_id` with lines having an `account_id` if they share the same number as id.
-                # See `test_disallowed_expenses_account_id_and_vehicle_id_confusion_regression_test`.
+                # See `test_fiscal_account_id_and_vehicle_id_confusion_regression_test`.
                 group_by = SQL("%s, aml.vehicle_id, COALESCE(aml.vehicle_id, aml.account_id)", group_by)
                 order_by = SQL(" ORDER BY aml.vehicle_id, COALESCE(aml.vehicle_id, aml.account_id)")
             else:
@@ -134,7 +134,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         return select, from_, where, group_by, order_by, order_by_rate
 
     def _parse_line_id(self, options, line_id):
-        # OVERRIDES account_disallowed_expenses.
+        # OVERRIDES account_fiscal_categories.
 
         current = {'category_id': None}
 
@@ -142,13 +142,13 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
             return current
 
         for _markup, model, record_id in self.env['account.report']._parse_line_id(line_id):
-            if model == 'account.disallowed.expenses.category':
+            if model == 'account.fiscal.category':
                 current.update({'category_id': record_id})
             if model == 'fleet.vehicle':
                 current.update({'vehicle_id': record_id})
             if model == 'account.account':
                 current.update({'account_id': record_id})
-            if model == 'account.disallowed.expenses.rate':
+            if model == 'account.account.fiscal.rate':
                 if model == 'fleet.vehicle':
                     current.update({'fleet_rate': record_id})
                 else:
@@ -157,11 +157,11 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         return current
 
     def _build_line_id(self, options, current, level, parent=False, markup=None):
-        # OVERRIDES account_disallowed_expenses.
+        # OVERRIDES account_fiscal_categories.
 
         report = self.env['account.report'].browse(options['report_id'])
         parent_line_id = None
-        line_id = report._get_generic_line_id('account.disallowed.expenses.category', current['category_id'])
+        line_id = report._get_generic_line_id('account.fiscal.category', current['category_id'])
         if current.get('vehicle_id') and options.get('vehicle_split'):
             parent_line_id = line_id
             line_id = report._get_generic_line_id('fleet.vehicle', current['vehicle_id'], parent_line_id=line_id)
@@ -175,7 +175,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
                 line_id = report._get_generic_line_id('account.account', current['account_id'], parent_line_id=line_id)
         if current.get('account_rate'):
             parent_line_id = line_id
-            line_id = report._get_generic_line_id('account.disallowed.expenses.rate', current['account_rate'], markup=markup, parent_line_id=line_id)
+            line_id = report._get_generic_line_id('account.fiscal.rate', current['account_rate'], markup=markup, parent_line_id=line_id)
         if current.get('fleet_rate'):
             parent_line_id = line_id
             line_id = report._get_generic_line_id('fleet.disallowed.expenses.rate', current['fleet_rate'], markup=markup, parent_line_id=line_id)
@@ -183,7 +183,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         return parent_line_id if parent else line_id
 
     def _report_expand_unfoldable_line_category_line(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
-        # OVERRIDES account_disallowed_expenses.
+        # OVERRIDES account_fiscal_categories.
 
         primary_fields = ['category_id', 'vehicle_id']
         secondary_fields = ['category_id', 'account_id']
@@ -204,7 +204,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
 
             if options.get('vehicle_split') and current.get('vehicle_id'):
                 current = self._filter_current(current, primary_fields)
-                line = self._disallowed_expenses_get_vehicle_line(options, result, current, level)
+                line = self._fiscal_get_vehicle_line(options, result, current, level)
             else:
                 current = self._filter_current(current, secondary_fields)
                 line = self._get_account_line(options, result, current, level)
@@ -217,7 +217,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         return {'lines': lines + unfoldable_lines}
 
     def _report_expand_unfoldable_line_account_line(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
-        # OVERRIDES account_disallowed_expenses.
+        # OVERRIDES account_fiscal_categories.
 
         primary_fields = ['category_id', 'vehicle_id', 'account_id', 'fleet_rate']
         secondary_fields = ['category_id', 'account_id', 'account_rate', 'fleet_rate']
@@ -238,7 +238,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
             else:
                 current = self._filter_current(current, secondary_fields)
 
-            base_line_values = list(result.values())[0]
+            base_line_values = next(iter(result.values()))
             account_id = self._get_single_value(base_line_values, 'account_id')
             lines.append(self._get_rate_line(options, result, current, level, account_id))
 
@@ -252,8 +252,9 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
             current = self._parse_hierarchy_group_key(group_key)
             level = len(self._parse_line_id(options, line_dict_id)) + 1
 
-            if options.get('vehicle_split') and current.get('fleet_rate'):
-                base_line_values = list(result.values())[0]
+            fleet_rate = current.get('fleet_rate')
+            if (options.get('vehicle_split') and (fleet_rate is not False and fleet_rate is not None)):
+                base_line_values = next(iter(result.values()))
                 account_id = self._get_single_value(base_line_values, 'account_id')
                 lines.append(self._get_rate_line(options, result, current, level, account_id))
             else:
@@ -261,8 +262,8 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
 
         return {'lines': lines}
 
-    def _disallowed_expenses_get_vehicle_line(self, options, values, current, level):
-        base_line_values = list(values.values())[0]
+    def _fiscal_get_vehicle_line(self, options, values, current, level):
+        base_line_values = next(iter(values.values()))
         return {
             **self._get_base_line(options, current, level),
             'name': base_line_values['vehicle_name'][0],
@@ -274,7 +275,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         }
 
     def _get_current_rate(self, values):
-        # OVERRIDES account_disallowed_expenses.
+        # OVERRIDES account_fiscal_categories.
         fleet_rate = self._get_single_value(values, 'fleet_rate')
         account_rate = self._get_single_value(values, 'account_rate')
 
@@ -291,7 +292,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         return current_rate
 
     def _get_current_deductible_amount(self, values):
-        # EXTENDS account_disallowed_expenses.
+        # EXTENDS account_fiscal_categories.
         res = super()._get_current_deductible_amount(values)
         return values['fleet_deductible_amount'] if any(values['vehicle_id']) else res
 
@@ -301,7 +302,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
     def action_open_accounts(self, options, params):
         return {
             'type': 'ir.actions.act_window',
-            'name': _("Accounts missing a disallowed expense category"),
+            'name': _("Accounts missing a fiscal category"),
             'res_model': 'account.account',
             'views': [(False, 'list'), (False, 'form')],
             'domain': [('id', 'in', params['args'])],

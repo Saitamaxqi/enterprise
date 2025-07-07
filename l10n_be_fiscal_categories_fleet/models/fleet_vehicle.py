@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api
@@ -24,7 +23,7 @@ class FleetVehicle(models.Model):
         return vehicles
 
     def write(self, vals):
-        result = super(FleetVehicle, self).write(vals)
+        result = super().write(vals)
         today = fields.Date.today()
         # Check if we modified fields that could impact the actual tax_deduction
         if any(key in vals for key in ['fuel_type', 'co2', 'horsepower']):
@@ -47,7 +46,7 @@ class FleetVehicle(models.Model):
 
     def action_view_disallowed_expenses_rate(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("l10n_be_account_disallowed_expenses_fleet.action_view_disallowed_expenses_rate")
+        action = self.env["ir.actions.actions"]._for_xml_id("l10n_be_fiscal_categories_fleet.action_view_disallowed_expenses_rate")
         action.update({
             'domain': [('vehicle_id', '=', self.id)],
             'context': {'dialog_size': 'medium'},

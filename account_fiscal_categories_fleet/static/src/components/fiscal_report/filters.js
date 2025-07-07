@@ -3,7 +3,7 @@ import { _t } from "@web/core/l10n/translation";
 import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportFilters } from "@account_reports/components/account_report/filters/filters";
 
-export class DisallowedExpenseFleetFilters extends AccountReportFilters {
+export class FiscalFleetFilters extends AccountReportFilters {
     get filterExtraOptionsData() {
         return {
             ...super.filterExtraOptionsData,
@@ -14,4 +14,4 @@ export class DisallowedExpenseFleetFilters extends AccountReportFilters {
     }
 }
 
-AccountReport.registerCustomComponent(DisallowedExpenseFleetFilters);
+AccountReport.registerCustomComponent(FiscalFleetFilters);

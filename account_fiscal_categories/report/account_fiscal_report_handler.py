@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, _
 from odoo.tools import SQL, Query
 
 
-class AccountDisallowedExpensesReportHandler(models.AbstractModel):
-    _name = 'account.disallowed.expenses.report.handler'
+class AccountFiscalReportHandler(models.AbstractModel):
+    _name = 'account.fiscal.report.handler'
     _inherit = ['account.report.custom.handler']
-    _description = 'Disallowed Expenses Custom Handler'
+    _description = 'Fiscal Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         results = self._get_query_results(options, primary_fields=['category_id'])
@@ -33,9 +32,9 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         # Check if there are multiple rates
         super()._custom_options_initializer(report, options, previous_options=previous_options)
         period_domain = [('date_from', '>=', options['date']['date_from']), ('date_from', '<=', options['date']['date_to'])]
-        rg = self.env['account.disallowed.expenses.rate']._read_group(
+        rg = self.env['account.account.fiscal.rate']._read_group(
             period_domain,
-            ['category_id'],
+            ['related_account_id'],
             having=[('__count', '>', 1)],
             limit=1,
         )
@@ -43,7 +42,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         if options['multi_rate_in_period']:
-            warnings['account_disallowed_expenses.warning_multi_rate'] = {}
+            warnings['account_fiscal_categories.warning_multi_rate'] = {}
 
     def _caret_options_initializer(self):
         return {
@@ -70,7 +69,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         domain = [('display_type', 'not in', ('line_section', 'line_subsection', 'line_note'))]
 
         model_to_domain = {
-            'account.disallowed.expenses.category': 'account_id.disallowed_expenses_category_id',
+            'account.fiscal.category': 'account_id.fiscal_category_id',
             'account.account': 'account_id',
             'fleet.vehicle': 'vehicle_id',
         }
@@ -110,7 +109,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         """
         company_ids = tuple(self.env['account.report'].get_report_company_ids(options))
         current = self._parse_line_id(options, line_dict_id)
-        category_name = self.env['account.disallowed.expenses.category']._field_to_sql('category', 'name')
+        category_name = self.env['account.fiscal.category']._field_to_sql('category', 'name')
 
         query = Query(self.env, alias='aml', table=SQL.identifier('account_move_line'))
         query.add_join('LEFT JOIN', alias='account', table='account_account', condition=SQL('aml.account_id = account.id'))
@@ -139,12 +138,12 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
             """
             FROM %(from_clause)s
             JOIN account_move move ON aml.move_id = move.id
-            JOIN account_disallowed_expenses_category category ON account.disallowed_expenses_category_id = category.id
-            LEFT JOIN account_disallowed_expenses_rate rate ON rate.id = (
-                SELECT r2.id FROM account_disallowed_expenses_rate r2
-                LEFT JOIN account_disallowed_expenses_category c2 ON r2.category_id = c2.id
+            JOIN account_fiscal_category category ON account.fiscal_category_id = category.id
+            LEFT JOIN account_account_fiscal_rate rate ON rate.id = (
+                SELECT r2.id FROM account_account_fiscal_rate r2
+                LEFT JOIN account_account acc ON r2.related_account_id = acc.id
                 WHERE r2.date_from <= aml.date
-                  AND c2.id = category.id
+                  AND acc.id = account.id
                 ORDER BY r2.date_from DESC LIMIT 1
             )
             """,
@@ -187,11 +186,11 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
             return current
 
         for _markup, model, record_id in self.env['account.report']._parse_line_id(line_id):
-            if model == 'account.disallowed.expenses.category':
+            if model == 'account.fiscal.category':
                 current['category_id'] = record_id
             if model == 'account.account':
                 current['account_id'] = record_id
-            if model == 'account.disallowed.expenses.rate':
+            if model == 'account.account.fiscal.rate':
                 current['account_rate'] = record_id
 
         return current
@@ -199,7 +198,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
     def _build_line_id(self, options, current, level, parent=False, markup=None):
         report = self.env['account.report'].browse(options['report_id'])
         parent_line_id = None
-        line_id = report._get_generic_line_id('account.disallowed.expenses.category', current['category_id'])
+        line_id = report._get_generic_line_id('account.fiscal.category', current['category_id'])
         if current.get('account_id'):
             parent_line_id = line_id
             line_id = report._get_generic_line_id('account.account', current['account_id'], parent_line_id=line_id)
@@ -210,7 +209,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
                 line_id = report._get_generic_line_id('account.account', current['account_id'], parent_line_id=line_id)
         if current.get('account_rate'):
             parent_line_id = line_id
-            line_id = report._get_generic_line_id('account.disallowed.expenses.rate', current['account_rate'], markup=markup, parent_line_id=line_id)
+            line_id = report._get_generic_line_id('account.account.fiscal.rate', current['account_rate'], markup=markup, parent_line_id=line_id)
 
         return parent_line_id if parent else line_id
 
@@ -272,7 +271,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         for group_key, result in results.items():
             current = self._parse_hierarchy_group_key(group_key)
             level = len(self._parse_line_id(options, line_dict_id)) + 1
-            base_line_values = list(result.values())[0]
+            base_line_values = next(iter(result.values()))
             account_id = self._get_single_value(base_line_values, 'account_id')
             lines.append(self._get_rate_line(options, result, current, level, account_id))
 
@@ -312,7 +311,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         }
 
     def _get_category_line(self, options, values, current, level):
-        base_line_values = list(values.values())[0]
+        base_line_values = next(iter(values.values()))
         return {
             **self._get_base_line(options, current, level),
             'name': '%s %s' % (base_line_values['category_code'][0], base_line_values['category_name'][0]),
@@ -323,7 +322,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         }
 
     def _get_account_line(self, options, values, current, level):
-        base_line_values = list(values.values())[0]
+        base_line_values = next(iter(values.values()))
         unfoldable = options.get('multi_rate_in_period')
         return {
             **self._get_base_line(options, current, level),
@@ -337,7 +336,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         }
 
     def _get_rate_line(self, options, values, current, level, markup=None):
-        base_line_values = list(values.values())[0]
+        base_line_values = next(iter(values.values()))
         return {
             **self._get_base_line(options, current, level, markup),
             'name': f"{base_line_values['account_code'][0]} {base_line_values['account_name'][0]}",
@@ -352,7 +351,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         current_line_id = self._build_line_id(options, current, level, markup=markup)
         return {
             'id': current_line_id,
-            'parent_id': self._build_line_id(options, current, level, parent=True, markup=markup, ),
+            'parent_id': self._build_line_id(options, current, level, parent=True, markup=markup),
             'unfolded': current_line_id in options.get('unfolded_lines') or options.get('unfold_all'),
         }
 

@@ -6,8 +6,19 @@
         <field name="inherit_id" ref="account.view_account_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='tax_ids']" position="after">
-                <field name="disallowed_expenses_category_id" string="Disallowed Expenses"
-                invisible="internal_group != 'expense' and internal_group != 'income'"/>
+                <field name="fiscal_category_id" string="Fiscal Category"
+                invisible="internal_group not in ('asset', 'expense', 'income')"/>
+            </xpath>
+            <xpath expr="//page[@name='Description']" position="after">
+                <page name="fiscal_rates" string="Fiscal Rates" invisible="not fiscal_category_id">
+                    <field name="rate_ids" nolabel="1">
+                        <list order="date_from desc" editable="bottom">
+                            <field name="date_from" width="200px"/>
+                            <field name="rate" width="200px"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </list>
+                    </field>
+                </page>
             </xpath>
         </field>
     </record>
@@ -18,7 +29,7 @@
         <field name="inherit_id" ref="account.view_account_search"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="disallowed_expenses_category_id"/>
+                <field name="fiscal_category_id"/>
             </field>
         </field>
     </record>

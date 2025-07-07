@@ -8,7 +8,7 @@
         Accounting reports:
         - Corporate Tax Report
     """,
-    'depends': ['l10n_ae', 'account_reports', 'account_disallowed_expenses'],
+    'depends': ['l10n_ae', 'account_reports', 'account_fiscal_categories'],
     'installable': True,
     'data': [
         'data/corporate_tax_report.xml',
@@ -24,7 +24,7 @@
         ],
     },
     'post_init_hook': '_l10n_ae_reports_post_init',
-    'auto_install': ['l10n_ae', 'account_reports', 'account_disallowed_expenses'],
+    'auto_install': ['l10n_ae', 'account_reports', 'account_fiscal_categories'],
     'website': 'https://www.odoo.com/app/accounting',
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

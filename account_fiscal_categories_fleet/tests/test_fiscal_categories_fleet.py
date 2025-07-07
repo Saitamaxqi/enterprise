@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 
 from odoo import Command, fields
@@ -8,38 +6,41 @@ from odoo.tests import tagged, freeze_time
 
 @freeze_time('2022-07-15')
 @tagged('post_install', '-at_install')
-class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
+class TestAccountFiscalCategoriesFleetReport(TestAccountReportsCommon):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
 
         cls.env.user.group_ids |= cls.env.ref("fleet.fleet_group_manager")
-        cls.dna_category = cls.env['account.disallowed.expenses.category'].create({
+        cls.dna_category = cls.env['account.fiscal.category'].create({
             'code': '2345',
             'name': 'DNA category',
-            'rate_ids': [
-                Command.create({
-                    'date_from': fields.Date.from_string('2022-01-01'),
-                    'rate': 60.0,
-                    'company_id': cls.company_data['company'].id,
-                }),
-                Command.create({
-                    'date_from': fields.Date.from_string('2022-04-01'),
-                    'rate': 40.0,
-                    'company_id': cls.company_data['company'].id,
-                }),
-                Command.create({
-                    'date_from': fields.Date.from_string('2022-08-01'),
-                    'rate': 23.0,
-                    'company_id': cls.company_data['company'].id,
-                }),
-            ],
         })
 
-        cls.company_data['default_account_expense'].disallowed_expenses_category_id = cls.dna_category.id
+        cls.company_data['default_account_expense'].fiscal_category_id = cls.dna_category.id
+        cls.company_data['default_account_expense'].rate_ids = [
+            Command.create({
+                'date_from': fields.Date.from_string('2022-01-01'),
+                'rate': 60.0,
+                'company_id': cls.company_data['company'].id,
+                'related_account_id': cls.company_data['default_account_expense']
+            }),
+            Command.create({
+                'date_from': fields.Date.from_string('2022-04-01'),
+                'rate': 40.0,
+                'company_id': cls.company_data['company'].id,
+                'related_account_id': cls.company_data['default_account_expense']
+            }),
+            Command.create({
+                'date_from': fields.Date.from_string('2022-08-01'),
+                'rate': 23.0,
+                'company_id': cls.company_data['company'].id,
+                'related_account_id': cls.company_data['default_account_expense']
+            }),
+        ]
         cls.company_data['default_account_expense_2'] = cls.company_data['default_account_expense'].copy()
-        cls.company_data['default_account_expense_2'].disallowed_expenses_category_id = cls.dna_category.id
+        cls.company_data['default_account_expense_2'].fiscal_category_id = cls.dna_category.id
 
         cls.batmobile, cls.batpod = cls.env['fleet.vehicle'].create([
             {
@@ -152,7 +153,7 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         (bill_1 + bill_2 + bill_3).action_post()
 
     def _setup_base_report(self, unfold=False, split=False):
-        report = self.env.ref('account_disallowed_expenses.disallowed_expenses_report')
+        report = self.env.ref('account_fiscal_categories.fiscal_report')
         default_options = {'unfold_all': unfold, 'vehicle_split': split}
         options = self._generate_options(report, '2022-01-01', '2022-12-31', default_options)
         self.env.company.totals_below_sections = False
@@ -167,7 +168,7 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
             line['name'] = line['name'].split(' \u2022 ')[0]
             line['columns'].append({'name': line['level']})
 
-    def test_disallowed_expenses_report_unfold_all(self):
+    def test_fiscal_report_unfold_all(self):
         report, options = self._setup_base_report(unfold=True)
         lines = report._get_lines(options)
         self._prepare_column_values(lines)
@@ -175,26 +176,26 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         self.assertLinesValues(
             # pylint: disable=C0326
             lines,
-            #   Name                                          Total Amount     Rate          Deuctible Amount      Level
-            [   0,                                            1,               2,            3,                   4],
+            # Name                                         Total Amount     Rate         Deuctible Amount     Level
+            [0,                                            1,               2,           3,                   4],
             [
-                ('2345 DNA category',                         3200.0,          '',          1088.0,               1),
-                  ('600000 Expenses',                         2300.0,          '',           749.0,               2),
-                    ('600000 Expenses',                        700.0,          '23.00%',     161.0,               3),
-                    ('600000 Expenses',                        600.0,          '23.00%',     138.0,               3),
-                    ('600000 Expenses',                        400.0,          '40.00%',     160.0,               3),
-                    ('600000 Expenses',                        200.0,          '31.00%',      62.0,               3),
-                    ('600000 Expenses',                        300.0,          '56.00%',     168.0,               3),
-                    ('600000 Expenses',                        100.0,          '60.00%',      60.0,               3),
-                  ('600002 Expenses (copy)',                        900.0,          '',           339.0,               2),
-                    ('600002 Expenses (copy)',                      500.0,          '23.00%',     115.0,               3),
-                    ('600002 Expenses (copy)',                      400.0,          '56.00%',     224.0,               3),
-                ('Total',                                     3200.0,          '',          1088.0,               1),
+             ('2345 DNA category',                         3200.0,          '',          1088.0,               1),
+               ('600000 Expenses',                         2300.0,          '',           749.0,               2),
+                 ('600000 Expenses',                        700.0,          '23.00%',     161.0,               3),
+                 ('600000 Expenses',                        600.0,          '23.00%',     138.0,               3),
+                 ('600000 Expenses',                        400.0,          '40.00%',     160.0,               3),
+                 ('600000 Expenses',                        200.0,          '31.00%',      62.0,               3),
+                 ('600000 Expenses',                        300.0,          '56.00%',     168.0,               3),
+                 ('600000 Expenses',                        100.0,          '60.00%',      60.0,               3),
+               ('600002 Expenses (copy)',                   900.0,          '',           339.0,               2),
+                 ('600002 Expenses (copy)',                 500.0,          '23.00%',     115.0,               3),
+                 ('600002 Expenses (copy)',                 400.0,          '56.00%',     224.0,               3),
+             ('Total',                                     3200.0,          '',          1088.0,               1),
             ],
             options,
         )
 
-    def test_disallowed_expenses_report_unfold_all_with_vehicle_split(self):
+    def test_fiscal_report_unfold_all_with_vehicle_split(self):
         report, options = self._setup_base_report(unfold=True, split=True)
         lines = report._get_lines(options)
         self._prepare_column_values(lines)
@@ -202,31 +203,31 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         self.assertLinesValues(
             # pylint: disable=C0326
             lines,
-            #   Name                                          Total Amount     Rate          Deuctible Amount      Level
-            [   0,                                            1,               2,            3,                   4],
+            # Name                                        Total Amount     Rate          Deuctible Amount     Level
+            [0,                                           1,               2,            3,                   4],
             [
-                ('2345 DNA category',                         3200.0,          '',          1088.0,               1),
-                  ('Wayne Enterprises/Batmobile/No Plate',    1300.0,          '',           315.0,               2),
-                    ('600000 Expenses',                        800.0,          '',           200.0,               3),
-                      ('600000 Expenses',                      600.0,          '23.00%',     138.0,               4),
-                      ('600000 Expenses',                      200.0,          '31.00%',      62.0,               4),
-                    ('600002 Expenses (copy)',                      500.0,          '23.00%',     115.0,               3),
-                      ('600002 Expenses (copy)',                    500.0,          '23.00%',     115.0,               4),
-                  ('Wayne Enterprises/Batpod/No Plate',        700.0,          '56.00%',     392.0,               2),
-                    ('600000 Expenses',                        300.0,          '56.00%',     168.0,               3),
-                      ('600000 Expenses',                      300.0,          '56.00%',     168.0,               4),
-                    ('600002 Expenses (copy)',                      400.0,          '56.00%',     224.0,               3),
-                      ('600002 Expenses (copy)',                    400.0,          '56.00%',     224.0,               4),
-                  ('600000 Expenses',                         1200.0,          '',           381.0,               2),
-                    ('600000 Expenses',                        700.0,          '23.00%',     161.0,               3),
-                    ('600000 Expenses',                        400.0,          '40.00%',     160.0,               3),
-                    ('600000 Expenses',                        100.0,          '60.00%',      60.0,               3),
-                ('Total',                                     3200.0,          '',          1088.0,               1),
+             ('2345 DNA category',                         3200.0,          '',          1088.0,               1),
+               ('Wayne Enterprises/Batmobile/No Plate',    1300.0,          '',           315.0,               2),
+                 ('600000 Expenses',                        800.0,          '',           200.0,               3),
+                   ('600000 Expenses',                      600.0,          '23.00%',     138.0,               4),
+                   ('600000 Expenses',                      200.0,          '31.00%',      62.0,               4),
+                 ('600002 Expenses (copy)',                 500.0,          '23.00%',     115.0,               3),
+                   ('600002 Expenses (copy)',               500.0,          '23.00%',     115.0,               4),
+               ('Wayne Enterprises/Batpod/No Plate',        700.0,          '56.00%',     392.0,               2),
+                 ('600000 Expenses',                        300.0,          '56.00%',     168.0,               3),
+                   ('600000 Expenses',                      300.0,          '56.00%',     168.0,               4),
+                 ('600002 Expenses (copy)',                 400.0,          '56.00%',     224.0,               3),
+                   ('600002 Expenses (copy)',               400.0,          '56.00%',     224.0,               4),
+               ('600000 Expenses',                         1200.0,          '',           381.0,               2),
+                 ('600000 Expenses',                        700.0,          '23.00%',     161.0,               3),
+                 ('600000 Expenses',                        400.0,          '40.00%',     160.0,               3),
+                 ('600000 Expenses',                        100.0,          '60.00%',      60.0,               3),
+             ('Total',                                     3200.0,          '',          1088.0,               1),
             ],
             options,
         )
 
-    def test_disallowed_expenses_report_comparison(self):
+    def test_fiscal_report_comparison(self):
         report, options = self._setup_base_report(unfold=True)
         report.filter_period_comparison = True
         options = self._update_comparison_filter(options, report, comparison_type='previous_period', number_period=1)
@@ -234,12 +235,6 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         self.mr_freeze_account = self.env['account.account'].create({
             'code': '611011',
             'name': 'Frozen Account',
-        })
-
-        self.robins_dna = self.env['account.disallowed.expenses.category'].create({
-            'code': '2346',
-            'name': 'Robins DNA',
-            'account_ids': [Command.set(self.mr_freeze_account.id)],
             'rate_ids': [
                 Command.create({
                     'date_from': fields.Date.from_string('2022-08-01'),
@@ -247,6 +242,12 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
                     'company_id': self.company_data['company'].id,
                 }),
             ],
+        })
+
+        self.robins_dna = self.env['account.fiscal.category'].create({
+            'code': '2346',
+            'name': 'Robins DNA',
+            'account_ids': [Command.set(self.mr_freeze_account.id)],
         })
 
         # Create journal entries, using a DNA category without a rate to test totals with blank 'Deuctible Amount  '
@@ -277,31 +278,31 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         self.assertLinesValues(
             # pylint: disable=C0326
             lines,
-            #                                    [                    2022                      ]    [                           2021               ]
-            #   Name                             Total Amount     Rate          Deuctible Amount      Total Amount     Rate          Deuctible Amount      Level
-            [   0,                               1,               2,            3,                   4,               5,            6,                   7],
+            #                                 [                    2022                     ]      [                      2021                   ]
+            # Name                            Total Amount     Rate          Deuctible Amount      Total Amount     Rate          Deuctible Amount      Level
+            [0,                               1,               2,            3,                   4,               5,            6,                      7],
             [
-                ('2345 DNA category',            3200.0,          '',          1088.0,               '',              '',           '',                  1),
-                  ('600000 Expenses',            2300.0,          '',           749.0,               '',              '',           '',                  2),
-                    ('600000 Expenses',           700.0,          '23.00%',     161.0,               '',              '',           '',                  3),
-                    ('600000 Expenses',           600.0,          '23.00%',     138.0,               '',              '',           '',                  3),
-                    ('600000 Expenses',           400.0,          '40.00%',     160.0,               '',              '',           '',                  3),
-                    ('600000 Expenses',           200.0,          '31.00%',      62.0,               '',              '',           '',                  3),
-                    ('600000 Expenses',           300.0,          '56.00%',     168.0,               '',              '',           '',                  3),
-                    ('600000 Expenses',           100.0,          '60.00%',      60.0,               '',              '',           '',                  3),
-                  ('600002 Expenses (copy)',           900.0,          '',           339.0,               '',              '',           '',                  2),
-                    ('600002 Expenses (copy)',         500.0,          '23.00%',     115.0,               '',              '',           '',                  3),
-                    ('600002 Expenses (copy)',         400.0,          '56.00%',     224.0,               '',              '',           '',                  3),
-                ('2346 Robins DNA',                46.0,          '',            10.5,               79.0,            '',           '',                  1),
-                  ('611011 Frozen Account',        46.0,          '',            10.5,               79.0,            '',           '',                  2),
-                    ('611011 Frozen Account',      21.0,          '50.00%',      10.5,               '',              '',           '',                  3),
-                    ('611011 Frozen Account',      25.0,          '',              '',               79.0,            '',           '',                  3),
-                ('Total',                        3246.0,          '',          1098.5,               79.0,            '',           0.0,                 1),
+             ('2345 DNA category',            3200.0,          '',          1088.0,               '',              '',           '',                  1),
+               ('600000 Expenses',            2300.0,          '',           749.0,               '',              '',           '',                  2),
+                 ('600000 Expenses',           700.0,          '23.00%',     161.0,               '',              '',           '',                  3),
+                 ('600000 Expenses',           600.0,          '23.00%',     138.0,               '',              '',           '',                  3),
+                 ('600000 Expenses',           400.0,          '40.00%',     160.0,               '',              '',           '',                  3),
+                 ('600000 Expenses',           200.0,          '31.00%',      62.0,               '',              '',           '',                  3),
+                 ('600000 Expenses',           300.0,          '56.00%',     168.0,               '',              '',           '',                  3),
+                 ('600000 Expenses',           100.0,          '60.00%',      60.0,               '',              '',           '',                  3),
+               ('600002 Expenses (copy)',      900.0,          '',           339.0,               '',              '',           '',                  2),
+                 ('600002 Expenses (copy)',    500.0,          '23.00%',     115.0,               '',              '',           '',                  3),
+                 ('600002 Expenses (copy)',    400.0,          '56.00%',     224.0,               '',              '',           '',                  3),
+             ('2346 Robins DNA',                46.0,          '',            10.5,               79.0,            '',           '',                  1),
+               ('611011 Frozen Account',        46.0,          '',            10.5,               79.0,            '',           '',                  2),
+                 ('611011 Frozen Account',      21.0,          '50.00%',      10.5,               '',              '',           '',                  3),
+                 ('611011 Frozen Account',      25.0,          '',              '',               79.0,            '',           '',                  3),
+             ('Total',                        3246.0,          '',          1098.5,               79.0,            '',           0.0,                 1),
             ],
             options,
         )
 
-    def test_disallowed_expenses_account_id_and_vehicle_id_confusion_regression_test(self):
+    def test_fiscal_account_id_and_vehicle_id_confusion_regression_test(self):
         """
         This test aims to reproduce an issue where two invoice lines were aggregated under the same
         hierarchy when they should have been segregated.
@@ -342,17 +343,18 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
             'name': 'Super expense',
             'code': '605555',
         })
-        dna_category = self.env['account.disallowed.expenses.category'].create({
+        dna_category = self.env['account.fiscal.category'].create({
             'code': 'bob',
             'name': 'DNA category',
-            'rate_ids': [
-                Command.create({
-                    'date_from': fields.Date.from_string('2022-01-01'),
-                    'rate': 40.0,
-                }),
-            ],
         })
-        expense_account.disallowed_expenses_category_id = dna_category.id
+        expense_account.fiscal_category_id = dna_category.id
+        expense_account.rate_ids = [
+            Command.create({
+                'date_from': fields.Date.from_string('2022-01-01'),
+                'rate': 40.0,
+                'related_account_id': expense_account
+            }),
+        ]
         vehicle = self.batmobile.copy()
         assert expense_account.id == vehicle.id, "Those new records need to share the same id to reproduce the issue"
 
@@ -395,19 +397,19 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         self.assertLinesValues(
             # pylint: disable=C0326
             lines,
-            #   Name                                         Total Amount     Rate            Deuctible Amount       Level
-            [   0,                                           1,                2,             3,                    4],
+            # Name                                        Total Amount     Rate            Deuctible Amount      Level
+            [0,                                           1,                2,             3,                    4],
             [
-                ('bob DNA category',                         1_100.0,          '',            425.0,                1),
+             ('bob DNA category',                         1_100.0,          '',            425.0,                1),
 
-                  ('Wayne Enterprises/Batmobile/No Plate',     100.0,          '25.00%',       25.0,                2),
-                    ('605555 Super expense',                   100.0,          '25.00%',       25.0,                3),
-                      ('605555 Super expense',                 100.0,          '25.00%',       25.0,                4),
+               ('Wayne Enterprises/Batmobile/No Plate',     100.0,          '25.00%',       25.0,                2),
+                 ('605555 Super expense',                   100.0,          '25.00%',       25.0,                3),
+                   ('605555 Super expense',                 100.0,          '25.00%',       25.0,                4),
 
-                  ('605555 Super expense',                   1_000.0,          '40.00%',      400.0,                2),
-                    ('605555 Super expense',                 1_000.0,          '40.00%',      400.0,                3),
+               ('605555 Super expense',                   1_000.0,          '40.00%',      400.0,                2),
+                 ('605555 Super expense',                 1_000.0,          '40.00%',      400.0,                3),
 
-                ('Total',                                    1_100.0,          '',            425.0,                1),
+             ('Total',                                    1_100.0,          '',            425.0,                1),
             ],
             options,
         )
@@ -416,14 +418,6 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         super_expense_account = self.company_data['default_account_expense'].copy({
             'name': 'Super expense',
             'code': '605555',
-        })
-        bob_expense_account = self.company_data['default_account_expense'].copy({
-            'name': 'bob expense',
-            'code': '605556',
-        })
-        dna_category = self.env['account.disallowed.expenses.category'].create({
-            'code': 'bob',
-            'name': 'DNA category',
             'rate_ids': [
                 Command.create({
                     'date_from': fields.Date.from_string('2022-01-01'),
@@ -431,8 +425,22 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
                 }),
             ],
         })
-        super_expense_account.disallowed_expenses_category_id = dna_category.id
-        bob_expense_account.disallowed_expenses_category_id = dna_category.id
+        bob_expense_account = self.company_data['default_account_expense'].copy({
+            'name': 'bob expense',
+            'code': '605556',
+            'rate_ids': [
+                Command.create({
+                    'date_from': fields.Date.from_string('2022-01-01'),
+                    'rate': 40.0,
+                }),
+            ],
+        })
+        dna_category = self.env['account.fiscal.category'].create({
+            'code': 'bob',
+            'name': 'DNA category',
+        })
+        super_expense_account.fiscal_category_id = dna_category.id
+        bob_expense_account.fiscal_category_id = dna_category.id
         vehicle = self.batmobile.copy()
 
         self.env['fleet.disallowed.expenses.rate'].create({
@@ -482,27 +490,24 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         lines = report._get_lines(options)
         self._prepare_column_values(lines)
         expected_lines = [
-              # pylint: disable=C0326
-              ('bob DNA category',                          111_100.0,                '',    29_425.0,           1),
-
-                ('Wayne Enterprises/Batmobile/No Plate',    100_100.0,          '25.00%',    25_025.0,           2),
-                  ('605555 Super expense',                      100.0,          '25.00%',        25.0,           3),
-                    ('605555 Super expense',                    100.0,          '25.00%',        25.0,           4),
-                  ('605556 bob expense',                    100_000.0,          '25.00%',    25_000.0,           3),
-                    ('605556 bob expense',                  100_000.0,          '25.00%',    25_000.0,           4),
-
-                ('605555 Super expense',                      1_000.0,          '40.00%',       400.0,           2),
-                  ('605555 Super expense',                    1_000.0,          '40.00%',       400.0,           3),
-                ('605556 bob expense',                       10_000.0,          '40.00%',     4_000.0,           2),
-                  ('605556 bob expense',                     10_000.0,          '40.00%',     4_000.0,           3),
-
-              ('Total',                                     111_100.0,                '',    29_425.0,           1),
-          ]
+            # pylint: disable=C0326
+            ('bob DNA category',                          111_100.0,                '',        29_425.0,         1),
+            ('Wayne Enterprises/Batmobile/No Plate',      100_100.0,          '25.00%',        25_025.0,         2),
+                ('605555 Super expense',                      100.0,          '25.00%',            25.0,         3),
+                ('605555 Super expense',                      100.0,          '25.00%',            25.0,         4),
+                ('605556 bob expense',                    100_000.0,          '25.00%',        25_000.0,         3),
+                ('605556 bob expense',                    100_000.0,          '25.00%',        25_000.0,         4),
+            ('605555 Super expense',                        1_000.0,          '40.00%',           400.0,         2),
+                ('605555 Super expense',                    1_000.0,          '40.00%',           400.0,         3),
+            ('605556 bob expense',                         10_000.0,          '40.00%',         4_000.0,         2),
+                ('605556 bob expense',                     10_000.0,          '40.00%',         4_000.0,         3),
+            ('Total',                                     111_100.0,                '',        29_425.0,         1),
+        ]
         self.assertLinesValues(
             # pylint: disable=C0326
             lines,
-            #   Name                                          Base Amount       Rate         Fiscal Amount       Level
-            [   0,                                            1,                2,           3,                  4],
+            # Name        Base Amount     Rate         Fiscal Amount       Level
+            [0,           1,              2,           3,                  4],
             expected_lines,
             options,
         )

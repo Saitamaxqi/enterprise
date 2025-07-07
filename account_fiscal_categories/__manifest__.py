@@ -1,19 +1,18 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Disallowed Expenses',
+    'name': 'Account Fiscal Report',
     'category': 'Accounting/Accounting',
-    'summary': 'Manage disallowed expenses',
-    'description': 'Manage disallowed expenses',
+    'summary': 'Account Fiscal Report',
+    'description': 'Account Fiscal Report',
     'version': '1.0',
     'depends': ['account_reports'],
     'data': [
-        'data/account_disallowed_expenses_report.xml',
+        'data/account_fiscal_report.xml',
         'security/ir.model.access.csv',
-        'security/account_disallowed_expenses_security.xml',
+        'security/account_fiscal_categories_security.xml',
         'views/account_account_views.xml',
-        'views/account_disallowed_expenses_category_views.xml',
-        'views/account_disallowed_expenses_report_views.xml',
+        'views/account_fiscal_category_views.xml',
+        'views/account_fiscal_report_views.xml',
         'data/account_return_check_template.xml',
     ],
     'installable': True,
@@ -22,7 +21,7 @@
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [
-            'account_disallowed_expenses/static/src/components/**/*',
+            'account_fiscal_categories/static/src/components/**/*',
         ],
     },
 }

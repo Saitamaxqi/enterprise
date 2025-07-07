@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 
 from odoo import Command, fields

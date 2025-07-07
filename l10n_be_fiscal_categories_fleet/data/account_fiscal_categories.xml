@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="l10n_be_disallowed_expenses.demo_disallowed_expenses_category_1205" model="account.disallowed.expenses.category">
-        <field name="car_category">True</field>
-    </record>
-    <record id="l10n_be_disallowed_expenses.demo_disallowed_expenses_category_1205_1" model="account.disallowed.expenses.category">
-        <field name="car_category">True</field>
-    </record>
-    <record id="l10n_be_disallowed_expenses.demo_disallowed_expenses_category_1205_2" model="account.disallowed.expenses.category">
+    <record id="l10n_be_fiscal_categories.demo_fiscal_category_1205" model="account.fiscal.category">
         <field name="car_category">True</field>
     </record>
 </odoo>

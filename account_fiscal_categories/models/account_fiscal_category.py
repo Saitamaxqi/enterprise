@@ -1,53 +1,28 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, api, _
+from odoo import api, fields, models
 from odoo.fields import Domain
-from odoo.tools import SQL
 
 
-class AccountDisallowedExpensesCategory(models.Model):
-    _name = 'account.disallowed.expenses.category'
-    _description = "Disallowed Expenses Category"
+class AccountFiscalCategory(models.Model):
+    _name = 'account.fiscal.category'
+    _description = "Account Fiscal Category"
 
     name = fields.Char(string='Name', required=True, translate=True)
     code = fields.Char(string='Code', required=True)
     active = fields.Boolean(default=True, help="Set active to false to hide the category without removing it.")
-    rate_ids = fields.One2many('account.disallowed.expenses.rate', 'category_id', string='Rate')
     company_id = fields.Many2one('res.company')
-    account_ids = fields.One2many('account.account', 'disallowed_expenses_category_id', check_company=True)
-    current_rate = fields.Char(compute='_compute_current_rate', string='Current Rate')
+    account_ids = fields.One2many('account.account', 'fiscal_category_id', check_company=True)
 
     _unique_code = models.Constraint(
         'UNIQUE(code)',
-        "Disallowed expenses category code should be unique.",
+        "Fiscal category code should be unique.",
     )
 
-    @api.depends('current_rate', 'code')
+    @api.depends('code')
     def _compute_display_name(self):
-        for record in self:
-            rate = record.current_rate or _('No Rate')
-            name = f'{record.code} - {record.name} ({rate})'
-            record.display_name = name
-
-    @api.depends('rate_ids')
-    def _compute_current_rate(self):
-        rates = self._get_current_rates()
-        for rec in self:
-            rate = rates.get(rec._origin.id, 0)
-            rec.current_rate = ('%g%%' % rate)
-
-    def _get_current_rates(self):
-        if not self.ids:
-            return {}
-        return dict(self.env.execute_query(SQL(
-            """ SELECT
-                    DISTINCT category_id,
-                    first_value(rate) OVER (PARTITION BY category_id ORDER BY date_from DESC)
-                FROM account_disallowed_expenses_rate
-                WHERE date_from <= CURRENT_DATE
-                AND category_id IN %s """,
-            tuple(self.ids),
-        )))
+        for category in self:
+            category.display_name = f"{category.code} - {category.name}" if category.code else category.name
 
     @api.model
     def _search_display_name(self, operator, value):
@@ -62,25 +37,3 @@ class AccountDisallowedExpensesCategory(models.Model):
             operator = 'in'
             value = [value]
         return super()._search_display_name(operator, value)
-
-    def action_read_category(self):
-        self.ensure_one()
-        return {
-            'name': self.display_name,
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'account.disallowed.expenses.category',
-            'res_id': self.id,
-        }
-
-
-class AccountDisallowedExpensesRate(models.Model):
-    _name = 'account.disallowed.expenses.rate'
-    _description = "Disallowed Expenses Rate"
-    _order = 'date_from desc'
-
-    rate = fields.Float(string='Fiscal Rate (%)', required=True)
-    date_from = fields.Date(string='Start Date', required=True)
-    category_id = fields.Many2one('account.disallowed.expenses.category', string='Category', required=True, index=True, ondelete='cascade')
-    company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
