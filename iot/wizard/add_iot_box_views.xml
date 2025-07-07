@@ -6,7 +6,11 @@
         <field name="model">add.iot.box</field>
         <field name="arch" type="xml">
             <form string="IoT Box found. Connecting..." js_class="add_iot_box_wizard">
-                Your IoT is connecting to your database. This shouldn't take long <span class="spinner-border spinner-border-sm"/>
+                <div>IoT Box detected correctly.</div>
+                <div class="d-flex align-items-center gap-2">
+                    Setup in progress, should take maximum 1 minute...
+                    <span class="spinner-border spinner-border-sm"/>
+                </div>
                 <footer>
                     <div class="d-flex justify-content-between w-100">
                         <div class="d-flex gap-1">
