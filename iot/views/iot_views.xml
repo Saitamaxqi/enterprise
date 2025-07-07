@@ -47,11 +47,12 @@
                     <notebook>
                         <page string="Devices" name="devices">
                             <field name="device_ids" readonly="False" widget="device_list_field">
-                                <list>
+                                <list default_order="connection, name">
                                     <field name="name"/>
                                     <field name="identifier"/>
                                     <field name="type"/>
                                     <field name="connection"/>
+                                    <field name="connected_status" string="Status"/>
                                 </list>
                             </field>
                         </page>
@@ -198,7 +199,7 @@
         <field name="name">iot.device.view.list</field>
         <field name="model">iot.device</field>
         <field name="arch" type="xml">
-            <list create="false" default_group_by="iot_id" default_order="type">
+            <list create="false" default_order="type">
                 <field name="name"/>
                 <field name="iot_id"/>
                 <field name="identifier"/>
