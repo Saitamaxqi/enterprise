@@ -29,6 +29,16 @@ export class GlobalFilterSuggestionsStore extends SpreadsheetStore {
             this.searchFilters.searchFiltersPromise,
             this._loadAllMetaData(),
         ]);
+        const dataSourceModels = new Set();
+        for (const matcher of globalFieldMatchingRegistry.getAll()) {
+            for (const dataSourceId of matcher.getIds(this.getters)) {
+                const model = matcher.getModel(this.getters, dataSourceId);
+                dataSourceModels.add(model);
+            }
+        }
+        if (dataSourceModels.size !== Object.keys(searchFiltersPerModels).length) {
+            return [];
+        }
         const suggestedRelations = await this._getSuggestedRelations(searchFiltersPerModels);
         if (suggestedRelations.length === 0) {
             return [];

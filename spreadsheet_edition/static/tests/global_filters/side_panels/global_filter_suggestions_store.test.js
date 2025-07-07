@@ -115,6 +115,33 @@ describe("global filter suggestions store", () => {
         ]);
     });
 
+    test("Filter with no matching is not proposed", async () => {
+        onRpc("get_search_view_archs", ({ args }) => {
+            expect(args).toEqual([["action_partner"]]);
+            return {
+                partner: [
+                    /*xml*/ `
+                    <search>
+                        <field name="product_id"/>
+                    </search>
+                    `,
+                ],
+            };
+        });
+        const { store, model } = await makeStore(GlobalFilterSuggestionsStore);
+        insertListInSpreadsheet(model, {
+            model: "partner",
+            columns: [],
+            actionXmlId: "action_partner",
+        });
+        insertListInSpreadsheet(model, {
+            model: "res.country",
+            columns: [],
+        });
+        const suggestions = await store.suggestionsPromise;
+        expect(suggestions).toEqual([]);
+    });
+
     test("suggestions if field is duplicated in different archs", async () => {
         onRpc("get_search_view_archs", ({ args }) => ({
             partner: [
