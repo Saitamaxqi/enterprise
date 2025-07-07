@@ -203,6 +203,7 @@
                 <field name="name"/>
                 <field name="iot_id"/>
                 <field name="identifier"/>
+                <field name="connected_status"/>
             </list>
         </field>
     </record>
