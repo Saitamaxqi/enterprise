@@ -45,7 +45,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             run: () => {
                 helper.assertWorkOrderValues({
                     index: 0,
-                    name: "WH/MO/00001 - Creation",
+                    name: "TWH/MO/00001 - Creation",
                     product: "Giraffe",
                     quantity: "2 Units",
                     steps: [

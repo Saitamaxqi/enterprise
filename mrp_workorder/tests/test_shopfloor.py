@@ -29,17 +29,17 @@ class TestShopFloor(HttpCase):
         self.env.user.write({'group_ids': [Command.unlink(group_uom.id)]})
 
         # Add some properties for commonly used in tests records.
-        self.warehouse = self.env['stock.warehouse'].search([], limit=1)
+        self.warehouse = self.env['stock.warehouse'].create({
+            'name': 'Test Warehouse',
+            'reception_steps': 'one_step',
+            'delivery_steps': 'ship_only',
+            'code': 'TWH',
+            'sequence': 5,
+        })
+        # Give WH's manufacturing operation a low sequence to prioritize it over other WH's ones.
+        self.warehouse.manu_type_id.sequence = 1
         self.stock_location = self.warehouse.lot_stock_id
         self.test_type_register_production = self.env.ref('mrp_workorder.test_type_register_production')
-        # Create new sequence specific for test to always have the same MO names
-        # regardless the number of time tests are runned.
-        mo_sequence = self.env['ir.sequence'].create({
-            'name': 'Test MO Sequence',
-            'padding': 5,
-            'prefix': f'{self.warehouse.code}/{self.warehouse.manu_type_id.sequence_code}/',
-        })
-        self.warehouse.manu_type_id.sequence_id = mo_sequence
         # Reset LN/SN sequence for the same reason.
         stock_lot_seq = self.env['ir.sequence'].search([('code', '=', 'stock.lot.serial')])
         stock_lot_seq.number_next_actual = 1
@@ -242,7 +242,7 @@ class TestShopFloor(HttpCase):
         """ Ensures when a component is added through the Shop Floor catalog,
         the Pick Component operation is correctly created/updated."""
         # Set the manufacture in 2 steps.
-        self.warehouse.write({'manufacture_steps': 'pbm'})
+        self.warehouse.manufacture_steps = 'pbm'
         # Create a product with a BoM and two components.
         # Create some products.
         product_final = self.env['product.product'].create({
@@ -323,8 +323,7 @@ class TestShopFloor(HttpCase):
     def test_shop_floor_my_wo_filter_with_pin_user(self):
         """Checks the shown Work Orders (in "My WO" section) are correctly
         refreshed when selected user uses a PIN code."""
-        warehouse = self.env['stock.warehouse'].search([], limit=1)
-        stock_location = warehouse.lot_stock_id
+        stock_location = self.warehouse.lot_stock_id
         # Create two employees (one with no PIN code and one with a PIN code.)
         self.env['hr.employee'].create([
             {'name': 'John Snow'},
@@ -400,8 +399,7 @@ class TestShopFloor(HttpCase):
             'is_storable': True,
             'tracking': 'serial',
         })
-        warehouse = self.env['stock.warehouse'].search([], limit=1)
-        stock_location = warehouse.lot_stock_id
+        stock_location = self.warehouse.lot_stock_id
         self.env['stock.quant']._update_available_quantity(component1, stock_location, quantity=100)
         self.env['stock.quant']._update_available_quantity(component2, stock_location, quantity=100)
         workcenter = self.env['mrp.workcenter'].create({
@@ -541,7 +539,7 @@ class TestShopFloor(HttpCase):
         ])
         self.env['stock.quant'].create([
             {
-                'location_id': self.env.ref('stock.warehouse0').lot_stock_id.id,
+                'location_id': self.warehouse.lot_stock_id.id,
                 'product_id': comp.id,
                 'inventory_quantity': 20,
             } for comp in [comp1, comp2]
@@ -613,8 +611,7 @@ class TestShopFloor(HttpCase):
         is created automatically by the system on shopfloor.
         Also check that the production can be closed if there is nothing to backorder.
         """
-        warehouse = self.env.ref("stock.warehouse0")
-        warehouse.manu_type_id.create_backorder = 'always'
+        self.warehouse.manu_type_id.create_backorder = 'always'
         final_product, component = self.env['product.product'].create([
             {
                 'name': 'Product',
@@ -628,7 +625,7 @@ class TestShopFloor(HttpCase):
                 'tracking': 'none',
             },
         ])
-        self.env['stock.quant']._update_available_quantity(product_id=component, location_id=warehouse.lot_stock_id, quantity=100)
+        self.env['stock.quant']._update_available_quantity(product_id=component, location_id=self.warehouse.lot_stock_id, quantity=100)
         workcenter = self.env['mrp.workcenter'].create({
             'name': 'Workcenter1',
         })
