@@ -109,7 +109,7 @@ class AccountReport(models.AbstractModel):
         """
         project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
         analytic_cols = SQL(", ").join(SQL('"account_analytic_line".%s', SQL.identifier(n._column_name())) for n in (project_plan + other_plans))
-        analytic_distribution_equivalent = SQL('to_jsonb(UNNEST(ARRAY[%s]))', analytic_cols)
+        analytic_distribution_equivalent = SQL('to_jsonb(UNNEST(ARRAY_REMOVE(ARRAY[%s], NULL)))', analytic_cols)
 
         change_equivalence_dict = {
             'id': SQL("account_analytic_line.id"),

@@ -192,7 +192,7 @@ class AccountReport(models.Model):
             elif fname == 'analytic_distribution':
                 project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
                 analytic_cols = SQL(', ').join(SQL.identifier('aal', n._column_name()) for n in (project_plan+other_plans))
-                selected_fields.append(SQL('to_jsonb(UNNEST(ARRAY[%s])) AS "analytic_distribution"', analytic_cols))
+                selected_fields.append(SQL('to_jsonb(UNNEST(ARRAY_REMOVE(ARRAY[%s], NULL))) AS "analytic_distribution"', analytic_cols))
             else:
                 selected_fields.append(SQL('aml.%s AS %s', SQL.identifier(fname), SQL.identifier(fname)))
 
