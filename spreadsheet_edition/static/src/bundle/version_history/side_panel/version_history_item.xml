@@ -18,7 +18,7 @@
           <span t-else="" t-esc="state.editName" />
         </div>
         <div
-          t-if="revision.name"
+          t-if="revision.name and revision.id"
           class="o-version-history-timestamp smaller fst-italic"
           t-esc="formattedTimeStamp"
         />

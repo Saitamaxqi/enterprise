@@ -429,6 +429,24 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         spreadsheet.with_user(self.env.ref("base.user_admin")).dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
         self.assertEqual(spreadsheet.sudo().spreadsheet_revision_ids[-1].author_id, self.env.ref("base.user_admin"))
 
+    def test_keep_original_spreadsheet_revision_timestamps(self):
+        with freeze_time("2025-01-01 12:00:00"):
+            spreadsheet = self.env["spreadsheet.test"].create({})
+            spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+            spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+            spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        with freeze_time("2025-01-01 23:00:00"):
+            copy = spreadsheet.copy()
+            revisions = copy.spreadsheet_revision_ids
+            self.assertEqual(revisions[0].revision_date, datetime(2025, 1, 1, 12, 0, 0))
+            self.assertEqual(revisions[1].revision_date, datetime(2025, 1, 1, 12, 0, 0))
+            self.assertEqual(revisions[2].revision_date, datetime(2025, 1, 1, 12, 0, 0))
+            copy.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+            self.assertEqual(
+                copy.spreadsheet_revision_ids[-1].revision_date,
+                datetime(2025, 1, 1, 23, 0, 0),
+            )
+
     def test_get_search_arch(self):
 
         # default search view

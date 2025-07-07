@@ -424,7 +424,7 @@ class SpreadsheetMixin(models.AbstractModel):
                     user=(rev.author_id.id, rev.author_id.name),
                     serverRevisionId=rev.parent_revision_id.revision_uuid or self._get_initial_revision_uuid(),
                     nextRevisionId=rev.revision_uuid,
-                    timestamp=rev.create_date,
+                    timestamp=rev.revision_date,
                 )
                 for rev in revisions
             ],
