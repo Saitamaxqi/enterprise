@@ -67,10 +67,10 @@ export class VoipSystrayItem extends Component {
 
     /** @param {MouseEvent} ev */
     onClick(ev) {
-        this.toggleSoftphone()
+        this.toggleSoftphone();
     }
 
-    toggleSoftphone() {
+    async toggleSoftphone() {
         if (this.softphone.isDisplayed) {
             this.softphone.hide();
             if (this.userAgent.hasCallInvitation) {
@@ -79,7 +79,7 @@ export class VoipSystrayItem extends Component {
         } else {
             this.softphone.show();
             this.voip.resetMissedCalls();
-            if (this.userAgent.shouldPlayIncomingCallRingtone) {
+            if (await this.userAgent.shouldPlayIncomingCallRingtone()) {
                 this.ringtoneService.incoming.play();
             }
         }

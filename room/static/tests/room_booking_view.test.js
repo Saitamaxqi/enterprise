@@ -26,8 +26,8 @@ function assertDisplayedTime(expectedTime) {
 function assertRoomStatus(remainingTime, nbBookings) {
     if (remainingTime) {
         const time = Duration.fromObject(remainingTime).toFormat("hh:mm:ss");
-        // Ignore last second digit as it will be affected by mocked time being advanced
-        expect(".o_room_remaining_time").toHaveText(new RegExp(`^${time.slice(0, -1)}\\d$`));
+        // Ignore second digits as it will be affected by mocked time being advanced
+        expect(".o_room_remaining_time").toHaveText(new RegExp(`^${time.slice(0, -2)}\\d\\d$`));
         expect(".o_room_booking_main > div").toHaveStyle(
             "background-image: linear-gradient(#FF0000DD, #FF0000DD)",
             { inline: true }

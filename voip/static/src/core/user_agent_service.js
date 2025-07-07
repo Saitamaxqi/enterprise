@@ -141,11 +141,10 @@ export class UserAgent extends Reactive {
         };
     }
 
-    /** @returns {boolean} */
-    get shouldPlayIncomingCallRingtone() {
+    async shouldPlayIncomingCallRingtone() {
         const dndUntil = this.voip.store.settings.do_not_disturb_until_dt;
         const doNotDisturb = Boolean(dndUntil) && dndUntil > luxon.DateTime.now();
-        return this.hasCallInvitation && !doNotDisturb && this.multiTabService.isOnMainTab();
+        return this.hasCallInvitation && !doNotDisturb && (await this.multiTabService.isOnMainTab());
     }
 
     async acceptIncomingCall() {
@@ -479,7 +478,7 @@ export class UserAgent extends Reactive {
             sipSession: inviteSession,
         };
         this.softphone.show();
-        if (this.shouldPlayIncomingCallRingtone) {
+        if (await this.shouldPlayIncomingCallRingtone()) {
             this.ringtoneService.incoming.play();
         }
     }

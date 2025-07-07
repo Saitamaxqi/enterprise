@@ -81,6 +81,8 @@ function prepareRegistry() {
         "bus_service",
         "bus.parameters",
         "multi_tab",
+        "legacy_multi_tab",
+        "worker_service",
         "title",
         "orm",
         "field",
