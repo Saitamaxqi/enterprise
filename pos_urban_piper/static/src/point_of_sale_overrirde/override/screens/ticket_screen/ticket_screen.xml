@@ -74,7 +74,7 @@
             </button>
         </xpath>
         <xpath expr="//ActionpadWidget" position="attributes">
-            <attribute name="t-if">order?.deliveryOrderType != 'self' or order.delivery_status == 'completed'</attribute>
+            <attribute name="t-if">(this.pos.cashier._role !== 'minimal') and (order?.deliveryOrderType != 'self' or order.delivery_status == 'completed')</attribute>
         </xpath>
         <xpath expr="//OrderDisplay" position="attributes">
             <attribute name="orderAcceptTime">order?.uiState?.orderAcceptTime</attribute>
