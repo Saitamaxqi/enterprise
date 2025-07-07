@@ -626,6 +626,12 @@ class L10n_InGstReturnPeriod(models.Model):
         # OVERRIDE
         pass
 
+    def _get_doc_issue_json(self):
+        # to overwrite in l10n_in_reports_gstr_document_summary
+        return {
+            'doc_det': []
+        }
+
     def _get_gstr1_json(self):
 
         def _process_hsn_data(hsn_data):
@@ -1192,6 +1198,7 @@ class L10n_InGstReturnPeriod(models.Model):
             'cdnr': _get_cdnr_json(AccountMoveLine.search(self._get_section_domain('cdnr'))),
             'cdnur': _get_cdnur_json(AccountMoveLine.search(self._get_section_domain('cdnur'))),
             'exp': _get_exp_json(AccountMoveLine.search(self._get_section_domain('exp'))),
+            'doc_issue': self._get_doc_issue_json()
             # Indian Government is not supporting supeco in the production
             # 'supeco': {
             #     'clttx': _get_supeco_clttx_json(AccountMoveLine.search(self._get_section_domain('supeco_clttx'))), # details for section 52 (TCS)

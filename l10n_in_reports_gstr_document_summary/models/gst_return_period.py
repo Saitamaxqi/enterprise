@@ -96,6 +96,7 @@ class L10nInGstReturnPeriod(models.Model):
                 }]
             }
         """
+        result = super()._get_doc_issue_json()
         doc_map = defaultdict(list)
         for line in self.document_summary_line_ids:
             doc_map[int(line.nature_of_document)].append(line)
@@ -114,12 +115,8 @@ class L10nInGstReturnPeriod(models.Model):
                 ]
             } for doc_num, lines in sorted(doc_map.items())
         ]
-        return {'doc_det': doc_det}
-
-    def _get_gstr1_json(self):
-        res = super()._get_gstr1_json()
-        res.update({'doc_issue': self._get_doc_issue_json()})
-        return res
+        result['doc_det'] = doc_det
+        return result
 
     def _prepare_sheet_values(self, gstr1_json, workbook, cell_formats):
         super()._prepare_sheet_values(gstr1_json, workbook, cell_formats)
