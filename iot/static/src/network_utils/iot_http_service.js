@@ -24,7 +24,7 @@ export class IotAction {
         this.orm = orm;
     }
 
-    onFailure(deviceIdentifier, _messageId) {
+    onFailure(_message, deviceIdentifier, _messageId) {
         this.notification.add(_t("Failed to reach the device: %s", deviceIdentifier), { type: "danger" });
     }
 
@@ -52,7 +52,7 @@ export class IotAction {
         // Define the connection types in the order of executions to try
         const connectionTypes = [
             async () => {
-                this.longpolling.onMessage(ip, deviceIdentifier, onSuccess); // failure handled by websocket
+                this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure);
                 await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, null, true);
             },
             async () => {
@@ -71,7 +71,7 @@ export class IotAction {
         }
 
         // If all the connection types failed, run the onFailure callback
-        onFailure(deviceIdentifier);
+        onFailure({ status: "disconnected" }, deviceIdentifier);
     }
 }
 

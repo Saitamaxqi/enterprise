@@ -2,26 +2,15 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { formView } from "@web/views/form/form_view";
 import { _t } from "@web/core/l10n/translation";
-import { DeviceController } from "@iot_base/device_controller";
 import { useSubEnv } from "@odoo/owl";
 
 class IoTDeviceController extends formView.Controller {
     setup() {
         super.setup();
-        this.iotLongpollingService = useService("iot_longpolling");
+        this.iotHttpService = useService("iot_http");
         this.notificationService = useService("notification");
 
         useSubEnv({ onClickViewButton: this.onClickButtonTest.bind(this) });
-    }
-
-    getIotDevice({ iot_ip, identifier }) {
-        if (!this._iotDevice) {
-            this._iotDevice = new DeviceController(this.iotLongpollingService, {
-                iot_ip,
-                identifier,
-            });
-        }
-        return this._iotDevice;
     }
 
     async onWillSaveRecord(record) {
@@ -48,37 +37,37 @@ class IoTDeviceController extends formView.Controller {
      * Send an action to the device to update the keyboard layout
      */
     async updateKeyboardLayout(data) {
-        const { keyboard_layout, is_scanner } = data;
+        const { iot_id, identifier, keyboard_layout, is_scanner } = data;
         // IMPROVEMENT: Perhaps combine the call to update_is_scanner and update_layout in just one remote call to the iotbox.
-        this.getIotDevice(data).action({ action: "update_is_scanner", is_scanner });
+        this.iotHttpService.action(iot_id.id, identifier, { action: "update_is_scanner", is_scanner });
         if (keyboard_layout) {
             const [keyboard] = await this.model.orm.read(
                 "iot.keyboard.layout",
                 [keyboard_layout[0]],
                 ["layout", "variant"]
             );
-            return this.getIotDevice(data).action({
-                action: "update_layout",
-                layout: keyboard.layout,
-                variant: keyboard.variant,
-            });
+            return this.iotHttpService.action(
+                iot_id.id,
+                identifier,
+                {
+                    action: "update_layout",
+                    layout: keyboard.layout,
+                    variant: keyboard.variant,
+                }
+            );
         } else {
-            return this.getIotDevice(data).action({ action: "update_layout" });
+            return this.iotHttpService.action(iot_id.id, identifier, { action: "update_layout" });
         }
     }
     /**
      * Send an action to the device to update the screen url
      */
     async updateDisplayUrl(data) {
-        const { display_url } = data;
-        return this.getIotDevice(data).action({ action: "update_url", url: display_url });
+        const { iot_id, identifier, display_url } = data;
+        return this.iotHttpService.action(iot_id.id, identifier, { action: "update_url", url: display_url });
     }
 
-    onPrinterEvent(event, removeListener) {
-        if (!event.print_status || event.action_args) {
-            return;
-        }
-
+    onPrinterEvent(event) {
         const messages = {
             ERROR_FAILED: _t("Failed to initiate print"),
             ERROR_OFFLINE: _t("Printer is not ready"),
@@ -91,46 +80,33 @@ class IoTDeviceController extends formView.Controller {
 
         const errorMessage = messages[event.message] ?? event.message;
 
-        if (event.print_status === "warning") {
-            this.notificationService.add(errorMessage, {
-                type: "warning",
-            });
-            return;
+        switch (event.status) {
+            case "error":
+                this.notificationService.add(errorMessage, { type: "danger" });
+                return;
+            case "warning":
+                this.notificationService.add(errorMessage, { type: "warning" });
+                return;
+            case "disconnected":
+                this.notificationService.add(_t("Printer is disconnected"), { type: "danger" });
+                return;
+            default:
+                this.notificationService.add(_t("Test page printed"), { type: "info" });
+                return;
         }
-
-        if (event.print_status === "error") {
-            this.notificationService.add(errorMessage, {
-                type: "danger",
-            });
-        } else {
-            this.notificationService.add(_t("Test page printed"), { type: "info" });
-        }
-
-        removeListener();
     }
 
     async onClickButtonTest(params) {
         if (params.clickParams.name === "test_printer") {
-            const device = this.getIotDevice(this.model.root.data);
-            device.addListener((event) =>
-                this.onPrinterEvent(event, () => device.removeListener())
-            );
+            const { iot_id, identifier } = this.model.root.data;
 
-            try {
-                const actionResponse = await device.action({ action: "status" });
-                if (!actionResponse.result) {
-                    this.notificationService.add(_t("Printer is disconnected"), {
-                        type: "danger",
-                    });
-                    device.removeListener();
-                }
-            } catch (error) {
-                if (error.message !== "Longpolling action failed") {
-                    console.error(error);
-                    this.notificationService.add(_t("Test print failed"), { type: "danger" });
-                }
-                device.removeListener();
-            }
+            this.iotHttpService.action(
+                iot_id.id,
+                identifier,
+                { action: "status" },
+                (event) => this.onPrinterEvent(event),
+                (event) => this.onPrinterEvent(event),
+            );
         }
     }
 }
