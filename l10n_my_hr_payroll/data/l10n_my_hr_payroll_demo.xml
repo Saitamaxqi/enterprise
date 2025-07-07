@@ -45,7 +45,6 @@
     <record id="user_xiu_mei_lee" model="res.users">
         <field name="partner_id" ref="l10n_my_hr_payroll.res_partner_xiu_mei_lee"/>
         <field name="login">xiu_mei_lee@example.com</field>
-        <field name="password">xiu_mei_lee</field>
         <field name="signature" type="html"><span>--<br/>+Xiu Mei Lee</span></field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_my'))]"/>
         <field name="company_id" ref="base.demo_company_my"/>

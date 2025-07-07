@@ -101,8 +101,6 @@
         <field name="partner_id" ref="l10n_mx_hr_payroll.res_partner_cecilia"/>
         <!-- firstname.lastname@example.com -->
         <field name="login" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).name.replace(' ', '.').lower() + '@example.com'"/>
-        <!-- firstnamelastname -->
-        <field name="password" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).name.replace(' ', '').lower()"/>
         <field name="signature" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).name.split(' ')[0][0] + '. ' + obj(ref('l10n_mx_hr_payroll.res_partner_cecilia')).name.split(' ')[-1]"/>
         <field name="company_ids" eval="[(4, ref('base.demo_company_mx'))]"/>
         <field name="company_id" ref="base.demo_company_mx"/>
@@ -114,8 +112,6 @@
         <field name="partner_id" ref="l10n_mx_hr_payroll.res_partner_xochitl"/>
         <!-- firstname.lastname@example.com -->
         <field name="login" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).name.replace(' ', '.').lower() + '@example.com'"/>
-        <!-- firstnamelastname -->
-        <field name="password" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).name.replace(' ', '').lower()"/>
         <field name="signature" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).name.split(' ')[0][0] + '. ' + obj(ref('l10n_mx_hr_payroll.res_partner_xochitl')).name.split(' ')[-1]"/>
         <field name="company_ids" eval="[(4, ref('base.demo_company_mx'))]"/>
         <field name="company_id" ref="base.demo_company_mx"/>
@@ -126,8 +122,6 @@
         <field name="partner_id" ref="l10n_mx_hr_payroll.res_partner_karla"/>
         <!-- firstname.lastname@example.com -->
         <field name="login" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_karla')).name.replace(' ', '.').lower() + '@example.com'"/>
-        <!-- firstnamelastname -->
-        <field name="password" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_karla')).name.replace(' ', '').lower()"/>
         <field name="signature" model="res.partner" eval="obj(ref('l10n_mx_hr_payroll.res_partner_karla')).name.split(' ')[0][0] + '. ' + obj(ref('l10n_mx_hr_payroll.res_partner_karla')).name.split(' ')[-1]"/>
         <field name="company_ids" eval="[(4, ref('base.demo_company_mx'))]"/>
         <field name="company_id" ref="base.demo_company_mx"/>

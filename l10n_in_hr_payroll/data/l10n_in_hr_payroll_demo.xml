@@ -99,7 +99,6 @@
         <record id="l10n_in_user_vihaan" model="res.users">
             <field name="partner_id" ref="l10n_in_hr_payroll.l10n_in_res_partner_vihaan"/>
             <field name="login">vihaan@example.com</field>
-            <field name="password">vihaan@123</field>
             <field name="signature">V. Sengupta</field>
             <field name="company_ids" eval="[(4, ref('base.demo_company_in'))]"/>
             <field name="company_id" ref="base.demo_company_in"/>
