@@ -38,13 +38,25 @@ class ProductTemplate(models.Model):
                 plan_id=request.cart.plan_id.id,
             )
         )
+        if not has_pricing and not product:
+            # If pricings are only defined by variant, there are no pricing applicable to the
+            # template itself. In this situation, we need to search for a pricing on a variant
+            # otherwise customers wouldn't be able to add the product to their cart.
+            has_pricing = bool(
+                self._get_recurring_pricing(
+                    pricelist=request.pricelist,
+                    variant=self.product_variant_id,
+                    plan_id=request.cart.plan_id.id,
+                )
+            )
+
         return has_pricing or (
             self.allow_one_time_sale
             and self.type == 'consu'
             and not request.cart.plan_id
         )
 
-    def _get_recurring_pricings(self, pricelist, variant=None):
+    def _get_recurring_pricings(self, pricelist, variant=None, quantity=1.0):
         """Return the first pricing applicable for each of the available subscription plans."""
         self.ensure_one()
 
@@ -73,7 +85,12 @@ class ProductTemplate(models.Model):
 
         found_plan_ids = set()
         for pricing in all_pricings:
-            if (plan_id := pricing.plan_id.id) not in found_plan_ids:
+            if (
+                (plan_id := pricing.plan_id.id) not in found_plan_ids
+                # No need for uom conversion since multi-uom is not supported for recurring
+                # products atm.
+                and pricing._is_applicable_for(product=variant or self, qty_in_product_uom=quantity)
+            ):
                 found_plan_ids.add(plan_id)
                 pricings |= pricing
 
@@ -86,7 +103,7 @@ class ProductTemplate(models.Model):
             return res
 
         product = (product_or_template.is_product_variant and product_or_template) or self.env['product.product']
-        pricings = self._get_recurring_pricings(pricelist=request.pricelist, variant=product)
+        pricings = self._get_recurring_pricings(pricelist=request.pricelist, variant=product, quantity=quantity)
 
         res['list_price'] = res['price']  # No pricelist discount for subscription prices
 

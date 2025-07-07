@@ -162,7 +162,9 @@ class ProductTemplate(models.Model):
                 template, variant = product_or_template, None
 
             # get the default pricing and plan since the plan has not yet been chosen
-            pricing = template._get_recurring_pricing(pricelist=pricelist, variant=variant)
+            pricing = template._get_recurring_pricing(
+                pricelist=pricelist, variant=variant, quantity=quantity,
+            )
             if pricing:
                 return (
                     pricing._compute_price(
@@ -181,7 +183,7 @@ class ProductTemplate(models.Model):
 
     @api.model
     def _get_additional_configurator_data(
-        self, product_or_template, date, currency, pricelist, *, plan_id=None, **kwargs
+        self, product_or_template, date, currency, pricelist, *, quantity=1.0, plan_id=None, **kwargs
     ):
         """Override of `sale` to append subscription data.
 
@@ -206,23 +208,33 @@ class ProductTemplate(models.Model):
             else:
                 template, variant = product_or_template, None
 
-            pricing = template._get_recurring_pricing(pricelist=pricelist, variant=variant, plan_id=plan_id)
+            pricing = template._get_recurring_pricing(
+                pricelist=pricelist, variant=variant, plan_id=plan_id, quantity=quantity,
+            )
             if pricing:
                 data['price_info'] = pricing.plan_id.sudo().billing_period_display_sentence
 
         return data
 
-    def _get_recurring_pricing(self, pricelist, variant=None, plan_id=None):
+    def _get_recurring_pricing(self, pricelist, variant=None, plan_id=None, quantity=1.0):
         self.ensure_one()
+        product_or_template = variant or self
         domain = pricelist._get_applicable_rules_domain(
-            products=variant or self,
+            products=product_or_template,
             date=fields.Datetime.now(),
             plan_id=plan_id,
             # If no plan is given, return the first one with a plan, to be used as default pricing
             any_plan=True,
         )
         order = self.env['product.pricelist.item']._get_recurring_rules_order()
-        pricing = self.env['product.pricelist.item'].search(domain, order=order, limit=1)
+        pricing = self.env['product.pricelist.item'].search(domain, order=order).filtered(
+            lambda ppi: ppi._is_applicable_for(
+                product=product_or_template,
+                # No need for uom conversion since multi-uom is not supported for recurring
+                # products atm.
+                qty_in_product_uom=quantity,
+            )
+        )[:1]
 
         if pricing or not pricelist:
             return pricing
@@ -236,7 +248,14 @@ class ProductTemplate(models.Model):
             # If no plan is given, return the first one with a plan, to be used as default pricing
             any_plan=True,
         )
-        return self.env['product.pricelist.item'].search(domain, order=order, limit=1)
+        return self.env['product.pricelist.item'].search(domain, order=order).filtered(
+            lambda ppi: ppi._is_applicable_for(
+                product=product_or_template,
+                # No need for uom conversion since multi-uom is not supported for recurring
+                # products atm.
+                qty_in_product_uom=quantity,
+            )
+        )[:1]
 
     def _has_multiple_uoms(self):
         # multi-uoms doesn't work with subscription (for now)
