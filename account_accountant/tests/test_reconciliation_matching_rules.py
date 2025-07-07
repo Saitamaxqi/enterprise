@@ -669,6 +669,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         payment_3 = self._create_and_post_payment(amount=100, memo="INV Admin SO/2025/127326426")
         payment_4 = self._create_and_post_payment(amount=100, memo="INV/2025/127326425 for Bob")
         payment_5 = self._create_and_post_payment(amount=100, memo="Invoice for Bob with id py_aesadasea123asdb")
+        payment_6 = self._create_and_post_payment(amount=100, memo="INFO:RMT*CT*SO2025/6413377*442500*000****\\")
         # Wrong format
         self._create_and_post_payment(amount=100, memo="Admin SaleOrder2025/127326425")
         self._create_and_post_payment(amount=100, memo="Admin SO//2025//127326425")
@@ -680,6 +681,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         bank_line_3 = self._create_st_line(amount=100, payment_ref='SO/2025/127326426 For admin')
         bank_line_4 = self._create_st_line(amount=100, payment_ref='INV/2025/127326425 paid on 2025')
         bank_line_5 = self._create_st_line(amount=100, payment_ref='py_aesadasea123asdb')
+        bank_line_6 = self._create_st_line(amount=100, payment_ref='INFO:RMT*CT*SO2025/6413377*442500*000****\\')
         self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
 
         # Everything should be reconciled
@@ -702,6 +704,10 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.assertRecordValues(bank_line_5.line_ids, [
             {'account_id': bank_line_5.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
             {'account_id': payment_5.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+        ])
+        self.assertRecordValues(bank_line_6.line_ids, [
+            {'account_id': bank_line_6.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': payment_6.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
         ])
 
     def test_auto_rule_creation_and_matching(self):
