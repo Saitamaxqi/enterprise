@@ -1073,6 +1073,28 @@ test("Can save with an empty field", async function () {
     expect(model.getters.getPivotFieldMatching(pivotId, "42")).toBe(undefined);
 });
 
+test("Field matching edition is saved even without others modifications", async function () {
+    const { model, pivotId, env } = await createSpreadsheetWithPivot();
+    addGlobalFilterWithoutReload(
+        model,
+        {
+            id: "42",
+            type: "text",
+            label: "Text Filter",
+        },
+        {
+            pivot: {
+                [pivotId]: { chain: "name", type: "char" },
+            },
+        }
+    );
+    await openSidePanel(model, env, "42");
+    await contains(".collapsor").click();
+    await contains(".o_model_field_selector_controls .fa-times").click();
+    await saveGlobalFilter();
+    expect(model.getters.getPivotFieldMatching(pivotId, "42")).toEqual({});
+});
+
 test("Can clear a field matching an invalid field", async function () {
     const { model, pivotId, env } = await createSpreadsheetWithPivot();
     addGlobalFilterWithoutReload(

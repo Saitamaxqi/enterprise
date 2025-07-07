@@ -229,6 +229,7 @@ export class FilterEditorStore extends SpreadsheetStore {
     }
 
     updateFieldMatching(id, chain, field) {
+        this.draft = this.filter;
         const fieldMatch = this.fieldsMatching.find((fm) => fm.id === id);
         if (!fieldMatch) {
             return;
@@ -255,7 +256,6 @@ export class FilterEditorStore extends SpreadsheetStore {
         } else {
             fieldMatch.isValid = true;
         }
-        this.draft = this.filter;
     }
 
     updateFieldMatchingOffset(id, offset) {
