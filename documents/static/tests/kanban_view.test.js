@@ -10,7 +10,15 @@ import {
 import { inputFiles } from "@web/../tests/utils";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
-import { keyDown, queryAll, queryAllTexts, queryFirst, waitFor, waitForNone } from "@odoo/hoot-dom";
+import {
+    keyDown,
+    queryAll,
+    queryAllTexts,
+    queryFirst,
+    setInputFiles,
+    waitFor,
+    waitForNone,
+} from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 import {
@@ -27,6 +35,7 @@ import { basicDocumentsKanbanArch, mountDocumentsKanbanView } from "./helpers/vi
 import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { documentsClientThumbnailService } from "@documents/views/helper/documents_client_thumbnail_service";
 import { Deferred } from "@web/core/utils/concurrency";
+import { EventBus } from "@odoo/owl";
 
 describe.current.tags("desktop");
 
@@ -101,6 +110,38 @@ test("Colorless-tags are also visible on cards", async function () {
     expect(
         ".o_kanban_record:contains('Testing tags') div[name='tag_ids'] div .o_tag:nth-of-type(2)"
     ).toHaveText("Colorful");
+});
+
+test("Uploading from control panel", async () => {
+    const _bus = new EventBus();
+    mockService("file_upload", {
+        bus: _bus,
+        upload: (route) => {
+            if (route.startsWith("/documents/upload")) {
+                _bus.trigger("FILE_UPLOAD_LOADED", {
+                    upload: {
+                        data: new FormData(),
+                        xhr: { status: 200, response: '{ "records": [] }' },
+                    },
+                });
+                expect.step("doc uploaded");
+            }
+        },
+    });
+    const serverData = getDocumentsTestServerData();
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+    await contains("button.btn.btn-primary.o-dropdown:contains('New')").click();
+    await contains("button.btn.btn-link.o_documents_kanban_upload").click();
+    // This step seems necessary to succeed everytime vs. clicking on "Upload" above...
+    await contains("input.o_input_file.o_hidden", {
+        visible: false,
+    }).click();
+    await animationFrame();
+    await setInputFiles([new File(["fake_file"], "fake_file.tiff", { type: "text/plain" })]);
+    await animationFrame();
+
+    expect.verifySteps(["doc uploaded"]);
 });
 
 test("Download button availability", async function () {

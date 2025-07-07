@@ -3,13 +3,12 @@
     <t t-name="documents.DocumentsViews.ControlPanel">
         <t t-set="isShareable" t-value="hasShareDocuments()"/>
         <t t-set="folder" t-value="this.env.searchModel.getSelectedFolder()"/>
-
+        <input type="file" multiple="true" t-ref="uploadFileInput" class="o_input_file o_hidden" t-on-change.stop="onFileInputChange"/>
         <Dropdown>
             <button type="button" class="btn btn-primary o-dropdown-caret" data-hotkey="c">
                 New
             </button>
             <t t-set-slot="content">
-                <input type="file" multiple="true" t-ref="uploadFileInput" class="o_input_file o_hidden" t-on-change.stop="onFileInputChange"/>
                 <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_upload'"
                     onSelected="() => this.uploadFileInputRef.el.click()"
                     attrs="{'data-hotkey': 'a', disabled: !canUploadInFolder(folder)}">
