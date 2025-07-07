@@ -76,10 +76,16 @@ class IotDevice(models.Model):
         help='Subtype of device.',
     )
 
-    @api.depends('iot_id')
+    @api.depends('name', 'iot_id', 'connection')
+    @api.depends_context('formatted_display_name')
     def _compute_display_name(self):
-        for i in self:
-            i.display_name = f"[{i.iot_id.name}] {i.name}"
+        connection_display_values = dict(self._fields['connection'].selection)
+        for device in self:
+            if device.env.context.get("formatted_display_name"):
+                connection = connection_display_values.get(device.connection, device.connection) if device.connection else ''
+                device.display_name = f"{device.name} \t --{connection}-- \t --{device.iot_id.name}--"
+            else:
+                device.display_name = f"{device.name}"
 
     @api.depends('type')
     def _compute_is_scanner(self):
