@@ -11,6 +11,7 @@ import { _t } from "@web/core/l10n/translation";
  * HTTP POST method and then using the websocket.
  */
 export class IotAction {
+    longpollingFailedTimestamp = null;
     /**
      *
      * @param {import("@iot_base/network_utils/longpolling").IotLongpolling} longpolling Longpolling service
@@ -56,6 +57,12 @@ export class IotAction {
         // Define the connection types in the order of executions to try
         const connectionTypes = [
             async () => {
+                if (
+                    this.longpollingFailedTimestamp &&
+                    Date.now() - this.longpollingFailedTimestamp < 20 * 60 * 1000
+                ) {
+                    throw new Error("Longpolling is temporarily disabled due to a recent failure.");
+                }
                 this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, actionId);
                 await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, actionId, true);
             },
@@ -71,6 +78,7 @@ export class IotAction {
                 return await connectionType();
             } catch (e) {
                 console.debug("IoT Box action: attempted method failed, attempting another protocol.", e);
+                this.longpollingFailedTimestamp = Date.now();
             }
         }
 
