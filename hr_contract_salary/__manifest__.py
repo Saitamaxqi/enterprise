@@ -29,6 +29,7 @@
         'views/hr_contract_salary_offer_refusal_reason_views.xml',
         'views/hr_contract_template_views.xml',
         'views/sign_template_views.xml',
+        'views/hr_version_views.xml',
 
         'data/ir_cron_data.xml',
         'data/mail_template_data.xml',
