@@ -1639,6 +1639,53 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             self.assertFalse(need_cron_trigger)
             self.assertFalse(all_subscriptions)
 
+    def test_recurring_invoice_cron_batch(self):
+        """
+        Check all subscriptions are processed by the cron when there are more than batch_size of them and
+        some of them are filtered by _get_subscriptions_to_invoice.
+        """
+        SaleOrder = self.env['sale.order']
+        subscriptions_to_invoice = self.env['sale.order']
+
+        for i in range(5):
+            sub_to_invoice = SaleOrder.create({
+                'name': 'Payment not required',
+                'is_subscription': True,
+                'partner_id': self.user_portal.partner_id.id,
+                'pricelist_id': self.pricelist.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'product_uom_qty': 1
+                    }),
+                ],
+                'require_payment': False,
+            })
+            sub_to_invoice.action_confirm()
+            subscriptions_to_invoice += sub_to_invoice
+
+        for i in range(2):
+            sub = SaleOrder.create({
+                'name': 'require payment %s' % str(i),
+                'is_subscription': True,
+                'partner_id': self.user_portal.partner_id.id,
+                'pricelist_id': self.pricelist.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'product_uom_qty': 1
+                    }),
+                ],
+                'require_payment': True,
+            })
+            sub.action_confirm()
+
+        SaleOrder._create_recurring_invoice(batch_size=3)
+
+        self.assertTrue(all(sub.invoice_ids))
+
     def test_amount_to_invoice_with_subscription(self):
         one_shot_product_tmpl = self.env['product.template'].create({
             'name': 'One shot product',

@@ -1475,7 +1475,7 @@ class SaleOrder(models.Model):
             ('move_id.state', 'in', ["draft", "posted"])
         ]).subscription_id.ids)
 
-    def _get_subscriptions_to_invoice(self):
+    def _get_subscriptions_to_invoice(self, limit=False):
         """ remove subscriptions that should send a reminder instead of invoicing. """
         invoiced_sub_ids = self._get_invoiced_subscriptions()
         # remove subscriptions which have no payment token and online payment true
@@ -1486,6 +1486,8 @@ class SaleOrder(models.Model):
                 or (sub.id not in invoiced_sub_ids and sub.prepayment_percent != 1)
                 or sub._invoice_is_considered_free(sub.with_context(recurring_automatic=True)._get_invoiceable_lines())[0]):
                 to_invoice_ids.append(sub.id)
+            if limit and len(to_invoice_ids) >= limit:
+                break
         return self.browse(to_invoice_ids)
 
     def _recurring_invoice_get_subscriptions(self, grouped=False, batch_size=30):
@@ -1513,7 +1515,7 @@ class SaleOrder(models.Model):
             # we call the '_get_subscriptions_to_invoice' method to process them.
             all_subscriptions = [subscriptions._get_subscriptions_to_invoice() for *__, subscriptions in all_subscriptions]
         else:
-            all_subscriptions = self.search(domain, limit=limit)._get_subscriptions_to_invoice()
+            all_subscriptions = self.search(domain)._get_subscriptions_to_invoice(limit)
             need_cron_trigger = batch_size and len(all_subscriptions) > batch_size
 
         if batch_size:
