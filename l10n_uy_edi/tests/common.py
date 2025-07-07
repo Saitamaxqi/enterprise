@@ -125,6 +125,8 @@ class TestUyEdi(AccountTestInvoicingCommon):
         })
 
         cls.utils_path = "odoo.addons.l10n_uy_edi.models.l10n_uy_edi_document.L10n_Uy_EdiDocument"
+        cls.mocked_responses_path = "l10n_uy_edi/tests/responses/"
+        cls.mocked_cfes_path = "l10n_uy_edi/tests/expected_cfes/"
 
     @classmethod
     def _create_move(cls, **kwargs):
@@ -170,7 +172,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
         if response_file == "NO_RESPONSE" or not response_file:
             mock_response = None
         else:
-            xml_content = misc.file_open("l10n_uy_edi/tests/responses/" + response_file + ".xml", mode="rb").read()
+            xml_content = misc.file_open(self.mocked_responses_path + response_file + ".xml", mode="rb").read()
             mock_response = mock.Mock(spec=requests.Response)
             mock_response.status_code = 200
             mock_response.headers = ""
@@ -222,7 +224,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
     def _check_cfe(self, invoice, expected_prefix, expected_xml_file):
         self.assertEqual(invoice.name, "%s DE%07d" % (expected_prefix, invoice.id), "Not valid name")
         self.assertEqual(invoice.l10n_uy_edi_cfe_state, "accepted", "CFE not accepted in demo mode not possible (it is always accepted)")
-        expected_xml = self.get_xml_tree_from_string(misc.file_open("l10n_uy_edi/tests/expected_cfes/" + expected_xml_file + ".xml").read())
+        expected_xml = self.get_xml_tree_from_string(misc.file_open(self.mocked_cfes_path + expected_xml_file + ".xml").read())
         result_xml = self.get_xml_tree_from_attachment(invoice.l10n_uy_edi_document_id.attachment_id)
 
         # For Debit/Credit Notes we need to change the original expected document to add the proper tag.

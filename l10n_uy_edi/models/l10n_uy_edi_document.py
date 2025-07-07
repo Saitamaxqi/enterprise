@@ -79,12 +79,23 @@ class L10n_Uy_EdiDocument(models.Model):
     attachment_file = fields.Binary(copy=False, attachment=True)
 
     # Related fields from origin record
-    l10n_latam_document_type_id = fields.Many2one(related="move_id.l10n_latam_document_type_id")
-    l10n_latam_document_number = fields.Char(related="move_id.l10n_latam_document_number")
-    company_id = fields.Many2one(related="move_id.company_id")
-    partner_id = fields.Many2one(related="move_id.partner_id")
+    l10n_latam_document_type_id = fields.Many2one(
+        "l10n_latam.document.type", "Document Type", related=False, compute="_compute_from_origin"
+    )
+    l10n_latam_document_number = fields.Char(related=False, compute="_compute_from_origin")
+    company_id = fields.Many2one("res.company", related=False, compute="_compute_from_origin")
+    partner_id = fields.Many2one("res.partner", related=False, compute="_compute_from_origin")
 
     # Compute methods
+
+    @api.depends('move_id.l10n_latam_document_number', 'move_id.l10n_latam_document_type_id', 'move_id.company_id', 'move_id.partner_id')
+    def _compute_from_origin(self):
+        for doc in self:
+            if doc.move_id:
+                doc.l10n_latam_document_number = doc.move_id.l10n_latam_document_number
+                doc.l10n_latam_document_type_id = doc.move_id.l10n_latam_document_type_id
+                doc.company_id = doc.move_id.company_id
+                doc.partner_id = doc.move_id.partner_id
 
     def _compute_linked_attachment_id(self, attachment_field, binary_field):
         """Helper to retrieve Attachment from Binary fields
