@@ -181,7 +181,7 @@ class DiscussChannel(models.Model):
 
     def _get_livechat_session_fields_to_store(self):
         fields_to_store = super()._get_livechat_session_fields_to_store()
-        help_desk_ticket_ids = self.env["helpdesk.ticket"].search(
+        helpdesk_tickets = self.env["helpdesk.ticket"].search(
             [
                 ("partner_id", "=", self.livechat_customer_partner_ids.id),
             ],
@@ -192,9 +192,9 @@ class DiscussChannel(models.Model):
                 "livechat_customer_partner_ids",
                 [
                     Store.Many(
-                        "helpdesk_ticket_ids",
+                        "helpdesk_tickets",
                         ["id", "name"],
-                        value=help_desk_ticket_ids,
+                        value=helpdesk_tickets,
                     )
                 ],
             ),
