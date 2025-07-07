@@ -15,7 +15,7 @@ registry
             configuratorTourUtils.assertOptionalProductPriceInfo("Optional product", "1 Hour"),
             {
                 content: "Proceed to checkout",
-                trigger: 'button:contains(Proceed to Checkout)',
+                trigger: 'button:contains(Go to Checkout)',
                 run: 'click',
                 expectUnloadPage: true,
             },
