@@ -453,7 +453,7 @@ class SignRequest(models.Model):
         res = self.env.cr.fetchall()
         request_to_send = self.env['sign.request']
         for request in self.browse(v[0] for v in res):
-            if request.validity < today:
+            if request.validity and request.validity < today:
                 request.state = 'expired'
             else:
                 request_to_send += request

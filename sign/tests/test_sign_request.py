@@ -612,3 +612,11 @@ class TestSignRequest(SignRequestCommon, MockEmail):
 
         with self.assertRaisesRegex(UserError, "Cannot update the value of a read-only sign item"):
             sign_request_item_customer.sign(self.create_sign_values(constant_sign_request.template_id.sign_item_ids, sign_request_item_customer.role_id.id))
+
+    def test_send_reminder_without_set_validity(self):
+        with self.mock_datetime_and_now("2025-07-06"):
+            sign_request = self.create_sign_request_3_roles(customer=self.partner_1, employee=self.partner_2, company=self.partner_3, cc_partners=self.partner_4)
+            sign_request.write({'validity': None, 'reminder_enabled': True, 'reminder': 1})
+
+        with self.mock_datetime_and_now("2025-07-07"):
+            self.env['sign.request']._cron_reminder()
