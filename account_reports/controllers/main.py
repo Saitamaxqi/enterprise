@@ -15,7 +15,7 @@ class AccountReportController(http.Controller):
 
     @http.route('/account_reports', type='http', auth='user', methods=['POST'], csrf=False)
     def get_report(self, options, file_generator, **kwargs):
-        uid = request.uid
+        uid = request.env.uid
         options = json.loads(options)
 
         allowed_company_ids = request.env['account.report'].get_report_company_ids(options)

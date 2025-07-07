@@ -314,7 +314,7 @@ class WebStudioController(http.Controller):
     def reset_background_image(self, context=None):
         if context:
             request.update_context(**context)
-        if request.env.company in request.env.user.with_user(request.uid).company_ids:
+        if request.env.company in request.env.user.with_user(request.env.uid).company_ids:
             request.env.company.background_image = None
 
     def create_new_field(self, values):
