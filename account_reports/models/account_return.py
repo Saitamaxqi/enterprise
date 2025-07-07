@@ -854,10 +854,15 @@ class AccountReturn(models.Model):
                 )
 
                 carryover_impacted_period = self.type_id._get_period_boundaries(self.company_id, self.date_to + relativedelta(days=1))
-                tax_lock_date = self.company_id.tax_lock_date
-                if carryover_values and tax_lock_date and tax_lock_date >= carryover_impacted_period[1]:
-                    raise UserError(_("You cannot reset this closing entry to draft, as it would delete carryover values impacting the tax report of a "
-                                      "locked period. To do this, you first need to modify you tax return lock date."))
+
+                violated_lock_dates = self.company_id._get_lock_date_violations(
+                    carryover_impacted_period[1], fiscalyear=False, sale=False, purchase=False, tax=True, hard=True,
+                ) if carryover_values else None
+
+                if violated_lock_dates:
+                    raise UserError(_("You cannot reset this closing entry to draft, as it would delete carryover values impacting the tax report of a locked period. "
+                                    "Please change the following lock dates to proceed: %(lock_date_info)s.",
+                                    lock_date_info=self.env['res.company']._format_lock_dates(violated_lock_dates)))
 
                 carryover_values.unlink()
 
