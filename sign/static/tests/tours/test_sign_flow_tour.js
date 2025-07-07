@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 
 registry.category("web_tour.tours").add("test_sign_flow_tour", {
     url: "/odoo",
@@ -88,7 +88,7 @@ registry.category("web_tour.tours").add("test_sign_flow_tour", {
             trigger: ".o_sign_validate_banner",
         },
         {
-            trigger: ":iframe input.o_sign_sign_item_constant[disabled]"
+            trigger: ":iframe input.o_sign_sign_item_constant[disabled]",
         },
         {
             content: "Validate & Send Completed Document",

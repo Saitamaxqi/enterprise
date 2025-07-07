@@ -1,6 +1,6 @@
 import { patch } from "@web/core/utils/patch";
 import { accountTourSteps } from "@account/js/tours/account";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 import { _t } from "@web/core/l10n/translation";
 
 patch(accountTourSteps, {

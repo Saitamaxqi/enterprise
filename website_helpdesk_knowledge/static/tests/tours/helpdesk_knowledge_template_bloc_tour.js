@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 
 
 registry.category("web_tour.tours").add('helpdesk_pick_template_as_message_from_knowledge', {

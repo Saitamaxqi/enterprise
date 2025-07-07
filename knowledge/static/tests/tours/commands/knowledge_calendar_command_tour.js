@@ -4,7 +4,7 @@ import {
     endKnowledgeTour,
     openCommandBar,
 } from "../knowledge_tour_utils.js";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 import { patch } from "@web/core/utils/patch";
 
 const embeddedViewPatchUtil = embeddedViewPatchFunctions();

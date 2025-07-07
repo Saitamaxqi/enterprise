@@ -13,7 +13,7 @@ import {
     endKnowledgeTour,
 } from "@knowledge/../tests/tours/knowledge_tour_utils";
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 
 registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     url: '/odoo',

@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 import AppointmentCrmSteps from "@appointment_crm/../tests/tours/appointment_crm_steps";
 
 const appointmentCrmSteps = new AppointmentCrmSteps();

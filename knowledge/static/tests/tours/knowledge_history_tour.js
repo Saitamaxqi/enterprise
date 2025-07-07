@@ -9,7 +9,7 @@
 
 import { endKnowledgeTour } from '@knowledge/../tests/tours/knowledge_tour_utils';
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 import { htmlEditorVersions } from "@html_editor/html_migrations/html_migrations_utils";
 
 const VERSIONS = htmlEditorVersions();

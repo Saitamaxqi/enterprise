@@ -163,6 +163,7 @@ Let your customers follow the signature process easily.
             'sign/static/tests/tours/**/*', 
             'web_tour/static/src/tour_pointer/**/*',
             'web_tour/static/src/tour_service/**/*',
+            'web_tour/static/src/tour_utils.js',
             'web/static/lib/hoot-dom/**/*',
         ],
         'web.assets_web_dark': [

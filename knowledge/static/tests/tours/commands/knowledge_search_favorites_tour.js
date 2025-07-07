@@ -1,6 +1,6 @@
 import { registry } from "@web/core/registry";
 import { endKnowledgeTour, openCommandBar } from "../knowledge_tour_utils.js";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 
 /**
  * Verify that a filter is not duplicated and is properly maintained after

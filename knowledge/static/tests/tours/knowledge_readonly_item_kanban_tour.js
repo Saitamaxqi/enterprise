@@ -1,6 +1,6 @@
 import { endKnowledgeTour } from './knowledge_tour_utils.js';
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 /**
  * This tour checks that a user that has readonly access on an article cannot
  * create items from the item kanban.

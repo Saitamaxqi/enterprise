@@ -1,6 +1,6 @@
 import { registry } from "@web/core/registry";
 import { insertText } from "@web/../tests/utils";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 
 import { endKnowledgeTour } from "./knowledge_tour_utils.js";
 import { setSelection, boundariesIn } from "@web_editor/js/editor/odoo-editor/src/utils/utils";

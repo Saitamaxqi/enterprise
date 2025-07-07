@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 import { queryFirst } from "@odoo/hoot-dom";
 import { _t } from "@web/core/l10n/translation";
 
@@ -43,7 +43,7 @@ export function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
     triggerDragEvent(from, "dragend");
 }
 
-export function createSelectionRectangle(startPos=0.25, endPos=0.75) {
+export function createSelectionRectangle(startPos = 0.25, endPos = 0.75) {
     const viewerContainer = queryFirst(`:iframe #viewerContainer`);
     const page = queryFirst(`:iframe .page[data-page-number="1"]`);
     const pageRect = page.getBoundingClientRect();
@@ -52,32 +52,32 @@ export function createSelectionRectangle(startPos=0.25, endPos=0.75) {
     const startY = pageRect.height * startPos;
     const endX = pageRect.width * endPos;
     const endY = pageRect.height * endPos;
-    const mousemoveEvent = new MouseEvent('mousemove', {
-        bubbles: true,
-        clientX: startX,
-        clientY: startY
-    });
-    viewerContainer.dispatchEvent(mousemoveEvent);
-
-    const mousedownEvent = new MouseEvent('mousedown', {
+    const mousemoveEvent = new MouseEvent("mousemove", {
         bubbles: true,
         clientX: startX,
         clientY: startY,
-        button: 0
+    });
+    viewerContainer.dispatchEvent(mousemoveEvent);
+
+    const mousedownEvent = new MouseEvent("mousedown", {
+        bubbles: true,
+        clientX: startX,
+        clientY: startY,
+        button: 0,
     });
     viewerContainer.dispatchEvent(mousedownEvent);
 
-    const mousemoveEvent2 = new MouseEvent('mousemove', {
+    const mousemoveEvent2 = new MouseEvent("mousemove", {
         bubbles: true,
         clientX: endX,
-        clientY: endY
+        clientY: endY,
     });
     viewerContainer.dispatchEvent(mousemoveEvent2);
 
-    const mouseupEvent = new MouseEvent('mouseup', {
+    const mouseupEvent = new MouseEvent("mouseup", {
         bubbles: true,
         clientX: endX,
-        clientY: endY
+        clientY: endY,
     });
     viewerContainer.dispatchEvent(mouseupEvent);
 }
@@ -131,21 +131,21 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         },
         {
             content: "Drop Signature Item",
-            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") +")",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
             run() {
                 dragAndDropSignItemAtHeight(this.anchor, 0.5, 0.25);
             },
         },
         {
             content: "Drop Name Sign Item",
-            trigger: ".o_sign_field_type_button:contains(" + _t("Name") +")",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Name") + ")",
             run() {
                 dragAndDropSignItemAtHeight(this.anchor, 0.25, 0.25);
             },
         },
         {
             content: "Drop Text Sign Item",
-            trigger: ".o_sign_field_type_button:contains(" + _t("Text") +")",
+            trigger: ".o_sign_field_type_button:contains(" + _t("Text") + ")",
             run() {
                 dragAndDropSignItemAtHeight(this.anchor, 0.15, 0.25);
             },
@@ -155,7 +155,7 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             trigger: ":iframe .page[data-page-number='1']",
             run() {
                 createSelectionRectangle(0.25, 0.75);
-            }
+            },
         },
         {
             content: "Verify items are selected",
@@ -165,14 +165,14 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             content: "Test copy functionality with Ctrl+C",
             trigger: ":iframe .o_sign_sign_item.multi_selected",
             run() {
-                const keyEvent = new KeyboardEvent('keydown', {
-                    key: 'c',
-                    code: 'KeyC',
+                const keyEvent = new KeyboardEvent("keydown", {
+                    key: "c",
+                    code: "KeyC",
                     ctrlKey: true,
-                    bubbles: true
+                    bubbles: true,
                 });
                 document.querySelector("iframe").contentDocument.dispatchEvent(keyEvent);
-            }
+            },
         },
         {
             content: "Click elsewhere to prepare for paste",
@@ -182,29 +182,29 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
                 const pageRect = page.getBoundingClientRect();
                 actions.click({
                     x: pageRect.left + pageRect.width * 0.8,
-                    y: pageRect.top + pageRect.height * 0.8
+                    y: pageRect.top + pageRect.height * 0.8,
                 });
-            }
+            },
         },
         {
             content: "Test paste functionality with Ctrl+V",
             trigger: ":iframe .page[data-page-number='1']",
             run() {
-                const keyEvent = new KeyboardEvent('keydown', {
-                    key: 'v',
-                    code: 'KeyV',
+                const keyEvent = new KeyboardEvent("keydown", {
+                    key: "v",
+                    code: "KeyV",
                     ctrlKey: true,
-                    bubbles: true
+                    bubbles: true,
                 });
                 document.querySelector("iframe").contentDocument.dispatchEvent(keyEvent);
-            }
+            },
         },
         {
             content: "Test multi-select by creating a selection rectangle",
             trigger: ":iframe .page[data-page-number='1']",
             run() {
                 createSelectionRectangle(0.25, 0.75);
-            }
+            },
         },
         {
             content: "Verify items are selected",

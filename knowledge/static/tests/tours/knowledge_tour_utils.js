@@ -1,5 +1,5 @@
 import { SORTABLE_TOLERANCE } from "@knowledge/components/sidebar/sidebar";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
+import { stepUtils } from "@web_tour/tour_utils";
 import { queryOne, queryFirst } from "@odoo/hoot-dom";
 import { childNodeIndex } from "@html_editor/utils/position";
 import { Component, xml } from "@odoo/owl";
