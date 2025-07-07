@@ -397,3 +397,40 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
         pdf_values = picking._prepare_pdf_values()
         expected_values = [{'tax_code': 27, 'tax_percent': 10.0, 'tax_name': 'ILA', 'tax_amount': 100.0}]
         self.assertEqual(pdf_values['withholdings'], expected_values)
+
+    @freeze_time('2019-10-24T20:00:00', tz_offset=3)
+    def test_delivery_guide_qtyitem_matches_move_quantity(self):
+        """
+        Ensure that the generated XML for a delivery guide includes the correct
+        quantity (`QtyItem`) taken from the stock move.
+        """
+        picking = self.env['stock.picking'].create({
+            'name': 'Test Delivery Guide',
+            'partner_id': self.chilean_partner_a.id,
+            'location_id': self.stock_location,
+            'location_dest_id': self.customer_location,
+            'picking_type_id': self.warehouse.out_type_id.id,
+        })
+        self.env['stock.move'].create({
+            'product_id': self.product_with_taxes_a.id,
+            'product_uom': self.product_with_taxes_a.uom_id.id,
+            'product_uom_qty': 10.00,
+            'quantity': 8.00,
+            'procure_method': 'make_to_stock',
+            'picking_id': picking.id,
+            'location_id': self.stock_location,
+            'location_dest_id': self.customer_location,
+            'company_id': self.env.company.id
+        })
+
+        picking.button_validate()
+        picking.create_delivery_guide()
+        picking.l10n_latam_document_number = 100
+        picking.l10n_cl_confirm_draft_delivery_guide()
+
+        xml_bytes = base64.b64decode(picking.l10n_cl_sii_send_file.with_context(bin_size=False).datas)
+        root = etree.fromstring(xml_bytes)
+        qty = root.find(".//sii:QtyItem", namespaces={"sii": "http://www.sii.cl/SiiDte"})
+
+        self.assertIsNotNone(qty, "QtyItem tag should exist in XML")
+        self.assertEqual(qty.text, "8.000000")
