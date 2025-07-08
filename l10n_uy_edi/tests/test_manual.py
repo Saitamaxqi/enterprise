@@ -303,6 +303,21 @@ class TestManual(common.TestUyEdi):
         self._send_and_print(invoice)
         self._check_cfe(invoice, "e-FC", "130_entrega_gratuita")
 
+    def test_135_entrega_gratuita_zero(self):
+        """ Create e-Invoice with line quantity 1.0 and price_unit/price_total = 0.0 (not need discount) """
+        invoice = self._create_move(
+            partner_id=self.partner_local.id,
+            l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id,
+            invoice_line_ids=[Command.create({
+                "product_id": self.service_vat_22.id,
+                "price_unit": 0,
+            })],
+        )
+        self.assertEqual(invoice.l10n_latam_document_type_id.code, "111", "Not an e-invoice")
+        invoice.action_post()
+        self._send_and_print(invoice)
+        self._check_cfe(invoice, "e-FC", "135_entrega_gratuita_zero")
+
     def test_140_global_discount(self):
         """ Create e-Invoice with line with discount 100% and it should work """
         discount = self.env["product.product"].create({

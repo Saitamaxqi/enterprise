@@ -284,7 +284,7 @@ class AccountMove(models.Model):
         k = 1
         for base_line in tax_details['base_lines']:
             line = base_line['record']
-            if line.price_unit <= 0:
+            if line.price_unit < 0:
                 continue
 
             tax_info = tax_details['tax_details_per_record'][line]['tax_details'].values()
@@ -344,7 +344,7 @@ class AccountMove(models.Model):
             "MntIVATasaMin": base[10.0] if not expo_doc else None,  # A121
             "MntIVATasaBasica": base[22.0] if not expo_doc else None,  # A122
             "MntTotal": self.amount_total - nf_amount if nf_amount else self.amount_total,  # A124
-            "CantLinDet": len(self.invoice_line_ids.filtered(lambda x: x.display_type == "product" and x.price_unit > 0 or x.move_id._is_downpayment())),  # A126
+            "CantLinDet": len(self.invoice_line_ids.filtered(lambda x: x.display_type == "product" and x.price_unit >= 0 or x.move_id._is_downpayment())),  # A126
             "MontoNF": nf_amount or None,
             "MntPagar": self.amount_total,  # A130
         }
@@ -407,7 +407,7 @@ class AccountMove(models.Model):
         tax_included = set(line.tax_ids.mapped("price_include"))
 
         # We made this in separate if because expo invoices can also have entrega gratuita
-        if line.discount == 100 and (line.price_total if tax_included else line.price_subtotal) == 0:
+        if line.currency_id.is_zero(line.price_total if tax_included else line.price_subtotal):
             invoice_ind = 5  # Entrega Gratuita
 
         return invoice_ind
