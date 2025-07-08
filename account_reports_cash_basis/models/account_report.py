@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models, fields, api
+from odoo.fields import Domain
 from odoo.tools import SQL, Query
 
 
@@ -231,5 +232,5 @@ class AccountReport(models.Model):
         action = super().action_audit_cell(options, params)
         # Only add the domain on the correct model (e.g. can be an account.analytic.line).
         if options.get('report_cash_basis') and action['res_model'] == 'account.move.line':
-            action['domain'].append(('move_id.impacting_cash_basis', '=', True))
+            action['domain'] = Domain(action['domain']) & Domain('move_id.impacting_cash_basis', '=', True)
         return action
