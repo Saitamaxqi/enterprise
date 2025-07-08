@@ -7,6 +7,7 @@ from . import documents_mixin
 
 # documents
 from . import documents_access
+from . import documents_access_tracking
 from . import documents_document
 from . import documents_redirect
 from . import documents_tag

@@ -3,13 +3,14 @@ from unittest.mock import patch
 
 from odoo import Command, fields
 from odoo.addons.documents.tests.test_documents_common import TransactionCaseDocuments
+from odoo.addons.mail.tests.common import MockEmail
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import freeze_time, users
-from odoo.tools import mute_logger
+from odoo.tools import html2plaintext, mute_logger
 from odoo.tests.common import RecordCapturer
 
 
-class TestDocumentsAccess(TransactionCaseDocuments):
+class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
 
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule')
     def test_access_type_internal(self):
@@ -1569,3 +1570,83 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         }
         embedded_action_folder_b = self.document_gif.with_user(self.internal_user).available_embedded_actions_ids
         self.assertIn(embedded_action_folder_b.action_id.id, folder_b_embedded_server_action_ids)
+
+    def test_tracking_creation_on_access_rights_changes(self):
+        self.folder_a_a.unlink()
+        # 10 sub folders
+        sub_folder_ids = self.env['documents.document'].create([
+            {
+                'type': 'folder',
+                'name': f'sub folder A-{letter}',
+                'folder_id': self.folder_a.id,
+            } for letter in ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'j')
+        ])
+        # 10 sub sub folders = 100 sub sub folders in total
+        for sub_folder in sub_folder_ids:
+            self.env['documents.document'].create([
+                {
+                    'type': 'folder',
+                    'name': f'{sub_folder.name}-{count}',
+                    'folder_id': sub_folder.id,
+                    'children_ids': [Command.create({
+                        'name': f'File {count}',
+                    }) for count in range(10)]
+                    # 10 files in each sub sub folders = 1000 files
+                } for count in range(10)
+            ])
+        self.assertEqual(len(self.folder_a.children_ids), 10)
+        for child in self.folder_a.children_ids:
+            self.assertEqual(len(child.children_ids), 10)
+
+        self.assertEqual(self.folder_a.access_internal, 'view')
+
+        def _get_mail_messages(doc_ids):
+            return self.env['mail.message'].search([
+                ('res_id', 'in', doc_ids),
+                ('tracking_value_ids', '!=', False)
+            ])
+
+        folder_a_d = sub_folder_ids[3]
+        self.assertEqual(folder_a_d.access_internal, 'view')
+        folder_a_d.action_update_access_rights(
+            access_internal='edit', partners={self.portal_user.partner_id.id: ('view', False)})
+
+        with self.enter_registry_test_mode():
+            self.env.ref('documents.ir_cron_documents_access_tracking').method_direct_trigger()
+
+        folder_a_d_message_ids = _get_mail_messages(folder_a_d.ids + folder_a_d.children_ids.ids)
+        self.assertTrue(folder_a_d_message_ids.exists())
+        for message in folder_a_d_message_ids:
+            self.assertTracking(message, [
+                ('access_internal', 'char', 'Viewer', 'Editor')
+            ], strict=True)
+            self.assertIn('Portal user has gained access as\nViewer', html2plaintext(message.body))
+
+        self.folder_a.action_update_access_rights(
+            access_internal='edit', access_via_link='view', is_access_via_link_hidden=True,
+            partners={self.portal_user.partner_id.id: ('edit', False)})
+
+        while self.env['documents.access.tracking'].search_count([]) > 0:
+            with self.enter_registry_test_mode():
+                self.env.ref('documents.ir_cron_documents_access_tracking').method_direct_trigger()
+
+        other_folders_ids = sub_folder_ids - folder_a_d
+        message_ids = _get_mail_messages(other_folders_ids.ids + other_folders_ids.children_ids.ids)
+        self.assertTrue(message_ids.exists())
+        for message in message_ids:
+            self.assertTracking(message, [
+                ('access_internal', 'char', 'Viewer', 'Editor'),
+                ('access_via_link', 'char', 'None', 'Viewer'),
+                ('is_access_via_link_hidden', 'boolean', False, True),
+            ], strict=True)
+            self.assertIn('Portal user has gained access as\nEditor', html2plaintext(message.body))
+
+        folder_a_d_latest_message_ids = _get_mail_messages(folder_a_d.ids + folder_a_d.children_ids.ids).filtered(
+            lambda message: message.id not in folder_a_d_message_ids.ids
+        )
+        for message in folder_a_d_latest_message_ids:
+            self.assertTracking(message, [
+                ('access_via_link', 'char', 'None', 'Viewer'),
+                ('is_access_via_link_hidden', 'boolean', False, True),
+            ], strict=True)
+            self.assertIn('Portal user rights changed from\nViewer\nto\nEditor', html2plaintext(message.body))

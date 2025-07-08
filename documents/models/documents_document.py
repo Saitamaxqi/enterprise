@@ -1062,15 +1062,18 @@ class DocumentsDocument(models.Model):
                 "Incorrect values. Use one of the following for the following fields: %(hints)s.)", hints=hints
             ))
 
-        self._action_update_access(access_internal, access_via_link, is_access_via_link_hidden,
-                                   no_propagation=no_propagation)
+        changes_by_document_dict = self._action_update_access(
+            access_internal, access_via_link, is_access_via_link_hidden, no_propagation=no_propagation)
         if partners:
             partners = {
                 self.env['res.partner'].browse(int(partner)) if isinstance(partner, str | int) else partner:
                 (role, fields.Datetime.to_datetime(exp) if exp and isinstance(exp, str) else exp)
                 for partner, (role, exp) in (partners or {}).items()
             }
-            self._action_update_members(partners, no_propagation=no_propagation)
+            created_or_updated_access, removed_access = self._action_update_members(partners, no_propagation=no_propagation)
+            self._update_changes_by_document_dict(created_or_updated_access, removed_access, changes_by_document_dict)
+
+        self.env['documents.access.tracking']._create_access_tracking(changes_by_document_dict)
 
         return self.mapped('user_permission')
 
@@ -1086,6 +1089,7 @@ class DocumentsDocument(models.Model):
         :param bool no_propagation: whether to propagate access update to sub-folders
         """
         self.flush_model()
+        changes_by_document_dict = defaultdict(dict)
         for field, value in (
             ('access_internal', access_internal),
             ('access_via_link', access_via_link),
@@ -1114,21 +1118,21 @@ class DocumentsDocument(models.Model):
                 WITH RECURSIVE candidates AS (%(candidates)s),
                 -- explore the folders
                 documents_to_update AS (
-                    SELECT id
+                    SELECT id, %(field)s
                       FROM candidates
                      WHERE id = ANY(%(root_ids)s)
                      UNION
-                    SELECT child.id
+                    SELECT child.id, child.%(field)s
                       FROM candidates AS child
                       JOIN documents_to_update AS parent
                         ON child.folder_id = parent.id
                 ),
                 documents_and_shortcuts AS (
-                    SELECT id FROM documents_to_update
+                    SELECT id, %(field)s FROM documents_to_update
                      UNION
                 -- document.shortcut_ids
                 -- update in "SUDO" to keep them synchronized
-                    SELECT shortcut.id
+                    SELECT shortcut.id, shortcut.%(field)s
                       FROM documents_document AS shortcut
                       JOIN documents_to_update
                         ON documents_to_update.id = shortcut.shortcut_document_id
@@ -1138,7 +1142,11 @@ class DocumentsDocument(models.Model):
                       FROM documents_and_shortcuts AS doc
                         -- document | document.children_ids | document.shortcut_ids
                      WHERE documents_document.id = doc.id
+                 RETURNING doc.id, doc.%(field)s
             """, field=SQL(field), value=value, root_ids=self.ids, candidates=candidates))
+
+            for id, old_value in self.env.cr.fetchall():
+                changes_by_document_dict[id][field] = old_value
 
         self.invalidate_model([
             'access_internal',
@@ -1146,6 +1154,8 @@ class DocumentsDocument(models.Model):
             'is_access_via_link_hidden',
             'user_permission',
         ])
+
+        return changes_by_document_dict
 
     def _action_update_members(self, partners, no_propagation=False):
         """Update the members access on all files bellow the current folder.
@@ -1175,6 +1185,7 @@ class DocumentsDocument(models.Model):
 
         documents = self.with_context(active_test=False)._search(to_update_domain).select()
 
+        created_or_updated_access = []
         for (role, expiration_date), partners in values_to_update.items():
             if role not in ('edit', 'view'):
                 raise UserError(_("Invalid role."))  # The public method would have returned a more insightful message
@@ -1198,23 +1209,35 @@ class DocumentsDocument(models.Model):
                           FROM documents_document AS shortcut
                           JOIN documents AS document
                             ON document.id = shortcut.shortcut_document_id
+                    ),
+                    existing AS (
+                        SELECT document_id, partner_id, role, expiration_date
+                          FROM documents_access
+                          JOIN documents_and_shortcuts
+                            ON document_id = documents_and_shortcuts.id
+                           AND partner_id = any(%(partner_ids)s)
+                    ),
+                    updated_or_created AS (
+                        INSERT INTO documents_access (
+                                document_id,
+                                partner_id,
+                                role,
+                                expiration_date
+                        ) (
+                            SELECT DISTINCT ON (doc.id, partner_id) doc.id,
+                                   partner_id,
+                                   %(role)s,
+                                   %(expiration_date)s
+                              FROM documents_and_shortcuts AS doc
+                      JOIN LATERAL UNNEST(%(partner_ids)s) AS partner_id ON TRUE
+                        )
+                       ON CONFLICT (document_id, partner_id) DO UPDATE SET %(update_fields)s
+                         RETURNING document_id, partner_id, role, expiration_date
                     )
-                    INSERT INTO documents_access (
-                            document_id,
-                            partner_id,
-                            role,
-                            expiration_date
-                    ) (
-                        SELECT DISTINCT ON (doc.id, partner_id) doc.id,
-                               partner_id,
-                               %(role)s,
-                               %(expiration_date)s
-                          FROM documents_and_shortcuts AS doc
-                  JOIN LATERAL UNNEST(%(partner_ids)s) AS partner_id
-                               ON 1=1
-                    )
-                    ON CONFLICT (document_id, partner_id) DO UPDATE SET
-                        %(update_fields)s
+                    SELECT 'existing' as action, * FROM existing
+                    UNION ALL
+                    SELECT 'upsert' as action, * FROM updated_or_created
+                    ORDER BY action ASC
                 """,
                 documents=documents,
                 partner_ids=partners.ids,
@@ -1222,6 +1245,9 @@ class DocumentsDocument(models.Model):
                 role=role,
                 update_fields=update_fields,
             ))
+            created_or_updated_access += self.env.cr.fetchall()
+
+        removed_access = []
         if partners_to_remove:
             self.env.cr.execute(SQL("""
                 WITH documents AS (%(documents)s),
@@ -1238,13 +1264,45 @@ class DocumentsDocument(models.Model):
                       USING docs_and_shortcuts AS doc
                       WHERE access.document_id = doc.id
                         AND access.partner_id = ANY(%(partner_ids)s)
+                  RETURNING access.document_id, access.partner_id
             """, documents=documents, partner_ids=partners_to_remove.ids))
+            removed_access = self.env.cr.fetchall()
 
         self.env['documents.document'].invalidate_model([
             'access_ids',
             'user_permission',
         ])
         self.env['documents.access'].invalidate_model()
+
+        return created_or_updated_access, removed_access
+
+    @api.model
+    def _update_changes_by_document_dict(
+        self, created_or_updated_access, removed_access, changes_by_document_dict):
+        old_values = defaultdict(dict)
+        for action, doc, partner, role, exp in created_or_updated_access:
+            exp = fields.Date.to_string(exp) or 'None'
+            partner_dict = (changes_by_document_dict.setdefault(doc, {})
+                            .setdefault('members', {'added': {}, 'updated': {}, 'removed': []}))
+            if action == 'upsert':
+                if old := old_values[doc].get(partner):
+                    partner_dict['updated'][partner] = {
+                        'role': (old['role'], role),
+                        'expiration_date': (old['expiration_date'], exp),
+                    }
+                else:
+                    partner_dict['added'][partner] = {
+                        'role': role,
+                        'expiration_date': exp,
+                    }
+            elif action == 'existing':
+                old_values[doc][partner] = {
+                    'role': role,
+                    'expiration_date': exp,
+                }
+        for doc, partner in removed_access:
+            (changes_by_document_dict.setdefault(doc, {})
+            .setdefault('members', {'added': {}, 'updated': {}, 'removed': []})['removed'].append(partner))
 
     def _update_company(self, company_id):
         """Apply company to documents and children, without stopping (see _action_update_members).

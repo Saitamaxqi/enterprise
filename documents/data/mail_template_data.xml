@@ -387,5 +387,47 @@
                 </ul>
             </t>
         </template>
+
+        <template id="tracking_access_members_change">
+            <t t-if="created_access">
+                <span>The following members gained access:</span>
+                <ul class="mb-1">
+                    <li t-foreach="created_access.items()" t-as="access">
+                        <t t-out="partner_map.get(access[0]).name"/> has gained access as
+                        <t t-if="access[1]['role'] == 'view'">Viewer</t>
+                        <t t-else="">Editor</t>
+                    </li>
+                </ul>
+            </t>
+            <t t-if="updated_access">
+                <span>The following members had their rights changed:</span>
+                <ul class="mb-1">
+                    <li t-foreach="updated_access.items()" t-as="access">
+                        <t t-if="access[1]['role'][0] != access[1]['role'][1]">
+                            <span t-out="partner_map.get(access[0]).name"/> rights changed from
+                            <t t-if="access[1]['role'][0] == 'view'">Viewer</t>
+                            <t t-else="">Editor</t>
+                            to
+                            <t t-if="access[1]['role'][1] == 'view'">Viewer</t>
+                            <t t-else="">Editor</t>
+                            <span t-if="access[1]['expiration_date'][0] != access[1]['expiration_date'][1]">
+                                 and its expiration date changed from <t t-out="access[1]['expiration_date'][0]"/> to <t t-out="access[1]['expiration_date'][1]"/>
+                            </span>
+                        </t>
+                        <t t-elif="access[1]['expiration_date'][0] != access[1]['expiration_date'][1]">
+                            <span t-out="partner_map.get(access[0]).name"/> expiration date changed from <t t-out="access[1]['expiration_date'][0]"/> to <t t-out="access[1]['expiration_date'][1]"/>
+                        </t>
+                    </li>
+                </ul>
+            </t>
+            <t t-if="removed_access">
+                <span>The following members access were removed:</span>
+                <ul class="mb-1">
+                    <li t-foreach="removed_access" t-as="access">
+                        <span t-out="partner_map.get(access).name"/>
+                    </li>
+                </ul>
+            </t>
+        </template>
     </data>
 </odoo>
