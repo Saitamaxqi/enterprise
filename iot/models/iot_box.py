@@ -107,21 +107,3 @@ class IotBox(models.Model):
             for box in local_iot_boxes
         ])
         return wizard.add_iot_box_wizard_action()
-
-    @api.model
-    def _reload_iot_drivers(self, module_name):
-        new_module = self.env["ir.module.module"]._get(module_name)
-        if not new_module or new_module.state != "installed":
-            return
-
-        available_iot_boxes = self.search([("drivers_auto_update", "=", True)])
-        if not available_iot_boxes:
-            return
-
-        return {
-            "name": self.env._("Action required"),
-            "type": "ir.actions.act_window",
-            "view_mode": "form",
-            "res_model": "iot.reload.drivers.wizard",
-            "target": "new",
-        }
