@@ -16,21 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_cl_reports
-#: model:account.report.column,name:l10n_cl_reports.cl_eightcolumns_report_column_assets
-msgid "Assets"
-msgstr "Activos"
-
-#. module: l10n_cl_reports
-#: model:account.report.column,name:l10n_cl_reports.account_financial_report_f29_column
-msgid "Balance"
-msgstr "Saldo"
-
-#. module: l10n_cl_reports
-#: model:account.report,name:l10n_cl_reports.cl_eightcolumns_report
-msgid "Chilean Fiscal Balance (8 Columns)"
-msgstr "Balance fiscal chilena (8 columnas)"
-
-#. module: l10n_cl_reports
 #: model:ir.model,name:l10n_cl_reports.model_l10n_cl_report_handler
 msgid "Chilean Report Custom Handler"
 msgstr "Informe chileno Manipulador personalizado"
@@ -114,11 +99,6 @@ msgstr "Tasa PPM (%)"
 #: code:addons/l10n_cl_reports/models/account_eightcolumns_report.py:0
 msgid "Total"
 msgstr "Total"
-
-#. module: l10n_cl_reports
-#: model:account.report.line,name:l10n_cl_reports.account_financial_report_f29_line_0105
-msgid "Total Sales"
-msgstr "Ventas totales"
 
 #. module: l10n_cl_reports
 #: model:ir.model.fields,field_description:l10n_cl_reports.field_l10n_cl_report_handler__display_name

@@ -27,12 +27,6 @@ msgid "Accounting Report"
 msgstr "Apskaitos ataskaita"
 
 #. module: l10n_eu_oss_reports
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_imports_report_net
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_sales_report_net
-msgid "Amount excl. VAT"
-msgstr "Suma be PVM"
-
-#. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__availability_condition
 msgid "Availability"
 msgstr "Pasiekiamumas"
@@ -98,16 +92,6 @@ msgid "Intermediary Number"
 msgstr "Tarpininkavimo sąskaitos numeris"
 
 #. module: l10n_eu_oss_reports
-#: model:account.report,name:l10n_eu_oss_reports.oss_imports_report
-msgid "OSS Imports"
-msgstr "OSS-importai"
-
-#. module: l10n_eu_oss_reports
-#: model:account.report,name:l10n_eu_oss_reports.oss_sales_report
-msgid "OSS Sales"
-msgstr "OSS-pardavimas"
-
-#. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_l10n_eu_oss_tax_report_handler
 msgid "OSS Tax Report Custom Handler"
 msgstr "OSS-mokesčių ataskaitų pasirinktinis tvarkymas"
@@ -156,12 +140,6 @@ msgstr "Naudojamas įmonėms, kurios yra už ES ribų, bet nori naudoti OSS"
 #: model:ir.model.fields.selection,name:l10n_eu_oss_reports.selection__account_report__availability_condition__oss
 msgid "Using OSS"
 msgstr "OSS naudojimas"
-
-#. module: l10n_eu_oss_reports
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_imports_report_tax
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_sales_report_tax
-msgid "VAT"
-msgstr "PVM"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__voes

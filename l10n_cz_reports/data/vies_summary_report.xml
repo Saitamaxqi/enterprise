@@ -2,6 +2,7 @@
 <odoo>
     <record id="vies_summary_report" model="account.report">
         <field name="name">VIES summary report</field>
+        <field name="name@cs">Souhrnné hlášení VIES</field>
         <field name="availability_condition">country</field>
         <field name="country_id" ref="base.cz"/>
         <field name="load_more_limit" eval="80"/>
@@ -9,32 +10,38 @@
         <field name="column_ids">
             <record id="vies_summary_report_country_code" model="account.report.column">
                 <field name="name">Country Code</field>
+                <field name="name@cs">Kód země</field>
                 <field name="expression_label">country_code</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="vies_summary_report_vat_number" model="account.report.column">
                 <field name="name">VAT number</field>
+                <field name="name@cs">DIČ pořizovatele zboží</field>
                 <field name="expression_label">vat_number</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="vies_summary_report_supplies_code" model="account.report.column">
                 <field name="name">Supplies code</field>
+                <field name="name@cs">Kód plnění</field>
                 <field name="expression_label">supplies_code</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="vies_summary_report_supplies_number" model="account.report.column">
                 <field name="name">Supplies number</field>
+                <field name="name@cs">Počet plnění</field>
                 <field name="expression_label">supplies_number</field>
                 <field name="figure_type">integer</field>
             </record>
             <record id="vies_summary_report_total_value" model="account.report.column">
                 <field name="name">Total value</field>
+                <field name="name@cs">Hodnota plnění</field>
                 <field name="expression_label">total_value</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="vies_summary_report_line" model="account.report.line">
                 <field name="name">B. SECTION</field>
+                <field name="name@cs">B. ODDÍL</field>
                 <field name="groupby">partner_id, l10n_cz_transaction_code, id</field>
                 <field name="expression_ids">
                     <record id="vies_summary_report_line_country_code" model="account.report.expression">

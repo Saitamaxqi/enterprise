@@ -2,6 +2,7 @@
 <odoo>
     <record id="control_statement_report" model="account.report">
         <field name="name">VAT Control Statement</field>
+        <field name="name@cs">Kontrolní hlášení DPH</field>
         <field name="root_report_id" ref="account.generic_tax_report"/>
         <field name="country_id" ref="base.cz"/>
         <field name="load_more_limit" eval="80"/>
@@ -9,46 +10,55 @@
         <field name="column_ids">
             <record id="control_statement_country_code" model="account.report.column">
                 <field name="name">Country Code</field>
+                <field name="name@cs">Kód země</field>
                 <field name="expression_label">country_code</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="control_statement_vat_number" model="account.report.column">
                 <field name="name">VAT</field>
+                <field name="name@cs">DPH</field>
                 <field name="expression_label">vat_number</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="control_statement_journal_entry" model="account.report.column">
                 <field name="name">Tax document registration number</field>
+                <field name="name@cs">Evidenční číslo daňového dokladu</field>
                 <field name="expression_label">journal_entry</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="control_statement_taxable_supply_date" model="account.report.column">
                 <field name="name">Date of taxable supply/of obligation to declare</field>
+                <field name="name@cs">Data uskutečnění zdanitelného plnění (DUZP)/data povinnosti přiznat daň (DPPD)</field>
                 <field name="expression_label">taxable_supply_date</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="control_statement_tax_base_1" model="account.report.column">
                 <field name="name">Tax base (basic VAT rate)</field>
+                <field name="name@cs">Základ daně (základní sazba DPH)</field>
                 <field name="expression_label">tax_base_1</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="control_statement_tax_1" model="account.report.column">
                 <field name="name">Tax amount (basic VAT rate)</field>
+                <field name="name@cs">Částka daně (základní sazba DPH)</field>
                 <field name="expression_label">tax_1</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="control_statement_tax_base_2" model="account.report.column">
                 <field name="name">Tax base (reduced VAT rate)</field>
+                <field name="name@cs">Základ daně (snížená sazba DPH)</field>
                 <field name="expression_label">tax_base_2</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="control_statement_tax_2" model="account.report.column">
                 <field name="name">Tax amount (reduced VAT rate)</field>
+                <field name="name@cs">Částka daně (snížená sazba DPH)</field>
                 <field name="expression_label">tax_2</field>
                 <field name="figure_type">monetary</field>
             </record>
             <record id="control_statement_supplies_code" model="account.report.column">
                 <field name="name">Code of subject of supply</field>
+                <field name="name@cs">Kód předmětu plnění</field>
                 <field name="expression_label">supplies_code</field>
                 <field name="figure_type">string</field>
             </record>
@@ -56,9 +66,11 @@
         <field name="line_ids">
             <record id="control_statement_A" model="account.report.line">
                 <field name="name">A. Transactions in the domestic reverse charge regime</field>
+                <field name="name@cs">A. Transakce v tuzemském režimu přenesení daňové povinnosti</field>
                 <field name="children_ids">
                     <record id="control_statement_A1" model="account.report.line">
                         <field name="name">A.1. Realized taxable supplies in the domestic reverse charge regime</field>
+                        <field name="name@cs">A.1. Zdanitelná plnění uskutečněná v tuzemsku v režimu přenesení daňové povinnosti</field>
                         <field name="groupby">move_id,l10n_cz_supplies_code</field>
                         <field name="code">A1</field>
                         <field name="expression_ids">
@@ -96,6 +108,7 @@
                     </record>
                     <record id="control_statement_A2" model="account.report.line">
                         <field name="name">A.2. Received taxable supplies</field>
+                        <field name="name@cs">A.2. Přijatá zdanitelná plnění</field>
                         <field name="groupby">move_id</field>
                         <field name="code">A2</field>
                         <field name="expression_ids">
@@ -151,6 +164,7 @@
                     </record>
                     <record id="control_statement_A3" model="account.report.line">
                         <field name="name">A.3. Realized supplies in the special regime of investment gold</field>
+                        <field name="name@cs">A.3. Dodávky realizované ve speciálním režimu investičního zlata</field>
                         <field name="groupby">move_id</field>
                         <field name="code">A3</field>
                         <field name="expression_ids">
@@ -188,6 +202,7 @@
                     </record>
                     <record id="control_statement_A4" model="account.report.line">
                         <field name="name">A.4. Realized taxable supplies and received payments above CZK 10,000</field>
+                        <field name="name@cs">A.4. Uskutečněná zdanitelná plnění a přijaté platby nad 10.000,- Kč </field>
                         <field name="groupby">move_id</field>
                         <field name="code">A4</field>
                         <field name="expression_ids">
@@ -243,6 +258,7 @@
                     </record>
                     <record id="control_statement_A5" model="account.report.line">
                         <field name="name">A.5. Other realized taxable supplies and received payments up to CZK 10,000</field>
+                        <field name="name@cs">A.5. Ostatní uskutečněná zdanitelná plnění a přijaté platby do 10.000,- Kč</field>
                         <field name="code">A5</field>
                         <field name="expression_ids">
                             <record id="control_statement_A5_tax_base_1" model="account.report.expression">
@@ -276,9 +292,11 @@
             </record>
             <record id="control_statement_B" model="account.report.line">
                 <field name="name">B. Received taxable supplies with the place of supply in the country</field>
+                <field name="name@cs">B. Přijatá zdanitelná plnění s místem plnění v tuzemsku</field>
                 <field name="children_ids">
                     <record id="control_statement_B1" model="account.report.line">
                         <field name="name">B.1. Received taxable supplies in the domestic reverse charge regime</field>
+                        <field name="name@cs">B.1. Přijatá zdanitelná plnění v tuzemském režimu přenesení daňové povinnosti</field>
                         <field name="groupby">move_id,l10n_cz_supplies_code</field>
                         <field name="code">B1</field>
                         <field name="expression_ids">
@@ -334,6 +352,7 @@
                     </record>
                     <record id="control_statement_B2" model="account.report.line">
                         <field name="name">B.2. Received taxable supplies and provided payments above CZK 10,000</field>
+                        <field name="name@cs">B.2. Přijatá zdanitelná plnění a poskytnuté platby nad 10.000,- Kč</field>
                         <field name="groupby">move_id</field>
                         <field name="code">B2</field>
                         <field name="expression_ids">
@@ -383,6 +402,7 @@
                     </record>
                     <record id="control_statement_B3" model="account.report.line">
                         <field name="name">B.3. Received taxable supplies and provided payments up to CZK 10,000</field>
+                        <field name="name@cs">B.3. Přijatá zdanitelná plnění a poskytnuté platby do 10.000,- Kč</field>
                         <field name="code">B3</field>
                         <field name="expression_ids">
                             <record id="control_statement_B3_tax_base_1" model="account.report.expression">
@@ -415,9 +435,11 @@
             </record>
              <record id="control_statement_C" model="account.report.line">
                 <field name="name">C. Control lines towards VAT return</field>
+                <field name="name@cs">C. Kontrolní řádky pro Daňové přiznání k DPH (DaP)</field>
                 <field name="children_ids">
                     <record id="control_statement_C1" model="account.report.line">
                         <field name="name">A.4. + A.5. Total tax bases at the basic VAT rate</field>
+                        <field name="name@cs">A.4. + A.5. Celkové základy daně u základní sazby DPH</field>
                         <field name="code">C1</field>
                         <field name="expression_ids">
                             <record id="control_statement_C1_tax_base_1" model="account.report.expression">
@@ -430,6 +452,7 @@
                     </record>
                     <record id="control_statement_C2" model="account.report.line">
                         <field name="name">A.4. + A.5. Total tax bases at the reduced VAT rate</field>
+                        <field name="name@cs">A.4. + A.5. Celkové základy daně za sníženou sazbu DPH</field>
                         <field name="code">C2</field>
                         <field name="expression_ids">
                             <record id="control_statement_C2_tax_base_1" model="account.report.expression">
@@ -442,6 +465,7 @@
                     </record>
                     <record id="control_statement_C3" model="account.report.line">
                         <field name="name">B.2. + B.3. Total tax bases at the basic VAT rate</field>
+                        <field name="name@cs">B.2. + B.3. Celkové základy daně u základní sazby DPH</field>
                         <field name="code">C3</field>
                         <field name="expression_ids">
                             <record id="control_statement_C3_tax_base_1" model="account.report.expression">
@@ -454,6 +478,7 @@
                     </record>
                     <record id="control_statement_C4" model="account.report.line">
                         <field name="name">B.2. + B.3. Total tax bases at the reduced VAT rate</field>
+                        <field name="name@cs">B.2. + B.3. Celkové základy daně u snížené sazby DPH</field>
                         <field name="code">C4</field>
                         <field name="expression_ids">
                             <record id="control_statement_C4_tax_base_1" model="account.report.expression">
@@ -466,6 +491,7 @@
                     </record>
                     <record id="control_statement_C5" model="account.report.line">
                         <field name="name">A.1 Total tax base</field>
+                        <field name="name@cs">A.1 Celkový základ daně</field>
                         <field name="code">C5</field>
                         <field name="expression_ids">
                             <record id="control_statement_C5_tax_base_1" model="account.report.expression">
@@ -478,6 +504,7 @@
                     </record>
                     <record id="control_statement_C6" model="account.report.line">
                         <field name="name">B.1. Total tax bases at the basic VAT rate</field>
+                        <field name="name@cs">B.1 Celkové základy daně u základní sazby DPH</field>
                         <field name="code">C6</field>
                         <field name="expression_ids">
                             <record id="control_statement_C6_tax_base_1" model="account.report.expression">
@@ -490,6 +517,7 @@
                     </record>
                     <record id="control_statement_C7" model="account.report.line">
                         <field name="name">B.1. Total tax bases at the reduced VAT rate</field>
+                        <field name="name@cs">B.1. Celkové základy daně u snížené sazby DPH</field>
                         <field name="code">C7</field>
                         <field name="expression_ids">
                             <record id="control_statement_C7_tax_base_1" model="account.report.expression">
@@ -502,6 +530,7 @@
                     </record>
                     <record id="control_statement_C8" model="account.report.line">
                         <field name="name">A.2. Total tax bases</field>
+                        <field name="name@cs">A.2 Celkové základy daně</field>
                         <field name="code">C8</field>
                         <field name="expression_ids">
                             <record id="control_statement_C8_tax_base_1" model="account.report.expression">

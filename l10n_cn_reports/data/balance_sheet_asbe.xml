@@ -2,6 +2,7 @@
 <odoo auto_sequence="1">
     <record id="l10n_cn_asbe_bs" model="account.report">
         <field name="name">ASBE: Balance Sheet</field>
+        <field name="name@zh_CN">企业会计准则：资产负债表</field>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="country_id" ref="base.cn"/>
         <field name="filter_date_range" eval="False"/>
@@ -15,12 +16,14 @@
         <field name="column_ids">
             <record id="l10n_cn_asbe_bs_balance" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@zh_CN">余额</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>
         <field name="line_ids">
             <record id="l10n_cn_asbe_bs_cn_a" model="account.report.line">
                 <field name="name">1. Assets</field>
+                <field name="name@zh_CN">1. 资产</field>
                 <field name="code">CN_A</field>
                 <field name="hierarchy_level">0</field>
                 <field name="foldable" eval="False"/>
@@ -28,6 +31,7 @@
                 <field name="children_ids">
                     <record id="l10n_cn_asbe_bs_cn_ca" model="account.report.line">
                         <field name="name">Current Assets</field>
+                        <field name="name@zh_CN">流动资产</field>
                         <field name="code">CN_CA</field>
                         <field name="hierarchy_level">2</field>
                         <field name="foldable" eval="False"/>
@@ -35,6 +39,7 @@
                         <field name="children_ids">
                             <record id="l10n_cn_asbe_bs_cn_mf" model="account.report.line">
                                 <field name="name">Monetary Funds</field>
+                                <field name="name@zh_CN">货币资金</field>
                                 <field name="code">CN_MF</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -43,6 +48,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_tfa" model="account.report.line">
                                 <field name="name">Trading Financial Assets</field>
+                                <field name="name@zh_CN">交易性金融资产</field>
                                 <field name="code">CN_TFA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -51,6 +57,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_dfa" model="account.report.line">
                                 <field name="name">Derivative Financial Assets</field>
+                                <field name="name@zh_CN">衍生金融资产</field>
                                 <field name="code">CN_DFA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -59,6 +66,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_faur" model="account.report.line">
                                 <field name="name">Financial Assets Under Resale Agreements</field>
+                                <field name="name@zh_CN">买入返售金融资产</field>
                                 <field name="code">CN_FAUR</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="foldable" eval="True"/>
@@ -66,6 +74,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_nr" model="account.report.line">
                                 <field name="name">Notes Receivable</field>
+                                <field name="name@zh_CN">应收票据</field>
                                 <field name="code">CN_NR</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -74,6 +83,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ar" model="account.report.line">
                                 <field name="name">Accounts Receivable</field>
+                                <field name="name@zh_CN">应收账款</field>
                                 <field name="code">CN_AR</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -82,6 +92,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_rf" model="account.report.line">
                                 <field name="name">Receivables Financing</field>
+                                <field name="name@zh_CN">应收款项融资</field>
                                 <field name="code">CN_RF</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -90,6 +101,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_pr" model="account.report.line">
                                 <field name="name">Prepayments</field>
+                                <field name="name@zh_CN">预付账款</field>
                                 <field name="code">CN_PR</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -98,6 +110,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ot" model="account.report.line">
                                 <field name="name">Other Receivables</field>
+                                <field name="name@zh_CN">其他应收款</field>
                                 <field name="code">CN_OT</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -106,6 +119,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_inv" model="account.report.line">
                                 <field name="name">Inventory</field>
+                                <field name="name@zh_CN">库存</field>
                                 <field name="code">CN_INV</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -114,6 +128,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_cta" model="account.report.line">
                                 <field name="name">Contract Assets</field>
+                                <field name="name@zh_CN">合同资产</field>
                                 <field name="code">CN_CTA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -122,6 +137,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_afs" model="account.report.line">
                                 <field name="name">Assets Held For Sale</field>
+                                <field name="name@zh_CN">持有待售资产</field>
                                 <field name="code">CN_AFS</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -130,6 +146,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ncao" model="account.report.line">
                                 <field name="name">Non-Current Assets Due Within One Year</field>
+                                <field name="name@zh_CN">一年内到期的非流动资产</field>
                                 <field name="code">CN_NCAO</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -138,6 +155,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_oca" model="account.report.line">
                                 <field name="name">Other Current Assets</field>
+                                <field name="name@zh_CN">其他流动资产</field>
                                 <field name="code">CN_OCA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -148,6 +166,7 @@
                     </record>
                     <record id="l10n_cn_asbe_bs_cn_nca" model="account.report.line">
                         <field name="name">Non-Current Assets</field>
+                        <field name="name@zh_CN">非流动资产</field>
                         <field name="code">CN_NCA</field>
                         <field name="hierarchy_level">2</field>
                         <field name="foldable" eval="False"/>
@@ -155,6 +174,7 @@
                         <field name="children_ids">
                             <record id="l10n_cn_asbe_bs_cn_di" model="account.report.line">
                                 <field name="name">Debt Investment</field>
+                                <field name="name@zh_CN">债券投资</field>
                                 <field name="code">CN_DI</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -163,6 +183,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_odi" model="account.report.line">
                                 <field name="name">Other Debt Investments</field>
+                                <field name="name@zh_CN">其他债权投资</field>
                                 <field name="code">CN_ODI</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -171,6 +192,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ltr" model="account.report.line">
                                 <field name="name">Long-Term Receivables</field>
+                                <field name="name@zh_CN">长期应收款</field>
                                 <field name="code">CN_LTR</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -179,6 +201,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ltei" model="account.report.line">
                                 <field name="name">Long Term Equity Investment</field>
+                                <field name="name@zh_CN">长期股权投资</field>
                                 <field name="code">CN_LTEI</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -187,6 +210,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_oeii" model="account.report.line">
                                 <field name="name">Other Equity Instrument Investments</field>
+                                <field name="name@zh_CN">其他权益工具投资</field>
                                 <field name="code">CN_OEII</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -195,6 +219,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_oncfa" model="account.report.line">
                                 <field name="name">Other Non-Current Financial Assets</field>
+                                <field name="name@zh_CN">其他非流动金融资产</field>
                                 <field name="code">CN_ONCFA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -203,6 +228,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ire" model="account.report.line">
                                 <field name="name">Investment Real Estate</field>
+                                <field name="name@zh_CN">投资性房地产</field>
                                 <field name="code">CN_IRE</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -211,6 +237,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_fa" model="account.report.line">
                                 <field name="name">Fixed Assets</field>
+                                <field name="name@zh_CN">固定资产</field>
                                 <field name="code">CN_FA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -219,6 +246,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_cip" model="account.report.line">
                                 <field name="name">Construction In Progress</field>
+                                <field name="name@zh_CN">在建工程</field>
                                 <field name="code">CN_CIP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -227,6 +255,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_pba" model="account.report.line">
                                 <field name="name">Productive Biological Assets</field>
+                                <field name="name@zh_CN">生产性生物资产</field>
                                 <field name="code">CN_PBA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -235,6 +264,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_oga" model="account.report.line">
                                 <field name="name">Oil And Gas Assets</field>
+                                <field name="name@zh_CN">油气资产</field>
                                 <field name="code">CN_OGA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -243,6 +273,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_roua" model="account.report.line">
                                 <field name="name">Right-Of-Use Assets</field>
+                                <field name="name@zh_CN">使用权资产</field>
                                 <field name="code">CN_ROUA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -251,6 +282,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ia" model="account.report.line">
                                 <field name="name">Intangible Assets</field>
+                                <field name="name@zh_CN">无形资产</field>
                                 <field name="code">CN_IA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -259,6 +291,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_de" model="account.report.line">
                                 <field name="name">Development Expenditure</field>
+                                <field name="name@zh_CN">开发支出</field>
                                 <field name="code">CN_DE</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -267,6 +300,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_gw" model="account.report.line">
                                 <field name="name">Goodwill</field>
+                                <field name="name@zh_CN">商誉</field>
                                 <field name="code">CN_GW</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -275,6 +309,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ltde" model="account.report.line">
                                 <field name="name">Long-Term Deferred Expenses</field>
+                                <field name="name@zh_CN">长期待摊费用</field>
                                 <field name="code">CN_LTDE</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -283,6 +318,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_dta" model="account.report.line">
                                 <field name="name">Deferred Tax Assets</field>
+                                <field name="name@zh_CN">递延所得税资产</field>
                                 <field name="code">CN_DTA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -291,6 +327,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_onca" model="account.report.line">
                                 <field name="name">Other Non-Current Assets</field>
+                                <field name="name@zh_CN">其他非流动资产</field>
                                 <field name="code">CN_ONCA</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -303,6 +340,7 @@
             </record>
             <record id="l10n_cn_asbe_bs_cn_l" model="account.report.line">
                 <field name="name">Liabilities</field>
+                <field name="name@zh_CN">负债</field>
                 <field name="code">CN_L</field>
                 <field name="hierarchy_level">0</field>
                 <field name="foldable" eval="False"/>
@@ -310,6 +348,7 @@
                 <field name="children_ids">
                     <record id="l10n_cn_asbe_bs_cn_cl" model="account.report.line">
                         <field name="name">Current Liabilities</field>
+                        <field name="name@zh_CN">流动负债</field>
                         <field name="code">CN_CL</field>
                         <field name="hierarchy_level">2</field>
                         <field name="foldable" eval="False"/>
@@ -317,6 +356,7 @@
                         <field name="children_ids">
                             <record id="l10n_cn_asbe_bs_cn_stb" model="account.report.line">
                                 <field name="name">Short Term Borrowing</field>
+                                <field name="name@zh_CN">短期借款</field>
                                 <field name="code">CN_STB</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -325,6 +365,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ftl" model="account.report.line">
                                 <field name="name">Financial Trading Liabilities</field>
+                                <field name="name@zh_CN">交易性金融负债</field>
                                 <field name="code">CN_FTL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -333,6 +374,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_dfl" model="account.report.line">
                                 <field name="name">Derivative Financial Liabilities</field>
+                                <field name="name@zh_CN">衍生金融负债</field>
                                 <field name="code">CN_DFL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -341,6 +383,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_np" model="account.report.line">
                                 <field name="name">Notes Payable</field>
+                                <field name="name@zh_CN">应付票据</field>
                                 <field name="code">CN_NP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -349,6 +392,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ap" model="account.report.line">
                                 <field name="name">Accounts Payable</field>
+                                <field name="name@zh_CN">应付账款</field>
                                 <field name="code">CN_AP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -357,6 +401,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_avp" model="account.report.line">
                                 <field name="name">Advance Payment</field>
+                                <field name="name@zh_CN">预付款项</field>
                                 <field name="code">CN_AVP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -365,6 +410,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_col" model="account.report.line">
                                 <field name="name">Contract Liabilities</field>
+                                <field name="name@zh_CN">合同负债</field>
                                 <field name="code">CN_COL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -373,6 +419,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ecp" model="account.report.line">
                                 <field name="name">Employee Compensation Payable</field>
+                                <field name="name@zh_CN">应付职工薪酬</field>
                                 <field name="code">CN_ECP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -381,6 +428,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_tp" model="account.report.line">
                                 <field name="name">Taxes Payable</field>
+                                <field name="name@zh_CN">应交税费</field>
                                 <field name="code">CN_TP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -389,6 +437,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_op" model="account.report.line">
                                 <field name="name">Other Payables</field>
+                                <field name="name@zh_CN">其他应付款</field>
                                 <field name="code">CN_OP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -397,6 +446,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_lhfs" model="account.report.line">
                                 <field name="name">Liabilities Held For Sale</field>
+                                <field name="name@zh_CN">持有待售负债</field>
                                 <field name="code">CN_LHFS</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -405,6 +455,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_nclo" model="account.report.line">
                                 <field name="name">Non-Current Liabilities Due Within One Year</field>
+                                <field name="name@zh_CN">一年内到期的非流动负债</field>
                                 <field name="code">CN_NCLO</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -413,6 +464,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ocl" model="account.report.line">
                                 <field name="name">Other Current Liabilities</field>
+                                <field name="name@zh_CN">其他流动负债</field>
                                 <field name="code">CN_OCL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -423,6 +475,7 @@
                     </record>
                     <record id="l10n_cn_asbe_bs_cn_ncl" model="account.report.line">
                         <field name="name">Non-Current Liabilities</field>
+                        <field name="name@zh_CN">非流动负债</field>
                         <field name="code">CN_NCL</field>
                         <field name="hierarchy_level">2</field>
                         <field name="foldable" eval="False"/>
@@ -430,6 +483,7 @@
                         <field name="children_ids">
                             <record id="l10n_cn_asbe_bs_cn_ltb" model="account.report.line">
                                 <field name="name">Long Term Borrowing</field>
+                                <field name="name@zh_CN">长期借款</field>
                                 <field name="code">CN_LTB</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -438,6 +492,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_bp" model="account.report.line">
                                 <field name="name">Bonds Payable</field>
+                                <field name="name@zh_CN">应付债券</field>
                                 <field name="code">CN_BP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -446,6 +501,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ll" model="account.report.line">
                                 <field name="name">Lease Liability</field>
+                                <field name="name@zh_CN">租赁负债</field>
                                 <field name="code">CN_LL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -454,6 +510,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_ltp" model="account.report.line">
                                 <field name="name">Long-Term Payables</field>
+                                <field name="name@zh_CN">长期应付款</field>
                                 <field name="code">CN_LTP</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -462,6 +519,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_el" model="account.report.line">
                                 <field name="name">Estimated Liabilities</field>
+                                <field name="name@zh_CN">预计负债</field>
                                 <field name="code">CN_EL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -470,6 +528,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_dfi" model="account.report.line">
                                 <field name="name">Deferred Income</field>
+                                <field name="name@zh_CN">递延收益</field>
                                 <field name="code">CN_DFI</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -478,6 +537,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_dfitl" model="account.report.line">
                                 <field name="name">Deferred Income Tax Liability</field>
+                                <field name="name@zh_CN">递延所得税负债</field>
                                 <field name="code">CN_DFITL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -486,6 +546,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_oncl" model="account.report.line">
                                 <field name="name">Other Non-Current Liabilities</field>
+                                <field name="name@zh_CN">其他非流动负债</field>
                                 <field name="code">CN_ONCL</field>
                                 <field name="hierarchy_level">4</field>
                                 <field name="groupby">account_id</field>
@@ -498,6 +559,7 @@
             </record>
             <record id="l10n_cn_asbe_bs_cn_e" model="account.report.line">
                 <field name="name">Owner&apos;s equity (or Shareholders&apos; Equity):</field>
+                <field name="name@zh_CN">所有者权益（或股东权益）:</field>
                 <field name="code">CN_E</field>
                 <field name="hierarchy_level">0</field>
                 <field name="foldable" eval="False"/>
@@ -505,6 +567,7 @@
                 <field name="children_ids">
                     <record id="l10n_cn_asbe_bs_cn_pc" model="account.report.line">
                         <field name="name">Paid-In Capital (or Equity)</field>
+                        <field name="name@zh_CN">实收资本（或股本）</field>
                         <field name="code">CN_PC</field>
                         <field name="hierarchy_level">4</field>
                         <field name="groupby">account_id</field>
@@ -513,6 +576,7 @@
                     </record>
                     <record id="l10n_cn_asbe_bs_cn_oe" model="account.report.line">
                         <field name="name">Other Equity Instruments</field>
+                        <field name="name@zh_CN">其他权益</field>
                         <field name="code">CN_OE</field>
                         <field name="hierarchy_level">4</field>
                         <field name="groupby">account_id</field>
@@ -521,6 +585,7 @@
                     </record>
                     <record id="l10n_cn_asbe_bs_cn_cr" model="account.report.line">
                         <field name="name">Capital Reserve (Less Treasury Shares)</field>
+                        <field name="name@zh_CN">资本公积</field>
                         <field name="code">CN_CR</field>
                         <field name="hierarchy_level">4</field>
                         <field name="groupby">account_id</field>
@@ -529,6 +594,7 @@
                     </record>
                     <record id="l10n_cn_asbe_bs_cn_spr" model="account.report.line">
                         <field name="name">Special Reserve</field>
+                        <field name="name@zh_CN">专项储备</field>
                         <field name="code">CN_SPR</field>
                         <field name="hierarchy_level">4</field>
                         <field name="groupby">account_id</field>
@@ -537,6 +603,7 @@
                     </record>
                     <record id="l10n_cn_asbe_bs_cn_sr" model="account.report.line">
                         <field name="name">Surplus Reserve</field>
+                        <field name="name@zh_CN">盈余公积</field>
                         <field name="code">CN_SR</field>
                         <field name="hierarchy_level">4</field>
                         <field name="groupby">account_id</field>
@@ -545,6 +612,7 @@
                     </record>
                     <record id="l10n_cn_asbe_bs_cn_udpl" model="account.report.line">
                         <field name="name">Undistributed Profit</field>
+                        <field name="name@zh_CN">未分配利润</field>
                         <field name="code">CN_UDPL</field>
                         <field name="hierarchy_level">4</field>
                         <field name="foldable" eval="True"/>
@@ -552,6 +620,7 @@
                         <field name="children_ids">
                             <record id="l10n_cn_asbe_bs_cn_curr_year_earnings" model="account.report.line">
                                 <field name="name">Current Year Unallocated Earnings</field>
+                                <field name="name@zh_CN">本年未分配盈余</field>
                                 <field name="code">CN_CURR_YEAR_EARNINGS</field>
                                 <field name="hierarchy_level">6</field>
                                 <field name="foldable" eval="True"/>
@@ -578,6 +647,7 @@
                             </record>
                             <record id="l10n_cn_asbe_bs_cn_prev_year_earnings" model="account.report.line">
                                 <field name="name">Previous Years Unallocated Earnings</field>
+                                <field name="name@zh_CN">以前年度未分配利润</field>
                                 <field name="code">CN_PREV_YEAR_EARNINGS</field>
                                 <field name="hierarchy_level">6</field>
                                 <field name="foldable" eval="True"/>
@@ -607,6 +677,7 @@
             </record>
             <record id="l10n_cn_asbe_bs_cn_tle" model="account.report.line">
                 <field name="name">Total Liabilities and Owners&apos; Equity (or Shareholders&apos; Equity)</field>
+                <field name="name@zh_CN">负债和所有者权益总计</field>
                 <field name="code">CN_TLE</field>
                 <field name="hierarchy_level">0</field>
                 <field name="foldable" eval="False"/>

@@ -113,8 +113,3 @@ msgstr ""
 #: code:addons/l10n_cl_reports/models/account_eightcolumns_report.py:0
 msgid "Total"
 msgstr ""
-
-#. module: l10n_cl_reports
-#: model:account.report.line,name:l10n_cl_reports.account_financial_report_f29_line_0105
-msgid "Total Sales"
-msgstr ""

@@ -2,6 +2,7 @@
 <odoo>
     <record id="mod_347_statistics_real_estates_count" model="account.report.line">
         <field name="name">Número total de inmuebles</field>
+        <field name="name@es">Número total de inmuebles</field>
         <field name="code">aeat_mod_347_statistics_real_estates_count</field>
         <field name="groupby">l10n_es_real_estate_id</field>
         <field name="sequence" eval="3"/>
@@ -20,6 +21,7 @@
     </record>
     <record id="mod_347_real_estates" model="account.report.line">
         <field name="name">Relación de inmuebles</field>
+        <field name="name@es">Relación de inmuebles</field>
         <field name="code">aeat_mod_347_real_estates</field>
         <field name="report_id" ref="l10n_es_reports.mod_347"/>
         <field name="groupby">l10n_es_real_estate_id</field>
@@ -50,6 +52,7 @@
     </record>
     <record id="mod_347_operations_real_estates_title" model="account.report.line">
         <field name="name">Arrendamiento Local Negocio</field>
+        <field name="name@es">Arrendamiento local de negocio</field>
         <field name="code">aeat_mod_347_operations_real_estates_title</field>
         <field name="report_id" ref="l10n_es_reports.mod_347"/>
         <field name="parent_id" ref="l10n_es_reports.mod_347_operations_title"/>
@@ -58,6 +61,7 @@
         <field name="children_ids">
             <record id="mod_347_operations_real_estates_bought" model="account.report.line">
                 <field name="name">A - Adquisiciones de bienes y servicios superiores a 3.005,06 €</field>
+                <field name="name@es">A - Adquisiciones de bienes y servicios superiores a 3005,06 €</field>
                 <field name="code">aeat_mod_347_operations_real_estates_bought</field>
                 <field name="report_id" ref="l10n_es_reports.mod_347"/>
                 <field name="groupby">partner_id</field>
@@ -75,6 +79,7 @@
             </record>
             <record id="mod_347_operations_real_estates_sold" model="account.report.line">
                 <field name="name">B - Entregas de bienes y prestaciones de servicios superiores a 3.005,06 €</field>
+                <field name="name@es">B - Entregas de bienes y prestaciones de servicios superiores a 3005,06 €</field>
                 <field name="code">aeat_mod_347_operations_real_estates_sold</field>
                 <field name="report_id" ref="l10n_es_reports.mod_347"/>
                 <field name="groupby">partner_id</field>

@@ -78,6 +78,7 @@
                     </record>
                     <record id="account_financial_report_f29_line_0105" model="account.report.line">
                         <field name="name">Total Sales</field>
+                        <field name="name@es_419">Ventas totales</field>
                         <field name="code">CL_TOTVENT</field>
                         <field name="expression_ids">
                             <record id="account_financial_report_f29_line_0105_balance" model="account.report.expression">

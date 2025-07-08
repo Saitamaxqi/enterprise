@@ -63,65 +63,9 @@ msgid "2 Triangular"
 msgstr ""
 
 #. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.l10n_cz_reports_bs_aktiva_b_I_2_1
-msgid "2.1. Software"
-msgstr ""
-
-#. module: l10n_cz_reports
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__account_move_line__l10n_cz_transaction_code__3
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__product_template__l10n_cz_transaction_code__3
 msgid "3 Service"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A
-msgid "A. Transactions in the domestic reverse charge regime"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C5
-msgid "A.1 Total tax base"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A1
-msgid "A.1. Realized taxable supplies in the domestic reverse charge regime"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A2
-msgid "A.2. Received taxable supplies"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C8
-msgid "A.2. Total tax bases"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A3
-msgid "A.3. Realized supplies in the special regime of investment gold"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C1
-msgid "A.4. + A.5. Total tax bases at the basic VAT rate"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C2
-msgid "A.4. + A.5. Total tax bases at the reduced VAT rate"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A4
-msgid "A.4. Realized taxable supplies and received payments above CZK 10,000"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A5
-msgid ""
-"A.5. Other realized taxable supplies and received payments up to CZK 10,000"
 msgstr ""
 
 #. module: l10n_cz_reports
@@ -137,56 +81,6 @@ msgstr ""
 #. module: l10n_cz_reports
 #: model:ir.model,name:l10n_cz_reports.model_account_return_type
 msgid "Accounting Return Type"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B
-msgid "B. Received taxable supplies with the place of supply in the country"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.vies_summary_report_line
-msgid "B. SECTION"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B1
-msgid "B.1. Received taxable supplies in the domestic reverse charge regime"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C6
-msgid "B.1. Total tax bases at the basic VAT rate"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C7
-msgid "B.1. Total tax bases at the reduced VAT rate"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C3
-msgid "B.2. + B.3. Total tax bases at the basic VAT rate"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C4
-msgid "B.2. + B.3. Total tax bases at the reduced VAT rate"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B2
-msgid "B.2. Received taxable supplies and provided payments above CZK 10,000"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B3
-msgid "B.3. Received taxable supplies and provided payments up to CZK 10,000"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C
-msgid "C. Control lines towards VAT return"
 msgstr ""
 
 #. module: l10n_cz_reports
@@ -207,11 +101,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_product_product__l10n_cz_supplies_code
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_product_template__l10n_cz_supplies_code
 msgid "Code of Supply"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_supplies_code
-msgid "Code of subject of supply"
 msgstr ""
 
 #. module: l10n_cz_reports
@@ -240,12 +129,6 @@ msgid "Construction and assembly work - provision of workers"
 msgstr ""
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_country_code
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_country_code
-msgid "Country Code"
-msgstr ""
-
-#. module: l10n_cz_reports
 #: model_terms:ir.ui.view,arch_db:l10n_cz_reports.view_product_template_form
 msgid "Czech Accounting"
 msgstr ""
@@ -268,11 +151,6 @@ msgstr ""
 #. module: l10n_cz_reports
 #: model:ir.model,name:l10n_cz_reports.model_l10n_cz_tax_report_handler
 msgid "Czech Tax Report Custom Handler"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_taxable_supply_date
-msgid "Date of taxable supply/of obligation to declare"
 msgstr ""
 
 #. module: l10n_cz_reports
@@ -442,16 +320,6 @@ msgid "Special scheme code"
 msgstr ""
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_supplies_code
-msgid "Supplies code"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_supplies_number
-msgid "Supplies number"
-msgstr ""
-
-#. module: l10n_cz_reports
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__account_move_line__l10n_cz_supplies_code__19
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__product_template__l10n_cz_supplies_code__19
 msgid "Supply of electricity through systems or networks to a trader"
@@ -464,36 +332,6 @@ msgid "Tax"
 msgstr ""
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_1
-msgid "Tax amount (basic VAT rate)"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_2
-msgid "Tax amount (reduced VAT rate)"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_base_1
-msgid "Tax base (basic VAT rate)"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_base_2
-msgid "Tax base (reduced VAT rate)"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_journal_entry
-msgid "Tax document registration number"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_total_value
-msgid "Total value"
-msgstr ""
-
-#. module: l10n_cz_reports
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_move_line__l10n_cz_transaction_code
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_product_product__l10n_cz_transaction_code
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_product_template__l10n_cz_transaction_code
@@ -501,22 +339,6 @@ msgid "Transaction code"
 msgstr ""
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_vat_number
-msgid "VAT"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report,name:l10n_cz_reports.control_statement_report
-msgid "VAT Control Statement"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_vat_number
-msgid "VAT number"
-msgstr ""
-
-#. module: l10n_cz_reports
-#: model:account.report,name:l10n_cz_reports.vies_summary_report
 #: model:ir.actions.client,name:l10n_cz_reports.action_vies_summary_report
 #: model:ir.ui.menu,name:l10n_cz_reports.menu_action_vies_summary_report
 msgid "VIES summary report"

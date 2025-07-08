@@ -15,19 +15,23 @@
         <field name="column_ids">
             <record id="libro_giornale_report_code" model="account.report.column">
                 <field name="name">Code</field>
+                <field name="name@it">Codice</field>
                 <field name="expression_label">code</field>
                 <field name="figure_type">string</field>
             </record>
             <record id="libro_giornale_report_debit" model="account.report.column">
                 <field name="name">Debit</field>
+                <field name="name@it">Debito</field>
                 <field name="expression_label">debit</field>
             </record>
             <record id="libro_giornale_report_credit" model="account.report.column">
                 <field name="name">Credit</field>
+                <field name="name@it">Credito</field>
                 <field name="expression_label">credit</field>
             </record>
             <record id="libro_giornale_report_balance" model="account.report.column">
                 <field name="name">Balance</field>
+                <field name="name@it">Equilibrio</field>
                 <field name="expression_label">balance</field>
             </record>
         </field>

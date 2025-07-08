@@ -27,12 +27,6 @@ msgid "Accounting Report"
 msgstr "Kirjanpitoraportti"
 
 #. module: l10n_eu_oss_reports
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_imports_report_net
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_sales_report_net
-msgid "Amount excl. VAT"
-msgstr "Määrä ilman alv:tä"
-
-#. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__availability_condition
 msgid "Availability"
 msgstr "Saatavuus"
@@ -98,16 +92,6 @@ msgid "Intermediary Number"
 msgstr "Välitystilin numero"
 
 #. module: l10n_eu_oss_reports
-#: model:account.report,name:l10n_eu_oss_reports.oss_imports_report
-msgid "OSS Imports"
-msgstr "OSS-tuonnit"
-
-#. module: l10n_eu_oss_reports
-#: model:account.report,name:l10n_eu_oss_reports.oss_sales_report
-msgid "OSS Sales"
-msgstr "OSS-myynti"
-
-#. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_l10n_eu_oss_tax_report_handler
 msgid "OSS Tax Report Custom Handler"
 msgstr "OSS-veroraportin mukautettu käsittely"
@@ -158,12 +142,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_eu_oss_reports.selection__account_report__availability_condition__oss
 msgid "Using OSS"
 msgstr "Käyttää OSS:ia"
-
-#. module: l10n_eu_oss_reports
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_imports_report_tax
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_sales_report_tax
-msgid "VAT"
-msgstr "ALV"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__voes

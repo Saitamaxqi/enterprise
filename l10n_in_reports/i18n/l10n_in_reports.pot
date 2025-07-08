@@ -28,95 +28,6 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_b_1
-msgid "(1) As per section 17(5) of CGST/SGST Act"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_1
-msgid "(1) Import of goods"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_2
-msgid "(2) Import of services"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_b_2
-msgid "(2) Others"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_3
-msgid "(3) Inward supplies liable to reverse charge (other than 1 & 2 above)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_4
-msgid "(4) All other ITC"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a
-msgid "(A) ITC Available (Whether in full or part)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_b
-msgid "(B) Ineligible ITC"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_a
-msgid ""
-"(a) Outward Taxable supplies (other than zero rated, nil rated and exempted)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_b
-msgid "(b) Outward Taxable supplies (zero rated)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_c
-msgid "(c) Other Outward Taxable supplies (Nil rated, exempted)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_d
-msgid "(d) Inward supplies (liable to reverse charge)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_e
-msgid "(e) Non-GST Outward supplies"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1
-msgid ""
-"3.1 Details of Outward Supplies and inward supplies liable to reverse charge"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2
-msgid ""
-"3.2  Of the supplies shown in 3.1 (a), details of inter-state supplies made "
-"to unregistered persons, composition taxable person and UIN holders"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4
-msgid "4. Eligible ITC"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5
-msgid "5. Values of exempt, Nil-rated and non-GST inward supplies"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_account_move_form_inherit_account
 msgid ""
 "<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
@@ -384,37 +295,9 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_35
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_35
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_35
-msgid "Andaman and Nicobar"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_37
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_37
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_37
-msgid "Andhra Pradesh"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__04
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__quarter__04
 msgid "April"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_12
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_12
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_12
-msgid "Arunachal Pradesh"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_18
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_18
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_18
-msgid "Assam"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -458,26 +341,6 @@ msgid "Avatar 512"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_b2b
-msgid "B2B Invoice - 4A, 4B, 4C, 6B, 6C"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_b2cl
-msgid "B2C(Large) Invoice - 5A, 5B"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_b2cs
-msgid "B2C(Small) Details - 7"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.column,name:l10n_in_reports.profit_and_loss_column
-msgid "Balance"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__bank_configuration
 msgid "Bank Configuration"
 msgstr ""
@@ -498,12 +361,6 @@ msgid "Bank Template"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_base_column
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_base_column
-msgid "Base"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_account_batch_payment
 msgid "Batch Payment"
 msgstr ""
@@ -517,13 +374,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_status__being_processed
 msgid "Being Processed"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_10
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_10
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_10
-msgid "Bihar"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -541,21 +391,9 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_cess_column
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_cess_column
-msgid "CESS"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
 msgid "CESS Charges"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_cgst_column
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_cgst_column
-msgid "CGST"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -568,20 +406,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "Certain Product Lines"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_04
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_04
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_04
-msgid "Chandigarh"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_22
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_22
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_22
-msgid "Chattisgarh"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -606,11 +430,6 @@ msgid "Close"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_closing_amount0
-msgid "Closing Stock"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_res_company
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__company_ids
 msgid "Companies"
@@ -629,11 +448,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_cost_sales0
-msgid "Cost of Revenue"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -658,11 +472,6 @@ msgid "Created on"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnur
-msgid "Credit Debit Note (unregistered)(9B)"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-javascript
 #. odoo-python
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
@@ -678,44 +487,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnr
-msgid "Credit/Debit Notes (Registered)(9B)"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__currency_id
 msgid "Currency"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_26
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_26
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_26
-msgid "Dadra and Nagar Haveli"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_25
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_25
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_25
-msgid "Daman and Diu"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__12
 msgid "December"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_07
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_07
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_07
-msgid "Delhi"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_depreciation0
-msgid "Depreciation"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -767,36 +545,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
 msgid "E-invoice fetching is in progress."
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_eco_52
-msgid "ECO liable to deduct TCS u/s 52(14A)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_eco_9_5
-msgid "ECO liable to pay GST u/s 9(5)(14B)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_demand_draft
-msgid "ENet Demand Draft"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_fund_transfer
-msgid "ENet Fund Transfer"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_neft
-msgid "ENet NEFT"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_rtgs
-msgid "ENet RTGS"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -864,17 +612,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_exception
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_move__l10n_in_gstr2b_reconciliation_status__exception
 msgid "Exception"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_expense0
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_less_expenses0
-msgid "Expenses"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_exp
-msgid "Export Invoices(6A)"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -955,7 +692,8 @@ msgstr ""
 #. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid "File generation is in progress on the GST portal. Auto retry in 10 minutes."
+msgid ""
+"File generation is in progress on the GST portal. Auto retry in 10 minutes."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -989,11 +727,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "For Journal Entries"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_a
-msgid "From a supplier under composition scheme, Exempt and Nil rated supply"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1096,7 +829,6 @@ msgid "GST username"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report,name:l10n_in_reports.account_report_gstr1
 #: model:ir.ui.menu,name:l10n_in_reports.menu_account_report_gstr1
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
 msgid "GSTR-1"
@@ -1195,7 +927,6 @@ msgid "GSTR-3 Report"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report,name:l10n_in_reports.account_report_gstr3b
 #: model:ir.ui.menu,name:l10n_in_reports.menu_account_report_gstr3b
 msgid "GSTR-3B"
 msgstr ""
@@ -1248,18 +979,6 @@ msgid "Go to the configuration panel"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_30
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_30
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_30
-msgid "Goa"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_gross_profit0
-msgid "Gross Profit"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr1_blocking_level
 msgid "Gstr1 Blocking Level"
 msgstr ""
@@ -1285,13 +1004,6 @@ msgid "Gstr3B Closing Entry"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_24
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_24
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_24
-msgid "Gujarat"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "HSN for Service type product shall start with 99,"
@@ -1304,21 +1016,9 @@ msgid "HSN for other than Service type product shall not start with 99,"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_hsn
-msgid "HSN summary of outward supplies(12)"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
 msgid "HSN: %s"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_06
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_06
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_06
-msgid "Haryana"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1329,13 +1029,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__has_message
 msgid "Has Message"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_02
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_02
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_02
-msgid "Himachal Pradesh"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1355,12 +1048,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_config_settings__id
 msgid "ID"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_igst_column
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_igst_column
-msgid "IGST"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1443,11 +1130,6 @@ msgid "In case of issues re-fetch or re-match"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_totalincome0
-msgid "Income"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.actions.server,name:l10n_in_reports.ir_cron_auto_sync_einvoice_irn_ir_actions_server
 msgid "Indian Accounting: Download E-Invoice IRN Data"
 msgstr ""
@@ -1515,16 +1197,6 @@ msgid "Inter State Transactions"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_b_1
-msgid "Inter-State Supplies "
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_a_1
-msgid "Inter-State supplies"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_move__l10n_in_transaction_type__intra_state
 msgid "Intra State"
 msgstr ""
@@ -1533,12 +1205,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "Intra State Transactions"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_a_2
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_b_2
-msgid "Intra-State Supplies"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1593,23 +1259,9 @@ msgid "JSON with list of IRNs"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_01
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_01
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_01
-msgid "Jammu and Kashmir"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__01
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__quarter__01
 msgid "January"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_20
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_20
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_20
-msgid "Jharkhand"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1647,20 +1299,6 @@ msgid "June"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_29
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_29
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_29
-msgid "Karnataka"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_32
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_32
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_32
-msgid "Kerala"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/gst_return_period.py:0
 msgid ""
@@ -1676,13 +1314,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__label
 msgid "Label"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_31
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_31
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_31
-msgid "Lakshadweep"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1710,27 +1341,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.res_config_settings_view_form_inherit_l10n_in_gstr
 msgid "Logout from GST Portal"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_23
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_23
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_23
-msgid "Madhya Pradesh"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_27
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_27
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_27
-msgid "Maharashtra"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_14
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_14
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_14
-msgid "Manipur"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1775,13 +1385,6 @@ msgid "May"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_17
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_17
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_17
-msgid "Meghalaya"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__company_ids
 msgid "Members of this unit"
 msgstr ""
@@ -1803,13 +1406,6 @@ msgid "Missing HSN for Journal Items"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_15
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_15
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_15
-msgid "Mizoram"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__month
 msgid "Month"
 msgstr ""
@@ -1825,20 +1421,8 @@ msgid "My Activity Deadline"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_13
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_13
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_13
-msgid "Nagaland"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
 msgid "Need help? Checkout our tutorial"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_net_profit0
-msgid "Net Profit"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1854,16 +1438,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_nil
-msgid "Nil Rated Supplies(8A, 8B, 8C, 8D)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_b
-msgid "Non GST supply"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1920,38 +1494,9 @@ msgid "October"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_opening0
-msgid "Opening Stock"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_income0
-msgid "Operating Income"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_21
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_21
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_21
-msgid "Orissa"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
 msgid "Other Charges"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_other_income0
-msgid "Other Income"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_97
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_97
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_97
-msgid "Other Territory"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2046,25 +1591,6 @@ msgid "Processing is running in the background. You can continue your work."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report,name:l10n_in_reports.profit_and_loss
-msgid "Profit and Loss"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_34
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_34
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_34
-msgid "Puducherry"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_03
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_03
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_03
-msgid "Punjab"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
 msgid "Push to GSTN"
 msgstr ""
@@ -2083,13 +1609,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__periodicity__trimester
 msgid "Quarterly"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_08
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_08
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_08
-msgid "Rajasthan"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2155,12 +1674,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "SGST and CGST are not applicable for"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_sgst_column
-#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_sgst_column
-msgid "SGST/UTGST"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2231,13 +1744,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__sequence
 msgid "Sequence"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_11
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_11
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_11
-msgid "Sikkim"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2320,44 +1826,15 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp
-msgid "Supplies made to Composition Taxable Persons"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin
-msgid "Supplies made to UIN holders"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur
-msgid "Supplies made to Unregistered Persons"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/gst_return_period.py:0
 msgid "TO check status please push the GSTN"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_33
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_33
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_33
-msgid "Tamil Nadu"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/bill_qr_scan/bill_scan_template.xml:0
 msgid "Tap to scan the Bill"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_36
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_36
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_36
-msgid "Telangana"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2499,13 +1976,6 @@ msgid "Total Taxable amount as per GSTR-2B is %s"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_16
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_16
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_16
-msgid "Tripura"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr ""
@@ -2533,20 +2003,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/bill_qr_scan/bill_scan_template.xml:0
 msgid "Use QR code scanner attached to computer or scan using mobile camera."
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_09
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_09
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_09
-msgid "Uttar Pradesh"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_05
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_05
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_05
-msgid "Uttarakhand"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2617,13 +2073,6 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__website_message_ids
 msgid "Website communication history"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_19
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_19
-#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_19
-msgid "West Bengal"
 msgstr ""
 
 #. module: l10n_in_reports

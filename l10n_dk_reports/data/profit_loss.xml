@@ -2378,6 +2378,7 @@
 
     <record id="account_financial_report_dk_pnl_minimal" model="account.report">
         <field name="name">Profit and loss minimal</field>
+        <field name="name@da_DK">Resultat og tab minimalt</field>
         <field name="root_report_id" ref="account_reports.profit_and_loss"/>
         <field name="filter_unfold_all" eval="True"/>
         <field name="filter_journals" eval="True"/>
@@ -2392,23 +2393,27 @@
         <field name="line_ids">
             <record id="account_pnl_report_minimal_l10n_dk_1" model="account.report.line">
                 <field name="name">Result for the year</field>
+                <field name="name@da_DK">Årets resultat</field>
                 <field name="code">DK_min_result</field>
                 <field name="aggregation_formula">DK_min_result_before_tax.balance - DK_min_tax_profit.balance - DK_min_other_tax.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_pnl_report_minimal_l10n_dk_1_1" model="account.report.line">
                         <field name="name">a) Result before tax</field>
+                        <field name="name@da_DK">a) Resultat før skat</field>
                         <field name="code">DK_min_result_before_tax</field>
                         <field name="aggregation_formula">DK_min_gross.balance - DK_min_personnel_costs.balance - DK_min_depreciation.balance - DK_min_impairment.balance - DK_min_other_operating_costs.balance + DK_min_income_invest.balance + DK_min_income_other_invest.balance + DK_min_other_financial_income_affiliated.balance + DK_min_other_financial_income.balance + DK_min_impairment_financial_assets.balance - DK_min_financial_expenses.balance - DK_min_other_financial_costs.balance</field>
                         <field name="children_ids">
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_1" model="account.report.line">
                                 <field name="name">1. Gross profit/gross loss</field>
+                                <field name="name@da_DK">1. Bruttofortjeneste/bruttotab</field>
                                 <field name="code">DK_min_gross</field>
                                 <field name="aggregation_formula">DK_min_net_turnover.balance + DK_min_change_in_stocks.balance + DK_min_other_operating_income.balance - DK_min_cost_materials.balance - DK_min_other_external_costs.balance</field>
                                 <field name="foldable" eval="True"/>
                                 <field name="children_ids">
                                     <record id="account_pnl_report_minimal_l10n_dk_1_1_1_1" model="account.report.line">
                                         <field name="name">1. Net turnover</field>
+                                        <field name="name@da_DK">1. Nettoomsætning</field>
                                         <field name="code">DK_min_net_turnover</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2432,6 +2437,7 @@
                                     </record>
                                     <record id="account_pnl_report_minimal_l10n_dk_1_1_1_2" model="account.report.line">
                                         <field name="name">2. Change in stocks of finished goods and work in progress</field>
+                                        <field name="name@da_DK">2. Ændring i lagre af færdigvarer og varer under fremstilling</field>
                                         <field name="code">DK_min_change_in_stocks</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2450,6 +2456,7 @@
                                     </record>
                                     <record id="account_pnl_report_minimal_l10n_dk_1_1_1_3" model="account.report.line">
                                         <field name="name">3. Other operating income</field>
+                                        <field name="name@da_DK">3. Andre driftsindtægter</field>
                                         <field name="code">DK_min_other_operating_income</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2469,6 +2476,7 @@
                                     </record>
                                     <record id="account_pnl_report_minimal_l10n_dk_1_1_1_4" model="account.report.line">
                                         <field name="name">4. Cost of raw materials, consumables and services</field>
+                                        <field name="name@da_DK">4. Omkostninger til råvarer, hjælpematerialer og ydelser</field>
                                         <field name="code">DK_min_cost_materials</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2495,11 +2503,13 @@
                                     </record>
                                     <record id="account_pnl_report_minimal_l10n_dk_1_1_1_5" model="account.report.line">
                                         <field name="name">5. Other external costs</field>
+                                        <field name="name@da_DK">5. Andre eksterne omkostninger</field>
                                         <field name="code">DK_min_other_external_costs</field>
                                         <field name="aggregation_formula">DK_min_sales_costs.balance + DK_min_premises_costs.balance + DK_min_administrative_costs.balance</field>
                                         <field name="children_ids">
                                             <record id="account_pnl_report_minimal_l10n_dk_1_1_1_5_1" model="account.report.line">
                                                 <field name="name">a) Sales costs</field>
+                                                <field name="name@da_DK">a) Salgsmæssige omkostninger</field>
                                                 <field name="code">DK_min_sales_costs</field>
                                                 <field name="groupby">account_id</field>
                                                 <field name="foldable" eval="True"/>
@@ -2524,6 +2534,7 @@
                                             </record>
                                             <record id="account_pnl_report_minimal_l10n_dk_1_1_1_5_2" model="account.report.line">
                                                 <field name="name">b) Premises costs</field>
+                                                <field name="name@da_DK">b) Lokaleomkostninger</field>
                                                 <field name="code">DK_min_premises_costs</field>
                                                 <field name="groupby">account_id</field>
                                                 <field name="foldable" eval="True"/>
@@ -2556,6 +2567,7 @@
                                             </record>
                                             <record id="account_pnl_report_minimal_l10n_dk_1_1_1_5_3" model="account.report.line">
                                                 <field name="name">c) Administrative costs</field>
+                                                <field name="name@da_DK">c) Administrationsomkostninger</field>
                                                 <field name="code">DK_min_administrative_costs</field>
                                                 <field name="groupby">account_id</field>
                                                 <field name="foldable" eval="True"/>
@@ -2612,6 +2624,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_2" model="account.report.line">
                                 <field name="name">2. Personnel costs</field>
+                                <field name="name@da_DK">2. Lønninger</field>
                                 <field name="code">DK_min_personnel_costs</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2643,6 +2656,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_3" model="account.report.line">
                                 <field name="name">3. Depreciation, amortization and impairment of tangible and intangible fixed assets</field>
+                                <field name="name@da_DK">3. Af- og nedskrivninger af materielle og immaterielle anlægsaktiver</field>
                                 <field name="code">DK_min_depreciation</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2668,6 +2682,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_4" model="account.report.line">
                                 <field name="name">4. Impairment losses on current assets in excess of normal write-downs</field>
+                                <field name="name@da_DK">4. Nedskrivninger af omsætningsaktiver, som overstiger normale nedskrivninger</field>
                                 <field name="code">DK_min_impairment</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2682,6 +2697,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_5" model="account.report.line">
                                 <field name="name">5. Other operating costs</field>
+                                <field name="name@da_DK">5. Andre driftsomkostninger</field>
                                 <field name="code">DK_min_other_operating_costs</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2701,6 +2717,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_6" model="account.report.line">
                                 <field name="name">6. Income from investments</field>
+                                <field name="name@da_DK">6. Indtægter af kapitalandele i tilknyttede virksomheder</field>
                                 <field name="code">DK_min_income_invest</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2718,6 +2735,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_7" model="account.report.line">
                                 <field name="name">7. Income from other investments, securities and receivables that are fixed assets</field>
+                                <field name="name@da_DK">7. Indtægter af andre kapitalandele, værdipapirer og tilgodehavender, der er anlægsaktiver</field>
                                 <field name="code">DK_min_income_other_invest</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2735,6 +2753,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_8" model="account.report.line">
                                 <field name="name">8. Other financial income from affiliated enterprises</field>
+                                <field name="name@da_DK">8. Andre finansielle indtægter fra tilknyttede virksomheder</field>
                                 <field name="code">DK_min_other_financial_income_affiliated</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2749,6 +2768,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_9" model="account.report.line">
                                 <field name="name">9. Other financial income</field>
+                                <field name="name@da_DK">9. Andre finansielle indtægter</field>
                                 <field name="code">DK_min_other_financial_income</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2770,6 +2790,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_10" model="account.report.line">
                                 <field name="name">10. Impairment of financial assets</field>
+                                <field name="name@da_DK">10. Nedskrivning af finansielle aktiver</field>
                                 <field name="code">DK_min_impairment_financial_assets</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2784,6 +2805,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_11" model="account.report.line">
                                 <field name="name">11. Financial expenses arising from affiliated enterprises</field>
+                                <field name="name@da_DK">11. Finansielle omkostninger, der hidrører fra tilknyttede virksomheder</field>
                                 <field name="code">DK_min_financial_expenses</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2798,6 +2820,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_1_12" model="account.report.line">
                                 <field name="name">12. Other financial costs</field>
+                                <field name="name@da_DK">12. Øvrige finansielle omkostninger</field>
                                 <field name="code">DK_min_other_financial_costs</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2824,6 +2847,7 @@
                     </record>
                     <record id="account_pnl_report_minimal_l10n_dk_1_2" model="account.report.line">
                         <field name="name">b) Tax on profit for the year</field>
+                        <field name="name@da_DK">b) Skat af årets resultat</field>
                         <field name="code">DK_min_tax_profit</field>
                         <field name="expression_ids">
                             <record id="account_pnl_report_minimal_l10n_dk_1_2_balance" model="account.report.expression">
@@ -2836,6 +2860,7 @@
                         <field name="children_ids">
                             <record id="account_pnl_report_minimal_l10n_dk_1_2_1" model="account.report.line">
                                 <field name="name">1. Current tax</field>
+                                <field name="name@da_DK">1. Aktuel skat</field>
                                 <field name="code">DK_min_current_tax</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2850,6 +2875,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_2_2" model="account.report.line">
                                 <field name="name">2. Change in deferred tax</field>
+                                <field name="name@da_DK">2. Ændring af udskudt skat</field>
                                 <field name="code">DK_min_change_deffered</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2864,6 +2890,7 @@
                             </record>
                             <record id="account_pnl_report_minimal_l10n_dk_1_2_3" model="account.report.line">
                                 <field name="name">3. Adjustment relating to previous years</field>
+                                <field name="name@da_DK">3. Regulering vedrørende tidligere år</field>
                                 <field name="code">DK_min_adjustment</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -2880,6 +2907,7 @@
                     </record>
                     <record id="account_pnl_report_minimal_l10n_dk_1_3" model="account.report.line">
                         <field name="name">c) Other tax</field>
+                        <field name="name@da_DK">c) Andre skatter</field>
                         <field name="code">DK_min_other_tax</field>
                         <field name="groupby">account_id</field>
                         <field name="foldable" eval="True"/>

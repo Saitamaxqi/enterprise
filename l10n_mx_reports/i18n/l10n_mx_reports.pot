@@ -260,16 +260,6 @@ msgid "Type of Operation"
 msgstr ""
 
 #. module: l10n_mx_reports
-#: model:account.report.column,name:l10n_mx_reports.diot_third_party
-msgid "Type of Third"
-msgstr ""
-
-#. module: l10n_mx_reports
-#: model:account.report.column,name:l10n_mx_reports.diot_report_partner_vat_number
-msgid "VAT"
-msgstr ""
-
-#. module: l10n_mx_reports
 #: model_terms:ir.ui.view,arch_db:l10n_mx_reports.view_account_form_l10n_mx_reports
 msgid ""
 "Warning: this account doesn't follow Odoo's account guidelines.\n"

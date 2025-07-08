@@ -595,6 +595,7 @@
                                 <field name="children_ids">
                                     <record id="balance_full_line_21100" model="account.report.line">
                                         <field name="name">I. Capital</field>
+                                        <field name="name@es">I. Capital</field>
                                         <field name="code">l10n_es_full_line_21100</field>
                                         <field name="aggregation_formula">l10n_es_full_line_21110.balance + l10n_es_full_line_21120.balance</field>
                                         <field name="children_ids">

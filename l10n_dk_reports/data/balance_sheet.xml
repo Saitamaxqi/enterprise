@@ -2750,17 +2750,20 @@
         <field name="line_ids">
             <record id="account_balance_report_minimal_l10n_dk_active" model="account.report.line">
                 <field name="name">Active</field>
+                <field name="name@da_DK">AKTIVER</field>
                 <field name="code">DK_min_active</field>
                 <field name="aggregation_formula">DK_min_fixed.balance + DK_min_current.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_balance_report_minimal_l10n_dk_active_1" model="account.report.line">
                         <field name="name">1. Fixed assets</field>
+                        <field name="name@da_DK">1. Anlægsaktiver</field>
                         <field name="code">DK_min_fixed</field>
                         <field name="aggregation_formula">DK_min_intangible_fixed.balance + DK_min_tangible_fixed.balance + DK_min_financial_fixed.balance</field>
                         <field name="children_ids">
                             <record id="account_balance_report_minimal_l10n_dk_active_1_1" model="account.report.line">
                                 <field name="name">a) Intangible fixed assets</field>
+                                <field name="name@da_DK">a) Goodwill, årets tilgange</field>
                                 <field name="code">DK_min_intangible_fixed</field>
                                 <field name="aggregation_formula">DK_min_goodwill.balance + DK_min_acquired_intangible.balance</field>
                                 <field name="children_ids">
@@ -2786,6 +2789,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_1_2" model="account.report.line">
                                         <field name="name">2. Acquired intangible fixed assets</field>
+                                        <field name="name@da_DK">2. Erhvervede immaterielle anlægsaktiver</field>
                                         <field name="code">DK_min_acquired_intangible</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2808,11 +2812,13 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_active_1_2" model="account.report.line">
                                 <field name="name">b) Tangible fixed assets</field>
+                                <field name="name@da_DK">b) Materielle anlægsaktiver</field>
                                 <field name="code">DK_min_tangible_fixed</field>
                                 <field name="aggregation_formula">DK_min_investment_properties.balance + DK_min_investment_properties_const.balance + DK_min_land_buildings.balance + DK_min_prod_plant_machin.balance + DK_min_furnishing_rented.balance + DK_min_other_fixtures.balance + DK_min_tangible_fixes_constr.balance + DK_min_assets_under_leases.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_1" model="account.report.line">
                                         <field name="name">1. Investment properties</field>
+                                        <field name="name@da_DK">1. Investeringsejendomme</field>
                                         <field name="code">DK_min_investment_properties</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2834,6 +2840,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_2" model="account.report.line">
                                         <field name="name">2. Investment properties under construction</field>
+                                        <field name="name@da_DK">2. Investeringsejendomme under opførelse, bogført værdi primo</field>
                                         <field name="code">DK_min_investment_properties_const</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2855,6 +2862,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_3" model="account.report.line">
                                         <field name="name">3. Land and buildings</field>
+                                        <field name="name@da_DK">3. Grunde og bygninger, bogført værdi primo</field>
                                         <field name="code">DK_min_land_buildings</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2876,6 +2884,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_4" model="account.report.line">
                                         <field name="name">4. Production plant and machinery</field>
+                                        <field name="name@da_DK">4. Produktionsanlæg og maskiner</field>
                                         <field name="code">DK_min_prod_plant_machin</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2896,6 +2905,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_5" model="account.report.line">
                                         <field name="name">5. Furnishing of rented premises</field>
+                                        <field name="name@da_DK">5. Indretning af lejede lokaler</field>
                                         <field name="code">DK_min_furnishing_rented</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2916,6 +2926,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_6" model="account.report.line">
                                         <field name="name">6. Other fixtures and fittings, tools and equipment</field>
+                                        <field name="name@da_DK">6. Andre anlæg, driftsmateriel og inventar, bogført værdi primo</field>
                                         <field name="code">DK_min_other_fixtures</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2936,6 +2947,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_7" model="account.report.line">
                                         <field name="name">7. Tangible fixed assets under construction and prepayments for tangible fixed assets</field>
+                                        <field name="name@da_DK">7. Materielle anlægsaktiver under udførelse og forudbetalinger for materielle anlægsaktiver</field>
                                         <field name="code">DK_min_tangible_fixes_constr</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2956,6 +2968,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_2_8" model="account.report.line">
                                         <field name="name">8. Assets held under finance leases</field>
+                                        <field name="name@da_DK">8. Finansielt leasede aktiver</field>
                                         <field name="code">DK_min_assets_under_leases</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -2978,11 +2991,13 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_active_1_3" model="account.report.line">
                                 <field name="name">c) Financial fixed assets</field>
+                                <field name="name@da_DK">c) Finansielle anlægsaktiver</field>
                                 <field name="code">DK_min_financial_fixed</field>
                                 <field name="aggregation_formula">DK_min_receivables_participants.balance + DK_min_other_non_current_receivables.balance + DK_min_other_secu_equity.balance + DK_min_long_receivables_participating_interests.balance + DK_min_invest_participating_interests.balance + DK_min_long_receivables_affiliated.balance + DK_min_invest_affiliated_financial.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_3_1" model="account.report.line">
                                         <field name="name">1. Investments in affiliated enterprises</field>
+                                        <field name="name@da_DK">1. Kapitalandele i tilknyttede virksomheder</field>
                                         <field name="code">DK_min_invest_affiliated_financial</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3003,6 +3018,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_3_2" model="account.report.line">
                                         <field name="name">2. Long-term receivables from affiliated enterprises</field>
+                                        <field name="name@da_DK">2. Langfristede tilgodehavender hos tilknyttede virksomheder</field>
                                         <field name="code">DK_min_long_receivables_affiliated</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3019,6 +3035,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_3_3" model="account.report.line">
                                         <field name="name">3. Investments in participating interests</field>
+                                        <field name="name@da_DK">3. Kapitalandele i kapitalinteresser, bogført værdi primo</field>
                                         <field name="code">DK_min_invest_participating_interests</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3039,6 +3056,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_3_4" model="account.report.line">
                                         <field name="name">4. Long-term receivables from participating interests</field>
+                                        <field name="name@da_DK">4. Langfristede tilgodehavender hos kapitalinteresser</field>
                                         <field name="code">DK_min_long_receivables_participating_interests</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3055,6 +3073,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_3_5" model="account.report.line">
                                         <field name="name">5. Other securities and equity</field>
+                                        <field name="name@da_DK">5. Andre værdipapirer og kapitalandele</field>
                                         <field name="code">DK_min_other_secu_equity</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3070,6 +3089,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_3_6" model="account.report.line">
                                         <field name="name">6. Other (non-current) receivables</field>
+                                        <field name="name@da_DK">6. Andre tilgodehavender (langfristede)</field>
                                         <field name="code">DK_min_other_non_current_receivables</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3087,6 +3107,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_1_3_7" model="account.report.line">
                                         <field name="name">7. Receivables from enterprise participants and management</field>
+                                        <field name="name@da_DK">7. Tilgodehavender hos virksomhedsdeltagere og ledelse</field>
                                         <field name="code">DK_min_receivables_participants</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3106,16 +3127,19 @@
                     </record>
                     <record id="account_balance_report_minimal_l10n_dk_active_2" model="account.report.line">
                         <field name="name">2. Current assets</field>
+                        <field name="name@da_DK">2. Omsætningsaktiver</field>
                         <field name="code">DK_min_current</field>
                         <field name="aggregation_formula">DK_min_inventories.balance + DK_min_receivable.balance + DK_min_secu_equity_invest.balance + DK_min_cash.balance</field>
                         <field name="children_ids">
                             <record id="account_balance_report_minimal_l10n_dk_active_2_1" model="account.report.line">
                                 <field name="name">a) Inventories</field>
+                                <field name="name@da_DK">a) Omsætningsaktiver</field>
                                 <field name="code">DK_min_inventories</field>
                                 <field name="aggregation_formula">DK_min_raw_mat_consu_write_down.balance + DK_min_goods_manu_write_down.balance + DK_min_manu_goods_impairment.balance + DK_min_prepayments_goods.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_1_1" model="account.report.line">
                                         <field name="name">1. Raw materials, consumables and write-down</field>
+                                        <field name="name@da_DK">1. Råvarer og hjælpematerialer</field>
                                         <field name="code">DK_min_raw_mat_consu_write_down</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3132,6 +3156,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_1_2" model="account.report.line">
                                         <field name="name">2. Goods in the course of manufacture and write-down</field>
+                                        <field name="name@da_DK">2. Varer under fremstilling</field>
                                         <field name="code">DK_min_goods_manu_write_down</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3148,6 +3173,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_1_3" model="account.report.line">
                                         <field name="name">3. Manufactured and traded goods and impairment losses</field>
+                                        <field name="name@da_DK">3. Fremstillede varer og handelsvarer</field>
                                         <field name="code">DK_min_manu_goods_impairment</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3165,6 +3191,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_1_4" model="account.report.line">
                                         <field name="name">4. Prepayments for goods</field>
+                                        <field name="name@da_DK">4. Forudbetalinger for varer</field>
                                         <field name="code">DK_min_prepayments_goods</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3184,11 +3211,13 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_active_2_2" model="account.report.line">
                                 <field name="name">b) Receivables</field>
+                                <field name="name@da_DK">b) Tilgodehavender</field>
                                 <field name="code">DK_min_receivable</field>
                                 <field name="aggregation_formula">DK_min_trade_other_receiv_accumul.balance + DK_min_current_receivables_affiliated_other.balance + DK_min_work_in_progress_third.balance + DK_min_other_receivables_current.balance + DK_min_claims_payment_company.balance + DK_min_current_receivables.balance + DK_min_prepayment_accrued_income.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_2_1" model="account.report.line">
                                         <field name="name">1. Trade and other receivables and accumulated provision</field>
+                                        <field name="name@da_DK">1. Tilgodehavender fra salg og tjenesteydelser</field>
                                         <field name="code">DK_min_trade_other_receiv_accumul</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3205,6 +3234,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_2_2" model="account.report.line">
                                         <field name="name">2. Current receivables from affiliated enterprises and other</field>
+                                        <field name="name@da_DK">2. Kortfristede tilgodehavender hos tilknyttede virksomheder</field>
                                         <field name="code">DK_min_current_receivables_affiliated_other</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3223,6 +3253,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_2_3" model="account.report.line">
                                         <field name="name">3. Work in progress on behalf of third parties</field>
+                                        <field name="name@da_DK">3. Igangværende arbejder for fremmed regning</field>
                                         <field name="code">DK_min_work_in_progress_third</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3238,6 +3269,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_2_4" model="account.report.line">
                                         <field name="name">4. Other receivables (current)</field>
+                                        <field name="name@da_DK">4. Andre tilgodehavender (kortfristede)</field>
                                         <field name="code">DK_min_other_receivables_current</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3260,6 +3292,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_2_5" model="account.report.line">
                                         <field name="name">5. Claims for payment of company capital and share premium</field>
+                                        <field name="name@da_DK">5. Krav på indbetaling af virksomhedskapital og overkurs</field>
                                         <field name="code">DK_min_claims_payment_company</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3275,6 +3308,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_2_6" model="account.report.line">
                                         <field name="name">6. Current receivables from enterprise participants and management</field>
+                                        <field name="name@da_DK">6. Kortfristede tilgodehavender hos virksomhedsdeltagere og ledelse</field>
                                         <field name="code">DK_min_current_receivables</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3288,6 +3322,7 @@
                                     </record>
                                     <record id="account_balance_report_minimal_l10n_dk_active_2_2_7" model="account.report.line">
                                         <field name="name">7. Prepayments and accrued income</field>
+                                        <field name="name@da_DK">7. Periodeafgrænsningsposter, der kan opretholdes skattemæssigt</field>
                                         <field name="code">DK_min_prepayment_accrued_income</field>
                                         <field name="groupby">account_id</field>
                                         <field name="foldable" eval="True"/>
@@ -3306,6 +3341,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_active_2_3" model="account.report.line">
                                 <field name="name">c) Securities and equity investments</field>
+                                <field name="name@da_DK">c) Kapitalandele i tilknyttede virksomheder</field>
                                 <field name="code">DK_min_secu_equity_invest</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3322,6 +3358,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_active_2_4" model="account.report.line">
                                 <field name="name">d) Cash, cash equivalents and bank account</field>
+                                <field name="name@da_DK">d) Likvide beholdninger</field>
                                 <field name="code">DK_min_cash</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3346,17 +3383,20 @@
             </record>
             <record id="account_balance_report_minimal_l10n_dk_passive" model="account.report.line">
                 <field name="name">Passive</field>
+                <field name="name@da_DK">Passiver</field>
                 <field name="code">DK_min_passive</field>
                 <field name="aggregation_formula">DK_min_equity_capital.balance + DK_min_provisions.balance + DK_min_long_term_debt.balance + DK_min_short_term_debt.balance</field>
                 <field name="hierarchy_level">0</field>
                 <field name="children_ids">
                     <record id="account_balance_report_minimal_l10n_dk_passive_1" model="account.report.line">
                         <field name="name">1. Equity capital</field>
+                        <field name="name@da_DK">1. Egenkapital</field>
                         <field name="code">DK_min_equity_capital</field>
                         <field name="aggregation_formula">DK_min_working_capital.balance + DK_min_share_premium.balance + DK_min_reval_reserve.balance + DK_min_reserve_reval.balance + DK_min_other_reserves_equity.balance + DK_min_retained_earnings.balance + DK_min_proposed_dividend.balance</field>
                         <field name="children_ids">
                             <record id="account_balance_report_minimal_l10n_dk_passive_1_1" model="account.report.line">
                                 <field name="name">a) Working capital</field>
+                                <field name="name@da_DK">a) Virksomhedskapital</field>
                                 <field name="code">DK_min_working_capital</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3373,6 +3413,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_1_2" model="account.report.line">
                                 <field name="name">b) Share premium on issue</field>
+                                <field name="name@da_DK">b) Overkurs ved emission</field>
                                 <field name="code">DK_min_share_premium</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3386,6 +3427,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_1_3" model="account.report.line">
                                 <field name="name">c) Revaluation reserve</field>
+                                <field name="name@da_DK">c) Reserve for opskrivninger</field>
                                 <field name="code">DK_min_reval_reserve</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3399,6 +3441,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_1_4" model="account.report.line">
                                 <field name="name">d) Reserve for net revaluation under the equity method</field>
+                                <field name="name@da_DK">d) Reserve for nettoopskrivning efter den indre værdis metode</field>
                                 <field name="code">DK_min_reserve_reval</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3412,6 +3455,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_1_5" model="account.report.line">
                                 <field name="name">e) Other reserves</field>
+                                <field name="name@da_DK">e) Andre reserver</field>
                                 <field name="code">DK_min_other_reserves_equity</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3431,11 +3475,13 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_1_6" model="account.report.line">
                                 <field name="name">f) Retained earnings</field>
+                                <field name="name@da_DK">f) Overført resultat</field>
                                 <field name="code">DK_min_retained_earnings</field>
                                 <field name="aggregation_formula">DK_min_brought_forward.balance + DK_min_result_pnl.balance</field>
                                 <field name="children_ids">
                                     <record id="account_balance_report_minimal_l10n_dk_passive_1_6_1" model="account.report.line">
                                         <field name="name">1. Profit brought forward</field>
+                                        <field name="name@da_DK">1. Overført resultat</field>
                                         <field name="code">DK_min_brought_forward</field>
                                         <field name="expression_ids">
                                             <record id="account_balance_report_minimal_l10n_dk_passive_1_6_1_expr" model="account.report.expression">
@@ -3447,6 +3493,7 @@
                                     </record>
                                    <record id="account_financial_report_minimal_dk_profit_loss0" model="account.report.line">
                                         <field name="name">2. Profit or loss for the year</field>
+                                        <field name="name@da_DK">2. Årets overskud eller tab</field>
                                         <field name="code">DK_min_result_pnl</field>
                                         <field name="expression_ids">
                                             <record id="account_financial_report_minimal_dk_profit_loss0_balance" model="account.report.expression">
@@ -3461,6 +3508,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_1_7" model="account.report.line">
                                 <field name="name">g) Proposed dividend recognized in equity</field>
+                                <field name="name@da_DK">g) Foreslået udbytte indregnet under egenkapitalen</field>
                                 <field name="code">DK_min_proposed_dividend</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3476,11 +3524,13 @@
                     </record>
                     <record id="account_balance_report_minimal_l10n_dk_passive_2" model="account.report.line">
                         <field name="name">2. Provisions for liabilities and charges</field>
+                        <field name="name@da_DK">2. Hensatte forpligtelser</field>
                         <field name="code">DK_min_provisions</field>
                         <field name="aggregation_formula">DK_min_provisions_deferred_pensions.balance + DK_min_other_provisions.balance</field>
                         <field name="children_ids">
                             <record id="account_balance_report_minimal_l10n_dk_passive_2_1" model="account.report.line">
                                 <field name="name">a) Provision for deferred taxes and pensions</field>
+                                <field name="name@da_DK">a) Hensættelse til udskudt skat</field>
                                 <field name="code">DK_min_provisions_deferred_pensions</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3497,6 +3547,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_2_2" model="account.report.line">
                                 <field name="name">b) Other Provisions</field>
+                                <field name="name@da_DK">b) Andre hensatte forpligtelser</field>
                                 <field name="code">DK_min_other_provisions</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3514,11 +3565,13 @@
                     </record>
                     <record id="account_balance_report_minimal_l10n_dk_passive_3" model="account.report.line">
                         <field name="name">3. Long-term debt</field>
+                        <field name="name@da_DK">3. Langfristet gæld</field>
                         <field name="code">DK_min_long_term_debt</field>
                         <field name="aggregation_formula">DK_min_credit_banks.balance + DK_min_owed_payable_affiliated.balance + DK_min_other_long_term_debt.balance</field>
                         <field name="children_ids">
                             <record id="account_balance_report_minimal_l10n_dk_passive_3_1" model="account.report.line">
                                 <field name="name">a) Amounts owed to credit institutions and banks</field>
+                                <field name="name@da_DK">a) Gæld til kreditinstitutter</field>
                                 <field name="code">DK_min_credit_banks</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3535,6 +3588,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_3_2" model="account.report.line">
                                 <field name="name">b) Amounts owed to affiliated enterprises and payable to participating interests</field>
+                                <field name="name@da_DK">b) Gæld til tilknyttede virksomheder - langfristet gæld</field>
                                 <field name="code">DK_min_owed_payable_affiliated</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3551,6 +3605,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_3_3" model="account.report.line">
                                 <field name="name">c) Other debts, including taxes and social security contributions payable</field>
+                                <field name="name@da_DK">c) Anden gæld, herunder skyldige skatter og skyldige bidrag til social sikring</field>
                                 <field name="code">DK_min_other_long_term_debt</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3573,11 +3628,13 @@
                     </record>
                     <record id="account_balance_report_minimal_l10n_dk_passive_4" model="account.report.line">
                         <field name="name">4. Short-term debt</field>
+                        <field name="name@da_DK">4. Moms af varekøb udland, EU og ikke-EU</field>
                         <field name="code">DK_min_short_term_debt</field>
                         <field name="aggregation_formula">DK_min_owed_credit_institutions_bank_other.balance + DK_min_prepayments_custo.balance + DK_min_suppliers_goods_services.balance + DK_min_owed_payables_short_term.balance + DK_min_other_debts_taxes.balance + DK_min_prepayments_accrued_income.balance</field>
                         <field name="children_ids">
                             <record id="account_balance_report_minimal_l10n_dk_passive_4_1" model="account.report.line">
                                 <field name="name">a) Amounts owed to credit institutions, banks and other</field>
+                                <field name="name@da_DK">a) Gæld til kreditinstitutter</field>
                                 <field name="code">DK_min_owed_credit_institutions_bank_other</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3595,6 +3652,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_4_2" model="account.report.line">
                                 <field name="name">b) Prepayments received from customers</field>
+                                <field name="name@da_DK">b) Modtagne forudbetalinger fra kunder</field>
                                 <field name="code">DK_min_prepayments_custo</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3610,6 +3668,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_4_3" model="account.report.line">
                                 <field name="name">c) Suppliers of goods and services</field>
+                                <field name="name@da_DK">c) Leverandører af varer og tjenesteydelser</field>
                                 <field name="code">DK_min_suppliers_goods_services</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3625,6 +3684,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_4_4" model="account.report.line">
                                 <field name="name">d) Amounts owed to affiliated enterprises and payable to participating interests</field>
+                                <field name="name@da_DK">d) Gæld til tilknyttede virksomheder - kortfristet gæld</field>
                                 <field name="code">DK_min_owed_payables_short_term</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3641,6 +3701,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_4_5" model="account.report.line">
                                 <field name="name">e) Other debts, including taxes and social security contributions payable</field>
+                                <field name="name@da_DK">e) Gæld til selskabsdeltagere og ledelse - kortfristet gæld</field>
                                 <field name="code">DK_min_other_debts_taxes</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>
@@ -3681,6 +3742,7 @@
                             </record>
                             <record id="account_balance_report_minimal_l10n_dk_passive_4_6" model="account.report.line">
                                 <field name="name">f) Prepayments and accrued income</field>
+                                <field name="name@da_DK">f) Periodeafgrænsningsposter</field>
                                 <field name="code">DK_min_prepayments_accrued_income</field>
                                 <field name="groupby">account_id</field>
                                 <field name="foldable" eval="True"/>

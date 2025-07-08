@@ -21,313 +21,6 @@ msgid ", practicó en la ciudad de"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo
-msgid "1 ASSETS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_11
-msgid "11 CASH AND CASH EQUIVALENTS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_12
-msgid "12 INVESTMENTS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_13
-msgid "13 ACCOUNTS RECEIVABLE"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_14
-msgid "14 INVENTORIES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_15
-msgid "15 PROPERTY, PLANT AND EQUIPMENT"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_16
-msgid "16 INTANGIBLE ASSETS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_17
-msgid "17 DEFERRED ASSETS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_18
-msgid "18 OTHER ASSETS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_activo_19
-msgid "19 REVALUATIONS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo
-msgid "2 LIABILITIES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_21
-msgid "21 FINANCIAL OBLIGATIONS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_22
-msgid "22 TRADE PAYABLES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_23
-msgid "23 ACCOUNTS PAYABLE"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_24
-msgid "24 TAXES, LEVIES AND FEES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_25
-msgid "25 LABOR OBLIGATIONS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_26
-msgid "26 ESTIMATED LIABILITIES AND PROVISIONS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_27
-msgid "27 DEFERRED LIABILITIES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_28
-msgid "28 OTHER LIABILITIES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_pasivo_29
-msgid "29 BONDS AND COMMERCIAL PAPER"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio
-msgid "3 EQUITY"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_31
-msgid "31 SHARE CAPITAL"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_32
-msgid "32 CAPITAL SURPLUS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_33
-msgid "33 RESERVES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_34
-msgid "34 EQUITY REVALUATION"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_35
-msgid ""
-"35 DIVIDENDS OR PARTICIPATIONS DECREED IN SHARES, QUOTAS OR PARTIES OF "
-"SOCIAL INTEREST"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_36
-msgid "36 NET INCOME FOR THE YEAR"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_37
-msgid "37 RETAINED EARNINGS FROM PRIOR YEARS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_patrimonio_38
-msgid "38 REVALUATION SURPLUS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_ingresos
-msgid "4 INCOME"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_ingresos_41
-msgid "41 OPERATING REVENUE"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_ingresos_42
-msgid "42 NON-OPERATING REVENUE"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_ingresos_47
-msgid "47 INFLATION ADJUSTMENTS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_gastos
-msgid "5 EXPENSES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_gastos_51
-msgid "51 ADMINISTRATIVE EXPENSES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_gastos_52
-msgid "52 SELLING EXPENSES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_gastos_53
-msgid "53 NON-OPERATING EXPENSES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_gastos_54
-msgid "54 INCOME TAX AND SUPPLEMENTARY TAXES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_gastos_59
-msgid "59 GAINS AND LOSSES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_ventas
-msgid "6 COST OF SALES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_ventas_61
-msgid "61 COST OF GOODS SOLD AND SERVICES RENDERED"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_ventas_62
-msgid "62 PURCHASES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_prod
-msgid "7 PRODUCTION OR OPERATION COSTS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_prod_71
-msgid "71 RAW MATERIALS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_prod_72
-msgid "72 DIRECT LABOR"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_prod_73
-msgid "73 INDIRECT COSTS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_c_prod_74
-msgid "74 SERVICE CONTRACTS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_deud
-msgid "8 MEMORANDUM ACCOUNTS – DEBIT BALANCES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_deud_81
-msgid "81 CONTINGENT RIGHTS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_deud_82
-msgid "82 TAX DEBTORS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_deud_83
-msgid "83 CONTROL DEBTORS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_deud_84
-msgid "84 OFFSET CONTINGENT RIGHTS (CR)"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_deud_85
-msgid "85 OFFSET TAX DEBTORS (CR)"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_deud_86
-msgid "86 OFFSET CONTROL DEBTORS (CR)"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_acre
-msgid "9 MEMORANDUM ACCOUNTS – CREDIT BALANCES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_acre_91
-msgid "91 CONTINGENT LIABILITIES"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_acre_92
-msgid "92 TAX CREDITORS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_acre_93
-msgid "93 CONTROL CREDITORS"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_acre_94
-msgid "94 OFFSET CONTINGENT LIABILITIES (DB)"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_acre_95
-msgid "95 OFFSET TAX CREDITORS (DB)"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_cu_acre_96
-msgid "96 OFFSET CONTROL CREDITORS (DB)"
-msgstr ""
-
-#. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "<span>DAILY JOURNAL REPORT</span>"
 msgstr ""
@@ -393,7 +86,6 @@ msgid "<strong>TOTAL DE IMPUESTOS DESCONTABLES</strong>"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_diario_account_name
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "ACCOUNT"
 msgstr ""
@@ -401,16 +93,6 @@ msgstr ""
 #. module: l10n_co_reports
 #: model:ir.model.fields,field_description:l10n_co_reports.field_l10n_co_reports_retention_report_wizard__article
 msgid "Artículo"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_inv_blc_assets_expenses
-msgid "Assets + Expenses"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_inv_blc_column
-msgid "Balance"
 msgstr ""
 
 #. module: l10n_co_reports
@@ -429,7 +111,6 @@ msgid "CERTIFICADO DE RETENCIÓN POR TERCEROS"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_diario_line_credit
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "CREDIT"
 msgstr ""
@@ -510,19 +191,16 @@ msgid ""
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_diario_line_date
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "DATE"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_diario_line_debit
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "DEBIT"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report,name:l10n_co_reports.l10n_co_reports_libro_diario
 #: model:ir.actions.client,name:l10n_co_reports.action_account_report_libro_diario
 #: model:ir.actions.report,name:l10n_co_reports.action_report_libro_diario
 #: model:ir.ui.menu,name:l10n_co_reports.menu_action_account_report_libro_diario
@@ -614,12 +292,6 @@ msgid "Imprimir"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report,name:l10n_co_reports.l10n_co_reports_libro_inv_blc
-msgid "Inventory and Balance Report"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_diario_line_label
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "LABEL"
 msgstr ""
@@ -635,17 +307,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.line,name:l10n_co_reports.l10n_co_inv_blc_equity_liability
-msgid "Liabilities + Equity + Income"
-msgstr ""
-
-#. module: l10n_co_reports
 #: model:ir.model,name:l10n_co_reports.model_l10n_co_libro_diario_report_handler
 msgid "Libro Diario Report Custom Handler"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_diario_move_name
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "MOVE"
 msgstr ""
@@ -673,7 +339,6 @@ msgid "Nombre/Razón Social:"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_libro_diario_partner_name
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_libro_diario
 msgid "PARTNER"
 msgstr ""

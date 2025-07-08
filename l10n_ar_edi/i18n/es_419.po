@@ -53,8 +53,12 @@ msgstr "%(item)s: \"%(partner)s\" importe %(amount)s"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
-msgid ") \n                        <i class=\"fa fa-info-circle\" title=\"This value depends on the receivable account's currency, To change it to Yes change the account to one that use currency that differs to the company currency\" role=\"img\"/>"
-msgstr ") \n                        <i class=\"fa fa-info-circle\" title=\"Este valor depende de la moneda de la cuenta por cobrar. Para cambiarlo a Sí, cambie la cuenta por una que use una moneda diferente a la de la compañía\" role=\"img\"/>"
+msgid ""
+") \n"
+"                        <i class=\"fa fa-info-circle\" title=\"This value depends on the receivable account's currency, To change it to Yes change the account to one that use currency that differs to the company currency\" role=\"img\"/>"
+msgstr ""
+") \n"
+"                        <i class=\"fa fa-info-circle\" title=\"Este valor depende de la moneda de la cuenta por cobrar. Para cambiarlo a Sí, cambie la cuenta por una que use una moneda diferente a la de la compañía\" role=\"img\"/>"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -92,8 +96,12 @@ msgstr "17"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
-msgid "<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-specific.\" groups=\"base.group_multi_company\"/>"
-msgstr "<span class=\"fa fa-lg fa-building-o\" title=\"Los valores configurados aquí son específicos de la compañía.\" groups=\"base.group_multi_company\"/>"
+msgid ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
+"specific.\" groups=\"base.group_multi_company\"/>"
+msgstr ""
+"<span class=\"fa fa-lg fa-building-o\" title=\"Los valores configurados aquí"
+" son específicos de la compañía.\" groups=\"base.group_multi_company\"/>"
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
@@ -595,25 +603,10 @@ msgid "Domestic market -without detail- RG2485 (WSFEv1)"
 msgstr "Mercado interno -sin detalle- RG2485 (WSFEv1)"
 
 #. module: l10n_ar_edi
-#: model:account.journal,name:l10n_ar_edi.ws_fex_journal_ri
-msgid "Electronic Exportation Invoice (FEX)"
-msgstr "Factura Electrónica de Exportación (FEX)"
-
-#. module: l10n_ar_edi
-#: model:account.journal,name:l10n_ar_edi.ws_bfe_journal_ri
-msgid "Electronic Fiscal Bond (BFE)"
-msgstr "Bono Fiscal Electrónico (BFE)"
-
-#. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid "Electronic Fiscal Bond - Web Service"
 msgstr "Bono Fiscal Electrónico - Web Service"
-
-#. module: l10n_ar_edi
-#: model:account.journal,name:l10n_ar_edi.ws_fe_journal_ri
-msgid "Electronic Invoice (FE)"
-msgstr "Factura Electrónica (FE)"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -867,8 +860,12 @@ msgstr ""
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_company__l10n_ar_show_withholding_legend
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_config_settings__l10n_ar_show_withholding_legend
-msgid "If this option is selected, the legend 'Operation Subject to Withholding' will be added below the Document Type letter on the Invoice PDF."
-msgstr "Si se selecciona esta opción, se agregará la leyenda 'Operación Sujeta a Retención' debajo de la letra del Tipo de Documento en el PDF de la factura."
+msgid ""
+"If this option is selected, the legend 'Operation Subject to Withholding' "
+"will be added below the Document Type letter on the Invoice PDF."
+msgstr ""
+"Si se selecciona esta opción, se agregará la leyenda 'Operación Sujeta a "
+"Retención' debajo de la letra del Tipo de Documento en el PDF de la factura."
 
 #. module: l10n_ar_edi
 #. odoo-python

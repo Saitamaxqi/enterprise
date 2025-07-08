@@ -27,12 +27,6 @@ msgid "Accounting Report"
 msgstr "Rendiconto contabile"
 
 #. module: l10n_eu_oss_reports
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_imports_report_net
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_sales_report_net
-msgid "Amount excl. VAT"
-msgstr "Importo IVA esclusa"
-
-#. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_account_report__availability_condition
 msgid "Availability"
 msgstr "Disponibilità"
@@ -98,16 +92,6 @@ msgid "Intermediary Number"
 msgstr "Numero intermediario"
 
 #. module: l10n_eu_oss_reports
-#: model:account.report,name:l10n_eu_oss_reports.oss_imports_report
-msgid "OSS Imports"
-msgstr "Importazioni sportello unico"
-
-#. module: l10n_eu_oss_reports
-#: model:account.report,name:l10n_eu_oss_reports.oss_sales_report
-msgid "OSS Sales"
-msgstr "Vendite sportello unico"
-
-#. module: l10n_eu_oss_reports
 #: model:ir.model,name:l10n_eu_oss_reports.model_l10n_eu_oss_tax_report_handler
 msgid "OSS Tax Report Custom Handler"
 msgstr "Gestore personalizzato del resoconto fiscale OSS"
@@ -157,12 +141,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_eu_oss_reports.selection__account_report__availability_condition__oss
 msgid "Using OSS"
 msgstr "Usa lo sportello unico"
-
-#. module: l10n_eu_oss_reports
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_imports_report_tax
-#: model:account.report.column,name:l10n_eu_oss_reports.oss_sales_report_tax
-msgid "VAT"
-msgstr "IVA"
 
 #. module: l10n_eu_oss_reports
 #: model:ir.model.fields,field_description:l10n_eu_oss_reports.field_res_company__voes

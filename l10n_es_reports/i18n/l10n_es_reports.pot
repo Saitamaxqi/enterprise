@@ -498,12 +498,6 @@ msgid "I - Services acquisition"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.balance_full_line_21100
-#: model:account.report.line,name:l10n_es_reports.balance_pymes_line_21100
-msgid "I. Capital"
-msgstr ""
-
-#. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_res_company__l10n_es_reports_iae_group
 msgid "IAE Group or Heading"
 msgstr ""

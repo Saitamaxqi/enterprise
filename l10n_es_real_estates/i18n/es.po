@@ -37,11 +37,6 @@ msgid "4th"
 msgstr "4.°"
 
 #. module: l10n_es_real_estates
-#: model:account.report.line,name:l10n_es_real_estates.mod_347_operations_real_estates_bought
-msgid "A - Adquisiciones de bienes y servicios superiores a 3.005,06 €"
-msgstr "A - Adquisiciones de bienes y servicios superiores a 3005,06 €"
-
-#. module: l10n_es_real_estates
 #: model:ir.model.fields.selection,name:l10n_es_real_estates.selection__l10n_es_reports_real_estate__cadastral_reference__4
 msgid "Abroad"
 msgstr "En el extranjero"
@@ -67,21 +62,9 @@ msgid "Any data necessary to complete the address"
 msgstr "Toda la información necesaria para completar la dirección"
 
 #. module: l10n_es_real_estates
-#: model:account.report.line,name:l10n_es_real_estates.mod_347_operations_real_estates_title
-msgid "Arrendamiento Local Negocio"
-msgstr "Arrendamiento local de negocio"
-
-#. module: l10n_es_real_estates
 #: model:ir.model.fields.selection,name:l10n_es_real_estates.selection__l10n_es_reports_real_estate__cadastral_reference__2
 msgid "Autonomous Community"
 msgstr "Comunidad autónoma"
-
-#. module: l10n_es_real_estates
-#: model:account.report.line,name:l10n_es_real_estates.mod_347_operations_real_estates_sold
-msgid ""
-"B - Entregas de bienes y prestaciones de servicios superiores a 3.005,06 €"
-msgstr ""
-"B - Entregas de bienes y prestaciones de servicios superiores a 3005,06 €"
 
 #. module: l10n_es_real_estates
 #: model:ir.model,name:l10n_es_real_estates.model_l10n_es_reports_aeat_boe_mod347_export_wizard
@@ -270,11 +253,6 @@ msgid "Number of the building block in the street"
 msgstr "Número del bloque en la calle"
 
 #. module: l10n_es_real_estates
-#: model:account.report.line,name:l10n_es_real_estates.mod_347_statistics_real_estates_count
-msgid "Número total de inmuebles"
-msgstr "Número total de inmuebles"
-
-#. module: l10n_es_real_estates
 #: model:ir.model.fields,field_description:l10n_es_real_estates.field_l10n_es_reports_aeat_mod347_real_estates_vat__operation_class
 msgid "Operation Class"
 msgstr "Clase de operación"
@@ -349,11 +327,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_es_real_estates.selection__account_move__l10n_es_reports_mod347_invoice_type__real_estates
 msgid "Real estates operation"
 msgstr "Operación de inmuebles"
-
-#. module: l10n_es_real_estates
-#: model:account.report.line,name:l10n_es_real_estates.mod_347_real_estates
-msgid "Relación de inmuebles"
-msgstr "Relación de inmuebles"
 
 #. module: l10n_es_real_estates
 #: model:ir.model.fields,field_description:l10n_es_real_estates.field_l10n_es_reports_real_estate__invoice_ids

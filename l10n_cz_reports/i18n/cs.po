@@ -71,69 +71,10 @@ msgid "2 Triangular"
 msgstr "2 Trojúhelníkové"
 
 #. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.l10n_cz_reports_bs_aktiva_b_I_2_1
-msgid "2.1. Software"
-msgstr "2.1. Software"
-
-#. module: l10n_cz_reports
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__account_move_line__l10n_cz_transaction_code__3
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__product_template__l10n_cz_transaction_code__3
 msgid "3 Service"
 msgstr "3 Služba"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A
-msgid "A. Transactions in the domestic reverse charge regime"
-msgstr "A. Transakce v tuzemském režimu přenesení daňové povinnosti"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C5
-msgid "A.1 Total tax base"
-msgstr "A.1 Celkový základ daně"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A1
-msgid "A.1. Realized taxable supplies in the domestic reverse charge regime"
-msgstr ""
-"A.1. Zdanitelná plnění uskutečněná v tuzemsku v režimu přenesení daňové "
-"povinnosti"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A2
-msgid "A.2. Received taxable supplies"
-msgstr "A.2. Přijatá zdanitelná plnění"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C8
-msgid "A.2. Total tax bases"
-msgstr "A.2 Celkové základy daně"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A3
-msgid "A.3. Realized supplies in the special regime of investment gold"
-msgstr "A.3. Dodávky realizované ve speciálním režimu investičního zlata"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C1
-msgid "A.4. + A.5. Total tax bases at the basic VAT rate"
-msgstr "A.4. + A.5. Celkové základy daně u základní sazby DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C2
-msgid "A.4. + A.5. Total tax bases at the reduced VAT rate"
-msgstr "A.4. + A.5. Celkové základy daně za sníženou sazbu DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A4
-msgid "A.4. Realized taxable supplies and received payments above CZK 10,000"
-msgstr "A.4. Uskutečněná zdanitelná plnění a přijaté platby nad 10.000,- Kč "
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_A5
-msgid ""
-"A.5. Other realized taxable supplies and received payments up to CZK 10,000"
-msgstr ""
-"A.5. Ostatní uskutečněná zdanitelná plnění a přijaté platby do 10.000,- Kč"
 
 #. module: l10n_cz_reports
 #: model:ir.model,name:l10n_cz_reports.model_account_chart_template
@@ -149,58 +90,6 @@ msgstr "Účetní návratnost"
 #: model:ir.model,name:l10n_cz_reports.model_account_return_type
 msgid "Accounting Return Type"
 msgstr "Typ účetní návratnosti"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B
-msgid "B. Received taxable supplies with the place of supply in the country"
-msgstr "B. Přijatá zdanitelná plnění s místem plnění v tuzemsku"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.vies_summary_report_line
-msgid "B. SECTION"
-msgstr "B. ODDÍL"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B1
-msgid "B.1. Received taxable supplies in the domestic reverse charge regime"
-msgstr ""
-"B.1. Přijatá zdanitelná plnění v tuzemském režimu přenesení daňové "
-"povinnosti"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C6
-msgid "B.1. Total tax bases at the basic VAT rate"
-msgstr "B.1 Celkové základy daně u základní sazby DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C7
-msgid "B.1. Total tax bases at the reduced VAT rate"
-msgstr "B.1. Celkové základy daně u snížené sazby DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C3
-msgid "B.2. + B.3. Total tax bases at the basic VAT rate"
-msgstr "B.2. + B.3. Celkové základy daně u základní sazby DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C4
-msgid "B.2. + B.3. Total tax bases at the reduced VAT rate"
-msgstr "B.2. + B.3. Celkové základy daně u snížené sazby DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B2
-msgid "B.2. Received taxable supplies and provided payments above CZK 10,000"
-msgstr "B.2. Přijatá zdanitelná plnění a poskytnuté platby nad 10.000,- Kč"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_B3
-msgid "B.3. Received taxable supplies and provided payments up to CZK 10,000"
-msgstr "B.3. Přijatá zdanitelná plnění a poskytnuté platby do 10.000,- Kč"
-
-#. module: l10n_cz_reports
-#: model:account.report.line,name:l10n_cz_reports.control_statement_C
-msgid "C. Control lines towards VAT return"
-msgstr "C. Kontrolní řádky pro Daňové přiznání k DPH (DaP)"
 
 #. module: l10n_cz_reports
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__account_move_line__l10n_cz_supplies_code__12
@@ -223,11 +112,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_product_template__l10n_cz_supplies_code
 msgid "Code of Supply"
 msgstr "Kód plnění"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_supplies_code
-msgid "Code of subject of supply"
-msgstr "Kód předmětu plnění"
 
 #. module: l10n_cz_reports
 #: model:ir.model.fields,help:l10n_cz_reports.field_account_move_line__l10n_cz_supplies_code
@@ -255,12 +139,6 @@ msgid "Construction and assembly work - provision of workers"
 msgstr "Stavební a montážní práce – poskytnutí pracovníků"
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_country_code
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_country_code
-msgid "Country Code"
-msgstr "Kód země"
-
-#. module: l10n_cz_reports
 #: model_terms:ir.ui.view,arch_db:l10n_cz_reports.view_product_template_form
 msgid "Czech Accounting"
 msgstr "České účetnictví"
@@ -284,13 +162,6 @@ msgstr "Česká republika"
 #: model:ir.model,name:l10n_cz_reports.model_l10n_cz_tax_report_handler
 msgid "Czech Tax Report Custom Handler"
 msgstr "Vlastní zpracovatel českého daňového výkazu"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_taxable_supply_date
-msgid "Date of taxable supply/of obligation to declare"
-msgstr ""
-"Data uskutečnění zdanitelného plnění (DUZP)/data povinnosti přiznat daň "
-"(DPPD)"
 
 #. module: l10n_cz_reports
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__account_move_line__l10n_cz_supplies_code__18
@@ -462,16 +333,6 @@ msgid "Special scheme code"
 msgstr "Kód režimu plnění - Zvláštní režim"
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_supplies_code
-msgid "Supplies code"
-msgstr "Kód plnění"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_supplies_number
-msgid "Supplies number"
-msgstr "Počet plnění"
-
-#. module: l10n_cz_reports
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__account_move_line__l10n_cz_supplies_code__19
 #: model:ir.model.fields.selection,name:l10n_cz_reports.selection__product_template__l10n_cz_supplies_code__19
 msgid "Supply of electricity through systems or networks to a trader"
@@ -484,36 +345,6 @@ msgid "Tax"
 msgstr "Daň"
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_1
-msgid "Tax amount (basic VAT rate)"
-msgstr "Částka daně (základní sazba DPH)"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_2
-msgid "Tax amount (reduced VAT rate)"
-msgstr "Částka daně (snížená sazba DPH)"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_base_1
-msgid "Tax base (basic VAT rate)"
-msgstr "Základ daně (základní sazba DPH)"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_tax_base_2
-msgid "Tax base (reduced VAT rate)"
-msgstr "Základ daně (snížená sazba DPH)"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_journal_entry
-msgid "Tax document registration number"
-msgstr "Evidenční číslo daňového dokladu"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_total_value
-msgid "Total value"
-msgstr "Hodnota plnění"
-
-#. module: l10n_cz_reports
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_account_move_line__l10n_cz_transaction_code
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_product_product__l10n_cz_transaction_code
 #: model:ir.model.fields,field_description:l10n_cz_reports.field_product_template__l10n_cz_transaction_code
@@ -521,22 +352,6 @@ msgid "Transaction code"
 msgstr "Kód transakce"
 
 #. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.control_statement_vat_number
-msgid "VAT"
-msgstr "DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report,name:l10n_cz_reports.control_statement_report
-msgid "VAT Control Statement"
-msgstr "Kontrolní hlášení DPH"
-
-#. module: l10n_cz_reports
-#: model:account.report.column,name:l10n_cz_reports.vies_summary_report_vat_number
-msgid "VAT number"
-msgstr "DIČ pořizovatele zboží"
-
-#. module: l10n_cz_reports
-#: model:account.report,name:l10n_cz_reports.vies_summary_report
 #: model:ir.actions.client,name:l10n_cz_reports.action_vies_summary_report
 #: model:ir.ui.menu,name:l10n_cz_reports.menu_action_vies_summary_report
 msgid "VIES summary report"

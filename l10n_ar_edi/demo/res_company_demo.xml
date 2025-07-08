@@ -46,6 +46,7 @@
 
         <record id="ws_fe_journal_ri" model="account.journal">
             <field name='name'>Electronic Invoice (FE)</field>
+            <field name="name@es_419">Factura Electrónica (FE)</field>
             <field name='company_id' ref="base.company_ri"/>
             <field name='type'>sale</field>
             <field name='l10n_latam_use_documents' eval="True"/>
@@ -57,6 +58,7 @@
 
         <record id="ws_fex_journal_ri" model="account.journal">
             <field name='name'>Electronic Exportation Invoice (FEX)</field>
+            <field name="name@es_419">Factura Electrónica de Exportación (FEX)</field>
             <field name='company_id' ref="base.company_ri"/>
             <field name='type'>sale</field>
             <field name='l10n_latam_use_documents' eval="True"/>
@@ -68,6 +70,7 @@
 
         <record id="ws_bfe_journal_ri" model="account.journal">
             <field name='name'>Electronic Fiscal Bond (BFE)</field>
+            <field name="name@es_419">Bono Fiscal Electrónico (BFE)</field>
             <field name='company_id' ref="base.company_ri"/>
             <field name='type'>sale</field>
             <field name='l10n_latam_use_documents' eval="True"/>
