@@ -40,4 +40,4 @@ class AccountBatchPayment(models.Model):
         ]
 
         amls_to_create += (self.payment_ids - payments_with_move)._get_amls_for_payment_without_move()
-        return amls_to_create
+        return amls, amls_to_create
