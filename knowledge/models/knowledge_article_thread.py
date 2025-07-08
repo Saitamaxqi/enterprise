@@ -110,7 +110,7 @@ class KnowledgeArticleThread(models.Model):
 
     def _notify_get_recipients(self, message, msg_vals=False, **kwargs):
         recipients_data = super()._notify_get_recipients(message, msg_vals=msg_vals, **kwargs)
-        recipients_data = [data for data in recipients_data if data['id'] in msg_vals.get('partner_ids', [])]
+        recipients_data = [data for data in recipients_data if data['id'] in (msg_vals or {}).get('partner_ids', [])]
 
         return recipients_data
 
