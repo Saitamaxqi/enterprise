@@ -45,22 +45,32 @@ export class SignTemplateSidebar extends Component {
         onWillUpdateProps(() => this.updateSignerNames(this.props.signers));
     }
 
-    onClickAddSigner() {
-        this.props.pushNewSigner();
-        if (this.props.signers?.length > 0) {
-            const lastSigner = this.props.signers.at(-1);
-            this.props.updateCollapse(lastSigner.id, false);
-            setTimeout(() => {
-                const roleId = this.props.signers.at(-1).roleId;
-                const span = document.querySelector(`span[data-role-id="${roleId}"]`);
-                span?.click();
-                setTimeout(() => {
-                    const input = document.querySelector(`input[data-role-id="${roleId}"]`);
-                    input?.focus();
-                    input?.select();
-                }, 100);
-            }, 100);
-        }
+    focusOnNewAddedSigner(roleId) {
+        const spanSelector = `span[data-role-id="${roleId}"]`;
+        const inputSelector = `input[data-role-id="${roleId}"]`;
+
+        // Polling function to check if the input is available in the DOM
+        const checkInput = () => {
+            const span = document.querySelector(spanSelector);
+            const input = document.querySelector(inputSelector);
+
+            // If the span and input are found, focus on input
+            if (span && input) {
+                span.click();
+                input.focus();
+                input.select();
+            } else {
+                // If input is not found, wait for the next frame and check again
+                requestAnimationFrame(checkInput);
+            }
+        };
+
+        checkInput();
+    }
+
+    async onClickAddSigner() {
+        await this.props.pushNewSigner();
+        this.focusOnNewAddedSigner(this.props.signers.at(-1).roleId);
     }
 
     deleteSigner(signerId, roleId) {
