@@ -161,7 +161,8 @@ class ProviderDHL(models.Model):
 
         return commodities
 
-    def _get_picking_packages(self, picking):
+    def _dhl_rest_get_picking_packages(self, picking):
+        self.ensure_one()
         packages = []
 
         if picking.is_return_picking:
@@ -242,7 +243,7 @@ class ProviderDHL(models.Model):
             'receiverDetails': srm._get_to_vals(destination_partner_id)
         }
         if picking:
-            packages = self._get_picking_packages(picking)
+            packages = self._dhl_rest_get_picking_packages(picking)
         else:
             packages = self._get_order_packages(order)
         rating_request['packages'] = srm._get_package_vals(self, packages)

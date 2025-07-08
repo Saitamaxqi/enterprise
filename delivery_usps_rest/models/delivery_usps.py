@@ -270,7 +270,8 @@ class ProviderUSPS(models.Model):
 
         return commodities
 
-    def _get_picking_packages(self, picking):
+    def _usps_rest_get_picking_packages(self, picking):
+        self.ensure_one()
         packages = []
 
         if picking.is_return_picking:
@@ -367,7 +368,7 @@ class ProviderUSPS(models.Model):
                 'customsContentType': self.usps_rest_content_type,
             }
 
-            packages = self._get_picking_packages(picking)
+            packages = self._usps_rest_get_picking_packages(picking)
             shipping_data = {
                 'exact_price': [],
                 'tracking_number': [],

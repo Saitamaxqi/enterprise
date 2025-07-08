@@ -209,16 +209,16 @@ class DHLProvider:
         return export_declaration
 
     def _get_shipment_vals(self, picking):
-        packages = picking.carrier_id._get_picking_packages(picking)
+        packages = picking.carrier_id._dhl_rest_get_picking_packages(picking)
         return [{
             'weight': picking.carrier_id._dhl_rest_convert_weight(package['weight']),
             'dimensions': {
-                'length': package['dimension']['length'],
-                'width': package['dimension']['width'],
-                'height': package['dimension']['height'],
+                'length': package.get('dimension', {}).get('length', 0),
+                'width': package.get('dimension', {}).get('width', 0),
+                'height': package.get('dimension', {}).get('height', 0),
             },
-            'description': package['name'] or ''
-        } for sequence, package in enumerate(packages)]
+            'description': package.get('name', '')
+        } for package in packages]
 
     def _send_shipment(self, shipment_request):
         url = 'shipments'
