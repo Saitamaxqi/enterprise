@@ -321,6 +321,7 @@ class Website_GeneratorRequest(models.Model):
 
                 attributes = {
                     'src': src,
+                    'data-attachment-id': attachment.id,
                     'data-original-id': attachment.id,
                     'data-original-src': attachment.image_src,
                     'data-mimetype': mimetype,

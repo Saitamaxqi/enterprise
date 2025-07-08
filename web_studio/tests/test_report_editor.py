@@ -1267,6 +1267,7 @@ class TestReportEditorUIUnit(HttpCase):
                 <img class="myimg"
                     width="50"
                     height="50"
+                    data-attachment-id="{attach.id}"
                     data-original-id="{attach.id}"
                     data-original-src="/web/image/{attach.id}"
                     src="data:image/png;base64,{attach.datas.decode("utf-8")}"/>
