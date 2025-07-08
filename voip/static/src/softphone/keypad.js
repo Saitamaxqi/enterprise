@@ -1,6 +1,6 @@
 import { useSelection } from "@mail/utils/common/hooks";
 
-import { Component, htmlEscape, markup, useEffect, useRef } from "@odoo/owl";
+import { Component, markup, useEffect, useRef } from "@odoo/owl";
 
 import { KeypadModel } from "@voip/softphone/softphone_model";
 import { tabComponents } from "@voip/softphone/tab";
@@ -128,10 +128,9 @@ export class Keypad extends Component {
                     nameMatched.push({
                         contact,
                         id: contact.id + " (by name)",
-                        match: markup(
-                            [...nameParts.slice(0, i), match, ...nameParts.slice(i + 1)]
-                                .map(htmlEscape)
-                                .join(" ")
+                        match: htmlJoin(
+                            [...nameParts.slice(0, i), match, ...nameParts.slice(i + 1)],
+                            " "
                         ),
                     });
                     break;
