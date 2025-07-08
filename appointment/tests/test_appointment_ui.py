@@ -457,7 +457,7 @@ class AppointmentUITest(AppointmentUICommon):
                 'start_hour': slot_time.hour,
                 'end_hour': slot_time.hour + 1,
             })],
-            'avatars_display': 'hide',
+            'show_avatars': False,
             'is_auto_assign': False,
             'is_date_first': False,
         }])

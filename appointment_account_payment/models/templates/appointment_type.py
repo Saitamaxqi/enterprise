@@ -36,7 +36,7 @@ class AppointmentType(models.Model):
             'appointment_duration': 0.5,
             'slot_creation_interval': 0.5,
             'is_auto_assign': True,
-            'avatars_display': 'hide',
+            'show_avatars': False,
             'event_videocall_source': False,
             'has_payment_step': True,
             'location_id': self.env.company.partner_id.id,

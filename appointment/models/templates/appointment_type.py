@@ -72,8 +72,8 @@ class AppointmentType(models.Model):
             'appointment_duration': 1.0,
             'is_auto_assign': False,
             'is_date_first': False,
-            'avatars_display': 'show',
             'event_videocall_source': False,
+            'show_avatars': True,
             'staff_user_ids': [(6, 0, [self.env.user.id])],
         }
 
@@ -85,14 +85,14 @@ class AppointmentType(models.Model):
             'slot_creation_interval': 0.5,
             'is_auto_assign': False,
             'is_date_first': False,
-            'avatars_display': 'hide',
             'event_videocall_source': self._get_default_template_videocall_source(),
             'location_id': False,
             'name': _('Video Call'),
             'question_ids': [(0, 0, {
                 'name': _('Describe what you need'),
                 'question_type': 'text',
-            })]
+            })],
+            'show_avatars': False,
         }
 
     @api.model

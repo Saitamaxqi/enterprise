@@ -312,7 +312,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                    <field name="avatars_display" widget="radio" options="{'horizontal': true}" required="1"/>
+                                    <field name="show_avatars" required="1"/>
                                 </group>
                                 <group name="options_right_details">
                                     <field name="category_slot_scheduling" class="mb-0" widget="radio" options="{'horizontal': true}" invisible="category == 'anytime'"/>

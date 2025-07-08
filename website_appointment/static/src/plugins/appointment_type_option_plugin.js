@@ -38,7 +38,7 @@ export class BaseAppointmentAction extends BuilderAction {
         return (await this.services.orm.read(
             "appointment.type",
             [this.appointmentTypeId],
-            ["allow_guests", "avatars_display", "hide_duration", "hide_timezone"]
+            ["allow_guests", "hide_duration", "hide_timezone", "show_avatars"]
         ))[0];
     }
     async set(apply) {
@@ -77,7 +77,7 @@ export class AppointmentTypeShowDurationAction extends BaseAppointmentAction {
 export class AppointmentTypeShowAvatarsAction extends BaseAppointmentAction {
     static id = "appointmentTypeShowAvatars";
     setup() {
-        super.setup("avatars_display", "show", "hide");
+        super.setup("show_avatars", true, false);
     }
 }
 

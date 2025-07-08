@@ -55,16 +55,16 @@
                                 <t t-out="total_capacity_reserved"/> people
                             </div>
                         </div>
-                        <div t-if="(not appointment_type.is_auto_assign or appointment_type.avatars_display == 'show') and
+                        <div t-if="(not appointment_type.is_auto_assign or appointment_type.show_avatars) and
                                 (appointment_type.manage_capacity or
-                                    (len(resources) == 1 and appointment_type.avatars_display == 'hide' and is_html_empty(resources[0].description))
+                                    (len(resources) == 1 and not appointment_type.show_avatars and is_html_empty(resources[0].description))
                                 )" class="row mb-4">
                             <div class="col-3">
                                 <label class="text-muted">Resources</label>
                             </div>
                             <div class="col-9 col-lg-6">
                                 <div t-foreach="resources" t-as="resource" class="d-flex flex-nowrap gap-2 align-items-center mb-1">
-                                    <div t-if="appointment_type.avatars_display == 'show'"
+                                    <div t-if="appointment_type.show_avatars"
                                         class="o_appointment_avatar_container o_appointment_avatar_multi_resource ratio ratio-1x1">
                                         <div t-attf-style="background-image: url('/appointment/#{appointment_type.id}/resource_avatar?resource_id=#{resource.id}');"
                                             class="o_appointment_avatar_background rounded-circle"/>
@@ -101,7 +101,7 @@
                         <div t-if="appointment_type" t-out="appointment_type.message_confirmation" class="mt-4"/>
                     </div>
                     <div class="col-12 col-md-4 px-md-4">
-                        <t t-if="not appointment_type.is_auto_assign or appointment_type.avatars_display == 'show'"
+                        <t t-if="not appointment_type.is_auto_assign or appointment_type.show_avatars"
                             t-call="appointment.appointment_validated_card"/>
                     </div>
                 </div>

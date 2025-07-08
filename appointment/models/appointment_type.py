@@ -111,10 +111,6 @@ class AppointmentType(models.Model):
         string="Starts with", compute="_compute_select_first", readonly=False,
         help="What is selected first by the customer when booking an appointment.")
 
-    avatars_display = fields.Selection(
-        [('hide', 'No Picture'), ('show', 'Show Pictures')],
-        string='Display pictures', compute='_compute_avatars_display', readonly=False, store=True,
-        help="""Display the Users'/Resources' picture on the Website.""")
     category = fields.Selection([
         ('recurring', 'Regular'),
         ('punctual', 'Punctual'),
@@ -149,6 +145,9 @@ class AppointmentType(models.Model):
     # Display Settings
     hide_duration = fields.Boolean('Hide Duration')
     hide_timezone = fields.Boolean('Hide Time Zone')
+    show_avatars = fields.Boolean('Display pictures',
+        compute='_compute_show_avatars', readonly=False, store=True,
+        help="""Display user or resource images across the entire booking flow.""")
 
     # Scheduling Configuration
     min_cancellation_hours = fields.Float('Cancel Before (hours)', required=True, default=1.0)
@@ -282,13 +281,10 @@ class AppointmentType(models.Model):
             appointment.is_auto_assign = appointment.assignment_method == 'auto'
 
     @api.depends('category')
-    def _compute_avatars_display(self):
+    def _compute_show_avatars(self):
         """ By default, enable avatars for custom appointment types and hide them for recurring and punctual category ones."""
         for record in self:
-            if record.category not in ['punctual', 'recurring']:
-                record.avatars_display = 'show'
-            elif not record.avatars_display:
-                record.avatars_display = 'hide'
+            record.show_avatars = record.category not in ['punctual', 'recurring']
 
     @api.depends('start_datetime', 'end_datetime')
     def _compute_category(self):

@@ -54,7 +54,7 @@
         <xpath expr="//t[@t-set='selectionPossible']" position="after">
             <!-- Selection is no longer possible if a selection screen was shown beforehand -->
             <t t-set="selectionPossible"
-               t-value="selectionPossible and not (is_manual_assign_user_resource_first and appointment_type.avatars_display == 'show')"/>
+               t-value="selectionPossible and not (is_manual_assign_user_resource_first and appointment_type.show_avatars)"/>
         </xpath>
     </template>
 
@@ -67,7 +67,7 @@
         <xpath expr="//a[contains(@t-att-class, 'step==STEP_TIME')]" position="before">
             <t t-set="is_manual_assign_user_resource_first" t-value="not appointment_type.is_auto_assign and not appointment_type.is_date_first"/>
             <t t-set="STEP_OPERATOR_SELECT" t-value="10"/>
-            <t t-set="show_operator_select" t-value="step==STEP_OPERATOR_SELECT or appointment_type.avatars_display == 'show' and is_manual_assign_user_resource_first and len(users_or_resources_possible) > 1"/>
+            <t t-set="show_operator_select" t-value="step==STEP_OPERATOR_SELECT or appointment_type.show_avatars and is_manual_assign_user_resource_first and len(users_or_resources_possible) > 1"/>
             <t t-if="show_operator_select">
                 <li class="d-flex align-items-center">
                     <a t-att-class="'text-decoration-none text-truncate ' + (step==STEP_OPERATOR_SELECT and 'fw-bold text-reset cursor-default' or step&gt;STEP_OPERATOR_SELECT and ' ' or 'cursor-default text-muted')"
@@ -288,7 +288,7 @@
     <template id='appointment_booking_resource_description' name="Avatars">
         <t t-set="avatars_max_count" t-value="avatars_max_count or 6"/>
         <t t-set="booking_count" t-value="len(appointment.staff_user_ids)"/>
-        <t t-if="appointment.avatars_display == 'show' and appointment.schedule_based_on == 'users'">
+        <t t-if="appointment.show_avatars and appointment.schedule_based_on == 'users'">
             <div t-att-class="booking_count == 1 and 'badge d-flex align-items-center rounded-pill py-0 ps-0 bg-light fw-normal' or ''">
                 <span class="o_appointment_user_avatars d-flex">
                     <t t-foreach="appointment.staff_user_ids[:(avatars_max_count - 1)]" t-as="staff_user">

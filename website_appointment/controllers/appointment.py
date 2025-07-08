@@ -102,7 +102,7 @@ class WebsiteAppointment(AppointmentController):
             not appointment_type.active or \
             appointment_type.is_auto_assign or \
             appointment_type.is_date_first or \
-            appointment_type.avatars_display != 'show'
+            not appointment_type.show_avatars
         operator_selection = not skip_resource_selection and \
             appointment_type.schedule_based_on == 'users' and \
             not page_values['user_selected'] and \
@@ -130,7 +130,7 @@ class WebsiteAppointment(AppointmentController):
         else:
             resource_or_user_selected = values['user_selected'] if appointment_type.schedule_based_on == 'users' else values['resource_selected']
             values['hide_select_dropdown'] = values['hide_select_dropdown'] or (
-                appointment_type.avatars_display == 'show'
+                appointment_type.show_avatars
                 and resource_or_user_selected
                 and not (appointment_type.is_date_first and not appointment_type.is_auto_assign))
         return values

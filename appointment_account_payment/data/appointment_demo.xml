@@ -12,7 +12,7 @@
         </field>
         <field name="reminder_ids" eval="[(6, 0, [ref('calendar.alarm_notif_1')])]"/>
         <field name="staff_user_ids" eval="[(6, 0, [ref('base.user_admin'), ref('base.user_demo')])]"/>
-        <field name="avatars_display">show</field>
+        <field name="show_avatars">True</field>
         <field name="has_payment_step">True</field>
         <field name="product_id" ref="product_appointment_type_online_cooking_lesson"/>
         <field name="image_1920" type="base64" file="appointment/static/src/img/appointment_3.jpg"/>
