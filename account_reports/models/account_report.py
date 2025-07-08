@@ -2325,7 +2325,8 @@ class AccountReport(models.Model):
         markup1~account.account~5
         :param current (list<tuple>): list of tuple(markup, model, value)
         """
-        return self._build_line_id(current[:-1])
+        to_process = [(json.dumps(markup) if isinstance(markup, dict) else markup, model, value) for markup, model, value in current[:-1]]
+        return self._build_line_id(to_process)
 
     @api.model
     def _parse_markup(self, markup):
