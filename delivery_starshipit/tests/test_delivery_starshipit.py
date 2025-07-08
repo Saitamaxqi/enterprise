@@ -269,3 +269,23 @@ class TestDeliveryStarShipIt(TransactionCase):
             self.assertEqual(picking.carrier_price, 4.20, "Final carrier_price on picking should be updated by the cron.")
             final_delivery_line = sale_order.order_line.filtered('is_delivery')
             self.assertEqual(final_delivery_line.price_unit, 4.20, "Final SO delivery line cost should be updated by the cron.")
+
+    def test_partner_address_street2(self):
+        """ Ensure street2 is taken into account if not False """
+        au_partner_2 = self.env['res.partner'].create({
+            'name': 'Deco Addict',
+            'street': 'Unit 12 Floor 15',
+            'street2': '26 Acheron Road',
+            'city': 'Hazelwood North',
+            'country_id': self.env.ref('base.au').id,
+            'zip': 3840,
+            'state_id': self.env.ref('base.state_au_7').id,
+        })
+
+        starshipit_service = self.starshipit._get_starshipit()
+        # Without street2
+        partner_details = starshipit_service._populate_partner_details(self.au_partner)
+        self.assertEqual(partner_details['street'], '26 Acheron Road')
+        # With street2
+        partner_details = starshipit_service._populate_partner_details(au_partner_2)
+        self.assertEqual(partner_details['street'], 'Unit 12 Floor 15 26 Acheron Road')

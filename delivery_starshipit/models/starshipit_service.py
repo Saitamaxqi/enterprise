@@ -67,14 +67,14 @@ class Starshipit:
             currency_id = picking.sale_id.currency_id or picking.company_id.currency_id
         payload = {
             'sender': {
-                'street': warehouse_partner.street,
+                'street': ' '.join(filter(None, [warehouse_partner.street, warehouse_partner.street2])),
                 'city': warehouse_partner.city,
                 'state': warehouse_partner.state_id.code,
                 'post_code': warehouse_partner.zip,
                 'country_code': warehouse_partner.country_id.code,
             },
             'destination': {
-                'street': destination_partner.street,
+                'street': ' '.join(filter(None, [destination_partner.street, destination_partner.street2])),
                 'city': destination_partner.city,
                 'state': destination_partner.state_id.code,
                 'post_code': destination_partner.zip,
@@ -147,7 +147,7 @@ class Starshipit:
             'email': partner.email,
             'phone': partner.phone,
             'company': partner.commercial_company_name or partner.name,
-            'street': partner.street,
+            'street': ' '.join(filter(None, [partner.street, partner.street2])),
             'city': partner.city,
             'state': partner.state_id.code,
             'post_code': partner.zip,
@@ -217,7 +217,7 @@ class Starshipit:
     def _get_delivery_services(self, origin_partner):
         self._validate_partner_fields(origin_partner)
         return self._send_request('deliveryservices', method='POST', data={
-            'street': origin_partner.street,
+            'street': ' '.join(filter(None, [origin_partner.street, origin_partner.street2])),
             'post_code': origin_partner.zip,
             'country_code': origin_partner.country_code,
             'packages': [{}],
