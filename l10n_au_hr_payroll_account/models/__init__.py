@@ -14,3 +14,4 @@ from . import res_config_settings
 from . import account_batch_payment
 from . import l10n_au_payslip_ytd
 from . import hr_employee
+from . import account_return
