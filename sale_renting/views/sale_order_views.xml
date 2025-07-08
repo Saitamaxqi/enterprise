@@ -187,8 +187,8 @@
                 <filter string="Rentals" domain="[('is_rental_order', '=', True)]" name="from_rental"/>
                 <separator/>
                     <filter name="filter_today" string="To Do Today"
-                    domain="[('next_action_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),
-                            ('next_action_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    domain="[('next_action_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)).to_utc()),
+                            ('next_action_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)).to_utc())]"/>
                     <filter string="Late" name="rental_late_orders"
                     domain="[('rental_status', 'in', ['pickup', 'return']), ('next_action_date', '&lt;', (datetime.datetime.now() + relativedelta(hours=1)).strftime('%Y-%m-%d %H:%M:%S'))]"/>
                 <separator/>

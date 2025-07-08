@@ -15,10 +15,10 @@
                 <separator/>
                 <filter name="filter_today" string="To Do Today"
                     domain="['|',
-                            '&amp;', ('pickup_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),
-                            ('pickup_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59))),
-                            '&amp;', ('return_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),
-                            ('return_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                            '&amp;', ('pickup_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)).to_utc()),
+                            ('pickup_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)).to_utc()),
+                            '&amp;', ('return_date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)).to_utc()),
+                            ('return_date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)).to_utc())]"/>
                 <filter name="Late" domain="[('late', '=', True), ('report_line_status', '!=', 'returned')]"/>
                 <separator/>
                 <field name="product_id"/>
