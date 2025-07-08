@@ -25,6 +25,7 @@ class TestBarcodeClientAction(HttpCase):
         self.env.ref('base.group_user').write({'implied_ids': [Command.unlink(grp_uom.id)]})
         self.env.user.write({'group_ids': [Command.unlink(grp_uom.id)]})
 
+        self.env.user.email = 'info@example.com'
         self.supplier_location = self.env.ref('stock.stock_location_suppliers')
         self.stock_location = self.env.ref('stock.stock_location_stock')
         self.stock_location.write({
