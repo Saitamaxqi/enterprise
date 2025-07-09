@@ -106,7 +106,7 @@ export class IotWebsocket {
         }
 
         // Run the callbacks
-        const success = message.status === "success";
+        const success = message.status === "success" || message.status?.status === "connected"; // 'connected' is the serial driver success status
         const callbacks = success ? listeners.onSuccess : listeners.onFailure;
         for (const callback of callbacks) {
             callback(message, deviceIdentifier, messageId);

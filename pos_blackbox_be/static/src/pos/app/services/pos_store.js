@@ -485,19 +485,12 @@ patch(PosStore.prototype, {
         const fdm = this.hardwareProxy.deviceControllers.fiscal_data_module;
 
         return new Promise((resolve, reject) => {
-            const callback = (result) => {
-                if (result?.status !== "connected") {
-                    reject(result);
-                } else {
-                    resolve(result);
-                }
-            };
             this.iotHttp.action(
                 fdm.iotId,
                 fdm.identifier,
                 { action, high_level_message: data },
-                callback,
-                callback
+                (message) => resolve(message),
+                (message) => reject(message)
             );
         });
     },
@@ -517,16 +510,16 @@ patch(PosStore.prototype, {
     async pushToBlackbox(dataToSend) {
         try {
             const data = await this.pushDataToBlackbox(dataToSend, "registerReceipt");
-            const dataValue = this.extractValue(data);
-            if (dataValue.error && dataValue.error.errorCode != "000000") {
-                throw dataValue.error;
+            const result = this.extractResult(data);
+            if (result.error && result.error.errorCode != "000000") {
+                throw result.error;
             }
-            return dataValue;
+            return result;
         } catch (err) {
             //the catch might actually not be an error
-            const dataValue = this.extractValue(err);
-            if (dataValue?.error && dataValue.error.errorCode == "000000") {
-                return dataValue;
+            const result = this.extractResult(err);
+            if (result?.error && result.error.errorCode == "000000") {
+                return result;
             }
             if (err.errorCode.startsWith("202")) {
                 this.dialog.add(NumberPopup, {
@@ -541,11 +534,11 @@ patch(PosStore.prototype, {
             }
         }
     },
-    extractValue(data) {
-        if (Array.isArray(data.value)) {
-            return data.value[0];
+    extractResult(data) {
+        if (Array.isArray(data.result)) {
+            return data.result[0];
         } else {
-            return data.value;
+            return data.result;
         }
     },
     async getBlackboxFields(order, receiptType = false) {
