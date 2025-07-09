@@ -25,6 +25,8 @@ const QWEB_STYLING = ["class", "style"].map((attr) => [`t-att-${attr}`, `t-attf-
 const QWEB_T_OUT = ["t-field", "t-out", "t-esc"];
 
 export class QWebPlugin extends _QWebPlugin {
+    static shared = ["normalizeExpressions"];
+
     resources = {
         ...this.resources,
         selectionchange_handlers: extendLists(

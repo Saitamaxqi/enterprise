@@ -680,7 +680,7 @@ class TestReportEditorUIUnit(HttpCase):
                  <p t-field="doc.name" title="Name"/>
                </div>
                <p>
-                 <span t-field="doc.function">some default value</span>
+                 <span data-oe-demo="some default value" t-field="doc.function"/>
                </p>
              </t>
         """)
@@ -704,7 +704,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(new_view_arch, """
             <t t-name="studio_report_document">
                 <div class="page">
-                    <div class="oe_structure"><span t-field="doc.function">some default value</span>
+                    <div class="oe_structure"><span data-oe-demo="some default value" t-field="doc.function"/>
       Custo</div>
                 </div>
             </t>
@@ -863,7 +863,7 @@ class TestReportEditorUIUnit(HttpCase):
         self.assertXMLEqual(arch, """
             <t t-name="web_studio.test_report_document">
                 <div><p t-field="doc.name"/></div>
-                <p><span t-field="doc.company_id.x_new_file">file default value</span><span t-field="doc.company_id.x_new_image" t-options-widget="\'image\'" t-options-qweb_img_raw_data="1">image default value</span></p>
+                <p><span data-oe-demo="file default value" t-field="doc.company_id.x_new_file" /><span data-oe-demo="image default value" t-field="doc.company_id.x_new_image" t-options-widget="\'image\'" t-options-qweb_img_raw_data="1" /></p>
             </t>
         """)
 
@@ -883,7 +883,7 @@ class TestReportEditorUIUnit(HttpCase):
                         </tr>
                         <tr t-foreach="doc.activity_ids" t-as="x2many_record">
                            <td>
-                               <span t-field="x2many_record.summary">Some Summary</span>
+                               <span data-oe-demo="Some Summary" t-field="x2many_record.summary" />
                            </td>
                         </tr>
                     </tbody>
@@ -1289,10 +1289,11 @@ class TestReportEditorUIUnit(HttpCase):
                 <div><p t-field="doc.name"/></div>
                 <p>
                     <span
+                        data-oe-demo="file default value"
                         t-field="doc.avatar_1024"
                         t-options-widget="'image'"
                         t-options-qweb_img_raw_data="1"
-                    >file default value</span>
+                    />
                 </p>
             </t>
         """)
@@ -1443,7 +1444,7 @@ class TestReportEditorUIUnit(HttpCase):
         added_field = combined.xpath("//span[hasclass('studio-added')]")[0]
         added_field = added_field[0]
         self.assertTrue(added_field.get("t-field").startswith("company."))
-        self.assertEqual(added_field.text, "studio company id")
+        self.assertEqual(added_field.get("data-oe-demo"), "studio company id")
 
     def test_report_without_view(self):
         report = self.env["ir.actions.report"].create({

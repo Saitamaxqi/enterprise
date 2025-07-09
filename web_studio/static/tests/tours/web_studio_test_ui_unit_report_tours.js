@@ -516,46 +516,50 @@ registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
             trigger: ".o-we-powerbox .o-we-command-description:contains(Insert a field)",
             run: "click",
         },
+
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover",
+        },
+        {
+            trigger: ".o_model_field_selector_value",
+            run: "click",
         },
         {
             trigger:
                 ".o-web-studio-report-editor-wysiwyg div:has(> .o-web-studio-report-container)",
             async run() {
                 const placeholderBox = getBoundingClientRect.call(
-                    document.querySelector(".o-web-studio-field-dynamic-placeholder")
+                    document.querySelector(".o-web-studio-report-dynamic-placeholder-popover")
                 );
                 assertEqual(this.anchor.scrollTop, 0);
                 this.anchor.scrollTop = 9999;
                 await waitUntil(() => {
                     const newPlaceholderbox = getBoundingClientRect.call(
-                        document.querySelector(".o-web-studio-field-dynamic-placeholder")
+                        document.querySelector(".o-web-studio-report-dynamic-placeholder-popover")
                     );
                     // The field placeholder should have followed its anchor, and it happens that the anchor's container
                     // has been scrolled, so the anchor has moved upwards (and is actually outside of the viewPort, to the top)
                     return placeholderBox.top > newPlaceholderbox.top;
                 });
+                this.anchor.scrollTop = 0;
+                await new Promise(requestAnimationFrame);
             },
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_popover_search input",
             run: "edit Job Position",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_item_name:contains(Job Position)",
+            trigger: ".o_model_field_selector_popover_item_name:contains(Job Position)",
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_default_value_input input",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit some default value",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover",
-            run: "press Enter",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
+            run: "click",
         },
         {
             trigger:
@@ -609,49 +613,60 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
             run: "click",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder",
+            trigger: ".o_model_field_selector_value",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover",
         },
         {
             trigger:
                 ".o-web-studio-report-editor-wysiwyg div:has(> .o-web-studio-report-container)",
             async run() {
                 const placeholderBox = getBoundingClientRect.call(
-                    document.querySelector(".o-web-studio-field-dynamic-placeholder")
+                    document.querySelector(".o-web-studio-report-dynamic-placeholder-popover")
                 );
                 assertEqual(this.anchor.scrollTop, 0);
                 this.anchor.scrollTop = 9999;
                 await waitUntil(() => {
                     const newPlaceholderbox = getBoundingClientRect.call(
-                        document.querySelector(".o-web-studio-field-dynamic-placeholder")
+                        document.querySelector(".o-web-studio-report-dynamic-placeholder-popover")
                     );
                     // The field placeholder should have followed its anchor, and it happens that the anchor's container
                     // has been scrolled, so the anchor has moved upwards (and is actually outside of the viewPort, to the top)
                     return placeholderBox.top > newPlaceholderbox.top;
                 });
+                this.anchor.scrollTop = 0;
+                await new Promise(requestAnimationFrame);
             },
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_popover_search input:visible",
             run: "edit Job Position",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_item_name:contains(Job Position)",
+            trigger: ".o_model_field_selector_popover_item_name:contains(Job Position)",
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_default_value_input input",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit some default value",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover",
-            run: "press Enter",
+            trigger:
+                ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']:value(some default value)",
+        },
+        {
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
+            run: "click",
+        },
+        {
+            trigger: "body:not(:has(.o-web-studio-report-dynamic-placeholder-popover))",
         },
         {
             // check that field was added successfully
-            trigger: ":iframe .odoo-editor-editable .page div > span:contains(some default value)",
+            trigger:
+                ":iframe .odoo-editor-editable .page div > span[data-oe-demo='some default value']:contains(some default value)",
         },
         {
             trigger: ":iframe .odoo-editor-editable .page div",
@@ -834,8 +849,11 @@ registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_fiel
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_value",
+            run: "click",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_search input",
             run: "edit Avatar",
         },
         {
@@ -843,13 +861,12 @@ registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_fiel
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_default_value_input input",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit file default value",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover",
-            run: "press Enter",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
+            run: "click",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
@@ -875,8 +892,11 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_value",
+            run: "click",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_search input",
             run: "edit Company",
         },
         {
@@ -884,8 +904,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_popover_search input",
             run: "edit New File",
         },
         {
@@ -894,13 +913,12 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_default_value_input input",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit file default value",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover",
-            run: "press Enter",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
+            run: "click",
         },
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
@@ -914,8 +932,11 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_value",
+            run: "click",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_search input",
             run: "edit Company",
         },
         {
@@ -923,8 +944,7 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_popover_search input",
             run: "edit New Image",
         },
         {
@@ -932,13 +952,12 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_default_value_input input",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit image default value",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover",
-            run: "press Enter",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
+            run: "click",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
@@ -965,8 +984,11 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
+            trigger: ".o_model_field_selector_value",
+            run: "click",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_search input",
             run: "edit Activities",
         },
         {
@@ -974,13 +996,12 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_default_value_input input",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit First Column",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover",
-            run: "press Enter",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
+            run: "click",
         },
         {
             trigger:
@@ -1007,23 +1028,24 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_search input",
-            run: "edit Summary",
-        },
-        {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover_item_name:contains(Summary)",
+            trigger: ".o_model_field_selector_value",
             run: "click",
         },
         {
-            trigger:
-                ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_default_value_input input",
+            trigger: ".o_model_field_selector_popover_search input",
+            run: "edit Summary",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_item_name:contains(/^Summary/)",
+            run: "click",
+        },
+        {
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit Some Summary",
         },
         {
-            trigger: ".o-web-studio-field-dynamic-placeholder .o_model_field_selector_popover",
-            run: "press Enter",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
+            run: "click",
         },
         {
             trigger:
@@ -1443,20 +1465,24 @@ registry.category("web_tour.tours").add("web_studio.test_edit_header_only_compan
             run: "click",
         },
         {
+            trigger: ".o_model_field_selector_value",
+            run: "click",
+        },
+        {
             trigger: ".o_model_field_selector_popover_item_name:contains(Company ID)",
             run: "click",
         },
         {
-            trigger: ".o_model_field_selector_default_value_input input",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
             run: "edit studio company id",
         },
         {
-            trigger: ".o_model_field_selector_popover button:contains(Insert)",
+            trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
             run: "click",
         },
         {
             trigger:
-                "body :iframe .odoo-editor-editable#wrapwrap .header [t-field]:contains(studio company id)",
+                "body :iframe .odoo-editor-editable#wrapwrap .header [t-field][data-oe-demo='studio company id']",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",

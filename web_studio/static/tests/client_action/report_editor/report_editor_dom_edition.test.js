@@ -1,5 +1,6 @@
 import { setupEditor } from "@html_editor/../tests/_helpers/editor";
 import { getContent } from "@html_editor/../tests/_helpers/selection";
+import { insertText } from "@html_editor/../tests/_helpers/user_actions";
 import { before, describe, expect, test } from "@odoo/hoot";
 import {
     hover,
@@ -10,10 +11,20 @@ import {
     queryOne,
 } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
-import { contains } from "@web/../tests/web_test_helpers";
+import { contains, defineModels, fields, models } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
 
+import { getReportEditorPlugins } from "@web_studio/client_action/report_editor/report_editor_wysiwyg/editor_plugins/report_editor_plugin";
+
 describe.current.tags("desktop");
+
+class SomeModel extends models.Model {
+    _name = "some.model";
+
+    field = fields.Char({ string: "My little field" });
+}
+
+defineModels([SomeModel]);
 
 before(() => {
     const services = registry.category("services");
@@ -36,30 +47,13 @@ before(() => {
     }
 });
 
-import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
-import { QWebTablePlugin } from "@web_studio/client_action/report_editor/report_editor_wysiwyg/editor_plugins/qweb_table_plugin";
-import {
-    QWebPlugin,
-    TablePlugin,
-    ToolbarPlugin,
-} from "@web_studio/client_action/report_editor/report_editor_wysiwyg/editor_plugins/editor_plugins";
-
-const REPORT_EDITOR_PLUGINS_MAP = Object.fromEntries(MAIN_PLUGINS.map((cls) => [cls.id, cls]));
-Object.assign(REPORT_EDITOR_PLUGINS_MAP, {
-    [QWebPlugin.id]: QWebPlugin,
-    [QWebTablePlugin.id]: QWebTablePlugin,
-    [TablePlugin.id]: TablePlugin,
-    [ToolbarPlugin.id]: ToolbarPlugin,
-});
-
-const baseConfig = {
-    Plugins: Object.values(REPORT_EDITOR_PLUGINS_MAP),
-    classList: ["odoo-editor-qweb"],
-};
-
 function getEditorOptions() {
     return {
-        config: { ...baseConfig },
+        config: {
+            Plugins: getReportEditorPlugins(),
+            classList: ["odoo-editor-qweb"],
+            reportResModel: "some.model",
+        },
         props: {
             iframe: true,
             copyCss: true,
@@ -435,4 +429,81 @@ test("disable formatting stuff on t-att-class and t-att-style (and their format 
         "Apply Font Color",
         "Add a link",
     ]);
+});
+
+test("add t-field", async () => {
+    const oeContext = JSON.stringify({
+        docs: {
+            model: "some.model",
+            name: "Some Model",
+        },
+        doc: {
+            model: "some.model",
+            name: "Some Model",
+        },
+    });
+
+    const { editor, el } = await setupEditor(
+        `<div oe-context='${oeContext}' ws-view-id="1" t-foreach="docs" t-as="doc">[hop hop]</div>`,
+        getEditorOptions()
+    );
+    await insertText(editor, "/");
+    await contains(".o-we-powerbox .o-we-command-name:contains(/^Field$/)").click();
+
+    await contains(
+        ".o-web-studio-report-dynamic-placeholder-popover .o_model_field_selector_value"
+    ).click();
+    await contains(".o_model_field_selector_popover_page li[data-name='field'] button").click();
+    expect(
+        ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']"
+    ).toHaveValue("My little field");
+
+    await contains(".o-web-studio-report-dynamic-placeholder-popover button.btn-primary").click();
+    expect(getContent(el.firstElementChild)).toBe(
+        '<span data-oe-expression-readable="My little field" data-oe-demo="My little field" t-field="doc.field" data-oe-protected="true" contenteditable="false">My little field</span>[]'
+    );
+});
+
+test("edit t-field and back", async () => {
+    const oeContext = JSON.stringify({
+        doc: {
+            model: "some.model",
+            name: "Some Model",
+        },
+    });
+
+    const { editor, el } = await setupEditor(
+        `<div oe-context='${oeContext}' ws-view-id="1">a<span t-field="doc.field" data-oe-expression-readable="human > expr" data-oe-demo="demo brol"></span></div>`,
+        getEditorOptions()
+    );
+    expect(getContent(el)).toBe(
+        `<div oe-context='${oeContext}' ws-view-id="1" class="o-paragraph">a<span t-field="doc.field" data-oe-expression-readable="human > expr" data-oe-demo="demo brol" data-oe-protected="true" contenteditable="false">demo brol</span></div>`
+    );
+
+    await contains(":iframe span[t-field]").click();
+    await contains(".o-we-toolbar button[name='editDynamicField']").click();
+    await contains(
+        ".o-web-studio-report-dynamic-placeholder-popover .o_model_field_selector_value"
+    ).click();
+    await contains(
+        ".o_model_field_selector_popover_page li[data-name='display_name'] button"
+    ).click();
+    await contains(
+        ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']"
+    ).edit("edited", { confirm: false });
+    await contains(".o-web-studio-report-dynamic-placeholder-popover button.btn-primary").click();
+
+    expect(getContent(el)).toBe(
+        `<div oe-context='${oeContext}' ws-view-id="1" class="o-paragraph o_dirty">a[<span t-field="doc.display_name" data-oe-expression-readable="Display name" data-oe-demo="edited" data-oe-protected="true" contenteditable="false">edited</span>]</div>`
+    );
+
+    expect(getContent(editor.getElContent())).toBe(
+        `<div oe-context='${oeContext}' ws-view-id="1" class="o_dirty">a<span t-field="doc.display_name" data-oe-expression-readable="Display name" data-oe-demo="edited"></span></div>`
+    );
+
+    editor.shared.history.undo();
+    await animationFrame();
+    expect(getContent(el)).toBe(
+        `<div oe-context='${oeContext}' ws-view-id="1" class="o-paragraph o_dirty">[]a<span t-field="doc.field" data-oe-expression-readable="human > expr" data-oe-demo="demo brol" data-oe-protected="true" contenteditable="false">demo brol</span></div>`
+    );
 });
