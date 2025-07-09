@@ -12,6 +12,7 @@ from . import helpdesk_ticket
 from . import helpdesk_tag
 from . import helpdesk_tag_assignment
 from . import mail_message
+from . import rating_rating
 from . import res_users
 from . import res_partner
 from . import res_company

@@ -55,7 +55,7 @@
             <menuitem
                 id="helpdesk_ticket_report_menu_ratings"
                 name="Customer Ratings"
-                action="helpdesk_ratings_server_action"
+                action="rating_rating_action_helpdesk"
                 sequence="30"
                 groups="helpdesk.group_use_rating"/>
 

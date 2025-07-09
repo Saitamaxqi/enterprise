@@ -992,16 +992,6 @@ class HelpdeskTeam(models.Model):
             if teams_dict[ticket.team_id.id]['to_stage_id']:
                 ticket.write({'stage_id': teams_dict[ticket.team_id.id]['to_stage_id'][0]})
 
-    def action_view_helpdesk_rating(self):
-        action = self.env['ir.actions.act_window']._for_xml_id('helpdesk.rating_rating_action_helpdesk')
-
-        ticket_ids = self.env['helpdesk.ticket']._search([('team_id.company_id', 'in', self.env.context.get('allowed_company_ids'))])
-        action['domain'] = Domain.AND([
-            ast.literal_eval(action.get('domain', '[]')),
-            [('res_id', 'in', list(ticket_ids))],
-        ])
-        return action
-
     def _local_midnight_as_utc(self):
         """ local 12am expressed in UTC (naive datetime) """ 
         now = fields.Datetime.context_timestamp(self, fields.Datetime.now())
