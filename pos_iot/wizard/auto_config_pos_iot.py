@@ -31,7 +31,6 @@ class AutoConfigPoSIoT(models.TransientModel):
         device_types = {
             'display': 'iface_display_id',
             'printer': 'iface_printer_id',
-            'scale': 'iface_scale_id',
             'scanner': 'iface_scanner_ids'
         }
 
