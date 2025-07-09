@@ -454,7 +454,6 @@ class HrPayslip(models.Model):
                 result[payslip.struct_id.report_id] |= payslip
         return result
 
-    @api.model
     def _get_email_template(self):
         return self.env.ref(
             'hr_payroll.mail_template_new_payslip', raise_if_not_found=False
