@@ -32,7 +32,7 @@
         <field name="model">hr.version</field>
         <field name="arch" type="xml">
             <search string="Employees">
-                <field name="employee_id" string="Employee" filter_domain="['|', ('employee_id.work_email', 'ilike', self), ('name', 'ilike', self)]"/>
+                <field name="employee_id" string="Employee" filter_domain="['|', ('employee_id.work_email', 'ilike', self), ('employee_id.name', 'ilike', self)]"/>
                 <field name="department_id"/>
                 <field name="job_id"/>
                 <field name="resource_calendar_id"/>
