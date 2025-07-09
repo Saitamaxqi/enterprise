@@ -1790,15 +1790,6 @@
         </field>
     </record>
 
-    <record id="fsm_customer_ratings_server_action" model="ir.actions.server">
-        <field name="name">project.project.fsm</field>
-        <field name="model_id" ref="industry_fsm.model_project_project"/>
-        <field name="path">field-service-task-ratings</field>
-        <field name="state">code</field>
-        <field name="code">
-            action = model.action_view_fsm_projects_rating()</field>
-    </record>
-
     <!--
         FSM Menus
     -->
@@ -1883,7 +1874,7 @@
 
         <menuitem id="fsm_menu_reporting_customer_ratings"
             name="Customer Ratings"
-            action="fsm_customer_ratings_server_action"
+            action="rating_rating_action_fsm"
             parent="industry_fsm.fsm_menu_reporting"
             groups="project.group_project_rating"
             sequence="20"/>

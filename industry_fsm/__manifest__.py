@@ -27,6 +27,7 @@ Adds the following options:
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
         'views/hr_timesheet_views.xml',
+        'views/rating_rating_views.xml',
         'views/fsm_views.xml',
         'views/project_task_views.xml',
         'report/project_report_views.xml',

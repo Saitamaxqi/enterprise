@@ -68,15 +68,6 @@ class ProjectProject(models.Model):
             defaults['allow_milestones'] = defaults.get('allow_milestones', False) and not defaults.get('is_fsm')
         return defaults
 
-    def action_view_fsm_projects_rating(self):
-        action = self.env['ir.actions.act_window']._for_xml_id('project.rating_rating_action_project_report')
-        action['domain'] = [
-            ('parent_res_model', '=', 'project.project'),
-            ('consumed', '=', True),
-            ('parent_res_id', 'in', self.env['project.project'].search([('is_fsm', '=', True)]).ids)
-        ]
-        return action
-
     def _get_projects_to_make_billable_domain(self):
         return Domain.AND([
             super()._get_projects_to_make_billable_domain(),
