@@ -802,6 +802,14 @@ class SaleOrder(models.Model):
                 raise UserError(_('Please remove the recurring plan on the subscription before sending the email.'))
         return super().action_quotation_send()
 
+    def action_preview_sale_order(self):
+        self.ensure_one()
+        if not self.plan_id and (self.has_recurring_line and not self._subscription_is_one_time_sale()):
+            raise UserError(self.env._('Please add a recurring plan on the subscription or remove the recurring product.'))
+        if self.plan_id and not self.has_recurring_line:
+            raise UserError(self.env._('Please add a recurring product in the subscription or remove the recurring plan.'))
+        return super().action_preview_sale_order()
+
     def _confirm_subscription(self):
         today = fields.Date.today()
         for sub in self:
