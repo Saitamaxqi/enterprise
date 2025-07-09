@@ -25,7 +25,7 @@
             </page>
 
             <group name="hr_birth_group" position="after">
-                <group string="Birth Information" groups="hr.group_hr_user">
+                <group string="Birth Information" groups="hr.group_hr_user" invisible="country_code != 'CH'">
                     <field name="l10n_ch_legal_first_name"/>
                     <field name="l10n_ch_legal_last_name"/>
                     <field name="l10n_ch_sv_as_number" placeholder="Unknown"/>
@@ -34,7 +34,7 @@
                 </group>
             </group>
             <group name="citizenship" position="after">
-                <group string="Citizenship" groups="hr.group_hr_user">
+                <group string="Citizenship" groups="hr.group_hr_user" invisible="country_code != 'CH'">
                     <field name="country_id"/>
                     <field name="l10n_ch_residence_category" invisible="l10n_ch_country_id_code == 'CH'"/>
                     <field name="l10n_ch_has_withholding_tax" string="Subject To Source Tax"/>
@@ -47,7 +47,7 @@
                 </group>
             </group>
             <group name="hr_location_group" position="after">
-                <group string="Address" groups="hr.group_hr_user">
+                <group string="Address" groups="hr.group_hr_user" invisible="country_code != 'CH'">
                     <label for="private_street" string="Private Address"/>
                     <div class="o_address_format">
                     <field name="private_street" placeholder="Street..." class="o_address_street"/>
@@ -91,7 +91,7 @@
                 </group>
             </group>
             <group name="hr_family_group" position="after">
-                <group string="Family" groups="hr.group_hr_user">
+                <group string="Family" groups="hr.group_hr_user" invisible="country_code != 'CH'">
                     <field name="marital"/>
                     <field name="l10n_ch_marital_from"/>
                     <label string="Children Information" for="l10n_ch_children"/>
@@ -110,8 +110,7 @@
                                       or not l10n_ch_has_withholding_tax
                                       or not children"/>
                 </group>
-                <group string="Marriage Partner"
-       invisible="not l10n_ch_has_withholding_tax or marital not in ['married','registered_partnership']">
+                <group string="Marriage Partner" invisible="not l10n_ch_has_withholding_tax or marital not in ['married','registered_partnership'] or country_code != 'CH'">
     <field name="l10n_ch_spouse_sv_as_number" placeholder="Unknown"/>
     <label for="l10n_ch_spouse_first_name" string="Spouse"/>
     <div class="o_row">
@@ -140,10 +139,10 @@
     <field name="l10n_ch_spouse_work_canton"
            string="Work Canton"
            invisible="not l10n_ch_spouse_revenues"/>
-</group>
+                </group>
             </group>
             <group name="hr_education_group" position="after">
-                <group string="Statistics" groups="hr.group_hr_user">
+                <group string="Statistics" groups="hr.group_hr_user" invisible="country_code != 'CH'">
                     <label for="l10n_ch_yearly_holidays"/>
                     <div class="o_row mw-50 o_hr_narrow_field" name="l10n_ch_yearly_holidays">
                         <field name="l10n_ch_yearly_holidays" string="Holidays" nolabel="1" help="Number of holidays per year at 100% Occupation Rate"/>
@@ -162,7 +161,7 @@
                 </group>
             </group>
             <page name="payroll_information" position="after">
-                <page string="Payroll" groups="hr_payroll.group_hr_payroll_user">
+                <page string="Payroll" groups="hr_payroll.group_hr_payroll_user" invisible="country_code != 'CH'">
                     <group>
                     <group name="contract" string="Contract Overview">
     <field name="l10n_ch_location_unit_id" string="Workplace"/>
@@ -303,7 +302,7 @@
                         </group>
                     </group>
                 </page>
-                <page string="Source-tax" invisible="not l10n_ch_has_withholding_tax" groups="hr.group_hr_user">
+                <page string="Source-tax" invisible="not l10n_ch_has_withholding_tax or country_code != 'CH'" groups="hr.group_hr_user">
                     <group>
                         <group string="Tax Scale">
                             <field name="l10n_ch_tax_scale_type" widget="radio"/>
@@ -357,7 +356,7 @@
                     </group>
 
                 </page>
-                <page string="Wage Statement" groups="hr_payroll.group_hr_payroll_user">
+                <page string="Wage Statement" invisible="country_code != 'CH'" groups="hr_payroll.group_hr_payroll_user">
                     <field name="l10n_ch_salary_certificate_profiles">
                         <list>
                             <field name="l10n_ch_certificate_type"/>
