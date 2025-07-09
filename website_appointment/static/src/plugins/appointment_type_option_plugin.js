@@ -84,7 +84,7 @@ export class AppointmentTypeShowAvatarsAction extends BaseAppointmentAction {
 export class AppointmentTypeShowAllowGuestsAction extends BaseAppointmentAction {
     static id = "appointmentTypeShowAllowGuests";
     setup() {
-        super.setup("allow_guests", false, true);
+        super.setup("allow_guests", true, false);
     }
 }
 
