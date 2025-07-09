@@ -700,16 +700,17 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
         )
 
         # Submit a zeoring event
-        stp = self.env["l10n_au.stp"].create(
-            {
-                "company_id": self.company.id,
-                "payevent_type": "update",
-                "is_zeroing": True,
-                "l10n_au_stp_emp": [(0, 0, {"employee_id": self.employee_2.id})],
-            }
-        )
+        with freeze_time("2024-10-31"):
+            stp = self.env["l10n_au.stp"].create(
+                {
+                    "company_id": self.company.id,
+                    "payevent_type": "update",
+                    "is_zeroing": True,
+                    "l10n_au_stp_emp": [(0, 0, {"employee_id": self.employee_2.id})],
+                }
+            )
 
-        stp.action_generate_xml()
+            stp.action_generate_xml()
 
         # Expected XML
         parsed_expected = etree.parse(file_path("l10n_au_hr_payroll_account/tests/stp_test_zeroing.xml")).getroot()

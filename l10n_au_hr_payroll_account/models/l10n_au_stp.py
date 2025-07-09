@@ -384,7 +384,7 @@ class L10n_AuStp(models.Model):
                 leave_inputs = filter(lambda item: item[1]["payment_type"] == 'leave', employee_input_totals[income_stream_type].items())
                 for input_type, leave in leave_inputs:
                     Remuneration["PaidLeaveCollection"].append({
-                        "TypeC": input_type.l10n_au_payroll_code,
+                        "TypeC": leave['payroll_code'],
                         "PaymentA": float_round(leave['amount'], precision_rounding=rounding),
                     })
                 # == Allowance ==
