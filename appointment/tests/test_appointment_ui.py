@@ -499,6 +499,54 @@ class AppointmentUITest(AppointmentUICommon):
         self.assertEqual(third_meeting.appointment_status, "request")
         self.assertTrue(all(attendee.state == 'accepted' for attendee in third_meeting.attendee_ids))
 
+    @freeze_time('2022-02-14')
+    @users('apt_manager')
+    def test_appointment_staff_user_manual_confirmation_percentage(self):
+        """ Check that appointment and attendee status are correctly set based on the auto_confirm
+        and manual_confirmation_percentage fields when enabled, when booking (multiple) users and
+        managing capacity """
+        self.authenticate(self.env.user.login, self.env.user.login)
+        # 2 users, 3 capacity -> 6 total.
+        self.apt_type_manage_capacity_users.write({
+            'auto_confirm': True,
+            'manual_confirmation_percentage': 0.5,
+            'user_capacity': 3,
+        })
+        self.apt_type_manage_capacity_users.staff_user_ids = [Command.set([self.staff_user_aust.id, self.staff_user_bxls.id])]
+        phone_question = self.apt_type_manage_capacity_users._get_main_phone_question()
+        self.assertTrue(phone_question)
+
+        event_values = {
+            'csrf_token': http.Request.csrf_token(self),
+            'datetime_str': '2022-02-14 11:00:00',
+            'duration_str': '1.0',
+            'email': 'test1@test.example.com',
+            'name': 'Meeting Test',
+            f'question_{phone_question.id}': '2025550999',
+            'staff_user_id': self.staff_user_bxls.id,
+            'asked_capacity': 3,
+        }
+
+        # Booking for 3 capacity with one staff user. Total used is 3/6. It should create a 'booked' event as <= 50%
+        res = self.url_open(f"/appointment/{self.apt_type_manage_capacity_users.id}/submit", event_values)
+        self.assertEqual(res.status_code, 200, "Response should be OK")
+        first_meeting = self.apt_type_manage_capacity_users.meeting_ids
+        self.assertEqual(len(first_meeting), 1)
+        self.assertEqual(first_meeting.appointment_status, "booked")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in first_meeting.attendee_ids))
+
+        # Booking for 1 capacity with another staff user. Total used is 4/6. It should create a 'request' event as > 50%
+        event_values.update({
+            'asked_capacity': 1,
+            'staff_user_id': self.staff_user_aust.id,
+        })
+        res = self.url_open(f"/appointment/{self.apt_type_manage_capacity_users.id}/submit", event_values)
+        self.assertEqual(res.status_code, 200, "Response should be OK")
+        second_meeting = self.apt_type_manage_capacity_users.meeting_ids - first_meeting
+        self.assertEqual(len(second_meeting), 1)
+        self.assertEqual(second_meeting.appointment_status, "request")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in second_meeting.attendee_ids))
+
 @tagged('appointment_ui', '-at_install', 'post_install')
 class CalendarTest(AppointmentUICommon):
 
