@@ -9,6 +9,9 @@
         getSectionStyle="getSectionStyle"
         sectionIcon="'fa fa-clock-o'"
     >
+        <t t-set-slot="top">
+            <SearchBar state="state" onInputSearch="onInputSearch"/>
+        </t>
         <t t-set-slot="entry" t-slot-scope="slot">
             <t t-set="activity" t-value="slot.item"/>
             <t t-set="isFolded" t-value="!activity.eq(voip.softphone.activeRecord)"/>

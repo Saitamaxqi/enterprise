@@ -42,7 +42,7 @@
         <field name="name">voip.call.view.graph</field>
         <field name="model">voip.call</field>
         <field name="arch" type="xml">
-            <graph string="Call Analysis">
+            <graph string="Calls Analysis">
                 <field name="user_id"/>
             </graph>
         </field>

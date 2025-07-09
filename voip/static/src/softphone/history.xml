@@ -5,10 +5,16 @@
         itemsBySection="callsByDate"
         extraClass="`o-voip-History ${props.extraClass}`"
         noEntriesMessage.translate="Your call history is empty! Make a call now and have it listed here 💡"
-        onInputSearch="onInputSearch"
         onTabEnd="() => this.voip.fetchRecentCalls(this.state.searchInputValue, this.filteredCalls.length)"
         state="state"
     >
+        <t t-set-slot="top">
+            <SearchBar state="state" onInputSearch="onInputSearch">
+                <t t-set-slot="right">
+                    <button class="btn btn-transparent oi oi-launch" t-on-click="onClickExpandHistory" title="Expand history"/>
+                </t>
+            </SearchBar>
+        </t>
         <t t-set-slot="entry" t-slot-scope="slot">
             <t t-set="call" t-value="slot.item"/>
             <t t-set="title" t-value="call.partner_id?.voipName ?? call.phone_number"/>

@@ -58,8 +58,10 @@
 </t>
 
 <t t-name="o-voip-Keypad-showMore">
-    <t t-call="o-voip-Keypad-searchBar"/>
-    <Tab itemsBySection="calleeSuggestions.searchResultsBySearchField" state="props.state" hasSearchBar="false" extraClass="'border-top overflow-auto'">
+    <Tab itemsBySection="calleeSuggestions.searchResultsBySearchField" state="props.state" extraClass="'border-top overflow-auto'">
+        <t t-set-slot="top">
+            <t t-call="o-voip-Keypad-searchBar"/>
+        </t>
         <t t-set-slot="entry" t-slot-scope="slot">
             <t t-set="contact" t-value="slot.item.contact"/>
             <t t-set="countryCode" t-value="contact.country_code_from_phone"/>

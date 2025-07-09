@@ -5,6 +5,7 @@ import { tabComponents } from "@voip/softphone/tab";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
+import { useDebounced } from "@web/core/utils/timing";
 
 /**
  * List of "call activities", i.e. activities of type call you were scheduled
@@ -25,6 +26,7 @@ export class Agenda extends Component {
         this.ui = useService("ui");
         onMounted(() => this.voip.fetchTodayCallActivities());
         this.state = useState(this.voip.softphone.agenda);
+        this.onInputSearch = useDebounced(() => this.voip.fetchTodayCallActivities(), 300);
     }
 
     get activitiesByDate() {

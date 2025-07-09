@@ -5,11 +5,12 @@
         itemsBySection="contactsByInitial"
         extraClass="`o-voip-AddressBook ${props.extraClass}`"
         noEntriesMessage.translate="Contacts with a phone number will be shown here."
-        onInputSearch="onInputSearch"
         onTabEnd="() => this.voip.fetchContacts(this.state.searchInputValue, this.voip.softphone.contacts.length)"
         state="state"
-        onClickBack="props.onClickBack"
     >
+        <t t-set-slot="top">
+            <SearchBar state="state" onInputSearch="onInputSearch" onClickBack="props.onClickBack"/>
+        </t>
         <t t-set-slot="entry" t-slot-scope="slot">
             <t t-set="contact" t-value="slot.item"/>
             <t t-set="countryCode" t-value="contact.country_code_from_phone"/>

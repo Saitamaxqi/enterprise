@@ -2,17 +2,7 @@
 <templates>
 <t t-name="voip.Tab">
     <div class="o-voip-Tab d-flex flex-column w-100 h-100" t-att-class="props.extraClass">
-        <t t-if="props.hasSearchBar">
-            <div class="d-flex align-items-center py-2 border-bottom">
-                <button t-if="props.onClickBack" title="Back" class="btn btn-secondary d-flex p-2 me-2 ms-3" t-on-click="() => props.onClickBack()">
-                    <i class="oi oi-arrow-left" aria-hidden="true"/>
-                </button>
-                <input id="o-voip-Tab-searchInput" class="form-control flex-grow-1 border-0" placeholder="Search…" t-model="props.state.searchInputValue" t-on-input="props.onInputSearch" t-ref="searchInput"/>
-                <label class="px-3" for="o-voip-Tab-searchInput">
-                    <i t-att-class="searchBarIcon" aria-hidden="true"/>
-                </label>
-            </div>
-        </t>
+        <t t-slot="top"/>
         <div t-if="props.itemsBySection.size > 0" class="overflow-auto">
             <t t-foreach="[...props.itemsBySection]" t-as="mapping" t-key="mapping[0]">
                 <t t-set="sectionName" t-value="mapping[0]"/>

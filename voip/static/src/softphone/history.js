@@ -192,4 +192,18 @@ export class History extends Component {
             target: this.ui.isSmall ? "new" : "current",
         });
     }
+
+    /** @param {MouseEvent} ev */
+    onClickExpandHistory(ev) {
+        this.action.doAction({
+            type: "ir.actions.act_window",
+            name: _t("Recent Calls"),
+            res_model: "voip.call",
+            target: this.ui.isSmall ? "new" : "current",
+            views: [[false, "list"], [false, "graph"], [false, "pivot"]],
+            context: {
+                search_default_my_calls: 1,
+            },
+        });
+    }
 }
