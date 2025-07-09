@@ -186,10 +186,26 @@ class CustomerPortal(portal.CustomerPortal):
         if not ticket_sudo.closed_by_partner and request.httprequest.method == 'GET':
             closing_stage = ticket_sudo.team_id._get_closing_stage()
             if ticket_sudo.stage_id != closing_stage:
-                ticket_sudo.write({'stage_id': closing_stage[0].id, 'closed_by_partner': True})
+                ticket_vals = {'stage_id': closing_stage[0].id, 'closed_by_partner': True}
+                if request.env.user._is_public():
+                    ticket_sudo.write(ticket_vals)
+                else:
+                    ticket_sudo.with_user(request.env.user).sudo().write(ticket_vals)
             else:
                 ticket_sudo.write({'closed_by_partner': True})
             body = _('Ticket closed by the customer')
-            ticket_sudo.with_context(mail_post_autofollow_author_skip=True).message_post(body=body, message_type='comment', subtype_xmlid='mail.mt_note')
+
+            author_id = None
+            if request.env.user.is_public and ticket_sudo.partner_id:
+                author_id = ticket_sudo.partner_id.id
+            elif not request.env.user.is_public and request.env.user.partner_id:
+                author_id = request.env.user.partner_id.id
+
+            ticket_sudo.with_context(mail_post_autofollow_author_skip=True).message_post(
+                body=body,
+                message_type='comment',
+                subtype_xmlid='mail.mt_note',
+                author_id=author_id
+            )
 
         return request.redirect('/my/ticket/%s/%s?ticket_closed=1' % (ticket_id, access_token or ''))
