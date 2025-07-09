@@ -51,24 +51,34 @@ class IotBox(models.Model):
     token = fields.Char(default=lambda self: self._default_token(), readonly=True)
 
     @api.model
-    def sign_communication(self, iot_box_ip, url, payload):
+    def sign_communication(self, ip_or_identifiers, url, payload):
         """Compute HMAC signature for the url and the payload of a request with
         the IoT Box `token` as key.
 
         In order not to multiply orm requests, we also check the SSL certificate validity
         in the same method.
 
-        :param iot_box_ip: ip of the ioT box
+        This method is used to sign both longpolling and websocket requests. As websocket
+        ones can target multiple IoT Boxes at once, we allow passing a list of identifiers.
+
+        :param str | list[str] ip_or_identifiers: ip of the ioT box or a list of identifiers
         :param url: url of the request
         :param payload: payload of the request
         :return: HMAC signature of the timestamp, url and payload, and a boolean
             indicating if the SSL certificate is valid
         :rtype: dict
         """
-        iot_id = self.env['iot.box'].search([('ip', '=', iot_box_ip)], limit=1)
+        if isinstance(ip_or_identifiers, list):
+            # Specific to Websocket: Allows signing multiple IoT Boxes at once
+            iot_ids = self.env['iot.box'].search([('identifier', 'in', ip_or_identifiers)])
+            return {"signatures": [hmac_sign(url, payload, iot_id.token) for iot_id in iot_ids]}
+
+        # For longpolling calls
+        iot_id = self.env['iot.box'].search([('ip', '=', ip_or_identifiers)], limit=1)
+        signatures = [hmac_sign(url, payload, iot_id.token)]
 
         return {
-            "signature": hmac_sign(url, payload, iot_id.token),
+            "signatures": signatures,
             "isSslCertificateValid": (
                 iot_id.ssl_certificate_end_date and iot_id.ssl_certificate_end_date > fields.Datetime.now()
             ),

@@ -72,13 +72,13 @@ patch(IoTLongpolling.prototype, {
     async _rpcIoT(iot_ip, route, params, timeout = undefined, fallback = false, headers = undefined) {
         // Sign the request
         const requestUrl = formatEndpoint(iot_ip, route);
-        const { signature, isSslCertificateValid } =
+        const { signatures, isSslCertificateValid } =
             await this.orm.call("iot.box", "sign_communication", [iot_ip, requestUrl, params]);
 
         if (!isSslCertificateValid) {
             this.subscriptionWarningDebounced();
         }
 
-        return super._rpcIoT(iot_ip, route, params, timeout, fallback, { ...headers, "Authorization": signature });
+        return super._rpcIoT(iot_ip, route, params, timeout, fallback, { ...headers, "Authorization": signatures[0] });
     }
 });
