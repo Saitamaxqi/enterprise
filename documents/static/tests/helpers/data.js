@@ -1,3 +1,5 @@
+import { user } from "@web/core/user";
+
 import { mailModels } from "@mail/../tests/mail_test_helpers";
 import { fields, models, serverState, webModels } from "@web/../tests/web_test_helpers";
 
@@ -154,9 +156,55 @@ export class DocumentsDocument extends models.Model {
     /**
      * @override to avoid super() not working for us.
      */
-    search_panel_select_range(fieldName) {
+    async search_panel_select_range(fieldName) {
         const result = { parent_field: "user_folder_id" };
-        result.values = [
+        result.values = await this._get_search_panel_specials();
+        for (const record of this.search_read(
+            [["type", "=", "folder"]],
+            [
+                "access_internal",
+                "access_via_link",
+                "active",
+                "alias_domain_id",
+                "alias_name",
+                "alias_tag_ids",
+                "company_id",
+                "create_activity_type_id",
+                "description",
+                "display_name",
+                "user_folder_id",
+                "id",
+                "is_access_via_link_hidden",
+                "is_folder",
+                "mail_alias_domain_count",
+                "owner_id",
+                "partner_id",
+                "type",
+                "user_permission",
+            ]
+        )) {
+            if (!isNaN(record.user_folder_id)) {
+                record.user_folder_id = Number(record.user_folder_id);
+            }
+            if (!record.active) {
+                record.user_folder_id = "TRASH";
+            }
+            if (record.alias_tag_ids) {
+                record.alias_tag_ids = record.alias_tag_ids.map((id) => {
+                    const [tag] = this.env["documents.tag"].browse(id);
+                    return { id, color: tag.color, display_name: tag.name };
+                });
+            }
+            result.values.push(record);
+        }
+        return result;
+    }
+
+    async _get_search_panel_specials() {
+        if (!(await user.hasGroup("base.group_user"))) {
+            return [];
+        }
+        return [
             {
                 bold: true,
                 childrenIds: [],
@@ -203,50 +251,50 @@ export class DocumentsDocument extends models.Model {
                 description: "Items in trash will be deleted forever after 30 days.",
             },
         ];
-        for (const record of this.search_read(
-            [["type", "=", "folder"]],
-            [
-                "access_internal",
-                "access_via_link",
-                "active",
-                "alias_domain_id",
-                "alias_name",
-                "alias_tag_ids",
-                "company_id",
-                "create_activity_type_id",
-                "description",
-                "display_name",
-                "user_folder_id",
-                "id",
-                "is_access_via_link_hidden",
-                "is_folder",
-                "mail_alias_domain_count",
-                "owner_id",
-                "partner_id",
-                "type",
-                "user_permission",
-            ]
-        )) {
-            if (!isNaN(record.user_folder_id)) {
-                record.user_folder_id = Number(record.user_folder_id);
-            }
-            if (!record.active) {
-                record.user_folder_id = "TRASH";
-            }
-            if (record.alias_tag_ids) {
-                record.alias_tag_ids = record.alias_tag_ids.map((id) => {
-                    const [tag] = this.env["documents.tag"].browse(id);
-                    return { id, color: tag.color, display_name: tag.name };
-                });
-            }
-            result.values.push(record);
-        }
-        return result;
     }
 
     toggle_lock(id) {
         const record = this.browse(id)[0];
         record.lock_uid = record.lock_uid ? false : serverState.odoobotId;
+    }
+}
+
+export class DocumentsOperation extends models.Model {
+    _name = "documents.operation";
+
+    operation = fields.Selection({
+        selection: [
+            ["move", "Move"],
+            ["shortcut", "Create shortcuts"],
+            ["copy", "Duplicate to"],
+            ["add", "Add attachment to Documents"],
+        ],
+    });
+    document_ids = fields.Many2many({ relation: "documents.document" });
+    attachment_id = fields.Many2one({ relation: "ir.attachment" });
+
+    destination = fields.Char({ default: "MY" });
+    display_name = fields.Char({ default: "My Drive" });
+
+    user_permission = fields.Char({ string: "Destination User Permission", default: "edit" });
+    access_internal = fields.Char({ string: "Destination Access Internal", default: "edit" });
+    access_via_link = fields.Char({ string: "Destination Access Via Link", default: "edit" });
+    is_access_via_link_hidden = fields.Boolean({ string: "Destination Link Access Hidden" });
+
+    get_any_editor_destination() {
+        for (const record of this.env["documents.document"].search_read(
+            [["type", "=", "folder"]],
+            ["shortcut_document_id", "type", "user_permission"]
+        )) {
+            if (
+                record.type === "folder" &&
+                !record.shortcut_document_id &&
+                record.user_permission === "edit"
+            ) {
+                return [{ destination: record.id.toString(), display_name: record.display_name }];
+            }
+        }
+        return [];
     }
 }
 
@@ -389,6 +437,7 @@ export const DocumentsModels = {
     MailAliasDomain,
     ResCompany: webModels.ResCompany,
     DocumentsDocument,
+    DocumentsOperation,
     DocumentsTag,
     DocumentsSharing,
 };

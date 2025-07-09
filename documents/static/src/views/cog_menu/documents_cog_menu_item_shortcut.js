@@ -17,7 +17,11 @@ export class DocumentsCogMenuItemShortcut extends DocumentsCogMenuItem {
     }
 
     async doActionOnFolder(folder) {
-        await this.documentService.createShortcut([folder.id]);
+        await this.documentService.openOperationDialog({
+            documents: [{ id: folder.id, name: folder.display_name }],
+            operation: "shortcut",
+            onClose: () => this.reload(),
+        });
         await this.reload();
     }
 }

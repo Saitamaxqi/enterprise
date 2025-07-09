@@ -452,7 +452,7 @@ class DocumentsDocument(models.Model):
         message = _("Conflicting values passed with user_folder_id.")
         if (folder_id := vals.get('folder_id')) and folder_id != new_vals['folder_id']:
             raise UserError(message)
-        if (owner_id := vals.get('owner_id')) and owner_id != new_vals['owner_id']:
+        if (owner_id := vals.get('owner_id')) and 'owner_id' in new_vals and owner_id != new_vals['owner_id']:
             raise UserError(message)
         vals.update(new_vals)
 

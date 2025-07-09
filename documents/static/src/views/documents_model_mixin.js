@@ -34,8 +34,8 @@ export const DocumentsModelMixin = (component) =>
             if (!this.originalSelection && selection && selection.length > 0) {
                 this.originalSelection = selection.map((rec) => rec.resId);
             }
-            for (let arg of arguments) {
-                arg.context['skip_res_field_check'] = true;
+            for (const arg of arguments) {
+                arg.context["skip_res_field_check"] = true;
             }
             const res = await super.load(...arguments);
             if (this.config.resModel !== "documents.document") {
@@ -46,7 +46,9 @@ export const DocumentsModelMixin = (component) =>
                 : this.env.documentsView.bus.trigger("documents-close-preview");
             this._reapplySelection();
             this._computeFileSize();
-            this.shortcutTargetRecords = this.orm.isSample ? [] : await this._loadShortcutTargetRecords();
+            this.shortcutTargetRecords = this.orm.isSample
+                ? []
+                : await this._loadShortcutTargetRecords();
             return res;
         }
 
@@ -64,13 +66,12 @@ export const DocumentsModelMixin = (component) =>
         _computeFileSize() {
             let size = 0;
             if (this.root.groups) {
-                size = this.root.groups.reduce((size, group) => {
-                    return size + group.aggregates.file_size;
-                }, 0);
+                size = this.root.groups.reduce(
+                    (size, group) => size + group.aggregates.file_size,
+                    0
+                );
             } else if (this.root.records) {
-                size = this.root.records.reduce((size, rec) => {
-                    return size + rec.data.file_size;
-                }, 0);
+                size = this.root.records.reduce((size, rec) => size + rec.data.file_size, 0);
             }
             size /= 1000 * 1000; // in MB
             this.fileSize = Math.round(size * 100) / 100;
@@ -221,16 +222,19 @@ export const DocumentsModelMixin = (component) =>
         }
 
         /**
-         * Create a shortcut for the selected document.
+         * Open dialog to create shortcut(s) for the selected document(s).
          */
         async onCreateShortcut() {
-            if (this.targetRecords.length !== 1) {
-                return;
-            }
-            await this.orm.call("documents.document", "action_create_shortcut", [
-                this.targetRecords[0].data.id,
-            ]);
-            await this._notifyChange();
+            const documents = this.targetRecords;
+            await this.documentService.openOperationDialog({
+                documents: documents.map((d) => ({
+                    id: d.data.id,
+                    name: d.data.name,
+                    shortcut_document_id: d.data.shortcut_document_id,
+                })),
+                operation: "shortcut",
+                onClose: async () => this._notifyChange(),
+            });
         }
 
         /**
@@ -262,31 +266,16 @@ export const DocumentsModelMixin = (component) =>
          * Duplicate the selected documents.
          */
         async onDuplicate() {
-            const records = this.targetRecords.filter((r) => r.data.active);
-            const recordIds = records.map((r) => r.data.id);
-            await this.orm.call("documents.document", "copy", [recordIds]);
-            await this._notifyChange();
-
-            const copiedInMyDrive = records.filter(
-                (r) =>
-                    (r.data.folder_id &&
-                        this.env.searchModel.getFolderById(r.data.folder_id.id).user_permission !==
-                            "edit") ||
-                    (!r.data.folder_id && !this.documentService.userIsDocumentManager)
-            );
-
-            if (this.env.searchModel.getSelectedFolderId() === "MY") {
-                return;
-            }
-
-            if (copiedInMyDrive.length !== 0) {
-                let message = _t("%s has been copied in My Drive.", copiedInMyDrive[0].data.name);
-                if (copiedInMyDrive.length > 1) {
-                    const names = copiedInMyDrive.map((r) => r.data.name).join(", ");
-                    message = _t("%s have been copied in My Drive.", names);
-                }
-                this.notification.add(message, { type: "success" });
-            }
+            const documents = this.targetRecords;
+            await this.documentService.openOperationDialog({
+                documents: documents.map((d) => ({
+                    id: d.data.id,
+                    name: d.data.name,
+                    shortcut_document_id: d.data.shortcut_document_id,
+                })),
+                operation: "copy",
+                onClose: async () => this.env.searchModel._reloadSearchModel(true),
+            });
         }
 
         /**
@@ -341,6 +330,22 @@ export const DocumentsModelMixin = (component) =>
         async onShare() {
             const documents = this.targetRecords;
             await this.documentService.openSharingDialog(documents.map((d) => d.data.id));
+        }
+
+        /**
+         * Open dialog to move the selected document(s).
+         */
+        async onMove() {
+            const documents = this.targetRecords;
+            await this.documentService.openOperationDialog({
+                documents: documents.map((d) => ({
+                    id: d.data.id,
+                    name: d.data.name,
+                    shortcut_document_id: d.data.shortcut_document_id,
+                })),
+                operation: "move",
+                onClose: async () => this.env.searchModel._reloadSearchModel(true),
+            });
         }
 
         /**

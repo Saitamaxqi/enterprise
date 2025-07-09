@@ -1,8 +1,8 @@
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 
-export class AccessRightsUpdageConfirmationDialog extends ConfirmationDialog {
-    static template = "documents.AccessRightsUpdageConfirmationDialog";
+export class AccessRightsUpdateConfirmationDialog extends ConfirmationDialog {
+    static template = "documents.AccessRightsUpdateConfirmationDialog";
 
     static props = {
         ...ConfirmationDialog.props,

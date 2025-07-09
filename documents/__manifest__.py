@@ -47,6 +47,7 @@ App to upload and manage your documents.
         'views/mail_compose_message_views.xml',
         'views/mail_scheduled_message_views.xml',
         'wizard/documents_link_to_record_wizard_views.xml',
+        'wizard/documents_operation_views.xml',
         'wizard/documents_request_wizard_views.xml',
         'wizard/documents_sharing_views.xml',
     ],

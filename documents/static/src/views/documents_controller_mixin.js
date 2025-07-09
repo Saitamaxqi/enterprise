@@ -127,8 +127,16 @@ export const DocumentsControllerMixin = (component) =>
                     callback: () => this.model.onToggleRightPanel(),
                     groupNumber: 2,
                 },
+                move: {
+                    isAvailable: () => true,
+                    sequence: 78,
+                    description: _t("Move"),
+                    icon: "fa fa-share",
+                    callback: () => this.model.onMove(),
+                    groupNumber: 2,
+                },
                 shortcut: {
-                    isAvailable: () => userIsInternal && singleSelection && !isInTrash,
+                    isAvailable: () => userIsInternal && !isInTrash,
                     sequence: 80,
                     description: _t("Create Shortcut"),
                     icon: "fa fa-external-link-square",

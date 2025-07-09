@@ -1,4 +1,4 @@
-import { AccessRightsUpdageConfirmationDialog } from "@documents/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog";
+import { AccessRightsUpdateConfirmationDialog } from "@documents/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog";
 import { Document } from "./document_model";
 import { DocumentsManageVersions } from "@documents/components/documents_manage_versions_panel/documents_manage_versions_panel";
 import { EventBus, markup, reactive } from "@odoo/owl";
@@ -39,6 +39,7 @@ export class DocumentService {
         this.userIsErpManager = false;
         this.userIsInternal = false;
         this.multiCompany = false;
+        this.hasFolderEditorAccess = false;
         // Init data
         const urlSearch = parseSearchQuery(browser.location.search);
         const { documents_init } = session;
@@ -79,6 +80,9 @@ export class DocumentService {
             user.hasGroup("base.group_user"),
             user.hasGroup("base.group_multi_company"),
         ]);
+        this.hasFolderEditorAccess =
+            this.userIsInternal ||
+            (await this.orm.call("documents.operation", "get_any_editor_destination")).length > 0;
         const initialState =
             this.userIsInternal && JSON.parse(localStorage.getItem("documentsChatterVisible"));
         this.rightPanelReactive = reactive(
@@ -193,6 +197,58 @@ export class DocumentService {
         await this.action.doAction(action, { onClose: () => this.reload() });
     }
 
+    async openOperationDialog({
+        documents,
+        attachmentId,
+        operation = "move",
+        onClose = () => {},
+        context = {},
+    }) {
+        documents = documents || [];
+        const doc0 = documents[0];
+        let name;
+        const single_values = { documentName: doc0?.name };
+        const multiple_values = { numberOfDocuments: documents.length.toString() };
+        if (operation === "move") {
+            name =
+                documents.length === 1
+                    ? _t("Move: %(documentName)s", single_values)
+                    : _t("Move: %(numberOfDocuments)s items", multiple_values);
+        } else if (operation === "shortcut") {
+            name =
+                documents.length === 1
+                    ? _t("Create shortcut to: %(documentName)s", single_values)
+                    : _t("Create shortcuts for: %(numberOfDocuments)s items", multiple_values);
+        } else if (operation === "copy") {
+            name =
+                documents.length === 1
+                    ? _t("Duplicate: %(documentName)s", single_values)
+                    : _t("Duplicate: %(numberOfDocuments)s items", multiple_values);
+        } else if (operation === "add") {
+            name = _t("Add to documents");
+        } else {
+            name = operation;
+        }
+        this.action.doAction(
+            {
+                name,
+                type: "ir.actions.act_window",
+                res_model: "documents.operation",
+                views: [[false, "form"]],
+                target: "new",
+            },
+            {
+                additionalContext: {
+                    default_document_ids: documents.map((d) => d.id),
+                    default_attachment_id: attachmentId || false,
+                    default_operation: operation,
+                    ...context,
+                },
+                onClose,
+            }
+        );
+    }
+
     async goToServerActionsView() {
         const userHasAccessRight = await user.checkAccessRight("ir.actions.server", "create");
         if (!userHasAccessRight) {
@@ -210,16 +266,6 @@ export class DocumentService {
             type: "object",
             resModel: "ir.actions.server",
         });
-    }
-
-    async createShortcut(documentIds) {
-        if (documentIds.length !== 1) {
-            this.notificationService.add(_t("Shortcuts can only be created one at a time."), {
-                type: "danger",
-            });
-            return;
-        }
-        await this.orm.call("documents.document", "action_create_shortcut", documentIds);
     }
 
     async moveOrCreateShortcut(records, targetFolder, forceShortcut, expectedAccessRightsChanges) {
@@ -242,16 +288,9 @@ export class DocumentService {
                         : _t("%s documents have been moved.", records.movableRecordIds.length);
                 if (expectedAccessRightsChanges) {
                     const confirmed = await new Promise((resolve) => {
-                        this.dialog.add(AccessRightsUpdageConfirmationDialog, {
+                        this.dialog.add(AccessRightsUpdateConfirmationDialog, {
                             destinationFolder: targetFolder,
-                            confirm: async () => {
-                                await this.orm.write(
-                                    "documents.document",
-                                    records.movableRecordIds,
-                                    { folder_id: targetFolderId }
-                                );
-                                resolve(true);
-                            },
+                            confirm: async () => resolve(true),
                             cancel: () => resolve(false),
                         });
                     });

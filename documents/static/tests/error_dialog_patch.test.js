@@ -1,9 +1,9 @@
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { expect, test } from "@odoo/hoot";
 import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
 import { EventBus } from "@odoo/owl";
 import {
     contains,
+    defineModels,
     makeServerError,
     mockService,
     mountWithCleanup,
@@ -13,8 +13,9 @@ import {
 import { browser } from "@web/core/browser/browser";
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { user } from "@web/core/user";
+import { DocumentsModels } from "@documents/../tests/helpers/data";
 
-defineMailModels();
+defineModels(DocumentsModels);
 
 test("Shareable error dialog", async () => {
     expect.errors(1);

@@ -1,4 +1,4 @@
-import { AccessRightsUpdageConfirmationDialog } from "@documents/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog";
+import { AccessRightsUpdateConfirmationDialog } from "@documents/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { browser } from "@web/core/browser/browser";
 import { SearchPanel } from "@web/search/search_panel/search_panel";
@@ -165,7 +165,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                             draggingFolder.is_access_via_link_hidden !==
                                 parentFolder.is_access_via_link_hidden))
                 ) {
-                    this.dialog.add(AccessRightsUpdageConfirmationDialog, {
+                    this.dialog.add(AccessRightsUpdateConfirmationDialog, {
                         destinationFolder: parentFolder,
                         confirm: async () => {
                             await this.orm.call("documents.document", "action_move_folder", [

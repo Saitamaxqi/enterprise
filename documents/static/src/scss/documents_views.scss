@@ -342,3 +342,53 @@
     background-position: center;
     filter: grayscale(1);
 }
+
+//// ========= Operation Wizard ===========
+//// ======================================
+
+.o_documents_operation {
+    height: 70vh;
+    .o_form_renderer {
+        height: 90% !important; // important for xl
+        .o_form_sheet_bg {
+            @media (min-width: 768px) {
+                height: 100% !important;
+            }
+            .o_form_sheet {
+                height: 100% !important;
+            }
+        }
+    }
+    div.o_field_documents_user_folder_id_char {
+        display: inherit;
+    }
+    div.o_documents_operation_destination_children_ids {
+        @media (min-width: 768px) {
+            // Fix the height of `list`'s `limit` rows with pager,
+            // to avoid jumps of elements below when switching destination
+            min-height: 415px !important;
+        }
+    }
+    ul.o_documents_operation_search_panel {
+        height: 55vh !important;
+        overflow-y: auto;
+        // hide scrollbar
+        scrollbar-width: none;  // Firefox
+        -ms-overflow-style: none;  // IE and Edge
+        &::-webkit-scrollbar {  // Chromium, Safari, Opera
+            display: none;
+        }
+    }
+    // Make sure rows don't appear as actionable
+    .o_list_renderer .o_data_row:not(.o_data_row_selected) {
+        cursor: default;
+        td {
+          cursor: default !important;
+        }
+        &:focus-within > * {
+          --table-accent-bg: inherit !important;
+          --table-striped-bg: inherit !important;
+        }
+        color: $text-muted !important;
+    }
+}

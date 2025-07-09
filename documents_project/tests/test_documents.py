@@ -215,3 +215,24 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
         project_2.use_documents = False
         # Should not raise an error
         parent_folder.unlink()
+
+    def test_add_attachment_to_project_folder_id(self):
+        project = self.env['project.project'].create({'name': "Test Project"})
+        self.assertTrue(project.use_documents)
+        self.assertTrue(project.documents_folder_id)
+        task = self.env['project.task'].create({'name': "Test Task", 'project_id': project.id})
+        project_attachment, task_attachment = self.env['ir.attachment'].create([
+            {"name": "project_image.png", "datas": GIF, "res_model": "project.project", "res_id": project.id},
+            {"name": "task_image.png", "datas": GIF, "res_model": "project.task", "res_id": task.id},
+        ])
+        for attachment in (project_attachment, task_attachment):
+            self.assertEqual(attachment.get_documents_operation_add_destination(), {
+                'destination': str(project.documents_folder_id.id),
+                'display_name': project.documents_folder_id.display_name,
+            })
+        project.use_documents = False
+        for attachment in (project_attachment, task_attachment):
+            self.assertNotEqual(
+                attachment.get_documents_operation_add_destination().get('destination'),
+                str(project.documents_folder_id.id)
+            )

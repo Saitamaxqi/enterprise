@@ -15,14 +15,9 @@ class IrAttachment(models.Model):
 
     document_ids = fields.One2many('documents.document', 'attachment_id', export_string_translation=False)
 
-    def add_attachment_to_drive(self):
+    def get_documents_operation_add_destination(self):
         self.ensure_one()
-        copy_attachment = self.copy({'res_model': False, 'res_id': False})
-        self.env['documents.document'].create({
-            'attachment_id': copy_attachment.id,
-            'type': copy_attachment.type,
-            'folder_id': False,
-        })
+        return {'destination': 'MY', 'display_name': self.env._('My Drive')}
 
     @api.model
     def _pdf_split(self, new_files=None, open_files=None):
