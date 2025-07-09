@@ -159,7 +159,7 @@ class L10nChMonthlySummary(models.Model):
         for agg_record, data in result.items():
             lines = [
                 {"code": code, "name": name, "total": round(total, 2)}
-                for code, name, total in sorted(data.items(), key=lambda x: x[0][0])  # Sort by code
+                for (code, name), total in sorted(data.items(), key=lambda x: x[0][0])  # Sort by code
             ]
             final_result[agg_record] = lines
 
