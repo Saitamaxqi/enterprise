@@ -23,10 +23,10 @@ DESCRIPTION_DEBIT_CODE = [
 ]
 
 L10N_CO_EDI_TYPE = {
-    'Sales Invoice': '1',
-    'Export Invoice': '2',
-    'Electronic transmission document - type 03': '3',
-    'Electronic Sales Invoice - type 04': '4',
+    'Sales Invoice': '01',
+    'Export Invoice': '02',
+    'Electronic transmission document - type 03': '03',
+    'Electronic Sales Invoice - type 04': '04',
     'Credit Note': '91',
     'Debit Note': '92',
     'Event (Application Response)': '96',

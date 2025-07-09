@@ -1139,7 +1139,7 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
     def _dian_get_document_type_code(self, invoice):
         """ Returns the document type, used for the 'InvoiceTypeCode'/'CreditNoteTypeCode' node """
         if not invoice.l10n_co_edi_is_support_document and invoice.l10n_co_edi_type:
-            return invoice.l10n_co_edi_type.rjust(2, '0')
+            return invoice.l10n_co_edi_type
         elif invoice.move_type == 'in_refund':
             return '95'  # Nota de ajuste al documento soporte
         else:

@@ -418,7 +418,7 @@ class AccountEdiFormat(models.Model):
         elif invoice.move_type == 'out_invoice' and invoice.l10n_co_edi_debit_note:
             edi_type = "92"
         else:
-            edi_type = "{0:0=2d}".format(int(invoice.l10n_co_edi_type))
+            edi_type = invoice.l10n_co_edi_type
 
         # description
         description_field = None

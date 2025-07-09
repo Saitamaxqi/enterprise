@@ -11,7 +11,7 @@ class MailTemplate(models.Model):
         """
         dian_subject = (
             "{{ object.company_id.partner_id._get_vat_without_verification_code() }};"
-            "{{ object.company_id.name }};{{ object.name }};{{ object.l10n_co_edi_type }};"
+            "{{ object.company_id.name }};{{ object.name }};{{ (object.l10n_co_edi_type or '') }};"
             "{{ object.company_id.partner_id.l10n_co_edi_commercial_name }}"
         )
 

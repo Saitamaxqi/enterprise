@@ -143,10 +143,10 @@ class CarvajalRequest():
                 carvajal_type = 'ND'
             else:
                 odoo_type_to_carvajal_type = {
-                    '1': 'FV',
-                    '2': 'FE',
-                    '3': 'FC',
-                    '4': 'FC',
+                    '01': 'FV',
+                    '02': 'FE',
+                    '03': 'FC',
+                    '04': 'FC',
                 }
                 carvajal_type = odoo_type_to_carvajal_type[invoice.l10n_co_edi_type]
         elif invoice.move_type == 'in_invoice':
