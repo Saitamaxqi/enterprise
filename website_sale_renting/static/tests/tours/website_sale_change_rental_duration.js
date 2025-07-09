@@ -24,7 +24,6 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
         {
             content: "Wait for the datepicker to be opened",
             trigger: ".o_time_picker_input",
-            run: "click",
         },
         {
             content: "Pick start time",
@@ -55,7 +54,6 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
         {
             content: "Wait for the datepicker to be opened",
             trigger: ".o_time_picker_input",
-            run: "click",
         },
         {
             content: "Pick start time",
