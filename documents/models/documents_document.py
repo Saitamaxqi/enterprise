@@ -1957,6 +1957,10 @@ class DocumentsDocument(models.Model):
         self.sudo().is_favorited = not self.is_favorited
         return self.is_favorited
 
+    def toggle_favorited_multi(self):  # TODO remove in master and directly modify toggle_favorited
+        for record in self:
+            record.toggle_favorited()
+
     def access_content(self):
         self.ensure_one()
         action = {

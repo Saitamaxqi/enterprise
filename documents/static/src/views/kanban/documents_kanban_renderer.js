@@ -53,11 +53,12 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
         );
         useCommand(
             _t("Toggle favorite"),
-            () => {
-                if (this.props.list.selection.length) {
-                    this.props.list.selection[0].update({
-                        is_favorited: !this.props.list.selection[0].data.is_favorited,
-                    });
+            async () => {
+                if (this.selection.length) {
+                    await this.env.model.orm.call("documents.document", "toggle_favorited_multi", [
+                        this.selection.map((record) => record.resId),
+                    ]);
+                    this.env.model.load();
                 }
             },
             {
