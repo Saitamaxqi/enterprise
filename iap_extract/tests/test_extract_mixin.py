@@ -75,10 +75,13 @@ class TestExtractMixin(common.TransactionCase):
             self._check_ocr_status()
 
         # The module iap is committing the transaction when creating an IAP account, we mock it to avoid that
-        with patch.object(iap_tools, 'iap_jsonrpc', side_effect=_mock_iap_jsonrpc),  \
-                patch.object(ExtractMixin, '_try_to_check_ocr_status', side_effect=_mock_try_to_check_ocr_status, autospec=True), \
-                patch.object(IapAutocompleteApi, '_contact_iap', side_effect=_mock_autocomplete), \
-                patch.object(IapAccount, 'get_credits', side_effect=lambda *args, **kwargs: 1), \
-                patch.object(Cursor, 'commit', side_effect=lambda *args, **kwargs: None), \
-                patch.object(IrCron, '_trigger', side_effect=_trigger, autospec=True):
+        with (
+            patch.object(iap_tools, 'iap_jsonrpc', side_effect=_mock_iap_jsonrpc),
+            patch.object(ExtractMixin, '_try_to_check_ocr_status', side_effect=_mock_try_to_check_ocr_status, autospec=True),
+            patch.object(IapAutocompleteApi, '_contact_iap', side_effect=_mock_autocomplete),
+            patch.object(IapAccount, 'get_credits', side_effect=lambda *args, **kwargs: 1),
+            patch.object(IrCron, '_trigger', side_effect=_trigger, autospec=True),
+        ):
             yield
+            with self.enter_registry_test_mode():
+                self.env.cr.postcommit.run()

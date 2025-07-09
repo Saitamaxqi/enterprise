@@ -132,7 +132,8 @@ class ExtractMixin(models.AbstractModel):
     def _safe_upload(self):
         """
         This function prevents any exception from being thrown during the upload of a document.
-        This is meant to be used for batch uploading where we don't want that an error rollbacks the whole transaction.
+        This is meant to be used for batch uploading where we don't want that an error prevents the
+        other documents from being sent.
         """
         try:
             self.with_company(self.company_id)._upload_to_extract()
@@ -145,8 +146,18 @@ class ExtractMixin(models.AbstractModel):
             _logger.warning("Couldn't upload %s with id %d: %s", self._name, self.id, str(e))
 
     def _send_batch_for_digitization(self):
-        for rec in self:
-            rec._safe_upload()
+        record_ids = self.ids
+
+        # The documents are sent in postcommit so that we can commit after each of them.
+        # If we were sending them in the current transaction, a rollback would reset the state
+        # of documents successfully sent to the OCR server, causing the loss of IAP credits.
+        @self.env.cr.postcommit.add
+        def send_batch_for_digitization():
+            with self.env.registry.cursor() as cr:
+                records = self.env(cr=cr)[self._name].sudo().browse(record_ids)
+                for record in records:
+                    record._safe_upload()
+                    cr.commit()
 
     def action_send_batch_for_digitization(self):
         if any(not document.is_in_extractable_state for document in self):
