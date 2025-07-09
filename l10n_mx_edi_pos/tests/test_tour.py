@@ -206,3 +206,28 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
         usage = order['l10n_mx_edi_usage']
         self.assertTrue(usage, "The invoice has no usage set.")
         self.assertEqual(usage, "G03", f"Expected CFDI usage to be 'G03', got '{usage}' instead.")
+
+    def test_refund_with_gift_card_mx(self):
+        """
+        Tests that in the case of a refund with a gift card involved, the customer can
+        still pay for the order, and that the points will go up on the gift card, depending
+        on how much the refunded product was worth.
+        """
+        if self.env['ir.module.module']._get('pos_loyalty').state != 'installed':
+            self.skipTest("pos_loyalty needs to be installed")
+
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        LoyaltyProgram = self.env['loyalty.program']
+        (LoyaltyProgram.search([])).write({'pos_ok': False})
+        self.env.ref('loyalty.gift_card_product_50').write({'active': True})
+
+        program_id = LoyaltyProgram.create_from_template('gift_card')['res_id']
+        gift_card_program = LoyaltyProgram.browse(program_id)
+        gift_card_program.write({'name': 'Test Gift Card Program'})
+        self.env["loyalty.generate.wizard"].with_context(
+            {"active_id": gift_card_program.id}
+        ).create({"coupon_qty": 1, 'points_granted': 1}).generate_coupons()
+        gift_card_program.coupon_ids.code = '043123456'
+
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_refund_with_gift_card_mx', login="pos_user")
+        self.assertEqual(gift_card_program.coupon_ids.points, 4.2)

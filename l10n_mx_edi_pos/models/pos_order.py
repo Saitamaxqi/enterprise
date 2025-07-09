@@ -277,7 +277,11 @@ class PosOrder(models.Model):
                 and (
                     (
                         order.refunded_order_id
-                        and any(line.price_subtotal > 0.0 for line in order_lines.filtered(lambda l: not l.refunded_orderline_id))
+                        and any(line.price_subtotal > 0.0 for line in order_lines.filtered(
+                            lambda l: not l.refunded_orderline_id and (
+                                'coupon_id' not in l._fields or not l.coupon_id
+                            )
+                        ))
                     )
                     or (not order.refunded_order_id and order.amount_total < 0.0)
                 )
