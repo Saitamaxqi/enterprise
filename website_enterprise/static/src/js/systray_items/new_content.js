@@ -1,10 +1,11 @@
-import { MODULE_STATUS } from "@website/client_actions/website_preview/new_content_element";
-import { NewContentModal } from "@website/client_actions/website_preview/new_content_systray_item";
-import { xml } from "@odoo/owl";
+import {
+    NewContentSystrayItem,
+    MODULE_STATUS,
+} from "@website/client_actions/website_preview/new_content_systray_item";
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 
-patch(NewContentModal.prototype, {
+patch(NewContentSystrayItem.prototype, {
     setup() {
         super.setup();
 
@@ -12,8 +13,9 @@ patch(NewContentModal.prototype, {
             moduleName: "website_appointment",
             moduleXmlId: "base.module_website_appointment",
             status: MODULE_STATUS.NOT_INSTALLED,
-            icon: xml`<i class="fa fa-calendar"/>`,
+            icon: "/appointment/static/description/icon.png",
             title: _t("Appointment Form"),
+            description: _t("Let visitors book meetings online"),
         });
     },
 });

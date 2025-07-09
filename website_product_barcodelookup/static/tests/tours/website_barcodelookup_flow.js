@@ -13,7 +13,7 @@ registry.category("web_tour.tours").add("test_01_website_barcodelookup_flow", {
             run: "click",
         }, {
             content: "Select 'New Product' to create product using barcodelookup.",
-            trigger: ".container .fa-shopping-cart",
+            trigger: ".o_new_content_menu_choices button[aria-label='Product']",
             run: "click",
         }, {
             content: "Enter barcode value of your product.",
