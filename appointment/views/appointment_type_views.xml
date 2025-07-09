@@ -171,8 +171,14 @@
                                 <field name="appointment_duration" class="oe_inline me-1 o_input_5ch" widget="float_time"/><span> hours</span>
                             </div>
                             <span class="text-muted" invisible="category != 'custom'">Depending on the Slots</span>
-                            <field name="location_id" context="{'show_address': True, 'default_is_company': True}" placeholder="Online Meeting"/>
-                            <field name="event_videocall_source" placeholder="None" invisible="location_id"/>
+                            <label for="location_id"/>
+                            <div>
+                                <field name="location_id" context="{'show_address': True, 'default_is_company': True}" placeholder="Online Meeting"/>
+                                <button name="add_videocall_source" type="button" class="btn btn-link p-0" invisible="not location_id or event_videocall_source">
+                                    <i class="oi oi-plus o_button_icon"/> Add Video
+                                </button>
+                            </div>
+                            <field name="event_videocall_source" placeholder="None" invisible="not event_videocall_source and location_id"/>
                         </group>
                         <group name="right_details">
                             <field name="staff_user_count" invisible="1"/>

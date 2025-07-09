@@ -11,6 +11,17 @@ export class AppointmentTypeFormController extends FormController {
     /**
      * @override
      */
+    async beforeExecuteActionButton(clickParams) {
+        if (clickParams.name === "add_videocall_source") {
+            this.model.root.update({'event_videocall_source': 'discuss'});
+            return false;
+        }
+        return super.beforeExecuteActionButton(...arguments);
+    }
+
+    /**
+     * @override
+     */
     async create() {
         this.dialog.add(AppointmentTemplatePickerDialog, {});
     }
