@@ -3,10 +3,10 @@ import { patch } from "@web/core/utils/patch";
 
 patch(CashierName.prototype, {
     async selectCashier(pin = false, login = false, list = false) {
-        await super.selectCashier(...arguments);
-        if (this.pos.useBlackBoxBe() && !this.pos.userSessionStatus) {
+        const selectedCashier = await super.selectCashier(...arguments);
+        if (selectedCashier && this.pos.useBlackBoxBe() && !this.pos.userSessionStatus) {
             await this.pos.clock(true);
         }
-        return;
+        return selectedCashier;
     },
 });

@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
+from odoo.fields import Domain
 from odoo.exceptions import UserError
 from itertools import groupby
 from collections import Counter
@@ -45,6 +46,7 @@ class PosSession(models.Model):
             session = self if self.exists() else self.env["pos.session"].browse(record["id"]).exists()
             record["_users_clocked_ids"] = session.users_clocked_ids.ids if session else []
             record["_employees_clocked_ids"] = session.employees_clocked_ids.ids if session else []
+            record["_user_latest_clock_in"] = session._get_latest_user_clockin_date(config) if session else None
             if config.module_pos_hr:
                 employees_insz_or_bis_number = self.env['hr.employee'].sudo().search_read(config._employee_domain(config.current_user_id.id), ['id', 'insz_or_bis_number'])
                 insz_or_bis_number_per_employee_id = {employee['id']: employee['insz_or_bis_number'] for employee in employees_insz_or_bis_number}
@@ -180,3 +182,18 @@ class PosSession(models.Model):
             for user in self.users_clocked_ids:
                 insz_map[user.id] = user.sudo().insz_or_bis_number
         return insz_map
+
+    def _get_latest_user_clockin_date(self, config):
+        self.ensure_one()
+
+        work_in_product = self.env.ref('pos_blackbox_be.product_product_work_in', raise_if_not_found=False)
+        if not work_in_product:
+            return None
+
+        domain = Domain('lines.product_id', '=', work_in_product.id)
+        if config.module_pos_hr:
+            domain &= Domain('employee_id', '=', self.employee_id.id)
+        else:
+            domain &= Domain('user_id', '=', self.user_id.id)
+        order = self.env['pos.order'].search(domain, order='id desc', limit=1)
+        return order.date_order if order else None

@@ -20,13 +20,12 @@ patch(PosStore.prototype, {
             });
         }
     },
-    async setUserSessionStatus(status, all = false) {
-        const cashier = this.getCashier();
-        if (!cashier) {
+    async setUserSessionStatus(user, status, all = false) {
+        if (!user) {
             return;
         }
         await this.data.call("pos.session", "set_user_session_work_status", [this.session.id], {
-            user_id: cashier.id,
+            user_id: user.id,
             status: status,
             all_insz: all,
         });
@@ -39,10 +38,13 @@ patch(PosStore.prototype, {
     },
     //#region User Clocking
     async clock(clock_in = true, inszs = []) {
+        await this.clockEmployee(this.getCashier(), clock_in, inszs);
+    },
+    async clockEmployee(employee, clock_in = true, inszs = []) {
         const automaticClock = Boolean(Object.keys(inszs).length > 0);
         if (Object.keys(inszs).length === 0) {
-            inszs[this.getCashier().id] = this.config.module_pos_hr
-                ? this.session._employee_insz_or_bis_number[this.getCashier().id]
+            inszs[employee.id] = this.config.module_pos_hr
+                ? this.session._employee_insz_or_bis_number[employee.id]
                 : this.user.insz_or_bis_number;
         }
         if (!this.clock_disabled) {
@@ -53,7 +55,7 @@ patch(PosStore.prototype, {
                     await this.printReceipt({ order });
                     this.removeClockOrder(order);
                 }
-                await this.setUserSessionStatus(clock_in, automaticClock);
+                await this.setUserSessionStatus(employee, clock_in, automaticClock);
             } finally {
                 this.clock_disabled = false;
             }
