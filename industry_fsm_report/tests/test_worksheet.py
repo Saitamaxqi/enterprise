@@ -299,3 +299,46 @@ class TestWorksheet(TransactionCase):
             self.assertEqual(project_form.company_id, project_form.worksheet_template_id.company_id)
             project_form.company_id = test_company
             self.assertEqual(project_form.company_id, project_form.worksheet_template_id.company_id)
+
+    def test_project_convert_fsm_project_template_with_worksheet_back_to_regular_project(self):
+        """
+        Test that when an FSM project with a worksheet template is converted to a project template
+        and then back to a regular project, the worksheet template is preserved.
+
+        Steps:
+        1. Create an FSM project with a worksheet template.
+        2. Create a task in this FSM project.
+        3. Convert the FSM project into a project template.
+        4. Verify the worksheet template is preserved on the task template.
+        5. Create a new regular project from the project template.
+        6. Verify the worksheet template is preserved on the new project task template.
+        """
+        fsm_project = self.env['project.project'].create({
+            'name': 'Field Service',
+            'is_fsm': True,
+            'worksheet_template_id': self.worksheet_template.id,
+            'company_id': self.env.company.id,
+        })
+
+        self.env['project.task'].create({
+            'name': 'FSM Task',
+            'project_id': fsm_project.id,
+            'partner_id': self.partner.id,
+        })
+
+        project_template_data = fsm_project.action_create_template_from_project()
+        project_id = project_template_data.get('params')['project_id']
+        project_template = self.env['project.project'].browse(project_id)
+
+        self.assertEqual(
+            project_template.task_template_ids[0].worksheet_template_id.id,
+            self.worksheet_template.id,
+            "Worksheet template should be preserved on the project template task"
+        )
+
+        project = project_template.action_create_from_template()
+        self.assertEqual(
+            project.task_ids[0].worksheet_template_id.id,
+            self.worksheet_template.id,
+            "Worksheet template should be preserved on the project task"
+        )

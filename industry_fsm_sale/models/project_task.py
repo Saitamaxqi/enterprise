@@ -40,11 +40,7 @@ class ProjectTask(models.Model):
     warning_message = fields.Char('Warning Message', compute='_compute_warning_message', export_string_translation=False)
     invoice_count = fields.Integer("Number of invoices", related='sale_order_id.invoice_count')
     pricelist_id = fields.Many2one('product.pricelist', compute="_compute_pricelist_id", export_string_translation=False)
-    under_warranty = fields.Boolean('Under Warranty',
-        copy=False,
-        help='If ticked, the time and materials used for this task will not be billed to the customer. '
-            'However, the inventory of consumed materials will still be updated.')
-
+    under_warranty = fields.Boolean(copy=False)
     # Project Sharing fields
     portal_quotation_count = fields.Integer(compute='_compute_portal_quotation_count')
     portal_invoice_count = fields.Integer('Invoice Count', compute='_compute_portal_invoice_count')

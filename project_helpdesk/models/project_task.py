@@ -16,15 +16,6 @@ class ProjectTask(models.Model):
                     'message': self.env._('Recurring tasks cannot be converted into tickets.'),
                 }
             }
-        if any(task.is_template for task in self):
-            return {
-                'type': 'ir.actions.client',
-                'tag': 'display_notification',
-                'params': {
-                    'type': 'warning',
-                    'message': self.env._('Tasks templates cannot be converted into tickets.'),
-                }
-            }
         return {
             'name': self.env._('Convert to Ticket'),
             'view_mode': 'form',

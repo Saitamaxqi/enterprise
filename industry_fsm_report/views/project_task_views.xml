@@ -84,7 +84,7 @@
                     name="action_fsm_worksheet"
                     icon="fa-pencil" type="object"
                     groups="project.group_project_user"
-                    invisible="(not is_fsm and not partner_id) or not allow_worksheets or not worksheet_template_id or worksheet_count or has_template_ancestor"
+                    invisible="(not is_fsm and not partner_id) or not allow_worksheets or not worksheet_template_id or worksheet_count"
                 >
                     <div class="o_stat_info">
                         <span class="o_stat_text">Worksheet</span>
@@ -95,7 +95,7 @@
                     name="action_fsm_worksheet"
                     icon="fa-check" type="object"
                     groups="project.group_project_user"
-                    invisible="not partner_id or not allow_worksheets or not worksheet_template_id or not worksheet_count or has_template_ancestor">
+                    invisible="not partner_id or not allow_worksheets or not worksheet_template_id or not worksheet_count">
                         <div class="o_stat_info">
                             <span class="o_stat_text">Worksheet</span>
                             <span class="o_stat_text">Complete</span>

@@ -4,6 +4,7 @@ from . import account_analytic_line
 from . import res_company
 from . import res_partner
 from . import project_project
+from . import project_task_template
 from . import project_task
 from . import project_task_recurrence
 from . import project_task_type

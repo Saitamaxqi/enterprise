@@ -8,13 +8,9 @@ from odoo import api, fields, models, _
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
-    allow_worksheets = fields.Boolean(related='project_id.allow_worksheets')
     worksheet_template_id = fields.Many2one(
-        'worksheet.template', string="Worksheet Template",
-        compute='_compute_worksheet_template_id', store=True, readonly=False, tracking=True,
-        domain="[('res_model', '=', 'project.task'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
-        group_expand='_group_expand_worksheet_template_id',
-        help="Create templates for each type of intervention you have and customize their content with your own custom fields.")
+        'worksheet.template', tracking=True,
+        group_expand='_group_expand_worksheet_template_id')
     worksheet_count = fields.Integer(compute='_compute_worksheet_count', compute_sudo=True, export_string_translation=False)
 
     @property
@@ -85,14 +81,6 @@ class ProjectTask(models.Model):
                 'display_send_report_primary': send_p,
                 'display_send_report_secondary': send_s,
             })
-
-    @api.depends('project_id')
-    def _compute_worksheet_template_id(self):
-        # Change worksheet when the project changes, not project.allow_worksheet
-        for task in self:
-            if not task.worksheet_template_id and task.allow_worksheets:
-                task.worksheet_template_id = task.parent_id.worksheet_template_id.id\
-                    if task.parent_id else task.project_id.worksheet_template_id.id
 
     @api.depends('worksheet_template_id')
     def _compute_worksheet_count(self):

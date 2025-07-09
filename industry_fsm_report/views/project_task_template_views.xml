@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_project_task_template_list_fsm_inherit" model="ir.ui.view">
+        <field name="name">project.task.template.list.fsm.inherit</field>
+        <field name="model">project.task.template</field>
+        <field name="inherit_id" ref="project.view_project_task_template_list"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="worksheet_template_id" optional="hide"
+                    context="{'default_res_model': 'project.task'}" invisible="not allow_worksheets"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_project_task_template_search_fsm_inherit" model="ir.ui.view">
+        <field name="name">project.task.template.search.fsm.inherit</field>
+        <field name="model">project.task.template</field>
+        <field name="inherit_id" ref="project.view_project_task_template_search"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="worksheet_template_id"/>
+            </field>
+            <filter name="milestone" position="before">
+                <filter string="Worksheet Template" name="groupby_worksheet_template" context="{'group_by': 'worksheet_template_id'}"/>
+            </filter>
+        </field>
+    </record>
+
+    <record id="quick_create_template_task_form_industry_fsm_report" model="ir.ui.view">
+        <field name="name">project.task.template.form.inherit.quick_creat</field>
+        <field name="model">project.task.template</field>
+        <field name="inherit_id" ref="project.quick_create_template_task_form"/>
+        <field name="arch" type="xml">
+            <field name="user_ids" position="after">
+                <field name="worksheet_template_id"
+                    options="{'no_open': True, 'no_quick_create': True}"
+                    context="{'form_view_ref': 'industry_fsm_report.worksheet_template_view_form_footer_design_button', 'default_res_model': 'project.task'}"
+                    invisible="not allow_worksheets"/>
+
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_project_task_template_fsm_form_inherited">
+        <field name="name">project.task.template.form.inherited</field>
+        <field name="model">project.task.template</field>
+        <field name="inherit_id" ref="project.view_project_task_template_form"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="allow_worksheets" invisible="1"/>
+                <field name="worksheet_template_id"
+                    options="{'no_open': True, 'no_quick_create': True}"
+                    context="{'form_view_ref': 'industry_fsm_report.worksheet_template_view_form_footer_design_button', 'default_res_model': 'project.task'}"
+                    invisible="not allow_worksheets"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
