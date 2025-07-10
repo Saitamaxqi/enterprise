@@ -33,26 +33,4 @@
             </div>
         </div>
     </template>
-    <template id="s_rental_search_options" inherit_id="website.snippet_options">
-        <xpath expr="//t[@t-set='so_content_addition_selector']" position="inside">, .s_rental_search</xpath>
-        <xpath expr="." position="inside">
-            <div data-js="RentalSearchOptions" data-selector=".s_rental_search">
-                <we-select data-name="timing_picker_opt" string="Timing" data-no-preview="true">
-                    <we-button data-set-timing="day">Day</we-button>
-                    <we-button data-set-timing="hour">Hour</we-button>
-                </we-select>
-                <we-row>
-                    <we-many2one string="Attribute Filter"
-                                 data-model="product.attribute"
-                                 data-no-preview="true"
-                                 data-name="product_attribute_picker_opt"
-                                 data-set-product-attribute=""
-                    />
-                    <we-button data-name="product_attribute_reset_opt"
-                               class="reset-product-attribute-picker align-self-end fa fa-fw fa-times">
-                    </we-button>
-                </we-row>
-            </div>
-        </xpath>
-    </template>
 </odoo>

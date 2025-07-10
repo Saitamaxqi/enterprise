@@ -11,7 +11,6 @@
         'security/ir_rule.xml',
         'views/knowledge_views.xml',
         'views/knowledge_templates_public.xml',
-        'views/snippets/snippets.xml',
     ],
     'installable': True,
     'auto_install': True,

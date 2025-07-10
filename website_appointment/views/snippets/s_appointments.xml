@@ -143,63 +143,6 @@
     </div>
 </template>
 
-<!-- Options -->
-<template id="s_appointments_options" inherit_id="website.snippet_options">
-    <xpath expr="." position="inside">
-        <t t-call="website_appointment.s_dynamic_snippet_options_template">
-            <t t-set="snippet_name" t-value="'appointments'"/>
-            <t t-set="snippet_selector" t-value="'.s_appointments'"/>
-        </t>
-    </xpath>
-    <xpath expr="//div[@data-js='ScrollButton']" position="attributes">
-        <attribute name="data-exclude" add=".s_appointments .s_dynamic_snippet_content" separator=","/>
-    </xpath>
-</template>
-
-<template id="s_dynamic_snippet_options_template" inherit_id="website.s_dynamic_snippet_options_template">
-    <xpath expr="//we-select[@data-name='filter_opt']" position="after">
-        <t t-if="snippet_name == 'appointments'">
-            <we-select string="Filter On"
-                data-attribute-name="filterType"
-                data-no-preview="true"
-                data-attribute-default-value="none"
-                data-dependencies="!single_record_opt">
-                <we-button data-select-data-attribute="none" title="No Filter">No Filter</we-button>
-                <we-button data-select-data-attribute="users" title="Specific Users">Users</we-button>
-                <we-button data-select-data-attribute="resources" title="Specific Resources">Resources</we-button>
-            </we-select>
-            <we-many2many string=" ⌙ Resources"
-                data-name="filter_resource"
-                data-model="appointment.type"
-                data-limit="10"
-                data-attribute-name="filterResources"
-                data-m2o-field="resource_ids"
-                data-no-preview="true"
-                data-select-data-attribute=""
-                data-default-message="Choose a resource..."/>
-            <we-many2many string=" ⌙ Users"
-                data-name="filter_user"
-                data-model="appointment.type"
-                data-limit="10"
-                data-attribute-name="filterUsers"
-                data-m2o-field="staff_user_ids"
-                data-no-preview="true"
-                data-select-data-attribute=""
-                data-domain='[["share", "=", false]]'
-                data-default-message="Choose a user..."/>
-            <we-input string="Names"
-                class="o_we_large"
-                data-name="filter_appointment_name"
-                data-attribute-name="appointmentNames"
-                data-no-preview="true"
-                data-select-data-attribute=""
-                placeholder="e.g. Dental Care, ..."
-                title="Comma-separated list of parts of appointment names"
-                data-dependencies="!single_record_opt"/>
-        </t>
-    </xpath>
-</template>
-
 <record id="website_appointment.s_appointments_000_scss" model="ir.asset">
     <field name="name">Appointments 000 SCSS</field>
     <field name="bundle">web.assets_frontend</field>

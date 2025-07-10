@@ -16,7 +16,6 @@
         'views/helpdesk_views.xml',
         'views/helpdesk_templates.xml',
         'security/website_helpdesk_security.xml',
-        'views/snippets.xml',
     ],
     'auto_install': True,
     'author': 'Odoo S.A.',

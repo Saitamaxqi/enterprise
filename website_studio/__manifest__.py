@@ -20,7 +20,6 @@ model. Furthermore, you can create a new website form or edit an existing one.
     'data': [
         'views/templates.xml',
         'views/views.xml',
-        'views/snippets/s_website_form.xml',
     ],
     'auto_install': True,
     'author': 'Odoo S.A.',
@@ -34,9 +33,6 @@ model. Furthermore, you can create a new website form or edit an existing one.
         ],
         'web.assets_unit_tests': [
             'website_studio/static/tests/builder/**/*',
-        ],
-        'website.backend_assets_all_wysiwyg': [
-            'website_studio/static/src/website_form_editor.js',
         ],
         'website.website_builder_assets': [
             'website_studio/static/src/plugins/**/*',

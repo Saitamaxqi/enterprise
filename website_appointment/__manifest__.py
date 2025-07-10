@@ -27,7 +27,6 @@ Allow clients to Schedule Appointments through your Website
         'views/snippets/s_appointments.xml',
         'views/snippets/s_appointments_preview_data.xml',
         'views/snippets/s_online_appointment.xml',
-        'views/snippets/snippets.xml',
         'security/calendar_security.xml',
         'security/ir.model.access.csv',
     ],
@@ -47,7 +46,6 @@ Allow clients to Schedule Appointments through your Website
         ],
         'web.assets_unit_tests_setup': [
             'website_appointment/static/src/snippets/**/*.js',
-            ('remove', 'website_appointment/static/src/snippets/**/options.js'),
         ],
         'web.assets_frontend': [
             'website_appointment/static/src/scss/website_appointment.scss',
@@ -56,18 +54,12 @@ Allow clients to Schedule Appointments through your Website
             'website_appointment/static/src/xml/appointment_no_slot.xml',
             'website_appointment/static/src/interactions/*.js',
             'website_appointment/static/src/snippets/**/*.js',
-            ('remove', 'website_appointment/static/src/snippets/**/options.js'),
         ],
         'website.assets_editor': [
             'website_appointment/static/src/js/systray_items/*.js',
         ],
         'website.website_builder_assets': [
             'website_appointment/static/src/plugins/**/*',
-        ],
-        'website.assets_wysiwyg': [
-            'website_appointment/static/src/snippets/s_online_appointment/options.js',
-            'website_appointment/static/src/snippets/s_appointment_type/options.js',
-            'website_appointment/static/src/snippets/s_appointments/options.js',
         ],
     }
 }
