@@ -345,6 +345,7 @@ export class SalaryPackage extends Interaction {
         stateSelectMenu.value = "";
         stateSelectMenu.choices = choicesEls;
         stateSelectMenu.disabled = enableState;
+        stateElement.selectedIndex = -1;
     }
 
     onkeydownInput(event) {
