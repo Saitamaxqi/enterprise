@@ -233,7 +233,6 @@ class SignRequestItem(models.Model):
         for signer in self:
             signer_email_normalized = email_normalize(signer.signer_email or '')
             signer_lang = get_lang(self.env, lang_code=signer.partner_id.lang).code
-            context = {'lang': signer_lang}
             # We hide the validity information if it is the default (6 month from the create_date)
             has_default_validity = signer.sign_request_id.validity and signer.sign_request_id.validity - relativedelta(months=6) == signer.sign_request_id.create_date.date()
             expiry_link_timestamp = signer._generate_expiry_link_timestamp()
@@ -256,21 +255,23 @@ class SignRequestItem(models.Model):
                 'show_validity': signer.sign_request_id.validity and not has_default_validity,
             }, lang=signer_lang, minimal_qcontext=True)
 
-            self.env['sign.request']._message_send_mail(
-                body, 'sign.sign_mail_notification_light',
-                {'record_name': signer.sign_request_id.reference},
-                {'model_description': _('Signature'),
-                 'company': signer.communication_company_id or signer.sign_request_id.create_uid.company_id,
-                 'partner': signer.partner_id},
-                {'email_from': signer.create_uid.email_formatted,
-                 'author_id': signer.create_uid.partner_id.id,
-                 'email_to': formataddr((signer.partner_id.name, signer_email_normalized)),
-                 'subject': signer.sign_request_id.subject},
+            self.env['sign.request'].with_context(lang=signer.partner_id.lang or self.env.lang)._message_send_mail(
+                body,
+                record_name=signer.sign_request_id.reference,
+                notif_values={
+                    'model_description': _('Signature'),
+                    'company': signer.communication_company_id or signer.sign_request_id.create_uid.company_id,
+                    'partner': signer.partner_id,
+                },
+                mail_values={
+                    'author_id': signer.create_uid.partner_id.id,
+                    'email_from': signer.create_uid.email_formatted,
+                    'email_to': formataddr((signer.partner_id.name, signer_email_normalized)),
+                    'subject': signer.sign_request_id.subject,
+                },
                 force_send=self.env.context.get('force_send', True),  # only force_send if not from cron
-                lang=signer_lang,
             )
             signer.is_mail_sent = True
-            del context
 
     def sign(self, signature, **kwargs):
         """ Sign sign request items at once.
@@ -319,20 +320,21 @@ class SignRequestItem(models.Model):
             'auth_method': dict(self.role_id._fields['auth_method']._description_selection(self.env))[self.role_id.auth_method]
         }, lang=partner_lang, minimal_qcontext=True)
 
-        self.env['sign.request']._message_send_mail(
-            body, 'sign.sign_mail_notification_light',
-            {'record_name': self.reference},
-            {'model_description': 'signature',
-             'company': self.communication_company_id or self.create_uid.company_id,
-             'partner': self.create_uid.partner_id},
-            {
-                'email_from': self.create_uid.email_formatted,
+        self.env['sign.request'].with_context(lang=self.create_uid.lang or self.env.lang)._message_send_mail(
+            body,
+            record_name=self.reference,
+            notif_values={
+                'model_description': 'signature',
+                'company': self.communication_company_id or self.create_uid.company_id,
+                'partner': self.create_uid.partner_id,
+            },
+            mail_values={
                 'author_id': self.create_uid.partner_id.id,
+                'email_from': self.create_uid.email_formatted,
                 'email_to': self.create_uid.email_formatted,
                 'subject': _('%s: missing credits for extra-authentication', self.reference)
             },
             force_send=True,
-            lang=partner_lang,
         )
 
     def _post_fill_request_item(self):

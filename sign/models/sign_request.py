@@ -409,18 +409,18 @@ class SignRequest(models.Model):
             'body': Markup('<p style="white-space: pre">{}</p>').format(refusal_reason),
         }, lang=partner_lang, minimal_qcontext=True)
 
-        self._message_send_mail(
-            body, 'sign.sign_mail_notification_light',
-            {'record_name': self.reference},
-            {'model_description': _('Signature'),
-             'company': self.communication_company_id or self.create_uid.company_id,
-             'partner': partner},
-            {'email_from': self.create_uid.email_formatted,
-             'author_id': self.create_uid.partner_id.id,
-             'email_to': partner.email_formatted,
-             'subject': subject},
+        self.with_context(lang=partner.lang or self.env.lang)._message_send_mail(
+            body,
+            record_name=self.reference,
+            notif_values={
+                'model_description': _('Signature'),
+                'company': self.communication_company_id or self.create_uid.company_id,
+                'partner': partner,
+            },
+            mail_values={
+                'subject': subject,
+            },
             force_send=force_send,
-            lang=partner_lang,
         )
 
     def send_signature_accesses(self):
@@ -548,19 +548,19 @@ class SignRequest(models.Model):
             'request_edited': request_edited,
             }, lang=partner_lang, minimal_qcontext=True)
 
-        self.env['sign.request']._message_send_mail(
-            body, 'sign.sign_mail_notification_light',
-            {'record_name': self.reference},
-            {'model_description': _('Signature'),
-             'company': self.communication_company_id or self.create_uid.company_id,
-             'partner': partner},
-            {'email_from': self.create_uid.email_formatted,
-             'author_id': self.create_uid.partner_id.id,
-             'email_to': partner.email_formatted,
-             'subject': _('%s has been edited and signed', self.reference) if request_edited else _('%s has been signed', self.reference),
-             'attachment_ids': self.attachment_ids.ids + self.completed_document_attachment_ids.ids},
+        self.with_context(lang=partner.lang or self.env.lang)._message_send_mail(
+            body,
+            record_name=self.reference,
+            notif_values={
+                'model_description': _('Signature'),
+                'company': self.communication_company_id or self.create_uid.company_id,
+                'partner': partner,
+            },
+            mail_values={
+                'attachment_ids': self.attachment_ids.ids + self.completed_document_attachment_ids.ids,
+                'subject': _('%s has been edited and signed', self.reference) if request_edited else _('%s has been signed', self.reference),
+            },
             force_send=force_send,
-            lang=partner_lang,
         )
 
     @api.autovacuum
@@ -652,40 +652,46 @@ class SignRequest(models.Model):
     # Mail overrides #
     ##################
 
-    @api.model
-    def _message_send_mail(self, body, email_layout_xmlid, message_values, notif_values, mail_values, force_send=False, **kwargs):
-        """ Shortcut to send an email. """
-        default_lang = get_lang(self.env, lang_code=kwargs.get('lang')).code
-        lang = kwargs.get('lang', default_lang)
-        sign_request = self.with_context(lang=lang)
-        partner_id = notif_values.get("partner")
-        if partner_id and len(partner_id.user_ids) == 1 and partner_id.user_ids.notification_type == "inbox":
-            return sign_request.message_notify(
-                body=body,
-                subject=mail_values.get("subject"),
-                author_id=self.create_uid.partner_id.id,
-                email_from=mail_values.get("email_from"),
+    def _message_send_mail(self, body, notif_values=None, mail_values=None, record_name=False, force_send=False):
+        """ Shortcut to sent a notification or an email. """
+        notif_values = notif_values or {}
+        company = notif_values.get('company')
+        model_description = notif_values.get('model_description')
+        partner = notif_values.get('partner')
+        notification_layout_xmlid = notif_values.get('notification_layout_xmlid', 'sign.sign_mail_notification_light')
+
+        mail_values = mail_values or {}
+        if 'author_id' not in mail_values:
+            mail_values['author_id'] = self.create_uid.partner_id.id
+            mail_values['email_from'] = self.create_uid.email_formatted
+        if 'email_to' not in mail_values:
+            mail_values['email_to'] = partner.email_formatted
+
+        if partner and len(partner.user_ids) == 1 and partner.user_ids.notification_type == "inbox":
+            return self.message_notify(
                 attachment_ids=mail_values.get("attachment_ids"),
-                partner_ids=notif_values.get("partner").ids,
-                record_name=message_values.get("record_name"),
-                model_description=notif_values.get("model_description"),
-                mail_auto_delete=False,
+                author_id=self.create_uid.partner_id.id,
+                body=body,
+                email_from=mail_values.get("email_from"),
                 force_send=force_send,
+                mail_auto_delete=False,
+                model_description=model_description,
+                partner_ids=partner.ids,
+                record_name=record_name,
+                subject=mail_values.get("subject"),
             )
 
-        # the notif layout wrapping expects a mail.message record, but we don't want
-        # to actually create the record
-        # See @tde-banana-odoo for details
-        msg = sign_request.env['mail.message'].sudo().new(dict(body=body, **message_values))
-        body_html = sign_request.env['ir.qweb']._render(
-            email_layout_xmlid,
-            dict(message=msg, **notif_values),
-            minimal_qcontext=True
+        mail_values['body_html'] = self.env['mail.render.mixin']._render_encapsulate(
+            notification_layout_xmlid, body,
+            context_record=self,
+            add_context={
+                'company': company,
+                'model_description': model_description,
+                'record_name': record_name,
+            },
         )
-        body_html = sign_request.env['mail.render.mixin']._replace_local_links(body_html)
-
         mail_values['reply_to'] = mail_values.get('email_from')
-        mail = sign_request.env['mail.mail'].sudo().create(dict(body_html=body_html, **mail_values))
+        mail = self.env['mail.mail'].sudo().create(mail_values)
         if force_send:
             mail.send_after_commit()
         return mail
