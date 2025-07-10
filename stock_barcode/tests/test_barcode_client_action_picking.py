@@ -2689,8 +2689,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # - product1 line should not be split (completed line)
         # - product2 line should be split in two (2 qty picked, 2 qty left)
         # - product3 line should not be split (not picked at all)
-        self.assertEqual(len(delivery.move_ids), 4)
         self.assertRecordValues(delivery.move_ids, [
+            {'product_id': self.product1.id, 'quantity': 4, 'picked': True},
+            {'product_id': self.product2.id, 'quantity': 4, 'picked': True},
+            {'product_id': product3.id, 'quantity': 2, 'picked': False},
+        ])
+        self.assertRecordValues(delivery.move_line_ids, [
             {'product_id': self.product1.id, 'quantity': 4, 'picked': True},
             {'product_id': self.product2.id, 'quantity': 2, 'picked': True},
             {'product_id': product3.id, 'quantity': 2, 'picked': False},
@@ -2738,6 +2742,35 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {'quantity': 2, 'picked': True, 'lot_id': lots[1].id},
         ])
 
+    def test_split_line_on_exit_for_receipt_with_grouped_lot(self):
+        """ Ensures that the total quantity handled by the splitted moves does
+        not exceed the initial demand in case the barcode lot lines are grouped.
+        """
+        grouped_lot_group = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'group_ids': [Command.link(grouped_lot_group.id)]})
+        # Creates a receipt for 3 x productlot1
+        receipt = self.env['stock.picking'].create({
+            'name': "SPLOEFRWGL",
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.supplier_location.id,
+            'picking_type_id': self.picking_type_in.id,
+            'move_ids': [Command.create({
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'product_id': self.productlot1.id,
+                'product_uom_qty': 3,
+            })]
+        })
+        receipt.action_confirm()
+        self.assertRecordValues(receipt.move_ids, [
+            {'product_uom_qty': 3.0, 'quantity': 3.0, 'picked': False}
+        ])
+        self.start_tour('/odoo/barcode', 'test_split_line_on_exit_for_receipt_with_grouped_lot', login='admin')
+        # Checks receipt moves values.
+        self.assertRecordValues(receipt.move_ids, [
+            {'product_uom_qty': 3.0, 'quantity': 3.0, 'picked': True},
+        ])
+
     def test_split_line_on_exit_for_receipt(self):
         """ Ensures that exit an unfinished operation will split the uncompleted move lines to have
         one move line with all picked quantity and one move line with the remaining quantity."""
@@ -2773,9 +2806,14 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour("odoo/barcode/", 'test_split_line_on_exit_for_receipt', login='admin')
         # Checks receipt moves values.
         self.assertRecordValues(receipt.move_ids, [
-            {'product_id': self.product1.id, 'quantity': 3, 'picked': True},
-            {'product_id': self.product2.id, 'quantity': 1, 'picked': True},
+            {'product_id': self.product1.id, 'quantity': 4, 'picked': True},
+            {'product_id': self.product2.id, 'quantity': 4, 'picked': True},
+        ])
+        self.assertRecordValues(receipt.move_ids.move_line_ids, [
+            {'product_id': self.product1.id, 'quantity': 2, 'picked': True},
             {'product_id': self.product1.id, 'quantity': 1, 'picked': False},
+            {'product_id': self.product1.id, 'quantity': 1, 'picked': True},
+            {'product_id': self.product2.id, 'quantity': 1, 'picked': True},
             {'product_id': self.product2.id, 'quantity': 3, 'picked': False},
         ])
 
@@ -3123,11 +3161,15 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             ])
         url = self._get_client_action_url(ship.id)
         self.start_tour(url, 'test_split_uncomplete_moves_on_exit', login='admin', timeout=180)
-        self.assertRecordValues(ship.move_ids.filtered(lambda m: m.product_id == mto_product).sorted('quantity'), [
+        self.assertRecordValues(ship.move_ids.sorted('quantity'), [
+            {"product_id": mto_product.id, "quantity": 4.0, "picked": True},
+            {"product_id": mts_product.id, "quantity": 5.0, "picked": True},
+        ])
+        self.assertRecordValues(ship.move_line_ids.filtered(lambda m: m.product_id == mto_product).sorted('quantity'), [
             {"quantity": 1.0, "picked": True},
             {"quantity": 3.0, "picked": False},
         ])
-        self.assertRecordValues(ship.move_ids.filtered(lambda m: m.product_id == mts_product).sorted('quantity'), [
+        self.assertRecordValues(ship.move_line_ids.filtered(lambda m: m.product_id == mts_product).sorted('quantity'), [
             {"quantity": 1.0, "picked": True},
             {"quantity": 4.0, "picked": False},
         ])
@@ -3163,7 +3205,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         delivery.action_assign()
         url = self._get_client_action_url(delivery.id)
         self.start_tour(url, 'test_split_uncomplete_manually_assigned_moves_on_exit', login='admin')
-        self.assertRecordValues(delivery.move_ids.sorted('quantity'), [
+        self.assertRecordValues(delivery.move_ids, [
+            {"quantity": 3.0, "picked": True},
+        ])
+        self.assertRecordValues(delivery.move_line_ids.sorted('quantity'), [
             {"quantity": 1.0, "picked": True},
             {"quantity": 2.0, "picked": False},
         ])
@@ -3209,10 +3254,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = f"/web#action={action.id}"
         self.start_tour(url, 'test_split_uncomplete_moves_on_exit_with_neutral_changes', login='admin')
-        # Checks the reservation state is essentially equivalent
+        # Checks the reservation state is equivalent
         self.assertRecordValues(delivery.move_ids, [
-            {'product_uom_qty': 2.0, 'quantity': 2.0, 'picked': False, 'lot_ids': lots[1].ids},
-            {'product_uom_qty': 2.0, 'quantity': 2.0, 'picked': False, 'lot_ids': lots[0].ids},
+            {'product_uom_qty': 4.0, 'quantity': 4.0, 'picked': False, 'lot_ids': lots.ids},
         ])
         self.assertRecordValues(delivery.move_line_ids, [
             {'quantity': 2.0, 'picked': False, 'lot_id': lots[1].id},

@@ -36,6 +36,7 @@ class StockMove(models.Model):
                 for move_line in move.move_line_ids:
                     if move_line.quantity == 0 and move_line.picked:
                         move_line.unlink()
+            new_moves._merge_moves(merge_into=moves_to_backorder)
         return new_moves
 
     def _truncate_overreserved_moves(self, barcode_quantities):

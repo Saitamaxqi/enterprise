@@ -951,12 +951,18 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         self.start_tour("odoo/barcode/", 'test_split_line_on_exit_for_batch', login='admin')
         # Checks the receipts moves values.
         self.assertRecordValues(receipt1.move_ids, [
-            {'product_id': self.product1.id, 'quantity': 2, 'picked': True},
-            {'product_id': self.product1.id, 'quantity': 2, 'picked': False},
+            {'product_id': self.product1.id, 'quantity': 4, 'picked': True},
+        ])
+        self.assertRecordValues(receipt1.move_line_ids, [
+            {'quantity': 2, 'picked': True},
+            {'quantity': 2, 'picked': False},
         ])
         self.assertRecordValues(receipt2.move_ids, [
-            {'product_id': self.product2.id, 'quantity': 1, 'picked': True},
-            {'product_id': self.product2.id, 'quantity': 3, 'picked': False},
+            {'product_id': self.product2.id, 'quantity': 4, 'picked': True},
+        ])
+        self.assertRecordValues(receipt2.move_line_ids, [
+            {'quantity': 1, 'picked': True},
+            {'quantity': 3, 'picked': False},
         ])
 
     def test_scan_can_change_destination_location(self):

@@ -5513,6 +5513,72 @@ registry.category("web_tour.tours").add("test_split_line_on_scan", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_split_line_on_exit_for_receipt_with_grouped_lot", {
+    steps: () => [
+        // Opens the receipt and checks its lines.
+        { trigger: ".o_stock_barcode_main_menu", run: "scan SPLOEFRWGL" },
+        {
+            trigger: ".o_barcode_client_action",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineProduct(0, "productlot1");
+                helper.assertLineQty(0, "0/3");
+            },
+        },
+        // Add one unit
+        {
+            trigger: ".o_edit .fa-pencil",
+            run: "click",
+        },
+        {
+            trigger: ".o_digipad_increment",
+            run: "click",
+        },
+        {
+            trigger: ".o_save",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line_details",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "1/3");
+            },
+        },
+        // Leaves the receipt and re-open it directly, the line was not splitted.
+        { trigger: "button.o_exit", run: "click" },
+        { trigger: ".o_stock_barcode_main_menu", run: "scan SPLOEFRWGL" },
+        {
+            trigger: ".o_barcode_line_details",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "1/3");
+            },
+        },
+        // Add the remaining quantity and leave
+        {
+            trigger: ".o_add_remaining_quantity",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(3)",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "3/3");
+            },
+        },
+        { trigger: "button.o_exit", run: "click" },
+        { trigger: ".o_stock_barcode_main_menu", run: "scan SPLOEFRWGL" },
+        {
+            trigger: ".o_barcode_line .qty-done:contains(3)",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLineQty(0, "3/3");
+            },
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_scan_line_splitting_preserve_destination", {
     steps: () => [
         // Select the first (only) line
