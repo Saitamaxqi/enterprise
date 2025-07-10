@@ -676,6 +676,10 @@ class AccountBankStatementLine(models.Model):
 
         self._handle_reconciliation_rule(account_move_line, account_id)
         new_rule = self._check_and_create_reconciliation_rule(account_id, self.env.company.id)
+
+        if self.env.context.get('account_default_taxes') and self.env['account.account'].browse(account_id).tax_ids:
+            self._recompute_tax_lines()
+
         if new_rule:
             return self.env['account.bank.statement.line'].search([
                 ('journal_id', '=', self.journal_id.id),

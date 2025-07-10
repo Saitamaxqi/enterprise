@@ -1643,3 +1643,45 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         ])
         self.assertEqual(len(messages), 3)
         self.assertEqual(messages.author_id, self.env.ref('base.partner_root'), "Automatic reco model set should be done by OdooBot.")
+
+    def test_account_default_taxes_of_reco_model(self):
+        default_tax = self.env['account.tax'].create({
+            'name': "default_tax",
+            'amount_type': 'fixed',
+            'amount': -10.0,
+        })
+        account = self.env['account.account'].create({
+            'name': 'account with default tax',
+            'code': '101010',
+            'tax_ids': [Command.link(default_tax.id)]
+        })
+        reco_model = self.env['account.reconcile.model'].create({
+            'name': 'test reco model',
+            'line_ids': [Command.create({'account_id': account.id})],
+        })
+        st_line = self._create_st_line(100.0, update_create_date=False)
+        reco_model._trigger_reconciliation_model(st_line)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'tax_ids': [], 'tax_line_id': False, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': account.id, 'tax_ids': default_tax.ids, 'tax_line_id': False, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': False},
+            {'account_id': account.id, 'tax_ids': [], 'tax_line_id': default_tax.id, 'amount_currency': -10.0, 'currency_id': self.company_data['currency'].id, 'balance': -10.0, 'reconciled': False},
+        ])
+
+    def test_add_default_tax_of_account_with_set_account(self):
+        default_tax = self.env['account.tax'].create({
+            'name': "default_tax",
+            'amount_type': 'fixed',
+            'amount': -20.0,
+        })
+        account = self.env['account.account'].create({
+            'name': 'account with default tax',
+            'code': '101010',
+            'tax_ids': [Command.link(default_tax.id)]
+        })
+        st_line = self._create_st_line(200.0, update_create_date=False)
+        st_line.with_context(account_default_taxes=True).set_account_bank_statement_line(st_line.line_ids[-1].id, account.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'tax_ids': [], 'tax_line_id': False, 'amount_currency': 200.0, 'currency_id': self.company_data['currency'].id, 'balance': 200.0, 'reconciled': False},
+            {'account_id': account.id, 'tax_ids': default_tax.ids, 'tax_line_id': False, 'amount_currency': -180.0, 'currency_id': self.company_data['currency'].id, 'balance': -180.0, 'reconciled': False},
+            {'account_id': account.id, 'tax_ids': [], 'tax_line_id': default_tax.id, 'amount_currency': -20.0, 'currency_id': self.company_data['currency'].id, 'balance': -20.0, 'reconciled': False},
+        ])

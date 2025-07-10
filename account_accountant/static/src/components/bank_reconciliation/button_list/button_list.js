@@ -103,7 +103,8 @@ export class BankRecButtonList extends Component {
                 // we need to reload the records that will use this model to make sure the new model is displayed.
                 const linesToLoad = await this._setAccountOnReconcileLine(
                     this.lastAccountMoveLine.data.id,
-                    account[0]
+                    account[0],
+                    { context: { account_default_taxes: true } }
                 );
                 const recordsToLoad = [
                     ...this.env.model.root.records.filter((record) =>
@@ -122,14 +123,16 @@ export class BankRecButtonList extends Component {
      *
      * @param {number} amlId - ID of the account move line to update.
      * @param {number} accountId - ID of the selected account to assign.
+     * @param {Object} context - the context to use for adding default tax of account
      *
      * @returns {Promise<list>} - The list of IDs of lines to reload in case of auto-rule creation.
      */
-    async _setAccountOnReconcileLine(amlId, accountId) {
+    async _setAccountOnReconcileLine(amlId, accountId, context = {}) {
         return await this.orm.call(
             "account.bank.statement.line",
             "set_account_bank_statement_line",
-            [this.statementLineData.id, amlId, accountId]
+            [this.statementLineData.id, amlId, accountId],
+            context
         );
     }
 

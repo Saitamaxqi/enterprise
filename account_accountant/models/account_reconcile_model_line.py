@@ -19,7 +19,7 @@ class AccountReconcileModelLine(models.Model):
         """
         self.ensure_one()
 
-        taxes = self.tax_ids
+        taxes = self.tax_ids or self.account_id.tax_ids
         if taxes and partner:
             fiscal_position = self.env['account.fiscal.position']._get_fiscal_position(partner)
             if fiscal_position:
