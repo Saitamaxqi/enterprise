@@ -202,6 +202,13 @@ class SignSendRequest(models.TransientModel):
         self._create_request_log_note(request)
         if self.activity_id:
             self._activity_done()
+
+        current_partner_id = self.env.user.partner_id.id
+        # Check if the current user's partner is one of the signers
+        if any(signer.partner_id.id == current_partner_id for signer in self.signer_ids):
+            return request.go_to_document()
+        if not self.reference_doc:
+            return self.env['ir.actions.actions']._for_xml_id('sign.sign_request_action')
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
