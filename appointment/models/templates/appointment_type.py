@@ -62,9 +62,6 @@ class AppointmentType(models.Model):
             return self._prepare_book_resource_template_values()
         return {}
 
-    def _get_default_template_videocall_source(self):
-        return 'discuss'
-
     @api.model
     def _prepare_meeting_template_values(self):
         return {
@@ -85,7 +82,6 @@ class AppointmentType(models.Model):
             'slot_creation_interval': 0.5,
             'is_auto_assign': False,
             'is_date_first': False,
-            'event_videocall_source': self._get_default_template_videocall_source(),
             'location_id': False,
             'name': _('Video Call'),
             'question_ids': [(0, 0, {

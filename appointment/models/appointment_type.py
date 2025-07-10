@@ -34,6 +34,9 @@ class AppointmentType(models.Model):
                 result['name'] = _("%s - Let's meet", self.env.user.name)
             if 'staff_user_ids' in fields and not result.get('staff_user_ids'):
                 result['staff_user_ids'] = [Command.set(self.env.user.ids)]
+        if 'event_videocall_source' in fields and not result.get('event_videocall_source'):
+            if not result.get('location_id'):
+                result['event_videocall_source'] = self._get_default_event_videocall_source()
         return result
 
     def _default_booked_mail_template_id(self):
@@ -45,6 +48,9 @@ class AppointmentType(models.Model):
     @api.model
     def _default_question_ids(self):
         return self.env['appointment.question'].search([('is_default', '=', True), ('active', '=', True)]).ids
+
+    def _get_default_event_videocall_source(self):
+        return 'discuss'
 
     # Global Settings
     sequence = fields.Integer('Sequence', default=10)
@@ -71,7 +77,7 @@ class AppointmentType(models.Model):
     location = fields.Char(
         'Location formatted', compute='_compute_location', compute_sudo=True,
         help='Location formatted for one line uses')
-    event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Video Link", default="discuss",
+    event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Video Link",
         help="Defines the type of video call link that will be used for the generated events. Keep it empty to prevent generating meeting url.")
     allow_guests = fields.Boolean(string='Allow invitations', help="Let attendees invite guests when registering a meeting.")
     manual_confirmation_percentage = fields.Float("Capacity Percentage", default=1.0,

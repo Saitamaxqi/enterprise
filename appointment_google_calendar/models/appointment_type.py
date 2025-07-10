@@ -10,8 +10,13 @@ from odoo.tools import str2bool
 class AppointmentType(models.Model):
     _inherit = "appointment.type"
 
+    def _get_default_event_videocall_source(self):
+        if "google" in self._get_calendars_possible_to_setup():
+            return "google_meet"
+        return super()._get_default_event_videocall_source()
+
     connector_google = fields.Boolean(compute="_compute_connector_google")
-    event_videocall_source = fields.Selection(selection_add=[('google_meet', 'Google Meet')], ondelete={'google_meet': 'set default'})
+    event_videocall_source = fields.Selection(selection_add=[('google_meet', 'Google Meet')], ondelete={'google_meet': 'set discuss'})
     users_wo_google_calendar_msg = fields.Html('Users Without Google Calendar Synchronization',
         compute='_compute_users_wo_google_calendar_msg')
 
