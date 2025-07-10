@@ -229,9 +229,10 @@ export class SalaryPackage extends Interaction {
             appliesOn: $(input).attr("applies-on"),
         }));
         let documentSrcs = {
-            "employee": {},
-            "address": {},
-            "bank_account": {}
+            'version_personal': {},
+            'employee': {},
+            'address': {},
+            'bank_account': {}
         };
         const promises = documentNames.map(async ({name, appliesOn}) => {
             const docSrc = await this.getFileData(name)
@@ -243,6 +244,7 @@ export class SalaryPackage extends Interaction {
 
     getBenefits() {
         const benefits = {
+            'version_personal': {},
             'version': {},
             'employee': {},
             'address': {},
@@ -325,7 +327,7 @@ export class SalaryPackage extends Interaction {
         if (!stateElement) {
             return;
         }
-        const countryID = document.querySelector("select[name='private_country_id'][applies-on='employee']")?.value
+        const countryID = document.querySelector("select[name='private_country_id'][applies-on='version_personal']")?.value
         let enableState = true;
         const stateSelectMenu = this.selectMenus["private_state_id"];
         stateElement.querySelectorAll("option").forEach((option) => option.remove());
@@ -718,6 +720,7 @@ export class SalaryPackage extends Interaction {
         benefits = {
             'employee': Object.assign(benefits.employee, personalDocuments.employee),
             'version': Object.assign(benefits.version, personalDocuments.version),
+            'version_personal': Object.assign(benefits.version_personal, personalDocuments.version_personal),
             'address': Object.assign(benefits.address, personalDocuments.address),
             'bank_account': Object.assign(benefits.bank_account, personalDocuments.bank_account),
         }

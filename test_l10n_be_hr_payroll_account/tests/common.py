@@ -63,7 +63,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'height': 0.015,
             }, {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
-                'name': 'employee_id.private_city',
+                'name': 'private_city',
                 'required': True,
                 'responsible_id': cls.env.ref('sign.sign_item_role_employee').id,
                 'page': 1,
@@ -74,7 +74,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'height': 0.015,
             }, {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
-                'name': 'employee_id.private_country_id.name',
+                'name': 'private_country_id.name',
                 'required': True,
                 'responsible_id': cls.env.ref('sign.sign_item_role_employee').id,
                 'page': 1,
@@ -85,7 +85,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'height': 0.015,
             }, {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
-                'name': 'employee_id.private_street',
+                'name': 'private_street',
                 'required': True,
                 'responsible_id': cls.env.ref('sign.sign_item_role_employee').id,
                 'page': 1,
@@ -129,7 +129,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
                 'height': 0.015,
             }, {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
-                'name': 'employee_id.children',
+                'name': 'children',
                 'required': True,
                 'responsible_id': cls.env.ref('sign.sign_item_role_employee').id,
                 'page': 2,

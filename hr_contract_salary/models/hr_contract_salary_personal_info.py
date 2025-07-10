@@ -1,10 +1,9 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
-MODELS_MAPPED = {'employee': 'hr.employee', 'bank_account': 'res.partner.bank'}
+MODELS_MAPPED = {'version_personal': 'hr.version', 'employee': 'hr.employee', 'bank_account': 'res.partner.bank'}
 
 
 class HrContractSalaryPersonalInfo(models.Model):
@@ -16,7 +15,7 @@ class HrContractSalaryPersonalInfo(models.Model):
     sequence = fields.Integer(default=100)
     res_field_id = fields.Many2one(
         'ir.model.fields', string="Related Field",
-        domain="[('model', '=', res_model), ('ttype', 'not in', ('one2many', 'many2one', 'many2many'))]", required=True, ondelete='cascade',
+        domain="[('model', '=', res_model), ('ttype', 'not in', ('one2many', 'many2one', 'many2many')), ('store', '=', True)]", required=True, ondelete='cascade',
         help="Name of the field related to this personal info.")
     field = fields.Char(related='res_field_id.name', readonly=True)
     structure_type_id = fields.Many2one('hr.payroll.structure.type', string="Salary Structure Type")
@@ -40,6 +39,7 @@ class HrContractSalaryPersonalInfo(models.Model):
     ], default='left')
     value_ids = fields.One2many('hr.contract.salary.personal.info.value', 'personal_info_id')
     applies_on = fields.Selection([
+        ('version_personal', 'Version'),
         ('employee', 'Employee'),
         ('bank_account', 'Bank Account')
     ], default='employee')
@@ -81,6 +81,8 @@ class HrContractSalaryPersonalInfo(models.Model):
                 return False
             if info.applies_on == 'employee':
                 info_value = version.employee_id[info.field]
+            elif info.applies_on == 'version_personal':
+                info_value = version[info.field]
             else:
                 info_value = version.employee_id.bank_account_id[info.field]
             if info.value_ids:

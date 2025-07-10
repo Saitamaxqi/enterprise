@@ -28,7 +28,7 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
 
             # asserts that '0' values automatically filled are actually being saved
             children_count = self.env['sign.request.item.value'].search([
-                ('sign_item_id.name', '=', "employee_id.children"),
+                ('sign_item_id.name', '=', "children"),
                 ('sign_request_id', '=', new_version.sign_request_ids.id)
             ], limit=1)
             self.assertEqual(children_count.value, '0')

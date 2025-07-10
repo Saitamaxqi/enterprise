@@ -415,6 +415,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 1348",
         },
         {
+            content: "Country",
+            trigger: "select[name=private_country_id]:not(:visible)",
+            run: "selectByLabel Belgium",
+        },
+        {
             content: "Email",
             trigger: 'input[name="private_email"]',
             run: "edit nathalie.stephen@example.com",
@@ -1394,6 +1399,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             content: "Validate and Sign",
             trigger: ".o_sign_validate_banner button",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Go on configurator",

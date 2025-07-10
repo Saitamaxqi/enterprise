@@ -145,10 +145,10 @@ class HrContractSalary(main.HrContractSalary):
                 ('private_car_reimbursed_amount', round(request.env['hr.version']._get_private_car_reimbursed_amount(float(new_value)), 2) if benefits['version']['fold_private_car_reimbursed_amount'] else 0),
             ]
         if benefit_field == 'fold_l10n_be_bicyle_cost':
-            distance = benefits['employee']['km_home_work'] or '0'
+            distance = benefits['version_personal']['km_home_work'] or '0'
             res['extra_values'] = [('l10n_be_bicyle_cost', round(request.env['hr.version']._get_private_bicycle_cost(float(distance)), 2) if benefits['version']['fold_l10n_be_bicyle_cost'] else 0)]
         if benefit_field == 'fold_private_car_reimbursed_amount':
-            distance = benefits['employee']['km_home_work'] or '0'
+            distance = benefits['version_personal']['km_home_work'] or '0'
             res['extra_values'] = [('private_car_reimbursed_amount', round(request.env['hr.version']._get_private_car_reimbursed_amount(float(distance)), 2) if benefits['version']['fold_private_car_reimbursed_amount'] else 0)]
         return res
 

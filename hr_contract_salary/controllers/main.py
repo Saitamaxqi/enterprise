@@ -322,6 +322,7 @@ class HrContractSalary(http.Controller):
         initial_values = {}
         dropdown_options = {}
         targets = {
+            'version_personal': version,
             'employee': version.employee_id,
             'bank_account': version.employee_id.bank_account_id,
         }
@@ -525,6 +526,7 @@ class HrContractSalary(http.Controller):
     def _update_personal_info(self, employee, version, personal_infos_values, no_name_write=False):
         def resolve_value(field_name, values):
             targets = {
+                'version_personal': request.env['hr.version'],
                 'employee': request.env['hr.employee'],
                 'bank_account': request.env['res.partner.bank'],
             }
@@ -536,11 +538,12 @@ class HrContractSalary(http.Controller):
             return field_value
 
         def _is_valid_date(date):
-            return fields.Date.from_string(date) < fields.Date.from_string('1900-01-01')
+            return fields.Date.from_string(date) >= fields.Date.from_string('1900-01-01')
 
         personal_infos = request.env['hr.contract.salary.personal.info'].sudo().search([
             '|', ('structure_type_id', '=', False), ('structure_type_id', '=', version.structure_type_id.id)])
 
+        version_infos = personal_infos_values['version_personal']
         employee_infos = personal_infos_values['employee']
         bank_account_infos = personal_infos_values['bank_account']
 
@@ -554,11 +557,12 @@ class HrContractSalary(http.Controller):
             employee_infos['job_title'] = job.name
 
         employee_vals = {}
+        version_vals = {}
         work_contact_vals = {}
         bank_account_vals = {}
         attachment_create_vals = []
 
-        if employee_infos.get('birthday') and _is_valid_date(employee_infos['birthday']):
+        if employee_infos.get('birthday') and not _is_valid_date(employee_infos['birthday']):
             employee_infos['birthday'] = ''
 
         for personal_info in personal_infos:
@@ -569,6 +573,8 @@ class HrContractSalary(http.Controller):
 
             if field_name in employee_infos and personal_info.applies_on == 'employee':
                 employee_vals[field_name] = resolve_value(field_name, employee_infos)
+            elif field_name in version_infos and personal_info.applies_on == 'version_personal':
+                version_vals[field_name] = resolve_value(field_name, version_infos)
             elif field_name in bank_account_infos and personal_info.applies_on == 'bank_account':
                 bank_account_vals[field_name] = resolve_value(field_name, bank_account_infos)
 
@@ -609,6 +615,7 @@ class HrContractSalary(http.Controller):
         if not no_name_write:
             employee_vals['name'] = employee_infos['name']
         employee.write(employee_vals)
+        version.with_context(tracking_disable=True).write(version_vals)
         if attachment_create_vals:
             request.env['ir.attachment'].sudo().create(attachment_create_vals)
 
@@ -617,6 +624,7 @@ class HrContractSalary(http.Controller):
         version_diff = []
         version_values = benefits['version']
         personal_infos = {
+            'version_personal': benefits['version_personal'],
             'employee': benefits['employee'],
             'address': benefits['address'],
             'bank_account': benefits['bank_account'],
@@ -860,6 +868,9 @@ class HrContractSalary(http.Controller):
             if info.applies_on == 'bank_account':
                 field_label = field_names['res.partner.bank'][info.field]
                 field_value = version.employee_id.bank_account_id[info.field]
+            if info.applies_on == 'version_personal':
+                field_label = field_names['hr.version'][info.field]
+                field_value = version[info.field]
             if isinstance(field_value, models.BaseModel):
                 field_value = field_value.name
             elif isinstance(field_value, float):
