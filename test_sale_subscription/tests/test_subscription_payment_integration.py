@@ -6,7 +6,7 @@ from odoo.tests import tagged
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 
 
-@tagged('post_install', '-at_install')
+@tagged('post_install', '-at_install', 'is_tour')
 class TestSubscriptionPaymentIntegration(PaymentHttpCommon):
 
     @classmethod
