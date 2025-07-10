@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-28 15:16+0000\n"
-"PO-Revision-Date: 2025-07-28 15:16+0000\n"
+"POT-Creation-Date: 2025-08-20 07:30+0000\n"
+"PO-Revision-Date: 2025-08-20 07:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -87,6 +87,16 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:ir.model.fields,help:l10n_fr_reports.field_res_config_settings__l10n_fr_rounding_difference_profit_account_id
 msgid "Account used for profits from rounding the lines of French tax reports"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Add express mention"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__is_reimbursement_comment
+msgid "Add reimbursement comment"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -505,6 +515,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__account_report_async_export__state__sent
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_search
 msgid "Sent"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__show_express_mention
+msgid "Show Express Mention"
 msgstr ""
 
 #. module: l10n_fr_reports

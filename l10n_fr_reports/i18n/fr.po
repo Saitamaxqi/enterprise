@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-04 08:41+0000\n"
-"PO-Revision-Date: 2024-11-04 08:41+0000\n"
+"POT-Creation-Date: 2025-07-10 14:19+0000\n"
+"PO-Revision-Date: 2025-07-10 14:19+0000\n"
 "Last-Translator: Manon Rondou <ronm@odoo.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -111,6 +111,11 @@ msgid "Account used for profits from rounding the lines of French tax reports"
 msgstr ""
 "Compte à utiliser pour les écarts (gains) causés par l'arrondi dans les "
 "rapports de taxe français"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Add express mention"
+msgstr "Ajouter une mention expresse"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__is_reimbursement_comment
@@ -542,6 +547,11 @@ msgstr "Wizard d'envoi du rapport de TVA"
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_search
 msgid "Sent"
 msgstr "Envoyé"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__show_express_mention
+msgid "Show Express Mention"
+msgstr "Afficher la mention express"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,help:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_bic

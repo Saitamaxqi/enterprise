@@ -22,6 +22,16 @@
                             <field name="computed_vat_amount" invisible="not is_vat_due" string="Amount to pay"/>
                         </group>
                     </group>
+                    <div invisible="is_vat_due">
+                        <field name="is_reimbursement_comment"/>
+                        <label for="is_reimbursement_comment" string="Add reimbursement comment"/>
+                        <field name="reimbursement_comment" invisible="not is_reimbursement_comment"/>
+                    </div>
+                    <div>
+                        <field name="show_express_mention" nolabel="1"/>
+                        <label for="show_express_mention" string="Add express mention"/>
+                        <field name="express_mention_reason" invisible="not show_express_mention"/>
+                    </div>
                     <div class="alert alert-warning d-flex flex-column gap-1"
                          role="alert"
                          invisible="not has_wrongly_configured_account and bank_account_line_count &lt;= 3 and vat_amount == computed_vat_amount and vat_amount"
@@ -68,10 +78,6 @@
                             <field name="currency_id" column_invisible="True"/>
                         </list>
                     </field>
-                    <group>
-                        <field name="is_reimbursement_comment" invisible="is_vat_due"/>
-                    </group>
-                    <field name="reimbursement_comment" invisible="not is_reimbursement_comment"/>
                 </sheet>
                 <footer>
                     <button string="Send VAT Report" name="send_vat_return" type="object" class="btn-primary" data-hotkey="q"/>

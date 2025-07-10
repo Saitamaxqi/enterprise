@@ -196,6 +196,8 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
     computed_vat_amount = fields.Monetary(compute='_compute_computed_vat_amount')
     is_reimbursement_comment = fields.Boolean(string="Add reimbursement comment")
     reimbursement_comment = fields.Text()
+    show_express_mention = fields.Boolean()
+    express_mention_reason = fields.Text()
 
     def _compute_vat_amount(self):
         vat_carried_forward_line = self.env.ref('l10n_fr_account.tax_report_27')
@@ -334,6 +336,19 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             ])
         return formatted_payment_values
 
+    def _get_express_mention(self):
+        self.ensure_one()
+        return [
+            {
+                'id': 'BA',
+                'value': self.express_mention_reason,
+            },
+            {
+                'id': 'BC',
+                'value': 'X',
+            },
+        ]
+
     def _get_common_edi_vals(self, options):
         sender_company = self.report_id._get_sender_company_for_export(options)
         # Assume Emitor = Writer -> omit the emitor
@@ -386,6 +401,8 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         writer_vals, debtor_vals, edi_partner_vals, identif_vals = self._get_common_edi_vals(options)
 
         identif_vals.extend(self._get_formatted_payment_values())
+        if self.express_mention_reason:
+            identif_vals.extend(self._get_express_mention())
         is_neutralized = self.env['ir.config_parameter'].sudo().get_param('database.is_neutralized')
 
         return {
