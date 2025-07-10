@@ -140,7 +140,17 @@ class WhatsappAccount(models.Model):
     def action_debug(self):
         """Enable debug logging."""
         self.ensure_one()
+        previous_debug_state = self.debug_logging
         self.debug_logging = True
+        return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('Warning'),
+                    'type': 'warning',
+                    'message': _('Enabling WhatsApp debug stops medias (pictures, videos, pdf, ...) from being received.'),
+                },
+            } if not previous_debug_state else None
 
     def action_stop_debug(self):
         """Disable debug logging."""
