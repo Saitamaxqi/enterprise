@@ -50,7 +50,7 @@ class AccountReturn(models.Model):
         :param options: report options
         :return: The closing moves.
         """
-        if self.company_id.country_id.code != 'AE':
+        if self.company_id.country_id.code != 'AE' or self.type_id.report_id != self.env.ref('l10n_ae_reports.ae_corporate_tax_report', raise_if_not_found=False):
             return super()._generate_tax_closing_entries(options)
         expenses_account = self.company_id.l10n_ae_tax_report_expenses_account
         liabilities_account = self.company_id.l10n_ae_tax_report_liabilities_account
@@ -60,7 +60,7 @@ class AccountReturn(models.Model):
 
         total_amount = self._get_report_total_amount(options)
 
-        action = self.env['ir.actions.act_window']._for_xml_id('account.action_account_config')
+        action = self.env.ref('account.action_account_config')
 
         if total_amount < 0:
             if not assets_account or not expenses_account:
