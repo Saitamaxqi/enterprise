@@ -97,18 +97,11 @@ App to upload and manage your documents.
             'documents/static/src/portal_webclient/**/*',
             'web/static/src/start.js',
         ],
-        'web.tests_assets': [
-            'documents/static/tests/legacy/helpers/**/*',
-        ],
         'web.assets_tests': [
             'documents/static/tests/tours/*',
         ],
         'web.assets_unit_tests': [
             'documents/static/tests/**/*',
-            ('remove', 'documents/static/tests/legacy/**/*'),
-        ],
-        'web.qunit_suite_tests': [
-            'documents/static/tests/legacy/**/*',
         ],
     }
 }
