@@ -27,7 +27,7 @@
             <group name="payroll_group" position="inside">
                 <group name="l10n_au_general" string="General" invisible="country_code != 'AU'">
                     <field name="l10n_au_pay_day"/>
-                    <field name="l10n_au_cessation_type_code" invisible="not date_end"/>
+                    <field name="l10n_au_cessation_type_code" invisible="not contract_date_end"/>
 
                     <separator string="Personal Information"/>
                     <field name="is_non_resident"/>
