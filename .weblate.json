@@ -407,6 +407,11 @@
                 "new_base": "data_merge_utm/i18n/data_merge_utm.pot"
             },
             {
+                "name": "databases",
+                "filemask": "databases/i18n/*.po",
+                "new_base": "databases/i18n/databases.pot"
+            },
+            {
                 "name": "delivery_bpost",
                 "filemask": "delivery_bpost/i18n/*.po",
                 "new_base": "delivery_bpost/i18n/delivery_bpost.pot"
