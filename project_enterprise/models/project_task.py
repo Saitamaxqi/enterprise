@@ -120,7 +120,7 @@ class ProjectTask(models.Model):
         ])
         if additional_domain:
             domain &= Domain(additional_domain)
-        domain = domain.optimize(self, full=True)
+        domain = domain.optimize_full(self)
 
         task1 = self._table
         query = self._where_calc(domain & Domain('id', 'in', self.ids))

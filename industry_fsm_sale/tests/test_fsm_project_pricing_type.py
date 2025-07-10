@@ -29,7 +29,7 @@ class TestFsmProjectPricingType(TestFsmFlowSaleCommon):
             # project._search_pricing_type() does not implement all operators,
             # so we optimize to normalize the domain and invoke the method with
             # the implemented operators
-            return Domain('pricing_type', operator, value).optimize(project, full=True)
+            return Domain('pricing_type', operator, value).optimize_full(project)
 
         # 2) Convert this project as a fsm project, that is set is_fsm to True and check if the pricing type is equal to task_rate.
         project.write({
