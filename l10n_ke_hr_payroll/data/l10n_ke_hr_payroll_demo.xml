@@ -153,7 +153,6 @@
         <field name="marital">single</field>
         <field name="bank_account_id" ref="l10n_ke_hr_payroll.res_partner_bank_account_ahmed"/>
         <field name="l10n_ke_mortgage">19500</field>
-        <field name="l10n_ke_pin">1100</field>
         <field name="l10n_ke_kra_pin">0101</field>
         <field name="l10n_ke_nssf_number">230115</field>
         <field name="l10n_ke_nhif_number">871024</field>
@@ -172,6 +171,8 @@
         <field name="l10n_ke_food_allowance">4000</field>
         <field name="l10n_ke_airtime_allowance">3000</field>
         <field name="l10n_ke_pension_allowance">6000</field>
+        <field name="l10n_ke_commuter_allowance">2500</field>
+        <field name="l10n_ke_housing_allowance_fixed">500</field>
         <field name="l10n_ke_voluntary_medical_insurance">3917</field>
         <field name="l10n_ke_life_insurance">0</field>
         <field name="l10n_ke_education">0</field>
@@ -210,7 +211,6 @@
         <field name="marital">single</field>
         <field name="bank_account_id" ref="l10n_ke_hr_payroll.res_partner_bank_account_barack"/>
         <field name="l10n_ke_mortgage">21000</field>
-        <field name="l10n_ke_pin">1234</field>
         <field name="l10n_ke_kra_pin">4321</field>
         <field name="l10n_ke_nssf_number">160465</field>
         <field name="l10n_ke_nhif_number">871542</field>
@@ -229,6 +229,9 @@
         <field name="l10n_ke_food_allowance">4000</field>
         <field name="l10n_ke_airtime_allowance">3000</field>
         <field name="l10n_ke_pension_allowance">6000</field>
+        <field name="l10n_ke_commuter_allowance">2500</field>
+        <field name="l10n_ke_housing_allowance_percentage">0.12</field>
+        <field name="l10n_ke_housing_allowance_unit">percentage</field>
         <field name="l10n_ke_voluntary_medical_insurance">3917</field>
         <field name="l10n_ke_life_insurance">0</field>
         <field name="l10n_ke_education">0</field>

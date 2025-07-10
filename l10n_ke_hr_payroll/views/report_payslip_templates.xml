@@ -5,19 +5,17 @@
         <table class="table table-sm table-borderless">
             <thead class="o_black_border">
                 <tr>
-                    <th>Employee's PIN</th>
+                    <th>National ID</th>
                     <th>KRA PIN</th>
                     <th>NSSF Number</th>
-                    <th>NHIF Number</th>
                     <th>SHIF Number</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><span t-field="o.employee_id.l10n_ke_pin"/></td>
+                    <td><span t-field="o.version_id.identification_id"/></td>
                     <td><span t-field="o.employee_id.l10n_ke_kra_pin"/></td>
                     <td><span t-field="o.employee_id.l10n_ke_nssf_number"/></td>
-                    <td><span t-field="o.employee_id.l10n_ke_nhif_number"/></td>
                     <td><span t-field="o.employee_id.l10n_ke_shif_number"/></td>
                 </tr>
             </tbody>
@@ -41,19 +39,17 @@
         <table class="table table-sm table-borderless">
             <thead class="o_black_border">
                 <tr>
-                    <th><strong>Employee's PIN</strong></th>
+                    <th><strong>National ID</strong></th>
                     <th><strong>KRA PIN</strong></th>
                     <th><strong>NSSF Number</strong></th>
-                    <th><strong>NHIF Number</strong></th>
                     <th><strong>SHIF Number</strong></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><span t-field="o.employee_id.l10n_ke_pin"/></td>
+                    <td><span t-field="o.version_id.identification_id"/></td>
                     <td><span t-field="o.employee_id.l10n_ke_kra_pin"/></td>
                     <td><span t-field="o.employee_id.l10n_ke_nssf_number"/></td>
-                    <td><span t-field="o.employee_id.l10n_ke_nhif_number"/></td>
                     <td><span t-field="o.employee_id.l10n_ke_shif_number"/></td>
                 </tr>
             </tbody>

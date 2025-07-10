@@ -71,6 +71,8 @@ result_rate = 10''')
     bold = fields.Boolean(string="Bold")
     underline = fields.Boolean(string="Underline")
     italic = fields.Boolean(string="Italic")
+    indented = fields.Boolean(string="Indented")
+    space_above = fields.Boolean(string="Space Above")
 
     input_usage_employee = fields.Boolean()
     input_usage_payslip = fields.Boolean()

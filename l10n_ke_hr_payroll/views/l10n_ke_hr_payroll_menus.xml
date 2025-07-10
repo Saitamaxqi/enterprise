@@ -8,7 +8,7 @@
 
     <menuitem
         id="l10n_ke_hr_payroll_menu_tax_deduction_card"
-        name="Tax Deduction Card"
+        name="P9 Report"
         action="l10n_ke_tax_deduction_card_action"
         parent="l10n_ke_hr_payroll.menu_reporting_l10n_ke"
         sequence="41"/>

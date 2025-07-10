@@ -162,6 +162,8 @@
                             <group>
                                 <field name="color" widget="color"/>
                                 <field name="title"/>
+                                <field name="indented"/>
+                                <field name="space_above"/>
                             </group>
                             <group>
                                 <field name="bold"/>

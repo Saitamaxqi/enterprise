@@ -61,6 +61,10 @@ class HrPayslipLine(models.Model):
             classes.append('fst-italic')
         if rule.underline:
             classes.append('text-decoration-underline')
+        if rule.space_above:
+            classes.append('pt-4')
+        if rule.indented:
+            classes.append('ps-4')
         return {
             'line_style': f'color:{rule.color};',
             'line_class': ' '.join(classes),

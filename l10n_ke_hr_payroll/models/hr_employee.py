@@ -8,7 +8,6 @@ class HrEmployee(models.Model):
     l10n_ke_nssf_number = fields.Char(string="NSSF Number", help="NSSF Number provided by the NSSF", groups="hr.group_hr_user")
     l10n_ke_nhif_number = fields.Char("NHIF Number", groups="hr.group_hr_user")
     l10n_ke_shif_number = fields.Char("SHIF Number", groups="hr.group_hr_user")
-    l10n_ke_pin = fields.Char(string="Employee's PIN", groups="hr.group_hr_user")
     l10n_ke_helb_number = fields.Char(string="HELB Number", groups="hr.group_hr_user")
     l10n_ke_pension_contribution = fields.Monetary(readonly=False, related="version_id.l10n_ke_pension_contribution", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     l10n_ke_food_allowance = fields.Monetary(readonly=False, related="version_id.l10n_ke_food_allowance", inherited=True, groups="hr_payroll.group_hr_payroll_user")

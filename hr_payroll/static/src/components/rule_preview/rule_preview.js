@@ -37,6 +37,8 @@ export class RuleFormRenderer extends FormRenderer {
             this._toggleClass(contentEl, data.bold, 'fw-bold');
             this._toggleClass(contentEl, data.italic, 'fst-italic');
             this._toggleClass(contentEl, data.underline, 'text-decoration-underline');
+            this._toggleClass(contentEl, data.space_above, 'pt-4');
+            this._toggleClass(contentEl, data.indented, 'ps-4');
             this._toggleClass(contentEl, data.title && contentEl.classList.contains('o_field_monetary'), 'd-none');
             contentEl.style.color = data.color || '';
         });

@@ -11,7 +11,13 @@ class HrVersion(models.Model):
     l10n_ke_food_allowance = fields.Monetary("Food Allowance", groups="hr_payroll.group_hr_payroll_user")
     l10n_ke_airtime_allowance = fields.Monetary("Airtime Allowance", groups="hr_payroll.group_hr_payroll_user")
     l10n_ke_pension_allowance = fields.Monetary("Pension Allowance", groups="hr_payroll.group_hr_payroll_user")
-    l10n_ke_voluntary_medical_insurance = fields.Monetary("Voluntary medical Insurance", groups="hr_payroll.group_hr_payroll_user")
+    l10n_ke_commuter_allowance = fields.Monetary("Commuter Allowance", groups="hr_payroll.group_hr_payroll_user")
+    l10n_ke_housing_allowance_fixed = fields.Monetary("Housing Allowance Fixed", groups="hr_payroll.group_hr_payroll_user")
+    l10n_ke_housing_allowance_percentage = fields.Float("Housing Allowance Percentage", groups="hr_payroll.group_hr_payroll_user")
+    l10n_ke_housing_allowance_unit = fields.Selection(
+        selection=[('fixed', '/ month'), ('percentage', 'Percentage')],
+        string="Housing Allowance Unit", required=True, default='fixed', groups="hr_payroll.group_hr_payroll_user")
+    l10n_ke_voluntary_medical_insurance = fields.Monetary("Voluntary Medical Insurance", groups="hr_payroll.group_hr_payroll_user")
     l10n_ke_life_insurance = fields.Monetary("Life Insurance", groups="hr_payroll.group_hr_payroll_user")
     l10n_ke_is_li_managed_by_employee = fields.Boolean(
         string="Managed by Employee", groups="hr_payroll.group_hr_payroll_user",
@@ -32,3 +38,9 @@ class HrVersion(models.Model):
         for version in self:
             if max_amount_yearly and version.l10n_ke_mortgage > max_amount_yearly:
                 raise UserError(_('The mortgage interest cannot exceed %s Ksh yearly.', max_amount_yearly))
+
+    @api.constrains('l10n_ke_housing_allowance_percentage')
+    def _check_l10n_ke_housing_allowance_percentage(self):
+        for version in self:
+            if not 0 <= version.l10n_ke_housing_allowance_percentage <= 1:
+                raise UserError(_('The housing allowance percentage should be between 0% and 100%.'))
