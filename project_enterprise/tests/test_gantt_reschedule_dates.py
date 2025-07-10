@@ -229,6 +229,46 @@ class TestGanttRescheduleOnTasks(ProjectEnterpriseGanttRescheduleCommon):
             self.assertEqual(task.planned_date_begin, old_vals[task.name][0] + timedelta(days=-1), failed_message)
             self.assertEqual(task.date_deadline, old_vals[task.name][1] + timedelta(days=-1), failed_message)
 
+    def test_gantt_reschedule_forward_dependent_task_maintain_buffer_with_missing_start_date_on_task(self):
+        """
+            Tests forward rescheduling with maintain buffer when a dependent task (Task 3) has no planned start date.
+            Task 1 move to the right, but Task 3 and its children 4, 5 and 6 remains unchanged due to Task 3
+            missing planned start date.
+        """
+        self.task_3.planned_date_begin = False
+        task3_date_deadline = self.task_3.date_deadline
+        res = self.gantt_reschedule_maintain_buffer(self.task_1, self.task_1_date_gantt_reschedule_trigger())
+        self.assertEqual(self.task_1.planned_date_begin, datetime(2021, 6, 24, 13))
+        self.assertEqual(self.task_1.date_deadline, datetime(2021, 6, 24, 14))
+        # Task 3 and its children 4, 5 and 6 remains unchanged
+        self.assertFalse(self.task_3.planned_date_begin)
+        self.assertEqual(self.task_3.date_deadline, task3_date_deadline)
+        self.assert_task_not_replanned(self.task_4 | self.task_5 | self.task_6, self.project_pigs_intial_dates())
+        self.assertEqual(res['message'], "Tasks rescheduled")
+
+    def test_gantt_reschedule_backward_dependent_task_maintain_buffer_with_missing_date_deadline_on_task(self):
+        """
+            Tests backward rescheduling with maintain buffer when a depends on task (Task 4) has no date deadline.
+            Task 6 -> task 5 should move to the left but Task 4 and its parent 3 and 1 remains unchanged due to
+            Task 4 missing date deadline.
+        """
+        self.task_4.date_deadline = False
+        task4_date_begin = self.task_4.planned_date_begin
+        task_6_vals = {
+            "planned_date_begin": '2021-08-03 08:00:00',
+            "date_deadline": '2021-08-03 17:00:00'
+        }
+        res = self.gantt_reschedule_maintain_buffer(self.task_6, task_6_vals)
+        self.assertEqual(self.task_6.planned_date_begin, datetime(2021, 8, 3, 8))
+        self.assertEqual(self.task_6.date_deadline, datetime(2021, 8, 3, 17))
+        self.assertEqual(self.task_5.planned_date_begin, datetime(2021, 6, 30, 8))
+        self.assertEqual(self.task_5.date_deadline, datetime(2021, 8, 2, 17))
+        # Task 4 and its parent 3 and 1 remains unchanged
+        self.assertFalse(self.task_4.date_deadline)
+        self.assertEqual(self.task_4.planned_date_begin, task4_date_begin)
+        self.assert_task_not_replanned(self.task_3 | self.task_1, self.project_pigs_intial_dates())
+        self.assertEqual(res['message'], "Tasks rescheduled")
+
     @users('admin')
     def test_gantt_reschedule_with_allocated_hours(self):
         """ This test purpose is to ensure that the task planned_date_fields (begin/end) are calculated accordingly to

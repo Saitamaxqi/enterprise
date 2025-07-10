@@ -1176,7 +1176,7 @@ class ProjectTask(models.Model):
     ):
         next_candidates = self[dependency_inverted_field_name if search_forward else dependency_field_name]
         for task in next_candidates:
-            if consume_buffer and not task._web_gantt_reschedule_is_record_candidate(start_date_field_name, stop_date_field_name):
+            if not task._web_gantt_reschedule_is_record_candidate(start_date_field_name, stop_date_field_name):
                 continue
 
             if search_forward:
