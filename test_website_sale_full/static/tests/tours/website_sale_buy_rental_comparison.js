@@ -31,7 +31,7 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_comparison", {
         },
         {
             content: "click on add to cart",
-            trigger: '.product_summary:contains("Computer") .a-submit:contains("Add to Cart")',
+            trigger: '.product_summary:contains("Computer") button:contains("Add to Cart")',
             run: "click",
         },
         tourUtils.goToCart({ quantity: 1 }),
