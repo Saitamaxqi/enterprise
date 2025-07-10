@@ -17,7 +17,6 @@ export class PosKanbanController extends KanbanController {
         this.popover = usePopover(DateTimePickerPopover, { position: "bottom" });
         this.state = useState({
             date: DateTime.now(),
-            filterId: 0,
         });
         this.model = this.env.model;
         this.localization = localization;
@@ -28,14 +27,9 @@ export class PosKanbanController extends KanbanController {
 
     async createStartFilter(date) {
         const searchModel = this.model.env.searchModel;
-        const searchItemIds = searchModel.query
-            .filter((query) => {
-                const searchItem = searchModel.searchItems[query.searchItemId];
-                return searchItem && searchItem.description.includes("Start is");
-            })
-            .map((query) => query.searchItemId);
-        const idsToToggle = [...new Set([...searchItemIds, this.state.filterId].filter(Boolean))];
-        idsToToggle.forEach((id) => searchModel.toggleSearchItem(id));
+        const kanbanDateFilter = Object.values(searchModel.searchItems).find(
+            (si) => si.name === "kanban_date_filter"
+        );
         const startIsDomain = Domain.and([
             new Domain([
                 [
@@ -62,15 +56,26 @@ export class PosKanbanController extends KanbanController {
                 ],
             ]),
         ]);
-        this.state.filterId = searchModel.nextId;
-        searchModel.createNewFilters([
-            {
-                description: `Start is ${date.toFormat(this.localization.dateFormat)}`,
-                domain: startIsDomain.toString(),
-                invisible: "True",
-                type: "filter",
-            },
-        ]);
+        if (kanbanDateFilter) {
+            kanbanDateFilter.domain = startIsDomain.toString();
+            kanbanDateFilter.description = `Start is ${date.toFormat(
+                this.localization.dateFormat
+            )}`;
+            searchModel._notify();
+            if (!searchModel.query.some((sm) => sm.searchItemId === kanbanDateFilter.id)) {
+                searchModel.toggleSearchItem(kanbanDateFilter.id);
+            }
+        } else {
+            searchModel.createNewFilters([
+                {
+                    description: `Start is ${date.toFormat(this.localization.dateFormat)}`,
+                    domain: startIsDomain.toString(),
+                    invisible: "True",
+                    type: "filter",
+                    name: "kanban_date_filter",
+                },
+            ]);
+        }
     }
 
     onClickDateBtn(ev) {
@@ -89,15 +94,6 @@ export class PosKanbanController extends KanbanController {
                 value: this.state.date,
             },
         });
-    }
-
-    onRemove() {
-        this.state.date = null;
-        const searchModel = this.model.env.searchModel;
-        if (searchModel.query.some((item) => item.searchItemId == this.state.filterId)) {
-            searchModel.toggleSearchItem(this.state.filterId);
-        }
-        this.state.filterId = 0;
     }
 
     get totalPersonCount() {
