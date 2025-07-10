@@ -565,6 +565,20 @@ msgid "Step 2 Logs"
 msgstr "Journaux de l'étape 2"
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/tax_report.py:0
+msgid ""
+"Sum of field 08+09+9B+10+11+T1->T7 is not equal to sum of field "
+"A1+A2+A3+B2+B3+B4"
+msgstr "La somme des champs 08+09+9B+10+11+T1->T7 n'est pas égale à la somme des champs A1+A2+A3+B2+B3+B4"
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
+msgid "Tax Report Error: %s"
+msgstr "Tax Report Erreur: %s"
+
+#. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_res_config_settings__l10n_fr_rounding_difference_loss_account_id
 msgid "Tax Rounding Loss Account"
 msgstr "Compte de pertes d'arrondi TVA"
@@ -583,6 +597,12 @@ msgstr "Différences d'arrondi sur la cloture fiscale"
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__test_interchange
 msgid "Test Interchange"
 msgstr "Interchange de test"
+
+#. module: l10n_fr_reports
+#. odoo-javascript
+#: code:addons/l10n_fr_reports/static/src/components/tax_report/warnings.xml:0
+msgid "The following controls failed:"
+msgstr "Les contrôles suivants ont échoué:"
 
 #. module: l10n_fr_reports
 #. odoo-python

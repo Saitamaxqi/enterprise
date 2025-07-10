@@ -32,6 +32,11 @@ in the "Statement Reports" section).
         'views/account_report_async_export_view.xml',
         'wizard/l10n_fr_send_vat_report_wizard.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'l10n_fr_reports/static/src/components/**/*',
+        ],
+    },
     'auto_install': ['l10n_fr_account', 'account_reports'],
     'installable': True,
     'author': 'Odoo S.A.',

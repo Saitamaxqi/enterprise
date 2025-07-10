@@ -61,3 +61,46 @@ class L10n_FrReportHandler(models.AbstractModel):
             params['expression_label'] = 'balance_from_tags'
 
         return report_line.report_id.action_audit_cell(options, params)
+
+    def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
+        def _evaluate_check(check_func):
+            return all(
+                check_func(expression_totals)
+                for expression_totals in all_column_groups_expression_totals.values()
+            )
+
+        def _compare_expression_totals(expression_totals):
+            return sum(
+                expression_totals[balance_line_expression_per_line_code[code]]['value']
+                for code in ['box_A1', 'box_A2', 'box_A3', 'box_B1', 'box_B2', 'box_B3', 'box_B4']
+            ) == sum(
+                expression_totals[balance_line_expression_per_line_code[code]]['value']
+                for code in [
+                    'box_08_base', 'box_09_base', 'box_9B_base', 'box_10_base',
+                    'box_11_base', 'box_T1_base', 'box_T2_base', 'box_T3_base',
+                    'box_T4_base', 'box_T5_base', 'box_T6_base', 'box_T7_base',
+                ]
+            )
+
+        super()._customize_warnings(report, options, all_column_groups_expression_totals, warnings)
+        balance_line_expression_per_line_code = {
+            line.code: line.expression_ids.filtered(lambda x: x.label == 'balance')
+            for line in report.line_ids
+            if line.code
+        }
+
+        checks = [
+            (
+                _('Sum of field 08+09+9B+10+11+T1->T7 is not equal to sum of field A1+A2+A3+B2+B3+B4'),
+                _compare_expression_totals,
+            )
+        ]
+
+        failed_controls = [
+            check_name
+            for check_name, check_func in checks
+            if not _evaluate_check(check_func)
+        ]
+
+        if failed_controls:
+            warnings['l10n_fr_reports.tax_report_warning_checks'] = {'failed_controls': failed_controls, 'alert_type': 'danger'}
