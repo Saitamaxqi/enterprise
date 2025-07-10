@@ -17,10 +17,10 @@ class L10nUsW2(models.Model):
     _description = 'W2 Form'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "US":
             raise UserError(_('You must be logged in a US company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     date_start = fields.Date("Start Date", default=lambda s: fields.Date.today() + relativedelta(day=1, month=1))
     date_end = fields.Date("End Date", compute='_compute_date_end', store=True, readonly=False)

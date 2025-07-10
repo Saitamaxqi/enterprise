@@ -9,8 +9,8 @@ class HrReferralCampaignWizard(models.TransientModel):
     _description = 'Referral Campaign Wizard'
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         if self.env.context.get('active_model') == 'hr.job':
             res['job_id'] = self.env.context.get('active_id')
         return res

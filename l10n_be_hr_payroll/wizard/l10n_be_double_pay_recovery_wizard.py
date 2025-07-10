@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from dateutil.relativedelta import relativedelta
@@ -12,10 +11,10 @@ class L10nBeDoublePayRecoveryWizard(models.TransientModel):
     _description = 'CP200: Double Pay Recovery Wizard'
 
     @api.model
-    def default_get(self, fields_list):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "BE":
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
-        result = super(L10nBeDoublePayRecoveryWizard, self).default_get(fields_list)
+        result = super().default_get(fields)
         if self.env.context.get('active_id') and self.env.context.get('active_model') == 'hr.payslip':
             payslip_id = self.env.context['active_id']
             payslip = self.env['hr.payslip'].browse(payslip_id)

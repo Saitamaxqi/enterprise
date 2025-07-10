@@ -20,9 +20,10 @@ class HelpdeskTicketSelectForumWizard(models.TransientModel):
     answer_content = fields.Html(string="Answer")
     tag_ids = fields.Many2many('forum.tag', string='Tags', compute='_compute_post', store=True, readonly=False)
 
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
-        if 'forum_id' in fields_list:
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        if 'forum_id' in fields:
             res['forum_id'] = self.env['forum.forum'].search([('filter_for_helpdesk_wizard', '=', True)], limit=1).id
         return res
 

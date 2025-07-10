@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -836,10 +835,10 @@ class L10n_BeDmfa(models.Model):
     _order = "year desc, quarter desc"
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "BE":
             raise UserError(_('You must be logged in a Belgian company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     name = fields.Char(compute='_compute_name', store=True)
     reference = fields.Char(required=True)

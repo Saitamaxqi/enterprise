@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import uuid
 
 from odoo import models, fields, api, _
+from odoo.fields import Date
 from odoo.exceptions import UserError
 
 
@@ -12,30 +12,30 @@ class L10n_UkHmrcSendWizard(models.TransientModel):
     _description = "HMRC Send Wizard"
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         if 'client_data' not in self.env.context:
             return res
 
         # Check obligations: should be logged in by now
         self.env['l10n_uk.vat.obligation'].import_vat_obligations(self.env.context['client_data'])
 
-        if 'obligation_id' in fields_list:
+        if 'obligation_id' in fields:
             obligations = self.env['l10n_uk.vat.obligation'].search([('status', '=', 'open')])
             if not obligations:
                 raise UserError(_('You have no open obligations anymore'))
 
-            date_from = fields.Date.from_string(self.env.context['options']['date']['date_from'])
-            date_to = fields.Date.from_string(self.env.context['options']['date']['date_to'])
+            date_from = Date.to_date(self.env.context['options']['date']['date_from'])
+            date_to = Date.to_date(self.env.context['options']['date']['date_to'])
             for obl in obligations:
                 if obl.date_start == date_from and obl.date_end == date_to:
                     res['obligation_id'] = obl.id
                     break
-        
-        if 'hmrc_gov_client_device_id' in fields_list:
+
+        if 'hmrc_gov_client_device_id' in fields:
             res['hmrc_gov_client_device_id'] = self.env.context['client_data']['hmrc_gov_client_device_id']
-        
-        if 'message' in fields_list:
+
+        if 'message' in fields:
             res['message'] = not res.get('obligation_id')
         return res
 

@@ -15,10 +15,10 @@ class L10nUsAdpExport(models.Model):
     _description = 'ADP Export'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "US":
             raise UserError(_('You must be logged in a US company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     name = fields.Char(compute='_compute_name')
     start_date = fields.Date('Start Date', required=True, default=lambda r: start_of(fields.Date.today(), 'month'))

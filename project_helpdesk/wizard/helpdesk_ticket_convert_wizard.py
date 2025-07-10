@@ -8,9 +8,9 @@ class HelpdeskTicketConvertWizard(models.TransientModel):
     _description = 'Convert Helpdesk Tickets to Tasks'
 
     @api.model
-    def default_get(self, field_list):
-        result = super().default_get(field_list)
-        if 'project_id' in field_list and not result.get('project_id'):
+    def default_get(self, fields):
+        result = super().default_get(fields)
+        if 'project_id' in fields and not result.get('project_id'):
             result['project_id'] = self._default_project_id() or self.env['project.project'].search([], limit=1).id
         return result
 

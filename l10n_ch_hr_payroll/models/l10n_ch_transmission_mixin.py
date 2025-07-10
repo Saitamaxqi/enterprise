@@ -12,10 +12,10 @@ class L10nCHSwissdecTransmitter(models.AbstractModel):
     _description = 'Abstract Swissdec Transmitter'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "CH":
             raise UserError(_('You must be logged in a Swiss company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     def _get_default_name(self):
         now = fields.Datetime.now()

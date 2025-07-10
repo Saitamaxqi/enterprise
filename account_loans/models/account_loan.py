@@ -13,9 +13,9 @@ class AccountLoan(models.Model):
     _order = 'date'
 
     @api.model
-    def default_get(self, fields_list):
-        values = super().default_get(fields_list)
-        if all(field not in fields_list for field in ['expense_account_id', 'long_term_account_id', 'short_term_account_id', 'journal_id']):
+    def default_get(self, fields):
+        values = super().default_get(fields)
+        if all(field not in fields for field in ['expense_account_id', 'long_term_account_id', 'short_term_account_id', 'journal_id']):
             return values
         previous_loan = self.search([
             ('company_id', '=', self.env.company.id),

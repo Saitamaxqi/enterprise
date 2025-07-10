@@ -224,13 +224,14 @@ class StudioApprovalRule(models.Model):
         action_ids = [self._parse_action_from_button(v) for v in value]
         return [("action_id", operator, action_ids)]
 
-    def default_get(self, fields_list):
-        vals = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        vals = super().default_get(fields)
         default_model_name = self.env.context.get("default_model_name")
-        if default_model_name and "model_id" in fields_list and not vals.get("model_id"):
+        if default_model_name and "model_id" in fields and not vals.get("model_id"):
             vals["model_id"] = self.env["ir.model"]._get(default_model_name)
         default_action_xmlid = self.env.context.get("default_action_xmlid")
-        if default_action_xmlid and "action_id" in fields_list and not vals.get("action_id"):
+        if default_action_xmlid and "action_id" in fields and not vals.get("action_id"):
             action_id = self._parse_action_from_button(default_action_xmlid)
             if action_id:
                 vals["action_id"] = self._parse_action_from_button(default_action_xmlid)
@@ -1288,10 +1289,11 @@ class StudioApprovalRuleDelegate(models.TransientModel):
             rule.write({"users_to_notify": rec.users_to_notify})
         return records
 
-    def default_get(self, fields_list):
-        vals = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        vals = super().default_get(fields)
         default_rule_id = self.env.context.get("default_approval_rule_id")
-        if default_rule_id and "approver_ids" in fields_list and "users_to_notify" in fields_list:
+        if default_rule_id and "approver_ids" in fields and "users_to_notify" in fields:
             rule = self.env["studio.approval.rule"].browse(default_rule_id).sudo()
             vals["approver_ids"] = [Command.link(log.user_id.id) for log in rule.approver_log_ids if log.is_delegation and log.create_uid.id == self.env.uid]
             vals["users_to_notify"] = [Command.link(uid) for uid in rule.users_to_notify.ids]

@@ -9,9 +9,9 @@ class ResUsers(models.Model):
     commission_plan_users_ids = fields.One2many('sale.commission.plan.user', 'user_id', 'Commission plans')
     filtered_commission_plan_users_ids = fields.One2many('sale.commission.plan.user', compute='_compute_filtered_commission_plan_users_ids')
 
-    def write(self, values):
-        res = super().write(values)
-        if 'sale_team_id' in values:
+    def write(self, vals):
+        res = super().write(vals)
+        if 'sale_team_id' in vals:
             today = fields.Date.today()
             commission_plan_user = [{
                 'plan_id': plan.id,

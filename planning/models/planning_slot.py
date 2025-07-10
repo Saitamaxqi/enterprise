@@ -12,7 +12,7 @@ from werkzeug.urls import url_encode
 
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
-from odoo.fields import Domain
+from odoo.fields import Datetime, Domain
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, SQL, float_utils, format_datetime
 from odoo.tools.date_utils import get_timedelta, sum_intervals
 from odoo.tools.intervals import Intervals
@@ -749,8 +749,8 @@ class PlanningSlot(models.Model):
         return res
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
 
         if res.get('resource_id'):
             resource_id = self.env['resource.resource'].browse(res.get('resource_id'))
@@ -764,19 +764,19 @@ class PlanningSlot(models.Model):
                                                                                        previous_template_id,
                                                                                        res.get('template_reset'))
         else:
-            if 'start_datetime' in fields_list and not self.env.context.get('planning_keep_default_datetime', False):
-                start_datetime = fields.Datetime.from_string(res.get('start_datetime')) if res.get('start_datetime') else self._default_start_datetime()
-                end_datetime = fields.Datetime.from_string(res.get('end_datetime')) if res.get('end_datetime') else self._default_end_datetime()
+            if 'start_datetime' in fields and not self.env.context.get('planning_keep_default_datetime', False):
+                start_datetime = Datetime.to_datetime(res.get('start_datetime')) if res.get('start_datetime') else self._default_start_datetime()
+                end_datetime = Datetime.to_datetime(res.get('end_datetime')) if res.get('end_datetime') else self._default_end_datetime()
                 start = pytz.utc.localize(start_datetime)
                 end = pytz.utc.localize(end_datetime) if end_datetime else self._default_end_datetime()
                 opening_hours = self._company_working_hours(start, end)
                 if opening_hours:
                     res['start_datetime'] = opening_hours[0].astimezone(pytz.utc).replace(tzinfo=None)
-                    if 'end_datetime' in fields_list:
+                    if 'end_datetime' in fields:
                         res['end_datetime'] = opening_hours[1].astimezone(pytz.utc).replace(tzinfo=None)
                 else:
                     res['start_datetime'], end_datetime = self._get_non_working_days_bounds(start_datetime, end_datetime)
-                    if 'end_datetime' in fields_list:
+                    if 'end_datetime' in fields:
                         res['end_datetime'] = end_datetime
 
         return res
@@ -930,7 +930,8 @@ class PlanningSlot(models.Model):
 
         return self.create(vals_list_updated_slots)
 
-    def write(self, values):
+    def write(self, vals):
+        values = vals
         new_resource = self.env['resource.resource'].browse(values['resource_id']) if 'resource_id' in values else None
         if new_resource and new_resource.resource_type == 'material':
             values['state'] = 'published'

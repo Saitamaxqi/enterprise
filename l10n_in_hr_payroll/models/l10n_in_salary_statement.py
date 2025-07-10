@@ -32,8 +32,9 @@ class L10n_In_Hr_PayrollSalaryStatement(models.Model):
         "A Salary Statement Report for this month and year already exists.",
     )
 
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
         res['year'] = str(datetime.now().year)
         return res
 

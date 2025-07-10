@@ -25,13 +25,13 @@ class ResCompany(models.Model):
         for company in self:
             company.is_country_germany = company.country_id.code == 'DE'
 
-    def write(self, values):
-        res = super().write(values)
+    def write(self, vals):
+        res = super().write(vals)
         for company in self:
             if company.l10n_de_is_germany_and_fiskaly():
                 on_change_fields = ['name', 'street', 'street2', 'zip', 'city', 'vat', 'l10n_de_stnr',
                                     'l10n_de_widnr']
-                if set(on_change_fields) & set(values):
+                if set(on_change_fields) & set(vals):
                     params = company._l10n_de_create_organization_payload()
                     self._l10n_de_fiskaly_iap_rpc('/update', params=params)
         return res

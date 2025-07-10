@@ -26,12 +26,12 @@ class AppointmentType(models.Model):
     _mail_post_access = 'read'
 
     @api.model
-    def default_get(self, default_fields):
-        result = super().default_get(default_fields)
-        if 'category' not in default_fields or result.get('category') == 'custom':
-            if 'name' in default_fields and not result.get('name'):
+    def default_get(self, fields):
+        result = super().default_get(fields)
+        if 'category' not in fields or result.get('category') == 'custom':
+            if 'name' in fields and not result.get('name'):
                 result['name'] = _("%s - Let's meet", self.env.user.name)
-            if 'staff_user_ids' in default_fields and not result.get('staff_user_ids'):
+            if 'staff_user_ids' in fields and not result.get('staff_user_ids'):
                 result['staff_user_ids'] = [Command.set(self.env.user.ids)]
         return result
 

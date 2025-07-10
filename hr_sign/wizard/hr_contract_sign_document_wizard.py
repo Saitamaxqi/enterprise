@@ -25,9 +25,9 @@ class HrContractSignDocumentWizard(models.TransientModel):
         return not bool(self._get_sign_template_ids()) and _('No documents templates on the database.')
 
     @api.model
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
-        if 'responsible_id' in fields_list and not defaults.get('responsible_id') and defaults.get('version_id'):
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
+        if 'responsible_id' in fields and not defaults.get('responsible_id') and defaults.get('version_id'):
             contract = self.env['hr.version'].browse(defaults.get('version_id'))
             defaults['responsible_id'] = contract.hr_responsible_id
         else:

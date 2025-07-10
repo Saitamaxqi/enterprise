@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
-from odoo import models, fields, api, _
+from odoo import api, fields, models
 
 
 class HelpdeskCreateFsmTask(models.TransientModel):
@@ -13,8 +12,8 @@ class HelpdeskCreateFsmTask(models.TransientModel):
         compute='_compute_worksheet_template_id', readonly=False, store=True, domain="[('res_model', '=', 'project.task')]", export_string_translation=False)
 
     @api.model
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
         project_id = defaults.get('project_id')
         if project_id:
             project = self.env['project.project'].browse(project_id)

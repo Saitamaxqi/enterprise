@@ -9,8 +9,9 @@ class L10n_AuStpFfrWizard(models.TransientModel):
     stp_id = fields.Many2one("l10n_au.stp", string="Report to Replace", required=True)
     ffr_payslip_ids = fields.One2many("l10n_au.stp.ffr.payslip", "ffr_wizard_id", string="Payslips")
 
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
         stp = self.env["l10n_au.stp"].browse(res.get("stp_id"))
         res["ffr_payslip_ids"] = [
             Command.create({"payslip_id": slip.id}) for slip in stp.payslip_ids

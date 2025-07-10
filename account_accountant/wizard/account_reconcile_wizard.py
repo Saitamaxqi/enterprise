@@ -14,9 +14,9 @@ class AccountReconcileWizard(models.TransientModel):
     _check_company_auto = True
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
-        if 'move_line_ids' not in fields_list:
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        if 'move_line_ids' not in fields:
             return res
         if self.env.context.get('active_model') != 'account.move.line' or not self.env.context.get('active_ids'):
             raise UserError(_('This can only be used on journal items'))

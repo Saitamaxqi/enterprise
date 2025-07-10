@@ -17,11 +17,11 @@ class HrPayrollDeclarationMixin(models.AbstractModel):
     _description = 'Payroll Declaration Mixin'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         country_restriction = self._country_restriction()
         if country_restriction and self.env.company.country_id.code != country_restriction:
             raise UserError(_('You must be logged in a %s company to use this feature', country_restriction))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     def _get_year_selection(self):
         current_year = datetime.now().year

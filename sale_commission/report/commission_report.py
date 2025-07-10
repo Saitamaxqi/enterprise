@@ -66,10 +66,10 @@ class SaleCommissionReport(models.Model):
             "domain": domain,
         }
 
-    def write(self, values):
+    def write(self, vals):
         # /!\ Do not call super as the table doesn't exist
-        if 'forecast' in values:
-            amount = values['forecast']
+        if 'forecast' in vals:
+            amount = vals['forecast']
             for line in self:
                 if line.forecast_id:
                     line.sudo().forecast_id.amount = amount

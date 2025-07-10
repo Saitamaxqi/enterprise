@@ -43,7 +43,7 @@ class ProductFetchImageWizard(models.TransientModel):
             ))
 
     @api.model
-    def default_get(self, fields_list):
+    def default_get(self, fields):
         self._check_cron_status()
         self._check_api_key_set()
 
@@ -60,7 +60,7 @@ class ProductFetchImageWizard(models.TransientModel):
         products_to_process = product_ids.filtered(lambda p: not p.image_1920 and p.barcode)
         nb_products_to_process = len(products_to_process)
         nb_products_unable_to_process = nb_products_selected - nb_products_to_process
-        defaults = super().default_get(fields_list)
+        defaults = super().default_get(fields)
         defaults.update(
             products_to_process=products_to_process,
             nb_products_selected=nb_products_selected,

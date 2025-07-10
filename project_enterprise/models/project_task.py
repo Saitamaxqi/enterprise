@@ -51,8 +51,9 @@ class ProjectTask(models.Model):
     def TASK_PORTAL_WRITABLE_FIELDS(self):
         return super().TASK_PORTAL_WRITABLE_FIELDS | PROJECT_TASK_WRITABLE_FIELDS
 
-    def default_get(self, fields_list):
-        result = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        result = super().default_get(fields)
         if self.env.context.get('scale', False) not in ("month", "year"):
             return result
 

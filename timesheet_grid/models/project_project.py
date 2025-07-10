@@ -28,9 +28,9 @@ class ProjectProject(models.Model):
             }
         return True
 
-    def write(self, values):
-        result = super().write(values)
-        if 'allow_timesheets' in values and not values['allow_timesheets']:
+    def write(self, vals):
+        result = super().write(vals)
+        if 'allow_timesheets' in vals and not vals['allow_timesheets']:
             self.env['timer.timer'].search([
                 ('res_model', '=', "project.task"),
                 ('res_id', 'in', self.with_context(active_test=False).task_ids.ids)

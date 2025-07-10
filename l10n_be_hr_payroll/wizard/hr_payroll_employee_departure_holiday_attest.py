@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from dateutil.relativedelta import relativedelta
@@ -12,10 +11,10 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
     _description = 'Manage the Employee Departure Holiday Attests'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "BE":
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     employee_id = fields.Many2one('hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'))
 

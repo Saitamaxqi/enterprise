@@ -45,10 +45,10 @@ class AccountAutoReconcileWizard(models.TransientModel):
     )
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         domain = self.env.context.get('domain')
-        if 'line_ids' in fields_list and 'line_ids' not in res and domain:
+        if 'line_ids' in fields and 'line_ids' not in res and domain:
             amls = self.env['account.move.line'].search(domain)
             if amls:
                 # pre-configure the wizard

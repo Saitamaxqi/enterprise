@@ -18,14 +18,14 @@ class L10n_HkManulifeMpf(models.Model):
     _order = 'period'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != 'HK':
             raise UserError(_('You must be logged in a Hong Kong company to use this feature.'))
         if not self.env.company.l10n_hk_manulife_mpf_scheme:
             raise UserError(_('You must set a Manulife MPF Scheme Number in your company settings first.'))
         if not self.env.company.l10n_hk_employer_name:
             raise UserError(_('You must set an Employer Name in your company settings first.'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')

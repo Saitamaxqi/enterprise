@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
@@ -9,9 +8,9 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
-        if 'origin' in fields_list and (ticket_id := self.env.context.get('create_for_ticket_id')):
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        if 'origin' in fields and (ticket_id := self.env.context.get('create_for_ticket_id')):
             ticket = self.env['helpdesk.ticket'].browse(ticket_id)
             res['origin'] = self.env._('[Helpdesk] %(ticket_name)s', ticket_name=ticket.name)
         return res

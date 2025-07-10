@@ -13,10 +13,10 @@ class YearlySalaryDetail(models.TransientModel):
     _description = 'Hr Salary Employee By Category Report'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "IN":
             raise UserError(_('You must be logged in a Indian company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     def _get_domain(self):
         self.ensure_one()

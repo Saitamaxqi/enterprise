@@ -18,8 +18,8 @@ class AmazonOffer(models.Model):
     _description = "Amazon Offer"
 
     @api.model
-    def default_get(self, default_fields):
-        result = super().default_get(default_fields)
+    def default_get(self, fields):
+        result = super().default_get(fields)
 
         # Default account_id.
         if not result.get('account_id'):

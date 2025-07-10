@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, Command
@@ -9,8 +8,9 @@ class Account_FollowupManual_Reminder(models.TransientModel):
     _inherit = ['mail.composer.mixin']
     _description = "Wizard for sending manual reminders to clients"
 
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
         assert self.env.context['active_model'] == 'res.partner'
         partner = self.env['res.partner'].browse(self.env.context['active_ids'])
         partner.ensure_one()

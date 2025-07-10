@@ -17,16 +17,16 @@ class ProjectTask(models.Model):
     _inherit = "project.task"
 
     @api.model
-    def default_get(self, fields_list):
+    def default_get(self, fields):
         context = dict(self.env.context)
         is_fsm_mode = self.env.context.get('fsm_mode')
         fsm_project = False
-        if is_fsm_mode and 'project_id' in fields_list and not self.env.context.get('default_parent_id'):
+        if is_fsm_mode and 'project_id' in fields and not self.env.context.get('default_parent_id'):
             company_id = self.env.context.get('default_company_id') or self.env.company.id
             fsm_project = self.env['project.project'].search([('is_fsm', '=', True), ('company_id', '=', company_id)], order='sequence, name, id', limit=1)
             if fsm_project:
                 context['default_project_id'] = self.env.context.get('default_project_id', fsm_project.id)
-        result = super(ProjectTask, self.with_context(context)).default_get(fields_list)
+        result = super(ProjectTask, self.with_context(context)).default_get(fields)
         if fsm_project:
             result.update({
                 'company_id': company_id,

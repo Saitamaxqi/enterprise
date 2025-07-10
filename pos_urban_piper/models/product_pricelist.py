@@ -1,10 +1,9 @@
-from odoo import models, api
+from odoo import models
 
 
 class ProductPricelist(models.Model):
     _inherit = 'product.pricelist'
 
-    @api.model
     def write(self, vals):
         res = super().write(vals)
         for pricelist in self:

@@ -13,9 +13,9 @@ class MarketingParticipant(models.Model):
     _rec_name = 'resource_ref'
 
     @api.model
-    def default_get(self, default_fields):
-        defaults = super(MarketingParticipant, self).default_get(default_fields)
-        if 'res_id' in default_fields and not defaults.get('res_id'):
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
+        if 'res_id' in fields and not defaults.get('res_id'):
             model_name = defaults.get('model_name')
             if not model_name and defaults.get('campaign_id'):
                 model_name = self.env['marketing.campaign'].browse(defaults['campaign_id']).model_name

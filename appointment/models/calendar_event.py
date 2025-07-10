@@ -20,10 +20,10 @@ class CalendarEvent(models.Model):
     _inherit = "calendar.event"
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         # If the event has an apt type, set the event stop datetime to match the apt type duration
-        if res.get('appointment_type_id') and res.get('duration') and res.get('start') and 'stop' in fields_list:
+        if res.get('appointment_type_id') and res.get('duration') and res.get('start') and 'stop' in fields:
             res['stop'] = res['start'] + timedelta(hours=res['duration'])
         if not self.env.context.get('booking_gantt_create_record', False):
             return res
@@ -33,7 +33,7 @@ class CalendarEvent(models.Model):
         user_id = res.get('user_id')
         resource_ids = self.env.context.get('default_resource_ids', [])
         # get a relevant appointment type for ease of use when coming from a view that groups by resource
-        if not res.get('appointment_type_id') and 'appointment_type_id' in fields_list:
+        if not res.get('appointment_type_id') and 'appointment_type_id' in fields:
             appointment_types = False
             if resource_ids:
                 appointment_types = self.env['appointment.resource'].browse(resource_ids).appointment_type_ids
@@ -45,13 +45,13 @@ class CalendarEvent(models.Model):
             default_partner_ids = self.env.context.get('default_partner_ids', [])
             # If there is only one attendee -> set him as organizer of the calendar event
             # Mostly used when you click on a specific slot in the appointment kanban
-            if len(default_partner_ids) == 1 and 'user_id' in fields_list:
+            if len(default_partner_ids) == 1 and 'user_id' in fields:
                 attendee_user = self.env['res.partner'].browse(default_partner_ids).user_ids
                 if attendee_user:
                     res['user_id'] = attendee_user[0].id
             # Special gantt case: we want to assign the current user to the attendees if he's set as organizer
             elif res.get('user_id') and res.get('partner_ids', Command.set([])) == [Command.set([])] and \
-                res['user_id'] == self.env.uid and 'partner_ids' in fields_list:
+                res['user_id'] == self.env.uid and 'partner_ids' in fields:
                 res['partner_ids'] = [Command.set(self.env.user.partner_id.ids)]
         return res
 

@@ -36,10 +36,10 @@ class HrESICReport(models.Model):
     )
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "IN":
             raise UserError(_('You must be logged in a Indian company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     @api.depends('month', 'year')
     def _compute_display_name(self):

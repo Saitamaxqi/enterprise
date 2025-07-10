@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.fields import Date
 from odoo.tools.float_utils import float_compare
 from dateutil.relativedelta import relativedelta
 from ..models.l10n_lu_tax_report_data import (YEARLY_SIMPLIFIED_NEW_TOTALS, YEARLY_SIMPLIFIED_FIELDS,
@@ -22,11 +22,11 @@ class L10n_LuGenerateTaxReport(models.TransientModel):
     )
 
     @api.model
-    def default_get(self, default_fields):
-        rec = super().default_get(default_fields)
+    def default_get(self, fields):
+        rec = super().default_get(fields)
         options = self.env.ref('l10n_lu.tax_report').get_options({})
-        date_from = fields.Date.from_string(options['date'].get('date_from'))
-        date_to = fields.Date.from_string(options['date'].get('date_to'))
+        date_from = Date.from_string(options['date'].get('date_from'))
+        date_to = Date.from_string(options['date'].get('date_to'))
 
         mapping = {
             date_from + relativedelta(months=12, days=-1): 'A',

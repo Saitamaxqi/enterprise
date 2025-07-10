@@ -93,15 +93,15 @@ class AccountAnalyticLine(models.Model):
         if not self.project_id or self.helpdesk_ticket_id.project_id != self.project_id:
             self.helpdesk_ticket_id = False
 
-    def write(self, values):
-        if values.get("helpdesk_ticket_id"):
-            ticket = self.env['helpdesk.ticket'].sudo().browse(values["helpdesk_ticket_id"])
-            values['account_id'] = ticket.analytic_account_id.id
+    def write(self, vals):
+        if vals.get("helpdesk_ticket_id"):
+            ticket = self.env['helpdesk.ticket'].sudo().browse(vals["helpdesk_ticket_id"])
+            vals['account_id'] = ticket.analytic_account_id.id
             if ticket.project_id:
-                values['project_id'] = ticket.project_id.id
-            if 'company_id' not in values:
-                values['company_id'] = ticket.project_id.company_id.id
-        return super().write(values)
+                vals['project_id'] = ticket.project_id.id
+            if 'company_id' not in vals:
+                vals['company_id'] = ticket.project_id.company_id.id
+        return super().write(vals)
 
     @api.model_create_multi
     def create(self, vals_list):

@@ -107,9 +107,9 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
     # ===== DEFAULT GET: calculate initial fields and lines =====
 
     @api.model
-    def default_get(self, fields_list):
-        result = super().default_get(fields_list)
-        if 'related_invoice_ids' in fields_list:
+    def default_get(self, fields):
+        result = super().default_get(fields)
+        if 'related_invoice_ids' in fields:
             if self.env.context.get('active_model') != 'account.move' or not self.env.context.get('active_ids'):
                 raise UserError(_('Withholds must be created from an invoice.'))
             invoices = self.env['account.move'].browse(self.env.context['active_ids'])

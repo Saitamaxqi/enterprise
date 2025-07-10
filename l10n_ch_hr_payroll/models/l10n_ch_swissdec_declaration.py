@@ -19,10 +19,10 @@ class L10nCHSwissdecDeclaration(models.Model):
     _order = "transmission_date desc"
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "CH":
             raise UserError(_('You must be logged in a Swiss company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     res_model = fields.Char(
         'Declaration Model Name', required=True, index=True)

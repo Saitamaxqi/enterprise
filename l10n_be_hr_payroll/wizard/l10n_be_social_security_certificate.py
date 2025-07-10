@@ -15,10 +15,10 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
     _description = 'Belgium: Social Security Certificate'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "BE":
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     date_from = fields.Date(default=lambda s: fields.Date.today() + relativedelta(day=1, month=1, years=-1))
     date_to = fields.Date(default=lambda s: fields.Date.today() + relativedelta(day=31, month=12, years=-1))

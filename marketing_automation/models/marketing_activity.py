@@ -250,10 +250,10 @@ class MarketingActivity(models.Model):
             default['mass_mailing_id'] = self.mass_mailing_id.copy().id
         return super(MarketingActivity, self).copy_data(default=default)
 
-    def write(self, values):
-        if any(activity.campaign_id.state == 'running' for activity in self) and any(field in values for field in ('interval_number', 'interval_type')):
-            values['require_sync'] = True
-        return super(MarketingActivity, self).write(values)
+    def write(self, vals):
+        if any(activity.campaign_id.state == 'running' for activity in self) and any(field in vals for field in ('interval_number', 'interval_type')):
+            vals['require_sync'] = True
+        return super().write(vals)
 
     def _get_full_statistics(self):
         self.env['marketing.trace'].flush_model(['activity_id', 'participant_id', 'state'])

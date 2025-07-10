@@ -19,10 +19,10 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
     _description = 'Belgium: Social Balance Sheet'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "BE":
             raise UserError(self.env._('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     # Source: https://www.nbb.be/fr/centrale-des-bilans/etablir-et-deposer/que-faut-il-deposer/modeles/modeles-pour-societes
     # Introduction: https://www.nbb.be/doc/ba/models/social%20balance/avis_cnc_2009_12.pdf

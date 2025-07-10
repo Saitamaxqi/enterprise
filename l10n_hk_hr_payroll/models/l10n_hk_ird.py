@@ -31,12 +31,12 @@ class L10n_HkIrd(models.AbstractModel):
     _order = 'start_period'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != 'HK':
             raise UserError(_('You must be logged in a Hong Kong company to use this feature.'))
         if not self.env.company.l10n_hk_employer_name or not self.env.company.l10n_hk_employer_file_number:
             raise UserError(_("Please configure the Employer's Name and the Employer's File Number in the company settings."))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     display_name = fields.Char()
     state = fields.Selection([('draft', 'Draft'), ('waiting', 'Waiting'), ('done', 'Done')], default='draft')

@@ -1,5 +1,6 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import RedirectWarning
+from odoo.fields import Date
 
 
 class MontlhyReturnWizard(models.TransientModel):
@@ -17,28 +18,28 @@ class MontlhyReturnWizard(models.TransientModel):
     already_submited_period = fields.Boolean(string="Already Submited Period")
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         options = self.env.context.get('options')
         if not options:
             return res
-        date_from = fields.Date.from_string(options['date']['date_from'])
-        date_to = fields.Date.from_string(options['date']['date_to'])
+        date_from = Date.from_string(options['date']['date_from'])
+        date_to = Date.from_string(options['date']['date_to'])
 
-        if 'date_from' in fields_list:
+        if 'date_from' in fields:
             res['date_from'] = date_from
 
-        if 'date_to' in fields_list:
+        if 'date_to' in fields:
             res['date_to'] = date_to
 
-        if 'use_wrong_period' in fields_list:
+        if 'use_wrong_period' in fields:
             if options['date']['period_type'] != 'tax_period':
                 period_start, period_end = self.env.ref('l10n_uk_reports_cis.uk_cis_tax_return_type')._get_period_boundaries(self.env.company, date_to)
                 res['use_wrong_period'] = period_start != date_from or period_end != date_to
             else:
                 res['use_wrong_period'] = False
 
-        if 'already_submited_period' in fields_list:
+        if 'already_submited_period' in fields:
             res['already_submited_period'] = self.env['l10n_uk.hmrc.transaction'].search_count([
                 ('company_id.id', '=', self.env.company.id),
                 ('period_start', '=', date_from),

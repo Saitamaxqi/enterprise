@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -20,10 +19,10 @@ class L10n_Be273s(models.Model):
     _order = 'period'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "BE":
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     year = fields.Integer(required=True, default=lambda self: fields.Date.today().year)
     month = fields.Selection([

@@ -7,6 +7,7 @@ from io import StringIO
 from werkzeug.urls import url_encode
 
 from odoo import api, fields, models
+from odoo.fields import Date
 from odoo.tools import groupby, SQL
 from odoo.exceptions import UserError
 
@@ -16,11 +17,11 @@ class L10n_PeStockPleWizard(models.TransientModel):
     _description = 'Wizard to generate Stock Move PLE reports for PE'
 
     @api.model
-    def default_get(self, fields_list):
-        results = super().default_get(fields_list)
+    def default_get(self, fields):
+        results = super().default_get(fields)
         if self.env.company.country_code != 'PE':
             raise UserError(self.env._('This option is only available for Peruvian companies.'))
-        date_from = fields.Date.today().replace(day=1)
+        date_from = Date.today().replace(day=1)
         results['date_from'] = date_from
         results['date_to'] = date_from + relativedelta(months=1, days=-1)
         return results

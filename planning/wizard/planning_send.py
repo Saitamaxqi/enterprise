@@ -8,9 +8,9 @@ class PlanningSend(models.TransientModel):
     _description = "Send Planning"
 
     @api.model
-    def default_get(self, default_fields):
-        res = super().default_get(default_fields)
-        if 'slot_ids' in res and 'employee_ids' in default_fields:
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        if 'slot_ids' in res and 'employee_ids' in fields:
             employees = self.env['planning.slot'].browse(res['slot_ids'][0][2]).employee_id
             res['employee_ids'] = [Command.set(employees.sudo().sorted('name').ids)]
         return res

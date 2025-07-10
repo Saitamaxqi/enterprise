@@ -28,10 +28,10 @@ class L10nChTaxRateImportWizard(models.TransientModel):
     _description = 'Swiss Payroll: Tax rate import wizard'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "CH":
             raise UserError(_('You must be logged into a Swiss company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     tax_file_ids = fields.One2many('ir.attachment', 'res_id',
         domain=[('res_model', '=', 'l10n.ch.tax.rate.import.wizard')],

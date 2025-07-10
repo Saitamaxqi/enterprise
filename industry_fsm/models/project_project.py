@@ -58,13 +58,13 @@ class ProjectProject(models.Model):
                 project.allow_geolocation = False
 
     @api.model
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
         if defaults.get('is_fsm', False) and not defaults.get('company_id', False):
             defaults['company_id'] = self.env.company.id
-        if 'allow_task_dependencies' in fields_list:
+        if 'allow_task_dependencies' in fields:
             defaults['allow_task_dependencies'] = defaults.get('allow_task_dependencies', False) and not defaults.get('is_fsm')
-        if 'allow_milestones' in fields_list:
+        if 'allow_milestones' in fields:
             defaults['allow_milestones'] = defaults.get('allow_milestones', False) and not defaults.get('is_fsm')
         return defaults
 

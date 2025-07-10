@@ -7,9 +7,9 @@ class ProjectTaskConvertWizard(models.TransientModel):
     _description = 'Convert Project Tasks to Tickets'
 
     @api.model
-    def default_get(self, field_list):
-        result = super().default_get(field_list)
-        if 'team_id' in field_list and not result.get('team_id'):
+    def default_get(self, fields):
+        result = super().default_get(fields)
+        if 'team_id' in fields and not result.get('team_id'):
             result['team_id'] = self._default_team_id() or self.env['helpdesk.team'].search([], limit=1).id
         return result
 

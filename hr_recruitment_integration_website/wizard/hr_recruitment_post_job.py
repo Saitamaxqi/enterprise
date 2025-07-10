@@ -9,12 +9,13 @@ from odoo.tools.mail import is_html_empty
 class HrRecruitmentPostJobWizard(models.TransientModel):
     _inherit = 'hr.recruitment.post.job.wizard'
 
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
         job = self.env['hr.job'].browse(res.get('job_id'))
         if not job:
             return res
-        if 'job_apply_url' in fields_list:
+        if 'job_apply_url' in fields:
             res['job_apply_url'] = job.full_url
         return res
 

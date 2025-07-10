@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from odoo.exceptions import ValidationError
-from odoo.exceptions import UserError
+from odoo.fields import Date
+from odoo.exceptions import UserError, ValidationError
 
 import re
 import string
@@ -45,11 +45,12 @@ class l10nChAccidentInsuranceGroup(models.Model):
     _name = "l10n.ch.accident.group"
     _description = "LAA Group category"
 
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
         res.update({
             'line_ids': [(0, 0, {
-                'date_from': fields.Date.today().replace(month=1, day=1),
+                'date_from': Date.today().replace(month=1, day=1),
                 'threshold': 148200,
                 'occupational_male_rate': 0,
                 'non_occupational_male_rate': 0,

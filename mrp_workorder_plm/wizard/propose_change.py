@@ -1,19 +1,19 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import re
 from markupsafe import Markup
 
-from odoo import SUPERUSER_ID, models, _
+from odoo import SUPERUSER_ID, api, models, _
 from odoo.tools import is_html_empty
 
 
 class ProposeChange(models.TransientModel):
     _inherit = 'propose.change'
 
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list=fields_list)
-        if 'step_id' in fields_list:
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        if 'step_id' in fields:
             wo = self.env['quality.check'].browse(res.get('step_id')).workorder_id
             eco = self.env['mrp.eco'].sudo().search([
                 ('bom_id', '=', wo.production_id.bom_id.id),

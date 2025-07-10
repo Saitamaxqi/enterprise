@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
+from odoo.fields import Date
 from odoo.tools import date_utils, format_date
 from itertools import product
 from functools import partial
@@ -20,12 +21,13 @@ class BudgetSplitWizard(models.TransientModel):
     ], string='Period', required=True, default='year')
     analytical_plan_ids = fields.Many2many('account.analytic.plan', string='Analytic Plans', required=True)
 
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
-        if 'date_from' in fields_list and not defaults.get('date_from'):
-            defaults['date_from'] = date_utils.start_of(fields.Date.context_today(self), 'year')
-        if 'date_to' in fields_list and not defaults.get('date_to'):
-            defaults['date_to'] = date_utils.end_of(fields.Date.context_today(self), 'year')
+    @api.model
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
+        if 'date_from' in fields and not defaults.get('date_from'):
+            defaults['date_from'] = date_utils.start_of(Date.context_today(self), 'year')
+        if 'date_to' in fields and not defaults.get('date_to'):
+            defaults['date_to'] = date_utils.end_of(Date.context_today(self), 'year')
         return defaults
 
     def action_budget_split(self):

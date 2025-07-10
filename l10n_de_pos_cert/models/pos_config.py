@@ -55,10 +55,10 @@ class PosConfig(models.Model):
                 pos_config._l10n_de_create_tss_process()
         return pos_configs
 
-    def write(self, values):
-        res = super().write(values)
+    def write(self, vals):
+        res = super().write(vals)
         for config in self:
-            if values.get('l10n_de_create_tss_flag') and not config.l10n_de_fiskaly_tss_id:
+            if vals.get('l10n_de_create_tss_flag') and not config.l10n_de_fiskaly_tss_id:
                 config._l10n_de_create_tss_process()
         return res
 

@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
 from dateutil.relativedelta import relativedelta
 
-from odoo import models, api, fields, _, Command
+from odoo import models, api, fields, _
+from odoo.fields import Command, Date
 from odoo.tools import format_date
 from odoo.exceptions import UserError
 
@@ -47,11 +47,11 @@ class AccountMulticurrencyRevaluationWizard(models.TransientModel):
     show_warning_move_id = fields.Many2one('account.move', compute='_compute_show_warning')
 
     @api.model
-    def default_get(self, default_fields):
-        rec = super().default_get(default_fields)
-        if 'reversal_date' in default_fields:
+    def default_get(self, fields):
+        rec = super().default_get(fields)
+        if 'reversal_date' in fields:
             report_options = self.env.context['multicurrency_revaluation_report_options']
-            rec['reversal_date'] = fields.Date.to_date(report_options['date']['date_to']) + relativedelta(days=1)
+            rec['reversal_date'] = Date.to_date(report_options['date']['date_to']) + relativedelta(days=1)
         if not self.env.context.get('revaluation_no_loop') and not self.with_context(revaluation_no_loop=True)._get_move_vals()['line_ids']:
             raise UserError(_("No adjustment needed"))
         return rec

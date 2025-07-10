@@ -114,8 +114,8 @@ class PlanningSlot(models.Model):
     # -----------------------------------------------------------------
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         if res.get('sale_line_id'):
             sale_line_id = self.env['sale.order.line'].browse(res.get('sale_line_id'))
             if sale_line_id.product_id.planning_enabled and res.get('start_datetime') and res.get('end_datetime'):

@@ -38,13 +38,13 @@ class RepairOrder(models.Model):
         res._create_quality_checks_for_repair(["product", "operation"])
         return res
 
-    def write(self, values):
-        res = super().write(values)
-        if "product_id" in values:
+    def write(self, vals):
+        res = super().write(vals)
+        if "product_id" in vals:
             self.quality_check_ids.filtered(lambda c: c.measure_on == "product").unlink()
             self._create_quality_checks_for_repair(["product"])
-        elif "lot_id" in values:
-            self.quality_check_ids.write({'lot_id': values['lot_id']})
+        elif "lot_id" in vals:
+            self.quality_check_ids.write({'lot_id': vals['lot_id']})
         return res
 
     def _create_quality_checks_for_repair(self, measures):

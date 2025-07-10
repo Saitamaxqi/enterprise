@@ -36,10 +36,10 @@ class L10n_AuTerminationPayment(models.TransientModel):
     ], required=True, default="normal", string="Termination Type")
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != 'AU':
             raise UserError(_("You must be logged in an Australian company to use that feature."))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     @api.depends('employee_id', 'contract_end_date')
     def _compute_contract_id(self):

@@ -33,10 +33,10 @@ class MailActivity(models.Model):
         call_activities.user_id._bus_send("refresh_call_activities", {})
         return activities
 
-    def write(self, values):
-        if "date_deadline" in values and self.user_id:
+    def write(self, vals):
+        if "date_deadline" in vals and self.user_id:
             self.user_id._bus_send("refresh_call_activities", {})
-        return super().write(values)
+        return super().write(vals)
 
     @api.model
     @api.readonly

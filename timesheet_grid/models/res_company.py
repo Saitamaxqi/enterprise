@@ -37,9 +37,9 @@ class ResCompany(models.Model):
             company.with_context(force_nextdates_calculation=True)._timesheet_postprocess(values)
         return companies
 
-    def write(self, values):
-        result = super().write(values)
-        self.with_context(force_nextdates_calculation=False)._timesheet_postprocess(values)
+    def write(self, vals):
+        result = super().write(vals)
+        self.with_context(force_nextdates_calculation=False)._timesheet_postprocess(vals)
         return result
 
     def _timesheet_postprocess(self, values):

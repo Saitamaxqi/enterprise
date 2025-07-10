@@ -2,6 +2,7 @@
 
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
+from odoo.fields import Date
 
 import re
 
@@ -36,32 +37,32 @@ class L10nChSocialInsurance(models.Model):
     no_lpp_reason = fields.Char(help="If your company doesn't have a main LPP insurance, state the reason here.")
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         res.update({
             'avs_line_ids': [(0, 0, {
-                'date_from': fields.Date.today().replace(month=1, day=1),
+                'date_from': Date.today().replace(month=1, day=1),
                 'employer_rate': 5.3,
                 'employee_rate': 5.3,
                 'admin_fees': 1.2,
             })],
             'ac_line_ids': [(0, 0, {
-                'date_from': fields.Date.today().replace(month=1, day=1),
+                'date_from': Date.today().replace(month=1, day=1),
                 'employer_rate': 1.1,
                 'employee_rate': 1.1,
                 'employee_additional_rate': 0,
                 'employer_additional_rate': 0,
             })],
             'l10n_ch_avs_rente_ids': [(0, 0, {
-                'date_from': fields.Date.today().replace(month=1, day=1),
+                'date_from': Date.today().replace(month=1, day=1),
                 'amount': 1400
             })],
             'l10n_ch_avs_ac_threshold_ids': [(0, 0, {
-                'date_from': fields.Date.today().replace(month=1, day=1),
+                'date_from': Date.today().replace(month=1, day=1),
                 'amount': 148200
             })],
             'l10n_ch_avs_acc_threshold_ids': [(0, 0, {
-                'date_from': fields.Date.today().replace(month=1, day=1),
+                'date_from': Date.today().replace(month=1, day=1),
                 'amount': 0
             })]
         })

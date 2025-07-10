@@ -10,8 +10,9 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
     _transient_max_count = 0
     _transient_max_hours = 24
 
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
         if self.env.context.get('active_model') == 'hr.job':
             res['job_id'] = self.env.context.get('active_id')
         return res

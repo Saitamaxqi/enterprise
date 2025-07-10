@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
@@ -11,9 +10,9 @@ class HelpdeskSla(models.Model):
     _description = "Helpdesk SLA Policies"
 
     @api.model
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
-        if 'team_id' in fields_list or 'stage_id' in fields_list:
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
+        if 'team_id' in fields or 'stage_id' in fields:
             default_team_id = self.env.context.get('default_team_id')
             team = self.env['helpdesk.team'].browse(default_team_id)
             if not default_team_id:

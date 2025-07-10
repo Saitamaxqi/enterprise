@@ -44,9 +44,9 @@ class ProjectProject(models.Model):
         return super()._get_hide_partner() and not self.is_fsm
 
     @api.model
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
-        if 'allow_quotations' in fields_list and 'allow_quotations' not in defaults and defaults.get('is_fsm'):
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
+        if 'allow_quotations' in fields and 'allow_quotations' not in defaults and defaults.get('is_fsm'):
             defaults['allow_quotations'] = self.env.user.has_group('industry_fsm.group_fsm_quotation_from_task')
         return defaults
 

@@ -74,15 +74,15 @@ class ResCompany(models.Model):
         self.env['account.return.type']._generate_or_refresh_all_returns(companies.root_id)
         return companies
 
-    def write(self, values):
+    def write(self, vals):
         root_companies_before = self.root_id
-        res = super().write(values)
+        res = super().write(vals)
 
-        if 'account_tax_return_journal_id' in values:
-            journal = self.env['account.journal'].browse(values['account_tax_return_journal_id'])
+        if 'account_tax_return_journal_id' in vals:
+            journal = self.env['account.journal'].browse(vals['account_tax_return_journal_id'])
             journal.show_on_dashboard = True
 
-        if any(return_field in values for return_field in ('account_return_periodicity', 'account_return_reminder_day', 'child_ids', 'parent_id', 'account_opening_date')):
+        if any(return_field in vals for return_field in ('account_return_periodicity', 'account_return_reminder_day', 'child_ids', 'parent_id', 'account_opening_date')):
             roots_to_recompute = root_companies_before | self.root_id
             self.env['account.return.type']._generate_or_refresh_all_returns(roots_to_recompute)
 

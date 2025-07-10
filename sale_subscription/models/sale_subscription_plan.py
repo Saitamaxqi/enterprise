@@ -80,11 +80,11 @@ class SaleSubscriptionPlan(models.Model):
         "Recurring period must be a positive number. Please ensure the input is a valid positive numeric value.",
     )
 
-    def write(self, values):
-        if "related_plan_id" in values:
+    def write(self, vals):
+        if "related_plan_id" in vals:
             old_related = {plan.id: plan.related_plan_id for plan in self}
-        res = super().write(values)
-        if "related_plan_id" in values:
+        res = super().write(vals)
+        if "related_plan_id" in vals:
             for plan in self:
                 if to_remove := old_related[plan.id] - plan.related_plan_id:
                     to_remove.related_plan_id = [Command.unlink(plan.id)]

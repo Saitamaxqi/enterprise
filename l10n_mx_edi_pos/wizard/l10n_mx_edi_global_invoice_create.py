@@ -7,9 +7,9 @@ class L10n_Mx_EdiGlobal_InvoiceCreate(models.Model):
     pos_order_ids = fields.Many2many(comodel_name='pos.order')
 
     @api.model
-    def default_get(self, fields_list):
+    def default_get(self, fields):
         # EXTENDS 'l10n_mx_edi'
-        results = super().default_get(fields_list)
+        results = super().default_get(fields)
 
         if 'pos_order_ids' in results:
             source_orders = self.env['pos.order'].browse(results['pos_order_ids'][0][2])

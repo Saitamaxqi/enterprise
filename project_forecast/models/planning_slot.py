@@ -81,8 +81,8 @@ class PlanningSlot(models.Model):
     def create(self, vals_list):
         return super().create(vals_list)
 
-    def write(self, values):
-        return super().write(values)
+    def write(self, vals):
+        return super().write(vals)
 
     def _prepare_shift_vals(self):
         return {

@@ -27,8 +27,9 @@ class ProposeChange(models.TransientModel):
         ('remove_step', 'Remove Current Step'),
         ('set_picture', 'Set Picture')], 'Type of Change')
 
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
+    @api.model
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
         if 'step_id' in defaults:
             step = self.env['quality.check'].browse(defaults.get('step_id'))
             defaults['title'] = step.title

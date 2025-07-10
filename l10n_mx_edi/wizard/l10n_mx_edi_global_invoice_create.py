@@ -14,9 +14,9 @@ class L10n_Mx_EdiGlobal_InvoiceCreate(models.Model):
     )
 
     @api.model
-    def default_get(self, fields_list):
+    def default_get(self, fields):
         # EXTENDS 'base'
-        results = super().default_get(fields_list)
+        results = super().default_get(fields)
 
         if 'move_ids' in results:
             source_invoices = self.env['account.move'].browse(results['move_ids'][0][2])

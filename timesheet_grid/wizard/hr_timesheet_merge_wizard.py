@@ -26,21 +26,21 @@ class Hr_TimesheetMergeWizard(models.TransientModel):
                 raise ValidationError(_('The timesheets must have the same encoding unit'))
 
     @api.model
-    def default_get(self, fields_list):
-        res = super().default_get(fields_list)
+    def default_get(self, fields):
+        res = super().default_get(fields)
         active_ids = self.env.context.get('active_ids')
 
-        if 'timesheet_ids' in fields_list and active_ids:
+        if 'timesheet_ids' in fields and active_ids:
             timesheets = self.env['account.analytic.line'].browse(active_ids)
             timesheets = timesheets.filtered(lambda l: l.project_id and not l.validated and not l.is_timer_running)
             if timesheets:
                 res['timesheet_ids'] = timesheets.ids
 
-                if 'date' in fields_list:
+                if 'date' in fields:
                     res['date'] = timesheets[0].date
 
                 for f in ['encoding_uom_id', 'project_id', 'task_id', 'employee_id']:
-                    if f in fields_list:
+                    if f in fields:
                         res[f] = timesheets[0][f].id
 
         return res

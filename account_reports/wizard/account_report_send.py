@@ -75,12 +75,12 @@ class AccountReportSend(models.TransientModel):
     )
 
     @api.model
-    def default_get(self, fields_list):
+    def default_get(self, fields):
         # EXTENDS 'base'
-        results = super().default_get(fields_list)
+        results = super().default_get(fields)
 
         context_options = self.env.context.get('default_report_options', {})
-        if 'account_report_id' in fields_list and 'account_report_id' not in results:
+        if 'account_report_id' in fields and 'account_report_id' not in results:
             report_id = context_options.get('report_id', False)
             results['account_report_id'] = report_id
             results['report_options'] = context_options

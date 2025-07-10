@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
@@ -8,9 +7,9 @@ class ProjectProject(models.Model):
     _inherit = 'project.project'
 
     @api.model
-    def default_get(self, fields_list):
-        defaults = super().default_get(fields_list)
-        if 'use_documents' in fields_list:
+    def default_get(self, fields):
+        defaults = super().default_get(fields)
+        if 'use_documents' in fields:
             defaults['use_documents'] = defaults.get('use_documents', False) and not defaults.get('is_fsm')
         return defaults
 

@@ -11,10 +11,10 @@ class L10nChAvsIncomeSplits(models.Model):
     _rec_name = 'employee_id'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "CH":
             raise UserError(_('You must be logged in a Swiss company to use this feature'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     employee_id = fields.Many2one("hr.employee", required=True)
     state = fields.Selection([("draft", "Draft"),

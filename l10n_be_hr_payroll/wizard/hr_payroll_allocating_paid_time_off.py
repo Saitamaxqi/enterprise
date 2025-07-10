@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
@@ -16,10 +15,10 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
     _description = 'Manage the Allocation of Paid Time Off'
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "BE":
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
-        return super().default_get(field_list)
+        return super().default_get(fields)
 
     def _get_range_of_years(self):
         current_year = fields.Date.today().year

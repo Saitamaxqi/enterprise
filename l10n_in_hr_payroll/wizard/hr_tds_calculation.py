@@ -8,6 +8,7 @@ class L10nInTdsComputationWizard(models.TransientModel):
     _name = 'l10n.in.tds.computation.wizard'
     _description = 'Indian Payroll: TDS computation'
 
+    @api.model
     def default_get(self, fields):
         res = super().default_get(fields)
         if self.env.company.country_id.code != "IN":

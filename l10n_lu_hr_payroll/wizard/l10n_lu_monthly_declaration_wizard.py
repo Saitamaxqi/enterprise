@@ -74,10 +74,10 @@ class L10nLuMonthlyDeclarationWizard(models.TransientModel):
             ])
 
     @api.model
-    def default_get(self, field_list=None):
+    def default_get(self, fields):
         if self.env.company.country_id.code != "LU":
             raise UserError(_('You must be logged in a Luxembourger company to use this feature'))
-        res = super().default_get(field_list)
+        res = super().default_get(fields)
         return res
 
     @api.depends('situational_unemployment_ids.amount')
