@@ -1,4 +1,8 @@
 import { PivotMissingCellDialog } from "../global_filters/components/pivot_missing_cell_dialog/pivot_missing_cell_dialog";
+import { constants, helpers } from "@odoo/o-spreadsheet";
+
+const { PIVOT_MAX_NUMBER_OF_CELLS } = constants;
+const { getPivotTooBigErrorMessage } = helpers;
 
 export const REINSERT_DYNAMIC_PIVOT_CHILDREN = (env) =>
     env.model.getters.getPivotIds().map((pivotId, index) => ({
@@ -39,14 +43,23 @@ export const REINSERT_STATIC_PIVOT_CHILDREN = (env) =>
             if (type === "ODOO") {
                 const dataSource = env.model.getters.getPivot(pivotId);
                 const model = await dataSource.copyModelWithOriginalDomain();
-                table = model.getExpandedTableStructure().export();
+                table = model.getExpandedTableStructure();
             } else {
-                table = env.model.getters.getPivot(pivotId).getExpandedTableStructure().export();
+                table = env.model.getters.getPivot(pivotId).getExpandedTableStructure();
+            }
+            if (table.numberOfCells > PIVOT_MAX_NUMBER_OF_CELLS) {
+                const locale = env.model.getters.getLocale();
+                env.notifyUser({
+                    type: "warning",
+                    text: getPivotTooBigErrorMessage(table.numberOfCells, locale),
+                    sticky: true,
+                });
+                return;
             }
             env.model.dispatch("INSERT_PIVOT_WITH_TABLE", {
                 ...position,
                 pivotId,
-                table,
+                table: table.export(),
                 pivotMode: "static",
             });
             env.model.dispatch("REFRESH_PIVOT", { id: pivotId });
