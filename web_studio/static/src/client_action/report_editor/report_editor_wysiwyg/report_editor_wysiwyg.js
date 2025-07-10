@@ -346,6 +346,9 @@ export class ReportEditorWysiwyg extends Component {
         this.reportEditorModel.setInEdition(false);
     }
 
+    /**
+     * @param {import("@html_editor/core/history_plugin").HistoryMutationRecord[]} records 
+     */
     handleMutations(records) {
         for (const record of records) {
             if (record.type === "attributes") {
@@ -357,7 +360,7 @@ export class ReportEditorWysiwyg extends Component {
                 }
             }
             if (record.type === "childList") {
-                Array.from(record.addedNodes).forEach((el) => {
+                record.addedTrees.map((tree) => tree.node).forEach((el) => {
                     if (el.nodeType !== 1) {
                         return;
                     }
@@ -368,10 +371,10 @@ export class ReportEditorWysiwyg extends Component {
                         node.classList.remove("o_dirty");
                     });
                 });
-                const realRemoved = [...record.removedNodes].filter(
+                const realRemoved = record.removedTrees.map((tree) => tree.node).filter(
                     (n) => n.nodeType !== Node.COMMENT_NODE
                 );
-                if (!realRemoved.length && !record.addedNodes.length) {
+                if (!realRemoved.length && !record.addedTrees.length) {
                     continue;
                 }
             }
