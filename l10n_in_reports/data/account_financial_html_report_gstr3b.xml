@@ -778,7 +778,7 @@
                                 </field>
                             </record>
                             <record id="account_report_gstr3b_3_2_ur_21" model="account.report.line">
-                                <field name="name">Orissa</field>
+                                <field name="name">Odisha</field>
                                 <field name="code">3_2_UR_21</field>
                                 <field name="hide_if_zero" eval="True"/>
                                 <field name="expression_ids">
@@ -1487,7 +1487,7 @@
                                 </field>
                             </record>
                             <record id="account_report_gstr3b_3_2_cp_21" model="account.report.line">
-                                <field name="name">Orissa</field>
+                                <field name="name">Odisha</field>
                                 <field name="code">3_2_CP_21</field>
                                 <field name="hide_if_zero" eval="True"/>
                                 <field name="expression_ids">
@@ -2196,7 +2196,7 @@
                                 </field>
                             </record>
                             <record id="account_report_gstr3b_3_2_uin_21" model="account.report.line">
-                                <field name="name">Orissa</field>
+                                <field name="name">Odisha</field>
                                 <field name="code">3_2_UIN_21</field>
                                 <field name="hide_if_zero" eval="True"/>
                                 <field name="expression_ids">
