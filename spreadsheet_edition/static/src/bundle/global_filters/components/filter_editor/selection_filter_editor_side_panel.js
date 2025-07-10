@@ -37,7 +37,7 @@ export class SelectionFilterEditorSidePanel extends AbstractFilterEditorSidePane
                 return;
             }
             const result = await this.orm
-                .cached()
+                .cache({ type: "disk" })
                 .call("ir.model", "display_name_for", [[this.store.filter.resModel]]);
             const label = result[0]?.display_name;
             this.store.updateSelectionModelLabel(label);

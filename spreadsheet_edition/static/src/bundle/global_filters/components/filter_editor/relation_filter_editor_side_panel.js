@@ -75,7 +75,7 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
             return;
         }
         const result = await this.orm
-            .cached()
+            .cache({ type: "disk" })
             .call("ir.model", "display_name_for", [[this.store.filter.modelName]]);
         const label = result[0]?.display_name;
         this.store.updateRelationModelLabel(label);

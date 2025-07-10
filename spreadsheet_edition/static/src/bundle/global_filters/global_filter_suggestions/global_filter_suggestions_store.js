@@ -92,7 +92,7 @@ export class GlobalFilterSuggestionsStore extends SpreadsheetStore {
      */
     async _getModelDisplayNames(models) {
         const result = await this.env.services.orm
-            .cached()
+            .cache({ type: "disk" })
             .call("ir.model", "display_name_for", [models]);
         return Object.fromEntries(result.map(({ model, display_name }) => [model, display_name]));
     }
