@@ -1,6 +1,5 @@
 import { Composer } from "@mail/core/common/composer";
 import { _t } from "@web/core/l10n/translation";
-import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 
 import { onWillDestroy, useEffect } from "@odoo/owl";
@@ -8,7 +7,6 @@ import { onWillDestroy, useEffect } from "@odoo/owl";
 patch(Composer.prototype, {
     setup() {
         super.setup();
-        this.action = useService("action");
         this.composerDisableCheckTimeout = null;
         useEffect(
             () => {
@@ -32,11 +30,14 @@ patch(Composer.prototype, {
         if (
             this.thread?.channel_type === "whatsapp" &&
             !this.state.active &&
-            this.action.id != "revive-whatsapp-conversation"
+            !this.isRevivingWhatsapp
         ) {
             return true;
         }
         return super.areAllActionsDisabled;
+    },
+    get isRevivingWhatsapp() {
+        return false;
     },
     get isMultiUpload() {
         if (this.thread?.channel_type === "whatsapp") {

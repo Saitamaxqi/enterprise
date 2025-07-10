@@ -39,6 +39,15 @@
         },
     },
     'assets': {
+        "im_livechat.assets_embed_core": [
+            "whatsapp/static/src/core/common/**/*",
+            "whatsapp/static/src/**/common/**/*",
+        ],
+        "mail.assets_public": [
+            "whatsapp/static/src/core/common/**/*",
+            "whatsapp/static/src/core/public_web/**/*",
+            "whatsapp/static/src/**/common/**/*",
+        ],
         'web.assets_backend': [
             'whatsapp/static/src/scss/*.scss',
             'whatsapp/static/src/core/common/**/*',
