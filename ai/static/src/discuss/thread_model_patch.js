@@ -12,7 +12,7 @@ patch(Thread.prototype, {
                 prompt,
                 channel_id,
             },
-            { shadow: true }
+            { silent: true }
         );
     },
     async post() {
@@ -31,5 +31,5 @@ patch(Thread.prototype, {
         }
 
         return super.avatarUrl;
-    }
+    },
 });
