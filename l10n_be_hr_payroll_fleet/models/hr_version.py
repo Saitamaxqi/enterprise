@@ -108,7 +108,7 @@ class HrVersion(models.Model):
         'Requested a new bike', compute='_compute_new_bike', store=True, readonly=False,
         groups='hr.group_hr_user')
     new_bike_model_id = fields.Many2one(
-        'fleet.vehicle.model', string="New Company Bike",
+        'fleet.vehicle.model', string="New Bike",
         domain=lambda self: self._get_possible_model_domain(vehicle_type='bike'),
         compute='_compute_new_bike_model_id', store=True, readonly=False, groups='hr.group_hr_user')
     transport_mode_private_car = fields.Boolean(store=True, readonly=False)

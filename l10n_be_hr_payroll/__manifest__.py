@@ -161,6 +161,7 @@ requirements and reduces manual interaction with the SFTP portal.
         'wizard/l10n_be_hr_payroll_employee_lang_views.xml',
         'views/hr_payslip_views.xml',
         'views/hr_payslip_run_views.xml',
+        'wizard/l10n_be_holiday_attest_wizard_views.xml',
     ],
     'demo': [
         'data/l10n_be_hr_payroll_demo.xml'

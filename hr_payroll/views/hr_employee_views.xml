@@ -38,7 +38,9 @@
                 </button>
             </button>
             <xpath expr="//div[@name='contract_type']" position="after">
-                <field name="registration_number" string="Reference"/>
+                <field name="registration_number" string="Reference" groups="base.group_no_one"/>
+            </xpath>
+            <xpath expr="//page[@name='personal_information']//group[@name='hr_birth_group']" position="inside">
                 <field name="lang" string="Payslip Language" placeholder="User Language"/>
             </xpath>
             <field name="marital" position="before">
@@ -53,27 +55,15 @@
             </field>
             <xpath expr="//label[@for='wage']" position="before">
                 <field name="wage_type"/>
-                <field name="schedule_pay" invisible="not show_schedule_pay"/>
                 <label for="hourly_wage" invisible="wage_type != 'hourly'"/>
                 <div class="o_row" name="hourly_wage" invisible="wage_type != 'hourly'">
                     <field name="hourly_wage" class="o_hr_narrow_field"/>
                     <span>/ hour</span>
                 </div>
             </xpath>
-            <xpath expr="//div[@name='wage_period_label']" position="attributes">
-                <attribute name="invisible">schedule_pay != 'monthly'</attribute>
-            </xpath>
-            <xpath expr="//div[@name='wage_period_label']" position="after">
-                <div class="mb-3" invisible="schedule_pay != 'annually'">/ year</div>
-                <div class="mb-3" invisible="schedule_pay != 'semi-annually'">/ half-year</div>
-                <div class="mb-3" invisible="schedule_pay != 'quarterly'">/ quarter</div>
-                <div class="mb-3" invisible="schedule_pay != 'bi-monthly'">/ two months</div>
-                <div class="mb-3" invisible="schedule_pay != 'semi-monthly'">/ half-month</div>
-                <div class="mb-3" invisible="schedule_pay != 'bi-weekly'">/ two weeks</div>
-                <div class="mb-3" invisible="schedule_pay != 'weekly'">/ week</div>
-                <div class="mb-3" invisible="schedule_pay != 'daily'">/ day</div>
-                <div class="mb-3" invisible="schedule_pay != '10_days'">/ 10 days</div>
-                <div class="mb-3" invisible="schedule_pay != '14_days'">/ 14 days</div>
+            <xpath expr="//field[@name='wage']" position="after">
+                <span class="mx-2">/</span>
+                <field name="schedule_pay" class="o_hr_narrow_field" nolabel="1"/>
             </xpath>
             
             <field name="resource_calendar_id" position="attributes">

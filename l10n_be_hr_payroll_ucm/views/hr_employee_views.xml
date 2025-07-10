@@ -6,13 +6,12 @@
         <field name="inherit_id" ref="l10n_be_hr_payroll.hr_employee_view_form"/>
         <field name="priority">41</field>
         <field name="arch" type="xml">
-            <page name="hr_settings" position="inside">
-                <group string="ucm" invisible="company_country_code != 'BE'">
-                    <group>
-                        <field name="ucm_code"/>
-                    </group>
-                </group>
-            </page>
+            <group name="external_codes" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </group>
+            <group name='external_codes' position="inside">
+                <field name="ucm_code" invisible="company_country_code != 'BE'"/>
+            </group>
         </field>
     </record>
 </odoo>

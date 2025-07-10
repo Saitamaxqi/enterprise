@@ -39,40 +39,6 @@
             <group name="contract" position="inside">
                 <field name="originated_offer_id" readonly="1" invisible="not originated_offer_id"/>
             </group>
-            <page name="hr_settings" position="before">
-                <page string="Signatories" groups="hr.group_hr_manager">
-                    <div class="d-flex align-items-center">
-                        <field name="template_warning" class="mb-0" readonly="1" invisible="not template_warning"/>
-                        <widget name="upload_pdf_button" invisible="not template_warning"/>
-                    </div>
-                    <group string="New Contract" invisible="template_warning">
-                        <field string="PDF Template" name="sign_template_id" options="{'no_create': True}" context="{'kanban_view_ref': 'sign.sign_template_view_kanban_mobile'}"/>
-                        <field name="sign_template_signatories_ids" nolabel="1" colspan="2" invisible="not sign_template_id">
-                            <list editable="bottom" create="false" delete="false">
-                                <field name="sign_role_id" readonly="1" force_save="1" options="{'no_open': True}"/>
-                                <field name="signatory" required="1" force_save="1" options="{'no_open': True}"/>
-                                <field name="partner_id" placeholder="Name or email..." options="{'no_open': True}"
-                                       context="{'force_email': True, 'show_email': True}"
-                                       invisible="signatory != 'partner'" required="signatory == 'partner'"/>
-                                <field name="order" force_save="1" options="{'no_open': True}" optional="hide"/>
-                            </list>
-                        </field>
-                    </group>
-                    <group string="Contract Update" invisible="template_warning">
-                        <field string="PDF Template" name="contract_update_template_id" options="{'no_create': True}"/>
-                        <field name="contract_update_signatories_ids" nolabel="1" colspan="2" invisible="not contract_update_template_id">
-                            <list editable="bottom" create="false" delete="false">
-                                <field name="sign_role_id" readonly="1" force_save="1" options="{'no_open': True}"/>
-                                <field name="signatory" required="1" force_save="1" options="{'no_open': True}"/>
-                                <field name="partner_id" placeholder="Name or email..." options="{'no_open': True}"
-                                       context="{'force_email': True, 'show_email': True}"
-                                       invisible="signatory != 'partner'" required="signatory == 'partner'"/>
-                                <field name="order" force_save="1" options="{'no_open': True}" optional="hide"/>
-                            </list>
-                        </field>
-                    </group>
-                </page>
-            </page>
             <separator name="schedule" position="before">
                 <separator name="employer_costs" string="Employer Costs"/>
                 <label name="final_yearly_costs" for="final_yearly_costs"/>

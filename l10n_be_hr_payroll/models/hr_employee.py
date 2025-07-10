@@ -235,3 +235,20 @@ Earnings are made of professional income, remuneration, unemployment allocations
         action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_hr_payroll_index")
         action['context'] = {'default_version_ids': self.mapped('current_version_id.id')}
         return action
+
+    def action_open_attest_wizard(self):
+        self.ensure_one()
+
+        default_year = self.env.context.get('default_year')
+        default_employee_id = self.id
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Create Attestation Line',
+            'res_model': 'l10n.be.holiday.attest.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_year': default_year,
+                'default_employee_id': default_employee_id,
+            }
+        }

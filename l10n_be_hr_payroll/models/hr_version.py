@@ -124,7 +124,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     ip_value = fields.Float(compute='_compute_ip_value', groups="hr.group_hr_user")
     no_onss = fields.Boolean(string="No ONSS", groups="hr.group_hr_user")
     no_withholding_taxes = fields.Boolean(groups="hr.group_hr_user")
-    rd_percentage = fields.Integer("Time Percentage in R&D", groups="hr.group_hr_user")
+    rd_percentage = fields.Integer("Time in R&D", groups="hr.group_hr_user")
     employee_age = fields.Integer('Age of Employee', compute='_compute_employee_age',
                                   compute_sudo=True, groups="hr.group_hr_user")
     l10n_be_impulsion_plan = fields.Selection([
@@ -132,9 +132,9 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         ('12mo', '12 months +'),
         ('55yo', '55+ years old')], string="Impulsion Plan", groups="hr.group_hr_user")
     l10n_be_onss_restructuring = fields.Boolean(
-        string="Allow ONSS Reduction for Restructuring", groups="hr.group_hr_user")
+        string="ONSS Reduction for Restructuring", groups="hr.group_hr_user")
 
-    has_hospital_insurance = fields.Boolean(string="Has Hospital Insurance", groups="hr.group_hr_user", tracking=True)
+    has_hospital_insurance = fields.Boolean(string="Hospital Insurance", groups="hr.group_hr_user", tracking=True)
     insured_relative_children = fields.Integer(string="# Insured Children < 19 y/o", groups="hr.group_hr_user", tracking=True)
     insured_relative_adults = fields.Integer(string="# Insured Children >= 19 y/o", groups="hr.group_hr_user", tracking=True)
     insured_relative_spouse = fields.Boolean(string="Insured Spouse", groups="hr.group_hr_user", tracking=True)
@@ -160,7 +160,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         compute='_compute_l10n_be_group_insurance_amount', store=True, groups="hr.group_hr_user")
     # Ambulatory Insurance
     l10n_be_has_ambulatory_insurance = fields.Boolean(
-        string="Has Ambulatory Insurance",
+        string="Ambulatory Insurance",
         groups="hr.group_hr_user", tracking=True)
     l10n_be_ambulatory_insured_children = fields.Integer(
         string="Ambulatory: # Insured Children < 19 y/o",

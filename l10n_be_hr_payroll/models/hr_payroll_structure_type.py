@@ -9,5 +9,5 @@ class HrPayrollStructureType(models.Model):
 
     def _get_selection_schedule_pay(self):
         if self.env.company.country_code == 'BE':
-            return [('monthly', 'Monthly')]
+            return [('monthly', 'month')]
         return super()._get_selection_schedule_pay()

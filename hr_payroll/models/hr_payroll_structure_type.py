@@ -12,15 +12,15 @@ class HrPayrollStructureType(models.Model):
 
     def _get_selection_schedule_pay(self):
         return [
-            ('annually', 'Annually'),
-            ('semi-annually', 'Semi-annually'),
-            ('quarterly', 'Quarterly'),
-            ('bi-monthly', 'Bi-monthly'),
-            ('monthly', 'Monthly'),
-            ('semi-monthly', 'Semi-monthly'),
-            ('bi-weekly', 'Bi-weekly'),
-            ('weekly', 'Weekly'),
-            ('daily', 'Daily'),
+            ('annually', 'year'),
+            ('semi-annually', 'half-year'),
+            ('quarterly', 'quarter'),
+            ('bi-monthly', '2 months'),
+            ('monthly', 'month'),
+            ('semi-monthly', 'half-month'),
+            ('bi-weekly', '2 weeks'),
+            ('weekly', 'week'),
+            ('daily', 'day'),
         ]
 
     sequence = fields.Integer(default=10)

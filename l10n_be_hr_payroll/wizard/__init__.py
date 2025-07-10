@@ -11,3 +11,4 @@ from . import l10n_be_double_pay_recovery_wizard
 from . import l10n_be_hr_payroll_employee_lang
 from . import l10n_be_december_slip_wizard
 from . import l10n_be_group_insurance_wizard
+from . import l10n_be_holiday_attest_wizard

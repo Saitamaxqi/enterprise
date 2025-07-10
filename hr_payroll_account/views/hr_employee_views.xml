@@ -6,10 +6,8 @@
         <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
         <field name="priority">60</field>
         <field name="arch" type="xml">
-            <group name="settings_group" position="inside">
-                <group string="Accounting" groups="analytic.group_analytic_accounting">
+            <group name="application_group" position="inside">
                     <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting"/>
-                </group>
             </group>
         </field>
     </record>

@@ -1019,31 +1019,6 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             run: "click",
         },
         {
-            content: "Select Signatories Tab",
-            trigger: ".o_notebook ul > li > a:contains(Signatories)",
-            run: "click",
-        },
-        {
-            content: "Contract Update Template",
-            trigger: ".o_field_widget.o_field_many2one[name=contract_update_template_id] input",
-            run: `edit test_employee_contract`,
-        },
-        {
-            isActive: ["auto"],
-            trigger: ".ui-autocomplete > li > a:contains('test_employee_contract')",
-            run: "click",
-        },
-        {
-            content: "New Contract Document Template",
-            trigger: ".o_field_widget.o_field_many2one[name=sign_template_id] input",
-            run: `edit test_employee_contract`,
-        },
-        {
-            isActive: ["auto"],
-            trigger: ".ui-autocomplete > li > a:contains('test_employee_contract')",
-            run: "click",
-        },
-        {
             content: "Select Payroll Tab",
             trigger: ".o_notebook ul > li > a:contains(Payroll)",
             run: "click",
@@ -1106,11 +1081,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         {
             content: "Select Contract",
             trigger: ".o_field_widget.o_field_many2one[name=contract_template_id] input",
-            run: `edit Mitchell Admin PFI`,
+            run: `edit New Developer Template Contract`,
         },
         {
             isActive: ["auto"],
-            trigger: ".ui-autocomplete > li > a:contains('2022')",
+            trigger: ".ui-autocomplete > li > a:contains('New Developer Template Contract')",
             run: "click",
         },
         {
