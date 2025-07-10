@@ -146,7 +146,7 @@ class DMFAWorker(DMFANode):
         contribution_payslips = contribution_payslips.filtered(lambda p: p.struct_id.code in basis_lines)
         line_values = contribution_payslips._get_line_values(['SALARY', 'BASIC', 'PAY_SIMPLE'])
         basis = round(sum(line_values[basis_lines[p.struct_id.code]][p.id]['total'] for p in contribution_payslips), 2)
-        has_mobility_budget_balance = 'MOBILITY.PAYMENT' in contribution_payslips.input_line_ids.mapped('code')
+        has_mobility_budget_balance = contribution_payslips._get_input_line_amount('MOBILITY.PAYMENT')
         if not basis:
             return []
 
@@ -618,6 +618,8 @@ class DMFAOccupation(DMFANode):
         self.occupation_informations = self._prepare_occupation_informations()
         work_address = contract.employee_id.address_id
         location_unit = self.env['l10n_be.dmfa.location.unit'].search([('partner_id', '=', work_address.id)])
+        if not location_unit:
+            raise UserError(_('No DMFA location unit linked to work address %(work_address)s for employee %(employee)s', work_address=work_address.name, employee=contract.employee_id.name))
         self.work_place = format_amount(location_unit._get_code(), width=10, hundredth=False)
 
     def _prepare_services(self):
@@ -689,7 +691,7 @@ class DMFAOccupation(DMFANode):
 
     def _prepare_occupation_informations(self):
         infos_to_declare = []
-        has_mobility_budget_balance = 'MOBILITY.PAYMENT' in self.payslips.input_line_ids.mapped('code')
+        has_mobility_budget_balance = self.payslips._get_input_line_amount('MOBILITY.PAYMENT')
         if has_mobility_budget_balance:
             infos_to_declare.append('mobility_budget')
         return DMFAOccupationInformation.init_multi([(self.payslips, infos_to_declare)] if infos_to_declare else [])
