@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, api
+from odoo import models
 from odoo.tools import float_round
 
 
@@ -8,8 +8,7 @@ class TimesheetGridMixin(models.AbstractModel):
     _name = 'timesheet.grid.mixin'
     _description = 'Timesheet Grid mixin'
 
-    @api.model
-    def get_planned_and_worked_hours(self, ids):
+    def get_planned_and_worked_hours(self):
         """
         Method called by the timesheet widgets on the frontend in gridview to get information
         about the hours allocated and worked for each record.
@@ -19,15 +18,16 @@ class TimesheetGridMixin(models.AbstractModel):
         day_uom = self.env.ref('uom.product_uom_day')
         rounding = len(str(format(company.timesheet_encode_uom_id.rounding, 'f')).split('.')[1].split('1')[0]) + 1
         hours_per_day = company.resource_calendar_id.hours_per_day
+
         def convert_hours_to_company_uom(hours):
             return float_round(hours / hours_per_day, precision_digits=rounding) if uom == day_uom else hours
 
         records = self.search_read(
-            self.get_planned_and_worked_hours_domain(ids),
+            self.get_planned_and_worked_hours_domain(),
             ['id', self.get_allocated_hours_field()] + self.get_worked_hours_fields(),
         )
 
-        records_per_id = dict.fromkeys(ids, {})
+        records_per_id = {key: {} for key in self.ids}
         uom_name = uom.name.lower()
         for record in records:
             records_per_id[record['id']] = {
@@ -37,5 +37,5 @@ class TimesheetGridMixin(models.AbstractModel):
             }
         return records_per_id
 
-    def get_planned_and_worked_hours_domain(self, ids):
-        return [('id', 'in', ids)]
+    def get_planned_and_worked_hours_domain(self):
+        return [('id', 'in', self.ids)]

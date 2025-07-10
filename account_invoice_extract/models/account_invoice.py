@@ -257,9 +257,9 @@ class AccountMove(models.Model):
         self.with_context(skip_is_manually_modified=True)._validate_ocr()
         return posted
 
-    def get_partner_create_data(self, context):
+    def get_partner_create_data(self, context_data):
         default_values = self.extract_prefill_data
-        if values := self._fetch_autocomplete_values(context.get('default_vat') or default_values.get('vat')):
+        if values := self._fetch_autocomplete_values(context_data.get('default_vat') or default_values.get('vat')):
             default_values |= values
         return {f'default_{k}': v for k, v in default_values.items()}
 

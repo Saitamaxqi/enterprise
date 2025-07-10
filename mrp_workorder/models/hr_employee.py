@@ -132,8 +132,8 @@ class HrEmployee(models.Model):
             # Test cases
             return [self.env.user.employee_id.id]
 
-    def set_employees_connected(self, ids):
-        new_employees = self.browse(ids)
+    def set_employees_connected(self):
+        new_employees = self
         old_employees = self.browse(request.session.get(EMPLOYEES_CONNECTED, []))
         (old_employees - new_employees).stop_all_workorder_from_employee()
         request.session[EMPLOYEES_CONNECTED] = new_employees.ids

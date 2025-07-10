@@ -32,5 +32,5 @@ class SaleOrderLine(models.Model):
     def get_worked_hours_fields(self):
         return ['qty_delivered']
 
-    def get_planned_and_worked_hours_domain(self, ids):
-        return super().get_planned_and_worked_hours_domain(ids) + [('qty_delivered_method', 'not in', ['manual', 'milestones'])]
+    def get_planned_and_worked_hours_domain(self):
+        return super().get_planned_and_worked_hours_domain() + [('qty_delivered_method', 'not in', ['manual', 'milestones'])]

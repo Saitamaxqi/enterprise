@@ -197,7 +197,7 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
             await stopAllWorkorderFromEmployee(employees.admin.id);
             await orm.call("hr.employee", "logout", [employees.admin.id, false, true]);
         }
-        await orm.call("hr.employee", "set_employees_connected", [null, ids]);
+        await orm.call("hr.employee", "set_employees_connected", [ids]);
         await getConnectedEmployees();
     };
 
