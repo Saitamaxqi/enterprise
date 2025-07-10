@@ -42,13 +42,15 @@ export class IotWebsocket {
      * @param onSuccess Callback to run when a message is received (can return ``message``, ``deviceIdentifier``, and ``messageId``)
      * @param onFailure Callback to run when the request fails (can return ``deviceIdentifier`` and ``messageId``)
      * @param messageType The type of message to listen for (optional)
+     * @param requestId The request ID to listen for (optional)
      */
     onMessage(
         iotBoxIdentifier,
         deviceIdentifier,
         onSuccess = (_message, _deviceIdentifier, _messageId) => {},
-        onFailure = (_message, _messageId, _deviceIdentifier) => {},
+        onFailure = (_message, _deviceIdentifier, _messageId) => {},
         messageType = 'operation_confirmation',
+        requestId = null
     ) {
         if (!this.iotChannel) {
             console.error("No IoT Channel found");
@@ -60,12 +62,12 @@ export class IotWebsocket {
 
         this.busService.addChannel(this.iotChannel);
         this.busService.subscribe(messageType, (payload) => {
-            const { message_id, iot_box_identifier, device_identifier, message } = payload;
-            if (iot_box_identifier !== iotBoxIdentifier || device_identifier !== deviceIdentifier) {
+            const { session_id, iot_box_identifier, device_identifier, message } = payload;
+            if (iot_box_identifier !== iotBoxIdentifier || device_identifier !== deviceIdentifier || (requestId && session_id !== requestId)) {
                 return;
             }
 
-            this.callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, message_id, message);
+            this.callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, session_id, message);
         });
     }
 

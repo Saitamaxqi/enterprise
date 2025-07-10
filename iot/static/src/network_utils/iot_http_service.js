@@ -1,5 +1,6 @@
 import { registry } from "@web/core/registry";
 import { post } from "@iot_base/network_utils/http";
+import { uuid } from "@web/core/utils/strings";
 import { IotWebsocket } from "@iot/network_utils/iot_websocket";
 import { _t } from "@web/core/l10n/translation";
 
@@ -42,22 +43,25 @@ export class IotAction {
         deviceIdentifier,
         data,
         onSuccess = (_message, _deviceIdentifier, _operationId) => {},
-        onFailure = (_message, deviceIdentifier, messageId) => this.onFailure(deviceIdentifier, messageId),
+        onFailure = (message, deviceIdentifier, messageId) => this.onFailure(message, deviceIdentifier, messageId),
     ) {
         if (!["number", "string"].includes(typeof iotBoxId)) {
             iotBoxId = iotBoxId[0]; // iotBoxId is the ``Many2one`` field, we need the actual ID
         }
         const [{ ip, identifier }] = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["ip", "identifier"]);
 
+        // generate a unique request ID for this request (ensure the callback corresponds to the request)
+        const actionId = uuid();
+
         // Define the connection types in the order of executions to try
         const connectionTypes = [
             async () => {
-                this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure);
-                await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, null, true);
+                this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, actionId);
+                await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, actionId, true);
             },
             async () => {
-                this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailure);
-                await this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data });
+                this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailure,"operation_confirmation", actionId);
+                await this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, actionId);
             },
         ];
 
