@@ -232,6 +232,22 @@
         <field name="work_entry_type_id" ref="hr_work_entry.l10n_hk_work_entry_type_statutory_holiday" />
     </record>
 
+    <!-- LEAVE ALLOCATION -->
+    <record id="demo_annual_leave_allocation" model="hr.leave.allocation">
+        <field name="name">Annual Leave Allocation - HK Employee</field>
+        <field name="holiday_status_id" ref="hr_holidays.l10n_hk_leave_type_annual_leave"/>
+        <field name="number_of_days">20</field>
+        <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_anthony"/>
+        <field name="date_from" eval="time.strftime('%Y-01-01')"/>
+        <field name="date_to" eval="time.strftime('%Y-12-31')"/>
+        <field name="state">confirm</field>
+    </record>
+
+    <!-- VALIDATE ALLOCATION -->
+    <function model="hr.leave.allocation" name="action_approve">
+        <value model="hr.leave.allocation" eval="[ref('demo_annual_leave_allocation')]"/>
+    </function>
+
     <!-- LEAVES -->
     <record id="demo_unpaid_leave" model="hr.leave">
         <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_anthony" />

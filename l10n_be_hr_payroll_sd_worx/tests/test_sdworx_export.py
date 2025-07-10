@@ -40,6 +40,14 @@ class TestSdworxExportLogic(TestSdworxExportCommon):
         for that day in the export file.
         """
 
+        self.env['hr.leave.allocation'].create({
+            'name': 'Allocation for Georges',
+            'holiday_status_id': self.leave_type_day.id,
+            'number_of_days': 5,
+            'employee_id': self.employee_georges.id,
+            'state': 'confirm',
+            'date_from': '2025-01-01',
+        }).action_approve()
         leave_date = date(2025, 6, 9)
         self.env['hr.leave'].create({
             'name': 'Full Day Leave Test',
@@ -72,6 +80,14 @@ class TestSdworxExportLogic(TestSdworxExportCommon):
             'request_hour_from': 13.0,
             'request_hour_to': 16.0,
         })
+        self.env['hr.leave.allocation'].create({
+            'name': 'Allocation for Georges',
+            'holiday_status_id': self.leave_type_day.id,
+            'number_of_days': 5,
+            'employee_id': self.employee_georges.id,
+            'state': 'confirm',
+            'date_from': '2025-01-01',
+        }).action_approve()
         self.env['hr.leave'].create({
             'name': 'Georges Full Day',
             'employee_id': self.employee_georges.id,

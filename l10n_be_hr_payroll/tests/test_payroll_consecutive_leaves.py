@@ -19,6 +19,7 @@ class TestConsecutiveLeaves(TestPayrollCommon):
         })
         self.leave_type = self.env['hr.leave.type'].create({
             'name': 'Sick Leave without Certificate',
+            'requires_allocation': False,
             'l10n_be_no_consecutive_leaves_allowed': True
         })
 

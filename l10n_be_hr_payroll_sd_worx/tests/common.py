@@ -37,14 +37,14 @@ class TestSdworxExportCommon(TestPayrollCommon):
 
         cls.leave_type_half_day = cls.env['hr.leave.type'].create({
             'name': 'Half-Day Time Off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'request_unit': 'half_day',
             'leave_validation_type': 'no_validation',
             'work_entry_type_id': cls.work_entry_type_legal_leave.id,
         })
         cls.leave_type_hour = cls.env['hr.leave.type'].create({
             'name': 'Hourly Time Off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'request_unit': 'hour',
             'leave_validation_type': 'no_validation',
             'work_entry_type_id': cls.work_entry_type_hourly_leave.id,

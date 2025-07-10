@@ -278,7 +278,7 @@
         <!-- allocation -->
         <record id="l10n_in_cl_allocation_1" model="hr.leave.allocation">
             <field name="name">Paid Time Off for Indian Employee 1</field>
-            <field name="date_from" eval="time.strftime('%Y-01-01')"/>
+            <field name="date_from" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-01-01')"/>
             <field name="date_to" eval="time.strftime('%Y-12-31')"/>
             <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
             <field name="number_of_days">24</field>
@@ -288,7 +288,7 @@
 
         <record id="l10n_in_cl_allocation_2" model="hr.leave.allocation">
             <field name="name">Paid Time Off for Indian Employee 2</field>
-            <field name="date_from" eval="time.strftime('%Y-01-01')"/>
+            <field name="date_from" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-01-01')"/>
             <field name="date_to" eval="time.strftime('%Y-12-31')"/>
             <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
             <field name="number_of_days">24</field>
@@ -298,13 +298,22 @@
 
         <record id="l10n_in_cl_allocation_3" model="hr.leave.allocation">
             <field name="name">Paid Time Off for Indian Employee 3</field>
-            <field name="date_from" eval="time.strftime('%Y-01-01')"/>
+            <field name="date_from" eval="(DateTime.today() - relativedelta(years=1)).strftime('%Y-01-01')"/>
             <field name="date_to" eval="time.strftime('%Y-12-31')"/>
             <field name="holiday_status_id" ref="hr_holidays.leave_type_paid_time_off"/>
             <field name="number_of_days">24</field>
             <field name="state">confirm</field>
             <field name="employee_id" ref="l10n_in_hr_payroll.l10n_in_hr_employee_shaurya"/>
         </record>
+
+        <!-- validate allocation -->
+        <function model="hr.leave.allocation" name="action_approve">
+            <value model="hr.leave.allocation" eval="[
+                ref('l10n_in_hr_payroll.l10n_in_cl_allocation_1'),
+                ref('l10n_in_hr_payroll.l10n_in_cl_allocation_2'),
+                ref('l10n_in_hr_payroll.l10n_in_cl_allocation_3'),
+            ]"/>
+        </function>
 
         <!-- time-off -->
         <record id="l10n_in_vihaan_time_off" model="hr.leave">

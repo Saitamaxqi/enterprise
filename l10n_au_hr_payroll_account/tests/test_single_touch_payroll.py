@@ -60,7 +60,7 @@ class TestSingleTouchPayroll(L10nPayrollAccountCommon):
     def create_leave(self, date_from=None, amount=None, name="", work_entry_type=None, employee_id=False):
         holiday_leave_types = self.env['hr.leave.type'].create([{
             'name': 'Paid Time Off',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
             'allocation_validation_type': 'no_validation',
             'leave_validation_type': 'no_validation',
             'request_unit': 'hour',

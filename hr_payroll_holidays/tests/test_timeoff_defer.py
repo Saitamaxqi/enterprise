@@ -423,7 +423,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             'name': 'Annoying overlaping leave type',
             'work_entry_type_id': overlapping_work_entry_type.id,
             'time_type': 'leave',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
         })
         overlapping_leave = self.env['hr.leave'].create({
             'name': 'Annoying overlaping leave',
@@ -517,7 +517,7 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             'name': 'Annoying overlaping leave type',
             'work_entry_type_id': overlapping_work_entry_type.id,
             'time_type': 'leave',
-            'requires_allocation': 'no',
+            'requires_allocation': False,
         })
         overlapping_leave = self.env['hr.leave'].create({
             'name': 'Annoying overlaping leave',

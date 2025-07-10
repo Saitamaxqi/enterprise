@@ -58,6 +58,15 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_04_payslip_paid_holiday(self):
         # 1/3 of the month is paid holidays
+        self.env['hr.leave.allocation'].create({
+            'name': 'Paid Time Off Allocation',
+            'employee_id': self.employee.id,
+            'holiday_status_id': self.env.ref('hr_holidays.leave_type_paid_time_off').id,
+            'number_of_days': 20,
+            'state': 'confirm',
+            'date_from': '2024-01-01',
+            'date_to': '2024-12-31',
+        }).action_approve()
         self._generate_leave(date(2024, 1, 1), date(2024, 1, 10), self.env.ref('hr_holidays.leave_type_paid_time_off'))
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
         payslip_results = {'BASIC': 50000.0, 'HOLIDAY_TO_SUB': 13333.33, 'GROSS_WITHOUT_HOLIDAY': 36666.67, 'HOLIDAYS_ON_TIME': 13333.33, 'GROSS': 50000.0, 'ISR': -9466.99, 'INT_DAY_WAGE_BASE': 1734.97, 'INT_DAY_WAGE_OTHER': 0.0, 'INT_DAY_WAGE_COMMISSIONS': 0.0, 'INT_DAY_WAGE': 1734.97, 'RISK_IMSS_EMPLOYER': 268.92, 'DIS_FIX_IMSS_EMPLOYER': 656.05, 'DIS_ADD_IMSS_EMPLOYER': 485.5, 'DIS_ADD_IMSS_EMPLOYEE': -176.55, 'DIS_MED_IMSS_EMPLOYER': 564.73, 'DIS_MED_IMSS_EMPLOYEE': -201.69, 'DIS_MON_IMSS_EMPLOYER': 376.49, 'DIS_MON_IMSS_EMPLOYEE': -134.46, 'DIS_LIF_IMSS_EMPLOYER': 941.22, 'DIS_LIF_IMSS_EMPLOYEE': -336.15, 'RETIRE_IMSS_EMPLOYER': 1075.68, 'CEAV_IMSS_EMPLOYER': 2867.23, 'CEAV_IMSS_EMPLOYEE': -605.07, 'NURSERY_IMSS_EMPLOYER': 537.84, 'INFONAVIT_IMSS_EMPLOYER': 2689.21, 'IMSS_EMPLOYEE_TOTAL': 1453.92, 'IMSS_EMPLOYER_TOTAL': 10462.88, 'NET': 39079.09, 'PROVISIONS_CHRISTMAS_BONUS': 2117.49, 'PERIOD_PROVISIONS_CHRISTMAS_BONUS': 2117.49, 'PROVISIONS_HOLIDAY_BONUS': 0.0, 'PERIOD_PROVISIONS_HOLIDAY_BONUS': 0.0, 'PROVISIONS_VACATIONS_BONUS': 17850.64, 'PERIOD_PROVISIONS_VACATIONS_BONUS': 17850.64}

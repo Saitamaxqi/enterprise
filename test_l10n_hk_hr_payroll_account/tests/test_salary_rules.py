@@ -46,6 +46,15 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
         self._validate_payslip(payslip, payslip_results)
 
     def test_001_b_moving_daily_wage_computation(self):
+        hk_annual_leave_allocation = self.env['hr.leave.allocation'].create({
+            'name': 'HK Annual Leave Allocation',
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_hk_leave_type_annual_leave').id,
+            'number_of_days': 10,
+            'employee_id': self.employee.id,
+            'state': 'confirm',
+            'date_from': '2023-01-01',
+        })
+        hk_annual_leave_allocation.action_approve()
         leaves_to_create = [
             (datetime(2023, 3, 7), datetime(2023, 3, 7), self.env.ref('hr_holidays.l10n_hk_leave_type_unpaid_leave')),
             (datetime(2023, 4, 11), datetime(2023, 4, 11), self.env.ref('hr_holidays.l10n_hk_leave_type_annual_leave')),

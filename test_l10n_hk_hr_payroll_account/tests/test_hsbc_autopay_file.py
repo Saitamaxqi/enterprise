@@ -57,17 +57,12 @@ class TestHsbcAutoFile(TestL10NHkHrPayrollAccountCommon):
             'identification_id': 'Z123456(7)'
         })
 
-        cls.contract = cls.env['hr.contract'].create({
-            'name': "Test Contract",
-            'employee_id': cls.employee.id,
-            'resource_calendar_id': cls.company.resource_calendar_id.id,
-            'company_id': cls.company.id,
-            'date_generated_from': datetime(2025, 4, 1, 0, 0, 0),
-            'date_generated_to': datetime(2025, 5, 1, 0, 0, 0),
-            'structure_type_id': cls.env.ref('l10n_hk_hr_payroll.structure_type_employee_cap57').id,
-            'date_start': date(2024, 3, 1),
-            'wage': 33570,
-            'state': "open",
+        cls.contract = cls.employee.version_id
+        cls.contract.write({
+            'date_version': date(2025, 4, 1),
+            'contract_date_start': date(2025, 4, 1),
+            'wage': 33570.0,
+            'l10n_hk_internet': 200.0,
         })
 
         public_holiday_to_create = [
@@ -85,7 +80,7 @@ class TestHsbcAutoFile(TestL10NHkHrPayrollAccountCommon):
                 'date_to': date_to,
                 'resource_id': False,
                 'time_type': "leave",
-                'work_entry_type_id': cls.env.ref('l10n_hk_hr_payroll.work_entry_type_public_holiday').id
+                'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_hk_work_entry_type_public_holiday').id
             }])
 
     def test_hsbc_autopay_file(self):
@@ -95,8 +90,16 @@ class TestHsbcAutoFile(TestL10NHkHrPayrollAccountCommon):
             'date_end': date(2025, 5, 31),
             'company_id': self.env.company.id,
         })
-
-        self._generate_leave(datetime(2025, 5, 8), datetime(2025, 5, 8), 'l10n_hk_hr_payroll.holiday_type_hk_annual_leave')
+        hk_annual_leave_allocation = self.env['hr.leave.allocation'].create({
+            'name': 'HK Annual Leave Allocation',
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_hk_leave_type_annual_leave').id,
+            'number_of_days': 10,
+            'employee_id': self.employee.id,
+            'state': 'confirm',
+            'date_from': '2025-01-01',
+        })
+        hk_annual_leave_allocation.action_approve()
+        self._generate_leave(datetime(2025, 5, 8), datetime(2025, 5, 8), self.env.ref('hr_holidays.l10n_hk_leave_type_annual_leave'))
         payslip = self._generate_payslip(
             date(2025, 5, 1),
             date(2025, 5, 1) + relativedelta(day=31),
