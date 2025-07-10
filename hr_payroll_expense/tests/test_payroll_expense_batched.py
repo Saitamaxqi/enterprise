@@ -104,15 +104,15 @@ class TestPayrollExpenseBatched(TestPayrollExpense):
         expenses_lines_to_reconcile = expenses_lines_to_reconcile.sorted('balance')
         self.assertRecordValues(reconciliation_lines.sorted('amount'), [
             {'amount': 1000.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[9]},
-            {'amount': 1001.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[8]},
-            {'amount': 1002.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[7]},
-            {'amount': 1003.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[6]},
-            {'amount': 1004.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[5]},
-            {'amount': 1005.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[4]},
-            {'amount': 1006.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[3]},
-            {'amount': 1007.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[2]},
-            {'amount': 1008.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[1]},
-            {'amount': 1009.0,  'debit_move_id': misc_move_lines.ids[1],     'credit_move_id': expenses_lines_to_reconcile.ids[0]},
+            {'amount': 1001.0,  'debit_move_id': misc_move_lines.ids[2],     'credit_move_id': expenses_lines_to_reconcile.ids[8]},
+            {'amount': 1002.0,  'debit_move_id': misc_move_lines.ids[3],     'credit_move_id': expenses_lines_to_reconcile.ids[7]},
+            {'amount': 1003.0,  'debit_move_id': misc_move_lines.ids[4],     'credit_move_id': expenses_lines_to_reconcile.ids[6]},
+            {'amount': 1004.0,  'debit_move_id': misc_move_lines.ids[5],     'credit_move_id': expenses_lines_to_reconcile.ids[5]},
+            {'amount': 1005.0,  'debit_move_id': misc_move_lines.ids[6],     'credit_move_id': expenses_lines_to_reconcile.ids[4]},
+            {'amount': 1006.0,  'debit_move_id': misc_move_lines.ids[7],     'credit_move_id': expenses_lines_to_reconcile.ids[3]},
+            {'amount': 1007.0,  'debit_move_id': misc_move_lines.ids[8],     'credit_move_id': expenses_lines_to_reconcile.ids[2]},
+            {'amount': 1008.0,  'debit_move_id': misc_move_lines.ids[9],     'credit_move_id': expenses_lines_to_reconcile.ids[1]},
+            {'amount': 1009.0,  'debit_move_id': misc_move_lines.ids[10],     'credit_move_id': expenses_lines_to_reconcile.ids[0]},
             {'amount': 10045.0, 'debit_move_id': payslips_lines_to_reconcile.id, 'credit_move_id': misc_move_lines.ids[0]},
         ])
 

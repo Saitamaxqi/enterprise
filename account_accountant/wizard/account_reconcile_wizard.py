@@ -624,23 +624,33 @@ class AccountReconcileWizard(models.TransientModel):
     def create_transfer(self):
         """ Create transfer move.
         We transfer lines squashed by partner and by currency to keep the partner ledger correct.
+        By default, the source line and the destination line of each transfer are linked to the same partner.
+        However, it can happen that the moves that are being reconciled together come from different partners
+        (e.g. reconciling an invoice of Partner X with a bill of Parnter Y).
+        In that case, one of the transfer lines should be set to the other partner.
+        Otherwise, the partner ledger will be wrong for both users.
         """
         self.ensure_one()
-        # we create one transfer per partner to keep
         line_ids = []
         lines_to_transfer = self.move_line_ids.filtered(lambda line: line.account_id == self.transfer_from_account_id)
+        # The lines that are not transferred will be used to determine the partners of the destination lines
+        other_lines = self.move_line_ids.filtered(lambda line: line.account_id == self.reco_account_id)
+        # Default dict for the destination lines. It contains the inverse of the source lines
+        # {(partner, currency, sign): {'balance': float, 'amount_currency': float}}
+        default_destination_data = dict()
+        # Dict generated from the lines linked to the reconcile model.
+        # It is splitted by partner and represents the possible partners and the amount max that can be used
+        # for the destination lines.
+        # {(currency, sign): {(partner): {'balance': float, 'amount_currency': float}}}
+        amounts_by_partner = defaultdict(lambda: defaultdict(lambda: defaultdict(float)))
+        # Final dict containing the data from which the destination lines will be created
+        # {(partner, currency, sign): {'balance': float, 'amount_currency': float}}
+        destination_data = defaultdict(lambda: defaultdict(float))
+
         for (partner, currency), lines_to_transfer_partner in groupby(lines_to_transfer, lambda l: (l.partner_id, l.currency_id)):
             amount = sum(line.amount_residual for line in lines_to_transfer_partner)
             amount_currency = sum(line.amount_residual_currency for line in lines_to_transfer_partner)
             line_ids += [
-                Command.create({
-                    'name': _('Transfer from %s', self.transfer_from_account_id.display_name),
-                    'account_id': self.reco_account_id.id,
-                    'partner_id': partner.id,
-                    'currency_id': currency.id,
-                    'amount_currency': amount_currency,
-                    'balance': amount,
-                }),
                 Command.create({
                     'name': _('Transfer to %s', self.reco_account_id.display_name),
                     'account_id': self.transfer_from_account_id.id,
@@ -648,6 +658,84 @@ class AccountReconcileWizard(models.TransientModel):
                     'currency_id': currency.id,
                     'amount_currency': -amount_currency,
                     'balance': -amount,
+                }),
+            ]
+            sign = -1 if amount < 0 else 1
+            # By default, the partner of the destination line will be the same than the one of the source line.
+            # As the transfer move should be balanced, the amounts defined here represent the total amount that
+            # will be in the destination lines.
+            # They may be split between several partners though.
+            default_destination_data[partner, currency, sign] = {
+                'balance': amount,
+                'amount_currency': amount_currency,
+            }
+        # Run through the lines linked to the reconcile account to determine the possible partners and amounts for the destination
+        # lines of the transfer
+        for (partner, currency), lines_to_transfer_partner in groupby(other_lines, lambda l: (l.partner_id, l.currency_id)):
+            amount = -sum(line.amount_residual for line in lines_to_transfer_partner)
+            amount_currency = -sum(line.amount_residual_currency for line in lines_to_transfer_partner)
+            sign = -1 if amount < 0 else 1
+            # If the partner, currency and sign of the amounts match one of the default data, it is kept for the destination lines.
+            # The amounts will be adapted with the remaining amounts.
+            if (partner, currency, sign) in default_destination_data:
+                default_amount = default_destination_data[partner, currency, sign]['balance']
+                default_amount_currency = default_destination_data[partner, currency, sign]['amount_currency']
+                amount_to_transfer = min(abs(amount), abs(default_amount)) * sign
+                amount_currency_to_transfer = min(abs(amount_currency), abs(default_amount_currency)) * sign
+                destination_data[partner, currency, sign] = {
+                    'balance': amount_to_transfer,
+                    'amount_currency': amount_currency_to_transfer,
+                }
+                default_amount -= amount_to_transfer
+                default_amount_currency -= amount_currency_to_transfer
+                amount -= amount_to_transfer
+                amount_currency -= amount_currency_to_transfer
+                if not currency.is_zero(abs(default_amount)):
+                    # Update the default amounts with the remaining amounts that have not been kept
+                    default_destination_data[partner, currency, sign] = {
+                        'balance': default_amount,
+                        'amount_currency': default_amount_currency,
+                    }
+                else:
+                    # Delete the key if there is no remaining amount
+                    del default_destination_data[partner, currency, sign]
+            if not currency.is_zero(abs(amount)):
+                amounts_by_partner[currency, sign][partner] = {
+                    'balance': amount,
+                    'amount_currency': amount_currency,
+                }
+        # Run through what's left of the default data and try to find a partner that matches the currency and sign.
+        # If none is found, the partner from the source line is used.
+        for (partner, currency, sign) in default_destination_data:
+            amount = default_destination_data[partner, currency, sign]['balance']
+            amount_currency = default_destination_data[partner, currency, sign]['amount_currency']
+            # Loop on all the partners with the same currency and sign
+            for p in amounts_by_partner[currency, sign]:
+                if amount == 0:
+                    break
+                amount_to_transfer = min(abs(amount), abs(amounts_by_partner[currency, sign][p]['balance'])) * sign
+                amount_currency_to_transfer = min(abs(amount_currency), abs(amounts_by_partner[currency, sign][p]['amount_currency'])) * sign
+                amount -= amount_to_transfer
+                amount_currency -= amount_currency_to_transfer
+
+                destination_data[p, currency, sign]['balance'] += amount_to_transfer
+                destination_data[p, currency, sign]['amount_currency'] += amount_currency_to_transfer
+                amounts_by_partner[currency, sign][p]['balance'] -= amount_to_transfer
+                amounts_by_partner[currency, sign][p]['amount_currency'] -= amount_currency_to_transfer
+            # Residual amount that couldn't be associated to another partner keeps the partner from the source line
+            if not currency.is_zero(abs(amount)):
+                destination_data[partner, currency, sign]['balance'] += amount
+                destination_data[partner, currency, sign]['amount_currency'] += amount_currency
+        # Create the destination lines
+        for (partner, currency, sign) in destination_data:
+            line_ids += [
+                Command.create({
+                    'name': _('Transfer from %s', self.transfer_from_account_id.display_name),
+                    'account_id': self.reco_account_id.id,
+                    'partner_id': partner.id,
+                    'currency_id': currency.id,
+                    'amount_currency': destination_data[partner, currency, sign]['amount_currency'],
+                    'balance': destination_data[partner, currency, sign]['balance'],
                 }),
             ]
         transfer_vals = {

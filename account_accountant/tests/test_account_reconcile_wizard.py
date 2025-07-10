@@ -823,3 +823,33 @@ class TestAccountReconcileWizard(AccountTestInvoicingCommon):
              'balance': 250.0, 'amount_currency': 250.0, 'currency_id': self.company_currency.id},
         ]
         self.assertWizardReconcileValues(line_1 + line_2, wizard_input_values, expected_values, expected_transfer_values=expected_transfer_values)
+
+    def test_reconcile_transfer_with_different_partners(self):
+        """ When balance is 0, and we need a transfer, we do the transfer+reconcile silently. """
+        partner_a = self.env['res.partner'].create({'name': 'Test Partner A'})
+        partner_b = self.env['res.partner'].create({'name': 'Test Partner B'})
+        partner_c = self.env['res.partner'].create({'name': 'Test Partner C'})
+        # when reconciling journal items on 2 different accounts from 2 different partners that balance themselves,
+        # all journal items should be fully reconciled together
+        line_a1 = self.create_line_for_reconciliation(1000.0, 1000.0, self.company_currency, '2016-01-01', account_1=self.receivable_account, partner=partner_a)
+        line_b1 = self.create_line_for_reconciliation(-1000.0, -1000.0, self.company_currency, '2016-01-01', account_1=self.payable_account, partner=partner_b)
+        lines = line_a1 + line_b1
+        lines.action_reconcile()
+        transfer_lines = lines.full_reconcile_id.reconciled_line_ids.filtered(lambda line: line.id not in lines.ids)
+        self.assertRecordValues(transfer_lines, [
+            {'balance': -1000.0, 'account_id': self.receivable_account.id, 'partner_id': partner_a.id},
+            {'balance': 1000.0, 'account_id': self.payable_account.id, 'partner_id': partner_b.id},
+        ])
+        # even if the journal items on one of the accounts are for several different partners,
+        # the journal items should be fully reconciled together
+        line_a2 = self.create_line_for_reconciliation(1000.0, 1000.0, self.company_currency, '2016-01-01', account_1=self.receivable_account, partner=partner_a)
+        line_b2 = self.create_line_for_reconciliation(-600.0, -600.0, self.company_currency, '2016-01-01', account_1=self.payable_account, partner=partner_b)
+        line_c2 = self.create_line_for_reconciliation(-400.0, -400.0, self.company_currency, '2016-01-01', account_1=self.payable_account, partner=partner_c)
+        lines = line_a2 + line_b2 + line_c2
+        lines.action_reconcile()
+        transfer_lines = lines.full_reconcile_id.reconciled_line_ids.filtered(lambda line: line.id not in lines.ids)
+        self.assertRecordValues(transfer_lines, [
+            {'balance': -1000.0, 'account_id': self.receivable_account.id, 'partner_id': partner_a.id},
+            {'balance': 600.0, 'account_id': self.payable_account.id, 'partner_id': partner_b.id},
+            {'balance': 400.0, 'account_id': self.payable_account.id, 'partner_id': partner_c.id},
+        ])
