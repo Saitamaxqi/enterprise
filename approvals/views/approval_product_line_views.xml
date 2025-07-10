@@ -27,7 +27,7 @@
         <field name="arch" type="xml">
             <list editable="bottom" string="Products">
                 <field name="company_id" column_invisible="True"/>
-                <field name="product_id" required="parent.has_product == 'required'" context="{'search_default_filter_to_purchase': 1, 'search_view_ref': 'product.product_template_search_view'}"/>
+                <field name="product_id" required="parent.has_product == 'required'" context="{'search_default_filter_to_purchase': 1}"/>
                 <field name="description"/>
                 <field name="quantity" column_invisible="parent.has_quantity == 'no'" required="parent.has_quantity == 'required' and parent.request_status != 'new'"/>
                 <field name="product_uom_id" groups="uom.group_uom" widget="many2one_uom"
