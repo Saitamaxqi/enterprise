@@ -174,6 +174,7 @@ export class ReportEditorWysiwyg extends Component {
                 },
                 reportResModel: this.reportEditorModel.reportResModel,
                 allowMediaDialogVideo: false,
+                allowImageTransform: false,
             },
             this.env.services
         );
