@@ -109,8 +109,11 @@ class QualityCheckWizard(models.TransientModel):
                 from_failure_form=False,
                 default_qty_tested=check_id.qty_to_test,
             )
-        if self.env.context.get('button_validate_picking_ids', False):
-            self.with_context(clean_context(self.env.context)).check_ids.picking_id.button_validate()
+        picking_ids_to_validate = self.env.context.get('button_validate_picking_ids')
+        if picking_ids_to_validate:
+            validate_action = self.env['stock.picking'].browse(picking_ids_to_validate).with_context(clean_context(self.env.context)).button_validate()
+            if validate_action is not True and validate_action.get('xml_id') != 'quality_control.action_quality_check_wizard':
+                return validate_action
         return action
 
     def action_generate_previous_window(self):

@@ -1331,3 +1331,51 @@ class TestQualityCheck(TestQualityCommon):
         self.assertRecordValues(self.receipt.check_ids, [
             {'quality_state': 'pass', 'product_id': self.product.id, 'qty_line': 2},
         ])
+
+    def test_receipt_validation_triggers_serial_number_label_print(self):
+        """
+        Ensure that the 'do_multi_print' action is trigger after quality check wizard validation
+        when the operation's auto_print_lot_labels is activate and Serial Number is set on the product
+        """
+        self.env.user.group_ids = [Command.link(self.env.ref('stock.group_production_lot').id)]
+        picking_type = self.env['stock.picking.type'].browse(self.picking_type_id)
+        picking_type.auto_print_lot_labels = True
+        self.product.write({
+            'is_storable': True,
+            'tracking': 'serial',
+        })
+        self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(picking_type.id)],
+            'product_ids': [Command.link(self.product.id)],
+            'measure_on': 'product',
+            'test_type_id': self.ref('quality_control.test_type_passfail')
+        })
+        receipts = self.env['stock.picking'].create([{
+            'picking_type_id': picking_type.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+            'move_ids': [Command.create({
+                'product_id': product.id,
+                'product_uom_qty': 1,
+                'product_uom': product.uom_id.id,
+            })]
+        } for product in [self.product, self.product_2]])
+        receipts[0].action_confirm()
+
+        ml = receipts[0].move_ids.move_line_ids
+        ml.write({
+            'quantity': 1,
+            'lot_name': '1457',
+        })
+        self.assertEqual(ml.lot_name, '1457')
+
+        action_quality_check = Form.from_action(self.env, receipts.button_validate()).save()
+        validate_res = action_quality_check.do_pass()
+
+        self.assertEqual(validate_res.get('type'), 'ir.actions.client')
+        self.assertEqual(validate_res.get('tag', False), 'do_multi_print')
+
+        self.assertRecordValues(receipts, [
+            {'state': 'done'},
+            {'state': 'done'}
+        ])
