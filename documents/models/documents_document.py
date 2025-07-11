@@ -870,7 +870,7 @@ class DocumentsDocument(models.Model):
 
     @api.model
     def get_previewable_file_extensions(self):
-        return {'bmp', 'mp4', 'mp3', 'png', 'jpg', 'jpeg', 'pdf', 'gif', 'txt', 'wav'}
+        return {'bmp', 'mp3', 'png', 'jpg', 'jpeg', 'pdf', 'gif', 'txt', 'wav'}
 
     def action_move_folder(self, target, before_folder_id=False):
         """Move one folder to the given position and update its sequence.
