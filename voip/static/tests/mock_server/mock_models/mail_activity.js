@@ -66,11 +66,11 @@ export class MailActivity extends mailModels.MailActivity {
     }
 
     /** @param {number[]} ids */
-    _to_store(ids, store) {
+    _to_store(store) {
         super._to_store(...arguments);
-        for (const activity of this.browse(ids)) {
+        for (const activity of this) {
             if (activity.phone) {
-                store.add(this.browse(activity.id), {
+                store._add_record_fields(this.browse(activity.id), {
                     phone: activity.phone,
                 });
             }

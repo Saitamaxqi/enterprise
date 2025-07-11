@@ -16,17 +16,20 @@ export class DiscussChannel extends mailModels.DiscussChannel {
      * @override
      * @type {typeof mailModels.DiscussChannel["prototype"]["_to_store"]}
      */
-    _to_store(ids, store) {
+    _to_store(store, fields) {
         /** @type {import("mock_models").ResPartner} */
         const ResPartner = this.env["res.partner"];
 
         super._to_store(...arguments);
+        if (fields && Array.isArray(fields) && fields.length) {
+            return;
+        }
         const channels = this._filter([
-            ["id", "in", ids],
+            ["id", "in", this.map((channel) => channel.id)],
             ["channel_type", "=", "whatsapp"],
         ]);
         for (const channel of channels) {
-            store.add(this.browse(channel.id), {
+            store._add_record_fields(this.browse(channel.id), {
                 whatsapp_channel_valid_until: channel.whatsapp_channel_valid_until || false,
                 whatsapp_partner_id: mailDataHelpers.Store.one(
                     ResPartner.browse(channel.whatsapp_partner_id),

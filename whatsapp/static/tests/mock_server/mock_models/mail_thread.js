@@ -7,8 +7,8 @@ export class MailThread extends mailModels.MailThread {
      * @override
      * @type {typeof mailModels.MailThread["prototype"]["_thread_to_store"]}
      */
-    _thread_to_store(ids, store, fields, request_list) {
-        const kwargs = getKwArgs(arguments, "ids", "store", "fields", "request_list");
+    _thread_to_store(store, fields, request_list) {
+        const kwargs = getKwArgs(arguments, "store", "fields", "request_list");
         request_list = kwargs.request_list;
 
         /** @type {import("mock_models").WhatsAppTemplate} */
@@ -16,7 +16,7 @@ export class MailThread extends mailModels.MailThread {
         super._thread_to_store(...arguments);
         if (request_list) {
             store.add(
-                this.env[this._name].browse(ids[0]),
+                this.env[this._name].browse(this[0].id),
                 {
                     canSendWhatsapp:
                         WhatsAppTemplate.search_count([
