@@ -22,7 +22,7 @@ class WebsiteSaleStockRenting(WebsiteSaleRenting):
             **super().renting_product_availabilities(product_id, min_date, max_date),
             'preparation_time': product_sudo.preparation_time
         }
-        if not product_sudo.allow_out_of_stock_order:
+        if product_sudo.is_storable and not product_sudo.allow_out_of_stock_order:
             result['renting_availabilities'] = product_sudo._get_availabilities(
                 fields.Datetime.to_datetime(min_date),
                 fields.Datetime.to_datetime(max_date),
