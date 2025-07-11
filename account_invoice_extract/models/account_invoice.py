@@ -130,7 +130,7 @@ class AccountMove(models.Model):
         return _("You cannot send a expense that is not in draft state!")
 
     def is_indian_taxes(self):
-        l10n_in = self.env['ir.module.module'].search([('name', '=', 'l10n_in')])
+        l10n_in = self.env['ir.module.module'].sudo().search([('name', '=', 'l10n_in')])
         return self.company_id.country_id.code == "IN" and l10n_in and l10n_in.state == 'installed'
 
     def _get_user_infos(self):
