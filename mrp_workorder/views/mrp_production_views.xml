@@ -69,6 +69,8 @@
                     <field name="picking_type_id"/>
                     <filter string="MO Pending" name="waiting" domain="[('reservation_state', '=', 'waiting')]"/>
                     <filter string="MO Ready" name="filter_ready" domain="[('reservation_state', '=', 'assigned')]"/>
+                    <separator/>
+                    <filter string="This Station" name="shop_floor_this_station" groups="mrp.group_mrp_routings"/>
                </search>
             </field>
         </record>
