@@ -157,6 +157,11 @@ export class MrpDisplayAction extends Component {
                     action_id: this.props.action.id,
                 }
             );
+            context["limit"] = parseInt(
+                await this.orm.call("ir.config_parameter", "get_param", [
+                    "mrp_workorder.wo_shop_floor_maximum_card_count",
+                ])
+            );
             this.withSearchProps = {
                 resModel: this.resModel,
                 searchViewArch: searchViews.views.search.arch,

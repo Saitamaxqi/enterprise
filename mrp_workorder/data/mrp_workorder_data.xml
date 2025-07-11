@@ -31,5 +31,10 @@
         <record id="base.group_user" model="res.groups">
             <field name="implied_ids" eval="[(4, ref('mrp_workorder.group_mrp_wo_shop_floor'))]"/>
         </record>
+
+        <record model="ir.config_parameter" id="wo_shop_floor_maximum_card_count" forcecreate="False">
+            <field name="key">mrp_workorder.wo_shop_floor_maximum_card_count</field>
+            <field name="value">40</field>
+        </record>
     </data>
 </odoo>
