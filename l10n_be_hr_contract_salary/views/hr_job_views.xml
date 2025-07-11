@@ -50,11 +50,11 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='department_id']" position="after">
-                <field name="l10n_be_contract_ip"/>
-                <field name="l10n_be_contract_withholding_taxes_exemption" />
+                <field name="l10n_be_contract_ip" optional="hide"/>
+                <field name="l10n_be_contract_withholding_taxes_exemption" optional="hide"/>
             </xpath>
             <xpath expr="//list" position="attributes">
-                <attribute name="editable">bottom</attribute>
+                <attribute name="multi_edit">1</attribute>
             </xpath>
         </field>
     </record>
