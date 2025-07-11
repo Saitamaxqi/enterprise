@@ -390,14 +390,12 @@ class WhatsappMessage(models.Model):
             message_type = "comment"
         # diffrent user from any model: warn chat is about to be moved into a new conversation
         else:
-            record_name = self.mail_message_id.record_name
             if self.mail_message_id.model and self.mail_message_id.res_id:
-                if not record_name:
-                    record_name = self.env[self.mail_message_id.model].browse(self.mail_message_id.res_id).display_name
+                record_name = self.mail_message_id.record_name
                 url = f"{self.get_base_url()}/odoo/{self.mail_message_id.model}/{self.mail_message_id.res_id}"
                 record_link = f"<a target='_blank' href='{url}'>{escape(record_name)}</a>"
             else:
-                record_link = record_name or _("another document")
+                record_link = _("another document")
             body = Markup(
                 _("A new template was sent on %(record_link)s.<br>"
                   "Future replies will be transferred to a new chat.",

@@ -54,9 +54,9 @@ class MailThread(models.AbstractModel):
         if not pids:
             return
 
-        self._notify_by_ocn_send(message, pids, msg_vals=msg_vals)
+        self._notify_by_ocn_send(message, pids, msg_vals=msg_vals, **kwargs)
 
-    def _notify_by_ocn_send(self, message, partner_ids, msg_vals=False):
+    def _notify_by_ocn_send(self, message, partner_ids, msg_vals=False, **kwargs):
         """ Send the notification to a list of partners
 
         :param message: current mail.message record
@@ -71,7 +71,10 @@ class MailThread(models.AbstractModel):
         ])
         if receiver_ids:
             endpoint = self.env['res.config.settings']._get_endpoint()
-            payload = self._notify_by_ocn_prepare_payload(message, receiver_ids, msg_vals=msg_vals)
+            payload = self._notify_by_ocn_prepare_payload(
+                message, receiver_ids, msg_vals=msg_vals,
+                force_record_name=kwargs.get('force_record_name', False),
+            )
 
             # prepare chunks
             chunks = []
@@ -106,7 +109,8 @@ class MailThread(models.AbstractModel):
                 except Exception as e:
                     _logger.error('An error occurred while contacting the ocn server: %s', e)
 
-    def _notify_by_ocn_prepare_payload(self, message, receiver_ids, msg_vals=False):
+    def _notify_by_ocn_prepare_payload(self, message, receiver_ids, msg_vals=False,
+                                       force_record_name=False):
         """Returns dictionary containing message information for mobile device.
         This info will be delivered to mobile device via Google Firebase Cloud
         Messaging (FCM). And it is having limit of 4000 bytes (4kb)
@@ -117,7 +121,7 @@ class MailThread(models.AbstractModel):
         body = msg_vals['body'] if 'body' in msg_vals else message.body
         model = msg_vals['model'] if 'model' in msg_vals else message.model
         res_id = msg_vals['res_id'] if 'res_id' in msg_vals else message.res_id
-        record_name = msg_vals['record_name'] if 'record_name' in msg_vals else message.record_name
+        record_name = force_record_name or message.record_name
         subject = msg_vals['subject'] if 'subject' in msg_vals else message.subject
 
         payload = {

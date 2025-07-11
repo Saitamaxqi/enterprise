@@ -232,8 +232,6 @@ class DiscussChannel(models.Model):
                 url = Markup('{base_url}/odoo/{model}/{res_id}').format(
                     base_url=self.get_base_url(), model=related_message.model, res_id=related_message.res_id)
                 related_record_name = related_message.record_name
-                if not related_record_name:
-                    related_record_name = self.env[related_message.model].browse(related_message.res_id).display_name
                 channel.message_post(
                     body=Markup('<p>{info}<a target="_blank" href="{url}">{related_record_name}</a></p>').format(
                         info=info, url=url, related_record_name=related_record_name),

@@ -211,9 +211,9 @@ class TestFrontDesk(MailCase, SMSCase):
         with (self.mock_mail_gateway(), self.mockSMSGateway()):
             visitor1 = self.env['frontdesk.visitor'].create(visitor_data)
 
-        visitor_messages = visitor1.message_ids.filtered(lambda m: m.model == 'frontdesk.visitor' and
-            m.record_name == visitor1.name)
+        visitor_messages = visitor1.message_ids.filtered(lambda m: m.message_type in ('comment', 'sms'))
         self.assertEqual(len(visitor_messages), 2, "Visitor should receive 1 email and 1 SMS")
+        self.assertEqual(set(visitor_messages.mapped('message_type')), {'comment', 'sms'}, "Visitor should receive 1 email and 1 SMS")
 
 
 @tagged('post_install', '-at_install')  # Run this test after all modules are installed

@@ -98,7 +98,6 @@ class TestPushNotification(SMSCommon):
             partner_ids=self.user_email.partner_id.ids,
             body="Test",
             subject="Test Activity",
-            record_name=self.record_simple._name,
         )
         jsonrpc.assert_not_called()
 
@@ -106,7 +105,6 @@ class TestPushNotification(SMSCommon):
             partner_ids=self.user_inbox.partner_id.ids,
             body="Test message send via OCN",
             subject="Test Activity",
-            record_name=self.record_simple._name,
         )
         jsonrpc.assert_called_once()
         self.assertEqual(jsonrpc.call_args[1]['params']['data']['model'], 'mail.test.simple')

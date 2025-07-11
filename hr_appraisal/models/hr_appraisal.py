@@ -273,18 +273,13 @@ class HrAppraisal(models.Model):
                     'auto_delete': True,
                     'email_to': employee.work_email
                 }
-                template_ctx = {
-                    'model_description': self.env['ir.model']._get('hr.appraisal').display_name,
-                    'message': self.env['mail.message'].sudo().new(dict(body=mail_values['body_html'], record_name=_("Appraisal Request"))),
-                    'company': self.env.company,
-                    'record': self,
-                }
-                body = self.env['ir.qweb']._render('mail.mail_notification_light', template_ctx, minimal_qcontext=True, raise_if_not_found=False)
-                if body:
-                    mail_values['body_html'] = self.env['mail.render.mixin']._replace_local_links(body)
-                else:
-                    _logger.warning('QWeb template mail.mail_notification_light not found when sending appraisal confirmed mails. Sending without layouting.')
-
+                mail_values['body_html'] = self.env['mail.render.mixin']._render_encapsulate(
+                    'mail.mail_notification_light', mail_values['body_html'],
+                    context_record=appraisal,
+                    add_context={
+                        'record_name': _("Appraisal Request"),
+                    },
+                )
                 self.env['mail.mail'].sudo().create(mail_values)
 
                 from_cron = 'from_cron' in self.env.context
