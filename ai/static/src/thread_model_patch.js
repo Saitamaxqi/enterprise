@@ -25,7 +25,6 @@ patch(Thread.prototype, {
             } catch (error) {
                 if (error instanceof RPCError) {
                     await orm.call("ai.agent", "post_error_message", [agent.id], {
-                        discuss_channel_id: this.id,
                         error_message:
                             error.data?.message ||
                             _t("An error occurred while generating the AI response."),

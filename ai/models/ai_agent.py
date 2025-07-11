@@ -377,6 +377,19 @@ class AIAgent(models.Model):
         if channel:
             channel.sudo().unlink()
 
+    def _post_ai_response(self, channel, message):
+        formatted_message = message
+        if markdown:
+            raw_html = markdown(message, extras=['fenced-code-blocks', 'tables', 'strike'])
+            formatted_message = html_sanitize(raw_html)
+        channel.sudo().message_post(
+            author_id=self.partner_id.id,
+            body=formatted_message,
+            message_type='comment',
+            silent=True,
+            subtype_xmlid='mail.mt_comment'
+        )
+
     def _get_openai_compatible_schema(self, schema):
         input_schema = copy.deepcopy(schema["parameters"])
         input_schema_properties = input_schema["properties"]
