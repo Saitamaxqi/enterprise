@@ -189,7 +189,40 @@ class AccountBankStatementLine(models.Model):
             # If some statement lines couldn't be processed because of the cron limits, manually re-trigger the cron
             self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
 
+    def _invoice_matching_post_process(self, st_line, amls):
+        # no valid candidates found yet, based on payment_reference, try to match on the following criteria:
+        # 1) there is a single invoice with the residual amount matching, for the partner
+        # 2) the amount correspond to the discounted amount and the payment date is prior to the discount date
+        # 3) there is a small difference, in the allowed error margin (3%)
+        candidate_amls = self.env['account.move.line']
+        # TODO now that the complex regex stuff is gone, try to remove totally the post process and benchmark when it is done in the SQL query
+        for aml in amls:
+            if (aml.company_currency_id == st_line.currency_id and (
+                    aml.amount_residual == st_line.amount
+                    or (aml.discount_balance == st_line.amount and st_line.date <= aml.discount_date)
+                    or (aml.amount_residual * 0.97 <= st_line.amount <= aml.amount_residual * 1.03)
+                    )
+                ) or (
+                aml.currency_id == st_line.currency_id and (
+                    aml.amount_residual_currency == st_line.amount
+                    or (aml.discount_amount_currency == st_line.amount and st_line.date <= aml.discount_date)
+                    or (aml.amount_residual_currency * 0.97 <= st_line.amount <= aml.amount_residual_currency * 1.03)
+                    )
+                ) or (
+                aml.currency_id == st_line.foreign_currency_id and (
+                    aml.amount_residual_currency == st_line.amount_currency
+                    or (aml.discount_amount_currency == st_line.amount_currency and st_line.date <= aml.discount_date)
+                    or (aml.amount_residual_currency * 0.97 <= st_line.amount_currency <= aml.amount_residual_currency * 1.03)
+                    )
+                ):
+                candidate_amls += aml
+
+        # if there's more than 1 possible match, we don't reconcile
+        if len(candidate_amls) == 1:
+            return candidate_amls
+
     def _try_auto_reconcile_statement_lines(self, company_id=None):
+        st_move_ids = self.mapped('move_id').ids
         # The field `cron_last_check` will be written on all processed lines that requires them to be protected against
         # concurrent update to avoid the whole transaction to be rolled back.
         self.lock_for_update()
@@ -255,241 +288,147 @@ class AccountBankStatementLine(models.Model):
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             st_line.partner_id = mapped_partner_id
 
+        # get all reconciliable accounts that can be used in the bank reconciliation (invoice & payment matching)
+        # note that we:
+        #   * include reconciliable accounts that aren't of receivable/paybale type to manage the outstanding payment accounts
+        #   * exclude suspense accounts from bank journals because it wouldn't make sense as we use the suspense accounts to know
+        #     when an entry has to be processed. If we reconcile it from another way, it would still be considered as unprocessed
+        #     in the reconciliation widget.
+        account_ids = self.env['account.account'].search([('reconcile', '=', True), ('account_type', 'not in', ('asset_cash', 'liability_credit_card'))])
+        account_ids -= self.env['account.journal'].search([('type', 'in', ['bank', 'cash', 'credit'])]).suspense_account_id
+        account_ids = account_ids.ids
+
         # global flushing of tables that should not be updated between the different SQL queries
         self.env['account.account'].flush_model(['account_type', 'active'])
         self.env['account.move'].flush_model(['date', 'amount_total'])
-
-        # First try to match invoices and payments where we can't be wrong:
-        # Either the total residual for the partner is equal to the statement line amount
-        # Either the statement line is referencing an invoice
-        self.env['account.move.line'].flush_model([
-            'account_id', 'partner_id', 'company_id',
-            'amount_residual', 'reconciled', 'ref', 'move_name',
-        ])
-        self.flush_recordset(['payment_ref', 'partner_id', 'company_id'])
-        self.env.cr.execute(SQL("""
-            SELECT st_line.id AS st_line_id,
-                   ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS all_aml_ids,
-                   SUM(aml.amount_residual) AS total_residual,
-                   ARRAY_AGG(aml.id ORDER BY aml.id ASC) FILTER (
-                       WHERE (
-                          -- First Rule, check if there is payment ref like SO|INV|BILL|...xxxx/xxx-yy in aml.ref
-                          aml.ref ~ ('\\m(' || array_to_string((
-                            SELECT array_agg(regexp_replace(match[1], '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g'))
-                            FROM regexp_matches(st_line.payment_ref, '\\w{2,5}/?\\d{4}/\\d+(?:/\\d+)?(?:-\\d+)?', 'g') AS match
-                          ), '|') || ')\\M')
-                          -- Second Rule, check for full match between aml ref and st_line label
-                          OR (LENGTH(aml.ref) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(aml.ref, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)'))
-                          -- Third Rule, check if there is a word longer than 16 characters matching both fields
-                          OR aml.ref ~ ('\\m(' || array_to_string((
-                            SELECT array_agg(regexp_replace(match[1], '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g'))
-                            FROM regexp_matches(st_line.payment_ref, '\\S{16,}', 'g') AS match
-                          ), '|') || ')\\M')
-                          -- Fourth Rule, full match with move_name
-                          OR (LENGTH(aml.move_name) >= 7 AND st_line.payment_ref ~ ('\\m' || aml.move_name || '\\M'))
-                          -- Fifth Rule, full match with payment_ref on move
-                          OR (LENGTH(move.payment_reference) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(move.payment_reference, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)')))
-                   ) AS ref_aml_ids
-              FROM account_bank_statement_line st_line, account_move_line aml
-         LEFT JOIN account_move move ON aml.move_id = move.id
-         LEFT JOIN account_account acc ON aml.account_id = acc.id
-             WHERE CASE WHEN st_line.partner_id IS NOT NULL
-              THEN (
-                  aml.partner_id = st_line.partner_id
-                  AND st_line.partner_id IS NOT NULL
-              )
-              ELSE (
-                  st_line.partner_id IS NULL
-                  -- To avoid matching too blindly if we don't have a partner on the statement line, so in this case,
-                  -- we want to apply the conditions on all_aml_ids as well
-                  AND (
-                    aml.ref ~ ('\\m(' || array_to_string((
-                      SELECT array_agg(regexp_replace(match[1], '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g'))
-                      FROM regexp_matches(st_line.payment_ref, '\\w{2,5}/?\\d{4}/\\d+(?:/\\d+)?(?:-\\d+)?', 'g') AS match
-                    ), '|') || ')\\M')
-                    OR (LENGTH(aml.ref) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(aml.ref, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)'))
-                    OR aml.ref ~ ('\\m(' || array_to_string((
-                      SELECT array_agg(regexp_replace(match[1], '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g'))
-                      FROM regexp_matches(st_line.payment_ref, '\\S{16,}', 'g') AS match
-                    ), '|') || ')\\M')
-                    OR (LENGTH(aml.move_name) >= 7 AND st_line.payment_ref ~ ('\\m' || aml.move_name || '\\M'))
-                    OR (LENGTH(move.payment_reference) >= 7 AND st_line.payment_ref ~ ('(^|\\s)' || regexp_replace(move.payment_reference, '([\\\\.+*?\\[\\]^$(){}=!<>|:])', '\\\\\\1', 'g') || '(\\s|$)')))
-              )
-               END
-               AND st_line.move_id != aml.move_id
-               AND aml.company_id = st_line.company_id
-               AND aml.reconciled = false
-               AND acc.reconcile = true
-               AND NOT acc.account_type IN ('asset_cash', 'liability_credit_card')
-               AND acc.active
-               AND ((st_line.amount > 0 and aml.balance > 0) OR (st_line.amount < 0 and aml.balance < 0))
-               AND (aml.parent_state in ('draft', 'posted'))
-               AND st_line.id IN %s
-          GROUP BY st_line.id
-        """, tuple(self.ids)))
-
-        # process then remove matched statement lines
-        processed_st_line_ids = set()
-        lines_to_assign_models_ids = set()
-        for st_line_id, all_aml_ids, total_residual, ref_aml_ids in self.env.cr.fetchall():
-            st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
-            if total_residual == st_line.amount:
-                st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(all_aml_ids)
-            elif ref_aml_ids:
-                ref_amls = self.env['account.move.line'].browse(ref_aml_ids).with_prefetch(self._prefetch_ids)
-
-                # If multiple move lines have the same matching value, we don't want to reconcile them
-                move_refs = ref_amls.move_id.grouped('payment_reference')
-                amls_to_remove = self.env['account.move.line']
-                aml_refs_counter = {word: self.env['account.move.line'] for word in st_line.payment_ref.split(' ')}
-                for aml in ref_amls:
-                    if aml in amls_to_remove:
-                        continue
-
-                    if aml.ref:
-                        # If we have multiple amls with same matching ref, we don't want to reconcile, so we
-                        # apply the same regex as the one in the SQL query
-                        for ref_word in st_line.payment_ref.split(' '):
-                            if ref_word and re.search(rf'(^{re.escape(ref_word)}$|\b{re.escape(ref_word)}\b)', aml.ref):
-                                aml_refs_counter[ref_word] += aml
-                    if aml.move_id.payment_reference and len(move_refs[aml.move_id.payment_reference]) > 1:
-                        amls_to_remove += move_refs[aml.move_id.payment_reference].mapped('line_ids')
-
-                for duplicated_amls in [aml for aml in aml_refs_counter.values() if len(aml) > 1]:
-                    amls_to_remove += duplicated_amls
-                ref_amls -= amls_to_remove
-
-                invoice_matched_total_residual = sum(ref_amls.mapped('amount_residual')) or 0
-                # Exclude move lines to prevent reconciliation when the total residual exceeds the statement line amount
-                for aml in reversed(ref_amls):
-                    if abs(invoice_matched_total_residual - aml.amount_residual) >= abs(st_line.amount):
-                        invoice_matched_total_residual -= aml.amount_residual
-                        ref_amls -= aml
-                    else:
-                        break
-                st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(ref_amls.ids)
-            else:
-                # no valid candidates yet
-                continue
-            processed_st_line_ids.add(st_line_id)
-            if not st_line.currency_id.is_zero(st_line.amount_residual):
-                lines_to_assign_models_ids.add(st_line_id)
-        remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
-        remaining_st_lines = self.filtered(lambda x: x.id not in processed_st_line_ids)
-
-        if lines_to_assign_models_ids:
-            lines_to_assign_models = self.browse(lines_to_assign_models_ids).with_prefetch(self._prefetch_ids)
-            reco_models._apply_reconcile_models(lines_to_assign_models)
-
-        # early return if we already processed everything
-        if not remaining_st_lines:
-            self.write({'cron_last_check': fields.Datetime.now()})
-            return
-
-        # Then try to match invoices and payments with a small tolerance on the different criteria
         self.env['account.move.line'].flush_model([
             'ref', 'move_id', 'move_name', 'account_id', 'partner_id', 'company_id',
             'reconciled', 'company_currency_id', 'amount_residual',
             'currency_id', 'amount_residual_currency',
             'discount_date', 'discount_balance', 'discount_amount_currency',
         ])
-        remaining_st_lines.flush_recordset([
+        self.flush_recordset([
             'move_id', 'partner_id', 'company_id', 'currency_id',
             'amount', 'foreign_currency_id', 'amount_currency', 'payment_ref'
         ])
-        self.env.cr.execute(SQL('''
-             -- Either the partner is set, and
-             SELECT st_line.id AS st_line_id,
-                    MIN(aml.id) AS aml_id
-               FROM account_bank_statement_line st_line
-          LEFT JOIN account_move st_line_move ON st_line.move_id = st_line_move.id,
-                    account_move_line aml
-          LEFT JOIN account_account acc ON aml.account_id = acc.id
-          LEFT JOIN account_move move ON aml.move_id = move.id
-              WHERE aml.partner_id = st_line.partner_id
-                AND aml.move_id != st_line.move_id
-                AND st_line.partner_id IS NOT NULL
-                AND aml.company_id = st_line.company_id
-                AND aml.reconciled = false
-                AND acc.account_type IN ('asset_receivable', 'liability_payable')
-                AND acc.active
-                AND st_line.id IN %s
-                -- we have only one invoice matching the exact amount, even if the payment reference doesn't match
-                -- or the invoice discount amount is the same as the statement line amount and paid in the allowed time limit
-                -- or there is a small difference, in the allowed error margin (3%%)
-                -- or the invoice original amount can be found in the the statement line label (with . or ,)
-                AND (
-                        (
-                            -- in company currency
-                            st_line.currency_id = aml.company_currency_id
-                            AND (
-                               aml.amount_residual = st_line.amount
-                               OR (aml.discount_balance = st_line.amount AND st_line_move.date <= aml.discount_date)
-                               OR (st_line.amount BETWEEN aml.amount_residual * 97/100 AND aml.amount_residual * 103/100)
-                            )
-                        ) OR (
-                            -- in secondary currency: statement currency is the same as the invoice
-                            st_line.currency_id = aml.currency_id
-                            AND (
-                               aml.amount_residual_currency = st_line.amount
-                               OR (aml.discount_amount_currency = st_line.amount AND st_line_move.date <= aml.discount_date)
-                               OR (st_line.amount BETWEEN aml.amount_residual_currency * 97/100 AND aml.amount_residual_currency * 103/100)
-                            )
-                        ) OR (
-                            -- in secondary currency: statement secondary currency is the same as the invoice
-                            st_line.foreign_currency_id = aml.currency_id
-                            AND (
-                                aml.amount_residual_currency = st_line.amount_currency
-                                OR (aml.discount_amount_currency = st_line.amount_currency AND st_line_move.date <= aml.discount_date)
-                                OR (st_line.amount_currency BETWEEN aml.amount_residual_currency * 97/100 AND aml.amount_residual_currency * 103/100)
-                            )
-                        ) OR (
-                            REPLACE(st_line.payment_ref, ',', '.') ILIKE '%%' || TRIM(trailing '0' FROM move.amount_total::TEXT) || '%%'
-                        )
-                )
-           GROUP BY st_line.id
-             HAVING COUNT(*) = 1
 
-            UNION ALL
+        # First try to match invoices and payments where we can't be wrong, using the statement lines payment_ref
+        processed_st_line_ids = set()
+        query = SQL("""
+                SELECT st_line.id,
+                       ARRAY_AGG(word_aml.id) aml_ids,
+                       SUM(word_aml.amount_residual),
+                       word_aml.word matching_word
+                  FROM account_bank_statement_line st_line
+          JOIN LATERAL (
+                        SELECT aml.id, word, aml.ref, aml.amount_residual
+                          FROM account_move_line aml
+                     LEFT JOIN account_move move ON (move.id = aml.move_id AND move.payment_reference != move.name),
+                       LATERAL regexp_split_to_table(
+                                  COALESCE(aml.ref, '') || ' - ' ||
+                                  COALESCE(aml.move_name, '') || ' - ' ||
+                                  COALESCE(move.payment_reference, ''), ' - '
+                               ) AS word
+                         WHERE (st_line.partner_id IS NULL OR st_line.partner_id = aml.partner_id)
+                           AND aml.move_id NOT IN %s
+                           AND aml.reconciled = false
+                           AND aml.account_id IN %s
+                           AND aml.company_id = st_line.company_id
+                           AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
+                           AND (aml.parent_state IN ('draft', 'posted'))
+                           AND st_line.id IN %s
+                           AND (
+                                length(word) > 8 AND st_line.payment_ref ILIKE '%%' || word || '%%'
+                               )
+                       ) word_aml ON TRUE
+              GROUP BY st_line.id, matching_word
+                HAVING COUNT(*) = 1
+        """, tuple(st_move_ids), tuple(account_ids), tuple(self.ids))
+        self.env.cr.execute(query)
 
-             -- Either the partner is not set, and
-             SELECT st_line.id AS st_line_id,
-                    MIN(aml.id) AS aml_id
-               FROM account_bank_statement_line st_line, account_move_line aml
-          LEFT JOIN account_account acc ON aml.account_id = acc.id
-          LEFT JOIN account_move move ON aml.move_id = move.id
-              WHERE st_line.partner_id IS NULL
-                AND aml.move_id != st_line.move_id
-                AND aml.company_id = st_line.company_id
-                AND aml.reconciled = false
-                AND acc.account_type IN ('asset_receivable', 'liability_payable')
-                AND acc.active
-                AND st_line.id IN %s
-                AND st_line.currency_id = aml.currency_id
-                AND (st_line.payment_ref = aml.move_name OR st_line.payment_ref = aml.ref OR st_line.payment_ref = move.payment_reference)
-                -- we have only one invoice matching the reference and amount, or the amount found in the statement line label
-                AND (
-                     (aml.amount_residual BETWEEN st_line.amount AND st_line.amount * 103/100)
-                     OR (
-                         REPLACE(st_line.payment_ref, ',', '.') ILIKE '%%' || TRIM(trailing '0' FROM move.amount_total::TEXT) || '%%'
-                     )
-                )
-           GROUP BY st_line.id
-             HAVING COUNT(*) = 1
-        ''', tuple(remaining_st_line_ids), tuple(remaining_st_line_ids)))
+        st_lines_refs = {}
+        to_process = {}
+        # make sure that a match on payment_ref can't be used to match several distinct aml, even if we are sure the same ref can't
+        # be found twice because of the HAVING COUNT(*) = 1, we still need to exclude cases where one ref is included in another.
+        for st_line_id, aml_id, aml_amount_residual, matching_word in self.env.cr.fetchall():
+            to_process[st_line_id, matching_word] = [(aml_id, aml_amount_residual)]
+            for word in st_lines_refs.get(st_line_id, []):
+                if word in matching_word or matching_word in word:
+                    del to_process[st_line_id, matching_word]
+                    del to_process[st_line_id, word]
+            if st_line_id not in st_lines_refs:
+                st_lines_refs[st_line_id] = []
+            st_lines_refs[st_line_id].append(matching_word)
+
+        ref_amls_sum = {}
+        for key, to_process_list in to_process.items():
+            st_line_id, matching_word = key
+            st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
+            for aml_id, aml_amount_residual in to_process_list:
+                # Exclude move lines to prevent reconciliation when the total residual exceeds the statement line amount
+                if st_line_id in ref_amls_sum:
+                    if ref_amls_sum[st_line_id] <= 0:
+                        continue
+                    ref_amls_sum[st_line_id] -= aml_amount_residual
+                else:
+                    ref_amls_sum[st_line_id] = st_line.amount - aml_amount_residual
+                st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_id)
+                if st_line.currency_id.is_zero(st_line.amount_residual):
+                    processed_st_line_ids.add(st_line.id)
+        remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
+
+        # early return if we already processed everything
+        if not remaining_st_line_ids:
+            self.write({'cron_last_check': fields.Datetime.now()})
+            return
+
+        # At this point, we don't try anymore to find a matching payment for statement lines without partner_id that haven't
+        # yet found a counterpart based on the communication. This would be too risky to reconcile only based on the amounts.
+        processed_st_line_ids = set()
+        query = SQL("""
+                SELECT st_line.id AS st_line_id,
+                       ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS all_aml_ids,
+                       SUM(aml.amount_residual) AS total_residual
+                  FROM account_bank_statement_line st_line
+                  JOIN account_move_line aml ON (st_line.partner_id = aml.partner_id AND aml.company_id = st_line.company_id)
+                  JOIN account_move move ON aml.move_id = move.id
+                 WHERE st_line.partner_id IS NOT NULL
+                   AND aml.move_id NOT IN %s
+                   AND aml.reconciled = false
+                   AND aml.account_id IN %s
+                   AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
+                   AND (aml.parent_state IN ('draft', 'posted'))
+                   AND st_line.id IN %s
+
+              GROUP BY st_line.id
+        """, tuple(st_move_ids), tuple(account_ids), tuple(remaining_st_line_ids))
+        self.env.cr.execute(query)
 
         # process then remove matched statement lines
-        for st_line_id, aml_id in self.env.cr.fetchall():
+        for st_line_id, all_aml_ids, total_residual in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
-            st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_id)
-            if st_line.currency_id.is_zero(st_line.amount_residual):
-                processed_st_line_ids.add(st_line_id)
-        remaining_st_line_ids = list(set(remaining_st_line_ids) - processed_st_line_ids)
+            if total_residual == st_line.amount:
+                # the total open amount for the partner equals the paid amount
+                st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(all_aml_ids)
+            elif all_aml_ids:
+                amls = self.env['account.move.line'].browse(all_aml_ids)
+                candidate_amls = self._invoice_matching_post_process(st_line, amls)
+                if candidate_amls:
+                    st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(candidate_amls.ids)
 
-        if remaining_st_line_ids:
-            # try to apply reco models on the remaining statement lines
-            remaining_st_lines = self.browse(remaining_st_line_ids).with_prefetch(self._prefetch_ids)
-            reco_models._apply_reconcile_models(remaining_st_lines)
+            if st_line.currency_id.is_zero(st_line.amount_residual):
+                processed_st_line_ids.add(st_line.id)
+
+        remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
+
+        # early return if we already processed everything
+        if not remaining_st_line_ids:
+            self.write({'cron_last_check': fields.Datetime.now()})
+            return
+
+        # try to apply reco models on the remaining statement lines
+        remaining_st_lines = self.browse(remaining_st_line_ids).with_prefetch(self._prefetch_ids)
+        reco_models._apply_reconcile_models(remaining_st_lines)
 
         self.write({'cron_last_check': fields.Datetime.now()})
 

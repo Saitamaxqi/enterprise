@@ -252,11 +252,11 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         invoice_line_8 = self._create_invoice_line(600, self.partner_3, 'out_invoice', ref="RF12 3456")
         _invoice_line_9 = self._create_invoice_line(200, self.partner_3, 'out_invoice')
         invoice_line_10 = self._create_invoice_line(200, self.partner_agrolait, 'out_invoice')
-        invoice_line_11 = self._create_invoice_line(12345.67, self.partner_2, 'out_invoice')
+        self._create_invoice_line(12345.67, self.partner_2, 'out_invoice')
 
         bank_line_1, bank_line_2,\
         bank_line_3, bank_line_4,\
-        bank_line_5, bank_line_6 = self.env['account.bank.statement.line'].create([
+        bank_line_5 = self.env['account.bank.statement.line'].create([
             {
                 'journal_id': self.bank_journal.id,
                 'date': '2020-01-01',
@@ -298,14 +298,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 'amount': 200,
                 'sequence': 5,
             },
-            {
-                'journal_id': self.bank_journal.id,
-                'date': '2020-01-01',
-                'payment_ref': 'yyyyy 12345.67 EUR fdfkmlk',
-                'partner_id': self.partner_2.id,
-                'amount': 5000,
-                'sequence': 6,
-            },
         ])
         self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
         # the total residual of the partner matches the line amount
@@ -324,7 +316,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         ], reconciled_amls=[invoice_line_4, False])
 
         # partner and amount almost equals the invoice (3% diff allowed)
-        # TODO: partial reconciliation ok? -> NO fp asked for full so +97 - 100 + 3 (suspense account)
         self._check_st_line_matching(bank_line_3, [
             {'account_id': self.bank_journal.default_account_id.id, 'balance': 97.0},
             {'account_id': self.account_rec.id, 'balance': -97.0},
@@ -341,12 +332,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.default_account_id.id, 'balance': 200.0, 'partner_id': self.partner_agrolait.id},
             {'account_id': self.account_rec.id, 'balance': -200.0, 'partner_id': self.partner_agrolait.id},
         ], reconciled_amls=[invoice_line_10])
-
-        # invoice amount found in the payment ref and partner identified
-        self._check_st_line_matching(bank_line_6, [
-            {'account_id': self.bank_journal.default_account_id.id, 'balance': 5000, 'partner_id': self.partner_2.id},
-            {'account_id': self.account_rec.id, 'balance': -5000, 'partner_id': self.partner_2.id},
-        ], reconciled_amls=[invoice_line_11])
 
     def test_matching_algorithm_for_multiple_invoices(self):
         """Test matching algorithm for multiple invoices with positive statement balance"""
@@ -494,9 +479,9 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
     def test_matching_rules_with_payment_memo(self):
         """Test matching algorithm for multiple payments with memo"""
-        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin SO2025/127326425")
-        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin SO2025/12237246-13")
-        payment_3 = self._create_and_post_payment(amount=100, memo="PAY Admin SO2025/127326425")
+        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/127326425")
+        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/12237246-13")
+        payment_3 = self._create_and_post_payment(amount=100, memo="PAY Admin - SO2025/127326425")
         bank_line_1 = self._create_st_line(amount=200, payment_ref='SO2025/127326425 and SO2025/12237246-13')
         bank_line_1._try_auto_reconcile_statement_lines()
         # Both payment_1 and payment_3 memos match the st_line label, so only payment_2 is reconciled
@@ -517,13 +502,14 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     def test_matching_rules_with_wrong_payment_memo(self):
         """Test matching algorithm for multiple payments with wrong payment memo."""
         # The correct payments
-        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin SO2025/127326425")
-        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin SO2025/12237246-13")
+        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/127326425")
+        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/12237246-13")
         # The wrong payments
-        self._create_and_post_payment(amount=100, memo="INV Admin paymentSO2025/127326425")
+        self._create_and_post_payment(amount=100, memo="INV Admin - paymentSO2025/127326425")
         self._create_and_post_payment(amount=100, memo="INVAdminSO2025/127326425")
-        self._create_and_post_payment(amount=100, memo="INV Admin SO2024/127326425")
-        self._create_and_post_payment(amount=100, memo="INV Admin SO/2025/127326425")
+        self._create_and_post_payment(amount=100, memo="INV Admin - SO2024/127326425")
+        self._create_and_post_payment(amount=100, memo="INV Admin - SO/2025/127326425")
+        self._create_and_post_payment(amount=100, memo="INV Admin SO2025/127326425")
 
         bank_line_1 = self._create_st_line(amount=200, payment_ref='SO2025/127326425 & SO2025/12237246-13')
         bank_line_1._try_auto_reconcile_statement_lines()
@@ -536,9 +522,9 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
     def test_matching_rules_with_duplicate_payment_memo(self):
         """Test that if a payment contains memo from other payments, we don't reconcile"""
-        self._create_and_post_payment(amount=100, memo="INV Admin SO2025/127326425")
-        self._create_and_post_payment(amount=100, memo="INV Admin SO2025/12237246-13")
-        self._create_and_post_payment(amount=200, memo="INV Admin SO2025/127326425 & SO2025/12237246-13")
+        self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/127326425")
+        self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/12237246-13")
+        self._create_and_post_payment(amount=200, memo="INV Admin - SO2025/127326425 - SO2025/12237246-13")
         self._create_and_post_payment(amount=200, memo="Test payment ref")
         self._create_and_post_payment(amount=200, memo="Test payment")
         bank_line_1 = self._create_st_line(amount=200, payment_ref='SO2025/127326425 & SO2025/12237246-13')
@@ -554,24 +540,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.assertRecordValues(bank_line_2.line_ids, [
             {'account_id': bank_line_2.journal_id.default_account_id.id, 'balance': 200.0, 'reconciled': False},
             {'account_id': bank_line_2.journal_id.suspense_account_id.id, 'balance': -200.0, 'reconciled': False},
-        ])
-
-    def test_matching_rules_with_empty_aml_ref(self):
-        """Test reconciliation with empty aml ref"""
-        # Only this payment should be matched
-        payment = self._create_and_post_payment(amount=200, memo="Test.ref/ label")
-        # Other shouldn't
-        self._create_and_post_payment(amount=200, memo="")
-        self._create_and_post_payment(amount=200, memo=" ")
-        self._create_and_post_payment(amount=200, memo="/")
-        self._create_and_post_payment(amount=200, memo=".")
-        self._create_and_post_payment(amount=200, memo="......")
-        self._create_and_post_payment(amount=200, memo="Test.ref/")
-        bank_line_1 = self._create_st_line(amount=200, payment_ref='Test.ref/ label')
-        bank_line_1._try_auto_reconcile_statement_lines()
-        self.assertRecordValues(bank_line_1.line_ids, [
-            {'account_id': bank_line_1.journal_id.default_account_id.id, 'balance': 200.0, 'reconciled': False},
-            {'account_id': payment.outstanding_account_id.id, 'balance': -200.0, 'reconciled': True},
         ])
 
     def test_matching_rules_with_same_ref_on_st_line_and_aml(self):
@@ -636,13 +604,13 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         """Test reconciliation if there is aml with empty move_name"""
         # The payment we want to match
         payment = self._create_and_post_payment(amount=100)
-        payment.move_id.name = "Payment number 1.1"
+        payment.move_id.name = "MOVE25/00004"
         # Posted payment with same amount
         payment_2 = self._create_and_post_payment(amount=100)
-        payment_2.move_id.name = "Payment number 2"
+        payment_2.move_id.name = "MOVE25/00005"
         # Payment with no move_name
         payment_3 = self._create_and_post_payment(amount=100)
-        payment_3.move_id.name = "."
+        payment_3.move_id.name = "/"
         # Draft payment without move_id
         self._create_and_post_payment(amount=100, post=False)
         bank_line_1 = self._create_st_line(amount=100, payment_ref=payment.move_id.name)
@@ -665,24 +633,22 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     def test_matching_rules_payment_regex(self):
         """Test if the regex matching payments is working properly"""
         # Good format
-        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin SO2025/127326425")
-        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin SO2025/12237246-13")
-        payment_3 = self._create_and_post_payment(amount=100, memo="INV Admin SO/2025/127326426")
-        payment_4 = self._create_and_post_payment(amount=100, memo="INV/2025/127326425 for Bob")
-        payment_5 = self._create_and_post_payment(amount=100, memo="Invoice for Bob with id py_aesadasea123asdb")
-        payment_6 = self._create_and_post_payment(amount=100, memo="INFO:RMT*CT*SO2025/6413377*442500*000****\\")
+        payment_1 = self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/127326425")
+        payment_2 = self._create_and_post_payment(amount=100, memo="INV Admin - SO2025/12237246-13")
+        payment_3 = self._create_and_post_payment(amount=100, memo="INV Admin - SO/2025/127326426")
+        payment_4 = self._create_and_post_payment(amount=100, memo="INV/2025/127326425 - Bob")
+        payment_5 = self._create_and_post_payment(amount=100, memo="Invoice for Bob with id - py_aesadasea123asdb")
         # Wrong format
         self._create_and_post_payment(amount=100, memo="Admin SaleOrder2025/127326425")
-        self._create_and_post_payment(amount=100, memo="Admin SO//2025//127326425")
+        self._create_and_post_payment(amount=100, memo="Admin SO2025/127326425")
         self._create_and_post_payment(amount=100, memo="Admin SO2025/63173462/234/567/890-11")
-        self._create_and_post_payment(amount=100, memo="Invoice for Bob with id py_aesadasea")
+        self._create_and_post_payment(amount=100, memo="Invoice for Bob with id py_aesadasea123asdb")
 
         bank_line_1 = self._create_st_line(amount=100, payment_ref='SO2025/127326425 - Odoo Partner: Admin')
         bank_line_2 = self._create_st_line(amount=100, payment_ref='Odoo Partner: Admin - SO2025/12237246-13')
         bank_line_3 = self._create_st_line(amount=100, payment_ref='SO/2025/127326426 For admin')
         bank_line_4 = self._create_st_line(amount=100, payment_ref='INV/2025/127326425 paid on 2025')
         bank_line_5 = self._create_st_line(amount=100, payment_ref='py_aesadasea123asdb')
-        bank_line_6 = self._create_st_line(amount=100, payment_ref='INFO:RMT*CT*SO2025/6413377*442500*000****\\')
         self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
 
         # Everything should be reconciled
@@ -705,10 +671,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.assertRecordValues(bank_line_5.line_ids, [
             {'account_id': bank_line_5.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
             {'account_id': payment_5.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
-        ])
-        self.assertRecordValues(bank_line_6.line_ids, [
-            {'account_id': bank_line_6.journal_id.default_account_id.id, 'balance': 100.0, 'reconciled': False},
-            {'account_id': payment_6.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
         ])
 
     def test_auto_rule_creation_and_matching(self):
