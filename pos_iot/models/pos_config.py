@@ -27,8 +27,9 @@ class PosConfig(models.Model):
     @api.model
     def _load_pos_data_read(self, records, config):
         read_records = super()._load_pos_data_read(records, config)
-        is_eu_country = self.env.company.country_id in self.env.ref('base.europe').country_ids
-        read_records[0]["_is_eu_country"] = is_eu_country
+        if read_records:
+            is_eu_country = self.env.company.country_id in self.env.ref('base.europe').country_ids
+            read_records[0]["_is_eu_country"] = is_eu_country
         return read_records
 
     @api.depends('iface_printer_id')

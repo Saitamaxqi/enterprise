@@ -30,8 +30,8 @@ class PosConfig(models.Model):
     @api.model
     def _load_pos_data_read(self, records, config):
         read_records = super()._load_pos_data_read(records, config)
-        record = read_records[0]
-        if config.certified_blackbox_identifier:
+        if read_records and config.certified_blackbox_identifier:
+            record = read_records[0]
             record["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
             record["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
         return read_records

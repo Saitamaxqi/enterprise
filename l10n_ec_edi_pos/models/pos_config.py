@@ -12,8 +12,7 @@ class PosConfig(models.Model):
 
     def _load_pos_data_read(self, records, config):
         data = super()._load_pos_data_read(records, config)
-
-        if self.env.company.country_id.code == 'EC':
+        if data and self.env.company.country_id.code == 'EC':
             final_consumer = self.env.ref('l10n_ec.ec_final_consumer', raise_if_not_found=False)
             data[0]['_final_consumer_id'] = final_consumer.id if final_consumer else None
 

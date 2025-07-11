@@ -50,8 +50,8 @@ class PosSession(models.Model):
 
     def _load_pos_data_read(self, records, config):
         read_records = super()._load_pos_data_read(records, config)
-        record = read_records[0]
-        if config.certified_blackbox_identifier:
+        if read_records and config.certified_blackbox_identifier:
+            record = read_records[0]
             record["_users_clocked_ids"] = self.users_clocked_ids.ids
             record["_employees_clocked_ids"] = self.employees_clocked_ids.ids
         return read_records

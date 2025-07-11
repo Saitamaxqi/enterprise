@@ -31,8 +31,7 @@ class PosConfig(models.Model):
     @api.model
     def _load_pos_data_read(self, records, config):
         read_records = super()._load_pos_data_read(records, config)
-
-        if self.env.company.country_id.code == 'CL':
+        if read_records and self.env.company.country_id.code == 'CL':
             read_records[0]['_consumidor_final_anonimo_id'] = self.env.ref('l10n_cl.par_cfa').id
             read_records[0]['_l10n_cl_sii_regional_office_selection'] = dict(self.env.company._fields['l10n_cl_sii_regional_office'].selection)
 
