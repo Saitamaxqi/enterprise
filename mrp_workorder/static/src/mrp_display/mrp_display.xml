@@ -105,6 +105,7 @@
                                 Track work orders, show instructions and record manufacturing operations from here:
                                 quality control, consumed quantities, lot/serial numbers, etc.
                             </p>
+                            <button role="button" class="btn btn-lg btn-primary" t-on-click="setMaxLimit" t-if="model.root.count > state.limit">Load All Manufacturing Orders</button>
                             <button role="button" class="btn btn-lg btn-primary" t-on-click="loadSamples" t-if="state.canLoadSamples" t-att-disabled="state.canLoadSamples === 'disabled'">Load Samples</button>
                         </div>
                     </div>

@@ -464,6 +464,7 @@ export class MrpDisplay extends Component {
 
     onClickRefresh() {
         this.invalidateRecordIdsCache();
+        this.state.limit = this.props.action?.context?.limit;
         this.env.reload();
     }
 
@@ -503,6 +504,12 @@ export class MrpDisplay extends Component {
             },
             { onClose: this.env.reload }
         );
+    }
+
+    setMaxLimit() {
+        this.state.limit = this.model.root.count;
+        this.invalidateRecordIdsCache();
+        return this.env.reload();
     }
 
     demoMORecords = [
