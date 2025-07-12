@@ -2094,10 +2094,10 @@ class DocumentsDocument(models.Model):
 
         write_result = super().write(vals)
         if attachment_dict:
-            self.mapped('attachment_id').write(attachment_dict)
+            self.attachment_id.write(attachment_dict)
 
         if 'attachment_id' in vals:
-            self.attachment_id.check('read')
+            self.attachment_id.check_access('read')
 
         if (new_active := vals.get('active')) is not None:
             if not new_active and self.sudo().search([('id', 'child_of', self.ids), ('active', '=', True)]):

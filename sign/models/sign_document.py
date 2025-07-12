@@ -74,7 +74,7 @@ class SignDocument(models.Model):
             })
             if document.template_id.name == self.env._('New Template'):
                 document.template_id.name = document.name
-        documents.attachment_id.check('read')
+        documents.attachment_id.check_access('read')
         return documents
 
     @api.model
@@ -108,7 +108,7 @@ class SignDocument(models.Model):
     def write(self, vals):
         res = super().write(vals)
         if 'attachment_id' in vals:
-            self.attachment_id.check('read')
+            self.attachment_id.check_access('read')
         return res
 
     def get_radio_sets_dict(self):
