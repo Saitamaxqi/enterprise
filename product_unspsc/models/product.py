@@ -42,7 +42,7 @@ class ProductUnspscCode(models.Model):
     def _search_display_name(self, operator, value):
         if operator == 'in':
             return Domain.OR(self._search_display_name('=', v) for v in value)
-        if Domain.is_negative_operator(operator):
+        if operator in Domain.NEGATIVE_OPERATORS:
             return NotImplemented
         if isinstance(value, str) and value:
             code_value = value.split(' ')[0]

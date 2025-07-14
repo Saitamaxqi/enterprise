@@ -12,7 +12,7 @@ class MailActivity(models.Model):
     approver_id = fields.Many2one("approval.approver", compute="_compute_approver_id")
 
     def _search_approval_request_id(self, operator, value):
-        if Domain.is_negative_operator(operator):
+        if operator in Domain.NEGATIVE_OPERATORS:
             return NotImplemented
         if operator == 'any':
             operator = 'in'

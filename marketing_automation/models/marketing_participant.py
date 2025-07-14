@@ -30,7 +30,7 @@ class MarketingParticipant(models.Model):
         return [(model.model, model.name) for model in models]
 
     def _search_resource_ref(self, operator, value):
-        if Domain.is_negative_operator(operator):
+        if operator in Domain.NEGATIVE_OPERATORS:
             return NotImplemented
         ir_model_ids = []
         for [model_name] in self.env['marketing.campaign']._read_group([], ['model_name']):

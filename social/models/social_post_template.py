@@ -101,7 +101,7 @@ class SocialPostTemplate(models.Model):
                 ), False)
 
     def _search_display_message(self, operator, operand):
-        if Domain.is_negative_operator(operator):
+        if operator in Domain.NEGATIVE_OPERATORS:
             return NotImplemented
         return Domain.OR(
             Domain(field, operator, operand)
