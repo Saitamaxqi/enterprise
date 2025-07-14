@@ -6,16 +6,11 @@ class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = "Custom Handler for Corporate TAX Reports in UAE"
 
-    def _custom_line_postprocessor(self, report, options, lines, warnings=None):
+    def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         # Overrides account.report
-        if warnings is None:
-            warnings = {}
-
         company = self.env['res.company'].browse(report.get_report_company_ids(options)[0])
         if not (company.l10n_ae_tax_report_expenses_account and company.l10n_ae_tax_report_liabilities_account and company.l10n_ae_tax_report_asset_account):
             warnings['l10n_ae_reports.corporate_report_accounts_not_configured'] = {}
-
-        return lines
 
     def l10n_ae_corporate_tax_report_open_settings(self, options):
         return self.env['ir.actions.act_window']._for_xml_id('account.action_account_config')

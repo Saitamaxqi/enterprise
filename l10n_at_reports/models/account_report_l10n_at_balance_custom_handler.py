@@ -12,7 +12,7 @@ class AccountReportL10n_AtBalanceCustomHandler(models.AbstractModel):
     _inherit = ['account.balance.sheet.report.handler']
     _description = 'Austrian Balance Sheet Report Custom Handler'
 
-    def _custom_line_postprocessor(self, report, options, lines, warnings=None):
+    def _custom_line_postprocessor(self, report, options, lines):
         """ Postprocesses the result of the report's _get_lines() before returning it. """
         equity_root = self.env.ref('l10n_at_reports.account_financial_report_l10n_at_paragraph_224_ugb_line_passiva_1', raise_if_not_found=False)
         for line in lines:
