@@ -15,7 +15,7 @@ class SaleOrder(models.Model):
 
             if not self.plan_id:
                 pricing = product.product_tmpl_id._get_recurring_pricing(
-                    pricelist=self.pricelist_id, variant=product,
+                    pricelist=self.pricelist_id, variant=product, plan_id=plan_id,
                 )
                 if pricing:
                     self.plan_id = pricing.plan_id
