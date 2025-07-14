@@ -13,7 +13,12 @@ class TestReportEngines(TestAccountReportsCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.company_data['company'].totals_below_sections = False
+        cls.company_data['company'].write({
+            'totals_below_sections': False,
+            'vat': '38972223422',
+            'phone': '555-555-5555',
+            'email': 'test@example.com',
+        })
 
         # necessary to ensure successful return checks
         cls.company_data['company'].write({

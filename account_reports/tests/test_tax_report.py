@@ -14,6 +14,12 @@ class TestTaxReport(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.company.write({
+            'vat': '38972223422',
+            'phone': '555-555-5555',
+            'email': 'test@example.com',
+        })
+
         # Create country data
         cls.fiscal_country = cls.env['res.country'].create({
             'name': "Discworld",

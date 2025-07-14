@@ -11,6 +11,12 @@ class TestFrenchFiscalRounding(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.company_data['company'].write({
+            'vat': 'FR23334175221',
+            'phone': '555-555-5555',
+            'email': 'test@example.com',
+        })
+
         # purchase and sales VAT
         cls.tva_20_percent_vente = cls.env.ref(f"account.{cls.company_data['company'].id}_tva_normale")
         cls.tva_20_percent_ttc_vente = cls.env.ref(f"account.{cls.company_data['company'].id}_tva_normale_ttc")

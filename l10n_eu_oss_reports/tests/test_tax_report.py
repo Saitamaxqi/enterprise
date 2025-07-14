@@ -16,6 +16,8 @@ class OSSTaxReportTest(TestAccountReportsCommon):
         cls.env.company.country_id = cls.env.ref('base.be')
         cls.env.company.account_fiscal_country_id = cls.env.ref('base.be')
         cls.env.company.vat = 'BE0477472701'
+        cls.env.company.phone = '555-555-5555'
+        cls.env.company.email = 'test@example.com'
         cls.env.company.currency_id = cls.env.ref('base.EUR')
 
         account_payable = cls.env['account.account'].create({

@@ -27,6 +27,9 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
 
         cls.company_data['company'].write({
             'company_registry': '50056940503239',
+            'vat': 'FR23334175221',
+            'phone': '555-555-5555',
+            'email': 'test@example.com',
             'street': 'Rue du Souleillou',
             'street2': '2',
             'zip': '46800',

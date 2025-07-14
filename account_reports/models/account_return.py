@@ -1710,7 +1710,7 @@ class AccountReturn(models.Model):
             if record.company_id not in self.env.companies:  # We do not run checks if the main company is not selected
                 continue
 
-            if record._should_run_checks():
+            if record._should_run_checks() or force_bypassed:
                 check_codes_to_ignore = set(record.check_ids.filtered(lambda x: x.state == record.state and x.bypassed and not force_bypassed).mapped('code'))
 
                 rslt = record._run_checks(check_codes_to_ignore)

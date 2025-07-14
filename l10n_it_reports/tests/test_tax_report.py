@@ -14,6 +14,8 @@ class TestItalianTaxReport(TestAccountReportsCommon):
         super().setUpClass()
         cls.company.update({
             'vat': 'IT78926680725',
+            'phone': '555-555-5555',
+            'email': 'test@example.com'
         })
 
         cls.tax_4a = cls.env.ref(f'account.{cls.env.company.id}_4am')

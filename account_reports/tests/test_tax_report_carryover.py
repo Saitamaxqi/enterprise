@@ -26,6 +26,17 @@ class TestTaxReportCarryover(TestAccountReportsCommon):
         cls.company_2.currency_id = cls.company_1.currency_id
         cls.company_1.account_return_periodicity = cls.company_2.account_return_periodicity = 'year'
 
+        cls.company_1.write({
+            'vat': '38972223422',
+            'phone': '555-555-5555',
+            'email': 'test@example.com',
+        })
+        cls.company_2.write({
+            'vat': '38972223423',
+            'phone': '666-666-6666',
+            'email': 'test2@example.com',
+        })
+
         cls.report = cls.env['account.report'].create({
             'name': 'Test report',
             'country_id': cls.company_1.account_fiscal_country_id.id,
