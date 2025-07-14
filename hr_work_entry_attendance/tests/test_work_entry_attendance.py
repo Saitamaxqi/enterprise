@@ -230,3 +230,50 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         employee.generate_work_entries(datetime(2024, 9, 1), datetime(2024, 9, 30))
         result_entries = self.env['hr.work.entry'].search([('employee_id', '=', employee.id)])
         self.assertEqual(len(result_entries), 3, 'Two work entry should be generated')
+
+    def test_gto_flexible_calendar(self):
+        """
+        Test when having a public time off and a flexible user has two
+        separate attendances in this day what will be the duration of the
+        holiday work entries.
+        """
+        start = datetime(2018, 1, 1, 6, 0, 0)
+        end = datetime(2018, 1, 1, 18, 0, 0)
+        self.env['resource.calendar.leaves'].create({
+            'date_from': start,
+            'date_to': end,
+            'work_entry_type_id': self.work_entry_type_leave.id,
+        })
+
+        flexible_calendar = self.env['resource.calendar'].create({
+            'name': 'flexible calendar',
+            'flexible_hours': True,
+            'full_time_required_hours': 40,
+            'hours_per_day': 8,
+        })
+
+        self.richard_emp.version_id.write({
+            'resource_calendar_id': flexible_calendar.id,
+            'work_entry_source': 'attendance',
+        })
+
+        self.env['hr.attendance'].create([
+            {
+                'check_in': datetime(2018, 1, 1, 9, 0, 0),
+                'check_out': datetime(2018, 1, 1, 11, 0, 0),
+                'employee_id': self.richard_emp.id,
+            },
+            {
+                'check_in': datetime(2018, 1, 1, 13, 0, 0),
+                'check_out': datetime(2018, 1, 1, 15, 0, 0),
+                'employee_id': self.richard_emp.id,
+            }
+        ])
+
+        work_entries = self.richard_emp.version_ids.generate_work_entries(start.date(), end.date())
+        time_off_entries = work_entries.filtered(lambda entry: entry.code == 'LEAVETEST100')
+        # Since we are now merging similar work entries on the same day
+        # we are going to have only one leave entry
+        self.assertEqual(len(time_off_entries), 1)
+        self.assertEqual(time_off_entries.duration, 8)
+        self.assertEqual((work_entries - time_off_entries).duration, 4)
