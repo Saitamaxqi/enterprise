@@ -14,7 +14,7 @@
                         t-esc="line.product_id.code"/>
                 </div>
                 <div class="o_product_label small" t-esc="line.product_id.display_name"/>
-                <div t-if="lineDescription" name="description" class="text-muted" t-out="lineDescription"/>
+                <div t-if="line.description_picking" name="description" class="text-muted o_stock_barcode_line_description" t-out="line.description_picking"/>
             </div>
             <t t-if="upperButtons !== false" t-call="{{upperButtons || 'stock_barcode.LineUpperButtons'}}"/>
         </div>

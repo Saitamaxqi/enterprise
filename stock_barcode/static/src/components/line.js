@@ -1,8 +1,6 @@
-import { Component, markup } from "@odoo/owl";
-
+import { Component } from "@odoo/owl";
 import { ProductImageDialog } from "@stock_barcode/components/product_image_dialog";
 
-import { htmlReplaceAll } from "@web/core/utils/html";
 
 export default class LineComponent extends Component {
     static props = ["displayUOM", "line", "subline?", "editLine"];
@@ -111,10 +109,6 @@ export default class LineComponent extends Component {
             this.env.model.lineIsFaulty(this.line) ? "o_faulty" : "",
             this.isSelected ? "o_selected o_highlight" : "",
         ].join(" ");
-    }
-
-    get lineDescription() {
-        return htmlReplaceAll(this.line.description_picking, "\n", markup`<br/>`);
     }
 
     _getLocationPath(rootLocation, currentLocation) {
