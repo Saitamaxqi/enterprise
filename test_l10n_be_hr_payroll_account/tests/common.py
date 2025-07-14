@@ -3,6 +3,7 @@
 
 import base64
 import time
+from datetime import date
 
 import odoo.tests
 from odoo.addons.mail.tests.common import mail_new_test_user
@@ -317,3 +318,67 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
             'eco_checks': 250,
             'car_id': False
         })
+
+        cls.resource_calendar = cls.env['resource.calendar'].create({
+            'name': 'Test Calendar',
+            'company_id': cls.company_id.id,
+            'hours_per_day': 7.6,
+            'tz': "Europe/Brussels",
+            'two_weeks_calendar': False,
+            'hours_per_week': 38,
+            'full_time_required_hours': 38
+        })
+
+        cls.employee_georges = cls.create_employee({
+            'name': 'Georges',
+            'date_version': date(2020, 1, 1),
+            'contract_date_start': date(2020, 1, 1),
+            'contract_date_end': False,
+        })
+
+        cls.employee_a = cls.create_employee({
+            'name': 'A',
+            'date_version': date(2020, 1, 1),
+            'contract_date_start': date(2020, 1, 1),
+            'contract_date_end': False,
+        })
+
+    @classmethod
+    def create_employee(cls, values):
+        default_values = {
+            'private_country_id': cls.env.ref('base.be').id,
+            'resource_calendar_id': cls.resource_calendar.id,
+            'company_id': cls.company_id.id,
+            'marital': "single",
+            'spouse_fiscal_status': "without_income",
+            'disabled': False,
+            'disabled_spouse_bool': False,
+            'is_non_resident': False,
+            'disabled_children_number': 0,
+            'other_dependent_people': False,
+            'other_senior_dependent': 0,
+            'other_disabled_senior_dependent': 0,
+            'other_juniors_dependent': 0,
+            'other_disabled_juniors_dependent': 0,
+            'fiscal_voluntarism': 0.0,
+            'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
+            'date_version': date.today(),
+            'contract_date_start': date.today(),
+            'contract_date_end': False,
+            'wage': 2500.0,
+            'hourly_wage': 0.0,
+            'commission_on_target': 0.0,
+            'fuel_card': 150.0,
+            'internet': 38.0,
+            'representation_fees': 150.0,
+            'mobile': 30.0,
+            'has_laptop': False,
+            'meal_voucher_amount': 7.45,
+            'eco_checks': 250.0,
+            'ip': False,
+            'ip_wage_rate': 25.0,
+            'time_credit': False,
+            'has_bicycle': False,
+        }
+        default_values.update(values)
+        return cls.env['hr.employee'].create(default_values)

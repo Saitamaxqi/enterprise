@@ -17,3 +17,4 @@ from . import test_employee_job_change
 from . import test_hr_contract_no_onss
 from . import test_eco_vouchers
 from . import test_salary_advance
+from . import test_social_balance_sheet

@@ -2,15 +2,17 @@ from datetime import date
 
 from odoo.tests import tagged
 
-from .common import TestPayrollCommon
+from .common import TestPayrollAccountCommon
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
-class TestPayrollSocialBalanceSheet(TestPayrollCommon):
+class TestSocialBalanceSheet(TestPayrollAccountCommon):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.company_ids |= cls.company_id
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company_id.ids))
 
         cls.cp200_salary_structure = cls.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
 
@@ -19,7 +21,7 @@ class TestPayrollSocialBalanceSheet(TestPayrollCommon):
                 'name': 'Salary Journal - Test',
                 'code': 'SLR',
                 'type': 'general',
-                'company_id': cls.belgian_company.id,
+                'company_id': cls.company_id.id,
             })
 
         cls.date_from = date(2024, 1, 1)
@@ -27,20 +29,16 @@ class TestPayrollSocialBalanceSheet(TestPayrollCommon):
 
         test_employees = (
             cls.employee_georges |
-            cls.employee_john |
-            cls.employee_a |
-            cls.employee_test |
-            cls.employee_with_attestation |
-            cls.employee_withholding_taxes
+            cls.employee_a
         )
         for emp in test_employees:
-            if emp == cls.employee_test or emp == cls.employee_withholding_taxes:
+            if emp == cls.employee_a:
                 emp.certificate = 'other'
             else:
                 emp.certificate = 'bachelor'
 
         for version in test_employees.version_id:
-            if version.employee_id == cls.employee_a or version.employee_id == cls.employee_test:
+            if version.employee_id == cls.employee_a:
                 version.sex = 'female'
             else:
                 version.sex = 'male'
@@ -66,7 +64,7 @@ class TestPayrollSocialBalanceSheet(TestPayrollCommon):
         social_balance_wizard = self.env['l10n.be.social.balance.sheet'].create({
             'date_from': self.date_from,
             'date_to': self.date_to,
-            'company_id': self.belgian_company.id,
+            'company_id': self.company_id.id,
         })
         social_balance_wizard.print_report()
 
@@ -83,28 +81,10 @@ class TestPayrollSocialBalanceSheet(TestPayrollCommon):
         """
         Tests Social Balance Sheet XLSX exports.
         """
-        test_employees = (
-            self.employee_georges |
-            self.employee_john |
-            self.employee_a |
-            self.employee_test |
-            self.employee_with_attestation |
-            self.employee_withholding_taxes
-        )
-        for emp in test_employees:
-            if not emp.certificate:
-                emp.certificate = 'other'
-
-        for version in test_employees.version_id:
-            if version.employee_id == self.employee_a or version.employee_id == self.employee_test:
-                version.sex = 'female'
-            else:
-                version.sex = 'male'
-        self.employee_test.certificate = 'other'
         social_balance_wizard = self.env['l10n.be.social.balance.sheet'].create({
             'date_from': self.date_from,
             'date_to': self.date_to,
-            'company_id': self.belgian_company.id,
+            'company_id': self.company_id.id,
         })
 
         social_balance_wizard.export_report_xlsx()
