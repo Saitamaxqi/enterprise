@@ -966,7 +966,7 @@ class AccountReport(models.Model):
         selected_partner_ids = [int(partner) for partner in previous_partner_ids]
         # search instead of browse so that record rules apply and filter out the ones the user does not have access to
         selected_partners = selected_partner_ids and self.env['res.partner'].with_context(active_test=False).search([('id', 'in', selected_partner_ids)]) or self.env['res.partner']
-        options['selected_partner_ids'] = selected_partners.mapped('name')
+        options['selected_partner_ids'] = selected_partners.filtered('name').mapped('name')
         options['partner_ids'] = selected_partners.ids
 
         selected_partner_category_ids = [int(category) for category in options['partner_categories']]
