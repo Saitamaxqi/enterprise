@@ -23,8 +23,8 @@ class AddIotBox(models.TransientModel):
 
     discovered_box_ids = fields.One2many("iot.discovered.box", "add_iot_box_wizard_id")
     iot_box_to_connect = fields.Many2one("iot.discovered.box")
-    serial_number = fields.Char(string='Serial Number', help="Serial number of the IoT Box")
-    pairing_code = fields.Char(string='Pairing Code', help="Pairing code of the IoT Box")
+    serial_number = fields.Char(string='Serial Number')
+    pairing_code = fields.Char(string='Pairing Code')
 
     offline_pairing_token = fields.Char(
         "Token", default=lambda self: self._compute_pairing_token(), readonly=True, store=False

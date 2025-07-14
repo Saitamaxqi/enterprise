@@ -28,14 +28,14 @@
         <field name="model">add.iot.box</field>
         <field name="arch" type="xml">
             <form string="No IoT Box found">
-                <ol>
-                    <li>Be sure your IoT Box is connected to internet, wait one minute for it to start.</li>
-                    <li>Then provide the IoT Box pairing code found on a screen or printer connected to the IoT Box.</li>
-                    <br/>
-                    <group class="col-md-8">
-                        <field name="pairing_code"/>
-                    </group>
-                </ol>
+                First, connect the IoT Box to internet, using an ethernet cable. Or, checkout the
+                <a href="https://www.odoo.com/documentation/18.0/applications/general/iot.html" target="_blank" class="link fw-bold">documentation</a>
+                for Wi-Fi.<br/>
+                Then, connect the IoT Box to a printer (via USB cable) or a screen (via micro HDMI cable) to get the pairing code.<br/>
+                <br/>
+                <group class="col-md-8">
+                    <field name="pairing_code" placeholder="e.g. ABDE0123"/>
+                </group>
                 <footer>
                     <div class="d-flex justify-content-between w-100">
                         <div class="d-flex gap-1">
