@@ -22,6 +22,7 @@ export class KnowledgeBaseAutocomplete extends Interaction {
 
     setup() {
         this.inputEl = this.el.querySelector(".search-query");
+        this.searchGroupEl = this.el.querySelector(".input-group");
         this.enabled = parseInt(this.el.dataset.autocomplete);
         this.hasResults = false;
         this.keepLast = new KeepLast();
@@ -41,13 +42,14 @@ export class KnowledgeBaseAutocomplete extends Interaction {
      */
     render(result) {
         this.hasResults = !!result;
-        const prevMenuEl = this.menuEl;
+        const prevMenuEl = this.menuEl?.[0];
         if (this.hasResults) {
             this.menuEl = this.renderAt("website_helpdesk.knowledge_base_autocomplete", {
                 results: result.results,
                 showMore: result.showMore,
                 term: this.inputEl.value,
             });
+            this.searchGroupEl.dataset.bsToggle = "dropdown";
         }
         if (prevMenuEl) {
             prevMenuEl.remove();
@@ -82,8 +84,8 @@ export class KnowledgeBaseAutocomplete extends Interaction {
                 if (this.menuEl) {
                     const newFocusEl =
                         ev.key === "ArrowUp"
-                            ? this.menuEl.lastElementChild
-                            : this.menuEl.firstElementChild;
+                            ? this.menuEl[0].lastElementChild
+                            : this.menuEl[0].firstElementChild;
                     newFocusEl.focus();
                 }
                 break;
