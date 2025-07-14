@@ -17,6 +17,9 @@
             <field name="partner_id" ref="base.partner_demo_company_in"/>
             <field name="currency_id" ref="base.INR"/>
             <field name="vat">24DUMMY1234AAZA</field>
+            <field name="l10n_in_provident_fund" eval="True"/>
+            <field name="l10n_in_esic" eval="True"/>
+            <field name="l10n_in_pt" eval="True"/>
         </record>
 
         <record id="base.partner_demo_company_in" model="res.partner">
@@ -37,6 +40,25 @@
             <value eval="[ref('base.user_root'), ref('base.user_admin'), ref('base.user_demo')]"/>
             <value eval="{'company_ids': [(4, ref('base.demo_company_in'))]}"/>
         </function>
+
+        <record id="l10n_in_default_contract_template" model="hr.version">
+            <field name="name">Default Contract</field>
+            <field name="contract_type_id" ref="hr.contract_type_permanent"/>
+            <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay"/>
+            <field name="wage">50000</field>
+            <field name="l10n_in_basic_percentage">0.5</field>
+            <field name="l10n_in_hra_percentage">0.5</field>
+            <field name="l10n_in_standard_allowance">4167</field>
+            <field name="l10n_in_performance_bonus_percentage">0.0833</field>
+            <field name="l10n_in_leave_travel_percentage">0.0833</field>
+            <field name="l10n_in_gratuity_percentage">0.0481</field>
+            <field name="l10n_in_esic_employee_percentage">0.0075</field>
+            <field name="l10n_in_esic_employer_percentage">0.0325</field>
+            <field name="l10n_in_lwf_employee_contribution">6</field>
+            <field name="l10n_in_lwf_employer_contribution">12</field>
+            <field name="pt_rule_parameter_id" ref="l10n_in_hr_payroll.l10n_in_rule_parameter_pt_maharashtra"/>
+            <field name="company_id" ref="base.demo_company_in"/>
+        </record>
 
         <record id="l10n_in_res_partner_vihaan" model="res.partner">
             <field name="name">Vihaan Sengupta</field>
@@ -177,13 +199,20 @@
             <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay"/>
             <field name="wage">40000</field>
             <field name="l10n_in_tds">4000</field>
-            <field name="l10n_in_gratuity">1142</field>
+            <field name="l10n_in_basic_percentage">0.4</field>
+            <field name="l10n_in_hra_percentage">0.5</field>
+            <field name="l10n_in_standard_allowance">3000</field>
+            <field name="l10n_in_performance_bonus_percentage">0.0433</field>
+            <field name="l10n_in_leave_travel_percentage">0.0433</field>
+            <field name="l10n_in_gratuity_percentage">0.0481</field>
+            <field name="l10n_in_esic_employee_percentage">0.0075</field>
+            <field name="l10n_in_esic_employer_percentage">0.0325</field>
+            <field name="l10n_in_phone_subscription">300</field>
+            <field name="l10n_in_internet_subscription">150</field>
+            <field name="l10n_in_meal_voucher_amount">240</field>
+            <field name="l10n_in_company_transport">150</field>
             <field name="l10n_in_medical_insurance">5100</field>
-            <field name="l10n_in_voluntary_provident_fund">12</field>
-            <field name="l10n_in_house_rent_allowance_metro_nonmetro">16</field>
-            <field name="l10n_in_supplementary_allowance">5560</field>
-            <field name="l10n_in_leave_allowance">2000</field>
-            <field name="l10n_in_esic_amount">1160</field>
+            <field name="pt_rule_parameter_id" ref="l10n_in_hr_payroll.l10n_in_rule_parameter_pt_gujarat"/>
             <field name="hr_responsible_id" ref="base.user_demo"/>
             <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
             <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
@@ -197,13 +226,10 @@
                 'contract_date_start': DateTime.today() + relativedelta(years=-1, month=1, day=1),
                 'contract_date_end': False,
                 'l10n_in_tds': 5000,
-                'l10n_in_gratuity': 1442.50,
+                'l10n_in_basic_percentage': 0.45,
+                'l10n_in_hra_percentage': 0.5,
+                'l10n_in_gratuity_percentage': 0.0801,
                 'l10n_in_medical_insurance': 6550,
-                'l10n_in_voluntary_provident_fund': 12,
-                'l10n_in_house_rent_allowance_metro_nonmetro': 12,
-                'l10n_in_supplementary_allowance': 6850,
-                'l10n_in_leave_allowance': 2750,
-                'l10n_in_esic_amount': 1560,
             }"/>
         </function>
 
@@ -239,7 +265,24 @@
             <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_worker"/>
             <field name="wage_type">hourly</field>
             <field name="hourly_wage">250</field>
-            <field name="wage" eval="15000"/>
+            <field name="l10n_in_tds">2500</field>
+            <field name="l10n_in_basic_percentage">0.5</field>
+            <field name="l10n_in_hra_percentage">0.4</field>
+            <field name="l10n_in_standard_allowance">3000</field>
+            <field name="l10n_in_performance_bonus_percentage">0.0433</field>
+            <field name="l10n_in_leave_travel_percentage">0.0433</field>
+            <field name="l10n_in_gratuity_percentage">0.0481</field>
+            <field name="l10n_in_esic_employee_percentage">0.0075</field>
+            <field name="l10n_in_esic_employer_percentage">0.0325</field>
+            <field name="l10n_in_phone_subscription">300</field>
+            <field name="l10n_in_internet_subscription">150</field>
+            <field name="l10n_in_meal_voucher_amount">170</field>
+            <field name="l10n_in_company_transport">450</field>
+            <field name="l10n_in_medical_insurance">4100</field>
+            <field name="l10n_in_gratuity">1058.2</field>
+            <field name="l10n_in_esic_employee_amount">338.025</field>
+            <field name="l10n_in_esic_employer_amount">1464.77</field>
+            <field name="pt_rule_parameter_id" ref="l10n_in_hr_payroll.l10n_in_rule_parameter_pt_gujarat"/>
             <field name="time_credit" eval="True"/>
             <field name="time_credit_type_id" ref="hr_work_entry.work_entry_type_unpaid_leave"/>
             <field name="hr_responsible_id" ref="base.user_demo"/>
@@ -269,8 +312,23 @@
             <field name="department_id" ref="l10n_in_hr_department_rd"/>
             <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_intern"/>
             <field name="wage" eval="25000"/>
+            <field name="l10n_in_basic_percentage">0.5</field>
+            <field name="l10n_in_hra_percentage">0.4</field>
+            <field name="l10n_in_standard_allowance">3000</field>
+            <field name="l10n_in_performance_bonus_percentage">0.0433</field>
+            <field name="l10n_in_leave_travel_percentage">0.0433</field>
+            <field name="l10n_in_gratuity_percentage">0.0481</field>
+            <field name="l10n_in_esic_employee_percentage">0.0075</field>
+            <field name="l10n_in_esic_employer_percentage">0.0325</field>
+            <field name="l10n_in_phone_subscription">200</field>
+            <field name="l10n_in_internet_subscription">150</field>
+            <field name="l10n_in_meal_voucher_amount">340</field>
+            <field name="l10n_in_company_transport">250</field>
+            <field name="l10n_in_medical_insurance">4100</field>
+            <field name="l10n_in_gratuity">601.25</field>
+            <field name="l10n_in_esic_employee_amount">194.55</field>
+            <field name="l10n_in_esic_employer_amount">843.05</field>
             <field name="hr_responsible_id" ref="base.user_demo"/>
-            <field name="l10n_in_esic_amount">1200</field>
             <field name="date_version" eval="(DateTime.today() + relativedelta(months=-6))"/>
             <field name="contract_date_start" eval="(DateTime.today() + relativedelta(months=-6))"/>
         </record>

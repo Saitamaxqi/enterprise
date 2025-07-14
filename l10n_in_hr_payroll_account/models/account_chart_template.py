@@ -44,9 +44,6 @@ class AccountChartTemplate(models.AbstractModel):
         std_IN_emp_salary_rule = self.env.ref('l10n_in_hr_payroll.l10n_in_hr_salary_rule_std')
         rules_mapping[std_IN_emp_salary_rule]['debit'] = '300002'
 
-        bonus_IN_emp_salary_rule = self.env.ref('l10n_in_hr_payroll.l10n_in_hr_salary_rule_bonus')
-        rules_mapping[bonus_IN_emp_salary_rule]['debit'] = '300003'
-
         spl_IN_emp_salary_rule = self.env.ref('l10n_in_hr_payroll.l10n_in_hr_salary_rule_spl')
         rules_mapping[spl_IN_emp_salary_rule]['debit'] = "300004"
 

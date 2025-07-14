@@ -6,34 +6,54 @@
         <field name="inherit_id" ref="hr_payroll.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//block[@id='hr_payroll_accountant']" position="after">
-                <h2>Indian Localization</h2>
-                <div class="row mt16 o_settings_container" id="l10n_in_hr_payroll">
-                    <div class="col-lg-6 col-12 o_setting_box" id="company_information">
-                        <div class="o_setting_left_pane"/>
-                        <div class="o_setting_right_pane">
-                            <span class="o_form_label">Company Information</span>
-                            <div class="text-muted">
-                                Offical Company Information
+                <block title="Indian Localization">
+                    <setting name="l10n_in_provident_fund" string="Employee Provident Fund (EPF)"
+                        help="Enable this to automatically calculate and deduct provident fund contributions from both
+                            employer and employee.">
+                        <field name="l10n_in_provident_fund"/>
+                        <div class="content-group">
+                            <div class="row ms-2" invisible="not l10n_in_provident_fund">
+                                <label for="l10n_in_epf_employer_id" class="col-md-6 p-0 m-0"/>
+                                <field name="l10n_in_epf_employer_id" placeholder="E.g. GJ/BAN/0000006/000/0000123"
+                                    class="col-lg-6 p-0"/>
                             </div>
-                            <group class="mt16">
-                                <field name="l10n_in_dearness_allowance"/>
-                            </group>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-12 o_setting_box" id="statutory_compliance" invisible="company_country_code != 'IN'">
-                        <div class="o_setting_left_pane">
-                            <field name="l10n_in_is_statutory_compliance"></field>
+                    </setting>
+                    <setting name="l10n_in_esic" string="ESIC (Employee State Insurance)"
+                        help="Enable this if your organization is registered under ESIC. This will deduct
+                            and contribute the ESIC amount for both employee and employer.">
+                        <field name="l10n_in_esic"/>
+                        <div class="content-group">
+                            <div class="row ms-2" invisible="not l10n_in_esic">
+                                <label for="l10n_in_esic_ip_number" class="col-md-6 p-0 m-0"/>
+                                <field name="l10n_in_esic_ip_number" placeholder="E.g. 11000000000001002"
+                                    class="col-lg-6 p-0"/>
+                            </div>
                         </div>
-                        <div class="o_setting_right_pane">
-                            <label for="l10n_in_is_statutory_compliance" string="Payroll Statutory Compliance"/>
-                            <group class="mt16" invisible="not l10n_in_is_statutory_compliance">
-                                <field name="l10n_in_epf_employer_id" placeholder="Code of 10 Numbers"/>
-                                <field name="l10n_in_esic_ip_number" placeholder="Code of 17 Digits"/>
-                                <field name="l10n_in_pt_number" placeholder="Code of 11 Digits"/>
-                            </group>
+                    </setting>
+                    <setting name="l10n_in_pt" string="Professional Tax (PT)"
+                        help="Turn this on to deduct professional tax based on employee income, as per your state government.">
+                        <field name="l10n_in_pt"/>
+                        <div class="content-group">
+                            <div class="row ms-2" invisible="not l10n_in_pt">
+                                <label for="l10n_in_pt_number" class="col-md-6 p-0 m-0"/>
+                                <field name="l10n_in_pt_number" placeholder="E.g. 12300012350" class="col-md-6 p-0"/>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </setting>
+                    <setting name="l10n_in_labour_welfare" string="Labour Welfare Fund (LWF)"
+                        help="Enable this to deduct a fixed contribution toward the Labour Welfare Fund for both
+                            employee and employer.">
+                        <field name="l10n_in_labour_welfare"/>
+                        <div class="content-group">
+                            <div class="row ms-2" invisible="not l10n_in_labour_welfare">
+                                <label for="l10n_in_labour_identification_number" class="col-md-6 p-0 m-0"/>
+                                <field name="l10n_in_labour_identification_number" placeholder="Enter LWF number"
+                                    class="col-md-6 p-0"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
             </xpath>
         </field>
     </record>

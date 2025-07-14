@@ -47,7 +47,7 @@ result_name = inputs['LAI'].name
         <field name="code">HRAMN</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-nonmetro_alw = version.l10n_in_house_rent_allowance_metro_nonmetro / 100
+nonmetro_alw = version.l10n_in_hra_percentage / 100
 result = version.wage * nonmetro_alw
         </field>
         <field name="category_id" ref="hr_payroll.ALW"/>
@@ -60,12 +60,15 @@ result = version.wage * nonmetro_alw
 
     <record id="hr_salary_rule_special" model="hr.salary.rule">
         <field name="code">SA</field>
-        <field name="name">Grade/Special/Management/Supplementary Allowance</field>
+        <field name="name">Fixed Allowance</field>
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(version.l10n_in_supplementary_allowance)</field>
+        <field name="condition_python">result = bool(version.l10n_in_fixed_allowance_percentage)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = version.l10n_in_supplementary_allowance</field>
+        <field name="amount_python_compute">
+result = categories['BASIC']
+result_rate = version.l10n_in_fixed_allowance_percentage * 100
+        </field>
         <field name="sequence" eval="20"/>
         <field name="note">This allowance is normally given as an additional benefit to employees and is fully taxable.</field>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
@@ -301,19 +304,6 @@ result_name = 'IE' in inputs and inputs['IE'].name
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
     </record>
 
-    <record id="hr_salary_rule_driver" model="hr.salary.rule">
-        <field name="code">DRI</field>
-        <field name="name">Driver Salary</field>
-        <field name="category_id" ref="hr_payroll.ALW"/>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(version.l10n_in_driver_salay)</field>
-        <field name="amount_select">fix</field>
-        <field eval="900.0" name="amount_fix"/>
-        <field name="sequence" eval="40"/>
-         <field name="note">Rs. 900 per month (non taxable)</field>
-        <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
-    </record>
-
     <record id="l10n_in_hr_payroll_salary_structure_ind_emp_gross_salary_rule" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.GROSS"/>
         <field name="name">Taxable Salary</field>
@@ -373,24 +363,6 @@ result = -version.wage * pf_ctb_percent
         <field name="note">Employee can claim deduction even of employer's contribution to NPS.</field>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
     </record>
-
-    <record id="hr_payslip_rule_vpf" model="hr.salary.rule">
-        <field name="code">VPF</field>
-        <field name="name">Voluntary Provident Fund Contribution</field>
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(version.l10n_in_voluntary_provident_fund)</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-VPF = version.l10n_in_voluntary_provident_fund
-result = -version.wage * VPF / 100
-        </field>
-        <field name="sequence" eval="160"/>
-        <field name="partner_id" ref="hr_vpf_contribution_register"/>
-        <field name="note">VPF is a safe option wherein you can contribute more than the PF ceiling of 12% that has been mandated by the government.This additional amount enjoys all the benefits of PF except that the employer is not liable to contribute any extra amount apart from 12%.An added advantage is that the interest rate is equal to the interest rate of PF and he withdrawal is tax free. Please note that the maximum contribution towards VPF is 100% of your Basic.The highest rate of interest (close to 9%) makes it a very attractive saving scheme. Because of these advantages many employees chose not to close their PF account even after getting employment else where other than India.Employees also get a major tax break on their entire contribution to the fund up to a ceiling of Rs. 70,000/-</field>
-        <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
-    </record>
-
     <record id="hr_payslip_rule_cpt" model="hr.salary.rule">
         <field name="code">CPT</field>
         <field name="name">Deduction for Company Provided Transport</field>
@@ -422,9 +394,9 @@ result = -version.wage * VPF / 100
         <field name="sequence" eval="168"/>
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(version.l10n_in_esic_amount)</field>
+        <field name="condition_python">result = bool(version.l10n_in_esic_employer_percentage)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = -version.l10n_in_esic_amount</field>
+        <field name="amount_python_compute">result = -categories['GROSS'] * version.l10n_in_esic_employer_percentage</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="hr_payroll_salary_structure_ind_emp"/>
     </record>

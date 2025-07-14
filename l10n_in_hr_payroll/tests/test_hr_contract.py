@@ -5,7 +5,7 @@ from datetime import date
 
 from freezegun import freeze_time
 from odoo.addons.l10n_in_hr_payroll.tests.common import TestPayrollCommon
-from odoo.tests import tagged
+from odoo.tests import Form, tagged
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -38,3 +38,91 @@ class TestHrContract(TestPayrollCommon):
             self.env['hr.employee'].notify_expiring_contract_work_permit()
             mail_activity = self.env['mail.activity'].search([('res_id', '=', contract.id), ('res_model', '=', 'hr.version')])
             self.assertTrue(mail_activity.exists(), "There should be reminder activity as employee rahul's contract end today")
+
+    def test_l10n_in_hr_version_computation(self):
+        """ Test the computation of various fields in hr.version model """
+
+        version = self.jethalal_emp.create_version({
+            'date_version': date(2025, 1, 1),
+            'contract_date_start': date(2025, 1, 1),
+            'contract_date_end':  date(2025, 4, 30),
+            'name': 'Test Version',
+            'wage': 50000.0,
+            'resource_calendar_id': self.env.company.resource_calendar_id.id,
+            'contract_type_id': self.env.ref('l10n_in_hr_payroll.l10n_in_contract_type_probation').id,
+            'hr_responsible_id': self.env.ref('base.user_admin').id,
+        })
+
+        with Form(version) as version_form:
+            version_form.l10n_in_basic_percentage = 0.4
+            version_form.l10n_in_hra_percentage = 0.5
+            version_form.l10n_in_standard_allowance_percentage = 0.1
+            version_form.l10n_in_performance_bonus_percentage = 0.05
+            version_form.l10n_in_leave_travel_percentage = 0.05
+            version_form.l10n_in_phone_subscription = 500
+            version_form.l10n_in_internet_subscription = 300
+            version_form.l10n_in_meal_voucher_amount = 1000
+            version_form.l10n_in_company_transport = 800
+            version_form.l10n_in_gratuity_percentage = 0.0481
+
+        self.assertAlmostEqual(version.l10n_in_basic_salary_amount, 20000,
+            msg="Basic salary amount should be 40% of wage")
+        self.assertAlmostEqual(version.l10n_in_standard_allowance, 2000,
+            msg="Standard allowance should be 10% of basic salary")
+        self.assertAlmostEqual(version.l10n_in_hra, 10000, msg="HRA should be 50% of basic salary")
+        self.assertAlmostEqual(version.l10n_in_performance_bonus, 1000,
+            msg="Performance bonus should be 10% of basic salary")
+        self.assertAlmostEqual(version.l10n_in_leave_travel_allowance, 1000, msg="LTA should be 5% of basic salary")
+        self.assertAlmostEqual(version.l10n_in_fixed_allowance, 16000,
+            msg="Fixed allowance should be wage minus sum of all allowances")
+        self.assertAlmostEqual(
+            version.l10n_in_gross_salary,
+            20000 + 10000 + 2000 + 1000 + 1000 + 500 + 300 + 1000 + 800 + 16000,
+            msg="Gross salary should be sum of all basic and allowances"
+        )
+        self.assertAlmostEqual(version.l10n_in_gratuity, 962.0,
+            msg="Gratuity should be 4.81% of basic salary")
+
+    def test_in_hr_version_percentage_computation(self):
+        """ Test the computation of percentage fields in hr.version model """
+
+        version = self.rahul_emp.create_version({
+            'date_version': date(2025, 3, 1),
+            'contract_date_start': date(2025, 3, 1),
+            'contract_date_end':  date(2025, 6, 30),
+            'name': 'Test Version',
+            'wage': 50000.0,
+            'l10n_in_basic_salary_amount': 20000,
+            'l10n_in_hra': 10000,
+            'l10n_in_standard_allowance': 1100,
+            'l10n_in_performance_bonus': 1000,
+            'l10n_in_leave_travel_allowance': 1000,
+            'l10n_in_pf_employer_type': 'calculate',
+            'l10n_in_pf_employee_type': 'calculate',
+            'l10n_in_gratuity': 962,
+            'resource_calendar_id': self.env.company.resource_calendar_id.id,
+            'contract_type_id': self.env.ref('l10n_in_hr_payroll.l10n_in_contract_type_probation').id,
+            'hr_responsible_id': self.env.ref('base.user_admin').id,
+        })
+
+        with Form(version) as version_form:
+            version_form.l10n_in_basic_salary_amount = 22000
+            version_form.save()
+
+        self.assertEqual(version.l10n_in_basic_percentage, 0.44,
+            msg="Basic percentage should be 44% of updated wage")
+        self.assertAlmostEqual(version.l10n_in_hra_percentage, 0.4, msg="HRA should be 40% of updated basic salary")
+        self.assertAlmostEqual(version.l10n_in_standard_allowance_percentage, 0.05,
+            msg="Standard allowance should be 5% of updated basic salary")
+        self.assertAlmostEqual(version.l10n_in_performance_bonus_percentage, 0.3,
+            msg="Performance bonus should be 30% of updated basic salary")
+        self.assertAlmostEqual(version.l10n_in_leave_travel_percentage, 0.3,
+            msg="LTA should be 30% of updated basic salary")
+        self.assertAlmostEqual(version.l10n_in_fixed_allowance, 4900,
+            msg="Fixed allowance should be wage minus sum of all allowances")
+        self.assertAlmostEqual(version.l10n_in_pf_employee_amount, 2640,
+            msg="PF employee amount should be 12% of updated basic salary")
+        self.assertAlmostEqual(version.l10n_in_pf_employer_amount, 2640,
+            msg="PF employer amount should be 12% of updated basic salary")
+        self.assertAlmostEqual(version.l10n_in_gratuity_percentage, 0.048090909090909094,
+            msg="Gratuity should be 4.81% of updated basic salary")

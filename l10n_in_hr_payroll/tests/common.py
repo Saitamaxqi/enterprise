@@ -27,6 +27,9 @@ class TestPayrollCommon(TransactionCase):
         cls.company_in = cls.Company.create({
             'name': 'Company IN',
             'country_id': cls.env.ref('base.in').id,
+            'l10n_in_esic': True,
+            'l10n_in_pt': True,
+            'l10n_in_provident_fund': True,
         })
 
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company_in.ids))
@@ -46,8 +49,17 @@ class TestPayrollCommon(TransactionCase):
             'contract_date_start': date(2023, 1, 1),
             'contract_date_end':  date(2023, 1, 31),
             'wage': 5000.0,
-            'l10n_in_esic_amount': 20.0,
             'hr_responsible_id': cls.employee_fp.id,
+            'l10n_in_basic_percentage': 0.35,
+            'l10n_in_hra_percentage': 0.4,
+            'l10n_in_standard_allowance': 30,
+            'l10n_in_performance_bonus_percentage': 0.3,
+            'l10n_in_leave_travel_percentage': 0.3,
+            'l10n_in_medical_insurance': 560.0,
+            'l10n_in_insured_spouse': True,
+            'l10n_in_gratuity_percentage': 0.0481,
+            'l10n_in_esic_employee_amount': 20.0,
+            'l10n_in_esic_employer_amount': 20.0,
         })
 
         cls.jethalal_emp = cls.Employee.create({
@@ -60,8 +72,17 @@ class TestPayrollCommon(TransactionCase):
             'contract_date_start': date(2023, 1, 1),
             'contract_date_end':  date(2023, 1, 31),
             'wage': 5000.0,
-            'l10n_in_esic_amount': 20.0,
             'hr_responsible_id': cls.employee_fp.id,
+            'l10n_in_basic_percentage': 0.35,
+            'l10n_in_hra_percentage': 0.4,
+            'l10n_in_standard_allowance': 40,
+            'l10n_in_performance_bonus_percentage': 0.3,
+            'l10n_in_leave_travel_percentage': 0.3,
+            'l10n_in_medical_insurance': 560.0,
+            'l10n_in_insured_spouse': True,
+            'l10n_in_gratuity_percentage': 0.0481,
+            'l10n_in_esic_employee_amount': 20.0,
+            'l10n_in_esic_employer_amount': 20.0,
         })
 
         cls.res_bank = cls.Bank.create({
@@ -84,3 +105,8 @@ class TestPayrollCommon(TransactionCase):
 
         cls.contract_rahul = cls.rahul_emp.version_id
         cls.contract_jethalal = cls.jethalal_emp.version_id
+
+        cls.contract_rahul._compute_l10n_in_esic_employee_percentage()
+        cls.contract_rahul._compute_l10n_in_esic_employer_percentage()
+        cls.contract_jethalal._compute_l10n_in_esic_employee_percentage()
+        cls.contract_jethalal._compute_l10n_in_esic_employer_percentage()

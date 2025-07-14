@@ -29,9 +29,9 @@ result = payslip.paid_amount
         <field name="name">Special</field>
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = bool(version.l10n_in_supplementary_allowance)</field>
+        <field name="condition_python">result = bool(version.l10n_in_fixed_allowance)</field>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = version.l10n_in_supplementary_allowance</field>
+        <field name="amount_python_compute">result = version.l10n_in_fixed_allowance</field>
         <field name="sequence" eval="20"/>
         <field name="note">This allowance is normally given as an additional benefit to worker and is fully taxable.</field>
         <field name="struct_id" ref="structure_worker_0001"/>
@@ -55,18 +55,20 @@ result = categories['BASIC'] + categories['ALW']
         <field name="name">Professional Tax</field>
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = categories['GROSS'] &gt;= 3000 </field>
+        <field name="condition_python">result = bool(version.l10n_in_pt and version.pt_rule_parameter_id)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-amounts = payslip._rule_parameter('l10n_in_professional_tax')
-if categories['GROSS'] &gt;= 12000:
-    result = amounts[0]
-elif categories['GROSS'] &gt;= 9000 and categories &lt; 11999:
-    result = amounts[1]
-elif categories['GROSS'] &gt;= 6000 and categories['GROSS'] &lt;= 8999:
-    result = amounts[2]
+result = 0
+tax_slabs = payslip._rule_parameter(version.pt_rule_parameter_id.code)
+if isinstance(tax_slabs, dict):
+    gender = version.sex if version.sex in ['male', 'female'] else 'male'
+    slabs = tax_slabs.get(gender, [])
 else:
-    result = 0
+    slabs = tax_slabs
+for amount, (lower, upper) in slabs:
+    if float(lower) &lt;= categories['GROSS'] &lt;= float(upper):
+        result = -amount
+        break
         </field>
         <field name="partner_id" ref="hr_professional_tax_deduction_register"/>
         <field eval="145" name="sequence"/>
