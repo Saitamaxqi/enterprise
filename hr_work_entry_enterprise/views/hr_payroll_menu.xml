@@ -8,21 +8,21 @@
         name="Payroll"
         sequence="190"
         web_icon="hr_payroll,static/description/icon.png"
-        groups="hr.group_hr_user"/>
+        groups="hr.group_hr_manager"/>
 
     <menuitem
         id="menu_hr_payroll_work_entries_root"
         name="Work Entries"
         parent="menu_hr_payroll_root"
         sequence="60"
-        groups="hr.group_hr_user"/>
+        groups="hr.group_hr_manager"/>
 
     <menuitem
         id="menu_hr_payroll_configuration"
         name="Configuration"
         parent="menu_hr_payroll_root"
         sequence="100"
-        groups="hr.group_hr_user"/>
+        groups="hr.group_hr_manager"/>
 
     <!-- **** Work Entries **** -->
     <menuitem

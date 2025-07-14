@@ -120,7 +120,11 @@
                     <field name="country_id" invisible="1"/>
                     <field name="country_code" invisible="1"/>
                     <field name="payslip_run_id" string="Pay Run" readonly="state not in ['draft', 'verify']" placeholder="Off-Cycle"/>
-                    <field name="struct_id" required="1" readonly="state in ['cancel', 'done', 'paid']"/>
+                    <field name="struct_id" required="1" readonly="state in ['cancel', 'done', 'paid']" 
+                        options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                        groups="!hr_payroll.group_hr_payroll_manager"/>
+                    <field name="struct_id" required="1" readonly="state in ['cancel', 'done', 'paid']" 
+                        groups="hr_payroll.group_hr_payroll_manager"/>
                     <field name="salary_attachment_ids" invisible="1" force_save="1"/>
                     <field name="wage_type" invisible="1"/>
                     <field name="sum_worked_hours" invisible="1"/>

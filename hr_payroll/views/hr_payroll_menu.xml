@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <odoo>
+    <record id="hr_work_entry_enterprise.menu_hr_payroll_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.link(ref('hr_payroll.group_hr_payroll_user'))]"/>
+    </record>
 
     <menuitem
         id="menu_hr_payroll_dashboard_root"
@@ -128,6 +131,9 @@
         parent="menu_hr_payroll_report"/>
 
     <!-- **** Configuration **** -->
+    <record id="hr_work_entry_enterprise.menu_hr_payroll_configuration" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('hr_payroll.group_hr_payroll_manager')])]"/>
+    </record>
 
     <menuitem
         id="menu_hr_payroll_global_settings"
@@ -142,8 +148,7 @@
         id="menu_hr_salary_configuration"
         name="Salary"
         parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
-        sequence="80"
-        groups="hr_payroll.group_hr_payroll_manager"/>
+        sequence="80"/>
 
     <menuitem
         id="menu_action_hr_salary_rule_form"
@@ -192,8 +197,7 @@
         id="menu_hr_payroll_dashboard_configuration"
         name="Dashboard"
         parent="hr_work_entry_enterprise.menu_hr_payroll_configuration"
-        sequence="100"
-        groups="hr_payroll.group_hr_payroll_manager"/>
+        sequence="100"/>
 
     <menuitem
         id="menu_hr_payroll_dashboard_warning"

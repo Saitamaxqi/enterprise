@@ -73,8 +73,15 @@
                 <div class="mb-3" invisible="schedule_pay != 'weekly'">/ week</div>
                 <div class="mb-3" invisible="schedule_pay != 'daily'">/ day</div>
             </xpath>
-
+            
+            <field name="resource_calendar_id" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+            </field>
             <field name="resource_calendar_id" position="after">
+                <field name="resource_calendar_id"
+                    groups="!hr.group_hr_manager,hr_payroll.group_hr_payroll_user"
+                    options="{'no_create': True, 'no_open': True}"
+                    help="The default working hours are set in configuration."/>
                 <label for="time_credit"/>
                 <div class="o_row">
                     <field name="time_credit"/>
@@ -83,6 +90,10 @@
                 <field name="standard_calendar_id" invisible="not time_credit" help="The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."/>
                 <field name="time_credit_type_id" invisible="not time_credit" required="time_credit"/>
             </field>
+
+            <page name="payroll_information" position="attributes">
+                <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
+            </page>
         </field>
     </record>
 
