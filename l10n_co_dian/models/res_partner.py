@@ -25,7 +25,7 @@ class ResPartner(models.Model):
     def _l10n_co_dian_onchange_identification_type(self):
         for partner in self:
             company = self.env.company
-            if partner.l10n_co_dian_enable_update_data and company.l10n_co_dian_certificate_ids:
+            if partner.l10n_co_dian_enable_update_data and company.sudo().l10n_co_dian_certificate_ids:
                 partner._l10n_co_dian_update_data(company)
 
     def button_l10n_co_dian_refresh_data(self):
