@@ -334,7 +334,7 @@ class AccountBankStatementLine(models.Model):
         for st_line_id, all_aml_ids, total_residual, ref_aml_ids in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             if total_residual == st_line.amount:
-                st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(all_aml_ids)
+                st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(all_aml_ids)
             elif ref_aml_ids:
                 ref_amls = self.env['account.move.line'].browse(ref_aml_ids).with_prefetch(self._prefetch_ids)
 
@@ -367,7 +367,7 @@ class AccountBankStatementLine(models.Model):
                         ref_amls -= aml
                     else:
                         break
-                st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(ref_amls.ids)
+                st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(ref_amls.ids)
             else:
                 # no valid candidates yet
                 continue
@@ -481,7 +481,7 @@ class AccountBankStatementLine(models.Model):
         # process then remove matched statement lines
         for st_line_id, aml_id in self.env.cr.fetchall():
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
-            st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_id)
+            st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_id)
             if st_line.currency_id.is_zero(st_line.amount_residual):
                 processed_st_line_ids.add(st_line_id)
         remaining_st_line_ids = list(set(remaining_st_line_ids) - processed_st_line_ids)
@@ -635,13 +635,13 @@ class AccountBankStatementLine(models.Model):
                      keys like "name", "account_id", "amount_currency", and "currency_id".
         """
         self.ensure_one()
-        currency = self.foreign_currency_id or self.currency_id or self.journal_id.currency_id or self.env.company.currency_id
+        currency = self.foreign_currency_id or self.currency_id or self.journal_id.currency_id or self.company_id.currency_id
         return {
             'name': self.payment_ref,
             'account_id': self.journal_id.suspense_account_id.id,
             'balance': -open_balance,
             'currency_id': currency.id,
-            'amount_currency': -open_amount_currency if is_same_currency else currency.round(-open_balance * currency.rate),
+            'amount_currency': -open_amount_currency if is_same_currency else currency.with_company(self.company_id).round(-open_balance * currency.rate),
         }
 
     def _get_partner_id(self, lines_to_add_partner_ids):
@@ -755,7 +755,7 @@ class AccountBankStatementLine(models.Model):
             return self.env['account.bank.statement.line']
 
         self._handle_reconciliation_rule(account_move_line, account_id)
-        new_rule = self._check_and_create_reconciliation_rule(account_id, self.env.company.id)
+        new_rule = self._check_and_create_reconciliation_rule(account_id, self.company_id.id)
 
         if self.env.context.get('account_default_taxes') and self.env['account.account'].browse(account_id).tax_ids:
             self._recompute_tax_lines()

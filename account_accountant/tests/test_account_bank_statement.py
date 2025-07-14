@@ -1894,3 +1894,39 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             statement_line.move_id.id: 3999.99,
             partials.exchange_move_id.id: 666.67,
         })
+
+    def test_currency_rate_with_cron(self):
+        """
+            This test will replicate the use of the cron in multi company with different currencies.
+            For example, when having 2 companies, one in EUR and one in USD. Eventually, the cron will be trigger and
+            do the try_auto_reconcile function with the main company as the self.env.company.
+            This will cause problem in the computation of the amount currency of the suspense line if the statement line
+            is from the other company (due to a wrong rate).
+        """
+        company_2 = self.company_data_2['company']
+        company_2.currency_id = self.other_currency
+        new_journal = self.company_data_2['default_journal_bank']
+        new_journal.currency_id = self.other_currency
+        new_journal.inbound_payment_method_line_ids.payment_account_id = self.inbound_payment_method_line.payment_account_id.copy({'company_ids': [Command.link(company_2.id)]})
+
+        payment = self._create_and_post_payment(
+            amount=100,
+            memo="INV/24-25/0001 - pay_AretqwwXerereE",
+            journal_id=new_journal.id,
+            company_id=company_2.id,
+            currency_id=self.company_data['currency'].id,
+        )
+        st_line = self._create_st_line(
+            amount=1000,
+            payment_ref="pay_AretqwwXerereE",
+            update_create_date=False,
+            journal_id=new_journal.id,
+            company_id=company_2.id,
+        )
+        # To emulate the launch of the try auto reconcile with the cron environment, we use the with company
+        st_line._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 1000.0, 'currency_id': self.other_currency.id, 'balance': 1000.0, 'reconciled': False},
+            {'account_id': payment.outstanding_account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': -900.0, 'currency_id': self.other_currency.id, 'balance': -900.0, 'reconciled': False},
+        ])
