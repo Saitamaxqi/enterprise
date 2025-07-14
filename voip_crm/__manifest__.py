@@ -8,6 +8,7 @@
     "auto_install": True,
     "data": [
         "views/crm_lead_views.xml",
+        "views/voip_call_views.xml",
         "security/voip_crm_security.xml",
     ],
     "author": "Odoo S.A.",

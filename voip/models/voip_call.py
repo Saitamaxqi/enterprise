@@ -8,7 +8,7 @@ from odoo.addons.mail.tools.discuss import Store
 
 class VoipCall(models.Model):
     _name = "voip.call"
-    _inherit = "voip.country.code.mixin"
+    _inherit = ["mail.thread", "voip.country.code.mixin"]
     _description = """A phone call handled using the VoIP application"""
 
     phone_number = fields.Char(required=True, readonly=True)
@@ -46,6 +46,16 @@ class VoipCall(models.Model):
     country_flag_url = fields.Char(related="country_id.image_url", string="Country Flag")
     provider_id = fields.Many2one(related="user_id.voip_provider_id", string="Provider", readonly=True)
     company_id = fields.Many2one(related="user_id.company_id", readonly=True)
+    calls_count = fields.Integer(compute="_compute_calls_count")
+    image_1920 = fields.Binary(related="partner_id.image_1920")
+    avatar_128 = fields.Binary(related="partner_id.avatar_128")
+
+    def _compute_calls_count(self):
+        for rec in self:
+            rec.calls_count = self.env["voip.call"].search_count(
+                (rec.partner_id and ["|", ("phone_number", "=", rec.phone_number), ("partner_id", "=", rec.partner_id)])
+                or [("phone_number", "=", rec.phone_number)]
+            )
 
     @api.depends("state", "partner_id.name")
     def _compute_display_name(self):
@@ -101,6 +111,12 @@ class VoipCall(models.Model):
 
         for call in self:
             call.country_id = country_id_by_iso_code.get(call.country_code_from_phone, False)
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "partner_id" in vals:
+            self.partner_id.phone = self.phone_number
+        return res
 
     @api.model
     def create_and_format(
@@ -234,3 +250,18 @@ class VoipCall(models.Model):
 
     def _phone_get_number_fields(self):
         return ["phone_number"]
+
+    def action_open_calls(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "name": "Calls",
+            "res_model": "voip.call",
+            "view_mode": "list,form",
+            "domain": (
+                self.partner_id
+                and ["|", ("phone_number", "=", self.phone_number), ("partner_id", "=", self.partner_id.id)]
+            )
+            or [("phone_number", "=", self.phone_number)],
+            "context": dict(self.env.context),
+        }

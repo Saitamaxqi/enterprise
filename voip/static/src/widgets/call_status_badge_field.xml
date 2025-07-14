@@ -1,0 +1,10 @@
+<templates>
+    <t t-name="voip.CallStatusBadgeField">
+        <span t-if="props.record.data[props.name]"
+              class="badge rounded-pill"
+              t-att-class="badgeClass">
+            <i class="me-1" t-att-class="iconClass"/>
+            <span t-esc="statusLabel"/>
+        </span>
+    </t>
+</templates>
