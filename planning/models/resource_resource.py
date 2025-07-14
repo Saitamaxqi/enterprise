@@ -57,8 +57,9 @@ class ResourceResource(models.Model):
         if not self.env.context.get('show_job_title'):
             return super()._compute_display_name()
         for resource in self:
-            if resource.resource_type == 'material' and resource.default_role_id:
-                resource.display_name = _("%(resource_name)s (%(role)s)", resource_name=resource.name, role=resource.default_role_id.name)
+            resource_default_role_id = resource.sudo().default_role_id
+            if resource.resource_type == 'material' and resource_default_role_id:
+                resource.display_name = _("%(resource_name)s (%(role)s)", resource_name=resource.name, role=resource_default_role_id.name)
             else:
                 resource.display_name = resource.employee_id.display_name if resource.employee_id else resource.name
 
