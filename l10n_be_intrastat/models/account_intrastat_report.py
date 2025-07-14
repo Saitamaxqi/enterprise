@@ -100,6 +100,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             '_get_reception_form': self._get_reception_form,
             '_get_expedition_code': self._get_expedition_code,
             '_get_expedition_form': self._get_expedition_form,
+            'hide_0_lines': options.get('hide_0_lines'),
         })
 
     def _get_reception_code(self, extended):

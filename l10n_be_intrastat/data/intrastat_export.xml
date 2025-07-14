@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <template id="intrastat_report_export_xml_items">
-            <t t-foreach="items" t-as="item">
+            <t t-foreach="items" t-as="item" t-if="not hide_0_lines or item['value'] > 0">
                 <Item>
                     <Dim prop="EXTRF"
                          t-out="item['system']"/>
