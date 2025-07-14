@@ -404,6 +404,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
             descriptor['source'] = product.l10n_br_source_origin or ''
             descriptor['productType'] = product.l10n_br_sped_type or ''
             descriptor['hsCode'] = (product.l10n_br_ncm_code_id.code or '').replace('.', '')
+            if product.l10n_br_ncm_code_id.ex:
+                descriptor['ex'] = product.l10n_br_ncm_code_id.ex
 
             uom = base_line['product_uom_id']
             descriptor['unitTaxable'] = uom.name[:6] if uom else ''  # the maximum length allowed by the API is 6

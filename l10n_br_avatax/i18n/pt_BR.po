@@ -366,6 +366,20 @@ msgstr ""
 "cenários e acionem a isenção a despeito das demais configurações."
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_ncm_code__ex
+msgid ""
+"Brazil: Use this field to indicate an 'EX Citation' which identifies "
+"exceptions to Avalara’s standard fiscal rules.\n"
+"EX Citations help define specific tax treatments (e.g., CST, ST, rate "
+"reductions, special benefits) for products with tax behavior different from "
+"Avalara’s default settings."
+msgstr "Brasil: Utilize este campo para indicar uma “EX Citation”, "
+"que identifica exceções às regras fiscais padrão da Avalara. "
+"As EX Citations ajudam a definir tratamentos fiscais específicos "
+"(como CST, ST, reduções de alíquota, benefícios especiais) para "
+"produtos com comportamento tributário diferente do padrão da Avalara."
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_use_type
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_use_type
 msgid "Brazil: indicate what is the usage purpose for this product"

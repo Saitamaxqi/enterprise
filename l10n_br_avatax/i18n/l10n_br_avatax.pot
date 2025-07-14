@@ -4,13 +4,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.5alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 17:02+0000\n"
-"PO-Revision-Date: 2024-10-23 17:02+0000\n"
+"POT-Creation-Date: 2025-07-14 09:44+0000\n"
+"PO-Revision-Date: 2025-07-14 09:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -36,20 +35,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid "%s must have a city selected in the list of Brazil's cities."
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
-msgid ""
-"- The following label exceeds the %(max_characters)s character limit for %(doc_type)s: %(line)s"
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
-msgid ""
-"The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -137,7 +122,15 @@ msgid "Active"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:product.template,name:l10n_br_avatax.added_taxes_consumable_product_product_template
+msgid "Added Taxes Consumable Product"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__agricultural_production
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_move__l10n_br_use_type__agricultural_production
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_use_type__agricultural_production
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__sale_order__l10n_br_use_type__agricultural_production
 msgid "Agricultural production"
 msgstr ""
 
@@ -218,6 +211,11 @@ msgid "Avatax requires at least one non-transport line."
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.view_product_template_form
+msgid "Brazil Accounting"
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_property_service_code_origin_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_property_service_code_origin_id
 msgid "Brazil: City service code where the provider is registered."
@@ -234,6 +232,14 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_sped_type
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_sped_type
 msgid "Brazil: Fiscal product type according to SPED list table"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model.fields,help:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
+msgid ""
+"Brazil: If an Operation Type is selected, it will be applied to the product "
+"in the line, determining the CFOP for that line. If no selection is made, "
+"the operation type will be inherited from the header."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -318,6 +324,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_ncm_code__ex
+msgid ""
+"Brazil: Use this field to indicate an 'EX Citation' which identifies exceptions to Avalara’s standard fiscal rules.\n"
+"EX Citations help define specific tax treatments (e.g., CST, ST, rate reductions, special benefits) for products with tax behavior different from Avalara’s default settings."
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_use_type
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_use_type
 msgid "Brazil: indicate what is the usage purpose for this product"
@@ -350,11 +363,12 @@ msgid ""
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:ir.model.fields,help:l10n_br_avatax.field_account_move_line__l10n_br_goods_operation_type_id
+#: model:ir.model.fields,help:l10n_br_avatax.field_account_bank_statement_line__l10n_br_use_type
+#: model:ir.model.fields,help:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_use_type
+#: model:ir.model.fields,help:l10n_br_avatax.field_account_move__l10n_br_use_type
+#: model:ir.model.fields,help:l10n_br_avatax.field_sale_order__l10n_br_use_type
 msgid ""
-"Brazil: If an Operation Type is selected, it will be applied to the product in the line, "
-"determining the CFOP for that line. If no selection is made, the operation type will be "
-"inherited from the header."
+"Brazil: this will override the purpose of use for all products sold here."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -455,6 +469,12 @@ msgid "Contacts"
 msgstr ""
 
 #. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/res_config_settings.py:0
+msgid "Continue Configurations"
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__create_uid
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__create_uid
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_operation_type__create_uid
@@ -488,6 +508,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_fiscal_position__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_tax__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__display_name
@@ -499,6 +520,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_partner__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__ex
+msgid "EX"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -528,8 +554,11 @@ msgid "Fiscal Position"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__fixed_assets
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_move__l10n_br_use_type__fixed_assets
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_sped_type__fixed_assets
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_use_type__fixed_assets
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__sale_order__l10n_br_use_type__fixed_assets
 msgid "Fixed assets"
 msgstr ""
 
@@ -579,6 +608,7 @@ msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_transport_cost_type__freight
+#: model:product.template,name:l10n_br_avatax.freight_transport_product_product_template
 msgid "Freight"
 msgstr ""
 
@@ -618,6 +648,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_fiscal_position__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move_line__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_tax__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__id
@@ -639,6 +670,7 @@ msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_transport_cost_type__insurance
+#: model:product.template,name:l10n_br_avatax.insurance_transport_product_product_template
 msgid "Insurance"
 msgstr ""
 
@@ -666,6 +698,11 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model,name:l10n_br_avatax.model_account_move
 msgid "Journal Entry"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model,name:l10n_br_avatax.model_account_move_line
+msgid "Journal Item"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -743,6 +780,12 @@ msgid "NCM Code"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.actions.act_window,name:l10n_br_avatax.l10n_br_ncm_code_action
+#: model:ir.ui.menu,name:l10n_br_avatax.ncm_codes_menu
+msgid "NCM Codes"
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_operation_type__name
@@ -804,8 +847,16 @@ msgid "Not Taxable"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__notapplicable
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_move__l10n_br_use_type__notapplicable
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_use_type__notapplicable
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__sale_order__l10n_br_use_type__notapplicable
 msgid "Not applicable"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_partner_view_list
+msgid "Number"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -829,6 +880,11 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_br_avatax.l10n_br_operation_type_action
 #: model:ir.ui.menu,name:l10n_br_avatax.l10n_br_operation_type_menu
 msgid "Operation Types"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:product.template,name:l10n_br_avatax.other_cost_transport_product_product_template
+msgid "Other Costs"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -902,8 +958,11 @@ msgid "Product service codes defined by the city"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__production
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_move__l10n_br_use_type__production
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_use_type__production
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_company__l10n_br_avalara_environment__production
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__sale_order__l10n_br_use_type__production
 msgid "Production"
 msgstr ""
 
@@ -914,13 +973,25 @@ msgid "Products"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_use_type
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_use_type
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_use_type
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_product_product__l10n_br_use_type
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_product_template__l10n_br_use_type
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_use_type
 msgid "Purpose of Use"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:product.template,name:l10n_br_avatax.regular_consumable_product_product_template
+msgid "Regular Consumable Product"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__resale
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_move__l10n_br_use_type__resale
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_use_type__resale
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__sale_order__l10n_br_use_type__resale
 msgid "Resale"
 msgstr ""
 
@@ -951,12 +1022,6 @@ msgstr ""
 msgid ""
 "Server Response:\n"
 "%s"
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/res_config_settings.py:0
-msgid "Continue Configurations"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1028,6 +1093,11 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_sped_type__subproduct
 msgid "Subproduct"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:product.template,name:l10n_br_avatax.subtracted_consumable_product_product_template
+msgid "Subtracted Consumable Product"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1143,6 +1213,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid ""
+"The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_service_code__city_id
 msgid "The city this service code relates to."
 msgstr ""
@@ -1197,7 +1274,10 @@ msgid "Use Avatax Brazil API"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_external_tax_mixin__l10n_br_use_type__use_or_consumption
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__account_move__l10n_br_use_type__use_or_consumption
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_use_type__use_or_consumption
+#: model:ir.model.fields.selection,name:l10n_br_avatax.selection__sale_order__l10n_br_use_type__use_or_consumption
 msgid "Use or consumption"
 msgstr ""
 
@@ -1345,6 +1425,13 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_activity_sector__generalwarehouse
 msgid "generalWarehouse"
+msgstr ""
+
+#. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/product_product.py:0
+#: code:addons/l10n_br_avatax/models/res_partner.py:0
+msgid "id"
 msgstr ""
 
 #. module: l10n_br_avatax

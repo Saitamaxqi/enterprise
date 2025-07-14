@@ -399,6 +399,14 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             'The operationType for vendor bills should be standardPurchase.'
         )
 
+    def test_09_ex_citation_in_payload(self):
+        """ Ensure that the 'ex' citation from the NCM code is included in the Avatax API payload. """
+        self.env.ref('l10n_br_avatax.49011000').write({'ex': '001'})
+        invoice, _ = self._create_invoice_01_and_expected_response()
+        payload = invoice._prepare_l10n_br_avatax_document_service_call(invoice._get_l10n_br_avatax_service_params())
+        line = payload['lines'][0]
+        self.assertEqual(line['itemDescriptor']['ex'], '001', "EX field should match the value set in NCM code")
+
 
 @tagged('post_install_l10n', '-at_install', 'post_install')
 class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):

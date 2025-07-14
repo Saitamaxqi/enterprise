@@ -8,6 +8,7 @@
                 <group>
                     <field name="code"/>
                     <field name="name"/>
+                    <field name="ex"/>
                 </group>
             </form>
         </field>
@@ -20,6 +21,7 @@
             <list>
                 <field name="code"/>
                 <field name="name"/>
+                <field name="ex"/>
             </list>
         </field>
     </record>
