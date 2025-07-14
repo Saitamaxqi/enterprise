@@ -11,7 +11,7 @@
                     invisible="not recurring_invoice or type != 'consu'"/>
                 <div class="fst-italic text-muted"
                     invisible="not recurring_invoice or type != 'consu'">
-                    Recurring order with this product will be invoiced at the beginning of the period.
+                    Recurring order with this product will be invoiced at the end of the period.
                 </div>
             </field>
         </field>
