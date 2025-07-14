@@ -1,4 +1,4 @@
-import { EventBus, markup, reactive } from "@odoo/owl";
+import { EventBus, reactive } from "@odoo/owl";
 
 import { CallMethodSelectionDialog } from "@voip/mobile/call_method_selection_dialog";
 import { SoftphoneContainer } from "@voip/softphone/softphone_container";
@@ -11,7 +11,6 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { Deferred } from "@web/core/utils/concurrency";
-import { htmlReplaceAll } from "@web/core/utils/html";
 
 export class Voip {
     bus = new EventBus();
@@ -236,8 +235,7 @@ export class Voip {
      * not block the UI.
      */
     triggerError(message, { isNonBlocking = false, title, button } = {}) {
-        const safeText = htmlReplaceAll(message, "\n", markup`<br>`);
-        this.error = { title, text: safeText, isNonBlocking, button };
+        this.error = { title, text: message, isNonBlocking, button };
     }
 
     /** @returns {Deferred<boolean>} */

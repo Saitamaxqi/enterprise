@@ -6,3 +6,7 @@
         --#{$prefix}heading-color: #{color-contrast($o-voipCalling-bg-color)};
     }
 }
+
+.o-voip-ErrorScreen-errorMessage {
+    white-space: pre-line;
+}
