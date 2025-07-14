@@ -404,7 +404,6 @@ class AccountOnlineLink(models.Model):
     ##########################
     # Wizard opening actions #
     ##########################
-    @api.model
     def create_new_bank_account_action(self, data):
         self.ensure_one()
         journal_type = data.get('journal_type') or 'bank'

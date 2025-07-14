@@ -70,7 +70,7 @@ class BankConfigureWidget extends Component {
         const action = await this.orm.call(
             'account.online.link',
             'create_new_bank_account_action',
-            [this.props.record.data.type], {
+            [this.props.record.resId, { journal_type: this.props.record.data.type }], {
             context: {
                 active_model: 'account.journal',
                 active_id: this.props.record.resId,
