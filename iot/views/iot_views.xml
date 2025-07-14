@@ -34,6 +34,13 @@
                     </t>
                 </header>
                 <sheet>
+                    <div class="alert alert-warning d-flex align-items-center" role="alert" invisible="not must_install_fdm_module">
+                        <span>
+                            A fiscal data module has been connected. To use it,
+                            <a class="alert-link text-decoration-underline" type="object" name="install_fdm_module">install the Fiscal Data Module</a>
+                            app.
+                        </span>
+                    </div>
                     <div class="oe_title">
                         <h1>
                             <field name="name"/>

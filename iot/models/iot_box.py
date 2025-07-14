@@ -23,6 +23,9 @@ class IotBox(models.Model):
     version = fields.Char('Image Version', readonly=True)
     company_id = fields.Many2one('res.company', 'Company')
     ssl_certificate_end_date = fields.Datetime('SSL Certificate End Date', readonly=True)
+    must_install_fdm_module = fields.Boolean(
+        "A fiscal data module is connected to this IoT Box", readonly=True, compute="_compute_must_install_fdm_module"
+    )
 
     def _default_token(self):
         """Generate a token used in the iot box "token" field or by the wizards used to connect a new IoT Box.
@@ -107,3 +110,27 @@ class IotBox(models.Model):
             for box in local_iot_boxes
         ])
         return wizard.add_iot_box_wizard_action()
+
+    @api.depends('device_ids')
+    def _compute_must_install_fdm_module(self):
+        is_module_installed = (
+            self.env['ir.module.module'].sudo().search([('name', '=', 'pos_blackbox_be')], limit=1).state == 'installed'
+        )
+        for box in self:
+            box.must_install_fdm_module = (
+                self.env.company.country_id.code == "BE"
+                and not is_module_installed
+                and any(device.type == 'fiscal_data_module' for device in box.device_ids)
+            )
+
+    def install_fdm_module(self):
+        """Install the pos_blackbox_be module if it is not installed and a fiscal data module is connected to the IoT Box."""
+        if not self.must_install_fdm_module:
+            return
+
+        module = self.env['ir.module.module'].sudo().search([('name', '=', 'pos_blackbox_be')], limit=1)
+        if module and module.state != 'installed':
+            module.button_immediate_install()
+            _logger.info("pos_blackbox_be module installed successfully.")
+        else:
+            _logger.warning("pos_blackbox_be module is already installed or not found.")
