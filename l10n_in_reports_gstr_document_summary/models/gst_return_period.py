@@ -66,6 +66,7 @@ class L10nInGstReturnPeriod(models.Model):
 
     def _get_gst_doc_type_domain(self):
         base_domain = [
+            ("posted_before", "=", True),
             ("date", ">=", self.start_date),
             ("date", "<=", self.end_date),
             ("state", "in", ["posted", "cancel"]),

@@ -63,9 +63,13 @@ class GSTRDocumentSummaryLine(models.Model):
                     continue
                 if not serial_pattern.match(value):
                     raise ValidationError(
-                        _("Invalid format for '%s'. It must be between 1-16 characters, it can contain only letters, digits, '/', '\\', -, and should have at least one non-zero letter or digit.", label)
-                    )
-                domain = [('id', '!=', record.id), '|', ('serial_from', '=', value), ('serial_to', '=', value)]
+                        _("Invalid format for '%s'. It must be between 1-16 characters, it can contain only letters, digits, '/', '\\', -, and should have at least one non-zero letter or digit.", label
+                    ))
+                domain = [
+                    ('id', '!=', record.id), ('return_period_id', '=', record.return_period_id.id),
+                    '|',
+                    ('serial_from', '=', value), ('serial_to', '=', value)
+                ]
                 if self.search_count(domain):
                     raise ValidationError(
                         _("Duplicate value found '%s'. Serial numbers should be unique.", value)
