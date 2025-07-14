@@ -43,8 +43,10 @@
             </xpath>
             <field name="identification_id" position="after">
                 <field name="niss" invisible="country_code != 'BE'"/>
-                <field name="l10n_be_scale_seniority" invisible="country_code != 'BE'"/>
             </field>
+            <group name="hr_education_group" position="inside">
+                <field name="l10n_be_scale_seniority" invisible="country_code != 'BE'"/>
+            </group>
             <group name="payroll_group" position="inside">
                 <group name="benefits" string="Benefits" invisible="country_code != 'BE'">
                     <label for="commission_on_target"/>
