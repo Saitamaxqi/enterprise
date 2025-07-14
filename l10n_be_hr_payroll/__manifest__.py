@@ -6,6 +6,12 @@
     'category': 'Human Resources/Payroll',
     'depends': ['certificate', 'hr_payroll', 'hr_work_entry_holidays', 'hr_payroll_holidays'],
     'auto_install': ['hr_payroll'],
+    'external_dependencies': {
+        'python': ['paramiko'],
+        'apt': {
+            'paramiko': 'python3-paramiko',
+        },
+    },
     'version': '1.0',
     'description': """
 Belgian Payroll Rules.
@@ -53,6 +59,27 @@ Prerequisites:
 
   - At the end of the procedure, you should have received a "ONSS Expeditor Number", you may
     encode in in the payroll Settings, with the .pem file and the related password, if any.
+
+Synchronize DmfA to ONSS portal
+===============================
+
+Automates the synchronization of DmfA ONSS declarations
+to the official Belgian SFTP portal.
+
+- Upload the FO, FS, and GO files to the correct ONSS environment folder
+  (IN, INTEST, INTEST-S).
+- Poll the OUT folders (OUT, OUTTEST, OUTTEST-S) for returned files.
+- Link received files to the corresponding declarations and employees
+  when applicable.
+
+Technical features include:
+- Secure connection using a private key and technical user credentials.
+- XML file parsing for ACRF and notification files.
+- Error handling and logging for missing directories or malformed files.
+
+This feature ensures compliance with ONSS electronic declaration
+requirements and reduces manual interaction with the SFTP portal.
+
     """,
 
     'data': [
@@ -77,6 +104,8 @@ Prerequisites:
         'views/report_termination_holidays.xml',
         'views/hr_dmfa_template.xml',
         'views/hr_dmfa_views.xml',
+        'views/l10n_be_onss_file_views.xml',
+        'views/l10n_be_onss_declaration_views.xml',
         'views/hr_departure_reason_views.xml',
         'views/273S_xml_export_template.xml',
         'views/281_10_xml_export_template.xml',

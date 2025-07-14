@@ -88,6 +88,8 @@
                             <field name="onss_company_id"/>
                             <field name="onss_registration_number"/>
                             <field name="dmfa_employer_class"/>
+                            <field name="onss_technical_user_name"/>
+                            <field name="onss_sftp_private_key"/>
                             <field name="onss_expeditor_number"/>
                             <field name="onss_certificate_id"/>
                         </group>

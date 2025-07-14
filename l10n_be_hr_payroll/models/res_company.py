@@ -29,6 +29,9 @@ class ResCompany(models.Model):
         help="Certificate to allow access to batch declarations")
     accident_insurance_name = fields.Char()
     accident_insurance_number = fields.Char()
+    onss_technical_user_name = fields.Char(string="ONSS Technical User Name", groups="base.group_system",
+        help="ONSS Technical User Name provided when registering service on the ONSS platform")
+    onss_sftp_private_key = fields.Many2one('certificate.key', string="ONSS Technical User Private Key", groups="base.group_system")
 
     @ormcache('self.id')
     def _get_workers_count(self):

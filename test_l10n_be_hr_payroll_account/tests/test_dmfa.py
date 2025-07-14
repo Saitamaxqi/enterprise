@@ -9,7 +9,7 @@ from unittest.mock import patch, MagicMock
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.l10n_be_hr_payroll.models.certificate import CertificateCertificate
-from odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.utils import xml_str_to_dict
+from odoo.addons.l10n_be_hr_payroll.models.utils import xml_str_to_dict
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.tests import tagged
 
@@ -648,7 +648,7 @@ class TestDMFA(AccountTestInvoicingCommon):
         self.assertEqual(declaration.onss_file_count, 3)
 
         # Post DmfA SFTP declaration to ONSS
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.putfo = MagicMock()
             # This mock needs to simulate the context manager behavior, specifically the __enter__ and __exit__ methods
@@ -704,7 +704,7 @@ class TestDMFA(AccountTestInvoicingCommon):
                 return make_file_mock(b"")
             raise FileNotFoundError(f"No mock for file: {remote_path}")
 
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.listdir.side_effect = mock_listdir_declaration_1
             fake_sftp.file.side_effect = file_side_effect_declaration_1
@@ -770,7 +770,7 @@ class TestDMFA(AccountTestInvoicingCommon):
         self.assertEqual(declaration.onss_file_count, 3)
 
         # Post DmfA SFTP declaration to ONSS
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.putfo = MagicMock()
             # This mock needs to simulate the context manager behavior, specifically the __enter__ and __exit__ methods
@@ -824,7 +824,7 @@ class TestDMFA(AccountTestInvoicingCommon):
                 return make_file_mock(b"")
             raise FileNotFoundError(f"No mock for file: {remote_path}")
 
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.listdir.side_effect = mock_listdir_declaration_2
             fake_sftp.file.side_effect = file_side_effect_declaration_2
@@ -921,7 +921,7 @@ class TestDMFA(AccountTestInvoicingCommon):
                 return make_file_mock(b"")
             raise FileNotFoundError(f"No mock for file: {remote_path}")
 
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.listdir.side_effect = mock_listdir_notification_1
             fake_sftp.file.side_effect = file_side_effect_notification_1
@@ -987,7 +987,7 @@ class TestDMFA(AccountTestInvoicingCommon):
         self.assertEqual(declaration.onss_file_count, 3)
 
         # Post DmfA SFTP declaration to ONSS
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.putfo = MagicMock()
             # This mock needs to simulate the context manager behavior, specifically the __enter__ and __exit__ methods
@@ -1041,7 +1041,7 @@ class TestDMFA(AccountTestInvoicingCommon):
                 return make_file_mock(b"")
             raise FileNotFoundError(f"No mock for file: {remote_path}")
 
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.listdir.side_effect = mock_listdir_declaration_3
             fake_sftp.file.side_effect = file_side_effect_declaration_3
@@ -1147,7 +1147,7 @@ class TestDMFA(AccountTestInvoicingCommon):
                 return make_file_mock(b"")
             raise FileNotFoundError(f"No mock for file: {remote_path}")
 
-        with patch('odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
+        with patch('odoo.addons.l10n_be_hr_payroll.models.l10n_be_onss_declaration.open_sftp_connection') as mock_open_conn:
             fake_sftp = MagicMock()
             fake_sftp.listdir.side_effect = mock_listdir_notification_2
             fake_sftp.file.side_effect = file_side_effect_notification_2

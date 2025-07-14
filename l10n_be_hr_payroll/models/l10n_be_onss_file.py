@@ -6,7 +6,7 @@ from datetime import date
 
 from odoo import api, fields, models
 
-from odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.utils import xml_str_to_dict
+from odoo.addons.l10n_be_hr_payroll.models.utils import xml_str_to_dict
 
 
 FILE_TYPES = [

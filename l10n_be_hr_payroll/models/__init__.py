@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from . import utils
 from . import certificate
 from . import ir_ui_menu
 from . import hr_employee
@@ -9,6 +10,8 @@ from . import res_users
 from . import hr_version
 from . import hr_payslip
 from . import hr_payslip_run
+from . import l10n_be_onss_file
+from . import l10n_be_onss_declaration
 from . import hr_dmfa
 from . import res_company
 from . import hr_work_entry

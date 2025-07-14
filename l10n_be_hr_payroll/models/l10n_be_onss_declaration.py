@@ -5,7 +5,7 @@ import logging
 
 from io import BytesIO
 
-from odoo.addons.l10n_be_hr_payroll_dmfa_sftp.models.utils import xml_str_to_dict, open_sftp_connection
+from odoo.addons.l10n_be_hr_payroll.models.utils import xml_str_to_dict, open_sftp_connection
 from odoo.exceptions import UserError
 from odoo import api, fields, models, _
 
@@ -53,7 +53,7 @@ class L10nBeOnssDeclaration(models.Model):
 
     def action_open_onss_file(self):
         self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id('l10n_be_hr_payroll_dmfa_sftp.action_l10n_be_onss_file')
+        action = self.env["ir.actions.actions"]._for_xml_id('l10n_be_hr_payroll.action_l10n_be_onss_file')
         action.update({
             'domain': [('onss_declaration_id', '=', self.id)],
         })
