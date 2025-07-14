@@ -105,7 +105,7 @@ export class DataMergeListController extends DataCleaningCommonListController {
             group_ids = Object.fromEntries(groups.map((g) => [g.group_id[0], g["id:array_agg"]]));
         } else {
             records.forEach(function (record) {
-                const group_id = parseInt(record.data.group_id[0]);
+                const group_id = parseInt(record.data.group_id.id);
                 const ids = group_ids[group_id] || [];
                 ids.push(parseInt(record.resId));
                 group_ids[group_id] = ids;
