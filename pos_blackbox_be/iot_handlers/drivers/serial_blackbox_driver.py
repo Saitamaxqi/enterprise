@@ -71,6 +71,7 @@ class BlackBoxDriver(SerialDriver):
         """Initializes `self._actions`, a map of action keys sent by the frontend to backend action methods."""
 
         self._actions.update({
+            'registerReceiptWeb': self._request_registerReceiptWeb,  # 'H' from server (websocket) so requires an answer
             'registerReceipt': self._request_registerReceipt,  # 'H'
             'registerPIN': self._request_registerPIN,  # 'P'
         })
@@ -175,6 +176,16 @@ class BlackBoxDriver(SerialDriver):
                 _logger.exception('Could not reach confirmation status URL: %s', server_url)
         except requests.exceptions.RequestException:
             _logger.exception('Could not reach confirmation status URL: %s', server_url)
+
+    def _request_registerReceiptWeb(self, data):
+        self._request_registerReceipt(data)
+
+        self.send_blackbox_response({
+            'order_id': data['id'],
+            'device_identifier': self.device_identifier,
+            'blackbox_response': self.data['result'],
+            'iot_mac': helpers.get_identifier()
+        })
 
     def _request_registerReceipt(self, data):
         if data['high_level_message'].get('clock'):

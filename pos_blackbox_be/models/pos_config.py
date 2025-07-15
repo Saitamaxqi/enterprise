@@ -277,14 +277,9 @@ class PosConfig(models.Model):
         iface_fiscal_data_module = order.config_id.iface_fiscal_data_module
         blackbox_data = order._create_order_for_blackbox(clock, clock_in)
         message = {
-            "iotDevice": {
-                "iotIdentifiers": iface_fiscal_data_module.iot_id.identifier,
-                "identifiers": [{
-                    "identifier": iface_fiscal_data_module.identifier,
-                    "id": iface_fiscal_data_module.id,
-                }],
-            },
-            "action": "registerReceipt",
+            "iot_identifiers": [iface_fiscal_data_module.iot_id.identifier],
+            "device_identifiers": [iface_fiscal_data_module.identifier],
+            "action": "registerReceiptWeb",
             "high_level_message": blackbox_data,
             "id": order.id,
         }
