@@ -5,6 +5,9 @@
     'category': 'Human Resources',
     'countries': ['fr'],
     'depends': ['l10n_fr_hr_payroll', 'hr_payroll_account', 'l10n_fr_account'],
+    'data': [
+        'data/hr_salary_rule_data.xml',
+    ],
     'description': """
 Accounting Data for French Payroll Rules.
 

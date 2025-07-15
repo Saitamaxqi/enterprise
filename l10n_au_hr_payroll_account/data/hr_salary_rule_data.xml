@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="l10n_au_salary_expense_refund_structure_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Expenses Reimbursement</field>
@@ -17,4 +16,7 @@ result_name = inputs['EXPENSES'].name
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
 
+    <record id="l10n_au_hr_payroll.l10n_au_hr_payroll_structure_au_regular_net_salary" model="hr.salary.rule">
+        <field name="employee_move_line" eval="True"/>
+    </record>
 </odoo>

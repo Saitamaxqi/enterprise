@@ -13,6 +13,7 @@ Accounting Data for United States Payroll Rules
     'depends': ['hr_payroll_account', 'l10n_us_hr_payroll', 'l10n_us_payment_nacha'],
     'data': [
         'data/account_chart_template_data.xml',
+        'data/hr_salary_rule_data.xml',
         'views/hr_payslip_run_views.xml',
         'views/hr_payslip_views.xml',
         'wizard/hr_payroll_payment_report_wizard.xml',

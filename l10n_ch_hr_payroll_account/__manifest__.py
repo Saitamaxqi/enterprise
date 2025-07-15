@@ -14,6 +14,7 @@ Accounting Data for Switzerland Payroll Rules
     'depends': ['hr_payroll_account', 'l10n_ch', 'l10n_ch_hr_payroll'],
     'data': [
         'data/account_chart_template_data.xml',
+        'data/hr_salary_rule_data.xml',
         'views/hr_salary_rule_views.xml',
     ],
     'demo': [

@@ -3189,7 +3189,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # 621000    ONSS Employer                                             1272.96
         # ----------------------------------------------------------------------------------------
         # BALANCE                                                             6419.96      6419.96
-
         self.assertEqual(len(move_lines), 12)
         self.assertAlmostEqual(sum(l.debit for l in move_lines), balance, places=2)
         self.assertAlmostEqual(sum(l.credit for l in move_lines), balance, places=2)

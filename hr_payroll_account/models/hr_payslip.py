@@ -111,7 +111,7 @@ class HrPayslip(models.Model):
         return True
 
     def _prepare_line_values(self, line, account_id, date, debit, credit):
-        if not self.company_id.batch_payroll_move_lines and line.code == "NET":
+        if not self.company_id.batch_payroll_move_lines and line.salary_rule_id.employee_move_line:
             partner = self.employee_id.work_contact_id
         else:
             partner = line.partner_id
@@ -145,11 +145,13 @@ class HrPayslip(models.Model):
                 continue
             debit_account_id = line.salary_rule_id.account_debit.id
             credit_account_id = line.salary_rule_id.account_credit.id
+            merge_amounts = self.company_id.batch_payroll_move_lines or not line.salary_rule_id.employee_move_line
+
             if debit_account_id: # If the rule has a debit account.
                 debit = amount if amount > 0.0 else 0.0
                 credit = -amount if amount < 0.0 else 0.0
 
-                debit_line = next(self._get_existing_lines(
+                debit_line = merge_amounts and next(self._get_existing_lines(
                     line_ids + new_lines, line, debit_account_id, debit, credit), False)
 
                 if not debit_line:
@@ -163,7 +165,7 @@ class HrPayslip(models.Model):
             if credit_account_id: # If the rule has a credit account.
                 debit = -amount if amount < 0.0 else 0.0
                 credit = amount if amount > 0.0 else 0.0
-                credit_line = next(self._get_existing_lines(
+                credit_line = merge_amounts and next(self._get_existing_lines(
                     line_ids + new_lines, line, credit_account_id, debit, credit), False)
 
                 if not credit_line:

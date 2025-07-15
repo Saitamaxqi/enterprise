@@ -12,6 +12,7 @@ Accounting Data for Saudi Arabia Payroll Rules.
     'depends': ['hr_payroll_account', 'l10n_sa', 'l10n_sa_hr_payroll'],
     'data': [
         'data/account_chart_template_data.xml',
+        'data/hr_salary_rule_data.xml',
     ],
     'license': 'OEEL-1',
     'auto_install': True,

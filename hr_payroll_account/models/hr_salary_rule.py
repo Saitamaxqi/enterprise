@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class HrSalaryRule(models.Model):
@@ -33,3 +33,12 @@ class HrSalaryRule(models.Model):
     split_move_lines = fields.Boolean(
         string="Split account line based on name",
         help="Enable this option to split the accountig entries for this rule according to the payslip line name. It could be useful for deduction/reimbursement or salary attachments for instance.")
+    employee_move_line = fields.Boolean(
+        string="Set employee on account line",
+        help="Enable this option to set the employee on the journal items of the payslips.")
+    batch_payroll_move_lines = fields.Boolean(
+        compute='_compute_batch_payroll_move_lines')
+
+    @api.depends_context('company')
+    def _compute_batch_payroll_move_lines(self):
+        self.batch_payroll_move_lines = self.env.company.batch_payroll_move_lines

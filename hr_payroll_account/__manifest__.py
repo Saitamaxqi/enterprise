@@ -12,7 +12,7 @@ Generic Payroll system Integrated with Accounting.
     """,
     'depends': ['hr_payroll', 'accountant', 'base_iban'],
     'data': [
-        'data/hr_payroll_account_data.xml',
+        'data/hr_salary_rule_data.xml',
         'views/hr_payslip_run_views.xml',
         'views/hr_payslip_views.xml',
         'views/hr_employee_views.xml',

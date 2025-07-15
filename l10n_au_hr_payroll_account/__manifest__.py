@@ -17,7 +17,7 @@ Accounting Data for Australian Payroll Rules.
 
     'auto_install': True,
     'data': [
-        "data/hr_salary_rules.xml",
+        "data/hr_salary_rule_data.xml",
         "data/account_chart_template_data.xml",
         "data/ir_sequence_data.xml",
         "data/res_partner.xml",

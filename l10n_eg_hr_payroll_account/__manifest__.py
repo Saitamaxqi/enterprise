@@ -12,6 +12,7 @@ Accounting Data for Egypt Payroll Rules.
     'depends': ['hr_payroll_account', 'l10n_eg', 'l10n_eg_hr_payroll'],
     'data': [
         'data/account_chart_template_data.xml',
+        'data/hr_salary_rule_data.xml',
     ],
     'demo': [
         'data/l10n_eg_hr_payroll_account_demo.xml',
