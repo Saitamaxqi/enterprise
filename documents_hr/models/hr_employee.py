@@ -38,7 +38,7 @@ class HrEmployee(models.Model):
         if 'name' in vals and len(self) == 1:
             # This makes no sense to rename multiple employees with the same name. This would probably be an error.
             # So we rename the folder only if one employee is renamed at a time.
-            self.hr_employee_folder_id.name = vals['name']
+            self.sudo().hr_employee_folder_id.write({'name': vals['name']})
         return result
 
     def action_open_documents(self):
