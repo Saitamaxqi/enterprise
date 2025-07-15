@@ -153,7 +153,7 @@ class AppointmentHrTest(AppointmentHrCommon):
                     {'start': 22, 'end': 23},
                     {'start': 23, 'end': 00},
                 ]},
-             'slots_startdate': self.reference_monday,
+             'slots_startdate': self.reference_monday.date(),
             }
         )
 

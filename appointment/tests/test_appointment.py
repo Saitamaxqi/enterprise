@@ -1495,7 +1495,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         self.assertSlots(
             slots,
             [{'name_formated': 'February 2022',
-              'month_date': datetime(2022, 2, 1),
+              'month_date': date(2022, 2, 1),
               'weeks_count': 5,  # 31/01 -> 28/02 (06/03)
               }
              ],
@@ -1503,9 +1503,9 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
              'startdate': self.reference_now_monthweekstart,
              'slots_start_hours': [],
              # first Monday after reference_now
-             'slots_startdate': self.reference_monday + timedelta(days=7),
+             'slots_startdate': self.reference_monday.date() + timedelta(days=7),
              # only test that day
-             'slots_enddate': self.reference_monday + timedelta(days=14),
+             'slots_enddate': self.reference_monday.date() + timedelta(days=14),
              'slots_day_specific': {date(2022, 2, 28): [{'start':1}]}
              }
         )
