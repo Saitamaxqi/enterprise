@@ -64,3 +64,13 @@ class ResPartner(models.Model):
             action['views'] = [(self.env.ref('sale_subscription.sale_subscription_view_tree').id, 'list'), (self.env.ref('sale_subscription.sale_subscription_primary_form_view').id, 'form')]
             action['search_view_id'] = [self.env.ref('sale_subscription.sale_subscription_view_search').id]
         return action
+
+    def _compute_application_statistics_hook(self):
+        data_list = super()._compute_application_statistics_hook()
+        if not self.env.user.has_group('sales_team.group_sale_salesman'):
+            return data_list
+        for partner in self.filtered('subscription_count'):
+            data_list[partner.id].append(
+                {'iconClass': 'fa-refresh', 'value': partner.subscription_count, 'label': _('Subscriptions')}
+            )
+        return data_list
