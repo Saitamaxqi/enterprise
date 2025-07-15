@@ -310,7 +310,9 @@ class StudioExportModel(models.Model):
     include_attachment = fields.Boolean(
         string="Attachments",
         default=False,
-        help="If set, the attachments related to the exported records will be included in the export.",
+        help="""If set, attachments related to the exported records will be included.
+        This does not include the attachments uploaded in binary fields such as pictures, files, etc.
+        Include the corresponding fields in the export to get them.""",
     )
 
     @api.depends("model_id")
