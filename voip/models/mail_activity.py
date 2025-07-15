@@ -28,14 +28,17 @@ class MailActivity(models.Model):
     def create(self, vals_list):
         activities = super().create(vals_list)
         call_activities = activities.filtered(
-            lambda activity: activity.phone and activity.activity_category == "phonecall"
+            lambda activity: activity.phone and activity.user_id and activity.activity_category == "phonecall"
         )
         call_activities.user_id._bus_send("refresh_call_activities", {})
         return activities
 
     def write(self, vals):
         if "date_deadline" in vals and self.user_id:
-            self.user_id._bus_send("refresh_call_activities", {})
+            call_activities = self.filtered(
+                lambda activity: activity.phone and activity.user_id and activity.activity_category == "phonecall"
+            )
+            call_activities.user_id._bus_send("refresh_call_activities", {})
         return super().write(vals)
 
     @api.model
