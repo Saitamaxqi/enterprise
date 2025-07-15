@@ -134,13 +134,13 @@ export class PlanningCalendarModel extends CalendarModel {
             return this.load();
         }
         // Check required attribute of fields in form view
-        const isValid = await this.data.multiCreateRecord.checkValidity({
+        const isValid = await this.data.multiCreate.record.checkValidity({
             displayNotification: true,
         });
         if (!isValid) {
             return;
         }
-        const values = await this.data.multiCreateRecord.getChanges();
+        const values = await this.data.multiCreate.record.getChanges();
         if (values.template_id) {
             const schedule = await this.orm.read("planning.slot.template", [values['template_id']], ["start_time", "end_time", "duration_days"]);
             const records = [];
