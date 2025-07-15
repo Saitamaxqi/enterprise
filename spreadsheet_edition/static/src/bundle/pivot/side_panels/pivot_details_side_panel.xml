@@ -31,6 +31,11 @@
                     domain="definition.domain"
                     onUpdate.bind="onDomainUpdate"
                 />
+                <RelatedFiltersSection
+                    resModel="definition.model"
+                    dataSourceId="props.pivotId"
+                    dataSourceType="'pivot'"
+                />
                 <div class="o-section pt-1">
                     <div class="o_pivot_last_update text-muted"><i>Last updated at <t t-esc="getLastUpdate()"/></i></div>
                 </div>

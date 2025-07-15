@@ -22,8 +22,7 @@
                         <FilterEditorFieldMatching
                             fieldMatchings="store.fieldsMatching"
                             selectField.bind="onSelectedField"
-                            filterModelFieldSelectorField.bind="filterModelFieldSelectorField"
-                            sortModelFieldSelectorFields.bind="sortModelFieldSelectorFields"
+                            filterModelFieldSelectorField="store.filterModelFieldSelectorField"
                             onOffsetSelected.bind="onOffsetSelected"
                         />
                     </Section>

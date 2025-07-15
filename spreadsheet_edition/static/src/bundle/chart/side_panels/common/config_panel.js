@@ -7,12 +7,19 @@ import { _t } from "@web/core/l10n/translation";
 import { components, constants } from "@odoo/o-spreadsheet";
 
 import { Component, onWillStart, onWillUpdateProps } from "@odoo/owl";
+import { RelatedFiltersSection } from "../../../global_filters/components/related_filters_section/related_fitlers_section";
 const { Section, ValidationMessages } = components;
 const { ChartTerms } = constants;
 
 export class CommonOdooChartConfigPanel extends Component {
     static template = "spreadsheet_edition.CommonOdooChartConfigPanel";
-    static components = { IrMenuSelector, DomainSelector, Section, ValidationMessages };
+    static components = {
+        IrMenuSelector,
+        DomainSelector,
+        RelatedFiltersSection,
+        Section,
+        ValidationMessages,
+    };
     static props = {
         chartId: String,
         definition: Object,
@@ -26,6 +33,7 @@ export class CommonOdooChartConfigPanel extends Component {
         this.dialog = useService("dialog");
         const loadData = async (chartId) => {
             const dataSource = this.env.model.getters.getChartDataSource(chartId);
+            await dataSource.load();
             this.isModelValid = dataSource.isModelValid();
             this.isDataLoaded = dataSource.isReady();
             if (this.isModelValid) {

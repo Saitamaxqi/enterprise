@@ -2,6 +2,7 @@ import { ModelFieldSelector } from "@web/core/model_field_selector/model_field_s
 
 import { Component } from "@odoo/owl";
 import { FilterFieldOffset } from "../filter_field_offset";
+import { sortModelFieldSelectorFields } from "../../../helpers/misc";
 
 /**
  * @typedef {import("@spreadsheet").FieldMatching} FieldMatching
@@ -19,9 +20,10 @@ export class FilterEditorFieldMatching extends Component {
         fieldMatchings: Array,
         selectField: Function,
         filterModelFieldSelectorField: Function,
-        sortModelFieldSelectorFields: Function,
         onOffsetSelected: { type: Function, optional: true },
     };
+
+    sortModelFieldSelectorFields = sortModelFieldSelectorFields;
 
     /**
      *

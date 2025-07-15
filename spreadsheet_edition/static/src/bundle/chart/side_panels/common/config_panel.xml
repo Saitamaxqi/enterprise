@@ -1,13 +1,9 @@
 <odoo>
     <t t-name="spreadsheet_edition.CommonOdooChartConfigPanel">
-        <t t-if="!isDataLoaded">
-            <div class="text-center mt-4">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
+        <t t-if="!isModelValid">
+            <ValidationMessages messages="[invalidChartModel]" msgType="'error'" />
         </t>
-        <t t-elif="isModelValid">
+        <t t-else="">
             <Section title.translate="Model">
                 <div><t t-esc="modelDisplayName" /> (<t t-esc="model" />)</div>
             </Section>
@@ -17,6 +13,11 @@
                     <i class="oi oi-arrow-right me-1" />Edit domain
                 </div>
             </Section>
+            <RelatedFiltersSection
+                resModel="model"
+                dataSourceId="props.chartId"
+                dataSourceType="'chart'"
+            />
             <div>
                 <!-- requires <irMenuSelector> component -->
                 <t t-call="spreadsheet_edition.OdooMenuChartPanelSection" />
@@ -27,9 +28,6 @@
                 </div>
                 <br />
             </Section>
-        </t>
-        <t t-else="1">
-            <ValidationMessages messages="[invalidChartModel]" msgType="'error'" />
         </t>
     </t>
 </odoo>

@@ -62,8 +62,7 @@
                             <FilterEditorFieldMatching
                                 fieldMatchings="store.fieldsMatching"
                                 selectField.bind="store.updateFieldMatching"
-                                filterModelFieldSelectorField="(field, path) => this.filterModelFieldSelectorField(field, path, store.filter.modelName)"
-                                sortModelFieldSelectorFields.bind="sortModelFieldSelectorFields"
+                                filterModelFieldSelectorField="(field, path) => this.store.filterModelFieldSelectorField(field, path, store.filter.modelName)"
                             />
                         </Section>
                     </t>

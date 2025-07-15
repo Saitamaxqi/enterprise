@@ -4,7 +4,7 @@ import { runAllTimers } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { registries, stores } from "@odoo/o-spreadsheet";
 import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
-import { updatePivot } from "@spreadsheet/../tests/helpers/commands";
+import { addGlobalFilter, updatePivot } from "@spreadsheet/../tests/helpers/commands";
 import {
     contains,
     fields,
@@ -13,7 +13,7 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { Component, onMounted, onWillUnmount, xml } from "@odoo/owl";
 import { PivotDetailsSidePanel } from "@spreadsheet_edition/bundle/pivot/side_panels/pivot_details_side_panel";
-const { useStoreProvider, ModelStore } = stores;
+const { useStore, useStoreProvider, ModelStore, SidePanelStore } = stores;
 
 defineSpreadsheetModels();
 describe.current.tags("desktop");
@@ -43,6 +43,8 @@ class Parent extends Component {
     setup() {
         const stores = useStoreProvider();
         stores.inject(ModelStore, this.props.model);
+        const sidePanelStore = useStore(SidePanelStore);
+        sidePanelStore.open("PivotSidePanel", this.props);
 
         onMounted(() => {
             this.props.model.on("update", this, () => this.render(true));
@@ -657,4 +659,23 @@ test("Can change measure display as from the side panel", async function () {
 
     await contains(".pivot-measure .fa-cog").click();
     expect.verifySteps(["PivotMeasureDisplayPanel"]);
+});
+
+test("display pivot related filters panel", async function () {
+    const { model, env, pivotId } = await createSpreadsheetWithPivot();
+    await openSidePanel(model, env, pivotId);
+    await addGlobalFilter(
+        model,
+        { id: "42", type: "relation", label: "Filter" },
+        {
+            pivot: {
+                [pivotId]: {
+                    chain: "product_id",
+                    type: "many2one",
+                },
+            },
+        }
+    );
+    await addGlobalFilter(model, { id: "43", type: "relation", label: "Filter 2" });
+    expect(".o_side_panel_collapsible_title:contains(Matching 1 / 2 filters)").toHaveCount(1);
 });

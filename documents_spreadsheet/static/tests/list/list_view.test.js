@@ -18,7 +18,11 @@ import { hover, leave } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { onMounted } from "@odoo/owl";
-import { selectCell, setCellContent } from "@spreadsheet/../tests/helpers/commands";
+import {
+    addGlobalFilter,
+    selectCell,
+    setCellContent,
+} from "@spreadsheet/../tests/helpers/commands";
 import { Partner, Product, ResUsers } from "@spreadsheet/../tests/helpers/data";
 import {
     getCellFormula,
@@ -1186,4 +1190,23 @@ test("readonly list side panel", async function () {
     await animationFrame();
     expect(".o-sidePanelBody > div.pe-none.opacity-50").toHaveCount(1);
     expect(".o-sidePanelBody > div.pe-none.opacity-50").toHaveAttribute("inert");
+});
+
+test("display list related filters panel", async function () {
+    const { model } = await createSpreadsheetFromListView();
+    const listId = model.getters.getListIds()[0];
+    await addGlobalFilter(
+        model,
+        { id: "42", type: "relation", label: "Filter" },
+        {
+            list: {
+                [listId]: {
+                    chain: "product_id",
+                    type: "many2one",
+                },
+            },
+        }
+    );
+    await addGlobalFilter(model, { id: "43", type: "relation", label: "Filter 2" });
+    expect(".o_side_panel_collapsible_title:contains(Matching 1 / 2 filters)").toHaveCount(1);
 });

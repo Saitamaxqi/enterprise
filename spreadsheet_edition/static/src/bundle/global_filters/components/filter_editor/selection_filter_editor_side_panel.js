@@ -58,19 +58,4 @@ export class SelectionFilterEditorSidePanel extends AbstractFilterEditorSidePane
         }
         return true;
     }
-
-    /**
-     * We only want to show the selection field if it is the one
-     * selected in the filter (same resModel and selectionField), or
-     * if it is a relation field.
-     */
-    filterModelFieldSelectorField(field, path, resModel) {
-        if (
-            this.store.filter.resModel === resModel &&
-            field.name === this.store.filter.selectionField
-        ) {
-            return true;
-        }
-        return !!field.relation;
-    }
 }

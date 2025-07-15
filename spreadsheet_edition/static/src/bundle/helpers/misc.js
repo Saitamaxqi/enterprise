@@ -12,3 +12,18 @@ export function addToRegistryWithCleanup(cleanUpHook, registry, name, item) {
         registry.remove(name);
     });
 }
+
+export function sortModelFieldSelectorFields(fields) {
+    return Object.keys(fields).sort((a, b) => {
+        if (fields[a].relation && fields[b].relation) {
+            return fields[a].string.localeCompare(fields[b].string);
+        }
+        if (fields[a].relation) {
+            return 1;
+        }
+        if (fields[b].relation) {
+            return -1;
+        }
+        return fields[a].string.localeCompare(fields[b].string);
+    });
+}

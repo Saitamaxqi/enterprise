@@ -64,44 +64,6 @@ export class AbstractFilterEditorSidePanel extends Component {
         }
     }
 
-    /**
-     * Function that will be called by ModelFieldSelector on each fields, to
-     * filter the ones that should be displayed
-     * @param {OdooField} field
-     * @param {string} path
-     * @param {[string]} coModel Only set when the filter is relation
-     * @returns {boolean}
-     */
-    filterModelFieldSelectorField(field, path, coModel) {
-        if (!field.searchable) {
-            return false;
-        }
-        if (field.name === "id" && this.type === "relation") {
-            const paths = path.split(".");
-            const lastField = paths.at(-2);
-            if (!lastField || (lastField.relation && lastField.relation === coModel)) {
-                return true;
-            }
-            return false;
-        }
-        return this.store.allowedFieldTypes.includes(field.type) || !!field.relation;
-    }
-
-    sortModelFieldSelectorFields(fields) {
-        return Object.keys(fields).sort((a, b) => {
-            if (fields[a].relation && fields[b].relation) {
-                return fields[a].string.localeCompare(fields[b].string);
-            }
-            if (fields[a].relation) {
-                return 1;
-            }
-            if (fields[b].relation) {
-                return -1;
-            }
-            return fields[a].string.localeCompare(fields[b].string);
-        });
-    }
-
     get footerProps() {
         return {
             onClickSave: () => {

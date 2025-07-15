@@ -42,6 +42,11 @@
                 fields="listFields"
                 onUpdateSorting.bind="this.onUpdateSorting"
             />
+            <RelatedFiltersSection
+                resModel="def.model"
+                dataSourceId="props.listId"
+                dataSourceType="'list'"
+            />
             <Section class="'o-section pt-0'">
                 <div class="o_pivot_last_update text-muted"><i>Last updated at <t t-esc="getLastUpdate()"/></i></div>
             </Section>

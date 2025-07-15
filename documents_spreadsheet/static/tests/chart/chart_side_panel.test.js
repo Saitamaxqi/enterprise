@@ -7,16 +7,14 @@ import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/sprea
 import { describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { registries } from "@odoo/o-spreadsheet";
-import { createBasicChart } from "@spreadsheet/../tests/helpers/commands";
+import { addGlobalFilter, createBasicChart } from "@spreadsheet/../tests/helpers/commands";
 import * as dsHelpers from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 import {
     contains,
     makeServerError,
     onRpc,
-    patchWithCleanup,
     fields,
 } from "@web/../tests/web_test_helpers";
-import { LoadableDataSource } from "@spreadsheet/data_sources/data_source";
 import { Partner } from "@spreadsheet/../tests/helpers/data";
 
 defineDocumentSpreadsheetModels();
@@ -722,18 +720,23 @@ test("An error is displayed in the side panel if the chart has invalid model", a
     expect(".o-validation-error").toHaveCount(1);
 });
 
-test("An spinner is displayed in the side panel if the chart model isn't loaded yet", async function () {
-    let isDataSourceLoaded = false;
-    patchWithCleanup(LoadableDataSource.prototype, {
-        isReady: () => isDataSourceLoaded,
-    });
-    const { model, env } = await createSpreadsheetFromGraphView({});
+test("display chart related filters", async function () {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await addGlobalFilter(
+        model,
+        { id: "42", type: "relation", label: "Filter" },
+        {
+            chart: {
+                [chartId]: {
+                    chain: "product_id",
+                    type: "many2one",
+                },
+            },
+        }
+    );
+    await addGlobalFilter(model, { id: "43", type: "relation", label: "Filter 2" });
     await openChartSidePanel(model, env);
-    expect(".spinner-border").toHaveCount(1);
-
-    isDataSourceLoaded = true;
-    model.trigger("update");
-    await animationFrame();
-
-    expect(".spinner-border").toHaveCount(0);
+    expect(".o_side_panel_collapsible_title:contains(Matching 1 / 2 filters)").toHaveCount(1);
 });

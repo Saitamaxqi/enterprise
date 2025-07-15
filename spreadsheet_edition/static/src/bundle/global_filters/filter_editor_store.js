@@ -159,6 +159,45 @@ export class FilterEditorStore extends SpreadsheetStore {
         );
     }
 
+    /**
+     * Returns a function called by ModelFieldSelector on each fields, to
+     * filter the ones that should be displayed
+     */
+    get filterModelFieldSelectorField() {
+        if (this.filter.type === "selection") {
+            /**
+             * We only want to show the selection field if it is the one
+             * selected in the filter (same resModel and selectionField), or
+             * if it is a relation field.
+             */
+            const filterModelFieldSelectorField = (field, path, resModel) => {
+                if (
+                    this.filter.resModel === resModel &&
+                    field.name === this.filter.selectionField
+                ) {
+                    return true;
+                }
+                return !!field.relation;
+            };
+            return filterModelFieldSelectorField;
+        }
+        const filterModelFieldSelectorField = (field, path, coModel) => {
+            if (!field.searchable) {
+                return false;
+            }
+            if (field.name === "id" && this.filter.type === "relation") {
+                const paths = path.split(".");
+                const lastField = paths.at(-2);
+                if (!lastField || (lastField.relation && lastField.relation === coModel)) {
+                    return true;
+                }
+                return false;
+            }
+            return this.allowedFieldTypes.includes(field.type) || !!field.relation;
+        };
+        return filterModelFieldSelectorField;
+    }
+
     onSelectionModelSelected({ technical, label }) {
         if (this.filter.type !== "selection") {
             return;
@@ -266,7 +305,10 @@ export class FilterEditorStore extends SpreadsheetStore {
         if (!fieldMatch) {
             return;
         }
-        fieldMatch.fieldMatch.offset = offset;
+        fieldMatch.fieldMatch = {
+            ...fieldMatch.fieldMatch,
+            offset,
+        };
         this.draft = this.filter;
     }
 

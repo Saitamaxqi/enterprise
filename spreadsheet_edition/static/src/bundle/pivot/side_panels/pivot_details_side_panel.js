@@ -4,6 +4,7 @@ import { components, stores } from "@odoo/o-spreadsheet";
 import { Component, onWillStart, onWillUpdateProps, useRef } from "@odoo/owl";
 import { OdooPivotLayoutConfigurator } from "./odoo_pivot_layout_configurator/odoo_pivot_layout_configurator";
 import { SidePanelDomain } from "../../components/side_panel_domain/side_panel_domain";
+import { RelatedFiltersSection } from "../../global_filters/components/related_filters_section/related_fitlers_section";
 
 const { Checkbox, Section, ValidationMessages, PivotTitleSection, PivotDeferUpdate } = components;
 const { useLocalStore, PivotSidePanelStore } = stores;
@@ -17,6 +18,7 @@ export class PivotDetailsSidePanel extends Component {
         OdooPivotLayoutConfigurator,
         PivotDeferUpdate,
         PivotTitleSection,
+        RelatedFiltersSection,
         SidePanelDomain,
     };
     static props = {

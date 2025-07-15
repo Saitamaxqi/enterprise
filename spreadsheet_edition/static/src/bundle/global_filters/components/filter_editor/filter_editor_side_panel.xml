@@ -28,7 +28,7 @@
                             isDebugMode="!!env.debug"
                             update="(path, fieldInfo) => props.selectField(match.id, path, fieldInfo.fieldDef)"
                             filter.bind="props.filterModelFieldSelectorField"
-                            sort.bind="props.sortModelFieldSelectorFields"
+                            sort.bind="sortModelFieldSelectorFields"
                             t-key="match.id"/>
                 </div>
                 <FilterFieldOffset
