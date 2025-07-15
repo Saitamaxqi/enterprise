@@ -355,7 +355,13 @@ class SaleOrderLine(models.Model):
                 new_period_start = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.last_invoice_date
                 theoretical_stop = new_period_start and new_period_start + self.order_id.plan_id.billing_period - relativedelta(days=1)
                 new_period_stop = min(date for date in [today, theoretical_stop, self.order_id.end_date] if date)
-                return new_period_start, new_period_stop, 1, None
+
+                # new_period_start is undefined if the SO was never invoiced. In that case theoretical_stop is undefined too.
+                ratio = 1
+                if new_period_start and new_period_stop and new_period_stop != new_period_start:
+                    ratio = (today - new_period_start) / (new_period_stop - new_period_start)
+                ratio = 1 if not self.product_id.allow_prorated_price else ratio
+                return new_period_start, new_period_stop, ratio, None
             else:
                 new_period_start = self.order_id.next_invoice_date or max(start_date, first_contract_date)
                 new_period_stop = new_period_start + self.order_id.plan_id.billing_period
@@ -370,6 +376,9 @@ class SaleOrderLine(models.Model):
 
         number_of_days = (next_date_1st - new_period_start).days
         ratio = number_of_days / (new_period_stop - new_period_start).days
+
+        if not self.product_id.allow_prorated_price:
+            ratio = 1
 
         return new_period_start, next_date_1st - relativedelta(days=1), ratio, number_of_days
 
@@ -392,7 +401,7 @@ class SaleOrderLine(models.Model):
 
             new_period_start, new_period_stop, ratio, number_of_days = self._get_invoice_line_parameters()
 
-            if ratio != 1 and self.product_id.type == 'service':
+            if ratio != 1:
                 duration = _('%s days', number_of_days)
                 res['price_unit'] = res['price_unit'] * ratio
 
@@ -558,7 +567,7 @@ class SaleOrderLine(models.Model):
             })]
 
     def _need_renew_discount_domain(self):
-        return [('recurring_invoice', '=', True), ('product_id.type', '=', 'service')]
+        return [('recurring_invoice', '=', True), ('product_id.allow_prorated_price', '=', True)]
 
     def _get_renew_upsell_values(self, subscription_state):
         order_lines = []

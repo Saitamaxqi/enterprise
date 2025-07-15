@@ -2688,3 +2688,136 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         subscription.sale_order_option_ids[0].button_add_to_order()
 
         self.assertEqual(subscription.order_line.mapped("discount"), [0, 20])
+
+    def test_correct_functioning_of_proration(self):
+        """
+        Check that the behavior of the allow_prorated_price flag is correct
+        """
+
+        with freeze_time("2025-08-19"):
+
+            # Case 1: Service product with default flag (on)
+
+            product_tmpl1 = self.ProductTmpl.create({
+                'name': 'Prorated Service Product',
+                'type': 'service',
+                'recurring_invoice': True,
+                'invoice_policy': 'order',
+            })
+            sale_order = self.env['sale.order'].create({
+                'name': 'Test Sale Order',
+                'partner_id': self.partner_a.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [Command.create({
+                        'product_id': product_tmpl1.product_variant_id.id,
+                        'product_uom_qty': 1,
+                        'price_unit': 10})]
+                })
+            sale_order.plan_id.billing_first_day = True
+            sale_order.action_confirm()
+            inv = sale_order._create_recurring_invoice()
+            self.assertEqual(inv.amount_untaxed, 4.19, "The invoiced amount should be 4.19 because the product is a default service and should be prorated.")
+            self.assertTrue(product_tmpl1.allow_prorated_price, "The product is a default service, therefore it should be prorated.")
+
+            # Case 2: Service product with flag turned off
+
+            product_tmpl2 = self.ProductTmpl.create({
+                'name': 'Non Prorated Service Product',
+                'type': 'service',
+                'recurring_invoice': True,
+                'invoice_policy': 'order',
+            })
+            product_tmpl2.write({'allow_prorated_price': False})
+
+            sale_order = self.env['sale.order'].create({
+                'name': 'Test Sale Order',
+                'partner_id': self.partner_a.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [Command.create({
+                        'product_id': product_tmpl2.product_variant_id.id,
+                        'product_uom_qty': 1,
+                        'price_unit': 10})]
+                })
+
+            sale_order.plan_id.billing_first_day = True
+            sale_order.action_confirm()
+            inv = sale_order._create_recurring_invoice()
+            self.assertEqual(inv.amount_untaxed, 10, "The invoiced amount should be 10 because the product is a service with the proration manually turned off.")
+
+            # Case 3: Good product with default flag (off)
+
+            product_tmpl3 = self.ProductTmpl.create({
+                'name': 'Good Product',
+                'type': 'consu',
+                'recurring_invoice': True,
+                'invoice_policy': 'order',
+            })
+
+            sale_order = self.env['sale.order'].create({
+                'name': 'Test Sale Order',
+                'partner_id': self.partner_a.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [Command.create({
+                        'product_id': product_tmpl3.product_variant_id.id,
+                        'product_uom_qty': 1,
+                        'price_unit': 10})]
+                })
+
+            sale_order.plan_id.billing_first_day = True
+            sale_order.action_confirm()
+            inv = sale_order._create_recurring_invoice()
+            self.assertEqual(inv.amount_untaxed, 10, "The invoiced amount should be 10 because the product is a good, which means it has proration off by default.")
+            self.assertFalse(product_tmpl3.allow_prorated_price, "The product is a good, so by default it should not be prorated.")
+
+            # Case 4: Service product invoiced on delivery with default flag (off)
+            product_tmpl4 = self.ProductTmpl.create({
+                'name': 'Service Product Invoiced On Delivery',
+                'type': 'service',
+                'recurring_invoice': True,
+                'invoice_policy': 'delivery',
+            })
+
+            sale_order = self.env['sale.order'].create({
+                'name': 'Test Sale Order',
+                'partner_id': self.partner_a.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [Command.create({
+                        'product_id': product_tmpl4.product_variant_id.id,
+                        'product_uom_qty': 1,
+                        'price_unit': 10})]
+                })
+
+            sale_order.plan_id.billing_first_day = True
+            sale_order.action_confirm()
+            inv = sale_order._create_recurring_invoice()
+            self.assertEqual(inv.amount_untaxed, 0, "The invoiced amount should be 0 because the product is billed on delivery and nothing has been delivered.")
+            self.assertFalse(product_tmpl4.allow_prorated_price, "The product is invoiced based on delivery, therefore it should not be prorated.")
+
+            # Case 5: Non recurring product (flag off by default) + Recurring Service (flag on by default)
+            product_tmpl5 = self.ProductTmpl.create({
+                'name': 'Non Recurring Product',
+                'type': 'service',
+                'recurring_invoice': False,
+                'invoice_policy': 'order',
+            })
+
+            sale_order = self.env['sale.order'].create({
+                'name': 'Test Sale Order',
+                'partner_id': self.partner_a.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': product_tmpl5.product_variant_id.id,
+                        'product_uom_qty': 1,
+                        'price_unit': 10}),
+                    Command.create({
+                        'product_id': product_tmpl1.product_variant_id.id,
+                        'product_uom_qty': 1,
+                        'price_unit': 10})]
+                })
+
+            sale_order.plan_id.billing_first_day = True
+            sale_order.action_confirm()
+            inv = sale_order._create_recurring_invoice()
+            self.assertEqual(inv.amount_untaxed, 14.19, "The invoiced amount should be 14.19 because the recurring service should be prorated and the non recurring one shouldn't.")
+            self.assertFalse(product_tmpl5.allow_prorated_price, "The product is not a subscription, so it should not be prorated.")

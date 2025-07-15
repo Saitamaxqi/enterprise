@@ -17,6 +17,13 @@ class ProductTemplate(models.Model):
         string="Accept One-Time",
         help="Define if the subscription product can also be bought as a one-time.",
     )
+    allow_prorated_price = fields.Boolean(
+        string="Prorated Price",
+        help="Define if price must be prorated or not for incomplete periods (upsell, calendar alignment, etc.)",
+        compute="_compute_allow_prorated_price",
+        store=True,
+        readonly=False,
+    )
 
     subscription_rule_ids = fields.One2many(
         comodel_name='product.pricelist.item',
@@ -67,6 +74,14 @@ class ProductTemplate(models.Model):
                 'message': _(
                     "You can not change the recurring property of this product because it has been sold already.")
             }}
+
+    @api.depends('type', 'recurring_invoice', 'invoice_policy')
+    def _compute_allow_prorated_price(self):
+        for template in self:
+            if template.recurring_invoice and template.type == 'service' and template.invoice_policy != 'delivery':
+                template.allow_prorated_price = True
+            else:
+                template.allow_prorated_price = False
 
     @api.depends('subscription_rule_ids')
     def _compute_display_subscription_pricing(self):

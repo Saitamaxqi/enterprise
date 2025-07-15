@@ -67,6 +67,7 @@
                     </field>
                     <group>
                         <field name="allow_one_time_sale" invisible="not recurring_invoice or type != 'consu'"/>
+                        <field name="allow_prorated_price" invisible="not recurring_invoice or type == 'consu' or invoice_policy == 'delivery'"/>
                     </group>
                 </page>
             </page>
