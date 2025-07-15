@@ -66,6 +66,7 @@ registry.category("web_tour.tours").add("PreparationDisplayTourConfigurableProdu
             Dialog.confirm("Open Register"),
             ProductScreen.clickDisplayedProduct("Configurable Chair"),
             Dialog.confirm(),
+            ProductScreen.addCustomerNote("Test customer note - orderline"),
             ProductScreen.totalAmountIs("11.0"),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),

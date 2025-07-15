@@ -11,6 +11,7 @@ class PosPrepLine(models.Model):
     cancelled = fields.Float("Quantity of cancelled product")
     pos_order_line_uuid = fields.Char(help="Original pos order line UUID")
     internal_note = fields.Char(help="Internal notes written at the time of the order")
+    customer_note = fields.Char(help="Customer notes written at the time of the order")
     product_id = fields.Many2one('product.product', string="Product ID")
     attribute_value_ids = fields.Many2many('product.template.attribute.value', 'pos_prep_line_product_template_attribute_value_rel', string="Selected Attributes")
     combo_line_ids = fields.One2many('pos.prep.line', 'combo_parent_id', string="Combo Lines")

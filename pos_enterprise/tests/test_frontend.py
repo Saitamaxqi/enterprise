@@ -100,8 +100,10 @@ class TestUi(TestPreparationDisplayHttpCommon):
 
         order = self.env['pos.order'].search([('amount_paid', '=', 11.0)], limit=1)
         preparation_order = self.env['pos.prep.order'].search([('pos_order_id', '=', order.id)], limit=1)
-        attribute_names = [attr.name for attr in preparation_order.prep_line_ids.attribute_value_ids]
+        prep_line = preparation_order.prep_line_ids[0]
+        attribute_names = [attr.name for attr in prep_line.attribute_value_ids]
         self.assertEqual(attribute_names, ['Red', 'Metal', 'Leather'])
+        self.assertEqual(prep_line.customer_note, 'Test customer note - orderline')
 
     def test_03_preparation_display_front_end(self):
         setup_product_combo_items(self)

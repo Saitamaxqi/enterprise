@@ -193,6 +193,7 @@ class PosOrder(models.Model):
                             ], limit=1)
                         pline = self.env['pos.prep.line'].create({
                             'internal_note': line.note or "[]",
+                            'customer_note': line.customer_note or "",
                             'attribute_value_ids': line.attribute_value_ids.ids,
                             'product_id': product_id,
                             'quantity': line_qty,
