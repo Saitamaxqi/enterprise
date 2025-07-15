@@ -100,7 +100,7 @@ class HrEmployee(models.Model):
 
     @api.depends('l10n_hk_surname', 'l10n_hk_given_name')
     def _compute_legal_name(self):
-        hk_employees = self.filtered(lambda e: e.company_id.country_code == 'HK')
+        hk_employees = self.filtered(lambda e: e.company_id.country_code == 'HK' and (e.l10n_hk_surname or e.l10n_hk_given_name))
         for employee in hk_employees:
             employee.legal_name = ' '.join(filter(None, [employee.l10n_hk_surname, employee.l10n_hk_given_name]))
 
