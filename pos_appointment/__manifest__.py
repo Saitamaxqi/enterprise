@@ -26,7 +26,6 @@
 
             'web/static/lib/dompurify/DOMpurify.js',
         ],
-
         'point_of_sale._assets_pos': [
             ('include', 'pos_appointment.html_editor'),
             'web_gantt/static/src/**/*',
@@ -40,7 +39,12 @@
         'point_of_sale.assets_prod_dark': [
             'web_gantt/static/src/**/*.dark.scss',
         ],
-       'web.assets_unit_tests': [
+        'web.assets_unit_tests_setup': [
+            # Adding error handler back since they are removed in the prod bundle
+            'html_editor/static/src/utils/regex.js',
+            'web_gantt/static/src/**/*.dark.scss'
+        ],
+        'web.assets_unit_tests': [
             'pos_appointment/static/tests/unit/data/**/*'
         ],
     }
