@@ -987,9 +987,12 @@ class DocumentsDocument(models.Model):
                 ('id', 'in' if no_propagation else 'child_of', self.ids),
             ])
             candidates_domain &= self._get_access_update_domain()
+            candidates_query = self.with_context(active_test=False)._search(candidates_domain)
 
-            candidates = self.with_context(active_test=False)._search(
-                candidates_domain).select('id', 'folder_id', 'shortcut_document_id', field)
+            candidates = candidates_query.select(*(
+                self._field_to_sql(candidates_query.table, fname, candidates_query)
+                for fname in ('id', 'folder_id', 'shortcut_document_id', field)
+            ))
 
             self.env.cr.execute(SQL("""
                 WITH RECURSIVE candidates AS (%(candidates)s),
@@ -1054,7 +1057,7 @@ class DocumentsDocument(models.Model):
         ])
         to_update_domain &= self._get_access_update_domain()
 
-        documents = self.with_context(active_test=False)._search(to_update_domain).select('id')
+        documents = self.with_context(active_test=False)._search(to_update_domain).select()
 
         for (role, expiration_date), partners in values_to_update.items():
             if role not in ('edit', 'view'):
@@ -1141,7 +1144,7 @@ class DocumentsDocument(models.Model):
             [('id', 'child_of', self.ids)],
             [] if self.env.su else [('user_permission', '=', 'edit')],
         ))
-        to_update = self.with_context(active_test=False)._search(to_update_domain).select('id')
+        to_update = self.with_context(active_test=False)._search(to_update_domain).select()
         # update shortcuts in sudo to keep them synchronized
         shortcuts_union = SQL("""
                          UNION
