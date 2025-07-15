@@ -625,6 +625,13 @@ class AccountMove(models.Model):
         # Check that the document type has been implemented, if not do not let the user create the doc
         if not edi_model._get_cfe_tag(self):
             errors.append(_("This CFE is not implemented yet %(doc_name)s", doc_name=self.l10n_latam_document_type_id.display_name))
+
+        # If found related document then it should be electronic one (should have serie and number)
+        if related_cfe := self._l10n_uy_edi_found_related_cfe():
+            cfe_serie, cfe_number = self.l10n_uy_edi_document_id._get_doc_parts(related_cfe)
+            if not cfe_serie or not cfe_number:
+                errors.append(_("The related CFE (%s) should be electronic", related_cfe.name))
+
         return errors
 
     def _l10n_uy_edi_cron_update_dgi_status(self, batch_size=10):

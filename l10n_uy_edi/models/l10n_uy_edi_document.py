@@ -211,8 +211,9 @@ class L10n_Uy_EdiDocument(models.Model):
 
     @api.model
     def _get_doc_parts(self, record):
-        """ return list [serie, number] """
-        return re.findall(r"([A-Z]{1,2})[-]*([0-9]{1,8})", record.l10n_latam_document_number)[-1]
+        """ Return list [serie, number] of the give CFE. If not valid then return [False, False]"""
+        res = re.findall(r"([A-Z]{1,2})[-]*([0-9]{1,8})", record.l10n_latam_document_number)
+        return res[-1] if res else [False, False]
 
     @api.model
     def _get_legends(self, addenda_type, move_id):

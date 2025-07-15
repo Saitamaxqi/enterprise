@@ -803,6 +803,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid "The related CFE (%s) should be electronic"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid ""
 "The Uruguayan xml you are trying to upload contains more than one CFE and up"
 " to now it is processed only the first one existing in the xml file."
