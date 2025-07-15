@@ -62,7 +62,7 @@ test("unselecting all measures should not crash pivot rendering", async () => {
         `,
     });
 
-    await click(".dropdown-toggle.btn.btn-primary:eq(1)");
+    await click(".dropdown-toggle.btn.btn-primary:eq(0)");
     await animationFrame();
     await click(".dropdown-item.o_menu_item.selected:eq(0)");
     await animationFrame();
