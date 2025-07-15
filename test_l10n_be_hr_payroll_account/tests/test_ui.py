@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from freezegun import freeze_time
@@ -21,9 +20,9 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
         with freeze_time("2022-01-01 10:00:00"):
             self.start_tour("/", 'hr_contract_salary_tour', login='admin', timeout=350)
 
-            new_version = self.env['hr.version'].search([('name', 'ilike', 'nathalie'), ('active', '=', False)])
+            new_employee_id = self.env['hr.employee'].search([('name', 'ilike', 'nathalie'), ('active', '=', False)])
+            new_version = self.env['hr.version'].search([('employee_id', '=', new_employee_id.id), ('active', '=', False)])
             self.assertTrue(new_version, 'A archived contract has been created')
-            new_employee_id = new_version.employee_id
             self.assertTrue(new_employee_id, 'An employee has been created')
             self.assertFalse(new_employee_id.active, 'Employee is not yet active')
 
@@ -37,7 +36,8 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
         with freeze_time("2022-01-01 11:00:00"):
             self.start_tour("/", 'hr_contract_salary_tour_hr_sign', login='admin', timeout=350)
             # Contract is signed by new employee and HR, the new car must be created
-            new_version = self.env['hr.version'].search([('name', 'ilike', 'nathalie')])
+            new_employee_id = self.env['hr.employee'].search([('name', 'ilike', 'nathalie')])
+            new_version = self.env['hr.version'].search([('employee_id', '=', new_employee_id.id)])
             self.assertTrue(new_version, 'A contract has been created')
             vehicle = self.env['fleet.vehicle'].search([('company_id', '=', self.company_id.id), ('model_id', '=', self.model_a3.id)])
             self.assertTrue(vehicle, 'A vehicle Exists')
@@ -51,9 +51,9 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
 
         with freeze_time("2022-01-01 12:00:00"):
             self.start_tour("/", 'hr_contract_salary_tour_2', login='admin', timeout=350)
-            new_version = self.env['hr.version'].search([('name', 'ilike', 'Mitchell Admin 3'), ('active', '=', False)])
+            new_employee_id = self.env['hr.employee'].search([('name', 'ilike', 'Mitchell Admin 3')])
+            new_version = self.env['hr.version'].search([('employee_id', '=', new_employee_id.id), ('active', '=', False)])
             self.assertTrue(new_version, 'A archived contract has been created')
-            new_employee_id = new_version.employee_id
             self.assertTrue(new_employee_id, 'An employee has been created')
             self.assertTrue(new_employee_id.active, 'Employee is active')
             self.assertEqual(new_version.new_car_model_id, self.model_corsa, 'Car is right model')
@@ -64,7 +64,7 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
         with freeze_time("2022-01-01 13:00:00"):
             # We now fully sign the offer to see if the vehicle to order is created correctly
             self.start_tour("/", 'hr_contract_salary_tour_counter_sign', login='admin', timeout=350)
-            new_version = self.env['hr.version'].search([('name', 'ilike', 'Mitchell Admin 3')])
+            new_version = self.env['hr.version'].search([('employee_id', '=', new_employee_id.id)])
             self.assertTrue(new_version, 'A contract has been created')
             vehicle = self.env['fleet.vehicle'].search([('company_id', '=', self.company_id.id), ('model_id', '=', self.model_corsa.id)])
             self.assertTrue(vehicle, 'A vehicle has been created')
