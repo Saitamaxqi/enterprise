@@ -24,8 +24,12 @@ class SignContract(Sign):
         result = super().sign(sign_request_id, token, sms_token=sms_token, signature=signature, **kwargs)
         if result.get('success'):
             request_item = request.env['sign.request.item'].sudo().search([('access_token', '=', token)])
-            version = request.env['hr.version'].sudo().with_context(active_test=False).search([
-                ('sign_request_ids', 'in', request_item.sign_request_id.ids)])
+            version = request.env['hr.version'].sudo().search([
+                ('sign_request_ids', 'in', request_item.sign_request_id.ids),
+                '|',
+                    ('active', '=', True),
+                    ('active', '=', False)
+            ])
             offer = request.env['hr.contract.salary.offer'].sudo().search([
                 ('sign_request_ids', 'in', request_item.sign_request_id.ids)])
             if offer.state in ['expired', 'refused']:
@@ -69,13 +73,17 @@ class SignContract(Sign):
         # Both applicant/employee and HR responsible have signed
         if request_item.sign_request_id.nb_closed == 2:
             current_employee_version = version.employee_id.version_id
-            current_employee_version.contract_date_end = version.contract_date_start - timedelta(days=1)
+            must_archive_current_version = version.applicant_id or False
             if current_employee_version.date_version >= version.date_version:
-                # then remplace the current version with the new one signed
-                current_employee_version.write({'active': False})
-                request.env.flush_all()
+                # then remplace the current version with the new one signed. We must 'fake' the date_version in order
+                # to be able to unarchive the new version without triggering the constraint if the two dates are equal
+                current_employee_version.date_version = version.date_version - timedelta(days=1)
+                must_archive_current_version = True
             version.write({'active': True})
             request.env.flush_all()
+            if must_archive_current_version:
+                current_employee_version.write({'active': False})
+                request.env.flush_all()
             if version.employee_id:
                 version.employee_id.active = True
                 if version.applicant_id:
@@ -617,8 +625,13 @@ class HrContractSalary(http.Controller):
         applicant = offer.applicant_id
         employee = kw.get('employee') or version.employee_id or applicant.employee_id or offer.employee_id
         if not employee and applicant:
-            existing_version = request.env['hr.version'].sudo().with_context(active_test=False).search([
-                ('applicant_id', '=', applicant.id), ('employee_id', '!=', False)], limit=1)
+            existing_version = request.env['hr.version'].sudo().search([
+                ('applicant_id', '=', applicant.id),
+                ('employee_id', '!=', False),
+                '|',
+                    ('active', '=', True),
+                    ('active', '=', False)
+            ], limit=1)
             employee = existing_version.employee_id
         if not employee:
             employee = request.env['hr.employee'].sudo().with_context(
