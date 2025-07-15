@@ -173,7 +173,7 @@ class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
         if current.get('account_id'):
             parent_line_id = line_id
             line_id = report._get_generic_line_id('account.account', current['account_id'], parent_line_id=line_id)
-            # This handles the case of child account lines without any rate.
+            # This handles the case of child account lines without any rate or having 0% rate.
             # We replicate the account_id in the line id in order to differentiate the child's line id from its parent.
             if len(current) != level and not (current.get('account_rate') or current.get('fleet_rate')):
                 parent_line_id = line_id

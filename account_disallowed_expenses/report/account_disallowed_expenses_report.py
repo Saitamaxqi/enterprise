@@ -203,6 +203,11 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         if current.get('account_id'):
             parent_line_id = line_id
             line_id = report._get_generic_line_id('account.account', current['account_id'], parent_line_id=line_id)
+            # This handles the case of child account lines without any rate or having 0% rate.
+            # We replicate the account_id in the line id in order to differentiate the child's line id from its parent.
+            if len(current) != level and not current.get('account_rate'):
+                parent_line_id = line_id
+                line_id = report._get_generic_line_id('account.account', current['account_id'], parent_line_id=line_id)
         if current.get('account_rate'):
             parent_line_id = line_id
             line_id = report._get_generic_line_id('account.disallowed.expenses.rate', current['account_rate'], markup=markup, parent_line_id=line_id)
@@ -255,7 +260,8 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
 
         for group_key, result in results.items():
             current = self._parse_hierarchy_group_key(group_key)
-            lines.append(self._get_account_line(options, result, current, len(current)))
+            level = len(self._parse_line_id(options, line_dict_id)) + 1
+            lines.append(self._get_account_line(options, result, current, level))
 
         return {'lines': lines}
 
@@ -265,9 +271,10 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
 
         for group_key, result in results.items():
             current = self._parse_hierarchy_group_key(group_key)
+            level = len(self._parse_line_id(options, line_dict_id)) + 1
             base_line_values = list(result.values())[0]
             account_id = self._get_single_value(base_line_values, 'account_id')
-            lines.append(self._get_rate_line(options, result, current, len(current), account_id))
+            lines.append(self._get_rate_line(options, result, current, level, account_id))
 
         return {'lines': lines}
 
