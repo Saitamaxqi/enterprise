@@ -25,6 +25,13 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
     departure_date = fields.Date(string='Departure Date', default=fields.Date.context_today, required=True)
     leaving_type_id = fields.Many2one('hr.departure.reason', string='Departure Reason', required=True)
     departure_reason_code = fields.Integer(related='leaving_type_id.l10n_be_reason_code')
+    l10n_be_scale_seniority = fields.Integer(
+        string="Seniority at Hiring",
+        related='employee_id.l10n_be_scale_seniority',
+        readonly=True)
+    use_seniority_at_hiring = fields.Boolean(
+        string="Use Seniority at Hiring",
+        help="If checked, also consider the seniority at hiring for Notice Duration computation")
 
     start_notice_period = fields.Date(
         string='Start Notice Period',
@@ -120,7 +127,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
                     months_to_weeks = notice.notice_duration_month_before_2014 / 3.0 * 13
                     notice.end_notice_period = notice.start_notice_period + timedelta(weeks=months_to_weeks + notice.notice_duration_week_after_2014, days=-1)
 
-    @api.depends('first_contract', 'leaving_type_id', 'salary_december_2013', 'start_notice_period', 'oldest_contract_id')
+    @api.depends('first_contract', 'leaving_type_id', 'salary_december_2013', 'start_notice_period', 'oldest_contract_id', 'use_seniority_at_hiring', 'l10n_be_scale_seniority')
     def _notice_duration(self):
         first_2014 = datetime(2014, 1, 1)
         departure_reasons = self.env['hr.departure.reason']._l10n_be_get_default_departure_reasons_codes_by_name()
@@ -130,13 +137,14 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
                 notice.notice_duration_month_before_2014 = 0
                 notice.notice_duration_week_after_2014 = 0
                 continue
-            if notice._get_years(relativedelta(first_2014, notice.first_contract)) < 0:
-                first_day_since_2014 = notice.first_contract
+            first_contract_date = notice.first_contract if not notice.use_seniority_at_hiring else notice.first_contract + relativedelta(years=-notice.l10n_be_scale_seniority)
+            if notice._get_years(relativedelta(first_2014, first_contract_date)) < 0:
+                first_day_since_2014 = first_contract_date
             else:
                 first_day_since_2014 = first_2014
             period_since_2014 = relativedelta(notice.start_notice_period, first_day_since_2014)
             difference_in_years = notice._get_years(relativedelta(datetime(2013, 12, 31),
-                notice.first_contract))
+                first_contract_date))
             if notice.leaving_type_id.l10n_be_reason_code == departure_reasons['fired']:
                 # Part I
                 if difference_in_years > 0:

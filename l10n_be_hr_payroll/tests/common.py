@@ -217,6 +217,7 @@ class TestPayrollCommon(TransactionCase):
                 'date_version': date(2017, 1, 1),
                 'contract_date_start': date(2017, 1, 1),
                 'contract_date_end': False,
+                'l10n_be_scale_seniority': 8,
             })
 
             cls.test_contracts = cls.employee_test.version_id

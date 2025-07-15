@@ -26,6 +26,12 @@
                     <group class="o_label_nowrap">
                         <field name="first_contract"/>
                         <field name="seniority_description"/>
+                        <label for="l10n_be_scale_seniority" invisible="l10n_be_scale_seniority == 0"/>
+                        <div name="seniority_at_hiring" invisible="l10n_be_scale_seniority == 0">
+                            <field name="use_seniority_at_hiring" nolabel="1"/>
+                            <field name="l10n_be_scale_seniority" nolabel="1" readonly="1" class="oe_inline"/>
+                            <span> years</span>
+                        </div>
                         <field name="start_notice_period" invisible="notice_respect == 'without'"/>
                         <label for="notice_duration_month_before_2014" string="Notice Duration" invisible="notice_respect != 'with'"/>
                         <label for="notice_duration_month_before_2014" string="Theoretical Notice Duration" invisible="notice_respect == 'with'"/>
