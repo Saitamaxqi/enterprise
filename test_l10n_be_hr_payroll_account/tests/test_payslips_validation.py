@@ -14,465 +14,462 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     @TestPayslipValidationCommon.setup_country('be')
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.group_ids += cls.quick_ref('hr_holidays.group_hr_holidays_manager')
+        cls.env.user.group_ids += cls.quick_ref('hr_holidays.group_hr_holidays_manager')\
+                                  | cls.quick_ref('hr_payroll.group_hr_payroll_user')\
+                                  | cls.quick_ref('fleet.fleet_group_manager')\
+                                  | cls.quick_ref('hr.group_hr_manager')
         cls.date_from = datetime.date(2020, 9, 1)
         cls.date_to = datetime.date(2020, 9, 30)
 
-        cls.resource_calendar_38_hours_per_week = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar : 38 Hours/Week",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 38.0,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 8.0, 12.0, "morning"),
-                ("0", 12.0, 13.0, "lunch"),
-                ("0", 13.0, 16.6, "afternoon"),
-                ("1", 8.0, 12.0, "morning"),
-                ("1", 12.0, 13.0, "lunch"),
-                ("1", 13.0, 16.6, "afternoon"),
-                ("2", 8.0, 12.0, "morning"),
-                ("2", 12.0, 13.0, "lunch"),
-                ("2", 13.0, 16.6, "afternoon"),
-                ("3", 8.0, 12.0, "morning"),
-                ("3", 12.0, 13.0, "lunch"),
-                ("3", 13.0, 16.6, "afternoon"),
-                ("4", 8.0, 12.0, "morning"),
-                ("4", 12.0, 13.0, "lunch"),
-                ("4", 13.0, 16.6, "afternoon"),
-
-            ]],
-        }])
-
-        cls.resource_calendar_38_hours_per_week_odoo = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar : 38 Hours/Week",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 38.0,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 9.0, 12.8, "morning"),
-                ("0", 12.8, 13.8, "lunch"),
-                ("0", 13.8, 17.6, "afternoon"),
-                ("1", 9.0, 12.8, "morning"),
-                ("1", 12.8, 13.8, "lunch"),
-                ("1", 13.8, 17.6, "afternoon"),
-                ("2", 9.0, 12.8, "morning"),
-                ("2", 12.8, 13.8, "lunch"),
-                ("2", 13.8, 17.6, "afternoon"),
-                ("3", 9.0, 12.8, "morning"),
-                ("3", 12.8, 13.8, "lunch"),
-                ("3", 13.8, 17.6, "afternoon"),
-                ("4", 9.0, 12.8, "morning"),
-                ("4", 12.8, 13.8, "lunch"),
-                ("4", 13.8, 17.6, "afternoon"),
-
-            ]],
-        }])
-
-        cls.resource_calendar_4_5_wednesday_off = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 4/5 Wednesday Off",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 38.0,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 8.0, 12.0, "morning"),
-                ("0", 12.0, 13.0, "lunch"),
-                ("0", 13.0, 16.6, "afternoon"),
-                ("1", 8.0, 12.0, "morning"),
-                ("1", 12.0, 13.0, "lunch"),
-                ("1", 13.0, 16.6, "afternoon"),
-                ("3", 8.0, 12.0, "morning"),
-                ("3", 12.0, 13.0, "lunch"),
-                ("3", 13.0, 16.6, "afternoon"),
-                ("4", 8.0, 12.0, "morning"),
-                ("4", 12.0, 13.0, "lunch"),
-                ("4", 13.0, 16.6, "afternoon"),
-
-            ]],
-        }])
-
-        cls.resource_calendar_4_5_thurday_off = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 4/5 Thursday Off",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 38.0,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 8.0, 12.0, "morning"),
-                ("0", 12.0, 13.0, "lunch"),
-                ("0", 13.0, 16.6, "afternoon"),
-                ("1", 8.0, 12.0, "morning"),
-                ("1", 12.0, 13.0, "lunch"),
-                ("1", 13.0, 16.6, "afternoon"),
-                ("2", 8.0, 12.0, "morning"),
-                ("2", 12.0, 13.0, "lunch"),
-                ("2", 13.0, 16.6, "afternoon"),
-                ("4", 8.0, 12.0, "morning"),
-                ("4", 12.0, 13.0, "lunch"),
-                ("4", 13.0, 16.6, "afternoon"),
-
-            ]],
-        }])
-
-        cls.resource_calendar_4_5_friday_off = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 4/5 Friday Off",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 38.0,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 8.0, 12.0, "morning"),
-                ("0", 12.0, 13.0, "lunch"),
-                ("0", 13.0, 16.6, "afternoon"),
-                ("1", 8.0, 12.0, "morning"),
-                ("1", 12.0, 13.0, "lunch"),
-                ("1", 13.0, 16.6, "afternoon"),
-                ("2", 8.0, 12.0, "morning"),
-                ("2", 12.0, 13.0, "lunch"),
-                ("2", 13.0, 16.6, "afternoon"),
-                ("3", 8.0, 12.0, "morning"),
-                ("3", 12.0, 13.0, "lunch"),
-                ("3", 13.0, 16.6, "afternoon"),
-            ]],
-        }])
-
-        cls.resource_calendar_half_time = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: Half Time",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 6.33,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 19.0,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 8.0, 12.0, "morning"),
-                ("0", 12.0, 13.0, "lunch"),
-                ("0", 13.0, 16.6, "afternoon"),
-                ("1", 8.0, 12.0, "morning"),
-                ("1", 12.0, 13.0, "lunch"),
-                ("1", 13.0, 16.6, "afternoon"),
-                ("2", 8.0, 11.8, "morning"),
-            ]],
-        }])
-
-        cls.resource_calendar_1_5_monday_on = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 1/5 Monday On",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 7.6,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 8.0, 12.0, "morning"),
-                ("0", 12.0, 13.0, "lunch"),
-                ("0", 13.0, 16.6, "afternoon"),
-            ]],
-        }])
-
-        cls.resource_calendar_0_hours_per_week = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 0 Hours per week",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 0,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 0,
-            'full_time_required_hours': 38,
-            'attendance_ids': [(5, 0, 0)],
-        }])
-
-        cls.resource_calendar_19_part_time_sick = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 19 Hours/Week Part Time Sick PM",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 38.0,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 9.0, 12.8, "morning"),
-                ("1", 9.0, 12.8, "morning"),
-                ("2", 9.0, 12.8, "morning"),
-                ("3", 9.0, 12.8, "morning"),
-                ("4", 9.0, 12.8, "morning"),
-            ]] + [(0, 0, {
-                'name': "Sick Time Off",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_partial_incapacity').id
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 13.8, 17.6, "afternoon"),
-                ("1", 13.8, 17.6, "afternoon"),
-                ("2", 13.8, 17.6, "afternoon"),
-                ("3", 13.8, 17.6, "afternoon"),
-                ("4", 13.8, 17.6, "afternoon"),
-            ]],
-        }])
-
-        cls.resource_calendar_9_10_monday_off = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 9/10 Hours/Week 1 Monday over 2 Off",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': True,
-            'hours_per_week': 34.2,
-            'work_time_rate': 90,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [
-                (0, 0, {
-                    'name': 'First week',
-                    'dayofweek': '0',
-                    'sequence': '0',
-                    'hour_from': 0,
-                    'day_period': 'morning',
-                    'week_type': '0',
-                    'hour_to': 0,
-                    'display_type': 'line_section'
-                }), (0, 0, {
-                    'name': 'Second week',
-                    'dayofweek': '0',
-                    'sequence': '25',
-                    'hour_from': 0,
-                    'day_period': 'morning',
-                    'week_type': '1',
-                    'hour_to': 0,
-                    'display_type': 'line_section'
-                })] + [(0, 0, {
+        cls.resource_calendar_38_hours_per_week, \
+        cls.resource_calendar_38_hours_per_week_odoo, \
+        cls.resource_calendar_4_5_wednesday_off, \
+        cls.resource_calendar_4_5_thurday_off, \
+        cls.resource_calendar_4_5_friday_off, \
+        cls.resource_calendar_half_time, \
+        cls.resource_calendar_1_5_monday_on, \
+        cls.resource_calendar_0_hours_per_week, \
+        cls.resource_calendar_19_part_time_sick, \
+        cls.resource_calendar_9_10_monday_off, \
+        cls.resource_calendar_9_10_strange, \
+        cls.resource_calendar_4_5_monday_off_equal_morning_afternoon, \
+        = cls.env['resource.calendar'].sudo().create([
+            *[{
+                'name': "Test Calendar : 38 Hours/Week",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 38.0,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
                     'dayofweek': dayofweek,
                     'hour_from': hour_from,
                     'hour_to': hour_to,
                     'day_period': day_period,
-                    'sequence': sequence,
-                    'week_type': week_type,
                     'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-                }) for dayofweek, hour_from, hour_to, day_period, week_type, sequence in [
-                    ("0", 8.0, 12.0, "morning", "0", "1"),
-                    ("0", 12.0, 13.0, "lunch", "0", "2"),
-                    ("0", 13.0, 16.6, "afternoon", "0", "3"),
-                    ("1", 8.0, 12.0, "morning", "0", "4"),
-                    ("1", 12.0, 13.0, "lunch", "0", "5"),
-                    ("1", 13.0, 16.6, "afternoon", "0", "6"),
-                    ("2", 8.0, 12.0, "morning", "0", "7"),
-                    ("2", 12.0, 13.0, "lunch", "0", "8"),
-                    ("2", 13.0, 16.6, "afternoon", "0", "9"),
-                    ("3", 8.0, 12.0, "morning", "0", "10"),
-                    ("3", 12.0, 13.0, "lunch", "0", "11"),
-                    ("3", 13.0, 16.6, "afternoon", "0", "12"),
-                    ("4", 8.0, 12.0, "morning", "0", "13"),
-                    ("4", 12.0, 13.0, "lunch", "0", "14"),
-                    ("4", 13.0, 16.6, "afternoon", "0", "15"),
-                    ("1", 8.0, 12.0, "morning", "1", "26"),
-                    ("1", 12.0, 13.0, "lunch", "1", "27"),
-                    ("1", 13.0, 16.6, "afternoon", "1", "28"),
-                    ("2", 8.0, 12.0, "morning", "1", "29"),
-                    ("2", 12.0, 13.0, "lunch", "1", "30"),
-                    ("2", 13.0, 16.6, "afternoon", "1", "31"),
-                    ("3", 8.0, 12.0, "morning", "1", "32"),
-                    ("3", 12.0, 13.0, "lunch", "1", "33"),
-                    ("3", 13.0, 16.6, "afternoon", "1", "34"),
-                    ("4", 8.0, 12.0, "morning", "1", "35"),
-                    ("4", 12.0, 13.0, "lunch", "1", "36"),
-                    ("4", 13.0, 16.6, "afternoon", "1", "37")]],
-        }])
-
-        cls.resource_calendar_9_10_strange = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 9/10 Hours/Week 1 hour less every day on second week + 1 wed pm off",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 7.6,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': True,
-            'hours_per_week': 34.2,
-            'work_time_rate': 90,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [
-                (0, 0, {
-                    'name': 'First week',
-                    'dayofweek': '0',
-                    'sequence': '0',
-                    'hour_from': 0,
-                    'day_period': 'morning',
-                    'week_type': '0',
-                    'hour_to': 0,
-                    'display_type': 'line_section'
-                }), (0, 0, {
-                    'name': 'Second week',
-                    'dayofweek': '0',
-                    'sequence': '25',
-                    'hour_from': 0,
-                    'day_period': 'morning',
-                    'week_type': '1',
-                    'hour_to': 0,
-                    'display_type': 'line_section'
-                })] + [(0, 0, {
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 16.6, "afternoon"),
+                    ("3", 8.0, 12.0, "morning"),
+                    ("3", 12.0, 13.0, "lunch"),
+                    ("3", 13.0, 16.6, "afternoon"),
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 16.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar : 38 Hours/Week",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 38.0,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
                     'dayofweek': dayofweek,
                     'hour_from': hour_from,
                     'hour_to': hour_to,
                     'day_period': day_period,
-                    'sequence': sequence,
-                    'week_type': week_type,
                     'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-                }) for dayofweek, hour_from, hour_to, day_period, week_type, sequence in [
-                    ("0", 9.0, 12.8, "morning", "0", "1"),
-                    ("0", 12.8, 13.8, "lunch", "0", "2"),
-                    ("0", 13.8, 17.6, "afternoon", "0", "3"),
-                    ("1", 9.0, 12.8, "morning", "0", "4"),
-                    ("1", 12.8, 13.8, "lunch", "0", "5"),
-                    ("1", 13.8, 17.6, "afternoon", "0", "6"),
-                    ("2", 9.0, 12.8, "morning", "0", "7"),
-                    ("2", 12.8, 13.8, "lunch", "0", "8"),
-                    ("2", 13.8, 17.6, "afternoon", "0", "9"),
-                    ("3", 9.0, 12.8, "morning", "0", "10"),
-                    ("3", 12.8, 13.8, "lunch", "0", "11"),
-                    ("3", 13.8, 17.6, "afternoon", "0", "12"),
-                    ("4", 9.0, 12.8, "morning", "0", "13"),
-                    ("4", 12.8, 13.8, "lunch", "0", "14"),
-                    ("4", 13.8, 17.6, "afternoon", "0", "15"),
-                    ("0", 9.0, 12.8, "morning", "1", "26"),
-                    ("0", 12.8, 13.8, "lunch", "1", "27"),
-                    ("0", 13.8, 16.6, "afternoon", "1", "28"),
-                    ("1", 9.0, 12.8, "morning", "1", "29"),
-                    ("1", 12.8, 13.8, "lunch", "1", "30"),
-                    ("1", 13.8, 16.6, "afternoon", "1", "31"),
-                    ("2", 9.0, 12.8, "morning", "1", "32"),
-                    ("3", 9.0, 12.8, "morning", "1", "33"),
-                    ("3", 12.8, 13.8, "lunch", "1", "34"),
-                    ("3", 13.8, 16.6, "afternoon", "1", "35"),
-                    ("4", 9.0, 12.8, "morning", "1", "36"),
-                    ("4", 12.8, 13.8, "lunch", "1", "37"),
-                    ("4", 13.8, 16.6, "afternoon", "1", "38")]],
-        }])
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 9.0, 12.8, "morning"),
+                    ("0", 12.8, 13.8, "lunch"),
+                    ("0", 13.8, 17.6, "afternoon"),
+                    ("1", 9.0, 12.8, "morning"),
+                    ("1", 12.8, 13.8, "lunch"),
+                    ("1", 13.8, 17.6, "afternoon"),
+                    ("2", 9.0, 12.8, "morning"),
+                    ("2", 12.8, 13.8, "lunch"),
+                    ("2", 13.8, 17.6, "afternoon"),
+                    ("3", 9.0, 12.8, "morning"),
+                    ("3", 12.8, 13.8, "lunch"),
+                    ("3", 13.8, 17.6, "afternoon"),
+                    ("4", 9.0, 12.8, "morning"),
+                    ("4", 12.8, 13.8, "lunch"),
+                    ("4", 13.8, 17.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 4/5 Wednesday Off",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 38.0,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("3", 8.0, 12.0, "morning"),
+                    ("3", 12.0, 13.0, "lunch"),
+                    ("3", 13.0, 16.6, "afternoon"),
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 16.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 4/5 Thursday Off",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 38.0,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 16.6, "afternoon"),
+                    ("4", 8.0, 12.0, "morning"),
+                    ("4", 12.0, 13.0, "lunch"),
+                    ("4", 13.0, 16.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 4/5 Friday Off",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 38.0,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("2", 8.0, 12.0, "morning"),
+                    ("2", 12.0, 13.0, "lunch"),
+                    ("2", 13.0, 16.6, "afternoon"),
+                    ("3", 8.0, 12.0, "morning"),
+                    ("3", 12.0, 13.0, "lunch"),
+                    ("3", 13.0, 16.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: Half Time",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 6.33,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 19.0,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                    ("1", 8.0, 12.0, "morning"),
+                    ("1", 12.0, 13.0, "lunch"),
+                    ("1", 13.0, 16.6, "afternoon"),
+                    ("2", 8.0, 11.8, "morning"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 1/5 Monday On",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 7.6,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 8.0, 12.0, "morning"),
+                    ("0", 12.0, 13.0, "lunch"),
+                    ("0", 13.0, 16.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 0 Hours per week",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 0,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 0,
+                'full_time_required_hours': 38,
+                'attendance_ids': [(5, 0, 0)],
+            }],
+            *[{
+                'name': "Test Calendar: 19 Hours/Week Part Time Sick PM",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 38.0,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 9.0, 12.8, "morning"),
+                    ("1", 9.0, 12.8, "morning"),
+                    ("2", 9.0, 12.8, "morning"),
+                    ("3", 9.0, 12.8, "morning"),
+                    ("4", 9.0, 12.8, "morning"),
+                ]] + [(0, 0, {
+                    'name': "Sick Time Off",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_partial_incapacity').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 13.8, 17.6, "afternoon"),
+                    ("1", 13.8, 17.6, "afternoon"),
+                    ("2", 13.8, 17.6, "afternoon"),
+                    ("3", 13.8, 17.6, "afternoon"),
+                    ("4", 13.8, 17.6, "afternoon"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 9/10 Hours/Week 1 Monday over 2 Off",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': True,
+                'hours_per_week': 34.2,
+                'work_time_rate': 90,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [
+                    (0, 0, {
+                        'name': 'First week',
+                        'dayofweek': '0',
+                        'sequence': '0',
+                        'hour_from': 0,
+                        'day_period': 'morning',
+                        'week_type': '0',
+                        'hour_to': 0,
+                        'display_type': 'line_section'
+                    }), (0, 0, {
+                        'name': 'Second week',
+                        'dayofweek': '0',
+                        'sequence': '25',
+                        'hour_from': 0,
+                        'day_period': 'morning',
+                        'week_type': '1',
+                        'hour_to': 0,
+                        'display_type': 'line_section'
+                    })] + [(0, 0, {
+                        'name': "Attendance",
+                        'dayofweek': dayofweek,
+                        'hour_from': hour_from,
+                        'hour_to': hour_to,
+                        'day_period': day_period,
+                        'sequence': sequence,
+                        'week_type': week_type,
+                        'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                    }) for dayofweek, hour_from, hour_to, day_period, week_type, sequence in [
+                        ("0", 8.0, 12.0, "morning", "0", "1"),
+                        ("0", 12.0, 13.0, "lunch", "0", "2"),
+                        ("0", 13.0, 16.6, "afternoon", "0", "3"),
+                        ("1", 8.0, 12.0, "morning", "0", "4"),
+                        ("1", 12.0, 13.0, "lunch", "0", "5"),
+                        ("1", 13.0, 16.6, "afternoon", "0", "6"),
+                        ("2", 8.0, 12.0, "morning", "0", "7"),
+                        ("2", 12.0, 13.0, "lunch", "0", "8"),
+                        ("2", 13.0, 16.6, "afternoon", "0", "9"),
+                        ("3", 8.0, 12.0, "morning", "0", "10"),
+                        ("3", 12.0, 13.0, "lunch", "0", "11"),
+                        ("3", 13.0, 16.6, "afternoon", "0", "12"),
+                        ("4", 8.0, 12.0, "morning", "0", "13"),
+                        ("4", 12.0, 13.0, "lunch", "0", "14"),
+                        ("4", 13.0, 16.6, "afternoon", "0", "15"),
+                        ("1", 8.0, 12.0, "morning", "1", "26"),
+                        ("1", 12.0, 13.0, "lunch", "1", "27"),
+                        ("1", 13.0, 16.6, "afternoon", "1", "28"),
+                        ("2", 8.0, 12.0, "morning", "1", "29"),
+                        ("2", 12.0, 13.0, "lunch", "1", "30"),
+                        ("2", 13.0, 16.6, "afternoon", "1", "31"),
+                        ("3", 8.0, 12.0, "morning", "1", "32"),
+                        ("3", 12.0, 13.0, "lunch", "1", "33"),
+                        ("3", 13.0, 16.6, "afternoon", "1", "34"),
+                        ("4", 8.0, 12.0, "morning", "1", "35"),
+                        ("4", 12.0, 13.0, "lunch", "1", "36"),
+                        ("4", 13.0, 16.6, "afternoon", "1", "37"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 9/10 Hours/Week 1 hour less every day on second week + 1 wed pm off",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 7.6,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': True,
+                'hours_per_week': 34.2,
+                'work_time_rate': 90,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [
+                    (0, 0, {
+                        'name': 'First week',
+                        'dayofweek': '0',
+                        'sequence': '0',
+                        'hour_from': 0,
+                        'day_period': 'morning',
+                        'week_type': '0',
+                        'hour_to': 0,
+                        'display_type': 'line_section'
+                    }), (0, 0, {
+                        'name': 'Second week',
+                        'dayofweek': '0',
+                        'sequence': '25',
+                        'hour_from': 0,
+                        'day_period': 'morning',
+                        'week_type': '1',
+                        'hour_to': 0,
+                        'display_type': 'line_section'
+                    })] + [(0, 0, {
+                        'name': "Attendance",
+                        'dayofweek': dayofweek,
+                        'hour_from': hour_from,
+                        'hour_to': hour_to,
+                        'day_period': day_period,
+                        'sequence': sequence,
+                        'week_type': week_type,
+                        'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                    }) for dayofweek, hour_from, hour_to, day_period, week_type, sequence in [
+                        ("0", 9.0, 12.8, "morning", "0", "1"),
+                        ("0", 12.8, 13.8, "lunch", "0", "2"),
+                        ("0", 13.8, 17.6, "afternoon", "0", "3"),
+                        ("1", 9.0, 12.8, "morning", "0", "4"),
+                        ("1", 12.8, 13.8, "lunch", "0", "5"),
+                        ("1", 13.8, 17.6, "afternoon", "0", "6"),
+                        ("2", 9.0, 12.8, "morning", "0", "7"),
+                        ("2", 12.8, 13.8, "lunch", "0", "8"),
+                        ("2", 13.8, 17.6, "afternoon", "0", "9"),
+                        ("3", 9.0, 12.8, "morning", "0", "10"),
+                        ("3", 12.8, 13.8, "lunch", "0", "11"),
+                        ("3", 13.8, 17.6, "afternoon", "0", "12"),
+                        ("4", 9.0, 12.8, "morning", "0", "13"),
+                        ("4", 12.8, 13.8, "lunch", "0", "14"),
+                        ("4", 13.8, 17.6, "afternoon", "0", "15"),
+                        ("0", 9.0, 12.8, "morning", "1", "26"),
+                        ("0", 12.8, 13.8, "lunch", "1", "27"),
+                        ("0", 13.8, 16.6, "afternoon", "1", "28"),
+                        ("1", 9.0, 12.8, "morning", "1", "29"),
+                        ("1", 12.8, 13.8, "lunch", "1", "30"),
+                        ("1", 13.8, 16.6, "afternoon", "1", "31"),
+                        ("2", 9.0, 12.8, "morning", "1", "32"),
+                        ("3", 9.0, 12.8, "morning", "1", "33"),
+                        ("3", 12.8, 13.8, "lunch", "1", "34"),
+                        ("3", 13.8, 16.6, "afternoon", "1", "35"),
+                        ("4", 9.0, 12.8, "morning", "1", "36"),
+                        ("4", 12.8, 13.8, "lunch", "1", "37"),
+                        ("4", 13.8, 16.6, "afternoon", "1", "38"),
+                ]],
+            }],
+            *[{
+                'name': "Test Calendar: 4/5 Monday/Friday Afternoon Off (equal morning/afternoon)",
+                'company_id': cls.env.company.id,
+                'hours_per_day': 6.08,
+                'tz': "Europe/Brussels",
+                'two_weeks_calendar': False,
+                'hours_per_week': 30.4,
+                'full_time_required_hours': 38.0,
+                'attendance_ids': [(5, 0, 0)] + [(0, 0, {
+                    'name': "Attendance",
+                    'dayofweek': dayofweek,
+                    'hour_from': hour_from,
+                    'hour_to': hour_to,
+                    'day_period': day_period,
+                    'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
+                }) for dayofweek, hour_from, hour_to, day_period in [
+                    ("0", 9.0, 12.8, "morning"),
+                    ("1", 9.0, 12.8, "morning"),
+                    ("1", 12.8, 13.8, "lunch"),
+                    ("1", 13.8, 17.6, "afternoon"),
+                    ("2", 9.0, 12.8, "morning"),
+                    ("2", 12.8, 13.8, "lunch"),
+                    ("2", 13.8, 17.6, "afternoon"),
+                    ("3", 9.0, 12.8, "morning"),
+                    ("3", 12.8, 13.8, "lunch"),
+                    ("3", 13.8, 17.6, "afternoon"),
+                    ("4", 9.0, 12.8, "morning"),
+                ]],
+            }],
+        ]).sudo(False)
 
-        cls.resource_calendar_4_5_monday_off_equal_morning_afternoon = cls.env['resource.calendar'].create([{
-            'name': "Test Calendar: 4/5 Monday/Friday Afternoon Off (equal morning/afternoon)",
-            'company_id': cls.env.company.id,
-            'hours_per_day': 6.08,
-            'tz': "Europe/Brussels",
-            'two_weeks_calendar': False,
-            'hours_per_week': 30.4,
-            'full_time_required_hours': 38.0,
-            'attendance_ids': [(5, 0, 0)] + [(0, 0, {
-                'name': "Attendance",
-                'dayofweek': dayofweek,
-                'hour_from': hour_from,
-                'hour_to': hour_to,
-                'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_attendance').id
-
-            }) for dayofweek, hour_from, hour_to, day_period in [
-                ("0", 9.0, 12.8, "morning"),
-                ("1", 9.0, 12.8, "morning"),
-                ("1", 12.8, 13.8, "lunch"),
-                ("1", 13.8, 17.6, "afternoon"),
-                ("2", 9.0, 12.8, "morning"),
-                ("2", 12.8, 13.8, "lunch"),
-                ("2", 13.8, 17.6, "afternoon"),
-                ("3", 9.0, 12.8, "morning"),
-                ("3", 12.8, 13.8, "lunch"),
-                ("3", 13.8, 17.6, "afternoon"),
-                ("4", 9.0, 12.8, "morning"),
-            ]],
-        }])
-
-        cls.brand = cls.env['fleet.vehicle.model.brand'].create([{
+        brand = cls.env['fleet.vehicle.model.brand'].sudo().create([{
             'name': "Test Brand"
         }])
 
-        cls.model = cls.env['fleet.vehicle.model'].create([{
+        model = cls.env['fleet.vehicle.model'].sudo().create([{
             'name': "Test Model",
-            'brand_id': cls.brand.id
+            'brand_id': brand.id
         }])
 
-        cls.car = cls.env['fleet.vehicle'].create([{
+        cls.car = cls.env['fleet.vehicle'].sudo().create([{
             'name': "Test Car",
             'license_plate': "TEST",
             'company_id': cls.env.company.id,
-            'model_id': cls.model.id,
+            'model_id': model.id,
             'contract_date_start': datetime.date(2020, 10, 8),
             'co2': 88.0,
             'car_value': 38000.0,
             'fuel_type': "diesel",
             'acquisition_date': datetime.date(2020, 1, 1)
-        }])
+        }]).sudo(False)
 
-        cls.vehicle_contract = cls.env['fleet.vehicle.log.contract'].create({
+        cls.vehicle_contract = cls.env['fleet.vehicle.log.contract'].sudo().create({
             'name': "Test Contract",
             'vehicle_id': cls.car.id,
             'company_id': cls.env.company.id,
@@ -1853,7 +1850,10 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_payslip(payslip, payslip_results)
 
         # PAYSLIP EDITION
-        action = payslip.action_edit_payslip_lines()
+        group_payroll_manager = self.env.ref('hr_payroll.group_hr_payroll_manager')
+        payslip.env.user.group_ids |= group_payroll_manager
+        action = payslip.sudo().action_edit_payslip_lines()
+        self.env.user.group_ids |= group_payroll_manager
         wizard = self.env[action['res_model']].browse(action['res_id'])
 
         # Edit the amount of the payslip line with the ATN.INT code

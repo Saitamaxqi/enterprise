@@ -47,7 +47,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
 
         belgium = cls.env.ref('base.be')
 
-        cls.resource_calendar_38_hours_per_week = cls.env['resource.calendar'].create([{
+        resource_calendar_38_hours_per_week = cls.env['resource.calendar'].sudo().create([{
             'name': "Test Calendar : 38 Hours/Week",
             'company_id': cls.company.id,
             'hours_per_day': 7.6,
@@ -103,44 +103,44 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
                 </xpath>
             """
         })
-        cls.employees = cls.env['hr.employee'].create([{
-            'name': "Test Employee %.03d" % i,
+        cls.employees = cls.env['hr.employee'].sudo().create([{
+            'name': f"Test Employee {i:03}",
             'private_street': 'Brussels Street',
             'private_city': 'Brussels',
             'private_zip': '2928',
             'private_country_id': belgium.id,
-            'resource_calendar_id': cls.resource_calendar_38_hours_per_week.id,
+            'resource_calendar_id': resource_calendar_38_hours_per_week.id,
             'company_id': cls.company.id,
             'distance_home_work': 75,
             'niss': '93051822361',
             'certificate': 'master',
 
-        } for i in range(cls.EMPLOYEES_COUNT)])
+        } for i in range(cls.EMPLOYEES_COUNT)]).sudo(False)
 
-        cls.brand = cls.env['fleet.vehicle.model.brand'].create([{
+        brand = cls.env['fleet.vehicle.model.brand'].sudo().create([{
             'name': "Test Brand"
         }])
 
-        cls.model = cls.env['fleet.vehicle.model'].create([{
+        model = cls.env['fleet.vehicle.model'].sudo().create([{
             'name': "Test Model",
-            'brand_id': cls.brand.id
+            'brand_id': brand.id
         }])
 
-        cls.cars = cls.env['fleet.vehicle'].create([{
-            'name': "Test Car %i" % i,
-            'license_plate': "TEST %i" % i,
+        cls.cars = cls.env['fleet.vehicle'].sudo().create([{
+            'name': f"Test Car {i}",
+            'license_plate': f"TEST {i}",
             'driver_id': cls.employees[i].work_contact_id.id,
             'company_id': cls.company.id,
-            'model_id': cls.model.id,
+            'model_id': model.id,
             'contract_date_start': date(2020, 10, 8),
             'co2': 88.0,
             'car_value': 38000.0,
             'fuel_type': "diesel",
             'acquisition_date': date(2020, 1, 1)
-        } for i in range(cls.EMPLOYEES_COUNT)])
+        } for i in range(cls.EMPLOYEES_COUNT)]).sudo(False)
 
-        cls.vehicle_contracts = cls.env['fleet.vehicle.log.contract'].create([{
-            'name': "Test Contract%s" % i,
+        cls.env['fleet.vehicle.log.contract'].sudo().create([{
+            'name': f"Test Contract{i}",
             'vehicle_id': cls.cars[i].id,
             'company_id': cls.company.id,
             'start_date': date(2020, 10, 8),
@@ -151,9 +151,9 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'recurring_cost_amount_depreciated': 450.0
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        for i, employee in enumerate(cls.employees):
+        for i, employee in enumerate(cls.employees.sudo()):
             employee.version_id.write({
-                'resource_calendar_id': cls.resource_calendar_38_hours_per_week.id,
+                'resource_calendar_id': resource_calendar_38_hours_per_week.id,
                 'company_id': cls.company.id,
                 'date_generated_from': datetime(2020, 9, 1, 0, 0, 0),
                 'date_generated_to': datetime(2020, 9, 1, 0, 0, 0),
@@ -174,7 +174,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
                 'ip': True,
                 'rd_percentage': 100,
             })
-        cls.contracts = cls.employees.version_ids
+        cls.contracts = cls.employees.sudo().version_ids
 
         cls.sick_time_off_type = cls.env['hr.leave.type'].sudo().create({
             'name': 'Sick Time Off',
@@ -189,9 +189,9 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         })
 
         # Public Holiday (global)
-        cls.env['resource.calendar.leaves'].create([{
+        cls.env['resource.calendar.leaves'].sudo().create([{
             'name': "Public Holiday (global)",
-            'calendar_id': cls.resource_calendar_38_hours_per_week.id,
+            'calendar_id': resource_calendar_38_hours_per_week.id,
             'company_id': cls.company.id,
             'date_from': datetime(2020, 9, 22, 5, 0, 0),
             'date_to': datetime(2020, 9, 22, 23, 0, 0),
@@ -202,9 +202,9 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
 
         # Everyone takes a legal leave the same day
         legal_leave = cls.env.ref('hr_work_entry.work_entry_type_legal_leave')
-        cls.env['resource.calendar.leaves'].create([{
+        cls.env['resource.calendar.leaves'].sudo().create([{
             'name': "Legal Leave %i" % i,
-            'calendar_id': cls.resource_calendar_38_hours_per_week.id,
+            'calendar_id': resource_calendar_38_hours_per_week.id,
             'company_id': cls.company.id,
             'resource_id': cls.employees[i].resource_id.id,
             'date_from': datetime(2020, 9, 14, 5, 0, 0),
@@ -218,7 +218,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
     def test_performance_l10n_be_payroll_whole_flow(self):
         # Work entry generation
         with self.assertQueryCount(admin=1800):
-            self.employees.generate_work_entries(self.date_from, self.date_to)
+            self.employees.sudo().generate_work_entries(self.date_from, self.date_to)
 
         structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
         payslips_values = [{

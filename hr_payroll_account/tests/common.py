@@ -50,7 +50,7 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             'name': country_code + ' Employee',
             'company_id': cls.env.company.id,
         })
-        cls.resource_calendar = resource_calendar or cls.env['resource.calendar'].create([{
+        cls.resource_calendar = resource_calendar or cls.env['resource.calendar'].sudo().create([{
             'name': "Standard Calendar : 40 Hours/Week",
             'company_id': cls.env.company.id,
             'hours_per_day': 8.0,
@@ -82,12 +82,12 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
                 ("4", 12.0, 13.0, "lunch"),
                 ("4", 13.0, 17.0, "afternoon"),
             ]],
-        }])
+        }]).sudo(False)
         cls.env.company.write({
             'resource_calendar_id': cls.resource_calendar.id,
         })
 
-        cls.employee = cls.env['hr.employee'].create({
+        cls.employee = cls.env['hr.employee'].sudo().create({
             'name': country_code + ' Employee',
             'work_contact_id': cls.work_contact.id,
             'address_id': cls.work_contact.id,
@@ -98,19 +98,19 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             'contract_date_start': date(2016, 1, 1),
             'date_version': date(2016, 1, 1),
             'wage': 1000.0,
-        })
-        if employee_fields:
-            cls.employee.write(employee_fields)
+            **(employee_fields or {})
+        }).sudo(False)
 
-        cls.contract = cls.employee.version_id
+        contract = cls.employee.sudo().version_id
         if contract_fields:
-            cls.contract.write(contract_fields)
+            contract.write(contract_fields)
+        cls.contract = contract.sudo(False)
 
         cls.car = car
         if cls.car:
-            cls.car.write({'driver_id': cls.employee.work_contact_id.id})
+            cls.car.sudo().write({'driver_id': cls.employee.work_contact_id.id})
             # This field only exists if fleet is installed
-            cls.contract.write({'car_id': cls.car.id})
+            cls.contract.sudo().write({'car_id': cls.car.id})
 
     @classmethod
     def _generate_payslip(cls, date_from, date_to, struct_id=False, input_line_ids=False, version_id=False, employee_id=False):

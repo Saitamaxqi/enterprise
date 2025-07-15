@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from odoo.fields import Date, Datetime
+from odoo.fields import Command, Date
 from odoo.tests.common import TransactionCase
 from dateutil.relativedelta import relativedelta
 
@@ -11,8 +11,10 @@ class TestPayslipBase(TransactionCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestPayslipBase, cls).setUpClass()
+        super().setUpClass()
 
+        payroll_manager = cls.env.ref('hr_payroll.group_hr_payroll_manager')
+        cls.env.user.group_ids |= payroll_manager
         cls.company_us = cls.env['res.company'].create({
             'name': 'Company US',
             'country_id': cls.env.ref('base.us').id,
@@ -22,9 +24,9 @@ class TestPayslipBase(TransactionCase):
         cls.env.company.resource_calendar_id.tz = 'Europe/Brussels'
         cls.env.user.tz = 'Europe/Brussels'
 
-        cls.dep_rd = cls.env['hr.department'].create({
+        cls.dep_rd = cls.env['hr.department'].sudo().create({
             'name': 'Research & Development - Test',
-        })
+        }).sudo(False)
 
         cls.structure_type = cls.env['hr.payroll.structure.type'].create({
             'name': 'Test - Developer',
@@ -154,6 +156,11 @@ class TestPayslipBase(TransactionCase):
         })
         cls.structure_type.default_struct_id = cls.developer_pay_structure
 
+        cls.env.user.write({'group_ids': [
+            Command.unlink(payroll_manager.id),
+            Command.link(cls.env.ref('hr_payroll.group_hr_payroll_user').id),
+        ]})
+
     def create_work_entry(self, start, stop, work_entry_type=None):
         work_entry_type = work_entry_type or self.work_entry_type
         return self.env['hr.work.entry'].create({
@@ -267,7 +274,7 @@ class TestPayslipContractBase(TestPayslipBase):
         })
 
         # This contract ends at the 15th of the month
-        cls.contract_cdd = cls.richard_emp.create_version({  # Fixed term contract
+        cls.contract_cdd = cls.richard_emp.sudo().create_version({  # Fixed term contract
             'contract_date_end': datetime.strptime('2015-11-15', '%Y-%m-%d'),
             'contract_date_start': datetime.strptime('2015-01-01', '%Y-%m-%d'),
             'date_version': datetime.strptime('2015-01-01', '%Y-%m-%d'),
@@ -280,7 +287,7 @@ class TestPayslipContractBase(TestPayslipBase):
 
         # This contract starts the next day
         cls.contract_cdi = cls.richard_contract
-        cls.richard_contract.write({
+        cls.richard_contract.sudo().write({
             'contract_date_start': datetime.strptime('2015-11-16', '%Y-%m-%d'),
             'contract_date_end': False,
             'date_version': datetime.strptime('2015-11-16', '%Y-%m-%d'),
@@ -292,7 +299,7 @@ class TestPayslipContractBase(TestPayslipBase):
         })
 
         # Contract for Jules
-        cls.jules_emp.version_id.write({
+        cls.jules_emp.version_id.sudo().write({
             'contract_date_start': datetime.strptime('2015-01-01', '%Y-%m-%d'),
             'date_version': datetime.strptime('2015-01-01', '%Y-%m-%d'),
             'name': 'Contract for Jules',

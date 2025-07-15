@@ -14,6 +14,7 @@ class Testl10nBeHrPayrollAccountUi(MockEmail, common.TestPayrollAccountCommon):
     @freeze_time('2022-01-01 09:00:00')
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.ref('base.user_admin').group_ids |= cls.env.ref('hr.group_hr_user')
 
     def test_ui(self):
         self._init_mail_gateway()

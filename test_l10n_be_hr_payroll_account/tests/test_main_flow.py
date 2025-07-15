@@ -36,9 +36,13 @@ class TestHR(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref('hr.group_hr_user') \
+                               | cls.env.ref('fleet.fleet_group_manager') \
+                               | cls.env.ref('hr_payroll.group_hr_payroll_user') \
+                               | cls.env.ref('hr_holidays.group_hr_holidays_user')
         cls.user = cls.create_user_employee(login='fgh', groups='sign.group_sign_user')
         cls.user_leave_team_leader = cls.create_user_employee(login='sef', groups='base.group_user')
-        cls.user.employee_id.leave_manager_id = cls.user_leave_team_leader
+        cls.user.employee_id.sudo().leave_manager_id = cls.user_leave_team_leader
         cls.hr_user = cls.create_user_employee(login='srt', groups='hr.group_hr_user')
         cls.hr_holidays_user = cls.create_user_employee(login='kut', groups='hr_holidays.group_hr_holidays_user')
         cls.hr_holidays_manager = cls.create_user_employee(login='bfd', groups='hr_holidays.group_hr_holidays_manager')
@@ -57,18 +61,18 @@ class TestHR(AccountTestInvoicingCommon):
             'datas': pdf_content,
             'name': 'test_employee_contract.pdf',
         })
-        cls.template = cls.env['sign.template'].create({})
-        cls.document = cls.env['sign.document'].create({
+        cls.template = cls.env['sign.template'].sudo().create({}).sudo(False)
+        cls.document = cls.env['sign.document'].sudo().create({
             'attachment_id': attachment.id,
             'template_id': cls.template.id,
-        })
+        }).sudo(False)
 
     @classmethod
     def create_user_employee(cls, login, groups):
         user = mail_new_test_user(cls.env, login=login, groups=groups)
         user.company_id.country_id = cls.env.ref('base.be')
-        employee = cls.env['hr.employee'].create({
-            'name': 'Employee %s' % login,
+        employee = cls.env['hr.employee'].sudo().create({
+            'name': f'Employee {login}',
             'user_id': user.id,
         })
         user.tz = employee.tz

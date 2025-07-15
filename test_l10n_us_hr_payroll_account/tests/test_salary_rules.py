@@ -14,6 +14,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     @TestPayslipValidationCommon.setup_country('us')
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref("hr_payroll.group_hr_payroll_user")
         cls.company_data['company'].write({
             'l10n_us_ca_ett_tax': True,
         })
@@ -41,7 +42,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             }
         )
 
-        cls.env.ref('l10n_us_hr_payroll.rule_parameter_ca_sui_rate_2023').parameter_value = "1.7"
+        cls.env.ref('l10n_us_hr_payroll.rule_parameter_ca_sui_rate_2023').sudo().parameter_value = "1.7"
 
     def test_001_semi_monthly(self):
         # A salaried employee with semi-monthly payment.
@@ -292,7 +293,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_payslip(payslip, payslip_results)
 
     def test_010_semi_monthly_cap_6_months(self):
-        self.env.ref('l10n_us_hr_payroll.rule_parameter_ca_sui_rate_2023').parameter_value = "6"
+        self.env.ref('l10n_us_hr_payroll.rule_parameter_ca_sui_rate_2023').sudo().parameter_value = "6"
 
         self.contract.write({
             'schedule_pay': 'semi-monthly',

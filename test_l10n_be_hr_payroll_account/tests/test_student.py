@@ -25,6 +25,7 @@ class TestStudent(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('hr.group_hr_user') | cls.env.ref('hr_payroll.group_hr_payroll_user')
         cls.new_calendar = cls.env['resource.calendar'].create({
             'name': 'O h/w calendar',
             'company_id': cls.env.company.id,
@@ -33,7 +34,7 @@ class TestStudent(AccountTestInvoicingCommon):
             'attendance_ids': [(5, 0, 0)],
         })
 
-        cls.employee = cls.env['hr.employee'].create({
+        cls.employee = cls.env['hr.employee'].sudo().create({
             'name': 'Jean-Pol Student',
             'company_id': cls.env.company.id,
             'resource_calendar_id': cls.new_calendar.id,
@@ -53,7 +54,7 @@ class TestStudent(AccountTestInvoicingCommon):
             'distance_home_work': 25,
             'internet': 0,
             'mobile': 0,
-        })
+        }).sudo(False)
 
         cls.contract = cls.employee.version_id
 

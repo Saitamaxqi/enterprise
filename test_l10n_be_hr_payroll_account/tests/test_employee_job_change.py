@@ -17,6 +17,7 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.ref('base.user_admin').group_ids |= cls.env.ref('hr.group_hr_user')
         cls.env['hr.job'].create({
             'name': 'Senior Developer BE',
             'company_id': cls.company_id.id,

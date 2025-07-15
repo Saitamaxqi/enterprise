@@ -16,7 +16,8 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
     @AccountTestInvoicingCommon.setup_country('be')
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.group_ids += cls.quick_ref('hr_holidays.group_hr_holidays_manager')
+        cls.env.user.group_ids += cls.quick_ref('hr_holidays.group_hr_holidays_manager') \
+            | cls.quick_ref('hr_payroll.group_hr_payroll_user')
 
     @freeze_time("2021-01-01")
     def test_eco_vouchers(self):
@@ -28,7 +29,7 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
 
         # Expected result = 250*5/12 + 200*(7-1)/12 = 104.67 + 100 = 204.17
 
-        full_time_calendar = self.env['resource.calendar'].create([{
+        full_time_calendar = self.env['resource.calendar'].sudo().create([{
             'name': "Test Calendar : 38 Hours/Week",
             'company_id': self.env.company.id,
             'tz': "Europe/Brussels",
@@ -60,9 +61,9 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
                 ("4", 12.0, 13.0, "lunch"),
                 ("4", 13.0, 16.6, "afternoon"),
             ]],
-        }])
+        }]).sudo(False)
 
-        part_time_calendar_3_5 = self.env['resource.calendar'].create([{
+        part_time_calendar_3_5 = self.env['resource.calendar'].sudo().create([{
             'name': "Test Calendar: 3/5 Tuesday/Wednesday Off",
             'company_id': self.env.company.id,
             'tz': "Europe/Brussels",
@@ -88,16 +89,16 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
                 ("4", 12.0, 13.0, "lunch"),
                 ("4", 13.0, 16.6, "afternoon"),
             ]],
-        }])
+        }]).sudo(False)
 
-        employee = self.env['hr.employee'].create({
+        employee = self.env['hr.employee'].sudo().create({
             'name': 'Test Employee',
             'date_version': date(2020, 6, 1),
             'contract_date_start': date(2020, 6, 1),
             'contract_date_end': date(2020, 10, 31),
             'resource_calendar_id': full_time_calendar.id,
             'wage': 1000,
-        })
+        }).sudo(False)
 
         contract_2 = self.env['hr.version'].create({
             'name': 'Part Time Contract',

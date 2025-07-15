@@ -23,6 +23,7 @@ class TestDMFA(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_user') | cls.env.ref('fleet.fleet_group_manager')
         cls.payroll_manager = mail_new_test_user(cls.env, login='blou', groups='hr_payroll.group_hr_payroll_manager,fleet.fleet_group_manager')
 
         cls.belgian_company = cls.company_data['company']
@@ -66,7 +67,7 @@ class TestDMFA(AccountTestInvoicingCommon):
             ],
         })
 
-        cls.calendar_4_5_wednesday_off = cls.env['resource.calendar'].create([{
+        cls.calendar_4_5_wednesday_off = cls.env['resource.calendar'].sudo().create([{
             'name': "Test Calendar: 4/5 Wednesday Off",
             'company_id': cls.belgian_company.id,
             'hours_per_day': 7.6,
@@ -95,7 +96,7 @@ class TestDMFA(AccountTestInvoicingCommon):
                 ("4", 12.0, 13.0, "lunch"),
                 ("4", 13.0, 16.6, "afternoon"),
             ]],
-        }])
+        }]).sudo(False)
 
         cls.calendar_0_hours_per_week = cls.env['resource.calendar'].create([{
             'name': "Test Calendar: 0 Hours per week",
@@ -110,29 +111,29 @@ class TestDMFA(AccountTestInvoicingCommon):
 
         cls.work_contact = cls.env['res.partner'].create({'name': 'Test Work Contact'})
 
-        cls.brand = cls.env['fleet.vehicle.model.brand'].create({
+        brand = cls.env['fleet.vehicle.model.brand'].sudo().create({
             'name': "Test Brand"
         })
 
-        cls.model = cls.env['fleet.vehicle.model'].create({
+        model = cls.env['fleet.vehicle.model'].sudo().create({
             'name': "Test Model",
-            'brand_id': cls.brand.id
+            'brand_id': brand.id
         })
 
-        cls.car = cls.env['fleet.vehicle'].create({
+        cls.car = cls.env['fleet.vehicle'].sudo().create({
             'name': "Test Car",
             'license_plate': "TEST",
             'driver_id': cls.work_contact.id,
             'company_id': cls.belgian_company.id,
-            'model_id': cls.model.id,
+            'model_id': model.id,
             'contract_date_start': date(2020, 10, 8),
             'co2': 88.0,
             'car_value': 38000.0,
             'fuel_type': "diesel",
             'acquisition_date': date(2020, 1, 1)
-        })
+        }).sudo(False)
 
-        cls.vehicle_contract = cls.env['fleet.vehicle.log.contract'].create({
+        cls.env['fleet.vehicle.log.contract'].sudo().create({
             'name': "Test Contract",
             'vehicle_id': cls.car.id,
             'company_id': cls.belgian_company.id,

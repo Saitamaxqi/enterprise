@@ -14,6 +14,7 @@ class TestPayrollExpenseBatched(TestPayrollExpense):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_manager')
         cls.company.batch_payroll_move_lines = True
         expenses_vals = []
         payslips_vals = []

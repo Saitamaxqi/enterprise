@@ -82,7 +82,7 @@ class TestNacha(AccountTestInvoicingCommon):
             "A incorrect number of records was calculated, it should equal the number of lines in the file (excluding padding)."
         )
 
-        generated = self.batch._generate_nacha_file().splitlines()
+        generated = self.batch.sudo()._generate_nacha_file().splitlines()
         self.assertEqual(len(generated), len(expected), "The generated NACHA file has an incorrect amount of records.")
 
         for generated_line, expected_line in zip(generated, expected):

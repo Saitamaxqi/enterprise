@@ -284,7 +284,10 @@ class TestYTD(TestPayslipContractBase):
         self._assert_ytd_values(payslip_to_edit, 1001 + 1002)
 
         # Opening the edit_payslip_lines wizard
+        manager = self.env.ref('hr_payroll.group_hr_payroll_manager')
+        self.env.user.group_ids |= manager
         action = payslip_to_edit.action_edit_payslip_lines()
+        self.env.user.group_ids -= manager
         wizard = self.env[action['res_model']].browse(action['res_id'])
 
         # Editing the YTD values

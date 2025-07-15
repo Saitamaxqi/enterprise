@@ -16,6 +16,7 @@ class TestDeclarationsValidation(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('hr.group_hr_manager') | cls.env.ref("hr_payroll.group_hr_payroll_user")
         cls.company_data['company'].write({
             'vat': 'BE0897223670',
             'phone': '0471098765',
@@ -30,7 +31,7 @@ class TestDeclarationsValidation(AccountTestInvoicingCommon):
 
         cls.EMPLOYEES_COUNT = 5
 
-        cls.resource_calendar_38_hours_per_week = cls.env['resource.calendar'].create([{
+        resource_calendar_38_hours_per_week = cls.env['resource.calendar'].sudo().create([{
             'name': "Test Calendar : 38 Hours/Week",
             'company_id': cls.env.company.id,
             'hours_per_day': 7.6,
@@ -66,24 +67,24 @@ class TestDeclarationsValidation(AccountTestInvoicingCommon):
         }])
 
         cls.work_contacts = cls.env['res.partner'].create([{
-            'name': "Test Work Contact %s" % (i),
+            'name': f"Test Work Contact {i}",
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        cls.brand = cls.env['fleet.vehicle.model.brand'].create([{
+        brand = cls.env['fleet.vehicle.model.brand'].sudo().create([{
             'name': "Test Brand"
         }])
 
-        cls.model = cls.env['fleet.vehicle.model'].create([{
+        model = cls.env['fleet.vehicle.model'].sudo().create([{
             'name': "Test Model",
-            'brand_id': cls.brand.id
+            'brand_id': brand.id
         }])
 
-        cls.cars = cls.env['fleet.vehicle'].create([{
-            'name': "Test Car %s" % (i),
-            'license_plate': "TEST%s" % (i),
+        cars = cls.env['fleet.vehicle'].sudo().create([{
+            'name': f"Test Car {i}",
+            'license_plate': f"TEST{i}",
             'driver_id': cls.work_contacts[i].id,
             'company_id': cls.env.company.id,
-            'model_id': cls.model.id,
+            'model_id': model.id,
             'contract_date_start': datetime.date(2020, 10, 8),
             'co2': 88.0,
             'car_value': 38000.0,
@@ -91,9 +92,9 @@ class TestDeclarationsValidation(AccountTestInvoicingCommon):
             'acquisition_date': datetime.date(2020, 1, 1)
         } for i in range(cls.EMPLOYEES_COUNT)])
 
-        cls.vehicle_contract = cls.env['fleet.vehicle.log.contract'].create([{
-            'name': "Test Contract %s" % (i),
-            'vehicle_id': cls.cars[i].id,
+        cls.env['fleet.vehicle.log.contract'].sudo().create([{
+            'name': f"Test Contract {i}",
+            'vehicle_id': cars[i].id,
             'company_id': cls.env.company.id,
             'start_date': datetime.date(2020, 10, 8),
             'expiration_date': datetime.date(2021, 10, 8),
@@ -104,20 +105,20 @@ class TestDeclarationsValidation(AccountTestInvoicingCommon):
         } for i in range(cls.EMPLOYEES_COUNT)])
 
         cls.employees = cls.env['hr.employee'].create([{
-            'name': "Test Employee %s" % i,
+            'name': f"Test Employee {i}",
             'work_contact_id': cls.work_contacts[i].id,
             'private_street': 'Employee Street %s' % i,
-            'private_zip': '100%s' % i,
-            'private_city': 'Employee City %s' % i,
+            'private_zip': f'100{i}',
+            'private_city': f'Employee City {i}',
             'private_country_id': cls.env.ref('base.be').id,
-            'resource_calendar_id': cls.resource_calendar_38_hours_per_week.id,
+            'resource_calendar_id': resource_calendar_38_hours_per_week.id,
             'company_id': cls.env.company.id,
             'distance_home_work': 75,
             'certificate': 'master',
             'niss': '91072800%s' % i + str(97 - int('91072800%s' % i) % 97),
             'date_generated_from': datetime.datetime(2020, 9, 1, 0, 0, 0),
             'date_generated_to': datetime.datetime(2020, 9, 1, 0, 0, 0),
-            'car_id': cls.cars[i].id,
+            'car_id': cars[i].id,
             'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
             'contract_date_start': datetime.date(2018, 12, 31),
             'date_version': datetime.date(2018, 12, 31),

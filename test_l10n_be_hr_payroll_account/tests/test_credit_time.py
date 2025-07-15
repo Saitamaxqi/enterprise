@@ -15,6 +15,8 @@ class TestCreditTime(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_user') \
+                               | cls.env.ref('fleet.fleet_group_manager')
         cls.env.company.partner_id.tz = "Europe/Brussels"
         cls.env['resource.calendar'].search([]).tz = "Europe/Brussels"
         cls.env.user.tz = "Europe/Brussels"
@@ -46,15 +48,15 @@ class TestCreditTime(AccountTestInvoicingCommon):
             ],
         })
         cls.classic_38h_calendar = cls.env.company.resource_calendar_id
-        cls.env.ref('hr.structure_type_employee_cp200').default_resource_calendar_id = cls.classic_38h_calendar
+        cls.env.ref('hr.structure_type_employee_cp200').sudo().default_resource_calendar_id = cls.classic_38h_calendar
 
-        cls.model_a3 = cls.env["fleet.vehicle.model"].create({
+        cls.model_a3 = cls.env["fleet.vehicle.model"].sudo().create({
             'name': ' A3',
             'brand_id': cls.env.ref('fleet.brand_audi').id,
             'vehicle_type': 'car',
-        })
+        }).sudo(False)
 
-        cls.car = cls.env['fleet.vehicle'].create({
+        cls.car = cls.env['fleet.vehicle'].sudo().create({
             'model_id': cls.model_a3.id,
             'license_plate': '1-JFC-095',
             'acquisition_date': time.strftime('%Y-01-01'),
@@ -62,9 +64,9 @@ class TestCreditTime(AccountTestInvoicingCommon):
             'driver_id': cls.env['res.partner'].create({'name': 'Roger'}).id,
             'car_value': 38000,
             'company_id': cls.env.company.id,
-        })
+        }).sudo(False)
 
-        cls.employee = cls.env['hr.employee'].create({
+        employee = cls.env['hr.employee'].sudo().create({
             'name': 'My Credit Time Employee',
             'company_id': cls.env.company.id,
             'resource_calendar_id': cls.classic_38h_calendar.id,
@@ -89,7 +91,8 @@ class TestCreditTime(AccountTestInvoicingCommon):
             'mobile': 30,
             'has_laptop': True,
         })
-        cls.original_contract = cls.employee.version_id
+        cls.original_contract = employee.version_id.sudo(False)
+        cls.employee = employee.sudo(False)
 
     def test_full_time_credit_time(self):
         # Test case:369.23
@@ -97,7 +100,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
         # Full Time Credit Time from the 5th of March 2020 to 30th of April 2020
         # Generate work entries for March and check both payslips
 
-        new_calendar = self.env['resource.calendar'].create({
+        new_calendar = self.env['resource.calendar'].sudo().create({
             'name': 'Credit Time Calendar',
             'company_id': self.env.company.id,
             'hours_per_day': 0,
@@ -214,7 +217,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
         # The employee won't work on wednesday
         # Generate work entries for March and check both payslips
 
-        new_calendar = self.env['resource.calendar'].create({
+        new_calendar = self.env['resource.calendar'].sudo().create({
             'name': 'Credit Time Calendar',
             'company_id': self.env.company.id,
             'hours_per_day': 7.6,

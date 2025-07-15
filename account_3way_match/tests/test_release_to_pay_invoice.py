@@ -12,7 +12,7 @@ class TestReleaseToPayInvoice(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-
+        cls.user.group_ids |= cls.quick_ref('purchase.group_purchase_user')
         cls.partner = cls.env['res.partner'].create({'name': 'Zizizapartner'})
         cls.product = cls.env['product.product'].create({
             'name': 'VR Computer',

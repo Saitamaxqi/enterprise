@@ -16,7 +16,9 @@ class TestSEPAFile(AccountTestInvoicingCommon):
         super().setUpClass()
         cls.company_data['company'].iso20022_orgid_id = "123456789"
 
-        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account') \
+                                | cls.env.ref('hr.group_hr_user') \
+                                | cls.env.ref('hr_payroll.group_hr_payroll_manager')
 
         cls.address_home = cls.env['res.partner'].create([{
             'name': "Test Employee",
@@ -53,7 +55,7 @@ class TestSEPAFile(AccountTestInvoicingCommon):
             'company_id': cls.env.company.id,
         })
 
-        cls.employee = cls.env['hr.employee'].create({
+        cls.employee = cls.env['hr.employee'].sudo().create({
             'name': "Test Employee",
             'work_contact_id': cls.address_home.id,
             'bank_account_id': cls.bank_account.id,
@@ -66,7 +68,7 @@ class TestSEPAFile(AccountTestInvoicingCommon):
             'contract_date_start': date(2018, 12, 31),
             'wage': 2400,
             'wage_on_signature': 2400,
-        })
+        }).sudo(False)
 
         cls.contract = cls.employee.version_id
 

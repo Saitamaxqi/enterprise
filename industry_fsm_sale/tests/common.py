@@ -10,8 +10,9 @@ class TestFsmFlowCommon(TransactionCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestFsmFlowCommon, cls).setUpClass()
+        super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('industry_fsm.group_fsm_user')
         cls.employee_user2 = cls.env['hr.employee'].create({
             'name': 'Employee User 2',
             'hourly_cost': 15,
@@ -85,7 +86,7 @@ class TestFsmFlowSaleCommon(TestFsmFlowCommon, TestCommonSaleTimesheet):
 
     @classmethod
     def setUpClass(cls):
-        super(TestFsmFlowSaleCommon, cls).setUpClass()
+        super().setUpClass()
         cls.fsm_project_employee_rate = cls.fsm_project.copy({
             'partner_id': cls.partner_1.id,
             'tasks': False,
