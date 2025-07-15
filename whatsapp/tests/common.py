@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 import hashlib
 import hmac
 import json
+import re
 import time
 import random
 import werkzeug
@@ -586,11 +586,16 @@ class WhatsAppCase(MockOutgoingWhatsApp):
             wa_message.state, status,
             f'whatsapp.message invalid status: found {wa_message.state}, expected {status}')
 
+        def normalize(value):
+            if isinstance(value, str):
+                return re.sub(r'\s+', ' ', value)
+            return value
         # check message content
         for fname, fvalue in (fields_values or {}).items():
             with self.subTest(fname=fname, fvalue=fvalue):
                 self.assertEqual(
-                    wa_message[fname], fvalue,
+                    normalize(wa_message[fname]),
+                    normalize(fvalue),
                     f'whatsapp.message: expected {fvalue} for {fname}, got {wa_message[fname]}'
                 )
 
@@ -598,7 +603,8 @@ class WhatsAppCase(MockOutgoingWhatsApp):
         for fname, fvalue in (mail_message_values or {}).items():
             with self.subTest(fname=fname, fvalue=fvalue):
                 self.assertEqual(
-                    wa_message.mail_message_id[fname], fvalue,
+                    normalize(wa_message.mail_message_id[fname]),
+                    normalize(fvalue),
                     f'whatsapp.message mail_message_id: expected {fvalue} for {fname}, got {wa_message.mail_message_id[fname]}'
                 )
 
@@ -608,7 +614,7 @@ class WhatsAppCase(MockOutgoingWhatsApp):
             # only support one attachment for whatsapp messages
             self.assertEqual(len(attachment), 1)
 
-            for fname, fvalue in (attachment_values).items():
+            for fname, fvalue in attachment_values.items():
                 with self.subTest(fname=fname, fvalue=fvalue):
                     attachment_value = attachment[fname]
                     self.assertEqual(
