@@ -28,6 +28,7 @@ patch(PosStore.prototype, {
         if (this.config.module_pos_urban_piper && this.config.urbanpiper_store_identifier) {
             await this._fetchUrbanpiperOrderCount(false);
         }
+        this.isSoundPlaying = false;
     },
 
     async updateStoreStatus(status = false, providerName = false) {
@@ -100,11 +101,12 @@ patch(PosStore.prototype, {
     get notificationOptions() {
         return {
             type: "success",
-            sticky: false,
+            sticky: true,
             buttons: [
                 {
                     name: _t("Review Orders"),
                     onClick: () => {
+                        this.closeNotificationFn?.();
                         const stateOverride = {
                             search: {
                                 fieldName: "DELIVERYPROVIDER",
@@ -127,6 +129,12 @@ patch(PosStore.prototype, {
                     },
                 },
             ],
+            onClose: () => {
+                if (this.isSoundPlaying) {
+                    this.sound.stop("order-receive-tone");
+                    this.isSoundPlaying = false;
+                }
+            },
         };
     },
 
@@ -157,9 +165,15 @@ patch(PosStore.prototype, {
                 await this.sendOrderInPreparationUpdateLastChange(deliveryOrder);
             }
         } else if (deliveryOrder.delivery_status === "placed") {
-            this.sound.play("notification");
-            this.deliveryOrderNotification = deliveryOrder;
-            this.notification.add(_t("New online order received."), this.notificationOptions);
+            if (!this.isSoundPlaying) {
+                this.isSoundPlaying = true;
+                this.sound.play("order-receive-tone", { loop: true, volume: 1 });
+                this.deliveryOrderNotification = deliveryOrder;
+                this.closeNotificationFn = this.notification.add(
+                    _t("New online order received."),
+                    this.notificationOptions
+                );
+            }
         } else if (deliveryOrder.delivery_status === "food_ready") {
             deliveryOrder.uiState.locked = true;
         }
