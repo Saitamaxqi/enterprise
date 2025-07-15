@@ -7,7 +7,7 @@ from odoo.fields import Domain
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    documents_account_settings = fields.Boolean()
+    documents_account_settings = fields.Boolean(default=True)
     account_folder_id = fields.Many2one(
         'documents.document', string="Accounting Folder", check_company=True,
         compute='_compute_account_folder_id', store=True, readonly=False,

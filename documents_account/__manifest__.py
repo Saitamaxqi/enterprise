@@ -37,5 +37,6 @@ Documents app in the desired format(s).
         'web.assets_backend_lazy': [
             'documents_account/static/src/views/activity/**',
         ]
-    }
+    },
+    'post_init_hook': '_documents_account_post_init',
 }
