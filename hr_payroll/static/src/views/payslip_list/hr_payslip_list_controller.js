@@ -143,6 +143,7 @@ export class PayslipListController extends ListController {
             resModel: "hr.payslip.run",
             resId: this.payrunId,
             fieldNames: Object.values(this.payRunArchInfo.fieldNodes).map((f) => f.name),
+            context: this.props.context,
             mode: "readonly",
         };
     }

@@ -75,8 +75,12 @@
         'web.assets_backend_lazy': [
             'hr_payroll/static/src/js/hr_work_entries_gantt.*',
         ],
+        'web.assets_unit_tests': [
+            'hr_payroll/static/tests/**/*',
+            ('remove', 'hr_payroll/static/tests/tours/**/*'),
+        ],
         'web.assets_tests': [
-            'hr_payroll/static/tests/**/*.js',
+            'hr_payroll/static/tests/tours/**/*'
         ],
     },
     'author': 'Odoo S.A.',
