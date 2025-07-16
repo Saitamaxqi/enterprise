@@ -153,23 +153,25 @@ class HrApplicant(models.Model):
         return super().archive_applicant()
 
     def _send_notification(self, body, action_value='hr_referral.action_hr_applicant_employee_referral'):
-        if self.partner_name:
-            subject = _('Referral: %(partner)s (%(applicant)s)', partner=self.partner_name, applicant=self.display_name)
-        else:
-            subject = _('Referral: %s', self.display_name)
-        action_url = f'/odoo/action-{action_value}?active_model={self._name}'
-        body = Markup("<a class='o_document_link' href=%s>%s</a><br>%s") % (action_url, subject, body)
-        odoobot = self.env.ref('base.partner_root')
-        # Do *not* notify on `self` as it will lead to unintended behavior.
-        # See opw-3285752
-        self.env['mail.thread'].sudo().message_notify(
-            model=self._name,
-            subject=subject,
-            body=body,
-            author_id=odoobot.id,
-            partner_ids=[self.ref_user_id.partner_id.id],
-            email_layout_xmlid='mail.mail_notification_light',
-        )
+        if referrer := self.ref_user_id:
+            if self.partner_name:
+                subject = _('Referral: %(partner)s (%(applicant)s)', partner=self.partner_name, applicant=self.display_name)
+            else:
+                subject = _('Referral: %s', self.display_name)
+            action_url = f'/odoo/action-{action_value}?active_model={self._name}'
+            body = Markup("<a class='o_document_link' href=%s>%s</a><br>%s") % (action_url, subject, body)
+            odoobot = self.env.ref('base.partner_root')
+            # Do *not* notify on `self` as it will lead to unintended behavior.
+            # See opw-3285752 -> we attach it on the referrer's user
+            self.env['mail.thread'].sudo().message_notify(
+                model=referrer._name,
+                res_id=referrer.id,
+                subject=subject,
+                body=body,
+                author_id=odoobot.id,
+                partner_ids=[self.ref_user_id.partner_id.id],
+                email_layout_xmlid='mail.mail_notification_light',
+            )
 
     def _update_points(self, new_state_id, old_state_id):
         if not self.company_id:
