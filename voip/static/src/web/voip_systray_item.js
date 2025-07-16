@@ -1,5 +1,6 @@
 import { Component } from "@odoo/owl";
 
+import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 
@@ -12,6 +13,7 @@ export class VoipSystrayItem extends Component {
         this.ringtoneService = useService("voip.ringtone");
         this.userAgent = useService("voip.user_agent");
         this.softphone = this.voip.softphone;
+        useCommand(_t("Toggle Softphone"), () => this.toggleSoftphone(), { hotkey: "Alt+Shift+S" });
     }
 
     /** @returns {string} */
@@ -65,6 +67,10 @@ export class VoipSystrayItem extends Component {
 
     /** @param {MouseEvent} ev */
     onClick(ev) {
+        this.toggleSoftphone()
+    }
+
+    toggleSoftphone() {
         if (this.softphone.isDisplayed) {
             this.softphone.hide();
             if (this.userAgent.hasCallInvitation) {
