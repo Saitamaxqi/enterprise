@@ -11,6 +11,22 @@ from odoo.addons.ai.utils.tools_schema.validators import validate_params_llm_val
 _logger = logging.getLogger(__name__)
 
 
+class AITerminate:
+    """Return value that signals the end of an AI conversation.
+
+    When a tool returns a AITerminate object, the conversation stops immediately and no further
+    LLM calls are made. The provided message becomes the final response to the user.
+
+    By default, tool results are added to the conversation history and the LLM continues processing.
+    Use AITerminate to override this behavior and end the conversation early.
+
+    :param message: The final message to return to the user.
+    :type message: str
+    """
+    def __init__(self, message):
+        self.message = message
+
+
 def register_ai_tool(schema):
     """Decorator to register a method as an AI tool with the provided schema.
 
@@ -58,9 +74,10 @@ def call_ai_tool(AITool, tool_call):
     if not method:
         raise ValidationError(AITool.env._("Error: Method %s is not callable.", method_name))
 
+    # result is either a None, string or AITerminate object
     result = method(AITool, **func_args_json)
-    return {
-        "content": result is None and 'success' or result,
-        "role": "tool",
-        "tool_call_id": tool_call_id,
-    }
+
+    if isinstance(result, AITerminate):
+        return True, tool_call_id, result.message
+
+    return False, tool_call_id, result or "success"

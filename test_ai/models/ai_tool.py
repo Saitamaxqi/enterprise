@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
-from odoo.addons.ai.utils.tools_schema.tools import register_ai_tool
+from odoo.addons.ai.utils.tools_schema.tools import register_ai_tool, AITerminate
 
 
 class AITool(models.Model):
@@ -26,6 +26,22 @@ class AITool(models.Model):
     })
     def _sum_2_numbers(self, a, b):
         return a + b
+
+    @register_ai_tool({
+        'description': 'just terminate the conversation',
+        'parameters': {
+            'type': 'object',
+            'properties': {
+                'message': {
+                    'type': 'string',
+                    'description': 'The message to return to the user'
+                }
+            },
+            'required': ['message']
+        }
+    })
+    def _terminate_conversation(self, message):
+        return AITerminate(message)
 
 
 def _extend_ai_tool(schema):

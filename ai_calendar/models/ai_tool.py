@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, Command, fields, models
 from odoo.fields import Domain
-from odoo.addons.ai.utils.tools_schema.tools import register_ai_tool
+from odoo.addons.ai.utils.tools_schema.tools import register_ai_tool, AITerminate
 
 
 class AITool(models.Model):
@@ -75,7 +75,7 @@ class AITool(models.Model):
             event_datetime=event_datetime,
             invited_attendee_names=', '.join(attendee_ids.mapped('name'))
         )
-        return success_message
+        return AITerminate(success_message)
 
     def _normalize_to_utc_and_remove_tzinfo(self, event_datetime):
         # The event_datetime is in the user's timezone. It should be normalized to UTC. However, the tz is removed in the end as required by the ORM.

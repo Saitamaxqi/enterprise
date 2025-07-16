@@ -456,8 +456,24 @@ class AIAgent(models.Model):
         return tools
 
     def _generate_response(self, prompt, chat_history=None, extra_system_context=""):
+        """Generate an AI response for the given user prompt.
+
+        This method orchestrates the complete response generation flow:
+        1. Constructs system context from agent settings and additional context
+        2. Retrieves relevant RAG context from attachments and URLs (if available)
+        3. Sends the complete conversation to the LLM API
+        4. Processes any tool calls in the response, executing them and continuing the conversation
+        5. Stops when the LLM provides a final response or all tools request termination
+
+        NOTE: This ignores all the termination messages in a batch if any tool call in that batch didn't request termination.
+
+        :param prompt: The user's input prompt
+        :param chat_history: Previous conversation messages to include as context
+        :param extra_system_context: Additional system instructions to include
+        :return: List of response messages from the LLM and/or tool termination messages
+        :raises UserError: If no LLM provider is found for the selected model
+        """
         self.ensure_one()
-        response_temperature = TEMPERATURE_MAP[self.response_style]
         system_messages = self._build_system_context(extra_system_context=extra_system_context)
         if rag_context := self._build_rag_context(prompt):
             system_messages.extend(rag_context)
@@ -465,41 +481,46 @@ class AIAgent(models.Model):
         provider = next((provider for provider, models in PROVIDERS_MODELS.items() if self.llm_model in models), None)
         if not provider:
             raise UserError(_("No provider found for the selected model"))
-
         available_tools = self._get_available_ai_tools(provider)
         api_service = LLMApiService(env=self.env, provider=provider)
-        api_response = api_service.get_completion(
-            model=self.llm_model,
-            messages=full_conversation,
-            tools=available_tools,
-            temperature=response_temperature,
-        )
+        response_temperature = TEMPERATURE_MAP[self.response_style]
 
-        if api_response:
-            response_messages = []
+        response_messages = []
+        prompt_processing_done = False
+        while not prompt_processing_done:
+            prompt_processing_done = True
+            api_response = api_service.get_completion(
+                model=self.llm_model,
+                messages=full_conversation,
+                tools=available_tools,
+                temperature=response_temperature,
+            )
+            if not api_response:
+                raise UserError(_("No response received from the LLM API."))
 
-            response_processed = False
-            while not response_processed:
-                # Process the API response
-                api_response = api_response['choices'][0]['message']
-                response_processed = True
-                full_conversation.append(api_response)
-                if api_response.get('content'):
-                    response_messages.append(api_response['content'])
-                # Check if the response contains a tool to call
-                if api_response.get('tool_calls'):
-                    tool_call_messages = [
-                        call_ai_tool(self.env['ai.tool'], tool_call)
-                        for tool_call in api_response['tool_calls']
-                    ]
-                    full_conversation.extend(tool_call_messages)
-                    api_response = api_service.get_completion(
-                        model=self.llm_model,
-                        messages=full_conversation,
-                        tools=available_tools,
-                        temperature=response_temperature)
-                    response_processed = False
-            return response_messages
+            api_message = api_response['choices'][0]['message']
+            full_conversation.append(api_message)
+            termination_messages = []
+            for tool_call in api_message.get("tool_calls") or []:
+                should_terminate, tool_call_id, content = call_ai_tool(self.env['ai.tool'], tool_call)
+                full_conversation.append({
+                    "role": "tool",
+                    "tool_call_id": tool_call_id,
+                    "content": content,
+                })
+                if not should_terminate:
+                    prompt_processing_done = False
+                elif content:
+                    termination_messages.append(content)
+            # api_message.get("tool_calls") and prompt_processing_done means that all the tool calls requested termination.
+            # If only prompt_processing_done is True, then there were no tool calls performed and the content of the api_message
+            # is the final response.
+            if api_message.get("tool_calls") and prompt_processing_done:
+                response_messages.extend(termination_messages)
+            elif api_message.get('content'):
+                response_messages.append(api_message['content'])
+
+        return response_messages
 
     def _retrieve_chat_history(self, discuss_channel, no_messages=20):
         chat_history = [
