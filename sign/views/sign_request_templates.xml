@@ -41,6 +41,9 @@
         <t t-if="not current_request_item.partner_id">
             <input id="o_sign_is_public_user" type="hidden"/>
         </t>
+        <t t-if="show_thank_you_dialog">
+            <input id="o_sign_show_thank_you_dialog" type="hidden"/>
+        </t>
     </template>
 
     <template id="sign.doc_sign" name="Document Sign">

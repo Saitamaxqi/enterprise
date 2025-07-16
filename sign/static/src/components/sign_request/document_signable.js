@@ -272,6 +272,7 @@ export class Document extends Component {
         this.selectOptions = datasetFromElements(
             parentEl.querySelectorAll(".o_sign_select_options_input_info")
         );
+        this.showThankYouDialog = Boolean(parentEl.querySelector("#o_sign_show_thank_you_dialog"));
         this.validateBanner = parentEl.querySelector(".o_sign_validate_banner");
         this.validateButton = parentEl.querySelector(".o_validate_button");
         this.nextDocumentBanner = parentEl.querySelector(".o_sign_next_document_banner");
@@ -550,6 +551,8 @@ export class Document extends Component {
             redirectURL: this.redirectURL,
             redirectURLText: this.redirectURLText,
             templateEditable: this.templateEditable,
+            showThankYouDialog: this.showThankYouDialog,
+            openThankYouDialog: () => this.openThankYouDialog(),
             documentId: sign_document_id,
             updateDocumentsWithUnsignedItems: (documentId, hasUnsignedItems) =>
                 this.updateDocumentsWithUnsignedItems(documentId, hasUnsignedItems),

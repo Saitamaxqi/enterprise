@@ -268,3 +268,34 @@ class TestSignController(TestSignControllerCommon):
             len(sign_request.request_item_ids), 1,
             'There should be exactly one request item in the sign request'
         )
+
+    def test_get_sign_request_items_with_public_user(self):
+        """ Test the RPC call to get sign request items as a public user. """
+        # Create two sign requests. The second one will be returned as 'the next' to be signed.
+        self.sign_request = self.create_sign_request_1_role(self.partner_1, self.env['res.partner'])
+        self.next_sign_request = self.create_sign_request_1_role(self.partner_1, self.env['res.partner'])
+
+        self.authenticate(None, None)  # Ensure the current user for the request is public
+        response = self._json_url_open(
+            '/sign/sign_request_items',
+            {
+                'request_id': self.sign_request.id,
+                'token': self.sign_request.access_token,
+                'sign_item_id': self.sign_request.request_item_ids[0].id,
+            }
+        )
+        self.assertEqual(response.status_code, 200, f"Expected 200 OK, got {response.status_code}")
+        response_json = response.json()  # Get the JSON content of the response
+        self.assertEqual(response_json['jsonrpc'], '2.0', "Expected JSON-RPC 2.0 response")
+        self.assertNotIn('error', response_json, f"RPC call returned an error: {response_json.get('error')}")
+
+        result = response_json['result']
+        self.assertIsInstance(result, list, "Result should be a list")
+        self.assertGreaterEqual(len(result), 1, "Should find at least one sign request item")
+
+        # Verify that the found item is the one associated with the test partner's email
+        found_item_ids = [item['id'] for item in result]
+        self.assertIn(
+            self.next_sign_request.request_item_ids[0].id, found_item_ids,
+            "The 'next' sign request item must be able to be accessed through the public route."
+        )

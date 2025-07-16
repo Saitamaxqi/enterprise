@@ -32,14 +32,14 @@
                     <tbody>
                         <t t-foreach="state.nextDocuments.filter((doc) => !doc.canceled)" t-as="doc" t-key="doc.id">
                             <tr t-attf-class="next-document">
-                                <th t-attf-class="{{doc_last and 'border-0'}}">
+                                <th t-attf-class="{{doc_last and 'border-0'}} pt-2">
                                     <div><strong t-out="doc.name"></strong></div>
-                                    <span>Sent by <span t-out="doc.user"></span> on <span t-out="doc.date"></span></span>
+                                    <span style="font-weight: normal;">Sent by <span t-out="doc.user"></span> on <span t-out="doc.date"></span></span>
                                 </th>
-                                <th t-attf-class="{{doc_last and 'border-0'}}">
+                                <th t-attf-class="{{doc_last and 'border-0'}} pt-2">
                                     <div t-attf-class="{{ isMobileOS ? 'd-flex flex-column gap-2' : 'text-end d-flex flex-row gap-1' }}">
-                                        <button class="btn btn-sm btn-primary o_thankyou_next_sign w-100" t-on-click="() => this.clickNextSign(doc.requestId, doc.accessToken)">Sign now</button>
-                                        <button class="btn btn-sm btn-secondary o_thankyou_next_cancel w-100" t-on-click="() => this.clickNextCancel(doc)">Refuse</button>
+                                        <button class="btn btn-sm btn-primary o_thankyou_next_sign w-100" t-on-click="() => this.clickNextSign(doc.requestId, doc.accessToken)">Sign</button>
+                                        <button class="btn btn-sm btn-secondary o_thankyou_next_view w-100" t-on-click="() => this.clickNextSign(doc.requestId, doc.accessToken)">View</button>
                                     </div>
                                 </th>
                             </tr>

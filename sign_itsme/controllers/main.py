@@ -18,7 +18,7 @@ class SignItsme(SignController):
         res = super().get_document_qweb_context(sign_request_id, token, **post)
         if res.get('rendering_context'):
             # show_thank_you_dialog and error_message come from IAP sign_itsme redirect
-            res['rendering_context']['show_thank_you_dialog'] = post.get('show_thank_you_dialog')
+            res['rendering_context']['show_thank_you_dialog'] = bool(res['rendering_context']['show_thank_you_dialog']) or bool(post.get('show_thank_you_dialog'))
             res['rendering_context']['error_message'] = post.get('error_message')
         return res
 

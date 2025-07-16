@@ -11,7 +11,6 @@ patch(SignablePDFIframe.prototype, {
     postRender() {
         const res = super.postRender();
         const errorCode = this.props.errorCode;
-        const showThankYouDialog = this.props.showThankYouDialog;
         if (errorCode) {
             const [errorMessage, title] = processErrorMessage.call(this, errorCode);
             this.dialog.add(
@@ -26,9 +25,6 @@ patch(SignablePDFIframe.prototype, {
                     },
                 }
             );
-        }
-        if (showThankYouDialog) {
-            this.props.openThankYouDialog();
         }
         return res;
     },
@@ -57,19 +53,15 @@ patch(Document.prototype, {
 
     getDataFromHTML() {
         super.getDataFromHTML();
-        this.showThankYouDialog = Boolean(
-            document.querySelector("#o_sign_show_thank_you_dialog")
-        );
-        this.errorCode = document.querySelector("#o_sign_show_error_message")?.value;
+        const { el: parentEl } = this.props.parent;
+        this.errorMessage = parentEl.querySelector("#o_sign_show_error_message")?.value;
     },
 
     getIframeProps(sign_document_id) {
         const props = super.getIframeProps(sign_document_id);
         return {
             ...props,
-            showThankYouDialog: this.showThankYouDialog,
-            errorCode: this.errorCode,
-            openThankYouDialog: () => this.openThankYouDialog(),
+            errorMessage: this.errorMessage,
         };
     },
 });

@@ -239,8 +239,8 @@ class SignRequestItem(models.Model):
             expiry_link_timestamp = signer._generate_expiry_link_timestamp()
             url_params = self._get_url_parameters(signer, expiry_link_timestamp)
             partial_url = "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {
-                    'request_id': signer.sign_request_id.id, 
-                    'access_token': self._get_access_token(signer), 
+                    'request_id': signer.sign_request_id.id,
+                    'access_token': self._get_access_token(signer),
                     'url_params': url_params
                 }
             link_sign = url_join(signer.get_base_url(), partial_url)

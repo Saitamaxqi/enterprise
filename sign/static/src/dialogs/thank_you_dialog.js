@@ -83,9 +83,10 @@ export class ThankYouDialog extends Component {
             const closeContext = result.custom_action ? {} : { clearBreadcrumbs: true };
             this.closeContext = closeContext;
         }
-        if (!this.suggestSignUp && !session.is_website_user && !this.props.isRefused) {
+        if (!this.props.isRefused) {
             const result = await rpc("/sign/sign_request_items", {
                 request_id: this.signInfo.get("documentId"),
+                sign_item_id: this.signInfo.get("signRequestItemId"),
                 token: this.signInfo.get("signRequestToken"),
             });
             if (result && result.length) {

@@ -390,6 +390,9 @@ export class SignablePDFIframe extends PDFIframe {
 
     postRender() {
         super.postRender();
+        if (this.props.showThankYouDialog) {
+            this.props.openThankYouDialog();
+        }
         if (this.readonly) {
             return;
         }

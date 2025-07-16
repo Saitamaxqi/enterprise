@@ -113,6 +113,7 @@ class Sign(http.Controller):
             'company_id': (sign_request.communication_company_id or sign_request.create_uid.company_id).id,
             'today_formatted_date': format_date(http.request.env, fields.Date.today(), lang_code=lang_code),
             'date_format': date_format.lower(),
+            'show_thank_you_dialog': bool(sign_request.completed_document_attachment_ids),
         }
         return result
 
@@ -661,8 +662,8 @@ class Sign(http.Controller):
             return http.request.not_found()
         return sign_request.state
 
-    @http.route(['/sign/sign_request_items'], type='jsonrpc', auth='user')
-    def get_sign_request_items(self, request_id, token):
+    @http.route(['/sign/sign_request_items'], type='jsonrpc', auth='public')
+    def get_sign_request_items(self, request_id, token, sign_item_id):
         """
         Finds up to 3 most important sign request items for the current user to sign,
         after the user has just completed one.
@@ -671,14 +672,16 @@ class Sign(http.Controller):
         :return: list of dicts describing sign request items for the Thank You dialog
         """
         sign_request = request.env['sign.request'].browse(request_id).sudo()
-        if not sign_request or not consteq(sign_request.access_token, token):
+        sign_item = request.env['sign.request.item'].browse(sign_item_id).sudo()
+        if not sign_request.exists() or not consteq(sign_request.access_token, token) or not sign_item.exists():
             return []
         uid = sign_request.create_uid.id
         items = request.env['sign.request.item'].sudo().search_read(
             domain=[
-                ('partner_id', '=', request.env.user.partner_id.id),
+                ('signer_email', '=', sign_item.signer_email),
                 ('state', '=', 'sent'),
                 ('sign_request_id.state', '=', 'sent'),
+                ('id', '!=', sign_item.id)
             ],
             fields=['access_token', 'sign_request_id', 'create_uid', 'create_date'],
             order='create_date DESC',
