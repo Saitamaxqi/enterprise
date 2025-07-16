@@ -54,19 +54,7 @@ patch(TicketScreen.prototype, {
         if (this.pos.useBlackBoxBe()) {
             order = this.pos.models["pos.order"].get(order.id);
             if (order?.state === "paid" && order.delivery_status === "food_ready") {
-                const result = await this.pos.pushOrderToBlackbox(order);
-                if (result) {
-                    const updatedOrder = this.pos.models["pos.order"].get(order.id);
-                    updatedOrder.setDataForPushOrderFromBlackbox(result);
-                    if (updatedOrder.isSynced) {
-                        await this.pos.data.write(
-                            "pos.order",
-                            [updatedOrder.id],
-                            updatedOrder.getBlackboxData()
-                        );
-                    }
-                    await this.pos.createLog(order);
-                }
+                await this.pos.pushOrderToBlackbox(order, true);
             }
         }
     },

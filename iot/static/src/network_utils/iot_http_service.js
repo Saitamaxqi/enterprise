@@ -35,6 +35,7 @@ export const FDM_MESSAGES = {
     299: _t("Unspecified error."),
     300: _t("Blackbox responded with invalid response. Please check the cable connection and the power supply, then retry. Restart if necessary"),
     301: _t("Blackbox did not respond to your request. This usually means it has disconnected. Please check its cable connection and its power supply. Restart if necessary."),
+    426: _t("Blackbox driver update required. Please restart your IoT Box to update the blackbox driver."),
 };
 
 /**
