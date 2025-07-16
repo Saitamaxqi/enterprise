@@ -385,6 +385,22 @@ class CalendarEvent(models.Model):
         # Use the organizer if set or fallback on SUPERUSER to notify attendees that the event is archived
         self.with_user(self.user_id or SUPERUSER_ID).sudo().action_archive()
 
+    def action_set_appointment_attended(self):
+        self.ensure_one()
+        self.appointment_status = 'attended'
+
+    def action_set_appointment_booked(self):
+        self.ensure_one()
+        self.appointment_status = 'booked'
+
+    def action_set_appointment_cancelled(self):
+        self.ensure_one()
+        self.appointment_status = 'cancelled'
+
+    def action_set_appointment_no_show(self):
+        self.ensure_one()
+        self.appointment_status = 'no_show'
+
     def _find_or_create_partners(self, guest_emails_str):
         """Used to find the partners from the emails strings and creates partners if not found.
         :param str guest_emails: optional line-separated guest emails. It will

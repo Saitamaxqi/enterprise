@@ -6,9 +6,21 @@
         <field name="model">calendar.event</field>
         <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
         <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_set_appointment_booked" class="btn btn-primary" type="object" string="Confirm"
+                    invisible="not appointment_type_id or appointment_status != 'request'"/>
+                <button name="action_set_appointment_attended" class="btn btn-primary" type="object" string="Check in"
+                    invisible="not appointment_type_id or appointment_status != 'booked'"/>
+                <button name="action_set_appointment_no_show" class="btn btn-secondary" type="object" string="No show"
+                    invisible="not appointment_type_id or appointment_status != 'booked'"/>
+                <button name="action_set_appointment_booked" class="btn btn-secondary" type="object" string="Confirm"
+                    invisible="not appointment_type_id or appointment_status != 'cancelled'"/>
+                <button name="action_set_appointment_cancelled" class="btn btn-secondary" type="object" string="Cancel"
+                    invisible="not appointment_type_id or appointment_status == 'cancelled'"/>
+            </header>
             <field name="categ_ids" position="after">
                 <field name="appointment_type_id" invisible="not appointment_type_id"/>
-                <field name="appointment_status" string="Status" required="appointment_type_id" invisible="not appointment_type_id"/>
+                <field name="appointment_status" string="Appointment Status" required="appointment_type_id" invisible="not appointment_type_id"/>
                 <field name="resource_ids" options="{'no_create': True}"
                     invisible="not appointment_type_id or appointment_type_schedule_based_on != 'resources'"
                     domain="[('appointment_type_ids', 'in', appointment_type_id)]" widget="many2many_tags"/>
@@ -17,20 +29,13 @@
             </field>
             <xpath expr="//widget[@name='web_ribbon']" position="replace">
                 <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active or appointment_type_id"/>
-                <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger" invisible="active or not appointment_type_id"/>
+                <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-500" invisible="active or not appointment_type_id"/>
+                <widget name="web_ribbon" title="Request" bg_color="text-bg-info" invisible="not appointment_type_id or appointment_status != 'request'"/>
+                <widget name="web_ribbon" title="Booked" bg_color="text-bg-success" invisible="not appointment_type_id or appointment_status != 'booked'"/>
+                <widget name="web_ribbon" title="Checked in" bg_color="text-bg-success" invisible="not appointment_type_id or appointment_status != 'attended'"/>
+                <widget name="web_ribbon" title="No show" bg_color="text-bg-danger" invisible="not appointment_type_id or appointment_status != 'no_show'"/>
             </xpath>
-            <xpath expr="//page[@name='page_invitations']" position="after">
-                <page name="page_appointment" string="Appointment Details"
-                    invisible="not appointment_type_id or not appointment_type_manage_capacity">
-                    <field name="booking_line_ids" invisible="not active">
-                        <list editable="bottom">
-                            <field name="appointment_type_id" column_invisible="True"/>
-                            <field name="appointment_resource_id" domain="[('appointment_type_ids', 'in', appointment_type_id)]" options="{'no_create': True}"/>
-                            <field name="capacity_reserved" sum="Total Capacity Reserved"/>
-                            <field name="capacity_used" optional="hide" sum="Total Capacity Used"/>
-                        </list>
-                    </field>
-                </page>
+            <xpath expr="//page[@name='options']" position="before">
                 <page name="page_questions" string="Questions"
                     invisible="not appointment_type_id or not appointment_answer_input_ids">
                     <field name="appointment_answer_input_ids">
@@ -43,6 +48,28 @@
                                 domain="[('question_id','=', question_id)]"
                                 options="{'no_create': True}"/>
                             <field name="value_text_box" invisible="question_type in ('radio','checkbox','select')"/>
+                        </list>
+                    </field>
+                </page>
+                <page name="page_appointment" string="Resources"
+                    invisible="not appointment_type_id or not appointment_type_manage_capacity">
+                    <field name="booking_line_ids" invisible="not active">
+                        <list editable="bottom">
+                            <control>
+                                <create string="Add a line" invisible="parent.appointment_type_schedule_based_on != 'resources'"/>
+                            </control>
+                            <field name="appointment_type_id" column_invisible="True"/>
+                            <field name="appointment_resource_id"
+                                domain="[('appointment_type_ids', 'in', appointment_type_id)]"
+                                column_invisible="parent.appointment_type_schedule_based_on != 'resources'"
+                                options="{'no_create': True}"/>
+                            <!-- Necessarily writeable to trigger the constraints on appointment_user_id -->
+                            <field name="appointment_user_id"
+                                domain="[('id', 'in', parent.user_id)]"
+                                column_invisible="parent.appointment_type_schedule_based_on != 'users'"
+                                options="{'no_open': True}"/>
+                            <field name="capacity_reserved" sum="Total Capacity Reserved"/>
+                            <field name="capacity_used" optional="hide" sum="Total Capacity Used"/>
                         </list>
                     </field>
                 </page>

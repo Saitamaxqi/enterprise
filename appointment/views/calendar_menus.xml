@@ -12,10 +12,7 @@
     <menuitem
         id="reporting_menu_calendar"
         parent="calendar.mail_menu_calendar"
-        name="Reporting"/>
-    <menuitem
-        id="menu_schedule_report_all_events"
-        parent="appointment.reporting_menu_calendar"
+        name="Reporting"
         action="calendar_event_action_report_all"/>
 
 </odoo>
