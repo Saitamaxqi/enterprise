@@ -62,6 +62,8 @@ class AccountMove(models.Model):
                     subscription.next_invoice_date += subscription.plan_id.billing_period
                 subscription.last_reminder_date = False
             subscription.pending_transaction = False
+            if subscription.user_pause_start:
+                subscription.user_pause_start = False
         if all_subscriptions:
             # update the renewal quotes to start at the next invoice date values
             renewal_quotes = self.env['sale.order'].search([

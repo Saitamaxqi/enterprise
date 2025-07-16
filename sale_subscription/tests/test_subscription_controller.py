@@ -960,3 +960,28 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
 
             self.env['sale.order']._cron_recurring_create_invoice()
             self.assertEqual(self.subscription.next_invoice_date, datetime.date(2022, 1, 18), "Next invoice date should update after invoicing.")
+
+    def test_reset_pause_period_after_invoice_creation(self):
+        """ Test that the pause period is reset after an invoice is created. """
+        with freeze_time("2021-11-17"):
+            self.authenticate(None, None)
+            self.subscription.plan_id.pausable_by_user = True
+            self.subscription.action_confirm()
+            self.subscription._create_invoices()._post()
+
+        with freeze_time("2021-11-18"):
+            pause_until = self.subscription.next_invoice_date + relativedelta(days=10)
+            user_lang = get_lang(self.env)
+            date_format = user_lang.date_format
+            pause_until_str = pause_until.strftime(date_format)
+            response = self._pause_subscription(pause_until_str)
+
+            self.assertEqual(response.status_code, 303, "Expected redirection status code 303.")
+            self.env.invalidate_all()
+            self.assertEqual(self.subscription.subscription_state, "3_progress", "Subscription should remain in progress.")
+
+        with freeze_time("2021-12-19"):
+            # By creating a manual invoice, we reset the user_pause_start
+            self.subscription._create_invoices()._post()
+            self.assertEqual(self.subscription.invoice_count, 2, "Invoice count should be 2.")
+            self.assertFalse(self.subscription.user_pause_start, "User pause start should be reset after invoicing.")
