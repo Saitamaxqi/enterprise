@@ -679,6 +679,7 @@ class SignRequest(models.Model):
         model_description = notif_values.get('model_description')
         partner = notif_values.get('partner')
         notification_layout_xmlid = notif_values.get('notification_layout_xmlid', 'sign.sign_mail_notification_light')
+        scheduled_date = self.env.context.get('scheduled_date', False)
 
         mail_values = mail_values or {}
         if 'author_id' not in mail_values:
@@ -711,8 +712,10 @@ class SignRequest(models.Model):
             },
         )
         mail_values['reply_to'] = mail_values.get('email_from')
+        if scheduled_date:
+            mail_values['scheduled_date'] = scheduled_date
         mail = self.env['mail.mail'].sudo().create(mail_values)
-        if force_send:
+        if force_send and not scheduled_date:
             mail.send_after_commit()
         return mail
 

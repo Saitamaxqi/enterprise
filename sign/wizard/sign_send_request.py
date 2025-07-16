@@ -37,7 +37,7 @@ class SignSendRequest(models.TransientModel):
     is_user_signer = fields.Boolean(compute='_compute_is_user_signer')
 
     subject = fields.Char(string="Subject", compute='_compute_subject', store=True)
-    message = fields.Html("Message", help="Message to be sent to signers of the specified document")
+    body = fields.Html('body', compute='_compute_mail_message_body', readonly=False, help="Message to be sent to signers of the specified document", store=True)
     message_cc = fields.Html("CC Message", help="Message to be sent to contacts in copy of the signed document")
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments', bypass_search_access=True)
     filename = fields.Char("Filename", compute='_compute_filename', store=True)
@@ -47,6 +47,9 @@ class SignSendRequest(models.TransientModel):
     reminder_enabled = fields.Boolean(default=False)
     reminder = fields.Integer(string='Reminder', default=7)
     certificate_reference = fields.Boolean(string="Certificate Reference", default=False, help="If checked, the unique certificate reference will be added on the final signed document.")
+    model = fields.Char('Related Document Model')
+    res_ids = fields.Text('Related Document IDs')
+    scheduled_date = fields.Char('Scheduled Date')
 
     only_autofill_readonly = fields.Boolean(
         string='Only Autofill',
@@ -143,7 +146,7 @@ class SignSendRequest(models.TransientModel):
         for wiz in self:
             subject = self.env._("Signature Request")
             if wiz.reference_doc:
-                subject = self.env._("Signature Request - %s", wiz.reference_doc.display_name or '')
+                subject = self.env._("Signature Request - %(template_name)s - %(res_name)s", template_name=wiz.template_id.display_name, res_name=wiz.reference_doc.display_name or '')
             elif wiz.template_id:
                 subject = self.env._("Signature Request - %(file_name)s", file_name=wiz.template_id.name)
             wiz.subject = subject
@@ -199,6 +202,13 @@ class SignSendRequest(models.TransientModel):
                 all_template_ids += other_templates.ids
             wiz.available_template_ids = [Command.set(all_template_ids)]
 
+    @api.depends('template_id')
+    def _compute_mail_message_body(self):
+        for wiz in self:
+            # Compute mail message
+            if wiz.template_id:
+                wiz.body = wiz.template_id.message
+
     # ==== Business methods ====
 
     def _activity_done(self):
@@ -215,13 +225,14 @@ class SignSendRequest(models.TransientModel):
         cc_partner_ids = self.cc_partner_ids.ids
         reference = self.filename or self.template_id.name
         subject = self.subject
-        message = self.message
+        message = self.body
         message_cc = self.message_cc
         attachment_ids = self.attachment_ids
+        scheduled_date = self.scheduled_date or False
         reference_doc = None
         if self.reference_doc:
             reference_doc = f"{self.reference_doc._name},{self.reference_doc.id}"
-        sign_request = self.env['sign.request'].create({
+        sign_request = self.env['sign.request'].with_context(scheduled_date=scheduled_date).create({
             'template_id': template_id,
             'request_item_ids': [Command.create({
                 'partner_id': signer['partner_id'],

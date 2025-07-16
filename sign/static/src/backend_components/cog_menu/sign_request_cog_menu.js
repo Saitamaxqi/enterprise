@@ -38,6 +38,8 @@ export class SignRequestCogMenu extends Component {
                         sign_directly_without_mail: false,
                         default_reference_doc: referenceDoc,
                         sign_from_record: true,
+                        default_model: resModel,
+                        default_res_ids: [resId],
                     },
             });
         }

@@ -10,10 +10,11 @@
             signStatus="signStatus"
             manageTemplateAccess="manageTemplateAccess"
             onTemplateSaveClick.bind="onTemplateSaveClick"
-            hasSignersWithoutItems ="hasSignersWithoutItems"
+            hasSignersWithoutItems="hasSignersWithoutItems"
             documentId="this.state.selectedDocumentId"
             onEditTemplate.bind="onEditTemplate"
             referenceDoc="referenceDoc"
+            activityId="activityId"
         />
         <div class="d-flex flex-grow-1 h-100 overflow-hidden">
             <SignTemplateSidebar t-if="showSidebar" t-props="signTemplateSidebarProps"/>

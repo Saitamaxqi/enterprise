@@ -21,6 +21,8 @@ export function useSignViewButtons() {
     let inactive;
     let resModel;
     let signTemplateId = false;
+    let referenceDoc;
+    let activityId;
     let updateDocuments = () => {};
 
     const uploadFiles = async (files) => {
@@ -77,6 +79,10 @@ export function useSignViewButtons() {
                     sign_directly_without_mail: false,
                     resModel: resModel,
                 },
+                context: {
+                    default_reference_doc: referenceDoc,
+                    default_activity_id: activityId,
+                },
             });
         },
 
@@ -92,6 +98,8 @@ export function useSignViewButtons() {
             resModel = this.props.resModel;
             signTemplateId = this.props.signTemplateId;
             updateDocuments = this.props.updateDocuments;
+            referenceDoc = this.env.searchModel?.globalContext?.default_reference_doc || false;
+            activityId = this.env.searchModel?.globalContext?.default_activity_id || false;
             fileInput.el.click();
         },
     };

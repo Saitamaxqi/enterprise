@@ -20,6 +20,7 @@ The first element of the selection (in DRM) will be used as the signature attach
         'views/sign_templates.xml',
         'views/res_config_settings.xml',
         'wizard/sign_import_documents.xml',
+        'wizard/sign_send_request_views.xml',
     ],
 
     'demo': [

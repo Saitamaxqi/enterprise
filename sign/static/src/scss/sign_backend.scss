@@ -151,7 +151,7 @@
 
     .o_sign_sidebar {
         max-width: 320px;
-        z-index: 1030;
+        z-index: 1019;
         flex-shrink: 0;
         overflow-y: auto;
         overflow-x: hidden;
@@ -518,4 +518,12 @@
 
 .o_sign_template_tags_and_save .o_tags_input {
     width: 100%;
+}
+
+.o_sign_message_style .note-editable {
+    min-height: 150px !important;
+}
+
+.o_form_view.o_sign_send_request_form .o_form_nosheet {
+    padding-bottom: 0px;
 }

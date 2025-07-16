@@ -28,6 +28,7 @@ export class SignTemplateControlPanel extends Component {
         documentId: { type: Number },
         onEditTemplate: { type: Function },
         referenceDoc: { optional: true, type: String },
+        activityId: { optional: true, type: Number },
     };
 
     setup() {
@@ -71,6 +72,9 @@ export class SignTemplateControlPanel extends Component {
                 show_email: true,
                 has_signers_without_items: this.props.hasSignersWithoutItems,
                 default_reference_doc: this.props.referenceDoc,
+                default_activity_id: this.props.activityId,
+                default_model: 'sign.template',
+                default_res_ids: [this.props.signTemplate.id],
             },
         });
     }
@@ -92,6 +96,7 @@ export class SignTemplateControlPanel extends Component {
                 sign_directly_without_mail: true,
                 has_signers_without_items: this.props.hasSignersWithoutItems,
                 default_reference_doc: this.props.referenceDoc,
+                default_activity_id: this.props.activityId,
             },
         });
     }

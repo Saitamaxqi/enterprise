@@ -57,6 +57,7 @@ class SignTemplate(models.Model):
         ('is_mail_thread', '=', 'True')
     ])
     model_name = fields.Char(related='model_id.model', string="Model Name")
+    message = fields.Html("Message", help="Message to be sent to signers of the specified document")
 
     _signature_request_validity_check = models.Constraint(
         "CHECK(signature_request_validity IS NULL OR signature_request_validity >= 0)",
@@ -463,6 +464,10 @@ class SignTemplate(models.Model):
             context.update({'default_has_default_template': True})
         if context.get('default_reference_doc'):
             context.update({'sign_from_record': True})
+        if not context.get('default_model'):
+            context.update({'default_model': 'sign.template'})
+        if not context.get('default_res_ids'):
+            context.update({'default_res_ids': self.ids})
         action = self.env['ir.actions.act_window']._for_xml_id('sign.action_sign_send_request')
         action.update({
             'context': context,

@@ -131,6 +131,20 @@
         </field>
     </record>
 
+    <record id="sign_template_view_inherit_tree" model="ir.ui.view">
+        <field name="name">sign.template.primary.inherit.list</field>
+        <field name="model">sign.template</field>
+        <field name="inherit_id" ref="sign.sign_template_view_tree"/>
+        <field name="mode">primary</field>
+        <field name="priority">10</field>
+        <field name="arch" type="xml">
+            <!-- hide Upload PDF button from external views -->
+            <xpath expr="//list" position="attributes">
+                <attribute name="js_class"></attribute>
+            </xpath>
+        </field>
+    </record>
+
     <record id="sign_template_view_form" model="ir.ui.view">
         <field name="name">sign.template.form</field>
         <field name="model">sign.template</field>
@@ -176,6 +190,11 @@
                             </div>
                         </group>
                     </group>
+                    <notebook>
+                        <page name="Communication" string="Communication">
+                            <field name="message" class="oe-bordered-editor" placeholder="Optional Message..."/>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -246,6 +265,10 @@
         <field name="res_model">sign.template</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="search_view_id" ref="sign_template_view_search"/>
+        <field name="view_ids" eval="[Command.clear(),
+                Command.create({'view_mode': 'kanban'}),
+                Command.create({'view_mode': 'list', 'view_id': ref('sign.sign_template_view_tree')}),
+                Command.create({'view_mode': 'form'})]"/>
         <field name="context">{'search_default_favorite': 1}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

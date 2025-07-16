@@ -21,11 +21,6 @@
     'demo': [
         'data/hr_sign_demo.xml',
     ],
-    'assets': {
-    'web.assets_backend': [
-        'hr_sign/static/src/**/*',
-        ],
-    },
     'installable': True,
     'auto_install': True,
     'author': 'Odoo S.A.',

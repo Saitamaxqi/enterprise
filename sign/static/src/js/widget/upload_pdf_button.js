@@ -8,10 +8,11 @@ import { _t } from "@web/core/l10n/translation";
 import { useSignViewButtons } from "@sign/views/hooks";
 
 export class UploadPdfButton extends Component {
-    static template = "hr_sign.upload_pdf_button"
+    static template = "sign.upload_pdf_button"
     static props = {
         ...standardWidgetProps,
-        title: { type: String, optional: true }
+        title: { type: String, optional: true },
+        btnClass: { type: String, optional: true },
     };
 
     setup() {
@@ -35,6 +36,7 @@ export const uploadPdfButton = {
     extractProps: ({ attrs }) => {
         return {
             title: attrs.title || _t("Upload PDF"),
+            btnClass: attrs.btnClass || "btn btn-link",
         };
     },
 };
