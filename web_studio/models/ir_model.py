@@ -126,7 +126,7 @@ class IrModel(models.Model):
                     'ttype': 'char',
                     'required': True,
                     'field_description': _('Description'),
-                    'translate': True,
+                    'translate': 'standard',
                     'tracking': use_mail,
                 })
             ]
@@ -224,7 +224,7 @@ class IrModel(models.Model):
                     'ttype': 'char',
                     'required': True,
                     'field_description': _('Description'),
-                    'translate': True,
+                    'translate': 'standard',
                 }),
                 Command.create({
                     'name': relation_field_name,
@@ -416,7 +416,7 @@ class IrModel(models.Model):
                     'ttype': 'char',
                     'required': True,
                     'field_description': _('Stage Name'),
-                    'translate': True,
+                    'translate': 'standard',
                     'copied': True,
                 })
             ],
