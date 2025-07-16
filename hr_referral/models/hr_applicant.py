@@ -142,16 +142,6 @@ class HrApplicant(models.Model):
                     applicant.last_valuable_stage_id = applicant.stage_id
         return applicants
 
-    def archive_applicant(self):
-        for applicant in self:
-            if applicant.ref_user_id:
-                applicant._send_notification(
-                    body=_("Sorry, your referral %s has been refused in the recruitment process.", applicant.partner_name),
-                    action_value='hr_referral.action_hr_refused_applicant_employee_referral'
-                )
-        self.write({'referral_state': 'closed'})
-        return super().archive_applicant()
-
     def _send_notification(self, body, action_value='hr_referral.action_hr_applicant_employee_referral'):
         if referrer := self.ref_user_id:
             if self.partner_name:
