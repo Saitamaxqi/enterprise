@@ -77,8 +77,11 @@ export class VoipSystrayItem extends Component {
                 this.ringtoneService.stopPlaying();
             }
         } else {
+            if (this.voip.missedCalls > 0) {
+                this.softphone.activeTab = "recent";
+                this.voip.resetMissedCalls();
+            }
             this.softphone.show();
-            this.voip.resetMissedCalls();
             if (await this.userAgent.shouldPlayIncomingCallRingtone()) {
                 this.ringtoneService.incoming.play();
             }

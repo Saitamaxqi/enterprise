@@ -27,3 +27,11 @@ test("Display missed call count in systray rounded pill “10” when there are 
     start();
     await contains("button[title='Open Softphone']", { text: "10" });
 });
+
+test("Clicking on VoIP systray button with missed calls opens the softphone on recent tab", async () => {
+    const pyEnv = await startServer();
+    pyEnv["voip.call"].create({ state: "missed", user_id: serverState.userId });
+    await start();
+    await click(".o_menu_systray button[title='Open Softphone']");
+    await contains("button.active span:contains('Recent')");
+});

@@ -1,5 +1,5 @@
 import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { fields } from "@web/../tests/web_test_helpers";
+import { fields, makeKwArgs } from "@web/../tests/web_test_helpers";
 
 export class ResUsers extends mailModels.ResUsers {
     voip_provider_id = fields.Many2one({
@@ -29,5 +29,17 @@ export class ResUsers extends mailModels.ResUsers {
                 },
             });
         }
+    }
+
+    reset_last_seen_phone_call() {
+        const domain = [("user_id", "=", [this.env.user.id])];
+        const last_call = this.env["voip.call"].search(
+            domain,
+            makeKwArgs({
+                limit: 1,
+                order: "id DESC",
+            })
+        );
+        this.env.user.last_seen_phone_call = last_call.id;
     }
 }

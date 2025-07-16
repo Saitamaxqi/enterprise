@@ -525,6 +525,7 @@ export class UserAgent extends Reactive {
         this.ringtoneService.stopPlaying();
         this.session.sipSession.reject({ statusCode: 487 /* Request Terminated */ });
         this.callService.miss(this.session.call);
+        this.softphone.activeTab = "recent";
     }
 
     /**
