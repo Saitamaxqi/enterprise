@@ -66,7 +66,7 @@ class ProjectProject(models.Model):
         for project in self:
             if not project.documents_folder_id:
                 folder_vals = {
-                    'access_internal': 'edit' if project.privacy_visibility != 'followers' else 'none',
+                    'access_internal': 'edit' if project.privacy_visibility in ['employees', 'portal'] else 'none',
                     'company_id': project.company_id.id,
                     'folder_id': documents_project_folder_id,
                     'name': project.name,
