@@ -15,9 +15,7 @@ patch(MessagingMenu.prototype, {
         );
         if (hasWhatsApp) {
             items.push({
-                counter: this.store.getDiscussSidebarCategoryCounter(
-                    this.store.discuss.whatsapp.id
-                ),
+                counter: this.store.discuss.whatsapp.threadsWithCounter.length,
                 icon: "fa fa-whatsapp",
                 id: "whatsapp",
                 label: _t("WhatsApp"),
