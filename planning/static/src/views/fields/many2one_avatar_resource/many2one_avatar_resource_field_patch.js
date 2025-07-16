@@ -19,7 +19,7 @@ function patchFieldComponent(o) {
         openMaterialPopover(target) {
             if (
                 !this.materialPopover.isOpen &&
-                this.props.record.data.resource_roles?.records.length <= 1
+                this.props.record.data.resource_roles?.currentIds.length <= 1
             ) {
                 return;
             }

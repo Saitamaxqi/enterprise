@@ -8,7 +8,7 @@ import {
 export const patchM2mResourceFieldPrototype = {
     displayAvatarCard(record) {
         return !this.env.isSmall && this.relation === "resource.resource" &&
-            (record.data.resource_type === "user" || record.data.role_ids.records.length > 1);
+            (record.data.resource_type === "user" || record.data.role_ids.currentIds.length > 1);
     },
 };
 
