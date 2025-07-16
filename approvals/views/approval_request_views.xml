@@ -83,7 +83,7 @@
                 <filter string="Canceled" name="filter_canceled_requests" domain="[('request_status', '=', 'cancel')]"/>
                 <separator/>
                 <filter string="Archived" name="filter_archived_requests" domain="[('active', '=', False)]"/>
-                <group string="Group By">
+                <group>
                     <filter string="Request Owner" name="groupby_request_owner"
                         context="{'group_by': 'request_owner_id'}"/>
                     <filter string="Category" name="groupby_category_id"

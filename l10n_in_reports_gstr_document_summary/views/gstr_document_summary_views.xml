@@ -21,7 +21,7 @@
         <field name="model">l10n_in.gstr.document.summary.line</field>
         <field name="arch" type="xml">
             <search string="GSTR Document Summary Lines">
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_by_doc_type" string="Nature of Document" context="{'group_by': 'nature_of_document'}"/>
                 </group>
             </search>

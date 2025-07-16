@@ -15,7 +15,7 @@
                 <filter string="Date" name="date_filter" date="date_start"/>
                 <separator/>
                 <filter string="Archived" name="filter_archived" domain="[('active', '=', 'False')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter string="Status" name="groupby_state" context="{'group_by': 'state'}"/>
                 </group>
             </search>

@@ -352,7 +352,7 @@
                         ('end_datetime', '&lt;', '=monday +2w'),
                     ]"/>
                 </filter>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_department" string="Department" context="{'group_by': 'department_id'}" groups="planning.group_planning_user"/>
                     <filter name="group_by_manager" string="Manager" context="{'group_by': 'manager_id'}" groups="planning.group_planning_user"/>
                     <filter name="group_by_resource" string="Resource" context="{'group_by': 'resource_id'}" groups="planning.group_planning_user"/>
@@ -650,7 +650,7 @@
                 <filter name="role_for_material" string="Materials" domain="[('resource_ids.resource_type', '=', 'material')]"/>
                 <separator/>
                 <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_resource" string="Resources" context="{'group_by': 'resource_ids'}"/>
                 </group>
             </search>

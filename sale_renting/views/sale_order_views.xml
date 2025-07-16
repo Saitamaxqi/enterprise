@@ -194,7 +194,7 @@
                     <filter string="Pickup Date" name="filter_pickup" date="next_action_date" domain="[('rental_status', '=', 'pickup')]"/>
                     <filter string="Return Date" name="filter_return" date="next_action_date" domain="[('rental_status', '=', 'return')]"/>
                 <separator/>
-                <group string="Group By">
+                <group>
                     <filter string="Status" name="groupby_status" context="{'group_by': 'rental_status'}"/>
                     <separator/>
                     <filter string="Salesperson" name="salesperson" context="{'group_by': 'user_id'}"/>

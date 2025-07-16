@@ -58,7 +58,7 @@
                 <separator/>
                 <filter string="Current Period" name="current"
                         domain="[('target_id.date_from', '&lt;', 'today'), ('target_id.date_to', '&gt;', 'today')]"/>
-                <group string="Group By">
+                <group>
                     <filter string="Salesperson" name="salesperson" context="{'group_by':'user_id'}"/>
                     <filter string="Sales Team" name="salesteam" context="{'group_by':'team_id'}"/>
                     <filter string="Period" name="target" context="{'group_by':'target_id'}"/>

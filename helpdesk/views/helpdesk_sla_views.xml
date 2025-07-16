@@ -42,7 +42,7 @@
                 <field name="name"/>
                 <field name="team_id"/>
                 <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                <group string="Group By">
+                <group>
                     <filter string="Helpdesk Team" name="team" context="{'group_by':'team_id'}"/>
                     <filter string="Company" name="company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
                 </group>

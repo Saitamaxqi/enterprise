@@ -60,7 +60,7 @@
                 <field name="company_id"/>
                 <separator/>
                 <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                <group string="Group By">
+                <group>
                     <filter string="Company" name="Company" context="{'group_by': 'company_id'}" groups="base.group_multi_company"/>
                 </group>
             </search>

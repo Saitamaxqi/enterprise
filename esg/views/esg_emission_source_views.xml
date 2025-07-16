@@ -66,7 +66,7 @@
                 <filter string="Scope 2: Indirect" name="scope_2" domain="[('scope', '=', 'indirect')]"/>
                 <filter string="Scope 3: Others Indirect" name="scope_3" domain="[('scope', '=', 'indirect_others')]"/>
                 <separator/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_parent_id" context="{'group_by': 'parent_id'}"/>
                     <filter name="group_by_scope" context="{'group_by': 'scope'}"/>
                 </group>

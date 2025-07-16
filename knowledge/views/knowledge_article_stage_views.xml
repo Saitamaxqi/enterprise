@@ -39,7 +39,7 @@
             <search string="Search Stages">
                 <field name="name"/>
                 <field name="parent_id"/>
-                <group string="Group By">
+                <group>
                     <filter string="Article" name="group_by_parent_id"
                             domain="[]" context="{'group_by': 'parent_id'}"/>
                 </group>

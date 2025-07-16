@@ -81,7 +81,7 @@ if records:
                     <field name="amount" />
                     <filter string="Unreconciled" domain="[('state','!=','reconciled')]" name="open"/>
 
-                    <group string="Group By">
+                    <group>
                         <filter name="group_by_journal_id" string="Bank Journal" context="{'group_by':'journal_id'}"/>
                         <filter name="group_by_state" string="State" context="{'group_by':'state'}"/>
                     </group>

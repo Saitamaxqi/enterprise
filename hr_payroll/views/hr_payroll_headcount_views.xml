@@ -89,7 +89,7 @@
                 <field name="employee_id"/>
                 <field name="department_id"/>
                 <field name="job_id"/>
-                <group string="Group By">
+                <group>
                     <filter string="Department" name="group_by_department" domain="[]" context="{'group_by': 'department_id'}"/>
                     <filter string="Job" name="group_by_job" domain="[]" context="{'group_by': 'job_id'}"/>
                     <filter string="Working Rate" name="group_by_Working_rate" domain="[]" context="{'group_by': 'working_rate_ids'}"/>

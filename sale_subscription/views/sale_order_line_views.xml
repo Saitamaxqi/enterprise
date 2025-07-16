@@ -26,7 +26,7 @@
                 <field name="order_id" string="Sale order"/>
                 <field name="order_partner_id" operator="child_of"/>
                 <field name="name" string="Product"/>
-                <group string="Group By">
+                <group>
                     <filter string="Product" name="product" domain="[]" context="{'group_by':'product_id'}"/>
                     <filter string="Product Variant" name="product variant" domain="[]" context="{'group_by':'product_template_variant_value_ids'}"/>
                     <filter string="Pricelist" name="pricelist" domain="[]" context="{'group_by':'pricelist_id'}"/>

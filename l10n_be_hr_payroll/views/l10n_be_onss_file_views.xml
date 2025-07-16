@@ -63,7 +63,7 @@
                 <field name="file_content"/>
                 <filter name="declaration_files" string="Declaration Files" domain="[('file_type', 'not in', ['GO', 'FS'])]"/>
                 <filter name="unlinked_file" string="Unlinked Files" domain="[('employee_id', '=', False), ('onss_declaration_id', '=', False)]"/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_onss_declaration_id" string="Declaration" domain="[]" context="{'group_by': 'onss_declaration_id'}"/>
                 </group>
             </search>

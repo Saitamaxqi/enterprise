@@ -117,7 +117,7 @@
                     <separator/>
                     <filter name="filter_create_date" date="create_date" string="Application Date"/>
                     <filter name="filter_date_closed" date="date_closed" string="Hired Date"/>
-                    <group string="Group By">
+                    <group>
                         <filter string="State" name="groupby_state" context="{'group_by': 'state'}"/>
                         <filter string="Job Position" name="groupby_job" context="{'group_by':'job_id'}"/>
                         <filter string="Applicant Name" name="groupby_name" context="{'group_by':'name'}"/>

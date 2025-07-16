@@ -54,7 +54,7 @@
                         ('entry_date', '&lt;', '=monday'),
                     ]"/>
                 </filter>
-                <group string="Group By">
+                <group>
                     <filter string="Department" name="resource_departement" context="{'group_by':'department_id'}"/>
                     <filter string="Employee" name="resource_employee" context="{'group_by':'employee_id'}"/>
                     <filter string="Date" name="date_month" context="{'group_by':'entry_date:month'}"/>

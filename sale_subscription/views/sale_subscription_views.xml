@@ -57,7 +57,7 @@
                         domain="[('activity_date_deadline', '&gt;', 'today')
                         ]"/>
                 <separator/>
-                <group string="Group By">
+                <group>
                     <filter string="Salesperson" name="sales_person" context="{'group_by':'user_id'}"/>
                     <filter string="Sales Team" name="sales_team" context="{'group_by':'team_id'}"/>
                     <filter string="Subscription Status" name="subscription_state" context="{'group_by':'subscription_state'}"/>

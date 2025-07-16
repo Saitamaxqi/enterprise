@@ -116,7 +116,7 @@
                 </filter>
                 <separator/>
                 <filter string="Archived" domain="[('active', '=', False)]" name="archive"/>
-                <group string="Group By">
+                <group>
                     <filter string="Assigned to" name="assignee" context="{'group_by':'user_id'}"/>
                     <filter string="Helpdesk Team" name="team" context="{'group_by':'team_id'}" invisible="context.get('default_team_id', False)"/>
                     <filter string="Stage" name="stage" context="{'group_by':'stage_id'}"/>
@@ -195,7 +195,7 @@
                     domain="[('activity_date_deadline', '&gt;', 'today')]"/>
                 <separator/>
                 <filter string="SLA Failed" name="sla_failed" domain="[('sla_fail','!=',False)]" groups="helpdesk.group_use_sla"/>
-                <group string="Group By">
+                <group>
                   <filter string="Assignee" name="assignee" context="{'group_by':'user_id'}"/>
                   <filter string="Helpdesk Team" name="team" context="{'group_by':'team_id'}"/>
                 </group>
@@ -914,7 +914,7 @@
                 <filter string="SLA Success" name="sla_successed" domain="[('sla_success', '=', True)]" groups="helpdesk.group_use_sla"/>
                 <separator/>
                 <filter string="Archived" domain="[('active','=',False)]" name="archive"/>
-                <group string="Group By">
+                <group>
                   <filter string="Assignee" name="assignee" context="{'group_by':'user_id'}"/>
                   <filter string="Helpdesk Team" name="team" context="{'group_by':'team_id'}"/>
                   <filter string="Creation Date" context="{'group_by':'create_date:week'}" name="group_by_create_date"/>

@@ -13,7 +13,7 @@
                 <filter string="Waiting" name="is_waiting" domain="[('payslip_id.state', '=', 'verify')]"/>
                 <separator/>
                 <filter string="Date" name="date_from" date="date_from" default_period="year"/>
-                <group col="8" colspan="4" expand="0" string="Group By">
+                <group col="8" colspan="4">
                     <filter string="Input Type" name="group_by_input_type" context="{'group_by': 'input_type_id'}"/>
                     <filter string="Input Type Code" name="group_by_code" context="{'group_by': 'code'}"/>
                     <filter string="Employee" name="group_by_employee_id" context="{'group_by': 'employee_id'}"/>

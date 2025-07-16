@@ -105,13 +105,13 @@
                 <filter string="Deadline Date" name="filter_deadline" date="deadline"/>
                 <field name="employee_id"/>
                 <field name="department_id"/>
-                <group string="Extended Filters...">
+                <group>
                     <field name="deadline"/>
                     <field name="state"/>
                     <field name="create_date"/>
                     <field name="final_interview"/>
                 </group>
-                <group string="Group By">
+                <group>
                     <filter string="Employee" name="employee" context="{'group_by':'employee_id'}"/>
                     <filter string="Department" name="department" context="{'group_by':'department_id'}"/>
                     <filter string="Status" name="status" context="{'group_by':'state'}"/>

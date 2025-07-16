@@ -11,7 +11,7 @@
                 <filter name="filter_not_cancelled" string="Not Cancelled" domain="[('budget_analytic_id.state', '!=', 'canceled')]"/>
                 <separator/>
                 <filter string="Date" name="filter_date_from" date="date_from"/>
-                <group string="Group By">
+                <group>
                     <filter name="group_budget_analytic_id" string="Budgets" domain="[]" context="{'group_by': 'budget_analytic_id'}"/>
                     <filter name="account_id" context="{'group_by':'account_id'}"/>
                 </group>

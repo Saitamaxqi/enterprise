@@ -97,7 +97,7 @@
                     domain="[('status', '=', 'draft')]"/>
                 <filter name="filter_done" string="Done"
                     domain="[('status','=', 'done')]"/>
-                <group expand="0" string="Group By">
+                <group>
                     <filter name="group_by_company" domain="[]" context="{'group_by': 'company_id'}"/>
                     <filter name="group_by_responsible_user_ids" domain="[]" context="{'group_by': 'responsible_user_ids'}"/>
                     <filter name="group_by_start_date" domain="[]" context="{'group_by': 'start_date'}"/>

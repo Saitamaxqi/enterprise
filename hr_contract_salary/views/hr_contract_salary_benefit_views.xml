@@ -27,7 +27,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
-                <group string="Group By">
+                <group>
                     <filter string="Structure Type" name="groupby_structure_type" context="{'group_by':'structure_type_id'}" />
                 </group>
             </search>

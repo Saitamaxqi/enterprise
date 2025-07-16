@@ -222,7 +222,7 @@
                 <field name="name"/>
                 <field name="type"/>
                 <field name="iot_id"/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_connection" string="Connection" context="{'group_by':'connection'}"/>
                 </group>
             </search>

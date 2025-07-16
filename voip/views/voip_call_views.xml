@@ -69,7 +69,7 @@
                 <filter string="Today" name="today" domain="[('create_date', '>=', context_today())]"/>
                 <filter string="Yesterday" name="yesterday" domain="[('create_date', '&lt;', context_today()), ('create_date', '>=', context_today() - relativedelta(days=1))]"/>
                 <filter string="Last 7 Days" name="last_7_days" domain="[('create_date','>=', context_today() - relativedelta(days=6))]"/>
-                <group name="group_by" string="Group By">
+                <group name="group_by">
                     <filter string="User" name="groupby_user" context="{'group_by': 'user_id'}"/>
                     <filter string="Contact" name="groupby_contact" context="{'group_by': 'partner_id'}"/>
                     <filter string="Status" name="groupby_status" context="{'group_by': 'state'}"/>

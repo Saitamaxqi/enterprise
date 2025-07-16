@@ -84,7 +84,7 @@
                 <filter string="Last Year" name="Last Year" domain="[('create_date','&gt;=', 'today -365d')]"/>
                 <separator/>
                 <filter string="Create Date" name="filter_create_date" date="create_date"/>
-                <group string="Group By">
+                <group>
                     <filter string="Sent To" name="groupby_mobile_number"
                         context="{'group_by': 'mobile_number'}"/>
                     <filter string="State" name="groupby_state"

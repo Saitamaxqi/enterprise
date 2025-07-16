@@ -417,7 +417,7 @@
                     domain="[('active', '=', False)]"/>
                 <filter name="filter_trashed" string="Trashed"
                     domain="[('active', '=', False), ('to_delete', '=', True)]"/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_category" domain="[]" context="{'group_by': 'category'}"/>
                     <filter name="group_by_menu_article" context="{'group_by': 'root_article_id'}"/>
                     <separator/>
@@ -451,7 +451,7 @@
                 <separator/>
                 <filter name="filter_active" string="Archived"
                     domain="[('active', '=', False)]"/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_stage" string="Stage" domain="[]" context="{'group_by': 'stage_id'}"/>
                     <separator/>
                     <filter name="group_by_article_properties" domain="[]"
@@ -599,7 +599,7 @@
                     domain="[('is_article_item', '=', False)]"/>
                 <filter name="filter_is_article_item" string="Template Items"
                     domain="[('is_article_item', '=', True)]"/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_template_category_id" domain="[]" context="{'group_by': 'template_category_id'}"/>
                     <filter name="group_by_menu_article" context="{'group_by': 'root_article_id'}"/>
                 </group>

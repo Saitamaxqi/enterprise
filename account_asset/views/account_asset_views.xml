@@ -416,7 +416,7 @@
                     domain="[('activity_date_deadline', '&gt;', 'today')]"/>
                 <separator/>
                 <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                <group string="Group By...">
+                <group>
                         <filter string="Date" name="month" domain="[]" context="{'group_by':'acquisition_date'}"/>
                         <filter string="Asset Model" name="model" domain="[]" context="{'group_by':'model_id'}"/>
                         <filter string="Properties" name="group_by_properties" context="{'group_by': 'asset_properties'}"/>
@@ -433,7 +433,7 @@
             <search string="Asset Model">
                 <field name="name"/>
                 <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                <group string="Group By...">
+                <group>
                         <filter string="Fixed Asset Account" name="account_asset_id" domain="[]" context="{'group_by':'account_asset_id'}"/>
                         <filter string="Depreciation Account" name="account_depreciation_id" domain="[]" context="{'group_by':'account_depreciation_id'}"/>
                         <filter string="Expense Account" name="account_depreciation_expense_id" domain="[]" context="{'group_by':'account_depreciation_expense_id'}"/>

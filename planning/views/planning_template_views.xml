@@ -79,7 +79,7 @@
                     <filter name="my_role" string="My Roles" domain="[('role_id.resource_ids.user_id', '=', uid)]"/>
                     <separator/>
                     <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
-                    <group string="Group By">
+                    <group>
                         <filter string="Role" name="group_by_role" context="{'group_by':'role_id'}"/>
                     </group>
                 </search>

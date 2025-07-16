@@ -67,7 +67,7 @@
                         ('date_from', '&lt;', 'today')]"/>
                     <separator/>
                     <filter name="filter_date_from" date="date_from"/>
-                    <group string="Group By">
+                    <group>
                         <filter string="Employee" name="employee_id" context="{'group_by':'employee_id'}"/>
                         <filter string="Department" name="department_id" context="{'group_by':'department_id'}"/>
                         <filter string="Master Department" name="master_department_id" context="{'group_by':'master_department_id'}"/>

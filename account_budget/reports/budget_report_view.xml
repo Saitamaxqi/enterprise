@@ -36,7 +36,7 @@
                     <filter string="In a Budget" name="in_a_budget" domain="[('budget_analytic_id', '!=', False)]"/>
                     <filter string="Open Budget" name="open_budget" domain="[('budget_analytic_id.state', '=', 'confirmed')]"/>
                     <separator/>
-                    <group string="Group By">
+                    <group>
                         <filter string="Date" name="date" context="{'group_by':'date'}"/>
                         <filter string="Type" name="line_type" context="{'group_by':'line_type'}"/>
                         <filter string="Budget" name="group_by_budget_analytic_id" context="{'group_by':'budget_analytic_id'}"/>

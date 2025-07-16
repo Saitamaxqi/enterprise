@@ -10,7 +10,7 @@
                 <field name="ref_user_id"/>
                 <filter domain="[('hr_referral_reward_id', '!=', False)]" string="Gifts" name="filter_gifts"/>
                 <filter domain="[('hr_referral_reward_id', '=', False), ('points', '!=', 0)]" string="Points" name="filter_points"/>
-                <group string="Group By">
+                <group>
                     <filter string="User" name="group_by_user_id" context="{'group_by':'ref_user_id'}"/>
                     <filter string="Applicant" name="group_by_applicant_id" context="{'group_by':'applicant_id'}"/>
                 </group>

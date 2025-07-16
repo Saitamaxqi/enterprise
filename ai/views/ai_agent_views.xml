@@ -153,7 +153,7 @@
                        ('attachment_ids.name','ilike',self),
                        ('url_attachment_ids.name','ilike',self),
                        ('url_attachment_ids.url','ilike',self)]"/>
-                <group string="Group By...">
+                <group>
                     <filter string="Model" name="model" domain="[]" context="{'group_by':'llm_model'}"/>
                     <filter string="Topics" name="topics" domain="[]" context="{'group_by':'topic_ids'}"/>
                 </group>

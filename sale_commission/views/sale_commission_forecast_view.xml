@@ -15,7 +15,7 @@
                         ('target_id.date_to', '&gt;=', '=1d =1m'),
                         ('target_id.date_to', '&lt;', '=1d =1m +1y'),
                     ]"/>
-                <group string="Group By">
+                <group>
                     <filter string="Sales Team" name="team_id" context="{'group_by':'team_id'}"/>
                     <filter string="Salesperson" name="user_id" context="{'group_by':'user_id'}"/>
                     <filter string="Period" name="target_id" context="{'group_by':'target_id'}"/>

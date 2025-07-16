@@ -37,7 +37,7 @@
                     <field name="name"/>
                     <field name="root_report_id"/>
                     <filter string="Inactive" name="inactive" domain="[('active', '=', False)]"/>
-                    <group string="Group By">
+                    <group>
                         <filter string="Country" name="country_id" domain="[]" context="{'group_by':'country_id'}"/>
                         <filter string="Root Report" name="root_report_id" domain="[]" context="{'group_by':'root_report_id'}"/>
                     </group>

@@ -10,7 +10,7 @@
                 <separator/>
                 <filter name="date_from" date="date_from"/>
                 <separator/>
-                <group string="Group By">
+                <group>
                     <filter name="group_by_vehicle_id" context="{'group_by': 'vehicle_id'}"/>
                     <filter name="group_by_driver_id" context="{'group_by': 'driver_id'}"/>
                 </group>

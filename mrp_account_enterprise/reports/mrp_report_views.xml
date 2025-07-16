@@ -10,7 +10,7 @@
                     <filter name="filter_date_finished" date="date_finished" default_period="year"/>
                     <field name="product_id" string="Product"/>
                     <field name="production_id" string="Manufacturing Order"/>
-                    <group string="Group by">
+                    <group>
                         <filter string="Product" name="product" context="{'group_by': 'product_id'}"/>
                         <filter string="End Date" name="date_finished" context="{'group_by': 'date_finished'}"/>
                     </group>

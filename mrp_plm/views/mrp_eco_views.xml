@@ -236,7 +236,7 @@
                 <field name="product_tmpl_id" string="Product" filter_domain="['|', ('product_tmpl_id', 'ilike', self), ('bom_id', 'ilike', self)]"/>
                 <field name="tag_ids"/>
                 <field name="stage_id"/>
-                <group string="Filters">
+                <group>
                     <filter name="mychange" string="My Change Orders" domain="[('user_id', '=', uid)]"/>
                     <separator/>
                     <filter name="toapprove_my" string="Awaiting My Validation" domain="[('approval_ids.awaiting_my_validation', '=', True)]"/>
@@ -267,7 +267,7 @@
                     <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
                         domain="[('activity_date_deadline', '&gt;', 'today')]"/>
                 </group>
-                <group string='Group by...'>
+                <group>
                     <filter string='Product' name="productgroup" context="{'group_by': 'product_tmpl_id'}"/>
                     <filter string="State" name="stategroup" context="{'group_by': 'state'}"/>
                     <filter string="Stage" name="stagegroup" context="{'group_by': 'stage_id'}"/>
