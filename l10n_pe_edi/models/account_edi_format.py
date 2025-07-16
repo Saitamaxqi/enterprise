@@ -549,7 +549,7 @@ class AccountEdiFormat(models.Model):
                     retrieved_cdr_document_id = cdr_tree.find('.//{*}DocumentReference//{*}ID')
                     is_same_document_id = retrieved_cdr_document_id.text == invoice.name.replace(' ', '') if retrieved_cdr_document_id else True
                     retrieved_cdr_ruc = cdr_tree.find('.//{*}RecipientParty//{*}CompanyID')
-                    is_same_ruc = retrieved_cdr_ruc.text == invoice.partner_id.vat if retrieved_cdr_ruc else True
+                    is_same_ruc = retrieved_cdr_ruc.text == invoice.partner_id.vat if retrieved_cdr_ruc is not None else True
                     if is_same_document_id and is_same_ruc:
                         # If the CDR already exists and is valid on SUNAT's side, then likely the invoice was already sent once, but
                         # Odoo hit an exception and rolled back the transaction after sending.

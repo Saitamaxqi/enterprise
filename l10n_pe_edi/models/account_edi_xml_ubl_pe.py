@@ -22,17 +22,20 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
     def _export_invoice_filename(self, invoice):
         return f"{invoice.name.replace('/', '_')}_ubl_pe.xml"
 
-    def _get_base_lines(self, invoice):
-        # OVERRIDE account.edi.xml.ubl_21
-        base_lines, _tax_lines = invoice._get_rounded_base_and_tax_lines()
+    def _add_invoice_base_lines_vals(self, vals):
+        super()._add_invoice_base_lines_vals(vals)
+        invoice = vals['invoice']
 
-        for base_line in base_lines:
-            # Line discounts are not handled well by the EDI service. That's why we skip them
-            # and already subtract the discount from the line in the `PriceAmount` tag.
-            self._transform_fixed_taxes_into_allowance_charge(base_line)
-            self._add_gross_price_unit_in_base_line(base_line)
-
-        return base_lines
+        # Filter out prepayment lines of final invoices
+        vals['prepayment_lines'] = []
+        cleaned_base_lines = []
+        if not invoice._is_downpayment():
+            for base_line in vals['base_lines']:
+                if base_line['record']._get_downpayment_lines():
+                    vals['prepayment_lines'].append(base_line)
+                else:
+                    cleaned_base_lines.append(base_line)
+            vals['base_lines'] = cleaned_base_lines
 
     def _is_document_allowance_charge(self, base_line):
         """ Negative lines (global discounts) should be treated as document-level AllowanceCharges. """
@@ -121,6 +124,40 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                 }
             }
         }
+
+        if prepayments := vals.get('prepayment_lines'):
+            document_references = []
+            prepaid_amounts = []
+            if invoice.l10n_latam_document_type_id == self.env.ref('l10n_pe.document_type02'):
+                document_type_code = '03'
+            else:
+                document_type_code = '02'
+            prepayment_sequence = 1
+            for prepayment_line in prepayments:
+                prepayment_moves = prepayment_line['record']._get_downpayment_lines().move_id.filtered(lambda m: m.move_type == 'out_invoice')
+                document_references.extend({
+                    'cbc:ID': {'_text': prepayment_move.name.replace(' ', '')},
+                    'cbc:DocumentTypeCode': {'_text': document_type_code},
+                    'cbc:DocumentStatusCode': {'_text': prepayment_sequence},
+                    'cac:IssuerParty': {
+                        'cac:PartyIdentification': {
+                            'cbc:ID': {
+                                '_text': invoice.company_id.vat,
+                                'schemeID': invoice.company_id.partner_id.l10n_latam_identification_type_id.l10n_pe_vat_code
+                            },
+                        }
+                    }
+                } for prepayment_move in prepayment_moves)
+                prepaid_amounts.extend({
+                    'cbc:ID': {'_text': prepayment_sequence},
+                    'cbc:PaidAmount': {
+                        '_text': self.format_float(prepayment_move.amount_total, prepayment_move.company_currency_id.decimal_places),
+                        'currencyID': prepayment_move.company_currency_id.name
+                    },
+                } for prepayment_move in prepayment_moves)
+                prepayment_sequence += 1
+            document_node['cac:AdditionalDocumentReference'] = document_references
+            document_node['cac:PrepaidPayment'] = prepaid_amounts
 
     def _add_invoice_accounting_supplier_party_nodes(self, document_node, vals):
         super()._add_invoice_accounting_supplier_party_nodes(document_node, vals)
@@ -266,9 +303,9 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             }
 
         invoice = vals['invoice']
-        base_lines = vals['base_lines']
+        all_lines = vals['base_lines'] + vals['prepayment_lines']
         AccountTax = self.env['account.tax']
-        base_lines_aggregated_tax_details = AccountTax._aggregate_base_lines_tax_details(base_lines, tax_grouping_function)
+        base_lines_aggregated_tax_details = AccountTax._aggregate_base_lines_tax_details(all_lines, tax_grouping_function)
         aggregated_tax_details = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_tax_details)
 
         total_isc_tax = sum(
@@ -334,8 +371,17 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             monetary_total_node['cbc:LineExtensionAmount']['_text'] = monetary_total_node['cbc:TaxExclusiveAmount']['_text']
 
         monetary_total_node['cbc:AllowanceTotalAmount'] = monetary_total_node['cbc:ChargeTotalAmount'] = None
-        monetary_total_node['cbc:PrepaidAmount']['_text'] = self.format_float(0.0, vals['currency_dp'])
-        monetary_total_node['cbc:PayableAmount']['_text'] = monetary_total_node['cbc:TaxInclusiveAmount']['_text']
+        prepaid_amount = 0.0
+        AccountTax = self.env['account.tax']
+        prepayment_lines_aggregated_tax_details = AccountTax._aggregate_base_lines_tax_details(vals['prepayment_lines'], vals['total_grouping_function'])
+        prepayment_moves_total_aggregated_tax_details = AccountTax._aggregate_base_lines_aggregated_values(prepayment_lines_aggregated_tax_details)
+        for grouping_key, values in prepayment_moves_total_aggregated_tax_details.items():
+            # By default grouping_key will always be True, but if other code overrides it it is good to be prepared.
+            if grouping_key:
+                prepaid_amount += values['base_amount_currency'] + values['tax_amount_currency']
+
+        monetary_total_node['cbc:PrepaidAmount']['_text'] = self.format_float(abs(prepaid_amount), vals['currency_dp'])
+        monetary_total_node['cbc:PayableAmount']['_text'] = self.format_float(vals['tax_inclusive_amount_currency'] - abs(prepaid_amount), vals['currency_dp'])
 
         return monetary_total_node
 
@@ -354,12 +400,24 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
     # -------------------------------------------------------------------------
     # EXPORT: Templates for document lines
     # -------------------------------------------------------------------------
+    def _add_document_allowance_charge_nodes(self, document_node, vals):
+        """ Prepayment lines are added to the document-level AllowanceCharge nodes. """
+
+        original_base_lines = vals['base_lines']
+        vals['base_lines'] = original_base_lines + vals['prepayment_lines']
+        super()._add_document_allowance_charge_nodes(document_node, vals)
+        vals['base_lines'] = original_base_lines
 
     def _get_document_allowance_charge_node(self, vals):
         """ Generic helper to generate a document-level AllowanceCharge node given a base_line. """
         base_line = vals['base_line']
         currency_suffix = vals['currency_suffix']
         base_amount = base_line['tax_details'][f'total_excluded{currency_suffix}']
+        if base_line['record']._get_downpayment_lines():
+            # The base amount for the document level allowance node is defined as the sum of the invoice
+            # plus the downpayment amount. As such we need to invert the sign of the total since the
+            # sign of the line is negative.
+            base_line['tax_details']['total_excluded_currency'] = -base_line['tax_details']['total_excluded_currency']
 
         def grouping_function_skip_discounts(base_line, tax_data):
             if base_line['tax_details']['total_excluded_currency'] < 0:
@@ -369,9 +427,25 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         aggregated_tax_details = self.env['account.tax']._aggregate_base_lines_aggregated_values(base_lines_aggregated_tax_details)
         total_amount_before_discount = aggregated_tax_details.get(True, {}).get('total_excluded_currency', 0.0)
 
+        def get_allowance_code(base_line):
+            """
+            Functionally, while tax_ids can support multiple taxes, the
+            normal functional workflow is that there is only one tax. As such,
+            we can always treat the first tax as the only one.
+            """
+            if not 'is_downpayment' in base_line['record'] or not base_line['record'].is_downpayment:
+                return '02'
+
+            affectation_map = {'10': '04', '11': '05', '12': '06'}
+            tax_ids = base_line['record'].tax_ids
+            for tax in tax_ids:
+                if code := affectation_map.get(tax.l10n_pe_edi_affectation_reason):
+                    return code
+            return '02'
+
         return {
             'cbc:ChargeIndicator': {'_text': 'false' if base_amount < 0.0 else 'true'},
-            'cbc:AllowanceChargeReasonCode': {'_text': '02'},
+            'cbc:AllowanceChargeReasonCode': {'_text': get_allowance_code(base_line)},
             'cbc:MultiplierFactorNumeric': {'_text': self.format_float(abs(base_amount) / total_amount_before_discount, 5)},
             'cbc:Amount': {
                 '_text': self.format_float(abs(base_amount), vals['currency_dp']),
