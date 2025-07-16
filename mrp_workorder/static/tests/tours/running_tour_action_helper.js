@@ -1,7 +1,7 @@
 import { assert, fail } from "@stock/../tests/tours/tour_helper";
 import { animationFrame } from "@odoo/hoot-dom";
 import { patch } from "@web/core/utils/patch";
-import { TourHelpers } from "@web_tour/tour_service/tour_helpers";
+import { TourHelpers } from "@web_tour/js/tour_automatic/tour_helpers";
 
 patch(TourHelpers.prototype, {
     async scan(barcode) {
