@@ -161,6 +161,19 @@ export class PermissionPanel extends Component {
 
     async removeArticleMember(member) {
         await this.orm.call("knowledge.article", "remove_member", [this.record.resId, member.id]);
+        //edge case: if the current user is removed from the article, we need to redirect to the home page
+        if (
+            member.isCurrentUser &&
+            this.userIsInternal &&
+            this.data.inherited_permission === "none" &&
+            !this.userIsAdmin
+        ) {
+            this.actionService.doAction(
+                await this.orm.call("knowledge.article", "action_home_page", [false]),
+                { stackPosition: "replaceCurrentAction" }
+            );
+            return;
+        }
         await this.load();
     }
 
