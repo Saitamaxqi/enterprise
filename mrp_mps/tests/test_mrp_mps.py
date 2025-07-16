@@ -2,11 +2,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from freezegun import freeze_time
+from dateutil.relativedelta import relativedelta
 
 from datetime import date, datetime, timedelta
 from odoo.tests import common, Form
 from odoo import Command
-from odoo.tools.date_utils import start_of
+from odoo.tools.date_utils import start_of, subtract
 
 
 class TestMpsMps(common.TransactionCase):
@@ -159,6 +160,35 @@ class TestMpsMps(common.TransactionCase):
         ])
         cls.mps = cls.mps_table | cls.mps_wardrobe | cls.mps_chair |\
             cls.mps_drawer | cls.mps_table_leg | cls.mps_screw | cls.mps_bolt
+
+    def _create_and_process_delivery_at_date(self, products_and_quantities, date=False, to_validate=True):
+        """ Create an out delivery order for the given products and quantities, at the given date.
+        :param products_and_quantities: list of tuples [(product, quantity)]
+        :param date: date of the operation, now if not specified
+        :param to_validate: if True (default), the delivery is validated, otherwise it is only confirmed
+
+        :return: the created out delivery
+        """
+        date = date or datetime.now()
+        delivery_type = self.env.ref('stock.warehouse0').out_type_id
+        with freeze_time(date):
+            delivery = self.env['stock.picking'].create({
+                'picking_type_id': delivery_type.id,
+                'location_id': delivery_type.default_location_src_id.id,
+                'location_dest_id': delivery_type.default_location_dest_id.id,
+                'move_ids': [Command.create({
+                    'location_id': delivery_type.default_location_src_id.id,
+                    'location_dest_id': delivery_type.default_location_dest_id.id,
+                    'product_id': product.id,
+                    'quantity': qty,
+                    'product_uom_qty': qty,
+                }) for (product, qty) in products_and_quantities],
+            })
+            delivery.action_confirm()
+            if to_validate:
+                delivery.action_assign()
+                delivery.button_validate()
+            return delivery
 
     def test_basic_state(self):
         """ Testing master product scheduling default values for client
@@ -1367,3 +1397,658 @@ class TestMpsMps(common.TransactionCase):
         # Check if the MO is created with the second BoM
         production = self.env['mrp.production'].search([('product_id', '=', product.id)], limit=1)
         self.assertEqual(production.bom_id, bom2, "MO was created with an incorrect BOM")
+
+    @freeze_time("2024-02-14")
+    def test_suggestion_for_years_with_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+
+        today = datetime.now().date()
+
+        date = today - relativedelta(years=1)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = today - relativedelta(months=10)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = today - relativedelta(years=2)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 4)], date
+        )
+
+        date = today
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_year = 5
+        # choose to suggest only for first period/year (index=0).
+        # when choosing a certain period for suggestion, only last year moves are considered
+        self.mps_table.suggestion_period = '0'
+        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_year):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 15)
+            else:
+                # since we are choosing a certain period (first year), other periods = 0
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose to suggest only for second period/year (index=1)
+        self.mps_table.suggestion_period = '1'
+        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_year):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                # from previous suggestion, unchanged
+                self.assertEqual(table_forecast['forecast_qty'], 15)
+            elif i == 1:
+                # this takes into account year - 1 (this year) confirmed moves
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            else:
+                # since we are choosing a certain period, other periods = 0
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+    @freeze_time("2024-02-14")
+    def test_suggestion_for_months_with_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+
+        today = datetime.now().date()
+
+        date = today - relativedelta(years=1)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = today - relativedelta(months=10)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = today - relativedelta(years=2)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 4)], date
+        )
+
+        date = today
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_month = 25
+        # choose to suggest only for first period/month (index=0)
+        # when choosing a certain period for suggestion, only last year moves are considered
+        self.mps_table.suggestion_period = '0'
+        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_month):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose to suggest only for third period/month (index=2)
+        self.mps_table.suggestion_period = '2'
+        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_month):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                # from previous suggestion, unchanged
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            elif i == 2:
+                # this takes the moves from 10 months ago, for that month it's last year moves
+                self.assertEqual(table_forecast['forecast_qty'], 5)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+    @freeze_time("2024-02-14")
+    def test_suggestion_for_weeks_with_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+
+        today = datetime.now().date()
+        based_on_year = today.year - 1
+
+        date = start_of(subtract(today, years=today.year - based_on_year), 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = start_of(subtract(today, weeks=50), 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = start_of(subtract(today, years=today.year - based_on_year, weeks=2), 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = start_of(today, 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_week = 105
+        # choose the first period/week for suggestion (index=0)
+        # when choosing a certain period for suggestion, only last year moves are considered
+        self.mps_table.suggestion_period = '0'
+        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_week):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose the third period/week for suggestion (index=2)
+        self.mps_table.suggestion_period = '2'
+        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_week):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                # same from previous suggestion, unchanged
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            elif i == 2:
+                # this takes the moves from 50 weeks ago, for that week it's last year moves
+                self.assertEqual(table_forecast['forecast_qty'], 5)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+    @freeze_time("2024-02-26")
+    def test_suggestion_for_days_with_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+
+        today = datetime.now().date()
+
+        date = today + relativedelta(years=-1)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = today - relativedelta(days=363)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = today - relativedelta(years=2)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 4)], date
+        )
+
+        date = today
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_day = 731
+        # choose the first period/day for suggestion (index=0)
+        # when choosing a certain period for suggestion, only last year moves are considered
+        self.mps_table.suggestion_period = '0'
+        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_day):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose the third period/day for suggestion (index=2)
+        self.mps_table.suggestion_period = '2'
+        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_day):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                # from previous suggestion, unchanged
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            elif i == 2:
+                # this takes the moves from 363 days ago, for that day it's last year moves
+                self.assertEqual(table_forecast['forecast_qty'], 5)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+    @freeze_time("2024-02-14")
+    def test_suggestion_for_years_with_no_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+
+        today = datetime.now().date()
+        self.table.uom_id.rounding = 1.0
+
+        date = today - relativedelta(years=1)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = today - relativedelta(months=10)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = today - relativedelta(days=20)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 100)], date
+        )
+
+        date = today - relativedelta(days=60)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 90)], date
+        )
+
+        date = today - relativedelta(years=2)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 4)], date
+        )
+
+        date = today
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_year = 5
+        # we choose suggestion to be based on 'last year', so every period's suggestion
+        # is taken from same period but previous year. (i.e. 2026 based on 2025 and so on)
+        self.mps_table.suggestion_based_on = 'last_year'
+        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_year):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 105)
+            elif i == 1:
+                self.assertEqual(table_forecast['forecast_qty'], 110)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose suggestion to be based on Actual Demand, every period's suggestion is
+        # based on the present moves in that period, nothing in the past.
+        self.mps_table.suggestion_based_on = 'actual_demand'
+        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_year):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 120)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # when choosing suggestion to be based on last 30 days, last 3 months or
+        # last 12 months, this takes into consideration the moves in last x days
+        # from today and takes a ratio out of it depending on the period (year, month, week or day).
+        # for example if last 30 day suggestion is 60 but my current period type is days,
+        # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
+        self.mps_table.suggestion_based_on = 'last_30_days'
+        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_year):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 1217)
+
+        self.mps_table.suggestion_based_on = 'last_3_months'
+        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_year):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 771)
+
+        self.mps_table.suggestion_based_on = 'last_12_months'
+        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_year):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 205)
+
+    @freeze_time("2024-02-14")
+    def test_suggestion_for_months_with_no_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+
+        today = datetime.now().date()
+        self.table.uom_id.rounding = 1.0
+
+        date = today - relativedelta(years=1)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = today - relativedelta(months=10)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = today - relativedelta(days=20)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 100)], date
+        )
+
+        date = today - relativedelta(days=60)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 90)], date
+        )
+
+        date = today - relativedelta(years=2)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 4)], date
+        )
+
+        date = today
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_month = 25
+        # we choose suggestion to be based on 'last year', so every period's suggestion
+        # is taken from same period but previous year. (May 2026 based on May 2025 and so on)
+        self.mps_table.suggestion_based_on = 'last_year'
+        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_month):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            elif i == 2:
+                self.assertEqual(table_forecast['forecast_qty'], 5)
+            elif i == 10:
+                self.assertEqual(table_forecast['forecast_qty'], 90)
+            elif i == 11:
+                self.assertEqual(table_forecast['forecast_qty'], 100)
+            elif i == 12:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose suggestion to be based on Actual Demand, every period's suggestion is
+        # based on the present moves in that period, nothing in the past.
+        self.mps_table.suggestion_based_on = 'actual_demand'
+        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_month):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 20)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # when choosing suggestion to be based on last 30 days, last 3 months or
+        # last 12 months, this takes into consideration the moves in last x days
+        # from today and takes a ratio out of it depending on the period (year, month, week or day).
+        # for example if last 30 day suggestion is 60 but my current period type is days,
+        # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
+        self.mps_table.suggestion_based_on = 'last_30_days'
+        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_month):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 100)
+
+        self.mps_table.suggestion_based_on = 'last_3_months'
+        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_month):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 64)
+
+        self.mps_table.suggestion_based_on = 'last_12_months'
+        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_month):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 17)
+
+    @freeze_time("2024-02-14")
+    def test_suggestion_for_weeks_with_no_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+
+        today = datetime.now().date()
+        based_on_year = today.year - 1
+        self.table.uom_id.rounding = 1.0
+
+        date = start_of(subtract(today, years=today.year - based_on_year), 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = start_of(subtract(today, weeks=3), 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 100)], date
+        )
+
+        date = start_of(subtract(today, weeks=9), 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 90)], date
+        )
+
+        date = start_of(subtract(today, years=today.year - based_on_year, weeks=2), 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = start_of(today, 'week')
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_week = 105
+        # we choose suggestion to be based on 'last year', so every period's suggestion
+        # is taken from same period but previous year. (week 4, 2026 based on week 4, 2025 and so on)
+        self.mps_table.suggestion_based_on = 'last_year'
+        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_week):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            elif i == 49:
+                self.assertEqual(table_forecast['forecast_qty'], 100)
+            elif i == 43:
+                self.assertEqual(table_forecast['forecast_qty'], 90)
+            elif i == 52:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose suggestion to be based on Actual Demand, every period's suggestion is
+        # based on the present moves in that period, nothing in the past.
+        self.mps_table.suggestion_based_on = 'actual_demand'
+        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_week):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 20)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # when choosing suggestion to be based on last 30 days, last 3 months or
+        # last 12 months, this takes into consideration the moves in last x days
+        # from today and takes a ratio out of it depending on the period (year, month, week or day).
+        # for example if last 30 day suggestion is 60 but my current period type is days,
+        # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
+        self.mps_table.suggestion_based_on = 'last_30_days'
+        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_week):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 26)
+
+        self.mps_table.suggestion_based_on = 'last_3_months'
+        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_week):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 16)
+
+        self.mps_table.suggestion_based_on = 'last_12_months'
+        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_week):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 4)
+
+    @freeze_time("2024-02-26")
+    def test_suggestion_for_days_with_no_period(self):
+        """
+        Make some moves in the past with different dates.
+        Moves with date more than 1 year ago shouldn't affect any suggestion.
+        Moves with date = today, are for Actual Demand testing (one is confirmed, one is not),
+        and both should reflect on Actual Demand suggestion.
+        """
+        today = datetime.now().date()
+        self.table.uom_id.rounding = 1.0
+
+        date = today - relativedelta(years=1)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        date = today - relativedelta(years=1, days=2)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 5)], date
+        )
+
+        date = today - relativedelta(days=20)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 100)], date
+        )
+
+        date = today - relativedelta(days=60)
+        self._create_and_process_delivery_at_date(
+            [(self.table, 90)], date
+        )
+
+        date = today
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date
+        )
+
+        self._create_and_process_delivery_at_date(
+            [(self.table, 10)], date, to_validate=False
+        )
+
+        self.env.company.manufacturing_period_to_display_day = 731
+        # we choose suggestion to be based on 'last year', so every period's suggestion
+        # is taken from same period but previous year. (May 4, 2026 based on May 4, 2025 and so on)
+        self.mps_table.suggestion_based_on = 'last_year'
+        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_day):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            elif i == 345:
+                self.assertEqual(table_forecast['forecast_qty'], 100)
+            elif i == 305:
+                self.assertEqual(table_forecast['forecast_qty'], 90)
+            elif i == 365:
+                self.assertEqual(table_forecast['forecast_qty'], 10)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # choose suggestion to be based on Actual Demand, every period's suggestion is
+        # based on the present moves in that period, nothing in the past.
+        self.mps_table.suggestion_based_on = 'actual_demand'
+        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_day):
+            table_forecast = mps_table['forecast_ids'][i]
+            if i == 0:
+                self.assertEqual(table_forecast['forecast_qty'], 20)
+            else:
+                self.assertEqual(table_forecast['forecast_qty'], 0)
+
+        # when choosing suggestion to be based on last 30 days, last 3 months or
+        # last 12 months, this takes into consideration the moves in last x days
+        # from today and takes a ratio out of it depending on the period (year, month, week or day).
+        # for example if last 30 day suggestion is 60 but my current period type is days,
+        # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
+        self.mps_table.suggestion_based_on = 'last_30_days'
+        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_day):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 4)
+
+        self.mps_table.suggestion_based_on = 'last_3_months'
+        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_day):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 3)
+
+        self.mps_table.suggestion_based_on = 'last_12_months'
+        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
+        for i in range(self.env.company.manufacturing_period_to_display_day):
+            table_forecast = mps_table['forecast_ids'][i]
+            self.assertEqual(table_forecast['forecast_qty'], 1)

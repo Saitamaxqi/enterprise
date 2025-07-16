@@ -14,6 +14,7 @@ import { standardActionServiceProps } from "@web/webclient/actions/action_servic
 import { Component, onWillStart, useSubEnv } from "@odoo/owl";
 import { ViewScaleSelector } from "@web/views/view_components/view_scale_selector";
 
+
 export const SCALE_LABELS = {
     day: _t("Day"),
     week: _t("Week"),
@@ -240,5 +241,23 @@ export class MainComponent extends Component {
             },
         };
         this.dialog.add(ExportDataDialog, dialogProps);
+    }
+
+    async suggestForecastedDemand(data, productionScheduleId) {
+        const action = await this.orm.call(
+            "mrp.production.schedule",
+            "action_open_suggest_forecasted_form_view",
+            [productionScheduleId],
+            {
+                context: {
+                    manufacturingPeriods: this.manufacturingPeriods,
+                    period_scale: this.currentPeriodType,
+                }
+            }
+        );
+        return this.action.doAction(
+            action,
+            {onClose: () => this.model.reload(productionScheduleId)}
+        );
     }
 }

@@ -15,7 +15,7 @@ export default class MpsLineComponent extends Component {
     static components = {
         CheckBox,
     };
-    static props = ["data", "groups"];
+    static props = ["data", "groups", "suggestForecastedDemand"];
 
 
     setup() {
@@ -103,6 +103,12 @@ export default class MpsLineComponent extends Component {
      */
     _onClickEdit(ev, id) {
         this.model._editProduct(id);
+    }
+
+    _onClickSuggestForecastedDemand(ev, id){
+        if (this.props.suggestForecastedDemand) {
+            this.props.suggestForecastedDemand(this.model.data, id);
+        }
     }
 
     _onClickOpenDetails(ev) {

@@ -48,7 +48,7 @@
                         </thead>
                         
                         <t t-foreach="lines" t-as="productionSchedule" t-key="productionSchedule.id">
-                            <MpsLineComponent data="productionSchedule" groups="groups"/>
+                            <MpsLineComponent data="productionSchedule" groups="groups" suggestForecastedDemand.bind="suggestForecastedDemand"/>
                         </t>
                     </table>
                 </div>

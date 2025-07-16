@@ -50,6 +50,41 @@
         </field>
     </record>
 
+    <record id="mrp_mps_production_schedule_suggest_forecasted_view" model="ir.ui.view" >
+        <field name="name">mrp.production.schedule.suggest.forecasted.form.view</field>
+        <field name="model">mrp.production.schedule</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <div class="text-muted">
+                        <p>Forecast Quantity for <field name="product_id" class="oe_inline fw-bold" options="{'no_open': True}" readonly="id"/> based on historical date or actual demand.</p>
+                    </div>
+                </group>
+                <group>
+                    <label for="suggestion_period"/>
+                    <div>
+                        <field name="suggestion_period" class="oe_inline me-2" widget="mps_period_selection" placeholder="All Periods"/>
+                    </div>
+                    <label for="suggestion_based_on"/>
+                    <div>
+                        <field name="suggestion_based_on" class="oe_inline me-1" invisible="suggestion_period"/>
+                        <field name="suggestion_based_on_readonly" class="oe_inline me-1" invisible="not suggestion_period"/>
+                        x <field name="suggestion_percent_factor" class="o_small oe_inline me-1 text-center"/> %
+                    </div>
+                </group>
+                <footer>
+                    <button name="apply_forecast_quantity_suggestion" data-hotkey="q" type="object" string="Apply" class="btn-primary"/>
+                    <button special="cancel" class="btn btn-secondary" string="Discard" data-hotkey="x" />
+                    <div class="position-absolute end-0 pe-3 text-end text-info fw-bold" invisible="not suggestion_period and suggestion_based_on not in ['last_30_days', 'last_3_months', 'last_12_months']">
+                        <field name="suggestion_quantity_before_scale" class="oe_inline"/> units x 
+                        <field name="suggestion_percent_factor" class="o_small oe_inline me-1" readonly="True"/>% = 
+                        <field name="suggestion_quantity" class="oe_inline"/> units
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+
     <record id="mrp_mps_search_view" model="ir.ui.view" >
         <field name="name">mrp.production.schedule.search.view</field>
         <field name="model">mrp.production.schedule</field>
