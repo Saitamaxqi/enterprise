@@ -98,9 +98,7 @@
                     class="form-check-input me-2 allow_one_time_sale"
                 />
                 <span>One Time Purchase</span>
-                <!-- FIXME ARJ no consideration of currencies where the symbol is supposed to be after the amount? -->
-                <span class= "fw-bold" t-esc="combination_info.get('currency').symbol"/>
-                <span class= "fw-bold" t-esc="combination_info.get('list_price')"/>
+                <span class="fw-bold" t-out="combination_info.get('list_price')" t-options="{'widget': 'monetary', 'display_currency': combination_info.get('currency')}"/>
             </label>
         </div>
         <div
@@ -122,8 +120,7 @@
                         class="fw-bold discount_info"
                         t-att-style="'text-decoration: line-through;'"
                     >
-                        <span class="fw-bold" t-esc="combination_info.get('currency').symbol"/>
-                        <span t-esc="product.list_price"/>
+                        <span class="fw-bold" t-out="combination_info.get('list_price')" t-options="{'widget': 'monetary', 'display_currency': combination_info.get('currency')}"/>
                     </span>
                     <span class="fw-bold ms-1" id="product_price" t-esc="combination_info.get('pricings')[0]['table_price']" />
                 </span>
