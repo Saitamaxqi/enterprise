@@ -36,7 +36,7 @@
                 <field name="use_product_returns" invisible="1" groups="stock.group_stock_user"/>
                 <button type="action" name="%(stock.act_stock_return_picking)d"
                     groups="stock.group_stock_user"
-                    string="Return" invisible="not has_partner_picking or not use_product_returns"
+                    string="Return" invisible="not use_product_returns"
                     context="{'default_ticket_id': id, 'default_company_id': company_id}" data-hotkey="q"/>
                 <button type="object" name="action_create_replacement" string="Replace"
                     invisible="not use_product_replacements or not partner_id" data-hotkey="l"

@@ -299,3 +299,43 @@ class TestHelpdeskStock(common.HelpdeskCommon):
             'default_ticket_id': ticket.id
         }))
         wizard_form.picking_id = self.env['stock.picking']
+
+    def test_return_product_no_sale_order(self):
+        """ This test ensure that when the picking field of the wizard is not set, we can return
+        the product without any issue."""
+        product = self.env['product.product'].create({
+            'name': 'test product',
+            'is_storable': True,
+            'invoice_policy': 'order',
+        })
+        partner = self.env['res.partner'].create({
+            'name': 'Customer'
+        })
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': 'test',
+            'partner_id': partner.id,
+            'team_id': self.test_team.id,
+        })
+
+        wizard = self.env['stock.return.picking'].create({
+            'ticket_id': ticket.id,
+            'partner_id': partner.id
+        })
+
+        line = self.env['stock.return.picking.line'].create({
+            'product_id': product.id,
+            'move_quantity': 5,
+            'quantity': 5,
+            'uom_id': product.uom_id.id,
+            'wizard_id': wizard.id,
+        })
+
+        res = wizard.action_create_returns()
+        self.assertTrue(res)
+        self.assertEqual(line.ids, wizard.product_return_moves.ids, 'the line ids should match the wizard product return moves')
+
+        res_picking = self.env['stock.picking'].search([('id', '=', res.get('res_id'))])
+        self.assertEqual(res_picking.product_id.id, product.id, 'the product id should match the product selected in the wizard')
+        self.assertEqual(res_picking.picking_type_code, 'incoming', 'the picking type code should be incoming in the return')
+        self.assertEqual(res_picking.return_id.id, wizard.picking_id.id, 'the return id should match the wizard picking id')

@@ -4,6 +4,12 @@
 from odoo import api, fields, models
 
 
+class StockReturnPickingLine(models.TransientModel):
+    _inherit = 'stock.return.picking.line'
+
+    picking_id = fields.Many2one('stock.picking', related='wizard_id.picking_id', export_string_translation=False)  # used for warnings
+
+
 class StockReturnPicking(models.TransientModel):
     _inherit = 'stock.return.picking'
 
@@ -47,7 +53,7 @@ class StockReturnPicking(models.TransientModel):
                 r.suitable_picking_ids = False
                 continue
 
-            domain = [('state', '=', 'done')]
+            domain = [('state', '=', 'done'), ('picking_type_id.code', '!=', 'incoming')]
             if r.sale_order_id:
                 domain += [('id', 'in', r.sale_order_id.picking_ids._origin.ids)]
             elif r.partner_id:
@@ -73,15 +79,25 @@ class StockReturnPicking(models.TransientModel):
                 ]
             r.suitable_sale_order_ids = self.env['sale.order'].search(domain)
 
-    def action_create_returns(self):
-        res = super().action_create_returns()
-        picking_id = self.env['stock.picking'].browse(res['res_id'])
-        ticket_id = self.ticket_id or self.env['helpdesk.ticket'].sudo().search([('picking_ids', 'in', self.picking_id.id)], limit=1)
-        if ticket_id:
-            ticket_id.picking_ids |= picking_id
-            picking_id.message_post_with_source(
-                'helpdesk.ticket_creation',
-                render_values={'self': picking_id, 'ticket': ticket_id},
-                subtype_xmlid='mail.mt_note',
-            )
-        return res
+    def _prepare_picking_default_values(self):
+        if not self.picking_id and self.ticket_id:
+            return {
+                'move_ids': [],
+                'state': 'draft',
+                'return_id': False,
+                'origin': self.env._('Ticket: %(ticket_name)s', ticket_name=self.ticket_id.name),
+                'partner_id': self.ticket_id.partner_id.address_get(['delivery'])['delivery'],
+                'ticket_id': self.ticket_id.id,
+                'picking_type_id': self.env['stock.picking.type'].search([
+                    ('company_id', '=', self.ticket_id.company_id.id),
+                    ('code', '=', 'incoming'),
+                ], limit=1).id,
+            }
+        return super()._prepare_picking_default_values()
+
+    def _create_return(self):
+        new_picking = super()._create_return()
+
+        if ticket_id := self.ticket_id or self.env['helpdesk.ticket'].sudo().search([('picking_ids', 'in', new_picking.id)], limit=1):
+            ticket_id.picking_ids |= new_picking
+        return new_picking

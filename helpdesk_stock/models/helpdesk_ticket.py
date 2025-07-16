@@ -25,7 +25,6 @@ class HelpdeskTicket(models.Model):
     pickings_count = fields.Integer('Return Orders Count', compute="_compute_pickings_count")
     picking_ids = fields.Many2many('stock.picking', string="Return Orders", copy=False)
     replacement_count = fields.Integer(compute='_compute_replacement_count', export_string_translation=False)
-    replacement_ids = fields.One2many('stock.picking', 'ticket_id', string='Replacement Orders', copy=False)
 
     @api.depends('partner_id')
     def _compute_suitable_product_ids(self):
@@ -59,6 +58,7 @@ class HelpdeskTicket(models.Model):
                 ('state', '=', 'done'),
                 ('partner_id', 'in', suitable_partner_ids),
                 ('picking_type_code', '=', 'outgoing'),
+                ('is_replacement', '=', False),  # exclude replacement pickings
             ], ['partner_id'], ['id:array_agg'])
 
             # it was not correct, it took only products of stock_move_line from the first partner_id of self
@@ -85,14 +85,22 @@ class HelpdeskTicket(models.Model):
             self.product_id = False
 
     @api.depends('picking_ids')
+    def _compute_replacement_count(self):
+        replacements_count_per_ticket = dict(
+            self.env['stock.picking']._read_group(
+                domain=[('ticket_id', 'in', self.ids), ('is_replacement', '=', True)],
+                groupby=['ticket_id'],
+                aggregates=['__count'],
+            )
+        )
+
+        for ticket in self:
+            ticket.replacement_count = replacements_count_per_ticket.get(ticket, 0)
+
+    @api.depends('picking_ids', 'replacement_count')
     def _compute_pickings_count(self):
         for ticket in self:
-            ticket.pickings_count = len(ticket.picking_ids)
-
-    @api.depends('replacement_ids')
-    def _compute_replacement_count(self):
-        for ticket in self:
-            ticket.replacement_count = len(ticket.replacement_ids)
+            ticket.pickings_count = len(ticket.picking_ids) - ticket.replacement_count
 
     @api.onchange('partner_id', 'team_id')
     def _compute_display_extra_info(self):
@@ -111,18 +119,19 @@ class HelpdeskTicket(models.Model):
 
     def action_view_pickings(self):
         self.ensure_one()
+        picking_ids = self.picking_ids.filtered(lambda p: not p.is_replacement).ids
         action = {
             'type': 'ir.actions.act_window',
             'name': _('Return Orders'),
             'res_model': 'stock.picking',
             'view_mode': 'list,form',
-            'domain': [('id', 'in', self.picking_ids.ids)],
+            'domain': [('id', 'in', picking_ids)],
             'context': dict(self.env.context, create=False, default_company_id=self.company_id.id)
         }
-        if self.pickings_count == 1:
+        if len(picking_ids) == 1:
             action.update({
                 'view_mode': 'form',
-                'res_id': self.picking_ids.id
+                'res_id': picking_ids[0],
             })
         return action
 
@@ -134,26 +143,29 @@ class HelpdeskTicket(models.Model):
             default_origin=self.env._('Ticket: %(ticket_name)s', ticket_name=self.name),
             restricted_picking_type_code='outgoing',
             default_sale_id=self.sale_order_id.id,
+            default_is_replacement=True,
             replacement_create_trigger=True,
         )
 
     def action_view_replacements(self):
         self.ensure_one()
+        replacement_ids = self.picking_ids.filtered(lambda p: p.is_replacement).ids
         action = {
-            **self.env['ir.actions.actions']._for_xml_id('stock.action_picking_tree_all'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'stock.picking',
             'name': self.env._('Delivery Orders'),
             'view_mode': 'list,form,kanban,calendar,activity',
-            'domain': [('id', 'in', self.replacement_ids.ids)],
+            'domain': [('id', 'in', replacement_ids)],
             'context': self._get_action_replacements_context(),
             'help': self.env._("""
                 <p class="o_view_nocontent_smiling_face o_view_nocontent_stock">No delivery orders yet. Let's create one!</p>
                 <p>Send customers a replacement for a lost, damaged, or returned item</p>
             """),
         }
-        if self.replacement_count == 1:
+        if len(replacement_ids) == 1:
             action.update({
                 'view_mode': 'form',
-                'res_id': self.replacement_ids.id
+                'res_id': replacement_ids[0],
             })
         return action
 

@@ -9,6 +9,8 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     ticket_id = fields.Many2one('helpdesk.ticket', string='Helpdesk Ticket', copy=False, index='btree_not_null')
+    ticket_visibility = fields.Selection(related='ticket_id.team_id.privacy_visibility', export_string_translation=False)
+    is_replacement = fields.Boolean(default=False, export_string_translation=False)
 
     def _compute_state(self):
         # Since `state` is a computed field, it does not go through the `write` function we usually use to track
@@ -22,7 +24,8 @@ class StockPicking(models.Model):
         if ticket_ids:
             mapped_data = dict()
             for ticket in ticket_ids:
-                mapped_data[ticket] = (ticket.picking_ids & self)
+                if return_ids := ticket.picking_ids.filtered(lambda p: not p.is_replacement):
+                    mapped_data[ticket] = (return_ids & self)
             for ticket, pickings in mapped_data.items():
                 if not pickings:
                     continue
@@ -37,12 +40,13 @@ class StockPicking(models.Model):
                 ticket.message_post(subtype_id=subtype.id, body=body)
 
         replacement_ticket_ids = self.env['helpdesk.ticket'].sudo().search([
-            ('use_product_replacements', '=', True), ('replacement_ids', 'in', tracked_pickings.ids)
+            ('use_product_replacements', '=', True), ('picking_ids', 'in', tracked_pickings.ids)
         ])
         if replacement_ticket_ids:
             mapped_data = dict()
             for ticket in replacement_ticket_ids:
-                mapped_data[ticket] = (ticket.replacement_ids & self)
+                if replacement_ids := ticket.picking_ids.filtered(lambda p: p.is_replacement):
+                    mapped_data[ticket] = (replacement_ids & self)
             for ticket, replacements in mapped_data.items():
                 if not replacements:
                     continue
@@ -66,6 +70,7 @@ class StockPicking(models.Model):
                 if not picking.ticket_id:
                     continue
 
+                picking.ticket_id.picking_ids |= picking
                 picking.message_post_with_source(
                     'helpdesk_stock.replacement_creation_picking',
                     render_values={'record': picking.ticket_id, 'message': self.env._('This transfer was created from the ticket')},
@@ -77,3 +82,14 @@ class StockPicking(models.Model):
                     subtype_xmlid='mail.mt_note',
                 )
         return pickings
+
+    def action_linked_ticket(self):
+        """ Open the linked helpdesk ticket from the stock picking form view. """
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.ticket_id.name,
+            'res_model': 'helpdesk.ticket',
+            'res_id': self.ticket_id.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }
