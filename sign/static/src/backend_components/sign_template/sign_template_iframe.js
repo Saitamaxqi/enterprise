@@ -319,7 +319,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             if (signItem.data.id in this.negativeIds) {
                 await this.negativeIds[signItem.data.id];
             }
-            const header_title = signItem.data.type == "radio" ? "Radio Button" : signItem.data.name;
+            const header_title = signItem.data.type === "radio" ? "Radio Button" : signItem.data.type_id?.[1] || signItem.data.name;
             const closeFn = this.popover.add(
                 signItem.el,
                 SignItemCustomPopover,
