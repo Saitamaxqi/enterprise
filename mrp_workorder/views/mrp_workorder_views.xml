@@ -434,6 +434,9 @@
                 <filter string="My Work Orders" name="my_work_order" domain="[('connected_employee_ids','in',[1])]"/>
                 <separator/>
             </xpath>
+            <xpath expr="//filter[@name='production']" position="after">
+                <filter string="Assigned" name="assigned_employee" context="{'group_by': 'employee_assigned_ids'}"/>
+            </xpath>
         </field>
     </record>
 
