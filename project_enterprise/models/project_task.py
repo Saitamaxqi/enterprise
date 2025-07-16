@@ -682,9 +682,10 @@ class ProjectTask(models.Model):
             self.write(vals)
             return {}
 
+        max_date_start = datetime.strptime(self.env.context.get('last_date_view'), '%Y-%m-%d %H:%M:%S')
         return self.sorted(
             lambda t: (not t.date_deadline, t.date_deadline, t._get_hours_to_plan() <= 0, -int(t.priority))
-        )._scheduling(vals)
+        )._scheduling(vals, max_date_start)
 
     def _get_dependencies_dict(self):
         # contains a task as key and the list of tasks before this one as values
@@ -696,7 +697,10 @@ class ProjectTask(models.Model):
             for task in self
         }
 
-    def _scheduling(self, vals):
+    def _scheduling(self, vals, max_date_start, first_possible_date_per_task=None):
+        if first_possible_date_per_task is None:
+            first_possible_date_per_task = {}
+
         tasks_to_write = {}
         warnings = {}
         old_vals_per_task_id = {}
@@ -721,13 +725,20 @@ class ProjectTask(models.Model):
                 calendar = company.resource_calendar_id
             tz_info = calendar.tz or tz_info
 
-        max_date_start = datetime.strptime(self.env.context.get('last_date_view'), '%Y-%m-%d %H:%M:%S').astimezone(timezone(tz_info))
         date_start = datetime.strptime(vals["planned_date_begin"], '%Y-%m-%d %H:%M:%S').astimezone(timezone(tz_info))
-        fetch_date_end = max_date_start
+        fetch_date_end = max_date_start.astimezone(timezone(tz_info))
         end_loop = date_start + relativedelta(day=31, month=12, years=1)  # end_loop will be the end of the next year.
 
         valid_intervals_per_user = self._web_gantt_get_valid_intervals(date_start, fetch_date_end, users, [], True)
-        dependent_tasks_end_dates = self._fetch_last_date_end_from_dependent_task_for_all_tasks(tz_info)
+        dependent_tasks_end_dates = self._fetch_last_date_end_from_dependent_task_for_all_tasks()
+
+        first_possible_date_per_task = {
+            key: max(
+                first_possible_date_per_task.get(key, datetime.min),
+                dependent_tasks_end_dates.get(key, datetime.min),
+            ).astimezone(timezone(tz_info))
+            for key in first_possible_date_per_task.keys() | dependent_tasks_end_dates.keys()
+        }
 
         scale = self.env.context.get("gantt_scale", "week")
         # In week and month scale, the precision set is used. In day scale we force the half day precison.
@@ -743,7 +754,7 @@ class ProjectTask(models.Model):
                 hours_to_plan = delta_hours
 
             compute_date_start = compute_date_end = False
-            first_possible_start_date = dependent_tasks_end_dates.get(task.id)
+            first_possible_start_date = first_possible_date_per_task.get(task.id)
 
             user_ids = False
             if user_to_assign and user_to_assign not in task.user_ids:
@@ -797,7 +808,7 @@ class ProjectTask(models.Model):
             tasks_to_write[task] = {'start': start_no_utc, 'end': end_no_utc}
 
             for next_task in task.dependent_ids:
-                dependent_tasks_end_dates[next_task.id] = max(dependent_tasks_end_dates.get(next_task.id, compute_date_end), compute_date_end)
+                first_possible_date_per_task[next_task.id] = max(first_possible_date_per_task.get(next_task.id, compute_date_end), compute_date_end)
 
             used_intervals = Intervals(used_intervals)
             if not user_ids:
@@ -859,7 +870,7 @@ class ProjectTask(models.Model):
         else:
             return Intervals([]), calendar._work_intervals_batch(date_start, date_end)[False]
 
-    def _fetch_last_date_end_from_dependent_task_for_all_tasks(self, tz_info):
+    def _fetch_last_date_end_from_dependent_task_for_all_tasks(self):
         """
             return: return a dict with task.id as key, and the latest date end from all the dependent task of that task
         """
@@ -877,7 +888,7 @@ class ProjectTask(models.Model):
                   GROUP BY task.id
                 """
         self.env.cr.execute(query, [self.ids, self.ids])
-        return {res['id']: res['date'].astimezone(timezone(tz_info)) for res in self.env.cr.dictfetchall()}
+        return {res['id']: res['date'] for res in self.env.cr.dictfetchall()}
 
     @api.model
     def _fetch_concurrent_tasks_intervals_for_employee(self, date_begin, date_end, user, tz_info):
