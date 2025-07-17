@@ -1972,7 +1972,7 @@ class AccountReport(models.Model):
     # OPTIONS: READONLY QUERY
     ####################################################
     def _init_options_readonly_query(self, options, previous_options):
-        options['readonly_query'] = True
+        options['readonly_query'] = options['currency_table']['type'] == 'monocurrency'
 
     ####################################################
     # OPTIONS: CORE
