@@ -333,9 +333,9 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         document = self.env['documents.document'].create({
             'name': 'test',
             'folder_id': self.folder_a.id,
-            'datas': base64.b64encode(b'<test> </test>'),
+            'datas': base64.b64encode(b'<?xml version="1.0" ?>\n<test> </test>'),
         })
-        self.assertEqual(document.mimetype, 'application/xml')
+        self.assertEqual(document.mimetype, 'text/xml')
         self.assertFalse(document._extract_pdf_from_xml())
         self.assertFalse(document.thumbnail_status)
         self.assertFalse(document.has_embedded_pdf)
@@ -343,9 +343,9 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         document = self.env['documents.document'].create({
             'name': 'test',
             'folder_id': self.folder_a.id,
-            'datas': base64.b64encode(b'<test> <Attachment>JVBERi0gRmFrZSBQREYgY29udGVudA==</Attachment> </test>'),
+            'datas': base64.b64encode(b'<?xml version="1.0" ?>\n<test> <Attachment>JVBERi0gRmFrZSBQREYgY29udGVudA==</Attachment> </test>'),
         })
-        self.assertEqual(document.mimetype, 'application/xml')
+        self.assertEqual(document.mimetype, 'text/xml')
         self.assertEqual(document._extract_pdf_from_xml(), b'%PDF- Fake PDF content')
         self.assertEqual(document.thumbnail_status, 'client_generated')
         self.assertTrue(document.has_embedded_pdf)
