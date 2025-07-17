@@ -226,17 +226,31 @@ class BlackBoxDriver(SerialDriver):
             if buffer[1:2] == STX and buffer[-1:] == ETX and self._lrc(response) == ord(bcc):
                 connection.write(ACK)
                 return response
-
             _logger.error("received ACK but not a valid response, sending NACK... (response: %s)", buffer)
             connection.write(NACK)
-
-        # no ACK or not a valid response
-        self.data['result'] = {
-            'error': {
-                'errorCode': '208000',
-                'errorMessage': errors.get('208000'),
+            # no ACK or not a valid response
+            self.data['result'] = {
+                'error': {
+                    'errorCode': '300',
+                    'errorMessage': (
+                        f'Fiscal Data Module responded with invalid response. Buffer: {buffer}. Please check the '
+                        f'cable connection and the power supply, then retry.'
+                    ),
+                }
             }
-        }
+        elif not len(buffer):
+            # When the blackbox is off or poorly connected its adaptor is still detected but always replies with empty bytestrings b''
+            _logger.error("Blackbox did not respond, check the cable connection and the power supply.")
+            self.data['result'] = {
+                'error': {
+                    'errorCode': '301',
+                    'errorMessage': (
+                        'Fiscal Data Module did not respond to your request. This usually means it has disconnected. '
+                        'Please check its cable connection and its power supply. Make sure it has steady green '
+                        'light on.'
+                    ),
+                }
+            }
         return None
 
     def _wrap_high_level_message_around(self, request_type, data):

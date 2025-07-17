@@ -16,10 +16,12 @@ const errors = {
     209: "Fiscal Data Module real time clock corrupt.",
     210: "Vat Signing Card not compatible with Fiscal Data Module.",
     299: "Unspecified error.",
+    300: "Invalid response from blackbox.",
+    301: "Connection error with blackbox.",
 };
 
 export class BlackboxError extends Error {
-    constructor(code, message = null, retry = undefined) {
+    constructor(code = "disconnected", message = null, retry = undefined) {
         super(message);
         this.name = "BLACKBOX_ERROR";
         this.type = "blackbox";
