@@ -96,7 +96,6 @@ Submit your Tax Reports to the Dutch tax authorities
         'wizard/l10n_tax_report_sbr_views.xml',
         'wizard/l10n_nl_sbr_icp_wizard_view.xml',
         'views/res_config_settings_view.xml',
-        'views/res_config_settings_views.xml',
         'views/res_company_views.xml',
         'data/tax_report.xml',
         'wizard/vat_pay_wizard.xml',
