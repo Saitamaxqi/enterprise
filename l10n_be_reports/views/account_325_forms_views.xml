@@ -69,12 +69,13 @@
                                 <field name="exposed_expenses"/>
                                 <field name="total_remuneration"/>
                                 <field name="paid_amount"/>
+                                <field name="sportsman_remuneration"/>
+                                <field name="trainer_remuneration"/>
                                 <button name="action_open_281_50_view_form" string="Open" type="object" class="btn-secondary"/>
                                 <field name="state" column_invisible="True"/>
                             </list>
                         </field>
                     </sheet>
-                    <!-- Chatter -->
                     <chatter/>
                 </form>
             </field>
@@ -107,10 +108,11 @@
                                 <field name="atn"/>
                                 <field name="exposed_expenses"/>
                                 <field name="paid_amount"/>
+                                <field name="sportsman_remuneration"/>
+                                <field name="trainer_remuneration"/>
                             </group>
                         </group>
                     </sheet>
-                    <!-- Chatter -->
                     <chatter/>
                 </form>
             </field>

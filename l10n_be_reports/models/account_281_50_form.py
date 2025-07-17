@@ -135,10 +135,26 @@ class L10n_BeForm28150(models.Model):
     )
     total_remuneration = fields.Monetary(
         string="Total remuneration",
+        help="Sum of commissions, fees, atn and expenses",
         compute='_compute_total_remuneration',
     )
     paid_amount = fields.Monetary(
         string="Paid amount",
+        help="Amount paid during the reference year and the preceding year related to the total remuneration",
+        default=0.0,
+        required=True,
+        readonly=True,
+    )
+    sportsman_remuneration = fields.Monetary(
+        string="Sportsman remuneration",
+        help="Amount within total remuneration related to sportsman remuneration",
+        default=0.0,
+        required=True,
+        readonly=True,
+    )
+    trainer_remuneration = fields.Monetary(
+        string="Trainer remuneration",
+        help="Amount within total remuneration related to trainer remuneration",
         default=0.0,
         required=True,
         readonly=True,
@@ -162,7 +178,6 @@ class L10n_BeForm28150(models.Model):
         test_forms = self - form_requiring_real_sequence
         for i, form in enumerate(test_forms.sorted(lambda f: (f.partner_zip, f.partner_name, f.id)), start=1):
             form.official_id = str(i)
-
 
     def _get_sequence_per_company(self):
         sequences = self.env['ir.sequence'].search([
@@ -252,7 +267,16 @@ class L10n_BeForm28150(models.Model):
     def get_dict_values(self):
         self.ensure_one()
         is_partner_from_belgium = self.country_id.code == 'BE'
-        sum_control = self.commissions + self.fees + self.atn + self.exposed_expenses + self.total_remuneration + self.paid_amount
+        sum_control = sum([
+            self.commissions,
+            self.fees,
+            self.atn,
+            self.exposed_expenses,
+            self.sportsman_remuneration,
+            self.trainer_remuneration,
+            self.total_remuneration,
+            self.paid_amount,
+        ])
         return {
             # F2XXX: info for this 281.XX tax form
             'F2002': self.reference_year,
@@ -280,8 +304,8 @@ class L10n_BeForm28150(models.Model):
             'F50_2063': self.exposed_expenses,
             'F50_2064': self.total_remuneration,  # Total from 2060 to 2063
             'F50_2065': self.paid_amount,
-            'F50_2066': 0,  # irrelevant: sport remuneration
-            'F50_2067': 0,  # irrelevant: manager remuneration
+            'F50_2066': self.sportsman_remuneration,
+            'F50_2067': self.trainer_remuneration,
             'F50_2099': '',  # further comments concerning amounts from 2060 to 2067
             'F50_2103': '',  # nature of the amounts
             'F50_2107': self.partner_job_position,

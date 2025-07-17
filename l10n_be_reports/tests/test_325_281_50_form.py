@@ -7,7 +7,7 @@ from odoo.tests import tagged, freeze_time
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
 @freeze_time('2022-03-01')
-class TestResPartner(AccountTestInvoicingCommon):
+class TestResPartner28150(AccountTestInvoicingCommon):
 
     @classmethod
     @AccountTestInvoicingCommon.setup_country('be')
@@ -38,11 +38,24 @@ class TestResPartner(AccountTestInvoicingCommon):
             'is_company': True,
             'category_id': [Command.link(cls.env.ref('l10n_be_reports.res_partner_tag_281_50').id)]
         })
+        cls.partner_c = cls.env['res.partner'].create({
+            'name': 'Super Bob',
+            'street': 'Rue de la boberie',
+            'street2': 'Bobinou 99',
+            'zip': '1326',
+            'city': 'Chauvemont-Bobtoux',
+            'country_id': cls.env.ref('base.be').id,
+            'is_company': False,
+            'citizen_identification': '91103044444',
+            'category_id': [Command.link(cls.env.ref('l10n_be_reports.res_partner_tag_281_50').id)]
+        })
 
         cls.tag_281_50_commissions = cls.env.ref('l10n_be_reports.account_tag_281_50_commissions')
         cls.tag_281_50_fees = cls.env.ref('l10n_be_reports.account_tag_281_50_fees')
         cls.tag_281_50_atn = cls.env.ref('l10n_be_reports.account_tag_281_50_atn')
         cls.tag_281_50_exposed_expenses = cls.env.ref('l10n_be_reports.account_tag_281_50_exposed_expenses')
+        cls.tag_281_50_sportsman_remuneration = cls.env.ref('l10n_be_reports.account_tag_281_50_sportsman_remuneration')
+        cls.tag_281_50_trainer_remuneration = cls.env.ref('l10n_be_reports.account_tag_281_50_trainer_remuneration')
 
         (cls.company_data['company'] + cls.company_data_2['company']).write({
             'vat': 'BE0477472701',
@@ -1148,5 +1161,36 @@ class TestResPartner(AccountTestInvoicingCommon):
         })
         bank_move.action_post()
         moves = bank_move + zeroed_entry
-        moves.line_ids.filtered(lambda l: l.account_id == payable_account).reconcile()
+        moves.line_ids.filtered(lambda line: line.account_id == payable_account).reconcile()
+        self.create_325_form(ref_year=2000)  # Just ensure we don't face the zero division error
+
+    def test_281_50_sports_remuneration_should_be_retrieved(self):
+        """Ensure the remuneration associated to sportsman and trainer are detailed"""
+        self.product_c, self.product_d = self.env['product.product'].create([{'name': 'product_c'}, {'name': 'product_d'}])
+
+        # Sportsman commission expense setup
+        self.product_c.property_account_expense_id = self.product_a.property_account_expense_id.copy()
+        self.product_c.property_account_expense_id.tag_ids |= (self.tag_281_50_commissions + self.tag_281_50_sportsman_remuneration)
+        bill = self.create_and_post_bill(self.partner_c, self.product_c, 1000.0, '2000-05-12')
+        self.pay_bill(bill=bill, amount=1000, date='2000-05-12')
+
+        # trainer fees setup
+        self.product_d.property_account_expense_id = self.product_b.property_account_expense_id.copy()
+        self.product_d.property_account_expense_id.tag_ids |= (self.tag_281_50_fees + self.tag_281_50_trainer_remuneration)
+        bill = self.create_and_post_bill(self.partner_c, self.product_d, 10000.0, '2000-05-12')
+        self.pay_bill(bill=bill, amount=10000, date='2000-05-12')
+
         form_325 = self.create_325_form(ref_year=2000)
+        self.assertRecordValues(form_325.form_281_50_ids.filtered(lambda f: f.partner_id == self.partner_c), [
+            {
+                'partner_id': self.partner_c.id,
+                'commissions': 1000.0,
+                'atn': 0.0,
+                'fees': 10000.0,
+                'exposed_expenses': 0.0,
+                'total_remuneration': 11000.0,
+                'paid_amount': 11000.0,
+                'sportsman_remuneration': 1000.0,
+                'trainer_remuneration': 10000.0,
+            }
+        ])

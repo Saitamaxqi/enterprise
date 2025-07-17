@@ -5,8 +5,6 @@ import tempfile
 import re
 import zipfile
 
-from collections import Counter
-
 from lxml import etree
 
 from odoo import _, fields, models, api, Command
@@ -318,14 +316,23 @@ class L10n_BeForm325(models.Model):
 
     @api.model
     def _get_remuneration_281_50_per_partner(self, partner_ids):
-        tag_281_50_atn, tag_281_50_commissions, tag_281_50_exposed_expenses, tag_281_50_fees = self._get_281_50_tags()
+        tag_281_50_commissions = self.env.ref('l10n_be_reports.account_tag_281_50_commissions')
+        tag_281_50_fees = self.env.ref('l10n_be_reports.account_tag_281_50_fees')
+        tag_281_50_atn = self.env.ref('l10n_be_reports.account_tag_281_50_atn')
+        tag_281_50_exposed_expenses = self.env.ref('l10n_be_reports.account_tag_281_50_exposed_expenses')
         account_281_50_tags = tag_281_50_commissions + tag_281_50_fees + tag_281_50_atn + tag_281_50_exposed_expenses
+        # The 2 following tags gives more details about the amounts reports by the previous tag.
+        # Thus, they shouldn't be taken into account to compute the paid amount.
+        tag_281_50_sportsman_remuneration = self.env.ref('l10n_be_reports.account_tag_281_50_sportsman_remuneration')
+        tag_281_50_trainer_remuneration = self.env.ref('l10n_be_reports.account_tag_281_50_trainer_remuneration')
 
         self.env.flush_all()
         commissions_per_partner = self._get_balance_per_partner(partner_ids, tag_281_50_commissions)
         fees_per_partner = self._get_balance_per_partner(partner_ids, tag_281_50_fees)
         atn_per_partner = self._get_balance_per_partner(partner_ids, tag_281_50_atn)
         exposed_expenses_per_partner = self._get_balance_per_partner(partner_ids, tag_281_50_exposed_expenses)
+        sportsman_remuneration_per_partner = self._get_balance_per_partner(partner_ids, tag_281_50_sportsman_remuneration)
+        trainer_remuneration_per_partner = self._get_balance_per_partner(partner_ids, tag_281_50_trainer_remuneration)
         paid_amount_per_partner = self._get_paid_amount_per_partner(partner_ids, account_281_50_tags)
 
         partner_ids = self.env['res.partner'].browse(
@@ -334,7 +341,7 @@ class L10n_BeForm325(models.Model):
                 fees_per_partner,
                 atn_per_partner,
                 exposed_expenses_per_partner,
-                paid_amount_per_partner
+                paid_amount_per_partner,
             )
         )
 
@@ -355,6 +362,8 @@ class L10n_BeForm325(models.Model):
                 'exposed_expenses': exposed_expenses_per_partner.get(partner_id.id, 0.0),
                 # don't report negative numbers
                 'paid_amount': max(paid_amount_per_partner.get(partner_id.id, 0.0), 0.0),
+                'sportsman_remuneration': sportsman_remuneration_per_partner.get(partner_id.id, 0.0),
+                'trainer_remuneration': trainer_remuneration_per_partner.get(partner_id.id, 0.0),
             }
             for partner_id in partner_ids.sorted(lambda p: (p.zip, p.name))
             if (
@@ -364,6 +373,8 @@ class L10n_BeForm325(models.Model):
                     fees_per_partner.get(partner_id.id, 0.0),
                     atn_per_partner.get(partner_id.id, 0.0),
                     exposed_expenses_per_partner.get(partner_id.id, 0.0),
+                    sportsman_remuneration_per_partner.get(partner_id.id, 0.0),
+                    trainer_remuneration_per_partner.get(partner_id.id, 0.0),
                 ]), 250.0) >= 0
             )
         ]
@@ -409,23 +420,6 @@ class L10n_BeForm325(models.Model):
             'decimal_places': self.env.company.currency_id.decimal_places,
         })
         return dict(self.env.cr.fetchall())
-    @api.model
-    def _get_281_50_tags(self):
-        missing_tag = []
-
-        def try_to_load_tags(xml_id):
-            tag = self.env.ref(xml_id, raise_if_not_found=False)
-            if not tag:
-                missing_tag.append(xml_id)
-            return tag
-
-        tag_281_50_commissions = try_to_load_tags('l10n_be_reports.account_tag_281_50_commissions')
-        tag_281_50_fees = try_to_load_tags('l10n_be_reports.account_tag_281_50_fees')
-        tag_281_50_atn = try_to_load_tags('l10n_be_reports.account_tag_281_50_atn')
-        tag_281_50_exposed_expenses = try_to_load_tags('l10n_be_reports.account_tag_281_50_exposed_expenses')
-        if missing_tag:
-            raise UserError(_("Internal reference to the following 281.50 tags are missing:\n") + missing_tag)
-        return tag_281_50_atn, tag_281_50_commissions, tag_281_50_exposed_expenses, tag_281_50_fees
 
     def _get_paid_amount_per_partner(self, partner_ids, tags):
         """Get all paid amount per partner for a specific year and the previous year.

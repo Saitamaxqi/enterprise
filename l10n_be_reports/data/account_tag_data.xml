@@ -32,6 +32,22 @@
             <field name="applicability">accounts</field>
         </record>
 
+        <record id="account_tag_281_50_sportsman_remuneration" model="account.account.tag">
+            <field name="name">281.50 - Sportsman remuneration</field>
+            <field name="name@nl">281.50 - Sportbeoefenaars beloning</field>
+            <field name="name@fr">281.50 - Rémunération sportive</field>
+            <field name="name@de">281.50 - Sportvergütung</field>
+            <field name="applicability">accounts</field>
+        </record>
+
+        <record id="account_tag_281_50_trainer_remuneration" model="account.account.tag">
+            <field name="name">281.50 - Trainer remuneration</field>
+            <field name="name@nl">281.50 - Trainers beloning</field>
+            <field name="name@fr">281.50 - Rémunération d'entraineur</field>
+            <field name="name@de">281.50 - Trainervergütung</field>
+            <field name="applicability">accounts</field>
+        </record>
+
         <record id="res_partner_tag_281_50" model="res.partner.category">
             <field name="name">281.50</field>
             <field name="name@nl">281.50</field>

@@ -126,11 +126,9 @@
                                         <div class="col-4" style="padding-top: 1%; padding-bottom: 1%;">
                                             <p class="text-end">
                                                 <br/><br/>
-                                                <!-- irrelevant: sport remuneration -->
-                                                0.00
+                                                <span t-out="form.sportsman_remuneration" t-options="{'widget': 'float', 'precision': 2}"/>
                                                 <br/><br/>
-                                                <!-- irrelevant: manager remuneration -->
-                                                0.00
+                                                <span t-out="form.trainer_remuneration" t-options="{'widget': 'float', 'precision': 2}"/>
                                                 <br/><br/>
                                             </p>
                                         </div>
