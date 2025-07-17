@@ -176,8 +176,8 @@ class CzechControlStatementTest(CzechReportsCommon):
                 <VetaA5 zakl_dane1="1000.00" dan1="210.00" zakl_dane2="1000.00" dan2="120.00"/>
                 <VetaB1 dic_dod="00000001" duzp="13.01.2024" zakl_dane1="500.00" dan1="105.00" zakl_dane2="700.00" dan2="84.00" kod_pred_pl="12"/>
                 <VetaB1 dic_dod="00000001" duzp="13.01.2024" zakl_dane1="900.00" dan1="189.00" kod_pred_pl="13"/>
-                <VetaB2 pomer="N" zdph_44="N" dic_dod="00000001" c_evid_dd="XXX" dan_dppd="15.01.2024" zakl_dane1="10000.00" dan1="2100.00"/>
-                <VetaB2 pomer="N" zdph_44="N" dic_dod="00000001" c_evid_dd="BILL/2024/01/0005" dan_dppd="15.01.2024" zakl_dane1="20459.23" dan1="4296.44" zakl_dane2="500.00" dan2="60.00"/>
+                <VetaB2 pomer="N" zdph_44="N" dic_dod="00000001" c_evid_dd="XXX" dppd="15.01.2024" zakl_dane1="10000.00" dan1="2100.00"/>
+                <VetaB2 pomer="N" zdph_44="N" dic_dod="00000001" c_evid_dd="BILL/2024/01/0005" dppd="15.01.2024" zakl_dane1="20459.23" dan1="4296.44" zakl_dane2="500.00" dan2="60.00"/>
                 <VetaB3 zakl_dane1="2000.00" dan1="420.00" zakl_dane2="1000.00" dan2="120.00"/>
                 <VetaC celk_zd_a2="24500.00" obrat23="10500.00" obrat5="1900.00" pln23="32459.23" pln5="1500.00" pln_rez_pren="800.00" rez_pren23="1400.00" rez_pren5="700.00"/>
             </DPHKH1>

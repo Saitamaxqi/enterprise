@@ -40,7 +40,7 @@
                 </t>
                 <t t-foreach="line_B2" t-as="line">
                     <VetaB2 t-att-dic_dod="line['vat_number']" t-att-c_evid_dd="line['journal_entry']"
-                            t-att-dan_dppd="line['taxable_supply_date']" t-att-zakl_dane1="line['tax_base_1']"
+                            t-att-dppd="line['taxable_supply_date']" t-att-zakl_dane1="line['tax_base_1']"
                             t-att-dan1="line['tax_1']" t-att-zakl_dane2="line['tax_base_2']"
                             t-att-dan2="line['tax_2']" pomer="N" zdph_44="N"/>
                 </t>
