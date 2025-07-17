@@ -6,8 +6,8 @@ import { BuilderAction } from "@html_builder/core/builder_action";
 
 class OnlineAppointmentOptionPlugin extends Plugin {
     static id = "OnlineAppointmentOption";
-    static shared = ["setDatasetProperty", "getDatasetProperty"];
-    async setup() {
+    static shared = ["setDatasetProperty", "getDatasetProperty", "getAllAppointmentTypesById"];
+    setup() {
         this.fetchAppointmentTypesProm = null;
         this.allAppointmentTypesById = null;
     }
@@ -110,7 +110,7 @@ export class SetAppTypesAction extends BuilderAction {
         );
         const appointmentTypesDetails = selectedAppointmentTypes.map((id) => {
             const appointmentType = this.dependencies.OnlineAppointmentOption.getAllAppointmentTypesById()[id];
-            return { id: appointmentType.id, name: appointmentType.name };
+            return { id: appointmentType.id, name: appointmentType.name, display_name: appointmentType.name };
         });
         return JSON.stringify(appointmentTypesDetails);
     }
@@ -139,7 +139,7 @@ export class SetStaffUsersAction extends BuilderAction {
             return "[]";
         }
         const appointmentTypeData =
-            this.this.dependencies.OnlineAppointmentOption.getAllAppointmentTypesById()[selectedAppointmentTypes[0]];
+            this.dependencies.OnlineAppointmentOption.getAllAppointmentTypesById()[selectedAppointmentTypes[0]];
         const selectedUserIds = this.dependencies.OnlineAppointmentOption.getDatasetProperty(
             editingElement,
             "staffUsers",
