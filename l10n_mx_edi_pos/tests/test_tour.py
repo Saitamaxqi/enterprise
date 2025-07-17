@@ -41,6 +41,56 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
             'l10n_mx_edi_cfdi_to_public': True,
         }])
 
+    def test_mx_pos_refund_discount_order(self):
+        self.product1 = self.env['product.product'].create({
+            'name': 'Test Product 1',
+            'is_storable': True,
+            'list_price': 10.0,
+            'taxes_id': False,
+        })
+        self.product_discount = self.env['product.product'].create({
+            'name': 'Test Discount',
+            'is_storable': False,
+            'list_price': -0.10,
+            'taxes_id': False,
+        })
+        self.main_pos_config.open_ui()
+        self.pos_order = self.env['pos.order'].create({
+            "name": "Order 0001",
+            "pos_reference": "Order 12345-123-1234",
+            'company_id': self.env.company.id,
+            'session_id': self.main_pos_config.current_session_id.id,
+            'partner_id': self.partner_mx.id,
+            'access_token': '1234567890',
+            'lines': [odoo.Command.create({
+                'name': "OL/0001",
+                'product_id': self.product1.id,
+                'price_unit': 10,
+                'discount': 0.0,
+                'qty': 1.0,
+                'tax_ids': False,
+                'price_subtotal': 10,
+                'price_subtotal_incl': 10,
+            }),
+            odoo.Command.create({
+                'name': "OL/0002",
+                'product_id': self.product_discount.id,
+                'price_unit': -0.10,
+                'discount': 0.0,
+                'qty': 1.0,
+                'tax_ids': False,
+                'price_subtotal': -0.10,
+                'price_subtotal_incl': -0.10,
+            })],
+            'amount_tax': 0,
+            'amount_total': 9.90,
+            'amount_paid': 9.90,
+            'amount_return': 0,
+        })
+        self.make_payment(self.pos_order, self.main_pos_config.payment_method_ids[0], 9.90)
+        self.config.current_session_id.action_pos_session_closing_control()
+        self.start_tour("/odoo", "l10n_mx_edi_pos.tour_refund_discount_order", login=self.env.user.login)
+
     def test_qr_code_receipt_mx(self):
         """This test make sure that no user is created when a partner is set on the PoS order.
             It also makes sure that the invoice is correctly created.

@@ -13,8 +13,7 @@ patch(PosStore.prototype, {
             if (
                 (isRefund &&
                     currentOrder.lines.some(
-                        (x) =>
-                            x.price_subtotal > 0.0 && !x[2]?.refunded_orderline_id && !x.coupon_id
+                        (x) => x.price_subtotal > 0.0 && !x.refunded_orderline_id && !x.coupon_id
                     )) ||
                 (!isRefund && this.currency.isNegative(currentOrder.amount_total))
             ) {
