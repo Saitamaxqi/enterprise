@@ -146,10 +146,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition", 
             run: "edit modified in test && click body",
         },
         {
-            trigger: ".o_web_studio_menu .breadcrumb-item.active",
-            run() {
-                assertEqual(this.anchor.textContent, "modified in test");
-            },
+            trigger: ".o_web_studio_menu .breadcrumb-item.active:contains(modified in test)",
         },
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
@@ -185,13 +182,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
         },
         {
             trigger:
-                ".o_web_studio_xml_resource_selector .o_web_studio_xml_resource_select_menu input",
-            run() {
-                assertEqual(
-                    this.anchor.value,
-                    "web_studio.test_report_document (web_studio.test_report_document)"
-                );
-            },
+                ".o_web_studio_xml_resource_selector .o_web_studio_xml_resource_select_menu input:value('web_studio.test_report_document (web_studio.test_report_document)')",
         },
         {
             trigger: ".o_web_studio_code_editor.ace_editor",
@@ -209,17 +200,9 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
             run: "click",
         },
         {
-            trigger: ".o-dropdown--menu",
-            run(helpers) {
-                const mainView = Array.from(
-                    this.anchor.querySelectorAll(".o_select_menu_item")
-                ).find(
-                    (el) =>
-                        el.textContent ===
-                        "web_studio.test_report (web_studio.studio_test_report_view)"
-                );
-                helpers.click(mainView);
-            },
+            trigger:
+                ".o-dropdown--menu .o_select_menu_item:contains('web_studio.test_report (web_studio.studio_test_report_view)')",
+            run: "click",
         },
         {
             trigger: ".o_web_studio_code_editor.ace_editor",
@@ -240,14 +223,12 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
             trigger: ".o-web-studio-save-report:not(.btn-primary)",
         },
         {
-            trigger: ".o-web-studio-report-container :iframe body",
-            run() {
-                assertEqual(
-                    this.anchor.querySelector(".test-added-0").textContent,
-                    "in document view"
-                );
-                assertEqual(this.anchor.querySelector(".test-added-1").textContent, "in main view");
-            },
+            trigger:
+                ".o-web-studio-report-container :iframe body .test-added-0:contains(in document view)",
+        },
+        {
+            trigger:
+                ".o-web-studio-report-container :iframe body .test-added-1:contains(in main view)",
         },
     ],
 });
@@ -259,10 +240,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_di
             run: "edit modified in test && click body",
         },
         {
-            trigger: ".o_web_studio_menu .breadcrumb-item.active",
-            run() {
-                assertEqual(this.anchor.textContent, "modified in test");
-            },
+            trigger: ".o_web_studio_menu .breadcrumb-item.active:contains(modified in test)",
         },
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
@@ -296,10 +274,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_ca
             run: "edit modified in test && click body",
         },
         {
-            trigger: ".o_web_studio_menu .breadcrumb-item.active",
-            run() {
-                assertEqual(this.anchor.textContent, "modified in test");
-            },
+            trigger: ".o_web_studio_menu .breadcrumb-item.active:contains(modified in test)",
         },
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
@@ -314,10 +289,8 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_ca
             run: "click",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
-            run() {
-                assertEqual(this.anchor.textContent, "edited with odoo editor");
-            },
+            trigger:
+                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0):contains(edited with odoo editor)",
         },
         {
             trigger: ".o-web-studio-save-report.btn-primary",
@@ -385,17 +358,11 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_er
             run: "click",
         },
         {
-            trigger: ".o_notification .o_notification_title",
-            run() {
-                assertEqual(this.anchor.textContent, "Report edition failed");
-            },
+            trigger: ".o_notification .o_notification_title:contains(Report edition failed)",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
-            run() {
-                // The iframe shouldn't have been reset after an error
-                assertEqual(this.anchor.textContent, "edited with odoo editor");
-            },
+            trigger:
+                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0):contains(edited with odoo editor)",
         },
     ],
 });
@@ -422,10 +389,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
             run: "click",
         },
         {
-            trigger: ".o_notification .o_notification_title",
-            run() {
-                assertEqual(this.anchor.textContent, "Report edition failed");
-            },
+            trigger: ".o_notification .o_notification_title:contains(Report edition failed)",
         },
         {
             trigger: ".o-web-studio-report-container :iframe body",
@@ -446,19 +410,12 @@ registry.category("web_tour.tours").add("web_studio.test_report_reset_archs", {
             run: "click",
         },
         {
-            trigger: ".modal-footer",
-            run(helpers) {
-                const button = Array.from(this.anchor.querySelectorAll("button")).find(
-                    (el) => el.textContent === "Reset report" && el.classList.contains("btn-danger")
-                );
-                helpers.click(button);
-            },
+            trigger: ".modal-footer button.btn-danger:contains(Reset report)",
+            run: "click",
         },
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1)",
-            run() {
-                assertEqual(this.anchor.textContent, "from file");
-            },
+            trigger:
+                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1):contains(from file)",
         },
     ],
 });
@@ -755,10 +712,8 @@ registry.category("web_tour.tours").add("web_studio.test_toolbar_appearance", {
 registry.category("web_tour.tours").add("web_studio.test_edition_without_lang", {
     steps: () => [
         {
-            trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1)",
-            run() {
-                assertEqual(this.anchor.textContent, "original term");
-            },
+            trigger:
+                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1):contains(original term)",
         },
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1)",
@@ -1142,13 +1097,7 @@ registry.category("web_tour.tours").add("web_studio.test_error_at_loading", {
             run: "click",
         },
         {
-            trigger: ":iframe div",
-            run() {
-                assertEqual(
-                    this.anchor.textContent,
-                    "The report could not be rendered due to an error"
-                );
-            },
+            trigger: ":iframe div:contains(The report could not be rendered due to an error)",
         },
         {
             trigger: "button[name='report_edit_sources']",
@@ -1230,19 +1179,14 @@ registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
         },
         {
             trigger: ".o_form_view table.diff",
-            run() {
-                assertEqual(
-                    document.querySelector(".o_form_view .o_field_widget[name='view_name']")
-                        .textContent,
-                    "web_studio.test_report_document"
-                );
-                assertEqual(
-                    document.querySelector(
-                        ".o_form_view .o_field_widget[name='compare_view_id'] input"
-                    ).value,
-                    "web_studio_backup__web_studio.test_report_document"
-                );
-            },
+        },
+        {
+            trigger:
+                ".o_form_view .o_field_widget[name='view_name']:contains(web_studio.test_report_document)",
+        },
+        {
+            trigger:
+                ".o_form_view .o_field_widget[name='compare_view_id'] input:value(web_studio_backup__web_studio.test_report_document)",
         },
     ],
 });
@@ -1282,18 +1226,8 @@ registry.category("web_tour.tours").add("web_studio.test_different_view_document
             run: "click",
         },
         {
-            trigger: ".o-dropdown--menu",
-            run() {
-                const sources = Array.from(this.anchor.querySelectorAll(".o_select_menu_item")).map(
-                    (e) => e.textContent
-                );
-                assertEqual(
-                    sources.includes(
-                        "Uses: web_studio.test_report_document (web_studio.test_report_document_1)"
-                    ),
-                    true
-                );
-            },
+            trigger:
+                ".o-dropdown--menu .o_select_menu_item:contains('web_studio.test_report_document (web_studio.test_report_document_1)')",
         },
     ],
 });
