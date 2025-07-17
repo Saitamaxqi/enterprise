@@ -1,4 +1,4 @@
-import { defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
+import { defineSpreadsheetModels, Partner, Product } from "@spreadsheet/../tests/helpers/data";
 import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import * as spreadsheet from "@odoo/o-spreadsheet";
@@ -15,6 +15,7 @@ import { getCellFormula, getCell } from "@spreadsheet/../tests/helpers/getters";
 import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
 import { createModelFromGrid } from "@spreadsheet/../tests/helpers/model";
 import { patchTranslations } from "@web/../tests/web_test_helpers";
+import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 
 describe.current.tags("headless");
 defineSpreadsheetModels();
@@ -1003,4 +1004,77 @@ test("Can autofill pivot with collapsed dimensions", async () => {
         `=PIVOT.HEADER(1,"date:year",2016,"date:month",DATE(2016,12,1))`
     );
     expect(getCell(model, "A5").content).toBe(`=PIVOT.HEADER(1)`);
+});
+
+test("Can autofill pivot with custom groups", async () => {
+    Product._records.push(
+        { id: 200, display_name: "chair", name: "chair" },
+        { id: 201, display_name: "table", name: "table" }
+    );
+    Partner._records.push(
+        { id: 200, product_id: 200, probability: 100, bar: true },
+        { id: 201, product_id: 201, probability: 50, bar: false },
+        { id: 202, product_id: false, probability: 10, bar: true }
+    );
+
+    const { model } = await createSpreadsheetWithPivot();
+    const pivotId = model.getters.getPivotIds()[0];
+    updatePivot(model, pivotId, {
+        columns: [{ fieldName: "GroupedProducts", order: "asc" }],
+        rows: [{ fieldName: "bar" }],
+        measures: [{ id: "probability:sum", fieldName: "probability", aggregator: "sum" }],
+        customFields: {
+            GroupedProducts: {
+                parentField: "product_id",
+                name: "GroupedProducts",
+                groups: [{ name: "xphone,xpad", values: [37, 41] }],
+            },
+        },
+    });
+    await waitForDataLoaded(model);
+
+    // Autofill headers
+    setCellContent(model, "E1", `=PIVOT.HEADER(1,"GroupedProducts","xphone,xpad")`);
+    selectCell(model, "E1");
+    model.dispatch("AUTOFILL_SELECT", { col: 5, row: 0 });
+    model.dispatch("AUTOFILL");
+
+    expect(getCell(model, "F1").content).toBe(`=PIVOT.HEADER(1,"GroupedProducts",false)`);
+
+    selectCell(model, "E1");
+    model.dispatch("AUTOFILL_SELECT", { col: 2, row: 0 });
+    model.dispatch("AUTOFILL");
+    expect(getCell(model, "D1").content).toBe(`=PIVOT.HEADER(1,"GroupedProducts",201)`);
+    expect(getCell(model, "C1").content).toBe(`=PIVOT.HEADER(1,"GroupedProducts",200)`);
+
+    // Autofill values
+    setCellContent(model, "A1", `=PIVOT.HEADER(1,"GroupedProducts","xphone,xpad")`);
+    selectCell(model, "A1");
+    model.dispatch("AUTOFILL_SELECT", { col: 0, row: 4 });
+    model.dispatch("AUTOFILL");
+
+    expect(getCell(model, "A2").content).toBe(
+        `=PIVOT.HEADER(1,"GroupedProducts","xphone,xpad","measure","probability:sum")`
+    );
+    expect(getCell(model, "A3").content).toBe(
+        `=PIVOT.VALUE(1,"probability:sum","bar",FALSE,"GroupedProducts","xphone,xpad")`
+    );
+    expect(getCell(model, "A4").content).toBe(
+        `=PIVOT.VALUE(1,"probability:sum","bar",TRUE,"GroupedProducts","xphone,xpad")`
+    );
+    expect(getCell(model, "A5").content).toBe(
+        `=PIVOT.VALUE(1,"probability:sum","GroupedProducts","xphone,xpad")`
+    );
+
+    // Autofill from "None" header
+    setCellContent(model, "A1", `=PIVOT.HEADER(1, "GroupedProducts",false)`);
+    selectCell(model, "A1");
+    model.dispatch("AUTOFILL_SELECT", { col: 0, row: 4 });
+    model.dispatch("AUTOFILL");
+    expect(getCell(model, "A3").content).toBe(
+        `=PIVOT.VALUE(1,"probability:sum","bar",FALSE,"GroupedProducts",false)`
+    );
+    expect(getCell(model, "A4").content).toBe(
+        `=PIVOT.VALUE(1,"probability:sum","bar",TRUE,"GroupedProducts",false)`
+    );
 });
