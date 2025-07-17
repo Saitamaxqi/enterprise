@@ -5,14 +5,23 @@ import { markup } from "@odoo/owl";
 import { HtmlField, htmlField } from "@html_editor/fields/html_field";
 import { registry } from "@web/core/registry";
 import { createDocumentFragmentFromContent } from "@web/core/utils/html";
+import { HtmlViewer } from "@html_editor/components/html_viewer/html_viewer";
+
+class SocialHtmlViewer extends HtmlViewer {
+    retargetLink() {}
+}
 
 export class FieldPostPreview extends SocialPostFormatterMixin(HtmlField) {
     static props = {
         ...FieldPostPreview.props,
         mediaType: { type: String, optional: true },
     };
+    static components = {
+        ...HtmlField.components,
+        HtmlViewer: SocialHtmlViewer,
+    };
 
-    get markupValue() {
+    get value() {
         const value = this.props.record.data[this.props.name] || "";
         const html = createDocumentFragmentFromContent(value);
         for (const previewMessage of html.querySelectorAll(".o_social_preview_message")) {
