@@ -179,6 +179,36 @@ registry.category("web_tour.tours").add("test_process_confirmed_mo", {
     ],
 });
 
+registry.category("web_tour.tours").add('test_scrap_done_mo', {
+    steps: () => [
+        {
+            trigger: "button.o_barcode_actions",
+            run: "click",
+        },
+        {
+            trigger: "button.o_scrap",
+            run: "click",
+        },
+        {
+            content: "Select the product field",
+            trigger: "input[id*=product_id]",
+            run: "click",
+        },
+        {
+            content: "Select the product from the dropdown",
+            trigger: '.o_field_many2one_selection .dropdown-item:not([id$=_loading]):contains("Final Product")',
+            run: "click",
+        },
+        {
+            trigger: "button[name*=action_validate]:contains(Scrap)",
+            run: "click",
+        },
+        {
+            trigger: '.o_barcode_line_title:contains("Final Product")',
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_barcode_production_create", {
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan WHMANUF" },

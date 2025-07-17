@@ -76,6 +76,11 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(mo.state, 'done')
         self.assertEqual(mo.qty_produced, 1)
         self.assertEqual(mo.qty_producing, 1)
+        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action'
+        self.start_tour(url, 'test_scrap_done_mo', login='admin')
+        self.assertRecordValues(mo.scrap_ids, [
+            {'product_id': self.final_product.id, 'scrap_qty': 1, 'state': 'done'},
+        ])
 
     def test_barcode_production_create(self):
         """Create a manufacturing order from barcode app

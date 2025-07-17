@@ -165,7 +165,9 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
         if (this.record.state !== "done") {
             context.product_ids = this.pageLines.map((line) => line.product_id.id);
         } else {
-            context.product_ids = this.byProductLines.map((line) => line.product_id.id);
+            context.product_ids = this.byProductLines
+                ? this.byProductLines.map((line) => line.product_id.id)
+                : [];
             context.product_ids.push(this.record.product_id.id);
         }
         return context;
