@@ -6,3 +6,14 @@ patch(PosPrinter.prototype, {
         return [...super._load_pos_data_fields(), "device_identifier"];
     },
 });
+
+PosPrinter._records = [
+    ...PosPrinter._records,
+    {
+        id: 2,
+        device_id: 2,
+        printer_type: "iot",
+        proxy_ip: "1.1.1.1",
+        device_identifier: "printer_identifier",
+    },
+];

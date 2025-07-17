@@ -8,6 +8,16 @@ export class IotBox extends models.ServerModel {
     _load_pos_data_fields() {
         return ["ip", "ip_url", "name"];
     }
+
+    _records = [
+        {
+            id: 2,
+            name: "DEMO IOT BOX",
+            identifier: "11:11:11:11:11:11",
+            ip: "1.1.1.1",
+            version: "25.04",
+        },
+    ];
 }
 
 patch(hootPosModels, [...hootPosModels, IotBox]);
