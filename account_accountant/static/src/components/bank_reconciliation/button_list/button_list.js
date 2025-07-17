@@ -504,11 +504,19 @@ export class BankRecButtonList extends Component {
     }
 
     get isSetReceivableButtonShown() {
-        return !this.isSetPartnerButtonShown && this.isCustomerRankHigher;
+        return (
+            !this.isSetPartnerButtonShown &&
+            ((this.statementLineData.partner_id.customer_rank && this.isCustomerRankHigher) ||
+                this.statementLineData.amount > 0)
+        );
     }
 
     get isSetPayableButtonShown() {
-        return !this.isSetPartnerButtonShown && !this.isCustomerRankHigher;
+        return (
+            !this.isSetPartnerButtonShown &&
+            ((this.statementLineData.partner_id.supplier_rank && !this.isCustomerRankHigher) ||
+                this.statementLineData.amount < 0)
+        );
     }
 
     get isReconcileButtonShown() {
