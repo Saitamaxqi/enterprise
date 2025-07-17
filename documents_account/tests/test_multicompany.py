@@ -53,7 +53,6 @@ class TestMultiCompanyDocumentsAccountMail(MailCommon):
         })
 
         # Enable centralization of accounting in one documents folder for company_2
-        cls.company_2.documents_account_settings = True
         cls.company_2.account_folder_id = cls.folder_finance_company2.id
 
         # Link the journal to the folder

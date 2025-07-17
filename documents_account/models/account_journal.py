@@ -15,7 +15,7 @@ class AccountJournal(models.Model):
         """Configure the synchronization for the journals (skip the ones with missing data)."""
         Journal = self.env['account.journal']
         sync_journals = self.filtered(
-            lambda j: j.type and j.name and j.company_id.documents_account_settings and j.company_id.account_folder_id)
+            lambda j: j.type and j.name and j.company_id.account_folder_id)
         if not sync_journals:
             return
         journal_type_labels = dict(Journal.fields_get(['type'], ['selection'])['type']['selection'])

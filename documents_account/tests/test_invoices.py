@@ -65,7 +65,6 @@ class TestInvoices(AccountTestInvoicingCommon):
         self.assertRecordValues(vendor_bill, [{'suspense_statement_line_id': st_line.id}])
 
         folder_test = self.env['documents.document'].create({'name': 'Test Bills','type':'folder'})
-        self.env.user.company_id.documents_account_settings = True
 
         invoice = self.init_invoice("in_invoice", amounts=[1000], post=True)
         setting = self.env['documents.account.folder.setting'].create({

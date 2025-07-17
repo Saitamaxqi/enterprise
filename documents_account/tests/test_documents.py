@@ -18,7 +18,6 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         """
         Test the behavior of opening default folder when there are more than one documents.
         """
-        self.env.user.company_id.documents_account_settings = True
         account_move_test_1, account_move_test_2 = self.env['account.move'].create([{
             'name': 'Journal Entry 1',
             'move_type': 'entry',
@@ -95,7 +94,6 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         on invoices.
         """
         folder_test = self.env['documents.document'].create({'name': 'folder_test', 'type': 'folder'})
-        self.env.user.company_id.documents_account_settings = True
 
         for invoice_type in ['in_invoice', 'out_invoice', 'in_refund', 'out_refund']:
             invoice_test = self.env['account.move'].with_context(default_move_type=invoice_type).create({
@@ -178,7 +176,6 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         is being created and updated.
         """
         folder_test = self.env["documents.document"].create({"name": "folder_test", "type": "folder"})
-        self.env.user.company_id.documents_account_settings = True
 
         invoice_test = (
             self.env["account.move"]
@@ -290,7 +287,6 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         on invoices.
         """
         folder_test = self.env['documents.document'].create({'name': 'Bills', 'type': 'folder'})
-        self.env.user.company_id.documents_account_settings = True
 
         invoice_test = self.env['account.move'].with_context(default_move_type='entry').create({
             'name': 'Journal Entry',
@@ -422,7 +418,6 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         """
         Makes sure pdf and xml created by the system will create a document
         """
-        self.env.user.company_id.documents_account_settings = True
         folder_test = self.env['documents.document'].create({'name': 'Bills', 'type': 'folder'})
 
         invoice = self.init_invoice("out_invoice", amounts=[1000], post=True)
@@ -539,7 +534,6 @@ class TestAccountMoveSendDocument(DocumentsAccountTestCommon, TestAccountMoveSen
         """
         Makes sure the documents are created when attaching pdf and xml to the move
         """
-        self.env.user.company_id.documents_account_settings = True
         folder_test = self.env['documents.document'].create({'name': 'Bills', 'type': 'folder'})
         move = self.init_invoice("out_invoice", amounts=[1000], post=True)
         setting = self.env['documents.account.folder.setting'].create({
