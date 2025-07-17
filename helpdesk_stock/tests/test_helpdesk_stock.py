@@ -261,3 +261,41 @@ class TestHelpdeskStock(common.HelpdeskCommon):
 
         self.assertTrue(done_so_ticket.has_partner_picking)
         self.assertEqual(other_tickets.mapped('has_partner_picking'), [False] * 5)
+
+    def test_set_picking_to_false_in_wizard(self):
+        """ This test ensure that when the picking field of the wizard is set to False, no traceback is triggered during
+        the product_return_moves compute."""
+        product = self.env['product.product'].create({
+            'name': 'test product',
+            'is_storable': True,
+            'invoice_policy': 'order',
+        })
+        partner = self.env['res.partner'].create({
+            'name': 'Customer'
+        })
+        so = self.env['sale.order'].create({
+            'partner_id': partner.id,
+        })
+        self.env['sale.order.line'].create({
+            'product_id': product.id,
+            'price_unit': 10,
+            'product_uom_qty': 5,
+            'order_id': so.id,
+        })
+        so.action_confirm()
+        delivery_order = so.picking_ids[0]
+        delivery_order.move_ids[0].quantity = 5
+        delivery_order.button_validate()
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': 'test',
+            'partner_id': partner.id,
+            'team_id': self.test_team.id,
+            'sale_order_id': so.id
+        })
+
+        wizard_form = Form(self.env['stock.return.picking'].with_context({
+            'active_model': 'helpdesk.ticket',
+            'default_ticket_id': ticket.id
+        }))
+        wizard_form.picking_id = self.env['stock.picking']
