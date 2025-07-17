@@ -11,6 +11,27 @@ class ResPartner(models.Model):
 
     contact_address_complete = fields.Char(compute='_compute_complete_address', store=True)
 
+    def write(self, vals):
+        # Reset latitude/longitude in case we modify the address without
+        # updating the related geolocation fields
+        if any(field in vals for field in ['street', 'zip', 'city', 'state_id', 'country_id']) \
+            and not all('partner_%s' % field in vals for field in ['latitude', 'longitude']):
+            vals.update({
+                'partner_latitude': False,
+                'partner_longitude': False,
+            })
+        return super().write(vals)
+
+    @api.model
+    def _address_fields(self):
+        return super()._address_fields() + ['partner_latitude', 'partner_longitude']
+
+    @api.model
+    def _formatting_address_fields(self):
+        """Returns the list of address fields usable to format addresses."""
+        result = super()._formatting_address_fields()
+        return [item for item in result if item not in ['partner_latitude', 'partner_longitude']]
+
     @api.model
     def update_latitude_longitude(self, partners):
         partners_data = defaultdict(list)
