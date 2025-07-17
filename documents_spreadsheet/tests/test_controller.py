@@ -186,7 +186,7 @@ class TestSpreadsheetDocumentController(SpreadsheetTestCommon, HttpCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()['isReadonly'], True)
 
-    def test_spreadsheet_with_token_from_workspace_share(self):
+    def test_spreadsheet_with_token_from_folder_share(self):
         document_1 = self.create_spreadsheet()
         self.create_spreadsheet()
         folder = document_1.folder_id

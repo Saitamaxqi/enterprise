@@ -13,7 +13,7 @@ class DocumentsDocument(models.Model):
             return
         sign_folder_ancestors = set(map(int, sign_folder.sudo().parent_path.split('/')[:-1]))
         if sign_folder_ancestors & set(self.ids):
-            raise UserError(_('The "%s" workspace is required by the Sign application and cannot be deleted.',
+            raise UserError(_('The "%s" folder is required by the Sign application and cannot be deleted.',
                               sign_folder.name))
 
     @api.constrains('company_id')

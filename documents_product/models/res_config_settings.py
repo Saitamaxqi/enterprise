@@ -11,7 +11,7 @@ class ResConfigSettings(models.TransientModel):
         readonly=False, string="Product")
     product_folder_id = fields.Many2one(
         'documents.document', related='company_id.product_folder_id',
-        readonly=False, string="product default workspace")
+        readonly=False, string="product default folder")
     product_tag_ids = fields.Many2many(
         'documents.tag', related='company_id.product_tag_ids',
         readonly=False, string="Product Tags")

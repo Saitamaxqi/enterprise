@@ -79,13 +79,13 @@ export class DocumentsDocument extends Documents {
     _records = [
         {
             id: 1,
-            name: "Workspace1",
-            description: "Workspace",
+            name: "Folder1",
+            description: "Folder",
             folder_id: false,
             handler: false,
             available_embedded_actions_ids: [],
             type: "folder",
-            access_token: "accessTokenWorkspace1",
+            access_token: "accessTokenFolder1",
         },
         {
             id: 2,

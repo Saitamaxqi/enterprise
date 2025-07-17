@@ -188,8 +188,8 @@ body.o_docs_share_page {
         }
     }
 
-    // Workspace sharing
-    #wrap.o_share_workspace {
+    // Folder sharing
+    #wrap.o_share_folder {
         .o_docs_upload_wrapper {
             overflow: hidden;
 
@@ -205,7 +205,7 @@ body.o_docs_share_page {
             }
         }
 
-        .o_docs_share_multible_bar .o_author {
+        .o_docs_share_multiple_bar .o_author {
             width: 21px;
             height: 21px;
         }

@@ -71,16 +71,16 @@
         </t>
     </template>
 
-    <!-- ====  Workspace sharing ==== -->
+    <!-- ====  Folder sharing ==== -->
     <template id="documents.public_folder_page" name="Public Folder Page">
         <t t-call="documents.public_page_layout">
             <t t-set="document" t-value="folder"/>  <!-- for public_page_layout -->
-            <t t-set="shareType" t-value="'o_share_workspace'"/>
+            <t t-set="shareType" t-value="'o_share_folder'"/>
 
             <t t-set="folder_downloadzip_url" t-valuef="/documents/content/#{quote(folder.access_token)}"/>
             <t t-set="folder_upload_url" t-valuef="/documents/upload/#{quote(folder.access_token)}"/>
 
-            <section class="o_docs_share_multible_bar d-flex mt-5 mb-4">
+            <section class="o_docs_share_multiple_bar d-flex mt-5 mb-4">
                 <div class="flex-grow-1 mb16">
                     <h2>
                         <t t-esc="len(documents.filtered(lambda doc: doc.type == 'folder'))"/>

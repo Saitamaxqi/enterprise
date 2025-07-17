@@ -318,14 +318,14 @@ test("Can create a spreadsheet from a template", async function () {
     expect.verifySteps(["action_create_spreadsheet", "redirect"]);
 });
 
-test("The workspace selection should not display Trash workspace", async function () {
+test("The folder selection should not display Trash folder", async function () {
     await initTestEnvWithKanban();
     await openTemplateDialog();
 
     expect(
         ".o-spreadsheet-templates-dialog .o-spreadsheet-grid-item-name:contains(TRASH)"
     ).toHaveCount(0, {
-        message: "Trash workspace should not be present in the selection",
+        message: "Trash folder should not be present in the selection",
     });
 });
 

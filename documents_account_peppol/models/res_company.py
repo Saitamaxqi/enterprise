@@ -13,7 +13,7 @@ class ResCompany(models.Model):
     )
     documents_account_peppol_folder_id = fields.Many2one(
         comodel_name='documents.document',
-        string="Document Workspace",
+        string="Document Folder",
         check_company=True,
         domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]
     )

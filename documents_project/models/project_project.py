@@ -88,9 +88,9 @@ class ProjectProject(models.Model):
                     if other_projects and other_projects.company_id.id != vals['company_id']:
                         lines = [f"- {project.name}" for project in other_projects]
                         raise UserError(_(
-                            'You cannot change the company of this project, because its workspace is linked to the other following projects that are still in the "%(other_company)s" company:\n%(other_workspaces)s\n\n'
-                            'Please update the company of all projects so that they remain in the same company as their workspace, or leave the company of the "%(workspace)s" workspace blank.',
-                            other_company=other_projects.company_id.name, other_workspaces='\n'.join(lines), workspace=project.documents_folder_id.name))
+                            'You cannot change the company of this project, because its folder is linked to the other following projects that are still in the "%(other_company)s" company:\n%(other_folders)s\n\n'
+                            'Please update the company of all projects so that they remain in the same company as their folder, or leave the company of the "%(folder)s" folder blank.',
+                            other_company=other_projects.company_id.name, other_folders='\n'.join(lines), folder=project.documents_folder_id.name))
 
         if 'name' in vals and len(self.documents_folder_id.sudo().project_ids) == 1 and self.name == self.documents_folder_id.sudo().name:
             self.documents_folder_id.sudo().name = vals['name']

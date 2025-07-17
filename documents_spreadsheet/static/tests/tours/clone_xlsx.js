@@ -30,7 +30,7 @@ registry.category("web_tour.tours").add("spreadsheet_clone_xlsx", {
         },
         {
             trigger: '.o_kanban_record:contains("Test folder")',
-            content: "Open Test folder workspace",
+            content: "Open Test folder folder",
             run: "dblclick",
         },
         {

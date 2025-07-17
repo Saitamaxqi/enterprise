@@ -528,7 +528,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         )
         self.assertEqual(len(contributor), 1, "The contribution should be registered")
 
-    def test_contributor_move_workspace(self):
+    def test_contributor_move_folder(self):
         document = self.create_spreadsheet()
         new_folder = self.env["documents.document"].create({
             "name": "New folder",

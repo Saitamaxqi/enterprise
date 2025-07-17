@@ -31,7 +31,7 @@
                 </DropdownItem>
                 <t t-if="userIsInternal and canUploadInFolder(folder)">
                     <div role="separator" class="dropdown-divider"/>
-                    <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_workspace'"
+                    <DropdownItem tag="'button'" class="'btn btn-link o_documents_kanban_folder'"
                         onSelected="onClickAddFolder"
                         attrs="{'data-hotkey': 'w'}">
                         <i class="fa fa-folder fa-fw me-1"/>

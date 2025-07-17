@@ -386,7 +386,7 @@ test("can open spreadsheet while multiple documents are selected along with it",
         records: [{ id: 1 }, { id: 2 }, { id: 3 }],
     };
     serverData.models["documents.document"].records = [
-        { id: 1, name: "demo-workspace", type: "folder" },
+        { id: 1, name: "demo-folder", type: "folder" },
         {
             name: "test-spreadsheet",
             raw: "{}",
@@ -419,7 +419,7 @@ test("can open spreadsheet while multiple documents are selected along with it",
     mockActionService((action) => {
         expect.step(action.tag);
     });
-    await contains(".o_kanban_record:contains('demo-workspace')").click();
+    await contains(".o_kanban_record:contains('demo-folder')").click();
     await animationFrame();
 
     await contains(".o_kanban_record:eq(0) .o_record_selector").click();

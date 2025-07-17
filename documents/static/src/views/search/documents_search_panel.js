@@ -24,7 +24,7 @@ export class DocumentsSearchPanelItemSettingsPopover extends Component {
         "onCreateChild", // Function, create new child
         "onEdit", // Function, edit element
         "isShareable", // Whether we have the option to share
-        "onShare", // Function, share workspace
+        "onShare", // Function, share folder
         "isEditable",
     ];
 }

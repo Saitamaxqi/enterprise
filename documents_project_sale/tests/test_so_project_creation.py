@@ -18,7 +18,7 @@ class testSoProjectCreation(TestSaleProjectCommon):
             'name': 'Test Project',
         })
 
-    def test_workspace_from_project(self):
+    def test_folder_from_project(self):
         """
             This tests the flow of creating a project and then using
             that project and its workplace to create the product

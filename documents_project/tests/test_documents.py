@@ -75,25 +75,25 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
 
     def test_bridge_parent_folder(self):
         """
-        Tests the "Parent Workspace" setting
+        Tests the "Parent Folder" setting
         """
         parent_folder = self.env.company.documents_project_folder_id
-        self.assertEqual(self.project_pigs.documents_folder_id.folder_id, parent_folder, "The workspace of the project should be a child of the 'Projects' workspace.")
+        self.assertEqual(self.project_pigs.documents_folder_id.folder_id, parent_folder, "The folder of the project should be a child of the 'Projects' folder.")
 
     def test_project_folder_creation(self):
         project = self.env['project.project'].create({
             'name': 'Project',
         })
-        self.assertTrue(project.documents_folder_id, "A workspace should be created for the project")
+        self.assertTrue(project.documents_folder_id, "A folder should be created for the project")
 
     def test_project_task_access_document(self):
         """
         Tests that 'MissingRecord' error should not be raised when trying to switch
-        workspace for a non-existing document.
+        folder for a non-existing document.
 
         - The 'active_id' here is the 'id' of a non-existing document.
-        - We then try to access 'All' workspace by calling the 'search_panel_select_range'
-            method. We should be able to access the workspace.
+        - We then try to access 'All' folder by calling the 'search_panel_select_range'
+            method. We should be able to access the folder.
         """
         missing_id = self.env['documents.document'].search([], order='id DESC', limit=1).id + 1
         result = self.env['documents.document'].with_context(

@@ -10,7 +10,7 @@
                 <div invisible="peppol_reception_mode != 'documents'">
                     <div class="row">
                         <label
-                            string="Document Workspace"
+                            string="Document Folder"
                             for="documents_account_peppol_folder_id"
                             class="col-lg-3"/>
                         <field

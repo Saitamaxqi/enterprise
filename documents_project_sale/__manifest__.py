@@ -4,9 +4,9 @@
     'name': 'Documents - Project - Sale',
     'version': '1.0',
     'category': 'Productivity/Documents',
-    'summary': 'Products Workspace Templates',
+    'summary': 'Products Folder Templates',
     'description': """
-Adds the ability to set workspace templates on products.
+Adds the ability to set folder templates on products.
 """,
     'depends': ['documents_project', 'sale_project'],
     'demo': [

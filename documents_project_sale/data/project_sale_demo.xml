@@ -54,7 +54,7 @@
         </record>
 
         <record id="product_1" model="product.template">
-            <field name="name">Renovation Architect (Workspace Template)</field>
+            <field name="name">Renovation Architect (Folder Template)</field>
             <field name="standard_price">30</field>
             <field name="list_price">45</field>
             <field name="type">service</field>

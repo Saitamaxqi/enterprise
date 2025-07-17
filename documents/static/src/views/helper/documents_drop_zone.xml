@@ -13,7 +13,7 @@
                     </div>
                     <div t-else="" class="o_documents_upload_text text-center text-danger">
                         <i class="d-block fa fa-times-circle fa-9x mb-4"/>
-                        <span>You must be in a specific writable workspace to upload files</span>
+                        <span>You must be in a specific writable folder to upload files</span>
                     </div>
                 </div>
             </div>

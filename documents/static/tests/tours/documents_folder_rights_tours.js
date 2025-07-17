@@ -34,7 +34,7 @@ registry.category("web_tour.tours").add("test_document_folder_rights_for_multi_c
             trigger: ".o_switch_company_menu:contains('Company_A')",
         },
         {
-            content: "Check that the workspace is not visible",
+            content: "Check that the folder is not visible",
             trigger: ".o_search_panel_label_title:not(:contains('Folder1'))",
         },
     ],
