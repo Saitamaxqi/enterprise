@@ -3,7 +3,6 @@
 {
     'name': 'Australia - Payroll with Accounting',
     'category': 'Human Resources',
-    'countries': ['au'],
     'depends': [
         'l10n_au_hr_payroll',
         'hr_payroll_account',
@@ -15,7 +14,7 @@ Accounting Data for Australian Payroll Rules.
 =============================================
     """,
 
-    'auto_install': True,
+    'auto_install': ['l10n_au', 'hr_payroll_account'],
     'data': [
         "data/hr_salary_rule_data.xml",
         "data/account_chart_template_data.xml",
