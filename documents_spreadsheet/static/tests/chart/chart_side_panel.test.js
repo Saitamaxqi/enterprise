@@ -415,6 +415,33 @@ test("geo chart", async () => {
     expect(model.getters.getChartDefinition(chartId).region).toBe("europe");
 });
 
+test("sunburst chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView({
+        additionalContext: {
+            graph_groupbys: ["product_id", "date:month"],
+            graph_measure: ["probability"],
+        },
+    });
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_sunburst");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_sunburst");
+    const runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("doughnut");
+    expect(runtime.chartJsConfig.options.plugins.sunburstHoverPlugin).toEqual({ enabled: true });
+    expect(runtime.chartJsConfig.data.datasets[0].data).toMatchObject([
+        { groups: ["xpad", "December 2016"], label: "December 2016", value: 110 },
+        { groups: ["xpad", "October 2016"], label: "October 2016", value: 11 },
+        { groups: ["xphone", "April 2016"], label: "April 2016", value: 10 },
+    ]);
+    expect(runtime.chartJsConfig.data.datasets[1].data).toMatchObject([
+        { groups: ["xpad"], label: "xpad", value: 121 },
+        { groups: ["xphone"], label: "xphone", value: 10 },
+    ]);
+});
+
 test("cannot change chart type to geo chart for a chart not grouped by country", async () => {
     const { model, env } = await createSpreadsheetFromGraphView({});
     await openChartSidePanel(model, env);

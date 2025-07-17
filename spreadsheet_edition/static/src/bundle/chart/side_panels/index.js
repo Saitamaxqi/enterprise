@@ -15,6 +15,7 @@ const {
     WaterfallChartDesignPanel,
     GeoChartDesignPanel,
     FunnelChartDesignPanel,
+    SunburstChartDesignPanel,
 } = spreadsheet.components;
 
 chartSidePanelComponentRegistry
@@ -33,6 +34,10 @@ chartSidePanelComponentRegistry
     .add("odoo_radar", {
         configuration: CommonOdooChartConfigPanel,
         design: RadarChartDesignPanel,
+    })
+    .add("odoo_sunburst", {
+        configuration: CommonOdooChartConfigPanel,
+        design: SunburstChartDesignPanel,
     })
     .add("odoo_waterfall", {
         configuration: CommonOdooChartConfigPanel,
