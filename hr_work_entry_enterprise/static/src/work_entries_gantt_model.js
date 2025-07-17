@@ -1,8 +1,6 @@
-import { useWorkEntry } from "@hr_work_entry/views/work_entry_hook";
 import { localStartOf } from "@web_gantt/gantt_helpers";
 import { GanttModel } from "@web_gantt/gantt_model";
-
-const { DateTime } = luxon;
+import { serializeDate } from "@web/core/l10n/dates";
 
 export class WorkEntriesGanttModel extends GanttModel {
     /**
@@ -10,8 +8,6 @@ export class WorkEntriesGanttModel extends GanttModel {
      */
     setup() {
         super.setup(...arguments);
-        const { generateWorkEntries } = useWorkEntry({ getRange: () => this.getRange() });
-        this.generateWorkEntries = generateWorkEntries;
     }
 
     getRange() {
@@ -25,15 +21,60 @@ export class WorkEntriesGanttModel extends GanttModel {
         return { focusDate: date, startDate, stopDate, rangeId };
     }
 
+    async resetWorkEntries(cellsInfo, recordIds) {
+        const cellsFormattedData = new Set();
+        for (const { start, stop, rowId } of cellsInfo) {
+            const schedule = this.getSchedule({ start, stop, rowId });
+            cellsFormattedData.add({ date: schedule.date, employee_id: schedule.employee_id });
+        }
+        await this.orm.call("hr.work.entry.regeneration.wizard", "regenerate_work_entries", [
+            [],
+            [...cellsFormattedData],
+            recordIds,
+        ]);
+        await this.fetchData();
+    }
+
+    async multiReplaceRecords(multiCreateData, cellsInfo, records) {
+        if (!cellsInfo.length) {
+            return;
+        }
+        const new_records = [];
+        const values = await multiCreateData.record.getChanges();
+        for (const { start, stop, rowId } of cellsInfo) {
+            const schedule = this.getSchedule({ start, stop, rowId });
+            new_records.push({ ...schedule, ...values });
+        }
+        const created = await this.orm.create(this.metaData.resModel, new_records, {
+            context: { ...this.searchParams.context, multi_create: true },
+        });
+        if (records.length && created) {
+            await this.orm.unlink(this.metaData.resModel, records);
+        }
+        await this.fetchData();
+    }
+
     /**
      * @protected
      * @override
      */
-    async _fetchData(metaData) {
-        const { globalStart } = metaData;
-        if (globalStart <= DateTime.local().plus({ months: 1 })) {
-            await this.generateWorkEntries();
+    _getDomain(metaData) {
+        return this.searchParams.domain;
+    }
+
+    /**
+     * @protected
+     * @override
+     */
+    async _fetchData(metaData, additionalContext) {
+        if (!this.orm.isSample) {
+            const { start, end } = this.getRange();
+            await this.orm.call("hr.employee", "generate_work_entries", [
+                [],
+                serializeDate(start),
+                serializeDate(end),
+            ]);
         }
-        return super._fetchData(...arguments);
+        await super._fetchData(...arguments);
     }
 }

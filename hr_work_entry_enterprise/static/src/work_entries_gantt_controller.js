@@ -6,16 +6,10 @@ export class WorkEntriesGanttController extends GanttController {
     setup() {
         super.setup(...arguments);
         const { onRegenerateWorkEntries } = useWorkEntry({
-            getEmployeeIds: () => {
-                const { rows } = this.model.data;
-                if (rows.length === 1) {
-                    const { groupedByField, resId } = rows[0];
-                    if (groupedByField === "employee_id" && Boolean(resId)) {
-                        return [resId];
-                    }
-                }
-                return [];
-            },
+            getEmployeeIds: () =>
+                this.model.data.rows
+                    .filter((r) => r.groupedByField === "employee_id")
+                    .map((e) => e.resId),
             getRange: () => this.model.getRange(),
             onClose: () => this.model.fetchData({}),
         });
