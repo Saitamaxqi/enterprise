@@ -2,5 +2,5 @@
 from . import ai_logging
 from . import llm_api_service
 from . import llm_providers
-from . import url_scraping
+from . import html_extractor
 from . import tools_schema

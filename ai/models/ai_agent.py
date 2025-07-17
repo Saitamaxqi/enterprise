@@ -23,7 +23,6 @@ from odoo.tools.mail import html_to_inner_content
 from odoo.tools.misc import mute_logger, submap
 
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
-from odoo.addons.ai.utils.url_scraping import URLScraper
 from odoo.addons.ai.utils.llm_providers import PROVIDERS, get_provider
 
 _logger = logging.getLogger(__name__)
@@ -73,6 +72,10 @@ PREPROMPTS = {
         - Use the context to answer the question.
         - Provide references to all attachments as a new paragraph at the end of the response, listing each reference in a bullet point.
         - If your response doesn't make use of the context, don't list the attachments.
+    """).strip(),
+    'unaccessible_references': dedent("""
+        - Ignore UNACCESSIBLE_REFERENCES in the response's references even if you use them in your response.
+        - Append only accessible references to the response's references if you use them, if you don't use any in the response or only unaccessible ones, don't append any references.
     """).strip(),
 }
 
@@ -241,23 +244,6 @@ class AIAgent(models.Model):
         help="If checked, the agent will only respond based on the provided sources.")
     image_128 = fields.Image("Image", related="partner_id.image_1920", max_width=128, max_height=128, readonly=False)
     avatar_128 = fields.Image("Avatar", related="partner_id.avatar_128")
-    attachment_ids = fields.One2many(
-        comodel_name='ir.attachment',
-        inverse_name='res_id',
-        string="Attachment Sources",
-        domain=[('url', '=', False)],
-    )
-
-    urls = fields.Text(string="URLs")
-    url_attachment_ids = fields.One2many(
-        comodel_name='ir.attachment',
-        inverse_name='res_id',
-        string="URL Sources",
-        domain=[('url', '!=', False)],
-    )
-
-    attachment_processing_percentage = fields.Integer(compute="_compute_attachment_processing_percentage", default=100)
-
     topic_ids = fields.Many2many(
         'ai.topic',
         string="Topics",
@@ -266,6 +252,13 @@ class AIAgent(models.Model):
     partner_id = fields.Many2one('res.partner', required=True, ondelete='cascade', index=True)
 
     is_system_agent = fields.Boolean('System Agent', default=False)
+
+    sources_ids = fields.One2many(
+        'ai.agent.source',
+        'agent_id',
+        string="Sources",
+    )
+    sources_fully_processed = fields.Boolean(compute="_compute_sources_fully_processed", default=True)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -279,15 +272,8 @@ class AIAgent(models.Model):
             vals['partner_id'] = partner.id
         ai_agents = super().create(vals_list)
         for agent in ai_agents:
-            if agent.attachment_ids:
-                agent._setup_attachment_embeddings()
-
             if not agent.image_128:
                 agent.image_128 = base64.b64encode(image_placeholder)
-
-            if agent.urls:
-                agent._process_urls()
-
         return ai_agents
 
     def write(self, vals):
@@ -298,13 +284,17 @@ class AIAgent(models.Model):
         result = super().write(vals)
         for agent in self:
             new_provider = agent._get_provider()
-            if 'attachment_ids' in vals or new_provider != old_providers.get(agent.id):
-                agent._setup_attachment_embeddings()
-
-            if 'urls' in vals:
-                agent._process_urls()
-
+            if new_provider != old_providers[agent.id]:
+                embedding_model = agent._get_embedding_model()
+                agent.sources_ids._sync_new_agent_provider(embedding_model)
         return result
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_sources(self):
+        """Delete sources (and their attachments) when an agent is deleted."""
+        for agent in self:
+            if agent.sources_ids:
+                agent.sources_ids.unlink()
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_system_agent(self):
@@ -333,154 +323,21 @@ class AIAgent(models.Model):
                 return p.embedding_model
         raise UserError(_("No embedding model found for the selected provider"))
 
-    @api.constrains('urls')
-    def _check_url(self):
-        for agent in self.filtered('urls'):
-            urls = [url.strip() for url in agent.urls.split('\n') if url.strip()]
-            # Allow up to 300 URLs for each agent
-            if len(urls) > 300:
-                raise ValidationError(_("A single agent can only have up to 300 URLs."))
-
-            for url in urls:
-                if url and not url.startswith(('https://', 'http://', 'ftp://')):
-                    raise ValidationError(
-                        _("URL %s does not seem complete, as it does not begin with http(s):// or ftp://", url))
-
-    @api.onchange('attachment_ids')
-    def _onchange_attachment_ids(self):
+    def action_refresh_sources(self):
+        """
+        Refresh the sources to show the new status if any was changed by the cron.
+        Run the cron if there are sources to process.
+        """
         self.ensure_one()
-        if not self.attachment_ids:
-            return
-
-        unique_attachment_ids = {attachment.checksum: attachment.id for attachment in self.attachment_ids}.values()
-        unique_attachments = self.attachment_ids.filtered(lambda att: att.id in unique_attachment_ids)
-
-        valid_attachments = unique_attachments.filtered(lambda att: att.index_content and len(att.index_content.split()) > 1)
-        invalid_attachments = unique_attachments - valid_attachments
-
-        self.attachment_ids = valid_attachments
-
-        # Check for invalid attachments
-        if invalid_attachments:
-            attachment_names = ", ".join([attachment.name for attachment in invalid_attachments])
-
-            return {
-                'warning': {
-                    'title': _("Invalid Attachment"),
-                    'message': _("%s cannot be processed to train the AI Agent. Try with different file format!", attachment_names),
-                    'type': 'notification',
-                }
-            }
-
-    def _setup_attachment_embeddings(self):
-        self.ensure_one()
-        trigger_embeddings_cron = False
-        if not self.attachment_ids:
-            return False
-
-        for attachment in self.attachment_ids:
-            if attachment.index_content and len(attachment.index_content.split()) > 1:
-                # Check if this attachment already has embeddings
-                existing = self.env['ai.embedding'].search([('attachment_id', '=', attachment.id), ('embedding_model', '=', self._get_embedding_model())], limit=1)
-                if not existing:
-                    attachment._generate_embedding(self._get_embedding_model())
-                    trigger_embeddings_cron = True
-        if trigger_embeddings_cron:
-            self.env.ref('ai.ir_cron_generate_embedding')._trigger()
-
-    def _process_urls(self):
-        """Process URLs stored in the agent's urls field.
-        Before scraping, it checks if the URLs already have attachments in the db."""
-
-        self.ensure_one()
-        trigger_embeddings_cron = False
-        if not self.urls:
-            return False
-
-        urls = list({url.strip() for url in self.urls.split('\n') if url.strip()})
-        if not urls:
-            return False
-
-        # Identify attachments to unlink (URLs no longer in the list)
-        existing_agent_attachments = self.url_attachment_ids.filtered(lambda a: a.url)
-        attachments_to_unlink = existing_agent_attachments.filtered(
-            lambda a: a.url not in urls
-        )
-        if attachments_to_unlink:
-            self.write({
-                'url_attachment_ids': [Command.unlink(attachment.id) for attachment in attachments_to_unlink]
-            })
-
-        # Get existing attachments if the URL already has an attachment
-        existing_url_attachments = self.env['ir.attachment'].search([
-            ('url', 'in', urls),
-            ('res_model', '=', 'ai.agent')
-        ])
-
-        # Create a dictionary mapping URLs to existing attachments
-        existing_url_map = {attachment.url: attachment for attachment in existing_url_attachments}
-        scraper = URLScraper()
-        failed_urls = []
-
-        for url in urls:
-            # Check if URL already has an attachment
-            if url in existing_url_map:
-                # Map existing attachment to this agent
-                existing_attachment = existing_url_map[url]
-                if existing_attachment.id not in self.url_attachment_ids.ids:
-                    self.write({
-                        'url_attachment_ids': [Command.link(existing_attachment.id)]
-                    })
-                    # When a new url attachment is linked, we need to generate the embedding
-                    # if it doesn't exist yet
-                    existing = self.env['ai.embedding'].search([('attachment_id', '=', existing_attachment.id), ('embedding_model', '=', self._get_embedding_model())], limit=1)
-                    if not existing:
-                        existing_attachment._generate_embedding(self._get_embedding_model())
-                        trigger_embeddings_cron = True
-                continue
-
-            # If URL doesn't have an attachment, scrape and create new one
-            result = scraper.scrap(url)
-            if not result or not result['content']:
-                _logger.warning("No content retrieved from URL %s", url)
-                failed_urls.append(url)
-                continue
-
-            # Create attachment with URL content
-            attachment_values = {
-                'name': f"{result['title']}-({url})",
-                'res_model': 'ai.agent',
-                'res_id': self.id,
-                'type': 'url',
-                'index_content': result['content'],
-                'mimetype': 'text/html',
-                'url': url
-            }
-
-            new_attachment = self.env['ir.attachment'].create(attachment_values)
-            new_attachment._generate_embedding(self._get_embedding_model())
-            self.write({
-                'url_attachment_ids': [Command.link(new_attachment.id)]
-            })
-            trigger_embeddings_cron = True
-
-        if trigger_embeddings_cron:
-            self.env.ref('ai.ir_cron_generate_embedding')._trigger()
-
-        if failed_urls:
-            failed_urls_str = ", ".join(failed_urls)
-            raise UserError(_("The following URLs cannot not be accessed or used for the agent: %s", failed_urls_str))
-
-    def action_refresh(self):
-        self.ensure_one()
-        if not self.env.user.has_group('base.group_system'):
-            return
-
         cron = self.env.ref('ai.ir_cron_generate_embedding')
-        last_cron_time = cron.lastcall
+        unprocessed_sources = self.sources_ids.filtered(lambda s: s.status == 'processing')
+        if unprocessed_sources:
+            cron._trigger()
 
-        if not last_cron_time or last_cron_time < fields.Datetime.now() - timedelta(minutes=3):
-            self.env.ref('ai.ir_cron_generate_embedding')._trigger()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'soft_reload',
+        }
 
     def get_direct_response(self, prompt: str, context_message: str = "", enable_html_response: bool = False):
         """Get a direct response from the agent's provider LLM without chat history or channel creation."""
@@ -571,7 +428,7 @@ class AIAgent(models.Model):
 
         This method orchestrates the complete response generation flow:
         1. Constructs system context from agent settings and additional context
-        2. Retrieves relevant RAG context from attachments and URLs (if available)
+        2. Retrieves relevant RAG context from sources (if any)
         3. Sends the complete conversation to the LLM API
         4. Processes any tool calls in the response, executing them and continuing the conversation
         5. Stops when the LLM provides a final response or all tools request termination
@@ -640,8 +497,7 @@ class AIAgent(models.Model):
         self.ensure_one()
         messages = []
         context = ""
-        all_attachments = self.attachment_ids + self.url_attachment_ids
-        if all_attachments:
+        if self.sources_ids:
             provider = self._get_provider()
             embedding_model = self._get_embedding_model()
             response = LLMApiService(env=self.env, provider=provider).get_embedding(
@@ -655,7 +511,7 @@ class AIAgent(models.Model):
             prompt_embedding = response['data'][0]['embedding']
             similar_embeddings = self.env['ai.embedding']._get_similar_chunks(
                 query_embedding=prompt_embedding,
-                attachment_ids=all_attachments.ids,
+                sources=self.sources_ids,
                 embedding_model=self._get_embedding_model(),
                 top_n=5
             )
@@ -665,33 +521,20 @@ class AIAgent(models.Model):
                     context += f"{embedding.attachment_id.name}\n{embedding.content}\n\n"
                     if embedding.attachment_id and embedding.attachment_id.name:
                         referenced_attachments.add(embedding.attachment_id.name)
-                context += f"##References:\n{', '.join(referenced_attachments)}"
-
+                referenced_sources = self.env['ai.agent.source'].search([('attachment_id.name', 'in', referenced_attachments)])
+                unaccessible_sources_names = referenced_sources.filtered(lambda s: not s.user_has_access).mapped('name')
+                accessible_referenced_sources_names = referenced_sources.filtered(lambda s: s.user_has_access).mapped('name')
+                context += f"##References:\n{', '.join(accessible_referenced_sources_names)}"
+                if unaccessible_sources_names:
+                    context += f"\n [UNACCESSIBLE_REFERENCES: {', '.join(unaccessible_sources_names)}] {PREPROMPTS['unaccessible_references']}"
         if context:
             messages.append(f"##Context information:\n\n{context}\n{PREPROMPTS['context']}")
         return messages
 
-    @api.depends("attachment_ids", "url_attachment_ids")
-    def _compute_attachment_processing_percentage(self):
+    @api.depends("sources_ids.status")
+    def _compute_sources_fully_processed(self):
         for record in self:
-            all_attachments = record.attachment_ids + record.url_attachment_ids
-            n_docs = len(all_attachments)
-            if not n_docs:
-                record.attachment_processing_percentage = 100
-                continue
-
-            embedding_model = record._get_embedding_model()
-            self.env.cr.execute(SQL(
-                '''
-                    SELECT COUNT(DISTINCT attachment_id)
-                    FROM ai_embedding
-                    WHERE attachment_id = ANY(%s) AND embedding_model = %s AND embedding_vector IS NULL
-                ''', all_attachments.ids, embedding_model)
-            )
-            not_fully_processed_count = self.env.cr.fetchall()[0][0]
-            percentage = int((n_docs - not_fully_processed_count) / n_docs * 100) if n_docs else 0
-
-            record.attachment_processing_percentage = percentage
+            record.sources_fully_processed = not record.sources_ids.filtered(lambda s: s.status == 'processing')
 
     def _eval_ai_prompts(self, rendered_html, remove_prompts=False, ai_context=""):
         """Evaluate AI prompts in the given HTML content"""

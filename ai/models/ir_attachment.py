@@ -59,12 +59,14 @@ class IrAttachment(models.Model):
         """
         Clean the PDF content by removing unwanted characters and formatting.
         """
+        # Remove NUL characters that can cause PostgreSQL insertion errors
+        buf = buf.replace('\x00', '')
         buf = buf.replace('\r\n', '\n').replace('\r', '\n')
         paragraphs = re.split(r'\n\s*\n', buf)
         paragraphs = [re.sub(r'[ \t]+', ' ', p.strip()) for p in paragraphs]
         return '\n'.join(paragraphs)
 
-    def _generate_embedding(self, embedding_model):
+    def _setup_attachment_chunks(self, embedding_model):
         self.ensure_one()
         content = self._compute_pdf_content()
         chunks = self._chunk_text(content if content else self.index_content)
@@ -89,6 +91,8 @@ class IrAttachment(models.Model):
         :returns: Cleaned text content
         :rtype: str
         """
+        # Remove NUL characters that can cause PostgreSQL insertion errors
+        text = text.replace('\x00', '')
         text = text.replace('\r\n', '\n')
 
         # Split into lines and process

@@ -73,15 +73,16 @@
                         type="object"
                         string="Test">
                     </button>
-                    <div invisible="attachment_processing_percentage == 100" role="status" class="alert alert-warning mb-0 py-2 px-3 w-100 d-flex justify-content-center align-items-center">
+                    <div invisible="sources_fully_processed" role="status" class="alert alert-warning mb-0 py-2 px-3 w-100 d-flex justify-content-center align-items-center">
                         <div class="d-flex align-items-center">
                             <i class="fa fa-clock-o me-2" />
                             <span>Processing your sources, it might take a few minutes...</span>
                         </div>
-                        <button 
-                            name="action_refresh"
+                        <button
+                            name="action_refresh_sources"
                             class="btn btn-sm btn-link"
-                            type="object">
+                            type="object"
+                            groups="base.group_system">
                             <span class="me-1">Refresh</span>
                             <i class="fa fa-refresh me-1"/>
                         </button>
@@ -114,22 +115,30 @@
                         <field name="system_prompt" placeholder="e.g. You are a support operator, you can answer questions related to ..."/>
                     </group>
                     <notebook>
-                        <page string="Attachments" name="attachments">
-                            <group>
-                                <field
-                                    name="attachment_ids"
-                                    widget="many2many_binary"
-                                    string="Attach Sources"
-                                    colspan="2"
-                                    class="o_agent_attachments"
-                                    options="{'accepted_file_extensions': '.pdf,.docx,.pptx,.xlsx,.odt,.ods'}"
-                                />
-                            </group>
-                        </page>
-                        <page string="URLs" name="urls">
-                            <div class="o_field_widget o_field_text">
-                                <field name="urls" placeholder="Enter URLs, one per line..." rows="5"/>
-                            </div>
+                        <page string="Sources" name="ai_agent_sources">
+                            <field name="sources_ids">
+                                <list string="Sources" limit="10" editable="bottom" decoration-muted="not is_active">
+                                    <field name="type" width="25px" widget="agent_source_type_icon" nolabel="1"/>
+                                    <field name="name" widget="source_view_link"/>
+                                    <field name="is_active" widget="boolean_toggle" readonly="status in ('processing', 'failed')"/>
+                                    <field name="write_date" optional="hide"/>
+                                    <field name="status" widget="status_badge_tooltip" decoration-success="status == 'indexed'" decoration-info="status == 'processing'" decoration-danger="status == 'failed'"/>
+                                    <field name="file_size" widget="source_size" optional="hide"/>
+                                    <field name="error_details" column_invisible="True"/> <!-- Required by status_badge_tooltip widget-->
+                                    <field name="mimetype" column_invisible="True"/> <!-- Required by agent_source_type_icon widget-->
+                                    <field name="user_has_access" column_invisible="True"/> <!-- Required by source_view_link widget-->
+                                    <button name="action_retry_failed_source" string="Retry" type="object" class="btn-link" icon="fa-refresh" invisible="status != 'failed'"/>
+                                    <control>
+                                        <button
+                                            string="Add a source"
+                                            name="action_open_sources_dialog"
+                                            type="object"
+                                            class="btn-link"
+                                            context="{'agent_id': parent.id}"
+                                        />
+                                    </control>
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
@@ -145,13 +154,13 @@
                 <field name="name" string="Agent" filter_domain="['|', ('name','ilike',self), ('subtitle','ilike',self)]"/>
                 <field name="system_prompt"/>
                 <field name="topic_ids"/>
-                <field name="attachment_ids"
+                <field name="sources_ids"
                        string="Sources"
                        filter_domain="[
                        '|', '|',
-                       ('attachment_ids.name','ilike',self),
-                       ('url_attachment_ids.name','ilike',self),
-                       ('url_attachment_ids.url','ilike',self)]"/>
+                       ('sources_ids.name','ilike',self),
+                       ('sources_ids.attachment_id.name','ilike',self),
+                       ('sources_ids.url','ilike',self)]"/>
                 <filter name="filter_is_archived" string="Archived" domain="[('active', '=', False)]"/>
                 <group>
                     <filter string="Model" name="model" domain="[]" context="{'group_by':'llm_model'}"/>

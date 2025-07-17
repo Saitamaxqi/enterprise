@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from . import ai_topic
 from . import ai_agent
+from . import ai_agent_source
 from . import ai_embedding
 from . import ir_attachment
 from . import mail_composer_mixin

@@ -8,9 +8,9 @@ from lxml import html
 _logger = logging.getLogger(__name__)
 
 
-class URLScraper:
+class HTMLExtractor:
     """
-    Scrapes a webpage and extracts text content as a series of paragraphs,
+    Extracts text content from HTML sources (URLs or HTML strings) as a series of paragraphs,
     simplifying the hierarchical structure into a clean text format.
     """
 
@@ -37,9 +37,16 @@ class URLScraper:
         ]
 
     def scrap(self, url):
-        html_content = self._fetch_url(url)
+        """
+        Scrape a webpage and extract text content.
+        Args:
+            url (str): The URL to scrape
+        Returns:
+            dict: Dictionary with 'content' and 'title' keys, or None if scraping fails
+        """
+        html_content, error_message = self._fetch_url(url)
         if not html_content:
-            return None
+            return {"content": None, "title": None, "error": error_message}
 
         parser = html.HTMLParser(remove_blank_text=True, remove_comments=True, remove_pis=True)
         tree = html.fromstring(html_content, parser=parser)
@@ -52,8 +59,35 @@ class URLScraper:
 
         # Extract content as paragraphs
         content = self._extract_content(tree)
+        if not content:
+            return {"content": None, "title": None, "error": "No extractable content found on the page."}
 
-        return {"content": content, "title": title}
+        return {"content": content, "title": title, "error": None}
+
+    def extract_from_html(self, html_content):
+        """
+        Extract text content from HTML string (e.g., from a knowledge HTML field body).
+        Args:
+            html_content (str): The HTML content as a string
+            title (str, optional): Optional title for the content
+        Returns:
+            dict: Dictionary with 'content' and 'title' keys
+        """
+        if not html_content:
+            return {"content": ""}
+
+        # Wrap content in a proper HTML structure to ensure _clean_html_tree works correctly
+        wrapped_html = f"<html><body>{html_content}</body></html>"
+        parser = html.HTMLParser(remove_blank_text=True, remove_comments=True, remove_pis=True)
+        tree = html.fromstring(wrapped_html, parser=parser)
+
+        # Clean HTML tree
+        self._clean_html_tree(tree)
+
+        # Extract content as paragraphs
+        content = self._extract_content(tree)
+
+        return {"content": content}
 
     def _fetch_url(self, url):
         """Fetch URL content"""
@@ -69,12 +103,20 @@ class URLScraper:
             # Check content type to ensure we're dealing with HTML
             content_type = response.headers.get('Content-Type', '').lower()
             if 'text/html' not in content_type and 'application/xhtml+xml' not in content_type:
-                _logger.warning("URL %s returned non-HTML content: %s", url, content_type)
-                return None
-            return response.content
+                error_msg = f"URL {url} returned non-HTML content: {content_type}"
+                _logger.warning(error_msg)
+                return None, error_msg
+
+            if not response.content:
+                error_msg = f"URL {url} returned empty content"
+                _logger.warning(error_msg)
+                return None, error_msg
+
+            return response.content, None
         except requests.exceptions.RequestException as e:
-            _logger.error("Error scraping URL %s: %s", url, e)
-            return None
+            error_msg = f"Failed to fetch URL: {e!s}"
+            _logger.error(error_msg)
+            return None, error_msg
 
     def _get_title(self, tree):
         """Extract page title."""
@@ -112,9 +154,12 @@ class URLScraper:
 
             # Check if this is a heading element
             if tag in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                # If we have content from a previous section, add it as a paragraph
-                if current_heading and current_paragraph_parts:
-                    paragraph = f"{current_heading}. {' '.join(current_paragraph_parts)}"
+                # If we have a previous heading, add it (with or without content)
+                if current_heading:
+                    if current_paragraph_parts:
+                        paragraph = f"{current_heading}. {' '.join(current_paragraph_parts)}"
+                    else:
+                        paragraph = current_heading
                     paragraphs.append(paragraph)
                     current_paragraph_parts = []
 
@@ -193,11 +238,14 @@ class URLScraper:
                     else:
                         paragraphs.append(text)
 
-        if current_heading and current_paragraph_parts:
-            paragraph = f"{current_heading}. {' '.join(current_paragraph_parts)}"
+        if current_heading:
+            if current_paragraph_parts:
+                paragraph = f"{current_heading}. {' '.join(current_paragraph_parts)}"
+            else:
+                paragraph = current_heading
             paragraphs.append(paragraph)
 
-        return "\n\n".join(paragraphs)
+        return "\n\n".join(p.strip() for p in paragraphs if p.strip())
 
     def _process_table_as_text(self, table):
         """Process a table element and return its text content."""
@@ -263,4 +311,8 @@ class URLScraper:
         text = re.sub(r'\s+', ' ', text)
         # Remove excessive newlines
         text = re.sub(r'\n+', ' ', text)
+        # Remove control characters and special characters
+        text = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', text)
+        # Remove HTML tags
+        text = re.sub(r'[<>{}[\]\\]', '', text)
         return text.strip()

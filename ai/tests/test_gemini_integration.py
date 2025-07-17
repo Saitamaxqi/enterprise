@@ -30,6 +30,16 @@ class TestGeminiIntegration(TransactionCase):
                 "res_id": self.agent.id,
             }
         )
+        self.agent_source = self.env["ai.agent.source"].create(
+            {
+                "name": "Test Document",
+                "agent_id": self.agent.id,
+                "type": "binary",
+                "attachment_id": test_attachment.id,
+                "status": "indexed",
+                "is_active": True,
+            }
+        )
         self.test_embedding = self.env["ai.embedding"].create(
             {
                 "attachment_id": test_attachment.id,

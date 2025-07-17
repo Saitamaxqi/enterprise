@@ -5,7 +5,11 @@
     "version": "1.0",
     "category": "Hidden",
     "summary": "Automatically sort your documents.",
-    "description": "Automatically sort your documents.",
+    "description": """
+        Automatically sort your documents.
+        This module is only used to sort documents automatically and cannot be used for any ai-documents related features since it relies on base_automation as well.
+        It should be renamed later to ai_documents_automation.
+    """,
     "depends": ["ai", "documents", "base_automation"],
     "demo": [
         "demo/ir_actions_server_tools.xml",
