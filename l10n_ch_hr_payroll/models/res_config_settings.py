@@ -77,7 +77,6 @@ class ResConfigSettings(models.TransientModel):
     l10n_ch_statistics_convention = fields.Selection(
         related='company_id.l10n_ch_statistics_convention',
         readonly=False,
-        default="individualContract",
         string="Statistics Pay Agreement"
     )
     l10n_ch_statistics_payroll_unit = fields.Char(
