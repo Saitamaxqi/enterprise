@@ -71,5 +71,8 @@ for IoT Box config.
             'pos_enterprise/static/src/backend/components/fields/duration_field.js',
             'pos_enterprise/static/src/backend/components/fields/duration_field.xml',
         ],
+        'web.assets_unit_tests': [
+            'pos_enterprise/static/tests/unit/**/*',
+        ],
     },
 }

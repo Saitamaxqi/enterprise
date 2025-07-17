@@ -106,6 +106,10 @@ class PosPrepDisplay(models.Model):
             )
         ]
 
+    @api.model
+    def _load_pos_data_fields(self, config_id):
+        return ['id', 'category_ids', 'write_date']
+
     @api.depends('stage_ids', 'pos_config_ids', 'category_ids')
     def _compute_order_count(self):
         for preparation_display in self:
