@@ -13,6 +13,9 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        # set high threshold to be sure to not hit mail limit during tests for a model
+        cls.env['ir.config_parameter'].sudo().set_param('mail.gateway.loop.threshold', 50)
+
         # test partners
         cls.partner_1, cls.partner_2, cls.partner_3 = cls.env['res.partner'].create([
             {
@@ -491,3 +494,62 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
 
         self.assertIn(self.helpdesk_portal.partner_id, ticket.message_partner_ids,
                     "Portal user's partner should be added as a follower after sharing")
+
+    def test_ticket_creation_removes_email_signatures(self):
+        """
+        Tests that email signature is correctly removed from a ticket
+        description when a ticket is created from an email alias.
+        """
+
+        gmail_email_source = f"""From: {self.partner_1.email_formatted}
+To: {self.test_team.alias_id.alias_full_name}
+Subject: Test Gmail Signature Removal
+Content-Type: text/html;
+
+<p>This is the main helpdesk ticket content.</p>
+<span>--</span>
+<div data-smartmail="gmail_signature">
+<p>Valid Lelitre</p>
+<p>Concerned Customer</p>
+</div>
+"""
+
+        outlook_email_source = f"""From: {self.partner_2.email_formatted}
+To: {self.test_team.alias_id.alias_full_name}
+Subject: Test Outlook Signature Removal
+Content-Type: text/html;
+
+<p>This is the main helpdesk ticket content.</p>
+<div id="Signature">
+<p>Valid Poilvache</p>
+<p>Valued Client</p>
+</div>
+"""
+        with self.mock_mail_gateway():
+            gmail_ticket_id = self.env['mail.thread'].message_process(
+                model='helpdesk.ticket',
+                message=gmail_email_source,
+                custom_values={'team_id': self.test_team.id}
+            )
+            outlook_ticket_id = self.env['mail.thread'].message_process(
+                model='helpdesk.ticket',
+                message=outlook_email_source,
+                custom_values={'team_id': self.test_team.id}
+            )
+
+        # 1. Verify Gmail signature removal
+        self.assertTrue(gmail_ticket_id, "Gmail ticket creation should return a valid ID.")
+        gmail_ticket = self.env['helpdesk.ticket'].browse(gmail_ticket_id)
+
+        self.assertIn("This is the main helpdesk ticket content", gmail_ticket.description, "The main content should be present.")
+        self.assertNotIn("--", gmail_ticket.description, "The Gmail signature separator should have been removed.")
+        self.assertNotIn("Valid Lelitre", gmail_ticket.description, "The Gmail signature should have been removed.")
+        self.assertNotIn("Concerned Customer", gmail_ticket.description, "The Gmail signature should have been removed.")
+
+        # 2. Verify Outlook signature removal
+        self.assertTrue(outlook_ticket_id, "Outlook ticket creation should return a valid ID.")
+        outlook_ticket = self.env['helpdesk.ticket'].browse(outlook_ticket_id)
+
+        self.assertIn("This is the main helpdesk ticket content", outlook_ticket.description, "The main content should be present.")
+        self.assertNotIn("Valid Poilvache", outlook_ticket.description, "The Outlook signature should have been removed.")
+        self.assertNotIn("Valued Client", outlook_ticket.description, "The Outlook signature should have been removed.")

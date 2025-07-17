@@ -3,10 +3,11 @@
 import ast
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
+from lxml import html
 
 from odoo import api, fields, models, tools, _
 from odoo.fields import Command, Domain
-from odoo.tools import LazyTranslate
+from odoo.tools import html_sanitize, LazyTranslate
 from odoo.addons.web.controllers.utils import clean_action
 
 _lt = LazyTranslate(__name__)
@@ -927,8 +928,29 @@ class HelpdeskTicket(models.Model):
                     ('partner_id', '=', False), email_domain,
                 ]).write({'partner_id': new_partner[0].id})
         # use the sanitized body of the email from the message thread to populate the ticket's description
-        if not self.description and message.subtype_id == self._creation_subtype() and tools.email_normalize(self.partner_email) == tools.email_normalize(message.email_from):
-            self.description = message.body
+        if (
+            not self.description
+            and message.subtype_id == self._creation_subtype()
+            and msg_vals.get('message_type') == 'email'
+            and tools.email_normalize(self.partner_email) == tools.email_normalize(message.email_from)
+            and msg_vals.get('body')
+        ):
+            # Remove the signature from the email body
+            source_html = msg_vals.get('body')
+            doc = html.fromstring(source_html)
+
+            signature_xpath = (
+                '//*[@id="Signature"] | '
+                '//*[@data-smartmail="gmail_signature"] | '
+                '//span[normalize-space(.) = "--"]'
+            )
+
+            for element in doc.xpath(signature_xpath):
+                element.getparent().remove(element)
+
+            cleaned_html = html.tostring(doc, encoding='unicode').strip()
+            self.description = html_sanitize(cleaned_html)
+
         return super()._message_post_after_hook(message, msg_vals)
 
     def _send_email_notify_to_cc(self, partners_to_notify):
