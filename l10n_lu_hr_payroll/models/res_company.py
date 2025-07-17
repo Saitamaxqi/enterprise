@@ -11,7 +11,7 @@ class ResCompany(models.Model):
 
     l10n_lu_accident_insurance_factor = fields.Selection(
         selection=[
-            ('0.9', '0.9'),
+            ('0.85', '0.85'),
             ('1.0', '1.0'),
             ('1.1', '1.1'),
             ('1.3', '1.3'),
