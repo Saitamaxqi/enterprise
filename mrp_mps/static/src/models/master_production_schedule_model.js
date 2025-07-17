@@ -155,7 +155,7 @@ export class MasterProductionScheduleModel extends EventBus {
                 target: 'new',
                 res_id: productionScheduleId,
             }, {
-                onClose: () => this.reload(productionScheduleId),
+                onClose: () => {this.reload(productionScheduleId)},
             });
         });
     }
