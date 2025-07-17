@@ -160,7 +160,8 @@ class IoTController(http.Controller):
                 _logger.info('Updating IoT %s with data: %s', box, create_update_value)
                 box.write(create_update_value)
         else:
-            create_update_value['name'] = ensure_unique_name(iot_box['name'])
+            name = 'IoT Box' if new_iot_version.startswith('L') else 'Virtual IoT Box'
+            create_update_value['name'] = ensure_unique_name(name)
             icp_sudo = request.env['ir.config_parameter'].sudo()
             iot_token = icp_sudo.get_param('iot.iot_token')
             if iot_token == iot_box['token']:

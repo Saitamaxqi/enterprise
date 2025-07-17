@@ -14,7 +14,7 @@ class IotBox(models.Model):
     _name = 'iot.box'
     _description = 'IoT Box'
 
-    name = fields.Char('Name', readonly=True)
+    name = fields.Char('Name', required=True)
     identifier = fields.Char(string='Identifier', readonly=True)
     device_ids = fields.One2many('iot.device', 'iot_id', string="Devices")
     device_count = fields.Integer(compute='_compute_device_count')
