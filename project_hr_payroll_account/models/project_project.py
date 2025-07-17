@@ -2,6 +2,8 @@
 
 from odoo import api, fields, models
 
+from collections import Counter
+
 
 class ProjectProject(models.Model):
     _inherit = 'project.project'
@@ -10,27 +12,26 @@ class ProjectProject(models.Model):
 
     @api.depends('account_id')
     def _compute_contracts_count(self):
-        contracts_data = self.env['hr.version']._read_group([
-            ('analytic_account_id', '!=', False),
-            ('analytic_account_id', 'in', self.account_id.ids)
-        ], ['analytic_account_id'], ['__count'])
-        mapped_data = {analytic_account.id: count for analytic_account, count in contracts_data}
+        contracts_data = self.env['hr.version'].search([('analytic_distribution', '!=', False)])
+        mapped_accounts = contracts_data.mapped('distribution_analytic_account_ids').ids
+        project_count = Counter(mapped_accounts)
         for project in self:
-            project.contracts_count = mapped_data.get(project.account_id.id, 0)
+            project.contracts_count = project_count.get(project.account_id.id, 0)
 
     # -------------------------------------------
     # Actions
     # -------------------------------------------
 
     def action_open_project_contracts(self):
-        contracts = self.env['hr.version'].search([('analytic_account_id', '!=', False), ('analytic_account_id', 'in', self.account_id.ids)])
+        all_contracts = self.env['hr.version'].search([('analytic_distribution', '!=', False)])
+        contracts = all_contracts.filtered(lambda c: self.account_id.id in c.distribution_analytic_account_ids.ids)
         action = self.env["ir.actions.actions"]._for_xml_id("hr.action_hr_version")
         action.update({
             'views': [[False, 'list'], [False, 'form'], [False, 'kanban']],
-            'context': {'default_analytic_account_id': self.account_id.id},
+            'context': {'default_analytic_distribution': {self.account_id.id: 100}},
             'domain': [('id', 'in', contracts.ids)]
         })
-        if(len(contracts) == 1):
+        if len(contracts) == 1:
             action["views"] = [[False, 'form']]
             action["res_id"] = contracts.id
         return action

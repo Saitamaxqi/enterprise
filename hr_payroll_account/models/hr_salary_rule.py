@@ -5,10 +5,9 @@ from odoo import api, fields, models
 
 
 class HrSalaryRule(models.Model):
-    _inherit = 'hr.salary.rule'
+    _name = 'hr.salary.rule'
+    _inherit = ['hr.salary.rule', "analytic.mixin"]
 
-    analytic_account_id = fields.Many2one(
-        'account.analytic.account', 'Analytic Account', company_dependent=True)
     account_debit = fields.Many2one(
         'account.account', 'Debit Account', company_dependent=True, ondelete='restrict')
     account_credit = fields.Many2one(
@@ -38,6 +37,7 @@ class HrSalaryRule(models.Model):
         help="Enable this option to set the employee on the journal items of the payslips.")
     batch_payroll_move_lines = fields.Boolean(
         compute='_compute_batch_payroll_move_lines')
+    analytic_distribution = fields.Json(groups="hr.group_hr_user")
 
     @api.depends_context('company')
     def _compute_batch_payroll_move_lines(self):

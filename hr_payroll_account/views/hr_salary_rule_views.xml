@@ -11,7 +11,7 @@
                         <group>
                             <field name="account_debit" />
                             <field name="account_credit"/>
-                            <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                            <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting"/>
                             <field name="split_move_lines"/>
                             <field name="not_computed_in_net"/>
                             <field name="employee_move_line" invisible="batch_payroll_move_lines"/>
