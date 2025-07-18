@@ -96,6 +96,19 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase, HttpCas
             "revisions ids are chained",
         )
 
+    def test_translation_namespace(self):
+        dashboard = self.create_dashboard()
+        self.env['ir.model.data'].sudo().create({
+            'name': 'test_translation_namespace',
+            'module': 'spreadsheet_dashboard_edition',
+            'res_id': dashboard.id,
+            'model': dashboard._name,
+        })
+        self.authenticate(self.user.login, self.user.password)
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
+        self.assertEqual(data["translation_namespace"], "spreadsheet_dashboard_edition")
+
     def test_load_sample_dashboard(self):
         self.authenticate(self.user.login, self.user.password)
         sample_dashboard_path = "spreadsheet_dashboard_edition/tests/data/sample_dashboard.json"

@@ -26,7 +26,8 @@ class SpreadsheetDashboard(models.Model):
     def _get_spreadsheet_metadata(self, *args, **kwargs):
         return dict(
             super()._get_spreadsheet_metadata(*args, **kwargs),
-            is_published=self.is_published
+            is_published=self.is_published,
+            translation_namespace=self._get_dashboard_translation_namespace(),
         )
 
     def action_edit_dashboard(self):
@@ -50,12 +51,15 @@ class SpreadsheetDashboard(models.Model):
         revisions.append(json.dumps(self._build_new_revision_data([update_locale_command])))
         serialized_revisions = "[%s]" % ",".join(revisions)
         serialized_snapshot = self._get_spreadsheet_serialized_snapshot()
-        default_currency = self._get_spreadsheet_metadata()["default_currency"]
+        metadata = self._get_spreadsheet_metadata()
+        default_currency = metadata["default_currency"]
+        translation_namespace = metadata["translation_namespace"]
         serialized_default_currency = json.dumps(default_currency, ensure_ascii=False)
-        serialized_data = '{"snapshot": %s,"revisions": %s,"default_currency": %s}' % (
+        serialized_data = '{"snapshot": %s,"revisions": %s,"default_currency": %s,"translation_namespace": "%s"}' % (
             serialized_snapshot,
             serialized_revisions,
-            serialized_default_currency
+            serialized_default_currency,
+            translation_namespace
         )
         return serialized_data
 
