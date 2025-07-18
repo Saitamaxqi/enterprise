@@ -183,6 +183,20 @@
         </field>
     </record>
 
+    <record id="action_hr_referral_reward_configuration_view_tree" model="ir.actions.act_window.view">
+        <field eval="10" name="sequence"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_hr_referral_reward_tree"/>
+        <field name="act_window_id" ref="action_hr_referral_reward_configuration"/>
+    </record>
+
+    <record id="action_hr_referral_reward_configuration_view_form" model="ir.actions.act_window.view">
+        <field eval="20" name="sequence"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_hr_referral_reward_form"/>
+        <field name="act_window_id" ref="action_hr_referral_reward_configuration"/>
+    </record>
+
     <record model="ir.actions.act_window" id="action_hr_referral_reward">
         <field name="name">Rewards</field>
         <field name="res_model">hr.referral.reward</field>
