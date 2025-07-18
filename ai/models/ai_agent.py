@@ -528,7 +528,7 @@ class AIAgent(models.Model):
                 'content': message.body,
                 'role': 'assistant' if message.author_id.agent_ids else 'user'
             }
-            for message in discuss_channel.message_ids[:no_messages]
+            for message in discuss_channel.message_ids[1 : no_messages + 1]
         ]
 
         chat_history.reverse()
