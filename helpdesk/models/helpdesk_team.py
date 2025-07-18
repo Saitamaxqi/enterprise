@@ -97,6 +97,7 @@ class HelpdeskTeam(models.Model):
     use_coupons = fields.Boolean('Coupons')
     use_fsm = fields.Boolean('Field Service')
     use_product_returns = fields.Boolean('Returns')
+    use_product_replacements = fields.Boolean('Replacements')
     use_product_repairs = fields.Boolean('Repairs')
     use_twitter = fields.Boolean('X')
     use_rating = fields.Boolean('Customer Ratings')
@@ -495,6 +496,7 @@ class HelpdeskTeam(models.Model):
             'use_helpdesk_sale_timesheet': 'helpdesk_sale_timesheet',
             'use_credit_notes': 'helpdesk_account',
             'use_product_returns': 'helpdesk_stock',
+            'use_product_replacements': 'helpdesk_stock',
             'use_product_repairs': 'helpdesk_repair',
             'use_coupons': 'helpdesk_sale_loyalty',
             'use_fsm': 'helpdesk_fsm',

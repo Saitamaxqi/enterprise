@@ -12,6 +12,7 @@ Manage Product returns from helpdesk tickets
     'data': [
         'wizard/stock_picking_return_views.xml',
         'views/helpdesk_ticket_views.xml',
+        'data/mail_templates.xml',
     ],
     'demo': ['data/helpdesk_stock_demo.xml'],
     'author': 'Odoo S.A.',

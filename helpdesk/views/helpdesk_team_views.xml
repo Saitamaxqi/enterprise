@@ -251,6 +251,9 @@
                         <setting help="Return faulty products">
                             <field name="use_product_returns"/>
                         </setting>
+                        <setting help="Send customers a replacement for a lost, damaged, or returned item">
+                            <field name="use_product_replacements"/>
+                        </setting>
                         <setting help="Send broken products for repair">
                             <field name="use_product_repairs"/>
                         </setting>

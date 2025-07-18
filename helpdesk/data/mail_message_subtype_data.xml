@@ -41,6 +41,14 @@
         <field name="internal" eval="True"/>
         <field name="description"></field>
     </record>
+    <record id="mt_ticket_delivery_status" model="mail.message.subtype">
+        <field name="name">Delivery Status</field>
+        <field name="sequence">14</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="description"></field>
+    </record>
     <record id="mt_ticket_repair_status" model="mail.message.subtype">
         <field name="name">Repair Status</field>
         <field name="sequence">15</field>

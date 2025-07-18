@@ -24,6 +24,8 @@ class HelpdeskTicket(models.Model):
     lot_id = fields.Many2one('stock.lot', string='Lot/Serial Number', domain="[('product_id', '=', product_id)]", tracking=True)
     pickings_count = fields.Integer('Return Orders Count', compute="_compute_pickings_count")
     picking_ids = fields.Many2many('stock.picking', string="Return Orders", copy=False)
+    replacement_count = fields.Integer(compute='_compute_replacement_count', export_string_translation=False)
+    replacement_ids = fields.One2many('stock.picking', 'ticket_id', string='Replacement Orders', copy=False)
 
     @api.depends('partner_id')
     def _compute_suitable_product_ids(self):
@@ -87,6 +89,11 @@ class HelpdeskTicket(models.Model):
         for ticket in self:
             ticket.pickings_count = len(ticket.picking_ids)
 
+    @api.depends('replacement_ids')
+    def _compute_replacement_count(self):
+        for ticket in self:
+            ticket.replacement_count = len(ticket.replacement_ids)
+
     @api.onchange('partner_id', 'team_id')
     def _compute_display_extra_info(self):
         show_product_id_records = self.filtered(lambda ticket:
@@ -118,3 +125,42 @@ class HelpdeskTicket(models.Model):
                 'res_id': self.picking_ids.id
             })
         return action
+
+    def _get_action_replacements_context(self):
+        return dict(
+            default_company_id=self.company_id.id,
+            default_ticket_id=self.id,
+            default_partner_id=self.partner_id.address_get(['delivery'])['delivery'],
+            default_origin=self.env._('Ticket: %(ticket_name)s', ticket_name=self.name),
+            restricted_picking_type_code='outgoing',
+            default_sale_id=self.sale_order_id.id,
+            replacement_create_trigger=True,
+        )
+
+    def action_view_replacements(self):
+        self.ensure_one()
+        action = {
+            **self.env['ir.actions.actions']._for_xml_id('stock.action_picking_tree_all'),
+            'name': self.env._('Delivery Orders'),
+            'view_mode': 'list,form,kanban,calendar,activity',
+            'domain': [('id', 'in', self.replacement_ids.ids)],
+            'context': self._get_action_replacements_context(),
+            'help': self.env._("""
+                <p class="o_view_nocontent_smiling_face o_view_nocontent_stock">No delivery orders yet. Let's create one!</p>
+                <p>Send customers a replacement for a lost, damaged, or returned item</p>
+            """),
+        }
+        if self.replacement_count == 1:
+            action.update({
+                'view_mode': 'form',
+                'res_id': self.replacement_ids.id
+            })
+        return action
+
+    def action_create_replacement(self):
+        self.ensure_one()
+        return {
+            **self.env['ir.actions.actions']._for_xml_id('stock.action_picking_form'),
+            'name': self.env._('Create Replacement Order'),
+            'context': self._get_action_replacements_context(),
+        }

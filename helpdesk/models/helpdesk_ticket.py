@@ -130,6 +130,7 @@ class HelpdeskTicket(models.Model):
     use_credit_notes = fields.Boolean(related='team_id.use_credit_notes', export_string_translation=False)
     use_coupons = fields.Boolean(related='team_id.use_coupons', string='Use Coupons')
     use_product_returns = fields.Boolean(related='team_id.use_product_returns', export_string_translation=False)
+    use_product_replacements = fields.Boolean(related='team_id.use_product_replacements', export_string_translation=False)
     use_product_repairs = fields.Boolean(related='team_id.use_product_repairs', export_string_translation=False)
     use_rating = fields.Boolean(related='team_id.use_rating', export_string_translation=False)
 
@@ -992,6 +993,7 @@ class HelpdeskTicket(models.Model):
             team = self.team_id
             optional_subtypes = [('use_credit_notes', self.env.ref('helpdesk.mt_ticket_refund_status')),
                                  ('use_product_returns', self.env.ref('helpdesk.mt_ticket_return_status')),
+                                 ('use_product_replacements', self.env.ref('helpdesk.mt_ticket_delivery_status')),
                                  ('use_product_repairs', self.env.ref('helpdesk.mt_ticket_repair_status'))]
             for field, subtype in optional_subtypes:
                 if not team[field] and subtype in res:

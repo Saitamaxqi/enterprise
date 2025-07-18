@@ -10,6 +10,10 @@
                     type="object" invisible="pickings_count == 0" groups="stock.group_stock_user">
                     <field name="pickings_count" string="Returns" widget="statinfo" />
                 </button>
+                <button class="oe_stat_button" name="action_view_replacements" icon="fa-truck" type="object"
+                    invisible="replacement_count == 0 or not use_product_replacements" groups="stock.group_stock_user">
+                    <field name="replacement_count" string="Deliveries" widget="statinfo" />
+                </button>
             </button>
             <xpath expr="//page[@name='extra_info']//field[@name='company_id']" position="after">
                 <field name="use_credit_notes" invisible="1"/>
@@ -34,6 +38,9 @@
                     groups="stock.group_stock_user"
                     string="Return" invisible="not has_partner_picking or not use_product_returns"
                     context="{'default_ticket_id': id, 'default_company_id': company_id}" data-hotkey="q"/>
+                <button type="object" name="action_create_replacement" string="Replace"
+                    invisible="not use_product_replacements or not partner_id" data-hotkey="l"
+                    groups="stock.group_stock_user"/>
             </field>
         </field>
     </record>

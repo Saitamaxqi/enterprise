@@ -3,6 +3,7 @@
 
     <record id="helpdesk.helpdesk_team3" model="helpdesk.team">
         <field name="use_product_returns" eval="True"/>
+        <field name="use_product_replacements" eval="True"/>
     </record>
 
     <!-- Product Lot/Serial Number Tracking -->
