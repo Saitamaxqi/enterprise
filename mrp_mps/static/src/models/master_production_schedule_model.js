@@ -47,7 +47,6 @@ export class MasterProductionScheduleModel extends EventBus {
                 'mrp.production.schedule',
                 'get_production_schedule_view_state',
                 [filteredScheduleIds, this.scale],
-                {context: {'compute_only_parent_schedules': true}},
             );
         }).then((production_schedule_ids) => {
             for (var i = 0; i < production_schedule_ids.length; i++) {

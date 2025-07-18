@@ -97,9 +97,7 @@ class MrpProductionSchedule(models.Model):
             return Domain.FALSE
 
         productions_schedules = self.search([])
-        productions_schedules_states = productions_schedules.with_context(
-            compute_only_parent_schedules=True
-        ).get_production_schedule_view_state()
+        productions_schedules_states = productions_schedules.get_production_schedule_view_state()
 
         def filter_forecasts(forecasts):
             forecast_state = set()
@@ -206,7 +204,7 @@ class MrpProductionSchedule(models.Model):
         first period that need a replenishment
         """
         production_schedules_to_replenish = self.filtered(lambda p: p.replenish_trigger != 'never')
-        production_schedule_states = production_schedules_to_replenish.get_production_schedule_view_state()
+        production_schedule_states = production_schedules_to_replenish.get_production_schedule_view_state(use_all_schedules=True)
         production_schedule_states = {mps['id']: mps for mps in production_schedule_states}
         procurements = []
         forecasts_values = []
@@ -307,9 +305,7 @@ class MrpProductionSchedule(models.Model):
         """
         productions_schedules = self.env['mrp.production.schedule'].search(domain or [], offset=offset, limit=limit)
         count = self.env['mrp.production.schedule'].search_count(domain or [])
-        productions_schedules_states = productions_schedules.with_context(
-            compute_only_parent_schedules=True
-        ).get_production_schedule_view_state(period_scale)
+        productions_schedules_states = productions_schedules.get_production_schedule_view_state(period_scale)
         company_groups = self.env.company.read([
             'mrp_mps_show_starting_inventory',
             'mrp_mps_show_demand_forecast',
@@ -403,7 +399,7 @@ class MrpProductionSchedule(models.Model):
                 - component 2
                 - component 3
         """
-        schedules_to_compute = self.browse(self.get_impacted_schedule()) | self
+        schedules_to_compute = self._get_impacted_schedule() | self
         indirect_demand_trees = schedules_to_compute._get_indirect_demand_tree()
 
         def _get_level_dict(nodes_to_check, level_dict=False, current_level=0):
@@ -423,7 +419,7 @@ class MrpProductionSchedule(models.Model):
         for mps in schedules_to_compute:
             mps.mps_sequence = 10 + level_by_product[mps.product_id]
 
-    def get_production_schedule_view_state(self, period_scale=False):
+    def get_production_schedule_view_state(self, period_scale=False, use_all_schedules=False):
         """ Prepare and returns the fields used by the MPS client action.
         For each schedule returns the fields on the model. And prepare the cells
         for each period depending the manufacturing period set on the company.
@@ -456,10 +452,9 @@ class MrpProductionSchedule(models.Model):
         # the state is not saved, it needs to recompute the quantity to
         # replenish of finished products. It will modify the indirect
         # demand and replenish_qty of schedules in self.
-        if self.env.context.get('compute_only_parent_schedules', False):
-            schedules_to_compute = self._get_impacted_parent_schedules() | self
-        else:
-            schedules_to_compute = self.env['mrp.production.schedule'].browse(self.get_impacted_schedule()) | self
+        schedules_to_compute = (self._get_impacted_schedule()
+                                if use_all_schedules
+                                else self._get_impacted_parent_schedules()) | self
 
         # Dependencies between schedules
         indirect_demand_trees = schedules_to_compute._get_indirect_demand_tree()
@@ -630,22 +625,35 @@ class MrpProductionSchedule(models.Model):
         return supplied_mps
 
     def get_impacted_schedule(self, domain=False):
-        """ When the user modify the demand forecast on a schedule. The new
+        """
+        Like `_get_impacted_schedule`, but returns a list of ids instead
+        to be used by the web client.
+
+        See `_get_impacted_schedule` for more details.
+
+        :param domain: Filter supplied and supplying schedules with the domain
+        :return: ids of supplied and supplying schedules
+        :rtype: list[int]
+        """
+        return self._get_impacted_schedule(domain).ids
+
+    def _get_impacted_schedule(self, domain=False):
+        """
+        When the user modify the demand forecast on a schedule. The new
         replenish quantity is computed from schedules that use the product in
         self as component (no matter at which BoM level). It will also modify
         the replenish quantity on self that will impact the schedule that use
         the product in self as a finished product.
 
-        :param domain: filter supplied and supplying schedules with the domain
-        :return ids of supplied and supplying schedules
-        :rtype list
+        :param domain: Filter supplied and supplying schedules with the domain
+        :return: Records of supplied and supplying schedules
         """
         if not domain:
             domain = []
 
         supplying_mps = self._get_impacted_parent_schedules(domain)
         supplied_mps = self._get_impacted_child_schedules(domain)
-        return (supplying_mps | supplied_mps).ids
+        return supplying_mps | supplied_mps
 
     def remove_replenish_qty(self, date_index, period_scale=False):
         """ Remove the quantity to replenish on the forecast cell.
