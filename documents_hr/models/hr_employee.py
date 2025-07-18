@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from collections import defaultdict
-
 from odoo import _, api, fields, models, tools
 from odoo.exceptions import AccessError, ValidationError
 
@@ -36,16 +34,19 @@ class HrEmployee(models.Model):
                 else:
                     employee.document_count = 0
             return
-        documents = self.env['documents.document'].search_read(
-            [('folder_id', 'child_of', self.hr_employee_folder_id.ids), ('type', '!=', 'folder')],
-            ['id', 'parent_path'])
-        documents_by_folder_id = defaultdict(list)
-        for document in documents:
-            split_path = document['parent_path'][:-1].split('/')
-            employee_folder = next(int(folder_id) for folder_id in split_path if int(folder_id) in self.hr_employee_folder_id.ids)
-            documents_by_folder_id[employee_folder].append(document['id'])
+        document_count_by_folder = dict(self.env['documents.document']._read_group([
+            ('id', 'child_of', self.hr_employee_folder_id.ids),
+            ('type', '!=', 'folder')
+        ], groupby=['folder_id'], aggregates=['__count']))
+
+        document_count_by_employee_folder = {
+            folder: sum(
+                count for doc_folder, count in document_count_by_folder.items()
+                if doc_folder.parent_path.startswith(folder.parent_path)
+            ) for folder in self.hr_employee_folder_id
+        }
         for employee in self:
-            employee.document_count = len(documents_by_folder_id.get(employee.hr_employee_folder_id.id, []))
+            employee.document_count = document_count_by_employee_folder.get(employee.hr_employee_folder_id, 0)
 
     @api.model_create_multi
     def create(self, vals_list):
