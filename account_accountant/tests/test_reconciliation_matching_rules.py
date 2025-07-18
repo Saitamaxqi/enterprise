@@ -1267,6 +1267,24 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.current_assets_account.id, 'balance': -50.0, 'amount_currency': -100, 'reconciled': False},
         ])
 
+    def test_reco_model_with_activities(self):
+        activity_type_id = self.env.ref('mail.mail_activity_data_todo').id
+        reco_model = self.env['account.reconcile.model'].create({
+            'name': 'new rule',
+            'match_label': 'contains',
+            'match_label_param': 'fees',
+            'next_activity_type_id': activity_type_id,
+        })
+
+        st_line = self.env['account.bank.statement.line'].create({
+            'journal_id': self.bank_journal.id,
+            'date': '2020-01-01',
+            'payment_ref': 'fees',
+            'amount': 100,
+        })
+        reco_model._trigger_reconciliation_model(st_line)
+        self.assertEqual(st_line.activity_ids.activity_type_id.id, activity_type_id)
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes

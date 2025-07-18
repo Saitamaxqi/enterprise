@@ -246,6 +246,11 @@ class AccountReconcileModel(models.Model):
         statement_line.with_user(SUPERUSER_ID)._set_move_line_to_statement_line_move(liquidity_line + other_lines, amls_to_create)
         if any(aml.get('tax_ids') for aml in amls_to_create):
             statement_line._recompute_tax_lines()
+        if self.next_activity_type_id:
+            statement_line.move_id.activity_schedule(
+                activity_type_id=self.next_activity_type_id.id,
+                user_id=self.env.user.id,
+            )
         statement_line.move_id._message_log(author_id=self.env.user.partner_id.id,
             body=_("Reconciliation model %s applied", self.name))
 
