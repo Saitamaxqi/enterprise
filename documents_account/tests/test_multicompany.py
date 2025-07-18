@@ -1,3 +1,4 @@
+from odoo.addons.documents_account.tests.common import DocumentsAccountHelpersCommon
 from odoo.addons.test_mail.data.test_mail_data import MAIL_EML_ATTACHMENT
 from odoo.tests.common import tagged, RecordCapturer, users
 from odoo.addons.mail.tests.common import MailCommon
@@ -6,7 +7,7 @@ from odoo import Command
 
 
 @tagged("post_install", "-at_install", "documents_account_multicompany_mail")
-class TestMultiCompanyDocumentsAccountMail(MailCommon):
+class TestMultiCompanyDocumentsAccountMail(MailCommon, DocumentsAccountHelpersCommon):
     """
     Tests incoming email processing for documents_account in a multi-company setup
     """
@@ -56,11 +57,7 @@ class TestMultiCompanyDocumentsAccountMail(MailCommon):
         cls.company_2.account_folder_id = cls.folder_finance_company2.id
 
         # Link the journal to the folder
-        cls.env["documents.account.folder.setting"].create({
-            "folder_id": cls.folder_finance_company2.id,
-            "journal_id": cls.journal_company2.id,
-            "company_id": cls.company_2.id,
-        })
+        cls.setup_sync_journal_folder(cls.journal_company2, cls.folder_finance_company2, cls.company_2)
 
     @users('simple_accountman')
     @mute_logger("odoo.addons.mail.models.mail_thread")

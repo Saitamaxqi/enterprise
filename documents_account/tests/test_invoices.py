@@ -3,11 +3,12 @@ import base64
 
 from odoo import Command
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.documents_account.tests.common import DocumentsAccountHelpersCommon
 from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install')
-class TestInvoices(AccountTestInvoicingCommon):
+class TestInvoices(AccountTestInvoicingCommon, DocumentsAccountHelpersCommon):
 
     @classmethod
     def setUpClass(cls):
@@ -16,6 +17,9 @@ class TestInvoices(AccountTestInvoicingCommon):
         cls.env.user.group_ids += cls.quick_ref('documents.group_documents_manager')
 
     def test_suspense_statement_line_id(self):
+        # Remove all autoconfigured journal synchronization settings for documents
+        self.env['documents.account.folder.setting'].search([]).unlink()
+
         reconcile_activity_type = self.env['mail.activity.type'].create({
             "name": "Reconciliation request",
             "category": "upload_file",
@@ -67,10 +71,7 @@ class TestInvoices(AccountTestInvoicingCommon):
         folder_test = self.env['documents.document'].create({'name': 'Test Bills','type':'folder'})
 
         invoice = self.init_invoice("in_invoice", amounts=[1000], post=True)
-        setting = self.env['documents.account.folder.setting'].create({
-            'folder_id': folder_test.id,
-            'journal_id': invoice.journal_id.id,
-        })
+        self.setup_sync_journal_folder(invoice.journal_id, folder_test)
 
         test_partner = self.env['res.partner'].create({'name':'test Azure'})
         document = self.env['documents.document'].create({

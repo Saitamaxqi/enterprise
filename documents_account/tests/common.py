@@ -17,6 +17,19 @@ class DocumentsAccountHelpersCommon:
         with patch.object(cls.env.cr, 'now', lambda: datetime.strptime(time, time_format)), freeze_time(time):
             yield
 
+    @classmethod
+    def setup_sync_journal_folder(cls, journal, folder, company=False):
+        """Update or create configuration for journal document synchronization."""
+        if setting := cls.env['documents.account.folder.setting'].search(
+                [('journal_id', '=', journal.id), ('company_id', '=', company.id if company else cls.env.company.id)]):
+            setting.folder_id = folder
+            return setting
+        setting = cls.env['documents.account.folder.setting'].create({
+            'folder_id': folder.id,
+            'journal_id': journal.id,
+        })
+        return setting
+
 
 class DocumentsAccountTestCommon(AccountTestInvoicingCommon, DocumentsAccountHelpersCommon):
     @classmethod

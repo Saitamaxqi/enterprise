@@ -25,10 +25,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
             'name': 'Journal Entry 2',
             'move_type': 'entry',
         }])
-        self.env['documents.account.folder.setting'].create({
-            'folder_id': self.folder_a.id,
-            'journal_id': account_move_test_1.journal_id.id,
-        })
+        self.setup_sync_journal_folder(account_move_test_1.journal_id, self.folder_a)
         self.assertFalse(account_move_test_1.has_documents, "Should be False because no attachment is attached to this record")
         self.assertFalse(account_move_test_2.has_documents, "Should be False because no attachment is attached to this record")
         attachments = self.env['ir.attachment'].create([{
@@ -100,10 +97,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
                 'name': 'invoice_test',
                 'move_type': invoice_type,
             })
-            setting = self.env['documents.account.folder.setting'].create({
-                'folder_id': folder_test.id,
-                'journal_id': invoice_test.journal_id.id,
-            })
+            setting = self.setup_sync_journal_folder(invoice_test.journal_id, folder_test)
 
             attachments = self.env["ir.attachment"]
             for i in range(3):
@@ -186,10 +180,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
             })
         )
 
-        self.env["documents.account.folder.setting"].create({
-            "folder_id": folder_test.id,
-            "journal_id": invoice_test.journal_id.id,
-        })
+        self.setup_sync_journal_folder(invoice_test.journal_id, folder_test)
 
         attachments = self.env["ir.attachment"]
         for i in range(1, 3):
@@ -292,10 +283,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
             'name': 'Journal Entry',
             'move_type': 'entry',
         })
-        setting = self.env['documents.account.folder.setting'].create({
-            'folder_id': folder_test.id,
-            'journal_id': invoice_test.journal_id.id,
-        })
+        setting = self.setup_sync_journal_folder(invoice_test.journal_id, folder_test)
         attachments = self.env['ir.attachment'].create([{
             'datas': TEXT,
             'name': 'fileText_test.txt',
@@ -421,10 +409,7 @@ class TestCaseDocumentsBridgeAccount(DocumentsAccountTestCommon):
         folder_test = self.env['documents.document'].create({'name': 'Bills', 'type': 'folder'})
 
         invoice = self.init_invoice("out_invoice", amounts=[1000], post=True)
-        setting = self.env['documents.account.folder.setting'].create({
-            'folder_id': folder_test.id,
-            'journal_id': invoice.journal_id.id,
-        })
+        setting = self.setup_sync_journal_folder(invoice.journal_id, folder_test)
         att_ids = []
         for fmt in ('xml', 'txt'):
             attachment = self.env["ir.attachment"].create({
@@ -536,10 +521,7 @@ class TestAccountMoveSendDocument(DocumentsAccountTestCommon, TestAccountMoveSen
         """
         folder_test = self.env['documents.document'].create({'name': 'Bills', 'type': 'folder'})
         move = self.init_invoice("out_invoice", amounts=[1000], post=True)
-        setting = self.env['documents.account.folder.setting'].create({
-            'folder_id': folder_test.id,
-            'journal_id': move.journal_id.id,
-        })
+        setting = self.setup_sync_journal_folder(move.journal_id, folder_test)
 
         wizard = self.create_send_and_print(move)
         wizard.action_send_and_print()
