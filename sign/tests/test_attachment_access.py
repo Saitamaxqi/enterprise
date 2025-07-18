@@ -162,3 +162,60 @@ class testAttachmentAccess(TransactionCase):
                 msg=f'An employee must not be able to read the attachment related to the {field!r} of another user'
             ):
                 self.env['ir.attachment'].browse(attachment_id).datas
+
+    def test_user_sign_item(self):
+        env_user = self.env(user=self.user)
+        attachment = env_user['ir.attachment'].create({'name': 'foo', 'datas': self.pdf})
+        attachment_2 = env_user['ir.attachment'].create({'name': 'foo', 'datas': self.pdf})
+        template = env_user['sign.template'].create({})
+        template_2 = self.env['sign.template'].create({})
+        document = env_user['sign.document'].create({
+            'attachment_id': attachment.id,
+            'template_id': template.id,
+        })
+        document_2 = self.env['sign.document'].create({
+            'attachment_id': attachment_2.id,
+            'template_id': template_2.id,
+        })
+
+        sign_item = env_user['sign.item'].create({
+            'document_id': document.id,
+            'type_id': self.env.ref('sign.sign_item_type_name').id,
+            'posX': 0.190,
+            'posY': 0.185,
+            'width': 0.680,
+            'height': 0.015,
+        })
+
+        with self.assertRaises(AccessError):
+            template_2.with_env(env_user).read(['name'])
+
+        with self.assertRaises(AccessError):
+            document_2.with_env(env_user).read(['name'])
+
+        with self.assertRaises(AccessError):
+            sign_item.template_id = template_2
+
+        with self.assertRaises(AccessError):
+            sign_item.document_id = document_2
+
+        with self.assertRaises(AccessError):
+            env_user['sign.item'].create({
+                'document_id': document_2.id,
+                'type_id': self.env.ref('sign.sign_item_type_name').id,
+                'posX': 0.190,
+                'posY': 0.185,
+                'width': 0.680,
+                'height': 0.015,
+            })
+
+        sign_item = env_user['sign.item'].create({
+            'document_id': document.id,
+            'template_id': template_2.id,
+            'type_id': self.env.ref('sign.sign_item_type_name').id,
+            'posX': 0.190,
+            'posY': 0.185,
+            'width': 0.680,
+            'height': 0.015,
+        })
+        self.assertEqual(sign_item.template_id, template)

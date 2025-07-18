@@ -33,6 +33,17 @@ class SignItem(models.Model):
 
     transaction_id = fields.Integer(copy=False)
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        res.template_id.check_access('write')
+        return res
+
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.keys() & {'template_id', 'document_id'}:
+            self.template_id.check_access('write')
+        return res
 
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)
