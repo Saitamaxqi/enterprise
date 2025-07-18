@@ -127,12 +127,11 @@ export class KnowledgeCommentsHandler extends Component {
         if (!activeId || this.commentsState.editorThreads[activeId]?.top === undefined) {
             return;
         }
-        const threadIds = this.props.commentBeaconManager.sortedThreadIds.filter((threadId) => {
-            return (
+        const threadIds = this.props.commentBeaconManager.sortedThreadIds.filter(
+            (threadId) =>
                 threadId in this.commentsState.editorThreads &&
-                this.commentsState.editorThreads[threadId].top
-            );
-        });
+                this.commentsState.editorThreads[threadId].top !== undefined
+        );
         const index = threadIds.indexOf(activeId);
         this.setThreadTop(activeId, this.commentsState.editorThreads[activeId].top);
         let masterTop = this.getThreadTop(activeId);
