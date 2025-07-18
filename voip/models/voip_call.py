@@ -89,6 +89,7 @@ class VoipCall(models.Model):
             "phone_number": phone_number,
             "partner_id": partner_id,
             "direction": direction,
+            "state": "calling",
             "user_id": self.env.uid,
         }
         if res_id and res_model:
