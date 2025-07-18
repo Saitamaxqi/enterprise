@@ -21,13 +21,10 @@ import { batched } from "@web/core/utils/timing";
 import { withSequence } from "@html_editor/utils/resource";
 import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
-function isAllowedBeaconPosition(node) {
-    return isPhrasingContent(node) || isParagraphRelatedElement(node) || isListItemElement(node);
-}
-
 export class KnowledgeCommentsPlugin extends Plugin {
     static id = "knowledgeComments";
     static dependencies = [
+        "baseContainer",
         "history",
         "dom",
         "feff",
@@ -301,6 +298,15 @@ export class KnowledgeCommentsPlugin extends Plugin {
         }
     }
 
+    isAllowedBeaconPosition(node) {
+        return (
+            isPhrasingContent(node) ||
+            isParagraphRelatedElement(node) ||
+            isListItemElement(node) ||
+            this.dependencies.baseContainer.isCandidateForBaseContainer(node)
+        );
+    }
+
     // TODO ABD: -> CTRL + DELETE needs some custo too (currently deletes too much)
     handleDeleteForward(range) {
         // allow deleteForward to go past a beacon instead of being blocked.
@@ -337,8 +343,8 @@ export class KnowledgeCommentsPlugin extends Plugin {
         const isCollapsed = startContainer === endContainer && startOffset === endOffset;
         if (
             isCollapsed ||
-            !isAllowedBeaconPosition(startContainer) ||
-            !isAllowedBeaconPosition(endContainer) ||
+            !this.isAllowedBeaconPosition(startContainer) ||
+            !this.isAllowedBeaconPosition(endContainer) ||
             !isContentEditable(startContainer) ||
             !isContentEditable(endContainer)
         ) {
@@ -403,7 +409,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         // for different users, is this an issue ?
         this.commentBeaconManager.removeBogusBeacons();
         for (const beacon of elem.querySelectorAll(".oe_thread_beacon")) {
-            if (beacon.isConnected && !isAllowedBeaconPosition(beacon.parentElement)) {
+            if (beacon.isConnected && !this.isAllowedBeaconPosition(beacon.parentElement)) {
                 this.commentBeaconManager.cleanupBeaconPair(beacon.dataset.id);
                 this.removeBeacon(beacon);
                 continue;
