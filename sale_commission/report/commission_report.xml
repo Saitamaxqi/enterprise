@@ -61,15 +61,15 @@
                             domain="[('user_id', '=', uid)]"/>
                 <separator/>
                 <filter string="Active Plans" name="active_plans"
-                        domain="[('plan_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('plan_id.date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                        domain="[('plan_id.date_from', '&lt;', 'today'), ('plan_id.date_to', '&gt;', 'today')]"/>
                 <separator/>
                 <filter string="By Quarter" name="quarter" context="{'group_quarter':'1'}" domain="[('company_id', '!=', False)]"/>
                 <separator/>
                 <filter string="Period" name="filter_date_to" date="date_to"/>
                 <separator/>
-                <filter string="Last Quarter" name="last_quarter" domain="[('date_to', '&lt;=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d')), ('date_to', '&gt;=', (context_today() + relativedelta(months=-3)).strftime('%Y-%m-%d'))]"/>
-                <filter string="This Quarter" name="this_quarter" domain="[('date_to', '&gt;=', context_today().strftime('%Y-%m-%d')), ('target_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
-                <filter string="Last Year" name="last_year" domain="[('date_to', '&lt;=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d')), ('date_to', '&gt;=', (context_today() + relativedelta(years=-1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Last Quarter" name="last_quarter" domain="[('date_to', '&lt;=', 'today +1d'), ('date_to', '&gt;=', 'today -3m')]"/>
+                <filter string="This Quarter" name="this_quarter" domain="[('date_to', '&gt;=', 'today'), ('target_id.date_from', '&lt;', 'today')]"/>
+                <filter string="Last Year" name="last_year" domain="[('date_to', '&lt;=', 'today +1d'), ('date_to', '&gt;=', 'today -1y')]"/>
                 <separator/>
                 <group string="Group By">
                     <filter string="Salesperson" name="group_by_salesperson" context="{'group_by':'user_id'}"/>

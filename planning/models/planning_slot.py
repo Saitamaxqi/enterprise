@@ -2,7 +2,7 @@
 import json
 import uuid
 from collections import defaultdict
-from datetime import date, datetime, time, timedelta
+from datetime import datetime, time, timedelta
 from math import modf
 from random import shuffle
 
@@ -2002,22 +2002,20 @@ class PlanningSlot(models.Model):
         return Domain.OR(filter_domains) if filter_domains else Domain.TRUE
 
     def _expand_domain_dates(self, domain):
-        filters = []
         delta = get_timedelta(1, self.env.context.get("scale", "week"))
-        for dom in domain:
-            if len(dom) == 3 and dom[0] == 'start_datetime' and dom[1] == '<':
-                max_date = dom[2] if dom[2] else datetime.now()
-                max_date = max_date if isinstance(max_date, date) else datetime.strptime(max_date, '%Y-%m-%d %H:%M:%S')
-                max_date = max_date + delta
-                filters.append((dom[0], dom[1], max_date))
-            elif len(dom) == 3 and dom[0] == 'end_datetime' and dom[1] == '>':
-                min_date = dom[2] if dom[2] else datetime.now()
-                min_date = min_date if isinstance(min_date, date) else datetime.strptime(min_date, '%Y-%m-%d %H:%M:%S')
-                min_date = min_date - delta
-                filters.append((dom[0], dom[1], min_date))
+
+        def update_start_end_dates(cond):
+            if cond.field_expr == 'start_datetime' and cond.operator[0] == '<':
+                value = cond.value or datetime.now()
+                value += delta
+            elif cond.field_expr == 'end_datetime' and cond.operator[0] == '>':
+                value = cond.value or datetime.now()
+                value -= delta
             else:
-                filters.append(dom)
-        return filters
+                return cond
+            return Domain(cond.field_expr, cond.operator, value)
+
+        return Domain(domain).optimize_full(self).map_conditions(update_start_end_dates)
 
     @api.model
     def _format_datetime_to_user_tz(self, datetime_without_tz, record_env, tz=None, lang_code=False):

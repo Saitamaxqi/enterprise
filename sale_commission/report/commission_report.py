@@ -1,11 +1,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime
+from datetime import date
 
 from odoo import api, models, fields, _
+from odoo.fields import Domain
 from odoo.tools import SQL
 
 from odoo.addons.resource.models.utils import filter_domain_leaf
+
 
 class SaleCommissionReport(models.Model):
     _name = 'sale.commission.report'
@@ -34,13 +36,15 @@ class SaleCommissionReport(models.Model):
         The date is converted to a string to allow updating the date value in view customizations.
         """
         # take date_to but not plan_id.date_to
-        date_to_domain = domain and filter_domain_leaf(domain, lambda field: 'date_to' in field and not 'plan_id' in field)
-        date_to_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3 and d[2]]
-        context = self.env.context.copy()
+        model = self
+        domain = Domain(domain)
+        date_to_domain = filter_domain_leaf(domain, lambda field: 'date_to' in field and not 'plan_id' in field)
+        date_to_domain = date_to_domain.optimize_full(model)
+        date_to_list = [cond.value for cond in date_to_domain.iter_conditions() if isinstance(cond.value, date)]
         if date_to_list:
             date_to = max(date_to_list)
-            context.update(conversion_date=date_to.strftime('%Y-%m-%d'))
-        return super(SaleCommissionReport, self.with_context(context))._search(domain, *args, **kwargs)
+            model = model.with_context(conversion_date=date_to.strftime('%Y-%m-%d'))
+        return super(SaleCommissionReport, model)._search(domain, *args, **kwargs)
 
     def action_achievement_detail(self):
         self.ensure_one()

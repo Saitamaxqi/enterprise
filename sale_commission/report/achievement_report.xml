@@ -57,7 +57,7 @@
                 <filter string="My Achievements" name="my" domain="[('user_id', '=', uid)]"/>
                 <separator/>
                 <filter string="Current Period" name="current"
-                        domain="[('target_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('target_id.date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                        domain="[('target_id.date_from', '&lt;', 'today'), ('target_id.date_to', '&gt;', 'today')]"/>
                 <group string="Group By">
                     <filter string="Salesperson" name="salesperson" context="{'group_by':'user_id'}"/>
                     <filter string="Sales Team" name="salesteam" context="{'group_by':'team_id'}"/>
