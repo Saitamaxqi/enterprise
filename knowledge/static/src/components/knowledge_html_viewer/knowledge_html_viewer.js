@@ -92,9 +92,10 @@ export class KnowledgeHtmlViewer extends HtmlViewer {
                     registry
                         .category(this.env.localOverlayContainerKey)
                         .remove(this.overlayComponentsKey);
+                    this.overlayComponentsKey = uniqueId("KnowledgeCommentsHandler");
                 };
             },
-            () => [this.readonlyElementRef.el, this.overlayRef.el]
+            () => [this.readonlyElementRef.el, this.overlayRef.el, this.state.value]
         );
     }
 
