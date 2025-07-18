@@ -10,7 +10,7 @@ TEXT = base64.b64encode(bytes("workflow bridge project", 'utf-8'))
 
 class TestCaseDocumentsBridgeExpense(TransactionCase):
 
-    @mute_logger('odoo.addons.documents.models.documents_document')
+    @mute_logger('odoo.addons.documents.models.documents_document', 'pypdf._reader')
     def test_create_document_to_expense(self):
         """
         Makes sure the hr expense is created from the document.

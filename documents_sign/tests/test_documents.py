@@ -51,7 +51,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
         self.assertTrue(document.exists(), 'failed at workflow_bridge_dms_account template')
         self.assertTrue(template.exists(), 'failed at workflow_bridge_dms_account template')
 
-    @mute_logger('odoo.addons.documents.models.documents_document')
+    @mute_logger('odoo.addons.documents.models.documents_document', 'pypdf._reader')
     def test_sign_action(self):
         """ Test sign a document from Document app using the workflow rule. """
         self.document_pdf_0.document_sign_create_sign_template(self.folder_a.id)
@@ -86,7 +86,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
         sign_request_item.sign(sign_values)
         self.assertEqual(sign_request_item.state, 'completed', 'The sign.request.item should be completed')
 
-    @mute_logger("odoo.addons.documents.models.documents_document")  # avoid warning about counting page of PDFs
+    @mute_logger("odoo.addons.documents.models.documents_document", 'pypdf._reader')  # avoid warning about counting page of PDFs
     def test_signed_documents_access_rights(self):
         """ Test access rights and owner of signed/certificate documents. """
         Document = self.env["documents.document"]
