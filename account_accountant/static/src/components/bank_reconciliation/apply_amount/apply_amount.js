@@ -1,14 +1,19 @@
-import { HtmlField, htmlField } from "@web_editor/js/backend/html_field";
+import { Component } from "@odoo/owl";
+import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 
-export class BankRecWidgetApplyAmountHtmlField extends HtmlField {
+class BankRecWidgetApplyAmountHtmlField extends Component {
+    static props = standardFieldProps;
     static template = "account_accountant.BankRecWidgetApplyAmountHtmlField";
 
     setup() {
-        super.setup();
         this.action = useService("action");
         this.orm = useService("orm");
+    }
+
+    get value() {
+        return this.props.record.data[this.props.name];
     }
 
     async switchApplyAmount(ev) {
@@ -65,9 +70,6 @@ export class BankRecWidgetApplyAmountHtmlField extends HtmlField {
     }
 }
 
-export const bankRecWidgetApplyAmountHtmlField = {
-    ...htmlField,
-    component: BankRecWidgetApplyAmountHtmlField,
-};
+const bankRecWidgetApplyAmountHtmlField = { component: BankRecWidgetApplyAmountHtmlField };
 
 registry.category("fields").add("apply_amount_html", bankRecWidgetApplyAmountHtmlField);
