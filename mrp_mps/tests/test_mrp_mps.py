@@ -251,6 +251,7 @@ class TestMpsMps(common.TransactionCase):
         a forecast and run the replenishment again, ensure the purchase order
         line is updated.
         """
+        self.env.company.horizon_days = 0
         self.mps_screw.replenish_trigger = 'manual'
         forecast_screw = self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
@@ -319,6 +320,7 @@ class TestMpsMps(common.TransactionCase):
         replenish are impacted by those delay. Ensure that the MPS state and
         the period to replenish are correct.
         """
+        self.env.company.horizon_days = 0
         self.env.company.manufacturing_period = 'week'
         partner = self.env['res.partner'].create({
             'name': 'Jhon'
@@ -446,6 +448,7 @@ class TestMpsMps(common.TransactionCase):
         - 8 bolts for May: table>table leg (June 1st - 10+10 days)
         - 8 bolts for April: table>drawer>table leg (June 1st - 10+15+10 days)
         """
+        self.env.company.horizon_days = 0
         self.env.company.manufacturing_period = 'month'
         self.table.write({
             'route_ids': [(6, 0, [self.ref('mrp.route_warehouse0_manufacture')])]
@@ -482,6 +485,7 @@ class TestMpsMps(common.TransactionCase):
         """ When showing a bigger period type (e.g. year > week), we want to make sure
         that lead times are applied on the day of the forecast and not the first day
         of the period. """
+        self.env.company.horizon_days = 0
         self.env.company.manufacturing_period = 'month'
         self.table.write({
             'route_ids': [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
@@ -502,6 +506,7 @@ class TestMpsMps(common.TransactionCase):
         that have a component as product.
         """
 
+        self.env.company.horizon_days = 0
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_table.id,
             'date': self.mps_dates_month[0][0],
@@ -1016,6 +1021,7 @@ class TestMpsMps(common.TransactionCase):
         # table stock target = 3
         # -> January: leg replenish qty == 12, screw replenish qty == 60
         # -> October: table starting qty == 3
+        self.env.company.horizon_days = 0
         self.mps_table.forecast_target_qty = 3
         mps_table, mps_table_leg, mps_screw = (self.mps_table | self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
         table_forecast_10 = mps_table['forecast_ids'][9]
@@ -1110,6 +1116,7 @@ class TestMpsMps(common.TransactionCase):
 
     @freeze_time('2025-01-01')
     def test_starting_inventory_qty(self):
+        self.env.company.horizon_days = 0
         self.env['stock.quant'].create({
             'product_id': self.table.id,
             'inventory_quantity': 5,

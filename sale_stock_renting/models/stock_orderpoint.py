@@ -7,8 +7,8 @@ class StockWarehouseOrderpoint(models.Model):
     def _get_orderpoint_action(self):
         return super(StockWarehouseOrderpoint, self.with_context(ignore_rental_returns=True))._get_orderpoint_action()
 
-    def _get_product_context(self, visibility_days=0):
-        context = super()._get_product_context(visibility_days)
+    def _get_product_context(self):
+        context = super()._get_product_context()
         context['ignore_rental_returns'] = True
         return context
 
@@ -21,7 +21,7 @@ class StockWarehouseOrderpoint(models.Model):
             domain = [
             ('product_id', '=', orderpoint.product_id.id),
             ('state', 'in', ['confirmed', 'assigned', 'waiting', 'partially_available']),
-            ('date', '<=', orderpoint.lead_days_date),
+            ('date', '<=', orderpoint.lead_horizon_date),
             '|',
                 ('location_id', 'in', rental_loc_ids),
                 '|',

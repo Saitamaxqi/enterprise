@@ -1116,7 +1116,6 @@ class TestRentalPicking(TestRentalCommon):
     def test_reordering_rule_forecast(self):
         """ Test the rental orders will only consider outgoing rental move in the forecast
         computation. """
-        # Set a fixed visibility_days
         self.product_id.stock_quant_ids.sudo().unlink()
         date = Date.today() + timedelta(days=7)
 
@@ -1129,9 +1128,9 @@ class TestRentalPicking(TestRentalCommon):
         rental_order_2.rental_return_date = Datetime.now() + timedelta(days=5)
         self.assertEqual(self.product_id.with_context(date=date).qty_available, 0)
         (rental_order_1 | rental_order_2).action_confirm()
-        self.env['stock.warehouse.orderpoint'].with_context(global_visibility_days=7).action_open_orderpoints()
-        self.assertEqual(self.product_id.orderpoint_ids.with_context(global_visibility_days=7).lead_days_date, date)
-        self.assertEqual(self.product_id.orderpoint_ids.with_context(global_visibility_days=7).qty_forecast, -2)
+        self.env['stock.warehouse.orderpoint'].with_context(global_horizon_days=7).action_open_orderpoints()
+        self.assertEqual(self.product_id.orderpoint_ids.with_context(global_horizon_days=7).lead_horizon_date, date)
+        self.assertEqual(self.product_id.orderpoint_ids.with_context(global_horizon_days=7).qty_forecast, -2)
 
     def test_rental_available_reserved_lots(self):
         """
