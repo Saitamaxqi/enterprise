@@ -13,7 +13,7 @@ import { DocumentsDropZone } from "@documents/views/helper/documents_drop_zone";
 import { DocumentsFileViewer } from "@documents/views/helper/documents_file_viewer";
 import { DocumentsKanbanRecord } from "@documents/views/kanban/documents_kanban_record";
 
-import { useExternalListener, useRef } from "@odoo/owl";
+import { onMounted, useExternalListener, useRef } from "@odoo/owl";
 
 export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRenderer) {
     static props = [...KanbanRenderer.props, "previewStore"];
@@ -90,6 +90,11 @@ export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRender
                 this.props.list.selection[0].data.id == detail.recordId
             ) {
                 this.render(true); // Re-render this Component and its children on activity add/edit/unlink
+            }
+        });
+        onMounted(() => {
+            if (this.isMobile && this.isRecentFolder) {
+                this.root.el.classList.add('o_documents_recent');
             }
         });
     }
