@@ -1871,7 +1871,7 @@ class DocumentsDocument(models.Model):
         (users | folders.owner_id).fetch(['partner_id'])
         vals_list_to_update_linked_record = []
         for vals, old_vals in zip(vals_list, old_vals_list):
-            owner = self.env['res.users'].browse(vals.get('owner_id', self.env.user.id))
+            owner = self.env['res.users'].browse(vals.get('owner_id', self.env.user.active and self.env.user.id))
             if owner and not owner.active:
                 _logger.warning(
                     "Documents: Creating document(s) as %s" % (

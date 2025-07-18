@@ -94,7 +94,7 @@ class AccountMove(models.Model):
             values = {
                 'folder_id': setting.folder_id.id,
                 'partner_id': self.partner_id.id or doc_sudo.partner_id.id,
-                'owner_id': self.create_uid.id,
+                'owner_id': self.create_uid.active and self.create_uid.id,
                 'tag_ids': [(4, tag.id) for tag in setting.tag_ids],
             }
             if doc_sudo:
