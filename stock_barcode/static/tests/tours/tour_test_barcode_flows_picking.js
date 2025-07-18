@@ -5861,6 +5861,12 @@ registry.category("web_tour.tours").add("test_create_backorder_after_qty_modifie
     ],
 });
 
+registry.category("web_tour.tours").add("test_barcode_lazy_cache_scan_two_lots", {  steps: () => [
+    { trigger: ".o_barcode_line", run: "scan SN-001" },
+    { trigger: ".o_barcode_line", run: "scan SN-002" },
+    { trigger: ".o_barcode_scanner_qty .qty-done:contains(2)"},
+]});
+
 registry.category("web_tour.tours").add("test_open_picking_dont_override_assigned_user", {
     steps: () => [
         {

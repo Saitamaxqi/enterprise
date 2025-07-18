@@ -3360,6 +3360,35 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'state': 'done'
         }])
 
+    def test_barcode_lazy_cache_scan_two_lots(self):
+        """ Checks that you can scan 2 lots without the OWL error 'quantsByLocation is not iterable' """
+        group_tracking = self.env.ref('stock.group_tracking_owner')
+        self.env.user.write({'group_ids': [Command.link(group_tracking.id)]})
+        self.picking_type_in.write({'use_existing_lots': True})
+
+        sn1, _ = self.env['stock.lot'].create([
+            {'name': 'SN-001', 'product_id': self.productlot1.id},
+            {'name': 'SN-002', 'product_id': self.productlot1.id},
+        ])
+        self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 1, lot_id=sn1)
+
+        receipt = self.env['stock.picking'].create({
+            'name': "Lovely Receipt",
+            'location_id': self.supplier_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_type_id': self.picking_type_in.id,
+            'move_ids': [Command.create({
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'product_id': self.productlot1.id,
+                'product_uom': self.productlot1.uom_id.id,
+                'product_uom_qty': 10,
+            })],
+        })
+        receipt.action_confirm()
+        url = self._get_client_action_url(receipt.id)
+        self.start_tour(url, 'test_barcode_lazy_cache_scan_two_lots', login='admin')
+
     def test_fetch_archived_records_in_lazy_barcode_cache(self):
         """
         Check that a picking related to archived records can be processed in barcode

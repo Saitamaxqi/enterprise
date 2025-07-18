@@ -146,7 +146,7 @@ export default class LazyBarcodeCache {
             if (quantsByLocation) {
                 quants.push(...quantsByLocation);
             } else {
-                this.dbQuantCache[product.id][location_id] = quantsByLocation;
+                this.dbQuantCache[product.id][location_id] = [];
             }
         } else {
             for (const quantsByLocation of Object.values(quantsByProduct)) {
