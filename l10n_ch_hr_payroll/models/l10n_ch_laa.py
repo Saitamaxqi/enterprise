@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from odoo.fields import Date
 from odoo.exceptions import UserError, ValidationError
 
 import re
@@ -15,6 +14,16 @@ class L10nChAccidentInsurance(models.Model):
     _name = 'l10n.ch.accident.insurance'
     _description = 'Swiss: Accident Insurances (AAP/AANP)'
 
+    @api.model
+    def _get_default_laa_group_ids(self):
+        vals = [
+            (0, 0, {
+                'name': "LAA Group A",
+                'group_unit': "A",
+            })
+        ]
+        return vals
+
     active = fields.Boolean(default=True)
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
     name = fields.Char(required=True)
@@ -24,7 +33,7 @@ class L10nChAccidentInsurance(models.Model):
     insurance_code = fields.Char(required=True)
     line_ids = fields.One2many('l10n.ch.accident.insurance.line', 'insurance_id')
     uid_bfs_number = fields.Char(required=False)
-    laa_group_ids = fields.One2many('l10n.ch.accident.group', 'insurance_id')
+    laa_group_ids = fields.One2many('l10n.ch.accident.group', 'insurance_id', default=_get_default_laa_group_ids)
 
     @api.constrains('uid_bfs_number')
     def _check_uid_bfs_number(self):
@@ -46,23 +55,22 @@ class l10nChAccidentInsuranceGroup(models.Model):
     _description = "LAA Group category"
 
     @api.model
-    def default_get(self, fields):
-        res = super().default_get(fields)
-        res.update({
-            'line_ids': [(0, 0, {
-                'date_from': Date.today().replace(month=1, day=1),
+    def _get_default_laa_line_ids(self):
+        vals = [
+            (0, 0, {
+                'date_from': fields.Date.today().replace(month=1, day=1),
                 'threshold': 148200,
                 'occupational_male_rate': 0,
                 'non_occupational_male_rate': 0,
                 'employer_aanp_part': '0',
-            })]
-        })
-        return res
+            })
+        ]
+        return vals
 
     name = fields.Char()
     group_unit = fields.Selection(selection=[(char, char) for char in string.ascii_uppercase[string.ascii_uppercase.index('A'):]], required=True, string="Group Unit")
     insurance_id = fields.Many2one('l10n.ch.accident.insurance')
-    line_ids = fields.One2many('l10n.ch.accident.insurance.line.rate', 'group_id')
+    line_ids = fields.One2many('l10n.ch.accident.insurance.line.rate', 'group_id', default=_get_default_laa_line_ids)
 
     def get_rates(self, target):
         self.ensure_one()

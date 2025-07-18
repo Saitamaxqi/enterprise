@@ -34,10 +34,6 @@ class L10nChAvsIncomeSplits(models.Model):
             "state": "draft"
         })
 
-    def unlink(self):
-        self.action_cancel()
-        return super().unlink()
-
 
 class L10nChAvsIncomeSplitLines(models.Model):
     _name = 'l10n.ch.avs.split.lines'

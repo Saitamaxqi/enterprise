@@ -2,7 +2,6 @@
 
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.fields import Date
 
 import re
 
@@ -13,16 +12,71 @@ class L10nChSocialInsurance(models.Model):
     _name = 'l10n.ch.social.insurance'
     _description = 'Swiss: Social Insurances (AVS, AC)'
 
+    @api.model
+    def _get_default_avs_line_ids(self):
+        vals = [
+            (0, 0, {
+                'date_from': fields.Date.today().replace(month=1, day=1),
+                'employer_rate': 5.3,
+                'employee_rate': 5.3,
+                'admin_fees': 1.2,
+            })
+        ]
+        return vals
+
+    @api.model
+    def _get_default_ac_line_ids(self):
+        vals = [
+            (0, 0, {
+                'date_from': fields.Date.today().replace(month=1, day=1),
+                'employer_rate': 1.1,
+                'employee_rate': 1.1,
+                'employee_additional_rate': 0,
+                'employer_additional_rate': 0,
+            })
+        ]
+        return vals
+
+    @api.model
+    def _get_default_l10n_ch_avs_rente_ids(self):
+        vals = [
+            (0, 0, {
+                'date_from': fields.Date.today().replace(month=1, day=1),
+                'amount': 1400
+            })
+        ]
+        return vals
+
+    @api.model
+    def _get_default_l10n_ch_avs_ac_threshold_ids(self):
+        vals = [
+            (0, 0, {
+                'date_from': fields.Date.today().replace(month=1, day=1),
+                'amount': 148200
+            })
+        ]
+        return vals
+
+    @api.model
+    def _get_default_l10n_ch_avs_acc_threshold_ids(self):
+        vals = [
+            (0, 0, {
+                'date_from': fields.Date.today().replace(month=1, day=1),
+                'amount': 0
+            })
+        ]
+        return vals
+
     name = fields.Char(required=True)
     member_number = fields.Char()
     member_subnumber = fields.Char()
     # https://www.swissdec.ch/fileadmin/user_upload/_Datenempfaenger/Empfaengerliste.pdf
     insurance_code = fields.Char(required=True)
-    avs_line_ids = fields.One2many('l10n.ch.social.insurance.avs.line', 'insurance_id')
-    ac_line_ids = fields.One2many('l10n.ch.social.insurance.ac.line', 'insurance_id')
-    l10n_ch_avs_rente_ids = fields.One2many('l10n.ch.social.insurance.avs.retirement.rente', 'insurance_id')
-    l10n_ch_avs_ac_threshold_ids = fields.One2many('l10n.ch.social.insurance.avs.ac.threshold', 'insurance_id')
-    l10n_ch_avs_acc_threshold_ids = fields.One2many('l10n.ch.social.insurance.avs.acc.threshold', 'insurance_id')
+    avs_line_ids = fields.One2many('l10n.ch.social.insurance.avs.line', 'insurance_id', default=_get_default_avs_line_ids)
+    ac_line_ids = fields.One2many('l10n.ch.social.insurance.ac.line', 'insurance_id', default=_get_default_ac_line_ids)
+    l10n_ch_avs_rente_ids = fields.One2many('l10n.ch.social.insurance.avs.retirement.rente', 'insurance_id', default=_get_default_l10n_ch_avs_rente_ids)
+    l10n_ch_avs_ac_threshold_ids = fields.One2many('l10n.ch.social.insurance.avs.ac.threshold', 'insurance_id', default=_get_default_l10n_ch_avs_ac_threshold_ids)
+    l10n_ch_avs_acc_threshold_ids = fields.One2many('l10n.ch.social.insurance.avs.acc.threshold', 'insurance_id', default=_get_default_l10n_ch_avs_acc_threshold_ids)
     age_start = fields.Integer(string="Start of the obligation to contribute to the AVS", default=18, required=True)
     age_stop_male = fields.Integer(string="Start of retirement age for men", default=65, required=True)
     age_stop_female = fields.Integer(string="Start of retirement age for women", default=64, required=True)
@@ -35,38 +89,6 @@ class L10nChSocialInsurance(models.Model):
     company_id = fields.Many2one("res.company", default=lambda self: self.env.company)
     no_laa_reason = fields.Char(help="If your company doesn't have a main LAA insurance, state the reason here.")
     no_lpp_reason = fields.Char(help="If your company doesn't have a main LPP insurance, state the reason here.")
-
-    @api.model
-    def default_get(self, fields):
-        res = super().default_get(fields)
-        res.update({
-            'avs_line_ids': [(0, 0, {
-                'date_from': Date.today().replace(month=1, day=1),
-                'employer_rate': 5.3,
-                'employee_rate': 5.3,
-                'admin_fees': 1.2,
-            })],
-            'ac_line_ids': [(0, 0, {
-                'date_from': Date.today().replace(month=1, day=1),
-                'employer_rate': 1.1,
-                'employee_rate': 1.1,
-                'employee_additional_rate': 0,
-                'employer_additional_rate': 0,
-            })],
-            'l10n_ch_avs_rente_ids': [(0, 0, {
-                'date_from': Date.today().replace(month=1, day=1),
-                'amount': 1400
-            })],
-            'l10n_ch_avs_ac_threshold_ids': [(0, 0, {
-                'date_from': Date.today().replace(month=1, day=1),
-                'amount': 148200
-            })],
-            'l10n_ch_avs_acc_threshold_ids': [(0, 0, {
-                'date_from': Date.today().replace(month=1, day=1),
-                'amount': 0
-            })]
-        })
-        return res
 
     @api.constrains('insurance_code')
     def _check_insurance_code(self):
