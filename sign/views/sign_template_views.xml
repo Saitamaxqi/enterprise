@@ -169,6 +169,11 @@
                             <field name="authorized_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="group_ids" groups="sign.manage_template_access" widget="many2many_tags" />
                             <field name="user_id" domain="[('share', '=', False)]" groups="sign.manage_template_access" options="{'no_open': True}"/>
+                            <label for="signature_request_validity" string="Valid for"/>
+                            <div class="o_row" name="signature_request_validity">
+                                <field name="signature_request_validity" class="oe_inline o_hr_narrow_field" nolabel="1"/>
+                                <div class="mb-3" name="signature_request_validity_unit_label"> days</div>
+                            </div>
                         </group>
                     </group>
                 </sheet>

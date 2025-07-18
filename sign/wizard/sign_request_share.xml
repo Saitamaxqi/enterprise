@@ -15,8 +15,8 @@
                     </group>
                 </group>
                 <footer>
-                    <button string="Share" class="btn-primary" name="action_share_request" type="object" invisible="is_shared" data-hotkey="x"/>
                     <button string="Stop sharing" name="action_stop_sharing" class="btn-primary" type="object" invisible="not is_shared" data-hotkey="q"/>
+                    <button string="Copy link" class="btn-primary" name="action_copy_and_close" type="object" invisible="not is_shared" data-hotkey="x"/>
                     <button string="Close" name="action_close_request" type="object" data-hotkey="q"/>
                 </footer>
             </form>

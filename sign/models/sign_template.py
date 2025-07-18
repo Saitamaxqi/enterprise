@@ -40,7 +40,12 @@ class SignTemplate(models.Model):
         help="Optional text to display on the button link")
     signed_count = fields.Integer(compute='_compute_signed_in_progress_template')
     in_progress_count = fields.Integer(compute='_compute_signed_in_progress_template')
-
+    signature_request_validity = fields.Integer(
+        string="Default signature request validity",
+        readonly=False,
+        default=60,
+        help="Specify the default validity period (in days) for signature requests. "
+             "Set to 0 for requests that don't expire.")
     authorized_ids = fields.Many2many('res.users', string="Authorized Users", relation="sign_template_authorized_users_rel", default=_default_favorited_ids)
     group_ids = fields.Many2many("res.groups", string="Authorized Groups")
     has_sign_requests = fields.Boolean(compute="_compute_has_sign_requests", compute_sudo=True, store=True)
@@ -52,6 +57,11 @@ class SignTemplate(models.Model):
         ('is_mail_thread', '=', 'True')
     ])
     model_name = fields.Char(related='model_id.model', string="Model Name")
+
+    _signature_request_validity_check = models.Constraint(
+        "CHECK(signature_request_validity IS NULL OR signature_request_validity >= 0)",
+        "The number of days for expiration must be a positive value.",
+    )
 
     @api.model
     def name_search(self, name='', domain=None, operator='ilike', limit=100):

@@ -220,7 +220,6 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         # Get the shared request from a template with one role.
         wizard_id = self.template_1_role.open_shared_sign_request()['res_id']
         wizard = self.env['sign.request.share'].browse(wizard_id)
-        wizard.action_share_request()
         shared_request = wizard.sign_request_id
         sign_request_item = shared_request.request_item_ids[0]
 

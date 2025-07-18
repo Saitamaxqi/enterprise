@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from dateutil.relativedelta import relativedelta
+
 from odoo import _, api, Command, fields, models
 from odoo.exceptions import ValidationError
 
@@ -31,11 +32,13 @@ class SignRequestShare(models.TransientModel):
                             'request_item_ids': [Command.create({'role_id': template_id.sign_item_ids.responsible_id.id or self.env.ref('sign.sign_item_role_default').id})],
                             'reference': "%s" % (template_id.name),
                             'state': 'shared',
-                            'validity': fields.Date.today() + relativedelta(months=2)
+                            'validity': fields.Date.today() + relativedelta(days=template_id.signature_request_validity) if template_id.signature_request_validity else None
                         }).id
+
+                    vals['is_shared'] = True
         return super().create(vals_list)
 
-    def action_share_request(self):
+    def action_copy_and_close(self):
         self.ensure_one()
         return {
             'type': 'ir.actions.client',
@@ -48,6 +51,7 @@ class SignRequestShare(models.TransientModel):
     def action_stop_sharing(self):
         self.ensure_one()
         self.sign_request_id.unlink()
+        self.is_shared = False
         return {'type': 'ir.actions.act_window_close'}
 
     def action_close_request(self):

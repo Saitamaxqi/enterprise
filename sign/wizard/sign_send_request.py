@@ -41,13 +41,14 @@ class SignSendRequest(models.TransientModel):
     attachment_ids = fields.Many2many('ir.attachment', string='Attachments')
     filename = fields.Char("Filename", compute='_compute_filename', store=True)
 
-    validity = fields.Date(string='Valid Until', default=lambda self: fields.Date.today() + relativedelta(months=6), help="Leave empty for requests without expiration.")
+    validity = fields.Date(compute='_compute_validity', store=True, readonly=False,
+                           string='Valid Until', help="Leave empty for requests without expiration.")
     reminder_enabled = fields.Boolean(default=False)
     reminder = fields.Integer(string='Reminder', default=7)
     certificate_reference = fields.Boolean(string="Certificate Reference", default=False, help="If checked, the unique certificate reference will be added on the final signed document.")
 
-    @api.onchange('validity')
-    def _onchange_validity(self):
+    @api.constrains('validity')
+    def _check_validity(self):
         if self.validity and self.validity < fields.Date.today():
             raise UserError(self.env._('Request expiration date must be set in the future.'))
 
@@ -145,6 +146,15 @@ class SignSendRequest(models.TransientModel):
             elif wiz.template_id:
                 filename = wiz.template_id.display_name
             wiz.filename = filename
+
+    @api.depends('template_id')
+    def _compute_validity(self):
+        for wiz in self:
+            if wiz.template_id:
+                if wiz.template_id.signature_request_validity:
+                    wiz.validity = fields.Date.today() + relativedelta(days=wiz.template_id.signature_request_validity)
+                else:
+                    wiz.validity = None
 
     @api.depends('signer_ids.partner_id', 'signer_id', 'signers_count')
     def _compute_is_user_signer(self):
