@@ -183,8 +183,12 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
                 Command.create({
                     'bank_partner_id': self.bank_partner.id,
                     'vat_amount': 667,
+                    'reimbursement_type': 'first_asking',
+                    'reimbursement_date': '2024-05-31',
                 }),
             ],
+            'is_reimbursement_comment': True,
+            'reimbursement_comment': "Test reimbursement comment for may 2024."
         })
         options = self._generate_options(
             self.report,

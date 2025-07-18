@@ -141,6 +141,11 @@ msgid "An error occurred while trying to send the document: "
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type__assignment_cessation
+msgid "Assignment, cessation, death, entry into a VAT group"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__attachment_ids
 msgid "Attachment"
 msgstr ""
@@ -238,6 +243,11 @@ msgid "DGFiP"
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_date
+msgid "Date"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__date_from
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__date_from
 msgid "Date From"
@@ -309,6 +319,11 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:ir.model,name:l10n_fr_reports.model_l10n_fr_fec_export_wizard
 msgid "Fichier Echange Informatise"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type__first_asking
+msgid "First asking"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -412,6 +427,11 @@ msgid "Options"
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type__others
+msgid "Others"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_form
 msgid "Process now"
 msgstr ""
@@ -430,6 +450,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__recipient
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__recipient
 msgid "Recipient"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__reimbursement_comment
+msgid "Reimbursement Comment"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type
+msgid "Reimbursement type"
 msgstr ""
 
 #. module: l10n_fr_reports

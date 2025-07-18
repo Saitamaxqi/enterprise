@@ -107,6 +107,12 @@ CODE_TO_EDI_ID = {
     'box_32': 'KE',
 }
 
+REIMBURSEMENT_TYPE_MAPPING = {
+    'first_asking': {'code': 'DI', 'date_code': 'DL'},
+    'assignment_cessation': {'code': 'DJ', 'date_code': 'DM'},
+    'others': {'code': 'DK', 'date_code': None},
+}
+
 # Specific Lines (not filled if 0):
 # * 22A: the tax coefficient and cannot be 0
 # * P1 and P2: petroleum lines and should be sent only for companies with specific tax regimes
@@ -148,6 +154,16 @@ class L10n_Fr_ReportsSendVatReportBankAccountLine(models.TransientModel):
     currency_id = fields.Many2one('res.currency', related="l10n_fr_send_vat_report_id.currency_id")
     vat_amount = fields.Monetary()
     is_wrongly_configured = fields.Boolean(compute="_compute_is_wrongly_configured")
+    reimbursement_type = fields.Selection(
+        string="Reimbursement type",
+        selection=[
+            ('first_asking', "First asking"),
+            ('assignment_cessation', "Assignment, cessation, death, entry into a VAT group"),
+            ('others', "Others")
+        ],
+        default='first_asking',
+    )
+    reimbursement_date = fields.Date(string="Date", default=fields.Date.today())
 
     @api.depends('account_number', 'bank_bic')
     def _compute_is_wrongly_configured(self):
@@ -178,6 +194,8 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
     currency_id = fields.Many2one('res.currency', default=lambda self: self.env.company.currency_id)
     vat_amount = fields.Monetary(compute='_compute_vat_amount')
     computed_vat_amount = fields.Monetary(compute='_compute_computed_vat_amount')
+    is_reimbursement_comment = fields.Boolean(string="Add reimbursement comment")
+    reimbursement_comment = fields.Text()
 
     def _compute_vat_amount(self):
         vat_carried_forward_line = self.env.ref('l10n_fr_account.tax_report_27')
@@ -548,6 +566,35 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             company_location_code = 'DF',
 
         for index, bank_account_line in enumerate(self.bank_account_line_ids):
+            reimbursement_type_data = REIMBURSEMENT_TYPE_MAPPING.get(bank_account_line.reimbursement_type)
+            zones = [{
+                'id': 'AA',
+                'iban': bank_account_line.account_number.replace(' ', ''),
+                'bic': bank_account_line.bank_bic.replace(' ', ''),
+            }, {
+                'id': 'FK',
+                'value': 'X',
+            }, {
+                'id': 'DN',
+                'value': float_repr(
+                    bank_account_line.currency_id.round(bank_account_line.vat_amount),
+                    bank_account_line.currency_id.decimal_places,
+                ).replace('.', ','),
+            }, {
+                'id': company_location_code,
+                'value': 'X',
+            }]
+            # Add reimbursement type and date
+            if reimbursement_type_data and reimbursement_type_data['code']:
+                zones.append({'id': reimbursement_type_data['code'], 'value': 'X'})
+            if reimbursement_type_data['date_code'] and bank_account_line.reimbursement_date:
+                zones.append({
+                    'id': reimbursement_type_data['date_code'],
+                    'value': bank_account_line.reimbursement_date.strftime("%Y%m%d"),
+                })
+            if self.is_reimbursement_comment and self.reimbursement_comment:
+                zones.append({'id': 'FJ', 'value': self.reimbursement_comment})
+
             declarations = {
                 'type': 'RBT',
                 'reference': "INFENT000042",  # internal reference to the emitor
@@ -564,23 +611,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                 'form': {
                     'millesime': "24",
                     'name': "3519",
-                    'zones': [{
-                        'id': 'AA',
-                        'iban': bank_account_line.account_number.replace(' ', ''),
-                        'bic': bank_account_line.bank_bic.replace(' ', ''),
-                    }, {
-                        'id': 'FK',
-                        'value': 'X'
-                    }, {
-                        'id': 'DN',
-                        'value': float_repr(
-                            bank_account_line.currency_id.round(bank_account_line.vat_amount),
-                            bank_account_line.currency_id.decimal_places,
-                        ).replace('.', ',')
-                    }, {
-                        'id': company_location_code,
-                        'value': 'X',
-                    }],
+                    'zones': zones,
                 }
             }
 

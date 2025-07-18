@@ -113,6 +113,11 @@ msgstr ""
 "rapports de taxe français"
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__is_reimbursement_comment
+msgid "Add reimbursement comment"
+msgstr "Ajouter un commentaire de remboursement"
+
+#. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
 msgid "All the selected bank accounts should have an IBAN and a bic code."
@@ -168,6 +173,11 @@ msgstr ""
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "An error occurred while trying to send the document: "
 msgstr "Une erreur s'est produite lors de l'envoi du document :"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type__assignment_cessation
+msgid "Assignment, cessation, death, entry into a VAT group"
+msgstr "Cession, cessation, décès, entrée dans un groupe TVA"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__attachment_ids
@@ -267,6 +277,11 @@ msgid "DGFiP"
 msgstr "DGFiP"
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_date
+msgid "Date"
+msgstr "Date"
+
+#. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__date_from
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__date_from
 msgid "Date From"
@@ -341,6 +356,11 @@ msgstr "Gestionnaire personnalisé du rapport FEC"
 #: model:ir.model,name:l10n_fr_reports.model_l10n_fr_fec_export_wizard
 msgid "Fichier Echange Informatise"
 msgstr "Fichier Échange Informatisé"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type__first_asking
+msgid "First asking"
+msgstr "Première demande"
 
 #. module: l10n_fr_reports
 #: model:ir.model,name:l10n_fr_reports.model_l10n_fr_report_handler
@@ -443,6 +463,11 @@ msgid "Options"
 msgstr "Options"
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type__others
+msgid "Others"
+msgstr "Autres"
+
+#. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_form
 msgid "Process now"
 msgstr "Traiter maintenant"
@@ -462,6 +487,16 @@ msgstr "Compte de résultats"
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__recipient
 msgid "Recipient"
 msgstr "Destinataire"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__reimbursement_comment
+msgid "Reimbursement Comment"
+msgstr "Commentaire sur le remboursement"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__reimbursement_type
+msgid "Reimbursement type"
+msgstr "Type de remboursement"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__account_report_async_export__state__rejected
