@@ -176,3 +176,68 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
 
         self.assertEqual(self.order_line.qty_delivered, 1.0)
         self.assertEqual(self.order_line.qty_returned, 1.0)
+
+    def test_rental_qty_delivered_without_rental_picking(self):
+        """ Test rental product qty delivered when processed in PoS when rental picking is disabled """
+        test_product = self.env['product.product'].create({
+            'name': 'Rental',
+            'rent_ok': True,
+            'is_storable': True,
+        })
+
+        sale_order = self.env['sale.order'].sudo().create({
+            'partner_id': self.partner_full.id,
+            'partner_invoice_id': self.partner_full.id,
+            'partner_shipping_id': self.partner_full.id,
+            'rental_start_date': fields.Datetime.today(),
+            'rental_return_date': fields.Datetime.today() + timedelta(days=3),
+            'order_line': [Command.create({
+                'product_id': test_product.id,
+                'product_uom_qty': 1.0,
+                'is_rental': True,
+            })],
+        })
+
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+
+        pos_order = {'amount_paid': 1,
+           'amount_return': 0,
+           'amount_tax': 0,
+           'amount_total': 1,
+           'date_order': fields.Datetime.to_string(fields.Datetime.now()),
+           'fiscal_position_id': False,
+           'to_invoice': True,
+           'partner_id': self.partner_full.id,
+           'pricelist_id': False,
+           'lines': [[0,
+             0,
+             {'discount': 0,
+              'pack_lot_ids': [],
+              'price_unit': 1,
+              'product_id': test_product.id,
+              'price_subtotal': 1,
+              'price_subtotal_incl': 1,
+              'sale_order_line_id': sale_order.order_line.id,
+              'sale_order_origin_id': sale_order.id,
+              'qty': 1,
+              'tax_ids': []}]],
+           'name': 'Order 00022-001-0001',
+           'session_id': self.main_pos_config.current_session_id.id,
+           'sequence_number': 1,
+           'payment_ids': [[0,
+             0,
+             {'amount': 1,
+              'name': fields.Datetime.now(),
+              'payment_method_id': self.main_pos_config.payment_method_ids[0].id}]],
+           'uuid': '00022-001-0001',
+           'user_id': self.env.uid}
+
+        self.env['pos.order'].sync_from_ui([pos_order])
+
+        self.assertEqual(sale_order.order_line.qty_delivered, 1.0)
+        return_action = sale_order.action_open_return()
+        wizard = Form(self.env['rental.order.wizard'].sudo().with_context(return_action['context'])).save()
+        wizard.apply()
+
+        self.assertEqual(sale_order.order_line.qty_delivered, 1.0)
+        self.assertEqual(sale_order.order_line.qty_returned, 1.0)
