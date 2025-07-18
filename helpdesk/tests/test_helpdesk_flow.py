@@ -897,3 +897,18 @@ Content-Transfer-Encoding: quoted-printable
             datetime(2024, 6, 1, 10, 0, 0),
             "Ticket created in a closed stage should have close_date set to the current datetime"
         )
+
+    def test_save_ticket_without_tags(self):
+        self.test_team.update({'assign_method': 'tags', 'auto_assignment': True})
+
+        tag = self.env['helpdesk.tag'].create({'name': 'Test Tag'})
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': 'Test Ticket',
+            'team_id': self.test_team.id,
+            'tag_ids': [(6, 0, [tag.id])],
+        })
+        self.assertIn(tag, ticket.tag_ids)
+
+        ticket.write({'tag_ids': [(5, 0, 0)]})
+        self.assertFalse(ticket.tag_ids)

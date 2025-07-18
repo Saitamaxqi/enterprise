@@ -689,10 +689,11 @@ class HelpdeskTicket(models.Model):
                     for ticket in unassigned_tickets_to_assign
                     if (added_tags := set(ticket.tag_ids.ids) - old_tag_ids_per_ticket_id[ticket.id])
                 ]
-                self._assign_vals_by_tags(vals_list)
-                for ticket, vals_dict in zip(unassigned_tickets_to_assign, list(zip(*vals_list))[2]):
-                    if vals_dict:
-                        ticket.write(vals_dict)
+                if vals_list:
+                    self._assign_vals_by_tags(vals_list)
+                    for ticket, vals_dict in zip(unassigned_tickets_to_assign, list(zip(*vals_list))[2]):
+                        if vals_dict:
+                            ticket.write(vals_dict)
         return res
 
     def copy_data(self, default=None):
