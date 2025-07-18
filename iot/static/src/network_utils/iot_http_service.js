@@ -35,6 +35,11 @@ export class IotAction {
         this.notification.add(_t("Failed to reach the IoT Box for device: %s", deviceIdentifier), { type: "danger" });
     }
 
+    async getIotBoxData(iotBoxId) {
+        const [iotBoxData] = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["ip", "identifier"]);
+        return iotBoxData;
+    }
+
     /**
      * Call for an action method on the IoT Box
      * @param iotBoxId IoT Box record ID
@@ -54,7 +59,8 @@ export class IotAction {
         if (!["number", "string"].includes(typeof iotBoxId)) {
             iotBoxId = iotBoxId[0]; // iotBoxId is the ``Many2one`` field, we need the actual ID
         }
-        const [{ ip, identifier }] = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["ip", "identifier"]);
+
+        const { ip, identifier } = await this.getIotBoxData(iotBoxId);
 
         // generate a unique request ID for this request (ensure the callback corresponds to the request)
         const actionId = uuid();

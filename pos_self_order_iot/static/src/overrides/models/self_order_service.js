@@ -4,13 +4,13 @@ import { SelfOrder, selfOrderService } from "@pos_self_order/app/services/self_o
 import { patch } from "@web/core/utils/patch";
 
 patch(selfOrderService, {
-    dependencies: [...selfOrderService.dependencies, "iot_longpolling"],
+    dependencies: [...selfOrderService.dependencies, "iot_longpolling", "iot_http"],
 });
 
 patch(SelfOrder.prototype, {
     async setup(env, services) {
         this.iot_longpolling = services.iot_longpolling;
-        this.iotHttp = services.iot_http;
+        this.iotHttpService = services.iot_http;
         await super.setup(...arguments);
 
         if (!this.config.iface_print_via_proxy || this.config.self_ordering_mode !== "kiosk") {
@@ -22,7 +22,13 @@ patch(SelfOrder.prototype, {
             identifier: this.config.iface_printer_id.identifier,
             iot_id: { id: this.config.iface_printer_id.iot_id },
         });
-        this.printer.setPrinter(new IoTPrinter({ device, iot_http: this.iotHttp }));
+        this.printer.setPrinter(
+            new IoTPrinter({
+                device,
+                iot_http: this.iotHttpService,
+                access_token: this.access_token,
+            })
+        );
     },
 
     filterPaymentMethods(paymentMethods) {
@@ -39,7 +45,11 @@ patch(SelfOrder.prototype, {
                 iot_ip: printer.proxy_ip,
                 identifier: printer.device_identifier,
             });
-            return new IoTPrinter({ device, iot_http: this.iotHttp });
+            return new IoTPrinter({
+                device,
+                iot_http: this.iotHttpService,
+                access_token: this.access_token,
+            });
         } else {
             return super.createPrinter(...arguments);
         }

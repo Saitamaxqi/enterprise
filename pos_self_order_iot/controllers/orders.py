@@ -3,7 +3,6 @@ from odoo.addons.pos_self_order.controllers.orders import PosSelfOrderController
 
 
 class PosSelfOrderControllerIot(PosSelfOrderController):
-
     @http.route("/pos-self-order/iot-payment-cancelled/", auth="public", type="jsonrpc", website=True)
     def iot_payment_cancelled(self, access_token, order_id):
         pos_config = self._verify_pos_config(access_token)
@@ -30,3 +29,24 @@ class PosSelfOrderControllerIot(PosSelfOrderController):
 
         if order.config_id.self_ordering_mode == "kiosk":
             order._send_payment_result('Success')
+
+    @http.route("/pos-self-order/get-iot-box-data/", auth="public", type="jsonrpc", website=True)
+    def get_iot_box_data(self, access_token, iot_box_id):
+        pos_config = self._verify_pos_config(access_token)
+        iot_data = pos_config.env["iot.box"].search([("id", "=", iot_box_id)], limit=1)
+        if not iot_data:
+            return {"error": "IoT Box not found"}
+        return {
+            "ip": iot_data.ip,
+            "identifier": iot_data.identifier,
+        }
+
+    @http.route("/pos-self-order/iot-box-websocket-channel/", auth="public", type="jsonrpc", website=True)
+    def iot_box_websocket_channel(self, access_token, message=None, message_type="iot_action"):
+        pos_config = self._verify_pos_config(access_token)
+        iot_channel = pos_config.env['iot.channel']
+        if message:
+            iot_channel.send_message(message, message_type)
+            return {"status": "Message sent successfully"}
+
+        return {"channel": iot_channel.get_iot_channel()}
