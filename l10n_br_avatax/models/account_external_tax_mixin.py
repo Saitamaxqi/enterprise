@@ -263,8 +263,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
     def _l10n_br_avatax_handle_response(self, service_params, response, title):
         if response.get('error'):
-            logger.warning(pformat(response), stack_info=True)
-
             inner_errors = []
             for error in response['error'].get('innerError', []):
                 # Useful inner errors are line-specific. Ones that aren't are typically not useful for the user.
@@ -594,6 +592,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 ))
                 if error:
                     errors.append(error)
+                    continue
 
                 for base_line, line_results in zip(base_lines, api_response['lines']):
                     tax_values_list = []

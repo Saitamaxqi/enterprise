@@ -407,6 +407,34 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         line = payload['lines'][0]
         self.assertEqual(line['itemDescriptor']['ex'], '001', "EX field should match the value set in NCM code")
 
+    def test_10_tax_calculation_api_error(self):
+        invoice, _ = self._create_invoice_01_and_expected_response()
+        response = {
+            "error": {
+                "code": "TC000",
+                "message": "Errors: ",
+                "innerError": [
+                    {
+                        "code": "TC001",
+                        "message": "Cannot find TaxCitation based on NCM for PIS",
+                        "lineCode": invoice.invoice_line_ids.ids[0],
+                        "where": {
+                            "type": "PIS",
+                            "hsCodes.codeType": "NCM",
+                            "hsCodes.code": "49011000",
+                            "date": "2025-07-18T00:00:00.000Z",
+                        },
+                        "lineIndex": 0,
+                        "itemCode": "false",
+                    },
+                ],
+            }
+        }
+
+        with self._capture_request_br(return_value=response), \
+             self.assertRaisesRegex(UserError, "Cannot find TaxCitation based on NCM for PIS"):
+            invoice.button_external_tax_calculation()
+
 
 @tagged('post_install_l10n', '-at_install', 'post_install')
 class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
