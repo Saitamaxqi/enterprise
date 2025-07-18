@@ -92,6 +92,15 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             'uom_id': cls.uom_unit.id,
             'invoice_policy': 'order',
         })
+        cls.product_one_time_sale = Product.create({
+            'name': "One time sale consumable",
+            'standard_price': 30.0,
+            'type': 'consu',
+            'uom_id': cls.uom_unit.id,
+            'invoice_policy': 'delivery',
+            'allow_one_time_sale': True,
+            'recurring_invoice': True,
+        })
 
         # SO
 
@@ -118,6 +127,18 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
                 'tax_ids': [Command.clear()],
             })]
         })
+
+        cls.subscription_one_time_delivery = SaleOrder.create({
+            'name': 'One Time Sale Delivery',
+            'partner_id': cls.user_portal.partner_id.id,
+            'plan_id': False,
+            'order_line': [Command.create({
+                'product_id': cls.product_one_time_sale.id,
+                'product_uom_qty': 1,
+                'tax_ids': [Command.clear()],
+            })]
+        })
+
         cls.context = {
             'active_model': 'sale.order',
             'active_ids': [cls.subscription_order.id],

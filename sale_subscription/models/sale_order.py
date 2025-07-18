@@ -1269,7 +1269,10 @@ class SaleOrder(models.Model):
     def _get_invoiceable_lines(self, final=False):
         date_from = self.env.context.get('invoiceable_date_from', fields.Date.today())
         res = super()._get_invoiceable_lines(final=final)
-        res = res.filtered(lambda l: not l.recurring_invoice or l.order_id.subscription_state == '7_upsell')
+        res = res.filtered(lambda l: not l.recurring_invoice
+            or l.order_id.subscription_state == '7_upsell'
+            or l._subscription_is_one_time_sale()
+        )
         invoiceable_line_ids = []
         downpayment_line_ids = []
         pending_section = None
@@ -2233,13 +2236,7 @@ class SaleOrder(models.Model):
 
     def _subscription_is_one_time_sale(self):
         """ Determines whether the user has made a one-time purchase. """
-        res = []
-        for line in self.order_line:
-            if not line.recurring_invoice:
-                continue
-            value = bool(line.product_id.allow_one_time_sale and not line.order_id.plan_id)
-            res.append(value)
-        return all(res)
+        return all(line._subscription_is_one_time_sale() for line in self.order_line if line.recurring_invoice)
 
     def _is_subscription_postpaid(self):
         self.ensure_one()

@@ -259,6 +259,8 @@ class SaleOrderLine(models.Model):
         for line in self:
             if not line.recurring_invoice or line.order_id.state != 'sale':
                 continue
+            if line._subscription_is_one_time_sale():
+                continue
             qty_invoiced = 0.0
             if not line.invoice_lines:
                 continue
@@ -701,3 +703,15 @@ class SaleOrderLine(models.Model):
             else:
                 results.append(False)
         return all(results)
+
+    def _subscription_is_one_time_sale(self):
+        """
+        Checks if the sale order line is eligible for a one-time sale in a subscription context.
+        Returns True if the product allows one-time sale, is recurring, and no plan is set.
+        """
+        self.ensure_one()
+        return (
+            self.product_id.allow_one_time_sale
+            and self.recurring_invoice
+            and not self.order_id.plan_id
+        )

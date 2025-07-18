@@ -97,6 +97,9 @@ class SaleOrderLine(models.Model):
             elif line.order_id.subscription_state in SUBSCRIPTION_PROGRESS_STATE and not line.last_invoiced_date:
                 # prepaid and postpaid lines not already invoiced
                 stock_line_ids.append(line.id)
+            elif line._subscription_is_one_time_sale():
+                # one-time sale lines
+                stock_line_ids.append(line.id)
             elif line._is_postpaid_line() and line.last_invoiced_date:
                 # postpaid already invoiced
                 stock_line_ids.append(line.id)
@@ -138,7 +141,7 @@ class SaleOrderLine(models.Model):
         Ensure one is present in inherited function
         """
         values = super()._prepare_procurement_values(group_id)
-        if not self.recurring_invoice or self.order_id.subscription_state == '7_upsell':
+        if not self.recurring_invoice or self.order_id.subscription_state == '7_upsell' or self._subscription_is_one_time_sale():
             return values
         # Remove 1 day as normal people thinks in terms of inclusive ranges.
         if not self.order_id.start_date or self.order_id.next_invoice_date == self.order_id.start_date and not self.order_id.last_invoice_date:

@@ -321,6 +321,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             self.assertEqual(upsell_so.order_line.qty_invoiced, 0, "Upsell line should have invoiced 0 items")
             self.assertEqual(upsell_so.order_line.parent_line_id.qty_delivered, 10, "Sub line should have delivered 10 items")
             self.assertEqual(upsell_so.order_line.parent_line_id.qty_invoiced, 10, "Sub line should have invoiced 10 items")
+
     def test_upsell_stored_product(self):
         sub = self.subscription_order
 
@@ -1101,3 +1102,10 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             # Assert activity is posted
             activity = subscription.activity_ids
             self.assertTrue(activity, "Expected mail activity was not created.")
+
+    def test_create_delivery_one_time_product(self):
+        """Create a sale order with a one-time sale product and confirm it."""
+        sale_order = self.subscription_one_time_delivery
+        sale_order.action_confirm()
+        picking = sale_order.picking_ids
+        self.assertTrue(picking, "A picking should be created for the one-time sale product.")
