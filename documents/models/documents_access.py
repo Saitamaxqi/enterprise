@@ -7,7 +7,7 @@ class DocumentsAccess(models.Model):
     _description = 'Document / Partner'
     _log_access = False
 
-    document_id = fields.Many2one('documents.document', required=True, auto_join=True, index=True, ondelete='cascade')
+    document_id = fields.Many2one('documents.document', required=True, bypass_search_access=True, index=True, ondelete='cascade')
     partner_id = fields.Many2one('res.partner', required=True, ondelete='cascade', index=True)
     role = fields.Selection(
         [('view', 'Viewer'), ('edit', 'Editor')],

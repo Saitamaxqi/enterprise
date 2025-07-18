@@ -42,7 +42,7 @@ class AmazonAccount(models.Model):
         readonly=True,
     )
     offer_ids = fields.One2many(
-        string="Offers", comodel_name='amazon.offer', inverse_name='account_id', auto_join=True
+        string="Offers", comodel_name='amazon.offer', inverse_name='account_id', bypass_search_access=True
     )
     base_marketplace_id = fields.Many2one(
         string="Home Marketplace",

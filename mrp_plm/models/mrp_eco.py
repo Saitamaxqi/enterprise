@@ -292,7 +292,7 @@ class MrpEco(models.Model):
     document_count = fields.Integer('# Attachments', compute='_compute_attachments')
     document_ids = fields.One2many(
         'product.document', 'res_id', string='Attachments',
-        auto_join=True, domain=lambda self: [('res_model', '=', self._name)])
+        bypass_search_access=True, domain=lambda self: [('res_model', '=', self._name)])
     displayed_image_id = fields.Many2one(
         'product.document', 'Displayed Image',
         domain="[('res_model', '=', 'mrp.eco'), ('res_id', '=', id), ('mimetype', 'ilike', 'image')]")

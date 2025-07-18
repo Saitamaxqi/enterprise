@@ -15,7 +15,7 @@ class SaleOrderLog(models.Model):
     order_id = fields.Many2one(
         'sale.order', string='Sale Order',
         required=True, ondelete='cascade', readonly=True,
-        auto_join=True, index=True,
+        bypass_search_access=True, index=True,
     )
     user_id = fields.Many2one('res.users', related='order_id.user_id', string='Salesperson', store=True, precompute=True, depends=[])
     team_id = fields.Many2one('crm.team', related='order_id.team_id', string='Sales Team', store=True, precompute=True, depends=[])

@@ -97,7 +97,7 @@ class L10n_Mx_EdiDocument(models.Model):
         readonly=True,
     )
     datetime = fields.Datetime(required=True)
-    move_id = fields.Many2one(comodel_name='account.move', auto_join=True, index='btree_not_null')
+    move_id = fields.Many2one(comodel_name='account.move', bypass_search_access=True, index='btree_not_null')
     attachment_id = fields.Many2one(comodel_name='ir.attachment')
     attachment_uuid = fields.Char(
         string="Fiscal Folio",

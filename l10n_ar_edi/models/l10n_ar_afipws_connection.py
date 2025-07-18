@@ -71,7 +71,7 @@ class L10n_ArAfipwsConnection(models.Model):
     _rec_name = "l10n_ar_afip_ws"
     _order = "expiration_time desc"
 
-    company_id = fields.Many2one('res.company', required=True, index=True, auto_join=True)
+    company_id = fields.Many2one('res.company', required=True, index=True, bypass_search_access=True)
     uniqueid = fields.Char('Unique ID', readonly=True)
     token = fields.Text(readonly=True)
     sign = fields.Text(readonly=True)

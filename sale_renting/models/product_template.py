@@ -19,7 +19,7 @@ class ProductTemplate(models.Model):
         comodel_name='product.pricing',
         inverse_name='product_template_id',
         string="Custom Pricings",
-        auto_join=True,
+        bypass_search_access=True,
         copy=False,
         domain=['|', ('pricelist_id', '=', False), ('pricelist_id.active', '=', True)],
     )

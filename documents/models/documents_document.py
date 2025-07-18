@@ -43,7 +43,7 @@ class DocumentsDocument(models.Model):
     _systray_view = 'activity'
 
     # Attachment
-    attachment_id = fields.Many2one('ir.attachment', ondelete='cascade', auto_join=True, copy=False)
+    attachment_id = fields.Many2one('ir.attachment', ondelete='cascade', bypass_search_access=True, copy=False)
     attachment_name = fields.Char('Attachment Name', related='attachment_id.name', readonly=False)
     attachment_type = fields.Selection(string='Attachment Type', related='attachment_id.type', readonly=False)
     is_editable_attachment = fields.Boolean(default=False, help='True if we can edit the link attachment.')

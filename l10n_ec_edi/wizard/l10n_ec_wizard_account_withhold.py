@@ -501,7 +501,7 @@ class L10n_EcWizardAccountWithholdLine(models.TransientModel):
     wizard_id = fields.Many2one(
         comodel_name='l10n_ec.wizard.account.withhold',
         required=True,
-        auto_join=True,
+        bypass_search_access=True,
     )
     sequence = fields.Integer(default=10)
 

@@ -23,7 +23,7 @@ class ProductTemplate(models.Model):
         inverse_name='product_tmpl_id',
         string="Subscription Pricings",
         domain=lambda self: self._domain_subscription_rule_ids(),
-        auto_join=True,
+        bypass_search_access=True,
         copy=False,
         groups='sales_team.group_sale_salesman',
     )
