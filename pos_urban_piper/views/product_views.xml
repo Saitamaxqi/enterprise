@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='public_description']" position="after">
                 <group name="pos_urban_piper" string="Urban Piper">
-                    <field name="urbanpiper_pos_config_ids" groups="point_of_sale.group_pos_user" widget="many2many_tags" placeholder="Not available for online orders."/>
+                    <field name="urbanpiper_pos_config_ids" options="{'no_create': True}" groups="point_of_sale.group_pos_user" widget="many2many_tags" placeholder="Not available for online orders."/>
                     <field name="urbanpiper_meal_type" groups="point_of_sale.group_pos_user"/>
                     <field name="is_recommended_on_urbanpiper" widget="boolean_toggle"
                     groups="point_of_sale.group_pos_user"/>
@@ -25,7 +25,7 @@
         <field name="inherit_id" ref="product.product_template_tree_view"/>
         <field name="arch" type="xml">
             <field name="available_in_pos" position="after">
-                <field name="urbanpiper_pos_config_ids" widget="many2many_tags" groups="point_of_sale.group_pos_user" optional="hide"/>
+                <field name="urbanpiper_pos_config_ids" options="{'no_create': True}" widget="many2many_tags" groups="point_of_sale.group_pos_user" optional="hide"/>
                 <field name="urbanpiper_meal_type" groups="point_of_sale.group_pos_user" optional="hide"/>
             </field>
         </field>
