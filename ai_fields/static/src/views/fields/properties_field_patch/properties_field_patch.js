@@ -1,5 +1,4 @@
 import { AiPrompt } from "@ai_fields/ai_prompt/ai_prompt";
-import { NO_AI_VALUE_MESSAGE } from "@ai_fields/views/fields/ai_fields/ai_fields";
 import { patch } from "@web/core/utils/patch";
 import { PropertiesField } from "@web/views/fields/properties/properties_field";
 import { PropertyDefinition } from "@web/views/fields/properties/property_definition";
@@ -15,10 +14,6 @@ patch(PropertiesField.prototype, {
         const value = await this.props.record.computeAiProperty(
             `${this.props.name}.${propertyName}`,
         );
-        if (!value) {
-            this.env.services.notification.add(NO_AI_VALUE_MESSAGE, { type: "info" });
-            return;
-        }
         this.onPropertyValueChange(propertyName, value);
     },
 

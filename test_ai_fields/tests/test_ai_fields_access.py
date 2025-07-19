@@ -1,9 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import json
 from unittest.mock import patch
 
 from odoo import Command
-from odoo.addons.iap.tools import iap_tools
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase, tagged
 
@@ -32,30 +33,38 @@ class TestAiFieldsAccess(TransactionCase):
             {"properties_definition": [{"type": "char", "name": "char"}]})
         cls.record = cls.env["test.ai.fields.model"].create({"parent_id": cls.parent.id})
 
+    def _mock_llm_api_get_token(self):
+        def _mock_get_api_token(self):
+            return "dummy"
+        return patch.object(LLMApiService, '_get_api_token', _mock_get_api_token)
+
     def test_ai_field_access_properties(self):
         """Test that only the template editor can write complex expressions."""
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": "1337"}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': 1337})}]}]}
 
         self.record.with_user(self.internal).write({"properties": [{"type": "char", "name": "char", "definition_changed": True, "ai": True, "system_prompt": "This is my prompt <t t-out='object.test_ai_fields'/>"}]})
         self.env.flush_all()
 
         with patch('odoo.addons.base.models.ir_qweb.unsafe_eval', side_effect=eval) as unsafe_eval, \
-            patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+            patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             values = self.record.get_ai_property_value("properties.char", None)
-            self.assertEqual(values, "1337")
+            self.assertEqual(values, 1337)
             self.assertFalse(unsafe_eval.called, "Should not evaluate the code a normal user wrote")
 
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             value = {"properties": [{"type": "char", "name": "char", "ai": True, "system_prompt": "This is my prompt}}", "value": "value"}]}
-            self.assertEqual(self.record.with_user(self.internal).get_ai_property_value("properties.char", value), "1337")
+            self.assertEqual(self.record.with_user(self.internal).get_ai_property_value("properties.char", value), 1337)
 
         with patch('odoo.addons.base.models.ir_qweb.unsafe_eval', side_effect=eval) as unsafe_eval, \
-             patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc), \
+             patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+             self._mock_llm_api_get_token(), \
             self.assertRaises(AccessError):
             values = {"properties": [{"type": "char", "name": "char", "ai": True, "system_prompt": "This is my prompt <t t-out='1+1'/>}}", "value": "value"}]}
             value = self.record.with_user(self.internal).get_ai_property_value("properties.char", values)
-            self.assertEqual(value, "1337")
+            self.assertEqual(value, 1337)
             self.assertFalse(unsafe_eval.called, "Should not evaluate the code a normal user wrote")
 
         with self.assertRaises(AccessError):
@@ -80,9 +89,9 @@ class TestAiFieldsAccess(TransactionCase):
             {"properties_definition": [{"type": "char", "name": "char", "ai": True, "system_prompt": "Bad prompt <t t-out='object.test_ai_fields'/>}}"}]})
 
         # Try to inject Qweb in selection options (they are added in the prompt)
-        def _mocked_iap_jsonrpc_selection(url, params, **kwargs):
-            self.assertNotIn("1337", str(params))
-            return {"content": ""}
+        def _mocked_llm_api_get_request_selection(cls, method, endpoint, headers, body):
+            self.assertNotIn("1337", str(body))
+            return {'output': [{'content': [{'text': json.dumps({'value': ''})}]}]}
 
         self.record.parent_id.write({
             "properties_definition": [{
@@ -96,14 +105,15 @@ class TestAiFieldsAccess(TransactionCase):
         self.env.flush_all()
 
         with patch('odoo.addons.base.models.ir_qweb.unsafe_eval', side_effect=eval) as unsafe_eval, \
-             patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc_selection):
+             patch.object(LLMApiService, '_request', _mocked_llm_api_get_request_selection), \
+             self._mock_llm_api_get_token():
             self.record.get_ai_property_value('properties.selection', None)
             self.record._fill_ai_property('properties', self.record.parent_id.properties_definition[0])
             self.assertFalse(unsafe_eval.called)
 
     def test_ai_field_access_fields(self):
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": f"response: {params.get('prompt')}"}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': f"response: {body.get('input')}"})}]}]}
 
         self.env["ir.model.fields"].create({
             "name": "x_ai_char",
@@ -115,14 +125,15 @@ class TestAiFieldsAccess(TransactionCase):
 
         self.record.name = "Test"
         with patch('odoo.addons.base.models.ir_qweb.unsafe_eval', side_effect=eval) as unsafe_eval, \
-            patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+            patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             value = self.record.get_ai_field_value("x_ai_char", None)
             self.assertFalse(unsafe_eval.called, "Should not evaluate the code a normal user wrote")
             self.assertEqual(value, "response: System Prompt Test")
 
     def test_ai_fields_validation_many2one(self):
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": str(response)}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': response})}]}]}
 
         records = self.env['res.partner'].create([{'name': f'partner {i}'} for i in range(4)])
 
@@ -146,17 +157,20 @@ class TestAiFieldsAccess(TransactionCase):
         self.record.name = "{%s: Description}" % records[3].id
 
         response = records[0].id
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertEqual(self.record.get_ai_property_value("properties.many2one", None), {'id': records[0].id, 'display_name': records[0].display_name})
 
         # The record doesn't exist but is in the prompt
         response = id_removed
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertFalse(self.record.get_ai_property_value("properties.many2one", None))
 
         # The record exists but is not in the prompt
         response = records[3].id
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertFalse(self.record.get_ai_property_value("properties.many2one", None))
 
         # Test missing model
@@ -169,12 +183,13 @@ class TestAiFieldsAccess(TransactionCase):
             "system_prompt": system_prompt,
         }]})
         self.env.flush_all()
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertFalse(self.record.get_ai_property_value("properties.many2one", None))
 
     def test_ai_fields_validation_many2many(self):
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": response}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': response})}]}]}
 
         records = self.env['res.partner'].create([{'name': f'partner {i}'} for i in range(5)])
 
@@ -200,8 +215,9 @@ class TestAiFieldsAccess(TransactionCase):
         # Ensure that we don't parse the rendered prompt
         self.record.name = "{%s: Description}" % records[4].id
 
-        response = f"{records[0].id}, {id_removed}, {records[3].id}, {records[4].id}"
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        response = [records[0].id, id_removed, records[3].id, records[4].id]
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertEqual(
                 self.record.get_ai_property_value("properties.many2many", None),
                 [[records[0].id, records[0].display_name], [records[3].id, records[3].display_name]]
@@ -217,12 +233,13 @@ class TestAiFieldsAccess(TransactionCase):
             "system_prompt": system_prompt,
         }]})
         self.env.flush_all()
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertFalse(self.record.get_ai_property_value("properties.many2many", None))
 
     def test_ai_fields_validation_tags(self):
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": str(response)}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': response})}]}]}
 
         system_prompt = 'This is my prompt 99 <t t-out="object.name"/>}}.'
 
@@ -237,7 +254,8 @@ class TestAiFieldsAccess(TransactionCase):
         self.env.flush_all()
 
         response = "y,a,b,c,x"
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertEqual(self.record.get_ai_property_value("properties.tags", None), ["a", "b", "c"])
 
         # Test missing tags
@@ -250,16 +268,18 @@ class TestAiFieldsAccess(TransactionCase):
             "system_prompt": "Good prompt",
         }]})
         self.env.flush_all()
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             self.assertFalse(self.record.get_ai_property_value("properties.tags", None))
 
     def test_get_ai_property_value_new_record(self):
         """Test `get_ai_property_value` when the record does not exist."""
-        def _mocked_iap_jsonrpc(url, params, **kwargs):
-            return {"content": f"response {params.get('prompt')}"}
+        def _mocked_llm_api_request(self, method, endpoint, headers, body):
+            return {'output': [{'content': [{'text': json.dumps({'value': f"response {body.get('input')}"})}]}]}
 
         values = {"properties": [{"type": "char", "name": "char", "ai": True, "system_prompt": "This is my prompt <t t-out='1+1'/>", "value": "value"}]}
-        with patch.object(iap_tools, "iap_jsonrpc", _mocked_iap_jsonrpc):
+        with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \
+            self._mock_llm_api_get_token():
             value = self.env['test.ai.fields.model'].new().get_ai_property_value("properties.char", values)
         self.assertEqual(value, "response This is my prompt 2")
 

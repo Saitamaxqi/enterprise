@@ -10,8 +10,8 @@ using an AI model and a system prompt.
     'version': '0.1',
     'author': 'Odoo S.A.',
     'license': 'LGPL-3',
-    'depends': ['iap', 'mail', 'web', 'ai'],
-    'auto_install': True,  # TODO merge ai_fields, ai_server_actions into ai in 19
+    'depends': ['ai'],
+    'auto_install': True,
     'data': [
         'data/ir_cron_data.xml',
         'views/ir_model_views.xml',

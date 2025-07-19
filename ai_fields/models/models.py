@@ -3,13 +3,16 @@
 import ast
 import collections
 import json
+import logging
 
 from odoo import _, api, Command, models
-from odoo.addons.ai_fields.tools import get_ai_value, get_field_system_prompt, get_property_system_prompt, render_prompt
+from odoo.addons.ai_fields.tools import get_ai_value, get_field_allowed_vals, get_property_allowed_vals, render_prompt
 from odoo.exceptions import AccessError
 from odoo.fields import Domain
 from odoo.tools import html_sanitize
 from odoo.tools.json import json_default
+
+_logger = logging.getLogger(__name__)
 
 
 class Base(models.AbstractModel):
@@ -152,11 +155,15 @@ class Base(models.AbstractModel):
         cache = {}
         if field_prompt is None and not (hasattr(field, 'ai') and field.ai):
             raise ValueError(f"The field {field.name} has no AI prompt")
-        system_prompt, allowed_values = get_field_system_prompt(self.env, field, field_prompt)
+        allowed_values = get_field_allowed_vals(self.env, field, field_prompt)
         for record in self:
             user_prompt = render_prompt(record, field_prompt or field.ai) + (record._get_currency_prompt(field) if field.type == 'monetary' else '')
             if user_prompt not in cache:
-                cache[user_prompt] = get_ai_value(record.env, field.type, system_prompt, user_prompt, allowed_values)
+                try:
+                    cache[user_prompt] = get_ai_value(record.env, field.type, user_prompt, allowed_values)
+                except Exception as e:  # noqa: BLE001
+                    _logger.info("Could not get a value for an AI Field (%s on %s): %s", field.name, field.model_name, e)
+                    cache[user_prompt] = ""  # prevent query llm again for the field (unresolvable/timeout)
             record[field.name] = cache[user_prompt]
 
     def _fill_ai_property(self, fname, property_definition):
@@ -172,12 +179,16 @@ class Base(models.AbstractModel):
         cache = {}
         if not property_definition.get('system_prompt'):
             raise ValueError(f"The property {property_definition['string']} has no AI prompt")
-        system_prompt, allowed_values = get_property_system_prompt(self.env, property_definition)
+        allowed_values = get_property_allowed_vals(self.env, property_definition)
         properties = {v['id']: v[fname] for v in self.read([fname])}
         for record in self:
             user_prompt = render_prompt(record, property_definition.get('system_prompt'))
             if user_prompt not in cache:
-                cache[user_prompt] = get_ai_value(record.env, property_definition.get('type'), system_prompt, user_prompt, allowed_values)
+                try:
+                    cache[user_prompt] = get_ai_value(record.env, property_definition.get('type'), user_prompt, allowed_values)
+                except Exception as e:  # noqa: BLE001
+                    _logger.info("Could not get a value for an AI property (%s in %s on %s): %s", property_definition['name'], fname, self._name, e)
+                    cache[user_prompt] = False  # prevent query llm again for the property (unresolvable/timeout)
 
             # update the property value (without overriding existing properties)
             # we don't write the definition otherwise we will retrigger the cron if there
@@ -206,13 +217,12 @@ class Base(models.AbstractModel):
             raise ValueError(f"The field {fname} is not defined on {self._name}")
         if not (hasattr(field, 'ai') and field.ai):
             raise ValueError(f"The field {fname} has no AI prompt")
-        system_prompt, allowed_values = get_field_system_prompt(self.env, field)
-        user_prompt = render_prompt(record, field.ai) + (self._get_currency_prompt(field) if field.type == 'monetary' else '')
-        val = get_ai_value(self.env, field.type, system_prompt, user_prompt, allowed_values)
-        if not val:
-            return False
+        val = get_ai_value(self.env, field.type,
+            render_prompt(record, field.ai) + (self._get_currency_prompt(field) if field.type == 'monetary' else ''),
+            get_field_allowed_vals(self.env, field),
+        )
         if field.type == 'many2one':
-            return self.env[field.comodel_name].browse(val).read(['id', 'display_name'])[0]
+            return bool(val) and self.env[field.comodel_name].browse(val).read(['id', 'display_name'])[0]
         elif field.type == 'many2many':
             return [[Command.SET, 0, val or []]]
         return val
@@ -251,14 +261,15 @@ class Base(models.AbstractModel):
         if not (property_definition.get('ai') and property_definition.get('system_prompt')):
             raise ValueError(f"The property {full_name} has no system prompt")
         property_type = property_definition['type']
-        system_prompt, allowed_values = get_property_system_prompt(self.env, property_definition)
-        user_prompt = render_prompt(record, property_definition.get('system_prompt'))
-        val = get_ai_value(self.env, property_type, system_prompt, user_prompt, allowed_values)
-        if not val:
-            return False
+        if property_type in ('many2many', 'many2one'):
+            if not property_definition.get('comodel'):
+                return property_type == 'many2many' and []
+        val = get_ai_value(self.env, property_type,
+            render_prompt(record, property_definition.get('system_prompt')),
+            get_property_allowed_vals(self.env, property_definition),
+        )
         if property_type == 'many2one':
-            record = self.env[property_definition['comodel']].browse(val)
-            return record.read(['id', 'display_name'])[0] if record else False
+            return bool(val) and self.env[property_definition['comodel']].browse(val).read(['id', 'display_name'])[0]
         if property_type == 'many2many':
             records = self.env[property_definition['comodel']].browse(val)
             return [[rec['id'], rec['display_name']] for rec in records.read(['id', 'display_name'])] if records else []

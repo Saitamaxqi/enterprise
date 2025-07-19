@@ -5,6 +5,7 @@ import {
     Command,
     defineModels,
     fields,
+    makeServerError,
     models,
     mountView,
     patchWithCleanup,
@@ -14,6 +15,29 @@ import {
 import { beforeEach, expect, test } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
+
+let unresolveRequest = false;
+
+class ParentModel extends models.Model {
+    _name = "ai_parent";
+
+    properties_definition = fields.PropertiesDefinition();
+
+    _records = [
+        {
+            id: 1,
+            properties_definition: [
+                {
+                    type: "char",
+                    ai: true,
+                    system_prompt: "hello",
+                    name: "ai_char",
+                    string: "AI Char",
+                },
+            ],
+        },
+    ];
+}
 
 class AiModel extends models.Model {
     _name = "ai_model";
@@ -38,20 +62,44 @@ class AiModel extends models.Model {
     });
     text = fields.Text({ ai: "text prompt" });
 
-    _records = [{ id: 1 }, { id: 2 }];
+    parent_id = fields.Many2one({ relation: "ai_parent" });
+    properties = fields.Properties({
+        definition_record: "parent_id",
+        definition_record_field: "properties_definition",
+    });
+
+    _records = [{ id: 1, parent_id: 1 }, { id: 2 }];
 
     async get_ai_field_value(rec, fieldName, changes) {
         const field = this._fields[fieldName];
         if (!field) {
             throw new Error("Unknown field " + fieldName);
         }
+        if (unresolveRequest) {
+            return makeServerError({
+                errorName: "odoo.addons.ai_fields.tools.UnresolvedQuery",
+                description: "The value could not be resolved",
+            });
+        }
         if (field.type === "boolean") {
             return true;
-        } else if (["char", "text", "html"].includes(field.type)) {
-            return field.ai;
-        } else {
-            return field.ai;
         }
+        return field.ai;
+    }
+
+    async get_ai_property_value(rec, fullName, changes) {
+        const [fname, pname] = fullName.split(".");
+        const field = this._fields[fname];
+        if (!field) {
+            throw new Error("Unknown field " + fname);
+        }
+        if (unresolveRequest) {
+            return makeServerError({
+                errorName: "odoo.addons.ai_fields.tools.UnresolvedQuery",
+                description: "The value could not be resolved",
+            });
+        }
+        return pname;
     }
 }
 
@@ -59,7 +107,7 @@ class Currency extends models.Model {
     _name = "currency";
 }
 
-defineModels([AiModel, Currency]);
+defineModels([ParentModel, AiModel, Currency]);
 defineMailModels();
 
 beforeEach(() => {
@@ -73,6 +121,12 @@ beforeEach(() => {
         async save(options) {
             const res = await super.save(options);
             asyncStep("save");
+            return res;
+        },
+
+        async computeAiProperty(fullName) {
+            const res = await super.computeAiProperty(fullName);
+            asyncStep(fullName + " computed");
             return res;
         },
     });
@@ -324,4 +378,62 @@ test("AI Fields - Text Field", async () => {
     await waitForSteps(["save"]);
     await animationFrame();
     expect(".o_field_ai_text textarea").toHaveValue("text prompt");
+});
+
+test("AI Fields - Unresolved Request", async () => {
+    await mountView({
+        type: "form",
+        resId: 1,
+        resModel: "ai_model",
+        arch: `<form>
+                    <field name="char" widget="ai_char"/>
+                </form>`,
+    });
+    unresolveRequest = true;
+    expect(".o_field_ai_char").toHaveCount(1);
+    expect(".o_field_ai_char input").toHaveValue("");
+    expect(".o_field_ai_char .btn[title='Refresh value']").toHaveCount(1);
+    await click(".o_field_ai_char .btn[title='Refresh value']");
+    await waitForSteps(["char computed"]);
+    await animationFrame();
+    expect(".o_notification .o_notification_content").toHaveText("The value could not be resolved");
+    expect(".o_field_ai_char input").toHaveValue("");
+});
+
+test("AI Properties - Resolved Request", async () => {
+    await mountView({
+        type: "form",
+        resId: 1,
+        resModel: "ai_model",
+        arch: `<form>
+                    <field name="properties"/>
+                </form>`,
+    });
+    unresolveRequest = false;
+    expect(".o_field_properties .o_property_field_value").toHaveCount(1);
+    expect(".o_field_properties .o_property_field_value input").toHaveValue("");
+    await click(".o_field_properties .btn[title='Refresh value']");
+    await waitForSteps(["properties.ai_char computed"]);
+    await animationFrame();
+    expect(".o_notification .o_notification_content").toHaveCount(0);
+    expect(".o_field_properties .o_property_field_value input").toHaveValue("ai_char");
+});
+
+test("AI Properties - Unresolved Request", async () => {
+    await mountView({
+        type: "form",
+        resId: 1,
+        resModel: "ai_model",
+        arch: `<form>
+                    <field name="properties"/>
+                </form>`,
+    });
+    unresolveRequest = true;
+    expect(".o_field_properties .o_property_field_value").toHaveCount(1);
+    expect(".o_field_properties .o_property_field_value input").toHaveValue("");
+    await click(".o_field_properties .btn[title='Refresh value']");
+    await waitForSteps(["properties.ai_char computed"]);
+    await animationFrame();
+    expect(".o_notification .o_notification_content").toHaveText("The value could not be resolved");
+    expect(".o_field_properties .o_property_field_value input").toHaveValue("");
 });
