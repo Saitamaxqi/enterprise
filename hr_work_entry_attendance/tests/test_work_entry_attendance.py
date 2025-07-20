@@ -143,6 +143,35 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
         self.assertEqual(len(work_entries), len(boundaries_attendances) + len(inner_attendance))
 
+    def test_attendance_spanning_days(self):
+        # Tests that attendances that cross midnight generate work entries that do not cross midnight
+        # or conflict. 2 entries for init, 2 for the first attendance, and 4 for the second due to lunch
+        self.contract.write({
+            'date_generated_from': datetime(2021, 9, 1, 0, 0, 0),
+            'date_generated_to': datetime(2021, 9, 30, 23, 59, 59),
+        })
+        self.env['hr.attendance'].create(
+            {
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 10, 22, 0, 0),
+            'check_out': datetime(2021, 9, 11, 6, 0, 0),
+            }
+        )
+        self.env['hr.attendance'].create([
+            {
+                'employee_id': self.employee.id,
+                'check_in': datetime(2021, 9, 11, 22, 0, 0),
+                'check_out': datetime(2021, 9, 12, 6, 0, 0),
+            },
+            {
+                'employee_id': self.employee.id,
+                'check_in': datetime(2021, 9, 13, 22, 0, 0),
+                'check_out': datetime(2021, 9, 15, 6, 0, 0),
+            },
+        ])
+        work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+        self.assertEqual(len(work_entries), 8)
+
     def test_unlink(self):
         # Tests that the work entry is archived when unlinking an attendance
         # Makes the attendance create a work entry directly
