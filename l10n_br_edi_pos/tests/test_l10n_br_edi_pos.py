@@ -1,25 +1,21 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import json
 import re
-from contextlib import contextmanager
-from unittest import mock
 from unittest.mock import patch
 
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
-from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import AccountExternalTaxMixin
+from odoo.addons.l10n_br_avatax.tests.test_br_avatax import TestBRMockedRequests
 from odoo.addons.l10n_br_edi.tests.test_l10n_br_edi import TestL10nBREDICommon
 from odoo.addons.l10n_br_edi_pos.tests.common import CommonPosBrEdiTest
 from odoo.addons.l10n_br_edi_pos.models.pos_order import PosOrder
 from odoo.exceptions import UserError
 from odoo.tests import tagged, freeze_time
-from odoo.tools import file_open
 
 # All tested POS orders are mocked to use this ID when calculating the access key
 TEST_POS_ORDER_ID = 548
 TEST_DATETIME = "2025-02-05T22:55:17+00:00"
 
 
-class TestL10nBREDIPOSCommon(TestL10nBREDICommon):
+class TestL10nBREDIPOSCommon(TestL10nBREDICommon, TestBRMockedRequests):
     @classmethod
     def setUpClass(self):
         super().setUpClass()
@@ -37,64 +33,10 @@ class TestL10nBREDIPOSCommon(TestL10nBREDICommon):
             }
         )
 
-    @contextmanager
-    def _with_mocked_l10n_br_iap_request(self, expected_communications):
-        """Checks that we send the right requests and returns corresponding mocked responses. Heavily inspired by
-        patch_session in l10n_ke_edi_oscu."""
-        self.maxDiff = None
-        test_case = self
-        json_module = json
-        expected_communications = iter(expected_communications)
-
-        def mocked_l10n_br_iap_request(self, route, company, json=None):
-
-            def replace_ignore(dict_to_replace):
-                """Replace `___ignore___` in the expected request JSONs by unittest.mock.ANY,
-                which is equal to everything."""
-                for k, v in dict_to_replace.items():
-                    if v == "___ignore___":
-                        dict_to_replace[k] = mock.ANY
-                return dict_to_replace
-
-            expected_route, expected_request_filename, expected_response_filename = next(expected_communications)
-            test_case.assertEqual(route, expected_route)
-
-            with file_open(f"l10n_br_edi_pos/tests/mocked_requests/{expected_request_filename}.json", "r") as request_file:
-                expected_request = json_module.loads(request_file.read(), object_hook=replace_ignore)
-                test_case.assertEqual(
-                    json,
-                    expected_request,
-                    f"Expected request did not match actual request for route {route}.",
-                )
-
-            with file_open(f"l10n_br_edi_pos/tests/mocked_responses/{expected_response_filename}.json", "r") as response_file:
-                api_response = json_module.loads(response_file.read())
-
-                if expected_route == "calculate_tax":
-                    expected_lines = api_response["lines"]
-                    order = self.env['pos.order'].browse(int(json['header']['documentCode'].split('_')[1]))
-                    lines = order.lines
-                    test_case.assertEqual(
-                        len(lines), len(expected_lines), f"The sent order was expected to have {len(expected_lines)} lines."
-                    )
-
-                    # Set the line IDs in the mocked response to the line IDs of this order.
-                    for i, line in enumerate(expected_lines):
-                        line["lineCode"] = lines[i].id
-
-                return api_response
-
-        with patch(
-            f"{AccountExternalTaxMixin.__module__}.AccountExternalTaxMixin._l10n_br_iap_request",
-            autospec=True,
-            side_effect=mocked_l10n_br_iap_request,
-        ), patch(
+        # Information needed for BR Mock.
+        self.mocked_l10n_br_iap_patches.append(patch(
             f"{PosOrder.__module__}.PosOrder._l10n_br_get_id_for_cnf", autospec=True, side_effect=lambda *args: TEST_POS_ORDER_ID
-        ):
-            yield
-
-        if next(expected_communications, None):
-            self.fail("Not all expected calls were made!")
+        ))
 
 
 @tagged("post_install_l10n", "post_install", "-at_install")

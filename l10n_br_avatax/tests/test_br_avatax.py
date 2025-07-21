@@ -1,21 +1,103 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import json
 import logging
-from contextlib import contextmanager, nullcontext
-from unittest import SkipTest
+from contextlib import ExitStack, contextmanager, nullcontext
+from unittest import SkipTest, mock
 from unittest.mock import patch
 
 from odoo import modules
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
-from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import AccountExternalTaxMixin
 from odoo.exceptions import UserError
 from odoo.fields import Command
-from odoo.tests.common import tagged
+from odoo.tests.common import TransactionCase, tagged
+from odoo.tools import file_open
+
 from .mocked_invoice_response import generate_response
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import (
+    AccountExternalTaxMixin,
+)
 
 _logger = logging.getLogger(__name__)
 
 DUMMY_SANDBOX_ID = "DUMMY_ID"
 DUMMY_SANDBOX_KEY = "DUMMY_KEY"
+
+
+class TestBRMockedRequests(TransactionCase):
+    @classmethod
+    def setUpClass(self):
+        super().setUpClass()
+        # Any additional patches that need to be applied for the tests can be added here.
+        self.mocked_l10n_br_iap_patches = []
+
+    @contextmanager
+    def _with_mocked_l10n_br_iap_request(self, expected_communications):
+        """Checks that we send the right requests and returns corresponding mocked responses. Heavily inspired by
+        patch_session in l10n_ke_edi_oscu."""
+        module = self.test_module
+        self.maxDiff = None
+        test_case = self
+        json_module = json
+        expected_communications = iter(expected_communications)
+
+        def mocked_l10n_br_iap_request(self, route, company, json=None):
+
+            def replace_ignore(dict_to_replace):
+                """Replace `___ignore___` in the expected request JSONs by unittest.mock.ANY,
+                which is equal to everything."""
+                for k, v in dict_to_replace.items():
+                    if v == "___ignore___":
+                        dict_to_replace[k] = mock.ANY
+                return dict_to_replace
+
+            expected_route, expected_request_filename, expected_response_filename = next(expected_communications)
+            test_case.assertEqual(route, expected_route)
+            with file_open(f"{module}/tests/mocked_requests/{expected_request_filename}.json", "r") as request_file:
+                expected_request = json_module.loads(request_file.read(), object_hook=replace_ignore)
+                test_case.assertEqual(
+                    json,
+                    expected_request,
+                    f"Expected request did not match actual request for route {route}.",
+                )
+
+            with file_open(f"{module}/tests/mocked_responses/{expected_response_filename}.json", "r") as response_file:
+                api_response = json_module.loads(response_file.read())
+
+                if expected_route == "calculate_tax":
+                    expected_lines = api_response["lines"]
+
+                    # Generically get line information for any record type that supports the
+                    # account.external.tax.mixin.
+                    record_model, record_id = json['header']['documentCode'].split('_')
+                    record = self.env[record_model].browse(int(record_id))
+                    lines = [
+                        line['base_line']['record']
+                        for line in record._get_line_data_for_external_taxes()
+                    ]
+
+                    test_case.assertEqual(
+                        len(lines), len(expected_lines), f"The sent record was expected to have {len(expected_lines)} lines.",
+                    )
+
+                    # Set the line IDs in the mocked response to the line IDs of this records.
+                    for i, line in enumerate(expected_lines):
+                        line["lineCode"] = lines[i].id
+
+                return api_response
+
+        with ExitStack() as patch_stack:
+            patch_stack.enter_context(patch(
+                f"{AccountExternalTaxMixin.__module__}.AccountExternalTaxMixin._l10n_br_iap_request",
+                autospec=True,
+                side_effect=mocked_l10n_br_iap_request,
+            ))
+            # Apply all other patches in addition to the required ones.
+            for other_patch in self.mocked_l10n_br_iap_patches:
+                patch_stack.enter_context(other_patch)
+            yield
+
+        if next(expected_communications, None):
+            self.fail("Not all expected calls were made!")
 
 
 @tagged('post_install_l10n', '-at_install', 'post_install')
