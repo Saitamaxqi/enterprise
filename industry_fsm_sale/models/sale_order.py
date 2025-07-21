@@ -81,6 +81,11 @@ class SaleOrderLine(models.Model):
             line.delivered_price_total = taxes['total_included']
             line.delivered_price_subtotal = taxes['total_excluded']
 
+    def _get_sale_order_partner_id(self, project):
+        if project.is_fsm:
+            return self.order_id.partner_shipping_id.id
+        return super()._get_sale_order_partner_id(project)
+
     def _timesheet_create_task_prepare_values(self, project):
         res = super()._timesheet_create_task_prepare_values(project)
         if project.is_fsm:

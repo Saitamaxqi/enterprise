@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from dateutil.relativedelta import relativedelta
+from datetime import datetime
 
 from odoo import fields, Command
 from odoo.tests import new_test_user, tagged
@@ -291,3 +292,57 @@ class TestSubscriptionTask(TestSubscriptionCommon):
 
         sale_order.with_user(user_salemanager).action_confirm()
         self.assertEqual(len(order_line.task_id.recurrence_id), 1)
+
+    def test_create_recurring_task_from_template_on_sale_order_confirmation(self):
+        """
+        Test that confirming a subscription-based sale order with a recurring service product
+        creates a recurring task using the specified task template.
+
+        Steps:
+            1. Create a recurring task template.
+            2. Create a service product linked to the template.
+            3. Create a subscription sale order and add the product.
+            4. Confirm the sale order.
+            5. Assert the task is created with correct recurrence.
+        """
+        task_template = self.env['project.task'].create({
+            'is_template': True,
+            'name': 'Recurring Template',
+            'project_id': self.project.id,
+            'recurring_task': True,
+            'repeat_unit': 'week',
+            'repeat_type': 'forever',
+            'date_deadline': "2023-01-01 00:00:00",
+        })
+
+        product_template = self.env['product.template'].create({
+            'name': 'Recurring Service Product',
+            'type': 'service',
+            'recurring_invoice': True,
+            'project_id': self.project.id,
+            'service_tracking': 'task_global_project',
+            'task_template_id': task_template.id,
+        })
+        product = product_template.product_variant_id
+
+        sale_order = self.env['sale.order'].create({
+            'is_subscription': True,
+            'plan_id': self.plan_month.id,
+            'partner_id': self.partner.id,
+        })
+
+        order_line = self.env['sale.order.line'].create({
+            'order_id': sale_order.id,
+            'product_id': product.id,
+        })
+
+        sale_order.action_confirm()
+
+        self.assertTrue(order_line.task_id.recurring_task, "The task should be marked as recurring.")
+        self.assertEqual(order_line.task_id.repeat_unit, 'week', "The repeat unit should be 'week'.")
+        self.assertEqual(order_line.task_id.repeat_type, 'forever', "The repeat type should be 'forever'.")
+        self.assertEqual(
+            order_line.task_id.date_deadline,
+            datetime(2023, 1, 1, 0, 0, 0),
+            "The task deadline should be 2023-01-01 00:00:00."
+        )
