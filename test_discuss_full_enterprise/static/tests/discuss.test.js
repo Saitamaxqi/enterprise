@@ -1,11 +1,12 @@
 import {
     contains,
-    defineMailModels,
     insertText,
     openDiscuss,
     start,
     startServer,
 } from "@mail/../tests/mail_test_helpers";
+
+import { defineHrModels } from "@hr/../tests/hr_test_helpers";
 
 import { expectElementCount } from "@html_editor/../tests/_helpers/ui_expectations";
 
@@ -14,7 +15,7 @@ import { press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 describe.current.tags("desktop");
-defineMailModels();
+defineHrModels();
 
 test("Can use channel command /who", async () => {
     const pyEnv = await startServer();
