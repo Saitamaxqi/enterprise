@@ -2065,6 +2065,10 @@ export class GanttRenderer extends Component {
             };
         }
         if (!this.defaultkanbanViewParams) {
+            // These values to be assigned outside of arch to properly generate POT files.
+            const nameString = _t("Name");
+            const startString = _t("Start");
+            const stopString = _t("Stop");
             const arch = `
                 <kanban>
                     <templates>
@@ -2073,13 +2077,13 @@ export class GanttRenderer extends Component {
                         <t t-name="${KanbanRecord.KANBAN_CARD_ATTRIBUTE}">
                             <ul class="p-0 mb-0 list-unstyled">
                                 <li class="pe-2">
-                                    <strong>Name</strong>: <field name="display_name"/>
+                                    <strong>${nameString}</strong>: <field name="display_name"/>
                                 </li>
                                 <li class="pe-2">
-                                    <strong>Start</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStartField}.raw_value).toFormat('f')"/>
+                                    <strong>${startString}</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStartField}.raw_value).toFormat('f')"/>
                                 </li>
                                 <li class="pe-2">
-                                    <strong>Stop</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStopField}.raw_value).toFormat('f')"/>
+                                    <strong>${stopString}</strong>: <span t-esc="luxon.DateTime.fromISO(record.${dateStopField}.raw_value).toFormat('f')"/>
                                 </li>
                             </ul>
                         </t>
