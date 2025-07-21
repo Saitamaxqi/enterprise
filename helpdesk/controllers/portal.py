@@ -40,6 +40,7 @@ class CustomerPortal(portal.CustomerPortal):
             'ticket_link_section': [],
             'ticket_closed': kwargs.get('ticket_closed', False),
             'preview_object': ticket,
+            'res_company': ticket.company_id  # Used to display correct company logo
         }
         return self._get_page_view_values(ticket, access_token, values, 'my_tickets_history', False, **kwargs)
 
