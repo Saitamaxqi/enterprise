@@ -11,8 +11,8 @@ patch(posService, {
 
 patch(PosStore.prototype, {
     async setup(env, { iot_http }) {
-        await super.setup(...arguments);
         this.iotHttp = iot_http;
+        await super.setup(...arguments);
     },
     async processServerData(loadedData) {
         await super.processServerData(...arguments);
