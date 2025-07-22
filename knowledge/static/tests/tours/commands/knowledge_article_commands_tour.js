@@ -9,7 +9,7 @@ import {
     endKnowledgeTour,
     openPowerbox,
 } from "../knowledge_tour_utils.js";
-import { EmbeddedVideoComponent } from "@html_editor/others/embedded_components/core/video/video";
+import { EmbeddedVideoComponent } from "@html_editor/others/embedded_components/backend/video/video";
 
 import { VideoSelector } from "@html_editor/main/media/media_dialog/video_selector";
 import { HtmlField } from "@html_editor/fields/html_field";
@@ -273,9 +273,8 @@ class MockedVideoIframe extends Component {
 const videoCommandSteps = [{ // patch the components
     trigger: "body",
     run: () => {
-        unpatchVideoEmbed = patch(EmbeddedVideoComponent.components, {
-            ...EmbeddedVideoComponent.components,
-            VideoIframe: MockedVideoIframe
+        unpatchVideoEmbed = patch(EmbeddedVideoComponent, {
+            template: xml`<div class="o_video_iframe_src" t-out="url" />`
         });
         unpatchVideoSelector = patch(VideoSelector.components, {
             ...VideoSelector.components,
