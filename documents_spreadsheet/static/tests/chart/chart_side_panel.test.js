@@ -442,6 +442,28 @@ test("sunburst chart", async () => {
     ]);
 });
 
+test("treemap chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView({
+        additionalContext: {
+            graph_groupbys: ["product_id", "date:month"],
+            graph_measure: ["probability"],
+        },
+    });
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_treemap");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_treemap");
+    const runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("treemap");
+    expect(runtime.chartJsConfig.data.datasets[0].tree).toEqual([
+        { 0: "xphone", 1: "April 2016", value: 10 },
+        { 0: "xpad", 1: "October 2016", value: 11 },
+        { 0: "xpad", 1: "December 2016", value: 110 },
+    ]);
+});
+
 test("cannot change chart type to geo chart for a chart not grouped by country", async () => {
     const { model, env } = await createSpreadsheetFromGraphView({});
     await openChartSidePanel(model, env);
