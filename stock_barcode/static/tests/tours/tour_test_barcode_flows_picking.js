@@ -5261,7 +5261,7 @@ registry.category("web_tour.tours").add("test_split_line_on_destination_scan", {
         { trigger: ".o_barcode_line.o_selected:not(.o_line_completed)", run: "scan product1" },
         { trigger: ".o_barcode_line.o_selected.o_line_completed", run: "scan LOC-01-01-00" },
         {
-            trigger: ".o_validate_page.btn-primary",
+            trigger: ".o_line_destination_location:contains('.../Section 1')",
             run: () => {
                 helper.assertLinesCount(2);
                 helper.assertLineDestinationLocation(0, "WH/Stock");
