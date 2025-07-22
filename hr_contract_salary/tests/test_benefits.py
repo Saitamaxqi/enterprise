@@ -107,6 +107,7 @@ class TestInformationUpdate(HttpCase):
                         'wage': 1000,
                         'final_yearly_costs': 1000,
                     },
+                    'version_personal': {},
                     'employee': {
                         'name': 'Edited Test Employee',
                         'private_email': 'edited_test_employee@test.example.com',

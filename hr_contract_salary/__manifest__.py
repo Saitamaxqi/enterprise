@@ -18,6 +18,7 @@
         'wizard/refuse_offer_wizard.xml',
 
         'views/hr_contract_salary_templates.xml',
+        'views/hr_contract_signatories_views.xml',
         'views/hr_employee_views.xml',
         'views/hr_applicant_views.xml',
         'views/hr_job_views.xml',

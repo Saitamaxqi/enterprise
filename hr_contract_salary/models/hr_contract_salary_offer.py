@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, SUPERUSER_ID, _
 from werkzeug.urls import url_encode
 
 
@@ -67,6 +67,27 @@ class HrContractSalaryOffer(models.Model):
         export_string_translation=False
     )
 
+    # DO NOT CALL THIS FUNCTION OUTSIDE OF A ROLLBACK SAVEPOINT
+    def _get_version(self):
+        self.ensure_one()
+        if self.employee_id:
+            return self.employee_id.current_version_id.with_context(tracking_disable=True)
+        if self.contract_template_id and self.contract_template_id.employee_id:
+            return self.contract_template_id.with_context(tracking_disable=True)
+
+        employee = self.env['hr.employee'].with_context(
+            tracking_disable=True,
+            salary_simulation=True,
+        ).with_user(SUPERUSER_ID).sudo().create({
+            'name': 'Simulation Employee'
+        })
+        if self.contract_template_id:
+            employee.version_id.write(
+                self.env['hr.version'].get_values_from_contract_template(self.contract_template_id)
+            )
+            return employee.current_version_id.with_context(tracking_disable=True)
+        return employee.current_version_id
+
     @api.depends('contract_template_id.sign_template_signatories_ids')
     def _compute_is_half_sign_state_required(self):
         for offer in self:
@@ -79,7 +100,7 @@ class HrContractSalaryOffer(models.Model):
             offer.url = base_url \
                       + f"/salary_package/simulation/offer/{offer.id}" \
                       + f"?final_yearly_costs={round(offer.final_yearly_costs, 2)}" \
-                      + (f"&token={offer.access_token}" if offer.applicant_id else "")
+                      + (f"&token={offer.access_token}" if offer.access_token else "")
 
     @api.depends('applicant_id', 'employee_version_id', 'employee_id')
     def _compute_display_name(self):
@@ -236,6 +257,17 @@ class HrContractSalaryOffer(models.Model):
         self.ensure_one()
         pending_sign_request = self.sign_request_ids.filtered(lambda r: r.state != 'signed')
         return pending_sign_request.go_to_document()
+
+    def action_edit_offer_signatories(self):
+        self.ensure_one()
+        return {
+            'name': self.env._("Edit PDF Template Signatories"),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'list',
+            'res_model': 'hr.contract.signatory',
+            'target': 'new',
+            'domain': [('id', 'in', self.sign_template_signatories_ids.ids)],
+        }
 
     def action_view_contract(self):
         self.ensure_one()

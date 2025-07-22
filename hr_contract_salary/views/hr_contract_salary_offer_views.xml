@@ -76,6 +76,8 @@
                         string="Salary Configurator"
                         class="btn btn-secondary"
                         invisible="not id or state in ['refused', 'expired', 'cancelled']"/>
+                    <field name="url" class="btn btn-addr ps-0" string="Copy link" widget="CopyClipboardButton"
+                        options="{'btn_class': 'btn btn-secondary'}" invisible="not id"/>
                     <field name="state" widget="statusbar" invisible="not is_half_sign_state_required"
                         statusbar_visible="open,half_signed,full_signed" readonly="1"/>
                     <field name="state" widget="statusbar" invisible="is_half_sign_state_required"
@@ -115,17 +117,30 @@
                     <div class="oe_title pe-0">
                         <label for="display_name"/>
                         <h1>
-                            <field name="display_name" options="{'line_breaks': False}" readonly="state == 'cancelled'"/>
+                            <field name="display_name" options="{'line_breaks': False}" readonly="state == 'cancelled'" placeholder="e.g. Offer 70k Employer Cost"/>
                         </h1>
                     </div>
                     <group>
                         <group name="group_offer">
                             <field name="contract_template_id" readonly="state in ['cancelled', 'full_signed']"
-                                context="{'form_view_ref': 'hr.hr_contract_template_form_view'}"/>
+                                context="{'form_view_ref': 'hr.hr_contract_template_form_view'}"
+                                placeholder="Select a contract template to load its predefined values"/>
+                            <label for="sign_template_id" string="PDF Template"/>
+                            <div class="o_row">
+                                <field name="sign_template_id" options="{'no_create': True}"
+                                    readonly="contract_template_id" placeholder="Select the PDF that the employee will sign"/>
+                                <button name="action_edit_offer_signatories" type="object" class="btn btn-secondary"
+                                    string="Edit Signatories" invisible="sign_template_id" disabled="1"/>
+                                <button name="action_edit_offer_signatories" type="object" class="btn btn-secondary"
+                                    string="Edit Signatories" invisible="not sign_template_id"/>
+                            </div>
                             <field name="final_yearly_costs" readonly="state in ['cancelled', 'full_signed']"/>
-                            <field name="job_title" readonly="state == 'cancelled'"/>
-                            <field name="employee_job_id" readonly="state in ['cancelled', 'full_signed']"/>
-                            <field name="department_id" readonly="state == 'cancelled'"/>
+                            <field name="job_title" readonly="state == 'cancelled'"
+                                placeholder="e.g. Lead Dev, Junior Consultant"/>
+                            <field name="employee_job_id" readonly="state in ['cancelled', 'full_signed']"
+                                placeholder="e.g. Developer, Sales, Consultant"/>
+                            <field name="department_id" readonly="state == 'cancelled'"
+                                placeholder="e.g. Human Resources, Research &amp; Development, Marketing"/>
                             <label for="contract_start_date" string="Contract Date"/>
                             <div class="o_row">
                                 <field name="contract_start_date" readonly="state in ['cancelled', 'full_signed']"/>
@@ -134,7 +149,6 @@
                             </div>
                             <field name="offer_create_date" readonly="1"/>
                             <field name="offer_end_date" readonly="state in ['cancelled', 'full_signed']" placeholder="Always valid"/>
-                            <field name="url" widget="HrContractSalaryCopyClipboardURL" invisible="not id"/>
                         </group>
                         <group name="group_offer_to">
                             <field name="employee_id" invisible="applicant_id or not context.get('is_hr_payroll', True)"

@@ -23,6 +23,13 @@
         groups="hr.group_hr_manager"/>
 
     <menuitem
+        id="menu_hr_payroll_salary_calculator"
+        name="Salary Calculator"
+        action="action_hr_salary_simulator"
+        parent="hr_payroll.menu_hr_payroll_employees"
+        sequence="40"/>
+
+    <menuitem
         id="hr_contract_salary.menu_salary_package_offer"
         name="Offers"
         parent="hr_payroll.menu_hr_payroll_employees"

@@ -263,6 +263,10 @@ class HrVersion(models.Model):
         remaining_for_gross = yearly_cost - self._get_benefits_costs()
         return remaining_for_gross / self._get_salary_costs_factor()
 
+    def _get_employer_costs_from_gross(self, gross):
+        self.ensure_one()
+        return (gross * self._get_salary_costs_factor()) + self._get_benefits_costs()
+
     @api.depends('sign_request_ids.nb_closed')
     def _compute_signatures_count(self):
         for version in self:

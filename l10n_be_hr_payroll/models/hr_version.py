@@ -240,7 +240,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
 
     def _get_whitelist_fields_from_template(self):
         whitelisted_fields = super()._get_whitelist_fields_from_template()
-        return whitelisted_fields + ['ip', 'ip_wage_rate']
+        return whitelisted_fields + ['ip', 'ip_wage_rate', 'wage_on_signature', 'fuel_card']
 
     def _get_marital_status_selection(self):
         if self.env.company.country_id.code != "BE":
@@ -372,6 +372,8 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     def _check_discount_percentage(self):
         if self.filtered(lambda c: c.rd_percentage < 0 or c.rd_percentage > 100):
             raise ValidationError(_('The time Percentage in R&D should be between 0-100'))
+        if self.env.context.get('salary_simulation'):
+            return
         for version in self:
             if version.rd_percentage and version.employee_id and version.employee_id.certificate not in ['civil_engineer', 'doctor', 'master', 'bachelor']:
                 raise ValidationError(_('Only employees with a Bachelor/Master/Doctor/Civil Engineer degree can benefit from the withholding taxes exemption.'))

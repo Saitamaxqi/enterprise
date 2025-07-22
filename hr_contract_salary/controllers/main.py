@@ -182,6 +182,32 @@ class HrContractSalary(http.Controller):
             'status_code': _('Oops'),
             'status_message': _('This offer is outdated, please request an updated link...')})
 
+    def _can_submit_offer(self, values):
+        return not values['redirect_to_job']
+
+    def _check_access_token(self, offer, token):
+        return token and offer.access_token and consteq(offer.access_token, token)
+
+    def _check_link_access(self, offer, **kw):
+        if not offer.exists() or offer.state in ['expired', 'refused']:
+            return False, self.env._('This offer has been updated, please request an updated link..')
+
+        if not request.env.user.has_group('hr.group_hr_manager'):
+            if offer.applicant_id:
+                if not self._check_access_token(offer, kw.get('token')) or \
+                        offer.offer_end_date and offer.offer_end_date < fields.Date.today():
+                    return False, self.env._('This link is invalid. Please contact the HR Responsible to get a new one...')
+            if offer.employee_id and not offer.employee_id.user_id and not offer.applicant_id:
+                return False, self.env._('The employee is not linked to an existing user, please contact the administrator..')
+            if offer.employee_id and offer.employee_id.user_id != request.env.user:
+                raise NotFound()
+            if offer.offer_end_date and offer.employee_id and offer.offer_end_date < fields.Date.today():
+                return False, self.env._('This link is invalid. Please contact the HR Responsible to get a new one...')
+            if offer.employee_version_id and offer.employee_version_id.employee_id \
+                and offer.employee_version_id.employee_id.user_id != request.env.user:
+                raise NotFound()
+        return True, ''
+
     @http.route(['/salary_package/simulation/offer/<int:offer_id>'], type='http', auth="public", website=True, sitemap=False)
     def salary_package(self, offer_id=None, **kw):
         response = False
@@ -195,31 +221,13 @@ class HrContractSalary(http.Controller):
         # This is just a simulation.
 
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
-        version = offer.contract_template_id
-        if not offer.exists() or offer.state in ['expired', 'refused']:
+        access, error_msg = self._check_link_access(offer, **kw)
+        if not access:
             return request.render('http_routing.http_error', {
-                'status_code': _('Oops'),
-                'status_message': _('This offer has been updated, please request an updated link..')})
+                    'status_code': _('Oops'),
+                    'status_message': error_msg})
 
-        if not request.env.user.has_group('hr.group_hr_manager'):
-            if offer.applicant_id:
-                if not kw.get('token') or \
-                        not offer.access_token or \
-                        not consteq(offer.access_token, kw.get('token')) or \
-                        offer.offer_end_date and offer.offer_end_date < fields.Date.today():
-                    return request.render('http_routing.http_error', {
-                        'status_code': _('Oops'),
-                        'status_message': _('This link is invalid. Please contact the HR Responsible to get a new one...')})
-            if version.employee_id and not version.employee_id.user_id and not offer.applicant_id:
-                return request.render('http_routing.http_error', {
-                    'status_code': _('Oops'),
-                    'status_message': _('The employee is not linked to an existing user, please contact the administrator..')})
-            if version.employee_id and version.employee_id.user_id != request.env.user:
-                raise NotFound()
-            if offer.offer_end_date and version.employee_id and offer.offer_end_date < fields.Date.today():
-                return request.render('http_routing.http_error', {
-                    'status_code': _('Oops'),
-                    'status_message': _('This link is invalid. Please contact the HR Responsible to get a new one...')})
+        version = offer.contract_template_id
 
         if not version.employee_id:
             version.date_version = fields.Date.today() + relativedelta(months=1)
@@ -233,14 +241,11 @@ class HrContractSalary(http.Controller):
             # is a template without an employee
             if not version.employee_id and employee_version.employee_id:
                 version.employee_id = employee_version.employee_id
-            if not request.env.user.has_group('hr.group_hr_manager') and employee_version.employee_id \
-                    and employee_version.employee_id.user_id != request.env.user:
-                raise NotFound()
 
         if not version.employee_id or not employee_version:
             version_country = version.company_id.country_id
             # Pre-filling
-            temporary_name = False
+            temporary_name = 'Simulation Employee'
             temporary_mobile = False
             private_email = False
             # Pre-filling name / phone / mail if coming from an applicant
@@ -284,8 +289,8 @@ class HrContractSalary(http.Controller):
         })
         refusal_reasons = request.env['hr.contract.salary.offer.refusal.reason'].search([])
         values.update({
-            'need_personal_information': not values['redirect_to_job'],
-            'submit': not values['redirect_to_job'],
+            'need_personal_information': self._can_submit_offer(values),
+            'submit': self._can_submit_offer(values),
             'default_mobile': request.env['ir.default'].sudo()._get('hr.version', 'mobile'),
             'original_link': get_current_url(request.httprequest.environ),
             'token': kw.get('token'),
@@ -691,7 +696,8 @@ class HrContractSalary(http.Controller):
                             version_diff.append((employee_field_name, current_value, new_value))
 
         new_version = request.env['hr.version'].with_context(
-            tracking_disable=True
+            tracking_disable=True,
+            salary_simulation=True,
         ).sudo().create(self._get_new_version_values(version, employee, version_values, offer))
         self._update_personal_info(employee, new_version, personal_infos, no_name_write=bool(kw.get('employee')))
 
@@ -733,7 +739,7 @@ class HrContractSalary(http.Controller):
         result['new_gross'] = round(new_gross, 2)
         new_version = new_version.with_context(
             origin_version_id=version.id,
-            simulation_working_schedule=kw.get('simulation_working_schedule', '100'))
+            simulation_working_schedule=kw.get('simulation_working_schedule', False))
         result.update(self._get_compute_results(new_version))
 
         request.env.cr.rollback()

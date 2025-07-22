@@ -281,7 +281,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
         })
         cls.env.ref('base.main_partner').email = "info@yourcompany.example.com"
 
-        cls.new_dev_contract = cls.env['hr.version'].create({
+        cls.new_dev_contract = cls.env['hr.version'].with_company(cls.company_id).create({
             'name': 'New Developer Template Contract',
             'wage': 3000,
             'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
@@ -299,7 +299,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
             'car_id': False
         })
 
-        cls.senior_dev_contract = cls.env['hr.version'].create({
+        cls.senior_dev_contract = cls.env['hr.version'].with_company(cls.company_id).create({
             'name': 'Senior Developer Template Contract',
             'wage': 6000,
             'structure_type_id': cls.env.ref('hr.structure_type_employee_cp200').id,
