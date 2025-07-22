@@ -1174,6 +1174,16 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         with self.assertRaises(RedirectWarning, msg="The regex cannot capture an empty value"):
             bad_regex_model._trigger_reconciliation_model(bank_line_3)
 
+    def test_no_reco_model_on_receivable_payable_button(self):
+        bank_stmt_line_1 = self._create_st_line(amount=10, payment_ref='This is a test')
+        bank_stmt_line_2 = self._create_st_line(amount=100, payment_ref='This is a test')
+
+        bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, self.company_data['default_account_receivable'].id)
+        bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, self.company_data['default_account_receivable'].id)
+        bank_stmt_line_3 = self._create_st_line(amount=1000, payment_ref='This is a test')
+        # Check that no reconciliation model is set on the suspense line as we set a receivable account manually
+        self.assertFalse(bank_stmt_line_3.line_ids[-1].reconcile_model_id.id)
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes
