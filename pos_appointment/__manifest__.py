@@ -45,7 +45,7 @@
             'web_gantt/static/src/**/*.dark.scss'
         ],
         'web.assets_unit_tests': [
-            'pos_appointment/static/tests/unit/data/**/*'
+            'pos_appointment/static/tests/unit/**/*'
         ],
     }
 }
