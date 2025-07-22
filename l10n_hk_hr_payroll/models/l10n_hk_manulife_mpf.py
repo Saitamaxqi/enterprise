@@ -77,7 +77,15 @@ class L10n_HkManulifeMpf(models.Model):
         for vals in vals_list:
             if not vals.get('sequence_no'):
                 vals['sequence_no'] = self.env['ir.sequence'].next_by_code('manulife.mpf')
-        return super().create(vals_list)
+        records = super().create(vals_list)
+        records.xlsx_attachment_id.check('read')
+        return records
+
+    def write(self, vals):
+        res = super().write(vals)
+        if 'xlsx_attachment_id' in vals:
+            self.xlsx_attachment_id.check('read')
+        return res
 
     def _get_report_data(self):
         self.ensure_one()
