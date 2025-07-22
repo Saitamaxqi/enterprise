@@ -2,6 +2,8 @@ import { Interaction } from '@web/public/interaction';
 import { registry } from '@web/core/registry';
 import { areDatesEqual, deserializeDateTime, serializeDateTime } from '@web/core/l10n/dates';
 import { rpc } from '@web/core/network/rpc';
+import wSaleUtils from '@website_sale/js/website_sale_utils';
+
 import { msecPerUnit, RentingMixin } from '@website_sale_renting/js/renting_mixin';
 
 const { DateTime } = luxon;
@@ -263,7 +265,7 @@ export class DaterangePicker extends Interaction {
         document.querySelector('.oe_website_sale')?.dispatchEvent(new CustomEvent(
             'toggle_disable',
             { detail: {
-                parent: this.el.closest('form'),
+                parent: wSaleUtils.getClosestProductForm(this.el),
                 isCombinationAvailable: !message,
             }},
         ));
@@ -282,11 +284,16 @@ export class DaterangePicker extends Interaction {
                 'input[type="hidden"][name="product_id"]',
                 'input[type="radio"][name="product_id"]:checked',
             ];
-            const form = this.el.closest('form');
+            const form = wSaleUtils.getClosestProductForm(this.el);
             const productInput = form && form.querySelector(productSelector.join(', '));
             this.productId = productInput && parseInt(productInput.value);
         }
         return this.productId;
+    }
+
+    _getParentElement() {
+        // May be null on checkout page
+        return wSaleUtils.getClosestProductForm(this.el);
     }
 
     /**

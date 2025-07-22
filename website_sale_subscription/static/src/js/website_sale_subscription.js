@@ -1,5 +1,6 @@
 import VariantMixin from "@website_sale/js/sale_variant_mixin";
 import { WebsiteSale } from '@website_sale/js/website_sale';
+import wSaleUtils from '@website_sale/js/website_sale_utils';
 
 WebsiteSale.include({
 
@@ -34,7 +35,7 @@ WebsiteSale.include({
      * @param {MouseEvent} ev
      */
     async _onClickAdd(ev) {
-        const form = ev.currentTarget.closest('form');
+        const form = wSaleUtils.getClosestProductForm(ev.currentTarget);
         const planSelects = form.querySelectorAll('.plan_select');
         for (const select of planSelects) {
             for (const option of select.options) {

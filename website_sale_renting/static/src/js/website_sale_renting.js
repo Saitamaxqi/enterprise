@@ -6,7 +6,7 @@ import {
 } from "@web/core/l10n/dates";
 import { rpc } from "@web/core/network/rpc";
 import { WebsiteSale } from '@website_sale/js/website_sale';
-import wSaleUtils from "@website_sale/js/website_sale_utils";
+import wSaleUtils from '@website_sale/js/website_sale_utils';
 import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
 import '@website_sale_renting/js/variant_mixin';
 
@@ -64,7 +64,7 @@ WebsiteSale.include({
      * @private
      */
     async _onClickAdd(ev) {
-        const $form = this.$(ev.currentTarget).closest('form');
+        const $form = this.$(wSaleUtils.getClosestProductForm(ev.currentTarget));
         if ($form.find('input[name="is_rental"]').val()) {
             if (!this._verifyValidRentingPeriod($form)) {
                 ev.stopPropagation();
@@ -136,9 +136,10 @@ WebsiteSale.include({
             !this._verifyValidInput(rentingDates, 'end_date')) {
             return false;
         }
+        const $form = $(wSaleUtils.getClosestProductForm($parent[0]));
         const message = this._getInvalidMessage(
             rentingDates.start_date, rentingDates.end_date,
-            this._getProductId($parent.closest('form'))
+            this._getProductId($form)
         );
         if (message) {
             this.el.querySelector('span[name=renting_warning_message]').innerText = message;
@@ -146,7 +147,7 @@ WebsiteSale.include({
         } else {
             this.el.querySelector('.o_renting_warning').classList.remove('d-block');
         }
-        this._toggleDisable($parent.closest('form'), !message);
+        this._toggleDisable($form, !message);
         return !message;
     },
 
