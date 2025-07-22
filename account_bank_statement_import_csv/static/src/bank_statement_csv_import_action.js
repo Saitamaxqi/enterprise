@@ -38,7 +38,7 @@ export class BankStatementImportAction extends ImportAction {
             );
             return this.action.doAction(res);
         }
-        super.exit();
+        super.exit(...arguments);
     }
 }
 
