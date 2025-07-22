@@ -464,7 +464,7 @@ export class ViewEditorModel extends Reactive {
         );
 
         const x2ManyEditionInfo = {
-            name: `Subview ${viewTypeToString(viewType)}`,
+            name: _t("Subview %(viewType)s", { viewType: viewTypeToString(viewType) }),
             context,
             resModel,
             resId: resIds[0],
