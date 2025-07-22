@@ -1,6 +1,5 @@
 import { patch } from "@web/core/utils/patch";
 
-import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 import { messageActionsRegistry, messageActionsInternal } from "@mail/core/common/message_actions";
 import { unwrapContents } from "@html_editor/utils/dom";
@@ -13,7 +12,7 @@ messageActionsRegistry
             component.store.aiInsertButtonTarget && // after a reload both parts of the below conditions are undefined and but we don't want to button to appear
             (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
                 component.env.isSmall) &&
-            component.message.author.userId !== user.userId,
+            !component.message.isSelfAuthored,
         title: () => _t("Use this"),
         onClick: (component) => {
             const fragment = document.createDocumentFragment();
@@ -36,7 +35,7 @@ messageActionsRegistry
     .add("send-message-direct", {
         condition: (component) =>
             !!component.props.thread.aiSpecialActions?.sendMessage &&
-            component.message.author.userId !== user.userId && // don't show the buttons for the user's messages
+            !component.message.isSelfAuthored && // don't show the buttons for the user's messages
             component.store.aiInsertButtonTarget && // after a reload both parts of the below conditions are undefined and but we don't want to button to appear
             (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
                 component.env.isSmall),
@@ -49,7 +48,7 @@ messageActionsRegistry
     .add("log-note-direct", {
         condition: (component) =>
             !!component.props.thread.aiSpecialActions?.logNote &&
-            component.message.author.userId !== user.userId && // don't show the buttons for the user's messages
+            !component.message.isSelfAuthored && // don't show the buttons for the user's messages
             component.store.aiInsertButtonTarget && // after a reload both parts of the below conditions are undefined and but we don't want to button to appear
             (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
                 component.env.isSmall),
@@ -72,7 +71,7 @@ patch(messageActionsInternal, {
             !requiredActions.includes(id)
         ) {
             return false;
-        } else if (component.message?.author?.im_status === "agent") {
+        } else if (component.message?.author_id?.im_status === "agent") {
             return false;
         }
         if (id === "copy-message") {
