@@ -17,7 +17,7 @@ import { isHtmlEmpty } from "@web/core/utils/html";
 import { Component, markup, onWillUpdateProps, useState } from "@odoo/owl";
 
 export class AiPrompt extends Component {
-    static template = "ai_fields.AiPrompt";
+    static template = "ai.AiPrompt";
     static components = { Wysiwyg };
     static props = {
         comodel: { type: String, optional: true },
@@ -120,7 +120,7 @@ export class AiPrompt extends Component {
 }
 
 export class AiPromptDialog extends Component {
-    static template = "ai_server_actions.AiPromptDialog";
+    static template = "ai.AiPromptDialog";
     static components = { Dialog, AiPrompt };
     static props = {
         aiPromptProps: { type: Object },

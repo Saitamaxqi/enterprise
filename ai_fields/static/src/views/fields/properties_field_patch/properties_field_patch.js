@@ -1,4 +1,4 @@
-import { AiPrompt } from "@ai_fields/ai_prompt/ai_prompt";
+import { AiPrompt } from "@ai/ai_prompt/ai_prompt";
 import { patch } from "@web/core/utils/patch";
 import { PropertiesField } from "@web/views/fields/properties/properties_field";
 import { PropertyDefinition } from "@web/views/fields/properties/property_definition";

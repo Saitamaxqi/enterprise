@@ -1,5 +1,5 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { AiPrompt } from "@ai_fields/ai_prompt/ai_prompt";
+import { AiPrompt } from "@ai/ai_prompt/ai_prompt";
 import { setSelection } from "@html_editor/../tests/_helpers/selection";
 import { insertText } from "@html_editor/../tests/_helpers/user_actions";
 import {

@@ -4,7 +4,7 @@ import { Component, useState } from "@odoo/owl";
 
 export class RecordsSelectorPopover extends Component {
     static components = { MultiRecordSelector };
-    static template = "aiFields.RecordsSelectorPopover";
+    static template = "ai.RecordsSelectorPopover";
     static props = {
         resModel: { type: String },
         close: { type: Function },

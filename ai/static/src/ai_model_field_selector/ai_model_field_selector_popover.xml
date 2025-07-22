@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <templates xml:space="preserve">
-    <t t-name="ai_fields.AiModelFieldSelectorPopover" t-inherit="web.ModelFieldSelectorPopover" t-inherit-mode="primary">
+    <t t-name="ai.AiModelFieldSelectorPopover" t-inherit="web.ModelFieldSelectorPopover" t-inherit-mode="primary">
         <xpath expr="//div[hasclass('o_model_field_selector_popover_body')]" position="before">
             <div>
                 <div

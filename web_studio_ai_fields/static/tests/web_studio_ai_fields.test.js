@@ -1,4 +1,4 @@
-import { AiPrompt, AiPromptDialog } from "@ai_fields/ai_prompt/ai_prompt";
+import { AiPrompt, AiPromptDialog } from "@ai/ai_prompt/ai_prompt";
 import { setSelection } from "@html_editor/../tests/_helpers/selection";
 import { insertText } from "@html_editor/../tests/_helpers/user_actions";
 import {

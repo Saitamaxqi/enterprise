@@ -5,7 +5,7 @@ import { useService } from "@web/core/utils/hooks";
 import { useState, onWillStart } from "@odoo/owl";
 
 export class AiModelFieldSelectorPopover extends ModelFieldSelectorPopover {
-    static template = "ai_fields.AiModelFieldSelectorPopover";
+    static template = "ai.AiModelFieldSelectorPopover";
     static props = {
         ...ModelFieldSelectorPopover.props,
         updateBatch: Function,

@@ -1,4 +1,4 @@
-import { AiPrompt, AiPromptDialog } from "@ai_fields/ai_prompt/ai_prompt";
+import { AiPrompt, AiPromptDialog } from "@ai/ai_prompt/ai_prompt";
 import { rpc } from "@web/core/network/rpc";
 import { patch } from "@web/core/utils/patch";
 import { FieldProperties } from "@web_studio/client_action/view_editor/interactive_editor/properties/field_properties/field_properties";

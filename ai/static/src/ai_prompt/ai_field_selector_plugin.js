@@ -1,4 +1,4 @@
-import { AiModelFieldSelectorPopover } from "@ai_fields/ai_model_field_selector/ai_model_field_selector_popover";
+import { AiModelFieldSelectorPopover } from "@ai/ai_model_field_selector/ai_model_field_selector_popover";
 import { Plugin } from "@html_editor/plugin";
 import { _t } from "@web/core/l10n/translation";
 import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";

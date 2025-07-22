@@ -4,7 +4,7 @@ import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { Component } from "@odoo/owl";
 
 export class AiPromptField extends Component {
-    static template = "ai_fields.AiPromptField";
+    static template = "ai.AiPromptField";
     static props = {
         ...standardFieldProps,
         // Field containing the model name that will be updated

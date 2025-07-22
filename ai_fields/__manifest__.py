@@ -18,8 +18,6 @@ using an AI model and a system prompt.
     ],
     'assets': {
         'web.assets_backend': [
-            'ai_fields/static/src/ai_model_field_selector/*',
-            'ai_fields/static/src/ai_prompt/*',
             'ai_fields/static/src/model/**/*',
             'ai_fields/static/src/views/**/*',
         ],

@@ -1,4 +1,4 @@
-import { RecordsSelectorPopover } from "@ai_fields/views/records_selector_popover/records_selector_popover";
+import { RecordsSelectorPopover } from "@ai/records_selector_popover/records_selector_popover";
 import { Plugin } from "@html_editor/plugin";
 import { Domain } from "@web/core/domain";
 import { ERROR_INACCESSIBLE_OR_MISSING } from "@web/core/name_service";
