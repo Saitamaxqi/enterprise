@@ -417,7 +417,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                     AND src_tax.type_tax_use IN ('sale', 'purchase')
                 JOIN account_account account ON account.id = tdr.base_account_id
                 WHERE tdr.tax_exigible
-                GROUP BY tdr.tax_repartition_line_id, trl.document_type, tdr.analytic_distribution, %(groupby_query)s
+                GROUP BY tdr.tax_repartition_line_id, trl.document_type, %(groupby_query)s
                 ORDER BY src_tax.sequence, src_tax.id, tax.sequence, tax.id
                 ''',
                 select_clause=SQL(',').join(select_clause_list),

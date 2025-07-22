@@ -2430,6 +2430,23 @@ class TestTaxReport(TestAccountReportsCommon):
             ]
         })
         invoice.action_post()
+        invoice2 = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2019-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'line1',
+                    'account_id': self.company_data['default_account_revenue'].id,
+                    'price_unit': 10.0,
+                    'tax_ids': [Command.set(tax_10.ids)],
+                    'analytic_distribution': {
+                        analytic_account_2.id: 100,
+                    },
+                }),
+            ]
+        })
+        invoice2.action_post()
 
         self.assertRecordValues(invoice.line_ids, [
             {'name': 'line1', 'debit': 0.00, 'credit': 200.0},
@@ -2437,6 +2454,12 @@ class TestTaxReport(TestAccountReportsCommon):
             {'name': tax_10.name, 'debit': 0.00, 'credit': 20.0},
             {'name': tax_10.name, 'debit': 0.00, 'credit': 10.0},
             {'name': invoice.name, 'debit': 330.0, 'credit': 0.00}
+        ])
+
+        self.assertRecordValues(invoice2.line_ids, [
+            {'name': 'line1', 'debit': 0.00, 'credit': 10.0},
+            {'name': tax_10.name, 'debit': 0.00, 'credit': 1.0},
+            {'name': invoice2.name, 'debit': 11.0, 'credit': 0.00}
         ])
 
         report = self.env.ref('account.generic_tax_report_account_tax')
@@ -2447,11 +2470,11 @@ class TestTaxReport(TestAccountReportsCommon):
             #   Name                                                                          Base      Tax
             [   0,                                                                             1,        2],
             [
-                ('Sales',                                                                     "",     30.0),
-                (self.company_data['default_account_revenue'].display_name,                   "",     30.0),
-                (f'{tax_10.name} ({tax_10.amount}%)',                                      300.0,     30.0),
-                (f'Total {self.company_data["default_account_revenue"].display_name}',        "",     30.0),
-                ('Total Sales',                                                               "",     30.0),
+                ('Sales',                                                                     "",     31.0),
+                (self.company_data['default_account_revenue'].display_name,                   "",     31.0),
+                (f'{tax_10.name} ({tax_10.amount}%)',                                      310.0,     31.0),
+                (f'Total {self.company_data["default_account_revenue"].display_name}',        "",     31.0),
+                ('Total Sales',                                                               "",     31.0),
             ],
             options
         )
@@ -2464,11 +2487,11 @@ class TestTaxReport(TestAccountReportsCommon):
             #   Name                                                                           Base      Tax
             [   0,                                                                              1,        2],
             [
-                ('Sales',                                                                      "",     30.0),
-                (f'{tax_10.name} ({tax_10.amount}%)',                                          "",     30.0),
-                (self.company_data['default_account_revenue'].display_name,                 300.0,     30.0),
-                (f'Total {tax_10.name} ({tax_10.amount}%)',                                    "",     30.0),
-                ('Total Sales',                                                                "",     30.0),
+                ('Sales',                                                                      "",     31.0),
+                (f'{tax_10.name} ({tax_10.amount}%)',                                          "",     31.0),
+                (self.company_data['default_account_revenue'].display_name,                 310.0,     31.0),
+                (f'Total {tax_10.name} ({tax_10.amount}%)',                                    "",     31.0),
+                ('Total Sales',                                                                "",     31.0),
             ],
             options
         )
