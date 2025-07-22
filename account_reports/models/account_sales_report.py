@@ -228,12 +228,11 @@ class AccountEcSalesReportHandler(models.AbstractModel):
 
                 groupby_partners.setdefault(row['groupby'], defaultdict(lambda: defaultdict(float)))
                 groupby_partners_keyed = groupby_partners[row['groupby']][row['column_group_key']]
-                if row['tax_element_id'] in options['sales_report_taxes']['goods']:
-                    groupby_partners_keyed['goods'] += row['balance']
-                elif row['tax_element_id'] in options['sales_report_taxes']['triangular']:
-                    groupby_partners_keyed['triangular'] += row['balance']
-                elif row['tax_element_id'] in options['sales_report_taxes']['services']:
-                    groupby_partners_keyed['services'] += row['balance']
+                for key in options['sales_report_taxes']:
+                    # options['sales_report_taxes'][key] could be either a list, set, tuple or boolean, in case of boolean
+                    # the in operator would traceback
+                    if not isinstance(options['sales_report_taxes'][key], bool) and row['tax_element_id'] in options['sales_report_taxes'][key]:
+                        groupby_partners_keyed[key] += row['balance']
 
                 groupby_partners_keyed.setdefault('tax_element_id', []).append(row['tax_element_id'])
                 groupby_partners_keyed.setdefault('sales_type_code', []).append(row['sales_type_code'])
