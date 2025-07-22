@@ -5,6 +5,8 @@ import pytz
 import requests
 from datetime import datetime
 from dateutil.parser import isoparse
+from markupsafe import Markup
+
 try:
     from markdown2 import markdown
 except ImportError:
@@ -168,6 +170,7 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
     } if (country_code := record.env.company.country_id.code) else {}
 
     try:
+        # TODO: remove and use `_request_llm`
         llm_response = llm_api._request(
             'post',
             OPENAI_ENDPOINT,
@@ -282,7 +285,7 @@ def get_property_prompt_vals(env, property_definition):
 
 def parse_ai_prompt_values(env, prompt, comodel, replace_prompt=True):
     fields = set()
-    records = None
+    records = set()
     tree = html.fromstring(prompt)
 
     for el in tree.xpath('//span[@data-ai-field]'):
@@ -296,18 +299,17 @@ def parse_ai_prompt_values(env, prompt, comodel, replace_prompt=True):
 
     if comodel:
         els = tree.xpath('//span[@data-ai-record-id]')
-        ids = {int(i) for el in els if (i := el.attrib.get('data-ai-record-id'))}
+        records = {int(i) for el in els if (i := el.attrib.get('data-ai-record-id'))}
         if replace_prompt:
-            ids = {r.id: r for r in env[comodel].browse(ids).exists()}
-            records = {}
+            records = {r.id: r for r in env[comodel].browse(records).exists()}
             for el in els:
-                if record := ids.get(int(el.attrib.get('data-ai-record-id'))):
+                if record := records.get(int(el.attrib.get('data-ai-record-id'))):
                     el.text = record.display_name
-                    records[record.id] = record.display_name
                 else:
                     el.drop_tree()
-        else:
-            records = ids
+
+            records = env[comodel].browse(records)._ai_format_records()
+
     if replace_prompt:
         return html_to_inner_content(html.tostring(tree, encoding='unicode')), fields, records
     return prompt, fields, records
@@ -354,3 +356,7 @@ def parse_ai_response(response, field_type, allowed_values):
         return html_sanitize(response or "")
     else:
         return response
+
+
+def ai_field_insert(field_path, field_label):
+    return Markup('<span data-ai-field="%s">%s</span>') % (field_path, field_label)

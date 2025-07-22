@@ -44,8 +44,10 @@ def validate_params_llm_values_with_schema(instance, schema, required_parameters
             is_param_required=param_name in required_parameters,
         )
         try:
-            param_validator._validate()
+            instance[param_name] = param_validator._validate()
         except (ValueError, TypeError) as e:
             errors.append(str(e))
     if errors:
         raise ValidationError("\n\n".join(errors))
+
+    return instance

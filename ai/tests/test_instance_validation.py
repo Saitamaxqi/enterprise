@@ -20,7 +20,7 @@ class TestInstanceValidation(TransactionCase):
                     required_parameters=required_parameters,
                 )
         else:
-            validators.validate_params_llm_values_with_schema(
+            return validators.validate_params_llm_values_with_schema(
                 instance=instance,
                 schema=schema,
                 required_parameters=required_parameters,
@@ -279,3 +279,37 @@ class TestInstanceValidation(TransactionCase):
             instance=instance,
             error_message=f"The value '{property_value}' of the parameter '{property_name}' doesn't match the expected pattern '{property_pattern}'.",
         )
+
+    def test_truncate(self):
+        schema = {
+            'object_param': {
+                'type': 'object',
+                'description': 'object root',
+                'properties': {
+                    'str_value': {
+                        'type': 'string',
+                        'description': 'str value',
+                        'maxLength': 5,
+                    },
+                    'sub_obj': {
+                        'type': 'object',
+                        'description': 'sub object',
+                        'properties': {
+                            'str_value_2': {
+                                'type': 'string',
+                                'description': 'str value',
+                                'maxLength': 3,
+                            },
+                        },
+                        'required': ['str_value_2'],
+                    },
+                },
+                'required': ['str_value'],
+            },
+        }
+        instance = {'object_param': {'str_value': '123456789', 'sub_obj': {'str_value_2': 'abcdefg'}}}
+        ret = self.validate_instance_with_schema(
+            schema=schema,
+            instance=instance,
+        )
+        self.assertEqual(ret, {'object_param': {'str_value': '12345...', 'sub_obj': {'str_value_2': 'abc...'}}})

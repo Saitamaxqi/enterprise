@@ -4,6 +4,7 @@ class ParamSchemaValidator:
     REQUIRED_PARAMETER_ATTRIBUTES = ['type', 'description']
     REQUIRED_PARAMETER_ATTRIBUTES_BY_TYPE = {
         'array': ['items'],
+        'string': ['maxLength'],
         'object': ['properties', 'required']
     }
     OPTIONAL_PARAMETER_ATTRIBUTES = ['pattern']

@@ -17,6 +17,12 @@ AI_SUPPORTED_IMG_TYPES = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
 class Model(models.AbstractModel):
     _inherit = 'base'
 
+    def _ai_truncate(self, value, size=60):
+        # Limit the size of the field we can, to try to limit prompt injection...
+        if not isinstance(value, str) or len(value) < size:
+            return value
+        return value[:max(0, size - 3)] + "..."
+
     def _ai_serialize_fields_data(self):
         fields_info = self.fields_get()
         result = {}
@@ -280,3 +286,11 @@ class Model(models.AbstractModel):
             snapshot[model] = records._ai_read(info['fields'], files_dict)
 
         return snapshot, list(files_dict.values())
+
+    def _ai_format_records(self):
+        """Format what will be in the prompt when we inserted records.
+
+        It needs to return a dict which keys are the records ids, and
+        the value of the dict can be anything.
+        """
+        return {record.id: record.display_name for record in self}

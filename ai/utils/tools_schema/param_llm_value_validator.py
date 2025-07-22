@@ -2,6 +2,7 @@ import re
 
 
 class ParamLLMValueValidator:
+    # TODO: refactor to not use a class and find a better name (does not only validate)
     JSON_SCHEMA_TO_PYTHON_TYPE = {
         'string': str,
         'number': (float, int),
@@ -36,6 +37,14 @@ class ParamLLMValueValidator:
         if self.expected_param_type == 'object':
             self._perform_object_type_checks()
 
+        max_length = self.expected_param.get("maxLength")
+        if isinstance(self.param_llm_value, str) and max_length and len(self.param_llm_value) > max_length:
+            # On the 31 Jully 2025, Gemini does not respect the `maxLength` JSON schema
+            # (while OpenAI does), so we manually truncate the arguments if needed
+            self.param_llm_value = self.param_llm_value[:max_length] + "..."
+
+        return self.param_llm_value
+
     def _perform_array_type_checks(self):
         self._validate_array_item_types()
         self._validate_array_item_pattern()
@@ -68,4 +77,4 @@ class ParamLLMValueValidator:
                 param_llm_value=self.param_llm_value.get(property_name),
                 is_param_required=property_name in required_properties
             )
-            param_validator._validate()
+            self.param_llm_value[property_name] = param_validator._validate()

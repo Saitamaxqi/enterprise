@@ -13,3 +13,4 @@ from . import ai_composer
 from . import discuss_channel
 from . import mail_thread
 from . import models
+from . import ir_actions_server
