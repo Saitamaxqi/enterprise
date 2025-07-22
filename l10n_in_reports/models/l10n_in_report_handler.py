@@ -1,7 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import io
+from collections import defaultdict
 
 import logging
 from datetime import datetime
+import re
+import xlsxwriter
 
 from odoo import api, models, _
 from odoo.fields import Domain
@@ -268,3 +272,173 @@ class L10n_InReportHandler(models.AbstractModel):
     @api.model
     def open_missing_pan_tds_tcs_moves(self, options, params):
         return self._l10n_in_open_action(_('Journal Entries'), 'account.move', [(False, 'list'), (False, 'form')], params)
+
+    def _custom_options_initializer(self, report, options, previous_options):
+        super()._custom_options_initializer(report, options, previous_options)
+
+        if self.env.company.account_fiscal_country_id.code != 'IN':
+            return
+        if report in (self.env.ref('l10n_in.tds_report'), self.env.ref('l10n_in.tcs_report')):
+            xlsx_button_option = next(button_opt for button_opt in options['buttons'] if button_opt.get('action_param') == 'export_to_xlsx')
+            xlsx_button_option['action_param'] = 'tds_tcs_export_to_xlsx'
+
+    @api.model
+    def tds_tcs_export_to_xlsx(self, options):
+        is_tds_report = options['report_id'] == self.env.ref('l10n_in.tds_report').id
+        with io.BytesIO() as output:
+            with xlsxwriter.Workbook(output, {
+                'in_memory': True,
+                'strings_to_formulas': False,
+            }) as workbook:
+                self._tds_tcs_inject_report_into_xlsx_sheet(options, workbook, is_tds_report)
+            report_period = options['date']['string']
+            file_name = f"{re.sub(r'[^a-z0-9_]', '', report_period.lower().replace(' - ', '_').replace(' ', '_'))}_{'tds' if is_tds_report else 'tcs'}_report.xlsx"
+            return {
+                'file_name': file_name,
+                'file_content': output.getvalue(),
+                'file_type': 'xlsx',
+            }
+
+    @api.model
+    def _tds_tcs_inject_report_into_xlsx_sheet(self, options, workbook, is_tds_report):
+        def write_header(sheet, header):
+            for i, val in enumerate(header):
+                sheet.write(i, 0, val, title_style)
+
+        def write_rows(sheet, start_row, rows, style_func):
+            for i, row in enumerate(rows):
+                style = style_func(i)
+                for j, val in enumerate(row):
+                    sheet.write(start_row + i, j, val, style)
+
+        report = self.env['account.report'].browse(options['report_id'])
+        company_name = self.env.company.name
+        report_date = options['date']['string']
+
+        title_style = workbook.add_format({'bold': True, 'font_name': 'Arial'})
+        line_style = workbook.add_format({'font_name': 'Arial', 'font_size': 11, 'align': 'left'})
+
+        colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
+        lines_mapping = {
+            line['name']: ("{:.2f}".format(float(line['columns'][colname_to_idx['balance']]['no_format'])))
+            for line in report._get_lines(options)
+        }
+
+        # Add Summary Sheet
+        summary_sheet = workbook.add_worksheet('Summary')
+        summary_sheet.set_column(0, 0, 60)
+        summary_sheet.set_column(1, 1, 15)
+        write_header(summary_sheet, [report_date, company_name])
+
+        summary_rows = [[name, balance] for name, balance in lines_mapping.items()]
+        summary_rows.insert(0, ['Section', 'Balance'])
+        write_rows(summary_sheet, 3, summary_rows, lambda i: title_style if i == 0 else line_style)
+
+        # Add Section Sheets
+        section_data = self._prepare_tds_tcs_report_data(options, is_tds_report)
+        col_widths = [16, 20, 18, 15, 12, 16, 16, 10]
+        if is_tds_report:
+            col_widths.insert(2, 18)
+            col_widths.insert(4, 22)
+            col_widths.insert(5, 15)
+        for section_name, section_info in section_data.items():
+            sheet = workbook.add_worksheet(section_name)
+            for i, width in enumerate(col_widths):
+                sheet.set_column(i, i, width)
+            write_header(sheet, [report_date, next(iter(section_info['description'].values()))])
+            write_rows(sheet, 3, section_info['moves'], lambda i: title_style if i == 0 else line_style)
+
+    @api.model
+    def _prepare_tds_tcs_report_data(self, options, is_tds_report):
+        columns = [
+            _("PAN"),
+            _("Customer"),
+            _("Bill") if is_tds_report else _("Journal Entry"),
+            _("Payment Date"),
+            _("Amount"),
+            _("TDS Debit Amount") if is_tds_report else _("TCS Debit Amount"),
+            _("TDS Credit Amount") if is_tds_report else _("TCS Credit Amount"),
+            _("TDS Rate") if is_tds_report else _("TCS Rate"),
+        ]
+
+        domain = [
+            ('date', '>=', options['date']['date_from']),
+            ('date', '<=', options['date']['date_to']),
+            ('state', '=', 'posted'),
+            ('line_ids.display_type', '=', 'tax'),
+            ('line_ids.tax_ids.l10n_in_tax_type', '=', 'tds_purchase' if is_tds_report else 'tcs'),
+        ]
+
+        query = self.env['account.move']._search(domain)
+        # common joins
+        query.join('account_move', 'id', 'account_move_line', 'move_id', 'aml')
+        query.join('account_move__aml', 'tax_line_id', 'account_tax', 'id', 'tax')
+        query.join('account_move__aml__tax', 'l10n_in_section_id', 'l10n_in_section_alert', 'id', 'section')
+        query.join('account_move__aml__tax__section', 'tax_report_line_id', 'account_report_line', 'id', 'report_line')
+
+        common_cols = [
+            'account_move__aml__tax__section.name AS section_name',
+            'account_move__aml__tax__section__report_line.name AS section_description',
+            'COALESCE(account_move__aml.debit, 0) AS tax_debit_amount',
+            'COALESCE(account_move__aml.credit, 0) AS tax_credit_amount',
+            'COALESCE(account_move__aml.tax_base_amount, 0) AS amount',
+        ]
+
+        if is_tds_report:
+            columns.insert(2, _("Journal Entry"))
+            columns.insert(4, _("Bill Ref. (Supplier Inv. No.)"))
+            columns.insert(5, _("Deduction Date"))
+
+            query.left_join('account_move', 'l10n_in_withholding_ref_move_id', 'account_move', 'id', 'bill_move')
+            query.left_join('account_move__bill_move', 'partner_id', 'res_partner', 'id', 'partner')
+
+            qu = query.select(
+                *common_cols,
+                'account_move__bill_move__partner.l10n_in_pan AS partner_pan',
+                'account_move__bill_move__partner.name AS partner_name',
+                'account_move.name AS wh_move_name',
+                'account_move__bill_move.name AS move_name',
+                'account_move__bill_move.invoice_date',
+                'account_move__bill_move.ref AS bill_ref',
+                'ABS(account_move__aml__tax.amount) AS tax_rate',
+                'account_move.date AS deduction_date',
+            )
+        else:
+            query.left_join('account_move', 'partner_id', 'res_partner', 'id', 'partner')
+
+            qu = query.select(
+                *common_cols,
+                'account_move__partner.l10n_in_pan AS partner_pan',
+                'account_move__partner.name AS partner_name',
+                'account_move.name AS move_name',
+                'account_move.invoice_date',
+                'account_move__aml__tax.amount AS tax_rate',
+            )
+
+        self.env.cr.execute(qu)
+        rows = self.env.cr.dictfetchall()
+
+        section_data = defaultdict(lambda: {'description': '', 'moves': []})
+        for row in rows:
+            section = row['section_name']
+            section_data[section]['description'] = row['section_description']
+            if not section_data[section]['moves']:
+                section_data[section]['moves'].append(columns)
+
+            line = [
+                row['partner_pan'] or '',
+                row['partner_name'] or '',
+                row['move_name'] or '',
+                row['invoice_date'].strftime("%d/%m/%y") if row['invoice_date'] else '',
+                f"{row['amount']:.2f}",
+                f"{row['tax_debit_amount']:.2f}",
+                f"{row['tax_credit_amount']:.2f}",
+                f"{row['tax_rate']}%",
+            ]
+            if is_tds_report:
+                line.insert(2, row['wh_move_name'])
+                line.insert(4, row['bill_ref'])
+                line.insert(5, row['deduction_date'].strftime("%d/%m/%y") if row['deduction_date'] else '')
+            section_data[section]['moves'].append(line)
+
+        return section_data
