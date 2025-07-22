@@ -60,6 +60,12 @@ async function openSidePanel(model, env, pivotId, onCloseSidePanel = () => {}) {
     await mountWithCleanup(Parent, { env, props: { model, pivotId, onCloseSidePanel } });
 }
 
+async function replaceSidePanel(model, env, pivotId, onCloseSidePanel = () => {}) {
+    env.notifyUser = env.notifyUser || (() => {});
+    env.replaceSidePanel = env.replaceSidePanel || (() => {});
+    await mountWithCleanup(Parent, { env, props: { model, pivotId, onCloseSidePanel } });
+}
+
 test("Open pivot properties", async function () {
     const { pivotId, env, model } = await createSpreadsheetWithPivot();
     await openSidePanel(model, env, pivotId);
@@ -597,10 +603,10 @@ test("pivot with twice the same date field with different granularity", async fu
 
 test("Can change measure display as from the side panel", async function () {
     const { model, env, pivotId } = await createSpreadsheetWithPivot();
-    env.openSidePanel = (name, props) => {
+    env.replaceSidePanel = (name, props) => {
         expect.step(name);
     };
-    await openSidePanel(model, env, pivotId);
+    await replaceSidePanel(model, env, pivotId);
 
     await contains(".pivot-measure .fa-cog").click();
     expect.verifySteps(["PivotMeasureDisplayPanel"]);

@@ -59,6 +59,11 @@ async function openSidePanel(model, env) {
     await mountWithCleanup(Parent, { env, props: { model } });
 }
 
+async function replaceSidePanel(model, env) {
+    env.replaceSidePanel = env.replaceSidePanel ?? (() => {});
+    await mountWithCleanup(Parent, { env, props: { model } });
+}
+
 /**
  * @param {"text" | "date" | "relation"} type
  */
@@ -93,8 +98,8 @@ test("Display with an existing 'Date' global filter", async function () {
         type: "date",
         label,
     });
-    env.openSidePanel = (_, props) => expect.step(props.id);
-    await openSidePanel(model, env);
+    env.replaceSidePanel = (panel, currentPanel, props) => expect.step(props.id);
+    await replaceSidePanel(model, env);
     const sections = target.querySelectorAll(".o_spreadsheet_global_filters_side_panel .o-section");
     expect(sections.length).toBe(2);
     const labelElement = sections[0].querySelector(".o_side_panel_filter_label");
@@ -107,8 +112,8 @@ test("Display with an existing 'Date' global filter", async function () {
 
 test("Create a new boolean global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
-    env.openSidePanel = (name) => expect.step(name);
-    await openSidePanel(model, env);
+    env.replaceSidePanel = (name) => expect.step(name);
+    await replaceSidePanel(model, env);
     await clickCreateFilter("boolean");
     expect.verifySteps(["BOOLEAN_FILTERS_SIDE_PANEL"]);
 });
@@ -131,24 +136,24 @@ test("Create a new numeric global filter", async function () {
 
 test("Create a new text global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
-    env.openSidePanel = (name) => expect.step(name);
-    await openSidePanel(model, env);
+    env.replaceSidePanel = (name) => expect.step(name);
+    await replaceSidePanel(model, env);
     await clickCreateFilter("text");
     expect.verifySteps(["TEXT_FILTER_SIDE_PANEL"]);
 });
 
 test("Create a new date global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
-    env.openSidePanel = (name) => expect.step(name);
-    await openSidePanel(model, env);
+    env.replaceSidePanel = (name) => expect.step(name);
+    await replaceSidePanel(model, env);
     await clickCreateFilter("date");
     expect.verifySteps(["DATE_FILTER_SIDE_PANEL"]);
 });
 
 test("Create a new relation global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
-    env.openSidePanel = (name) => expect.step(name);
-    await openSidePanel(model, env);
+    env.replaceSidePanel = (name) => expect.step(name);
+    await replaceSidePanel(model, env);
     await clickCreateFilter("relation");
     expect.verifySteps(["RELATION_FILTER_SIDE_PANEL"]);
 });

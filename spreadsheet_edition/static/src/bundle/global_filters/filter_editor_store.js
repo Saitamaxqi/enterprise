@@ -270,12 +270,12 @@ export class FilterEditorStore extends SpreadsheetStore {
         this.draft = this.filter;
     }
 
-    saveGlobalFilter() {
+    saveGlobalFilter(sourcePanel) {
         if (!this.canSave) {
             return;
         }
         if (!this.draft) {
-            this.sidePanelStore.open("GLOBAL_FILTERS_SIDE_PANEL");
+            this.sidePanelStore.replace("GLOBAL_FILTERS_SIDE_PANEL", sourcePanel);
             return;
         }
         let filter = this.draft;
@@ -305,7 +305,7 @@ export class FilterEditorStore extends SpreadsheetStore {
             this.notificationStore.raiseError(_t("Duplicated filter label"));
         } else {
             this.draft = undefined;
-            this.sidePanelStore.open("GLOBAL_FILTERS_SIDE_PANEL");
+            this.sidePanelStore.replace("GLOBAL_FILTERS_SIDE_PANEL", sourcePanel);
         }
     }
 
