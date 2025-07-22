@@ -210,3 +210,21 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
                 'destination': str(project.documents_folder_id.id),
                 'display_name': project.documents_folder_id.display_name,
             })
+
+    def test_project_copy_includes_linked_documents(self):
+        """
+        Test that copying a project also copies its linked document.
+        Steps:
+        1. Link a document to the project (set folder and res_id).
+        2. Copy the project.
+        3. Check that the copied project has one linked document.
+        """
+        self.document_txt_2.write({
+            'folder_id': self.project_pigs.documents_folder_id.id,
+            'res_id': self.project_pigs.id,
+        })
+        copied_project_documents = self.project_pigs.copy().document_ids
+        self.assertEqual(
+            len(copied_project_documents), 1,
+            "The copied project should have one document copied."
+        )
