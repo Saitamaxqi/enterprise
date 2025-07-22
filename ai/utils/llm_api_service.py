@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import copy
 import json
 import os
 import requests
@@ -374,9 +375,19 @@ class LLMApiService:
         AI_MAX_TOOL_CALLS_PER_CALL = int(self.env["ir.config_parameter"].sudo()
             .get_param("ai.max_tool_calls_per_call", "5"))
 
+        if tools:
+            tools = copy.deepcopy(tools)
+            for _tool_description, _tool_call, tool_parameter_schema in tools.values():
+                tool_parameter_schema["properties"]["__end_message"] = {
+                    "type": "string",
+                    "description": "If you are not waiting a result, and you are done, write here what you did and why. If you will do action after this one, leave it empty.",
+                }
+                if "__end_message" not in tool_parameter_schema["required"]:
+                    tool_parameter_schema["required"].append("__end_message")
+
         inputs = []
         all_responses = []
-        for __ in range(AI_MAX_SUCCESSIVE_CALLS):
+        for api_call in range(AI_MAX_SUCCESSIVE_CALLS):
             responses, next_actions, inputs = self._request_llm(
                 llm_model,
                 system_prompts,
@@ -392,11 +403,13 @@ class LLMApiService:
             if not next_actions:
                 break
 
+            done = False
             for tool_name, call_id, arguments in next_actions[:AI_MAX_TOOL_CALLS_PER_CALL]:
                 if tool_name not in tools:
                     _logger.error("AI: Try to call a forbidden action %s", tool_name)
                     continue
 
+                end_message = arguments.pop("__end_message", None)
                 result, error = tools[tool_name][1](arguments=arguments)
 
                 inputs.append({
@@ -404,6 +417,16 @@ class LLMApiService:
                     "call_id": call_id,
                     "output": str(result),
                 })
+
+                if end_message and error is None:
+                    all_responses.append(end_message)
+                    done = True
+                    _logger.info("AI: action terminate early: %s", end_message)
+
+            if done:
+                break
+
+        _logger.info("AI: API calls %s", api_call + 1)
 
         return all_responses
 

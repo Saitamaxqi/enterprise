@@ -43,7 +43,7 @@ class TestAiServerActions(TransactionCase):
                 return self._ai_tool_call(
                     tool_names[1],
                     "call_789123",
-                    {"value": "new name"},
+                    {"value": "new name", "__end_message": "Renamed!"},
                 )
 
             return [], [], []
@@ -77,7 +77,7 @@ class TestAiServerActions(TransactionCase):
         with patch.object(LLMApiService, "_request_llm", _mocked_request_llm):
             action.with_context(active_model=partner._name, active_id=partner.id).run()
 
-        self.assertEqual(llm_calls, 3)
+        self.assertEqual(llm_calls, 2)
         self.assertEqual(partner.name, "new name")
 
         # Simulate the LLM answering a forbidden action (not in the tools)
