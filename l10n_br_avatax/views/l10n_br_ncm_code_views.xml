@@ -5,11 +5,13 @@
         <field name="model">l10n_br.ncm.code</field>
         <field name="arch" type="xml">
             <form>
-                <group>
-                    <field name="code"/>
-                    <field name="name"/>
-                    <field name="ex"/>
-                </group>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="ex"/>
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
