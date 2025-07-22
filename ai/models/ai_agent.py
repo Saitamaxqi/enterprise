@@ -412,6 +412,8 @@ class AIAgent(models.Model):
         if markdown:
             raw_html = markdown(message, extras=['fenced-code-blocks', 'tables', 'strike'])
             formatted_message = html_sanitize(raw_html)
+        else:
+            formatted_message = html_sanitize(message)
         channel.sudo().message_post(
             author_id=self.partner_id.id,
             body=formatted_message,
