@@ -293,7 +293,7 @@ def parse_ai_response(response, field_type, allowed_values):
         return [value for value in response if value in allowed_values]
     elif field_type == 'html':
         if markdown:
-            raw_html = markdown(response, extras=['fenced-code-blocks', 'tables', 'strike'])
+            raw_html = markdown(response, extras=['fenced-code-blocks', 'tables', 'strike']).rstrip('\n')
             return html_sanitize(raw_html or "")
         return html_sanitize(response or "")
     else:

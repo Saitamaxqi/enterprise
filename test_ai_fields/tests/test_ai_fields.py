@@ -142,7 +142,7 @@ class TestAiFields(TransactionCase):
 
         self.assertEqual(
             result[records[0].id],
-            (None, "response value text prompt", "<p>response value html prompt</p>\n", 0, False),
+            (None, "response value text prompt", "<p>response value html prompt</p>", 0, False),
             "Textual fields should have been updated (except char which is excluded by ai_domain)"
         )
         # only NULL textual fields should be updated
@@ -270,12 +270,12 @@ class TestAiFields(TransactionCase):
         })
 
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': '<img src="x" onerror="alert(1)"/>'})}]}]}
+            return {'output': [{'content': [{'text': json.dumps({'value': '<p><img src="x" onerror="alert(1)"/></p>'})}]}]}
 
         with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
             self._mock_llm_api_get_token():
             value = record.get_ai_field_value("x_ai_html", None)
-            self.assertEqual(value, '<p><img src="x"></p>\n')
+            self.assertEqual(value, '<p><img src="x"></p>')
 
         record.write({
             "properties": [{
@@ -291,7 +291,7 @@ class TestAiFields(TransactionCase):
             self._mock_llm_api_get_token(), \
             self.enter_registry_test_mode():
             value = record.get_ai_property_value("properties.test_html", None)
-        self.assertEqual(value, '<p><img src="x"></p>\n')
+        self.assertEqual(value, '<p><img src="x"></p>')
 
     def test_ai_field_unresolved_request(self):
         self.env['ir.model.fields'].create({
