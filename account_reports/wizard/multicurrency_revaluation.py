@@ -119,7 +119,7 @@ class AccountMulticurrencyRevaluationWizard(models.TransientModel):
         report = self.env.ref('account_reports.multicurrency_revaluation_report')
         included_line_id = report.line_ids.filtered(lambda l: l.code == 'multicurrency_included').id
         generic_included_line_id = report._get_generic_line_id('account.report.line', included_line_id)
-        options = {**self.env.context['multicurrency_revaluation_report_options'], 'unfold_all': False}
+        options = {**self.env.context['multicurrency_revaluation_report_options'], 'unfold_all': True}
         report_lines = report._get_lines(options)
         move_lines = []
 
