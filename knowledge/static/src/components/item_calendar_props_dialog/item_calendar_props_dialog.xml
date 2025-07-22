@@ -21,20 +21,16 @@
                     </label>
                     <div class="col-sm-8 d-flex justify-content-center my-auto">
                         <div class="o_knowledge_item_calendar_dialog_date_start w-100">
-                            <SelectMenu onSelect.bind="selectDateStart" groups="availableDateStartProperties" value="state.dateStartPropertyId" required="true" searchPlaceholder.translate="Start typing">
-                                <t t-set-slot="default">
-                                    <t t-if="state.dateStartPropertyId" t-out="dateStartProperty.label"/>
-                                    <span t-else="" class="text-muted opacity-25">Start Date</span>
-                                </t>
+                            <SelectMenu onSelect.bind="selectDateStart" groups="availableDateStartProperties" value="state.dateStartPropertyId" required="true" placeholder.translate="Start Date" searchPlaceholder.translate="Start typing">
                                 <t t-set-slot="bottomArea" t-slot-scope="select">
-                                    <DropdownItem t-if="select.data.searchValue.length"
+                                    <DropdownItem t-if="select.data.searchValue"
                                         onSelected="() => this.createProperty(select.data.searchValue, 'datetime', 'dateStart')"
                                         class="'o_select_menu_item o_create_datetime mb-1 d-flex align-items-center'">
                                         <div class="o_select_menu_item_label text-wrap fst-italic ms-3">
                                             Create "<t t-out="select.data.searchValue"/>" (date and time)
                                         </div>
                                     </DropdownItem>
-                                    <DropdownItem t-if="select.data.searchValue.length"
+                                    <DropdownItem t-if="select.data.searchValue"
                                         onSelected="() => this.createProperty(select.data.searchValue, 'date', 'dateStart')"
                                         class="'o_select_menu_item o_create_date mb-1 d-flex align-items-center'">
                                         <div class="o_select_menu_item_label text-wrap fst-italic ms-3">
@@ -48,13 +44,9 @@
                             <i class="fa fa-lg fa-fw fa-arrow-right"/>
                         </div>
                         <div t-attf-class="o_knowledge_item_calendar_dialog_date_stop w-100 #{this.state.dateStartPropertyId ? '' : 'o_disabled'}">
-                            <SelectMenu onSelect.bind="selectDateStop" groups="availableDateStopProperties" value="state.dateStopPropertyId" searchPlaceholder.translate="Start typing">
-                                <t t-set-slot="default">
-                                    <t t-if="state.dateStopPropertyId" t-out="dateStopProperty.label"/>
-                                    <span t-else="" class="text-muted opacity-25">Stop Date</span>
-                                </t>
+                            <SelectMenu onSelect.bind="selectDateStop" groups="availableDateStopProperties" value="state.dateStopPropertyId" placeholder.translate="Stop Date" searchPlaceholder.translate="Start typing">
                                 <t t-set-slot="bottomArea" t-slot-scope="select">
-                                    <DropdownItem t-if="select.data.searchValue.length"
+                                    <DropdownItem t-if="select.data.searchValue"
                                         onSelected="() => this.createProperty(select.data.searchValue, dateStartProperty.type, 'dateStop')"
                                         class="'o_select_menu_item o_create_choice mb-1 d-flex align-items-center'">
                                         <div class="o_select_menu_item_label text-wrap fst-italic ms-3">
@@ -71,13 +63,9 @@
                         Base Color On
                     </label>
                     <div class="col-sm-8 my-auto">
-                        <SelectMenu onSelect.bind="selectColor" choices="colorChoices" value="state.colorPropertyId" searchPlaceholder="start_typing">
-                            <t t-set-slot="default">
-                                <t t-if="state.colorPropertyId" t-out="colorProperty.label"/>
-                                <span t-else="" class="text-muted opacity-25">Property Field</span>
-                            </t>
+                        <SelectMenu onSelect.bind="selectColor" choices="colorChoices" value="state.colorPropertyId" placeholder.translate="Property Field" searchPlaceholder="start_typing">
                             <t t-set-slot="bottomArea" t-slot-scope="select">
-                                <DropdownItem t-if="select.data.searchValue.length"
+                                <DropdownItem t-if="select.data.searchValue"
                                     onSelected="() => this.createProperty(select.data.searchValue, 'selection', 'color')"
                                     class="'o_select_menu_item o_create_choice mb-1 d-flex align-items-center'">
                                     <div class="o_select_menu_item_label text-wrap fst-italic ms-3">

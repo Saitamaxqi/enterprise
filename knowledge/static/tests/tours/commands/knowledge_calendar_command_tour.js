@@ -142,19 +142,19 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
 }, { // Open the start date dropdown
     trigger: '.o_knowledge_item_calendar_dialog_date_start .o_select_menu_toggler',
     run: 'click',
-}, { // Create a new start property
-    trigger: '.o_select_menu_menu input',
-    run: "edit Start Property",
-}, {
+},
+// Create a new start property
+...stepUtils.editSelectMenuInput('.o_knowledge_item_calendar_dialog_date_start .o_select_menu_input', 'Start Property'),
+{
     trigger: '.o_select_menu_menu .o_select_menu_item.o_create_datetime',
     run: 'click',
 }, { // Open the stop dropwdown
     trigger: '.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_toggler',
     run: 'click',
-}, { // Create a new stop property
-    trigger: '.o_select_menu_menu input',
-    run: "edit Stop Property",
-}, {
+},
+// Create a new stop property
+...stepUtils.editSelectMenuInput('.o_knowledge_item_calendar_dialog_date_stop .o_select_menu_input', 'Stop Property'),
+{
     trigger: '.o_select_menu_menu .o_select_menu_item.o_create_choice',
     run: 'click',
 }, { // Change the min slot time
