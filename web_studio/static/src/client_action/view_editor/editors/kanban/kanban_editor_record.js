@@ -22,13 +22,7 @@ class KanbanEditorRecordMenu extends Component {
         slots: Object,
         studioXpath: String,
     };
-    static template = xml`
-        <div class="o_dropdown_kanban bg-transparent position-absolute end-0 top-0 o-web-studio-editor--element-clickable" t-att-studioXpath="props.studioXpath">
-            <button class="btn o-no-caret rounded-0 px-1 pe-none" title="Dropdown menu">
-                <span class="oi oi-ellipsis-v"/>
-            </button>
-        </div>
-    `;
+    static template = "web_studio.KanbanEditorRecordMenu";
 }
 
 function useSafeKanban() {

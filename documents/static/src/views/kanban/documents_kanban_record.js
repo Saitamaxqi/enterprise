@@ -5,7 +5,7 @@ import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { browser } from "@web/core/browser/browser";
 import { FileUploadProgressBar } from "@web/core/file_upload/file_upload_progress_bar";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { useEffect, useState, xml } from "@odoo/owl";
+import { useEffect, useState } from "@odoo/owl";
 
 const CANCEL_GLOBAL_CLICK = ["a", ".dropdown", ".oe_kanban_action"].join(",");
 
@@ -18,22 +18,8 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         ...KanbanRecord.defaultProps,
     };
     static props = [...KanbanRecord.props];
-    static template = xml`
-        <div
-            role="article"
-            tabindex="0"
-            t-att-class="getRecordClasses()"
-            t-att-data-id="props.record.id"
-            t-att-data-value-id="props.record.data.id"
-            t-on-click.synthetic="onGlobalClick"
-            t-on-touchstart="onTouchStart"
-            t-on-touchmove="onTouchMoveOrCancel"
-            t-on-touchcancel="onTouchMoveOrCancel"
-            t-on-touchend="onTouchEnd"
-            t-ref="root">
-            <span t-if="props.selectionAvailable" class="o_record_selection_tooltip d-none position-absolute p-2 rounded-3 start-50 top-50">Click to select</span>
-            <t t-call="{{ templates[this.constructor.KANBAN_CARD_ATTRIBUTE] }}" t-call-context="this.renderingContext"/>
-        </div>`;
+    static template = "documents.DocumentsKanbanRecord";
+
     setup() {
         super.setup();
         // File upload
