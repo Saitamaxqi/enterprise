@@ -10,11 +10,6 @@
 Allows to use in the Point of Sale the devices that are connected to an IoT Box.
 Supported devices include payment terminals, receipt printers, scales and customer displays.
 """,
-    'data': [
-        'views/pos_config_views.xml',
-        'views/res_config_setting_views.xml',
-        'views/pos_printer_views.xml',
-    ],
     'depends': ['point_of_sale', 'iot'],
     'installable': True,
     'auto_install': True,

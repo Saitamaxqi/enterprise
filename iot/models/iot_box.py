@@ -5,7 +5,6 @@ from urllib.parse import urlsplit
 
 from odoo import api, fields, models
 from odoo.http import request
-from odoo.addons.iot_base.tools.payload_signature import hmac_sign
 
 _logger = logging.getLogger(__name__)
 
@@ -49,29 +48,6 @@ class IotBox(models.Model):
         return iot_token_value
 
     token = fields.Char(default=lambda self: self._default_token(), readonly=True)
-
-    @api.model
-    def sign_communication(self, ip_or_identifiers, url, payload):
-        """Compute HMAC signature for the url and the payload of a request with
-        the IoT Box `token` as key.
-
-        This method is used to sign both longpolling and websocket requests. As websocket
-        ones can target multiple IoT Boxes at once, we allow passing a list of identifiers.
-
-        :param str | list[str] ip_or_identifiers: ip of the ioT box or a list of identifiers
-        :param url: url of the request
-        :param payload: payload of the request
-        :return: HMAC signature of the timestamp, url and payload
-        :rtype: dict
-        """
-        if isinstance(ip_or_identifiers, list):
-            # Specific to Websocket: Allows signing multiple IoT Boxes at once
-            iot_ids = self.env['iot.box'].search([('identifier', 'in', ip_or_identifiers)])
-            return {"signatures": [hmac_sign(url, payload, iot_id.token) for iot_id in iot_ids]}
-
-        # For longpolling calls
-        iot_id = self.env['iot.box'].search([('ip', '=', ip_or_identifiers)], limit=1)
-        return {"signatures": [hmac_sign(url, payload, iot_id.token)]}
 
     def _compute_device_count(self):
         for box in self:

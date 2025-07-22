@@ -3,10 +3,6 @@ from odoo.addons.pos_self_order.controllers.orders import PosSelfOrderController
 
 
 class PosSelfOrderControllerIot(PosSelfOrderController):
-    @http.route("/pos-self-order/sign-iot-message/", auth="public", type="jsonrpc", website=True)
-    def sign_iot_message(self, access_token, iot_box_ip, url, payload):
-        pos_config = self._verify_pos_config(access_token)
-        return pos_config.env["iot.box"].sign_communication(iot_box_ip, url, payload)
 
     @http.route("/pos-self-order/iot-payment-cancelled/", auth="public", type="jsonrpc", website=True)
     def iot_payment_cancelled(self, access_token, order_id):

@@ -26,10 +26,4 @@ class IotChannel(models.AbstractModel):
         :param dict message: The message to send to the IoT Box
         :param str message_type: The type of the message (Default: call an action on a device)
         """
-        authorizations = self.env['iot.box'].sign_communication(
-            message['iot_identifiers'], self.get_base_url(), message
-        )
-        self.env['bus.bus']._sendone(self.get_iot_channel(), message_type, {
-            "Authorizations": authorizations['signatures'],
-            "content": message
-        })
+        self.env['bus.bus']._sendone(self.get_iot_channel(), message_type, message)
