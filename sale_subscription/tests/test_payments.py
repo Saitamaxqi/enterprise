@@ -933,7 +933,7 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
         ]
         sub.action_confirm()
         # Create first period invoice for both recurring and non-recurring products
-        sub._create_recurring_invoice()
+        sub._create_invoices().action_post()
         invoice_1 = sub.invoice_ids
         # check subscription should be not be paid
         self.assertNotEqual(sub.amount_total, invoice_1.amount_paid, 'Subscription should not be paid')
