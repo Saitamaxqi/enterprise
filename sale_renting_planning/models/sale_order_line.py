@@ -5,6 +5,7 @@ from random import shuffle
 
 from odoo import models
 from odoo.exceptions import ValidationError
+from odoo.tools import float_compare, float_round
 
 
 class SaleOrderLine(models.Model):
@@ -26,18 +27,14 @@ class SaleOrderLine(models.Model):
             line.planning_hours_to_plan = line.company_id.resource_calendar_id.hours_per_day * days_per_week
         super(SaleOrderLine, self - planning_rental_sols)._compute_planning_hours_to_plan()
 
-    def _planning_slot_vals_list(self):
-        vals_list = super()._planning_slot_vals_list()
+    def _planning_slot_vals_list_per_sol(self):
+        vals_list_per_sol = super()._planning_slot_vals_list_per_sol()
         assigned_resource_ids = []
         problematic_services = []
-        for sol, vals in zip(self, vals_list):
+        unit_uom = self.env.ref('uom.product_uom_unit')
+        for sol, vals_list in vals_list_per_sol.items():
             if not sol.is_rental:
                 continue
-
-            vals.update({
-                'start_datetime': sol.start_date,
-                'end_datetime': sol.return_date,
-            })
             available_resources = sol.product_id.planning_role_id.resource_ids
             if not available_resources:
                 problematic_services.append(sol.product_id.name)
@@ -73,31 +70,49 @@ class SaleOrderLine(models.Model):
 
             shuffle(free_resource_ids)
 
+            # FIXME: check why it is needed
             if free_resource_ids and free_resource_ids[0] not in flexible_resource_ids:
                 days_per_week = sol.company_id.resource_calendar_id.get_work_duration_data(sol.start_date, sol.return_date)['days']
                 sol.planning_hours_to_plan = sol.company_id.resource_calendar_id.hours_per_day * days_per_week
 
             resource_id = False
-            if free_resource_ids:
-                resource_id = free_resource_ids[0]
-                assigned_resource_ids.append(resource_id)
+            if free_resource_ids and len(vals_list) <= len(free_resource_ids):
+                for index, vals in enumerate(vals_list):
+                    resource_id = free_resource_ids[index]
+                    vals['resource_id'] = resource_id
+                    assigned_resource_ids.append(resource_id)
+                if sol.product_uom_id == unit_uom and float_compare(sol.product_uom_qty, 1, precision_rounding=sol.product_uom_id.rounding) > 0:
+                    nb_shifts_to_generate = int(float_round(sol.product_uom_qty, 0, rounding_method="UP"))
+                    if len(free_resource_ids) < nb_shifts_to_generate:
+                        raise ValidationError(
+                            self.env._(
+                                "This Sales Order can't be confirmed. No enough resources are available for the shifts in: %(product_name)s.",
+                                product_name=sol.product_id.name,
+                            )
+                        )
+                    vals_list.extend([
+                        {**sol._planning_slot_values(), 'resource_id': free_resource_ids[i]}
+                        for i in range(1, nb_shifts_to_generate)
+                    ])
             else:
                 problematic_services.append(sol.product_id.name)
-            vals['resource_id'] = resource_id
-
         if problematic_services:
             raise ValidationError(
                 self.env._(
-                    "This Sales Order can't be confirmed. No resources are available for the shifts in: %s.",
-                    ", ".join(problematic_services)
+                    "This Sales Order can't be confirmed. No resources are available for the shifts in: %(problematic_services)s.",
+                    problematic_services=problematic_services,
                 )
             )
-        return vals_list
+        return vals_list_per_sol
 
     def _planning_slot_values(self):
         vals = super()._planning_slot_values()
         if self.is_rental:
-            vals['state'] = 'published'
+            vals.update(
+                start_datetime=self.start_date,
+                end_datetime=self.return_date,
+                state='published',
+            )
         return vals
 
     def write(self, vals):

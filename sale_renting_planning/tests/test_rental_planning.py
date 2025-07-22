@@ -45,7 +45,7 @@ class TestRentalPlanning(TestSalePlanning):
             'order_line': [
                 Command.create({
                     'product_id': self.plannable_product.id,
-                    'product_uom_qty': 10,
+                    'product_uom_qty': 1,
                 }),
             ],
         }, {
@@ -55,7 +55,7 @@ class TestRentalPlanning(TestSalePlanning):
             'order_line': [
                 Command.create({
                     'product_id': self.plannable_product.id,
-                    'product_uom_qty': 10,
+                    'product_uom_qty': 1,
                 }),
             ],
         }, {
@@ -65,7 +65,7 @@ class TestRentalPlanning(TestSalePlanning):
             'order_line': [
                 Command.create({
                     'product_id': self.plannable_product.id,
-                    'product_uom_qty': 10,
+                    'product_uom_qty': 1,
                 }),
             ],
         }])
@@ -80,16 +80,20 @@ class TestRentalPlanning(TestSalePlanning):
         self.assertEqual(basic_so.planning_hours_planned, 24.0, 'Planned hours should be set when the shift is already scheduled.')
         self.assertEqual(basic_so.planning_hours_to_plan, 0.0, 'To Plan hours should be zero when the shift is already scheduled.')
 
+        self.assertEqual(slot.state, 'published')
+
         resource_time_off_so.action_confirm()
         slot_2 = resource_time_off_so.order_line.planning_slot_ids
 
         self.assertEqual(slot_2.resource_id, plannable_employee2.resource_id, 'Second resource should be assign as first resource is on Time Off')
+        self.assertEqual(slot_2.state, 'published')
 
         plannable_employee1.resource_id.calendar_id = False
         public_holiday_so.action_confirm()
         slot_3 = public_holiday_so.order_line.planning_slot_ids
 
         self.assertEqual(slot_3.resource_id, plannable_employee1.resource_id, 'First resource should be assign on public holiday as first resource is working flexible hours')
+        self.assertEqual(slot_3.state, 'published')
 
     def test_planning_rental_for_material_resource(self):
         """
@@ -124,7 +128,7 @@ class TestRentalPlanning(TestSalePlanning):
             'order_line': [
                 Command.create({
                     'product_id': product_projector.id,
-                    'product_uom_qty': 10,
+                    'product_uom_qty': 1,
                 }),
             ],
         }])
@@ -132,7 +136,8 @@ class TestRentalPlanning(TestSalePlanning):
         so_rental.action_confirm()
         self.assertEqual(so_rental.planning_hours_planned, 8.0, 'Planned hours should be set when the shift is already scheduled.')
         self.assertEqual(so_rental.planning_hours_to_plan, 0.0, 'To Plan hours should be zero when the shift is already scheduled.')
-        self.assertEqual(so_rental.order_line.planning_slot_ids.state, 'published', 'The shift generated should be published.')
+        self.assertEqual(len(so_rental.order_line.planning_slot_ids), 1)
+        self.assertEqual(so_rental.order_line.planning_slot_ids.state, 'published')
 
     def test_planning_rental_sol_slot_conflict(self):
         '''
@@ -202,3 +207,76 @@ class TestRentalPlanning(TestSalePlanning):
             3,
             "There should be 3 resources assigned to the shift",
         )
+
+    def test_planning_rental_sol_confirmation_with_more_than_one_unit_ordered(self):
+        projector = self.env['resource.resource'].create({
+            'name': 'Projector',
+            'resource_type': 'material',
+        })
+
+        planning_role_projector = self.env['planning.role'].create({
+            'name': 'Projector',
+            'resource_ids': [Command.link(projector.id)],
+            'sync_shift_rental': True,
+        })
+
+        product_projector, service_product = self.env['product.product'].create([
+            {
+                'name': 'Projector Service',
+                'type': 'service',
+                'planning_enabled': True,
+                'planning_role_id': planning_role_projector.id,
+                'rent_ok': True,
+                'uom_id': self.env.ref('uom.product_uom_unit').id,
+            },
+            {
+                'name': 'Service',
+                'type': 'service',
+                'planning_enabled': True,
+                'planning_role_id': planning_role_projector.id,
+                'rent_ok': True,
+                'uom_id': self.env.ref('uom.product_uom_hour').id,
+            },
+        ])
+
+        rental_order, rental_order2 = self.env['sale.order'].with_context(in_rental_app=True).create([
+            {
+                'partner_id': self.planning_partner.id,
+                'rental_start_date': datetime(2024, 12, 18, 0, 0),
+                'rental_return_date': datetime(2024, 12, 19, 0, 0),
+                'order_line': [
+                    Command.create({
+                        'product_id': product_projector.id,
+                        'product_uom_qty': 2,
+                    }),
+                ],
+            },
+            {
+                'partner_id': self.planning_partner.id,
+                'rental_start_date': datetime(2024, 12, 23, 0, 0),
+                'rental_return_date': datetime(2024, 12, 25, 0, 0),
+                'order_line': [
+                    Command.create({
+                        'product_id': service_product.id,
+                        'product_uom_qty': 5,
+                    }),
+                ],
+            }
+        ])
+
+        with self.assertRaises(ValidationError, msg="Error should be raised since no resource is available for the product inside Rental Order."):
+            rental_order.action_confirm()
+
+        projector2 = self.env['resource.resource'].create({
+            'name': 'Projector2',
+            'resource_type': 'material',
+            'default_role_id': planning_role_projector.id,
+            'role_ids': planning_role_projector.ids,
+        })
+        rental_order.action_confirm()
+        self.assertEqual(len(rental_order.order_line.planning_slot_ids), 2, "2 planning slots should be generated for that rental order.")
+        self.assertEqual(rental_order.order_line.planning_slot_ids.resource_id, projector + projector2, "Both resources should be assigned to that rental order line.")
+
+        rental_order2.action_confirm()
+        self.assertEqual(len(rental_order2.order_line.planning_slot_ids), 1, "1 planning slot should be generated since the UoM of the product is Hour.")
+        self.assertIn(rental_order2.order_line.planning_slot_ids.resource_id, projector + projector2, "One of both resources created inside that test should be selected.")

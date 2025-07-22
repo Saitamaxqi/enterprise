@@ -124,7 +124,8 @@ class SaleOrderLine(models.Model):
         """
             For SO service lines with slot generation, create the planning slot.
         """
-        vals_list = self.filtered(lambda sol: sol._should_generate_planning_slot())._planning_slot_vals_list()
+        vals_list_per_sol = self.filtered(lambda sol: sol._should_generate_planning_slot())._planning_slot_vals_list_per_sol()
+        vals_list = [vals for vals_list in vals_list_per_sol.values() for vals in vals_list]
         self.env['planning.slot'].create(vals_list)
 
     def _should_generate_planning_slot(self):
@@ -139,8 +140,8 @@ class SaleOrderLine(models.Model):
             ) == 1
         )
 
-    def _planning_slot_vals_list(self):
-        return [sol._planning_slot_values() for sol in self]
+    def _planning_slot_vals_list_per_sol(self):
+        return {sol: [sol._planning_slot_values()] for sol in self}
 
     def _planning_slot_values(self):
         return {
