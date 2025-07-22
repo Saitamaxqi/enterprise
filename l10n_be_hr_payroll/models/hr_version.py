@@ -569,7 +569,14 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         date_from = datetime.combine(date_from, datetime.min.time())
         date_to = datetime.combine(date_to, datetime.max.time())
         work_data = defaultdict(lambda: [0, 0])  # [days, hours]
-        number_of_hours_full_day = self.resource_calendar_id._get_max_number_of_hours(date_from, date_to)
+
+        # TODO DBE: Seems to return wrong value in case of flexible hours
+        attendances = self.resource_calendar_id.attendance_ids.filtered(lambda a: a.day_period != 'lunch' and (
+                (not a.date_from or not a.date_to) or (a.date_from <= date_to.date() and a.date_to >= date_from.date())))
+        mapped_data = defaultdict(lambda: 0)
+        for attendance in attendances:
+            mapped_data[attendance.week_type, attendance.dayofweek] += attendance.hour_to - attendance.hour_from
+        number_of_hours_full_day = max(mapped_data.values()) if attendances else 0
 
         work_entries = self.env['hr.work.entry']._read_group(
             self._get_work_hours_domain(date_from, date_to, domain=domain),

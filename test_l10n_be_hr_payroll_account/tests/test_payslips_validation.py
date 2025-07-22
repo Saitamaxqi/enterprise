@@ -40,7 +40,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 38.0,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -73,7 +72,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 38.0,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -106,7 +104,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 38.0,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -136,7 +133,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 38.0,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -166,7 +162,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 38.0,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -196,7 +191,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 6.33,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 19.0,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -221,7 +215,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 7.6,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -242,7 +235,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 0,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 0,
                 'full_time_required_hours': 38,
                 'attendance_ids': [(5, 0, 0)],
             }],
@@ -252,7 +244,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 38.0,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -288,7 +279,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': True,
-                'hours_per_week': 34.2,
                 'work_time_rate': 90,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [
@@ -355,7 +345,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 7.6,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': True,
-                'hours_per_week': 34.2,
                 'work_time_rate': 90,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [
@@ -423,7 +412,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hours_per_day': 6.08,
                 'tz': "Europe/Brussels",
                 'two_weeks_calendar': False,
-                'hours_per_week': 30.4,
                 'full_time_required_hours': 38.0,
                 'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                     'name': "Attendance",
@@ -6277,7 +6265,6 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'hours_per_day': 6.67,
             'tz': "Europe/Brussels",
             'two_weeks_calendar': False,
-            'hours_per_week': 26.67,
             'full_time_required_hours': 38.0,
             'attendance_ids': [(5, 0, 0)] + [(0, 0, {
                 'name': "Attendance",

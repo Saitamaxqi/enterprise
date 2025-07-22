@@ -92,12 +92,15 @@ class TestHrAttendanceGantt(TransactionCase):
             {
                 'name': 'Calendar 8h',
                 'tz': 'UTC',
+                'company_id': False,
                 'full_time_required_hours': 8.0,
+                'hours_per_week': 8.0,
                 'hours_per_day': 8.0,
                 'flexible_hours': True,
             }, {
                 'name': 'Calendar 8h',
                 'tz': 'UTC',
+                'company_id': False,
                 'full_time_required_hours': 8.0,
                 'hours_per_day': 8.0,
                 'attendance_ids': [
