@@ -11,8 +11,9 @@ from functools import partial
 from odoo import api, fields, models
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.ai_fields.tools import parse_ai_prompt_values
+from odoo.addons.ai.utils.tools_schema.validators import validate_params_llm_values_with_schema, validate_schema
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import _
+from odoo.tools import _, replace_exceptions
 
 _logger = logging.getLogger(__name__)
 
@@ -126,6 +127,9 @@ class IrActionsServer(models.Model):
 
             if not isinstance(data, dict):
                 raise ValidationError(_("Invalid JSON schema (malformed JSON)."))
+
+            with replace_exceptions(Exception, by=UserError):
+                validate_schema(data)
 
     def _get_ai_tools(self, record=None, tool_calls_history=None):
         """Return the tool to use in the LLM services.
@@ -266,6 +270,14 @@ class IrActionsServer(models.Model):
         :param arguments: The arguments to give to the action
         """
         _logger.info("AI: Call action %s with arguments: %s", self.name, arguments)
+
+        if ai_tool_schema := self.ai_tool_schema:
+            ai_tool_schema = json.loads(ai_tool_schema)
+            validate_params_llm_values_with_schema(
+                arguments,
+                ai_tool_schema.get("properties", {}),
+                ai_tool_schema.get("required", []),
+            )
 
         self.ensure_one()
         record = record or self.env[self.model_id.model]

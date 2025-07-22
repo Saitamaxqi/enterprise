@@ -2,7 +2,6 @@
 from . import ai_topic
 from . import ai_agent
 from . import ai_embedding
-from . import ai_tool
 from . import ir_attachment
 from . import mail_composer_mixin
 from . import mail_render_mixin

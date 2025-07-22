@@ -348,6 +348,7 @@ class LLMApiService:
         self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
         tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
         files: list[dict] | None = None, schema: dict | None = None, temperature: float = 0.2,
+        inputs: list[dict] | None = None,
     ) -> list[str]:
         """Same as `_request_llm`, but will call the tools until we are done.
 
@@ -385,7 +386,7 @@ class LLMApiService:
                 if "__end_message" not in tool_parameter_schema["required"]:
                     tool_parameter_schema["required"].append("__end_message")
 
-        inputs = []
+        inputs = inputs or []
         all_responses = []
         for api_call in range(AI_MAX_SUCCESSIVE_CALLS):
             responses, next_actions, inputs = self._request_llm(

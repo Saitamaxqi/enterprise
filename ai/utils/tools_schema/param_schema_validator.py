@@ -1,13 +1,13 @@
 class ParamSchemaValidator:
 
-    AVAILABLE_TYPES = ['string', 'number', 'boolean', 'array', 'object']
-    REQUIRED_PARAMETER_ATTRIBUTES = ['type', 'description']
+    AVAILABLE_TYPES = ['string', 'number', 'integer', 'boolean', 'array', 'object', 'null']
+    REQUIRED_PARAMETER_ATTRIBUTES = ['type']
     REQUIRED_PARAMETER_ATTRIBUTES_BY_TYPE = {
         'array': ['items'],
         'string': ['maxLength'],
         'object': ['properties', 'required']
     }
-    OPTIONAL_PARAMETER_ATTRIBUTES = ['pattern']
+    OPTIONAL_PARAMETER_ATTRIBUTES = ['pattern', 'description', 'enum']
 
     def __init__(self, param_name, param_definition, is_object_property=False):
         self.param_name = param_name

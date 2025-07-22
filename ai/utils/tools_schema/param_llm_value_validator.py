@@ -5,6 +5,7 @@ class ParamLLMValueValidator:
     # TODO: refactor to not use a class and find a better name (does not only validate)
     JSON_SCHEMA_TO_PYTHON_TYPE = {
         'string': str,
+        'integer': int,
         'number': (float, int),
         'boolean': bool,
         'array': list,

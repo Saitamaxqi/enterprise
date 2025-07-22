@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_actions_server_create_calendar_event" model="ir.actions.server">
+        <field name="name">AI Calendar: Create Event</field>
+        <field name="state">code</field>
+        <field name="use_in_ai" eval="True"/>
+        <field name="code">ai['result'] = record._ai_tool_create_calendar_event(event_title, event_datetime, event_duration, attendee_names, summary)</field>
+        <field name="model_id" ref="model_calendar_event"/>
+        <field name="ai_tool_description">Create a calendar event</field>
+        <field name="ai_tool_schema">
+        {
+            "properties": {
+                "event_title": {
+                    "type": "string",
+                    "description": "The title of the event."
+                },
+                "attendee_names": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "description": "The names of the event attendees."
+                },
+                "event_datetime": {
+                    "type": "string",
+                    "description": "The date and time of the event in format YYYY-mm-dd HH:mm.",
+                    "pattern": "^20\\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01]) ([01][0-9]|2[0-3]):([0-5][0-9])$"
+                },
+                "event_duration": {
+                    "type": "number",
+                    "description": "The duration of the event in hours."
+                },
+                "summary": {
+                    "type": "string",
+                    "description": "A summary of the purpose of the event."
+                }
+            },
+            "required": ["event_title", "attendee_names", "event_datetime", "event_duration"],
+            "type": "object"
+        }
+        </field>
+    </record>
+</odoo>

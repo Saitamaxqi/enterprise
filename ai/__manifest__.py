@@ -17,7 +17,6 @@
     'data': [
         'security/ir.model.access.csv',
         'views/ai_agent_views.xml',
-        'views/ai_tool_views.xml',
         'views/ai_topic_views.xml',
         'views/res_config_settings_views.xml',
         'views/ai_composer_views.xml',
