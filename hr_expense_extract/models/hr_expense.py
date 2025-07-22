@@ -73,8 +73,8 @@ class HrExpense(models.Model):
         return text_to_send
 
     def action_submit(self, **kwargs):
-        res = super().action_submit(**kwargs)
         self._validate_ocr()
+        res = super().action_submit(**kwargs)
         return res
 
     def _fill_document_with_results(self, ocr_results):
