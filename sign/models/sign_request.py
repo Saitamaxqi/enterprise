@@ -151,8 +151,9 @@ class SignRequest(models.Model):
         for sign_request in self:
             sign_request.cc_partner_ids = sign_request.message_follower_ids.partner_id - sign_request.request_item_ids.partner_id
 
-    @api.depends('request_item_ids.access_token')
+    @api.depends('request_item_ids.access_token', 'state')
     def _compute_share_link(self):
+        self.share_link = False
         for sign_request in self.filtered(lambda sr: sr.state == 'shared'):
             sign_request.share_link = "%s/sign/document/mail/%s/%s" % (self.get_base_url(), sign_request.id, sign_request.request_item_ids[0].sudo().access_token)
 
