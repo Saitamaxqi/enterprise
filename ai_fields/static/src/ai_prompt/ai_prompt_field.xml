@@ -9,6 +9,7 @@
             placeholder="props.placeholder"
             prompt="prompt"
             readonly="props.readonly"
-            aiFieldPath="updatedFieldName"/>
+            aiFieldPath="updatedFieldName"
+            domain="props.recordSelectorDomain"/>
     </t>
 </templates>

@@ -11,7 +11,7 @@ class IrActionsServer(models.Model):
     evaluation_type = fields.Selection(
         selection_add=[("ai_computed", "Update with AI")],
     )
-    ai_prompt = fields.Text("AI Prompt")
+    ai_prompt = fields.Html("AI Prompt", sanitize=True, sanitize_output_method="xml")
     update_field_name = fields.Char(related='update_field_id.name')
     update_field_relation = fields.Char(related="update_field_id.relation")
     update_field_type = fields.Selection(related='update_field_id.ttype')

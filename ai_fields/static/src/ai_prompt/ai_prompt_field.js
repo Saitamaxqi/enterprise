@@ -10,12 +10,13 @@ export class AiPromptField extends Component {
         // Field containing the model name that will be updated
         modelReferenceField: { type: String },
         // Field containing the field name that will be updated
-        fieldReferenceField: { type: String },
+        fieldReferenceField: { type: String, optional: true },
 
         placeholder: { type: String, optional: true },
 
         // If we update a relational field, field containing the model for which we will choose candidate values
         recordSelectorRelationField: { type: String, optional: true },
+        recordSelectorDomain: { type: String, optional: true },
     };
     static components = { AiPrompt };
 
@@ -42,7 +43,7 @@ export class AiPromptField extends Component {
 
 export const aiPrompt = {
     component: AiPromptField,
-    supportedTypes: ["text", "char"],
+    supportedTypes: ["html"],
 
     extractProps: ({ attrs, options }) => {
         return {
@@ -50,6 +51,7 @@ export const aiPrompt = {
             modelReferenceField: options.model_reference_field,
             fieldReferenceField: options.field_reference_field,
             recordSelectorRelationField: options.record_selector_relation_field,
+            recordSelectorDomain: options.record_selector_domain,
         };
     },
 };

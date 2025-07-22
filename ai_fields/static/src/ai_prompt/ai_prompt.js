@@ -35,7 +35,7 @@ export class AiPrompt extends Component {
         this.state = useState({ key: 0 });
 
         onWillUpdateProps((newProps) => {
-            if (newProps.prompt !== this.lastValue) {
+            if ((newProps.prompt || "").toString() !== (this.lastValue || "").toString()) {
                 this.lastValue = newProps.prompt;
                 this.state.key++;
             } else if (newProps.comodel !== this.props.comodel) {
