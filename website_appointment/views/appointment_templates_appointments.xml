@@ -70,7 +70,7 @@
             <t t-if="show_operator_select">
                 <li class="d-flex align-items-center">
                     <a t-att-class="'text-decoration-none text-truncate ' + (step==STEP_OPERATOR_SELECT and 'fw-bold text-reset cursor-default' or step&gt;STEP_OPERATOR_SELECT and ' ' or 'cursor-default text-muted')"
-                       t-att-href="'#' if step&lt;STEP_OPERATOR_SELECT or step==STEP_OPERATOR_SELECT else '/appointment/%s?%s' % (appointment_type.id, keep_query('filter_appointment_type_ids', 'filter_staff_user_ids', 'invite_token'))">
+                       t-att-href="'#' if step&lt;STEP_OPERATOR_SELECT or step==STEP_OPERATOR_SELECT else '/appointment/%s?%s' % (appointment_type.id, keep_query('filter_appointment_type_ids', 'filter_resource_ids', 'filter_staff_user_ids', 'invite_token'))">
                         <span t-if="appointment_type.schedule_based_on == 'users'">Operator</span>
                         <span t-else="">Meeting</span>
                     </a>
