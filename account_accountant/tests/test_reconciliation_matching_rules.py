@@ -1184,6 +1184,40 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         # Check that no reconciliation model is set on the suspense line as we set a receivable account manually
         self.assertFalse(bank_stmt_line_3.line_ids[-1].reconcile_model_id.id)
 
+    def test_apply_reco_model_other_currency(self):
+        new_journal = self.env['account.journal'].create({
+            'name': 'test',
+            'code': 'TBNK',
+            'type': 'bank',
+            'currency_id': self.other_currency.id,
+        })
+
+        bank_stmt_line = self._create_st_line(amount=100, journal_id=new_journal.id)
+
+        reco_model = self.env['account.reconcile.model'].create({
+            'name': 'New reco model',
+            'match_journal_ids': [Command.set([new_journal.id])],
+            'match_label': 'contains',
+            'match_label_param': 'turlututu',
+            'line_ids': [Command.create({
+                'account_id': self.current_assets_account.id,
+                'amount_type': 'percentage',
+                'amount': 100,
+                'label': 'test',
+            })],
+        })
+
+        self._check_st_line_matching(bank_stmt_line, [
+            {'account_id': new_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': new_journal.suspense_account_id.id, 'reconcile_model_id': reco_model.id},
+        ], reconciled_amls=False)
+        reco_model._trigger_reconciliation_model(bank_stmt_line)
+
+        self.assertRecordValues(bank_stmt_line.line_ids, [
+            {'account_id': bank_stmt_line.journal_id.default_account_id.id, 'balance': 50, 'amount_currency': 100, 'reconciled': False},
+            {'account_id': self.current_assets_account.id, 'balance': -50.0, 'amount_currency': -100, 'reconciled': False},
+        ])
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes

@@ -8,10 +8,13 @@ class AccountReconcileModel(models.Model):
     # Technical field to know if the rule was created automatically or by a user.
     created_automatically = fields.Boolean(default=False)
 
-    def _apply_lines_for_bank_widget(self, residual_amount_currency, partner, st_line):
+    def _apply_lines_for_bank_widget(self, residual_amount_currency, residual_balance, partner, st_line):
         """ Apply the reconciliation model lines to the statement line passed as parameter.
-        :param residual_amount_currency:    The open balance of the statement line in the bank reconciliation widget
+
+        :param residual_amount_currency:    The open amount currency of the statement line in the bank reconciliation widget
                                             expressed in the statement line currency.
+        :param residual_balance:            The open balance of the statement line in the bank reconciliation widget
+                                            expressed in the company currency.
         :param partner:                     The partner set on the wizard.
         :param st_line:                     The statement line processed by the bank reconciliation widget.
         :return:                            A list of python dictionaries (one per reconcile model line) representing
@@ -21,14 +24,21 @@ class AccountReconcileModel(models.Model):
         currency = st_line.foreign_currency_id or st_line.journal_id.currency_id or st_line.company_currency_id
         vals_list = []
         for line in self.line_ids:
-            vals = line._apply_in_bank_widget(residual_amount_currency, line.partner_id or partner, st_line)
+            vals = line._apply_in_bank_widget(
+                residual_amount_currency=residual_amount_currency,
+                residual_balance=residual_balance,
+                partner=line.partner_id or partner,
+                st_line=st_line,
+            )
             amount_currency = vals['amount_currency']
+            balance = vals['balance']
 
-            if currency.is_zero(amount_currency):
+            if currency.is_zero(amount_currency) and st_line.company_currency_id.is_zero(balance):
                 continue
 
             vals_list.append(vals)
             residual_amount_currency -= amount_currency
+            residual_balance -= balance
 
         return vals_list
 
@@ -224,11 +234,15 @@ class AccountReconcileModel(models.Model):
         self.ensure_one()
         liquidity_line, suspense_line, other_lines = statement_line._seek_for_lines()
 
-        amls_to_create = [
-            {**line, 'balance': line['amount_currency']}
-            for line in
-            self._apply_lines_for_bank_widget(sum(suspense_line.mapped('balance')), statement_line.partner_id, statement_line)
-        ]
+        amls_to_create = list(
+            self._apply_lines_for_bank_widget(
+                residual_amount_currency=sum(suspense_line.mapped('amount_currency')),
+                residual_balance=sum(suspense_line.mapped('balance')),
+                partner=statement_line.partner_id,
+                st_line=statement_line,
+            )
+        )
+
         statement_line.with_user(SUPERUSER_ID)._set_move_line_to_statement_line_move(liquidity_line + other_lines, amls_to_create)
         if any(aml.get('tax_ids') for aml in amls_to_create):
             statement_line._recompute_tax_lines()
