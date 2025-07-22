@@ -571,3 +571,8 @@ class TestL10nClDte(TestL10nClEdiCommon):
             self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_dte_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )
+
+    def test_demo_certificate_serial_number(self):
+        cert = self.env.ref('l10n_cl_edi.l10n_cl_demo_certificate').sudo()
+        self.assertIsNotNone(cert, "Demo certificate not found")
+        self.assertEqual(cert.subject_serial_number, "23841194-7")
