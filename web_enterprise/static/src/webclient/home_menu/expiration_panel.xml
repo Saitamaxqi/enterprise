@@ -20,7 +20,7 @@
                     </t>
                     <t t-if="subscription.expirationReason === 'renewal'">
                         <div class="d-flex flex-wrap justify-content-center mt-2">
-                            <a class="oe_instance_renew btn btn-link" href="#" t-on-click.prevent="() => subscription.renew()">Renew your subscription </a>
+                            <a class="oe_instance_renew btn btn-link" href="#" t-on-click.prevent="() => subscription.renew()">Renew now </a>
                             <a class="check_enterprise_status btn btn-link" href="#" t-on-click.prevent="() => subscription.checkStatus()">I paid, please recheck!</a>
                         </div>
                     </t>
