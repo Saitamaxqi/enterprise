@@ -94,6 +94,7 @@
                         <group>
                             <group>
                                 <field name="partner_name" readonly="state == 'generated'"/>
+                                <field name="partner_first_name" readonly="state == 'generated'" invisible="not partner_is_natural_person"/>
                                 <field name="partner_address" readonly="state == 'generated'"/>
                                 <field name="partner_zip" readonly="state == 'generated'"/>
                                 <field name="partner_city" readonly="state == 'generated'"/>

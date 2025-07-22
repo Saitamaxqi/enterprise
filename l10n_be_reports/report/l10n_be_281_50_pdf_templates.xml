@@ -47,7 +47,7 @@
                                             </p>
                                             <br/>
                                             <p class="text-start border border-dark" style="padding-left: 2%">
-                                                <span t-out="form.partner_name"/> <!-- Partner name -->
+                                                <span t-out="form.partner_name"/> <span t-if="form.partner_first_name" t-out="form.partner_first_name"/>
                                                 <br/>
                                                 <span t-out="form.partner_address"/> <!-- Partner Address -->
                                                 <br/>

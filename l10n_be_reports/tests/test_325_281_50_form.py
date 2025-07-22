@@ -39,7 +39,7 @@ class TestResPartner28150(AccountTestInvoicingCommon):
             'category_id': [Command.link(cls.env.ref('l10n_be_reports.res_partner_tag_281_50').id)]
         })
         cls.partner_c = cls.env['res.partner'].create({
-            'name': 'Super Bob',
+            'name': 'Super, Bob',
             'street': 'Rue de la boberie',
             'street2': 'Bobinou 99',
             'zip': '1326',
@@ -1184,6 +1184,8 @@ class TestResPartner28150(AccountTestInvoicingCommon):
         self.assertRecordValues(form_325.form_281_50_ids.filtered(lambda f: f.partner_id == self.partner_c), [
             {
                 'partner_id': self.partner_c.id,
+                'partner_name': 'Super',
+                'partner_first_name': 'Bob',
                 'commissions': 1000.0,
                 'atn': 0.0,
                 'fees': 10000.0,

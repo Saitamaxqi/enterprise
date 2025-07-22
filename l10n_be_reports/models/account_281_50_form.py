@@ -57,7 +57,13 @@ class L10n_BeForm28150(models.Model):
         string='Partner Name',
         help='Name of the partner when the form was created',
         tracking=True,
-        compute='_compute_partner_name', store=True, readonly=False,
+        compute='_compute_partner_names', store=True, readonly=False,
+    )
+    partner_first_name = fields.Char(
+        string='Partner Firstname',
+        help='Firstname of the partner when the form was created',
+        tracking=True,
+        compute='_compute_partner_names', store=True, readonly=False,
     )
     partner_address = fields.Char(
         string='Address',
@@ -202,10 +208,15 @@ class L10n_BeForm28150(models.Model):
         for form in self:
             form.total_remuneration = form.commissions + form.fees + form.atn + form.exposed_expenses
 
-    @api.depends('partner_id')
-    def _compute_partner_name(self):
+    @api.depends('partner_id', 'partner_is_natural_person')
+    def _compute_partner_names(self):
         for form in self:
-            form.partner_name = form.partner_id.name
+            names = (form.partner_id.name or '').rsplit(', ')
+            if form.partner_is_natural_person and len(names) == 2:
+                form.partner_name, form.partner_first_name = names
+            else:
+                form.partner_name = form.partner_id.name
+                form.partner_first_name = ''
 
     @api.depends('partner_id')
     def _compute_partner_address(self):
@@ -293,7 +304,7 @@ class L10n_BeForm28150(models.Model):
             'F2018': ONSS_COUNTRY_CODE_MAPPING.get(self.country_id.code),
             'F2018_display': self.country_id.name,
             'F2112': '' if is_partner_from_belgium else self.partner_zip,
-            'F2114': '',  # firstname: full name is set on F2013
+            'F2114': self.partner_first_name[:15],
             # F50_2XXX: info for this 281.50 tax form
             'F50_2030': '1' if self.partner_is_natural_person else '2',
             'F50_2031': 0 if self.paid_amount != 0 else 1,
