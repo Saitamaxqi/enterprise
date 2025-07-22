@@ -85,9 +85,6 @@ patch(PosStore.prototype, {
         if (this.config.iface_print_via_proxy) {
             this.hardwareProxy.connectToPrinter();
         }
-        if (!this.hardwareProxy.statusLoopRunning) {
-            this.hardwareProxy.statusLoop();
-        }
         return Promise.resolve();
     },
 

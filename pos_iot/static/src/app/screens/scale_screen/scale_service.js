@@ -64,4 +64,6 @@ patch(PosScaleService.prototype, {
             return data.value || 0;
         }
     },
+
+    _checkScaleIsConnected() {},
 });

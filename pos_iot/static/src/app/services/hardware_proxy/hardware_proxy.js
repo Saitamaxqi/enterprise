@@ -63,25 +63,4 @@ patch(HardwareProxy.prototype, {
             this.setConnectionInfo({ status: "connected" });
         }
     },
-    /**
-     * Check the status of the devices every 5 seconds and update the status of
-     * the drivers. This status is valid only if the IoT Box is connected.
-     */
-    async statusLoop() {
-        this.statusLoopRunning = true;
-        const device_ids = this.pos.config.iot_device_ids.map((device) => device.id);
-        const devices = await this.pos.data.searchRead(
-            "iot.device",
-            [
-                ["id", "in", device_ids],
-                ["connected_status", "=", "connected"],
-            ],
-            this.pos.data.fields["iot.device"]
-        );
-        const drivers = Object.fromEntries(
-            devices.map((device) => [device.type, { status: "connected" }])
-        );
-        this.setConnectionInfo({ drivers });
-        setTimeout(() => this.statusLoop(), 5000);
-    },
 });

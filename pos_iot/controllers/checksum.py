@@ -8,7 +8,7 @@ from odoo.tools import file_open
 # files listed below.
 # Any change to these files will require re-certification with LNE.
 # DO NOT CHANGE IT WITHOUT CONTACTING THE POS TEAM FIRST!
-EXPECTED_CHECKSUM = "febada8923e4583cc2026add271abb9ffc40d660de5facb8e6f8dbc4263d027d"
+EXPECTED_CHECKSUM = "53e0cf6f5e4aec9838426426a876667103dd4c37855e8daea980357070f431bf"
 
 SCALE_FILES = [
     'point_of_sale/static/src/app/screens/scale_screen/scale_service.js',
