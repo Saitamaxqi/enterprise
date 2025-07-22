@@ -604,7 +604,7 @@ test("Tooltip of pivot formulas with 2 measures", async function () {
         { value: "2016" },
     ]);
     expect(model.getters.getTooltipFormula(getCellFormula(model, "C3"), true)).toEqual([
-        { value: "None" },
+        { value: "Raoul" },
         { value: "Foo" },
     ]);
 });
@@ -621,7 +621,7 @@ test("Tooltip of empty pivot formula is empty", async function () {
         pivotType: "static",
     });
     selectCell(model, "A3");
-    model.dispatch("AUTOFILL_SELECT", { col: 10, row: 10 });
+    model.dispatch("AUTOFILL_SELECT", { col: 15, row: 15 });
     expect(model.getters.getAutofillTooltip()).toBe(undefined);
 });
 

@@ -1080,11 +1080,14 @@ test("search view with group by and additional row group", async () => {
     });
     expect(getCellContent(model, "A1")).toBe("");
     expect(getCellContent(model, "A2")).toBe("");
-    expect(getCellContent(model, "A3")).toBe('=PIVOT.HEADER(1,"name",FALSE)');
-    expect(getCellContent(model, "A4")).toBe('=PIVOT.HEADER(1,"name",FALSE,"foo",1)');
-    expect(getCellContent(model, "A5")).toBe('=PIVOT.HEADER(1,"name",FALSE,"foo",2)');
-    expect(getCellContent(model, "A6")).toBe('=PIVOT.HEADER(1,"name",FALSE,"foo",12)');
-    expect(getCellContent(model, "A7")).toBe('=PIVOT.HEADER(1,"name",FALSE,"foo",17)');
+    expect(getCellContent(model, "A3")).toBe('=PIVOT.HEADER(1,"name","Raoul")');
+    expect(getCellContent(model, "A4")).toBe('=PIVOT.HEADER(1,"name","Raoul","foo",12)');
+    expect(getCellContent(model, "A5")).toBe('=PIVOT.HEADER(1,"name","Steven")');
+    expect(getCellContent(model, "A6")).toBe('=PIVOT.HEADER(1,"name","Steven","foo",1)');
+    expect(getCellContent(model, "A7")).toBe('=PIVOT.HEADER(1,"name","Taylor")');
+    expect(getCellContent(model, "A8")).toBe('=PIVOT.HEADER(1,"name","Taylor","foo",17)');
+    expect(getCellContent(model, "A9")).toBe('=PIVOT.HEADER(1,"name","Zara")');
+    expect(getCellContent(model, "A10")).toBe('=PIVOT.HEADER(1,"name","Zara","foo",2)');
     expect(getCellContent(model, "B2")).toBe('=PIVOT.HEADER(1,"measure","__count")');
 });
 
