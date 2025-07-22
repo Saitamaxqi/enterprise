@@ -14,7 +14,7 @@ class PosConfig(models.Model):
 
     iface_fiscal_data_module = fields.Many2one(
         "iot.device",
-        domain="[('type', '=', 'fiscal_data_module'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        domain=lambda self: ['&', ('type', '=', 'fiscal_data_module'), '|', ('company_id', '=', False), ('company_id', '=', self.env.company.id)],
     )
     certified_blackbox_identifier = fields.Char(
         "Blackbox Identifier",
