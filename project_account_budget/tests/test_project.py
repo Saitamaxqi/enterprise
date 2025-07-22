@@ -27,7 +27,10 @@ class TestProject(TestProjectCommon):
             'account_id': cls.analytic_account.id,
         })
 
-    def test_get_budget_items(self):
+    def test_get_budget_items_expense(self):
+        """
+        Check budget items data with expense budget only
+        """
         if not self.project_pigs.account_id:
             self.assertEqual(self.project_pigs._get_budget_items(False), None, 'No budget should be return since no AA is set into the project.')
         self.assertTrue(self.env.user.has_group('analytic.group_analytic_accounting'))
@@ -44,16 +47,17 @@ class TestProject(TestProjectCommon):
         self.assertEqual(self.project_goats.account_id, self.analytic_account, 'The project and budget line will use the same analytic account on the same plan.')
         plan_fname = self.analytic_account.plan_id._column_name()
         today = date.today()
-        budget = self.env['budget.analytic'].create({
-            'name': 'Project Goats Budget',
+        budget_1 = self.env['budget.analytic'].create({
+            'name': 'Project Goats Expense Budget',
             'date_from': today.replace(day=1),
             'date_to': today + relativedelta(months=1, days=-1),
+            'budget_type': 'expense',
             'budget_line_ids': [Command.create({
                 plan_fname: self.analytic_account.id,
                 'budget_amount': 500,
             })],
         })
-        budget.action_budget_confirm()
+        budget_1.action_budget_confirm()
 
         budget_items = self.project_goats._get_budget_items(False)
         del budget_items['data'][0]['name']  # remove the name because it is a lazy translation.
@@ -61,14 +65,209 @@ class TestProject(TestProjectCommon):
         self.assertDictEqual(budget_items, {
             'data': [
                 {
-                    'allocated': 500,
+                    'allocated': 500.0,
                     'budgets': [],
                     'budget_type': 'expense',
+                    'progress': 1.0,
+                    'spent': 0.0,
+                },
+            ],
+            'total': {'allocated': 500.0, 'spent': 0.0, 'progress': 1.0},
+            'can_add_budget': False,
+        })
+
+    def test_get_budget_items_revenue(self):
+        """
+        Check budget items data with revenue budget only
+        """
+        self.assertEqual(self.project_goats.account_id, self.analytic_account, 'The project and budget line will use the same analytic account on the same plan.')
+        plan_fname = self.analytic_account.plan_id._column_name()
+        today = date.today()
+        budget_1 = self.env['budget.analytic'].create({
+            'name': 'Project Goats Revenue 1 Budget',
+            'date_from': today.replace(day=1),
+            'date_to': today + relativedelta(months=1, days=-1),
+            'budget_type': 'revenue',
+            'budget_line_ids': [Command.create({
+                plan_fname: self.analytic_account.id,
+                'budget_amount': 500,
+            })],
+        })
+        budget_1.action_budget_confirm()
+
+        budget_items = self.project_goats._get_budget_items(False)
+        del budget_items['data'][0]['name']  # remove the name because it is a lazy translation.
+        del budget_items['data'][0]['id']
+        self.assertDictEqual(budget_items, {
+            'data': [
+                {
+                    'allocated': 500.0,
+                    'budgets': [],
+                    'budget_type': 'revenue',
                     'progress': -1.0,
                     'spent': 0.0,
                 },
             ],
             'total': {'allocated': 500.0, 'spent': 0.0, 'progress': -1.0},
+            'can_add_budget': False,
+        })
+
+    def test_get_budget_items_both(self):
+        """
+        Check budget items data with both budget only
+        """
+        self.assertEqual(self.project_goats.account_id, self.analytic_account, 'The project and budget line will use the same analytic account on the same plan.')
+        plan_fname = self.analytic_account.plan_id._column_name()
+        today = date.today()
+        budget_1 = self.env['budget.analytic'].create({
+            'name': 'Project Goats Both Budget',
+            'date_from': today.replace(day=1),
+            'date_to': today + relativedelta(months=1, days=-1),
+            'budget_type': 'both',
+            'budget_line_ids': [Command.create({
+                plan_fname: self.analytic_account.id,
+                'budget_amount': 500,
+            })],
+        })
+        budget_1.action_budget_confirm()
+
+        budget_items = self.project_goats._get_budget_items(False)
+        del budget_items['data'][0]['name']  # remove the name because it is a lazy translation.
+        del budget_items['data'][0]['id']
+        self.assertDictEqual(budget_items, {
+            'data': [
+                {
+                    'allocated': 500.0,
+                    'budgets': [],
+                    'budget_type': 'both',
+                    'progress': -1.0,
+                    'spent': 0.0,
+                },
+            ],
+            'total': {'allocated': 500.0, 'spent': 0.0, 'progress': -1.0},
+            'can_add_budget': False,
+        })
+
+    def test_get_budget_items_expense_and_revenue(self):
+        """
+        Check budget items data with expense and revenue budgets
+        """
+        self.assertEqual(self.project_goats.account_id, self.analytic_account, 'The project and budget line will use the same analytic account on the same plan.')
+        plan_fname = self.analytic_account.plan_id._column_name()
+        today = date.today()
+        budget_1 = self.env['budget.analytic'].create({
+            'name': 'Project Goats Expense Budget',
+            'date_from': today.replace(day=1),
+            'date_to': today + relativedelta(months=1, days=-1),
+            'budget_type': 'expense',
+            'budget_line_ids': [Command.create({
+                plan_fname: self.analytic_account.id,
+                'budget_amount': 500,
+            })],
+        })
+        budget_1.action_budget_confirm()
+
+        budget_2 = self.env['budget.analytic'].create({
+            'name': 'Project Goats Revenue Budget',
+            'date_from': today.replace(day=1),
+            'date_to': today + relativedelta(months=1, days=-1),
+            'budget_type': 'revenue',
+            'budget_line_ids': [Command.create({
+                plan_fname: self.analytic_account.id,
+                'budget_amount': 1500,
+            })],
+        })
+        budget_2.action_budget_confirm()
+
+        budget_items = self.project_goats._get_budget_items(False)
+        del budget_items['data'][0]['name']  # remove the name because it is a lazy translation.
+        del budget_items['data'][0]['id']
+        del budget_items['data'][1]['name']  # remove the name because it is a lazy translation.
+        del budget_items['data'][1]['id']
+        self.assertDictEqual(budget_items, {
+            'data': [
+                {
+                    'allocated': 500.0,
+                    'budgets': [],
+                    'budget_type': 'expense',
+                    'progress': 1.0,
+                    'spent': 0.0,
+                },
+                {
+                    'allocated': 1500.0,
+                    'budgets': [],
+                    'budget_type': 'revenue',
+                    'progress': -1.0,
+                    'spent': 0.0,
+                },
+            ],
+            'total': {'allocated': 2000.0, 'spent': 0.0, 'progress': -1.0},
+            'can_add_budget': False,
+        })
+
+        self.analytic_plan_pigs = self.env['account.analytic.plan'].create({
+            'name': 'Plan pigs',
+        })
+
+        self.analytic_account_pigs = self.env['account.analytic.account'].create({
+            'name': 'Project pigs -  AA',
+            'code': 'AA-1234',
+            'plan_id': self.analytic_plan_pigs.id,
+        })
+        self.project_pigs.write({
+            'account_id': self.analytic_account_pigs.id,
+        })
+
+        self.assertEqual(self.project_pigs.account_id, self.analytic_account_pigs, 'The project and budget line will use the same analytic account on the same plan.')
+        plan_fname = self.analytic_account_pigs.plan_id._column_name()
+        budget_1 = self.env['budget.analytic'].create({
+            'name': 'Project Pigs Expense Budget',
+            'date_from': today.replace(day=1),
+            'date_to': today + relativedelta(months=1, days=-1),
+            'budget_type': 'expense',
+            'budget_line_ids': [Command.create({
+                plan_fname: self.analytic_account_pigs.id,
+                'budget_amount': 1500,
+            })],
+        })
+        budget_1.action_budget_confirm()
+
+        plan_fname = self.analytic_account_pigs.plan_id._column_name()
+        budget_2 = self.env['budget.analytic'].create({
+            'name': 'Project Pigs Revenue Budget',
+            'date_from': today.replace(day=1),
+            'date_to': today + relativedelta(months=1, days=-1),
+            'budget_type': 'revenue',
+            'budget_line_ids': [Command.create({
+                plan_fname: self.analytic_account_pigs.id,
+                'budget_amount': 500,
+            })],
+        })
+        budget_2.action_budget_confirm()
+
+        budget_items = self.project_pigs._get_budget_items(False)
+        del budget_items['data'][0]['name']  # remove the name because it is a lazy translation.
+        del budget_items['data'][0]['id']
+        del budget_items['data'][1]['name']  # remove the name because it is a lazy translation.
+        del budget_items['data'][1]['id']
+        self.assertDictEqual(budget_items, {
+            'data': [
+                {
+                    'allocated': 1500.0,
+                    'budgets': [],
+                    'budget_type': 'expense',
+                    'progress': 1.0,
+                    'spent': 0.0,
+                },
+                {
+                    'allocated': 500.0,
+                    'budgets': [],
+                    'budget_type': 'revenue',
+                    'progress': -1.0,
+                    'spent': 0.0,
+                },
+            ],
+            'total': {'allocated': 2000.0, 'spent': 0.0, 'progress': 1.0},
             'can_add_budget': False,
         })
 
@@ -106,7 +305,7 @@ class TestProject(TestProjectCommon):
             'data': [
                 {
                     'allocated': 500.0,
-                    'progress': -1.0,
+                    'progress': 1.0,
                     'spent': 0.0,
                     'budgets': [],
                     'budget_type': 'expense',
@@ -118,7 +317,7 @@ class TestProject(TestProjectCommon):
                 },
                 {
                     'allocated': 1000.0,
-                    'progress': -1.0,
+                    'progress': 1.0,
                     'spent': 0.0,
                     'budgets': [],
                     'budget_type': 'expense',
@@ -129,7 +328,7 @@ class TestProject(TestProjectCommon):
                     }
                 },
             ],
-            'total': {'allocated': 1500.0, 'spent': 0.0, 'progress': -1.0},
+            'total': {'allocated': 1500.0, 'spent': 0.0, 'progress': 1.0},
             'form_view_id': self.env.ref('project_account_budget.view_budget_analytic_form_dialog').id,
             'can_add_budget': True,
             'company_id': self.env.company.id,

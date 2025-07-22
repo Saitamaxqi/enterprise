@@ -20,20 +20,26 @@ class ProjectProject(models.Model):
 
     def _compute_budget(self):
         budget_items = self.env['budget.line'].sudo()._read_group(
-            domain=self._get_budget_analytic_account_domain(),
-            groupby=['account_id'],
+            self._get_budget_analytic_account_domain(),
+            groupby=['account_id', 'budget_analytic_id'],
             aggregates=['budget_amount:sum', 'achieved_amount:sum'],
         )
-        budget_items_by_account_analytic = {}
-        for analytic_account, budget_amount_sum, achieved_amount_sum in budget_items:
-            budget_items_by_account_analytic[analytic_account.id] = {
-                'budget_amount': budget_amount_sum,
-                'achieved_amount': achieved_amount_sum,
-            }
+        budget_items_by_account_analytic = defaultdict(lambda: {
+            'budget_amount': 0,
+            'budget_amount_for_progress': 0,
+            'achieved_amount_for_progress': 0,
+        })
+        for analytic_account, budget_analytic_id, budget_amount_sum, achieved_amount_sum in budget_items:
+            type_factor = -1 if budget_analytic_id.budget_type == 'expense' else 1
+            budget_items_by_account_analytic[analytic_account.id]["budget_amount"] += budget_amount_sum
+            budget_items_by_account_analytic[analytic_account.id]["budget_amount_for_progress"] += budget_amount_sum * type_factor
+            budget_items_by_account_analytic[analytic_account.id]["achieved_amount_for_progress"] += achieved_amount_sum * type_factor
+
         for project in self:
-            total_budget_amount = budget_items_by_account_analytic.get(project.account_id.id, {}).get('budget_amount', 0.0)
-            total_achieved_amount = budget_items_by_account_analytic.get(project.account_id.id, {}).get('achieved_amount', 0.0)
-            project.total_budget_progress = total_budget_amount and (total_achieved_amount - total_budget_amount) / total_budget_amount
+            total_budget_amount = budget_items_by_account_analytic[project.account_id.id]['budget_amount']
+            total_budget_amount_fp = budget_items_by_account_analytic[project.account_id.id]['budget_amount_for_progress']
+            total_achieved_amount_fp = budget_items_by_account_analytic[project.account_id.id]['achieved_amount_for_progress']
+            project.total_budget_progress = total_budget_amount_fp and (total_achieved_amount_fp - total_budget_amount_fp) / abs(total_budget_amount_fp)
             project.total_budget_amount = total_budget_amount
 
     def action_view_budget_lines(self, domain=None):
@@ -87,6 +93,7 @@ class ProjectProject(models.Model):
                 has_company_access = True
                 break
         total_allocated = total_spent = 0.0
+        total_allocated_for_progress = total_spent_for_progress = 0.0
         can_see_budget_items = with_action and has_company_access and (
             self.env.user.has_group('account.group_account_readonly')
             or self.env.user.has_group('analytic.group_analytic_accounting')
@@ -112,6 +119,8 @@ class ProjectProject(models.Model):
             budget_data['budget_type'] = budget_analytic.budget_type
             total_allocated += allocated
             total_spent += spent
+            total_allocated_for_progress += allocated * -1 if budget_analytic.budget_type == 'expense' else allocated
+            total_spent_for_progress += spent * -1 if budget_analytic.budget_type == 'expense' else spent
 
             if can_see_budget_items:
                 budget_item = {
@@ -120,7 +129,7 @@ class ProjectProject(models.Model):
                     'allocated': allocated,
                     'spent': spent,
                     'budget_type': budget_analytic.budget_type,
-                    'progress': allocated and (spent - allocated) / abs(allocated),
+                    'progress': allocated and (spent - allocated) / abs(allocated) * (-1 if budget_analytic.budget_type == 'expense' else 1),
                 }
                 budget_data['budgets'].append(budget_item)
                 budget_data['ids'] += ids
@@ -128,7 +137,8 @@ class ProjectProject(models.Model):
                 budget_data['budgets'] = []
 
         for budget_data in budget_data_per_budget.values():
-            budget_data['progress'] = budget_data['allocated'] and (budget_data['spent'] - budget_data['allocated']) / abs(budget_data['allocated'])
+            budget_data['progress'] = budget_data['allocated'] and (budget_data['spent'] - budget_data['allocated']) / abs(budget_data['allocated']) \
+                * (-1 if budget_data['budget_type'] == 'expense' else 1)
 
         budget_data_per_budget = list(budget_data_per_budget.values())
         if can_see_budget_items:
@@ -147,7 +157,7 @@ class ProjectProject(models.Model):
             'total': {
                 'allocated': total_allocated,
                 'spent': total_spent,
-                'progress': total_allocated and (total_spent - total_allocated) / abs(total_allocated),
+                'progress': (total_spent_for_progress - total_allocated_for_progress) / abs(total_allocated_for_progress) if total_allocated_for_progress else 0,
             },
             'can_add_budget': can_add_budget,
         }
