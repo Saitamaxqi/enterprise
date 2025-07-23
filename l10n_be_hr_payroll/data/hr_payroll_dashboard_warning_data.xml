@@ -97,5 +97,22 @@ for employee, total_duration in employee_duration.items():
         warning_records |= employee
             </field>
         </record>
+
+        <record id="hr_payroll_dashboard_warning_employee_with_exceeding_hourly_wage" model="hr.payroll.dashboard.warning">
+            <field name="name">Employees With Exceeding Hourly Wage</field>
+            <field name="country_id" ref="base.be"/>
+            <field name="color">11</field>
+            <field name="evaluation_code">
+belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == 'BE')
+employees_exceeding_hourly_wage = self.env['hr.employee'].search([
+    ('company_id', 'in', belgian_companies.ids),
+    ('wage_type', '=', 'hourly'),
+    ('hourly_wage', '&gt;=', 17),
+])
+if employees_exceeding_hourly_wage:
+    warning_count = len(employees_exceeding_hourly_wage)
+    warning_records = employees_exceeding_hourly_wage
+            </field>
+        </record>
     </data>
 </odoo>
