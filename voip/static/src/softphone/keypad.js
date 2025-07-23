@@ -6,6 +6,7 @@ import { KeypadModel } from "@voip/softphone/softphone_model";
 import { tabComponents } from "@voip/softphone/tab";
 import { isCurrentFocusEditable } from "@voip/utils/utils";
 
+import { isMobileOS } from "@web/core/browser/feature_detection";
 import { _t } from "@web/core/l10n/translation";
 import { normalize, normalizedMatch } from "@web/core/l10n/utils";
 import { rpc } from "@web/core/network/rpc";
@@ -54,6 +55,7 @@ export class Keypad extends Component {
         this.ui = useService("ui");
         this.regionNames = new Intl.DisplayNames(user.lang, { type: "region" });
         this.softphone = useService("voip").softphone;
+        this.isMobile = isMobileOS();
         useEffect(
             (shouldFocusInput) => {
                 if (
@@ -288,7 +290,7 @@ export class Keypad extends Component {
             this.updateCountryCode();
         }
         this.selection.moveCursor(cursorPosition);
-        this.props.state.input.focus = true;
+        this.props.state.input.focus = !this.isMobile;
         this.onInputSearchBar();
     }
 
@@ -320,7 +322,10 @@ export class Keypad extends Component {
             this.props.state.input.value =
                 value.slice(0, selectionStart) + key + value.slice(selectionEnd);
             this.selection.moveCursor(selectionStart + 1);
-            this.props.state.input.focus = true;
+            if (this.isMobile) {
+                this.inputRef.el.blur();
+            }
+            this.props.state.input.focus = !this.isMobile;
             this.onInputSearchBar();
         }
     }

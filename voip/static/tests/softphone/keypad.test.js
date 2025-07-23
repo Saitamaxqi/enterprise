@@ -1,5 +1,6 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { edit } from "@odoo/hoot-dom";
+import { mockUserAgent } from "@odoo/hoot-mock";
 import {
     click,
     contains,
@@ -230,4 +231,14 @@ test("T9 search does not match when contact has falsy t9_name", async () => {
     await contains(".o-voip-Keypad button:contains(+1234567890)");
     await edit("66");
     await contains(".o-voip-Keypad .d-flex.flex-column.mx-3", { count: 0 });
+});
+
+test("clicking a keypad key should not focus the input on mobile", async () => {
+    await start();
+    mockUserAgent("Chrome/0.0.0 Android (OdooMobile; Linux; Android 13; Odoo TestSuite)");
+    await click(".o_menu_systray [title='Show Softphone']");
+    await click(".o-voip-Softphone nav button:contains(Keypad)");
+    await click(".o-voip-Keypad-digit:contains(2)");
+    const input = document.querySelector(".o-voip-Keypad-searchBar input");
+    expect(document.activeElement).not.toBe(input);
 });
