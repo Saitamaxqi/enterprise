@@ -101,8 +101,10 @@ export class AiPrompt extends Component {
     onBlur() {
         // We might need to remove the default records inserted
         this.lastValue = this.addRecordsIfNecessary(this.props, this.content);
-        this.props.onChange(this.lastValue);
-        this.state.prompt = this.lastValue;
+        if (this.lastValue !== this.state.prompt) {
+            this.props.onChange(this.lastValue);
+            this.state.prompt = this.lastValue;
+        }
     }
 
     onEditorLoad(editor) {

@@ -104,9 +104,13 @@ test("AI Prompt - Field selector without template editor group", async () => {
     await click(".o_model_field_selector_popover_item_name");
     await animationFrame();
     expect("div.o_ai_prompt").toHaveText("Hello Display name");
+    // clicking on the record should reopen the field selector
+    await click("div.o_ai_prompt .o_ai_field");
+    await animationFrame();
+    expect(".o_model_field_selector_popover").toHaveCount(1);
     await click(document.body);
     expect.verifySteps([
-        'change <p>Hello <span data-oe-protected="true" class="o_ai_field"><div class="d-none">{"display_name":</div><t t-out="object.display_name">Display name</t><div class="d-none">}</div></span> </p>',
+        'change <p>Hello <span data-oe-protected="true" class="o_ai_field"><span class="d-none">{"display_name":</span><t t-out="object.display_name">Display name</t><span class="d-none">}</span></span> </p>',
     ]);
 });
 
@@ -135,10 +139,14 @@ test("AI Prompt - Field selector with template editor group", async () => {
     await expect(".o_model_field_selector_popover .badge").toHaveCount(2);
     await click(".btn-primary");
     await animationFrame();
-    expect("div.o_ai_prompt").toHaveText("Hello Created on\nDisplay name");
+    expect("div.o_ai_prompt").toHaveText(/Hello\s+Created on\s+Display name/);
+    // clicking on the record should reopen the field selector
+    await click("div.o_ai_prompt .o_ai_field");
+    await animationFrame();
+    expect(".o_model_field_selector_popover").toHaveCount(1);
     await click(document.body);
     expect.verifySteps([
-        `change <p>Hello <t t-out="object._ai_read('create_date','display_name')" class="o_ai_field"><span data-ai-field="create_date">Created on</span><br><span data-ai-field="display_name">Display name</span><br></t></p>`
+        `change <p>Hello </p><div t-out="object._ai_read('create_date','display_name')" class="o_ai_field"><span data-ai-field="create_date">Created on</span><br><span data-ai-field="display_name">Display name</span><br></div><p><br></p>`
     ]);
 });
 
@@ -218,9 +226,13 @@ test("AI Prompt - With comodel", async () => {
     await animationFrame();
     await click(".o_records_selector_popover .btn-primary");
     await animationFrame();
-    expect("div.o_ai_prompt").toHaveText("Hello\n\nBob Patrick");
+    expect("div.o_ai_prompt").toHaveText("Hello Bob Patrick");
+    // clicking on the record should reopen the field selector
+    await click("div.o_ai_prompt .o_ai_record");
+    await animationFrame();
+    expect(".o_records_selector_popover").toHaveCount(1);
     await click(document.body);
     expect.verifySteps([
-        'change <p>Hello </p><div><div class="o_ai_record" data-oe-protected="true"><div class="d-none">{1:</div><span>Bob</span><div class="d-none">}</div></div> <div class="o_ai_record" data-oe-protected="true"><div class="d-none">{2:</div><span>Patrick</span><div class="d-none">}</div></div> </div><p><br></p>',
+        'change <p>Hello <span class="o_ai_record" data-oe-protected="true"><span class="d-none">{1:</span><span>Bob</span><span class="d-none">}</span></span> <span class="o_ai_record" data-oe-protected="true"><span class="d-none">{2:</span><span>Patrick</span><span class="d-none">}</span></span> </p>',
     ]);
 });

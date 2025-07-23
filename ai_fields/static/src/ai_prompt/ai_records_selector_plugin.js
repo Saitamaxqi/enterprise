@@ -59,12 +59,12 @@ export class AIRecordsSelectorPlugin extends Plugin {
         );
 
         for (const resId of resIds) {
-            const container = document.createElement("div");
+            const container = document.createElement("span");
             container.classList.add("o_ai_record");
             container.setAttribute("data-oe-protected", "true");
             container.setAttribute("contenteditable", "false");
 
-            const elId = document.createElement("div");
+            const elId = document.createElement("span");
             elId.classList.add("d-none");
             elId.innerText = `{${resId}:`;
             container.appendChild(elId);
@@ -75,7 +75,7 @@ export class AIRecordsSelectorPlugin extends Plugin {
             elName.innerText = displayNames[resId];
             container.appendChild(elName);
 
-            const elClose = document.createElement("div");
+            const elClose = document.createElement("span");
             elClose.classList.add("d-none");
             elClose.innerText = `}`;
             container.appendChild(elClose);

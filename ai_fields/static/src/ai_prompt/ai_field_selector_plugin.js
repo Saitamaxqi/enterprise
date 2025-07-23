@@ -75,10 +75,8 @@ export class AIFieldSelectorPlugin extends Plugin {
                 // Try to not call `_ai_read` so demo user can use it
                 // keep only `object.field` in `t-out`, because of QWeb whitelist
                 elField = document.createElement("SPAN");
-                elField.setAttribute("data-oe-protected", "true");
-                elField.setAttribute("contenteditable", "false");
 
-                const elOpen = document.createElement("DIV");
+                const elOpen = document.createElement("SPAN");
                 elOpen.classList.add("d-none");
                 elOpen.innerText = `{"${chain}":`;
                 elField.appendChild(elOpen);
@@ -88,7 +86,7 @@ export class AIFieldSelectorPlugin extends Plugin {
                 elT.innerText = fieldString;
                 elField.appendChild(elT);
 
-                const elClose = document.createElement("DIV");
+                const elClose = document.createElement("SPAN");
                 elClose.classList.add("d-none");
                 elClose.innerText = `}`;
                 elField.appendChild(elClose);
@@ -107,7 +105,7 @@ export class AIFieldSelectorPlugin extends Plugin {
                 }
             }
         } else {
-            elField = document.createElement("T");
+            elField = document.createElement("DIV");
             elField.setAttribute("t-out", aiRead);
 
             for (const fieldChain of fieldsInfo) {
@@ -121,6 +119,7 @@ export class AIFieldSelectorPlugin extends Plugin {
             noTrailingSpace = true;
         }
 
+        elField.setAttribute("data-oe-protected", "true");
         elField.classList.add("o_ai_field");
         this.dependencies.dom.insert(elField);
         if (!noTrailingSpace) {
