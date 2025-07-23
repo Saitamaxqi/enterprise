@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
-import base64
 import collections
 import logging
 
@@ -9,12 +8,8 @@ from odoo import _, api, Command, models
 from odoo.addons.ai_fields.tools import get_ai_value, get_field_prompt_vals, get_property_prompt_vals, parse_ai_prompt_values
 from odoo.exceptions import AccessError
 from odoo.fields import Domain
-from odoo.tools import html_sanitize, OrderedSet
-from odoo.tools.mail import html_to_inner_content
-from odoo.tools.misc import formatLang
-from odoo.tools.mimetypes import guess_mimetype
+from odoo.tools import html_sanitize
 
-AI_SUPPORTED_IMG_TYPES = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
 
 _logger = logging.getLogger(__name__)
 
@@ -128,161 +123,6 @@ class Base(models.AbstractModel):
                             raise AccessError(_("You can not use the field %(field)s in a prompt."))
                 if (comodel := property_definition.get('comodel')) and record_ids:
                     self.env[comodel].browse(record_ids).check_access("read")
-
-    ################
-    #  Extensions  #
-    ################
-
-    def _ai_format(self, files_dict):
-        # meant to be overridden by models for which one wants to send more than just the
-        # display name or filter records to send (see mail.message for an example)
-        # todo: add a limit?
-        return self._ai_read(['display_name'], files_dict)
-
-    def _ai_read(self, fnames, files_dict):
-        if not fnames:
-            return self._ai_format(files_dict)
-        vals_list = self.read(fnames, load=None)
-        for fname in fnames:
-            field = self._fields.get(fname)
-            if field.type in ('binary', 'image'):
-                if field.attachment and (len(self) > 1 or self._origin.id):  # attachment is not created yet in quick creation
-                    attachments = self.env['ir.attachment'].search([
-                        ('res_model', '=', self._name),
-                        ('res_field', '=', fname),
-                        ('res_id', 'in', self.ids)  # ._origin?
-                    ])
-                    attachments._ai_format(files_dict)  # populate the files_dict
-                    attachments_by_resid = {att.res_id: att for att in attachments}
-                    for vals in vals_list:
-                        if not vals[fname] or (res_id := vals['id'] or vals['id'].origin) not in attachments_by_resid:
-                            continue
-                        vals[fname] = files_dict[attachments_by_resid[res_id].checksum]['file_ref']
-                else:
-                    for vals in vals_list:
-                        checksum = self.env['ir.attachment']._compute_checksum(vals[fname])
-                        if checksum not in files_dict:
-                            raw = base64.b64decode(vals[fname])
-                            mimetype = guess_mimetype(raw)
-                            extension = mimetype.split("/")[-1]
-                            file_ref = f'<file_#{len(files_dict) + 1}>'
-                            if is_uri := extension in (*AI_SUPPORTED_IMG_TYPES, 'pdf'):
-                                value = f'data:{mimetype};base64,{vals[fname].decode()}'
-                            else:
-                                try:
-                                    value = self._index(vals[fname], mimetype, checksum=checksum)
-                                except TypeError:
-                                    value = self._index(vals[fname], mimetype)
-                            files_dict[checksum] = {
-                                'type': 'pdf' if extension == 'pdf' else 'image' if is_uri else 'text',
-                                'value': value,
-                                'file_ref': file_ref,
-                            }
-                        vals[fname] = files_dict[checksum]['file_ref']
-            elif field.type in ('date', 'datetime'):
-                for vals in vals_list:
-                    vals[fname] = field.to_string(vals[fname])
-            elif field.type == 'html':
-                for vals in vals_list:
-                    vals[fname] = html_to_inner_content(vals[fname])
-            elif field.type in ('many2many', 'many2one', 'one2many'):
-                for vals in vals_list:
-                    vals[fname] = {'model': field.comodel_name, 'ids': vals[fname]}
-            elif field.type in ('many2one_reference', 'reference'):
-                vals_by_ids = {vals['id']: vals for vals in vals_list}
-                for record in self:
-                    record_vals = vals_by_ids[record.id]
-                    if not record[fname]:
-                        record_vals[fname] = False  # keep falsy values consistent for the LLM
-                    if field.type == 'many2one_reference':
-                        record_vals[fname] = {'model': model, 'ids': record_vals[fname]} if (model := record[field.model_field]) else False
-                    else:
-                        record_vals[fname] = {'model': record._name, 'ids': record.id}
-            elif field.type == 'monetary':
-                currency_field = field.get_currency_field(self)
-                if currency_field:
-                    currency = self[currency_field]
-                    for vals in vals_list:
-                        vals[fname] = formatLang(self.env, vals[fname], currency_obj=currency)
-
-        for vals in vals_list:
-            if not vals['id']:
-                vals['id'] = self._origin.id
-        return vals_list
-
-    def _get_ai_context(self, field_paths):
-        """ Get the context dict for a record given a list of field paths.
-        The context dict is a mini-orm snapshot with values formatted for LLM usage.
-        It is a dictionary of the form:
-
-        .. code-block:: python
-
-            {
-                "model_A": [
-                    {
-                        "id": 1,
-                        "field_A": "val_1",
-                        "field_B": {"model": "model_B", "ids": [3]},
-                    },
-                    {
-                        "id": 2,
-                        "field_A": "val_2",
-                        "field_B": {"model": "model_B", "ids": [4]},
-                    }
-                ],
-                "model_B": [
-                    {
-                        "id": 3,
-                        "field_C": "val_3"
-                    },
-                    {
-                        "id": 4,
-                        "field_C": "val_4"
-                    }
-                ]
-            }
-        """
-        self.ensure_one()
-        models = {}
-
-        def _map_to_models(records, path):
-            model = records._name
-            ids = OrderedSet(records.ids)
-            if model not in models:
-                models[model] = {'fields': OrderedSet(), 'ids': ids}
-            else:
-                models[model]['ids'] |= ids
-            if not path:
-                return
-            fname = path[0]
-            field = records._fields.get(fname)
-            if not field:
-                return
-            if field.type in ('many2many', 'many2one', 'one2many'):
-                _map_to_models(records[fname], path[1:])
-            elif field.type == 'reference':
-                for record in records:
-                    if record[fname]:
-                        _map_to_models(record[fname], path[1:])
-            elif field.type == 'many2one_reference':
-                for record in records:
-                    if (ref_model := record[field.model_field]) and (ref_id := record[fname]):
-                        _map_to_models(self.env[ref_model].browse(ref_id), path[1:])
-            models[model]['fields'].add(fname)
-
-        # get a mapping {model: {fields, ids}} to know which fields to read on which records
-        for path in field_paths:
-            _map_to_models(self, path.split("."))
-
-        snapshot = {}
-        files_dict = {}  # files are sent separately to LLMs
-        for model, info in models.items():
-            records = self.env[model].browse(info['ids'])
-            if model == self._name and not self.id:
-                records = records.filtered(lambda r: r.id != self._origin.id) | self  # unsaved changes
-            snapshot[model] = records._ai_read(info['fields'], files_dict)
-
-        return snapshot, list(files_dict.values())
 
     def _fill_ai_field(self, field, field_prompt=None):
         """Assign a value to the specified field in the given records based on the response of a
