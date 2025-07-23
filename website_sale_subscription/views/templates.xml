@@ -169,15 +169,23 @@
 
     <template id="cart_summary_inherit_website_sale_subscription" inherit_id="website_sale.cart_summary_content">
         <xpath expr="//table[hasclass('o_cart_products_table')]//td[@name='website_sale_cart_summary_line_price']" position="inside">
-            <div t-if="line.recurring_invoice">
-                <span t-out="line.order_id.plan_id.billing_period_display_sentence"/>
-            </div>
+            <small
+                t-if="line.recurring_invoice"
+                class="text-nowrap text-muted"
+                t-out="line.order_id.plan_id.billing_period_display_sentence"
+            />
         </xpath>
     </template>
 
-    <template id="cart_lines_subscription" inherit_id="website_sale.cart_lines_price">
-        <xpath expr="//h6[@name='website_sale_cart_line_price']" position="after">
-            <div t-if="line.recurring_invoice and line.order_id.plan_id" class="text-end" name="recurring_info">
+    <template id="cart_lines_subscription" inherit_id="website_sale.cart_line_description_following_lines">
+        <xpath expr="//div[@t-if='description_lines']" position="before">
+            <div
+                t-if="line.recurring_invoice and line.order_id.plan_id"
+                class="small text-muted"
+                name="recurring_info"
+            >
+                <t t-set="product_price" t-value="line._get_cart_display_price()"/>
+                <t t-call="website_sale.cart_product_price"/>
                 <span t-out="line.order_id.plan_id.billing_period_display_sentence"/>
             </div>
         </xpath>
