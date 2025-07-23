@@ -162,9 +162,9 @@
                 </group>
             </group>
             <page name="payroll_information" position="after">
-                <page string="Payroll" groups="hr.group_hr_user">
+                <page string="Payroll" groups="hr_payroll.group_hr_payroll_user">
                     <group>
-                    <group name="contract" string="Contract Overview" groups="hr.group_hr_user">
+                    <group name="contract" string="Contract Overview">
     <field name="l10n_ch_location_unit_id" string="Workplace"/>
     <field name="registration_number" string="Employee Reference"/>
     <field name="lang" string="Payslip Language" placeholder="User Language"/>
@@ -185,7 +185,13 @@
         <button name="%(hr.hr_version_wizard_action)d" type="action" string="Load a Template" class="btn btn-link p-0 ms-auto"/>
     </div>
     <separator string="Schedule"/>
-    <field name="resource_calendar_id" help="The default working hours are set in configuration."/>
+    <field name="resource_calendar_id"
+        groups="hr.group_hr_manager"
+        help="The default working hours are set in configuration."/>
+    <field name="resource_calendar_id"
+        groups="!hr.group_hr_manager,hr_payroll.group_hr_payroll_user"
+        options="{'no_create': True, 'no_open': True}"
+        help="The default working hours are set in configuration."/>
     <field name="tz" required="id"/>
     <field name="irregular_working_time"/>
     <field name="l10n_ch_current_occupation_rate" invisible="irregular_working_time"/>
