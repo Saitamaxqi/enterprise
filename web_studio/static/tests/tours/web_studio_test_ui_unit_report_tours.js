@@ -6,6 +6,7 @@ import { assertEqual, stepNotInStudio, nextTick } from "@web_studio/../tests/tou
 import { cookie } from "@web/core/browser/cookie";
 import { editorsWeakMap } from "@html_editor/../tests/tours/helpers/editor";
 import { nodeSize } from "@html_editor/utils/position";
+import { waitUntil } from "@odoo/hoot-dom";
 
 const getBoundingClientRect = Element.prototype.getBoundingClientRect;
 
@@ -527,13 +528,14 @@ registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
                 );
                 assertEqual(this.anchor.scrollTop, 0);
                 this.anchor.scrollTop = 9999;
-                await new Promise(requestAnimationFrame);
-                const newPlaceholderbox = getBoundingClientRect.call(
-                    document.querySelector(".o-web-studio-field-dynamic-placeholder")
-                );
-                // The field placeholder should have followed its anchor, and it happens that the anchor's container
-                // has been scrolled, so the anchor has moved upwards (and is actually outside of the viewPort, to the top)
-                assertEqual(placeholderBox.top > newPlaceholderbox.top, true);
+                await waitUntil(() => {
+                    const newPlaceholderbox = getBoundingClientRect.call(
+                        document.querySelector(".o-web-studio-field-dynamic-placeholder")
+                    );
+                    // The field placeholder should have followed its anchor, and it happens that the anchor's container
+                    // has been scrolled, so the anchor has moved upwards (and is actually outside of the viewPort, to the top)
+                    return placeholderBox.top > newPlaceholderbox.top;
+                });
             },
         },
         {
@@ -618,13 +620,14 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
                 );
                 assertEqual(this.anchor.scrollTop, 0);
                 this.anchor.scrollTop = 9999;
-                await new Promise(requestAnimationFrame);
-                const newPlaceholderbox = getBoundingClientRect.call(
-                    document.querySelector(".o-web-studio-field-dynamic-placeholder")
-                );
-                // The field placeholder should have followed its anchor, and it happens that the anchor's container
-                // has been scrolled, so the anchor has moved upwards (and is actually outside of the viewPort, to the top)
-                assertEqual(placeholderBox.top > newPlaceholderbox.top, true);
+                await waitUntil(() => {
+                    const newPlaceholderbox = getBoundingClientRect.call(
+                        document.querySelector(".o-web-studio-field-dynamic-placeholder")
+                    );
+                    // The field placeholder should have followed its anchor, and it happens that the anchor's container
+                    // has been scrolled, so the anchor has moved upwards (and is actually outside of the viewPort, to the top)
+                    return placeholderBox.top > newPlaceholderbox.top;
+                });
             },
         },
         {
