@@ -62,7 +62,8 @@
                             <td class="text-end"><span t-esc="line.amount"
                                     t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
                             <td class="text-end">
-                                <span t-esc="line.rate / 100"/>
+                                <span t-if="line.rate &lt; 100" t-out="str(line.rate) + ' %'"/>
+                                <span t-if="line.rate > 100" t-out="round(line.rate / 100, 2)"/>
                             </td>
                             <td class="text-end"><span t-esc="line.total"
                                     t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/></td>
