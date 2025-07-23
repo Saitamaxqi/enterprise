@@ -16,7 +16,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
         return super().default_get(fields)
 
-    employee_id = fields.Many2one('hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'))
+    employee_id = fields.Many2one('hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'), domain="[('company_id', 'in', allowed_company_ids)]")
 
     payslip_n_ids = fields.Many2many(
         'hr.payslip', string='Payslips N',

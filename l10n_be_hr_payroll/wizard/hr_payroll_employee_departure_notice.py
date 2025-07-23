@@ -21,7 +21,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
             raise UserError(_('This feature seems to be as exclusive as Belgian chocolates. You must be logged in to a Belgian company to use it.'))
         return super().default_get(fields)
 
-    employee_id = fields.Many2one('hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'))
+    employee_id = fields.Many2one('hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'), domain="[('company_id', 'in', allowed_company_ids)]")
     departure_date = fields.Date(string='Departure Date', default=fields.Date.context_today, required=True)
     leaving_type_id = fields.Many2one('hr.departure.reason', string='Departure Reason', required=True)
     departure_reason_code = fields.Integer(related='leaving_type_id.l10n_be_reason_code')
