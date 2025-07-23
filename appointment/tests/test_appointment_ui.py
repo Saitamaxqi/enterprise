@@ -449,6 +449,51 @@ class AppointmentUITest(AppointmentUICommon):
 
     @freeze_time('2022-02-14')
     @users('apt_manager')
+    def test_appointment_resource_manual_confirmation(self):
+        """ Test that when auto_confirm is False, the appointment type is not confirmed
+        and the attendees are not confirmed until the booking is confirmed manually.
+        """
+        self.authenticate(self.env.user.login, self.env.user.login)
+        self.assertFalse(self.apt_resource_multiple_bookings.meeting_ids)
+        phone_question = self.apt_resource_multiple_bookings._get_main_phone_question()
+        self.assertTrue(phone_question)
+        resource = self.env['appointment.resource'].sudo().create([{
+            'appointment_type_ids': self.apt_resource_multiple_bookings.ids,
+            'capacity': 4,
+            'name': 'Resource',
+        }])
+
+        self.assertTrue(self.apt_resource_multiple_bookings.auto_confirm)
+        self.assertEqual(float_compare(self.apt_resource_multiple_bookings.manual_confirmation_percentage, 1.0, 3), 0)
+        appointment_data = {
+            'available_resource_ids': [resource.id],
+            'csrf_token': http.Request.csrf_token(self),
+            'datetime_str': '2022-02-14 15:00:00',
+            'duration_str': '1.0',
+            'email': 'test@test.example.com',
+            'name': 'Online Meeting',
+            'phone': '2025550999',
+            f'question_{phone_question.id}': '2025550999',
+        }
+
+        url = f'/appointment/{self.apt_resource_multiple_bookings.id}/submit'
+        res = self.url_open(url, data=appointment_data)
+        self.assertEqual(res.status_code, 200, 'Response should = OK')
+        self.assertEqual(len(self.apt_resource_multiple_bookings.meeting_ids), 1)
+        self.assertEqual(self.apt_resource_multiple_bookings.meeting_ids[0].appointment_status, 'booked')
+
+        self.apt_resource_multiple_bookings.write({'auto_confirm': False})
+        appointment_data['datetime_str'] = '2022-02-14 16:00:00'
+        res = self.url_open(url, data=appointment_data)
+        self.assertEqual(res.status_code, 200, 'Response should = OK')
+        self.assertEqual(len(self.apt_resource_multiple_bookings.meeting_ids), 2)
+        self.assertEqual(
+            self.apt_resource_multiple_bookings.meeting_ids[0].appointment_status, 'request',
+            'When manual confirmation is set, the booking status should be set to request.'
+        )
+
+    @freeze_time('2022-02-14')
+    @users('apt_manager')
     def test_appointment_staff_user_manual_confirmation(self):
         """ Check that appointment and attendee status are correctly
         set based on the auto_confirm and manual_confirmation_percentage fields"""

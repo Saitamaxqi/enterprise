@@ -103,55 +103,73 @@ class AppointmentAccountPaymentTest(AppointmentAccountPaymentCommon):
     def test_booking_to_event_on_invoice_paid_users(self):
         """ Replace booking with Event when invoice is paid - staff user appointment """
         appointment_type = self.appointment_users_payment
-        start = self.start_slot
-        stop = self.stop_slot
+        for manage_capacity in (True, False):
+            with self.subTest(manage_capacity=manage_capacity, capacity_mode=manage_capacity):
+                start = self.start_slot
+                stop = self.stop_slot
 
-        # Assert Initial Data
-        slots = appointment_type._get_appointment_slots('UTC')
-        slots_list = self._filter_appointment_slots(slots)
-        self.assertEqual(len(slots_list), 1)
+                # Assert Initial Data
+                slots = appointment_type._get_appointment_slots('UTC')
+                slots_list = self._filter_appointment_slots(slots)
+                self.assertEqual(len(slots_list), 1)
 
-        # Create Calendar Event Booking
-        booking_values = {
-            'appointment_type_id': appointment_type.id,
-            'booking_line_ids': [(0, 0, {'appointment_user_id': self.staff_user_bxls.id, 'capacity_reserved': 1, 'capacity_used': 1})],
-            'duration': 1.0,
-            'partner_id': self.apt_manager.partner_id.id,
-            'product_id': appointment_type.product_id.id,
-            'staff_user_id': self.staff_user_bxls.id,
-            'start': start,
-            'stop': stop,
-        }
-        calendar_booking = self.env['calendar.booking'].create(booking_values)
+                # Create Calendar Event Booking
+                booking_values = {
+                    'appointment_type_id': appointment_type.id,
+                    'asked_capacity': 3 if manage_capacity else 1,
+                    'booking_line_ids': [(0, 0, {'appointment_user_id': self.staff_user_bxls.id, 'capacity_reserved': 1, 'capacity_used': 1})],
+                    'duration': 1.0,
+                    'partner_id': self.apt_manager.partner_id.id,
+                    'product_id': appointment_type.product_id.id,
+                    'staff_user_id': self.staff_user_bxls.id,
+                    'start': start,
+                    'stop': stop,
+                }
+                calendar_booking = self.env['calendar.booking'].create(booking_values)
 
-        # Create an invoice
-        invoice = calendar_booking.sudo()._make_invoice_from_booking()
-        self.assertEqual(calendar_booking.account_move_id, invoice)
-        self.assertFalse(invoice.calendar_booking_ids.calendar_event_id)
+                # Create an invoice
+                invoice = calendar_booking.sudo()._make_invoice_from_booking()
+                self.assertEqual(calendar_booking.account_move_id, invoice)
+                self.assertFalse(invoice.calendar_booking_ids.calendar_event_id)
 
-        # Calendar Booking do not reserve space
-        slots = appointment_type._get_appointment_slots('UTC')
-        slots_list = self._filter_appointment_slots(slots)
-        self.assertEqual(len(slots_list), 1)
+                # Calendar Booking do not reserve space
+                slots = appointment_type._get_appointment_slots('UTC')
+                slots_list = self._filter_appointment_slots(slots)
+                self.assertEqual(len(slots_list), 1)
 
-        # Posting invoice (at transaction post processing or manually) creates event and reserve space
-        invoice._post()
-        event = invoice.calendar_booking_ids.calendar_event_id
-        self.assertEqual(len(event), 1)
-        slots = appointment_type._get_appointment_slots('UTC')
-        slots_list = self._filter_appointment_slots(slots)
-        self.assertEqual(len(slots_list), 0)
+                # Posting invoice (at transaction post processing or manually) creates event and reserve space
+                invoice._post()
+                event = invoice.calendar_booking_ids.calendar_event_id
+                self.assertEqual(len(event), 1)
+                slots = appointment_type._get_appointment_slots('UTC')
+                slots_list = self._filter_appointment_slots(slots)
+                self.assertEqual(len(slots_list), 0)
 
-        # Assert Booking Data
-        self.assertTrue(event.active)
-        self.assertEqual(event, calendar_booking.calendar_event_id)
-        self.assertEqual(event.appointment_type_id, calendar_booking.appointment_type_id)
-        self.assertEqual(event.duration, calendar_booking.duration)
-        self.assertEqual(event.user_id, calendar_booking.staff_user_id)
-        self.assertEqual(event.partner_ids, calendar_booking.partner_id | calendar_booking.staff_user_id.partner_id)
-        self.assertEqual(event.start, calendar_booking.start)
-        self.assertEqual(event.stop, calendar_booking.stop)
-        self.assertTrue(all(attendee.state == 'accepted' for attendee in event.attendee_ids))
+                # Inoviced quantity should be equal to asked_capacity
+                self.assertEqual(invoice.invoice_line_ids.quantity, calendar_booking.asked_capacity)
+
+                # Assert Booking Data
+                self.assertTrue(event.active)
+                self.assertEqual(event, calendar_booking.calendar_event_id)
+                self.assertEqual(event.appointment_type_id, calendar_booking.appointment_type_id)
+                self.assertEqual(event.duration, calendar_booking.duration)
+                self.assertEqual(event.user_id, calendar_booking.staff_user_id)
+                self.assertEqual(event.partner_ids, calendar_booking.partner_id | calendar_booking.staff_user_id.partner_id)
+                self.assertEqual(event.start, calendar_booking.start)
+                self.assertEqual(event.stop, calendar_booking.stop)
+                self.assertTrue(all(attendee.state == 'accepted' for attendee in event.attendee_ids))
+
+                # Assert Booking Lines Data
+                booking_line, calendar_booking_line = event.booking_line_ids, calendar_booking.booking_line_ids
+                self.assertEqual(len(booking_line), 1)
+                self.assertTrue(booking_line.active)
+                self.assertEqual(booking_line.capacity_reserved, calendar_booking_line.capacity_reserved)
+                self.assertEqual(booking_line.capacity_used, calendar_booking_line.capacity_used)
+                self.assertEqual(booking_line.event_start, calendar_booking.start)
+                self.assertEqual(booking_line.event_stop, calendar_booking.stop)
+
+                calendar_booking.calendar_event_id.unlink()
+                calendar_booking.unlink()
 
     def test_booking_unlink(self):
         """ Unlinking a booking should (only) unlink appointment answers not linked to any calendar event. """

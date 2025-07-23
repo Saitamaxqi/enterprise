@@ -151,6 +151,44 @@ class AppointmentCommon(MailCase, common.HttpCase):
             })],
         })
 
+        cls.apt_user_multiple_bookings, cls.apt_resource_multiple_bookings = cls.env['appointment.type'].create([{
+            'appointment_tz': 'Europe/Brussels',
+            'appointment_duration': 1,
+            'is_auto_assign': True,
+            'max_schedule_days': 15,
+            'min_cancellation_hours': 1,
+            'min_schedule_hours': 1,
+            'max_bookings': 3,
+            'name': 'Bxls Users Appt Type with multiple bookings',
+            'slot_ids': [
+                (0, False, {'weekday': weekday,
+                            'start_hour': hour,
+                            'end_hour': hour + 1,
+                           })
+                for weekday in ['1', '2']
+                for hour in range(8, 14)
+            ],
+            'staff_user_ids': [(6, 0, [cls.staff_user_aust.id, cls.staff_user_bxls.id])],
+        }, {
+            'appointment_tz': 'Europe/Brussels',
+            'appointment_duration': 1,
+            'is_auto_assign': True,
+            'max_bookings': 3,
+            'max_schedule_days': 15,
+            'min_cancellation_hours': 1,
+            'min_schedule_hours': 1,
+            'name': 'Bxls Resource Appt Type with multiple bookings',
+            'schedule_based_on': 'resources',
+            'slot_ids': [
+                (0, False, {'weekday': weekday,
+                            'start_hour': hour,
+                            'end_hour': hour + 1,
+                           })
+                for weekday in ['1', '2']
+                for hour in range(8, 14)
+            ],
+        }])
+
     def _test_url_open(self, url):
         """ Call url_open with nocache parameter """
         url += ('?' not in url and '?' or '&') + 'nocache'

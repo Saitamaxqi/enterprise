@@ -366,6 +366,63 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         self.assertFalse(appt_form.slot_ids)
         self.assertFalse(apt_type.start_datetime or apt_type.end_datetime)
 
+    @freeze_time('2022-02-14')
+    @users('apt_manager')
+    def test_appointment_type_remaining_capacity_for_multiple_bookings(self):
+        """ Test the remaining capacity computation for appointment type having multiple bookings. """
+        apt_user, apt_resource = self.apt_user_multiple_bookings, self.apt_resource_multiple_bookings
+
+        user = self.staff_user_bxls
+        resource = self.env['appointment.resource'].create({
+            'appointment_type_ids': [(4, apt_resource.id)],
+            'capacity': 2,
+            'name': 'Resource 1',
+        })
+
+        start = datetime(2022, 2, 15, 14, 0, 0)
+        end = start + timedelta(hours=1)
+
+        user_remaining_capacity = apt_user._get_users_remaining_capacity(user, start, end)['total_remaining_capacity']
+        resource_remaining_capacity = apt_resource._get_resources_remaining_capacity(resource, start, end)['total_remaining_capacity']
+
+        # Check initial remaining capacity
+        self.assertEqual(
+            user_remaining_capacity, 3, 'Initial user remaining capacity should be 3.'
+        )
+        self.assertEqual(
+            resource_remaining_capacity, 3,
+            'Initial resource remaining capacity should be 3.',
+        )
+
+        # Create 3 bookings one-by-one for both appointment types
+        for booking_number in range(1, 4):
+            self.env['calendar.event'].with_context(self._test_context).create([{
+                'appointment_type_id': apt_user.id,
+                'booking_line_ids': [(0, 0, {'capacity_reserved': 1})],
+                'name': 'Booking 1',
+                'start': start,
+                'stop': end,
+                'user_id': user.id,
+            }, {
+                'appointment_type_id': apt_resource.id,
+                'booking_line_ids': [(0, 0, {'capacity_reserved': 1, 'appointment_resource_id': resource.id})],
+                'name': 'Booking 2',
+                'start': start,
+                'stop': end,
+            }])
+
+            user_remaining_capacity = apt_user._get_users_remaining_capacity(user, start, end)['total_remaining_capacity']
+            resource_remaining_capacity = apt_resource._get_resources_remaining_capacity(resource, start, end)['total_remaining_capacity']
+
+            self.assertEqual(
+                user_remaining_capacity, 3 - booking_number,
+                f'User remaining capacity should be {5 - booking_number} after {booking_number} booking(s)',
+            )
+            self.assertEqual(
+                resource_remaining_capacity, 3 - booking_number,
+                f'Resource remaining capacity should be {5 - booking_number} after {booking_number} booking(s).',
+            )
+
     @mute_logger('odoo.sql_db')
     @users('apt_manager')
     def test_appointment_slot_start_and_end_datetimes_constraint(self):
@@ -1682,6 +1739,153 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         (booking_3 + booking_4)._compute_unavailable_resource_ids()
         self.assertEqual(booking_3.unavailable_resource_ids, court3)
         self.assertEqual(booking_4.unavailable_resource_ids, court3)
+
+    @freeze_time('2022-02-14')
+    def test_resource_unavailability_with_multiple_appointment_events(self):
+        """ Test that resources are correctly computed as unavailable when multiple appointments are booked
+        on the same resource and overlapping events.
+        Here are the cases which are tested, resource with:
+        - bookings in appointments, some with manage capacity True and some with False.
+        - bookings in appointment with manage capacity and exceeding the resource capacity.
+        - bookings in appointment without manage capacity and exceeding the booking appointment capacity.
+        - bookings in appointments with all manage capacity False.
+        - bookings in appointments with manage capacity and unshareable resource type.
+        """
+        court1, court2, court3 = self.env['appointment.resource'].create([{
+            'appointment_type_ids': self.apt_resource_multiple_bookings.ids,
+            'name': 'Court 1',
+            'capacity': 5,
+        }, {
+            'appointment_type_ids': self.apt_type_resource.ids,
+            'capacity': 4,
+            'name': 'Court 2',
+            'shareable': True,
+        }, {
+            'appointment_type_ids': (self.apt_resource_multiple_bookings + self.apt_type_resource).ids,
+            'capacity': 6,
+            'name': 'Court 3',
+        }])
+        start = datetime(2022, 2, 14, 15, 0, 0)
+        end = start + timedelta(hours=1)
+
+        # Book for one appointments for each resources
+        booking1, booking2, booking3 = self.env['calendar.event'].create([{
+            'appointment_type_id': self.apt_resource_multiple_bookings.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': court1.id, 'capacity_reserved': 1})],
+            'name': 'Booking 1',
+            'start': start,
+            'stop': end,
+        }, {
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': court2.id, 'capacity_reserved': 2})],
+            'name': 'Booking 2',
+            'start': start,
+            'stop': end,
+        }, {
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': court3.id, 'capacity_reserved': 2})],
+            'name': 'Booking 3',
+            'start': start,
+            'stop': end,
+        }])
+
+        self.assertFalse(booking1.unavailable_resource_ids, 'Booking 1 should not have unavailable resources')
+        self.assertFalse(booking2.unavailable_resource_ids, 'Booking 2 should not have unavailable resources')
+        self.assertFalse(booking3.unavailable_resource_ids, 'Booking 3 should not have unavailable resources')
+
+        appointment_wcapacity = self.apt_type_resource.copy()
+        appointment_wocapacity = self.apt_resource_multiple_bookings.copy()
+        self.apt_resource_multiple_bookings.write({'max_bookings': 1})
+
+        for (appointment, resource, capacity_reserved, unavailable_resource, conflicting_booking) in [
+            # Multiple capacity methods
+            (self.apt_resource_multiple_bookings, court3, 1, court3, booking3),
+            # All managing capacity and exceeding resource capacity (2 + 4 > 4)
+            (appointment_wcapacity, court2, 4, court2, booking2),
+            # Un shareable resource in more than one appointment with manage capacity True.
+            (appointment_wcapacity, court3, 2, court3, booking3),
+            # Manage capacity false and exceeding appointment booking capacity (2 > 1)
+            (self.apt_resource_multiple_bookings, court1, 1, court1, booking1),
+            # All not managing capacity and booking in more than one appointment.
+            (appointment_wocapacity, court1, 1, court1, booking1),
+        ]:
+            with self.subTest(
+                appointment=appointment, resource=resource, capacity_reserved=capacity_reserved,
+                unavailable_resource=unavailable_resource, conflicting_booking=conflicting_booking
+            ):
+                booking = self.env['calendar.event'].create({
+                    'appointment_type_id': appointment.id,
+                    'booking_line_ids': [(0, 0, {'appointment_resource_id': resource.id, 'capacity_reserved': capacity_reserved})],
+                    'name': 'Booking',
+                    'start': start,
+                    'stop': end,
+                })
+                (booking + conflicting_booking)._compute_unavailable_resource_ids()
+                self.assertEqual(conflicting_booking.unavailable_resource_ids, unavailable_resource)
+                self.assertEqual(booking.unavailable_resource_ids, unavailable_resource)
+                booking.unlink()
+
+    @freeze_time('2022-02-14')
+    @users('apt_manager')
+    def test_staff_user_unavailability_with_multiple_appointment_events(self):
+        """ Test that unavailable users are correctly computed when multiple appointments are booked
+        on the same user at the same time.
+        """
+        user1, user2 = self.staff_user_aust, self.staff_user_bxls
+        start = datetime(2022, 2, 14, 15, 0, 0)
+        end = start + timedelta(hours=1)
+
+        self.apt_type_manage_capacity_users.write({'user_capacity': 5})
+        self.apt_user_multiple_bookings.write({'max_bookings': 1})
+
+        # Book one appointment for each users
+        booking1 = self.env['calendar.event'].with_context(self._test_context).create({
+            'appointment_type_id': self.apt_type_manage_capacity_users.id,
+            'booking_line_ids': [(0, 0, {'appointment_user_id': user1.id, 'capacity_reserved': 3})],
+            'name': 'Booking 1',
+            'partner_ids': [(4, user1.partner_id.id), (4, self.env.user.partner_id.id)],
+            'start': start,
+            'stop': end,
+            'user_id': user1.id,
+        })
+        booking2 = self.env['calendar.event'].with_context(self._test_context).create({
+            'appointment_type_id': self.apt_user_multiple_bookings.id,
+            'booking_line_ids': [(0, 0, {'appointment_user_id': user2.id, 'capacity_reserved': 1})],
+            'name': 'Booking 2',
+            'partner_ids': [(4, user2.partner_id.id), (4, self.env.user.partner_id.id)],
+            'start': start,
+            'stop': end,
+            'user_id': user2.id,
+        })
+
+        self.assertNotIn(user1.partner_id, booking1.unavailable_partner_ids, f'Booking 1 should not have {user1.partner_id} as unavailable.')
+        self.assertNotIn(user2.partner_id, booking2.unavailable_partner_ids, f'Booking 2 should not have {user2.partner_id} as unavailable.')
+
+        for (appointment, user, capacity_reserved, unavailable_user, conflicting_booking) in [
+                # More than one appointments
+                (self.apt_type_manage_capacity_users, user2, 2, user2, booking2),
+                # Exceeding appointment booking capacity (2 > 1)
+                (self.apt_user_multiple_bookings, user2, 1, user2, booking2),
+                # Exceeding user capacity (6 > 5)
+                (self.apt_type_manage_capacity_users, user1, 3, user1, booking1),
+            ]:
+            with self.subTest(
+                appointment=appointment, user=user, capacity_reserved=capacity_reserved,
+                unavailable_user=unavailable_user, conflicting_booking=conflicting_booking
+            ):
+                booking = self.env['calendar.event'].with_context(self._test_context).create({
+                    'appointment_type_id': appointment.id,
+                    'booking_line_ids': [(0, 0, {'appointment_user_id': user.id, 'capacity_reserved': capacity_reserved})],
+                    'name': 'Booking',
+                    'partner_ids': [(4, user.partner_id.id), (4, self.env.user.partner_id.id)],
+                    'start': start,
+                    'stop': end,
+                    'user_id': user.id,
+                })
+                (booking + conflicting_booking)._compute_unavailable_partner_ids()
+                self.assertIn(unavailable_user.partner_id, conflicting_booking.unavailable_partner_ids)
+                self.assertIn(unavailable_user.partner_id, booking.unavailable_partner_ids)
+                booking.unlink()
 
     @users('apt_manager')
     def test_appointment_user_remaining_capacity(self):

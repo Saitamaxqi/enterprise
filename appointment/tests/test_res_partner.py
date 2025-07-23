@@ -37,3 +37,36 @@ class ResPartnerTest(AppointmentCommon):
             self.reference_monday + timedelta(days=8, hours=3),  # 1 hour next Tuesday (10 UTC)
             self.reference_monday + timedelta(days=8, hours=4)
         ))
+
+        # Test availability for the meeting linked to the appointment
+        start = self.reference_monday + timedelta(hours=15)
+        end = start + timedelta(hours=1)
+
+        self._create_meetings(
+            self.staff_user_aust,
+            [(start, end, False)],
+            self.apt_type_manage_capacity_users.id,
+        )
+
+        # Partner is unavailable for the meeting without appointment
+        self.assertFalse(
+            self.staff_user_aust.partner_id.calendar_verify_availability(start, end)
+        )
+
+        # Unavailable for the meeting in other appointments
+        self.assertFalse(
+            self.staff_user_aust.partner_id.calendar_verify_availability(
+                start,
+                end,
+                self.apt_user_multiple_bookings,
+            )
+        )
+
+        # Available for the booking for the same appointment as previous booking
+        self.assertTrue(
+            self.staff_user_aust.partner_id.calendar_verify_availability(
+                start,
+                end,
+                self.apt_type_manage_capacity_users,
+            )
+        )

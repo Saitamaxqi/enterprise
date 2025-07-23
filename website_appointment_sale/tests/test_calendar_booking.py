@@ -16,78 +16,84 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         """ Checks that a booking does not add a sale order line in cart if it would then
             overflow the resource capacity. Check that event is not created when resources
             are not available anymore. """
-        appointment_type = self.appointment_resources_payment
+        apt_manage_capacity = self.appointment_resources_payment
+        apt_multiple_bookings = apt_manage_capacity.copy({'manage_capacity': False})
         # Resource remaining: capacity 2 (shareable)
         self.resource_1.unlink()
-        asked_capacity = 2
-        start = self.start_slot
-        stop = self.stop_slot
 
-        # Assert Initial Capacity
-        resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)
-        self.assertEqual(resources_remaining_capacity['total_remaining_capacity'], 2)
+        for appointment_type in (apt_multiple_bookings + apt_manage_capacity):
+            with self.subTest(appointment_type=appointment_type, capacity_mode=appointment_type.manage_capacity):
+                total_availability = 2 if appointment_type.manage_capacity else 1
+                start = self.start_slot
+                stop = self.stop_slot
 
-        # Create Calendar Event Booking and Calendar Booking Lines
-        booking_values = {
-            'appointment_type_id': appointment_type.id,
-            'asked_capacity': asked_capacity,
-            'duration': 1.0,
-            'partner_id': self.apt_manager.partner_id.id,
-            'product_id': appointment_type.product_id.id,
-            'start': start,
-            'stop': stop,
-        }
-        calendar_booking_line_values = {
-            'appointment_resource_id': self.resource_2.id,
-            'capacity_reserved': asked_capacity,
-            'capacity_used': asked_capacity,
-        }
+                # Assert Initial Capacity
+                resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)
+                self.assertEqual(resources_remaining_capacity['total_remaining_capacity'], total_availability)
 
-        calendar_booking_1 = self.env['calendar.booking'].create(booking_values)
-        calendar_booking_line_values['calendar_booking_id'] = calendar_booking_1.id
-        self.env['calendar.booking.line'].create(calendar_booking_line_values)
-        sale_order_1 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_1.partner_id.id})
-        cart_values = sale_order_1._cart_add(
-            product_id=appointment_type.product_id.id,
-            quantity=1,
-            calendar_booking_id=calendar_booking_1.id,
-        )
-        self.assertEqual(cart_values['quantity'], 1)
-        sale_order_line_1 = sale_order_1.order_line.filtered(lambda line: line.id == cart_values['line_id'])
-        self.assertTrue(sale_order_line_1)
-        self.assertFalse(sale_order_line_1.calendar_event_id)
+                # Create Calendar Event Booking and Calendar Booking Lines
+                booking_values = {
+                    'appointment_type_id': appointment_type.id,
+                    'asked_capacity': total_availability,  # reserve max capacity
+                    'duration': 1.0,
+                    'partner_id': self.apt_manager.partner_id.id,
+                    'product_id': appointment_type.product_id.id,
+                    'start': start,
+                    'stop': stop,
+                }
+                calendar_booking_line_values = {
+                    'appointment_resource_id': self.resource_2.id,
+                    'capacity_reserved': total_availability,
+                    'capacity_used': total_availability,
+                }
 
-        resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)
-        self.assertEqual(resources_remaining_capacity['total_remaining_capacity'], 2)
+                calendar_booking_1 = self.env['calendar.booking'].create(booking_values)
+                calendar_booking_line_values['calendar_booking_id'] = calendar_booking_1.id
+                self.env['calendar.booking.line'].create(calendar_booking_line_values)
+                sale_order_1 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_1.partner_id.id})
+                cart_values = sale_order_1._cart_add(
+                    product_id=appointment_type.product_id.id,
+                    quantity=1,
+                    calendar_booking_id=calendar_booking_1.id,
+                )
+                self.assertEqual(cart_values['quantity'], 1)
+                sale_order_line_1 = sale_order_1.order_line.filtered(lambda line: line.id == cart_values['line_id'])
+                self.assertTrue(sale_order_line_1)
+                self.assertFalse(sale_order_line_1.calendar_event_id)
 
-        calendar_booking_2 = self.env['calendar.booking'].create(booking_values)
-        calendar_booking_line_values['calendar_booking_id'] = calendar_booking_2.id
-        self.env['calendar.booking.line'].create(calendar_booking_line_values)
-        sale_order_2 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_2.partner_id.id})
+                resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)
+                self.assertEqual(resources_remaining_capacity['total_remaining_capacity'], total_availability)
 
-        # In sale_order_1, resource is already booked for max capacity. Line is not added.
-        self.assertTrue((sale_order_1.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
-        self.assertFalse((sale_order_2.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
-        cart_values = sale_order_2._cart_add(
-            product_id=appointment_type.product_id.id,
-            quantity=1,
-            calendar_booking_id=calendar_booking_2.id,
-        )
-        self.assertEqual(cart_values['quantity'], 1)
-        sale_order_line_2 = sale_order_2.order_line.filtered(lambda line: line.id == cart_values['line_id'])
-        self.assertTrue(sale_order_line_2)
-        self.assertFalse(sale_order_line_2.calendar_event_id)
+                calendar_booking_2 = self.env['calendar.booking'].create(booking_values)
+                calendar_booking_line_values['calendar_booking_id'] = calendar_booking_2.id
+                self.env['calendar.booking.line'].create(calendar_booking_line_values)
+                sale_order_2 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_2.partner_id.id})
 
-        sale_order_1._action_confirm()
-        sale_order_2._action_confirm()
-        # sale_order_2 failed since resource is not available anymore
-        self.assertTrue(calendar_booking_1.calendar_event_id)
-        self.assertTrue(sale_order_1.calendar_event_count == 1)
-        self.assertTrue(calendar_booking_2.not_available and not calendar_booking_2.calendar_event_id)
-        self.assertTrue(sale_order_2.calendar_event_count == 0)
+                # In sale_order_1, resource is already booked for max capacity. Line is not added.
+                self.assertTrue((sale_order_1.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
+                self.assertFalse((sale_order_2.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
+                cart_values = sale_order_2._cart_add(
+                    product_id=appointment_type.product_id.id,
+                    quantity=1,
+                    calendar_booking_id=calendar_booking_2.id,
+                )
+                self.assertEqual(cart_values['quantity'], 1)
+                sale_order_line_2 = sale_order_2.order_line.filtered(lambda line: line.id == cart_values['line_id'])
+                self.assertTrue(sale_order_line_2)
+                self.assertFalse(sale_order_line_2.calendar_event_id)
 
-        resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)
-        self.assertEqual(resources_remaining_capacity['total_remaining_capacity'], 0)
+                sale_order_1._action_confirm()
+                sale_order_2._action_confirm()
+                # sale_order_2 failed since resource is not available anymore
+                self.assertTrue(calendar_booking_1.calendar_event_id)
+                self.assertEqual(sale_order_1.calendar_event_count, 1)
+                self.assertTrue(calendar_booking_2.not_available and not calendar_booking_2.calendar_event_id)
+                self.assertEqual(sale_order_2.calendar_event_count, 0)
+
+                resources_remaining_capacity = appointment_type._get_resources_remaining_capacity(appointment_type.resource_ids, start, stop)
+                self.assertEqual(resources_remaining_capacity['total_remaining_capacity'], 0)
+
+                calendar_booking_1.calendar_event_id.unlink()
 
     @freeze_time('2022-02-13 20:00:00')
     @mute_logger('odoo.sql_db')
@@ -96,67 +102,90 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         """ Checks that a booking does not add a sale order line in cart when it already contains a
             booking with the selected staff_user on the same slot. Check that event is not created
             when users are not available anymore. """
-        appointment_type = self.appointment_users_payment
+        apt_multiple_bookings = self.appointment_users_payment
+        apt_manage_capacity = apt_multiple_bookings.copy({'manage_capacity': True, 'user_capacity': 5})
         start = self.start_slot
         stop = self.stop_slot
 
-        slots = appointment_type._get_appointment_slots('UTC')
-        slots_list = self._filter_appointment_slots(slots)
-        self.assertEqual(len(slots_list), 1)
+        for appointment_type in (apt_multiple_bookings + apt_manage_capacity):
+            with self.subTest(appointment_type=appointment_type, capacity_mode=appointment_type.manage_capacity):
+                slots = appointment_type._get_appointment_slots('UTC')
+                slots_list = self._filter_appointment_slots(slots)
+                self.assertEqual(len(slots_list), 1)
+                total_availability = 5 if appointment_type.manage_capacity else 1
 
-        booking_values = {
-            'appointment_type_id': appointment_type.id,
-            'duration': 1.0,
-            'booking_line_ids': [(0, 0, {'appointment_user_id': self.staff_user_bxls.id, 'capacity_reserved': 1, 'capacity_used': 1})],
-            'partner_id': self.apt_manager.partner_id.id,
-            'product_id': appointment_type.product_id.id,
-            'staff_user_id': self.staff_user_bxls.id,
-            'start': start,
-            'stop': stop,
-        }
-        calendar_booking_1 = self.env['calendar.booking'].create(booking_values)
-        sale_order_1 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_1.partner_id.id})
-        cart_values = sale_order_1._cart_add(
-            product_id=appointment_type.product_id.id,
-            quantity=1,
-            calendar_booking_id=calendar_booking_1.id,
-        )
-        self.assertEqual(cart_values['quantity'], 1)
-        sale_order_line_1 = sale_order_1.order_line.filtered(lambda line: line.id == cart_values['line_id'])
-        self.assertTrue(sale_order_line_1)
-        self.assertFalse(sale_order_line_1.calendar_event_id)
+                # Assert Initial Capacity
+                users_remaining_capacity = appointment_type._get_users_remaining_capacity(appointment_type.staff_user_ids, start, stop)
+                self.assertEqual(users_remaining_capacity['total_remaining_capacity'], total_availability)
 
-        slots = appointment_type._get_appointment_slots('UTC')
-        slots_list = self._filter_appointment_slots(slots)
-        self.assertEqual(len(slots_list), 1)
+                booking_values = {
+                    'appointment_type_id': appointment_type.id,
+                    'duration': 1.0,
+                    'partner_id': self.apt_manager.partner_id.id,
+                    'product_id': appointment_type.product_id.id,
+                    'staff_user_id': self.staff_user_bxls.id,
+                    'start': start,
+                    'stop': stop,
+                }
+                calendar_booking_line_values = {
+                    'capacity_reserved': total_availability,  # reserve full capacity
+                    'capacity_used': total_availability,
+                }
+                calendar_booking_1 = self.env['calendar.booking'].create(booking_values)
+                calendar_booking_line_values['calendar_booking_id'] = calendar_booking_1.id
+                self.env['calendar.booking.line'].create(calendar_booking_line_values)
+                sale_order_1 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_1.partner_id.id})
+                cart_values = sale_order_1._cart_add(
+                    product_id=appointment_type.product_id.id,
+                    quantity=1,
+                    calendar_booking_id=calendar_booking_1.id,
+                )
+                self.assertEqual(cart_values['quantity'], 1)
+                sale_order_line_1 = sale_order_1.order_line.filtered(lambda line: line.id == cart_values['line_id'])
+                self.assertTrue(sale_order_line_1)
+                self.assertFalse(sale_order_line_1.calendar_event_id)
 
-        calendar_booking_2 = self.env['calendar.booking'].create(booking_values)
-        sale_order_2 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_2.partner_id.id})
+                remaining_capacity = appointment_type._get_users_remaining_capacity(appointment_type.staff_user_ids, start, stop)
+                self.assertEqual(remaining_capacity['total_remaining_capacity'], total_availability)
 
-        # In sale_order_1, apt_manager is already booked for that slot. Line would not be added.
-        self.assertTrue((sale_order_1.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
-        self.assertFalse((sale_order_2.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
-        cart_values = sale_order_2._cart_add(
-            product_id=appointment_type.product_id.id,
-            quantity=1,
-            calendar_booking_id=calendar_booking_2.id,
-        )
-        self.assertEqual(cart_values['quantity'], 1)
-        sale_order_line_2 = sale_order_2.order_line.filtered(lambda line: line.id == cart_values['line_id'])
-        self.assertTrue(sale_order_line_2)
-        self.assertFalse(sale_order_line_2.calendar_event_id)
+                slots = appointment_type._get_appointment_slots('UTC')
+                slots_list = self._filter_appointment_slots(slots)
+                self.assertEqual(len(slots_list), 1)
 
-        sale_order_1._action_confirm()
-        sale_order_2._action_confirm()
-        # sale_order_2 failed since slot is not available anymore
-        self.assertTrue(calendar_booking_1.calendar_event_id)
-        self.assertTrue(sale_order_1.calendar_event_count == 1)
-        self.assertTrue(calendar_booking_2.not_available and not calendar_booking_2.calendar_event_id)
-        self.assertTrue(sale_order_2.calendar_event_count == 0)
+                calendar_booking_2 = self.env['calendar.booking'].create(booking_values)
+                calendar_booking_line_values['calendar_booking_id'] = calendar_booking_2.id
+                self.env['calendar.booking.line'].create(calendar_booking_line_values)
+                sale_order_2 = self.env['sale.order'].sudo().create({'partner_id': calendar_booking_2.partner_id.id})
 
-        slots = appointment_type._get_appointment_slots('UTC')
-        slots_list = self._filter_appointment_slots(slots)
-        self.assertEqual(len(slots_list), 0)
+                # In sale_order_1, apt_manager is already booked for that slot. Line would not be added.
+                self.assertTrue((sale_order_1.order_line.calendar_booking_ids | calendar_booking_2)._filter_unavailable_bookings())
+                self.assertFalse((sale_order_2.order_line.calendar_booking_ids | calendar_booking_2).with_context(debug=True)._filter_unavailable_bookings())
+                cart_values = sale_order_2._cart_add(
+                    product_id=appointment_type.product_id.id,
+                    quantity=1,
+                    calendar_booking_id=calendar_booking_2.id,
+                )
+                self.assertEqual(cart_values['quantity'], 1)
+                sale_order_line_2 = sale_order_2.order_line.filtered(lambda line: line.id == cart_values['line_id'])
+                self.assertTrue(sale_order_line_2)
+                self.assertFalse(sale_order_line_2.calendar_event_id)
+
+                sale_order_1._action_confirm()
+                sale_order_2._action_confirm()
+                # sale_order_2 failed since slot is not available anymore
+                self.assertTrue(calendar_booking_1.calendar_event_id)
+                self.assertEqual(sale_order_1.calendar_event_count, 1)
+                self.assertTrue(calendar_booking_2.not_available and not calendar_booking_2.calendar_event_id)
+                self.assertEqual(sale_order_2.calendar_event_count, 0)
+
+                slots = appointment_type._get_appointment_slots('UTC')
+                slots_list = self._filter_appointment_slots(slots)
+                self.assertEqual(len(slots_list), 0)
+
+                users_remaining_capacity = appointment_type._get_users_remaining_capacity(appointment_type.staff_user_ids, start, stop)
+                self.assertEqual(users_remaining_capacity['total_remaining_capacity'], 0)
+
+                calendar_booking_1.calendar_event_id.unlink()
 
     @mute_logger('odoo.sql_db')
     @users('apt_manager')
