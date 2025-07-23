@@ -10,5 +10,7 @@ class PosSession(models.Model):
     @api.model
     def _load_pos_data_models(self, config):
         data = super()._load_pos_data_models(config)
-        data += ['appointment.resource']
+        if self.config_id.module_pos_restaurant:
+            data.remove('calendar.event')
+            data += ['appointment.resource', 'calendar.event']
         return data

@@ -22,15 +22,20 @@ class CalendarEvent(models.Model):
         for record in self:
             record.answers = (', ').join([answer.value_text_box or answer.value_answer_id.name for answer in record.appointment_answer_input_ids.sorted('id')])
 
+    def _appointment_resource_domain(self, data):
+        return [('booking_line_ids.appointment_resource_id', '=', False)]
+
     @api.model
     def _load_pos_data_domain(self, data, config):
         now = fields.Datetime.now()
         day_after = fields.Date.today() + timedelta(days=1)
-        return [
-            ('booking_line_ids.appointment_resource_id', '=', False),
-            ('appointment_type_id', '=', config.appointment_type_id.id),
-            '|', '&', ('start', '>=', now), ('start', '<=', day_after), '&', ('stop', '>=', now), ('stop', '<=', day_after),
-        ]
+        return (
+            self._appointment_resource_domain(data)
+            + [
+                ('appointment_type_id', '=', config.appointment_type_id.id),
+                '|', '&', ('start', '>=', now), ('start', '<=', day_after), '&', ('stop', '>=', now), ('stop', '<=', day_after),
+            ]
+        )
 
     @api.model
     def _load_pos_data_fields(self, config):

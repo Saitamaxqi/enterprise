@@ -15,7 +15,7 @@ export class CalendarEvent extends models.ServerModel {
             "appointment_type_id",
             "appointment_status",
             "appointment_resource_ids",
-            "resource_total_capacity_reserved",
+            "total_capacity_reserved",
         ];
     }
 }

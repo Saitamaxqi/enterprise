@@ -51,3 +51,12 @@ class CalendarEvent(models.Model):
     def unlink(self):
         self._send_table_notifications(self, "REMOVED")
         return super().unlink()
+
+    @api.model
+    def _appointment_resource_domain(self, data):
+        if data['pos.config'][0]['module_pos_restaurant']:
+            return [
+                ('booking_line_ids.appointment_resource_id', 'in', [table['appointment_resource_id'] for table in data['restaurant.table']])
+            ]
+        else:
+            return super()._appointment_resource_domain(data)
