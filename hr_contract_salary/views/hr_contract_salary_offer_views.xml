@@ -101,7 +101,7 @@
                             data-hotkey="shift+g"
                             class="oe_stat_button"
                             icon="fa-pencil"
-                            invisible="state != 'half_signed'">
+                            invisible="state != 'half_signed' or not sign_request_ids">
                             <div class="o_field_widget o_stat_info">
                                 <span class="o_stat_text">Requested Signature</span>
                             </div>
