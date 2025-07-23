@@ -108,10 +108,9 @@ class PosConfig(models.Model):
         self._check_is_certified_pos()
         if self.iface_fiscal_data_module:
             self._check_loyalty()
-            res = self._check_insz_user()
+            res = self._check_insz_user() or self._check_company_address()
             if res:
                 return res
-            self._check_company_address()
             self._check_work_product_taxes_and_categories()
             self._check_employee_insz_or_bis_number()
             self._check_pos_category()
@@ -164,10 +163,17 @@ class PosConfig(models.Model):
         return False
 
     def _check_company_address(self):
-        if not self.company_id.street:
-            raise ValidationError(_("The address of the company must be filled."))
-        if not self.company_id.company_registry:
-            raise ValidationError(_("The VAT number of the company must be filled."))
+        if not self.company_id.street or not self.company_id.company_registry:
+            action = self.env['ir.actions.actions']._for_xml_id('base.action_res_company_form')
+            action['res_id'] = self.company_id.id
+            action['views'] = [[self.env.ref('base.view_company_form').id, 'form']]
+            action['target'] = 'new'
+            action['context'] = {
+                'company_address_required': not self.company_id.street,
+                'company_vat_required': not self.company_id.company_registry,
+            }
+            return action
+        return False
 
     def _check_pos_category(self):
         if self.limit_categories:

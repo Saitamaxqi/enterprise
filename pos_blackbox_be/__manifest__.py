@@ -31,7 +31,8 @@ No modified version is certified and supported by Odoo SA.
         'views/pos_daily_reports.xml',
         'views/pos_order_views.xml',
         'views/res_config_settings_views.xml',
-        'views/res_users_views.xml'
+        'views/res_users_views.xml',
+        'views/res_company_views.xml'
     ],
     'demo': [
         'data/demo.xml',
