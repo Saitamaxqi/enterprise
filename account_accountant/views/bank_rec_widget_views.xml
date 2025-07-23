@@ -117,6 +117,7 @@
                     <filter name="matched" string="Matched" domain="[('is_reconciled', '=', True)]"/>
                     <filter name="not_matched" string="Not Matched"
                             domain="[('is_reconciled', '=', False), ('checked', '=', True)]"/>
+                    <filter name="to_check" string="To Check" domain="[('checked', '=', False)]"/>
                     <filter name="with_activities" string="With Activities" domain="[('activity_ids', '!=', False)]"/>
                     <separator/>
                     <filter name="date" string="Date" date="date"/>
