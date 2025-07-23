@@ -27,7 +27,7 @@ patch(Thread.prototype, {
             return url("/ai/static/description/icon.png");
         }
         if (this.channel_type === "ai_chat" && this.correspondent) {
-            return this.correspondent.persona.avatarUrl;
+            return this.correspondent.avatarUrl;
         }
 
         return super.avatarUrl;
