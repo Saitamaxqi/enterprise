@@ -15,7 +15,7 @@ class SaleCommissionPlanAchievement(models.Model):
         ('amount_sold', "Amount Sold"),
         ('qty_invoiced', "Quantity Invoiced"),
         ('qty_sold', "Quantity Sold"),
-    ], required=True)
+    ], index=True, required=True)
 
     product_id = fields.Many2one('product.product', "Product")
     product_categ_id = fields.Many2one('product.category', "Category")

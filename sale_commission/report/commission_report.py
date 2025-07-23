@@ -97,6 +97,8 @@ class SaleCommissionReport(models.Model):
 
     @property
     def _table_query(self):
+        # Deactivate the jit for this transaction
+        self.env.cr.execute("SET LOCAL JIT = OFF")
         query = self._query()
         table_query = SQL(query)
         return table_query
@@ -108,7 +110,7 @@ class SaleCommissionReport(models.Model):
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
-
+        self.env['sale.commission.achievement.report']._create_temp_invoice_table(users=users, teams=teams)
         res = f"""
 WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams)},
 achievement AS (

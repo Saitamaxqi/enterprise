@@ -26,6 +26,45 @@ class SaleCommissionAchievementReport(models.Model):
     related_res_id = fields.Many2oneReference("Related", model_field='related_res_model', readonly=True)
 
     @api.model
+    def _create_temp_invoice_table(self, users=None, teams=None):
+        query = f"""
+        -- Tests may call this function multiple times within the same transaction;
+        DROP TABLE IF EXISTS invoices_rules;
+        -- Create a temporary table
+        CREATE TEMPORARY TABLE invoices_rules ON COMMIT DROP AS (
+            SELECT
+                COALESCE(scpu.date_from, scp.date_from) AS date_from,
+                COALESCE(scpu.date_to, scp.date_to) AS date_to,
+                scpu.user_id AS user_id,
+                scp.team_id AS team_id,
+                scp.id AS plan_id,
+                scpa.product_id,
+                scpa.product_categ_id,
+                scp.company_id,
+                {self.env.company.currency_id.id} AS currency_id,
+                scp.user_type = 'team' AS team_rule,
+                {self._rate_to_case(self._get_invoices_rates())}
+                {self._select_rules()}
+            FROM sale_commission_plan_achievement scpa
+            JOIN sale_commission_plan scp ON scp.id = scpa.plan_id
+            JOIN sale_commission_plan_user scpu ON scpa.plan_id = scpu.plan_id
+            WHERE scp.active
+            AND scp.state = 'approved'
+            AND scpa.type IN ({','.join("'%s'" % r for r in self._get_invoices_rates())})
+            {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
+        );
+        -- Create a supporting index to avoid seq.scans
+        CREATE INDEX inv_rules_df_idx ON invoices_rules (date_from, date_to, team_id, team_rule) ;
+        CREATE INDEX inv_rules_user_idx ON invoices_rules (user_id) ;
+        CREATE INDEX inv_rules_plan_idx ON invoices_rules (plan_id) ;
+        CREATE INDEX inv_rules_product_idx ON invoices_rules (product_id) ;
+        CREATE INDEX inv_rules_company_idx ON invoices_rules (company_id) ;
+        -- Update statistics for correct planning
+        ANALYZE invoices_rules
+        """
+        self.env.cr.execute(query)
+
+    @api.model
     def _search(self, domain, *args, **kwargs):
         """ Extract the currency conversion date form the date_to field.
         It is used to be able to get fixed results not depending on the currency daily rates.
@@ -84,12 +123,15 @@ class SaleCommissionAchievementReport(models.Model):
 
     @property
     def _table_query(self):
+        # Deactivate the jit for this transaction
+        self.env.cr.execute("SET LOCAL JIT = OFF")
         users = self.env.context.get('commission_user_ids', [])
         if users:
             users = self.env['res.users'].browse(users).exists()
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
+        self._create_temp_invoice_table(users=users, teams=teams)
         query = self.with_context(achievement_report=True)._query(users=users, teams=teams)
         table_query = SQL(
             query
@@ -412,28 +454,7 @@ achievement_commission_lines_rem AS (
     def _invoices_lines(self, users=None, teams=None):
         return f"""
 {self._get_filtered_moves_cte(users=users, teams=teams)},
-invoices_rules AS (
-    SELECT
-        COALESCE(scpu.date_from, scp.date_from) AS date_from,
-        COALESCE(scpu.date_to, scp.date_to) AS date_to,
-        scpu.user_id AS user_id,
-        scp.team_id AS team_id,
-        scp.id AS plan_id,
-        scpa.product_id,
-        scpa.product_categ_id,
-        scp.company_id,
-        {self.env.company.currency_id.id} AS currency_id,
-        scp.user_type = 'team' AS team_rule,
-        {self._rate_to_case(self._get_invoices_rates())}
-        {self._select_rules()}
-    FROM sale_commission_plan_achievement scpa
-    JOIN sale_commission_plan scp ON scp.id = scpa.plan_id
-    JOIN sale_commission_plan_user scpu ON scpa.plan_id = scpu.plan_id
-    WHERE scp.active
-      AND scp.state = 'approved'
-      AND scpa.type IN ({','.join("'%s'" % r for r in self._get_invoices_rates())})
-    {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
-), invoice_commission_lines_team AS (
+invoice_commission_lines_team AS (
     SELECT
         {self._select_invoices()}
     FROM invoices_rules rules
