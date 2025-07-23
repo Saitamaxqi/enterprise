@@ -10,21 +10,12 @@ class HrVersion(models.Model):
         domain = Domain.AND([
             Domain.OR([
                 [('company_id', '=', False)],
-                [('company_id', '=', self.company_id.id)]
+                [('company_id', '=', self.company_id.id)],
             ]),
-            Domain.AND([
-                Domain.AND([
-                    Domain.OR([
-                        [('future_driver_id', '=', False)],
-                        [('future_driver_id', 'in', driver_ids.ids if driver_ids else [])],
-                    ]),
-                    [('model_id.vehicle_type', '=', vehicle_type)],
-                ]),
-                Domain.OR([
-                    [('driver_id', '=', False)],
-                    [('driver_id', 'in', driver_ids.ids if driver_ids else [])],
-                    [('plan_to_change_car', '=', True)] if vehicle_type == 'car' else [('plan_to_change_bike', '=', True)]
-                ])
+            [('model_id.vehicle_type', '=', vehicle_type)],
+            Domain.OR([
+                [(f'plan_to_change_{vehicle_type}', '=', True)],
+                [('future_driver_id', 'in', driver_ids.ids if driver_ids else [])],
             ]),
             [('write_off_date', '=', False)],
         ])
