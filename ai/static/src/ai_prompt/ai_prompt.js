@@ -4,11 +4,13 @@ import {
     AIRecordsSelectorPlugin,
 } from "@ai/ai_prompt/ai_records_selector_plugin";
 import { HintPlugin } from "@html_editor/main/hint_plugin";
+import { PlaceholderPlugin } from "@html_editor/main/placeholder_plugin";
 import { PowerboxPlugin } from "@html_editor/main/powerbox/powerbox_plugin";
 import { SearchPowerboxPlugin } from "@html_editor/main/powerbox/search_powerbox_plugin";
 import { QWebPlugin } from "@html_editor/others/qweb_plugin";
 import { CORE_PLUGINS } from "@html_editor/plugin_sets";
 import { childNodeIndex } from "@html_editor/utils/position";
+import { withSequence } from "@html_editor/utils/resource";
 import { Wysiwyg } from "@html_editor/wysiwyg";
 import { Dialog } from "@web/core/dialog/dialog";
 import { localization } from "@web/core/l10n/localization";
@@ -76,12 +78,22 @@ export class AiPrompt extends Component {
                 AIFieldSelectorPlugin,
                 AIRecordsSelectorPlugin,
                 HintPlugin,
+                PlaceholderPlugin,
                 PowerboxPlugin,
                 QWebPlugin,
                 SearchPowerboxPlugin,
             ],
             recordsSelectorDomain: this.props.domain,
             recordsSelectorResModel: this.props.comodel,
+            // small hack to continue to show the placeholder when the widget is focused but empty
+            resources: {
+                hints: [
+                    withSequence(20, {
+                        selector: ".odoo-editor-editable > p:only-child",
+                        text: this.props.placeholder,
+                    }),
+                ],
+            },
         };
     }
 
