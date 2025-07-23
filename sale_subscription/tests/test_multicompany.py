@@ -94,3 +94,40 @@ class TestSubscriptionMultiCompany(TestSubscriptionCommon):
         })
         self.assertEqual(sol_company_1_no_pl.price_unit, base_sol_company_1.price_unit)
         self.assertEqual(sol_company_2_no_pl.price_unit, base_sol_company_2.price_unit)
+
+    def test_ignore_archived_companies_subs(self):
+        """
+        Make sure that if a company is archived, the cron doesn't continue invoicing its subscriptions.
+        """
+
+        # Create a new company called company_2, create a subscription sale
+        # order for it and confirm it. Then we want to archive the company
+        # but we can't because there is a user assigned to it, so get the
+        # user, archive it, and then archive the company. Finally trigger
+        # the recurring invoice and check that nothing has been invoiced.
+
+        company_2 = self.setup_other_company(name="company_2")['company']
+
+        sub = self.env['sale.order'].create({
+            'name': 'Test Sub',
+            'partner_id': self.user_portal.partner_id.id,
+            'company_id': company_2.id,
+            'plan_id': self.plan_month.id,
+            'order_line': [Command.create({
+                'name': "Product 1",
+                'product_id': self.product.id,
+                'product_uom_qty': 1,
+            })]
+        })
+
+        sub.action_confirm()
+
+        company_active_user = self.env['res.users'].search([
+            ('company_id', '=', company_2.id),
+            ('active', '=', True),
+        ])
+        company_active_user.active = False
+        company_2.active = False
+
+        moves = sub._create_recurring_invoice()
+        self.assertEqual(False, moves.invoice_line_ids.sale_line_ids.id)

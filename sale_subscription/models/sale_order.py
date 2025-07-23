@@ -1452,6 +1452,7 @@ class SaleOrder(models.Model):
                          ('subscription_state', '=', '3_progress'),
                          ('payment_exception', '=', False),
                          ('pending_transaction', '=', False),
+                         ('company_id.active', '=', True),
                          '|', ('next_invoice_date', '<=', current_date), ('end_date', '<=', current_date)]
         if extra_domain:
             search_domain = Domain.AND([search_domain, extra_domain])
@@ -1500,7 +1501,7 @@ class SaleOrder(models.Model):
         need_cron_trigger = False
         limit = False
         if self:
-            domain = [('id', 'in', self.ids), ('subscription_state', 'in', SUBSCRIPTION_PROGRESS_STATE)]
+            domain = [('id', 'in', self.ids), ('subscription_state', 'in', SUBSCRIPTION_PROGRESS_STATE), ('company_id.active', '=', True)]
             batch_size = False
         else:
             domain = self._recurring_invoice_domain()
