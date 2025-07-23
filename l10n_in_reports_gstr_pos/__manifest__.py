@@ -9,9 +9,6 @@ GSTR-1 return data set as per point of sale orders
     """,
     "category": "Accounting/Localizations/Reporting",
     "depends": ["l10n_in_reports", "point_of_sale"],
-    'data': [
-        'data/account_financial_html_report_gstr3.xml',
-    ],
     "auto_install": True,
     "installable": True,
     "author": "Odoo S.A.",
