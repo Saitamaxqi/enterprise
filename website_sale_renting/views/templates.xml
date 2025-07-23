@@ -268,7 +268,7 @@
         </xpath>
     </template>
 
-    <template id="cart" inherit_id="website_sale.checkout_layout">
+    <template id="cart" inherit_id="website_sale.shorter_cart_summary">
         <xpath expr="//div[@name='o_cart_total_card_body']/t" position="before">
             <div t-if="website_sale_order.has_rented_products" class="o_website_sale_daterange_picker mb-3 mb-lg-2 pb-lg-3" id="cart_rental_period">
                 <h6>Rental period</h6>
