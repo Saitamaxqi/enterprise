@@ -4,18 +4,10 @@ import { patch } from "@web/core/utils/patch";
 import { parseXML, serializeXML } from "@web/core/utils/xml";
 import { assertEqual, stepNotInStudio, nextTick } from "@web_studio/../tests/tours/tour_helpers";
 import { cookie } from "@web/core/browser/cookie";
-import { Editor } from "@html_editor/editor";
+import { editorsWeakMap } from "@html_editor/../tests/tours/helpers/editor";
 import { nodeSize } from "@html_editor/utils/position";
 
 const getBoundingClientRect = Element.prototype.getBoundingClientRect;
-
-const editorsWeakMap = new WeakMap();
-patch(Editor.prototype, {
-    attachTo(editable) {
-        editorsWeakMap.set(editable.ownerDocument, this);
-        return super.attachTo(...arguments);
-    },
-});
 
 function normalizeXML(str) {
     const doc = parseXML(str);
