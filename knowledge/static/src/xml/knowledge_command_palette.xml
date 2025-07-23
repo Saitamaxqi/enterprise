@@ -9,12 +9,7 @@
                 </span>
                 <i t-if="props.isFavorite" class="fa fa-star o_favorite pe-2 position-static"/>
                 <span t-if="props.subjectName" class="text-muted small pe-2">—</span>
-                <span t-if="props.subjectName" class="o_command_name text-ellipsis text-muted small">
-                    <t t-foreach="props.splitSubjectName" t-as="name" t-key="name_index">
-                        <b t-if="name_index % 2" t-out="name" class="text-primary"/>
-                        <t t-else="" t-out="name"/>
-                    </t>
-                </span>
+                <span t-if="props.subjectName" t-out="props.subjectText" class="o_command_name text-ellipsis text-muted small"/>
                 <span class="ms-auto flex-shrink-0">
                     <t t-slot="focusMessage"/>
                 </span>

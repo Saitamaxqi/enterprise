@@ -1,9 +1,10 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { HotkeyCommandItem } from "@web/core/commands/default_providers";
-import { DefaultCommandItem, splitCommandName } from "@web/core/commands/command_palette";
+import { DefaultCommandItem } from "@web/core/commands/command_palette";
 import { markup } from "@odoo/owl";
 import { user } from "@web/core/user";
+import { highlightText } from "@web/core/utils/html";
 
 // Articles command
 class KnowledgeCommand extends DefaultCommandItem {
@@ -13,7 +14,7 @@ class KnowledgeCommand extends DefaultCommandItem {
         headline: String,
         icon_string: String,
         isFavorite: Boolean,
-        splitSubjectName: Array,
+        subjectText: String,
         subjectName: [String, Boolean],
     };
 }
@@ -106,10 +107,15 @@ const fn = (hidden) => {
             name: article.name || _t("Untitled"),
             props: {
                 isFavorite: article.is_user_favorite,
-                headline: article.headline ? markup(article.headline) : '',
-                subjectName: article.root_article_id[0] != article.id ? article.root_article_id[1] : false,
-                splitSubjectName: splitCommandName(article.root_article_id[1], options.searchValue),
-                icon_string: article.icon || '📄',
+                headline: article.headline ? markup(article.headline) : "",
+                subjectName:
+                    article.root_article_id[0] != article.id ? article.root_article_id[1] : false,
+                subjectText: highlightText(
+                    options.searchValue,
+                    article.root_article_id[1],
+                    "fw-bolder text-primary"
+                ),
+                icon_string: article.icon || "📄",
             },
         }));
         if (!hidden && !(await user.hasGroup("base.group_portal"))) {

@@ -1,7 +1,7 @@
-import { splitCommandName } from "@web/core/commands/command_palette";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 import { closestScrollableY } from "@web/core/utils/scrolling";
+import { highlightText } from "@web/core/utils/html";
 import { debounce } from "@web/core/utils/timing";
 import { Component, markup, onWillStart, useExternalListener, useRef, useState } from "@odoo/owl";
 
@@ -101,11 +101,17 @@ export class ArticleSearchDialog extends Component {
                 icon: article.icon || "📄",
                 id: article.id,
                 isFavorite: article.is_user_favorite,
-                splitName: article.name && splitCommandName(article.name, searchValue),
-                splitSubjectName:
+                text:
+                    article.name &&
+                    highlightText(searchValue, article.name, "fw-bolder text-primary"),
+                subjectText:
                     article.root_article_id?.[0] &&
                     article.root_article_id[0] != article.id &&
-                    splitCommandName(article.root_article_id[1], searchValue),
+                    highlightText(
+                        searchValue,
+                        article.root_article_id[1],
+                        "fw-bolder text-primary"
+                    ),
             }));
         }
         this.state.selectedIdx = 0;
