@@ -60,3 +60,24 @@ class TestSubscription(TestSubscriptionCommon, HttpCase):
             ],
         })
         self.start_tour(self.subscription.get_portal_url(), 'test_optional_products_portal')
+
+    def test_subscription_so_preview_without_user_id(self):
+        """Ensure the sale order preview works for a subscription created by a portal user without a user_id."""
+
+        sale_order = self.env['sale.order'].create({
+                'name': "Protal so",
+                'is_subscription': True,
+                'user_id': False,
+                'partner_id': self.user_portal.partner_id.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [Command.create({
+                    'name': self.sub_product_tmpl.name,
+                    'product_id': self.sub_product_tmpl.product_variant_ids.id,
+                    'product_uom_qty': 2.0,
+                    'price_unit': self.sub_product_tmpl.list_price,
+                })]
+            })
+        sale_order.action_confirm()
+        preview_vals = sale_order.action_preview_sale_order()
+        url = preview_vals.get('url')
+        self.assertEqual(self.url_open(url).status_code, 200, "Preview URL's response status should be 200")

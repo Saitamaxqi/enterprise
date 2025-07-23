@@ -233,9 +233,10 @@ class CustomerPortal(payment_portal.PaymentPortal):
     def _prepare_partner_addresses(self, order_sudo):
         """ Retrieves the invoicing and delivery addresses of the sale order, and format them properly for display. """
         addresses_data = self._prepare_address_data(order_sudo.partner_id)
+        check_user_id = order_sudo.user_id or request.env.user
         # we don't allow to update the subscription shipping address yet.
         return {
-            'multiple_addresses_enabled': order_sudo.user_id.has_group('account.group_delivery_invoice_address'),
+            'multiple_addresses_enabled': check_user_id.has_group('account.group_delivery_invoice_address'),
             'invoicing_addresses': [{'id': partner.id, 'address': f'{partner.name}, {partner._display_address(without_company=True)}'} for partner in addresses_data.get('billing_addresses')],
             'delivery_addresses': [{'id': partner.id, 'address': f'{partner.name}, {partner._display_address(without_company=True)}'} for partner in addresses_data.get('delivery_addresses') if order_sudo.partner_shipping_id.id == partner.id],
         }
@@ -359,7 +360,8 @@ class CustomerPortal(payment_portal.PaymentPortal):
         order_sudo, redirection = self._get_subscription(access_token, order_id)
         if redirection:
             return redirection
-        multiple_addresses_enabled = order_sudo.user_id.has_group('account.group_delivery_invoice_address')
+        check_user_id = order_sudo.user_id or request.env.user
+        multiple_addresses_enabled = check_user_id.has_group('account.group_delivery_invoice_address')
         if not multiple_addresses_enabled:
             raise request.not_found()
         addresses_data = self._prepare_address_data(order_sudo.partner_id)
