@@ -7,9 +7,7 @@ class ResUsers(models.Model):
     _inherit = "res.users"
 
     # bis number is for foreigners in Belgium
-    insz_or_bis_number = fields.Char(
-        "INSZ or BIS number", help="Social security identification number"
-    )
+    insz_or_bis_number = fields.Char("Social security identification number (INSZ or BIS)")
     session_clocked_ids = fields.Many2many(
         "pos.session",
         "users_session_clocking_info",
@@ -36,7 +34,7 @@ class ResUsers(models.Model):
     def _check_insz_or_bis_number(self):
         for rec in self:
             if rec.insz_or_bis_number and not self.is_valid_insz_or_bis_number(rec.insz_or_bis_number):
-                raise ValidationError(_("The INSZ or BIS number is not valid."))
+                raise ValidationError(_("The Social security identification number (INSZ or BIS) is not valid."))
 
     def is_valid_insz_or_bis_number(self, number):
         if not number:

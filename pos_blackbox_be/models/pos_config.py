@@ -211,7 +211,7 @@ class PosConfig(models.Model):
 
                 if len(emp_names) > 0:
                     raise ValidationError(
-                        _("%s must have an INSZ or BIS number.", ", ".join(emp_names))
+                        _("%s must have an Social security identification number (INSZ or BIS).", ", ".join(emp_names))
                     )
 
     def _check_cash_rounding(self):
