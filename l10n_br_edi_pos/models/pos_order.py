@@ -433,6 +433,10 @@ class PosOrder(models.Model):
 
             payment_modes.append(payment_mode)
 
+        if not payment_modes:
+            # Always have a payment mode value if the order is free.
+            payment_modes.append({"mode": "99", "value": 0.0, "modeDescription": _("Other")})
+
         return {
             "change": self.currency_id.round(sum(self.payment_ids.filtered("is_change").mapped(lambda payment: -payment.amount))),
             "paymentMode": payment_modes,

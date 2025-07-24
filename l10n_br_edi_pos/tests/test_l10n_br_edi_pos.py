@@ -392,6 +392,37 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, CommonPosBrEdiTest):
         self.assertEqual(order_a.l10n_br_last_avatax_status, "accepted", "Order was not properly processed")
         self.assertEqual(order_b.l10n_br_last_avatax_status, "accepted", "Order was not properly processed")
 
+    @freeze_time(TEST_DATETIME)
+    def test_08_order_no_payments(self):
+        """ POS Orders with no payments due to 0 cost should always have paymentMode sent otherwise
+            Avalara will error."""
+        order, _ = self.create_backend_pos_order({
+            'order_data': {
+                'name': "Order/0001",
+            },
+            'line_data': [{
+                'qty': 3,
+                'price_unit': 0.0,
+                'price_subtotal': 0.0,
+                'price_subtotal_incl': 0.0,
+                'product_id': self.product_screens.product_variant_id.id,
+            }],
+        })
+
+        payload = order._prepare_l10n_br_avatax_document_service_call(order._get_l10n_br_avatax_service_params())
+        expected_dict = {
+            'paymentInfo': {
+                'paymentMode': [
+                    {
+                        "mode": "99",
+                        "value": 0.0,
+                        "modeDescription": "Other",
+                    },
+                ],
+            },
+        }
+        self.assertDictEqual(payload['header']['payment'], expected_dict, 'paymentMode should still be set for free orders!')
+
 
 @freeze_time(TEST_DATETIME)
 @tagged("post_install_l10n", "post_install", "-at_install")
