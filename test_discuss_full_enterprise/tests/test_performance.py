@@ -59,19 +59,3 @@ def _get_init_store_data_result(self):
 
 
 TestDiscussFullPerformance._get_init_store_data_result = _get_init_store_data_result
-
-
-old_expected_result_for_channel = TestDiscussFullPerformance._expected_result_for_channel
-
-
-def _expected_result_for_channel(self, channel):
-    result = old_expected_result_for_channel(self, channel)
-    result.update(
-        wa_account_id=False,
-        whatsapp_channel_valid_until=False,
-        whatsapp_partner_id=False
-    )
-    return result
-
-
-TestDiscussFullPerformance._expected_result_for_channel = _expected_result_for_channel

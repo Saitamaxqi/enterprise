@@ -14,6 +14,15 @@ from odoo.exceptions import ValidationError
 _logger = logging.getLogger(__name__)
 
 
+def is_whatsapp_channel(channel):
+    """Predicate to filter channels for which the channel type is 'whatsapp'.
+
+    :returns: Whether the channel is a whatsapp channel.
+    :rtype: bool
+    """
+    return channel.channel_type == "whatsapp"
+
+
 class DiscussChannel(models.Model):
     """ Support WhatsApp Channels, used for discussion with a specific
     whasapp number """
@@ -297,10 +306,10 @@ class DiscussChannel(models.Model):
 
     def _to_store_defaults(self, target):
         return super()._to_store_defaults(target) + [
-            "whatsapp_channel_valid_until",
-            Store.One("whatsapp_partner_id", []),
+            Store.Attr("whatsapp_channel_valid_until", predicate=is_whatsapp_channel),
+            Store.One("whatsapp_partner_id", [], predicate=is_whatsapp_channel),
             # sudo: discuss.channel - reading wa_account_id is allowed for multi-company users
-            Store.One("wa_account_id", ["name"], sudo=True),
+            Store.One("wa_account_id", ["name"], predicate=is_whatsapp_channel, sudo=True),
         ]
 
     def _types_allowing_seen_infos(self):
