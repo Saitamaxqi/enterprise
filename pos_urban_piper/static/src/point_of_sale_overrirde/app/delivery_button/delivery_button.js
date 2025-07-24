@@ -18,12 +18,9 @@ export class DeliveryButton extends Component {
     }
 
     async handleToggle(providerCode) {
-        const toggleStatus = !this.pos.toggleState.enableProviders[providerCode];
-        this.pos.toggleState.enableProviders[providerCode] = toggleStatus;
-        localStorage.setItem(
-            "toggle_state_" + this.pos.config.id,
-            JSON.stringify(this.pos.toggleState.enableProviders)
-        );
+        const toggleStatus = !this.pos.enabledProviders[providerCode];
+        this.pos.enabledProviders[providerCode] = toggleStatus;
+        await this.pos.saveProviderState(this.pos.enabledProviders);
         await this.pos.updateStoreStatus(toggleStatus, providerCode);
     }
 

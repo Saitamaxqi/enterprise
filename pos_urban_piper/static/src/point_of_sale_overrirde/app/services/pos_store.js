@@ -8,27 +8,56 @@ patch(PosStore.prototype, {
      */
     async setup() {
         await super.setup(...arguments);
-        this.delivery_order_count = { urbanpiper: {} };
-        this.delivery_providers = [];
-        this.total_new_order = 0;
-        const storedToggleState =
-            JSON.parse(localStorage.getItem("toggle_state_" + this.config.id)) || {};
-        const toggleState = {};
-        this.config.urbanpiper_delivery_provider_ids.forEach((provider) => {
-            toggleState[provider.technical_name] =
-                provider.technical_name in storedToggleState
-                    ? storedToggleState[provider.technical_name]
-                    : true;
+        this.delivery_order_count = {};
+        this.enabledProviders = {};
+
+        // Init provider states from other sources
+        if (this.config.module_pos_urban_piper) {
+            await this.initProviderStatus();
+        }
+
+        this.data.connectWebSocket("URBAN_PIPER_PROVIDER_STATES", async (data) => {
+            this.enabledProviders = data;
         });
-        localStorage.setItem("toggle_state_" + this.config.id, JSON.stringify(toggleState));
-        this.toggleState = {
-            enableProviders:
-                JSON.parse(localStorage.getItem("toggle_state_" + this.config.id)) || {},
-        };
         if (this.config.module_pos_urban_piper && this.config.urbanpiper_store_identifier) {
             await this._fetchUrbanpiperOrderCount(false);
         }
         this.isSoundPlaying = false;
+    },
+
+    async saveProviderState(newStates = {}) {
+        this.enabledProviders = await this.data.call(
+            "pos.config",
+            "set_urban_piper_provider_states",
+            [this.config.id, JSON.stringify(newStates)]
+        );
+    },
+
+    async getProviderState() {
+        const provideState = await this.data.call("pos.config", "get_urban_piper_provider_states", [
+            this.config.id,
+        ]);
+        return provideState || {};
+    },
+
+    async initProviderStatus() {
+        // If certain providers are not yet in the status cache, we create it and set it to true.
+        let changed = false;
+        this.enabledProviders = await this.getProviderState();
+
+        for (const provider of this.config.urbanpiper_delivery_provider_ids) {
+            const name = provider.technical_name;
+            const currentValue = this.enabledProviders[name];
+            const newValue = currentValue === undefined ? true : this.enabledProviders[name];
+            if (currentValue === undefined) {
+                changed = true; // Initialize provider state to true
+            }
+            this.enabledProviders[name] = newValue;
+        }
+
+        if (changed) {
+            await this.saveProviderState(this.enabledProviders);
+        }
     },
 
     async updateStoreStatus(status = false, providerName = false) {
@@ -38,19 +67,7 @@ patch(PosStore.prototype, {
                     providerName: providerName,
                 },
             });
-            if (status) {
-                localStorage.setItem(
-                    "toggle_state_" + this.config.id,
-                    JSON.stringify(this.toggleState.enableProviders)
-                );
-            }
         }
-    },
-
-    async closePos() {
-        await this.updateStoreStatus();
-        localStorage.removeItem("toggle_state_" + this.config.id);
-        return super.closePos();
     },
 
     async getServerOrders() {
@@ -73,17 +90,10 @@ patch(PosStore.prototype, {
             sticky: false,
         };
         let message = "";
-        // Initialize or get existing toggle state from localStorage
-        const storageKey = "toggle_state_" + this.config.id;
-        const toggleState = JSON.parse(localStorage.getItem(storageKey)) || {};
         if (data.status) {
-            toggleState[data.platform] = data.action === "enable";
+            this.enabledProviders[data.platform] = data.action === "enable";
+            this.saveProviderState(this.enabledProviders);
         }
-        localStorage.setItem(storageKey, JSON.stringify(toggleState));
-
-        this.toggleState = {
-            enableProviders: toggleState,
-        };
         // Prepare notification message
         if (!data.status) {
             params.type = "danger";

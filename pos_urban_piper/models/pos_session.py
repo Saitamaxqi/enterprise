@@ -10,6 +10,17 @@ class PosSession(models.Model):
         data += ['pos.delivery.provider']
         return data
 
+    def close_session_from_ui(self, bank_payment_method_diff_pairs=None):
+        result = super().close_session_from_ui(bank_payment_method_diff_pairs)
+        if self.config_id.module_pos_urban_piper:
+            self.config_id.update_store_status(status=False)  # api request for updating status at urban piper
+        self.config_id.set_urban_piper_provider_states({})
+        return result
+
+    def delete_opening_control_session(self):
+        self.config_id.set_urban_piper_provider_states({})
+        return super().delete_opening_control_session()
+
     def get_closing_control_data(self):
         data = super().get_closing_control_data()
         orders = self._get_closed_orders()

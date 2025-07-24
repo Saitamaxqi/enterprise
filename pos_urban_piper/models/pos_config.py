@@ -1,5 +1,6 @@
 import secrets
 import psycopg2
+import json
 
 from odoo import fields, models, api, Command, SUPERUSER_ID, _
 from odoo.exceptions import ValidationError, UserError
@@ -99,11 +100,6 @@ class PosConfig(models.Model):
                 self._default_urbanpiper_store_identifier(),
                 pos_config_id[0]
             ))
-
-    def open_ui(self):
-        if self.module_pos_urban_piper and self.urbanpiper_store_identifier and self.current_session_id:
-            self.update_store_status(True)
-        return super().open_ui()
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -216,7 +212,7 @@ class PosConfig(models.Model):
         user_name = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_username')
         api_key = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_apikey')
         if not(user_name == 'demo' or api_key == 'demo'):
-            up = UrbanPiperClient(self)
+            up = UrbanPiperClient(self.with_context(provider_name=self.env.context.get('providerName')))
             up.configure_webhook()
             up.urbanpiper_store_status_update(status=status)
 
@@ -403,3 +399,16 @@ class PosConfig(models.Model):
                 })
         except psycopg2.Error:
             pass
+
+    def get_urban_piper_provider_states(self):
+        raw = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.toggle_state') or "{}"
+        config_state = json.loads(raw)
+        config_state = config_state.get(str(self.id), {})
+        return config_state
+
+    def set_urban_piper_provider_states(self, value_json):
+        config_state = json.loads(self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.toggle_state', "{}"))
+        config_state[str(self.id)] = json.loads(value_json or "{}")
+        self.env['ir.config_parameter'].sudo().set_param('pos_urban_piper.toggle_state', json.dumps(config_state))
+        self._notify('URBAN_PIPER_PROVIDER_STATES', config_state[str(self.id)])
+        return config_state[str(self.id)]
