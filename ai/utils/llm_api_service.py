@@ -239,14 +239,24 @@ class LLMApiService:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            message = f"LLM API request failed: {e!r}"
+            error = repr(e)
             if e.response is not None:
                 try:
-                    message += f" {json.dumps(e.response.json(), indent=2)}"
+                    response = e.response.json()
+                    if isinstance(response, list) and response:
+                        # Gemini return error in a list
+                        response = response[0]
+                    if isinstance(response, dict) and (json_error := response.get('error', {}).get('message')):
+                        error = json_error
+                    else:
+                        error = json.dumps(response, indent=2)
                 except ValueError:  # catch JSON decode errors
-                    message += f" {e.response.text}"
-            _logger.warning(message)
-            raise
+                    error = e.response.text
+                if not error:
+                    error = repr(e)
+
+            _logger.warning("LLM API request failed: %s", error)
+            raise UserError(error)
 
     def _request_llm(
         self, llm_model, system_prompts, user_prompts, tools=None,
