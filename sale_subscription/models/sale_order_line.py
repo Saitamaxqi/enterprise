@@ -426,10 +426,13 @@ class SaleOrderLine(models.Model):
             res.update({
                 'name': description,
                 'quantity': qty_to_invoice,
-                'deferred_start_date': new_period_start,
-                'deferred_end_date': new_period_stop,
                 'subscription_id': parent_order_id,
             })
+            if self.product_type != 'combo':
+                res.update({
+                    'deferred_start_date': new_period_start,
+                    'deferred_end_date': new_period_stop,
+                })
         elif self.order_id.is_subscription and not res.get('subscription_id'):
             # This is needed in case we only need to invoice this line or Downpayments
             res.update({

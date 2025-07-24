@@ -13,6 +13,7 @@ from . import test_subscription_controller
 from . import test_performance
 from . import test_report
 from . import test_payment_with_account
+from . import test_sale_subscription_combo_product
 from . import test_sale_subscription_configurators
 from . import test_sale_subscription_portal
 from . import test_sale_subscription_product_template
