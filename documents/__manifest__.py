@@ -58,7 +58,6 @@ App to upload and manage your documents.
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [
-            'documents/static/src/model/**/*',
             'documents/static/src/scss/documents_views.scss',
             'documents/static/src/scss/documents_kanban_view.scss',
             'documents/static/src/attachments/**/*',

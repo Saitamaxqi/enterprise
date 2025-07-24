@@ -21,10 +21,10 @@ export class DocumentsKanbanRecord extends KanbanRecord {
     static template = xml`
         <div
             role="article"
+            tabindex="0"
             t-att-class="getRecordClasses()"
             t-att-data-id="props.record.id"
             t-att-data-value-id="props.record.data.id"
-            t-att-tabindex="props.record.model.useSampleModel ? -1 : 0"
             t-on-click.synthetic="onGlobalClick"
             t-on-touchstart="onTouchStart"
             t-on-touchmove="onTouchMoveOrCancel"

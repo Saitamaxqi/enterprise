@@ -220,7 +220,6 @@ export function useDocumentView(helpers) {
                 fullscreen: env.isSmall,
                 onClose: async () => {
                     await env.model.load();
-                    env.model.useSampleModel = env.model.root.records.length === 0;
                     env.model.notify();
                 },
             });
@@ -239,7 +238,6 @@ export function useDocumentView(helpers) {
                 fullscreen: env.isSmall,
                 onClose: async () => {
                     await env.model.load();
-                    env.model.useSampleModel = env.model.root.records.length === 0;
                     env.model.notify();
                 },
             });
@@ -464,20 +462,8 @@ function useDocumentsViewFileUpload() {
         });
     };
 
-    let wasUsingSampleModel = false;
-    useBus(fileUpload.bus, "FILE_UPLOAD_ADDED", () => {
-        if (env.model.useSampleModel) {
-            wasUsingSampleModel = true;
-            env.model.useSampleModel = false;
-        }
-    });
-
     useBus(fileUpload.bus, "FILE_UPLOAD_ERROR", async (ev) => {
         const { upload } = ev.detail;
-        if (wasUsingSampleModel) {
-            wasUsingSampleModel = false;
-            env.model.useSampleModel = true;
-        }
         if (upload.state !== "error") {
             return;
         }
@@ -493,7 +479,6 @@ function useDocumentsViewFileUpload() {
     });
 
     useBus(fileUpload.bus, "FILE_UPLOAD_LOADED", async (ev) => {
-        wasUsingSampleModel = false;
         const { upload } = ev.detail;
         const xhr = upload.xhr;
         if (xhr.status !== 200) {
@@ -510,7 +495,6 @@ function useDocumentsViewFileUpload() {
         // /mail/attachment/upload: returns an object { "ir.attachment": ... }
         const response = JSON.parse(xhr.response);
         const newDocumentIds = Array.isArray(response) ? response : undefined;
-        env.model.useSampleModel = false;
         await env.model.load(component.props);
         if (!newDocumentIds) {
             return;

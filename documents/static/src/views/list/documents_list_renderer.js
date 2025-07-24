@@ -162,7 +162,7 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
 
     getFolderInfo() {
         return {
-            count: this.props.list.model.useSampleModel ? 0 : this.props.list.count,
+            count: this.props.list.count,
             fileSize: this.props.list.model.fileSize,
         };
     }

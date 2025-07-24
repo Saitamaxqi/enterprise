@@ -140,7 +140,7 @@ export const DocumentsRendererMixin = (component) =>
             if (!this.props.list) {
                 return this.props.records.length;
             }
-            return this.props.list.model.useSampleModel ? 0 : this.props.list.count;
+            return this.props.list.count;
         }
 
         get selection() {
