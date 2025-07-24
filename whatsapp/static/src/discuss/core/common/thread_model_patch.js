@@ -13,7 +13,7 @@ const threadPatch = {
                 return (
                     this.channel_type === "whatsapp" &&
                     this.channel_member_ids.find((member) =>
-                        member.persona?.eq(this.whatsapp_partner_id)
+                        member.partner_id?.eq(this.whatsapp_partner_id)
                     )
                 );
             },
@@ -22,7 +22,7 @@ const threadPatch = {
     _computeOfflineMembers() {
         const res = super._computeOfflineMembers();
         if (this.channel_type === "whatsapp") {
-            return res.filter((member) => member.persona?.notEq(this.whatsapp_partner_id));
+            return res.filter((member) => member.partner_id?.notEq(this.whatsapp_partner_id));
         }
         return res;
     },
