@@ -278,6 +278,13 @@ class TestAiFields(TransactionCase):
             {'value': "My txt content", 'type': 'text', 'file_ref': '<file_#3>'}
         ])
 
+        # Check that the name are truncated
+        partner_2.name = "_" * 1000
+        for field_path in ("message_partner_ids", "message_partner_ids.name", "message_partner_ids.display_name"):
+            vals, _files = record._get_ai_context([field_path])
+            self.assertNotIn(partner_2.name, str(vals))
+            self.assertIn(partner_2._ai_truncate(partner_2.name), str(vals))
+
     def test_ai_field_sanitize(self):
         system_prompt = '<p><span data-ai-field="name">name</span> <img src="x" onerror="alert(1)"/></p>'
         expected = '<p><span data-ai-field="name">name</span> <img src="x"/></p>'

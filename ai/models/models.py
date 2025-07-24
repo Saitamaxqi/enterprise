@@ -23,6 +23,9 @@ class Model(models.AbstractModel):
             return value
         return value[:max(0, size - 3)] + "..."
 
+    def _ai_field_names_to_truncate(self):
+        return ('name', 'display_name')
+
     def _ai_serialize_fields_data(self):
         fields_info = self.fields_get()
         result = {}
@@ -31,11 +34,14 @@ class Model(models.AbstractModel):
             field_type = field_attrs["type"]
             field_value = self[field_name]
 
+            if field_type == 'char' and field_name in self._ai_field_names_to_truncate():
+                field_value = self._ai_truncate(field_value)
+
             try:
                 # Handle relational fields
                 if field_type == "many2one":
                     result[field_name] = (
-                        field_value.display_name if field_value else None
+                        self._ai_truncate(field_value.display_name) if field_value else None
                     )
                 elif field_type in ["one2many", "many2many"]:
                     linked_records = self.env[field_value._name].browse(field_value.ids)
@@ -45,7 +51,7 @@ class Model(models.AbstractModel):
                         continue
                     else:
                         result[field_name] = [
-                            record.display_name for record in linked_records
+                            self._ai_truncate(record.display_name) for record in linked_records
                         ]
                 elif field_type == "binary":
                     continue  # we don't include binary fields in the record info JSON
@@ -139,7 +145,6 @@ class Model(models.AbstractModel):
     def _ai_format(self, files_dict):
         # meant to be overridden by models for which one wants to send more than just the
         # display name or filter records to send (see mail.message for an example)
-        # todo: add a limit?
         return self._ai_read(['display_name'], files_dict)
 
     def _ai_read(self, fnames, files_dict):
@@ -207,6 +212,9 @@ class Model(models.AbstractModel):
                     currency = self[currency_field]
                     for vals in vals_list:
                         vals[fname] = formatLang(self.env, vals[fname], currency_obj=currency)
+            elif field.type == 'char' and field.name in self._ai_field_names_to_truncate():
+                for vals in vals_list:
+                    vals[fname] = self._ai_truncate(vals[fname])
 
         for vals in vals_list:
             if not vals['id']:
