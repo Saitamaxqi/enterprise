@@ -29,11 +29,14 @@ export class DocumentCogMenuPinAction extends Component {
         this.documentService = useService("document.document");
         this.notification = useService("notification");
 
-        this.documentsState = useState({ actions: null });
+        this.documentsState = useState({ actions: [] });
 
         onWillStart(async () => {
             const folderId = this.env.searchModel.getSelectedFolderId();
-            this.documentsState.actions = await this.documentService.getActions(folderId);
+            this.documentService.getActions(folderId).then((actions) => {
+                // Do not block `onWillStart` to not create a lag when opening the cogwheel
+                this.documentsState.actions = actions;
+            });
         });
     }
 
