@@ -23,7 +23,7 @@ export class MrpDisplayAction extends Component {
                 "check_ids",
                 "company_id",
                 "employee_ids",
-                "lot_producing_id",
+                "lot_producing_ids",
                 "move_byproduct_ids",
                 "move_raw_ids",
                 "move_finished_ids",
@@ -40,6 +40,7 @@ export class MrpDisplayAction extends Component {
                 "priority",
                 "log_note",
                 "picking_type_auto_close",
+                "serial_numbers_count",
             ],
             "mrp.workorder": [
                 "id",
@@ -89,7 +90,7 @@ export class MrpDisplayAction extends Component {
                 "picking_type_prefill_shop_floor_lots",
                 "bom_line_id",
             ],
-            "stock.move.line": ["id", "lot_id", "location_id", "quantity", "picked"],
+            "stock.move.line": ["id", "lot_id", "location_id", "quantity", "picked", "product_id"],
             "quality.check": [
                 "id",
                 "display_name",
@@ -97,7 +98,7 @@ export class MrpDisplayAction extends Component {
                 "component_id",
                 "component_tracking",
                 "component_uom_id",
-                "lot_id",
+                "lot_ids",
                 "name",
                 "note",
                 "picture",
@@ -116,6 +117,11 @@ export class MrpDisplayAction extends Component {
                 "previous_check_id",
                 "next_check_id",
                 "component_barcode",
+            ],
+            "stock.lot": [
+                "id",
+                "name",
+                "display_name"
             ],
         };
     }

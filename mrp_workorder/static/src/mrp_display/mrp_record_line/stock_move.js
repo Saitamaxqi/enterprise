@@ -56,12 +56,7 @@ export class StockMove extends QualityCheck {
 
     get toConsumeQuantity() {
         const move = this.props.record.data;
-        const parent = this.props.record._parentRecord.data;
-        let toConsumeQuantity = move.should_consume_qty || move.product_uom_qty;
-        if (parent.product_tracking === "serial") {
-            toConsumeQuantity /= parent.product_qty;
-        }
-        return toConsumeQuantity;
+        return move.should_consume_qty || move.product_uom_qty;
     }
 
     get quantityDone() {

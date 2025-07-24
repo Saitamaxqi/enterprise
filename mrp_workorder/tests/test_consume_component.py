@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests import tagged
+from odoo.tests import Form, tagged
 from odoo.addons.mrp.tests.test_consume_component import TestConsumeComponentCommon
 
 @tagged('post_install', '-at_install')
@@ -186,8 +186,15 @@ class TestConsumeTrackedComponent(TestConsumeComponentCommon):
                 {'should_consume_qty': 0.0, 'quantity': 0.0, 'picked': False},
             ]
         )
-        mo.action_generate_serial()
-        self.assertTrue(mo.lot_producing_id)
+        res_dict = mo.action_generate_serial()
+        self.assertEqual(res_dict.get('res_model'), 'mrp.production.serials')
+        serials_wizard = Form.from_action(self.env, res_dict)
+        serials_wizard.lot_name = 'sn#1'
+        serials_wizard.lot_quantity = 1
+        res_dict = serials_wizard.save().action_generate_serial_numbers()
+        serials_wizard = Form.from_action(self.env, res_dict)
+        serials_wizard.save().action_apply()
+        self.assertTrue(mo.lot_producing_ids)
         self.assertRecordValues(mo, [{'qty_producing': 1.0, 'product_uom_qty': 3.0}])
         self.assertRecordValues(mo.move_raw_ids, [
                 {'should_consume_qty': 3.0, 'quantity': 3.0, 'picked': True},

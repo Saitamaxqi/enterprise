@@ -119,13 +119,6 @@ patch(MainComponent.prototype, {
                 await this.env.model.confirmAndSetData(recordId);
                 this.toggleBarcodeLines();
             }
-            if (
-                lineRecord.context.set_qty_producing === true && lineRecord.data.lot_producing_id &&
-                lineRecord.data.lot_producing_id[0] != this.env.model.record.lot_producing_id?.id
-            ) {
-                await this.orm.call("mrp.production", "set_qty_producing", [[recordId]]);
-                update = true;
-            }
             if (update) {
                 if (lineRecord.data.product_qty != this.env.model.record.product_qty) {
                     // need to reassign moves to update the quants on screen

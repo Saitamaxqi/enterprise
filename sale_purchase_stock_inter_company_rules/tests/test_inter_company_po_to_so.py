@@ -412,7 +412,6 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         with Form(receipt_from_vendor) as receipt_form:
             with receipt_form.move_ids_without_package.edit(0) as move_form:
                 move_form.lot_ids = lot
-                move_form.quantity = 1
                 move_form.picked = True
             receipt_from_vendor = receipt_form.save()
         receipt_from_vendor.button_validate()
@@ -498,7 +497,6 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         with Form(dropship_from_vendor) as receipt_form:
             with receipt_form.move_ids_without_package.edit(0) as move_form:
                 move_form.lot_ids = lot
-                move_form.quantity = 1
                 move_form.picked = True
             dropship_from_vendor = receipt_form.save()
         dropship_from_vendor.button_validate()

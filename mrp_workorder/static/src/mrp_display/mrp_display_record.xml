@@ -92,17 +92,16 @@
     </t>
 
     <t t-name="mrp_workorder.MrpDisplayProductionFooter">
-        <t t-if="props.record.data.state === 'to_close' and (!['serial', 'lot'].includes(trackingMode) or this.props.record.data.lot_producing_id)" t-set="_btn_type" t-value="'btn-primary'"/>
+        <t t-if="props.record.data.state === 'to_close' and (!['serial', 'lot'].includes(trackingMode) or this.props.record.data.lot_producing_ids)" t-set="_btn_type" t-value="'btn-primary'"/>
         <t t-else="" t-set="_btn_type" t-value="'btn-secondary'"/>
         <button t-if="displayDoneButton" t-attf-class="btn #{_btn_type}"
                 t-on-click="validate" t-att-barcode_trigger="props.barcodeTarget ? 'CLMO' : false">
-            <t t-if="trackingMode === 'mass_produce'">Mass Produce</t>
-            <t t-else="">Close Production</t>
+            <t>Close Production</t>
         </button>
     </t>
     <t t-name="mrp_workorder.MrpDisplayWorkorderFooter">
         <t t-set="_close_production" t-value="props.production.data.picking_type_auto_close &amp;&amp; props.record.data.is_last_unfinished_wo"/>
-        <t t-if="(_close_production &amp;&amp; ['serial', 'lot'].includes(trackingMode) &amp;&amp; !this.props.production.data.lot_producing_id) || !active" t-set="_btn_type" t-value="'btn-secondary'"/>
+        <t t-if="(_close_production &amp;&amp; ['serial', 'lot'].includes(trackingMode) &amp;&amp; !this.props.production.data.lot_producing_ids) || !active" t-set="_btn_type" t-value="'btn-secondary'"/>
         <t t-else="" t-set="_btn_type" t-value="'btn-primary'"/>
         <button t-if="displayDoneButton" t-attf-class="btn #{_btn_type}"
                 t-on-click="validate" t-att-barcode_trigger="props.barcodeTarget ? (_close_production ? 'CLMO' : 'CLWO') : false">

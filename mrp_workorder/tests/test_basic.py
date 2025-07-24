@@ -300,7 +300,7 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
 
         workorder.button_start()
         serial = self.env['stock.lot'].create({'product_id': self.laptop.id})
-        workorder.finished_lot_id = serial
+        workorder.finished_lot_ids = serial
         workorder.record_production()
         mo_laptop.button_mark_done()
 
@@ -449,7 +449,15 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
 
         wo = mo.workorder_ids[0]
         wo.button_start()
-        wo.action_generate_serial()
+        res_dict = mo.action_generate_serial()
+        self.assertEqual(res_dict.get('res_model'), 'mrp.production.serials')
+        serials_wizard = Form.from_action(self.env, res_dict)
+        serials_wizard.lot_name = 'sn#1'
+        serials_wizard.lot_quantity = 1
+        res_dict = serials_wizard.save().action_generate_serial_numbers()
+        serials_wizard = Form.from_action(self.env, res_dict)
+        serials_wizard.save().action_apply()
+
         wo.do_finish()
         wo_backorder = self.get_backorder_wo(wo)
         self.assertEqual(len(wo_backorder.check_ids), len(wo.check_ids))
@@ -542,7 +550,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         # Process assembly line
         # ---------------------------------------------------------
         finished_lot = self.env['stock.lot'].create({'product_id': production_table.product_id.id})
-        workorder.write({'finished_lot_id': finished_lot.id})
+        workorder.write({'finished_lot_ids': [finished_lot.id]})
         workorder.button_start()
         workorder.qty_producing = 1.0
         for stock_move in workorder.move_raw_ids:
@@ -670,7 +678,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         production_table.action_assign()
 
         finished_lot = self.env['stock.lot'].create({'product_id': production_table.product_id.id})
-        workorders[0].write({'finished_lot_id': finished_lot.id, 'qty_producing': 1.0})
+        workorders[0].write({'finished_lot_ids': [finished_lot.id], 'qty_producing': 1.0})
         workorders[0].button_start()
         move_table_sheet = production_table.move_raw_ids.filtered(lambda p: p.product_id == product_table_sheet)
         move_table_sheet.move_line_ids.write({'lot_id': lot_sheet.id, 'quantity': 1, 'picked': True})
@@ -835,7 +843,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         kit_wo.button_start()
         finished_lot = self.env['stock.lot'].create({'product_id': man_order.product_id.id})
         kit_wo.write({
-            'finished_lot_id': finished_lot.id,
+            'finished_lot_ids': [finished_lot.id],
             'qty_producing': 48
         })
 
@@ -847,7 +855,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         finished_lot = self.env['stock.lot'].create({'product_id': man_order.product_id.id})
         door_wo_1.button_start()
         door_wo_1.write({
-            'finished_lot_id': finished_lot.id,
+            'finished_lot_ids': [finished_lot.id],
             'qty_producing': 48
         })
         door_wo_1.record_production()
@@ -960,7 +968,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         laptop_lot_001 = self.env['stock.lot'].create({'product_id': custom_laptop.id})
         mo_form = Form(mo_custom_laptop)
         mo_form.qty_producing = 6
-        mo_form.lot_producing_id = laptop_lot_001
+        mo_form.lot_producing_ids.set(laptop_lot_001)
         mo_custom_laptop = mo_form.save()
         details_operation_form = Form(mo_custom_laptop.move_raw_ids[0], view=self.env.ref('stock.view_stock_move_operations'))
         with details_operation_form.move_line_ids.edit(0) as ml:
@@ -994,7 +1002,7 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         mo_custom_laptop = mo_custom_laptop.procurement_group_id.mrp_production_ids[1]
         mo_form = Form(mo_custom_laptop)
         mo_form.qty_producing = 4
-        mo_form.lot_producing_id = laptop_lot_002
+        mo_form.lot_producing_ids.set(laptop_lot_002)
         mo_custom_laptop = mo_form.save()
         details_operation_form = Form(mo_custom_laptop.move_raw_ids[0], view=self.env.ref('stock.view_stock_move_operations'))
         with details_operation_form.move_line_ids.edit(0) as ml:
@@ -1067,28 +1075,31 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         workorder = workorders[0]
         workorder.button_start()
         serial_a = self.env['stock.lot'].create({'product_id': laptop.id})
-        workorder.finished_lot_id = serial_a
+        workorder.finished_lot_ids = serial_a
+        workorder.qty_producing = 1
         workorder.record_production()
         workorder = self.get_backorder_wo(workorder)
         self.assertTrue(workorder)
         serial_b = self.env['stock.lot'].create({'product_id': laptop.id})
-        workorder.finished_lot_id = serial_b
+        workorder.finished_lot_ids = serial_b
+        workorder.qty_producing = 1
         workorder.record_production()
         workorder = self.get_backorder_wo(workorder)
         serial_c = self.env['stock.lot'].create({'product_id': laptop.id})
-        workorder.finished_lot_id = serial_c
+        workorder.finished_lot_ids = serial_c
+        workorder.qty_producing = 1
         workorder.record_production()
         self.assertEqual(workorders[0].state, 'done')
 
         for workorder in workorders - workorders[0]:
             workorder.button_start()
-            self.assertEqual(workorder.finished_lot_id, serial_a)
+            self.assertEqual(workorder.finished_lot_ids, serial_a)
             workorder.record_production()
             workorder = self.get_backorder_wo(workorder)
-            self.assertEqual(workorder.finished_lot_id, serial_b)
+            self.assertEqual(workorder.finished_lot_ids, serial_b)
             workorder.record_production()
             workorder = self.get_backorder_wo(workorder)
-            self.assertEqual(workorder.finished_lot_id, serial_c)
+            self.assertEqual(workorder.finished_lot_ids, serial_c)
             workorder.record_production()
             self.assertEqual(workorder.state, 'done')
 
@@ -1211,24 +1222,12 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
 
         workorder_1 = mo.workorder_ids[1]
         workorder_1.button_start()
-        # `finished_lot_id` is invisible in the view
-        # however, it's a computed field
-        # `workorder.finished_lot_id = workorder.production_id.lot_producing_id`
-        with Form(workorder_1.production_id) as wo_production:
-            wo_production.lot_producing_id = lot_1
-        workorder_1.record_production()
-        workorder_1 = self.get_backorder_wo(workorder_1)
-
-        with Form(workorder_1.production_id) as wo_production:
-            wo_production.lot_producing_id = lot_2
-        workorder_1.record_production()
-
-        workorder_2 = mo.workorder_ids[2]
-        self.assertEqual(workorder_2.finished_lot_id, lot_1)
+        workorder_1.production_id.qty_producing = 2
+        workorder_1.production_id.lot_producing_ids = lot_1 | lot_2
 
         productions = workorder_1.production_id.procurement_group_id.mrp_production_ids
         self.assertEqual(sum(productions.mapped('qty_producing')), 2)
-        self.assertEqual(productions.lot_producing_id, lot_1 | lot_2)
+        self.assertEqual(productions.lot_producing_ids, lot_1 | lot_2)
         for production in productions:
             production._post_inventory()
         self.assertEqual(sum(productions.move_finished_ids.move_line_ids.mapped('quantity')), 2)
@@ -2323,23 +2322,23 @@ class TestRoutingAndKits(TransactionCase):
         wo1 = mo.workorder_ids.filtered(lambda wo: wo.state == 'blocked')[0]
         wo1.button_start()
         wo1.qty_producing = 4
-        wo1.finished_lot_id = lot1
+        wo1.finished_lot_ids = lot1
         wo1.record_production()
         backorder = mo.procurement_group_id.mrp_production_ids[-1]
         ba_wo1 = backorder.workorder_ids[0]
         self.assertEqual(ba_wo1.qty_producing, 6)
         self.assertEqual(ba_wo1.qty_produced, 0)
         self.assertEqual(ba_wo1.qty_remaining, 6)
-        ba_wo1.finished_lot_id = lot1
+        ba_wo1.finished_lot_ids = lot1
         ba_wo1.record_production()
         wo2 = mo.workorder_ids[2]
         wo2.button_start()
         ba_wo2 = backorder.workorder_ids[2]
         ba_wo2.button_start()
         self.assertEqual(wo2.qty_producing, 4)
-        self.assertEqual(wo2.finished_lot_id, lot1)
+        self.assertEqual(wo2.finished_lot_ids, lot1)
         self.assertEqual(ba_wo2.qty_producing, 6)
-        self.assertEqual(ba_wo2.finished_lot_id, lot1)
+        self.assertEqual(ba_wo2.finished_lot_ids, lot1)
 
     def test_add_move(self):
         """ Make a production using multi step routing. Add an additional move

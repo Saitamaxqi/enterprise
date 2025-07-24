@@ -70,6 +70,17 @@ export class MrpDisplayRecord extends Component {
         if (!this.props.production.data.qty_producing) {
             this.props.production.update({ qty_producing: this.props.production.data.product_qty });
         }
+        if(this.props.production.data.product_tracking == 'serial' && this.props.production.data.product_qty > 1) {
+            const action = await this.props.record.model.orm.call(
+                this.props.record.resModel,
+                "action_generate_serial",
+                [this.props.record.resId]
+            );
+            if (action && typeof action === "object") {
+                return this.action.doAction(action, { onClose: () => this.env.reload() });
+            }
+            return;
+        }
         const title = _t(
             "Register Production: %s",
             this.props.production.data.product_id.display_name
@@ -261,13 +272,6 @@ export class MrpDisplayRecord extends Component {
     }
 
     get trackingMode() {
-        if (
-            this.props.production.data.product_tracking === "serial" &&
-            this.props.production.data.product_qty > 1 &&
-            !["progress", "to_close"].includes(this.props.production.data.state)
-        ) {
-            return "mass_produce";
-        }
         return this.props.production.data.product_tracking;
     }
 
@@ -329,15 +333,6 @@ export class MrpDisplayRecord extends Component {
                 this.record.is_last_unfinished_wo)
         ) {
             methodName = "button_mark_done";
-            if (this.trackingMode === "serial") {
-                kwargs.context = { skip_redirection: true };
-                if (this.record.product_qty > 1) {
-                    kwargs.context.skip_backorder = true;
-                    kwargs.context.mo_ids_to_backorder = [resId];
-                }
-            } else if (this.trackingMode === "mass_produce") {
-                methodName = "action_mass_produce";
-            }
             resModel = "mrp.production";
             resId = this.props.production.resId;
         }

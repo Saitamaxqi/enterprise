@@ -126,4 +126,4 @@ class TestShopFloorQuality(TestShopFloor, TestQualityCommon):
         action = mo.workorder_ids.action_open_mes()
         url = '/web?#action=%s' % (action['id'])
         self.start_tour(url, "test_register_sn_production_quality_check", login='admin')
-        self.assertRecordValues(mo.lot_producing_id, [{'name': 'SN0012'}])
+        self.assertRecordValues(mo.lot_producing_ids, [{'name': 'SN0012'}])

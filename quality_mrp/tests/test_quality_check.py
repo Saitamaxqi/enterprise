@@ -38,7 +38,7 @@ class TestQualityCheck(TestQualityMrpCommon):
 
         mo_form = Form(self.mrp_production_qc_test1)
         mo_form.qty_producing = self.mrp_production_qc_test1.product_qty - 1
-        mo_form.lot_producing_id = self.lot_product_27_0
+        mo_form.lot_producing_ids.set(self.lot_product_27_0)
         for move in self.mrp_production_qc_test1.move_raw_ids:
             details_operation_form = Form(move, view=self.env.ref('stock.view_stock_move_operations'))
             with details_operation_form.move_line_ids.edit(0) as ml:
@@ -120,7 +120,7 @@ class TestQualityCheck(TestQualityMrpCommon):
         # Do the quality checks and create backorder
         production.check_ids.do_pass()
         production.qty_producing = 3.0
-        production.lot_producing_id = self.lot_product_27_0
+        production.lot_producing_ids = self.lot_product_27_0
         for move in production.move_raw_ids:
             details_operation_form = Form(move, view=self.env.ref('stock.view_stock_move_operations'))
             with details_operation_form.move_line_ids.edit(0) as ml:
@@ -139,7 +139,7 @@ class TestQualityCheck(TestQualityMrpCommon):
 
     def test_quality_check_serial_backorder(self):
         """Create a MO for a product tracked by serial number.
-        Open the smp wizard, generate all but one serial numbers and create a back order.
+        Generate all but one serial numbers and create a back order.
         """
         # Set up Products
         product_to_build = self.env['product.product'].create({
@@ -191,13 +191,14 @@ class TestQualityCheck(TestQualityMrpCommon):
         self.assertEqual(len(mo.check_ids), 1)
         mo.check_ids.do_pass()
 
-        action = mo.action_mass_produce()
-        wizard = Form(self.env['mrp.batch.produce'].with_context(**action['context']))
-        wizard.lot_name = "sn#1"
-        wizard.lot_qty = mo.product_qty - 1
-        wizard = wizard.save()
-        wizard.action_generate_production_text()
-        wizard.action_prepare()
+        action = mo.action_generate_serial()
+        wizard = Form.from_action(self.env, action)
+        wizard.lot_name = 'sn#1'
+        wizard.lot_quantity = mo.product_qty - 1
+        action = wizard.save().action_generate_serial_numbers()
+        wizard = Form.from_action(self.env, action)
+        wizard.save().action_apply()
+
         # Last MO in sequence is the backorder
         bo = mo.procurement_group_id.mrp_production_ids[-1]
         self.assertEqual(len(bo.check_ids), 1)
@@ -216,7 +217,7 @@ class TestQualityCheck(TestQualityMrpCommon):
         production = production_form.save()
         production.action_confirm()
         production.qty_producing = 1
-        production.lot_producing_id = self.lot_product_27_0
+        production.lot_producing_ids = self.lot_product_27_0
         production.move_raw_ids[0].move_line_ids[0].lot_id = self.lot_product_product_drawer_drawer_0
         production.move_raw_ids[1].move_line_ids[0].lot_id = self.lot_product_product_drawer_case_0
         production.move_raw_ids.picked = True
@@ -280,7 +281,7 @@ class TestQualityCheck(TestQualityMrpCommon):
 
         mo_form = Form(self.mrp_production_qc_test1)
         mo_form.qty_producing = self.mrp_production_qc_test1.product_qty
-        mo_form.lot_producing_id = self.lot_product_27_0
+        mo_form.lot_producing_ids.set(self.lot_product_27_0)
         for move in self.mrp_production_qc_test1.move_raw_ids:
             details_operation_form = Form(move, view=self.env.ref('stock.view_stock_move_operations'))
             with details_operation_form.move_line_ids.edit(0) as ml:

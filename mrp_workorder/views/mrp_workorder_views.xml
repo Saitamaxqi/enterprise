@@ -20,7 +20,7 @@
                             <field name="title"/>
                             <field name="control_date" string="Date"/>
                             <field name="user_id" string="Operator"/>
-                            <field name="finished_lot_id" string="Finished Lot/Serial Number" column_invisible="parent.product_tracking == 'none'"/>
+                            <field name="finished_lot_ids" string="Finished Lot/Serial Number" column_invisible="parent.product_tracking == 'none'" widget="many2many_tags" options="{'edit_tags': True}"/>
                             <field name="result"/>
                         </list>
                     </field>
@@ -272,10 +272,10 @@
                     <div class="o_workorder_bar_center o_workorder_bar_content">
                         <div class="o_workorder_field o_workorder_lot">
                             <div invisible="product_tracking == 'none'">
-                                <label for="finished_lot_id" string="Lot" invisible="product_tracking != 'lot'"/>
-                                <label for="finished_lot_id" string="Serial" invisible="product_tracking != 'serial'"/>
-                                <field name="finished_lot_id" context="{'default_product_id': product_id, 'default_company_id': company_id}" domain="[('product_id', '=', product_id)]"/>
-                                <button name="action_generate_serial" type="object" class="o_btn_icon btn btn-secondary" aria-label="Creates a new serial/lot number" title="Creates a new serial/lot number" invisible="finished_lot_id">
+                                <label for="finished_lot_ids" string="Lot" invisible="product_tracking != 'lot'"/>
+                                <label for="finished_lot_ids" string="Serial" invisible="product_tracking != 'serial'"/>
+                                <field name="finished_lot_ids" context="{'default_product_id': product_id, 'default_company_id': company_id}" domain="[('product_id', '=', product_id)]" widget="many2many_tags" options="{'edit_tags': True}"/>
+                                <button name="action_generate_serial" type="object" class="o_btn_icon btn btn-secondary" aria-label="Creates a new serial/lot number" title="Creates a new serial/lot number" invisible="finished_lot_ids">
                                     <i class="fa fa-plus" role="img"/>
                                 </button>
                             </div>

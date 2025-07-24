@@ -13,11 +13,15 @@
                     <span t-field="doc.workorder_id.display_name"/>
                 </div>
             </xpath>
-            <xpath expr="//div[@name='lot']" position="replace">
-                <div name="lot" t-if="doc.lot_id or doc.finished_lot_id">
+            <xpath expr="//div[@name='lots']" position="replace">
+                <t t-set="lots" t-value="doc.lot_ids or doc.finished_lot_ids"/>
+                <div name="lots" t-if="lots">
                     <strong>Lot/Serial Number: </strong>
-                    <span t-if="doc.lot_id.product_id.id == doc.product_id.id" t-field="doc.lot_id.display_name"/>
-                    <span t-if="doc.finished_lot_id.product_id.id == doc.product_id.id" t-field="doc.finished_lot_id.display_name"/>
+                    <t t-foreach="lots" t-as="lot">
+                        <t t-if="lot.product_id.id == doc.product_id.id">
+                            <span t-field="lot.display_name"></span>
+                        </t>
+                    </t>
                 </div>
             </xpath>
         </template>

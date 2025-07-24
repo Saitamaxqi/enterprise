@@ -9,5 +9,5 @@ class StockLot(models.Model):
 
     def _get_quality_check_domain(self, prod_lot):
         domain = super()._get_quality_check_domain(prod_lot)
-        domain = Domain.OR([domain, [('finished_lot_id', 'in', prod_lot.ids)]])
+        domain = Domain.OR([domain, [('finished_lot_ids', 'in', prod_lot.ids)]])
         return domain

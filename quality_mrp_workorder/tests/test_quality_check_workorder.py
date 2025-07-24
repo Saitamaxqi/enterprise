@@ -89,11 +89,11 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         mo.action_confirm()
 
         mo_form = Form(mo)
-        mo_form.lot_producing_id = finished_sn
+        mo_form.lot_producing_ids.set(finished_sn)
         mo = mo_form.save()
 
-        self.assertEqual(mo.workorder_ids.finished_lot_id, finished_sn)
-        self.assertEqual(mo.workorder_ids.lot_id, component_sn)
+        self.assertEqual(mo.workorder_ids.finished_lot_ids, finished_sn)
+        self.assertEqual(mo.workorder_ids.current_quality_check_id.lot_ids, component_sn)
 
         mo.workorder_ids.current_quality_check_id.action_next()
         mo.workorder_ids.do_finish()
@@ -158,8 +158,8 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         # Should have 2 mos /w 1 sn each
         self.assertEqual(len(mo.procurement_group_id.mrp_production_ids), 2)
         # Check that the assigned lots didn't change
-        self.assertEqual(mo.procurement_group_id.mrp_production_ids[0].workorder_ids.lot_id, lots[0])
-        self.assertEqual(mo.procurement_group_id.mrp_production_ids[1].workorder_ids.lot_id, lots[1])
+        self.assertEqual(mo.procurement_group_id.mrp_production_ids[0].workorder_ids.current_quality_check_id.lot_ids, lots[0])
+        self.assertEqual(mo.procurement_group_id.mrp_production_ids[1].workorder_ids.current_quality_check_id.lot_ids, lots[1])
         # Register sn3 on mo 1 and check that it is reflected on the associated move line
         component_move = mo.workorder_ids.current_quality_check_id.move_id
         component_move.action_add_from_quant(self.env['stock.quant'].search([('lot_id', '=', lots[2].id), ('location_id', '=', warehouse.lot_stock_id.id)], limit=1).id)
@@ -276,7 +276,7 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         mo.action_confirm()
         self.assertEqual(mo.state, 'confirmed')
         mo_form = Form(mo)
-        mo_form.lot_producing_id = finished_sn
+        mo_form.lot_producing_ids.set(finished_sn)
         mo = mo_form.save()
         mo.check_ids.do_pass()
         mo.button_mark_done()
@@ -316,7 +316,7 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         self.assertEqual(quality_check.component_id, self.product_2)
         self.assertEqual(quality_check.move_id.quantity, 1)
         self.assertEqual(finished_sn.quality_check_qty, 2)
-        domain_sn_qc = ['|', ('lot_id', 'in', finished_sn.ids), ('finished_lot_id', 'in', finished_sn.ids)]
+        domain_sn_qc = ['|', ('lot_ids', 'in', finished_sn.ids), ('finished_lot_ids', 'in', finished_sn.ids)]
         self.assertEqual(list(finished_sn.action_open_quality_checks()['domain']), domain_sn_qc)
 
 

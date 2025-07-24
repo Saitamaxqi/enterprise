@@ -34,11 +34,10 @@ class MrpProduction(models.Model):
         """ Special mo barcode action to produce and return SN/lot data compatible with barcode app.
         Helps avoid doing extra db calls within barcode that using action_generate_serial
         would require."""
-        self._set_lot_producing()
-        action = False
-        if self.picking_type_id.auto_print_generated_mrp_lot:
-            action = self._autoprint_generated_lot(self.lot_producing_id)
-        return self.lot_producing_id.read(self.lot_producing_id._get_fields_stock_barcode(), load=False), action
+        action = self.action_generate_serial()
+        if action and action['type'] == 'ir.actions.act_window':
+            return None, action
+        return self.lot_producing_ids.read(self.lot_producing_ids._get_fields_stock_barcode(), load=False), action
 
     def _get_fields_stock_barcode(self):
         return [
@@ -54,7 +53,7 @@ class MrpProduction(models.Model):
             'product_uom_id',
             'product_qty',
             'qty_producing',
-            'lot_producing_id',
+            'lot_producing_ids',
             'name',
             'state',
             'picking_type_id',
@@ -69,7 +68,7 @@ class MrpProduction(models.Model):
         # Avoid to get the products full name because code and name are separate in the barcode app.
         self = self.with_context(display_default_code=False)
         move_lines = self.move_raw_line_ids | self.move_byproduct_line_ids
-        lots = move_lines.lot_id | self.lot_producing_id
+        lots = move_lines.lot_id | self.lot_producing_ids
         owners = move_lines.owner_id
         # Fetch all implied products in `self`
         products = self.product_id | (self.move_raw_ids + self.move_byproduct_ids).product_id

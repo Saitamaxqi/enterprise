@@ -177,7 +177,7 @@ class TestShopFloor(HttpCase):
             {'state': 'done', 'workcenter_id': savannah.id},
             {'state': 'done', 'workcenter_id': jungle.id},
         ])
-        self.assertEqual(mo.workorder_ids[0].finished_lot_id, mo.move_finished_ids.move_line_ids.lot_id)
+        self.assertEqual(mo.workorder_ids[0].finished_lot_ids, mo.move_finished_ids.move_line_ids.lot_id)
         self.assertEqual(mo.workorder_ids[0].qty_produced, 2)
         self.assertEqual(mo.workorder_ids[0].check_ids[2].move_id.quantity, 10)
         self.assertEqual(mo.workorder_ids[0].check_ids[3].move_id.quantity, 2)

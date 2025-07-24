@@ -20,9 +20,11 @@
                     <span t-field="doc.product_id.display_name">Laptop XYZ</span>
                 </div>
                 <div class="oe_structure"></div>
-                <div name="lot" t-if="doc.lot_id">
+                <div name="lots" t-if="doc.lot_ids">
                     <strong>Lot/Serial Number: </strong>
-                    <span t-field="doc.lot_id.display_name">LT-00045</span>
+                    <t t-foreach="doc.lot_ids" t-as="lot">
+                        <span t-field="lot.display_name">LT-00045</span>
+                    </t>
                 </div>
                 <div class="oe_structure"></div>
                 <div t-if="doc.user_id">

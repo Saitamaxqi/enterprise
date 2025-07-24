@@ -68,6 +68,16 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             trigger: ".o_mrp_record_line:contains('Register Production') .btn-primary",
             run: "click",
         },
+        // Handle mrp.production.serials wizard
+        {
+            content: "Register production: Giraffe",
+            trigger: ".o_workorder_bar_content:contains('Generate Lot') .btn-primary",
+            run: "click",
+        },
+        {
+            trigger: ".btn-primary:contains('Validate')",
+            run: "click",
+        },
         // Produced product's lot should be displayed and "Register Production" should be crossed.
         { trigger: ".text-decoration-line-through:contains('Register Production')" },
         { trigger: ".o_line_value:contains('0000001')" },
@@ -530,10 +540,14 @@ registry.category("web_tour.tours").add("test_change_qty_produced", {
             run: "click",
         },
         {
+            content: "Handle MrpRegisterProductionDialog",
+            trigger: ".btn-primary:contains('Validate')",
+            run: "click",
+        },
+        {
             content: "Open the wizard and decrease the produced quantity",
             trigger:
                 ".o_mrp_record_line .text-decoration-line-through:contains('Register Production')",
-
             run: "click",
         },
         {
@@ -552,7 +566,7 @@ registry.category("web_tour.tours").add("test_change_qty_produced", {
         },
         {
             content: "Mark the WorkOrder as Done",
-            trigger: 'button.btn-primary:contains("Close Production")',
+            trigger: 'button.btn-secondary:contains("Close Production")',
             run: "click",
         },
         {
@@ -805,11 +819,6 @@ registry.category("web_tour.tours").add("test_automatic_backorder_no_redirect", 
             run: "click",
         },
         {
-            trigger:
-                ".o_mrp_display_record:has(.card-title:contains(MOBACK)) .o_mrp_record_line .o_line_value:contains(2 / 2)",
-            run: "click",
-        },
-        {
             trigger: ".modal-content .o_field_widget[name=qty_done] input",
             run: "edit 1",
         },
@@ -834,6 +843,10 @@ registry.category("web_tour.tours").add("test_automatic_backorder_no_redirect", 
         {
             trigger:
                 ".o_mrp_display_record:has(.card-title:contains(MOBACK-002)) .o_mrp_record_line:contains(Register Production)",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content button:contains(Validate)",
             run: "click",
         },
         {

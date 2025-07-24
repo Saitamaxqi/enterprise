@@ -45,7 +45,7 @@ registry.category("web_tour.tours").add("test_serial_tracked_and_register", {
             run: "click",
         },
         {
-            trigger: 'div.o_field_widget[name="finished_lot_id"] input ',
+            trigger: 'div.o_field_widget[name="finished_lot_ids"] input ',
             tooltipPosition: "bottom",
             run: "edit Magic Potion_2",
         },
@@ -79,7 +79,7 @@ registry.category("web_tour.tours").add("test_serial_tracked_and_register", {
         },
         {
             // produced sn shouldn't change when comp sn is changed
-            trigger: 'div.o_field_widget[name="finished_lot_id"] input ',
+            trigger: 'div.o_field_widget[name="finished_lot_ids"] input ',
             run: function () {
                 helper.assert(
                     document.querySelector('input[id="finished_lot_id_0"]').value,

@@ -66,7 +66,7 @@
                 <field name="name" decoration-bf="1"/>
                 <field name="product_tmpl_id" optional="show"/>
                 <field name="product_id" optional="hide"/>
-                <field name="lot_id" optional="hide" groups="stock.group_production_lot"/>
+                <field name="lot_ids" optional="hide" groups="stock.group_production_lot" widget="many2many_tags"/>
                 <field name="team_id" optional="show"/>
                 <field name="user_id" optional="show" widget='many2one_avatar_user'/>
                 <field name="tag_ids" optional="hide" widget="many2many_tags"/>
@@ -84,9 +84,9 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name" string="Quality Alert" filter_domain="[
-                    '|', '|', '|', ('name', 'ilike', self), ('product_id', 'ilike', self), ('product_tmpl_id', 'ilike', self), ('lot_id', 'ilike', self)]"/>
+                    '|', '|', '|', ('name', 'ilike', self), ('product_id', 'ilike', self), ('product_tmpl_id', 'ilike', self), ('lot_ids', 'ilike', self)]"/>
                 <field name="product_id" string="Product" filter_domain="[
-                    '|', '|', ('product_id', 'ilike', self), ('product_tmpl_id', 'ilike', self), ('lot_id', 'ilike', self)]"/>
+                    '|', '|', ('product_id', 'ilike', self), ('product_tmpl_id', 'ilike', self), ('lot_ids', 'ilike', self)]"/>
                 <field name="tag_ids"/>
                 <field name="user_id"/>
                 <filter string="My Alerts" name="myalerts" domain="[('user_id', '=', uid)]"/>

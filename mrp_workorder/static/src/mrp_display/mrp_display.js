@@ -459,6 +459,20 @@ export class MrpDisplay extends Component {
             fields: checkFields,
             activeFields: checkFields,
         };
+        const lotFields = this.props.models.find((m) => m.resModel === "stock.lot").fields;
+        params.config.activeFields.lot_producing_ids.related = {
+            fields: lotFields,
+            activeFields: lotFields,
+        };
+        params.config.activeFields.lot_producing_ids.onChange = true;
+        params.config.activeFields.workorder_ids.related.activeFields.check_ids.related.activeFields.lot_ids.related = {
+            fields: lotFields,
+            activeFields: lotFields,
+        };
+        params.config.activeFields.check_ids.related.activeFields.production_id.related = {
+            fields: fields,
+            activeFields: fields,
+        };
         return params;
     }
 

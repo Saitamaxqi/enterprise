@@ -87,7 +87,7 @@
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="product_qty">1</field>
             <field name="bom_id" ref="mrp.mrp_bom_desk"/>
-            <field name="lot_producing_id" ref="purchase_mrp_workorder_quality.stock_production_lot"/>
+            <field name="lot_producing_ids" eval="[ref('purchase_mrp_workorder_quality.stock_production_lot')]"/>
         </record>
 
         <function model="mrp.production" name="action_confirm" eval="[ref('purchase_mrp_workorder_quality.mrp_production')]"/>
@@ -102,7 +102,7 @@
 
         <function model="quality.check" name="write">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
-            <value model="stock.lot" eval="{'lot_id': obj().search([('name', '=', 'T0002')], limit=1).id}"/>
+            <value model="stock.lot" eval="{'lot_ids': obj().search([('name', '=', 'T0002')], limit=1).ids}"/>
         </function>
         <function model="quality.check" name="_next">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
@@ -119,7 +119,7 @@
 
         <function model="quality.check" name="write">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
-            <value model="stock.lot" eval="{'lot_id': obj().search([('name', '=', '0000000000001')], limit=1).id}"/>
+            <value model="stock.lot" eval="{'lot_ids': obj().search([('name', '=', '0000000000001')], limit=1).ids}"/>
         </function>
         <function model="quality.check" name="_next">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
@@ -148,7 +148,7 @@
 
         <function model="quality.check" name="write">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
-            <value model="stock.lot" eval="{'lot_id': obj().search([('name', '=', '0000000000002')], limit=1).id}"/>
+            <value model="stock.lot" eval="{'lot_ids': obj().search([('name', '=', '0000000000002')], limit=1).ids}"/>
         </function>
 
         <function model="quality.check" name="_next">

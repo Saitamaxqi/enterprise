@@ -87,13 +87,19 @@ export class QualityCheck extends MrpWorkorder {
     }
 
     get showQty() {
-        const { lot_id, product_tracking } = this.check;
         if (this.type === "register_production") {
-            return product_tracking != "none"
-                ? lot_id && lot_id.display_name
-                : this.passed
-                ? this.props.qtyProducing
-                : false;
+            const { lot_ids, product_tracking } = this.check;
+            if (product_tracking == "lot") {
+                return lot_ids.count ? lot_ids.records[0].data.display_name : false;
+            }
+            if (product_tracking == "serial") {
+                const { product_qty, qty_producing } = this.props.record.data.production_id;
+                if (product_qty == 1) {
+                    return lot_ids.count ? lot_ids.records[0].data.display_name : false;
+                }
+                return qty_producing ? this.props.qtyProducing : false;
+            }
+            return this.passed ? this.props.qtyProducing : false;
         }
         return false;
     }
@@ -112,18 +118,14 @@ export class QualityCheck extends MrpWorkorder {
             case "picture":
                 return this.fileUploaderToggle.el.click();
             case "register_production":
-                if (["lot", "serial"].includes(this.check.product_tracking) && !this.check.lot_id) {
+                if (
+                    ["lot", "serial"].includes(this.check.product_tracking) &&
+                    !this.check.lot_ids.count
+                ) {
                     await this.props.record.load();
                 }
-                return this.isComplete || this.check.lot_id
-                    ? this.props.registerProduction(this.props.record)
-                    : this.quickRegisterProduction();
+                return this.props.registerProduction();
         }
-    }
-
-    async quickRegisterProduction() {
-        await this.doActionAndNext("action_register_production");
-        return this.env.reload(this.props.record);
     }
 
     async onFileUploaded(info) {
@@ -136,7 +138,7 @@ export class QualityCheck extends MrpWorkorder {
     async doActionAndNext(action, stateToSet = "pass", actionParams = {}) {
         const { model, resModel, resId, data, _parentRecord } = this.props.record;
         const result = await model.orm.call(resModel, action, [resId]);
-        if ("next_check_id" in result) {
+        if (_parentRecord.data.current_quality_check_id && "next_check_id" in result) {
             data.quality_state = stateToSet;
             _parentRecord.data.current_quality_check_id.id = result.next_check_id;
         }

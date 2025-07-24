@@ -202,7 +202,7 @@ class QualityCheck(models.Model):
     component_barcode = fields.Char(related='component_id.barcode')
     component_uom_id = fields.Many2one('uom.uom', related='move_id.product_uom', string='Component Unit', readonly=True)
 
-    finished_lot_id = fields.Many2one('stock.lot', 'Finished Lot/Serial', related='production_id.lot_producing_id')
+    finished_lot_ids = fields.Many2many('stock.lot', 'Finished Lot/Serial', related='production_id.lot_producing_ids')
     component_tracking = fields.Selection(related='component_id.tracking', string="Is Component Tracked")
 
     # Workorder specific fields
@@ -246,7 +246,7 @@ class QualityCheck(models.Model):
             if not check.point_id and check.component_id:
                 check.title = '{} "{}"'.format(check.test_type_id.display_name, check.component_id.name or check.workorder_id.name)
 
-    @api.depends('point_id', 'quality_state', 'component_id', 'component_uom_id', 'lot_id')
+    @api.depends('point_id', 'quality_state', 'component_id', 'component_uom_id', 'lot_ids')
     def _compute_result(self):
         for check in self:
             if check.quality_state == 'none':
@@ -255,12 +255,11 @@ class QualityCheck(models.Model):
                 check.result = check._get_check_result()
 
     def _get_check_result(self):
-        if self.test_type in ('register_consumed_materials', 'register_byproducts') and self.lot_id:
-            return f'{self.component_id.name} - {self.lot_id.name}, {self.component_uom_id.name}'
-        elif self.test_type in ('register_consumed_materials', 'register_byproducts'):
+        if self.test_type in ('register_consumed_materials', 'register_byproducts'):
+            if len(self.lot_ids) == 1:
+                return f'{self.component_id.name} - {self.lot_ids[0].name}, {self.component_uom_id.name}'
             return f'{self.component_id.name}, {self.component_uom_id.name}'
-        else:
-            return ''
+        return ''
 
     def action_print(self):
         quality_point_id = self.point_id
@@ -269,7 +268,7 @@ class QualityCheck(models.Model):
         if self.product_id.tracking == 'none':
             res = self._get_product_label_action(report_type)
         else:
-            if self.workorder_id.finished_lot_id:
+            if self.workorder_id.finished_lot_ids:
                 res = self._get_lot_label_action(report_type)
             else:
                 raise UserError(_('You did not set a lot/serial number for '
@@ -281,7 +280,7 @@ class QualityCheck(models.Model):
 
     def _get_print_qty(self):
         uom_unit = self.env.ref('uom.product_uom_unit')
-        if self.product_id.uom_id._has_common_reference(uom_unit):
+        if self.product_tracking != 'serial' and self.product_id.uom_id._has_common_reference(uom_unit):
             qty = int(self.workorder_id.qty_producing) or int(self.workorder_id.qty_production)
         else:
             qty = 1
@@ -304,7 +303,7 @@ class QualityCheck(models.Model):
             xml_id = 'stock.label_lot_template'
         else:
             xml_id = 'stock.action_report_lot_label'
-        res = self.env.ref(xml_id).report_action([self.workorder_id.finished_lot_id.id] * qty)
+        res = self.env.ref(xml_id).report_action([self.workorder_id.finished_lot_ids.ids] * qty)
         res['id'] = self.env.ref(xml_id).id
         return res
 
@@ -329,16 +328,6 @@ class QualityCheck(models.Model):
             if self.worksheet_document:
                 attachments = [('document', base64.b64decode(self.worksheet_document))]
             self.workorder_id.production_id.bom_id.message_post(body=body, attachments=attachments)
-
-    def action_register_production(self):
-        self.ensure_one()
-        if self.product_tracking == 'none':
-            self.production_id.qty_producing = self.production_id.product_qty
-            self.production_id._set_qty_producing(False)
-        elif not self.lot_id:
-            self.production_id.action_generate_serial()
-            self.lot_id = self.production_id.lot_producing_id
-        return {'next_check_id': self._next()}
 
     def _next(self):
         """ This function:

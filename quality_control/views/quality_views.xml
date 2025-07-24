@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="replace">
                 <field name="title" string="Quality Alert" filter_domain="[
-                    '|', '|', '|', ('title', 'ilike', self), ('product_id', 'ilike', self), ('product_tmpl_id', 'ilike', self), ('lot_id', 'ilike', self)]"/>
+                    '|', '|', '|', ('title', 'ilike', self), ('product_id', 'ilike', self), ('product_tmpl_id', 'ilike', self), ('lot_ids', 'ilike', self)]"/>
             </xpath>
         </field>
     </record>
@@ -61,7 +61,7 @@
                             <field name="title"/>
                             <field name="product_tmpl_id"/>
                             <field name="product_id" groups="product.group_product_variant"/>
-                            <field name="lot_id" context="{'default_product_id': product_id}" groups="stock.group_production_lot"/>
+                            <field name="lot_ids" context="{'default_product_id': product_id}" groups="stock.group_production_lot" widget="many2many_tags" options="{'edit_tags': True}"/>
                             <field name="picking_id"/>
                         </group>
                         <group>
@@ -232,7 +232,7 @@
                             <field name="product_tracking" invisible="1"/>
                             <field name="is_lot_tested_fractionally" invisible="1"/>
                             <field name="lot_name" invisible="product_tracking == 'none' or not show_lot_text or not move_line_id"/>
-                            <field name="lot_id" invisible="product_tracking == 'none' or show_lot_text"/>
+                            <field name="lot_ids" invisible="product_tracking == 'none' or show_lot_text" widget="many2many_tags" options="{'edit_tags': True}"/>
                             <label for="qty_line" invisible="not move_line_id or quality_state == 'fail'"/>
                             <label for="qty_line" invisible="not move_line_id or quality_state != 'fail'" string="Failed Quantity"/>
                             <div class="o_row" invisible="not move_line_id">
@@ -299,7 +299,7 @@
                         </div>
                         <div class="row text-muted">
                             <field name="product_id" class="col-8"/>
-                            <field name="lot_id" class="col-4"/>
+                            <field name="lot_ids" class="col-4" widget="many2many_tags"/>
                         </div>
                         <field name="user_id" widget="many2one_avatar_user" class="ms-auto"/>
                     </t>
@@ -316,7 +316,7 @@
                 <field name="name" decoration-bf="1"/>
                 <field name="measure_on" optional="hide"/>
                 <field name='product_id' optional="show"/>
-                <field name="lot_id" column_invisible="context.get('show_lots_text')"/>
+                <field name="lot_ids" column_invisible="context.get('show_lots_text')" widget="many2many_tags"/>
                 <field name="lot_name" column_invisible="not context.get('show_lots_text')"/>
                 <field name="picking_id" optional="hide" string="Transfer"/>
                 <field name="control_date" string="Checked Date" optional="show"/>
@@ -356,9 +356,9 @@
         <field name="model">quality.check</field>
         <field name="arch" type="xml">
             <search>
-                <field name="product_id" string="Product" filter_domain="['|', ('product_id', 'ilike', self), ('lot_id', 'ilike', self)]"/>
+                <field name="product_id" string="Product" filter_domain="['|', ('product_id', 'ilike', self), ('lot_ids', 'ilike', self)]"/>
                 <field name="picking_id"/>
-                <field name="lot_id" groups="stock.group_production_lot"/>
+                <field name="lot_ids" groups="stock.group_production_lot" widget="many2many_tags"/>
                 <field name="team_id"/>
                 <filter string="In Progress" name="progress" domain="[('quality_state', '=', 'none')]"/>
                 <filter string="Passed" name="passed" domain="[('quality_state', '=', 'pass')]"/>

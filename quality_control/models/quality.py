@@ -289,7 +289,7 @@ class QualityCheck(models.Model):
         for qc in self:
             qc.lot_line_id = qc.move_line_id.lot_id
             if qc.lot_line_id and qc._update_lot_from_lot_line():
-                qc.lot_id = qc.lot_line_id
+                qc.lot_ids = qc.lot_line_id
 
     def _update_lot_from_lot_line(self):
         return True
@@ -357,7 +357,7 @@ class QualityCheck(models.Model):
             'check_id': self.id,
             'product_id': self.product_id.id,
             'product_tmpl_id': self.product_id.product_tmpl_id.id,
-            'lot_id': self.lot_id.id,
+            'lot_ids': self.lot_ids.ids,
             'user_id': self.user_id.id,
             'team_id': self.team_id.id,
             'company_id': self.company_id.id

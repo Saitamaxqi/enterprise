@@ -38,7 +38,7 @@ registry.category("web_tour.tours").add("test_register_sn_production_quality_che
         },
         {
             trigger:
-                ".modal-content .o_field_widget[name=lot_producing_id] .dropdown-item:contains(Create and edit)",
+                ".modal-content .o_field_widget[name=lot_producing_ids] .dropdown-item:contains(Create and edit)",
             run: "click",
         },
         {

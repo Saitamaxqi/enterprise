@@ -24,15 +24,20 @@
                 <t t-if="props.record.data.product_tracking &amp;&amp; props.record.data.product_tracking !== 'none'" class="">
                     <span class="text-capitalize" t-out="props.record.data.product_tracking"/>
                     <div class="d-flex gap-2">
-                        <div name="lot_producing_id" class="o_field_widget">
-                            <Many2OneField t-props="lotInfo"/>
+                        <div t-if="props.record.data.product_tracking == 'serial' ? props.record.data.product_qty == 1 : true" name="lot_producing_ids" class="o_field_widget">
+                            <Many2ManyTagsField t-props="lotInfo" readonly="props.record.data.lot_producing_ids.count > 0"/>
                         </div>
-                        <button
-                            t-if="!props.record.data.lot_producing_id"
-                            t-att-disabled="state.disabled"
-                            class="btn btn-primary btn-sm"
-                            t-on-click="actionGenerateSerial">
-                            Create New
+                        <button t-if="props.record.data.product_tracking == 'serial' &amp;&amp; props.record.data.lot_producing_ids.count == 0"
+                            t-att-disabled="state.disabled" class="btn btn-primary btn-sm" t-on-click="actionGenerateSerial">
+                            Generate Serial
+                        </button>
+                        <button t-if="props.record.data.product_tracking == 'lot' &amp;&amp; props.record.data.lot_producing_ids.count == 0"
+                            t-att-disabled="state.disabled" class="btn btn-primary btn-sm" t-on-click="actionGenerateSerial">
+                            Generate Lot
+                        </button>
+                        <button t-if="props.record.data.lot_producing_ids.count"
+                            t-att-disabled="state.disabled" class="btn btn-secondary btn-sm" t-on-click="actionClearLotProducing">
+                            Clear
                         </button>
                     </div>
                 </t>

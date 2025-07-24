@@ -34,9 +34,10 @@ class MrpProduction(models.Model):
             production.state_color = colors[production.state]
 
     def write(self, vals):
-        if 'lot_producing_id' in vals:
-            self.sudo().workorder_ids.check_ids.filtered(lambda c: c.test_type_id.technical_name == 'register_production').write({'lot_id': vals['lot_producing_id']})
-        return super().write(vals)
+        res = super().write(vals)
+        if 'lot_producing_ids' in vals:
+            self.workorder_ids.check_ids.filtered(lambda c: c.test_type_id.technical_name == 'register_production').write({'lot_ids': self.lot_producing_ids.ids})
+        return res
 
     def action_add_byproduct(self):
         self.ensure_one()

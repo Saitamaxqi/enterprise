@@ -17,7 +17,7 @@ class StockLot(models.Model):
             prod_lot.quality_check_qty = self.env['quality.check'].search_count(domain)
 
     def _get_quality_check_domain(self, prod_lot):
-        return [('lot_id', 'in', prod_lot.ids)]
+        return [('lot_ids', 'in', prod_lot.ids)]
 
     def action_open_quality_checks(self):
         self.ensure_one()
@@ -29,14 +29,14 @@ class StockLot(models.Model):
     def _compute_quality_alert_qty(self):
         for prod_lot in self:
             prod_lot.quality_alert_qty = self.env['quality.alert'].search_count([
-                ('lot_id', 'in', prod_lot.ids),
+                ('lot_ids', 'in', prod_lot.ids),
                 ('company_id', '=', self.env.company.id)
             ])
 
     def action_lot_open_quality_alerts(self):
         action = self.env["ir.actions.act_window"]._for_xml_id("quality_control.quality_alert_action_check")
         action.update({
-            'domain': [('lot_id', '=', self.id)],
+            'domain': [('lot_ids', '=', self.id)],
             'context': {
                 'default_product_id': self.product_id.id,
                 'default_lot_id': self.id,

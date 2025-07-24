@@ -2,6 +2,7 @@ import BarcodePickingModel from "@stock_barcode/models/barcode_picking_model";
 import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
+import { deepEqual } from "@web/core/utils/objects";
 
 export default class BarcodeMRPModel extends BarcodePickingModel {
     constructor(params) {
@@ -111,7 +112,7 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
     get isComplete() {
         if (
             this.record.product_id.tracking !== "none" &&
-            !(this.record.lot_producing_id || this.record.lot_name)
+            !(this.record.lot_producing_ids.length || this.record.lot_name)
         ) {
             return false;
         }
@@ -254,8 +255,10 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
         }
         record.product_id = this.cache.getRecord("product.product", record.product_id);
         record.product_uom_id = this.cache.getRecord("uom.uom", record.product_uom_id);
-        if (record.lot_producing_id) {
-            record.lot_producing_id = this.cache.getRecord("stock.lot", record.lot_producing_id);
+        if (record.lot_producing_ids.length > 0) {
+            for (const index in record.lot_producing_ids) {
+                record.lot_producing_ids[index] = this.cache.getRecord("stock.lot", record.lot_producing_ids[index]);
+            }
         }
         if (record.picking_type_id && record.state !== "cancel") {
             record.picking_type_id = this.cache.getRecord(
@@ -333,7 +336,10 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
                     "stock.location",
                     this.record.location_dest_id
                 ),
-                lot_id: this.record.lot_producing_id,
+                lot_id:
+                    this.record.lot_producing_ids?.length === 1
+                        ? this.record.lot_producing_ids[0]
+                        : false,
                 lot_name: this.record.lot_name,
                 finalProduct: true,
                 package_id: false,
@@ -389,7 +395,7 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
                 this.record.lot_name = args.lot_name;
             }
             if (args.lot_id) {
-                this.record.lot_producing_id = args.lot_id;
+                this.record.lot_producing_ids = [args.lot_id];
             }
             this.produceQty();
             return;
@@ -474,11 +480,6 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
 
     produceQty(quantity = 1) {
         const new_producing = this.record.qty_producing + quantity;
-        if (this.record.product_id.tracking == "serial" && new_producing > 1) {
-            const message = _t(`To produce more products create a new MO.`);
-            this.notification(message, { type: "danger" });
-            return;
-        }
         this.record.qty_producing = new_producing;
         const ratio = quantity / this.record.product_qty;
 
@@ -518,14 +519,16 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
     async generateSerial() {
         await this.save();
         const res = await this.orm.call("mrp.production", "set_lot_producing", [[this.resId]]);
-        this.record.lot_producing_id = res[0][0];
         const action = res[1];
-        if (this.record.product_id.tracking == "serial" && this.record.qty_producing === 0) {
-            this.produceQty();
-            if (action) {
-                return this.action.doAction(action);
+        if(res[0]) {
+            this.record.lot_producing_ids = [res[0][0]];
+            if (this.record.product_id.tracking == "serial" && this.record.qty_producing === 0) {
+                this.produceQty();
+                if (action) {
+                    return this.action.doAction(action);
+                }
+                return;
             }
-            return;
         }
         if (action) {
             return this.action.doAction(action);
@@ -581,7 +584,7 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
     }
 
     _getRecordFieldsToWrite() {
-        return ["qty_producing", "product_qty", "lot_producing_id", "product_id"];
+        return ["qty_producing", "product_qty", "lot_producing_ids", "product_id"];
     }
 
     _getRecordSaveVals() {
@@ -590,20 +593,27 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
         const writeFields = this._getRecordFieldsToWrite();
         for (const fieldName of writeFields) {
             let value = this.record[fieldName];
-            value = typeof value === "object" ? value.id : value;
+            if (Array.isArray(value)) {
+                value = value.map((value) => value.id);
+            } else if (typeof value === "object") {
+                value = value.id;
+            }
             let initialValue = this.initialState.record[fieldName];
-            initialValue = typeof initialValue === "object" ? initialValue.id : initialValue;
-            if (value !== initialValue) {
+            if (Array.isArray(initialValue)) {
+                initialValue = initialValue.map((initialValue) => initialValue.id);
+            } else if (typeof initialValue === "object") {
+                initialValue = initialValue.id;
+            }
+            if (!deepEqual(value, initialValue)) {
                 res[fieldName] = value;
             }
         }
-
-        if (!this.record.lot_producing_id && this.record.lot_name) {
-            res.lot_producing_id = {
+        if(this.record.lot_name && this.record.lot_producing_ids.length == 0) {
+            res.lot_producing_ids = [{
                 name: this.record.lot_name,
                 product_id: this.record.product_id.id,
                 company_id: this.record.company_id, // only the id is fetched from the backend
-            };
+            }];
         }
 
         if (!this.record.company_id) {

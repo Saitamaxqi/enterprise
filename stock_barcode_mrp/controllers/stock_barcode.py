@@ -23,7 +23,6 @@ class MRPStockBarcode(StockBarcodeController):
         :param model_vals: list of list with model name,res_id and a dict of write_vals
         :returns the barcode data from the mrp model passed
         """
-        target_record = request.env['mrp.production']
         for model, res_id, vals in model_vals:
             if res_id == 0:
                 record = request.env[model].with_context(newByProduct=vals.pop('byProduct', False)).create(vals)
@@ -33,10 +32,10 @@ class MRPStockBarcode(StockBarcodeController):
             else:
                 record = request.env[model].browse(res_id)
                 for key in vals:
-                    # check if dict val is passed for creation (for many2one, lot_producing_id in case of mrp)
-                    if isinstance(vals[key], dict):
+                    # check if list of dict is passed for creation (for many2many, lot_producing_ids in case of mrp)
+                    if isinstance(vals[key], list) and isinstance(vals[key][0], dict):
                         sub_model = request.env[model]._fields[key].comodel_name
-                        vals[key] = request.env[sub_model].create(vals[key]).id
+                        vals[key] = request.env[sub_model].create(vals[key]).ids
                 record.write(vals)
         target_record = record if model == 'mrp.production' else record.production_id
         if target_record.state == 'draft':

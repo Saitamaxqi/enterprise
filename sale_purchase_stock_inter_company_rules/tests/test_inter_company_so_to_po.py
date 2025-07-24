@@ -49,7 +49,6 @@ class TestInterCompanySaleToPurchaseWithStock(TestInterCompanyRulesCommonStock):
         with Form(delivery) as delivery_form:
             with delivery_form.move_ids_without_package.edit(0) as move_form:
                 move_form.lot_ids = serial
-                move_form.quantity = 1
                 move_form.picked = True
             delivery = delivery_form.save()
         delivery.with_company(self.company_a).button_validate()

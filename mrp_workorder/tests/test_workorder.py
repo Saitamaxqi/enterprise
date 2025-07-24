@@ -225,7 +225,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         sorted_workorder_ids = mo.workorder_ids.sorted()
         wo = sorted_workorder_ids[0]
         wo.button_start()
-        wo.finished_lot_id = self.sp1
+        wo.finished_lot_ids = self.sp1
         self.assertEqual(wo.move_raw_ids.move_line_ids[0].lot_id, self.mc1, 'The suggested lot is wrong')
         wo.move_raw_ids.move_line_ids[0].quantity = 1
         wo.move_raw_ids.picked = True
@@ -233,7 +233,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
 
         wo = sorted_workorder_ids[1]
         wo.button_start()
-        self.assertEqual(wo.finished_lot_id, self.sp1, 'The suggested final product is wrong')
+        self.assertEqual(wo.finished_lot_ids, self.sp1, 'The suggested final product is wrong')
         self.assertEqual(wo.move_raw_ids.move_line_ids[0].lot_id, self.elon1, 'The suggested lot is wrong')
         wo.move_raw_ids.move_line_ids[0].quantity = 1
         wo.move_raw_ids.picked = True
@@ -242,7 +242,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
 
         wo = sorted_workorder_ids[2]
         wo.button_start()
-        self.assertEqual(wo.finished_lot_id, self.sp1, 'The suggested final product is wrong')
+        self.assertEqual(wo.finished_lot_ids, self.sp1, 'The suggested final product is wrong')
         wo.do_finish()
 
         mo.move_raw_ids.filtered(lambda m: not m.operation_id).picked = True
@@ -296,7 +296,7 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         wo = production.workorder_ids
         wo.button_start()
         self.assertEqual(production.move_raw_ids.move_line_ids.lot_id, self.elon2, "Lot should be assigned.")
-        self.assertEqual(wo.lot_id, self.elon2, "Lot should be set in the step")
+        self.assertEqual(wo.current_quality_check_id.lot_ids, self.elon2, "Lot should be set in the step")
 
     def test_step_by_product_variant(self):
         who_attr = self.env['product.attribute'].create({'name': 'Who?'})
@@ -564,12 +564,12 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         operation_1.qty_producing = 1.0
         raw_move_1.move_line_ids[0].quantity = 1.0
         operation_1.do_finish()
-        self.assertRecordValues(operation_1, [{'qty_produced': 1.0, 'finished_lot_id': False, 'state': 'done'}])
+        self.assertRecordValues(operation_1, [{'qty_produced': 1.0, 'finished_lot_ids': [], 'state': 'done'}])
         operation_2.button_start()
         operation_2.qty_producing = 1.0
         raw_move_2.move_line_ids[0].quantity = 1.0
         operation_2.do_finish()
-        self.assertRecordValues(operation_2, [{'qty_produced': 1.0, 'finished_lot_id': False, 'state': 'done'}])
+        self.assertRecordValues(operation_2, [{'qty_produced': 1.0, 'finished_lot_ids': [], 'state': 'done'}])
         self.assertEqual(mo.state, 'to_close')
         # Try to finish the production without assigning an SN
         mo.move_raw_ids.filtered(lambda m: not m.operation_id).picked = True
@@ -577,8 +577,8 @@ class TestWorkOrder(TestMrpWorkorderCommon):
             mo.button_mark_done()
         # Assign an SN and mark the production as done
         mo.action_generate_serial()
-        self.assertEqual(operation_1.finished_lot_id, mo.lot_producing_id)
-        self.assertEqual(operation_2.finished_lot_id, mo.lot_producing_id)
+        self.assertEqual(operation_1.finished_lot_ids, mo.lot_producing_ids)
+        self.assertEqual(operation_2.finished_lot_ids, mo.lot_producing_ids)
         mo.button_mark_done()
         self.assertEqual(mo.state, 'done')
 

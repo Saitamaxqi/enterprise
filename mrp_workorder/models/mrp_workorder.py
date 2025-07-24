@@ -42,7 +42,6 @@ class MrpWorkorder(models.Model):
     is_last_lot = fields.Boolean('Is Last lot', compute='_compute_is_last_lot')
     is_first_started_wo = fields.Boolean('Is The first Work Order', compute='_compute_is_last_unfinished_wo')
     is_last_unfinished_wo = fields.Boolean('Is Last Work Order To Process', compute='_compute_is_last_unfinished_wo', store=False)
-    lot_id = fields.Many2one(related='current_quality_check_id.lot_id', readonly=False)
     move_id = fields.Many2one(related='current_quality_check_id.move_id', readonly=False)
     move_line_ids = fields.One2many(related='move_id.move_line_ids')
     quality_state = fields.Selection(related='current_quality_check_id.quality_state', string="Quality State", readonly=False)
@@ -160,9 +159,7 @@ class MrpWorkorder(models.Model):
 
     def action_generate_serial(self):
         self.ensure_one()
-        self.finished_lot_id = self.env['stock.lot'].create(
-            self.production_id._prepare_stock_lot_values()
-        )
+        return self.production_id.action_generate_serial(self)
 
     def _change_quality_check(self, position):
         """Change the quality check currently set on the workorder `self`.
@@ -427,12 +424,12 @@ class MrpWorkorder(models.Model):
                 case "ask":
                     return self.production_id.with_context(workorder_id_to_finish=self.id)._action_generate_backorder_wizard(self.production_id)
                 case "always":
-                    backorder = self.production_id._split_productions()[1:]
+                    backorder = self.production_id._split_productions({self.production_id: [self.qty_producing, self.qty_remaining - self.qty_producing]})[1:]
                     for workorder in backorder.workorder_ids:
-                        if workorder.product_tracking == 'serial':
-                            workorder.qty_producing = 1
-                        else:
+                        if not self.env.context.get('no_start_next', False):
                             workorder.qty_producing = workorder.qty_remaining
+                    self.production_id.product_qty = self.qty_producing
+
         else:
             if self.operation_id:
                 backorder = (self.production_id.procurement_group_id.mrp_production_ids - self.production_id).filtered(
@@ -464,7 +461,7 @@ class MrpWorkorder(models.Model):
         move_line_id = move.move_line_ids[:1]
         if move_line_id:
             vals.update({
-                'lot_id': move_line_id.lot_id.id,
+                'lot_ids': move_line_id.lot_id.ids,
             })
         return vals
     # --------------------------
@@ -880,7 +877,7 @@ class MrpWorkorder(models.Model):
                 'quality_state': 'pass',
                 'production_id': self.production_id.id,
                 'product_id': self.product_id.id,
-                'lot_id': self.production_id.lot_producing_id.id,
+                'lot_ids': self.production_id.lot_producing_ids.ids,
                 'team_id': self.env['quality.alert.team']._get_quality_team(
                     self.env['quality.alert.team']._check_company_domain(
                         self.company_id.id or self.env.context.get('default_company_id', self.env.company.id)

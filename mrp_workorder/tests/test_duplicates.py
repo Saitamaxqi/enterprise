@@ -168,7 +168,7 @@ class TestDuplicateProducts(common.TransactionCase):
         wo = production.workorder_ids[0]
         wo.button_start()
         # Components
-        wo.finished_lot_id = self.pb1
+        wo.finished_lot_ids = self.pb1
         wo.move_raw_ids[0].move_line_ids[0].lot_id = self.bb1
         wo.move_raw_ids[0].move_line_ids[0].quantity = 1
         # First layer

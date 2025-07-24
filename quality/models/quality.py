@@ -196,8 +196,8 @@ class QualityCheck(models.Model):
     picking_id = fields.Many2one('stock.picking', 'Picking', check_company=True, index='btree_not_null')
     partner_id = fields.Many2one(
         related='picking_id.partner_id', string='Partner')
-    lot_id = fields.Many2one(
-        'stock.lot', 'Lot/Serial',
+    lot_ids = fields.Many2many(
+        'stock.lot', string='Lot/Serial',
         check_company=True,
         domain="[('product_id', '=', product_id)]")
     user_id = fields.Many2one('res.users', 'Responsible', tracking=True)
@@ -325,8 +325,8 @@ class QualityAlert(models.Model):
     product_id = fields.Many2one(
         'product.product', 'Product Variant',
         domain="[('product_tmpl_id', '=', product_tmpl_id)]")
-    lot_id = fields.Many2one(
-        'stock.lot', 'Lot', check_company=True,
+    lot_ids = fields.Many2many(
+        'stock.lot', string='Lot', check_company=True,
         domain="['|', ('product_id', '=', product_id), ('product_id.product_tmpl_id', '=', product_tmpl_id)]")
     priority = fields.Selection([
         ('0', 'Normal'),
