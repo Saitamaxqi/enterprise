@@ -1,16 +1,18 @@
 from odoo.exceptions import AccessError
+from odoo.tests import tagged
 from odoo.tests.common import new_test_user
 
 from odoo.addons.voip.tests.test_voip_access_rights import TestVoipAccessRights
 
 
+@tagged("-at_install", "post_install")
 class TestVoipHrAccessRights(TestVoipAccessRights):
     def test_hr_manager_and_department_manager_access_on_subordinates_calls(self):
         """
         HR managers and department managers can only read voip.call records for their subordinates.
         """
         department = self.env["hr.department"].create({"name": "HR"})
-        manager_user = new_test_user(self.env, login="manager", groups="base.group_user")
+        manager_user = new_test_user(self.env, login="manager", groups="hr.group_hr_user")
         manager_employee = self.env["hr.employee"].create(
             {
                 "name": "Manager",
@@ -19,7 +21,7 @@ class TestVoipHrAccessRights(TestVoipAccessRights):
             },
         )
         department.manager_id = manager_employee.id
-        employee_user = new_test_user(self.env, login="employee", groups="base.group_user")
+        employee_user = new_test_user(self.env, login="employee", groups="hr.group_hr_user")
         employee = self.env["hr.employee"].create(
             {
                 "name": "Employee",
@@ -57,7 +59,7 @@ class TestVoipHrAccessRights(TestVoipAccessRights):
         HR managers and department managers do not have any access to voip.call records for users who are not their subordinates.
         """
         department = self.env["hr.department"].create({"name": "HR", "manager_id": False})
-        manager_user = new_test_user(self.env, login="manager", groups="base.group_user")
+        manager_user = new_test_user(self.env, login="manager", groups="hr.group_hr_user")
         manager_employee = self.env["hr.employee"].create(
             {
                 "name": "Manager",
@@ -67,7 +69,7 @@ class TestVoipHrAccessRights(TestVoipAccessRights):
         )
         department.manager_id = manager_employee.id
         # Create a user and employee NOT in the manager's department or hierarchy
-        outsider_user = new_test_user(self.env, login="outsider", groups="base.group_user")
+        outsider_user = new_test_user(self.env, login="outsider", groups="hr.group_hr_user")
         self.env["hr.employee"].create({"name": "Outsider", "user_id": outsider_user.id})
 
         with self.assertRaises(AccessError):
