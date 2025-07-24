@@ -124,7 +124,7 @@ registry.category("web_tour.tours").add('industry_fsm_stock_test_tour', {
         run: "click",
     },
     {
-        trigger: 'button[name="action_view_task"]',
+        trigger: 'a.fw-bold.text-truncate[data-tooltip*="Fsm task"]',
         content: 'Go back to fsm task',
         run: "click",
     },

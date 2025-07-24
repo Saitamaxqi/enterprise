@@ -17,8 +17,8 @@ registry.category("web_tour.tours").add(
             run: "click",
         },
         {
-            trigger: 'button[name="action_view_task"]',
-            content: 'Open tasks',
+            trigger: 'button[name="action_view_project_ids"]',
+            content: 'Open project/tasks',
             run: "click",
         },
         {
