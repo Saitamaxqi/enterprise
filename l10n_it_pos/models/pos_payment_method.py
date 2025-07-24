@@ -16,7 +16,7 @@ class PosPaymentMethod(models.Model):
             "6 = Payment discount"
         )
     )
-    it_payment_index = fields.Integer(string='Payment Index', default=0)
+    it_payment_index = fields.Integer(string='Payment Index', default=1)
 
     @api.model
     def _load_pos_data_fields(self, config):
