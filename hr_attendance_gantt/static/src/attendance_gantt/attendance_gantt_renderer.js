@@ -11,19 +11,4 @@ import { HrGanttRenderer } from "@hr_gantt/hr_gantt_renderer";
             () => this.props.openDialog({ resId: pill.record.id })
         )
     }
-    /**
-     * @override
-     * If multiple columns have been selected, keep the check_out's value overwise remove it.
-     */
-    onCreate(rowId, columnStart, columnStop) {
-        let { start } = this.getSubColumnFromColNumber(columnStart);
-        let { stop } = this.getSubColumnFromColNumber(columnStop);
-        ({ start, stop } = this.normalizeTimeRange(start, stop));
-        const context = this.model.getDialogContext({rowId, start, stop, withDefault: true});
-        if (columnStart == columnStop){
-            delete context.check_out;
-            delete context.default_check_out;
-        }
-        this.props.create(context);
-    }
 }
