@@ -6,6 +6,7 @@ import {
 } from "../knowledge_tour_utils.js";
 import { stepUtils } from "@web_tour/tour_utils";
 import { patch } from "@web/core/utils/patch";
+import { animationFrame, hover, queryFirst } from "@odoo/hoot-dom";
 
 const embeddedViewPatchUtil = embeddedViewPatchFunctions();
 
@@ -388,20 +389,20 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
         const target = document.querySelector('.fc-timegrid-slot.fc-timegrid-slot-lane[data-time="09:00:00"]');
         dragDate(this.anchor, target);
     },
-}, { // Make resizer visible
-    trigger: '.fc-timegrid-event',
-    run: function () {
-        const resizer = this.anchor.querySelector(".fc-event-resizer-end");
-        resizer.style.display = "block";
-        resizer.style.width = "100%";
-        resizer.style.height = "3px";
-        resizer.style.bottom = "0";
-        },
-}, {
-    trigger: '.fc-timegrid-event:contains("Item Article") .fc-event-resizer-end',
-    run: function () {
-        const target = document.querySelector('.fc-timegrid-slot.fc-timegrid-slot-lane[data-time="11:00:00"]');
-        dragDate(this.anchor, target);
+}, { // Resize the item
+    trigger: '.fc-timegrid-event:contains("Item Article")',
+    run: async () => {
+        // Make resizer visible
+        await hover(`.fc-event-main:first`, { root: this.anchor });
+        await animationFrame();
+        const resizer = queryFirst(`.fc-event-resizer-end`, { root: this.anchor });
+        Object.assign(resizer.style, {
+            display: "block",
+            height: "1px",
+            bottom: "0",
+        });
+        const target = queryFirst('.fc-timegrid-slot.fc-timegrid-slot-lane[data-time="11:00:00"]');
+        dragDate(resizer, target);
     },
 }, {
     //----------------------------------------------------------------------
