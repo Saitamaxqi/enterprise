@@ -19,5 +19,9 @@
         'web.assets_tests': [
             'stock_barcode_product_expiry/static/tests/tours/**/*',
         ],
+        'web.assets_unit_tests': [
+            'stock_barcode_product_expiry/static/tests/**/*',
+            ('remove', 'stock_barcode_product_expiry/static/tests/tours/**/*'),
+        ]
     },
 }

@@ -1,7 +1,9 @@
 import * as helper from "@stock_barcode/../tests/tours/tour_helper_stock_barcode";
 import { registry } from "@web/core/registry";
+import { formatDate, deserializeDateTime } from "@web/core/l10n/dates";
 
-registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
+
+registry.category("web_tour.tours").add('test_gs1_receipt_expiration_date', { 
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -27,7 +29,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
                 helper.assertLinesCount(1);
                 const line = helper.getLine({ barcode: "76543210" });
                 const lot_with_date = line.querySelector('div[name="lot"]').innerText;
-                const date = new Date("2022-05-20").toLocaleDateString();
+                const date = formatDate(deserializeDateTime("2022-05-20"));
                 helper.assert(lot_with_date, `b1-b001 (${date})`, "lot line");
                 helper.assertLineIsHighlighted(line, true);
                 helper.assertLineQty(line, "8/20");
@@ -60,8 +62,8 @@ registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
                 helper.assertLineIsHighlighted(line2, true);
                 const lot_with_date_1 = line1.querySelector('div[name="lot"]').innerText;
                 const lot_with_date_2 = line2.querySelector('div[name="lot"]').innerText;
-                const date1 = new Date("2022-05-20").toLocaleDateString();
-                const date2 = new Date("2022-05-21").toLocaleDateString();
+                const date1 = formatDate(deserializeDateTime("2022-05-20"));
+                const date2 = formatDate(deserializeDateTime("2022-05-21"));
                 helper.assert(lot_with_date_1, `b1-b001 (${date1})`, "lot line");
                 helper.assert(lot_with_date_2, `b1-b002 (${date2})`, "lot line");
             },
@@ -93,9 +95,9 @@ registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
                 const lot_with_date_1 = line1.querySelector('div[name="lot"]').innerText;
                 const lot_with_date_2 = line2.querySelector('div[name="lot"]').innerText;
                 const lot_with_date_3 = line3.querySelector('div[name="lot"]').innerText;
-                const date1 = new Date("2022-05-20").toLocaleDateString();
-                const date2 = new Date("2022-05-21").toLocaleDateString();
-                const date3 = new Date("2022-05-22").toLocaleDateString();
+                const date1 = formatDate(deserializeDateTime("2022-05-20"));
+                const date2 = formatDate(deserializeDateTime("2022-05-21"));
+                const date3 = formatDate(deserializeDateTime("2022-05-22"));
                 helper.assert(lot_with_date_1, `b1-b001 (${date1})`, "lot line");
                 helper.assert(lot_with_date_2, `b1-b002 (${date2})`, "lot line");
                 helper.assert(lot_with_date_3, `b1-b003 (${date3})`, "lot line");
