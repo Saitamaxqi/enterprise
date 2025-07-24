@@ -280,7 +280,7 @@ class LLMApiService:
             user_content.extend(
                 {'type': 'input_text', 'text': file['value']}
                 if file['type'] == 'text' else
-                {'type': 'input_image', 'image_url': file['value']}
+                {'type': 'input_image', 'image_url': file['value'], 'detail': 'low'}
                 if file['type'] == 'image' else
                 {'type': 'input_file', 'filename': f"file_{idx}.pdf", 'file_data': file['value']}
                 for idx, file in enumerate(files, start=1)

@@ -1,16 +1,21 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import base64
+import contextlib
 import io
 import logging
 import re
 
 from odoo import models
 from odoo.addons.ai.models.models import AI_SUPPORTED_IMG_TYPES
+from odoo.tools.pdf import OdooPdfFileReader, OdooPdfFileWriter, to_pdf_stream, PdfReadError
 
 _logger = logging.getLogger(__name__)
 
 
 class IrAttachment(models.Model):
     _inherit = 'ir.attachment'
+
+    AI_MAX_PDF_PAGES = 5
 
     def _compute_pdf_content(self):
         """Compute the content of the PDF attachment."""
@@ -198,9 +203,31 @@ class IrAttachment(models.Model):
                 continue
             file_ref = f'<file_#{len(files_dict) + 1}>'
             extension = attachment.mimetype.split('/')[-1]
-            if extension in AI_SUPPORTED_IMG_TYPES or extension == 'pdf' and not attachment.url:
+            if extension == 'pdf' and not attachment.url:
+                # Extract the X first / last pages of the PDFs
+                reader = None
+                with contextlib.suppress(PdfReadError):
+                    reader = OdooPdfFileReader(to_pdf_stream(attachment), strict=False)
+                if not reader or reader.numPages <= self.AI_MAX_PDF_PAGES:
+                    b64_datas = attachment.datas.decode()
+                else:
+                    writer = OdooPdfFileWriter()
+                    start_pages = self.AI_MAX_PDF_PAGES // 2
+                    end_pages = self.AI_MAX_PDF_PAGES - start_pages
+                    for p in (*range(start_pages), *range(reader.numPages - end_pages, reader.numPages)):
+                        writer.addPage(reader.getPage(p))
+                    out_buff = io.BytesIO()
+                    writer.write(out_buff)
+                    b64_datas = base64.b64encode(out_buff.getvalue()).decode()
+
                 files_dict[attachment.checksum] = {
-                    'type': 'pdf' if extension == 'pdf' else 'image',
+                    'type': 'pdf',
+                    'value': f"data:application/pdf;base64,{b64_datas}",
+                    'file_ref': file_ref,
+                }
+            elif extension in AI_SUPPORTED_IMG_TYPES:
+                files_dict[attachment.checksum] = {
+                    'type': 'image',
                     'value': attachment.url or f"data:{attachment.mimetype};base64,{attachment.datas.decode()}",  # utf-8 ?
                     'file_ref': file_ref,
                 }
