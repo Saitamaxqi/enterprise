@@ -58,6 +58,9 @@ export const patchListRendererDesktop = () => ({
                     // we set them to not editable too.
                     return false;
                 }
+                if (action.res_model === "account.bank.statement.line") {
+                    return false; // bank reconciliation isn't editable
+                }
                 return Boolean(action.res_model);
             };
             const onUiUpdated = () => {
