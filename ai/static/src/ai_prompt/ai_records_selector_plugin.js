@@ -1,5 +1,6 @@
 import { RecordsSelectorPopover } from "@ai/records_selector_popover/records_selector_popover";
 import { Plugin } from "@html_editor/plugin";
+import { withSequence } from "@html_editor/utils/resource";
 import { Domain } from "@web/core/domain";
 import { ERROR_INACCESSIBLE_OR_MISSING } from "@web/core/name_service";
 import { _t } from "@web/core/l10n/translation";
@@ -23,8 +24,9 @@ export class AIRecordsSelectorPlugin extends Plugin {
                     !!this.config.recordsSelectorResModel && isHtmlContentSupported(selection),
             },
         ],
-        normalize_handlers: this.normalize.bind(this),
+        normalize_handlers: withSequence(-1, this.normalize.bind(this)),
         powerbox_items: { categoryId: "ai_prompt_tools", commandId: "openAIRecordsSelector" },
+        selectors_for_feff_providers: () => AI_RECORD_SELECTOR,
         start_edition_handlers: this.updateDisplayNames.bind(this),
     };
 
@@ -38,8 +40,8 @@ export class AIRecordsSelectorPlugin extends Plugin {
 
     normalize(element) {
         // make sure records are always protected (could be added without this plugin)
-        if (element.matches(AI_RECORD_SELECTOR)) {
-            element.dataset.oeProtected = true;
+        for (const recordEl of element.querySelectorAll(AI_RECORD_SELECTOR)) {
+            recordEl.dataset.oeProtected = true;
         }
     }
 
@@ -93,7 +95,7 @@ export class AIRecordsSelectorPlugin extends Plugin {
             span.dataset.aiRecordId = resId;
             span.innerText = displayNames[resId];
             this.dependencies.dom.insert(span);
-            this.dependencies.dom.insert(resId === resIds.at(-1) ? " " : ", ");
+            this.dependencies.dom.insert(resId === resIds.at(-1) ? "\u00A0" : ", ");
         }
         this.dependencies.history.addStep();
     }

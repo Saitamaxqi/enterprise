@@ -1,5 +1,6 @@
 import { AiModelFieldSelectorPopover } from "@ai/ai_model_field_selector/ai_model_field_selector_popover";
 import { Plugin } from "@html_editor/plugin";
+import { withSequence } from "@html_editor/utils/resource";
 import { _t } from "@web/core/l10n/translation";
 import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
@@ -20,9 +21,10 @@ export class AIFieldSelectorPlugin extends Plugin {
                 isAvailable: isHtmlContentSupported,
             },
         ],
-        normalize_handlers: this.normalize.bind(this),
+        normalize_handlers: withSequence(-1, this.normalize.bind(this)),
         powerbox_categories: { id: "ai_prompt_tools", name: _t("AI Prompt Tools") },
         powerbox_items: { categoryId: "ai_prompt_tools", commandId: "openAIFieldSelector" },
+        selectors_for_feff_providers: () => AI_FIELD_SELECTOR,
     };
 
     setup() {
@@ -34,9 +36,9 @@ export class AIFieldSelectorPlugin extends Plugin {
     }
 
     normalize(element) {
-        // make sure fields are always protected (in case they are added in the prompt from the backend)
-        if (element.matches(AI_FIELD_SELECTOR)) {
-            element.dataset.oeProtected = true;
+        // make sure fields are always protected (could be added without this plugin)
+        for (const fieldEl of element.querySelectorAll(AI_FIELD_SELECTOR)) {
+            fieldEl.dataset.oeProtected = true;
         }
     }
 
@@ -77,7 +79,7 @@ export class AIFieldSelectorPlugin extends Plugin {
             span.dataset.aiField = fieldChain;
             span.innerText = fieldInfo.map((field) => field.string).join(" > ");
             this.dependencies.dom.insert(span);
-            this.dependencies.dom.insert(fieldInfo === fieldsInfo.at(-1) ? " " : ", ");
+            this.dependencies.dom.insert(fieldInfo === fieldsInfo.at(-1) ? "\u00A0" : ", ");
         }
         this.dependencies.history.addStep();
     }

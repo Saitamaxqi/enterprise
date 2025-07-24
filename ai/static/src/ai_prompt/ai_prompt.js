@@ -3,6 +3,7 @@ import {
     AI_RECORD_SELECTOR,
     AIRecordsSelectorPlugin,
 } from "@ai/ai_prompt/ai_records_selector_plugin";
+import { FeffPlugin } from "@html_editor/main/feff_plugin";
 import { HintPlugin } from "@html_editor/main/hint_plugin";
 import { PlaceholderPlugin } from "@html_editor/main/placeholder_plugin";
 import { PowerboxPlugin } from "@html_editor/main/powerbox/powerbox_plugin";
@@ -77,6 +78,7 @@ export class AiPrompt extends Component {
                 ...CORE_PLUGINS,
                 AIFieldSelectorPlugin,
                 AIRecordsSelectorPlugin,
+                FeffPlugin,
                 HintPlugin,
                 PlaceholderPlugin,
                 PowerboxPlugin,
