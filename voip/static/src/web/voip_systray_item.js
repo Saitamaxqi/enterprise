@@ -77,6 +77,7 @@ export class VoipSystrayItem extends Component {
                 this.ringtoneService.stopPlaying();
             }
         } else {
+            document.activeElement.blur();
             if (this.voip.missedCalls > 0) {
                 this.softphone.activeTab = "recent";
                 this.voip.resetMissedCalls();
