@@ -1,3 +1,6 @@
+import { mountView } from "@web/../tests/web_test_helpers";
+import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
+
 export const basicDocumentsListArch = /* xml */ `
 <list js_class="documents_list">
     <field name="type" width="25px" widget="documents_type_icon" nolabel="1"/>
@@ -18,3 +21,14 @@ export const basicDocumentsListArch = /* xml */ `
     <field name="attachment_id"/>
 </list>
 `;
+
+export async function mountDocumentsListView(params = {}) {
+    return mountView({
+        actionMenus: {},
+        type: "list",
+        resModel: "documents.document",
+        arch: basicDocumentsListArch,
+        searchViewArch: getEnrichedSearchArch(),
+        ...params,
+    });
+}

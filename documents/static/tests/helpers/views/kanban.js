@@ -1,5 +1,5 @@
-import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
 import { mountView } from "@web/../tests/web_test_helpers";
+import { getEnrichedSearchArch } from "@documents/../tests/helpers/views/search";
 
 export const basicDocumentsKanbanArch = /* xml */ `
 <kanban js_class="documents_kanban" draggable="true">

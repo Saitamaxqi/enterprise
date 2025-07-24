@@ -533,26 +533,39 @@ test("Split PDF button availability", async function () {
     ]);
 
     serverData["ir.attachment"] = [
-            { id: 1, name: "text_file.txt", mimetype: "image/webp"},
-            { id: 2, name: "pdf1.pdf", mimetype: "application/pdf"},
-            { id: 3, name: "pdf2.pdf", mimetype: "application/pdf"},
-        ]
+        { id: 1, name: "text_file.txt", mimetype: "image/webp" },
+        { id: 2, name: "pdf1.pdf", mimetype: "application/pdf" },
+        { id: 3, name: "pdf2.pdf", mimetype: "application/pdf" },
+    ];
 
     await makeDocumentsMockEnv({ serverData });
     await mountDocumentsKanbanView();
 
     // Non-PDF with edit permission
     await contains(".o_kanban_record:contains('text_file.txt') [name='document_preview']").click();
-    await contains('.o-FileViewer .o_cp_action_menus .o-dropdown').click()
-    await waitForNone(".o-dropdown-item:contains('Split PDF')")
+    await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
+    await waitForNone(".o-dropdown-item:contains('Split PDF')");
 
     // PDF with view permission
     await contains(".o_kanban_record:contains('pdf1.pdf') [name='document_preview']").click();
-    await contains('.o-FileViewer .o_cp_action_menus .o-dropdown').click()
-    await waitForNone(".o-dropdown-item:contains('Split PDF')")
+    await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
+    await waitForNone(".o-dropdown-item:contains('Split PDF')");
 
     // PDF with edit permission
     await contains(".o_kanban_record:contains('pdf2.pdf') [name='document_preview']").click();
-    await contains('.o-FileViewer .o_cp_action_menus .o-dropdown').click()
-    await waitFor(".o-dropdown-item:contains('Split PDF')")
+    await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
+    await waitFor(".o-dropdown-item:contains('Split PDF')");
+});
+
+test("Select a range with SHIFT key", async () => {
+    await makeDocumentsMockEnv({ serverData: embeddedActionsServerData });
+    await mountDocumentsKanbanView();
+    const { name: folder1Name } = embeddedActionsServerData["documents.document"][0];
+    await contains(`.o_kanban_record:contains(${folder1Name}) .o_record_selector`).click({
+        ctrlKey: true,
+    });
+    await keyDown("Shift");
+    await contains(".o_kanban_record:contains(Request 2)").click();
+    expect(".o_kanban_record:contains(Request 1)").toHaveClass("o_record_selected");
+    expect("div.o_record_selected").toHaveCount(3);
 });

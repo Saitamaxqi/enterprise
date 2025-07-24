@@ -1,13 +1,7 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { waitFor, waitForNone } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
-import {
-    contains,
-    defineModels,
-    mountView,
-    onRpc,
-    patchWithCleanup,
-} from "@web/../tests/web_test_helpers";
+import { contains, defineModels, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 
 import {
@@ -18,8 +12,7 @@ import {
 } from "./helpers/data";
 import { makeDocumentsMockEnv } from "./helpers/model";
 import { embeddedActionsServerData } from "./helpers/test_server_data";
-import { basicDocumentsListArch } from "./helpers/views/list";
-import { getEnrichedSearchArch } from "./helpers/views/search";
+import { mountDocumentsListView } from "./helpers/views/list";
 
 describe.current.tags("desktop");
 
@@ -50,12 +43,7 @@ test("Open share with view user_permission", async function () {
         },
     });
     await makeDocumentsMockEnv({ serverData });
-    await mountView({
-        type: "list",
-        resModel: "documents.document",
-        arch: basicDocumentsListArch,
-        searchViewArch: getEnrichedSearchArch(),
-    });
+    await mountDocumentsListView();
     await contains(`.o_data_row:contains(${folder1Name}) .o_list_record_selector`).click();
     await contains("button:contains(Share)").click();
 
@@ -87,12 +75,7 @@ test("Right panel shows and updates focused or container record only", async fun
         args[0].map((model) => ({ model, display_name: model }))
     );
     await makeDocumentsMockEnv({ serverData });
-    await mountView({
-        type: "list",
-        resModel: "documents.document",
-        arch: basicDocumentsListArch,
-        searchViewArch: getEnrichedSearchArch(),
-    });
+    await mountDocumentsListView();
 
     // Open right panel
     await contains(".o_control_panel_navigation .fa-info-circle").click();
@@ -147,12 +130,7 @@ test("Document actions are hidden when focused record is not selected", async fu
         { id: 2, name: "Two" },
     ];
     await makeDocumentsMockEnv({ serverData });
-    await mountView({
-        type: "list",
-        resModel: "documents.document",
-        arch: basicDocumentsListArch,
-        searchViewArch: getEnrichedSearchArch(),
-    });
+    await mountDocumentsListView();
     // select record focuses it
     await contains(".o_data_row:contains('File 1') .o_list_record_selector").click();
     // Actions are visible as selection is focused
@@ -169,12 +147,7 @@ test("Document actions are hidden when focused record is not selected", async fu
 
 test("only show common available actions", async function () {
     await makeDocumentsMockEnv({ serverData: embeddedActionsServerData });
-    await mountView({
-        type: "list",
-        resModel: "documents.document",
-        arch: basicDocumentsListArch,
-        searchViewArch: getEnrichedSearchArch(),
-    });
+    await mountDocumentsListView();
 
     await contains(`.o_data_row:contains('Request 1') .o_list_record_selector`).click();
     await waitFor(".o_control_panel_actions:contains('Action 1')");
@@ -196,12 +169,7 @@ test("Required document name", async function () {
         makeDocumentRecordData(3, "Testing folder", { folder_id: 1 }),
     ]);
     await makeDocumentsMockEnv({ serverData });
-    await mountView({
-        type: "list",
-        resModel: "documents.document",
-        arch: basicDocumentsListArch,
-        searchViewArch: getEnrichedSearchArch(),
-    });
+    await mountDocumentsListView();
     const lr = (documentName, selector) => `.o_data_row:contains('${documentName}') ${selector}`;
     for (const documentName of ["Testing folder", "Testing file"]) {
         await contains(lr(documentName, ".o_list_record_selector")).click();
@@ -220,4 +188,18 @@ test("Required document name", async function () {
         await contains(".o_list_button_discard").click();
         await animationFrame();
     }
+});
+
+test("documents list: don't unselect all when interacting with the headers", async () => {
+    await makeDocumentsMockEnv({ serverData: embeddedActionsServerData });
+    await mountDocumentsListView();
+
+    await contains(".o_data_row:eq(0) .o_list_record_selector input").click();
+    await contains(".o_data_row:eq(1) .o_list_record_selector input").click();
+
+    expect(".o_data_row_selected").toHaveCount(2);
+
+    await contains("th:eq(2) .o_resize", { visible: false }).dragAndDrop("th:eq(3)");
+
+    expect(".o_data_row_selected").toHaveCount(2);
 });
