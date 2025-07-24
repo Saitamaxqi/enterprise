@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Top menu / dashboard icon -->
-    <menuitem name="Documents" id="documents.menu_root" groups="documents.group_documents_user" web_icon="documents,static/description/icon.png" sequence="65"/>
+    <menuitem name="Documents" id="documents.menu_root" groups="base.group_user" web_icon="documents,static/description/icon.png" sequence="65"/>
 
     <!-- Top bar menus -->
     <menuitem name="Documents"
         id="documents.dashboard"
         parent="documents.menu_root"
         action="document_action_preference"
-        groups="documents.group_documents_user"
+        groups="base.group_user"
         sequence="0"/>
     <menuitem name="Configuration"
         id="documents.Config"
