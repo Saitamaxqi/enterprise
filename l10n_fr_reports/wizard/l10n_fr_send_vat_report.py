@@ -94,7 +94,7 @@ CODE_TO_EDI_ID = {
     'box_2E': 'HL',
     'box_25': 'JA',
     'box_TD': 'KA',
-    'box_26': 'JB',
+    'box_26_external': 'JB',
     'box_AA': 'KJ',
     'box_27': 'JC',
     'box_Y5': 'MT',
