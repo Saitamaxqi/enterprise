@@ -6,8 +6,8 @@
             <field name="model">mail.template</field>
             <field name="inherit_id" ref="mail.email_template_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//page[@name='content']//div[hasclass('text-muted')][contains(text(), 'Write /field')]" position="replace">
-                    <div class="text-muted">Write /field to insert values or /prompt to integrate AI-generated dynamic content.</div>
+                <xpath expr="//page[@name='content']//div[hasclass('text-muted')]" position="replace">
+                    <div invisible="not can_write" class="fst-italic text-muted">Tip: Write /field to insert values or /prompt to integrate AI-generated dynamic content!</div>
                 </xpath>
             </field>
         </record>
