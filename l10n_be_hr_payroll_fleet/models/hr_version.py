@@ -60,7 +60,7 @@ class HrVersion(models.Model):
         'fleet.vehicle', string='Company Car',
         tracking=True, compute="_compute_car_id", store=True, readonly=False,
         domain=lambda self: [('company_id', 'in', (False, self.env.company.id)), ('vehicle_type', '=', 'car')],
-        groups='fleet.fleet_group_manager')
+        groups='fleet.fleet_group_manager,hr.hr_group_user')
     car_atn = fields.Float(
         compute='_compute_car_atn_and_costs',
         store=True,
@@ -84,7 +84,7 @@ class HrVersion(models.Model):
     ordered_car_id = fields.Many2one('fleet.vehicle', string='Ordered New Car',
         tracking=True, store=True, readonly=False,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('vehicle_type', '=', 'car')]",
-        groups='fleet.fleet_group_manager')
+        groups='fleet.fleet_group_manager,hr.hr_group_user')
     new_car_model_id = fields.Many2one(
         'fleet.vehicle.model', string="New Company Car", domain=lambda self: self._get_possible_model_domain(),
         groups='hr.group_hr_user', tracking=True)
