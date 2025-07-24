@@ -14,11 +14,8 @@ export class ResPartner extends mailModels.ResPartner {
 
     get_contacts() {
         const store = new mailDataHelpers.Store();
-        const contacts = this._format_contacts(this.search([["phone", "!=", false]]));
-        for (const contact of contacts) {
-            store.add(this.browse(contact.id), contact);
-        }
-        return store.get_result();
+        const contacts = this.browse(this.search([["phone", "!=", false]]));
+        return store.add(contacts, this._voip_get_store_fields()).get_result();
     }
 
     /** @param {number[]} ids */
@@ -31,5 +28,9 @@ export class ResPartner extends mailModels.ResPartner {
             name: contact.display_name,
             t9_name: contact.t9_name,
         }));
+    }
+
+    _voip_get_store_fields() {
+        return ["id", "email", "phone", "name", "t9_name"];
     }
 }
