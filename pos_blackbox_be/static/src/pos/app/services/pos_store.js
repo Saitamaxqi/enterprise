@@ -461,7 +461,7 @@ patch(PosStore.prototype, {
      * @return {Promise<Object>} The data returned from the blackbox, should look like this:
      * ```
      * {
-     *      value: {
+     *      result: {
      *          signature: "123456789",
      *          vsc: "123456789",
      *          fdm_number: "123456789",

@@ -65,8 +65,6 @@ class PosConfig(models.Model):
 
     def write(self, vals):
         if (vals.get('iface_fiscal_data_module') or self.certified_blackbox_identifier):
-            if vals.get('limit_categories') or self.limit_categories:
-                vals['iface_available_categ_ids'] = vals.get('iface_available_categ_ids', []) + [(4, self.env.ref("pos_blackbox_be.pos_category_fdm").id)]
             cash_rounding = self._create_default_cashrounding()
             if cash_rounding:
                 vals['cash_rounding'] = True
@@ -113,7 +111,6 @@ class PosConfig(models.Model):
                 return res
             self._check_work_product_taxes_and_categories()
             self._check_employee_insz_or_bis_number()
-            self._check_pos_category()
             self._check_cash_rounding()
             self._check_printer_connected()
         return super()._check_before_creating_new_session()
@@ -174,18 +171,6 @@ class PosConfig(models.Model):
             }
             return action
         return False
-
-    def _check_pos_category(self):
-        if self.limit_categories:
-            if (
-                self.env.ref("pos_blackbox_be.pos_category_fdm").id
-                not in self.iface_available_categ_ids.ids
-            ):
-                raise ValidationError(
-                    _(
-                        "You have to add the fiscal category to the limited category in order to use the fiscal data module"
-                    )
-                )
 
     @api.constrains("iface_fiscal_data_module", "fiscal_position_ids")
     def _check_posbox_fp_tax_code(self):

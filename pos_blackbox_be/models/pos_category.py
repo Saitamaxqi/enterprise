@@ -2,10 +2,18 @@
 
 from odoo import models, api, _
 from odoo.exceptions import UserError
+from odoo.osv import expression
 
 
 class PosCategory(models.Model):
     _inherit = "pos.category"
+
+    def _load_pos_data_domain(self, data):
+        domain = super()._load_pos_data_domain(data)
+        if data['pos.config'][0]['iface_fiscal_data_module'] and data['pos.config'][0]['limit_categories']:
+            fdm_categ = self.env.ref("pos_blackbox_be.pos_category_fdm").id
+            domain = expression.OR([domain, [('id', '=', fdm_categ)]])
+        return domain
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_fiscal_category(self):
