@@ -192,9 +192,9 @@ class PosConfig(models.Model):
         self._add_line_to_fiscal_position(fiscal_position)
 
     def _add_line_to_fiscal_position(self, fiscal_position):
-        source_taxes = self.env['account.tax'].search([('type_tax_use', '=', 'sale'), ('company_id', '=', self.company_id.id), ('is_domestic', '=', True)])
-        if fiscal_position and fiscal_position.tax_ids.original_tax_ids != source_taxes:
-            fiscal_position.tax_ids.original_tax_ids = source_taxes
+        # Outside of India, prices are tax-inclusive. So if users want tax-specific behavior,
+        # they must manually add a tax line to the fiscal position.
+        pass
 
     def prepare_taxes_data(self, pos_products):
         """

@@ -40,6 +40,7 @@ class PosConfig(models.Model):
     def _add_line_to_fiscal_position(self, fiscal_position):
         super()._add_line_to_fiscal_position(fiscal_position)
         if self.company_id.country_code == 'IN':
-            taxes_to_remove = fiscal_position.tax_ids.original_tax_ids.filtered(lambda a: a.amount != 5 or a.tax_group_id.name != 'GST')
-            for dest_tax in fiscal_position.tax_ids:
-                dest_tax.original_tax_ids -= taxes_to_remove
+            # Add a GST 5% line if not already present
+            gst_tax = self.env['account.chart.template'].with_company(self.company_id).ref("sgst_sale_5")
+            if gst_tax and gst_tax not in fiscal_position.tax_ids.mapped('original_tax_ids'):
+                fiscal_position.tax_ids.original_tax_ids |= gst_tax

@@ -129,10 +129,10 @@ class TestFrontend(TestPosUrbanPiperCommon):
             }).make_test_order(identifier_1)
         self.start_pos_tour('OrderWithChargesAndDiscountTour', pos_config=self.urban_piper_config, login="pos_admin")
         order_1 = self.env['pos.order'].search([('delivery_identifier', '=', identifier_1)])
-        self.assertEqual(500.0, order_1.amount_total)
-        self.assertEqual(500.0, order_1.amount_paid)
-        self.assertEqual(0.0, order_1.amount_tax)
-        self.assertEqual(500.0, order_1.payment_ids[0].amount)
+        self.assertEqual(522.5, order_1.amount_total)
+        self.assertEqual(522.5, order_1.amount_paid)
+        self.assertEqual(22.5, order_1.amount_tax)
+        self.assertEqual(522.5, order_1.payment_ids[0].amount)
 
     def test_prepare_option_data_returns_valid_options(self):
         """Test that _prepare_option_data returns correctly formatted active options."""
