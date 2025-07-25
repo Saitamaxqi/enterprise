@@ -10,7 +10,7 @@ from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
 
 _logger = logging.getLogger(__name__)
 
-DEFAULT_ENDPOINT = "https://graph.facebook.com/v17.0"
+DEFAULT_ENDPOINT = "https://graph.facebook.com/v23.0"
 MAX_RESPONSE_SIZE = 10 * 1024 * 1024  # 10MB
 
 class WhatsAppApi:

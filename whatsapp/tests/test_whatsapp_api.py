@@ -38,7 +38,7 @@ class WhatsAppAPI(WhatsAppCommon, MockIncomingWhatsApp):
         self.assertEqual(len(self._wa_http_requests), 2)
 
         doc_info_log_message = (
-            "URL: https://graph.facebook.com/v17.0/test_doc_id\n"
+            "URL: https://graph.facebook.com/v23.0/test_doc_id\n"
             "Status Code: 200\n"
             f"Response Text: {self._wa_http_requests[0]['response'].content.decode()}"
         )
