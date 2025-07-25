@@ -22,6 +22,7 @@ class MailTemplate(models.Model):
             self.env['ir.model.data']._update_xmlids([{
                 'xml_id': "l10n_co_dian.email_template_edi_invoice",
                 'record': invoice_dian_template,
+                'noupdate': True,
             }])
 
         credit_note_template = self.env.ref('account.email_template_edi_credit_note', raise_if_not_found=False)
@@ -31,4 +32,5 @@ class MailTemplate(models.Model):
             self.env['ir.model.data']._update_xmlids([{
                 'xml_id': "l10n_co_dian.email_template_edi_credit_note",
                 'record': credit_note_dian_template,
+                'noupdate': True,
             }])
