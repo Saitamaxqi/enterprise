@@ -183,11 +183,11 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
                     'content': [
                         {'type': 'input_text', 'text': user_prompt},
                         *(
+                            {'type': 'input_file', 'filename': f"file_{idx}.pdf", 'file_data': f"data:{file['mimetype']};base64,{file['value']}"}
+                            if file['mimetype'] == 'application/pdf' else
+                            {'type': 'input_image', 'image_url': f"data:{file['mimetype']};base64,{file['value']}", 'detail': 'low'}
+                            if file['mimetype'].startswith("image/") else
                             {'type': 'input_text', 'text': file['value']}
-                            if file['type'] == 'text' else
-                            {'type': 'input_image', 'image_url': file['value']}
-                            if file['type'] == 'image' else
-                            {'type': 'input_file', 'filename': f"file_{idx}.pdf", 'file_data': file['value']}
                             for idx, file in enumerate(files, start=1)
                         )
                     ]

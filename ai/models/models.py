@@ -174,15 +174,16 @@ class Model(models.AbstractModel):
                             mimetype = guess_mimetype(raw)
                             extension = mimetype.split("/")[-1]
                             file_ref = f'<file_#{len(files_dict) + 1}>'
-                            if is_uri := extension in (*AI_SUPPORTED_IMG_TYPES, 'pdf'):
-                                value = f'data:{mimetype};base64,{vals[fname].decode()}'
+                            if extension in (*AI_SUPPORTED_IMG_TYPES, 'pdf'):
+                                # todo: keep 5 pages max and resize images
+                                value = vals[fname].decode()
                             else:
                                 try:
                                     value = self.env['ir.attachment']._index(vals[fname], mimetype, checksum=checksum)
                                 except TypeError:
                                     value = self.env['ir.attachment']._index(vals[fname], mimetype)
                             files_dict[checksum] = {
-                                'type': 'pdf' if extension == 'pdf' else 'image' if is_uri else 'text',
+                                'mimetype': mimetype,
                                 'value': value,
                                 'file_ref': file_ref,
                             }

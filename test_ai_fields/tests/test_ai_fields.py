@@ -273,9 +273,9 @@ class TestAiFields(TransactionCase):
         ])
         self.assertCountEqual(vals['res.partner.bank'], record.message_partner_ids.bank_ids.read(['acc_number']))
         self.assertCountEqual(files, [
-            {'value': f"data:application/pdf;base64,{pdf_datas.decode()}", 'type': 'pdf', 'file_ref': '<file_#1>'},
-            {'value': f"data:image/png;base64,{png_datas.decode()}", 'type': 'image', 'file_ref': '<file_#2>'},
-            {'value': "My txt content", 'type': 'text', 'file_ref': '<file_#3>'}
+            {'value': pdf_datas.decode(), 'mimetype': 'application/pdf', 'file_ref': '<file_#1>'},
+            {'value': png_datas.decode(), 'mimetype': 'image/png', 'file_ref': '<file_#2>'},
+            {'value': "My txt content", 'mimetype': 'text/plain', 'file_ref': '<file_#3>'},
         ])
 
         # Check that the name are truncated

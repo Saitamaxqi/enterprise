@@ -15,11 +15,6 @@ from odoo.exceptions import UserError
 _logger = getLogger(__name__)
 
 
-class ChatMessage(typing.TypedDict):
-    role: str
-    content: str
-
-
 class Embedding(typing.TypedDict):
     index: int
     embedding: list[float]
@@ -44,77 +39,6 @@ class LLMApiService:
 
         self.base_url = base_url
         self.env = env
-
-    def get_completion(
-        self,
-        messages: list[ChatMessage],
-        model: str = 'gpt-4',
-        store: bool | None = None,
-        reasoning_effort: str | None = None,
-        metadata: dict | None = None,
-        frequency_penalty: float | None = None,
-        logit_bias: dict | None = None,
-        logprobs: bool | None = None,
-        top_logprobs: int | None = None,
-        max_completion_tokens: int | None = None,
-        n: int | None = None,
-        modalities: list[str] | None = None,
-        prediction: dict | None = None,
-        audio: dict | None = None,
-        presence_penalty: float | None = None,
-        response_format: dict | None = None,
-        seed: int | None = None,
-        service_tier: str | None = None,
-        stop: str | list[str] | None = None,
-        stream: bool | None = None,
-        stream_options: dict | None = None,
-        temperature: float | None = None,
-        top_p: float | None = None,
-        tools: list[dict] | None = None,
-        tool_choice: str | dict | None = None,
-        parallel_tool_calls: bool | None = None,
-        user: str | None = None,
-    ):
-        body = {
-            'model': model,
-            'messages': messages
-        }
-
-        self._add_if_set(body, 'store', store)
-        self._add_if_set(body, 'reasoning_effort', reasoning_effort)
-        self._add_if_set(body, 'metadata', metadata)
-        self._add_if_set(body, 'frequency_penalty', frequency_penalty)
-        self._add_if_set(body, 'logit_bias', logit_bias)
-        self._add_if_set(body, 'logprobs', logprobs)
-        if logprobs:
-            self._add_if_set(body, 'top_logprobs', top_logprobs)
-        self._add_if_set(body, 'max_completion_tokens', max_completion_tokens)
-        self._add_if_set(body, 'n', n)
-        self._add_if_set(body, 'modalities', modalities)
-        self._add_if_set(body, 'prediction', prediction)
-        if modalities and 'audio' in modalities:
-            self._add_if_set(body, 'audio', audio)
-        self._add_if_set(body, 'presence_penalty', presence_penalty)
-        self._add_if_set(body, 'response_format', response_format)
-        self._add_if_set(body, 'seed', seed)
-        self._add_if_set(body, 'service_tier', service_tier)
-        self._add_if_set(body, 'stop', stop)
-        self._add_if_set(body, 'stream', stream)
-        if stream:
-            self._add_if_set(body, 'stream_options', stream_options)
-        self._add_if_set(body, 'temperature', temperature)
-        self._add_if_set(body, 'top_p', top_p)
-        self._add_if_set(body, 'tools', tools)
-        self._add_if_set(body, 'tool_choice', tool_choice)
-        self._add_if_set(body, 'parallel_tool_calls', parallel_tool_calls)
-        self._add_if_set(body, 'user', user)
-
-        return self._request(
-            'post',
-            '/chat/completions',
-            self._get_base_headers(),
-            body,
-        )
 
     def get_embedding(
         self,
@@ -224,12 +148,17 @@ class LLMApiService:
             return api_key
         raise UserError(_("No API key set for provider '%s'", self.provider))
 
-    def _request(self, method: str, endpoint: str, headers: dict[str, str], body: dict, data: dict | None = None, files: dict | None = None) -> dict:
-        route = f"{self.base_url}/{endpoint.strip('/')}"
+    def _request(
+        self, method: str, endpoint: str, headers: dict[str, str], body: dict,
+        data: dict | None = None, files: dict | None = None, params: dict | None = None,
+        base_url: str | None = None,
+    ) -> dict:
+        route = f"{base_url or self.base_url}/{endpoint.strip('/')}"
         try:
             response = requests.request(
                 method,
                 route,
+                params=params,
                 headers=headers,
                 json=body,
                 data=data,
@@ -258,7 +187,7 @@ class LLMApiService:
             _logger.warning("LLM API request failed: %s", error)
             raise UserError(error)
 
-    def _request_llm(
+    def _request_llm_openai(
         self, llm_model, system_prompts, user_prompts, tools=None,
         files=None, schema=None, temperature=0.2, inputs=(),
     ):
@@ -277,12 +206,23 @@ class LLMApiService:
         user_content = [{"type": "input_text", "text": prompt} for prompt in user_prompts]
 
         if files:
+            def _build_file(idx, file):
+                if file["mimetype"] == "text/plain":
+                    return {"type": "input_text", "text": file["value"]}
+
+                file_uri = f"data:{file['mimetype']};base64,{file['value']}"
+                if file['mimetype'] == 'application/pdf':
+                    return {
+                        "type": "input_file",
+                        "filename": f"file_{idx}.pdf",
+                        "file_data": file_uri,
+                    }
+
+                assert file["mimetype"].startswith("image/")
+                return {"type": "input_image", "image_url": file_uri, "detail": "low"}
+
             user_content.extend(
-                {'type': 'input_text', 'text': file['value']}
-                if file['type'] == 'text' else
-                {'type': 'input_image', 'image_url': file['value'], 'detail': 'low'}
-                if file['type'] == 'image' else
-                {'type': 'input_file', 'filename': f"file_{idx}.pdf", 'file_data': file['value']}
+                _build_file(idx, file)
                 for idx, file in enumerate(files, start=1)
             )
 
@@ -354,6 +294,101 @@ class LLMApiService:
                 response.extend(t for c in line.get('content', ()) if (t := c.get('text')))
         return response, to_call, next_inputs
 
+    def _request_llm_google(
+        self, llm_model, system_prompts, user_prompts, tools=None,
+        files=None, schema=None, temperature=0.2, inputs=(),
+    ):
+        """Make a single request to the LLM.
+
+        Gemini's OpenAI conversion layer does not support `type: file`, so we use the real API
+        > https://discuss.ai.google.dev/t/combining-openai-compatible-gemini-completions-with-file-uploads/75281/2
+
+        > https://ai.google.dev/gemini-api/docs/text-generation
+        > https://ai.google.dev/gemini-api/docs/function-calling
+        > https://ai.google.dev/gemini-api/docs/document-processing
+        """
+        assert not schema
+
+        body = {
+            "contents": [],
+            "generationConfig": {
+                "temperature": temperature,
+            },
+        }
+        if system_prompts:
+            body["contents"].append({
+                "role": "model",
+                "parts": [
+                    {"text": prompt}
+                    for prompt in system_prompts
+                ],
+            })
+        if user_prompts:
+            body["contents"].append({
+                "role": "user",
+                "parts": [
+                    {"text": prompt}
+                    for prompt in user_prompts
+                ],
+            })
+
+        body["contents"].extend(inputs)
+
+        if files:
+            def _build_file(idx, file):
+                if file["mimetype"] == "text/plain":
+                    return {"text": file["value"]}
+
+                # TODO: low quality for image
+                # TODO: image URL ?
+                return {"inline_data": {"mime_type": file['mimetype'], "data": file["value"]}}
+
+            body["contents"].append({"role": "user", "parts":
+                [_build_file(idx, file) for idx, file in enumerate(files, start=1)]})
+
+        if tools:
+            body["tools"] = {
+                "functionDeclarations": [{
+                    "description": tool_description,
+                    "parameters": tool_parameter_schema,
+                    "name": tool_name,
+                } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()]
+            }
+
+        llm_response = self._request(
+            "post",
+            base_url="https://generativelanguage.googleapis.com/v1beta",
+            headers={},
+            endpoint=f"/models/{llm_model}:generateContent",
+            params={"key": self._get_api_token()},
+            body=body,
+        )
+
+        to_call = []
+        response = []
+        next_inputs = list(inputs or ())
+
+        for candidate in llm_response.get("candidates") or ():
+            for line in candidate.get('content', {}).get('parts') or ():
+                if f_info := line.get('functionCall'):
+                    to_call.append((f_info['name'], f_info['name'], f_info['args']))
+                    next_inputs.append({"role": "model", "parts": [line]})
+                elif r := line.get('text'):
+                    response.append(r)
+                else:
+                    _logger.warning("Gemini: could not parse %s", line)
+
+        return response, to_call, next_inputs
+
+    def _request_llm(self, *args, **kwargs):
+        if self.provider == 'openai':
+            return self._request_llm_openai(*args, **kwargs)
+
+        if self.provider == 'google':
+            return self._request_llm_google(*args, **kwargs)
+
+        raise NotImplementedError()
+
     def request_llm(
         self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
         tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
@@ -363,9 +398,9 @@ class LLMApiService:
         """Same as `_request_llm`, but will call the tools until we are done.
 
         >>> files = [
-        >>>     {'type': 'text', 'value': 'text content', 'file_ref': '<file_#1>'},
-        >>>     {'type': 'image', 'value': 'data:image/png;base64,aW1hZ2UgY29udGVudA==', 'file_ref': '<file_#2>'},
-        >>>     {'type': 'pdf', 'value': 'data:application/pdf;base64,cGRmIGNvbnRlbnQ=', 'file_ref': '<file_#3>'},
+        >>>     {'mimetype': 'text/plain', 'value': 'text content', 'file_ref': '<file_#1>'},
+        >>>     {'mimetype': 'image/png', 'value': 'aW1hZ2UgY29udGVudA==', 'file_ref': '<file_#2>'},
+        >>>     {'mimetype': 'application/pdf', 'value': 'cGRmIGNvbnRlbnQ=', 'file_ref': '<file_#3>'},
         >>> ]
 
         >>> tools = {
@@ -378,8 +413,6 @@ class LLMApiService:
         >>> }
         > https://json-schema.org/
         """
-        assert self.provider == "openai", "Not implemented"
-
         AI_MAX_SUCCESSIVE_CALLS = int(self.env["ir.config_parameter"].sudo()
             .get_param("ai.max_successive_calls", "5"))
 
@@ -397,6 +430,14 @@ class LLMApiService:
                     tool_parameter_schema["required"].append("__end_message")
 
         inputs = inputs or []
+
+        if self.provider == 'google':
+            # OpenAI / Odoo inputs -> Gemini
+            inputs = [
+                {"role": "user" if i["role"] == "user" else "model", "parts": [{"text": i["content"]}]}
+                for i in inputs
+            ]
+
         all_responses = []
         for api_call in range(AI_MAX_SUCCESSIVE_CALLS):
             responses, next_actions, inputs = self._request_llm(
@@ -420,14 +461,13 @@ class LLMApiService:
                     _logger.error("AI: Try to call a forbidden action %s", tool_name)
                     continue
 
+                # Ensure that all arguments are set in the dict, even the non-required ones
+                arguments = {n: None for n in tools[tool_name][2].get("properties", {})} | arguments
+
                 end_message = arguments.pop("__end_message", None)
                 result, error = tools[tool_name][1](arguments=arguments)
 
-                inputs.append({
-                    "type": "function_call_output",
-                    "call_id": call_id,
-                    "output": str(result),
-                })
+                inputs.append(self._build_tool_call_response(call_id, result))
 
                 if end_message and error is None:
                     all_responses.append(end_message)
@@ -460,3 +500,29 @@ class LLMApiService:
             tool["parameters"]["required"].extend(non_required)
             tool["parameters"]["additionalProperties"] = False
         return schema
+
+    def _build_tool_call_response(self, tool_call_id, return_value):
+        """Build the response for the given tool call.
+
+        :param tool_call_id: The identifier of the tool call
+        :param return_value: The value the tool returned
+        """
+        if self.provider == "openai":
+            return {
+                "type": "function_call_output",
+                "call_id": tool_call_id,
+                "output": str(return_value),
+            }
+
+        if self.provider == "google":
+            return {
+                "role": "user",
+                "parts": [{
+                    "functionResponse": {
+                        "name": tool_call_id,
+                        "response": {"result": str(return_value)},
+                    },
+                }],
+            }
+
+        raise NotImplementedError()

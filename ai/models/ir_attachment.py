@@ -221,21 +221,21 @@ class IrAttachment(models.Model):
                     b64_datas = base64.b64encode(out_buff.getvalue()).decode()
 
                 files_dict[attachment.checksum] = {
-                    'type': 'pdf',
-                    'value': f"data:application/pdf;base64,{b64_datas}",
+                    'mimetype': 'application/pdf',
+                    'value': b64_datas,
                     'file_ref': file_ref,
                 }
-            elif extension in AI_SUPPORTED_IMG_TYPES:
+            elif extension in AI_SUPPORTED_IMG_TYPES and not attachment.url:
                 files_dict[attachment.checksum] = {
-                    'type': 'image',
-                    'value': attachment.url or f"data:{attachment.mimetype};base64,{attachment.datas.decode()}",  # utf-8 ?
+                    'mimetype': attachment.mimetype,
+                    'value': attachment.datas.decode(),
                     'file_ref': file_ref,
                 }
             else:
                 if not attachment.index_content or attachment.index_content == "application":
                     continue
                 files_dict[attachment.checksum] = {
-                    'type': 'text',
+                    'mimetype': 'text/plain',
                     'value': attachment.index_content,
                     'file_ref': file_ref
                 }

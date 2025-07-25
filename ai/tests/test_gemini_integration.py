@@ -52,7 +52,7 @@ class TestGeminiIntegration(TransactionCase):
 
         api_calls = []
 
-        def mock_request_handler(method, endpoint, headers, body, **kwargs):
+        def mock_request_handler(method, endpoint, headers, body, params=None, **kwargs):
             api_calls.append(
                 {
                     "endpoint": endpoint,
@@ -74,15 +74,15 @@ class TestGeminiIntegration(TransactionCase):
                         ],
                         "model": "gemini-embedding-001",
                     }
-            elif endpoint == "/chat/completions":
-                self.assertEqual(body["model"], "gemini-1.5-flash")
-                self.assertEqual(body["temperature"], 0.2)
-                self.assertEqual(headers["Authorization"], "Bearer test-gemini-key")
+            elif endpoint.startswith("/models/"):
+                self.assertIn("gemini-1.5-flash", endpoint)
+                self.assertEqual(body.get("generationConfig", {}).get("temperature"), 0.2)
+                self.assertEqual(params.get("key"), "test-gemini-key")
 
-                messages = body["messages"]
+                messages = body["contents"]
                 rag_context_found = any(
-                    msg["role"] == "system"
-                    and "##Context information:" in msg["content"]
+                    msg["role"] == "model"
+                    and "##Context information:" in str(msg["parts"])
                     for msg in messages
                 )
                 self.assertTrue(rag_context_found, "RAG context not found in messages")
@@ -90,19 +90,19 @@ class TestGeminiIntegration(TransactionCase):
                 rag_message = next(
                     msg
                     for msg in messages
-                    if msg["role"] == "system"
-                    and "##Context information:" in msg["content"]
+                    if msg["role"] == "model"
+                    and "##Context information:" in str(msg["parts"])
                 )
                 self.assertIn(
-                    "Odoo is an open-source ERP system", rag_message["content"]
+                    "Odoo is an open-source ERP system", str(rag_message["parts"])
                 )
 
                 return {
-                    "choices": [
+                    "candidates": [
                         {
-                            "message": {
+                            "content": {
                                 "role": "assistant",
-                                "content": "Odoo is an open-source ERP system as mentioned in the documents.",
+                                "parts": [{"text": "Odoo is an open-source ERP system as mentioned in the documents."}],
                             },
                         }
                     ],
@@ -119,7 +119,7 @@ class TestGeminiIntegration(TransactionCase):
         self.assertEqual(len(api_calls), 2)
         self.assertEqual(api_calls[0]["endpoint"], "/embeddings")
         self.assertEqual(api_calls[0]["body"]["input"], "What is Odoo?")
-        self.assertEqual(api_calls[1]["endpoint"], "/chat/completions")
+        self.assertEqual(api_calls[1]["endpoint"], "/models/gemini-1.5-flash:generateContent")
 
     def test_provider_detection_for_gemini(self):
         """Test that Gemini models correctly identify Google as provider and use correct embedding model"""

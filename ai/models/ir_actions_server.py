@@ -21,7 +21,6 @@ _logger = logging.getLogger(__name__)
 class IrActionsServer(models.Model):
     _inherit = "ir.actions.server"
 
-    # TODO: make it configurable once gemini work in master
     AI_PROVIDER = "openai"
     AI_MODEL = "gpt-4.1"
 
