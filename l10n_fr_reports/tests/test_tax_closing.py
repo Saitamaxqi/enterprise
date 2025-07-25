@@ -92,9 +92,8 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
             'company_id': self.env.company.id,
         })
-        april_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            april_return.action_lock()
+            april_return.action_validate(bypass_failing_tests=True)
 
         self.assertRecordValues(
             april_return.closing_move_ids.line_ids,
@@ -132,9 +131,8 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
             'company_id': self.env.company.id,
         })
-        may_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            may_return.action_lock()
+            may_return.action_validate(bypass_failing_tests=True)
 
         self.assertRecordValues(
             may_return.closing_move_ids.line_ids,
@@ -248,9 +246,8 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_fr_reports.vat_return_type').id,
             'company_id': self.env.company.id,
         })
-        may_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            may_return.action_lock()
+            may_return.action_validate(bypass_failing_tests=True)
 
         with patch.object(self.env.registry['l10n_fr_reports.send.vat.report'], '_send_xml_to_aspone', return_value=[]):
             send_vat_wizard.send_vat_return()

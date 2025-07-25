@@ -95,7 +95,10 @@
         flex-grow: 1;
 
         .kanban_return_card {
-            margin: 20px 20px 40px;
+            margin: 0px 0px 40px;
+            .o_kanban_record {
+                border-top: none;
+            }
         }
 
         .kanban_checks_cards {

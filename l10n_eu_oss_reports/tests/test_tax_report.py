@@ -147,9 +147,8 @@ class OSSTaxReportTest(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_eu_oss_reports.eu_oss_sales_tax_return_type').id,
             'company_id': self.env.company.id,
         })
-        tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            tax_return.action_lock()
+            tax_return.action_validate(bypass_failing_tests=True)
 
         self.assertEqual(len(tax_return.closing_move_ids), 1)
 
@@ -368,9 +367,8 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             'type_id': self.tax_return_type.id,
             'company_id': self.env.company.id,
         })
-        oss_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            oss_return.action_lock()
+            oss_return.action_validate(bypass_failing_tests=True)
 
         tax_closing_entry_lines = oss_return.closing_move_ids.line_ids.filtered(lambda l: l.balance != 0.0)
 

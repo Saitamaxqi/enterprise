@@ -226,9 +226,10 @@ class AccountReturn(models.Model):
 
         return checks
 
-    def action_lock(self):
+    def action_validate(self, bypass_failing_tests=False):
         # OVERRIDE
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
+            self._review_checks(bypass_failing_tests)
             new_wizard = self.env['l10n_be_reports.vat.return.lock.wizard'].create([{'return_id': self.id}])
             return {
                 'type': 'ir.actions.act_window',
@@ -243,7 +244,7 @@ class AccountReturn(models.Model):
                 },
             }
 
-        return super().action_lock()
+        return super().action_validate(bypass_failing_tests)
 
     def action_submit(self):
         # OVERRIDE

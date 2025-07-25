@@ -92,7 +92,7 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         # Locking this one ("2025-01-01", "2025-01-31")
         with self.allow_pdf_render():
-            existing_returns[0].action_lock()
+            existing_returns[0].action_validate()
 
         # Regenerate new returns without overriding posted ones
         with self._patch_returns_generation():
@@ -136,7 +136,7 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         # Locking this one ("2024-01-01", "2024-02-28")
         with self.allow_pdf_render():
-            existing_returns[0].action_lock()
+            existing_returns[0].action_validate()
 
         # Regenerate new returns without overriding posted ones
         with self._patch_returns_generation():
@@ -189,7 +189,7 @@ class TestAccountReturn(TestAccountReportsCommon):
         ])
         # Locking this one ("2024-01-01", "2024-01-31")
         with self.allow_pdf_render():
-            existing_returns[0].action_lock()
+            existing_returns[0].action_validate()
 
         with self._patch_returns_generation():
             self.basic_return_type.deadline_start_date = '2024-12-01'
@@ -364,9 +364,8 @@ class TestAccountReturn(TestAccountReportsCommon):
         ])
         self.assertEqual(len(first_return), 1)
 
-        first_return.action_review()
         with self.allow_pdf_render():
-            first_return.action_lock()
+            first_return.action_validate()
 
         self.assertTrue(first_return.closing_move_ids)
 
@@ -482,11 +481,9 @@ class TestAccountReturn(TestAccountReportsCommon):
             ('company_id', '=', self.company_data['company'].id),
         ], order='date_to ASC', limit=2)
 
-        first_return.action_review()
-        second_return.action_review()
         with self.allow_pdf_render():
-            first_return.action_lock()
-            second_return.action_lock()
+            first_return.action_validate()
+            second_return.action_validate()
 
         self.company_data['company'].tax_lock_date = date(2023, 12, 31)
 
@@ -502,15 +499,13 @@ class TestAccountReturn(TestAccountReportsCommon):
             ('company_id', '=', self.company_data['company'].id),
         ], order='date_to ASC', limit=2)
 
-        second_return.action_review()
         with self.allow_pdf_render():
             with self.assertRaises(UserError):
-                second_return.action_lock()
+                second_return.action_validate()
 
-        first_return.action_review()
         with self.allow_pdf_render():
-            first_return.action_lock()
-            second_return.action_lock()
+            first_return.action_validate()
+            second_return.action_validate()
 
     def test_return_manual_creation_wizard_single_return(self):
         original_number_of_returns = self.env['account.return'].search_count([])

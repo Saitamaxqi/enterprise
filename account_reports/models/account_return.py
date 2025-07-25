@@ -414,7 +414,6 @@ class AccountReturn(models.Model):
         selection=[
             ('new', 'New'),
             ('reviewed', 'Reviewed'),
-            ('locked', 'Locked'),
             ('submitted', 'Submitted'),
             ('paid', 'Paid'),
         ],
@@ -708,16 +707,19 @@ class AccountReturn(models.Model):
             return 'generic_state_review_submit'
         return 'generic_state_tax_report'
 
-    def try_auto_review(self):
-        for account_return in self:
-            state_keys = [s[0] for s in account_return._fields[account_return._get_state_field()].selection]
-            next_state_index = state_keys.index(account_return.state) + 1
-            is_next_state_review = next_state_index < len(state_keys) and state_keys[next_state_index] == 'reviewed'
-            if is_next_state_review and account_return.unresolved_check_count == 0 and account_return.check_ids.filtered(lambda r: r.bypassed):
-                account_return.action_review()
-
-    def action_review(self, bypass_failing_tests=False):
+    def action_validate(self, bypass_failing_tests=False):
+        """
+        Validating return consists of two steps:
+        - Review the checks with optionally bypassing failing ones
+        - Set Lock date and generate closing entry
+        """
         self.ensure_one()
+
+        self._review_checks(bypass_failing_tests)
+
+        return self._proceed_with_locking()
+
+    def _review_checks(self, bypass_failing_tests):
         self.refresh_checks()
 
         if bypass_failing_tests:
@@ -725,20 +727,13 @@ class AccountReturn(models.Model):
 
         self._check_failing_checks_in_current_stage()
 
-        self.state = 'reviewed'
-        return True
-
-    def action_lock(self):
-        self.ensure_one()
-        self._proceed_with_locking()
-
     def _proceed_with_locking(self, options_to_inject=None):
         """
         Called at the end of the locking process.
         It creates:
         - closing entries if it is a tax report
-        - change the state to locked
         - generates attachments specified in `_generate_locking_attachments`
+        - change state to 'reviewed' as it's last step in validation process
 
         """
         self.ensure_one()
@@ -755,8 +750,6 @@ class AccountReturn(models.Model):
             raise UserError(_("You cannot lock this return as there are previous returns that are waiting to be posted."))
 
         self._check_failing_checks_in_current_stage()
-
-        self.state = 'locked'
 
         if report := self.type_id.report_id:
             options = {**self._get_closing_report_options(), **(options_to_inject or {})}
@@ -780,6 +773,20 @@ class AccountReturn(models.Model):
             self._generate_locking_attachments(options)
 
         self.date_lock = fields.Date.context_today(self)
+
+        self.state = 'reviewed'
+
+        if self.is_tax_return:
+            return {
+                    'type': 'ir.actions.client',
+                    'tag': 'display_notification',
+                    'params': {
+                        'type': 'success',
+                        'title': self.env._("Checks Validated"),
+                        'message': self.env._("Closing entry posted and lock date applied."),
+                        'next': {'type': 'ir.actions.act_window_close'},
+                    },
+                }
 
     def _evaluate_amount_to_pay_from_tax_closing_accounts(self):
         country = self.type_id.report_id.country_id or self.company_id.account_fiscal_country_id
@@ -884,11 +891,11 @@ class AccountReturn(models.Model):
             self.state = 'submitted'
 
         if self.state == 'submitted':
-            self._reset_checks_for_states([self.state, 'locked'])
+            self._reset_checks_for_states([self.state, 'reviewed'])
             self.date_submission = False
-            self.state = 'locked'
+            self.state = 'reviewed'
 
-        if self.state == 'locked':
+        if self.state == 'reviewed':
             # Check if it is the last return locked
             domain = [
                 ('company_id', '=', self.company_id.id),
@@ -897,7 +904,7 @@ class AccountReturn(models.Model):
                 ('date_deadline', '>', self.date_deadline),
             ]
             if self.env['account.return'].search_count(domain, limit=1):
-                raise UserError(_("You cannot reset this return to reviewed, as another return has been locked at a later date."))
+                raise UserError(_("You cannot reset this return to new, as another return has been locked at a later date."))
 
             # delete carryover if possible
             if report := self.type_id.report_id:
@@ -953,10 +960,6 @@ class AccountReturn(models.Model):
 
             self.date_lock = False
             self.report_opened_once = False
-            self._reset_checks_for_states([self.state, 'reviewed'])
-            self.state = 'reviewed'
-
-        if self.state == 'reviewed':
             self._reset_checks_for_states([self.state, 'new'])
             self.state = 'new'
 
@@ -2027,7 +2030,6 @@ class AccountReturnCheck(models.Model):
                 'new': new_approvers,
             }
         self._log_return_changes(changes)
-        self.return_id.try_auto_review()
 
     def action_invalidate_check(self):
         self.ensure_one()

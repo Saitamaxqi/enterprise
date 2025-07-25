@@ -344,9 +344,8 @@ class TestTaxReport(TestAccountReportsCommon):
             'company_id': company.id,
             'tax_unit_id': tax_unit.id if tax_unit else False,
         })
-        tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            tax_return.action_lock()
+            tax_return.action_validate(bypass_failing_tests=True)
 
         self.assertEqual(len(closing_vals_by_company), len(tax_return.closing_move_ids))
         for closing_move in tax_return.closing_move_ids:

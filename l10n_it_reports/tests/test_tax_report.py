@@ -184,9 +184,8 @@ class TestItalianTaxReport(TestAccountReportsCommon):
             'type_id': self.env.ref('l10n_it_reports.it_tax_return_type').id,
             'company_id': self.env.company.id,
         })
-        tax_return.action_review(bypass_failing_tests=True)
         with self.allow_pdf_render():
-            tax_return.action_lock()
+            tax_return.action_validate(bypass_failing_tests=True)
 
         # Get to the next month
         report_lines = self.report._get_lines(second_month_options)
