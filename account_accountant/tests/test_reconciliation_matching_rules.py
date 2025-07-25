@@ -869,6 +869,55 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         ])
         self.assertTrue(reco_model.exists())
 
+    def test_multiple_auto_rule_creation_with_same_account_for_different_payment_ref(self):
+        """ Test that when setting same account on statement lines with different payment ref will create multiple reco model """
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        bank_stmt_line_1 = self._create_st_line(amount=100, payment_ref='DINNER PAYMENT 100 EUR')
+        bank_stmt_line_2 = self._create_st_line(amount=200, payment_ref='DINNER PAYMENT 200 EUR')
+        bank_stmt_line_3 = self._create_st_line(amount=300, payment_ref='VISA PAYMENT 300 EUR')
+        bank_stmt_line_4 = self._create_st_line(amount=400, payment_ref='VISA PAYMENT 400 EUR')
+
+        bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, account_a.id)
+        bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
+        bank_stmt_line_3.set_account_bank_statement_line(bank_stmt_line_3.line_ids[-1].id, account_a.id)
+        bank_stmt_line_4.set_account_bank_statement_line(bank_stmt_line_4.line_ids[-1].id, account_a.id)
+
+        reco_models = self.env['account.reconcile.model'].search([
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', 'in', ['DINNER PAYMENT \\d+ EUR', 'VISA PAYMENT \\d+ EUR']),
+        ])
+        self.assertTrue(reco_models.exists())
+        self.assertEqual(len(reco_models), 2, "Reco model should be created for both type of payment refs")
+
+    def test_only_one_auto_rule_creation_for_same_payment_ref(self):
+        """ Test that when setting same account on more than two statement lines with same payment ref will not create more than one
+            reco model """
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        bank_stmt_line_1 = self._create_st_line(amount=100, payment_ref='OFFICE RENT PAYMENT 100 EUR')
+        bank_stmt_line_2 = self._create_st_line(amount=200, payment_ref='OFFICE RENT PAYMENT 200 EUR')
+        bank_stmt_line_3 = self._create_st_line(amount=300, payment_ref='OFFICE RENT PAYMENT 300 EUR')
+        bank_stmt_line_4 = self._create_st_line(amount=400, payment_ref='OFFICE RENT PAYMENT 400 EUR')
+
+        bank_stmt_line_1.set_account_bank_statement_line(bank_stmt_line_1.line_ids[-1].id, account_a.id)
+        bank_stmt_line_2.set_account_bank_statement_line(bank_stmt_line_2.line_ids[-1].id, account_a.id)
+        bank_stmt_line_3.set_account_bank_statement_line(bank_stmt_line_3.line_ids[-1].id, account_a.id)
+        bank_stmt_line_4.set_account_bank_statement_line(bank_stmt_line_4.line_ids[-1].id, account_a.id)
+
+        reco_models = self.env['account.reconcile.model'].search([
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', 'in', ['OFFICE RENT PAYMENT \\d+ EUR']),
+        ])
+        self.assertTrue(reco_models.exists())
+        self.assertEqual(len(reco_models), 1, "Only one Reco model should be created for same payment refs")
+
     def test_discount_amount(self):
         _invoice_line_1 = self._create_invoice_line(100, self.partner_1, 'out_invoice')
         invoice_line_2 = self._create_invoice_line(100, self.partner_1, 'out_invoice')
@@ -1107,7 +1156,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         # Long (>=10) common substring
         long_common_refs = [x + ' is Gamora.' for x in ('Where', 'Who', 'Why')]
         long_common_bl = [self._create_st_line(payment_ref=x) for x in long_common_refs]
-        self.assertEqual(long_common_bl[0]._get_common_substring([x.payment_ref for x in long_common_bl]), ' IS GAMORA.')
+        self.assertEqual(long_common_bl[0]._get_common_substring([x.payment_ref for x in long_common_bl]), 'IS GAMORA.')
         # Short (<10) but identical normalised string
         short_normalised_refs = ['Odoo ' + str(x) for x in (18, 19, 9000)]
         short_normalised_bl = [self._create_st_line(payment_ref=x) for x in short_normalised_refs]

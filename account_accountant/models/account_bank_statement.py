@@ -710,9 +710,6 @@ class AccountBankStatementLine(models.Model):
         :param company_id: ID of the company
         :return: The newly created reconciliation rule if created, None otherwise
         """
-        if self._reconciliation_rule_exists(account_id, company_id):
-            return None
-
         bank_stmt_line_domain = [
             ('company_id', '=', company_id),
             ('journal_id', '=', self.journal_id.id),
@@ -726,28 +723,37 @@ class AccountBankStatementLine(models.Model):
         if len(previous_statement_lines) <= 1:
             return None
 
+        # removing the statement lines from previous statement lines which are already eligible for one of the reco model
+        # but reco model does not applied to it yet, because we want to allow multiple reco model with same account for different payment ref
+        existing_reco_models = self.env['account.reconcile.model'].search([
+            ('company_id', '=', company_id),
+            ('line_ids.account_id', '=', account_id),
+            ('match_journal_ids', '=', self.journal_id.ids),
+            ('match_label', '=', 'match_regex'),
+            ('match_label_param', '!=', False),
+        ])
+        for reco_model in existing_reco_models:
+            pattern = re.compile(reco_model.match_label_param, re.IGNORECASE)
+            previous_statement_lines = previous_statement_lines.filtered(lambda sl: sl.payment_ref and not pattern.search(sl.payment_ref))
+            if len(previous_statement_lines) <= 1:
+                return None
+
         rule_data = self._prepare_reconciliation_rule_data(previous_statement_lines, account_id)
         if rule_data.get('common_substring'):
             return self._create_reconciliation_rule(rule_data)
         return None
 
-    def _reconciliation_rule_exists(self, account_id, company_id):
-        """Checks if a reconciliation rule already exists."""
-        model_domain = (
-                self.env['account.reconcile.model']._check_company_domain(company_id) +
-                [('line_ids.account_id', '=', account_id), ('match_journal_ids', '=', self.journal_id.ids)]
-        )
-        return bool(self.env['account.reconcile.model'].search(model_domain, limit=1))
-
     def _prepare_reconciliation_rule_data(self, statement_lines, account_id):
         """Prepares data for reconciliation rule creation."""
         payment_refs = [line.payment_ref for line in statement_lines]
         common_substring = self._get_common_substring(payment_refs)
+        if not common_substring:
+            return {}
         account = self.env['account.account'].browse(account_id)
 
         return {
-            'name': account.name,
-            'common_substring': common_substring and common_substring.strip(),
+            'name': f'{common_substring.title()} - {account.code}',
+            'common_substring': common_substring,
             'account': account,
             'partner_ids': statement_lines.partner_id.ids if len(statement_lines.partner_id.ids) == 1 else [],
         }
@@ -802,36 +808,12 @@ class AccountBankStatementLine(models.Model):
 
             return label
 
-        def get_longest_common_substring(s1, s2):
-            """
-            Finds the longest common substring (LCS) between two input strings using dynamic programming.
-            The function constructs a 2D table to keep track of suffix matches between the strings
-            and identifies the LCS based on the maximum match length stored in the table.
-
-            Parameters:
-                s1 (str): The first input string.
-                s2 (str): The second input string.
-
-            Returns:
-                str: The longest common substring found between `s1` and `s2`.
-            """
-
-            # Matrix to store lengths of common suffixes.
-            dp = [[0] * (len(s2) + 1) for _ in range(len(s1) + 1)]
-
-            longest = 0  # Length of the longest match.
-            end_pos_s1 = 0  # End index in s1 where the longest match ends.
-
-            # Build the matrix.
-            for i in range(len(s1)):
-                for j in range(len(s2)):
-                    if s1[i] == s2[j]:
-                        dp[i + 1][j + 1] = dp[i][j] + 1
-                        if dp[i + 1][j + 1] > longest:
-                            longest = dp[i + 1][j + 1]
-                            end_pos_s1 = i + 1
-
-            return s1[end_pos_s1 - longest:end_pos_s1]
+        def get_all_substrings(s):
+            return {
+                s[i:j]
+                for i in range(len(s))
+                for j in range(i + 1, len(s) + 1)
+            }
 
         normalised = [normalise_label(label.upper()) for label in labels if label]
         # If they're all the same after normalising, then we don't care about the size being 10 chars or more.
@@ -842,14 +824,9 @@ class AccountBankStatementLine(models.Model):
         normalised.sort(key=len)
 
         # After normalising, we need to get the longest possible substring.
-        # To do this, we get the one from the first two, then the result with the next string and so on.
-        substring = get_longest_common_substring(normalised[0], normalised[1])
-        for i in range(2, len(normalised)):
-            substring = get_longest_common_substring(substring, normalised[i])
-            if len(substring) < 10:
-                break
+        substring = max(set.intersection(*map(get_all_substrings, normalised)), key=len, default="")
 
-        return substring if len(substring) >= 10 else None
+        return substring.strip() if len(substring) >= 10 else None
 
     def _create_account_model_fee(self, account_id):
         """
