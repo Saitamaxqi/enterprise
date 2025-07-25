@@ -10,27 +10,4 @@ patch(Store.prototype, {
         }
         return params;
     },
-
-    async openWhatsAppChannel(id, name) {
-        const thread = this.Thread.insert({
-            channel_type: "whatsapp",
-            id,
-            model: "discuss.channel",
-            name,
-        });
-        if (!thread.avatar_cache_key) {
-            thread.avatar_cache_key = "hello";
-        }
-        if (!thread.hasSelfAsMember) {
-            const data = await this.env.services.orm.call(
-                "discuss.channel",
-                "whatsapp_channel_join_and_pin",
-                [[id]]
-            );
-            this.insert(data);
-        } else if (!thread.is_pinned) {
-            thread.pin();
-        }
-        thread.open();
-    },
 });

@@ -267,28 +267,6 @@ class DiscussChannel(models.Model):
             channel._broadcast(partners_to_notify.ids)
         return channel
 
-    def whatsapp_channel_join_and_pin(self):
-        """ Adds the current partner as a member of self channel and pins them if not already pinned. """
-        self.ensure_one()
-        if self.channel_type != 'whatsapp':
-            raise ValidationError(_('This join method is not possible for regular channels.'))
-
-        self.check_access('write')
-        current_partner = self.env.user.partner_id
-        member = self.channel_member_ids.filtered(lambda m: m.partner_id == current_partner)
-        if member:
-            if not member.is_pinned:
-                member.write({'unpin_dt': False})
-        else:
-            new_member = self.env['discuss.channel.member'].with_context(tools.clean_context(self.env.context)).sudo().create([{
-                'partner_id': current_partner.id,
-                'channel_id': self.id,
-            }])
-            message_body = Markup(f'<div class="o_mail_notification">{_("joined the channel")}</div>')
-            new_member.channel_id.message_post(body=message_body, message_type="notification", subtype_xmlid="mail.mt_comment")
-            Store(new_member, bus_channel=self).add(self, "member_count").bus_send()
-        return Store(self).get_result()
-
     # ------------------------------------------------------------
     # OVERRIDE
     # ------------------------------------------------------------
