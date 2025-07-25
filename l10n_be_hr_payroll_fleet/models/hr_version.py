@@ -268,6 +268,11 @@ class HrVersion(models.Model):
             self.transport_mode_car = False
             self.car_id = False
 
+    def write(self, vals):
+        # Force to track cars in employee form if any changes is found after version write
+        self.employee_id._track_prepare(["car_id", "ordered_car_id", "bike_id"])
+        return super().write(vals=vals)
+
     def _get_fields_that_recompute_payslip(self):
         # Returns the fields that should recompute the payslip
         return super()._get_fields_that_recompute_payslip() + [
