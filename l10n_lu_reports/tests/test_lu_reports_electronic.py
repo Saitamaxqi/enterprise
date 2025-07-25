@@ -650,7 +650,7 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                                     <NumericField id="1115">800,00</NumericField>
                                     <NumericField id="1852">1000,00</NumericField>
                                     <NumericField id="1862">1000,00</NumericField>
-                                    <NumericField id="1112">-0,00</NumericField>
+                                    <NumericField id="1112">0,00</NumericField>
                                     <NumericField id="2258">200,00</NumericField>
                                     <NumericField id="0162">200,00</NumericField>
                                     <NumericField id="0158">200,00</NumericField>
