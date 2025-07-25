@@ -229,7 +229,7 @@ class BlackBoxDriver(SerialDriver):
             connection.write(NACK)
 
         # no ACK or not a valid response
-        self.data['value'] = {
+        self.data['result'] = {
             'error': {
                 'errorCode': '208000',
                 'errorMessage': errors.get('208000'),
