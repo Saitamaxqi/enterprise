@@ -34,7 +34,7 @@ class TestKnowledgeUI(TestKnowledgeUICommon):
 
     def test_knowledge_history(self):
         """This tour will check that the history works properly."""
-        self.start_tour('/odoo', 'knowledge_history_tour', login='demo')
+        self.start_tour('/odoo?debug=1', 'knowledge_history_tour', login='demo')
 
     def test_knowledge_load_template(self):
         """This tour will check that the user can create a new article by using
