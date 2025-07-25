@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <header position="after">
                 <field name="carrier_price" invisible="1"/>
-                <div class="alert alert-info" role="alert" invisible="state != 'done' or carrier_price">
+                <div class="alert alert-info" role="alert" invisible="delivery_type != 'starshipit' or state != 'done' or carrier_price">
                     The Shipping Cost is being fetched in the background.
                 </div>
             </header>
