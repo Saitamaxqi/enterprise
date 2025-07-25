@@ -2,11 +2,11 @@ import { describe, expect, test } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { createSpreadsheetDashboard } from "@spreadsheet_dashboard/../tests/helpers/dashboard_action";
-import { defineSpreadsheetDashboardModels } from "@spreadsheet_dashboard/../tests/helpers/data";
 import { mockService, onRpc, serverState } from "@web/../tests/web_test_helpers";
+import { defineSpreadsheetDashboardEditionModels } from "./helpers/test_data";
 
 describe.current.tags("desktop");
-defineSpreadsheetDashboardModels();
+defineSpreadsheetDashboardEditionModels();
 
 test("Clicking 'Edit' icon navigates to dashboard edit view", async function () {
     serverState.debug = "1";
@@ -80,4 +80,38 @@ test("Can edit a non-active dashboard", async function () {
     await click(".o_edit_dashboard:eq(1)");
     await animationFrame();
     expect.verifySteps(["action_edit_dashboard", "doAction"]);
+});
+
+test("tooltip for editing standard dashboards", async function () {
+    serverState.debug = "1";
+
+    onRpc("spreadsheet.dashboard.group", "web_search_read", ({ kwargs, method }) => {
+        expect(kwargs.specification.published_dashboard_ids.fields.is_from_data).toEqual({});
+        return {
+            length: 1,
+            records: [
+                {
+                    id: 8,
+                    name: "CRM",
+                    published_dashboard_ids: [
+                        {
+                            id: 1,
+                            name: "My custom dashboard",
+                            is_favorite: false,
+                            is_from_data: false,
+                        },
+                        {
+                            id: 2,
+                            name: "Leads",
+                            is_favorite: false,
+                            is_from_data: true,
+                        },
+                    ],
+                },
+            ],
+        };
+    });
+    await createSpreadsheetDashboard();
+    expect(".o_edit_dashboard:eq(0)").not.toHaveClass("btn-warning", { exact: false });
+    expect(".o_edit_dashboard:eq(1)").toHaveClass("btn-warning", { exact: false });
 });

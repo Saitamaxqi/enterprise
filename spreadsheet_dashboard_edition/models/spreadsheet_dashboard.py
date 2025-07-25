@@ -1,11 +1,27 @@
 import json
 
-from odoo import api, models, _
+from odoo import api, fields, models, _
 
 
 class SpreadsheetDashboard(models.Model):
     _name = 'spreadsheet.dashboard'
     _inherit = ['spreadsheet.dashboard', 'spreadsheet.mixin']
+
+    is_from_data = fields.Boolean(compute='_compute_is_from_data', export_string_translation=False)
+
+    @api.depends('sample_dashboard_file_path')
+    def _compute_is_from_data(self):
+        # we guess that a dashboard is from data if it has a sample file path (only definable in XML)
+        # and if it has an XML ID (so it is not created by a user)
+        # This compute doesn't have the correct dependency on ir.model.data
+        # to be recomputed automatically. But we don't really care as it's very unlikely to change
+        # within the current request.
+        xml_ids = self.env['ir.model.data'].search([
+            ('model', '=', self._name),
+            ('res_id', 'in', self.ids),
+        ]).grouped('res_id')
+        for dashboard in self:
+            dashboard.is_from_data = bool(xml_ids.get(dashboard.id) and dashboard.sample_dashboard_file_path)
 
     def _get_spreadsheet_metadata(self, *args, **kwargs):
         return dict(

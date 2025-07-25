@@ -1,3 +1,4 @@
+import { fields } from "@web/../tests/web_test_helpers";
 import {
     SpreadsheetModels,
     defineSpreadsheetModels,
@@ -5,15 +6,14 @@ import {
 } from "@spreadsheet/../tests/helpers/data";
 import {
     SpreadsheetDashboard as SpreadsheetDashboardCommunity,
-    SpreadsheetDashboardGroup as SpreadsheetDashboardGroupCommunity,
+    SpreadsheetDashboardGroup,
 } from "@spreadsheet_dashboard/../tests/helpers/data";
 
 export class SpreadsheetDashboard extends SpreadsheetDashboardCommunity {
-    _records = [];
-}
-
-export class SpreadsheetDashboardGroup extends SpreadsheetDashboardGroupCommunity {
-    _records = [];
+    is_from_data = fields.Boolean({
+        string: "Is from Data",
+        default: false,
+    });
 }
 
 export function defineSpreadsheetDashboardEditionModels() {
@@ -24,5 +24,8 @@ export function defineSpreadsheetDashboardEditionModels() {
 
 export function getDashboardBasicServerData() {
     const { views, models } = getBasicServerData();
-    return { views, models: { ...models, "spreadsheet.dashboard": {} } };
+    return {
+        views,
+        models: { ...models, "spreadsheet.dashboard": { records: SpreadsheetDashboard._records } },
+    };
 }
