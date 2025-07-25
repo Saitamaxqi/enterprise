@@ -897,7 +897,7 @@ class DocumentsDocument(models.Model):
                 'name', 'partner_id', 'type', 'url', 'url_preview_image'}
 
     def action_update_access_rights(self, access_internal=None, access_via_link=None, is_access_via_link_hidden=None,
-                                    partners=None):
+                                    partners=None, no_propagation=False):
         """Update access to a document and propagate if applicable.
 
         This method can be called to update the access of internal users, with
@@ -917,6 +917,7 @@ class DocumentsDocument(models.Model):
             Mapping of partner(_id) to the tuple:
                 role: 'edit', 'view', False (=>delete),
                 expiration: datetime string, False (removed/None)
+        :param bool no_propagation: whether to propagate rights to sub-folders
         """
         if len(self.ids) == 0:
             return
@@ -945,18 +946,20 @@ class DocumentsDocument(models.Model):
                 "Incorrect values. Use one of the following for the following fields: %(hints)s.)", hints=hints
             ))
 
-        self._action_update_access(access_internal, access_via_link, is_access_via_link_hidden)
+        self._action_update_access(access_internal, access_via_link, is_access_via_link_hidden,
+                                   no_propagation=no_propagation)
         if partners:
             partners = {
                 self.env['res.partner'].browse(int(partner)) if isinstance(partner, str | int) else partner:
                 (role, fields.Datetime.to_datetime(exp) if exp and isinstance(exp, str) else exp)
                 for partner, (role, exp) in (partners or {}).items()
             }
-            self._action_update_members(partners)
+            self._action_update_members(partners, no_propagation=no_propagation)
 
         return self.mapped('user_permission')
 
-    def _action_update_access(self, access_internal, access_via_link, is_access_via_link_hidden):
+    def _action_update_access(self, access_internal, access_via_link, is_access_via_link_hidden,
+                              no_propagation=False):
         """Update the access on self and children.
 
         Stop the propagation when the value is already the right one.
@@ -964,6 +967,7 @@ class DocumentsDocument(models.Model):
         :param str | None access_internal: change the `access_internal` if not None
         :param str | None access_via_link: change the `access_via_link` if not None
         :param bool | None is_access_via_link_hidden: change the `is_access_via_link_hidden` if not None
+        :param bool no_propagation: whether to propagate access update to sub-folders
         """
         self.flush_model()
         for field, value in (
@@ -980,7 +984,7 @@ class DocumentsDocument(models.Model):
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
-                ('id', 'child_of', self.ids),
+                ('id', 'in' if no_propagation else 'child_of', self.ids),
             ])
             candidates_domain &= self._get_access_update_domain()
 
@@ -1024,10 +1028,11 @@ class DocumentsDocument(models.Model):
             'user_permission',
         ])
 
-    def _action_update_members(self, partners):
+    def _action_update_members(self, partners, no_propagation=False):
         """Update the members access on all files bellow the current folder.
 
         :param partners: Partners to add as members / change access
+        :param bool no_propagation: whether to propagate members update to sub-folders
         """
         self.env['documents.access'].flush_model()
 
@@ -1045,7 +1050,7 @@ class DocumentsDocument(models.Model):
         # use `_search` to respect access rules and to use `_search_user_permission`
         to_update_domain = Domain([
             ('shortcut_document_id', '=', False),  # update "target -> shortcuts" but not "shortcut -> target"
-            ('id', 'child_of', self.ids),
+            ('id', 'in' if no_propagation else 'child_of', self.ids),
         ])
         to_update_domain &= self._get_access_update_domain()
 
