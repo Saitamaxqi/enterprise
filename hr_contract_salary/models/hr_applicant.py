@@ -96,9 +96,6 @@ class HrApplicant(models.Model):
             'hr_contract_salary.access_token_validity', default=30))
         offer_values = self._get_offer_values()
 
-        if not offer_values['contract_template_id']:
-            raise UserError(_('You have to define contract templates to be used for offers. Go to Configuration / Contract Templates to define a contract template'))
-
         offer_values['validity_days_count'] = offer_validity_period
         offer = self.env['hr.contract.salary.offer'].with_context(
             default_contract_template_id=self._get_contract_template().id).create(offer_values)
@@ -125,7 +122,7 @@ class HrApplicant(models.Model):
         self.ensure_one()
         contract_template = self._get_contract_template()
         return {
-            'company_id': contract_template.company_id.id,
+            'company_id': contract_template.company_id.id or self.company_id.id or self.env.company.id,
             'contract_template_id': contract_template.id,
             'applicant_id': self.id,
             'final_yearly_costs': contract_template.final_yearly_costs,

@@ -13,6 +13,7 @@ class HrContractSignatory(models.Model):
     partner_id = fields.Many2one('res.partner', copy=True)
     contract_template_id = fields.Many2one('hr.version', index='btree_not_null')
     update_contract_template_id = fields.Many2one('hr.version', index='btree_not_null')
+    offer_id = fields.Many2one('hr.contract.salary.offer', index='btree_not_null')
     order = fields.Integer('Sign Order', required=True)
 
     @api.model

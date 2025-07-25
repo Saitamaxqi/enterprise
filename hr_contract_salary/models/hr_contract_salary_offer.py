@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, SUPERUSER_ID, _
 from werkzeug.urls import url_encode
 
@@ -28,7 +29,13 @@ class HrContractSalaryOffer(models.Model):
     currency_id = fields.Many2one(related='company_id.currency_id')
     contract_template_id = fields.Many2one(
         'hr.version',
-        domain="['|', ('employee_id', '=', False), ('id', '=', employee_version_id)]", required=True, tracking=True)
+        domain="['|', ('employee_id', '=', False), ('id', '=', employee_version_id)]", tracking=True)
+    sign_template_id = fields.Many2one(
+        'sign.template', compute='_compute_sign_template_id', readonly=False, store=True, string="PDF Sign Template",
+        help="Default document that the applicant will have to sign to accept a contract offer.")
+    sign_template_signatories_ids = fields.One2many(
+        'hr.contract.signatory', 'offer_id', compute="_compute_sign_template_signatories_ids",
+        store=True, readonly=False)
     state = fields.Selection([
         ('open', 'In Progress'),
         ('half_signed', 'Partially Signed'),
@@ -70,28 +77,73 @@ class HrContractSalaryOffer(models.Model):
     # DO NOT CALL THIS FUNCTION OUTSIDE OF A ROLLBACK SAVEPOINT
     def _get_version(self):
         self.ensure_one()
-        if self.employee_id:
-            return self.employee_id.current_version_id.with_context(tracking_disable=True)
-        if self.contract_template_id and self.contract_template_id.employee_id:
-            return self.contract_template_id.with_context(tracking_disable=True)
 
+        # Offer for an employee
+        if self.employee_id:
+            if self.contract_template_id:
+                if not self.contract_template_id.employee_id:
+                    self.contract_template_id.write({
+                        'employee_id': self.employee_id,
+                        'date_version': fields.Date.today() + relativedelta(months=1),
+                        'contract_date_start': False
+                    })
+                return self.contract_template_id.with_context(tracking_disable=True)
+            else:
+                return self.employee_version_id.with_context(tracking_disable=True)
+
+        # Offer for an applicant, create an employee
         employee = self.env['hr.employee'].with_context(
             tracking_disable=True,
             salary_simulation=True,
         ).with_user(SUPERUSER_ID).sudo().create({
-            'name': 'Simulation Employee'
+            'name': self.applicant_id.partner_name if self.applicant_id else 'Simulation Employee',
+            'private_phone': self.applicant_id.partner_phone if self.applicant_id else False,
+            'private_email': self.applicant_id.email_from if self.applicant_id else False,
+            'active': False,
+            'country_id': self.company_id.country_id.id,
+            'private_country_id': self.company_id.country_id.id,
+            'certificate': False,  # To force encoding it
+            'company_id': self.company_id.id,
         })
         if self.contract_template_id:
             employee.version_id.write(
                 self.env['hr.version'].get_values_from_contract_template(self.contract_template_id)
             )
             return employee.current_version_id.with_context(tracking_disable=True)
-        return employee.current_version_id
+        return employee.current_version_id.with_context(tracking_disable=True)
+
+    @api.depends('contract_template_id')
+    def _compute_sign_template_id(self):
+        for offer in self:
+            if offer.contract_template_id:
+                if offer.employee_id:
+                    offer.sign_template_id = offer.contract_template_id.contract_update_template_id
+                else:
+                    offer.sign_template_id = offer.contract_template_id.sign_template_id
+
+    def _copy_contract_template_signatories(self):
+        self.ensure_one()
+        if self.employee_id:
+            contract_template_signatories_copy = self.contract_template_id.contract_update_signatories_ids.copy()
+        else:
+            contract_template_signatories_copy = self.contract_template_id.sign_template_signatories_ids.copy()
+        # Must unlink the signatory from the contract template, will be linked to the offer with the SET command
+        contract_template_signatories_copy.contract_template_id = False
+        contract_template_signatories_copy.update_contract_template_id = False
+        return [(5, 0, 0)] + [(6, 0, contract_template_signatories_copy.ids)]
+
+    @api.depends('sign_template_id', 'contract_template_id')
+    def _compute_sign_template_signatories_ids(self):
+        for offer in self:
+            if offer.contract_template_id:
+                offer.sign_template_signatories_ids = offer._copy_contract_template_signatories()
+            else:
+                offer.sign_template_signatories_ids = self.env['hr.contract.signatory'].create_empty_signatories(offer.sign_template_id)
 
     @api.depends('contract_template_id.sign_template_signatories_ids')
     def _compute_is_half_sign_state_required(self):
         for offer in self:
-            offer.is_half_sign_state_required = len(offer.contract_template_id.sign_template_signatories_ids) != 1
+            offer.is_half_sign_state_required = len(offer.sign_template_signatories_ids) != 1
 
     @api.depends("access_token", "applicant_id")
     def _compute_url(self):

@@ -342,6 +342,10 @@ class HrVersion(models.Model):
             'department_id': self.department_id.id,
         }
 
+    def _get_values_dict(self):
+        self.ensure_one()
+        return self.read(load=None)[0]
+
     def _get_wage_to_apply(self):
         # To be overriden in localizations if a new wage applies depending on selected benefits
         self.ensure_one()

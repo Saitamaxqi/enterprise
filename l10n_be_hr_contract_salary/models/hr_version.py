@@ -112,7 +112,7 @@ class HrVersion(models.Model):
             'double_holiday_wage',
         ]
 
-    def _get_benefit_values_company_car_total_depreciated_cost(self, version, benefits):
+    def _get_benefit_values_company_car_total_depreciated_cost(self, version_vals, benefits):
         has_car = benefits['fold_company_car_total_depreciated_cost']
         selected_car = benefits.get('select_company_car_total_depreciated_cost')
         if not has_car or not selected_car:
@@ -138,7 +138,7 @@ class HrVersion(models.Model):
             'car_id': int(car_id),
         }
 
-    def _get_benefit_values_company_bike_depreciated_cost(self, version, benefits):
+    def _get_benefit_values_company_bike_depreciated_cost(self, version_vals, benefits):
         has_bike = benefits['fold_company_bike_depreciated_cost']
         selected_bike = benefits.get('select_company_bike_depreciated_cost', None)
         if not has_bike or not selected_bike:
@@ -163,7 +163,7 @@ class HrVersion(models.Model):
             'bike_id': int(bike_id),
         }
 
-    def _get_benefit_values_wishlist_car_total_depreciated_cost(self, version, benefits):
+    def _get_benefit_values_wishlist_car_total_depreciated_cost(self, version_vals, benefits):
         if benefits.get('fold_wishlist_car_total_depreciated_cost', False):
             model_id = benefits['select_wishlist_car_total_depreciated_cost'].split('-')[1]
             return {
@@ -173,10 +173,10 @@ class HrVersion(models.Model):
         else:
             return {}
 
-    def _get_benefit_values_insured_relative_spouse(self, version, benefits):
+    def _get_benefit_values_insured_relative_spouse(self, version_vals, benefits):
         return {'insured_relative_spouse': benefits['fold_insured_relative_spouse']}
 
-    def _get_benefit_values_l10n_be_ambulatory_insured_spouse(self, version, benefits):
+    def _get_benefit_values_l10n_be_ambulatory_insured_spouse(self, version_vals, benefits):
         return {'l10n_be_ambulatory_insured_spouse': benefits['fold_l10n_be_ambulatory_insured_spouse']}
 
     def _get_description_company_car_total_depreciated_cost(self, new_value=None):
@@ -285,13 +285,8 @@ class HrVersion(models.Model):
         self.ensure_one()
         return '<span class="form-text">The commission is scalable and starts from the 1st € sold. The commission plan has stages with accelerators. At 100%%, 3 months are paid in Warrant which results to a monthly NET commission value of %s € and 9 months in cash which result in a GROSS monthly commission of %s €, taxable like your usual monthly pay.</span>' % (round(self.warrant_value_employee, 2), round(self.commission_on_target, 2))
 
-    def _get_benefit_values_ip_value(self, version, benefits):
-        if not benefits['ip_value'] or not ast.literal_eval(benefits['ip_value']):
-            return {
-                'ip': False,
-                'ip_wage_rate': version.ip_wage_rate
-            }
+    def _get_benefit_values_ip_value(self, version_vals, benefits):
         return {
-            'ip': True,
-            'ip_wage_rate': version.ip_wage_rate
+            'ip': benefits['ip_value'] and ast.literal_eval(benefits['ip_value']),
+            'ip_wage_rate': version_vals.get('ip_wage_rate')
         }

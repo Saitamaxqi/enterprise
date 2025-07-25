@@ -527,7 +527,7 @@ export class SalaryPackage extends Interaction {
             const result = await rpc('/salary_package/onchange_benefit', {
                 'benefit_field': benefitField,
                 'new_value': newValue,
-                'version_id': parseInt($("input[name='version']").val()),
+                'offer_id': parseInt($("input[name='offer_id']").val()),
                 'benefits': this.getBenefits({includeFiles: false}),
             });
             if (type !== "select") {
@@ -569,7 +569,6 @@ export class SalaryPackage extends Interaction {
         $("input[name='NET']").addClass("o_outdated");
         return this.keepLast.add(
             rpc('/salary_package/update_salary', {
-                'version_id': parseInt($("input[name='version']").val()),
                 'offer_id': parseInt($("input[name='offer_id']").val()),
                 'benefits': self.getBenefits({includeFiles: false}),
                 'simulation_working_schedule': $("select[name='simulation_working_schedule']").val(),
@@ -727,7 +726,6 @@ export class SalaryPackage extends Interaction {
         }
 
         return {
-            'version_id': parseInt($("input[name='version']").val()),  /* YTI TO REMOVE*/
             'token': $("input[name='token']").val(),
             'benefits': benefits,
             'offer_id': parseInt($("input[name='offer_id']").val()) || false,

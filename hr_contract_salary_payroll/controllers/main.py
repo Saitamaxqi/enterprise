@@ -25,13 +25,13 @@ class HrContractSalary(main.HrContractSalary):
         })
         return values
 
-    def _get_new_version_values(self, version, employee, advantages, offer):
-        version_vals = super()._get_new_version_values(version, employee, advantages, offer)
-        version_vals['work_entry_source'] = version.work_entry_source
-        version_vals['standard_calendar_id'] = version.standard_calendar_id.id
-        if version.wage_type == 'hourly':
-            version_vals['hourly_wage'] = version.hourly_wage
-        return version_vals
+    def _get_new_version_values(self, version_vals, employee, benefits, offer):
+        new_version_vals = super()._get_new_version_values(version_vals, employee, benefits, offer)
+        new_version_vals['work_entry_source'] = version_vals.get('work_entry_source')
+        new_version_vals['standard_calendar_id'] = version_vals.get('standard_calendar_id')
+        if version_vals.get('wage_type') == 'hourly':
+            new_version_vals['hourly_wage'] = version_vals.get('hourly_wage')
+        return new_version_vals
 
     def _get_payslip_line_values(self, payslip, codes):
         return payslip._get_line_values(codes)
@@ -103,8 +103,8 @@ class HrContractSalary(main.HrContractSalary):
         return result
 
     @http.route()
-    def submit(self, version_id=None, offer_id=None, benefits=None, **kw):
+    def submit(self, offer_id=None, benefits=None, **kw):
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
         if offer.is_simulation_offer:
             raise UserError(self.env._('This offer is a simulation. You cannot submit this salary package.'))
-        return super().submit(version_id, offer_id, benefits, **kw)
+        return super().submit(offer_id, benefits, **kw)
