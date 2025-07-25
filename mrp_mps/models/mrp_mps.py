@@ -62,7 +62,8 @@ class MrpProductionSchedule(models.Model):
     replenish_state = fields.Selection([
         ('to_replenish', 'To Replenish'),
         ('under_replenishment', 'Under Replenishment'),
-        ('excessive_replenishment', 'Excessive Replenishment')], store=False, search='_search_replenish_state',
+        ('excessive_replenishment', 'Excessive Replenishment'),
+        ('low_forecast', 'Forecast Too Low')], store=False, search='_search_replenish_state',
         help="Technical field to support filtering by replenish state")
     mps_sequence = fields.Integer('Sequence', default=10)
     is_indirect = fields.Boolean('Indirect demand product', default=False,
@@ -179,6 +180,9 @@ class MrpProductionSchedule(models.Model):
                 elif f['state'] == 'to_correct':
                     forecast_state.add('excessive_replenishment')
 
+                if f['outgoing_qty'] > f['forecast_qty'] or f['indirect_outgoing_qty'] > f['indirect_demand_qty']:
+                    forecast_state.add('low_forecast')
+
             if not forecast_state:
                 return False in states
             return states.intersection(forecast_state)
@@ -203,7 +207,7 @@ class MrpProductionSchedule(models.Model):
         suggestion_quantities = []
         years = 0 if self.suggestion_based_on == 'actual_demand' else 1
         date_range = self.company_id._get_date_range(years=years, force_period=period_scale)
-        outgoing_qty, outgoing_qty_done = self._get_outgoing_qty(date_range)
+        outgoing_qty, outgoing_qty_done, __, __ = self._get_outgoing_qty(date_range)
 
         for date in date_range:
             period_qty = 0
@@ -447,6 +451,7 @@ class MrpProductionSchedule(models.Model):
             'mrp_mps_show_starting_inventory',
             'mrp_mps_show_demand_forecast',
             'mrp_mps_show_indirect_demand',
+            'mrp_mps_show_indirect_actual_demand',
             'mrp_mps_show_actual_demand',
             'mrp_mps_show_to_replenish',
             'mrp_mps_show_actual_replenishment',
@@ -572,7 +577,9 @@ class MrpProductionSchedule(models.Model):
         available. After, the safety stock from previous period.
         - incoming_qty: The incoming moves and RFQ for the specified product and
         warehouse during the current period.
-        - outgoing_qty: The outgoing moves quantity.
+        - outgoing_qty: The direct outgoing moves quantity (i.e. from SOs).
+        - indirect_outgoing_qty: The indirect outgoing moves quantity (i.e. from MOs and
+        moves going to subcontracting locations).
         - indirect_demand_qty: On manufacturing a quantity to replenish could
         require a need for a component in another schedule. e.g. 2 product A in
         order to create 1 product B. If the replenish quantity for product B is
@@ -603,9 +610,9 @@ class MrpProductionSchedule(models.Model):
         indirect_demand_order = schedules_to_compute._get_indirect_demand_order(indirect_demand_trees)
         demand_qty_dict = defaultdict(lambda: defaultdict(float))
         incoming_qty, incoming_qty_done = self._get_incoming_qty(date_range)
-        outgoing_qty, outgoing_qty_done = self._get_outgoing_qty(date_range)
-        dummy, outgoing_qty_year_minus_1 = self._get_outgoing_qty(date_range_year_minus_1)
-        dummy, outgoing_qty_year_minus_2 = self._get_outgoing_qty(date_range_year_minus_2)
+        outgoing_qty, outgoing_qty_done, indirect_outgoing_qty, indirect_outgoing_qty_done = self._get_outgoing_qty(date_range)
+        __, outgoing_qty_year_minus_1, __, __ = self._get_outgoing_qty(date_range_year_minus_1)
+        __, outgoing_qty_year_minus_2, __, __ = self._get_outgoing_qty(date_range_year_minus_2)
         read_fields = [
             'forecast_target_qty',
             'min_to_replenish_qty',
@@ -637,6 +644,7 @@ class MrpProductionSchedule(models.Model):
             if len(date_range):
                 starting_inventory_qty -= incoming_qty_done.get((date_range[0], production_schedule.product_id, production_schedule.warehouse_id), 0.0)
                 starting_inventory_qty += outgoing_qty_done.get((date_range[0], production_schedule.product_id, production_schedule.warehouse_id), 0.0)
+                starting_inventory_qty += indirect_outgoing_qty_done.get((date_range[0], production_schedule.product_id, production_schedule.warehouse_id), 0.0)
 
             for index, (date_start, date_stop) in enumerate(date_range):
                 forecast_values = {}
@@ -648,8 +656,8 @@ class MrpProductionSchedule(models.Model):
                 if production_schedule in self:
                     forecast_values['date_start'] = date_start
                     forecast_values['date_stop'] = date_stop
-                    forecast_values['incoming_qty'] = float_round(incoming_qty.get(key, 0.0) + incoming_qty_done.get(key, 0.0), precision_rounding=rounding)
                     forecast_values['outgoing_qty'] = float_round(outgoing_qty.get(key, 0.0) + outgoing_qty_done.get(key, 0.0), precision_rounding=rounding)
+                    forecast_values['indirect_outgoing_qty'] = float_round(indirect_outgoing_qty.get(key, 0.0) + indirect_outgoing_qty_done.get(key, 0.0), precision_rounding=rounding)
                     forecast_values['outgoing_qty_year_minus_1'] = float_round(outgoing_qty_year_minus_1.get(key_y_1, 0.0), precision_rounding=rounding)
                     forecast_values['outgoing_qty_year_minus_2'] = float_round(outgoing_qty_year_minus_2.get(key_y_2, 0.0), precision_rounding=rounding)
 
@@ -657,6 +665,7 @@ class MrpProductionSchedule(models.Model):
                 forecast_values['indirect_demand_qty'] = float_round(indirect_qty_value, precision_rounding=rounding, rounding_method='UP')
                 forecast_values['forecast_qty'] = float_round(sum(existing_forecasts.mapped('forecast_qty')), precision_rounding=rounding)  # will be 0 if no existing forecast
                 forecast_values['replenish_qty_updated'] = any(existing_forecasts.mapped('replenish_qty_updated'))  # will be False if no existing forecast
+                forecast_values['incoming_qty'] = float_round(incoming_qty.get(key, 0.0) + incoming_qty_done.get(key, 0.0), precision_rounding=rounding)
 
                 if forecast_values['replenish_qty_updated']:
                     forecast_values['replenish_qty'] = float_round(sum(existing_forecasts.mapped('replenish_qty')), precision_rounding=rounding)
@@ -668,7 +677,7 @@ class MrpProductionSchedule(models.Model):
                         demand_qty_dict[key][forecast.date] += forecast.forecast_qty
 
                 forecast_values['starting_inventory_qty'] = float_round(starting_inventory_qty, precision_rounding=rounding)
-                forecast_values['safety_stock_qty'] = float_round(starting_inventory_qty - forecast_values['forecast_qty'] - forecast_values['indirect_demand_qty'] + forecast_values['replenish_qty'], precision_rounding=rounding)
+                forecast_values['safety_stock_qty'] = float_round(starting_inventory_qty - forecast_values['forecast_qty'] - forecast_values['indirect_demand_qty'] + max(forecast_values['incoming_qty'], forecast_values['replenish_qty']), precision_rounding=rounding)
 
                 if production_schedule in self:
                     production_schedule_state['forecast_ids'].append(forecast_values)
@@ -702,7 +711,9 @@ class MrpProductionSchedule(models.Model):
                 # The purpose is to hide indirect demand row if the schedule do not
                 # depends from another.
                 has_indirect_demand = any(forecast['indirect_demand_qty'] != 0 for forecast in production_schedule_state['forecast_ids'])
+                has_indirect_actual_demand = any(forecast['indirect_outgoing_qty'] != 0 for forecast in production_schedule_state['forecast_ids'])
                 production_schedule_state['has_indirect_demand'] = has_indirect_demand
+                production_schedule_state['has_indirect_actual_demand'] = has_indirect_actual_demand
         return [production_schedule_states_by_id[_id] for _id in self.ids if _id in production_schedule_states_by_id]
 
     def _get_impacted_parent_schedules(self, domain=None):
@@ -1250,9 +1261,18 @@ class MrpProductionSchedule(models.Model):
         """ Get the outgoing quantity from existing moves.
         return a dict with as key a production schedule and as values a list
         of outgoing quantity for each date range.
+
+        param: date_range: list of time slots used in order to group outgoing quantity.
+        return:
+            outgoing_qty: {(date_range, product, warehouse): qty} for direct and not done moves
+            outgoing_qty_done: {(date_range, product, warehouse): qty} for direct and done moves
+            indirect_outgoing_qty: {(date_range, product, warehouse): qty} for indirect and not done moves
+            indirect_outgoing_qty_done: {(date_range, product, warehouse): qty} for indirect and done moves
         """
         outgoing_qty = defaultdict(float)
         outgoing_qty_done = defaultdict(float)
+        indirect_outgoing_qty = defaultdict(float)
+        indirect_outgoing_qty_done = defaultdict(float)
         after_date = date_range[0][0]
         before_date = date_range[-1][1]
         # Get quantity on incoming moves
@@ -1272,12 +1292,19 @@ class MrpProductionSchedule(models.Model):
             while not (date_range[index][0] <= date and date_range[index][1] >= date):
                 index += 1
             key = (date_range[index], move.product_id, move.location_id.warehouse_id)
+            is_indirect_demand = move.location_dest_id.usage == 'production' or 'is_subcontracting_location' in move.location_dest_id._fields and move.location_dest_id.is_subcontracting_location
             if move.state == 'done':
-                outgoing_qty_done[key] += move.product_qty
+                if is_indirect_demand:
+                    indirect_outgoing_qty_done[key] += move.product_qty
+                else:
+                    outgoing_qty_done[key] += move.product_qty
             else:
-                outgoing_qty[key] += move.product_qty
+                if is_indirect_demand:
+                    indirect_outgoing_qty[key] += move.product_qty
+                else:
+                    outgoing_qty[key] += move.product_qty
 
-        return outgoing_qty, outgoing_qty_done
+        return outgoing_qty, outgoing_qty_done, indirect_outgoing_qty, indirect_outgoing_qty_done
 
     def _get_rfq_domain(self, date_start, date_stop):
         """ Return a domain used to compute the incoming quantity for a given

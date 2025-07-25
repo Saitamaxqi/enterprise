@@ -33,6 +33,8 @@ class ResCompany(models.Model):
         'Display Actual Demand', default=False)
     mrp_mps_show_indirect_demand = fields.Boolean(
         'Display Indirect Demand', default=True)
+    mrp_mps_show_indirect_actual_demand = fields.Boolean(
+        'Display Indirect Actual Demand', default=False)
     mrp_mps_show_to_replenish = fields.Boolean(
         'Display To Replenish', default=True)
     mrp_mps_show_actual_replenishment = fields.Boolean(

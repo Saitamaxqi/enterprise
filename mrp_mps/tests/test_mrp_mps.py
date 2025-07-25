@@ -1012,7 +1012,7 @@ class TestMpsMps(common.TransactionCase):
         outgoing_qty = state['forecast_ids'][0]['outgoing_qty']
         incoming_qty = state['forecast_ids'][0]['incoming_qty']
         self.assertEqual(outgoing_qty, 12, 'outgoing qty is incorrect')
-        self.assertEqual(incoming_qty, 12, 'outgoing qty is incorrect')
+        self.assertEqual(incoming_qty, 12, 'incoming qty is incorrect')
 
     def test_forecast_target_qty(self):
         """ Test that adding a safety stock target does not break indirect demand computation.
@@ -1238,6 +1238,73 @@ class TestMpsMps(common.TransactionCase):
         screw_wizard_2 = Form.from_action(self.env, screw_action)
         self.assertEqual(screw_wizard_2.moves_qty, 24)
         self.assertEqual(screw_wizard_2.rfq_qty, 12)
+
+    def test_actual_indirect_demand(self):
+        """Test that Indirect Actual Demand is correctly computed apart from
+        Actual Demand (direct).
+        Indirect Actual Demand is affected by MOs or moves to subcontracting locations.
+        (Direct) Actual Demand is affected by direct SOs.
+        """
+        today = datetime.now().date()
+
+        # create OUT delivery for drawer (Direct Actual Demand)
+        self._create_and_process_delivery_at_date(
+            [(self.drawer, 10)], today
+        )
+
+        # create MO for table to check Indirect Actual Demand of drawer
+        production = self.env['mrp.production'].create({
+            'product_id': self.table.id,
+            'product_qty': 5,
+            'product_uom_id': self.table.uom_id.id,
+            'bom_id': self.bom_table.id,
+            'location_src_id': self.warehouse.lot_stock_id.id,
+            'location_dest_id': self.warehouse.lot_stock_id.id,
+            'origin': 'Test MPS',
+        })
+        production.action_confirm()
+        production.button_mark_done()
+
+        mps_drawer = self.mps_drawer.get_production_schedule_view_state()[0]
+        drawer_forecast = mps_drawer['forecast_ids'][0]
+        self.assertEqual(drawer_forecast['outgoing_qty'], 10)
+        self.assertEqual(drawer_forecast['indirect_outgoing_qty'], 5)
+
+    def test_early_replenishment_calculation(self):
+        """ Test that if an early replenishment occured in a period where the replenishment
+        is greater than the demand, the next periods take into account these extra quantities
+        when setting replenish_qty.
+        """
+        partner = self.env['res.partner'].create({'name': 'Al-Khwarizmi'})
+        self.env['product.supplierinfo'].create({
+            'product_id': self.screw.id,
+            'partner_id': partner.id,
+            'price': 12.0,
+            'delay': 0
+        })
+        self.mps_screw.replenish_trigger = 'manual'
+        self.table.route_ids = [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
+
+        # Create an MO for 1 table and a PO for 20 screws
+        self.mps_table.set_forecast_qty(0, 1)
+        (self.mps_table | self.mps_screw).action_replenish()
+        # Change the POL qty from 20 screws to 2 dozen screws (4 more than necessary), validate the PO
+        purchase_order_line = self.env['purchase.order.line'].search([('product_id', '=', self.screw.id)])
+        purchase_order_line.write({
+            'product_uom_id': self.env.ref('uom.product_uom_dozen').id,
+            'product_qty': 2,
+        })
+        purchase_order_line.order_id.button_confirm()
+        # Create a demand for 2 screws in period 1, no replenish_qty should be set in period 1
+        self.mps_screw.set_forecast_qty(1, 2)
+        # Create a demand for 5 screws in period 2, replenish_qty = 3 should be set in period 2
+        self.mps_screw.set_forecast_qty(2, 5)
+
+        mps_screw = self.mps_screw.get_production_schedule_view_state()[0]
+        screw_forecast_1 = mps_screw['forecast_ids'][1]
+        self.assertEqual(screw_forecast_1['replenish_qty'], 0)
+        screw_forecast_2 = mps_screw['forecast_ids'][2]
+        self.assertEqual(screw_forecast_2['replenish_qty'], 3)
 
     def test_actual_demand_multisteps(self):
         """ Test that actual demand is correctly calculated when deliveries are in multi-steps.

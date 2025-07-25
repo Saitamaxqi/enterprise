@@ -97,6 +97,8 @@
                         domain="[('replenish_state', '=', 'under_replenishment')]"/>
                 <filter string="Replenishment Too High" name="excessive_replenishment"
                         domain="[('replenish_state', '=', 'excessive_replenishment')]"/>
+                <filter string="Forecast Too Low" name="low_forecast"
+                        domain="[('replenish_state', '=', 'low_forecast')]"/>
                 <separator/>
                 <filter string="Manually Replenished" name="manual_replenish"
                         domain="[('replenish_trigger', '=', 'manual')]"/>

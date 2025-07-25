@@ -12,7 +12,7 @@
                     <span t-if="'product_uom_id' in productionSchedule" class="text-muted"> by <t t-esc="productionSchedule.product_uom_id[1]"/></span>
                     <span t-if="'warehouse_id' in productionSchedule"> - <t t-esc="productionSchedule.warehouse_id[1]"/></span>
                     <span> </span>
-                    <button type="button" t-attf-class="{{! groups.mrp_mps_show_safety_stock and 'o_hidden' or 'btn btn-link text-muted o_no_padding o_mrp_mps_edit'}}" t-on-click.stop="(ev) => this._onClickEdit(ev, productionSchedule.id)">
+                    <button type="button" t-attf-class="{{'btn btn-link text-muted o_no_padding o_mrp_mps_edit'}}" t-on-click.stop="(ev) => this._onClickEdit(ev, productionSchedule.id)">
                         <span class="fa fa-pencil text-muted fa-fw" role="img" aria-label="Forecasted" title="Forecasted"/>
                     </button>
                 </th>
@@ -65,7 +65,7 @@
                             t-att-data-date_index="forecast_index"
                             t-att-data-date_start="forecast.date_start"
                             t-att-data-date_stop="forecast.date_stop"
-                            t-attf-class="{{! groups.mrp_mps_show_actual_demand and 'o_hidden' or 'o_mrp_mps_open_details'}} {{forecast.outgoing_qty ? '' : 'o_zero_qty'}}">
+                            t-attf-class="{{! groups.mrp_mps_show_actual_demand and 'o_hidden' or 'o_mrp_mps_open_details'}} {{forecast.outgoing_qty ? '' : 'o_zero_qty'}} {{forecast.outgoing_qty > forecast.forecast_qty ? 'text-danger' : ''}}">
                                 <t t-esc="formatFloat(forecast.outgoing_qty)"/>
                             </a>
                             <span t-attf-class="{{! (groups.mrp_mps_show_actual_demand and groups.mrp_mps_show_demand_forecast) and 'o_hidden' or ''}}"> / </span>
@@ -81,14 +81,24 @@
                     </th>
                 </t>
             </tr>
-            <tr name="indirect_demand" t-attf-class="{{(! groups.mrp_mps_show_indirect_demand or ! productionSchedule.has_indirect_demand) and 'o_hidden' or ''}}">
+            <tr name="indirect_demand" t-attf-class="{{! (groups.mrp_mps_show_indirect_demand and productionSchedule.has_indirect_demand) and ! (groups.mrp_mps_show_indirect_actual_demand and productionSchedule.has_indirect_actual_demand) and 'o_hidden' or ''}}">
                 <th class="o_text_align"> - </th>
-                <th scope="row" data-bs-toggle="tooltip" data-bs-placement="bottom" title="The forecasted demand to fulfill the needs in components of the Manufacturing Orders.">
-                    Indirect Demand Forecast
+                 <th scope="row">
+                    <span t-attf-class="{{! groups.mrp_mps_show_indirect_actual_demand and 'o_hidden' or ''}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="The confirmed demand, based on the manufacturing orders.">Actual</span>
+                    <span t-attf-class="{{! (groups.mrp_mps_show_indirect_actual_demand and groups.mrp_mps_show_indirect_demand) and 'o_hidden' or ''}}"> / </span>
+                    <span t-attf-class="{{! groups.mrp_mps_show_indirect_demand and 'o_hidden' or ''}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="The forecasted demand to fulfill the needs in components of the Manufacturing Orders.">Indirect Demand Forecast</span>
                 </th>
                 <t t-foreach="productionSchedule.forecast_ids" t-as="forecast" t-key="forecast_index">
-                    <th t-attf-class="text-end {{forecast.indirect_demand_qty ? 'text-muted' : ''}} {{forecast.indirect_demand_qty ? '' : 'o_zero_qty'}}">
-                        <t t-esc="formatFloat(forecast.indirect_demand_qty)"/>
+                    <th>
+                        <div class="o_mps_inline">
+                            <span t-attf-class="text-end {{! groups.mrp_mps_show_indirect_actual_demand and 'o_hidden' or ''}} {{forecast.indirect_outgoing_qty ? 'text-muted' : 'o_zero_qty'}} {{forecast.indirect_outgoing_qty > forecast.indirect_demand_qty ? 'text-danger' : ''}}">
+                                <t t-esc="formatFloat(forecast.indirect_outgoing_qty)"/>
+                            </span>
+                            <span t-attf-class="{{! (groups.mrp_mps_show_indirect_actual_demand and groups.mrp_mps_show_indirect_demand) and 'o_hidden' or ''}}"> / </span>
+                            <span t-attf-class="text-end {{! groups.mrp_mps_show_indirect_demand and 'o_hidden' or ''}} {{forecast.indirect_demand_qty ? 'text-muted' : 'o_zero_qty'}}">
+                                <t t-esc="formatFloat(forecast.indirect_demand_qty)"/>
+                            </span>
+                        </div>
                     </th>
                 </t>
             </tr>
@@ -163,7 +173,7 @@
                 </th>
                 <t t-foreach="productionSchedule.forecast_ids" t-as="forecast" t-key="forecast_index">
                     <th class="text-end">
-                        <span t-attf-class="{{! groups.mrp_mps_show_available_to_promise and 'o_hidden' or ''}} {{(forecast.starting_inventory_qty + forecast.replenish_qty - forecast.outgoing_qty) ? '' : 'o_zero_qty'}}" t-esc="formatFloat(forecast.starting_inventory_qty + forecast.replenish_qty - forecast.outgoing_qty)"/>
+                        <span t-attf-class="{{! groups.mrp_mps_show_available_to_promise and 'o_hidden' or ''}} {{(forecast.starting_inventory_qty - forecast.outgoing_qty - forecast.indirect_outgoing_qty + (forecast.incoming_qty > forecast.replenish_qty ? forecast.incoming_qty : forecast.replenish_qty)) ? '' : 'o_zero_qty'}}" t-esc="formatFloat(forecast.starting_inventory_qty - forecast.outgoing_qty - forecast.indirect_outgoing_qty + (forecast.incoming_qty > forecast.replenish_qty ? forecast.incoming_qty : forecast.replenish_qty))"/>
                         <span t-attf-class="{{! (groups.mrp_mps_show_safety_stock and groups.mrp_mps_show_available_to_promise) and 'o_hidden' or ''}}"> / </span>
                         <span t-attf-class="{{forecast.safety_stock_qty &lt; 0 and 'text-danger' or ''}} {{! groups.mrp_mps_show_safety_stock and 'o_hidden' or ''}} {{forecast.safety_stock_qty ? '' : 'o_zero_qty'}}" t-esc="formatFloat(forecast.safety_stock_qty)"/>
                     </th>
