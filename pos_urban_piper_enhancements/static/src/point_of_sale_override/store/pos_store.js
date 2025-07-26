@@ -17,7 +17,7 @@ patch(PosStore.prototype, {
             const futureOrders = this.models["pos.order"].filter((o) => orderIds.includes(o.id));
             for (const order of futureOrders) {
                 try {
-                    await this.sendOrderInPreparation(order);
+                    await this.checkPreparationStateAndSentOrderInPreparation(order);
                 } catch {
                     this.notification.add(
                         _t("Error to send delivery order in preparation display."),

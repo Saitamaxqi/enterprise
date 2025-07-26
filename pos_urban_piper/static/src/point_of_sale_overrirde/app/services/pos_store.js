@@ -196,7 +196,7 @@ patch(PosStore.prototype, {
         this.navigate("TicketScreen");
         if (this.getOrder().delivery_status !== "placed") {
             try {
-                await this.sendOrderInPreparation(this.getOrder());
+                await this.checkPreparationStateAndSentOrderInPreparation(this.getOrder());
             } catch {
                 this.notification.add(_t("Error to send in preparation display."), {
                     type: "warning",

@@ -133,7 +133,7 @@ patch(TicketScreen.prototype, {
                             order.last_order_preparation_change.general_customer_note =
                                 order.general_customer_note;
                         }
-                        await this.pos.sendOrderInPreparation(order, true);
+                        await this.pos.checkPreparationStateAndSentOrderInPreparation(order, true);
                     }
                     await this._updateScreenState(order, "ACTIVE_ORDERS");
                     await this.pos.deleteOrders([order]);
