@@ -3,6 +3,7 @@ import { KeepLast } from "@web/core/utils/concurrency";
 import { useService } from "@web/core/utils/hooks";
 import { Pager } from "@web/core/pager/pager";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
+import { _t } from "@web/core/l10n/translation";
 import { SpreadsheetSelectorGrid } from "../spreadsheet_selector_grid/spreadsheet_selector_grid";
 
 import { Component, onWillStart, useState, onWillUnmount } from "@odoo/owl";
@@ -11,7 +12,7 @@ const DEFAULT_LIMIT = 9;
 
 /**
  * @typedef State
- * @property {Object} spreadsheets
+ * @property {Object[]} spreadsheets
  * @property {string} panel
  * @property {string} name
  * @property {number|null} selectedSpreadsheetId
@@ -41,7 +42,7 @@ export class SpreadsheetSelectorPanel extends Component {
     setup() {
         /** @type {State} */
         this.state = useState({
-            spreadsheets: {},
+            spreadsheets: [],
             selectedSpreadsheetId: null,
             pagerProps: {
                 offset: 0,
@@ -72,6 +73,10 @@ export class SpreadsheetSelectorPanel extends Component {
         });
     }
 
+    get blankCardLabel() {
+        return _t("Blank spreadsheet");
+    }
+
     async _fetchSpreadsheets() {
         const { offset, limit } = this.state.pagerProps;
         const { records, total } = await this.keepLast.add(
@@ -92,6 +97,12 @@ export class SpreadsheetSelectorPanel extends Component {
 
     async _getCreateAndOpenSpreadsheetAction() {
         return this.orm.call(this.props.model, "action_open_new_spreadsheet");
+    }
+
+    _getActionForSelectedItem(spreadsheet) {
+        return spreadsheet
+            ? this._getOpenSpreadsheetAction
+            : this._getCreateAndOpenSpreadsheetAction;
     }
 
     async onSearchInput(ev) {
@@ -127,11 +138,10 @@ export class SpreadsheetSelectorPanel extends Component {
         const spreadsheet =
             this.state.selectedSpreadsheetId &&
             this.state.spreadsheets.find((s) => s.id === this.state.selectedSpreadsheetId);
+
         this.props.onSpreadsheetSelected({
             spreadsheet,
-            getOpenSpreadsheetAction: spreadsheet
-                ? this._getOpenSpreadsheetAction.bind(this)
-                : this._getCreateAndOpenSpreadsheetAction.bind(this),
+            getOpenSpreadsheetAction: this._getActionForSelectedItem(spreadsheet).bind(this),
         });
     }
 

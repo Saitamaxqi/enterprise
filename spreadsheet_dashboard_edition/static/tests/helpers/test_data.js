@@ -14,6 +14,19 @@ export class SpreadsheetDashboard extends SpreadsheetDashboardCommunity {
         string: "Is from Data",
         default: false,
     });
+
+    get_spreadsheets(domain = [], args = {}) {
+        let { offset, limit } = args;
+        offset = offset || 0;
+
+        const records = this.env["spreadsheet.dashboard"].search_read(domain).map((dashboard) => ({
+            display_name: dashboard.name,
+            id: dashboard.id,
+        }));
+
+        const sliced = records.slice(offset, limit ? offset + limit : undefined);
+        return { records: sliced, total: records.length };
+    }
 }
 
 export function defineSpreadsheetDashboardEditionModels() {

@@ -81,5 +81,5 @@ class SpreadsheetDashboard(models.Model):
                 "model": self._name,
                 "display_name": _("Dashboards"),
                 "sequence": 10,
-                "allow_create": False,
+                "allow_create": True,
             }

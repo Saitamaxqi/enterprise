@@ -3,11 +3,6 @@ import { _t } from "@web/core/l10n/translation";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 
 const DEFAULT_LIMIT = 9;
-const BLANK_SPREADSHEET_TEMPLATE = {
-    id: null,
-    display_name: _t("Blank spreadsheet"),
-    thumbnail: "/spreadsheet/static/img/spreadsheet.svg",
-};
 
 export class SpreadsheetSelectorGrid extends Component {
     static template = "spreadsheet_edition.SpreadsheetSelectorGrid";
@@ -21,10 +16,8 @@ export class SpreadsheetSelectorGrid extends Component {
         onSpreadsheetDblClicked: Function,
         getThumbnailURL: Function,
         selectedSpreadsheetId: Number | null,
-        displayBlank: {
-            type: Boolean,
-            optional: true,
-        },
+        displayBlank: { type: Boolean, optional: true },
+        blankCardLabel: { type: String, optional: true },
     };
 
     blankThumbnailPlaceholder = "/spreadsheet/static/img/spreadsheet.svg";
@@ -38,6 +31,14 @@ export class SpreadsheetSelectorGrid extends Component {
         });
     }
 
+    get blankTemplate() {
+        return {
+            id: null,
+            display_name: this.props.blankCardLabel ?? _t("Blank spreadsheet"),
+            thumbnail: "/spreadsheet/static/img/spreadsheet.svg",
+        };
+    }
+
     /**
      * @returns {Array} - The list of spreadsheets to display in the grid.
      */
@@ -45,7 +46,7 @@ export class SpreadsheetSelectorGrid extends Component {
         if (!this.props.displayBlank) {
             return this.props.spreadsheets;
         }
-        return [BLANK_SPREADSHEET_TEMPLATE, ...this.props.spreadsheets];
+        return [this.blankTemplate, ...this.props.spreadsheets];
     }
 
     /**

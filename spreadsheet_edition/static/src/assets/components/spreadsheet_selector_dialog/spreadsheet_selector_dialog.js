@@ -93,6 +93,10 @@ export class SpreadsheetSelectorDialog extends Component {
         }
         this.state.confirmationIsPending = true;
         const action = await this.actionState.getOpenSpreadsheetAction();
+        if (!action) {
+            this.state.confirmationIsPending = false;
+            return;
+        }
         const threshold = this.state.threshold ? parseInt(this.state.threshold, 10) : 0;
         const name = this.state.name.toString();
 

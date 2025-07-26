@@ -29,6 +29,7 @@
             getThumbnailURL="getThumbnailURL"
             selectedSpreadsheetId="state.selectedSpreadsheetId"
             displayBlank="props.displayBlank"
+            blankCardLabel="blankCardLabel"
         />
     </t>
 
