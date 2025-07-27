@@ -103,7 +103,7 @@ export class PrepDisplay extends WithLazyGetterTrap {
                 this.notification.add(data.notification);
             }
         });
-        this.bus.addEventListener("reconnect", () => {
+        this.bus.addEventListener("BUS:RECONNECT", () => {
             this.ringTheBell();
             this.getPreparationDisplayOrder(null);
         });
