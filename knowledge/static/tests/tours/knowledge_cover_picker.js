@@ -68,7 +68,7 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
         },
         {
             content: "Choose the odoo_logo cover",
-            trigger: '.o_existing_attachment_cell img[title*="odoo_logo"]',
+            trigger: '.o_existing_attachment_cell .o_button_area[aria-label*="odoo_logo"]',
             run: "click",
         },
         {
@@ -197,7 +197,7 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
             // search query, which is the article name, is "odoo" which is also in the
             // cover attachment's name, and that clicking on it sets it as cover of the
             // current article
-            trigger: '.modal-body .o_existing_attachment_cell img[title="odoo_logo.png"]',
+            trigger: '.modal-body .o_existing_attachment_cell .o_button_area[aria-label="odoo_logo.png"]',
             run: "click",
         },
         {
@@ -231,7 +231,7 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
         {
             content:
                 "Check that Odoo logo is now shown in the cover selector, make the trash button visible and click on delete cover button",
-            trigger: '.modal-body .o_existing_attachment_cell img[title="odoo_logo.png"]',
+            trigger: '.modal-body .o_existing_attachment_cell .o_button_area[aria-label="odoo_logo.png"]',
             run: `hover && click .modal-body .o_existing_attachment_cell:has(img[title="odoo_logo.png"]) .o_existing_attachment_remove`,
         },
         {

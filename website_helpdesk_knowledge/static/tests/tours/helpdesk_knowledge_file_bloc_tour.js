@@ -14,7 +14,7 @@ const createEmbeddedFileSteps = [
         trigger: '.o_select_media_dialog .nav-tabs .nav-link:contains("Documents")',
         run: 'click',
     }, { // choose "Onboarding" file
-        trigger: '.o_existing_attachment_cell .o_file_name:contains("Onboarding")',
+        trigger: '.o_existing_attachment_cell .o_button_area:has(+ .o_file_name:contains("Onboarding"))',
         run: 'click',
     },
 ];

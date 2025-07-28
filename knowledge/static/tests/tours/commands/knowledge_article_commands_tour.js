@@ -111,7 +111,7 @@ const fileCommandSteps = [{ // open the command bar
     trigger: '.o_select_media_dialog .nav-tabs .nav-link:contains("Documents")',
     run: 'click',
 }, { // click on the first item of the modal
-    trigger: '.o_existing_attachment_cell:contains(Onboarding)',
+    trigger: '.o_existing_attachment_cell:contains(Onboarding) .o_button_area',
     run: 'click'
 }, { // wait for the block to appear in the editor
     trigger: "[data-embedded='file'] span.o_file_image a",
