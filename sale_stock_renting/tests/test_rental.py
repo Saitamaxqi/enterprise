@@ -425,7 +425,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 8.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -435,7 +434,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 10.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -445,7 +443,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 20.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -455,7 +452,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 30.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -465,7 +461,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 1.0,
-                    'is_rental': True,
                 })],
             },
         ])
@@ -486,6 +481,7 @@ class TestRentalWizard(TestRentalCommon):
 
         """
 
+        sale_orders.order_line.update({'is_rental': True})
         so = sale_orders[0]
         (sale_orders - so).action_confirm()
         self.assertEqual(so.order_line.virtual_available_at_date, 100)
@@ -571,7 +567,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 8.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -581,7 +576,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 10.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -591,7 +585,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 20.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -601,7 +594,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 30.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -611,10 +603,10 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 1.0,
-                    'is_rental': True,
                 })],
             },
         ])
+        sale_orders.order_line.update({'is_rental': True})
 
         """
         The last SO is here to create a rental order covering the entire renting periods.
@@ -715,7 +707,6 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 5.0,
-                    'is_rental': True,
                 })],
             },
             {
@@ -725,11 +716,11 @@ class TestRentalWizard(TestRentalCommon):
                 'order_line': [Command.create({
                     'product_id': product.id,
                     'product_uom_qty': 10.0,
-                    'is_rental': True,
                 })],
             },
         ])
 
+        (so1 | so2).order_line.update({'is_rental': True})
         so2.action_confirm()
         self.assertFalse(so2.picking_ids)
         self.assertEqual(so1.order_line.virtual_available_at_date, 100)
@@ -753,6 +744,67 @@ class TestRentalWizard(TestRentalCommon):
         })
         product.invalidate_recordset()
         self.assertEqual(so1.order_line.virtual_available_at_date, 80)
+
+    def test_rental_forecast_without_rental_transfers_and_with_pickup(self):
+        """Ensure correct virtual availability calculation when
+        'Rental Transfers' are disabled.
+        Scenario:
+        - Create a storable rental product with 10 units in stock.
+        - Disable the 'Rental Transfer' setting.
+        - Create two rental orders for the same period:
+            * Order A: 9 units
+            * Order B: 1 unit
+        - Confirm and pick up Order A.
+        - Check that Order B still shows 1 unit available.
+        Expected:
+        - Virtual availability before any confirmation: 10
+        - After confirming and picking up Order A: Order B should still show 1 available unit.
+        """
+        # Disable rental transfers
+        self.env['res.config.settings'].create({'group_rental_stock_picking': False}).execute()
+        self.assertFalse(self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'))
+        self.env['stock.quant']._update_available_quantity(self.product_id, self.warehouse_id.lot_stock_id, 6)
+        # Create 2 rental orders for the same period
+        start = Datetime.today() + timedelta(days=1)
+        end = start + timedelta(days=1)
+        so1, so2 = self.env['sale.order'].create([
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': start,
+                'rental_return_date': end,
+                'order_line': [Command.create({
+                    'product_id': self.product_id.id,
+                    'product_uom_qty': 9.0,
+                })],
+            },
+            {
+                'partner_id': self.cust1.id,
+                'rental_start_date': start,
+                'rental_return_date': end,
+                'order_line': [Command.create({
+                    'product_id': self.product_id.id,
+                    'product_uom_qty': 1.0,
+                })],
+            },
+        ])
+        (so1 | so2).order_line.update({'is_rental': True})
+        self.assertEqual(so2.order_line.virtual_available_at_date, 10)
+        # Confirm Order A (9 units)
+        so1.action_confirm()
+        self.assertFalse(so1.picking_ids)
+        self.assertTrue(so1.has_pickable_lines)
+        # Check availability for Order B after confirming Order A
+        so2.order_line.invalidate_recordset()
+        self.assertEqual(so2.order_line.virtual_available_at_date, 1)
+        # Simulate pickup of Order A
+        pickup_action = so1.action_open_pickup()
+        wizard = Form(self.env['rental.order.wizard'].with_context(pickup_action['context'])).save()
+        with freeze_time(so1.order_line.start_date):
+            wizard.apply()
+        so2.order_line.invalidate_recordset()
+        self.assertFalse(so1.has_pickable_lines)
+        # Virtual availability should remain correct for Order B
+        self.assertEqual(so2.order_line.virtual_available_at_date, 1)
 
     ###############################
     #       PRIVATE METHODS       #

@@ -129,14 +129,13 @@ class SaleOrderLine(models.Model):
                         from_date=False,
                         to_date=from_date,
                         warehouse_id=warehouse_id).virtual_available
-                    if self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
-                        # If rental transfers are enabled, the rented_qty_during_period will overlap with
-                        # planned incoming taken into account by the virtual_available qty
-                        rentable_qty += line.product_id._get_virtual_unavailable_qty_in_rent(
-                            pivot_date=from_date,
-                            ignored_soline_id=line and line.state == 'draft' and line.id,
-                            warehouse_id=line.order_id.warehouse_id.id,
-                        )
+                    # The rented_qty_during_period can overlap with planned
+                    # incoming/outgoing moves taken into account by the virtual_available qty
+                    rentable_qty += line.product_id._get_virtual_unavailable_qty_in_rent(
+                        pivot_date=from_date,
+                        ignored_soline_id=line and line.state == 'draft' and line.id,
+                        warehouse_id=line.order_id.warehouse_id.id,
+                    )
                 rented_qty_during_period = line.product_id._get_unavailable_qty(
                     from_date, to_date,
                     ignored_soline_id=line and line.id,

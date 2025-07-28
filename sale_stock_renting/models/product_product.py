@@ -3,6 +3,7 @@
 from datetime import timedelta
 from odoo import _, api, models
 from odoo.fields import Domain
+from odoo.tools import float_is_zero
 
 
 class ProductProduct(models.Model):
@@ -130,6 +131,16 @@ class ProductProduct(models.Model):
         kwargs['rental_pivot_date'] = True
         active_lines = self._get_active_rental_lines(
             from_date=pivot_date, to_date=pivot_date, **kwargs
+        )
+        active_lines = active_lines.filtered(lambda line:
+            line.order_id.rental_status in ('pickup', 'return')
+                and (
+                    not line.order_id.has_pickable_lines
+                    or (
+                        float_is_zero(line.qty_delivered, precision_rounding=line.product_uom_id.rounding)
+                        and self.env.user.has_group('sale_stock_renting.group_rental_stock_picking')
+                    )
+                )
         )
         return sum(active_lines.mapped('product_uom_qty'))
 
