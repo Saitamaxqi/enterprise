@@ -22,7 +22,13 @@ class ResCompany(models.Model):
         default="monthly"
     )
     account_return_reminder_day = fields.Integer(string='Start from', default=7, required=True)
-    account_tax_return_journal_id = fields.Many2one('account.journal', string='Journal', domain=[('type', '=', 'general')], check_company=True)
+    account_tax_return_journal_id = fields.Many2one(
+        comodel_name='account.journal',
+        string='Journal',
+        inverse='_inverse_account_tax_return_journal_id',
+        domain=[('type', '=', 'general')],
+        check_company=True,
+    )
     account_revaluation_journal_id = fields.Many2one('account.journal', domain=[('type', '=', 'general')], check_company=True)
     account_revaluation_expense_provision_account_id = fields.Many2one('account.account', string='Expense Provision Account', check_company=True)
     account_revaluation_income_provision_account_id = fields.Many2one('account.account', string='Income Provision Account', check_company=True)
@@ -43,6 +49,9 @@ class ResCompany(models.Model):
         for company in self:
             company.totals_below_sections = company.anglo_saxon_accounting
 
+    def _inverse_account_tax_return_journal_id(self):
+        self.account_tax_return_journal_id.show_on_dashboard = True
+
     def _get_countries_allowing_tax_representative(self):
         """ Returns a set containing the country codes of the countries for which
         it is possible to use a representative to submit the tax report.
@@ -50,22 +59,30 @@ class ResCompany(models.Model):
         """
         return set()
 
-    def _get_default_misc_journal(self):
-        """ Returns a default 'miscellanous' journal to use for
-        account_tax_return_journal_id field. This is useful in case a
-        CoA was already installed on the company at the time the module
-        is installed, so that the field is set automatically when added."""
-        return self.env['account.journal'].search([
-            *self.env['account.journal']._check_company_domain(self),
-            ('type', '=', 'general'),
-        ], limit=1)
-
     def _get_tax_closing_journal(self):
-        journals = self.env['account.journal']
-        for company in self:
-            journals |= company.account_tax_return_journal_id or company.sudo()._get_default_misc_journal()
-
-        return journals
+        if not self.account_tax_return_journal_id:
+            closing_journal = self.env['account.journal']
+            for company in reversed(self.sudo().parent_ids):
+                if journal := company.account_tax_return_journal_id:
+                    closing_journal = journal
+                    break
+            if not closing_journal:
+                closing_journal = self.env['account.journal'].sudo().search([
+                    *self.env['account.journal']._check_company_domain(self),
+                    ('code', 'in', ('TAX', 'TRTRN')),  # TRTRN for Backward compatibility
+                    ('type', '=', 'general'),
+                ], limit=1)
+            if not closing_journal:
+                closing_journal = self.env['account.journal'].sudo().create([{
+                    'name': self.env._('Tax Returns'),
+                    'code': 'TAX',
+                    'type': 'general',
+                    'company_id': self.id,
+                    'currency_id': self.currency_id.id,
+                    'show_on_dashboard': True,
+                }])
+            self.account_tax_return_journal_id = closing_journal
+        return self.account_tax_return_journal_id
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -77,10 +94,6 @@ class ResCompany(models.Model):
     def write(self, vals):
         root_companies_before = self.root_id
         res = super().write(vals)
-
-        if 'account_tax_return_journal_id' in vals:
-            journal = self.env['account.journal'].browse(vals['account_tax_return_journal_id'])
-            journal.show_on_dashboard = True
 
         if any(return_field in vals for return_field in ('account_return_periodicity', 'account_return_reminder_day', 'child_ids', 'parent_id', 'account_opening_date')):
             roots_to_recompute = root_companies_before | self.root_id

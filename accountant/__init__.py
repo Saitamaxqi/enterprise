@@ -19,9 +19,8 @@ def _accounting_post_init(env):
         if module_ids:
             module_ids.sudo().button_install()
 
-    for company in env['res.company'].search([]):
-        default_misc_journal = company._get_default_misc_journal()
-        default_misc_journal.show_on_dashboard = True
+    for company in env['res.company'].search([('chart_template', '!=', False)], order="parent_path"):
+        company._get_tax_closing_journal()
         company._initiate_account_onboardings()
 
 def uninstall_hook(env):

@@ -22,7 +22,7 @@ class AccountJournal(models.Model):
         )
 
         for journal in self.filtered(lambda j: j.type == 'general'):
-            is_return_journal = journal == journal.company_id._get_tax_closing_journal()
+            is_return_journal = journal == journal.company_id.account_tax_return_journal_id
             dashboard_data[journal.id]['is_account_return_journal'] = is_return_journal
             if is_return_journal:
                 dashboard_data[journal.id]['tax_return_button_primary'] = (
