@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import timedelta
+from itertools import product
 
 from dateutil.relativedelta import relativedelta
 
@@ -698,3 +699,23 @@ class TestUi(HttpCase):
         # create it in advance here instead
         self.env['res.partner'].name_create('Agrolait')
         self.start_tour("/odoo", 'rental_tour', login="admin")
+
+    def test_product_displayed_on_rental_only(self):
+        """
+        This test will check that product are diplayed in the correct app.
+        In the rental app: rent_ok product and no not rent_ok product.
+        In the sale app: sale_ok product and no not sale_ok product
+        """
+
+        if self.env['ir.module.module']._get('sale_management').state != 'installed':
+            self.skipTest("If the 'sale_management' module isn't installed, we can't test wether products appear in the sale app!")
+
+        self.env['product.product'].create([{
+            'name': f"product:{sale_ok=},{rent_ok=}",
+            'type': 'consu',
+            'rent_ok': rent_ok,
+            'sale_ok': sale_ok,
+        } for sale_ok, rent_ok in product([True, False], [False, True])])
+
+        self.start_tour("/odoo", 'sale_renting_product_display', login="admin")
+        self.start_tour("/odoo", 'sale_product_display', login="admin")
