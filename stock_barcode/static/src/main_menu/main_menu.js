@@ -34,7 +34,7 @@ export class MainMenu extends Component {
             this.quantCount = data.quant_count;
             this.soundEnable = data.play_sound;
             if (this.soundEnable) {
-                const fileExtension = new Audio().canPlayType("audio/ogg") ? "ogg" : "mp3";
+                const fileExtension = new Audio().canPlayType("audio/ogg; codecs=vorbis") ? "ogg" : "mp3";
                 this.sounds = {
                     success: new Audio(
                         url(`/stock_barcode/static/src/audio/success.${fileExtension}`)
@@ -93,7 +93,12 @@ export class MainMenu extends Component {
     playSound(soundName) {
         if (this.soundEnable) {
             this.sounds[soundName].currentTime = 0;
-            this.sounds[soundName].play();
+            this.sounds[soundName].play().catch((error) => {
+                // `play` returns a promise. In case this promise is rejected (permission
+                // issue for example), catch it to avoid Odoo's `UncaughtPromiseError`.
+                this.soundEnable = false;
+                console.warn(error);
+            });
         }
     }
 

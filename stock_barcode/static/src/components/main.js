@@ -212,7 +212,8 @@ class MainComponent extends Component {
         this.sounds[type].play().catch((error) => {
             // `play` returns a promise. In case this promise is rejected (permission
             // issue for example), catch it to avoid Odoo's `UncaughtPromiseError`.
-            console.log(error);
+            this.config.play_sound  = false;
+            console.warn(error);
         });
     }
 
@@ -232,7 +233,7 @@ class MainComponent extends Component {
         barcodeData.actionId = this.props.actionId;
         this.config = { play_sound: true, ...barcodeData.data.config };
         if (this.config.play_sound) {
-            const fileExtension = new Audio().canPlayType("audio/ogg") ? "ogg" : "mp3";
+            const fileExtension = new Audio().canPlayType("audio/ogg; codecs=vorbis") ? "ogg" : "mp3";
             this.sounds = {
                 error: new Audio(url(`/barcodes/static/src/audio/error.${fileExtension}`)),
                 notify: new Audio(url(`/mail/static/src/audio/ting.${fileExtension}`)),
