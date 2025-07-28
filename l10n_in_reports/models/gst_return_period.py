@@ -239,11 +239,11 @@ class L10n_InGstReturnPeriod(models.Model):
                 time_period = (False, False)
             record.start_date, record.end_date = time_period
 
-    @api.depends("start_date")
+    @api.depends('end_date')
     def _compute_rtn_period_month_year(self):
         for period in self:
-            if period.start_date:
-                period.return_period_month_year = period.start_date.strftime("%m%Y")
+            if period.end_date:
+                period.return_period_month_year = period.end_date.strftime("%m%Y")
             else:
                 period.return_period_month_year = False
 
