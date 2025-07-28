@@ -412,6 +412,41 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.document_txt.action_unarchive()
         self.assertTrue(self.document_txt.active, 'the document should be active')
 
+    def test_archived_documents_operations(self):
+        """Check (un)authorized moves of archived documents"""
+        # Initial set up:
+        #
+        # folder_1
+        # ├─ folder_3
+        # │  ├─ request
+        # folder_2
+        folder_1, folder_2, folder_3 = self.env['documents.document'].create([
+            {'name': f'Test Folder {idx + 1}', 'type': 'folder'} for idx in range(3)
+        ])
+        folder_3.folder_id = folder_1
+        request = self.env['documents.document'].create({'name': 'Test Request', 'folder_id': folder_3.id})
+
+        # Can't move into archived folders
+        folder_2.action_archive()
+        with self.assertRaises(UserError):
+            folder_3.folder_id = folder_2
+        folder_2.action_unarchive()
+
+        # No-op doesn't fail
+        folder_1.action_archive()
+        folder_3.folder_id = folder_1
+
+        # Can't simply move archived documents
+        with self.assertRaises(UserError):
+            folder_3.folder_id = folder_2
+
+        # Move is allowed if specifying `active` as well (without children) *if the current folder is active*
+        with self.assertRaises(UserError):
+            folder_3.write({'folder_id': folder_2.id, 'active': True})
+        (folder_1 | folder_3).write({'folder_id': folder_2.id, 'active': True})
+
+        self.assertFalse(request.active, "folder_3's content should still be in the trash")
+
     def test_unarchive_document_with_archived_parent(self):
         """Unarchive a document whose parent folder is archived should send an error."""
         document = self.document_txt

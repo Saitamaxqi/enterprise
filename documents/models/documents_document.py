@@ -1989,14 +1989,20 @@ class DocumentsDocument(models.Model):
             if new_parent_folder.shortcut_document_id:
                 return self.write(vals | {'folder_id': new_parent_folder.shortcut_document_id.id})
 
-            if any(not d.active or not new_parent_folder.active or d.folder_id and not d.folder_id.active for d in self):
-                raise UserError(_("It is not possible to move archived documents or documents to archived folders."))
-
             documents_to_move = self.filtered(lambda d: d.folder_id != new_parent_folder)
-            if not self.env.su and any(
-                    d.user_permission != 'edit' or d.folder_id and d.folder_id.user_permission != 'edit'
-                    for d in documents_to_move):
-                raise AccessError(_("You are not allowed to move (some of) these documents."))
+            if documents_to_move and not new_parent_folder.active:
+                raise UserError(_("It is not possible to move documents into archived folders."))
+            for doc in documents_to_move:
+                to_active = vals.get('active')
+                if (
+                    not doc.active and not to_active
+                    or doc.folder_id and not doc.folder_id.active and (not to_active or doc.folder_id not in self)
+                ):
+                    raise UserError(_("It is not possible to move archived documents."))
+
+                if not self.env.su and (
+                        doc.user_permission != 'edit' or doc.folder_id and doc.folder_id.user_permission != 'edit'):
+                    raise AccessError(_("You are not allowed to move (some of) these documents."))
 
         if vals.get('active') is False:
             if self.env.user.share:

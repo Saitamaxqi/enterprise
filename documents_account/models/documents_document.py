@@ -180,10 +180,11 @@ class DocumentsDocument(models.Model):
                 "xml_id": "documents.document_finance_folder",
                 "noupdate": True,
                 "values": {
+                    "active": True,
                     "type": "folder",
                     "access_internal": "edit",
                     "name": _("Finance"),
-                    "sequence": 10
+                    "sequence": 10,
                 }
             }
         ])
@@ -192,11 +193,12 @@ class DocumentsDocument(models.Model):
                 "xml_id": "documents.document_finance_taxes_folder",
                 "noupdate": True,
                 "values": {
+                    "active": True,
                     "type": "folder",
                     "access_internal": "edit",
                     "folder_id": self.env.ref("documents.document_finance_folder").id,
                     "name": _("Taxes"),
-                    "sequence": 120
+                    "sequence": 120,
                 }
             }
         ])
@@ -205,11 +207,12 @@ class DocumentsDocument(models.Model):
                 "xml_id": "documents.document_finance_annual_closing_folder",
                 "noupdate": True,
                 "values": {
+                    "active": True,
                     "type": "folder",
                     "access_internal": "edit",
                     "folder_id": self.env.ref("documents.document_finance_folder").id,
                     "name": _("Annual Closing"),
-                    "sequence": 130
+                    "sequence": 130,
                 }
             },
         ])
@@ -218,11 +221,12 @@ class DocumentsDocument(models.Model):
                 "xml_id": "documents.document_finance_annual_closing_year_current_folder",
                 "noupdate": True,
                 "values": {
+                    "active": True,
                     "type": "folder",
                     "access_internal": "edit",
                     "folder_id": self.env.ref('documents.document_finance_annual_closing_folder').id,
                     "name": str(datetime.now().year),
-                    "sequence": 200
+                    "sequence": 200,
                 }
             },
         ])
