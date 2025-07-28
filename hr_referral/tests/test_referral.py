@@ -80,6 +80,24 @@ class TestHrReferral(TestHrReferralBase):
         self.assertEqual(self.red_mug_shop.points_missing, self.red_mug_shop.cost, "10 points are missing")
 
     def test_referral_no_hired_stage(self):
+        """
+        Test Case: Referral Program - Applicant passing through 'not hired' stages
+
+        This test ensures that:
+        - Points from referral stages are only awarded for stages marked `use_in_referral=True`.
+        - Stages with `use_in_referral=False` (e.g., parking or draft stages) do not award points.
+        - Points are not duplicated when moving back to already scored stages.
+        - Dashboard reflects progress accurately.
+        - Final stage marks the applicant as 'hired' even if later stages exist but are not marked for referral.
+
+        Scenario Flow:
+        1. Create custom stages that are excluded from referral (`use_in_referral=False`).
+        2. Move applicant across various stages and verify:
+            - Earned points are correct.
+            - Number of referral lines is correct.
+            - Dashboard reflects correct progression.
+        3. Ensure jumping over or into 'not hired' stages does not affect point tally incorrectly.
+        """
         self.env.ref('hr_recruitment.stage_job0').use_in_referral = False
         self.env.ref('hr_recruitment.stage_job3').use_in_referral = False
         stage_parking_1 = self.env['hr.recruitment.stage'].create({
@@ -111,36 +129,47 @@ class TestHrReferral(TestHrReferralBase):
         self.assertEqual(len(info_dashboard), 4, "In dashboard, we have only not 'not hired stage'.")
         self.assertEqual([x['done'] for x in info_dashboard], [True, False, False, False], "In dashboard, we have only not 'not hired stage' and state are correct.")
 
+        # Move to stage 3 (not hired) → should add points for skipped stage 2
         job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job3')
-        self.assertEqual(job_applicant.earned_points, self.env.ref('hr_recruitment.stage_job1').points, "As he jump to a 'not hired stage', he receive no points and the jumped stages are ignored.")
-        self.assertEqual(len(job_applicant.referral_points_ids), 1, "Richard received points corresponding to the first stage.")
+        total_points = self.env.ref('hr_recruitment.stage_job1').points + self.env.ref('hr_recruitment.stage_job2').points
+        self.assertEqual(job_applicant.earned_points, total_points, "As he jump to a 'not hired stage', he receive points for other stages and the jumped stages are ignored.")
+        self.assertEqual(len(job_applicant.referral_points_ids), 2, "Richard received points corresponding to the first and second stage.")
+        info_dashboard = json.loads(job_applicant.shared_item_infos)
+        self.assertEqual([x['done'] for x in info_dashboard], [True, True, False, False], "In dashboard, we have only not 'not hired stage' and state are correct.")
+
+        # Move back to stage 1 → new line add in received points as points removed for stage 2
         job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job1')
         self.assertEqual(job_applicant.earned_points, self.env.ref('hr_recruitment.stage_job1').points, "As he jump from a 'not hired stage' to the stage where he was before the 'not hired stage', he receive no points.")
-        self.assertEqual(len(job_applicant.referral_points_ids), 1, "Richard received points corresponding to the first stage.")
+        self.assertEqual(len(job_applicant.referral_points_ids), 3, "Richard received points corresponding to the first and second stages, including the second stage again when we moved the applicant back.")
+        info_dashboard = json.loads(job_applicant.shared_item_infos)
+        self.assertEqual([x['done'] for x in info_dashboard], [True, False, False, False], "In dashboard, we have only not 'not hired stage' and state are correct.")
 
+        # Move to stage 3 again → stage 2 points should be added again
         job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job3')
-        self.assertEqual(job_applicant.earned_points, self.env.ref('hr_recruitment.stage_job1').points, "As he jump to a 'not hired stage', he receive no points and the jumped stages are ignored.")
-        self.assertEqual(len(job_applicant.referral_points_ids), 1, "Richard received points corresponding to the first stage.")
+        total_points = self.env.ref('hr_recruitment.stage_job1').points + self.env.ref('hr_recruitment.stage_job2').points
+        self.assertEqual(job_applicant.earned_points, total_points, "As he jump to a 'not hired stage', he receive points for other stages and the jumped stages are ignored.")
+        self.assertEqual(len(job_applicant.referral_points_ids), 4, "Richard received points corresponding to the second stage again.")
+
         # We jump from not hired stage to another stage. All points between last valuable stage (stage 1) and new stage (stage 4) must be added
         job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job4')
         self.assertEqual(job_applicant.earned_points, 35, "He received points for stage 2 and stage 4 (in addition to stage 1 that he already received).")
-        self.assertEqual(len(job_applicant.referral_points_ids), 3, "3 lines in received points (2 new [for stage 2 and 4] and 1 old [for stage 1]).")
+        self.assertEqual(len(job_applicant.referral_points_ids), 5, "3 lines in received points (3 new [2 for stage 2 and 1 for stage 4], 1 old [for stage 1] and 1 for remove [for stage 2]).")
         info_dashboard = json.loads(job_applicant.shared_item_infos)
         self.assertEqual([x['done'] for x in info_dashboard], [True, True, True, False], "In dashboard, we have only not 'not hired stage' and state are correct.")
 
         # We jump between differents 'not hired stage' = > Nothing change
-        job_applicant.stage_id = stage_parking_1
-        job_applicant.stage_id = stage_parking_2
-        job_applicant.stage_id = stage_parking_1
-        job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job3')
+        job_applicant.stage_id = stage_parking_1    # points get for stage 5
+        job_applicant.stage_id = stage_parking_2    # no points get for this 'not hired stage'
+        job_applicant.stage_id = stage_parking_1    # no points get for this 'not hired stage'
+        job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job3')  # remove points for 4 and 5 stage
         job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job4')  # We come back to previous not 'not hired stage'
         self.assertEqual(job_applicant.earned_points, 35, "Nothing change as it was only 'not hired stage'.")
-        self.assertEqual(len(job_applicant.referral_points_ids), 3, "Nothing change as it was only 'not hired stage'.")
+        self.assertEqual(len(job_applicant.referral_points_ids), 9, "Total line added in received points.")
 
         # The applicant reach last not 'not hired stage'
         job_applicant.stage_id = self.env.ref('hr_recruitment.stage_job5')
         self.assertEqual(job_applicant.earned_points, 85, "He received all points.")
-        self.assertEqual(len(job_applicant.referral_points_ids), 4, "We add a line in received points.")
+        self.assertEqual(len(job_applicant.referral_points_ids), 10, "We add a line in received points.")
         self.assertEqual(job_applicant.referral_state, 'hired', "Referral is hired, even if stage (not hired) exist with bigger sequence.")
 
     def test_referral_no_point_done_stage(self):

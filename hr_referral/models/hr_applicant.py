@@ -125,8 +125,7 @@ class HrApplicant(models.Model):
                     applicant.referral_points_ids.unlink()
                 applicant.sudo()._update_points(applicant.stage_id.id, vals.get('last_stage_id', False))
                 if 'stage_id' in vals and vals['stage_id']:
-                    if self.env['hr.recruitment.stage'].browse(vals['stage_id']).use_in_referral:
-                        applicant.last_valuable_stage_id = vals['stage_id']
+                    applicant.last_valuable_stage_id = vals['stage_id']
                 if 'date_closed' in vals:
                     if not vals['date_closed'] and not applicant.stage_id.hired_stage:
                         applicant.referral_state = 'progress'
@@ -138,8 +137,7 @@ class HrApplicant(models.Model):
         for applicant in applicants:
             if applicant.ref_user_id and applicant.stage_id:
                 applicant.sudo()._update_points(applicant.stage_id.id, False)
-                if applicant.stage_id.use_in_referral:
-                    applicant.last_valuable_stage_id = applicant.stage_id
+                applicant.last_valuable_stage_id = applicant.stage_id
         return applicants
 
     def _send_notification(self, body, action_value='hr_referral.action_hr_applicant_employee_referral'):
@@ -167,8 +165,6 @@ class HrApplicant(models.Model):
         if not self.company_id:
             raise UserError(_("Applicant must have a company."))
         new_state = self.env['hr.recruitment.stage'].browse(new_state_id)
-        if not new_state.use_in_referral:
-            return
         old_state = self.env['hr.recruitment.stage'].browse(old_state_id)
         if old_state and old_state.use_in_referral:
             old_state_sequence = old_state.sequence
@@ -182,6 +178,7 @@ class HrApplicant(models.Model):
         if new_state.sequence < old_state_sequence:
             stages_to_remove = self.env['hr.referral.points']._read_group(
                 [
+                    ('stage_id.use_in_referral', '=', True),
                     ('applicant_id', '=', self.id),
                     ('stage_id.sequence', '<=', old_state_sequence),
                     ('stage_id.sequence', '>', new_state.sequence)
@@ -227,11 +224,12 @@ class HrApplicant(models.Model):
                     link1=Markup('<a href="/odoo/action-hr_referral.action_hr_referral_reward?active_model=hr.referral.reward">'),
                     link2=Markup('</a>'),
                 )
-            if self.stage_id.hired_stage:
-                self.referral_state = 'hired'
-                self._send_notification(_("Your referrer is hired! %(message)s", message=additional_message))
-            else:
-                self._send_notification(_("Your referrer got a step further! %(message)s", message=additional_message))
+            if new_state.use_in_referral:
+                if self.stage_id.hired_stage:
+                    self.referral_state = 'hired'
+                    self._send_notification(_("Your referrer is hired! %(message)s", message=additional_message))
+                else:
+                    self._send_notification(_("Your referrer got a step further! %(message)s", message=additional_message))
 
         self.env['hr.referral.points'].create(point_stage)
         self.invalidate_recordset(['earned_points'])
