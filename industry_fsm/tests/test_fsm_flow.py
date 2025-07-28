@@ -130,6 +130,7 @@ class TestFsmFlow(TestIndustryFsmCommon):
         fsm_stage.action_unarchive()
 
     def test_plan_task_in_calendar(self):
+        self.env.user.write({'tz': 'Europe/Brussels'})
         self.task.user_ids = self.george_user
         self.task.with_context(task_calendar_plan_full_day=True).plan_task_in_calendar({
             'planned_date_begin': '2023-02-01 07:00:00',
