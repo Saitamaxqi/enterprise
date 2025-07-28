@@ -12,7 +12,7 @@ patch(AddPageDialog.prototype, {
             // We also skip the possibility to choose to add in menu in that
             // case (e.g. in creation from 404 page button). The user can still
             // create its menu afterwards if needed.
-            await this.createPage(sectionsArch, this.props.forcedURL);
+            await this.createPage(sectionsArch, this.props.forcedURL, false, this.props.pageTitle);
         } else {
             this.dialogs.add(AddPageAIConfirmDialog, {
                 createPage: (...args) => this.createPage(...args),

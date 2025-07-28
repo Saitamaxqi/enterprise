@@ -19,16 +19,16 @@ patch(MenuDialog.prototype, {
      * @override
      */
     onClickOk() {
-        if (this.url.isValid()) {
-            const isHelpdeskUrl = this.url.input.value === "/helpdesk";
-            const isHelpdeskTeamPattern = isHelpdeskUrl || /^\/helpdesk\/([a-zA-Z]+-)+\d+$/.test(this.url.input.value);
+        if (this.state.url) {
+            const isHelpdeskUrl = this.state.url === "/helpdesk";
+            const isHelpdeskTeamPattern = isHelpdeskUrl || /^\/helpdesk\/([a-zA-Z]+-)+\d+$/.test(this.state.url);
             if (isHelpdeskUrl || isHelpdeskTeamPattern) {
-                this.url.input.hasError = true;
+                this.state.invalidUrl = true;
                 this.notification.add(
                     isHelpdeskUrl ?
                         _t("This URL is reserved for the helpdesk teams with 'website form' feature enabled.")
                         : _t("The %s URL is reserved for the helpdesk team with the same name. \
-                        To use it, please enable the 'website form' feature on that team instead.", this.url.input.value),
+                        To use it, please enable the 'website form' feature on that team instead.", this.state.url),
                     { type: 'danger' },
                 );
                 return;
