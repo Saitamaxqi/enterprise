@@ -2,6 +2,7 @@
 
 import base64
 import re
+from datetime import timedelta
 
 from reportlab.rl_config import TTFSearchPath
 
@@ -25,7 +26,7 @@ class SignTemplate(models.Model):
 
     document_ids = fields.One2many('sign.document', 'template_id', string="Documents", copy=True)
     name = fields.Char(required=True, default="New Template")
-    sign_item_ids = fields.One2many('sign.item', 'template_id', string="Signature Items", compute='_compute_sign_item_ids', store=True)
+    sign_item_ids = fields.One2many('sign.item', 'template_id', string="Signature Items", compute='_compute_sign_item_ids', store=True, domain=[('page', '>', -1)])
     responsible_count = fields.Integer(compute='_compute_responsible_count', string="Responsible Count")
 
     active = fields.Boolean(default=True, string="Active")
@@ -546,3 +547,38 @@ class SignTemplate(models.Model):
             'target': 'new',
         })
         return action
+
+    @api.model
+    def create_item_and_role(self, document_id, role_name):
+        """ Create a new sign role and a corresponding dummy sign item. """
+        role = self.env['sign.item.role'].create({'name': role_name})
+        self.env['sign.item'].create({
+            'document_id': document_id,
+            'type_id': 1,
+            'required': False,
+            'responsible_id': role.id,
+            'page': -1,
+            'posX': -1,
+            'posY': -1,
+            'width': -1,
+            'height': -1,
+        })
+        return role.id
+
+    @api.autovacuum
+    def _gc_sign_items(self):
+        """ Garbage-collect dummy sign items (page < 0) that are older than one day,
+        and remove sign roles that are no longer linked to any active sign items.
+        """
+
+        # Filter dummy items older than 1 day to avoid deleting roles that may still be
+        # used in an ongoing sign request creation session.
+        one_day_ago = fields.Datetime.now() - timedelta(days=1)
+        dummy_items = self.env['sign.item'].search([('page', '<', 0), ('create_date', '<', one_day_ago)])
+
+        active_items = self.env['sign.item'].search([('page', '>', -1)])
+        roles_with_dummy_items = dummy_items.mapped('responsible_id')
+        roles_with_active_items = active_items.mapped('responsible_id')
+        unused_role_recordset = roles_with_dummy_items - roles_with_active_items
+        dummy_items.unlink()
+        unused_role_recordset.unlink()

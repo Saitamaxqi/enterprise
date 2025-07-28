@@ -231,7 +231,7 @@ export class SignTemplate extends Component {
 
     async pushNewSigner() {
         const name = _t("Signer %s", this.state.signers.length + 1);
-        const [roleId] = await this.orm.create('sign.item.role', [{ name }]);
+        const roleId = await this.orm.call('sign.template', 'create_item_and_role', [this.state.selectedDocumentId, name]);
         const colorId = this.getNextColor();
         this.state.signers.push({
             'id': this.state.nextId,
