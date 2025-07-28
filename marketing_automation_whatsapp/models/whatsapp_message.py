@@ -28,10 +28,11 @@ class WhatsappMessage(models.Model):
         }
 
         for processed_msg in processed_msgs:
-            trace = processed_msg.marketing_trace_ids
+            traces = processed_msg.marketing_trace_ids
             trace_event = status_mapping.get(processed_msg.state, '')
-            if trace_event and trace:
-                trace.sudo().process_event(trace_event)
+            if trace_event and traces:
+                for trace in traces:
+                    trace.sudo().process_event(trace_event)
 
     def _get_whatsapp_gc_domain(self):
         return Domain.AND([
@@ -41,12 +42,14 @@ class WhatsappMessage(models.Model):
 
     def _handle_error(self, failure_type=False, whatsapp_error_code=False, error_message=False):
         super()._handle_error(failure_type, whatsapp_error_code=whatsapp_error_code, error_message=error_message)
-        trace = self.sudo().marketing_trace_ids
-        if trace:
-            trace.write({
-                    'state': 'canceled',
-                    'schedule_date': self.env.cr.now(),
-                    'state_msg': _('WhatsApp canceled')
-            })
-            if self.state == 'bounced':
+        traces = self.sudo().marketing_trace_ids
+        if not traces:
+            return
+        traces.write({
+                'state': 'canceled',
+                'schedule_date': self.env.cr.now(),
+                'state_msg': _('WhatsApp canceled')
+        })
+        if self.state == 'bounced':
+            for trace in traces:
                 trace.process_event('whatsapp_bounced')
