@@ -75,30 +75,30 @@ class PosConfig(models.Model):
         return super().write(vals)
 
     def _check_is_certified_pos(self):
+        action = self.env['pos.config'].action_pos_config_modal_edit()
+        action['res_id'] = self.id
+
+        fdm_required = self.certified_blackbox_identifier or self.env['pos.config'].search_count(
+            domain=[
+                *self.env['account.journal']._check_company_domain(self.company_id),
+                ('certified_blackbox_identifier', '!=', False),
+            ],
+            limit=1
+        )
+
         fdm_ids = self.env['iot.device'].search([
             *self.env['iot.device']._check_company_domain(self.company_id),
             ('type', '=', 'fiscal_data_module'),
         ], limit=2)
 
-        if self.certified_blackbox_identifier and not self.iface_fiscal_data_module:
-            if len(fdm_ids) != 1:
-                raise UserError(
-                    _("Forbidden to start a certified Point of sale without blackbox")
-                )
+        if not self.iface_fiscal_data_module and fdm_required:
             self.is_posbox = True
-            self.iface_fiscal_data_module = fdm_ids[0]  # if there is only one fdm available, we set it automatically
-        config_with_blackbox = self.env['pos.config'].search_count(
-            domain=[
-                    *self.env['account.journal']._check_company_domain(self.company_id),
-                    ('certified_blackbox_identifier', '!=', False),
-                ],
-            limit=1
-        )
-        if not self.iface_fiscal_data_module and config_with_blackbox:
             if len(fdm_ids) != 1:
-                raise UserError(_("You cannot have an uncertified Point of sale with the module pos_blackbox_be installed."))
-            self.is_posbox = True
-            self.iface_fiscal_data_module = fdm_ids[0]  # if there is only one fdm available, we set it automatically
+                action['context']['fdm_required'] = True
+                return action
+            self.iface_fiscal_data_module = fdm_ids[0]   # If only one FDM is available, set it automatically
+
+        return False
 
     @api.depends("iface_fiscal_data_module")
     def _compute_iot_device_ids(self):
@@ -114,16 +114,17 @@ class PosConfig(models.Model):
         return res
 
     def _check_before_creating_new_session(self):
-        self._check_is_certified_pos()
+        res = self._check_is_certified_pos()
+        if res:
+            return res
         if self.iface_fiscal_data_module:
             self._check_loyalty()
-            res = self._check_insz_user() or self._check_company_address()
+            res = self._check_insz_user() or self._check_company_address() or self._check_printer_connected()
             if res:
                 return res
             self._check_work_product_taxes_and_categories()
             self._check_employee_insz_or_bis_number()
             self._check_cash_rounding()
-            self._check_printer_connected()
         return super()._check_before_creating_new_session()
 
     def _check_loyalty(self):
@@ -227,11 +228,15 @@ class PosConfig(models.Model):
         if hasattr(self, "epson_printer_ip"):
             epson_printer = self.epson_printer_ip
         if not self.iface_printer_id and not epson_printer:
-            raise ValidationError(_("A printer must be connected"))
+            action = self.env['pos.config'].action_pos_config_modal_edit()
+            action['res_id'] = self.id
+            action['context'].update({'printer_required': True})
+            return action
         if not self.iface_print_auto:
             raise ValidationError(_("Automatic Receipt Printing must be activated"))
         if not self.iface_print_skip_screen:
             raise ValidationError(_("Skip Preview Screen must be activated"))
+        return False
 
     def _get_work_products(self):
         empty_product = self.env['product.product']

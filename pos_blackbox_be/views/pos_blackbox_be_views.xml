@@ -95,10 +95,18 @@
             <field name="model">pos.config</field>
             <field name="inherit_id" ref="pos_iot.pos_iot_config_view_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <div class="alert alert-warning" role="alert" invisible="not context.get('printer_required')">
+                        To open a certified Point of sale, you must <span class="alert-link">connect a receipt printer</span>.
+                    </div>
+                    <div class="alert alert-warning" role="alert" invisible="not context.get('fdm_required')">
+                        To open a certified Point of sale, you must <span class="alert-link">connect a Fiscal Data Module</span>.
+                    </div>
+                </xpath>
                 <xpath expr="//div[@name='row_scale']" position="after">
                     <div class="row">
                         <label string="Belgian Fiscal Data Module" for="iface_fiscal_data_module" class="col-lg-5 o_light_label"/>
-                        <field name="iface_fiscal_data_module" placeholder="none"/>
+                        <field name="iface_fiscal_data_module" placeholder="none" required="context.get('fdm_required')"/>
                     </div>
                 </xpath>
             </field>
