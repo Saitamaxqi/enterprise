@@ -228,7 +228,7 @@ export class ReadonlyEmbeddedViewComponent extends Component {
      */
     openView() {
         this.saveFilters();
-        const props = this.additionalViewProps || {};
+        const props = { ...(this.additionalViewProps || {}) };
         if (this.action.context.orderBy) {
             try {
                 props.orderBy = JSON.parse(this.action.context.orderBy);
