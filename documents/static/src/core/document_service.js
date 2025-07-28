@@ -1,3 +1,4 @@
+import { AccessRightsUpdageConfirmationDialog } from "@documents/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog";
 import { Document } from "./document_model";
 import { DocumentsManageVersions } from "@documents/components/documents_manage_versions_panel/documents_manage_versions_panel";
 import { EventBus, markup, reactive } from "@odoo/owl";
@@ -218,8 +219,9 @@ export class DocumentService {
         await this.orm.call("documents.document", "action_create_shortcut", documentIds);
     }
 
-    async moveOrCreateShortcut(records, targetFolderId, forceShortcut) {
+    async moveOrCreateShortcut(records, targetFolder, forceShortcut, expectedAccessRightsChanges) {
         let message = "";
+        const targetFolderId = targetFolder.id === "MY" ? false : targetFolder.id;
         if (forceShortcut) {
             await this.orm.call("documents.document", "action_create_shortcut", [
                 records.all,
@@ -231,14 +233,33 @@ export class DocumentService {
                     : _t("%s shortcuts have been created.", records.all.length);
         } else {
             if (records.movableRecordIds.length) {
-                await this.orm.call("documents.document", "action_move_documents", [
-                    records.movableRecordIds,
-                    targetFolderId,
-                ]);
                 message =
                     records.movableRecordIds.length === 1
                         ? _t("The document has been moved.")
                         : _t("%s documents have been moved.", records.movableRecordIds.length);
+                if (expectedAccessRightsChanges) {
+                    const confirmed = await new Promise((resolve) => {
+                        this.dialog.add(AccessRightsUpdageConfirmationDialog, {
+                            destinationFolder: targetFolder,
+                            confirm: async () => {
+                                await this.orm.call("documents.document", "action_move_documents", [
+                                    records.movableRecordIds,
+                                    targetFolderId,
+                                ]);
+                                resolve(true);
+                            },
+                            cancel: () => resolve(false),
+                        });
+                    });
+                    if (!confirmed) {
+                        return;
+                    }
+                } else {
+                    await this.orm.call("documents.document", "action_move_documents", [
+                        records.movableRecordIds,
+                        targetFolderId,
+                    ]);
+                }
             }
             if (records.nonMovableRecordIds.length) {
                 this.notification.add(

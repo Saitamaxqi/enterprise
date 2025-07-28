@@ -1,5 +1,6 @@
 import { describe, expect, test } from "@odoo/hoot";
 import {
+    click,
     keyDown,
     queryAll,
     queryAllTexts,
@@ -293,6 +294,124 @@ test("Drag and Drop - Check permission when dropping documents", async function 
     expect(".o_notification_content:eq(-1)").toHaveText(
         "At least one document could not be moved due to access rights."
     );
+});
+
+test("Drag and Drop - Check access rights confirmation popup when moving from kanban view", async function () {
+    onRpc("action_move_documents", () => {
+        expect.step("action_move_documents");
+    });
+    const documents = [
+        [2, "Internal Viewer - Link None - Discoverable", "view", "none", false, "folder"],
+        [3, "Internal Editor - Link None - Discoverable", "edit", "none", false, "folder"],
+        [4, "Internal Viewer - Link Viewer - Discoverable", "view", "view", false, "folder"],
+        [5, "Internal Viewer - Link None - Must have link", "view", "none", true, "folder"],
+        [6, "Internal Viewer - Link Viewer - Must have link", "view", "view", true, "folder"],
+    ];
+    const serverData = getDocumentsTestServerModelsData(
+        documents.map(
+            ([id, name, access_internal, access_via_link, is_access_via_link_hidden, type]) =>
+                makeDocumentRecordData(id, name, {
+                    access_internal,
+                    access_via_link,
+                    is_access_via_link_hidden,
+                    type,
+                })
+        )
+    );
+    const cases = [
+        [2, 3, true], // Change internal access
+        [2, 4, true], // Change link access
+        [2, 5, false], // Change link hidden access with link access == none
+        [4, 6, true], // Change link hidden access with link access != none
+    ];
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+
+    for (const [docToMove, targetDoc, expectedConfirmation] of cases) {
+        const { drop, moveTo } = await contains(
+            `.o_kanban_record[data-value-id='${docToMove}']`
+        ).drag();
+        await moveTo(`.o_kanban_record[data-value-id='${targetDoc}']`);
+        await drop();
+        if (expectedConfirmation) {
+            // Wait for dialog, cancel move and close dialog
+            await waitFor(".o_dialog:not(.o_inactive_modal)");
+            expect(".o_dialog:not(.o_inactive_modal)").toHaveCount(1);
+            await click(".o_dialog:not(.o_inactive_modal) .modal-footer button:contains(Cancel)");
+            await animationFrame();
+            expect(".o_dialog:not(.o_inactive_modal)").toHaveCount(0);
+        } else {
+            // Assert move
+            await animationFrame();
+            expect.verifySteps(["action_move_documents"]);
+        }
+    }
+});
+
+test("Drag and Drop - Check access rights confirmation popup when moving from search panel", async function () {
+    onRpc("action_move_folder", () => {
+        expect.step("action_move_folder");
+    });
+    const documents = [
+        [2, "Internal Viewer - Link None - Discoverable", "view", "none", false, "folder"],
+        [3, "Internal Editor - Link None - Discoverable", "edit", "none", false, "folder"],
+        [4, "Internal Viewer - Link Viewer - Discoverable", "view", "view", false, "folder"],
+        [5, "Internal Viewer - Link None - Must have link", "view", "none", true, "folder"],
+        [6, "Internal Viewer - Link Viewer - Must have link", "view", "view", true, "folder"],
+    ];
+    const serverData = getDocumentsTestServerModelsData(
+        documents.map(
+            ([id, name, access_internal, access_via_link, is_access_via_link_hidden, type]) =>
+                makeDocumentRecordData(id, name, {
+                    access_internal,
+                    access_via_link,
+                    is_access_via_link_hidden,
+                    type,
+                })
+        )
+    );
+    const cases = [
+        [2, 3, true], // Change internal access
+        [2, 4, true], // Change link access
+        [2, 5, false], // Change link hidden access with link access == none
+        [4, 6, true], // Change link hidden access with link access != none
+    ];
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+    await click(".o_search_panel_category_value[data-value-id='COMPANY'] .o_toggle_fold");
+    await animationFrame();
+
+    for (const [docToMove, targetDoc, expectedConfirmation] of cases) {
+        // Drag & Drop under the target folder
+        const { drop, moveTo } = await contains(
+            `.o_search_panel_category_value[data-value-id='${docToMove}']`
+        ).drag();
+        const targetFolder = document.querySelector(
+            `.o_search_panel_category_value[data-value-id='${targetDoc}']`
+        );
+        await moveTo(targetFolder);
+        await moveTo(targetFolder, {
+            position: { y: targetFolder.offsetHeight },
+            relative: true,
+        });
+        await moveTo(targetFolder, {
+            position: { x: targetFolder.offsetWidth },
+            relative: true,
+        });
+        await drop();
+        if (expectedConfirmation) {
+            // Wait for dialog, cancel move and close dialog
+            await waitFor(".o_dialog:not(.o_inactive_modal)");
+            expect(".o_dialog:not(.o_inactive_modal)").toHaveCount(1);
+            await click(".o_dialog:not(.o_inactive_modal) .modal-footer button:contains(Cancel)");
+            await animationFrame();
+            expect(".o_dialog:not(.o_inactive_modal)").toHaveCount(0);
+        } else {
+            // Assert move
+            await animationFrame();
+            expect.verifySteps(["action_move_folder"]);
+        }
+    }
 });
 
 test("Drag and Drop - Drop multiple documents at once", async function () {

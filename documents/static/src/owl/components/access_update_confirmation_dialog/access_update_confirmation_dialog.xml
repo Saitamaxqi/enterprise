@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="documents.AccessRightsUpdageConfirmationDialog">
+        <Dialog size="'md'" title="title" modalRef="modalRef">
+            <div class="o_documents_access_rights_update_dialog pb-2">
+                <div class="text-warning pb-2">
+                    <i class="fa fa-warning pe-1"/>
+                    Moving the document(s) will change their access rights to the following settings:
+                </div>
+                <DocumentsAccessSettings
+                    access="access"
+                    baseAccess="access"
+                    disabled="true"
+                    onChangeAccessInternal.bind="() => {}"
+                    onChangeAccessLink.bind="() => {}"
+                    onChangeIsAccessLinkHidden.bind="() => {}"
+                    selections="selections"
+                    />
+            </div>
+            <t t-set-slot="footer">
+                <button class="btn btn-primary" t-on-click="_confirm">Move</button>
+                <button class="btn btn-secondary" t-on-click="_cancel">Cancel</button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

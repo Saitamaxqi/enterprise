@@ -1,3 +1,4 @@
+import { AccessRightsUpdageConfirmationDialog } from "@documents/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { browser } from "@web/core/browser/browser";
 import { SearchPanel } from "@web/search/search_panel/search_panel";
@@ -120,8 +121,8 @@ export class DocumentsSearchPanel extends SearchPanel {
             },
             onDrop: async ({ element, parent, next }) => {
                 const draggingFolderId = parseInt(element.dataset.valueId);
-                const draggingFolderRootId =
-                    this.env.searchModel.getFolderById(draggingFolderId).rootId;
+                const draggingFolder = this.env.searchModel.getFolderById(draggingFolderId);
+                const draggingFolderRootId = draggingFolder.rootId;
                 let parentFolderId = parent ? parent.dataset.valueId : false;
                 const beforeFolderId = next ? parseInt(next.dataset.valueId) : false;
                 if (draggingFolderId === parentFolderId) {
@@ -149,6 +150,28 @@ export class DocumentsSearchPanel extends SearchPanel {
                 }
                 if (!["COMPANY", "MY"].includes(parentFolderId)) {
                     parentFolderId = parseInt(parentFolderId);
+                }
+                const parentFolder = this.env.searchModel.getFolderById(parentFolderId);
+                if (
+                    draggingFolder.access_internal !== parentFolder.access_internal ||
+                    draggingFolder.access_via_link !== parentFolder.access_via_link ||
+                    (parentFolder.access_via_link !== "none" &&
+                        draggingFolder.is_access_via_link_hidden !==
+                            parentFolder.is_access_via_link_hidden)
+                ) {
+                    this.dialog.add(AccessRightsUpdageConfirmationDialog, {
+                        destinationFolder: parentFolder,
+                        confirm: async () => {
+                            await this.orm.call("documents.document", "action_move_folder", [
+                                [draggingFolderId],
+                                parentFolderId || false,
+                                beforeFolderId,
+                            ]);
+                            await this.env.searchModel._reloadSearchModel(true);
+                        },
+                        cancel: () => {},
+                    });
+                    return;
                 }
                 await this.orm.call("documents.document", "action_move_folder", [
                     [draggingFolderId],

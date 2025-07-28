@@ -13,6 +13,16 @@ export class DocumentsDocument extends models.Model {
         ],
         default: "edit",
     });
+    access_via_link = fields.Selection({
+        selection: [
+            ["edit", "Editor"],
+            ["view", "Viewer"],
+            ["none", "None"],
+        ],
+        default: "none",
+    });
+    is_access_via_link_hidden = fields.Boolean();
+
     activity_state = fields.Selection({
         selection: [
             ["overdue", "Overdue"],
@@ -123,6 +133,29 @@ export class DocumentsDocument extends models.Model {
         }
     }
 
+    action_move_folder(folder, target, before_folder_id = false) {
+        const record = this.filter((r) => folder.id === r.id);
+        record.folder_id = target;
+    }
+
+    permission_panel_data(recordId) {
+        return {
+            record: this.browse([recordId])[0],
+            selections: {
+                access_via_link: this._fields.access_via_link.selection,
+                access_via_link_options: [
+                    ("1", "Must have the link to access"),
+                    ("0", "Discoverable"),
+                ],
+                access_internal: this._fields.access_internal.selection,
+                doc_access_roles: [
+                    ["view", "Viewer"],
+                    ["edit", "Editor"],
+                ],
+            },
+        };
+    }
+
     /**
      * @override to avoid super() not working for us.
      */
@@ -178,6 +211,8 @@ export class DocumentsDocument extends models.Model {
         for (const record of this.search_read(
             [["type", "=", "folder"]],
             [
+                "access_internal",
+                "access_via_link",
                 "active",
                 "alias_domain_id",
                 "alias_name",
@@ -188,6 +223,7 @@ export class DocumentsDocument extends models.Model {
                 "display_name",
                 "folder_id",
                 "id",
+                "is_access_via_link_hidden",
                 "is_folder",
                 "mail_alias_domain_count",
                 "owner_id",

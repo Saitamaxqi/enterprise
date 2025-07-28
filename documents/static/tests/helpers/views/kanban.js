@@ -19,6 +19,9 @@ export const basicDocumentsKanbanArch = /* xml */ `
         <field name="display_name"/>
         <field name="lock_uid"/>
         <field name="thumbnail_status"/>
+        <field name="access_internal"/>
+        <field name="access_via_link"/>
+        <field name="is_access_via_link_hidden"/>
         <t t-name="card">
             <div>
                 <div name="document_preview" class="o_kanban_image_wrapper">a thumbnail</div>

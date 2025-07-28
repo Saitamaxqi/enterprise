@@ -124,7 +124,7 @@ export function useDocumentView(helpers) {
         const document = shortcut_document_id ? { id: shortcut_document_id.id } : { id };
         dialogService.add(DocumentsPermissionPanel, {
             document,
-            onChangesSaved: () => env.searchModel.trigger("update"),
+            onChangesSaved: () => env.searchModel._reloadSearchModel(true),
         });
     };
 

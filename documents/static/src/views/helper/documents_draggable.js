@@ -242,25 +242,42 @@ export const useDraggableDocuments = makeDraggableHook({
             return;
         }
 
-        if (targetFolder.rootId === "MY" && sourceFolder.rootId !== "MY") {
-            await model.documentService.moveOrCreateShortcut(
-                this.draggedRecords,
-                targetFolderId === "MY" ? false : targetFolderId,
-                true
-            );
-            model.env.searchModel._reloadSearchModel(true);
-            return;
-        }
         if (targetFolder.id === "COMPANY") {
             await model.documentService.moveToCompanyRoot(this.draggedRecords);
             model.env.searchModel._reloadSearchModel(true);
             return;
         }
 
+        let expectedAccessRightsChanges = false;
+        if (
+            this._getMovableRecords(model).some(
+                (record) =>
+                    record.data.access_internal !== targetFolder.access_internal ||
+                    record.data.access_via_link !== targetFolder.access_via_link ||
+                    (targetFolder.access_via_link !== "none" &&
+                        record.data.is_access_via_link_hidden !==
+                            targetFolder.is_access_via_link_hidden)
+            )
+        ) {
+            expectedAccessRightsChanges = true;
+        }
+
+        if (targetFolder.rootId === "MY" && sourceFolder.rootId !== "MY") {
+            await model.documentService.moveOrCreateShortcut(
+                this.draggedRecords,
+                targetFolder,
+                true,
+                expectedAccessRightsChanges
+            );
+            model.env.searchModel._reloadSearchModel(true);
+            return;
+        }
+
         await model.documentService.moveOrCreateShortcut(
             this.draggedRecords,
-            targetFolderId,
-            ref.el.classList.contains("o_documents_dnd_shortcut")
+            targetFolder,
+            ref.el.classList.contains("o_documents_dnd_shortcut"),
+            expectedAccessRightsChanges
         );
 
         model.load();
@@ -268,11 +285,17 @@ export const useDraggableDocuments = makeDraggableHook({
         model.env.searchModel._reloadSearchModel(true);
     },
 
+    _getMovableRecords(model) {
+        return model.root.selection.filter(
+            (record) => !record.data.lock_uid && record.data.user_permission === "edit"
+        );
+    },
+
     _setDraggedRecords(model) {
         this.draggedRecords = {};
-        this.draggedRecords.movableRecordIds = model.root.selection
-            .filter((record) => !record.data.lock_uid && record.data.user_permission === "edit")
-            .map((record) => record.data.id);
+        this.draggedRecords.movableRecordIds = this._getMovableRecords(model).map(
+            (record) => record.data.id
+        );
         this.draggedRecords.nonMovableRecordIds = model.root.selection
             .filter((record) => !this.draggedRecords.movableRecordIds.includes(record.data.id))
             .map((record) => record.data.id);

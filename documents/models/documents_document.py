@@ -2132,12 +2132,7 @@ class DocumentsDocument(models.Model):
     def search_panel_select_range(self, field_name, **kwargs):
         if field_name == 'folder_id':
             enable_counters = kwargs.get('enable_counters', False)
-            search_panel_fields = ['access_token', 'company_id', 'description', 'display_name', 'folder_id',
-                                   'is_favorited', 'is_company_root_folder', 'owner_id', 'shortcut_document_id',
-                                   'user_permission', 'active', 'mail_alias_domain_count']
-            if not self.env.user.share:
-                search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids', 'partner_id',
-                                        'create_activity_type_id', 'create_activity_user_id']
+            search_panel_fields = self._get_search_panel_fields()
             domain = Domain('type', '=', 'folder')
 
             if unique_folder_id := self.env.context.get('documents_unique_folder_id'):
@@ -2353,6 +2348,18 @@ class DocumentsDocument(models.Model):
             ('active', '=', False),
             ('write_date', '<=', fields.Datetime.now() - relativedelta(days=deletion_delay)),
         ]
+
+    @api.model
+    def _get_search_panel_fields(self):
+        """Returns the list of fields used by the search panel."""
+        search_panel_fields = ['access_internal', 'access_token', 'access_via_link', 'active', 'company_id',
+                               'description', 'display_name', 'folder_id', 'is_access_via_link_hidden',
+                               'is_company_root_folder', 'is_favorited', 'mail_alias_domain_count',
+                               'owner_id', 'shortcut_document_id', 'user_permission']
+        if not self.env.user.share:
+            search_panel_fields += ['alias_domain_id', 'alias_name', 'alias_tag_ids', 'create_activity_type_id',
+                                    'create_activity_user_id', 'partner_id']
+        return search_panel_fields
 
     def _get_access_action(self, access_uid=None, force_website=False):
         self.ensure_one()
