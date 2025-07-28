@@ -761,3 +761,72 @@ test("Select a range with SHIFT key", async () => {
     expect(".o_kanban_record:contains(Request 1)").toHaveClass("o_record_selected");
     expect("div.o_record_selected").toHaveCount(3);
 });
+
+test("Name in previewer is correct without attachment", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        {
+            id: 10,
+            name: "Shin chan: The Spicy Kasukabe",
+            type: "url",
+            url: "https://www.youtube.com/watch?v=Qv_-R9kw5eg",
+            mimetype: "text/html",
+            folder_id: 1,
+        },
+        {
+            id: 11,
+            name: "Mom vs Dad |Shinchan",
+            type: "url",
+            url: "https://www.youtube.com/watch?v=sZeU-nrm8UA",
+            mimetype: "text/html",
+            folder_id: 1,
+        },
+    ]);
+
+    patchWithCleanup(HTMLIFrameElement.prototype, {
+        contentWindow: {
+            get: () => null,
+        },
+        contentDocument: {
+            get: () => null,
+        },
+    });
+
+    const previewedAttachments = [];
+    mockService("document.document", {
+        setPreviewedDocument: (doc) => {
+            if (doc && doc.attachment) {
+                previewedAttachments.push({
+                    id: doc.attachment.id,
+                    name: doc.attachment.name,
+                    url: doc.attachment.url,
+                    documentId: doc.attachment.documentId,
+                });
+                expect.step(`preview_${doc.attachment.name}`);
+            }
+        },
+        documentList: null,
+    });
+
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView();
+
+    await contains(".o_kanban_record:contains('Shin chan') [name='document_preview']").click();
+    await waitFor(".o-FileViewer");
+
+    const closeBtn = document.querySelector(".o-FileViewer [aria-label='Close']");
+    closeBtn.click();
+    await waitForNone(".o-FileViewer");
+
+    await contains(".o_kanban_record:contains('Mom vs Dad') [name='document_preview']").click();
+    await waitFor(".o-FileViewer");
+
+    expect(previewedAttachments).toHaveLength(2);
+
+    expect(previewedAttachments[0].id).toBe(10);
+    expect(previewedAttachments[0].name).toBe("Shin chan: The Spicy Kasukabe");
+
+    expect(previewedAttachments[1].id).toBe(11);
+    expect(previewedAttachments[1].name).toBe("Mom vs Dad |Shinchan");
+
+    expect.verifySteps(["preview_Shin chan: The Spicy Kasukabe", "preview_Mom vs Dad |Shinchan"]);
+});
