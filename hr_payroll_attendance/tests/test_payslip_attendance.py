@@ -75,10 +75,11 @@ class TestPayslipAttendance(HrWorkEntryAttendanceCommon):
             ('check_out', '>=', self.payslip.date_from)
         ]
         attendances = self.env['hr.attendance'].with_context(tz="Europe/Brussels").search(domain)
-        self.assertEqual(attendances, attendance_A + attendance_B) # Not correct (`attendance_B` is not in the payslip period)
+        self.assertEqual(attendances, attendance_A)
+        self.assertNotIn(attendance_B, attendances)
         # With using `_get_attendance_by_payslip`:
         attendance_by_payslip = self.payslip.with_context(tz="Europe/Brussels")._get_attendance_by_payslip()
-        self.assertEqual(attendance_by_payslip[self.payslip], attendance_A) # Correct
+        self.assertEqual(attendance_by_payslip[self.payslip], attendance_A)
 
     def test_compute_payslip_no_worked_hours(self):
         employee = self.env['hr.employee'].create({
