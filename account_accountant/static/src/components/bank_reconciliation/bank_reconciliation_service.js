@@ -107,6 +107,10 @@ export class BankReconciliationService {
     get statementLineMoveId() {
         return this.statementLineMove?.id;
     }
+
+    get statementLine() {
+        return this.chatterState.statementLine;
+    }
 }
 
 const bankReconciliationService = {

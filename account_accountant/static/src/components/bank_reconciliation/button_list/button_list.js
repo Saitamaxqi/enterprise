@@ -10,6 +10,7 @@ import { _t } from "@web/core/l10n/translation";
 import { getCurrency } from "@web/core/currency";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "../bank_reconciliation_service";
+import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 
 export class BankRecButtonList extends Component {
     static template = "account_accountant.BankRecButtonList";
@@ -20,6 +21,7 @@ export class BankRecButtonList extends Component {
         BankRecFileUploader,
     };
     static props = {
+        statementLineRootRef: { type: Object },
         statementLine: { type: Object },
         isTopLine: { type: Boolean, optional: true },
         suspenseAccountLine: { type: Object, optional: true },
@@ -40,43 +42,60 @@ export class BankRecButtonList extends Component {
         this.addDialog = useOwnedDialogs();
         this.currencyDigits = getCurrency(this.statementLineData.currency_id.id)?.digits || 2;
         this.bankReconciliation = useBankReconciliation();
+
+        this.registerHotkeys();
+    }
+
+    restoreFocus() {
+        if (this.isLineSelected) {
+            this.props.statementLineRootRef.el.focus();
+        }
     }
 
     /**
      * Displays a search dialog (no create option) for selecting a `res.partner` record.
      */
     setPartnerOnReconcileLine() {
-        this.addDialog(SelectCreateDialog, {
-            title: _t("Search: Partner"),
-            noCreate: false,
-            multiSelect: false,
-            resModel: "res.partner",
-            context: { default_name: this.statementLineData.partner_name },
-            onSelected: async (partner) => {
-                await this.orm.call(
-                    "account.bank.statement.line",
-                    "set_partner_bank_statement_line",
-                    [this.statementLineData.id, partner[0]]
-                );
-                const recordsToLoad = [];
-                if (this.statementLineData.partner_name) {
-                    // Reload all impacted statement lines if we have a partner_name
-                    recordsToLoad.push(
-                        ...this.env.model.root.records.filter(
-                            (record) =>
-                                record.data.partner_name === this.statementLineData.partner_name
-                        )
+        this.addDialog(
+            SelectCreateDialog,
+            {
+                title: _t("Search: Partner"),
+                noCreate: false,
+                multiSelect: false,
+                resModel: "res.partner",
+                context: { default_name: this.statementLineData.partner_name },
+                onSelected: async (partner) => {
+                    await this.orm.call(
+                        "account.bank.statement.line",
+                        "set_partner_bank_statement_line",
+                        [this.statementLineData.id, partner[0]]
                     );
-                } else {
-                    recordsToLoad.push(this.props.statementLine);
-                }
-                await this.bankReconciliation.reloadRecords(recordsToLoad);
-                await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
-                    this.env.model.root.records
-                );
-                this.bankReconciliation.reloadChatter();
+                    const recordsToLoad = [];
+                    if (this.statementLineData.partner_name) {
+                        // Reload all impacted statement lines if we have a partner_name
+                        recordsToLoad.push(
+                            ...this.env.model.root.records.filter(
+                                (record) =>
+                                    record.data.partner_name === this.statementLineData.partner_name
+                            )
+                        );
+                    } else {
+                        recordsToLoad.push(this.props.statementLine);
+                    }
+                    await this.bankReconciliation.reloadRecords(recordsToLoad);
+                    await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+                        this.env.model.root.records
+                    );
+                    this.bankReconciliation.reloadChatter();
+                    this.restoreFocus();
+                },
             },
-        });
+            {
+                onClose: () => {
+                    this.restoreFocus();
+                },
+            }
+        );
     }
 
     /**
@@ -91,30 +110,39 @@ export class BankRecButtonList extends Component {
                 : { preferred_account_type: "expense" }),
         };
 
-        this.addDialog(SelectCreateDialog, {
-            title: _t("Search: Account"),
-            noCreate: true,
-            multiSelect: false,
-            context: context,
-            resModel: "account.account",
-            onSelected: async (account) => {
-                // After setting an account on a line, a new reconciliation model may be automatically created. If so,
-                // we need to reload the records that will use this model to make sure the new model is displayed.
-                const linesToLoad = await this._setAccountOnReconcileLine(
-                    this.lastAccountMoveLine.data.id,
-                    account[0],
-                    { context: { account_default_taxes: true } }
-                );
-                const recordsToLoad = [
-                    ...this.env.model.root.records.filter((record) =>
-                        linesToLoad.includes(record.data.id)
-                    ),
-                    this.props.statementLine,
-                ];
-                await this.bankReconciliation.reloadRecords(recordsToLoad);
-                this.bankReconciliation.reloadChatter();
+        this.addDialog(
+            SelectCreateDialog,
+            {
+                title: _t("Search: Account"),
+                noCreate: true,
+                multiSelect: false,
+                context: context,
+                resModel: "account.account",
+                onSelected: async (account) => {
+                    // After setting an account on a line, a new reconciliation model may be automatically created. If so,
+                    // we need to reload the records that will use this model to make sure the new model is displayed.
+                    const linesToLoad = await this._setAccountOnReconcileLine(
+                        this.lastAccountMoveLine.data.id,
+                        account[0],
+                        { context: { account_default_taxes: true } }
+                    );
+                    const recordsToLoad = [
+                        ...this.env.model.root.records.filter((record) =>
+                            linesToLoad.includes(record.data.id)
+                        ),
+                        this.props.statementLine,
+                    ];
+                    await this.bankReconciliation.reloadRecords(recordsToLoad);
+                    this.bankReconciliation.reloadChatter();
+                    this.restoreFocus();
+                },
             },
-        });
+            {
+                onClose: () => {
+                    this.restoreFocus();
+                },
+            }
+        );
     }
 
     /**
@@ -183,28 +211,38 @@ export class BankRecButtonList extends Component {
                 : { search_default_posted: 1 }),
         };
 
-        this.addDialog(BankRecSelectCreateDialog, {
-            title: _t("Search: Journal Items to Match"),
-            noCreate: true,
-            domain: this.getReconcileButtonDomain(),
-            resModel: "account.move.line",
-            size: "xl",
-            context: context,
-            onSelected: async (moveLines) => {
-                await this.orm.call("account.bank.statement.line", "set_line_bank_statement_line", [
-                    this.statementLineData.id,
-                    moveLines,
-                ]);
-                await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
-                    this.env.model.root.records
-                );
-                this.props.statementLine.load();
-                this.bankReconciliation.reloadChatter();
+        this.addDialog(
+            BankRecSelectCreateDialog,
+            {
+                title: _t("Search: Journal Items to Match"),
+                noCreate: true,
+                domain: this.getReconcileButtonDomain(),
+                resModel: "account.move.line",
+                size: "xl",
+                context: context,
+                onSelected: async (moveLines) => {
+                    await this.orm.call(
+                        "account.bank.statement.line",
+                        "set_line_bank_statement_line",
+                        [this.statementLineData.id, moveLines]
+                    );
+                    await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
+                        this.env.model.root.records
+                    );
+                    this.props.statementLine.load();
+                    this.bankReconciliation.reloadChatter();
+                    this.restoreFocus();
+                },
+                suspenseAccountLine: this.props.suspenseAccountLine,
+                reference: this.statementLineData.payment_ref,
+                date: this.statementLineData.date,
             },
-            suspenseAccountLine: this.props.suspenseAccountLine,
-            reference: this.statementLineData.payment_ref,
-            date: this.statementLineData.date,
-        });
+            {
+                onClose: () => {
+                    this.restoreFocus();
+                },
+            }
+        );
     }
 
     getReconcileButtonDomain() {
@@ -266,6 +304,159 @@ export class BankRecButtonList extends Component {
         this.bankReconciliation.reloadChatter();
     }
 
+    /**
+     * Retrieves the corresponding action, condition, and button element for a given key.
+     * This function is part of a keydown event handler that maps specific key presses to actions
+     * on the reconciliation line, such as setting a partner or reconciling an account.
+     * It checks if a line is selected and if the relevant button exists before returning the action details.
+     *
+     * @param {string|number} key - The key pressed.
+     * @returns {Object|undefined} An object containing the action, condition, and button element, or undefined if no action is found.
+     */
+    getKeyAction(key) {
+        const keyActions = {
+            1: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(".set-partner-btn") &&
+                    this.isLineSelected,
+                action: async () => this.setPartnerOnReconcileLine(),
+                buttonElement: this.props.statementLineRootRef.el.querySelector(".set-partner-btn"),
+            },
+            2: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(".reconcile-btn") &&
+                    this.isLineSelected,
+                action: async () => this.reconcileOnReconcileLine(),
+                buttonElement: this.props.statementLineRootRef.el.querySelector(".reconcile-btn"),
+            },
+            3: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(".set-account-btn") &&
+                    this.isLineSelected,
+                action: () => this.setAccountOnReconcileLine(),
+                buttonElement: this.props.statementLineRootRef.el.querySelector(".set-account-btn"),
+            },
+            4: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(".set-payable-btn") &&
+                    this.isLineSelected,
+                action: () => this.setAccountPayableOnReconcileLine(),
+                buttonElement: this.props.statementLineRootRef.el.querySelector(".set-payable-btn"),
+            },
+            5: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(".set-receivable-btn") &&
+                    this.isLineSelected,
+                action: () => this.setAccountReceivableOnReconcileLine(),
+                buttonElement:
+                    this.props.statementLineRootRef.el.querySelector(".set-receivable-btn"),
+            },
+            6: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(
+                        ".reconciliation-model-btn-0"
+                    ) && this.isLineSelected,
+                action: () => {
+                    const buttonElement = this.props.statementLineRootRef.el.querySelector(
+                        ".reconciliation-model-btn-0"
+                    );
+                    if (buttonElement) {
+                        buttonElement.click();
+                    }
+                },
+                buttonElement: this.props.statementLineRootRef.el.querySelector(
+                    ".reconciliation-model-btn-0"
+                ),
+            },
+            7: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(
+                        ".reconciliation-model-btn-1"
+                    ) && this.isLineSelected,
+                action: () => {
+                    const buttonElement = this.props.statementLineRootRef.el.querySelector(
+                        ".reconciliation-model-btn-1"
+                    );
+                    if (buttonElement) {
+                        buttonElement.click();
+                    }
+                },
+                buttonElement: this.props.statementLineRootRef.el.querySelector(
+                    ".reconciliation-model-btn-1"
+                ),
+            },
+            8: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(
+                        ".reconciliation-model-btn-2"
+                    ) && this.isLineSelected,
+                action: () => {
+                    const buttonElement = this.props.statementLineRootRef.el.querySelector(
+                        ".reconciliation-model-btn-2"
+                    );
+                    if (buttonElement) {
+                        buttonElement.click();
+                    }
+                },
+                buttonElement: this.props.statementLineRootRef.el.querySelector(
+                    ".reconciliation-model-btn-2"
+                ),
+            },
+            Enter: {
+                condition:
+                    this.props.statementLineRootRef.el.querySelector(".btn-primary") &&
+                    this.isLineSelected,
+                action: () => {
+                    const primaryButtons = this.props.statementLineRootRef.el.querySelectorAll(".btn-primary");
+                    if (primaryButtons.length > 0) {
+                        primaryButtons[0].click();
+                    }
+                },
+                buttonElement: this.props.statementLineRootRef.el.querySelector(".btn-primary"),
+            },
+        };
+        return keyActions[key];
+    }
+
+    /**
+     * Registers hotkeys for the reconciliation buttons.
+     */
+    registerHotkeys() {
+        const hotkeyConfigs = [
+            { key: "1", trigger: "alt+shift+1" },
+            { key: "2", trigger: "alt+shift+2" },
+            { key: "3", trigger: "alt+shift+3" },
+            { key: "4", trigger: "alt+shift+4" },
+            { key: "5", trigger: "alt+shift+5" },
+            { key: "6", trigger: "alt+shift+6" },
+            { key: "7", trigger: "alt+shift+7" },
+            { key: "8", trigger: "alt+shift+8" },
+            { key: "Enter", trigger: "alt+shift+enter" },
+        ];
+        hotkeyConfigs.forEach(({ key, trigger }) => {
+            useHotkey(
+                trigger,
+                ({ target }) => {
+                    const { condition, action } = this.getKeyAction(key);
+                    if (condition) {
+                        action();
+                    }
+                },
+                {
+                    area: () => this.props.statementLineRootRef.el.parentElement,
+                    withOverlay: () => {
+                        const { buttonElement, condition } = this.getKeyAction(key);
+                        return condition ? buttonElement : null;
+                    },
+                    isAvailable: () => {
+                        const { condition } = this.getKeyAction(key);
+                        return condition;
+                    },
+                }
+            );
+        });
+    }
+
     // -----------------------------------------------------------------------------
     // File Uploader
     // -----------------------------------------------------------------------------
@@ -287,6 +478,10 @@ export class BankRecButtonList extends Component {
     // -----------------------------------------------------------------------------
     get statementLineData() {
         return this.props.statementLine.data;
+    }
+
+    get isLineSelected() {
+        return this.statementLineData.id === this.bankReconciliation.statementLine?.data.id;
     }
 
     get lastAccountMoveLine() {
@@ -342,6 +537,7 @@ export class BankRecButtonList extends Component {
             buttonsToDisplay.partner = {
                 label: _t("Set Partner"),
                 action: this.setPartnerOnReconcileLine.bind(this),
+                classes: "set-partner-btn",
             };
         }
 
@@ -350,6 +546,7 @@ export class BankRecButtonList extends Component {
                 label: _t("Reconcile"),
                 action: this.reconcileOnReconcileLine.bind(this),
                 count: this.props.reconcileLineCount,
+                classes: "reconcile-btn",
             };
         }
 
@@ -357,11 +554,13 @@ export class BankRecButtonList extends Component {
             buttonsToDisplay.receivable = {
                 label: _t("Receivable"),
                 action: this.setAccountReceivableOnReconcileLine.bind(this),
+                classes: "set-receivable-btn",
             };
         } else if (this.isSetPayableButtonShown) {
             buttonsToDisplay.payable = {
                 label: _t("Payable"),
                 action: this.setAccountPayableOnReconcileLine.bind(this),
+                classes: "set-payable-btn",
             };
         }
 
@@ -369,6 +568,7 @@ export class BankRecButtonList extends Component {
             buttonsToDisplay.account = {
                 label: _t("Set Account"),
                 action: this.setAccountOnReconcileLine.bind(this),
+                classes: "set-account-btn",
             };
         }
 
@@ -381,12 +581,15 @@ export class BankRecButtonList extends Component {
         }
 
         if (!this.ui.isSmall) {
-            for (const model of this.props.reconcileModels
+            const models = this.props.reconcileModels
                 .filter((model) => model.id !== this.props?.preSelectedReconciliationModel?.id)
-                .slice(0, 3)) {
+                .slice(0, 3)
+                .entries();
+            for (const [index, model] of models) {
                 buttonsToDisplay[`model_${model.id}`] = {
                     label: model.display_name,
                     action: this.triggerReconciliationModel.bind(this, model.id),
+                    classes: `reconciliation-model-btn-${index}`,
                 };
             }
         }

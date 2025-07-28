@@ -3,6 +3,7 @@ import { KanbanController } from "@web/views/kanban/kanban_controller";
 import { makeActiveField } from "@web/model/relational_model/utils";
 import { useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "./bank_reconciliation_service";
+import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 
 export class BankRecKanbanController extends KanbanController {
     static template = "account_accountant.BankRecoKanbanController";
@@ -13,6 +14,10 @@ export class BankRecKanbanController extends KanbanController {
         this.bankReconciliation = useBankReconciliation();
         useSubEnv({
             bus: this.bankReconciliation.bus,
+        });
+        useHotkey("alt+shift+c", () => this.bankReconciliation.toggleChatter(), {
+            bypassEditableProtection: true,
+            withOverlay: () => this.rootRef.el.querySelector(".bank-chatter-btn"),
         });
     }
 

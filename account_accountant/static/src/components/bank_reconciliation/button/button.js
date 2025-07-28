@@ -9,9 +9,11 @@ export class BankRecButton extends Component {
         count: { type: [Number, { value: null }], optional: true },
         primary: { type: Boolean, optional: true },
         toReview: { type: Boolean, optional: true },
+        classes: { type: String, optional: true },
     };
     static defaultProps = {
         primary: false,
+        classes: "",
     };
 
     setup() {

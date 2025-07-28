@@ -36,7 +36,7 @@
                 openRecord="props.openRecord"
                 readonly="props.readonly"
                 record="groupOrRecord.record"
-                selectionAvailable="state.selectionAvailable"
+                selectionAvailable="false"
             />
         </xpath>
         <xpath expr="//t[@t-else='']/BankRecStatementLine" position="before">

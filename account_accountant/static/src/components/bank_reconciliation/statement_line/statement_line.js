@@ -5,8 +5,9 @@ import { formatMonetary } from "@web/views/fields/formatters";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-import { onWillStart, useState } from "@odoo/owl";
+import { onWillStart, useState, useRef } from "@odoo/owl";
 import { useBankReconciliation } from "../bank_reconciliation_service";
+import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 
 export class BankRecStatementLine extends KanbanRecord {
     static template = "account_accountant.BankRecStatementLine";
@@ -18,6 +19,7 @@ export class BankRecStatementLine extends KanbanRecord {
     static props = [...KanbanRecord.props];
 
     setup() {
+        this.registerHotKeys();
         super.setup();
         this.orm = useService("orm");
         this.ui = useService("ui");
@@ -25,12 +27,13 @@ export class BankRecStatementLine extends KanbanRecord {
         this.state = useState({
             isUnfolded: false,
         });
+        this.statementLineRootRef = useRef("root");
         if (this.env.model.config.context?.default_st_line_id) {
             this.state.isUnfolded = true;
         }
         onWillStart(async () => {
             this.userCanReview = await user.hasGroup("account.group_account_user");
-        })
+        });
     }
 
     // -----------------------------------------------------------------------------
@@ -67,6 +70,20 @@ export class BankRecStatementLine extends KanbanRecord {
     }
 
     // -----------------------------------------------------------------------------
+    // EVENT HANDLERS
+    // -----------------------------------------------------------------------------
+
+    registerHotKeys() {
+        const hotKeyOptions = {
+            area: () => this.rootRef.el,
+            allowRepeat: true,
+        };
+        useHotkey("Enter", () => this.unfold(), hotKeyOptions);
+        useHotkey("ArrowRight", () => this.unfold(), hotKeyOptions);
+        useHotkey("ArrowLeft", () => this.fold(), hotKeyOptions);
+    }
+
+    // -----------------------------------------------------------------------------
     // HELPER
     // -----------------------------------------------------------------------------
 
@@ -76,6 +93,20 @@ export class BankRecStatementLine extends KanbanRecord {
 
     get recordData() {
         return this.props.record.data;
+    }
+
+    fold() {
+        if (this.state.isUnfolded) {
+            this.toggleUnfold();
+        }
+        this.bankReconciliation.selectStatementLine(this.record);
+    }
+
+    unfold() {
+        if (!this.state.isUnfolded) {
+            this.toggleUnfold();
+        }
+        this.bankReconciliation.selectStatementLine(this.record);
     }
 
     toggleUnfold() {
@@ -215,6 +246,7 @@ export class BankRecStatementLine extends KanbanRecord {
 
     get buttonListProps() {
         return {
+            statementLineRootRef: this.statementLineRootRef,
             statementLine: this.record,
             reconcileLineCount:
                 this.bankReconciliation.reconcileCountPerPartnerId[this.recordData.partner_id.id] ??

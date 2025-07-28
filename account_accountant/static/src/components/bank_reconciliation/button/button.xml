@@ -2,7 +2,7 @@
 <templates>
     <t t-name="account_accountant.BankRecButton">
         <button
-            class="d-flex gap-1 btn text-nowrap"
+            t-attf-class="d-flex gap-1 btn text-nowrap {{ props.classes }}"
             t-att-class="{'btn-sm': !ui.isSmall, 'btn-primary': props.primary, 'btn-info': props.toReview, 'btn-secondary': !props.primary}"
             t-on-click.stop="() => props?.action()"
         >
