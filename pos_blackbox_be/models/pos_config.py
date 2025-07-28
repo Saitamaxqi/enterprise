@@ -75,10 +75,18 @@ class PosConfig(models.Model):
         return super().write(vals)
 
     def _check_is_certified_pos(self):
+        fdm_ids = self.env['iot.device'].search([
+            *self.env['iot.device']._check_company_domain(self.company_id),
+            ('type', '=', 'fiscal_data_module'),
+        ], limit=2)
+
         if self.certified_blackbox_identifier and not self.iface_fiscal_data_module:
-            raise UserError(
-                _("Forbidden to start a certified Point of sale without blackbox")
-            )
+            if len(fdm_ids) != 1:
+                raise UserError(
+                    _("Forbidden to start a certified Point of sale without blackbox")
+                )
+            self.is_posbox = True
+            self.iface_fiscal_data_module = fdm_ids[0]  # if there is only one fdm available, we set it automatically
         config_with_blackbox = self.env['pos.config'].search_count(
             domain=[
                     *self.env['account.journal']._check_company_domain(self.company_id),
@@ -87,7 +95,10 @@ class PosConfig(models.Model):
             limit=1
         )
         if not self.iface_fiscal_data_module and config_with_blackbox:
-            raise UserError(_("You cannot have an uncertified Point of sale with the module pos_blackbox_be installed."))
+            if len(fdm_ids) != 1:
+                raise UserError(_("You cannot have an uncertified Point of sale with the module pos_blackbox_be installed."))
+            self.is_posbox = True
+            self.iface_fiscal_data_module = fdm_ids[0]  # if there is only one fdm available, we set it automatically
 
     @api.depends("iface_fiscal_data_module")
     def _compute_iot_device_ids(self):
