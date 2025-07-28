@@ -27,7 +27,7 @@
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
         </span>
         <div name="product_list_price_container" position="attributes">
-            <attribute name="t-if">not combination_info.get('is_rental')</attribute>
+            <attribute name="t-if" add="not combination_info.get('is_rental')" separator=" and "/>
         </div>
         <div name="product_price" position="after">
             <div
