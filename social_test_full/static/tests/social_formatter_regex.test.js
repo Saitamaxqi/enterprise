@@ -1,7 +1,11 @@
 import { expect, test } from "@odoo/hoot";
+import { markup } from "@odoo/owl";
+
 import { patchWithCleanup } from "@web/../tests/web_test_helpers";
 
 import { SocialPostFormatterMixinBase } from "@social/js/social_post_formatter_mixin";
+
+const Markup = markup("").constructor;
 
 test("Facebook Message", () => {
     patchWithCleanup(SocialPostFormatterMixinBase, {
@@ -28,6 +32,7 @@ test("Facebook Message", () => {
             "<a href='https://www.facebook.com/hashtag/odoo' target='_blank'>#odoo</a>",
         ].join(" ")
     );
+    expect(finalMessage).toBeInstanceOf(Markup);
 });
 
 test("Instagram Message", () => {
@@ -51,6 +56,7 @@ test("Instagram Message", () => {
             "<a href='https://www.instagram.com/explore/tags/odoo' target='_blank'>#odoo</a>",
         ].join(" ")
     );
+    expect(finalMessage).toBeInstanceOf(Markup);
 });
 
 test("LinkedIn Message", () => {
@@ -71,6 +77,7 @@ test("LinkedIn Message", () => {
             "<a href='https://www.linkedin.com/feed/hashtag/?keywords=odoo' target='_blank'>#odoo</a>",
         ].join(" ")
     );
+    expect(finalMessage).toBeInstanceOf(Markup);
 });
 
 test("Twitter Message", () => {
@@ -94,6 +101,7 @@ test("Twitter Message", () => {
             "<a href='https://twitter.com/hashtag/odoo?src=hash' target='_blank'>#odoo</a>",
         ].join(" ")
     );
+    expect(finalMessage).toBeInstanceOf(Markup);
 });
 
 test("YouTube Message", () => {
@@ -114,4 +122,5 @@ test("YouTube Message", () => {
             "<a href='https://www.youtube.com/results?search_query=%23odoo' target='_blank'>#odoo</a>",
         ].join(" ")
     );
+    expect(finalMessage).toBeInstanceOf(Markup);
 });
