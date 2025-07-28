@@ -5,6 +5,7 @@ from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 
 from odoo import Command, _, api, fields, models
+from odoo.fields import Domain
 from odoo.tools import float_is_zero, format_date
 
 from .sale_order import SUBSCRIPTION_CLOSED_STATE
@@ -379,10 +380,8 @@ class SaleOrderLine(models.Model):
 
         number_of_days = (next_date_1st - new_period_start).days
         ratio = number_of_days / (new_period_stop - new_period_start).days
-
-        if not self.product_id.allow_prorated_price:
+        if self._is_delivery() or not self.product_id.allow_prorated_price:
             ratio = 1
-
         return new_period_start, next_date_1st - relativedelta(days=1), ratio, number_of_days
 
     def _prepare_invoice_line(self, **optional_values):
@@ -411,7 +410,7 @@ class SaleOrderLine(models.Model):
                 duration = _('%s days', number_of_days)
 
             description = res.get('name') or self.name
-            if self.recurring_invoice:
+            if self.recurring_invoice and not self._is_delivery():
                 format_start = format_date(self.env, new_period_start, lang_code=lang_code)
                 format_next = format_date(self.env, new_period_stop, lang_code=lang_code)
                 start_to_next = _("%(start)s to %(next)s", start=format_start, next=format_next)
@@ -571,7 +570,11 @@ class SaleOrderLine(models.Model):
             })]
 
     def _need_renew_discount_domain(self):
-        return [('recurring_invoice', '=', True), ('product_id.allow_prorated_price', '=', True)]
+        domain = [('recurring_invoice', '=', True), ('product_id.allow_prorated_price', '=', True)]
+        if 'is_delivery' in self:
+            # excluding delivery products when the delivery module is installed
+            domain = Domain.AND([domain, [(('is_delivery', '=', False))]])
+        return domain
 
     def _get_renew_upsell_values(self, subscription_state):
         order_lines = []
@@ -591,7 +594,7 @@ class SaleOrderLine(models.Model):
             partner_lang = line.order_id.partner_id.lang
             line = line.with_context(lang=partner_lang) if partner_lang else line
             product = line.product_id
-            order_lines.append((0, 0, {
+            line_values = {
                 'parent_line_id': line.id,
                 'name': line.name + "(*)" if line in description_needed else line.name,
                 'product_id': product.id,
@@ -599,7 +602,11 @@ class SaleOrderLine(models.Model):
                 'product_uom_qty': 0 if subscription_state == '7_upsell' else line.product_uom_qty,
                 'price_unit': line.price_unit,
                 'display_type': line.display_type
-            }))
+            }
+            # If the line product is delivery product, set is_delivery=True to consider it as delivery line
+            if line._is_delivery():
+                line_values.update({'is_delivery': True})
+            order_lines.append((0, 0, line_values))
 
         order_lines = self._filter_non_empty_sections(order_lines)
 
