@@ -432,7 +432,7 @@ test("disable formatting stuff on t-att-class and t-att-style (and their format 
         "Toggle bold",
         "Toggle italic",
         "Toggle underline",
-        "Toggle strikethrough",
+        "Apply Font Color",
         "Add a link",
     ]);
 });
