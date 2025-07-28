@@ -7,8 +7,11 @@ from . import account_sales_report
 from . import account_general_ledger
 from . import account_chart_template
 from . import partner_vat_listing
+from . import l10n_be_company_region
+from . import l10n_be_company_type
 from . import res_partner
 from . import res_company
 from . import account_325_form
 from . import account_281_50_form
 from . import mail_activity_type
+from . import annual_statement_custom_handler

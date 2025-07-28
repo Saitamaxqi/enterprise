@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.5alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-08 09:25+0000\n"
-"PO-Revision-Date: 2024-08-08 09:25+0000\n"
+"POT-Creation-Date: 2025-08-27 07:46+0000\n"
+"PO-Revision-Date: 2025-08-27 07:46+0000\n"
 "Last-Translator: Dylan Kiss <dyki@odoo.com>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -1700,3 +1700,53 @@ msgstr ", um die Liste zu sehen."
 #: code:addons/l10n_be_reports/static/src/components/partner_vat_listing/warnings.xml:0
 msgid "will be grouped in the XML export."
 msgstr "werden im XML-Export in Gruppen zusammengefasst."
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,help:l10n_be_reports.field_res_company__l10n_be_region_id
+msgid ""
+"The region where the company is located. This is used for annual report "
+"export."
+msgstr "Region des Unternehmens (für Export des Jahresberichts)"
+
+#. module: l10n_be_reports
+#: model:ir.model.fields,help:l10n_be_reports.field_res_company__l10n_be_company_type_id
+msgid "The type of company. This is used for annual report export."
+msgstr "Unternehmenstyp (für Export des Jahresberichts)"
+
+#. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/models/annual_statement_custom_handler.py:0
+msgid ""
+"XBRL export is only applicable for Belgium reports. Please change to Belgium"
+" annual statement report."
+msgstr "XBRL-Export nur für belgische Berichte. Bitte belgischen Jahresabschluss wählen."
+
+#. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/models/annual_statement_custom_handler.py:0
+msgid ""
+"Please add a single balance sheet and a single profit and loss report that "
+"have a matching (Abbr or Full) format for the XBRL export."
+msgstr "Fügen Sie eine Bilanz und eine GuV im gleichen Format (kurz oder vollständig) für den XBRL-Export hinzu."
+
+#. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/models/annual_statement_custom_handler.py:0
+msgid ""
+"The 499 accounts should always be zero before exporting XBRL. Please correct"
+" your accounts and try again."
+msgstr "Die Konten 499 müssen vor dem XBRL-Export immer null sein. Bitte korrigieren und erneut versuchen."
+
+#. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/models/annual_statement_custom_handler.py:0
+msgid ""
+"Please fill in the following company data before generating the XBRL file: "
+"%s"
+msgstr "Bitte Firmendaten ausfüllen, bevor die XBRL-Datei erstellt wird: %s"
+
+#. module: l10n_be_reports
+#. odoo-python
+#: code:addons/l10n_be_reports/models/annual_statement_custom_handler.py:0
+msgid "Go to company configuration"
+msgstr "Zur Unternehmenseinstellung gehen"

@@ -20,3 +20,5 @@ def _l10n_be_reports_post_init(env):
         ChartTemplate._load_data({
             'res.company': company_data,
         })
+
+    env['res.company'].search([])._compute_l10n_be_region_id()
