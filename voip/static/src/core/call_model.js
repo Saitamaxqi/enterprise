@@ -114,6 +114,7 @@ export class Call extends Record {
 
     onCallEnd() {
         const softphone = this.store.env.services.voip.softphone;
+        this.store.env.services["voip.user_agent"].session = null;
         softphone.showSummary(this);
         softphone.dialer.reset();
         softphone.inCallView.reset();

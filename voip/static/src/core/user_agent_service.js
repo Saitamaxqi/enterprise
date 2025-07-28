@@ -205,7 +205,6 @@ export class UserAgent extends Reactive {
                 await this.callService.end(this.session.call, { activityDone });
                 break;
         }
-        this.session = null;
     }
 
     async init() {
@@ -344,7 +343,6 @@ export class UserAgent extends Reactive {
         this.ringtoneService.stopPlaying();
         this.session.sipSession.reject({ statusCode: 603 /* Decline */ });
         await this.callService.reject(this.session.call);
-        this.session = null;
     }
 
     /** @param {string} deviceId */
@@ -406,7 +404,6 @@ export class UserAgent extends Reactive {
             return;
         }
         await this.callService.end(this.session.call);
-        this.session = null;
         this._cleanUpRemoteAudio();
     }
 
@@ -530,7 +527,6 @@ export class UserAgent extends Reactive {
         this.ringtoneService.stopPlaying();
         this.session.sipSession.reject({ statusCode: 487 /* Request Terminated */ });
         this.callService.miss(this.session.call);
-        this.session = null;
     }
 
     /**
@@ -608,7 +604,6 @@ export class UserAgent extends Reactive {
         })();
         this.voip.triggerError(errorMessage, { isNonBlocking: true });
         this.callService.reject(this.session.call);
-        this.session = null;
     }
 
     /**
@@ -622,7 +617,6 @@ export class UserAgent extends Reactive {
         this.session.sipSession.bye();
         this._cleanUpRemoteAudio();
         await this.callService.end(this.session.call);
-        this.session = null;
     }
 
     /** @param {SIP.SessionState} newState */
