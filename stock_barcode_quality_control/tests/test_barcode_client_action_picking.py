@@ -18,6 +18,11 @@ class TestBarcodeClientActionPicking(TestBarcodeClientAction):
         will be confirmed at the start of the button_validate.
         """
 
+        product3 = self.env['product.product'].create({
+            'name': 'product3',
+            'is_storable': True,
+            'barcode': 'product3',
+        })
         # Create Quality Point for incoming shipments.
         quality_points = self.env['quality.point'].create([
             {
@@ -32,6 +37,12 @@ class TestBarcodeClientActionPicking(TestBarcodeClientAction):
                 'product_ids': [Command.link(self.product2.id)],
                 'picking_type_ids': [Command.link(self.picking_type_in.id)],
             },
+            {
+                'title': "check product 3",
+                'measure_on': "operation",
+                'product_ids': [Command.link(product3.id)],
+                'picking_type_ids': [Command.link(self.picking_type_in.id)],
+            },
         ])
 
         self.start_tour("/odoo/barcode", "test_operation_quality_check_barcode", login="admin")
@@ -40,8 +51,10 @@ class TestBarcodeClientActionPicking(TestBarcodeClientAction):
         self.assertRecordValues(quality_checks.sorted('title'), [
             {'title': 'check product 1', 'quality_state': 'pass'},
             {'title': 'check product 2', 'quality_state': 'fail'},
+            {'title': 'check product 3', 'quality_state': 'none'},
         ])
-        self.assertEqual(quality_checks.picking_id.state, "done")
+        self.assertEqual(quality_checks.picking_id[0].state, "done")
+        self.assertEqual(quality_checks.picking_id[1].state, "assigned")
 
     def test_operation_quality_check_delivery_barcode(self):
         """

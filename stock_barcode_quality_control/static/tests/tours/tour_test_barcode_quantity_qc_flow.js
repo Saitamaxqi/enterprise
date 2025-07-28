@@ -59,6 +59,29 @@ registry.category("web_tour.tours").add("test_operation_quality_check_barcode", 
             trigger: ".o_notification_bar.bg-success",
             run() {},
         },
+        /* Now test Quality check button appears on footer after clicking X on QC */
+        {
+            trigger: "button.o-kanban-button-new",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_lines",
+            run: "scan product3",
+        },
+        { trigger: ".o_barcode_line" },
+        {
+            trigger: ".o_validate_page",
+            run: "click",
+        },
+        {
+            content: "Close the QC wizard without passing or failing",
+            trigger: ".modal-content button.btn-close",
+            run: "click",
+        },
+        {
+            content: "Check QC button is on footer",
+            trigger: "button.o_check_quality",
+        },
     ],
 });
 
