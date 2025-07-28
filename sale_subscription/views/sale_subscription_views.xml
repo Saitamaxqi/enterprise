@@ -106,11 +106,9 @@
         <field name="domain">[('subscription_state', 'in', ['1_draft', '3_progress', '4_paused', '6_churn'])]</field>
         <field name="search_view_id" ref="sale_subscription.sale_subscription_view_search"/>
         <field name="help" type="html">
-            <p class="o_view_nocontent_subscription_graph">
-                Create a new subscription
-            </p><p>
-                Automate invoices and payments, simplify upsell quotes, reduce churn and get insights (MRR, churn, CLTV, ...)
-            </p>
+            <img src="/sale_subscription/static/src/img/MRRgraph.svg" alt="Onboarding example showing how the app tracks customer subscriptions and visualizes MRR growth." class="w-100 mb-4 rounded-3 bg-secondary-light"/>
+            <p>Create a new subscription</p>
+            <p>Automate invoices and payments, simplify upsell quotes, reduce churn and get insights (MRR, churn, CLTV, ...)</p>
         </field>
     </record>
 

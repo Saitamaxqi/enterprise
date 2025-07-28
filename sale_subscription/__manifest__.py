@@ -74,7 +74,6 @@ Features:
             'sale_subscription/static/src/js/product_configurator_dialog/*',
             'sale_subscription/static/src/js/sale_product_field.js',
             'sale_subscription/static/src/js/tours/sale_subscription.js',
-            'sale_subscription/static/src/scss/sale_subscription.scss',
         ],
         'web.assets_frontend': [
             'sale_subscription/static/src/js/payment_form.js',
