@@ -432,6 +432,86 @@ class AccountMove(models.Model):
             for line in move.invoice_line_ids - previous_lines:
                 line._onchange_name_predictive()
 
+    def _compute_payments_widget_to_reconcile_info(self):
+        # EXTENDS
+        super()._compute_payments_widget_to_reconcile_info()
+        for move in self:
+            if move.state not in {'draft', 'posted'} \
+                    or move.payment_state not in ('not_paid', 'partial') \
+                    or not move.is_invoice(include_receipts=True) \
+                    or not move.partner_id:
+                continue
+
+            bank_domain = [
+                ('parent_state', '=', 'posted'),
+                ('partner_id', '=', move.commercial_partner_id.id),
+                ('partner_id', '!=', False),
+                ('account_id.account_type', '=', 'asset_cash'),
+                ('journal_id', 'in', self.env['account.journal']._search([
+                        *self.env['account.journal']._check_company_domain(move.company_id.id),
+                        ('type', '=', 'bank')
+                    ])),
+                ('balance', '>' if move.is_inbound() else '<', 0.0),
+                ('statement_line_id', '!=', False),
+                ('move_id.line_ids', 'any', [('account_id', '=', move.company_id.account_journal_suspense_account_id.id)])
+            ]
+
+            payments_widget_vals = {
+                'outstanding': True,
+                'content': [],
+                'move_id': move.id,
+                'title': _('Outstanding credits') if move.is_inbound() else _('Outstanding debits')
+            }
+
+            for line in self.env['account.move.line'].search(bank_domain):
+                st_line = line.statement_line_id
+                if st_line.line_ids.filtered(lambda l: l.reconciled):
+                    continue
+                if st_line.foreign_currency_id == move.currency_id:
+                    amount = abs(st_line.amount_residual)
+                elif st_line.currency_id == move.currency_id:
+                    amount = abs(st_line.amount)
+                else:
+                    amount = st_line.foreign_currency_id._convert(
+                        from_amount=abs(st_line.amount_residual),
+                        to_currency=move.currency_id,
+                        company=move.company_id,
+                        date=line.date,
+                    )
+                if move.currency_id.is_zero(amount):
+                    continue
+
+                payments_widget_vals['content'].append({
+                    'journal_name': line.ref or line.move_id.name,
+                    'amount': amount,
+                    'currency_id': move.currency_id.id,
+                    'id': line.id,
+                    'move_id': line.move_id.id,
+                    'date': fields.Date.to_string(line.date),
+                    'account_payment_id': line.payment_id.id,
+                })
+
+            if payments_widget_vals['content']:
+                if move.invoice_outstanding_credits_debits_widget:
+                    move.invoice_outstanding_credits_debits_widget['content'].extend(payments_widget_vals['content'])
+                else:
+                    move.invoice_outstanding_credits_debits_widget = payments_widget_vals
+                    move.invoice_has_outstanding = True
+
+    def js_assign_outstanding_line(self, line_id):
+        # EXTENDS
+        super().js_assign_outstanding_line(line_id)
+        line = self.env['account.move.line'].browse(line_id)
+        if line.account_id.account_type == 'asset_cash' and line.statement_line_id:
+            return line.statement_line_id.set_line_bank_statement_line(self.line_ids.filtered(lambda line: line.account_id.account_type in ['asset_receivable', 'liability_payable']).ids)
+
+    def js_remove_outstanding_partial(self, partial_id):
+        # EXTENDS
+        if st_line := self.statement_line_id:
+            st_line.delete_reconciled_line(self.line_ids.filtered(lambda line: line.account_id.account_type in ['asset_receivable', 'liability_payable']).ids)
+        else:
+            super().js_remove_outstanding_partial(partial_id)
+
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
