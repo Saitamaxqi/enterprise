@@ -10,6 +10,40 @@ class PlanningSlot(models.Model):
 
     role_sync_shift_rental = fields.Boolean(related='role_id.sync_shift_rental')
 
+    def write(self, vals):
+        res = super().write(vals)
+        if (
+            not self.env.context.get('rental_order_updated')
+            and any(vals.get(k) for k in ['start_datetime', 'end_datetime'])
+            and (rental_orders := self.exists().filtered('role_sync_shift_rental').sale_order_id.filtered('is_rental_order'))
+        ):
+            shifts_per_sale_order = self.env['planning.slot']._read_group(
+                [
+                    ('sale_order_id', 'in', rental_orders.ids),
+                ],
+                ['sale_order_id'],
+                ['id:recordset'],
+            )
+            updated_sale_order_ids = []
+            for sale_order, shifts in shifts_per_sale_order:
+                min_start_datetime = min(shifts.mapped('start_datetime'))
+                max_end_datetime = max(shifts.mapped('end_datetime'))
+                rental_order_vals = {}
+                if sale_order.rental_start_date != min_start_datetime:
+                    rental_order_vals['rental_start_date'] = min_start_datetime
+                if sale_order.rental_return_date != max_end_datetime:
+                    rental_order_vals['rental_return_date'] = max_end_datetime
+                if rental_order_vals:
+                    sale_order.sudo().with_context(slots_rescheduled=True).write(rental_order_vals)
+                    updated_sale_order_ids.append(sale_order.id)
+            if updated_sale_order_ids:
+                SaleOrderLine = self.env['sale.order.line']
+                self.env.add_to_compute(
+                    SaleOrderLine._fields['name'],
+                    SaleOrderLine.sudo().search([('order_id', 'in', updated_sale_order_ids), ('is_rental', '=', True)])
+                )
+        return res
+
     def action_create_order(self):
         self.ensure_one()
         action = self.env['ir.actions.actions']._for_xml_id('sale_renting.rental_order_action')
@@ -57,3 +91,15 @@ class PlanningSlot(models.Model):
                 'order_id': order.id,
             })
         self.state = 'published'
+        if not (order.rental_start_date == self.start_datetime and order.rental_return_date == self.end_datetime):
+            min_start_datetime, max_end_datetime = self.env['planning.slot']._read_group(
+                [('sale_order_id', '=', order.id)],
+                [],
+                ['start_datetime:min', 'end_datetime:max'],
+            )[0]
+            order.with_context(slots_rescheduled=True).write({'rental_start_date': min_start_datetime, 'rental_return_date': max_end_datetime})
+            SaleOrderLine = self.env['sale.order.line']
+            self.env.add_to_compute(
+                SaleOrderLine._fields['name'],
+                order.order_line.filtered('is_rental')
+            )
