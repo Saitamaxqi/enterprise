@@ -146,24 +146,24 @@
                             </cartaporte31:Mercancia>
                         </t>
                         <cartaporte31:Autotransporte t-if="record.l10n_mx_edi_transport_type == '01'"
-                            t-att-NumPermisoSCT="record.l10n_mx_edi_vehicle_id.name"
-                            t-att-PermSCT="record.l10n_mx_edi_vehicle_id.transport_perm_sct">
+                            t-att-NumPermisoSCT="record.l10n_mx_edi_vehicle_id.l10n_mx_transport_perm_number"
+                            t-att-PermSCT="record.l10n_mx_edi_vehicle_id.l10n_mx_transport_perm_sct">
                             <cartaporte31:IdentificacionVehicular
-                                t-att-AnioModeloVM="record.l10n_mx_edi_vehicle_id.vehicle_model"
-                                t-att-ConfigVehicular="record.l10n_mx_edi_vehicle_id.vehicle_config"
+                            t-att-AnioModeloVM="record.l10n_mx_edi_vehicle_id.model_year"
+                            t-att-ConfigVehicular="record.l10n_mx_edi_vehicle_id.l10n_mx_vehicle_config"
                                 t-att-PesoBrutoVehicular="peso_bruto_vehicular"
-                                t-att-PlacaVM="record.l10n_mx_edi_vehicle_id.vehicle_licence"/>
+                                t-att-PlacaVM="record.l10n_mx_edi_vehicle_id.license_plate"/>
                             <cartaporte31:Seguros
-                                t-att-AseguraRespCivil="record.l10n_mx_edi_vehicle_id.transport_insurer"
-                                t-att-PolizaRespCivil="record.l10n_mx_edi_vehicle_id.transport_insurance_policy"
-                                t-att-AseguraMedAmbiente="record.l10n_mx_edi_vehicle_id.environment_insurer
+                                t-att-AseguraRespCivil="record.l10n_mx_edi_vehicle_id.l10n_mx_transport_insurer"
+                                t-att-PolizaRespCivil="record.l10n_mx_edi_vehicle_id.l10n_mx_transport_insurance_policy"
+                                t-att-AseguraMedAmbiente="record.l10n_mx_edi_vehicle_id.l10n_mx_environment_insurer
                                                           if any(moves.filtered(lambda m: m.l10n_mx_edi_is_hazardous_material))
                                                           else None"
-                                t-att-PolizaMedAmbiente="record.l10n_mx_edi_vehicle_id.environment_insurance_policy
+                                t-att-PolizaMedAmbiente="record.l10n_mx_edi_vehicle_id.l10n_mx_environment_insurance_policy
                                                          if any(moves.filtered(lambda m: m.l10n_mx_edi_is_hazardous_material))
                                                          else None"/>
-                            <cartaporte31:Remolques t-if="record.l10n_mx_edi_vehicle_id.trailer_ids">
-                                <t t-foreach="record.l10n_mx_edi_vehicle_id.trailer_ids" t-as="trailer">
+                            <cartaporte31:Remolques t-if="record.l10n_mx_edi_vehicle_id.l10n_mx_trailer_ids">
+                                <t t-foreach="record.l10n_mx_edi_vehicle_id.l10n_mx_trailer_ids" t-as="trailer">
                                     <cartaporte31:Remolque
                                         t-att-SubTipoRem="trailer.sub_type"
                                         t-att-Placa="trailer.name"/>
@@ -172,7 +172,13 @@
                         </cartaporte31:Autotransporte>
                     </cartaporte31:Mercancias>
                     <cartaporte31:FiguraTransporte>
-                        <t t-foreach="record.l10n_mx_edi_vehicle_id.figure_ids.sorted(lambda f: f.type)" t-as="figure">
+                        <cartaporte31:TiposFigura
+                            t-if="record.l10n_mx_edi_vehicle_id.driver_id"
+                            TipoFigura="01"
+                            t-att-RFCFigura="record.l10n_mx_edi_vehicle_id.driver_id.vat"
+                            t-att-NombreFigura="record.l10n_mx_edi_vehicle_id.driver_id.name"
+                            t-att-NumLicencia="record.l10n_mx_edi_vehicle_id.driver_id.l10n_mx_edi_operator_licence"/>
+                        <t t-foreach="record.l10n_mx_edi_vehicle_id.l10n_mx_figure_ids.sorted(lambda f: f.type)" t-as="figure">
                             <cartaporte31:TiposFigura
                                 t-att-TipoFigura="figure.type"
                                 t-att-RFCFigura="figure.operator_id.vat"

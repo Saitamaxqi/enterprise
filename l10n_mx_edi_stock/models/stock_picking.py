@@ -108,8 +108,9 @@ class StockPicking(models.Model):
         help='Specify the transportation method. The Delivery Guide will contain the Complemento Carta Porte only when'
              ' federal transport is used')
     l10n_mx_edi_vehicle_id = fields.Many2one(
-        comodel_name='l10n_mx_edi.vehicle',
+        comodel_name='fleet.vehicle',
         string='Vehicle Setup',
+        domain="[('l10n_mx_is_freight_vehicle', '=', True)]",
         ondelete='restrict',
         copy=False,
         help='The vehicle used for Federal Transport')
@@ -120,9 +121,15 @@ class StockPicking(models.Model):
     )
     l10n_mx_edi_gross_vehicle_weight = fields.Float(
         string="Gross Vehicle Weight",
+        digits=(16, 2),
         compute="_compute_l10n_mx_edi_gross_vehicle_weight",
-        store=True,
-        readonly=False,
+        help='The weight is computed in accordance with the Carta Porte filling guide. '
+             'This means that the reported weight in tons includes the sum of the vehicle weight, the freight weight, '
+             'and the "extra weight" used to account for the drivers and their luggage.'
+    )
+    l10n_mx_edi_extra_weight = fields.Float(
+        string="Extra Weight",
+        help='Used to report the weight of the drivers, the luggage and any other extras.'
     )
     l10n_mx_edi_customs_regime_ids = fields.Many2many(
         string="Customs Regimes",
@@ -151,6 +158,10 @@ class StockPicking(models.Model):
         comodel_name='res.partner',
         ondelete="restrict",
     )
+    l10n_mx_edi_delivery_date = fields.Datetime(
+        string="Delivery Date",
+        help="Date of arrival at destination, required for the Carta Porte",
+    )
 
     def _l10n_mx_edi_get_cartaporte_pdf_values(self):
         self.ensure_one()
@@ -162,7 +173,7 @@ class StockPicking(models.Model):
         warehouse_partner = self.picking_type_id.warehouse_id.partner_id
 
         figure_types_dict = dict(self.env['l10n_mx_edi.figure']._fields['type'].selection)
-        vehicle_configs_dict = dict(self.env['l10n_mx_edi.vehicle']._fields['vehicle_config'].selection)
+        vehicle_configs_dict = dict(self.env['fleet.vehicle']._fields['l10n_mx_vehicle_config'].selection)
         transport_types_dict = dict(self.env['stock.picking']._fields['l10n_mx_edi_transport_type'].selection)
 
         ubicacion_fields = (
@@ -241,16 +252,16 @@ class StockPicking(models.Model):
             'destino_ubicacion': {
                 field: cfdi_values['destino'][field] or "-" for field in (*ubicacion_fields, 'distancia_recorrida')
             },
-            'transport_perm_sct': self.l10n_mx_edi_vehicle_id.transport_perm_sct or "-",
-            'num_permiso_sct': self.l10n_mx_edi_vehicle_id.name or "-",
-            'config_vehicular': f"{self.l10n_mx_edi_vehicle_id.vehicle_config} - {vehicle_configs_dict.get(self.l10n_mx_edi_vehicle_id.vehicle_config, '')}",
+            'l10n_mx_transport_perm_sct': self.l10n_mx_edi_vehicle_id.l10n_mx_transport_perm_sct or "-",
+            'num_permiso_sct': self.l10n_mx_edi_vehicle_id.l10n_mx_transport_perm_number or "-",
+            'config_vehicular': f"{self.l10n_mx_edi_vehicle_id.l10n_mx_vehicle_config} - {vehicle_configs_dict.get(self.l10n_mx_edi_vehicle_id.l10n_mx_vehicle_config, '')}",
             'peso_bruto_vehicular': cfdi_values['peso_bruto_vehicular'] or "-",
-            'placa_vm': self.l10n_mx_edi_vehicle_id.vehicle_licence or "-",
-            'anio_modelo_vm': self.l10n_mx_edi_vehicle_id.vehicle_model or "-",
-            'asegura_resp_civil': self.l10n_mx_edi_vehicle_id.transport_insurer or "-",
-            'poliza_resp_civil': self.l10n_mx_edi_vehicle_id.transport_insurance_policy or "-",
-            'asegura_med_ambiente': self.l10n_mx_edi_vehicle_id.environment_insurer if contains_hazardous_materials else "-",
-            'poliza_med_ambiente': self.l10n_mx_edi_vehicle_id.environment_insurance_policy if contains_hazardous_materials else "-",
+            'placa_vm': self.l10n_mx_edi_vehicle_id.license_plate or "-",
+            'anio_modelo_vm': self.l10n_mx_edi_vehicle_id.model_year or "-",
+            'asegura_resp_civil': self.l10n_mx_edi_vehicle_id.l10n_mx_transport_insurer or "-",
+            'poliza_resp_civil': self.l10n_mx_edi_vehicle_id.l10n_mx_transport_insurance_policy or "-",
+            'asegura_med_ambiente': self.l10n_mx_edi_vehicle_id.l10n_mx_environment_insurer if contains_hazardous_materials else "-",
+            'poliza_med_ambiente': self.l10n_mx_edi_vehicle_id.l10n_mx_environment_insurance_policy if contains_hazardous_materials else "-",
             'figures': [
                 {
                     'tipo_figura': f"{figure.type} - {figure_types_dict.get(figure.type, '')}",
@@ -262,7 +273,7 @@ class StockPicking(models.Model):
                         if figure.operator_id.country_id.l10n_mx_edi_code != 'MEX'
                         else "-",
                 }
-                for figure in self.l10n_mx_edi_vehicle_id.figure_ids.sorted('type')
+                for figure in self.l10n_mx_edi_vehicle_id.l10n_mx_figure_ids.sorted('type')
             ],
             'barcode_src': barcode_src,
         }
@@ -365,13 +376,17 @@ class StockPicking(models.Model):
             else:
                 picking.l10n_mx_edi_idccp = False
 
-    @api.depends('l10n_mx_edi_vehicle_id')
+    @api.depends('l10n_mx_edi_vehicle_id.l10n_mx_gross_vehicle_weight', 'weight', 'l10n_mx_edi_extra_weight')
     def _compute_l10n_mx_edi_gross_vehicle_weight(self):
+        weight_uom = self.env['product.template']._get_weight_uom_id_from_ir_config_parameter()
+        ton_uom = self.env.ref('uom.product_uom_ton')
+
         for picking in self:
-            if picking.l10n_mx_edi_vehicle_id and not picking.l10n_mx_edi_gross_vehicle_weight:
-                picking.l10n_mx_edi_gross_vehicle_weight = picking.l10n_mx_edi_vehicle_id.gross_vehicle_weight
-            else:
-                picking.l10n_mx_edi_gross_vehicle_weight = picking.l10n_mx_edi_gross_vehicle_weight
+            picking.l10n_mx_edi_gross_vehicle_weight = (
+                picking.l10n_mx_edi_vehicle_id.l10n_mx_gross_vehicle_weight +
+                weight_uom._compute_quantity(picking.weight, ton_uom, round=False) +
+                weight_uom._compute_quantity(picking.l10n_mx_edi_extra_weight, ton_uom, round=False)
+            )
 
     # -------------------------------------------------------------------------
     # CFDI: Generation
@@ -425,11 +440,12 @@ class StockPicking(models.Model):
 
         warehouse_partner = self.picking_type_id.warehouse_id.partner_id
         mx_tz = warehouse_partner._l10n_mx_edi_get_cfdi_timezone()
+        delivery_date = self.l10n_mx_edi_delivery_date or self.date_done
 
         cfdi_values.update({
             'record': self,
             'cfdi_date': self.date_done.astimezone(mx_tz).strftime(CFDI_DATE_FORMAT),
-            'scheduled_date': self.scheduled_date.astimezone(mx_tz).strftime(CFDI_DATE_FORMAT),
+            'scheduled_date': delivery_date.astimezone(mx_tz).strftime(CFDI_DATE_FORMAT),
             'lugar_expedicion': warehouse_partner.zip,
             'moves': self.move_ids.filtered(lambda ml: ml.quantity > 0),
             'weight_uom': self.env['product.template']._get_weight_uom_id_from_ir_config_parameter(),

@@ -29,22 +29,20 @@ class TestMXEdiStockCommon(TestMxExtendedEdiCommon):
             'l10n_mx_edi_operator_licence': 'a234567890',
         })
 
-        cls.vehicle_pedro = cls.env['l10n_mx_edi.vehicle'].create({
-            'name': 'DEMOPERMIT',
-            'transport_insurer': 'DEMO INSURER',
-            'transport_insurance_policy': 'DEMO POLICY',
-            'transport_perm_sct': 'TPAF10',
-            'vehicle_model': '2020',
-            'vehicle_config': 'T3S1',
-            'vehicle_licence': 'ABC123',
-            'trailer_ids': [Command.create({'name': 'trail1', 'sub_type': 'CTR003'})],
-            'environment_insurer': 'DEMO INSURER',
-            'environment_insurance_policy': 'DEMO INSURER POLICY',
-            'figure_ids': [
-                Command.create({
-                    'type': '01',
-                    'operator_id': cls.operator_pedro.id,
-                }),
+        cls.vehicle_pedro = cls.env['fleet.vehicle'].create({
+            'model_id': cls.env.ref('fleet.model_clio').id,
+            'l10n_mx_transport_insurer': 'DEMO INSURER',
+            'l10n_mx_transport_insurance_policy': 'DEMO POLICY',
+            'l10n_mx_transport_perm_sct': 'TPAF10',
+            'l10n_mx_transport_perm_number': 'DEMOPERMIT',
+            'l10n_mx_vehicle_config': 'T3S1',
+            'license_plate': 'ABC123',
+            'driver_id': cls.operator_pedro.id,
+            'l10n_mx_is_freight_vehicle': True,
+            'l10n_mx_trailer_ids': [Command.create({'name': 'trail1', 'sub_type': 'CTR003'})],
+            'l10n_mx_environment_insurer': 'DEMO INSURER',
+            'l10n_mx_environment_insurance_policy': 'DEMO INSURER POLICY',
+            'l10n_mx_figure_ids': [
                 Command.create({
                     'type': '02',
                     'operator_id': cls.env.company.partner_id.id,
@@ -71,7 +69,7 @@ class TestMXEdiStockCommon(TestMxExtendedEdiCommon):
             'partner_id': self.partner_mx.id,
             'l10n_mx_edi_transport_type': '01',
             'l10n_mx_edi_vehicle_id': self.vehicle_pedro.id,
-            'l10n_mx_edi_gross_vehicle_weight': 2.0,
+            'l10n_mx_edi_gross_vehicle_weight': 0.01,
             'l10n_mx_edi_distance': 120,
             'state': 'draft',
             **picking_vals,

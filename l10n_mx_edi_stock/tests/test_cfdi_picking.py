@@ -16,8 +16,8 @@ class TestCFDIPickingXml(TestMXEdiStockCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.vehicle_pedro.write({
-            'environment_insurer': 'DEMO INSURER',
-            'environment_insurance_policy': 'DEMO INSURER POLICY',
+            'l10n_mx_environment_insurer': 'DEMO INSURER',
+            'l10n_mx_environment_insurance_policy': 'DEMO INSURER POLICY',
         })
 
     def test_delivery_guide_outgoing(self):

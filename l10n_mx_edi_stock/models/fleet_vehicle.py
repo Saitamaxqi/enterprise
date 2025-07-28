@@ -1,25 +1,16 @@
-# -*- coding: utf-8 -*-
-
 from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError
 
 
-class L10n_Mx_EdiVehicle(models.Model):
-    _name = 'l10n_mx_edi.vehicle'
-    _description = 'MX EDI Vehicle'
-    _rec_names_search = ['name', 'vehicle_licence']
+class FleetVehicle(models.Model):
+    _inherit = 'fleet.vehicle'
 
-    def _default_intermediary(self):
-        return [(0, 0, {'type': '01'})]
-
-    active = fields.Boolean(default=True)
-    name = fields.Char(
+    l10n_mx_transport_perm_number = fields.Char(
         string='SCT Permit Number',
-        required=True,
         help='The permit number granted to the unit performing the transfer of goods')
-    transport_insurer = fields.Char('Insurance Company', help='The name of the insurer that covers the liability risks of the vehicle')
-    transport_insurance_policy = fields.Char('Insurance Policy Number')
-    transport_perm_sct = fields.Selection(
+    l10n_mx_transport_insurer = fields.Char('Insurance Company', help='The name of the insurer that covers the liability risks of the vehicle')
+    l10n_mx_transport_insurance_policy = fields.Char('Insurance Policy Number')
+    l10n_mx_transport_perm_sct = fields.Selection(
         selection=[
             ('TPAF01', 'Autotransporte Federal de carga general.'),
             ('TPAF02', 'Transporte privado de carga.'),
@@ -50,8 +41,7 @@ class L10n_Mx_EdiVehicle(models.Model):
         ],
         string='SCT Permit Type',
         help='The type of permit code to carry out the goods transfer service')
-    vehicle_model = fields.Char('Vehicle Model Year')
-    vehicle_config = fields.Selection(
+    l10n_mx_vehicle_config = fields.Selection(
         selection=[
             ('VL', 'Vehículo ligero de carga (2 llantas en el eje delantero y 2 llantas en el eje trasero)'),
             ('C2', 'Camión Unitario (2 llantas en el eje delantero y 4 llantas en el eje trasero)'),
@@ -90,118 +80,31 @@ class L10n_Mx_EdiVehicle(models.Model):
         ],
         string='Vehicle Configuration',
         help='The type of vehicle used')
-    vehicle_licence = fields.Char(
-        string='Vehicle Plate Number',
-        help='License plate number of the vehicle in which the goods are transferred. Alphanumeric characters only, no dashes and/or spaces',
-        required=True)
-    gross_vehicle_weight = fields.Float(
+    l10n_mx_gross_vehicle_weight = fields.Float(
         string="Gross Vehicle Weight",
-        help="Permitted weight of the vehicle (in tons) in accordance with NOM-SCT-012-2017.",
+        help="""The vehicle weight, in the case of cargo vehicles; or the sum of the vehicle weight and the weight of the passengers, luggage, and parcels, "
+        in the case of vehicles intended for passenger service according to NOM-SCT-012-2017 or its replacement, which, for the purposes of filling out the Carta Porte complement, is expressed in tons. The freight weight will be added on the delivery form.""",
     )
-    trailer_ids = fields.One2many(
+    l10n_mx_trailer_ids = fields.One2many(
         comodel_name='l10n_mx_edi.trailer',
         inverse_name='vehicle_id',
         string='Trailers',
         help='Up to 2 trailers used on this vehicle')
-    figure_ids = fields.One2many(
+    l10n_mx_figure_ids = fields.One2many(
         comodel_name='l10n_mx_edi.figure',
         inverse_name='vehicle_id',
         string='Intermediaries',
-        default=_default_intermediary,
         help='Information corresponding to the transport intermediaries, as well as those taxpayers related to the transportation method used to transport the goods')
-    environment_insurer = fields.Char(
+    l10n_mx_environment_insurer = fields.Char(
         string="Environment Insurer",
         help="The name of the insurer that covers the liability risks of the environment when transporting hazardous materials")
-    environment_insurance_policy = fields.Char(
+    l10n_mx_environment_insurance_policy = fields.Char(
         string="Environment Insurance Policy",
         help="Environment Insurance Policy Number - used when transporting hazardous materials")
+    l10n_mx_is_freight_vehicle = fields.Boolean()
 
-    @api.depends('vehicle_licence')
-    def _compute_display_name(self):
-        for vehicle in self:
-            vehicle.display_name = f'[{vehicle.vehicle_licence}] {vehicle.name}'
-
-    @api.constrains('figure_ids')
-    def _check_figures(self):
-        for vehicle in self:
-            operators = vehicle.figure_ids.filtered(lambda f: f.type == '01')
-            if not operators:
-                raise ValidationError(_("The vehicle intermediaries must contain at least one intermediary of type: Operator"))
-
-    @api.constrains('trailer_ids')
+    @api.constrains('l10n_mx_trailer_ids')
     def _check_trailers(self):
         for vehicle in self:
-            if len(vehicle.trailer_ids) > 2:
+            if len(vehicle.l10n_mx_trailer_ids) > 2:
                 raise ValidationError(_("A maximum of 2 trailers are allowed per vehicle"))
-
-
-class L10n_Mx_EdiFigure(models.Model):
-    _name = 'l10n_mx_edi.figure'
-    _description = 'MX EDI Vehicle Intermediary Figure'
-
-    vehicle_id = fields.Many2one('l10n_mx_edi.vehicle')
-    type = fields.Selection(
-        selection=[
-            ('01', 'Operador'),
-            ('02', 'Propietario'),
-            ('03', 'Arrendador'),
-            ('04', 'Notificado'),
-            ('05', 'Integrante de Coordinados'),
-        ])
-    operator_id = fields.Many2one(
-        comodel_name='res.partner',
-        string='Partner',
-        help="Register the contact that is involved depending on its responsibility in the transport (Operador, "
-             "Propietario, Arrendador, Notificado)")
-    part_ids = fields.Many2many('l10n_mx_edi.part', string='Parts')
-
-
-class L10n_Mx_EdiPart(models.Model):
-    _name = 'l10n_mx_edi.part'
-    _description = 'MX EDI Intermediary Part'
-
-    code = fields.Char(required=True)
-    name = fields.Char(required=True)
-
-
-class L10n_Mx_EdiTrailer(models.Model):
-    _name = 'l10n_mx_edi.trailer'
-    _description = 'MX EDI Vehicle Trailer'
-
-    vehicle_id = fields.Many2one('l10n_mx_edi.vehicle')
-    name = fields.Char('Number Plate')
-    sub_type = fields.Selection(
-        selection=[
-            ('CTR001', 'Caballete'),
-            ('CTR002', 'Caja'),
-            ('CTR003', 'Caja Abierta'),
-            ('CTR004', 'Caja Cerrada'),
-            ('CTR005', 'Caja De Recolección Con Cargador Frontal'),
-            ('CTR006', 'Caja Refrigerada'),
-            ('CTR007', 'Caja Seca'),
-            ('CTR008', 'Caja Transferencia'),
-            ('CTR009', 'Cama Baja o Cuello Ganso'),
-            ('CTR010', 'Chasis Portacontenedor'),
-            ('CTR011', 'Convencional De Chasis'),
-            ('CTR012', 'Equipo Especial'),
-            ('CTR013', 'Estacas'),
-            ('CTR014', 'Góndola Madrina'),
-            ('CTR015', 'Grúa Industrial'),
-            ('CTR016', 'Grúa '),
-            ('CTR017', 'Integral'),
-            ('CTR018', 'Jaula'),
-            ('CTR019', 'Media Redila'),
-            ('CTR020', 'Pallet o Celdillas'),
-            ('CTR021', 'Plataforma'),
-            ('CTR022', 'Plataforma Con Grúa'),
-            ('CTR023', 'Plataforma Encortinada'),
-            ('CTR024', 'Redilas'),
-            ('CTR025', 'Refrigerador'),
-            ('CTR026', 'Revolvedora'),
-            ('CTR027', 'Semicaja'),
-            ('CTR028', 'Tanque'),
-            ('CTR029', 'Tolva'),
-            ('CTR031', 'Volteo'),
-            ('CTR032', 'Volteo Desmontable'),
-        ],
-        string='Sub Type')

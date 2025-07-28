@@ -25,6 +25,14 @@
     </record>
 
     <menuitem
+        id="menu_stock_config_settings_mx"
+        name="Mexico"
+        parent="stock.menu_stock_config_settings"
+        sequence="100"
+        groups="stock.group_stock_manager"
+    />
+    
+    <menuitem
         action="l10n_mx_edi_customs_document_type_action"
         id="menu_stock_mx_customs_document_type"
         name="Custom Document Type"

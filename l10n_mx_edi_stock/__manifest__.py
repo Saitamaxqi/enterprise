@@ -12,8 +12,8 @@ It is only when a delivery order is validated that you can create the delivery
 guide.
     """,
     'depends': [
+        'fleet',
         'stock_delivery',
-        'l10n_mx_edi',
         'l10n_mx_edi_extended',
         'web_map',
     ],
@@ -28,7 +28,7 @@ guide.
         'data/l10n_mx_edi_part.xml',
         'data/l10n_mx_edi.hazardous.material.csv',
         'data/product.unspsc.code.csv',
-        'views/l10n_mx_edi_vehicle_views.xml',  # parents l10n_mx_edi_customs_*.xml
+        'views/fleet_vehicle_views.xml',
         'views/l10n_mx_edi_customs_document_type_views.xml',
         'views/l10n_mx_edi_customs_regime_views.xml',
         'views/l10n_mx_edi_hazardous_material_view.xml',
@@ -37,7 +37,6 @@ guide.
         'views/report_cartaporte.xml',
         'views/res_partner_views.xml',
         'views/stock_picking_views.xml',
-        'views/vehicle_views.xml',
     ],
     'installable': True,
     'auto_install': True,
