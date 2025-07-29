@@ -734,7 +734,7 @@ class AccountMoveLine(models.Model):
         ] + (additional_domain or []), bypass_access=True)
 
     @api.model
-    def _predicted_field(self, name, partner_id, field, query=None, additional_queries=None):
+    def _predicted_field(self, move_id, name, partner_id, field, query=None, additional_queries=None):
         r"""Predict the most likely value based on the previous history.
 
         This method uses postgres tsvector in order to try to deduce a field of
@@ -770,7 +770,7 @@ class AccountMoveLine(models.Model):
         parsed_description = ' | '.join(parsed_description.split())
 
         try:
-            main_source = (query if query is not None else self._build_predictive_query(self.move_id)).select(
+            main_source = (query if query is not None else self._build_predictive_query(move_id)).select(
                 SQL("%s AS prediction", field),
                 SQL(
                     "setweight(to_tsvector(%s, account_move_line.name), 'B') || setweight(to_tsvector('simple', 'account_move_line'), 'A') AS document",
@@ -797,7 +797,7 @@ class AccountMoveLine(models.Model):
               ORDER BY ranking DESC, count DESC
                  LIMIT 2
                 """,
-                account_move_line=self._build_predictive_query(self.move_id).select(SQL('*')),
+                account_move_line=self._build_predictive_query(move_id).select(SQL('*')),
                 source=SQL('(%s)', SQL(') UNION ALL (').join([main_source] + (additional_queries or []))),
                 lang=psql_lang,
                 description=parsed_description,
@@ -820,7 +820,7 @@ class AccountMoveLine(models.Model):
         query.left_join('account_move_line', 'id', 'account_move_line_account_tax_rel', 'account_move_line_id', 'tax_rel')
         query.left_join('account_move_line__tax_rel', 'account_tax_id', 'account_tax', 'id', 'tax_ids')
         query.add_where('account_move_line__tax_rel__tax_ids.active IS NOT FALSE')
-        predicted_tax_ids = self._predicted_field(self.name, self.partner_id, field, query)
+        predicted_tax_ids = self._predicted_field(self.move_id, self.name, self.partner_id, field, query)
         if predicted_tax_ids == [None]:
             return False
         if predicted_tax_ids is not False and set(predicted_tax_ids) != set(self.tax_ids.ids):
@@ -839,13 +839,13 @@ class AccountMoveLine(models.Model):
             AND account_move_line__tax_rel__tax_ids.type_tax_use = %s
             AND account_move_line__tax_rel__tax_ids.amount = %s
         """, (amount_type, type_tax_use, amount))
-        return self._predicted_field(name, partner, field, query)
+        return self._predicted_field(move, name, partner, field, query)
 
     def _predict_product(self):
         predict_product = int(self.env['ir.config_parameter'].sudo().get_param('account_predictive_bills.predict_product', '1'))
         if predict_product and self.company_id.predict_bill_product:
             query = self._build_predictive_query(self.move_id, ['|', ('product_id', '=', False), ('product_id.active', '=', True)])
-            predicted_product_id = self._predicted_field(self.name, self.partner_id, SQL('account_move_line.product_id'), query)
+            predicted_product_id = self._predicted_field(self.move_id, self.name, self.partner_id, SQL('account_move_line.product_id'), query)
             if predicted_product_id and predicted_product_id != self.product_id.id:
                 return predicted_product_id
         return False
@@ -869,7 +869,7 @@ class AccountMoveLine(models.Model):
         ))]
         query = self._build_predictive_query(self.move_id, [('account_id', 'in', account_query)])
 
-        predicted_account_id = self._predicted_field(self.name, self.partner_id, field, query, additional_queries)
+        predicted_account_id = self._predicted_field(self.move_id, self.name, self.partner_id, field, query, additional_queries)
         if predicted_account_id and predicted_account_id != self.account_id.id:
             return predicted_account_id
         return False
@@ -878,7 +878,7 @@ class AccountMoveLine(models.Model):
         if self.account_id and self.partner_id and self.env.user.has_group('account.group_partial_purchase_deductibility'):
             field = SQL('account_move_line.deductible_amount')
             query = self._build_predictive_query(self.move_id, [('account_id', '=', self.account_id.id)])
-            predicted_deductible_amount = self._predicted_field(self.name, self.partner_id, field, query)
+            predicted_deductible_amount = self._predicted_field(self.move_id, self.name, self.partner_id, field, query)
             if predicted_deductible_amount and predicted_deductible_amount != self.deductible_amount:
                 return predicted_deductible_amount
         return False
