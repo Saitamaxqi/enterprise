@@ -516,7 +516,7 @@ class HrVersion(models.Model):
             daily_wage = Payslip._l10n_au_convert_amount(version.wage, version.schedule_pay, "daily")
             version.hourly_wage = daily_wage / hours_per_day
 
-    @api.depends("wage_type", "wage", "hourly_wage")
+    @api.depends("wage_type", "wage", "hourly_wage", "schedule_pay")
     def _compute_yearly_wage(self):
         Payslip = self.env['hr.payslip']
         for version in self:

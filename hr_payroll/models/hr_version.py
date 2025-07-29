@@ -22,7 +22,7 @@ class HrVersion(models.Model):
         ('bi-weekly', 'Bi-weekly'),
         ('weekly', 'Weekly'),
         ('daily', 'Daily')],
-        compute='_compute_schedule_pay', store=True, readonly=False, groups="hr.group_hr_user")
+        compute='_compute_schedule_pay', store=True, readonly=False, groups="hr.group_hr_user", default='monthly')
     resource_calendar_id = fields.Many2one(default=lambda self: self.env.company.resource_calendar_id,
         help='''Employee's working schedule.
         When left empty, the employee is considered to have a fully flexible schedule, allowing them to work without any time limit, anytime of the week.
@@ -56,7 +56,8 @@ class HrVersion(models.Model):
     @api.depends('structure_type_id')
     def _compute_schedule_pay(self):
         for version in self:
-            version.schedule_pay = version.structure_type_id.default_schedule_pay
+            if version.structure_type_id:
+                version.schedule_pay = version.structure_type_id.default_schedule_pay
 
     @api.depends('structure_type_id')
     def _compute_wage_type(self):
