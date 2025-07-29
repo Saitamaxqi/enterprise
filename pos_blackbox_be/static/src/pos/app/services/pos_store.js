@@ -131,7 +131,11 @@ patch(PosStore.prototype, {
             ) {
                 this.dialog.add(AlertDialog, {
                     title: _t("POS error"),
-                    body: _t("User must be clocked in."),
+                    body: _t(
+                        "The government's Fiscal Data Module requires every user to Clock In before " +
+                            "sending an order.\n" +
+                            "You can Clock In from the top-right menu (\u2261)."
+                    ),
                 });
                 return;
             } else if (!product.taxes_id.every((tax) => tax?.tax_group_id.pos_receipt_label)) {

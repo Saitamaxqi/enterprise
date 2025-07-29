@@ -10,7 +10,7 @@ class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
     insz_or_bis_number = fields.Char(
-        "Social security identification number (INSZ or BIS)",
+        "National Register Number",
         groups="hr.group_hr_manager",
         store=True,
         compute="_compute_insz_or_bis_number",
@@ -39,4 +39,4 @@ class HrEmployee(models.Model):
         for emp in self:
             insz_number = emp.insz_or_bis_number
             if insz_number and not self.env['res.users'].is_valid_insz_or_bis_number(insz_number):
-                raise ValidationError(_("The Social security identification number (INSZ or BIS) is not valid."))
+                raise ValidationError(_("The National Register Number is not valid."))

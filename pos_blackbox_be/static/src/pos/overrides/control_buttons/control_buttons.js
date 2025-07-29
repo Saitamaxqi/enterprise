@@ -12,7 +12,11 @@ patch(ControlButtons.prototype, {
         if (this.pos.useBlackBoxBe() && !this.pos.userSessionStatus) {
             this.dialog.add(AlertDialog, {
                 title: this._t("POS error"),
-                body: this._t("User must be clocked in."),
+                body: this._t(
+                    "The government's Fiscal Data Module requires every user to Clock In before " +
+                        "sending an order.\n" +
+                        "You can Clock In from the top-right menu (\u2261)."
+                ),
             });
             return;
         }

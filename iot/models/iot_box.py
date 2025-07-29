@@ -107,5 +107,9 @@ class IotBox(models.Model):
         if module and module.state != 'installed':
             module.button_immediate_install()
             _logger.info("pos_blackbox_be module installed successfully.")
-        else:
-            _logger.warning("pos_blackbox_be module is already installed or not found.")
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'reload',
+            }
+        _logger.warning("pos_blackbox_be module is already installed or not found.")
+        return None
