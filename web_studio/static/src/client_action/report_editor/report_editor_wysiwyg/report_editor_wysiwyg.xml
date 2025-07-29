@@ -92,11 +92,11 @@
 <t t-name="web_studio.ReportEditorWysiwyg.UndoRedo">
   <t t-set="isActive" t-value="props.state.canUndo or props.state.canRedo" />
   <div class="rounded bg-white border border-2 d-flex flex-row o-web-studio-report-editor-undo-redo align-items-center" t-attf-class="{{ isActive ? 'active' : '' }} {{ this.props.className }}">
-    <button class="btn o_web_studio_undo_redo_button text-uppercase" t-attf-class="{{ !props.state.canUndo ? 'text-muted' : 'active' }}" t-on-click="props.state.undo">
+    <button class="btn o_web_studio_undo_redo_button text-uppercase border-0" t-attf-class="{{ !props.state.canUndo ? 'text-muted' : 'active' }}" t-on-click="props.state.undo">
       <i class="fa fa-undo me-1"/>Undo
     </button>
     <div class="border" />
-    <button class="btn o_web_studio_undo_redo_button text-uppercase" t-attf-class="{{ !props.state.canRedo ? 'text-muted' : 'active' }}" t-on-click="props.state.redo">
+    <button class="btn o_web_studio_undo_redo_button text-uppercase border-0" t-attf-class="{{ !props.state.canRedo ? 'text-muted' : 'active' }}" t-on-click="props.state.redo">
       <i class="fa fa-repeat me-1"/>Redo
     </button>
   </div>
