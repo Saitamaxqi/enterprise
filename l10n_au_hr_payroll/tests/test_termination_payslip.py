@@ -5,7 +5,7 @@ from unittest.mock import patch
 from freezegun import freeze_time
 
 from odoo import fields
-from odoo.tests import tagged
+from odoo.tests import tagged, Form
 from .common import TestPayrollCommon
 
 
@@ -860,3 +860,17 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             payslip_date_to=fields.Date.to_date('2024-02-27'),
             termination_type="normal"
         )
+
+    @freeze_time('2023-12-30')
+    def test_termination_flow(self):
+        with Form(self.env['l10n_au.termination.payment']) as term_wizard:
+            term_wizard.employee_id = self.employee_id
+            term_wizard.cessation_type_code = 'V'
+            self.assertEqual(term_wizard.termination_type, 'normal')
+            self.assertEqual(term_wizard.version_id, self.employee_id.version_id)
+            self.assertEqual(term_wizard.contract_end_date, fields.Date.from_string('2023-12-30'))
+        action = term_wizard.save().button_terminate()
+        self.assertEqual(self.employee_id.version_id.date_end, fields.Date.from_string('2023-12-30'))
+        slip = self.env["hr.payslip"].browse(action['res_id'])
+        slip.action_refresh_from_work_entries()
+        self.assertEqual(slip.l10n_au_termination_type, 'normal')

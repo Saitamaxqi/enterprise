@@ -47,9 +47,6 @@ class L10n_AuTerminationPayment(models.TransientModel):
             contracts = record.employee_id._get_versions_with_contract_overlap_with_period(
                 date_from=record.contract_end_date,
                 date_to=record.contract_end_date,
-            ) or record.employee_id._get_incoming_contracts(
-                date_from=record.contract_end_date,
-                date_to=record.contract_end_date,
             )
             record.version_id = contracts and contracts[0]
 
@@ -76,7 +73,7 @@ class L10n_AuTerminationPayment(models.TransientModel):
 
         self.version_id.write({
             'l10n_au_cessation_type_code':  self.cessation_type_code,
-            'date_end':  self.contract_end_date,
+            'contract_date_end':  self.contract_end_date,
         })
         # Implement New payslip create
         payslip = self.env["hr.payslip"].create({
