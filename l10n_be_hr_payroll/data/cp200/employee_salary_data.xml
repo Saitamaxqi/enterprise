@@ -188,11 +188,14 @@ if not salary_simulation:
         <field name="condition_python">result = bool(not payslip.is_outside_contract and version.has_laptop)</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-first_period_contract_ids = payslip._get_period_contracts()
-first_period_contract = version.browse(first_period_contract_ids).filtered(lambda c: c.has_laptop)
-if first_period_contract:
-    target_contract = payslip._get_max_basic_salary_contract(first_period_contract)
-result = payslip._rule_parameter('cp200_bik_laptop') if (first_period_contract and payslip.version_id == target_contract) else 0
+salary_simulation = payslip.env.context.get('salary_simulation')
+result = payslip._rule_parameter('cp200_bik_laptop')
+if not salary_simulation:
+    first_period_contract_ids = payslip._get_period_contracts()
+    first_period_contract = version.browse(first_period_contract_ids).filtered(lambda c: c.has_laptop)
+    if first_period_contract:
+        target_contract = payslip._get_max_basic_salary_contract(first_period_contract)
+    result = payslip._rule_parameter('cp200_bik_laptop') if (first_period_contract and payslip.version_id == target_contract) else 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
     </record>

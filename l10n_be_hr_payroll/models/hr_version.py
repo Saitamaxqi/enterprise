@@ -240,7 +240,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
 
     def _get_whitelist_fields_from_template(self):
         whitelisted_fields = super()._get_whitelist_fields_from_template()
-        return whitelisted_fields + ['ip', 'ip_wage_rate', 'wage_on_signature', 'fuel_card']
+        return whitelisted_fields + ['ip', 'ip_wage_rate', 'wage_on_signature', 'fuel_card', 'has_laptop']
 
     def _get_marital_status_selection(self):
         if self.env.company.country_id.code != "BE":

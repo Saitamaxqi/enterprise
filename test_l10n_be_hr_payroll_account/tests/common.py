@@ -297,6 +297,7 @@ class TestPayrollAccountCommon(odoo.tests.HttpCase):
             'internet': 38,
             'mobile': 30,
             'eco_checks': 250,
+            'has_laptop': True,
             'car_id': False
         })
 
