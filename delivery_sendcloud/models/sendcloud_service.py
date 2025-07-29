@@ -54,7 +54,7 @@ class SendCloud:
             from_country = order.warehouse_id.partner_id.country_id.code
             to_postal_code = order.partner_shipping_id.zip
             from_postal_code = order.warehouse_id.partner_id.zip
-            error_lines = order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type != 'service' and not line.display_type)
+            error_lines = order.order_line._get_invalid_delivery_weight_lines()
             if error_lines:
                 raise UserError(_("The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n %s", ", ".join(error_lines.product_id.mapped('name'))))
             packages = carrier._get_packages_from_order(order, carrier.sendcloud_default_package_type_id)
