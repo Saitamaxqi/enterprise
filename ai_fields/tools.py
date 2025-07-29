@@ -44,7 +44,7 @@ You must return a structured output:
 - In such cases, set `value: null`, `could_not_resolve: true`, and include a `resolution_note`.
 """
 
-OPENAI_ENDPOINT = '/v1/responses'
+OPENAI_ENDPOINT = '/responses'
 OPENAI_MODEL = 'gpt-4.1'  # prompts are usually tweaked for a model. Double check behavior if changed.
 
 
