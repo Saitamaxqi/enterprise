@@ -84,7 +84,7 @@ class PlanningSlot(models.Model):
                 self.sale_line_id = sol
                 break
         if not self.sale_line_id:
-            self.sale_line_id = self.env['sale.order.line'].create({
+            self.sale_line_id = self.env['sale.order.line'].with_context(planning_slot_generation=False).create({
                 'product_id': products[:1].product_variant_id.id,
                 'is_rental': True,
                 'product_uom_qty': 1,

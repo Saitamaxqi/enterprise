@@ -59,9 +59,9 @@ class SaleOrderLine(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         lines = super().create(vals_list)
-        for line in lines:
-            if line.state == 'sale' and not line.is_expense:
-                line.sudo()._planning_slot_generation()
+        if self.env.context.get('planning_slot_generation', True):
+            sale_lines = lines.filtered(lambda sol: sol.state == 'sale' and not sol.is_expense)
+            sale_lines._planning_slot_generation()
         return lines
 
     def write(self, vals):
