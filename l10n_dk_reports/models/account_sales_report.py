@@ -81,7 +81,10 @@ class L10n_DkEcSalesReportHandler(models.AbstractModel):
         # Unset this as 'use_taxes_instead_of_tags' should never be used outside of the generic ec sales report
         ec_operation_category['use_taxes_instead_of_tags'] = False
 
-        options.update({'sales_report_taxes': ec_operation_category})
+        options.update({
+            'sales_report_taxes': ec_operation_category,
+            'rounding_unit': 'units',  # So that the report is rounded by default
+        })
 
     def export_sales_report_to_csv(self, options):
         colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
@@ -141,9 +144,9 @@ class L10n_DkEcSalesReportHandler(models.AbstractModel):
                     cvr_number,
                     country_code,
                     customer_vat[2:],
-                    line['columns'][colname_to_idx['goods']].get('no_format', '0'),
-                    line['columns'][colname_to_idx['triangular']].get('no_format', '0'),
-                    line['columns'][colname_to_idx['services']].get('no_format', '0'),
+                    round(line['columns'][colname_to_idx['goods']].get('no_format', 0)),
+                    round(line['columns'][colname_to_idx['triangular']].get('no_format', 0)),
+                    round(line['columns'][colname_to_idx['services']].get('no_format', 0)),
                 ]
             )
             index += 1
@@ -154,7 +157,7 @@ class L10n_DkEcSalesReportHandler(models.AbstractModel):
             [
                 10,
                 index,
-                lines[-1]['columns'][colname_to_idx['balance']]['no_format'] if lines else 0,
+                round(lines[-1]['columns'][colname_to_idx['balance']]['no_format']) if lines else 0,
                 '',
                 '',
                 '',

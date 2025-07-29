@@ -88,7 +88,7 @@ class TestDKIntrastatReport(TestAccountReportsCommon):
                 'Net Mass', 'Supplementary Units', 'Invoice Value', 'Declarant Ref. No. (optional)'
             ],
             [
-                '88023000', '11', 'BE', '50000.0', '10.0', '300000.0', 'BILL/2024/05/0001'
+                '88023000', '11', 'BE', '50000.0', '10.0', '300000', 'BILL/2024/05/0001'
             ],
         ]
 
@@ -113,7 +113,7 @@ class TestDKIntrastatReport(TestAccountReportsCommon):
                 'Partner VAT No.', 'Country of Origin'
             ],
             [
-                '88023000', '11', 'BE', '20000.0', '4.0', '120000.0', 'INV/2024/00001', 'BE0897223670', 'ES'
+                '88023000', '11', 'BE', '20000.0', '4.0', '120000', 'INV/2024/00001', 'BE0897223670', 'ES'
             ],
         ]
 

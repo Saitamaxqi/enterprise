@@ -38,18 +38,18 @@ class DenmarkSalesReportTest(AccountSalesReportCommon):
             report._get_lines(options),
             [   0,                      1,                                  2,                      3,                                      4,                                      5,                                      6],
             [
-                (self.partner_a.name,   self.partner_a.country_id.code,     self.partner_a.vat,     f'kr{NON_BREAKING_SPACE}6,000.00',      f'kr{NON_BREAKING_SPACE}7,000.00',      f'kr{NON_BREAKING_SPACE}0.00',          f'kr{NON_BREAKING_SPACE}13,000.00'),
-                (self.partner_b.name,   self.partner_b.country_id.code,     self.partner_b.vat,     f'kr{NON_BREAKING_SPACE}0.00',          f'kr{NON_BREAKING_SPACE}4,000.00',      f'kr{NON_BREAKING_SPACE}2,000.00',      f'kr{NON_BREAKING_SPACE}6,000.00'),
-                ('Total',               '',                                 '',                     f'kr{NON_BREAKING_SPACE}6,000.00',      f'kr{NON_BREAKING_SPACE}11,000.00',     f'kr{NON_BREAKING_SPACE}2,000.00',      f'kr{NON_BREAKING_SPACE}19,000.00'),
+                (self.partner_a.name,   self.partner_a.country_id.code,     self.partner_a.vat,     f'kr{NON_BREAKING_SPACE}6,000',      f'kr{NON_BREAKING_SPACE}7,000',      f'kr{NON_BREAKING_SPACE}0',          f'kr{NON_BREAKING_SPACE}13,000'),
+                (self.partner_b.name,   self.partner_b.country_id.code,     self.partner_b.vat,     f'kr{NON_BREAKING_SPACE}0',          f'kr{NON_BREAKING_SPACE}4,000',      f'kr{NON_BREAKING_SPACE}2,000',      f'kr{NON_BREAKING_SPACE}6,000'),
+                ('Total',               '',                                 '',                     f'kr{NON_BREAKING_SPACE}6,000',      f'kr{NON_BREAKING_SPACE}11,000',     f'kr{NON_BREAKING_SPACE}2,000',      f'kr{NON_BREAKING_SPACE}19,000'),
             ],
             options
         )
 
         correct_report = (
             '0,58403288,LIST,,,,,,\r\n'
-            '2,0,2019-12-31,58403288,FR,23334175221,6000.0,0.0,7000.0\r\n'
-            '2,1,2019-12-31,58403288,BE,0477472701,0.0,2000.0,4000.0\r\n'
-            '10,2,19000.0,,,,,,\r\n'
+            '2,0,2019-12-31,58403288,FR,23334175221,6000,0,7000\r\n'
+            '2,1,2019-12-31,58403288,BE,0477472701,0,2000,4000\r\n'
+            '10,2,19000,,,,,,\r\n'
         )
 
         gen_report = self.env[report.custom_handler_model_name].export_sales_report_to_csv(options)['file_content'].decode()
