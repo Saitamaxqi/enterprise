@@ -17,7 +17,7 @@ class SignRequest(models.Model):
         """ Go to the signable document as the signers or the current user for specified request_items. """
         res = super().go_to_signable_document(request_items)
 
-        if all(role.auth_method != 'emsigner' for role in self.request_item_ids.role_id):
+        if self.env.context.get('sign_all') or all(role.auth_method != 'emsigner' for role in self.request_item_ids.role_id):
             return res
 
         if not request_items:

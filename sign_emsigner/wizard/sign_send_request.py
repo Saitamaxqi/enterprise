@@ -10,7 +10,8 @@ class EmsignerSignSendRequest(models.TransientModel):
 
     def sign_directly(self):
         if self.env.context.get('sign_all') and len(self.signer_ids) > 1:
-            has_emsigner_role = any(signer.role_id.auth_method == 'emsigner' for signer in self.signer_ids)
+            # If the request has multiple signers and one of them has an emsigner role(except last signer), we cannot sign directly.
+            has_emsigner_role = any(signer.role_id.auth_method == 'emsigner' for signer in self.signer_ids[:-1])
             if has_emsigner_role:
-                raise UserError(self.env._("Emsigner role cannot be used for signing directly. Please send the request instead."))
+                raise UserError(self.env._("Emsigner role cannot be signed first. Please keep emsigner as last signer."))
         return super().sign_directly()

@@ -4,7 +4,7 @@
         <div t-attf-class="o_sign_sidebar {{ isSidebarHidden ? 'd-none' : ''}} w-100 border-end border-secondary">
             <div class="o_sign_sidebar_documents_header_title">
                 <h6 class="m-0 mx-2">Documents</h6>
-                <div class="d-flex" t-if="!this.props.hasSignRequests">
+                <div class="d-flex o_sign_add_doc_btn" t-if="!this.props.hasSignRequests">
                     <t t-call="sign.SignViews.buttons"/>
                 </div>
             </div>

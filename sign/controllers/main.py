@@ -522,7 +522,7 @@ class Sign(http.Controller):
                 return False
         return True
 
-    def _validate_auth_method(self, request_item_sudo, sms_token=None):
+    def _validate_auth_method(self, request_item_sudo, sms_token=None, **kwargs):
         if request_item_sudo.role_id.auth_method == 'sms':
             has_sms_credits = request.env['iap.account'].sudo().get_credits('sms') > 0  # credits > 0 because the credit was already spent
             # if there are no sms credits, we still allow the user to sign it

@@ -1,4 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
+import { useState } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
@@ -51,10 +52,22 @@ patch(SignTemplate.prototype, {
 });
 
 patch(SignTemplateSidebar.prototype, {
+    setup() {
+        super.setup();
+        this.emsignerState = useState({
+            showAddDocumentBtn: true,
+        });
+    },
+
+    displayAddDocumentButton(value) {
+        this.emsignerState.showAddDocumentBtn = value;
+    },
+
     getSidebarRoleItemsProps(id) {
         return {
             ...super.getSidebarRoleItemsProps(id),
             propsForEmsigner: this.props,
+            displayAddDocumentButton: (value) => this.displayAddDocumentButton(value),
         };
     }
 });
@@ -63,6 +76,7 @@ patch(SignTemplateSidebarRoleItems, {
     props: {
         ...SignTemplateSidebarRoleItems.props,
         propsForEmsigner: { type: Object, optional: true },
+        displayAddDocumentButton: { type: Function, optional: true },
     }
 });
 
@@ -73,6 +87,13 @@ patch(SignTemplateSidebarRoleItems.prototype, {
         super.setup();
         const functions = getEmsignerRole();
         Object.assign(this, functions);
+
+        if (this.props.propsForEmsigner.signers.length > 0) {
+            this.hasEmsignerRole(this.props.propsForEmsigner)
+            .then((result) => {
+                this.props.displayAddDocumentButton(result.role > 0);
+            })
+        };
     },
 
     async openSignRoleRecord() {
@@ -91,6 +112,7 @@ patch(SignTemplateSidebarRoleItems.prototype, {
                         confirmLabel: _t("Ok"),
                     });
                 }
+                this.props.displayAddDocumentButton(hasEmsignerRole.role > 0);
             },
         });
     }
