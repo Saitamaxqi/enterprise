@@ -12,6 +12,7 @@ from odoo import Command, http
 from odoo.addons.appointment.tests.common import AppointmentCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.tests import common, tagged, users
+from odoo.tools import float_compare
 from odoo.tools.misc import mute_logger
 
 
@@ -390,7 +391,7 @@ class AppointmentUITest(AppointmentUICommon):
     @users('apt_manager')
     def test_appointment_staff_user_manual_confirmation(self):
         """ Check that appointment and attendee status are correctly
-        set based on the auto_confirm field"""
+        set based on the auto_confirm and manual_confirmation_percentage fields"""
         self.authenticate(self.env.user.login, self.env.user.login)
         phone_question = self.apt_type_resource._get_main_phone_question()
         self.assertTrue(phone_question)
@@ -403,22 +404,39 @@ class AppointmentUITest(AppointmentUICommon):
             f'question_{phone_question.id}': '2025550999',
             'staff_user_id': self.staff_user_bxls.id,
         }
+        self.apt_type_bxls_2days.max_bookings = 3
         self.assertTrue(self.apt_type_bxls_2days.auto_confirm)
+        self.assertEqual(float_compare(self.apt_type_bxls_2days.manual_confirmation_percentage, 1.0, 3), 0)
         self.assertTrue(self.apt_type_bxls_2days.is_always_confirm)
-        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
-        self.assertEqual(res.status_code, 200, "Response should be OK")
-        self.assertEqual(len(self.apt_type_bxls_2days.meeting_ids), 1)
-        self.assertEqual(self.apt_type_bxls_2days.meeting_ids[0].appointment_status, "booked")
-        self.assertTrue(all(attendee.state == 'accepted' for attendee in self.apt_type_bxls_2days.meeting_ids.attendee_ids))
 
-        self.apt_type_bxls_2days.auto_confirm = False
-        self.assertFalse(self.apt_type_bxls_2days.is_always_confirm)
-        event_values['datetime_str'] = '2022-02-14 12:00:00'
         res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
         self.assertEqual(res.status_code, 200, "Response should be OK")
-        self.assertEqual(len(self.apt_type_bxls_2days.meeting_ids), 2)
-        self.assertEqual(self.apt_type_bxls_2days.meeting_ids[0].appointment_status, "request")
-        self.assertTrue(all(attendee.state == 'accepted' for attendee in self.apt_type_bxls_2days.meeting_ids.attendee_ids))
+        first_meeting = self.apt_type_bxls_2days.meeting_ids
+        self.assertEqual(len(first_meeting), 1)
+        self.assertEqual(first_meeting.appointment_status, "booked")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in first_meeting.attendee_ids))
+
+        self.apt_type_bxls_2days.manual_confirmation_percentage = 0.5
+        self.assertFalse(self.apt_type_bxls_2days.is_always_confirm)
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
+        self.assertEqual(res.status_code, 200, "Response should be OK")
+        second_meeting = self.apt_type_bxls_2days.meeting_ids - first_meeting
+        self.assertEqual(len(second_meeting), 1)
+        self.assertEqual(second_meeting.appointment_status, "request")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in second_meeting.attendee_ids))
+
+        # Despite 100% manual_confirmation_percentage, should be 'request' as auto_confirm is False
+        self.apt_type_bxls_2days.write({
+            'auto_confirm': False,
+            'manual_confirmation_percentage': 1.0
+        })
+        self.assertFalse(self.apt_type_bxls_2days.is_always_confirm)
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
+        self.assertEqual(res.status_code, 200, "Response should be OK")
+        third_meeting = self.apt_type_bxls_2days.meeting_ids - (first_meeting | second_meeting)
+        self.assertEqual(len(third_meeting), 1)
+        self.assertEqual(third_meeting.appointment_status, "request")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in third_meeting.attendee_ids))
 
     @freeze_time('2022-02-14T7:00:00')
     def test_get_appointment_type_page_view(self):

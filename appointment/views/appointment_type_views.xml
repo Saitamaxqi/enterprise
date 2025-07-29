@@ -299,11 +299,11 @@
                                     <label for="auto_confirm"/>
                                     <div class="d-flex">
                                         <field name="auto_confirm" class="oe_inline"/>
-                                        <div invisible="not auto_confirm or not manage_capacity">
+                                        <div invisible="not auto_confirm">
                                             <span>
                                                 up to
                                                 <field name="manual_confirmation_percentage" class="oe_inline o_input_4ch mx-1" widget="percentage"/>
-                                                of max capacity
+                                                of total capacity
                                             </span>
                                         </div>
                                     </div>

@@ -338,12 +338,12 @@ class AppointmentType(models.Model):
             else:
                 record.location = record.location_id.name or ''
 
-    @api.depends('auto_confirm', 'manage_capacity', 'manual_confirmation_percentage')
+    @api.depends('auto_confirm', 'manual_confirmation_percentage')
     def _compute_is_always_confirm(self):
         for appointment_type in self:
-            appointment_type.is_always_confirm = appointment_type.auto_confirm and (
-                not appointment_type.manage_capacity
-                or (float_compare(appointment_type.manual_confirmation_percentage, 1.0, 3) == 0)
+            appointment_type.is_always_confirm = (
+                appointment_type.auto_confirm and
+                float_compare(appointment_type.manual_confirmation_percentage, 1.0, 3) == 0
             )
 
     @api.depends('schedule_based_on')
@@ -636,15 +636,24 @@ class AppointmentType(models.Model):
         if not self.is_always_confirm:
             if not self.auto_confirm:
                 default_state = 'request'
-            elif self.manage_capacity:
+            else:
                 bookings_data = self.env['appointment.booking.line'].sudo()._read_group([
                     ('appointment_type_id', '=', self.id),
                     ('event_start', '<', stop_dt),
                     ('event_stop', '>', start_dt)
                 ], [], ['capacity_used:sum'])
                 capacity_already_used = bookings_data[0][0]
+
+                if self.manage_capacity:
+                    total_capacity = (
+                        self.resource_total_capacity if self.schedule_based_on == 'resources' else
+                        len(self.staff_user_ids) * self.user_capacity)
+                else:
+                    total_capacity = (
+                        len(self.resource_ids) * self.max_bookings if self.schedule_based_on == 'resources' else
+                        len(self.staff_user_ids) * self.max_bookings)
+
                 total_capacity_used = capacity_already_used + capacity_reserved
-                total_capacity = self.resource_total_capacity if self.schedule_based_on == 'resources' else self.user_capacity
                 if float_compare(total_capacity_used / total_capacity, self.manual_confirmation_percentage, 2) > 0:
                     default_state = 'request'
         return default_state
