@@ -13,9 +13,16 @@ export class FiscalInvoice extends Component {
         Footer,
     };
 
+    static props = {
+        order: {
+            type: Object,
+            optional: true, // To keep backward compatibility
+        },
+    };
+
     setup() {
         this.pos = usePos();
-        this.order = this.pos.getOrder();
+        this.order = this.props.order || this.pos.getOrder();
     }
 
     get client() {

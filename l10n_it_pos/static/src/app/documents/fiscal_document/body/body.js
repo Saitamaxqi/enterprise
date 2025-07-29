@@ -25,9 +25,16 @@ export class Body extends Component {
         PrintRecSubtotalAdjustment,
     };
 
+    static props = {
+        order: {
+            type: Object,
+            optional: true, // To keep backward compatibility
+        },
+    };
+
     setup() {
         this.pos = usePos();
-        this.order = this.pos.getOrder();
+        this.order = this.props.order || this.pos.getOrder();
         this.adjustment = this.order.getRoundingApplied() && {
             description: _t("Rounding"),
             amount: this._itFormatCurrency(Math.abs(this.order.getRoundingApplied())),

@@ -9,4 +9,11 @@ export class FiscalReceipt extends Component {
         Body,
         Footer,
     };
+
+    static props = {
+        order: {
+            type: Object,
+            optional: true, // To keep backward compatibility
+        },
+    };
 }

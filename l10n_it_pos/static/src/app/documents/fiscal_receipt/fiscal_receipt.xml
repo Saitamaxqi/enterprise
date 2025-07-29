@@ -2,10 +2,10 @@
 <templates xml:space="preserve">
     <t t-name="l10n_it_pos.FiscalReceipt">
         <printerFiscalReceipt>
-            <Header />
+            <Header order="props.order" />
             <beginFiscalReceipt operator="1" /> 
-            <Body />
-            <Footer />
+            <Body order="props.order" />
+            <Footer order="props.order" />
             <endFiscalReceipt operator="1" /> 
         </printerFiscalReceipt>
     </t>

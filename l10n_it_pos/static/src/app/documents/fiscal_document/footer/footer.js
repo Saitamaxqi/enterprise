@@ -12,9 +12,16 @@ export class Footer extends Component {
         PrintRecMessage,
     };
 
+    static props = {
+        order: {
+            type: Object,
+            optional: true, // To keep backward compatibility
+        },
+    };
+
     async setup() {
         this.pos = usePos();
-        this.order = this.pos.getOrder();
+        this.order = this.props.order || this.pos.getOrder();
     }
 
     get footers() {

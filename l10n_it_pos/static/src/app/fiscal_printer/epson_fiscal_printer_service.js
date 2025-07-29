@@ -40,13 +40,13 @@ class EpsonFiscalPrinter extends Reactive {
         this.command = epson_fiscal_printer_command;
     }
 
-    async printFiscalReceipt({ timeout, devid } = {}) {
-        const command = await this.command.create(FiscalReceipt);
+    async printFiscalReceipt({ timeout, devid, order } = {}) {
+        const command = await this.command.create(FiscalReceipt, { order });
         return this.sendCommand(command, { timeout, devid });
     }
 
-    async printFiscalInvoice({ timeout, devid } = {}) {
-        const command = await this.command.create(FiscalInvoice);
+    async printFiscalInvoice({ timeout, devid, order } = {}) {
+        const command = await this.command.create(FiscalInvoice, { order });
         return this.sendCommand(command, { timeout, devid });
     }
 
