@@ -364,7 +364,7 @@ class L10n_Nl_ReportsSbrTaxReportWizard(models.TransientModel):
                     ]),
                     _("Create Closing Entry"),
                 )
-            if closing_move.state == 'draft':
+            if any(move.state == 'draft' for move in closing_move):
                 raise RedirectWarning(
                     _("The closing entry for the selected period is still in draft. Please post it before sending your report."),
                     self.env['account.return'].action_open_tax_return_view(additional_return_domain=[
