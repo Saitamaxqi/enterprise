@@ -466,6 +466,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         shortcut = shortcut.action_create_shortcut(False)
         self.assertEqual(shortcut.shortcut_document_id, self.folder_b)
 
+        # Can't move out if not editor on folder
         self.folder_a.action_update_access_rights(partners={self.internal_user.partner_id.id: ('edit', False)})
         self.folder_b.action_update_access_rights(partners={self.internal_user.partner_id.id: ('view', False)})
         with self.assertRaises(AccessError):
@@ -473,6 +474,10 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         with self.assertRaises(AccessError):
             self.document_gif.with_user(self.internal_user).action_move_documents(self.folder_a.id)
+
+        # Unless user is the owner
+        self.document_gif.owner_id = self.internal_user
+        self.document_gif.with_user(self.internal_user).folder_id = self.folder_a
 
     def test_ir_actions_server(self):
         """Check the behavior of the documents actions.
