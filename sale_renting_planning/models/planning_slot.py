@@ -103,3 +103,11 @@ class PlanningSlot(models.Model):
                 SaleOrderLine._fields['name'],
                 order.order_line.filtered('is_rental')
             )
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success',
+                'message': self.env._('Shift added to last order'),
+            },
+        }
