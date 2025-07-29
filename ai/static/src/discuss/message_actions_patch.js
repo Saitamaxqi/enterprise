@@ -13,8 +13,8 @@ messageActionsRegistry
             (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
                 component.env.isSmall) &&
             !component.message.isSelfAuthored,
-        title: () => _t("Use this"),
-        onClick: (component) => {
+        name: _t("Use this"),
+        onSelected: (component) => {
             const fragment = document.createDocumentFragment();
             const content_root = document.createElement("span");
             content_root.setAttribute("InsertorId", "AIInsertion");
@@ -39,8 +39,8 @@ messageActionsRegistry
             component.store.aiInsertButtonTarget && // after a reload both parts of the below conditions are undefined and but we don't want to button to appear
             (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
                 component.env.isSmall),
-        title: _t("Send as Message"),
-        onClick: (component) => {
+        name: _t("Send as Message"),
+        onSelected: (component) => {
             component.props.thread.aiSpecialActions.sendMessage(component.props.message.body);
         },
         sequence: 20,
@@ -52,8 +52,8 @@ messageActionsRegistry
             component.store.aiInsertButtonTarget && // after a reload both parts of the below conditions are undefined and but we don't want to button to appear
             (component.store.aiInsertButtonTarget === component.props.thread.aiChatSource ||
                 component.env.isSmall),
-        title: _t("Log as Note"),
-        onClick: (component) =>
+        name: _t("Log as Note"),
+        onSelected: (component) =>
             component.props.thread.aiSpecialActions.logNote(component.props.message.body),
         sequence: 30,
     });

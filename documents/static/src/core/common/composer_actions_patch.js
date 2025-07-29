@@ -6,7 +6,7 @@ import { SelectAddDocumentCreateDialog } from "@documents/views/view_dialogs/sel
 composerActionsRegistry.add("add-documents", {
     icon: "fa fa-file-text",
     name: _t("Add from Documents"),
-    onClick: (component) => {
+    onSelected: (component) => {
         const thread = component.props.composer?.message?.thread || component.thread;
         component.env.services.dialog.add(SelectAddDocumentCreateDialog, {
             resModel: "documents.document",

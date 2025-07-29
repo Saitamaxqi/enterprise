@@ -10,7 +10,7 @@ composerActionsRegistry.add("revive-whatsapp-conversation", {
         component.props.composer.thread?.channel_type === "whatsapp" && !component.state.active,
     icon: "fa fa-whatsapp",
     name: _t("Revive WhatsApp Conversation"),
-    onClick: (component) => component.onclickWhatsAppChat(),
+    onSelected: (component) => component.onclickWhatsAppChat(),
     sequenceQuick: 10,
 });
 
