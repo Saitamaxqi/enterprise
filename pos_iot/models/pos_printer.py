@@ -21,5 +21,5 @@ class PosPrinter(models.Model):
     @api.model
     def _load_pos_data_fields(self, config):
         result = super()._load_pos_data_fields(config)
-        result += ['device_identifier']
+        result += ['device_identifier', 'device_id']
         return result

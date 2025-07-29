@@ -42,11 +42,15 @@ patch(PosStore.prototype, {
     },
     createPrinter(config) {
         if (config.device_identifier && config.printer_type === "iot") {
-            const device = new DeviceController(this.env.services.iot_longpolling, {
+            const device = this.models["iot.device"].get(config.device_id) ?? {
                 iot_ip: config.proxy_ip,
                 identifier: config.device_identifier,
-            });
-            return new IoTPrinter({ device, iot_http: this.iotHttp });
+            };
+            const deviceController = new DeviceController(
+                this.env.services.iot_longpolling,
+                device
+            );
+            return new IoTPrinter({ device: deviceController, iot_http: this.iotHttp });
         } else {
             return super.createPrinter(...arguments);
         }

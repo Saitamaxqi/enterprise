@@ -12,6 +12,12 @@ class IotBox(models.Model):
         'pos.config', string="Associated PoS", compute='_compute_associated_pos_config_ids'
     )
 
+    # Override to disable limited loading, as this could cause missing data
+    def _load_pos_data(self, data):
+        domain = self._load_pos_data_domain(data)
+        fields = self._load_pos_data_fields(data['pos.config'][0]['id'])
+        return self.search_read(domain, fields, load=False) if domain is not False else []
+
     @api.model
     def _load_pos_data_domain(self, data, config):
         return [('id', 'in', [device['iot_id'] for device in data['iot.device'] if device['iot_id']])]

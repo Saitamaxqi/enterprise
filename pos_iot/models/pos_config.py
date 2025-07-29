@@ -37,13 +37,13 @@ class PosConfig(models.Model):
         for config in self:
             config.iface_electronic_scale = config.iface_scale_id.id is not False
 
-    @api.depends('iface_printer_id', 'iface_display_id', 'iface_scanner_ids', 'iface_scale_id')
+    @api.depends('iface_printer_id', 'iface_display_id', 'iface_scanner_ids', 'iface_scale_id', 'printer_ids')
     def _compute_iot_device_ids(self):
         for config in self:
             if config.is_posbox:
-                config.iot_device_ids = config.iface_printer_id + config.iface_display_id + config.iface_scanner_ids + config.iface_scale_id
+                config.iot_device_ids = config.iface_printer_id + config.iface_display_id + config.iface_scanner_ids + config.iface_scale_id + config.printer_ids.mapped('device_id')
             else:
-                config.iot_device_ids = False
+                config.iot_device_ids = config.printer_ids.mapped('device_id') or False
 
     @api.depends('payment_method_ids', 'payment_method_ids.iot_device_id')
     def _compute_payment_terminal_device_ids(self):
