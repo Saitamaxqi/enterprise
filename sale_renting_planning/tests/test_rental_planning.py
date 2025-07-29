@@ -1,16 +1,37 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 from odoo.exceptions import ValidationError
 from odoo.fields import Command
-from odoo.tests import tagged
+from odoo.tests import Form, tagged
 
 from odoo.addons.sale_planning.tests.test_sale_planning import TestSalePlanning
 
 
 @tagged('post_install', '-at_install')
 class TestRentalPlanning(TestSalePlanning):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.projector = cls.env['resource.resource'].create({
+            'name': 'Projector',
+            'resource_type': 'material',
+        })
+
+        cls.planning_role_projector = cls.env['planning.role'].create({
+            'name': 'Projector',
+            'resource_ids': [Command.link(cls.projector.id)],
+        })
+
+        cls.product_projector = cls.env['product.product'].create({
+            'name': 'Projector Service',
+            'type': 'service',
+            'planning_enabled': True,
+            'planning_role_id': cls.planning_role_projector.id,
+            'rent_ok': True,
+        })
 
     def test_planning_rental_sol_confirmation(self):
         plannable_employees = (
@@ -102,32 +123,13 @@ class TestRentalPlanning(TestSalePlanning):
             2) Create a SO for the newly created product and confirm it.
             3) Observe the state button the shift is already planned but it incorrectly displays 'To Plan'.
         """
-
-        projector = self.env['resource.resource'].create({
-            'name': 'Projector',
-            'resource_type': 'material',
-        })
-
-        planning_role_projector = self.env['planning.role'].create({
-            'name': 'Projector',
-            'resource_ids': [(4, projector.id)],
-        })
-
-        product_projector = self.env['product.product'].create({
-            'name': 'Projector Service',
-            'type': 'service',
-            'planning_enabled': True,
-            'planning_role_id': planning_role_projector.id,
-            'rent_ok': True,
-        })
-
         so_rental = self.env['sale.order'].with_context(in_rental_app=True).create([{
             'partner_id': self.planning_partner.id,
             'rental_start_date': datetime(2024, 12, 18, 0, 0),
             'rental_return_date': datetime(2024, 12, 19, 0, 0),
             'order_line': [
                 Command.create({
-                    'product_id': product_projector.id,
+                    'product_id': self.product_projector.id,
                     'product_uom_qty': 1,
                 }),
             ],
@@ -280,3 +282,35 @@ class TestRentalPlanning(TestSalePlanning):
         rental_order2.action_confirm()
         self.assertEqual(len(rental_order2.order_line.planning_slot_ids), 1, "1 planning slot should be generated since the UoM of the product is Hour.")
         self.assertIn(rental_order2.order_line.planning_slot_ids.resource_id, projector + projector2, "One of both resources created inside that test should be selected.")
+
+    def test_action_create_order(self):
+        planning_slot = self.env['planning.slot'].create({
+            'resource_id': self.projector.id,
+            'role_id': self.planning_role_projector.id,
+            'start_datetime': datetime(2024, 12, 18, 0, 0),
+            'end_datetime': datetime(2024, 12, 19, 0, 0),
+        })
+        action = planning_slot.action_create_order()
+        self.assertEqual(action['res_model'], 'sale.order')
+        self.assertEqual(action['view_mode'], 'form')
+        self.assertEqual(action['target'], 'current')
+        self.assertEqual(action['res_model'], 'sale.order')
+        context = action['context']
+        self.assertTrue(context['default_is_rental_order'])
+        self.assertEqual(context['default_rental_start_date'], planning_slot.start_datetime)
+        self.assertEqual(context['default_rental_return_date'], planning_slot.end_datetime)
+        expected_default_order_line_vals = {
+            'product_id': self.product_projector.id,
+            'is_rental': True,
+            'product_uom_qty': 1,
+            'planning_slot_ids': planning_slot.ids,
+        }
+        self.assertEqual(context['default_order_line'], [Command.create(expected_default_order_line_vals)])
+        view_ids = [view_id for view_id, view_type in action['views'] if view_type == 'form']
+        form_view_id = view_ids[0] if view_ids else False
+        rental_order_form = Form(self.env['sale.order'].with_context(context), view=form_view_id)
+        self.assertEqual(len(rental_order_form.order_line), 1)
+        rental_order_form.partner_id = self.planning_partner
+        rental_order_form.rental_return_date += relativedelta(days=1)
+        rental_order = rental_order_form.save()
+        self.assertEqual(planning_slot.end_datetime, rental_order.rental_return_date, "Make sure the dates are sync between planning slot and rental order")
