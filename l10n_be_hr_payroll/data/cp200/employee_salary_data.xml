@@ -429,17 +429,34 @@ result = categories['BASIC'] + categories['ALW']
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
     </record>
 
+     <record id="cp200_employees_salary_withholding_tax_threshold" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Withholding Taxes (Adjustment)</field>
+        <field name="code">P.P.ADJ</field>
+        <field name="sequence">135</field>
+        <field name="condition_select">input</field>
+        <field name="condition_other_input_id" ref="l10n_be_hr_payroll.cp200_other_input_min_withholding_tax"/>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+min_withholding_tax = inputs['WT_MIN'].amount
+total_withholding_tax = -(categories['PP'] + result_rules['FISC_VOL']['total'] - result_rules['P.P.DED']['total'])
+result = -max(0, min_withholding_tax - total_withholding_tax)
+        </field>
+        <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
+    </record>
+
     <record id="cp200_employees_salary_withholding_taxes_total" model="hr.salary.rule">
         <field name="category_id" ref="hr_salary_rule_category_withholding_taxes_total"/>
-        <field name="name">Withholding Taxes (Total)</field>
+        <field name="name">Withholding Tax (Total)</field>
         <field name="code">PPTOTAL</field>
         <field name="amount_select">code</field>
-        <field name="sequence">131</field>
+        <field name="sequence">140</field>
         <field name="condition_select">none</field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = -(categories['PP'] + (result_rules['P.P.DED']['total'] if bool(categories['EmpBonus']) else 0) + result_rules['FISC_VOL']['total'])
+result = -(categories['PP'] + (result_rules['P.P.DED']['total'] if bool(categories['EmpBonus']) else 0) + result_rules['FISC_VOL']['total'] + result_rules['P.P.ADJ']['total'])
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_employee_cost_dashboard" eval="True"/>

@@ -78,6 +78,14 @@
         <field name="struct_ids" eval="[(4, ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary'))]"/>
     </record>
 
+     <record id="cp200_other_input_min_withholding_tax" model="hr.payslip.input.type">
+        <field name="name">Minimum Withholding Tax</field>
+        <field name="code">WT_MIN</field>
+        <field name="country_id" ref="base.be"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary'))]"/>
+        <field name="available_in_attachments" eval="True"/>
+    </record>
+
     <!-- Termination Fees -->
     <!-- Salary Other Input -->
     <record id="cp200_other_input_months" model="hr.payslip.input.type">
