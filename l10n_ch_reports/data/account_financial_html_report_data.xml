@@ -626,7 +626,7 @@
                                             <record id="account_financial_report_line_ch_290_b_domain" model="account.report.expression">
                                                 <field name="label">domain</field>
                                                 <field name="engine">domain</field>
-                                                <field name="date_scope">from_beginning</field>
+                                                <field name="date_scope">to_beginning_of_fiscalyear</field>
                                                 <field name="formula">[('account_id.account_type', '=', 'equity_unaffected')]</field>
                                                 <field name="subformula">-sum</field>
                                             </record>
@@ -653,13 +653,33 @@
                                 <field name="name@de">Jahresgewinn oder Jahresverlust</field>
                                 <field name="code">CH_299</field>
                                 <field name="action_id" ref="account_financial_report_l10n_ch_pl_action"/>
-                                <field name="expression_ids">
-                                    <record id="account_financial_report_line_ch_299_balance" model="account.report.expression">
-                                        <field name="label">balance</field>
-                                        <field name="engine">aggregation</field>
-                                        <field name="formula">CH_R.balance</field>
-                                        <field name="date_scope">from_fiscalyear</field>
-                                        <field name="subformula">cross_report(l10n_ch_reports.account_financial_report_l10n_ch_cdr)</field>
+                                <field name="aggregation_formula">CH_299_A.balance + CH_299_B.balance</field>
+                                <field name="children_ids">
+                                    <record id="account_financial_report_line_ch_299_a" model="account.report.line">
+                                        <field name="name">Current Year Retained Earnings</field>
+                                        <field name="code">CH_299_A</field>
+                                        <field name="expression_ids">
+                                            <record id="account_financial_report_line_ch_299_a_balance" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">domain</field>
+                                                <field name="date_scope">from_fiscalyear</field>
+                                                <field name="formula">[('account_id.account_type', '=', 'equity_unaffected')]</field>
+                                                <field name="subformula">-sum</field>
+                                            </record>
+                                        </field>
+                                    </record>
+                                    <record id="account_financial_report_line_ch_299_cross_report" model="account.report.line">
+                                        <field name="name">Current Year Unallocated Earnings</field>
+                                        <field name="code">CH_299_B</field>
+                                        <field name="expression_ids">
+                                            <record id="account_financial_report_line_ch_299_b_balance" model="account.report.expression">
+                                                <field name="label">balance</field>
+                                                <field name="engine">aggregation</field>
+                                                <field name="formula">CH_R.balance</field>
+                                                <field name="date_scope">from_fiscalyear</field>
+                                                <field name="subformula">cross_report(l10n_ch_reports.account_financial_report_l10n_ch_cdr)</field>
+                                            </record>
+                                        </field>
                                     </record>
                                 </field>
                             </record>
