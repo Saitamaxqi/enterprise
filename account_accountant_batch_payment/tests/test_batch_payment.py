@@ -3,6 +3,7 @@
 
 import time
 
+from odoo import Command
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests import tagged
 from odoo.exceptions import ValidationError
@@ -106,3 +107,56 @@ class TestBatchPayment(AccountTestInvoicingCommon):
                 'balance': -50.0,
             },
         ])
+
+    def test_partner_account_batch_payments(self):
+        """ Test that account receivable is used for inbound payments and account payable for outbound ones """
+        for payment_type, account_a, account_b in [
+            ('inbound', self.partner_a.property_account_receivable_id, self.partner_b.property_account_receivable_id),
+            ('outbound', self.partner_a.property_account_payable_id, self.partner_b.property_account_payable_id),
+        ]:
+            payment_1 = self.env['account.payment'].create({
+                'date': '2015-01-01',
+                'payment_type': payment_type,
+                'partner_type': 'customer',
+                'partner_id': self.partner_a.id,
+                'payment_method_line_id': self.batch_deposit.id,
+                'amount': 100.0,
+            })
+            payment_2 = self.env['account.payment'].create({
+                'date': '2015-01-01',
+                'payment_type': payment_type,
+                'partner_type': 'customer',
+                'partner_id': self.partner_b.id,
+                'payment_method_line_id': self.batch_deposit.id,
+                'amount': 200.0,
+            })
+            payments = payment_1 + payment_2
+            payments.action_post()
+            batch = self.env['account.batch.payment'].create({
+                'batch_type': payment_type,
+                'journal_id': self.journal.id,
+                'payment_ids': [Command.set(payments.ids)],
+                'payment_method_id': self.batch_deposit_method.id,
+            })
+            batch.validate_batch()
+            st_line_amount = 300.0 if payment_type == 'inbound' else -300.0
+            st_line = self.env['account.bank.statement.line'].create({
+                'journal_id': self.journal.id,
+                'amount': st_line_amount,
+                'date': '2015-01-01',
+                'payment_ref': batch.name,
+            })
+            st_line.set_batch_payment_bank_statement_line(batch.id)
+            bank_account = self.journal.default_account_id
+            if payment_type == 'inbound':
+                self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
+                    {'account_id': account_b.id, 'partner_id': self.partner_b.id, 'balance': -200.0},
+                    {'account_id': account_a.id, 'partner_id': self.partner_a.id, 'balance': -100.0},
+                    {'account_id': bank_account.id, 'partner_id': False, 'balance': 300.0},
+                ])
+            else:
+                self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
+                    {'account_id': bank_account.id, 'partner_id': False, 'balance': -300.0},
+                    {'account_id': account_a.id, 'partner_id': self.partner_a.id, 'balance': 100.0},
+                    {'account_id': account_b.id, 'partner_id': self.partner_b.id, 'balance': 200.0},
+                ])

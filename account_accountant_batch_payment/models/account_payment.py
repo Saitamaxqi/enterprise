@@ -27,7 +27,12 @@ class AccountPayment(models.Model):
                 account2amount[line.account_id] -= current
 
             if remaining:
-                account2amount[payment.partner_id.property_account_receivable_id] -= remaining
+                partner_account = (
+                    payment.partner_id.property_account_payable_id
+                    if payment.payment_type == "outbound"
+                    else payment.partner_id.property_account_receivable_id
+                )
+                account2amount[partner_account] -= remaining
 
             for account, amount in account2amount.items():
                 # TODO flg keep invoice link here
