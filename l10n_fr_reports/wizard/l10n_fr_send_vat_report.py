@@ -494,7 +494,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             'line_ids': [
                 *lines,
                 Command.create({
-                    'account_id': self.env['account.chart.template'].ref(f'pcg_445671').id,
+                    'account_id': self.env['account.chart.template'].ref('pcg_44583').id,
                     'debit': self.computed_vat_amount,
                     'credit': 0,
                 }),
