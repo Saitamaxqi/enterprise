@@ -96,7 +96,7 @@ class L10n_InGstReturnPeriod(models.Model):
         pos_move_with_hsn = pos_move_ids.filtered(lambda m: any(line.display_type == 'product' and line.l10n_in_hsn_code for line in m.line_ids))
         pos_move_ids -= pos_move_with_hsn
         hsn_json = super()._get_gstr1_hsn_json(journal_items - pos_move_ids.line_ids, tax_details_by_move)
-        pos_orders = pos_move_ids.pos_session_ids.order_ids.filtered(lambda l: not l.is_invoiced and not l.reversed_move_ids)
+        pos_orders = pos_move_ids.pos_session_ids.order_ids.filtered(lambda l: not l.is_invoiced or l.reversed_move_ids)
         pos_order_lines = self.env['pos.order.line'].browse(pos_orders.lines.ids)
         pos_order_lines.fetch(['product_id', 'product_uom_id'])
         details_pos_lines_by_move = _set_details_pos_lines(pos_order_lines)

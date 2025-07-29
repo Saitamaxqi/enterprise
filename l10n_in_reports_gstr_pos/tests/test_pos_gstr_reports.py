@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import odoo
 
+from datetime import date
 from freezegun import freeze_time
 
 from odoo.fields import Command
@@ -270,3 +271,62 @@ class TestInGstrPosGSTR(TestInGstrPosBase):
         generated_gstr1_json = self.gstr1_report_may_2025._get_gstr1_json()
         expected_gstr1_pos_with_closing_entry_by_product = self._read_mock_json('gstr1_pos_with_closing_entry_by_product.json')
         self.assertDictEqual(generated_gstr1_json, expected_gstr1_pos_with_closing_entry_by_product)
+
+    @freeze_time('2025-07-20')
+    def test_gstr1_json_of_previous_period_updated_after_invoice_generated_in_later_month(self):
+        """Ensure GSTR-1 JSON for previous period is updated after reversal in current period."""
+        # Step 1: Setup partner details
+        self.partner_a.write({
+            'vat': '24ABCPM8965E1ZE',
+            'state_id': self.env.ref("base.state_in_gj").id,
+        })
+        expected_gstr1_pos_response_old_period = self._read_mock_json('gstr1_pos_order_reversal_expected_response_previous_period.json')
+        expected_gstr1_pos_response_current_period = self._read_mock_json('gstr1_pos_order_reversal_expected_response_current_period.json')
+        # Step 2: Create POS orders under old return period (April)
+        old_return_period_date = date(2025, 6, 19)
+        with freeze_time(old_return_period_date):
+            with self.with_pos_session():
+                self._create_order({
+                    'pos_order_lines_ui_args': [
+                        (self.product_a, 2.0),
+                        (self.product_b, 2.0),
+                    ],
+                    'payments': [(self.bank_pm1, 630.0)],
+                })
+                going_to_invoice_order_in_next_session = self._create_order({
+                    'pos_order_lines_ui_args': [
+                        (self.product_a, 2.0),
+                        (self.product_b, 2.0),
+                    ],
+                    'payments': [(self.bank_pm1, 630.0)],
+                    'customer': self.partner_a,
+                })
+
+        # Step 3: Generate and verify old GSTR1
+        old_return_period = self.env['l10n_in.gst.return.period'].create({
+            'company_id': self.company_data["company"].id,
+            'periodicity': 'monthly',
+            'year': old_return_period_date.strftime('%Y'),
+            'month': old_return_period_date.strftime('%m'),
+        })
+        old_return_period_json = old_return_period._get_gstr1_json()
+        self.assertDictEqual(old_return_period_json, expected_gstr1_pos_response_old_period)
+
+        # Step 4: Generate invoice for old order in current period
+        going_to_invoice_order_in_next_session._generate_pos_order_invoice()
+
+        # Step 5: Generate and verify current GSTR1
+        current_return_period_date = date(2025, 7, 20)
+        current_return_period = self.env['l10n_in.gst.return.period'].create({
+            'company_id': self.company_data["company"].id,
+            'periodicity': 'monthly',
+            'year': current_return_period_date.strftime('%Y'),
+            'month': current_return_period_date.strftime('%m'),
+        })
+
+        current_gstr1_report_json = current_return_period._get_gstr1_json()
+        self.assertDictEqual(current_gstr1_report_json, expected_gstr1_pos_response_current_period)
+
+        # Step 6: Re-generate and verify updated old GSTR1 JSON
+        updated_old_return_period_json = old_return_period._get_gstr1_json()
+        self.assertDictEqual(updated_old_return_period_json, expected_gstr1_pos_response_old_period)
