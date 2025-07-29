@@ -208,14 +208,16 @@ class Website_GeneratorRequest(models.Model):
     def _apply_all_html_replacements(self, odoo_blocks):
         direct_html_replacements_mapping = odoo_blocks['direct_html_replacements_mapping']
         sorted_original_html = sorted(direct_html_replacements_mapping.keys(), key=len, reverse=True)
+        # Use a regular expression to match any of the replacements
+        pattern_sorted_html = r'(' + '|'.join(map(re.escape, sorted_original_html)) + r')'
 
         homepage = odoo_blocks['homepage']
         regex_html_replacements_mapping = homepage['regex_html_replacements_mapping']
-        homepage['body_html'] = self._apply_html_replacements(homepage.get('body_html', []), sorted_original_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
+        homepage['body_html'] = self._apply_html_replacements(homepage.get('body_html', []), pattern_sorted_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
 
         footer = homepage.get('footer', [])
         if footer:
-            homepage['footer'] = self._apply_html_replacements(footer, sorted_original_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
+            homepage['footer'] = self._apply_html_replacements(footer, pattern_sorted_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
 
         header_buttons = homepage.get('header', {}).get('buttons', [])
         for button in header_buttons:
@@ -225,7 +227,7 @@ class Website_GeneratorRequest(models.Model):
         # Update the html urls for all pages
         for page_name, page_dict in odoo_blocks.get('pages', {}).items():
             regex_html_replacements_mapping = page_dict['regex_html_replacements_mapping']
-            odoo_blocks['pages'][page_name]['body_html'] = self._apply_html_replacements(page_dict.get('body_html', []), sorted_original_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
+            odoo_blocks['pages'][page_name]['body_html'] = self._apply_html_replacements(page_dict.get('body_html', []), pattern_sorted_html, direct_html_replacements_mapping, regex_html_replacements_mapping)
 
     def _create_model_records(self, tar, odoo_blocks):
         # Each override will call super and create it's model records as well as any redirects it needs.
@@ -294,7 +296,6 @@ class Website_GeneratorRequest(models.Model):
         odoo_blocks['direct_html_replacements_mapping'].update({html.escape(k): v.image_src for k, v in attachments_url_src.items()})
 
         # Create attachments for all images (cropped)
-        customized_image_mappings = {}
         for page_dict in [odoo_blocks['homepage']] + list(odoo_blocks.get('pages', {}).values()):
             customized_images = page_dict.get('images_to_customize', [])
             page_dict['regex_html_replacements_mapping'] = {}
@@ -353,9 +354,7 @@ class Website_GeneratorRequest(models.Model):
                 pattern = rf'<img[^>]*data-ws_id\s*=\s*["\']?{ws_id}["\']?[^>]*>'
                 # The 'style="" class=""' is needed and will be replaced by the class and style attributes of the original image.
                 customized_img_string = f'<img style="" class="" {" ".join([f"{k}={v!r}" for k, v in attributes.items()])}>'
-                customized_image_mappings[pattern] = customized_img_string
-
-            page_dict['regex_html_replacements_mapping'].update(customized_image_mappings)
+                page_dict['regex_html_replacements_mapping'][pattern] = customized_img_string
 
     def try_create_image_attachment(self, img_name, img_url, tar):
         try:
@@ -379,10 +378,10 @@ class Website_GeneratorRequest(models.Model):
             logger.warning("Error attaching image %r : %s", img_url, e)
         return None
 
-    def _apply_html_replacements(self, body_html, sorted_list_replacement_mapping, direct_replacement_mapping, regex_replacement_mapping):
+    def _apply_html_replacements(self, body_html, pattern_sorted_html, direct_replacement_mapping, regex_replacement_mapping):
         new_block_list = []
         for block_html in body_html:
-            page_html = self._replace_in_string(block_html, sorted_list_replacement_mapping, direct_replacement_mapping)
+            page_html = self._replace_in_string(block_html, pattern_sorted_html, direct_replacement_mapping)
             page_html = self._replace_in_string_regex(page_html, regex_replacement_mapping)
             new_block_list.append(page_html)
         return new_block_list
@@ -442,12 +441,9 @@ class Website_GeneratorRequest(models.Model):
         return page_html
 
     @staticmethod
-    def _replace_in_string(string, sorted_list_replacements, replacements):
-        if not replacements or not sorted_list_replacements:
+    def _replace_in_string(string, pattern_sorted_html, replacements):
+        if not replacements:
             return string
-
-        # Use a regular expression to match any of the replacements
-        pattern = r'(' + '|'.join(map(re.escape, sorted_list_replacements)) + r')'
 
         def replace_callback(match):
             # Having this callback function is useful for verifying which URLs were replaced.
@@ -459,7 +455,7 @@ class Website_GeneratorRequest(models.Model):
             return replacement
 
         # Replace all matches with their corresponding replacement
-        replaced_string = re.sub(pattern, replace_callback, string)
+        replaced_string = re.sub(pattern_sorted_html, replace_callback, string)
         return replaced_string
 
     @api.model
