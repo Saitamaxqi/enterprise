@@ -245,6 +245,9 @@ class SignRequestItem(models.Model):
                     'url_params': url_params
                 }
             link_sign = url_join(signer.get_base_url(), partial_url)
+            company = self.communication_company_id
+            if 'website_id' in company and company.website_id.domain:
+                link_sign = url_join(company.website_id.domain, partial_url)
             link_cancel = link_sign + '&refuseDocument=1'
             body = self.env['ir.qweb']._render('sign.sign_template_mail_request', {
                 'record': signer,
