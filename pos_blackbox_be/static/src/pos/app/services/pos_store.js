@@ -8,6 +8,7 @@ import { BlackboxError } from "@pos_blackbox_be/pos/app/utils/blackbox_error";
 patch(PosStore.prototype, {
     async setup() {
         await super.setup(...arguments);
+        this.waitBeforePayment = false;
         this.multiple_discount = false;
     },
     async initServerData() {
@@ -230,14 +231,19 @@ patch(PosStore.prototype, {
             discount !== line.getDiscountStr() &&
             !this.multiple_discount
         ) {
-            const selectedNumpadMode = this.numpadMode;
-            const order = this.getOrder();
-            await this.pushCorrection(order, [line]);
-            const res = await super.setDiscountFromUI(...arguments);
-            this.addPendingOrder([order.id]);
-            await this.syncAllOrders({ throw: true });
-            this.numpadMode = selectedNumpadMode;
-            return res;
+            try {
+                this.waitBeforePayment = true;
+                const selectedNumpadMode = this.numpadMode;
+                const order = this.getOrder();
+                await this.pushCorrection(order, [line]);
+                const res = await super.setDiscountFromUI(...arguments);
+                this.addPendingOrder([order.id]);
+                await this.syncAllOrders({ throw: true });
+                this.numpadMode = selectedNumpadMode;
+                return res;
+            } finally {
+                this.waitBeforePayment = false;
+            }
         } else {
             return await super.setDiscountFromUI(...arguments);
         }

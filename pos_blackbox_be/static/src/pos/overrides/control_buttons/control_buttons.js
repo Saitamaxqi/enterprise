@@ -33,6 +33,7 @@ patch(ControlButtons.prototype, {
     async applyDiscount(pc) {
         if (this.pos.useBlackBoxBe()) {
             try {
+                this.pos.waitBeforePayment = true;
                 const order = this.pos.getOrder();
                 const lines = order.getOrderlines();
                 this.pos.multiple_discount = true;
@@ -46,6 +47,7 @@ patch(ControlButtons.prototype, {
                 await this.pos.syncAllOrders({ throw: true });
             } finally {
                 this.pos.multiple_discount = false;
+                this.pos.waitBeforePayment = false;
             }
         } else {
             await super.applyDiscount(pc);
