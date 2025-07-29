@@ -900,7 +900,7 @@ class WhatsappTemplate(models.Model):
         """
         formatted_body = str(plaintext2html(body_html))  # stringify for regex
         formatted_body = re.sub(r'\*(.*?)\*', r'<b>\1</b>', formatted_body)
-        formatted_body = re.sub(r'_(.*?)_', r'<i>\1</i>', formatted_body)
+        formatted_body = re.sub(r'\b_([^_\s][^_]*?[^_\s])_\b', r'<i>\1</i>', formatted_body)  # apply italic when whitespace surrounded for not breaking urls
         formatted_body = re.sub(r'~(.*?)~', r'<s>\1</s>', formatted_body)
         formatted_body = re.sub(r'```(.*?)```', r'<code>\1</code>', formatted_body)
         return Markup(formatted_body)

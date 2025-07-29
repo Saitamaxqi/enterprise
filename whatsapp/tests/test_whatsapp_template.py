@@ -188,6 +188,35 @@ Welcome to {{3}} office''',
         with self.assertRaises(exceptions.ValidationError):
             template.body = "{{2}} {{3}} {{4}} {{5}}"
 
+    def test_template_format_markup_underscore_handling(self):
+        """Test that underscores in URLs and tokens are not converted to italic markup"""
+        template = self.env['whatsapp.template']
+
+        test_cases = [
+            ("Here is _some text_ in italics", "<p>Here is <i>some text</i> in italics</p>"),
+            # URLs with underscores should not be affected
+            ("Visit https://example.com?access_token=abc123_def456",
+            '<p>Visit <a href="https://example.com?access_token=abc123_def456" target="_blank" rel="noreferrer noopener">https://example.com?access_token=abc123_def456</a></p>'),
+            # Mixed content - italic with urls and underscores
+            ("This is _italic_ and visit https://example.com?token=abc_123",
+            '<p>This is <i>italic</i> and visit <a href="https://example.com?token=abc_123" target="_blank" rel="noreferrer noopener">https://example.com?token=abc_123</a></p>'),
+            # Multiple italic formatting
+            ("Both _first_ and _second_ are italic",
+            "<p>Both <i>first</i> and <i>second</i> are italic</p>"),
+            # Edge case
+            ("_italic_text_with_underscores_", "<p>_italic_text_with_underscores_</p>"),  # Should not match
+            # Combined formatting italic and bold
+            ("*Bold* and _italic_ with url_param=value",
+            "<p><b>Bold</b> and <i>italic</i> with url_param=value</p>"),
+        ]
+
+        for input_text, expected_output in test_cases:
+            with self.subTest(input_text=input_text):
+                result = template._format_markup_to_html(input_text)
+                result_str = str(result)
+                self.assertEqual(result_str, expected_output,
+                    f"Failed for input: {input_text}")
+
     @users('user_wa_admin')
     def test_template_header_type_attachment(self):
         """ Test header type attachment """
