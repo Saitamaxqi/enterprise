@@ -515,17 +515,17 @@ patch(PosStore.prototype, {
         try {
             const data = await this.pushDataToBlackbox(dataToSend, "registerReceipt");
             const result = this.extractResult(data);
-            if (result.error && result.error.errorCode != "000000") {
+            if (result?.error?.errorCode !== "000000") {
                 throw result.error;
             }
             return result;
         } catch (err) {
             //the catch might actually not be an error
             const result = this.extractResult(err);
-            if (result?.error && result.error.errorCode == "000000") {
+            if (result?.error?.errorCode === "000000") {
                 return result;
             }
-            if (err.errorCode.startsWith("202")) {
+            if (err.errorCode?.startsWith("202")) {
                 this.dialog.add(NumberPopup, {
                     title: _t("Enter Pin Code"),
                     getPayload: (num) => {
