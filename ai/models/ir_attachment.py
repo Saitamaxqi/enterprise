@@ -8,6 +8,7 @@ import re
 from odoo import models
 from odoo.addons.ai.models.models import AI_SUPPORTED_IMG_TYPES
 from odoo.tools.pdf import OdooPdfFileReader, OdooPdfFileWriter, to_pdf_stream, PdfReadError
+from odoo.tools.image import ImageProcess
 
 _logger = logging.getLogger(__name__)
 
@@ -226,9 +227,21 @@ class IrAttachment(models.Model):
                     'file_ref': file_ref,
                 }
             elif extension in AI_SUPPORTED_IMG_TYPES and not attachment.url:
+                raw_data = attachment.raw
+
+                try:
+                    image_process = ImageProcess(raw_data)
+                    size = image_process.image.size
+                    if max(size) > 1024:
+                        raw_data = image_process \
+                            .crop_resize(min(size[0], 1024), min(size[1], 1024), 0, 0) \
+                            .image_quality(output_format='PNG')
+                except Exception as e:  # noqa: BLE001
+                    _logger.error("Image resize failed %s", e)
+
                 files_dict[attachment.checksum] = {
                     'mimetype': attachment.mimetype,
-                    'value': attachment.datas.decode(),
+                    'value': base64.b64encode(raw_data).decode(),
                     'file_ref': file_ref,
                 }
             else:
