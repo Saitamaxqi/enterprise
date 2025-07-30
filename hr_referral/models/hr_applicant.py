@@ -72,6 +72,7 @@ class HrApplicant(models.Model):
                 applicant.source_id = utm_source_referral.id
 
     @api.model
+    @api.deprecated("Override of a deprecated method")
     def check_field_access_rights(self, operation, field_names):
         referral_fields = REFERRAL_FIELDS
 
