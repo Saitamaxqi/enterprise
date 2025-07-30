@@ -108,21 +108,19 @@ class AccountMoveLine(models.Model):
 
     def _get_max_invoiced_date(self):
         """ Util to determine the latest deferred_end_date of several account.move.line
-        When refund are founds, their deferred_end_date are ignored because the corresponding period
+        When full refunds are founds, their deferred_end_date are ignored because the corresponding period
         is not a period covered by the subscription contract. It may be reinvoiced later.
+        Minimal change preserving the original behavior of not differentiating by product.
         """
-        invoice_dates = []
-        refund_dates = []
+        periods = {}
+
         for aml in self:
             if aml.move_id.state in ['draft', 'cancel'] or not aml.deferred_end_date:
                 continue
-            if aml.move_id.move_type == 'out_invoice':
-                invoice_dates.append(aml.deferred_end_date)
-            elif aml.move_id.move_type == 'out_refund':
-                refund_dates.append(aml.deferred_end_date)
-        for d in refund_dates:
-            # remove refunded periods
-            if d not in invoice_dates:
-                continue
-            invoice_dates.remove(d)
+            sign = 1 if aml.move_id.move_type == 'out_invoice' else -1
+            periods.setdefault(aml.deferred_end_date, 0.0)
+            periods[aml.deferred_end_date] += sign * aml.product_uom_id._compute_quantity(aml.quantity, aml.sale_line_ids.product_uom_id, round=False)
+
+        invoice_dates = [d for d, qty in periods.items() if qty > 0.0]
+
         return invoice_dates and max(invoice_dates)

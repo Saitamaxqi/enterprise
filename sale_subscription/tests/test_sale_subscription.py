@@ -2736,6 +2736,55 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(subscription.order_line.product_uom_qty, 2.0,
                          "The recurring product's quantity should not be changed in subscription")
 
+    def test_partial_refund_reduces_invoiced_quantity_on_subscription(self):
+        """
+        Verify that a partial refund on a subscription invoice
+        correctly updates the invoiced quantity on the order line.
+        """
+        with freeze_time("2024-09-01"):
+            subscription = self.env['sale.order'].create({
+                'partner_id': self.partner.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [
+                    (0, 0, {
+                        'name': self.product.name,
+                        'product_id': self.product.id,
+                        'product_uom_qty': 3.0,
+                        'product_uom_id': self.product.uom_id.id,
+                        'price_unit': 12,
+                    })],
+            })
+            subscription.action_confirm()
+            subscription._create_recurring_invoice()
+            self.assertEqual(subscription.order_line.qty_invoiced, 3, "The 3 products should be invoiced")
+            subscription._get_invoiced()
+            inv = subscription.invoice_ids
+            inv.payment_state = 'paid'
+            refund_wizard = self.env['account.move.reversal'].with_context(
+                active_model="account.move",
+                active_ids=inv.ids).create({
+                'reason': 'Partial refund for Product A',
+                'journal_id': inv.journal_id.id,
+            })
+            refund_wizard.reverse_moves()
+
+            credit_note = self.env['account.move'].search([
+                ('reversed_entry_id', '=', inv.id),
+                ('move_type', '=', 'out_refund'),
+            ], limit=1)
+
+            for line in credit_note.invoice_line_ids:
+                if line.product_id.id == self.product.id:
+                    line.quantity = 2
+
+            credit_note._compute_amount()
+            credit_note._compute_tax_totals()
+
+            credit_note.action_post()
+
+        self.assertEqual(subscription.order_line.qty_invoiced, 1,
+                         "The invoiced quantity should be reduced by the refund")
+
     def test_sale_subscription_optional_product_discount(self):
         """
         Check that the discount on an optional product is correctly applied when the option is added to a SO.
