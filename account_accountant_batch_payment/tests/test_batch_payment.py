@@ -478,3 +478,56 @@ class TestBatchPayment(AccountTestInvoicingCommon):
             {'account_id': bills_1.line_ids[-1].account_id.id, 'amount_currency': 1000.0, 'balance': 1000.0, 'reconciled': True},
             {'account_id': bills_2.line_ids[-1].account_id.id, 'amount_currency': 1000.0, 'balance': 1000.0, 'reconciled': True},
         ])
+
+    def test_batch_reconciliation_multiple_installments_payment_term(self):
+        """ Test reconciliation of payments for multiple installments payment term lines """
+        payment_term = self.env['account.payment.term'].create({
+            'name': "20-80_payment_term",
+            'company_id': self.company_data['company'].id,
+            'line_ids': [
+                Command.create({'value': 'percent', 'value_amount': 20, 'nb_days': 0}),
+                Command.create({'value': 'percent', 'value_amount': 80, 'nb_days': 20}),
+            ],
+        })
+        invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0])
+        invoice.invoice_payment_term_id = payment_term
+        invoice.action_post()
+        # register payment for the first installment
+        payment_1 = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=invoice.ids,
+        ).create({
+            'amount': 200.0,
+            'payment_date': '2015-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+        })._create_payments()
+        payment_1.create_batch_payment()
+        st_line_1 = self._create_st_line(amount=200.0, date='2015-01-01', partner_id=False)
+        st_line_1.set_batch_payment_bank_statement_line(payment_1.batch_payment_id.id)
+
+        self.assertRecordValues(st_line_1.move_id.line_ids.sorted('balance'), [
+            {'balance': -200.0},
+            {'balance': 200.0},
+        ])
+
+        # register payment for the second installment
+        payment_2 = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=invoice.ids,
+        ).create({
+            'amount': 800.0,
+            'payment_date': '2015-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+        })._create_payments()
+        payment_2.create_batch_payment()
+        st_line_2 = self._create_st_line(amount=800.0, date='2015-01-01', partner_id=False)
+        st_line_2.set_batch_payment_bank_statement_line(payment_2.batch_payment_id.id)
+
+        self.assertRecordValues(st_line_2.move_id.line_ids.sorted('balance'), [
+            {'balance': -800.0},
+            {'balance': 800.0},
+        ])
+        self.assertRecordValues(invoice.line_ids.filtered(lambda l: l.display_type == 'payment_term').sorted('balance'), [
+            {'balance': 200.0, 'amount_residual': 0.0, 'reconciled': True},
+            {'balance': 800.0, 'amount_residual': 0.0, 'reconciled': True},
+        ])

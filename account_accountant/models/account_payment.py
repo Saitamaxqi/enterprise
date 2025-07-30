@@ -51,7 +51,7 @@ class AccountPayment(models.Model):
 
             line2amount = defaultdict(float)
 
-            payment_term_lines = payment.invoice_ids.line_ids.filtered(lambda line: line.display_type == "payment_term").sorted("date")
+            payment_term_lines = payment.invoice_ids.line_ids.filtered(lambda line: line.display_type == "payment_term" and not line.reconciled).sorted("date")
             remaining = payment.amount_signed
             for line in payment_term_lines:
                 if not remaining:
