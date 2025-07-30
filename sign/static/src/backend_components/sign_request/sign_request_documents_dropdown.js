@@ -28,6 +28,7 @@ export class SignRequestDocumentsDropdown extends Component {
         super.setup();
         this.signInfo = useService("signInfo");
         this.orm = useService("orm");
+        this.action = useService("action");
         onWillStart(async () => {
             // Check if we're in a view context where we need to fetch sign request data
             if (this.props.record?.context?.active_id) {
@@ -87,6 +88,14 @@ export class SignRequestDocumentsDropdown extends Component {
             );
             this.signInfo.set({ original_documents });
         }
+    }
+
+    downloadDocument(url) {
+        return this.action.doAction({
+            type: "ir.actions.act_url",
+            target: "download",
+            url,
+        });
     }
 }
 

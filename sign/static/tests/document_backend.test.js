@@ -4,6 +4,7 @@ import { user } from "@web/core/user";
 import { patchWithCleanup, getService, onRpc } from "@web/../tests/web_test_helpers";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
 import { createDocumentWebClient } from "./action_utils";
+import { browser } from "@web/core/browser/browser";
 
 const tag = "sign.Document";
 
@@ -93,6 +94,11 @@ test("do not crash when leaving the action", async () => {
 });
 
 test("show completed documents download dropdown when state is signed", async () => {
+    patchWithCleanup(browser, {
+        open: (url) => {
+            expect.step(url);
+        },
+    });
     const config = {
         tag: tag,
         actionContext: { state: "signed" },
@@ -106,15 +112,13 @@ test("show completed documents download dropdown when state is signed", async ()
 
     await click(".o_sign_download_documents_dropdown");
     await animationFrame();
-    expect(".o-dropdown--menu .o_sign_download_single_document_dropdown_item").toHaveAttribute(
-        "href",
-        "/sign/download/5/abc/completed/1",
-        {
-            message: "should have correct download URL for a single document",
-        }
-    );
+    await click(".o-dropdown--menu .o_sign_download_single_document_dropdown_item");
+    expect.verifySteps(["/sign/download/5/abc/completed/1"], {
+        message: "should have correct download URL for a single document",
+    });
 
-    expect(".o_sign_download_certificate_dropdown_item").toHaveAttribute("href", "/sign/download/5/abc/log", {
+    await click(".o_sign_download_certificate_dropdown_item");
+    expect.verifySteps(["/sign/download/5/abc/log"], {
         message: "should have correct download URL for a certificate",
     });
 });

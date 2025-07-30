@@ -8,30 +8,35 @@
             <t t-set-slot="content">
                 <t t-if="signInfo.get('signRequestState') == 'signed'">
                     <t t-if="(signInfo.get('completed_documents')||[]).length > 1">
-                        <DropdownItem class="'o_sign_download_all_completed_documents_dropdown_item'" attrs="{href: `/sign/download/${signInfo.get('documentId')}/${signInfo.get('signRequestToken')}/completed`}">
+                        <t t-set="url" t-value="'/sign/download/'+signInfo.get('documentId')+'/'+signInfo.get('signRequestToken')+'/completed'"/>
+                        <DropdownItem class="'o_sign_download_all_completed_documents_dropdown_item'" onSelected="() => this.downloadDocument(url)">
                             All Documents (zip)
                         </DropdownItem>
                         <div role="separator" class="dropdown-divider"/>
                     </t>
                     <t t-foreach="signInfo.get('completed_documents') || []" t-as="doc" t-key="doc.id">
-                        <DropdownItem class="'o_sign_download_single_document_dropdown_item'" attrs="{href: `/sign/download/${signInfo.get('documentId')}/${signInfo.get('signRequestToken')}/completed/${doc.id}`}">
+                        <t t-set="url" t-value="'/sign/download/'+signInfo.get('documentId')+'/'+signInfo.get('signRequestToken')+'/completed/'+doc.id"/>
+                        <DropdownItem class="'o_sign_download_single_document_dropdown_item'" onSelected="() => this.downloadDocument(url)">
                             <t t-esc="doc.name"/>
                         </DropdownItem>
                     </t>
                     <div role="separator" class="dropdown-divider"/>
-                    <DropdownItem class="'o_sign_download_certificate_dropdown_item'" attrs="{href: `/sign/download/${signInfo.get('documentId')}/${signInfo.get('signRequestToken')}/log`}">
+                    <t t-set="url" t-value="'/sign/download/'+signInfo.get('documentId')+'/'+signInfo.get('signRequestToken')+'/log'"/>
+                    <DropdownItem class="'o_sign_download_certificate_dropdown_item'" onSelected="() => this.downloadDocument(url)">
                         Certificate
                     </DropdownItem>
                 </t>
                 <t t-else="">
                     <t t-if="(signInfo.get('original_documents')||[]).length > 1">
-                        <DropdownItem class="'o_sign_download_all_original_documents_dropdown_item'" attrs="{href: `/sign/download/${signInfo.get('documentId')}/${signInfo.get('signRequestToken')}/origin`}">
+                        <t t-set="url" t-value="'/sign/download/'+signInfo.get('documentId')+'/'+signInfo.get('signRequestToken')+'/origin'"/>
+                        <DropdownItem class="'o_sign_download_all_original_documents_dropdown_item'" onSelected="() => this.downloadDocument(url)">
                             All Documents (zip)
                         </DropdownItem>
                         <div role="separator" class="dropdown-divider"/>
                     </t>
                     <t t-foreach="signInfo.get('original_documents') || []" t-as="doc" t-key="doc.id">
-                        <DropdownItem class="'o_sign_download_original_documents_dropdown_item'" attrs="{href: `/sign/download/${signInfo.get('documentId')}/${signInfo.get('signRequestToken')}/origin/${doc.id}`}">
+                        <t t-set="url" t-value="'/sign/download/'+signInfo.get('documentId')+'/'+signInfo.get('signRequestToken')+'/origin/'+doc.id"/>
+                        <DropdownItem class="'o_sign_download_original_documents_dropdown_item'" onSelected="() => this.downloadDocument(url)">
                             <t t-esc="doc.name"/>
                         </DropdownItem>
                     </t>
