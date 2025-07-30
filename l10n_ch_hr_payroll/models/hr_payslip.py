@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 from collections import defaultdict
 from datetime import date
+from calendar import monthrange
 
 from odoo import api, fields, models, Command, _
 from odoo.exceptions import UserError
@@ -1025,7 +1025,7 @@ class HrPayslip(models.Model):
         if finish and finish == self.date_from:
             return 1
         if start > payslip.date_from and finish and finish < payslip.date_to:
-            return (30 - ((start - payslip.date_from).days + 1) - ((payslip.date_to - finish).days)) + 1
+            return (monthrange(payslip.date_from.year, payslip.date_from.month)[1] - ((start - payslip.date_from).days + 1) - ((payslip.date_to - finish).days)) + 1
         if start > payslip.date_from:
             return 31 - start.day
         if finish and finish < payslip.date_to and not finish < payslip.date_from:
