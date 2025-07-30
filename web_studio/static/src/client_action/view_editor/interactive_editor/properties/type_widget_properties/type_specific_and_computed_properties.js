@@ -80,6 +80,9 @@ export const FIELD_TYPE_ATTRIBUTES = {
     monetary: {
         list: [EDITABLE_FIELD_ATTRIBUTES.aggregate],
     },
+    one2many: {
+        common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
+    },
     selection: {
         common: [EDITABLE_FIELD_ATTRIBUTES.placeholder],
     },

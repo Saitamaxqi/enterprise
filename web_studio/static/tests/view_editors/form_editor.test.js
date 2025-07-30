@@ -888,6 +888,23 @@ test("TextField can edit its placeholder", async () => {
     expect(".o_web_studio_property [name=placeholder_field]").toHaveCount(1);
 });
 
+test("One2Many can edit its placeholder", async () => {
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: `<form>
+        <sheet>
+            <group>
+                <field name="product_ids" class="studio"/>
+            </group>
+        </sheet>
+    </form>
+    `,
+    });
+    await contains(".o_cell[data-field-name=product_ids]").click();
+    expect(".o_web_studio_property input[name=placeholder]").toHaveCount(1);
+});
+
 test("form editor - chatter edition", async () => {
     onRpc("/web_studio/get_email_alias", () => ({ email_alias: "coucou" }));
     await mountViewEditor({
