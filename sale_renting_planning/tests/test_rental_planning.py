@@ -132,6 +132,7 @@ class TestRentalPlanning(TestSalePlanning):
         so_rental.action_confirm()
         self.assertEqual(so_rental.planning_hours_planned, 8.0, 'Planned hours should be set when the shift is already scheduled.')
         self.assertEqual(so_rental.planning_hours_to_plan, 0.0, 'To Plan hours should be zero when the shift is already scheduled.')
+        self.assertEqual(so_rental.order_line.planning_slot_ids.state, 'published', 'The shift generated should be published.')
 
     def test_planning_rental_sol_slot_conflict(self):
         '''

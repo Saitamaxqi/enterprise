@@ -94,6 +94,12 @@ class SaleOrderLine(models.Model):
             )
         return vals_list
 
+    def _planning_slot_values(self):
+        vals = super()._planning_slot_values()
+        if self.is_rental:
+            vals['state'] = 'published'
+        return vals
+
     def write(self, vals):
         if 'product_uom_qty' in vals and vals['product_uom_qty'] == 0 and (rental_sols := self.filtered('is_rental')):
             if slots := self.env['planning.slot'].search([('sale_line_id', 'in', rental_sols.ids)]):
