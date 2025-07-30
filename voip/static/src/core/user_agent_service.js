@@ -149,12 +149,38 @@ export class UserAgent extends Reactive {
 
     async acceptIncomingCall() {
         this.ringtoneService.stopPlaying();
-        this.session.sipSession.accept({
-            sessionDescriptionHandlerOptions: {
-                constraints: this.mediaConstraints,
-            },
-        });
         this.voip.triggerError(_t("Please accept the use of the microphone."));
+        // ⚠ Async code ahead. Save call here in case the one on this.session
+        // changes in the meantime.
+        const call = this.session.call;
+        const isSrtpDtls = this._hasSrtpDtlsMediaType(this.session.sipSession.body);
+        const hasDtlsAttributes = this._hasDtlsAttributes(this.session.sipSession.body);
+        try {
+            await this.session.sipSession.accept({
+                sessionDescriptionHandlerOptions: { constraints: this.mediaConstraints },
+            });
+        } catch (error) {
+            console.error(error);
+            this.callService.end(call);
+            const errorParts = [
+                _t("An error occurred while attempting to answer the incoming call."),
+            ];
+            if (!hasDtlsAttributes) {
+                errorParts.push(
+                    _t(
+                        "The DTLS fingerprint and/or setup is missing from the SDP. Please have your administrator verify that the PBX is configured to use SRTP-DTLS."
+                    )
+                );
+            } else if (!isSrtpDtls) {
+                errorParts.push(
+                    _t(
+                        "It appears that the server may not be using the correct media type. Please have your administrator verify that the media type is correctly set to SRTP-DTLS."
+                    )
+                );
+            }
+            errorParts.push(_t("Error message:\n%s", error.message));
+            this.voip.triggerError(errorParts.join("\n\n"), { isNonBlocking: true });
+        }
     }
 
     async attemptReconnection(attemptCount = 0) {
@@ -377,7 +403,11 @@ export class UserAgent extends Reactive {
     }
 
     updateTracks() {
-        if (!this.session?.sipSession?.sessionDescriptionHandler) {
+        if (
+            !this.session?.sipSession?.sessionDescriptionHandler ||
+            this.session.sipSession.state === SIP.SessionState.Terminated ||
+            this.session.sipSession.state === SIP.SessionState.Terminating
+        ) {
             return;
         }
         const { sessionDescriptionHandler } = this.session.sipSession;
@@ -390,6 +420,41 @@ export class UserAgent extends Reactive {
     _cleanUpRemoteAudio() {
         this.remoteAudio.srcObject = null;
         this.remoteAudio.pause();
+    }
+
+    /**
+     * Determines if the SDP contains the attributes required by DTLS.
+     *
+     * @param {string} sdp
+     */
+    _hasDtlsAttributes(sdp) {
+        const fields = sdp.split(/\r?\n/);
+        let hasFingerprint = false;
+        let hasSetup = false;
+        for (const field of fields) {
+            hasFingerprint ||= field.startsWith("a=fingerprint");
+            hasSetup ||= field.startsWith("a=setup");
+        }
+        return hasFingerprint && hasSetup;
+    }
+
+    /**
+     * Determines if the media type for the audio is SRTP-DTLS.
+     *
+     * WebRTC mandates the use of "SRTP-DTLS", which means that RTP datagrams
+     * must be encrypted using TLS (DTLS).
+     *
+     * Note that communication could still work with a "plain RTC" media type,
+     * as long as the DTLS fingerprint is included.
+     *
+     * @param {string} sdp
+     * @returns {boolean}
+     */
+    _hasSrtpDtlsMediaType(sdp) {
+        const fields = sdp.split(/\r?\n/);
+        return fields.some(
+            (field) => field.startsWith("m=audio") && field.includes("UDP/TLS/RTP/SAVPF")
+        );
     }
 
     /**
