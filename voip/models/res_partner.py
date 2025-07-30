@@ -114,7 +114,7 @@ class ResPartner(models.Model):
                 [("email", "ilike", search_terms)],
             ])
         contacts = self.search(domain, offset=offset, limit=limit)
-        return Store(contacts, self._voip_get_store_fields()).get_result()
+        return Store().add(contacts, self._voip_get_store_fields()).get_result()
 
     def _voip_get_store_fields(self):
         return ["commercial_company_name", "country_code_from_phone", "email", "function", "is_company", "name", "phone", "t9_name"]

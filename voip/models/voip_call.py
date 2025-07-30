@@ -138,7 +138,10 @@ class VoipCall(models.Model):
                 self.env["res.partner"],
             ).id
         calls = self.sudo().create(values).sudo(False)
-        return {"ids": [call.id for call in calls], "store_data": Store(calls, calls._get_voip_store_fields()).get_result()}
+        return {
+            "ids": [call.id for call in calls],
+            "store_data": Store().add(calls, calls._get_voip_store_fields()).get_result(),
+        }
 
     @api.model
     def get_recent_phone_calls(
@@ -149,7 +152,7 @@ class VoipCall(models.Model):
             search_fields = ["phone_number", "partner_id.name", "activity_name"]
             domain &= Domain.OR([Domain(field, "ilike", search_terms) for field in search_fields])
         calls = self.search(domain, offset=offset, limit=limit, order="create_date DESC")
-        return Store(calls, calls._get_voip_store_fields()).get_result()
+        return Store().add(calls, calls._get_voip_store_fields()).get_result()
 
     @api.model
     def _get_number_of_missed_calls(self) -> int:
@@ -162,14 +165,14 @@ class VoipCall(models.Model):
     def abort_call(self):
         self.check_access("read")
         self.sudo().state = "aborted"
-        return Store(self, self._get_voip_store_fields()).get_result()
+        return Store().add(self, self._get_voip_store_fields()).get_result()
 
     def start_call(self):
         self.check_access("read")
         calls_sudo = self.sudo()
         calls_sudo.start_date = fields.Datetime.now()
         calls_sudo.state = "ongoing"
-        return Store(self, self._get_voip_store_fields()).get_result()
+        return Store().add(self, self._get_voip_store_fields()).get_result()
 
     def end_call(self, activity_name: Optional[str] = None):
         self.check_access("read")
@@ -178,17 +181,17 @@ class VoipCall(models.Model):
         calls_sudo.state = "terminated"
         if activity_name:
             calls_sudo.activity_name = activity_name
-        return Store(self, self._get_voip_store_fields()).get_result()
+        return Store().add(self, self._get_voip_store_fields()).get_result()
 
     def reject_call(self):
         self.check_access("read")
         self.sudo().state = "rejected"
-        return Store(self, self._get_voip_store_fields()).get_result()
+        return Store().add(self, self._get_voip_store_fields()).get_result()
 
     def miss_call(self):
         self.check_access("read")
         self.sudo().state = "missed"
-        return Store(self, self._get_voip_store_fields()).get_result()
+        return Store().add(self, self._get_voip_store_fields()).get_result()
 
     def get_contact_info(self):
         self.ensure_one()
@@ -214,7 +217,7 @@ class VoipCall(models.Model):
         if not partner:
             return False
         self.partner_id = partner
-        return Store(self, self._get_voip_store_fields()).get_result()
+        return Store().add(self, self._get_voip_store_fields()).get_result()
 
     def _get_voip_store_fields(self):
         return [

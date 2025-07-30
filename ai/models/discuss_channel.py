@@ -79,7 +79,7 @@ class DiscussChannel(models.Model):
             caller_component, channel.ai_composer.default_prompt, text_selection, front_end_info
         )
 
-        return {"ai_channel_id": channel.id, "data": Store(channel).get_result()}
+        return {"ai_channel_id": channel.id, "data": Store().add(channel).get_result()}
 
     @api.model
     def _get_or_create_ai_chat(self, partner):

@@ -172,7 +172,7 @@ class DiscussChannel(models.Model):
                 })
         if messages.author_id == self.whatsapp_partner_id:
             self.last_wa_mail_message_id = new_msg
-            Store(self, "whatsapp_channel_valid_until", bus_channel=self).bus_send()
+            Store(bus_channel=self).add(self, "whatsapp_channel_valid_until").bus_send()
         if whatsapp_message_vals:
             self.env['whatsapp.message'].create(whatsapp_message_vals)._send_message()
 

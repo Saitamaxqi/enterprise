@@ -32,8 +32,7 @@ class DiscussChannelMember(models.Model):
         )
         members_to_be_unpinned.unpin_dt = datetime.now()
         for member in members_to_be_unpinned:
-            Store(
+            Store(bus_channel=member._bus_channel()).add(
                 member.channel_id,
                 {"close_chat_window": True, "is_pinned": False},
-                bus_channel=member._bus_channel(),
             ).bus_send()
