@@ -118,6 +118,10 @@ class MrpProduction(models.Model):
                 'additional': True,
                 'manual_consumption': True,
             })
+        if workorder_id := kwargs.get('workorder_id'):
+            workorder = self.env['mrp.workorder'].browse(workorder_id)
+            values['workorder_id'] = workorder_id
+            values['operation_id'] = workorder.operation_id.id
         return values
 
     def can_load_samples(self):

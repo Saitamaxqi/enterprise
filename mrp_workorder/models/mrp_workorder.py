@@ -208,11 +208,11 @@ class MrpWorkorder(models.Model):
 
     def action_add_component(self):
         self.ensure_one()
-        return self.production_id.action_add_component()
+        return self.production_id.with_context(workorder_id=self.id).action_add_component()
 
     def action_add_byproduct(self):
         self.ensure_one()
-        return self.production_id.action_add_byproduct()
+        return self.production_id.with_context(workorder_id=self.id).action_add_byproduct()
 
     def action_add_workorder(self):
         self.ensure_one()

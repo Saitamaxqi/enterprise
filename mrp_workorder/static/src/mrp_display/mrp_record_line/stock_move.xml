@@ -11,7 +11,7 @@
                     <span class="o_mrp_record_line_qty">
                         <t t-if="(quantityDone || isComplete) &amp;&amp; quantityDone !== toConsumeQuantity"
                            t-out="quantityDone + ' / '"/>
-                        <t t-esc="toConsumeQuantity"/>
+                        <t t-out="toConsumeQuantity"/>
                     </span>
                     <span class="o_mrp_record_line_uom ms-1 small fw-normal"
                           t-att-class="{'text-muted': !(quantityDone > toConsumeQuantity)}"
@@ -28,8 +28,8 @@
         <li t-foreach="visibleMoveLines" t-as="line" t-key="line.resId" t-on-click="() => this.editQuantity(line)"
             class="o_mrp_record_line o_mrp_record_line_indented list-group-item position-relative d-flex justify-content-between align-items-center gap-3 border-0 cursor-pointer">
             <span class="o_line_label ms-3 text-wrap text-break" t-att-class="{'text-muted': quantityDone >= toConsumeQuantity}">
-                <t t-if="line.data.location_id" t-out="line.data.location_id.display_name"/>
-                <t t-if="line.data.location_id &amp;&amp; line.data.lot_id"> / </t>
+                <t t-if="!byproduct &amp;&amp; line.data.location_id" t-out="line.data.location_id.display_name"/>
+                <t t-if="!byproduct &amp;&amp; line.data.location_id &amp;&amp; line.data.lot_id"> / </t>
                 <t t-if="line.data.lot_id" t-out="line.data.lot_id.display_name"/>
             </span>
             <div class="d-flex align-items-center gap-1 mb-auto text-nowrap">

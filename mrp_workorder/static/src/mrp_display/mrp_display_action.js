@@ -41,6 +41,8 @@ export class MrpDisplayAction extends Component {
                 "log_note",
                 "picking_type_auto_close",
                 "serial_numbers_count",
+                "location_src_id",
+                "production_location_id",
             ],
             "mrp.workorder": [
                 "id",
@@ -89,6 +91,7 @@ export class MrpDisplayAction extends Component {
                 "move_line_ids",
                 "picking_type_prefill_shop_floor_lots",
                 "bom_line_id",
+                "byproduct_id",
             ],
             "stock.move.line": ["id", "lot_id", "location_id", "quantity", "picked", "product_id"],
             "quality.check": [

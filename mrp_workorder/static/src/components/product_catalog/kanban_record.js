@@ -4,10 +4,14 @@ import { KanbanRecord } from "@web/views/kanban/kanban_record";
 
 patch(ProductCatalogKanbanRecord.prototype, {
     _getUpdateQuantityAndGetPriceParams() {
-        return {
+        const params = {
             ...super._getUpdateQuantityAndGetPriceParams(),
             from_shop_floor: this.props.record.context.from_shop_floor,
         };
+        if ("workorder_id" in this.props.record.context) {
+            params.workorder_id = this.props.record.context.workorder_id;
+        }
+        return params;
     },
 
     _updateQuantity() {

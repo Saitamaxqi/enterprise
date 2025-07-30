@@ -142,7 +142,7 @@ export class MrpDisplayRecord extends Component {
             return this.props.production.data.move_byproduct_ids.records.filter(
                 (bp) =>
                     !checked_byproducts.includes(bp.data.product_id.id) &&
-                    (bp.data.operation_id.id === undefined ||
+                    ((!bp.data.byproduct_id && !bp.data.operation_id) ||
                         bp.data.operation_id.id === this.props.record.data.operation_id.id)
             );
         }
@@ -169,18 +169,19 @@ export class MrpDisplayRecord extends Component {
     }
 
     get moves() {
+        const moMoves = this.props.production.data.move_raw_ids.records.filter(
+            (move) => !move.data.scrapped && !move.data.bom_line_id && !move.data.operation_id
+        );
         if (this.resModel === "mrp.production") {
-            return this.props.record.data.move_raw_ids.records.filter(
-                (move) => !move.data.bom_line_id
-            );
+            return moMoves;
         }
         const woMovesNoCheck = this.props.record.data.move_raw_ids.records.filter(
-            (move) => !move.data.check_id.count
+            (move) =>
+                !move.data.scrapped &&
+                move.data.operation_id.id === this.props.record.data.operation_id.id &&
+                !move.data.check_id.count
         );
-        const moMovesNoBomLine = this.props.production.data.move_raw_ids.records.filter(
-            (move) => !move.data.bom_line_id
-        );
-        return [...woMovesNoCheck, ...moMovesNoBomLine];
+        return [...woMovesNoCheck, ...moMoves];
     }
 
     get workorders() {
@@ -227,10 +228,12 @@ export class MrpDisplayRecord extends Component {
             subRecord = moves.records.find((m) => m.data.check_id.resIds.includes(subRecord.resId));
             props.displayUOM = this.displayUOM;
             props.startWorking = this.startWorking.bind(this);
+            props.production = this.props.production;
         } else if (subRecord.resModel === "stock.move") {
             props.displayUOM = this.displayUOM;
             props.isCurrent = false;
             props.startWorking = this.startWorking.bind(this);
+            props.production = this.props.production;
         }
         props.record = subRecord;
 
