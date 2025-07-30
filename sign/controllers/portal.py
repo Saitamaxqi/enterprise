@@ -37,9 +37,10 @@ class CustomerPortal(portal.CustomerPortal):
         values = self._prepare_portal_layout_values()
         partner_id = request.env.user.partner_id
         SignRequestItem = request.env['sign.request.item'].sudo()
-        default_domain = Domain([('partner_id', '=', partner_id.id), '|', ('state', '=', 'completed'), ('is_mail_sent', '=', True), ('sign_request_id.state', '!=', 'expired')])
+        default_domain = Domain([('partner_id', '=', partner_id.id), '|', ('state', 'in', ['completed', 'canceled']), ('is_mail_sent', '=', True), ('sign_request_id.state', '!=', 'expired')])
 
         searchbar_sortings = {
+            'state': {'label': _('Status'), 'order': 'state desc'},
             'new': {'label': _('Newest'), 'order': 'sign_request_id desc'},
             'date': {'label': _('Signing Date'), 'order': 'signing_date desc'},
         }
@@ -47,9 +48,8 @@ class CustomerPortal(portal.CustomerPortal):
         searchbar_filters = {
             'all': {'label': _('All'), 'domain': default_domain},
             'tosign': {'label': _('To sign'), 'domain': default_domain & Domain('state', '=', 'sent') & Domain('sign_request_id.state', '=', 'sent')},
-            'completed': {'label': _('Completed'), 'domain': default_domain & Domain('state', '=', 'completed')},
-            'signed': {'label': _('Fully Signed'),
-                       'domain': default_domain & Domain('sign_request_id.state', '=', 'signed')},
+            'completed': {'label': _('Signed'), 'domain': default_domain & Domain('state', '=', 'completed')},
+            'cancelled': {'label': _('Cancelled'), 'domain': default_domain & Domain('state', '=', 'canceled')},
         }
 
         searchbar_inputs = {
@@ -63,13 +63,13 @@ class CustomerPortal(portal.CustomerPortal):
 
         # default sortby order
         if not sortby:
-            sortby = 'new'
+            sortby = 'state'
         sort_order = searchbar_sortings[sortby]['order']
         # default filter by value
         if not filterby:
             filterby = 'all'
         # get the search  bar filters and remove the cancelled requests
-        domain = Domain.AND([searchbar_filters[filterby]['domain'], [('state', '!=', 'canceled')]])
+        domain = Domain.AND([searchbar_filters[filterby]['domain']])
         if date_begin and date_end:
             domain &= Domain('signing_date', '>', date_begin) & Domain('signing_date', '<=', date_end)
         # search only the document name
@@ -78,7 +78,7 @@ class CustomerPortal(portal.CustomerPortal):
         pager = portal_pager(
             url='/my/signatures',
             url_args={'date_begin': date_begin, 'date_end': date_end, 'sortby': sortby, 'filterby': filterby,
-                      'search_in': search_in, 'search': search},
+                      'search_in': search_in, 'search': search, 'groupby': groupby},
             total=SignRequestItem.search_count(domain),
             page=page,
             step=self._items_per_page
@@ -86,7 +86,7 @@ class CustomerPortal(portal.CustomerPortal):
 
         # content according to pager and archive selected
         if groupby == 'state':
-            sort_order = 'state, %s' % sort_order
+            sort_order = '%s, %s' % (searchbar_sortings['state']['order'], sort_order)
 
         # search the count to display, according to the pager data
         sign_requests_items = SignRequestItem.search(domain, order=sort_order, limit=self._items_per_page,
@@ -105,7 +105,7 @@ class CustomerPortal(portal.CustomerPortal):
             'pager': pager,
             'default_url': '/my/signatures',
             'searchbar_sortings': searchbar_sortings,
-            'searchbar_filters': OrderedDict(sorted(searchbar_filters.items())),
+            'searchbar_filters': OrderedDict(searchbar_filters.items()),
             'searchbar_groupby': searchbar_groupby,
             'searchbar_inputs': searchbar_inputs,
             'search_in': search_in,

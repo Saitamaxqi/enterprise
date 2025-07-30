@@ -48,9 +48,10 @@ class SignRequestItem(models.Model):
     signature = fields.Binary(attachment=True, copy=False)
     frame_hash = fields.Char(size=256, compute='_compute_frame_hash')
     signing_date = fields.Date('Signed on', readonly=True, copy=False)
+
     state = fields.Selection([
         ("sent", "To Sign"),
-        ("completed", "Completed"),
+        ("completed", "Signed"),
         ("canceled", "Cancelled"),
     ], readonly=True, default="sent", copy=False, index=True)
     color = fields.Integer(compute='_compute_color')
