@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, Command
 from odoo.exceptions import UserError
+from odoo.tools import format_date
 
 
 class SignSendRequest(models.TransientModel):
@@ -46,6 +47,16 @@ class SignSendRequest(models.TransientModel):
     reminder_enabled = fields.Boolean(default=False)
     reminder = fields.Integer(string='Reminder', default=7)
     certificate_reference = fields.Boolean(string="Certificate Reference", default=False, help="If checked, the unique certificate reference will be added on the final signed document.")
+
+    only_autofill_readonly = fields.Boolean(
+        string='Only Autofill',
+        compute='_compute_only_autofill_readonly',
+    )
+    display_download_button = fields.Boolean(
+        string="Display Download Button",
+        compute='_compute_display_download_button',
+        store=False
+    )
 
     @api.constrains('validity')
     def _check_validity(self):
@@ -272,3 +283,126 @@ class SignSendRequest(models.TransientModel):
             # Go back to document if it exists
             return request.go_to_signable_document(request.request_item_ids)
         return request.go_to_signable_document()
+
+    def _get_user_signature(self, user, signature_type):
+        """
+        This function returns the signature or initials of a user (in this case the first). Returns False if signature or initials are not present.
+
+        :param signature_type: can be 'sign_signature' or 'sign_initials' and inticates what we want to obtain.
+        :return: returns the signature/initials if present or False if not or if signature_type is an invalid value.
+        """
+        if user and signature_type in ['sign_signature', 'sign_initials']:
+            return user[signature_type]
+        return False
+
+    @api.depends("template_id", "signer_ids")
+    def _compute_only_autofill_readonly(self):
+        """
+        Computes the flag indicating if all the fields in a request are autofillable/constant(readonly).
+
+        :return: nothing, sets the value in the only_autofill_readonly field.
+        """
+        for request in self:
+            role_to_user_map = {signer.role_id.id: signer.partner_id.user_id for signer in self.signer_ids}
+            only_autofill_readonly = True
+            for item in request.template_id.sign_item_ids:
+                user = role_to_user_map[item.responsible_id.id]
+                if (not item.constant and
+                        not item.type_id.sudo().auto_field and
+                        item.type_id.name != 'Date' and
+                        not (item.type_id.name == 'Signature' and request._get_user_signature(user, 'sign_signature')) and
+                        not (item.type_id.name == 'Initials' and request._get_user_signature(user, 'sign_initials'))):
+                    only_autofill_readonly = False
+            request.only_autofill_readonly = only_autofill_readonly
+
+    @api.depends("only_autofill_readonly", "signers_count", "is_user_signer")
+    def _compute_display_download_button(self):
+        """
+        Computes the flag indicating if the download button should be shown in the wizard.
+
+        :return: nothing, sets the value in the display_download_button field.
+        """
+        for wiz in self:
+            wiz.display_download_button = (
+                wiz.only_autofill_readonly
+                and (wiz.signers_count == 1)
+                and wiz.is_user_signer
+            )
+
+    def quick_sign(self):
+        """
+        Is triggered by the Download button, implements the quick-sign flow by retrieving the values needed to fill the fields, filling them, creating the finished document, downloading it and redirecting to the view of the model the user was coming from (sign requests can be made from other apps too).
+
+        :return: triggers an action which downloads the completed document and redirects to the correct view.
+        """
+        # Create the sign request
+        request = self.create_request()
+
+        # Build a dictionary matching the fields that exist in the document with their properties.
+        # The keys in the dictionary are the stringified version of the ids because that's how the
+        # _fill function expects them later.
+        sign_values = {}
+        for item in self.template_id.sign_item_ids:
+            sign_values[str(item.id)] = {
+                "name": item.name,
+                "type_id": item.type_id.id,
+                "auto_field": item.type_id.sudo().auto_field,
+                "type_name": item.name,
+            }
+
+        # Build the dictionary with the information taken from the user profile as the _fill function expects it
+        sign_request_item = request.request_item_ids
+        corrected_dict = sign_values.copy()
+        frames = {}
+        for key, value in sign_values.items():
+            corrected_dict[key] = value["name"]
+            # All autofillable fields except for Signature, Initials and Date have an auto_field property set which can be used to get the value from the profile
+            if value.get("auto_field"):
+                corrected_dict[key] = sign_request_item._get_auto_field_value({
+                    "id": value.get("type_id"),
+                    "auto_field": value.get("auto_field")
+                })
+            # Signatures and Initials need a different procedure because of the fact that the contents are images and they might need frames and hashes
+            elif value.get("type_name") in ["Signature", "Initials"]:
+                signature_field_name = 'sign_signature' if value.get("type_name") == "Signature" else 'sign_initials'
+                user_signature = sign_request_item._get_user_signature(signature_field_name)
+                user_signature_frame = sign_request_item.sudo()._get_user_signature_frame(signature_field_name + '_frame')
+                corrected_dict[key] = 'data:image/png;base64,%s' % user_signature.decode() if user_signature else False
+                frames[key] = {
+                    'frameValue': 'data:image/png;base64,%s' % user_signature_frame.decode() if user_signature_frame else False,
+                    'frameHash': False,
+                }
+            # The Date field can be autofilled but doesn't have a auto_field because it's always filled with today's date
+            elif value.get("type_name") == "Date":
+                corrected_dict[key] = format_date(self.env, fields.Date.today())
+
+        # Fill the fields with the values contained in corrected_dict, set the request state as signed and generate the document.
+        sign_request_item.sudo()._fill(corrected_dict, frame=frames)
+        request.state = 'signed'
+        request.sudo()._generate_completed_documents()
+
+        # Trigger the download and the redirection with a single custom action
+        # The reference_doc tells us if the request has been made from somewhere outside of Sign (other apps)
+        url = f"/sign/download/{request.id}/{request.access_token}/completed"
+        if self.reference_doc:
+            view_record = self.reference_doc
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'sign_download_document_and_return',
+                'params': {
+                    'url': url,
+                    'res_model': view_record._name,
+                    'res_id': view_record.id,
+                    'view_mode': 'form'
+                }
+            }
+        else:
+            action = {
+                'type': 'ir.actions.client',
+                'tag': 'sign_download_document_and_return',
+                'params': {
+                    'url': url,
+                    'redirect_to': 'sign.sign_request_action'
+                }
+            }
+        return action

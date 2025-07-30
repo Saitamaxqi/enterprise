@@ -184,7 +184,7 @@ class SignRequest(models.Model):
                 sign_values_by_role[item.responsible_id][str(item.id)] = {
                     "name": item.name,
                     "type_id": item.type_id.id,
-                    "auto_field": item.type_id.auto_field
+                    "auto_field": item.type_id.sudo().auto_field
                 }
 
         if not sign_values_by_role:

@@ -4,7 +4,7 @@
         <Dialog t-props="dialogProps">
             <SignNameAndSignature t-props="nameAndSignatureProps"/>
             <div class="mt16 small">
-                By clicking Adopt &amp; Sign, I agree that the chosen signature/initials will be a valid electronic representation of my hand-written signature/initials for all purposes when it is used on documents, including legally binding contracts.
+                By signing, I agree that the chosen signature/initials will be a valid electronic representation of my hand-written signature/initials for all purposes when it is used on documents, including legally binding contracts.
             </div>
             <t t-set-slot="footer">
                 <button class="btn btn-primary" t-if="props.onConfirmAll" t-on-click="props.onConfirmAll" t-att-disabled="footerState.signAllButtonsDisabled">Sign all</button>
