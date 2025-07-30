@@ -1030,3 +1030,48 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_barcode_batch_partial_receipt_leave_reopen', login='admin', timeout=180)
         self.assertEqual(len(batch.move_ids), 4)
         self.assertEqual(len(batch.move_line_ids), 7)
+
+    def test_pack_batch_in_multiple_packages(self):
+        """
+        Batch deliveries and put in packs lines from different pickings.
+        Check that the lines still refer to their respective picking.
+        """
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'group_ids': [Command.link(grp_pack.id)]})
+        # Creates a new batch.
+        batch_receipts = self.env['stock.picking.batch'].create({
+            'name': 'test_pack_batch_in_multiple_packages',
+            'picking_type_id': self.picking_type_in.id,
+        })
+        # Creates two receipts (each containing product1 and product2) and add them to the batch.
+        products = self.product1 | self.product2
+        receipts = self.env['stock.picking'].create([
+            {
+                'batch_id': batch_receipts.id,
+                'name': f"Lovely receipt {i + 1}",
+                'location_id': self.supplier_location.id,
+                'location_dest_id': self.stock_location.id,
+                'picking_type_id': self.picking_type_in.id,
+                'move_ids': [
+                    Command.create({
+                        'location_id': self.supplier_location.id,
+                        'location_dest_id': self.stock_location.id,
+                        'product_id': product.id,
+                        'product_uom_qty': 2 + i,
+                    }) for product in products
+                ]
+            } for i in range(2)
+        ])
+        batch_receipts.action_confirm()
+        url = self._get_batch_client_action_url(batch_receipts.id)
+        self.start_tour(url, 'test_pack_batch_in_multiple_packages', login='admin')
+        # Checks the receipts moves values.
+        self.assertFalse(receipts.backorder_ids)
+        packages = receipts[1].move_line_ids.sorted(lambda ml: ml.product_id.id).result_package_id
+        self.assertRecordValues(receipts.move_line_ids.sorted(lambda ml: (ml.picking_id, ml.product_id.id, ml.quantity)), [
+            {'picking_id': receipts.ids[0], 'result_package_id': packages.ids[1], 'product_id': products.ids[0], 'quantity': 1.0},
+            {'picking_id': receipts.ids[0], 'result_package_id': packages.ids[0], 'product_id': products.ids[0], 'quantity': 1.0},
+            {'picking_id': receipts.ids[0], 'result_package_id': packages.ids[1], 'product_id': products.ids[1], 'quantity': 2.0},
+            {'picking_id': receipts.ids[1], 'result_package_id': packages.ids[0], 'product_id': products.ids[0], 'quantity': 3.0},
+            {'picking_id': receipts.ids[1], 'result_package_id': packages.ids[1], 'product_id': products.ids[1], 'quantity': 3.0},
+        ])

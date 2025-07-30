@@ -1543,3 +1543,120 @@ registry.category("web_tour.tours").add("test_barcode_batch_partial_receipt_leav
         },
     ]
 });
+
+registry.category("web_tour.tours").add("test_pack_batch_in_multiple_packages", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_client_action",
+            run: () => {
+                helper.assertLinesCount(4);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "0/2");
+                helper.assertLineBelongTo(0, "Lovely receipt 1");
+                helper.assertLineProduct(1, "product1");
+                helper.assertLineQty(1, "0/3");
+                helper.assertLineBelongTo(1, "Lovely receipt 2");
+                helper.assertLineProduct(2, "product2");
+                helper.assertLineQty(2, "0/2");
+                helper.assertLineBelongTo(2, "Lovely receipt 1");
+                helper.assertLineProduct(3, "product2");
+                helper.assertLineQty(3, "0/3");
+                helper.assertLineBelongTo(3, "Lovely receipt 2");
+            }
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_product_label:contains(product1)):has(.o_picking_label:contains('Lovely receipt 1'))",
+            run: "scan product1",
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_product_label:contains(product1)):has(.o_picking_label:contains('Lovely receipt 1')):has(.qty-done:contains(1))",
+            run() {},
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_product_label:contains(product1)):has(.o_picking_label:contains('Lovely receipt 2')) .o_add_remaining_quantity",
+            run: "click",
+        },
+        {
+            trigger: ".o_put_in_pack",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line .result-package",
+            run: () => {
+                helper.assertLinesCount(5);
+                const [line1, line2, line3, line4, line5] = helper.getLines();
+                const packageName = line5.querySelector('[name=package]').innerText
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "0/1");
+                helper.assertLineBelongTo(0, "Lovely receipt 1");
+                helper.assert(line1.querySelector('[name=package]').innerText, `${packageName} ?`); // Display suggested package.
+                helper.assertLineProduct(1, "product2");
+                helper.assertLineQty(1, "0/2");
+                helper.assertLineBelongTo(1, "Lovely receipt 1");
+                helper.assert(line2.querySelector('[name=package]').innerText, `${packageName} ?`); // Display suggested package.
+                helper.assertLineProduct(2, "product2");
+                helper.assertLineQty(2, "0/3");
+                helper.assertLineBelongTo(2, "Lovely receipt 2");
+                helper.assert(line3.querySelector('[name=package]').innerText, `${packageName} ?`); // Display suggested package.
+                helper.assertLineProduct(3, "product1");
+                helper.assertLineQty(3, "1/1");
+                helper.assertLineBelongTo(3, "Lovely receipt 1");
+                helper.assert(line4.querySelector('[name=package]').innerText, packageName);
+                helper.assertLineProduct(4, "product1");
+                helper.assertLineQty(4, "3/3");
+                helper.assertLineBelongTo(4, "Lovely receipt 2");
+                helper.assert(line5.querySelector('[name=package]').innerText, packageName);
+            }
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_product_label:contains(product1)):has(.o_picking_label:contains('Lovely receipt 1')) .o_add_remaining_quantity",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_product_label:contains(product2)):has(.o_picking_label:contains('Lovely receipt 1')) .o_add_remaining_quantity",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line:has(.o_product_label:contains(product2)):has(.o_picking_label:contains('Lovely receipt 2')) .o_add_remaining_quantity",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_lines:not(:has(.o_barcode_line:contains(product1) .o_add_remaining_quantity))",
+            run() {},
+        },
+        {
+            trigger: ".o_put_in_pack",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_lines:not(:contains(?))",
+            run: () => {
+                helper.assertLinesCount(5);
+                const [line1, line2, line3, line4, line5] = helper.getLines();
+                const package1 = line1.querySelector('[name=package]').innerText
+                const package2 = line3.querySelector('[name=package]').innerText
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "1/1");
+                helper.assertLineBelongTo(0, "Lovely receipt 1");
+                helper.assert(line1.querySelector('[name=package]').innerText, package1);
+                helper.assertLineProduct(1, "product1");
+                helper.assertLineQty(1, "3/3");
+                helper.assertLineBelongTo(1, "Lovely receipt 2");
+                helper.assert(line2.querySelector('[name=package]').innerText, package1);
+                helper.assertLineProduct(2, "product1");
+                helper.assertLineQty(2, "1/1");
+                helper.assertLineBelongTo(2, "Lovely receipt 1");
+                helper.assert(line3.querySelector('[name=package]').innerText, package2);
+                helper.assertLineProduct(3, "product2");
+                helper.assertLineQty(3, "2/2");
+                helper.assertLineBelongTo(3, "Lovely receipt 1");
+                helper.assert(line4.querySelector('[name=package]').innerText, package2);
+                helper.assertLineProduct(4, "product2");
+                helper.assertLineQty(4, "3/3");
+                helper.assertLineBelongTo(4, "Lovely receipt 2");
+                helper.assert(line5.querySelector('[name=package]').innerText, package2);
+            }
+        },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});

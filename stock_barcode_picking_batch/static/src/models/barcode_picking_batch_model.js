@@ -368,7 +368,8 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
             }
         }
         // Get the line's picking as the default one, or take the batch's first one.
-        const defaultPicking = line?.picking_id || this.picking;
+        const defaultPicking =
+            (fieldsParams && fieldsParams.picking_id) || (line && line.picking_id) || this.picking;
         if (!this.config.group_lines_by_product) {
             // Don't add the color if lines are grouped by product.
             defaultValues.colorLine = this.colorByPickingId.get(defaultPicking.id);
