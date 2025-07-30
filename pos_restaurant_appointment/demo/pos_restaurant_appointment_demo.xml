@@ -188,7 +188,7 @@
     <!-- Table 11 -->
     <record id="appointment_type_restaurant_table_table_11" model="appointment.resource">
         <field name="name">Table 11</field>
-        <field name="capacity">6</field>
+        <field name="capacity">2</field>
         <field name="appointment_type_ids" eval="[(6, 0, [ref('appointment_type_restaurant_table')])]"/>
         <field name="pos_table_ids" eval="[(6, 0, [ref('pos_restaurant.table_11')])]"/>
         <field name="linked_resource_ids" eval="[(6, 0, [
@@ -202,6 +202,26 @@
             ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_08'),
             ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_09'),
             ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_10')])]"/>
+    </record>
+
+    <!-- Table 12 -->
+    <record id="appointment_type_restaurant_table_table_12" model="appointment.resource">
+        <field name="name">Table 12</field>
+        <field name="capacity">2</field>
+        <field name="appointment_type_ids" eval="[(6, 0, [ref('appointment_type_restaurant_table')])]"/>
+        <field name="pos_table_ids" eval="[(6, 0, [ref('pos_restaurant.table_12')])]"/>
+        <field name="linked_resource_ids" eval="[(6, 0, [
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_01'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_02'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_03'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_04'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_05'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_06'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_07'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_08'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_09'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_10'),
+            ref('pos_restaurant_appointment.appointment_type_restaurant_table_table_11')])]"/>
     </record>
 
     <!-- Patio: Left table row -->

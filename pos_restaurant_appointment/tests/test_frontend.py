@@ -75,3 +75,12 @@ class TestUi(TestFrontend):
     @freeze_time('2025-08-27 12:18:56')
     def test_appointment_kanban_view(self):
         self.start_pos_tour("test_appointment_kanban_view", login="pos_admin")
+        self.start_pos_tour('DuplicateFloorCalendarResource', login="pos_admin")
+
+        floor = self.env['restaurant.floor'].search([('name', '=', 'Main Floor (copy)'), ('pos_config_ids', 'in', self.pos_config.id)], limit=1)
+        for table in floor.table_ids:
+            self.assertIn(
+                self.appointment_type.id,
+                table.appointment_resource_id.appointment_type_ids.ids,
+                f"Table {table.table_number} resource does not include expected appointment type."
+            )

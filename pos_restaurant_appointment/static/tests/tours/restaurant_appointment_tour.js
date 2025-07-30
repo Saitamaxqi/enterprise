@@ -156,3 +156,43 @@ registry.category("web_tour.tours").add("test_appointment_kanban_view", {
             },
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("DuplicateFloorCalendarResource", {
+    steps: () =>
+        [
+            // check floors if they contain their corresponding tables
+            Chrome.startPoS(),
+
+            FloorScreen.selectedFloorIs("Main Floor"),
+            FloorScreen.hasTable("2"),
+            FloorScreen.hasTable("4"),
+            FloorScreen.hasTable("5"),
+
+            Chrome.clickMenuOption("Edit Plan"),
+
+            //test copy floor
+            FloorScreen.clickFloor("Main Floor"),
+            FloorScreen.clickEditButton("Clone"),
+            FloorScreen.selectedFloorIs("Main Floor (copy)"),
+            FloorScreen.hasTable("2"),
+            FloorScreen.hasTable("4"),
+            FloorScreen.hasTable("5"),
+            FloorScreen.clickSaveEditButton(),
+            {
+                content: `Check copied floor plan tables have an appointment resource`,
+                trigger: ".pos", // dummy trigger
+                run: function () {
+                    const tables = window.posmodel.models["restaurant.floor"]
+                        .find((rf) => rf.name == "Main Floor (copy)")
+                        .table_ids?.filter((table) => table.active);
+                    for (const table of tables) {
+                        if (table.appointment_resource_id === undefined) {
+                            console.error(
+                                `Table "${table.table_number}" has no appointment_resource_id.`
+                            );
+                        }
+                    }
+                },
+            },
+        ].flat(),
+});

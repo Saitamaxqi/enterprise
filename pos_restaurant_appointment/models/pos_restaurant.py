@@ -23,6 +23,7 @@ class RestaurantTable(models.Model):
                     'name': f'Table {table.table_number}',
                     'capacity': table.seats,
                     'pos_table_ids': table,
+                    'appointment_type_ids': table.floor_id.pos_config_ids.appointment_type_id,
                 })
 
         return tables

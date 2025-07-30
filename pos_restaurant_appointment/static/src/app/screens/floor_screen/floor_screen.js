@@ -26,6 +26,18 @@ patch(FloorScreen.prototype, {
 
         return table;
     },
+    async duplicateFloor() {
+        await super.duplicateFloor(...arguments);
+        const tableIds = this.activeTables.map((table) => table.id);
+
+        if (tableIds.length > 0) {
+            await this.pos.data.searchRead(
+                "appointment.resource",
+                [["pos_table_ids", "in", tableIds]],
+                this.pos.data.fields["appointment.resource"]
+            );
+        }
+    },
     async createTableFromRaw(table) {
         delete table.appointment_resource_id;
         return super.createTableFromRaw(table);
