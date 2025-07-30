@@ -268,7 +268,8 @@ class UrbanPiperClient:
                 alcohol_tags = tags.setdefault(provider.technical_name, [])
                 alcohol_tag = 'alcohol-present' if product.is_alcoholic_on_urbanpiper else 'alcohol-absent'
                 alcohol_tags.append(alcohol_tag)
-            item_lst.append(item)
+            updated_item = self.config.update_urbanpiper_item_data(item, product)
+            item_lst.append(updated_item)
         return item_lst
 
     def _prepare_option_groups_data(self, pos_products):

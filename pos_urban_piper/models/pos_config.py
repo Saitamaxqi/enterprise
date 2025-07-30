@@ -202,6 +202,13 @@ class PosConfig(models.Model):
         """
         return []
 
+    def update_urbanpiper_item_data(self, item, product):
+        """
+        Override this method to update item data with product information. (as per requirements for different regions)
+        """
+        self.ensure_one()
+        return item
+
     def update_store_status(self, status):
         """
         Activate and Deactivate store

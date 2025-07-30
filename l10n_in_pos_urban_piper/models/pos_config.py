@@ -1,3 +1,5 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from odoo import models
 
 
@@ -44,3 +46,13 @@ class PosConfig(models.Model):
             gst_tax = self.env['account.chart.template'].with_company(self.company_id).ref("sgst_sale_5")
             if gst_tax and gst_tax not in fiscal_position.tax_ids.mapped('original_tax_ids'):
                 fiscal_position.tax_ids.original_tax_ids |= gst_tax
+
+    def update_urbanpiper_item_data(self, item, product):
+        updated_item = super().update_urbanpiper_item_data(item, product)
+        if (
+            self.company_id.country_code == 'IN' and any(val != 5.00 for val in product.taxes_id.mapped('amount'))
+        ):
+            tags = updated_item['tags'].setdefault('default', [])
+            if 'packaged-good' not in tags:
+                tags.append('packaged-good')
+        return updated_item
