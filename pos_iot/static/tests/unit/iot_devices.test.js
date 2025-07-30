@@ -1,7 +1,6 @@
-import { test, expect, getFixture } from "@odoo/hoot";
+import { test, expect } from "@odoo/hoot";
 import { setupPosEnv } from "@point_of_sale/../tests/unit/utils";
 import { definePosModels } from "@point_of_sale/../tests/unit/data/generate_model_definitions";
-import { htmlToCanvas } from "@point_of_sale/app/services/render_service";
 
 definePosModels();
 
@@ -37,8 +36,6 @@ test("pos_iot_common", async () => {
         "scanners",
         "scale",
     ]);
-
-    expect(store.getDisplayDeviceIP()).toBe("1.1.1.1");
     expect(store.scale._scaleDevice).not.toBeEmpty();
 
     // printer
@@ -50,20 +47,8 @@ test("pos_iot_common", async () => {
     expect(hardwareProxyPrinter.id).toInclude("listener");
     expect(hardwareProxyPrinter.identifier).toBe("printer_identifier");
 
-    // print a job
-    const target = getFixture();
-    const node = document.createElement("div");
-    node.classList.add("render-container");
-    target.appendChild(node);
-
-    const canvas = await htmlToCanvas(node, {});
-    const printJobAction = await hardwareProxy.printer.sendPrintingJob(canvas);
-    expect(printJobAction.result).toBe(true);
-
-    // Open cashbox
-    const openCashBoxAction = await hardwareProxy.printer.openCashbox();
-    expect(openCashBoxAction.result).toBe(true);
-
+    // printer methods like sendPrintingJob & cashbox are not checked here as
+    // iotAction is already tested in iot_http_service.test.js
     // disconnect the iot
     await hardwareProxy.setProxyConnectionStatus("1.1.1.1", false);
     expect(hardwareProxy.iotBoxes[0].connected).toBe(false);

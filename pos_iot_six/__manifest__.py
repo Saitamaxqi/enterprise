@@ -24,5 +24,8 @@
             'pos_iot_six/static/src/js/six_terminal_id_field.*',
             'pos_iot_six/static/src/css/six_terminal_id_field.css',
         ],
+        'web.assets_unit_tests': [
+            'pos_iot_six/static/tests/unit/**/*',
+        ],
     }
 }
