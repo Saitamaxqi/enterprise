@@ -30,6 +30,28 @@ class SaleCommissionReport(models.Model):
     date_to = fields.Date(related='target_id.date_to')
     notes = fields.Text(related='forecast_id.notes', readonly=True)
 
+    ################################################################################
+    # Readonly Cursor hacks
+    # These methods use a readonly cursor everywhere else in odoo but here we need a RW cursor because
+    # we are creating a temporary table in _search.
+
+    @api.model
+    def web_search_read(self, domain, specification, offset=0, limit=None, order=None, count_limit=None):
+        return super().web_search_read(domain, specification, offset=offset, limit=limit, order=order, count_limit=count_limit)
+    # Make sure the method is never readonly in this model
+    web_search_read._readonly = False
+
+    @api.model
+    def formatted_read_group(self, domain, groupby=(), aggregates=(), having=(), offset=0, limit=None, order=None) -> list[dict]:
+        return super().formatted_read_group(domain, groupby, aggregates, having, limit, offset, order)
+    formatted_read_group._readonly = False
+
+    ################################################################################
+
+    def fetch(self, field_names=None):
+        self.env['sale.commission.achievement.report']._create_temp_invoice_table(users=None, teams=None)
+        return super().fetch(field_names=field_names)
+
     @api.model
     def _search(self, domain, *args, **kwargs):
         """ Extract the currency conversion date form the date_to field.
@@ -45,6 +67,8 @@ class SaleCommissionReport(models.Model):
         if date_to_list:
             date_to = max(date_to_list)
             model = model.with_context(conversion_date=date_to.strftime('%Y-%m-%d'))
+        self.env.cr.execute("SET LOCAL JIT = OFF")
+        self.env['sale.commission.achievement.report']._create_temp_invoice_table(users=None, teams=None)
         return super(SaleCommissionReport, model)._search(domain, *args, **kwargs)
 
     def action_achievement_detail(self):
@@ -107,7 +131,6 @@ class SaleCommissionReport(models.Model):
     @property
     def _table_query(self):
         # Deactivate the jit for this transaction
-        self.env.cr.execute("SET LOCAL JIT = OFF")
         query = self._query()
         table_query = SQL(query)
         return table_query
@@ -119,7 +142,6 @@ class SaleCommissionReport(models.Model):
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
-        self.env['sale.commission.achievement.report']._create_temp_invoice_table(users=users, teams=teams)
         res = f"""
 WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams)},
 achievement AS (

@@ -26,6 +26,23 @@ class SaleCommissionAchievementReport(models.Model):
     related_res_model = fields.Char(readonly=True)
     related_res_id = fields.Many2oneReference("Related", model_field='related_res_model', readonly=True)
 
+    ################################################################################
+    # Readonly Cursor hacks
+    # These methods use a readonly cursor everywhere else in odoo but here we need a RW cursor because
+    # we are creating a temporary table in _search.
+    @api.model
+    def web_search_read(self, domain, specification, offset=0, limit=None, order=None, count_limit=None):
+        return super().web_search_read(domain, specification, offset=offset, limit=limit, order=order, count_limit=count_limit)
+    # Make sure the method is never readonly in this model
+    web_search_read._readonly = False
+
+    @api.model
+    def formatted_read_group(self, domain, groupby=(), aggregates=(), having=(), offset=0, limit=None, order=None) -> list[dict]:
+        return super().formatted_read_group(domain, groupby, aggregates, having, limit, offset, order)
+    formatted_read_group._readonly = False
+
+    ################################################################################
+
     @api.model
     def _create_temp_invoice_table(self, users=None, teams=None):
         query = f"""
@@ -65,6 +82,10 @@ class SaleCommissionAchievementReport(models.Model):
         """
         self.env.cr.execute(query)
 
+    def fetch(self, field_names=None):
+        self._create_temp_invoice_table(users=None, teams=None)
+        return super().fetch(field_names=field_names)
+
     @api.model
     def _search(self, domain, *args, **kwargs):
         """ Extract the currency conversion date form the date_to field.
@@ -78,6 +99,8 @@ class SaleCommissionAchievementReport(models.Model):
         if date_to_list and not 'conversion_date' in self.env.context:
             conversion_date = max(date_to_list)
             model = model.with_context(conversion_date=conversion_date.strftime('%Y-%m-%d'))
+        self.env.cr.execute("SET LOCAL JIT = OFF")
+        self._create_temp_invoice_table(users=None, teams=None)
         return super(SaleCommissionAchievementReport, model)._search(domain, *args, **kwargs)
 
     def open_related(self):
@@ -132,7 +155,6 @@ class SaleCommissionAchievementReport(models.Model):
         teams = self.env.context.get('commission_team_ids', [])
         if teams:
             teams = self.env['crm.team'].browse(teams).exists()
-        self._create_temp_invoice_table(users=users, teams=teams)
         query = self.with_context(achievement_report=True)._query(users=users, teams=teams)
         table_query = SQL(
             query
