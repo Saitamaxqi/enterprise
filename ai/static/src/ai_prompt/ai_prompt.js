@@ -85,6 +85,7 @@ export class AiPrompt extends Component {
                 QWebPlugin,
                 SearchPowerboxPlugin,
             ],
+            baseContainers: ["DIV"],
             recordsSelectorDomain: this.props.domain,
             recordsSelectorResModel: this.props.comodel,
             // small hack to continue to show the placeholder when the widget is focused but empty
