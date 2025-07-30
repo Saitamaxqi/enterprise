@@ -466,7 +466,6 @@ export class UserAgent extends Reactive {
         const call = await this.callService.create({
             direction: "incoming",
             phone_number: phoneNumber,
-            state: "calling",
         });
         inviteSession.delegate = this.sessionDelegate;
         inviteSession.incomingInviteRequest.delegate = {
