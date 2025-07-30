@@ -87,7 +87,7 @@
                                                     readonly="is_locked or not user_can_write or not active"/>
                                                 <!-- Portal users get some commands disabled, notably /image and /file, as they don't have access to ir.attachment -->
                                                 <field name="body" widget="knowledge_html" class="o_field_html" no_label="1" groups="base.group_portal"
-                                                    options="{'collaborative': true, 'resizable': False, 'embedded_components': true, 'allowAttachmentCreation': false, 'allowMediaDialogVideo': false, 'baseContainers': ['P', 'DIV']}"
+                                                    options="{'collaborative': true, 'resizable': False, 'embedded_components': true, 'allowAttachmentCreation': false, 'baseContainers': ['P', 'DIV']}"
                                                     readonly="is_locked or not user_can_write or not active"/>
                                             </div>
                                         </div>
