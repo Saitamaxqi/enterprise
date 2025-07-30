@@ -7,9 +7,12 @@ import { readonlyViewEmbedding } from "@knowledge/editor/embedded_components/bac
 import { viewEmbedding } from "@knowledge/editor/embedded_components/backend/view/embedded_view";
 import { readonlyViewLinkEmbedding } from "@knowledge/editor/embedded_components/backend/embedded_view_link/readonly_embedded_view_link";
 import { viewLinkEmbedding } from "@knowledge/editor/embedded_components/backend/embedded_view_link/embedded_view_link";
+import { foldableSectionEmbedding } from "@knowledge/editor/embedded_components/backend/foldable_section/foldable_section";
+import { readonlyFoldableSectionEmbedding } from "@knowledge/editor/embedded_components/core/readonly_foldable_section/readonly_foldable_section";
 
 export const KNOWLEDGE_EMBEDDINGS = [
     articleIndexEmbedding,
+    foldableSectionEmbedding,
     macrosClipboardEmbedding,
     macrosFileEmbedding,
     viewEmbedding,
@@ -19,6 +22,7 @@ export const KNOWLEDGE_EMBEDDINGS = [
 export const KNOWLEDGE_READONLY_EMBEDDINGS = [
     macrosClipboardEmbedding,
     readonlyArticleIndexEmbedding,
+    readonlyFoldableSectionEmbedding,
     readonlyMacrosFileEmbedding,
     readonlyViewEmbedding,
     readonlyViewLinkEmbedding,
