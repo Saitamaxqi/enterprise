@@ -1,9 +1,10 @@
 import { registry } from "@web/core/registry";
-import { post } from "@iot_base/network_utils/http";
+import { post, formatEndpoint } from "@iot_base/network_utils/http";
 import { uuid } from "@web/core/utils/strings";
 import { IotWebsocket } from "@iot/network_utils/iot_websocket";
 import { _t } from "@web/core/l10n/translation";
 import { IotWebRtc } from "./iot_webrtc";
+import { browser } from "@web/core/browser/browser";
 
 /**
  * Class to handle IoT actions
@@ -13,6 +14,7 @@ import { IotWebRtc } from "./iot_webrtc";
  */
 export class IotAction {
     longpollingFailedTimestamp = null;
+    connectionStatus = "local"; // local, online, offline
     /**
      *
      * @param {import("@iot_base/network_utils/longpolling").IotLongpolling} longpolling Longpolling service
@@ -30,7 +32,7 @@ export class IotAction {
     }
 
     onFailure(_message, deviceIdentifier, _messageId) {
-        this.notification.add(_t("Failed to reach the device: %s", deviceIdentifier), { type: "danger" });
+        this.notification.add(_t("Failed to reach the IoT Box for device: %s", deviceIdentifier), { type: "danger" });
     }
 
     /**
@@ -38,16 +40,16 @@ export class IotAction {
      * @param iotBoxId IoT Box record ID
      * @param deviceIdentifier Identifier of the device connected to the IoT Box
      * @param data Data to send
-     * @param onSuccess Callback to run when a message is received (optional)
-     * @param onFailure Callback to run when the request fails (optional)
+     * @param {(message: Record<string, unknown>, deviceId: string) => void} onSuccess Callback to run when a message is received
+     * @param {(message: Record<string, unknown>, deviceId: string) => void} onFailure Callback to run when the request fails
      * @returns {Promise<void>}
      */
     async action(
         iotBoxId,
         deviceIdentifier,
         data,
-        onSuccess = (_message, _deviceIdentifier, _operationId) => {},
-        onFailure = (message, deviceIdentifier, messageId) => this.onFailure(message, deviceIdentifier, messageId),
+        onSuccess = () => {},
+        onFailure = (...args) => this.onFailure(...args),
     ) {
         if (!["number", "string"].includes(typeof iotBoxId)) {
             iotBoxId = iotBoxId[0]; // iotBoxId is the ``Many2one`` field, we need the actual ID
@@ -72,10 +74,16 @@ export class IotAction {
                 }
                 this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, actionId);
                 await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, actionId, true);
+                this.connectionStatus = "local";
             },
             async () => {
-                this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailure,"operation_confirmation", actionId);
+                const onFailureWithTimeout = (...args) => {
+                    onFailure(...args);
+                    this.connectionStatus = "offline";
+                };
+                this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailureWithTimeout, "operation_confirmation", actionId);
                 await this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, actionId);
+                this.connectionStatus = "online";
             },
         ];
 
@@ -91,6 +99,16 @@ export class IotAction {
 
         // If all the connection types failed, run the onFailure callback
         onFailure({ status: "disconnected" }, deviceIdentifier);
+    }
+
+    async testLongpollingAvailability(iotBoxIp) {
+        try {
+            await browser.fetch(formatEndpoint(iotBoxIp, '/iot_drivers/ping'));
+            this.longpollingFailedTimestamp = null;
+            this.connectionStatus = "local";
+        } catch {
+            this.longpollingFailedTimestamp = Date.now();
+        }
     }
 }
 
@@ -120,9 +138,15 @@ export const iotHttpService = {
             orm
         );
         const action = iotAction.action.bind(iotAction);
+        const refresh = iotAction.testLongpollingAvailability.bind(iotAction);
 
         // Expose only those functions to the environment
-        return { post, action, longpolling, websocket };
+        // status is a getter to have a reactive value
+        return {
+            post, action, longpolling, websocket, refresh, get status() {
+                return iotAction.connectionStatus;
+            }
+        };
     },
 };
 

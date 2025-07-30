@@ -60,6 +60,11 @@ export class IotWebsocket {
         // add the listener to the list of listeners
         this.pushListener(iotBoxIdentifier, deviceIdentifier, messageType, onSuccess, onFailure);
 
+        const timeoutId = setTimeout(() => {
+            this.busService.unsubscribe(messageType);
+            console.debug("Websocket timeout for", iotBoxIdentifier, deviceIdentifier, requestId);
+            this.callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, requestId, { status: "error" });
+        }, 6000); // error callback if the listener is not called within 6 seconds
         this.busService.addChannel(this.iotChannel);
         this.busService.subscribe(messageType, (payload) => {
             const { session_id, iot_box_identifier, device_identifier, message } = payload;
@@ -68,6 +73,7 @@ export class IotWebsocket {
             }
 
             this.callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, session_id, message);
+            clearTimeout(timeoutId);
         });
     }
 
