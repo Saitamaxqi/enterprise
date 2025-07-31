@@ -286,8 +286,11 @@ const videoCommandSteps = [{ // patch the components
     run: function () {
         openPowerbox(this.anchor);
     },
-}, { // click on the /video command
-    trigger: '.o-we-command-name:contains("Video")',
+}, { // click on the /media command
+    trigger: '.o-we-command-name:contains("Media")',
+    run: "click",
+}, { // open the Videos tab 
+    trigger: '.modal-body .nav-link:contains("Videos")',
     run: "click",
 }, {
     content: "Enter a video URL",
@@ -298,7 +301,7 @@ const videoCommandSteps = [{ // patch the components
     trigger: `.o_video_iframe_src:contains("//www.youtube.com/embed/${YoutubeVideoId}?rel=0&autoplay=0")`,
 }, {
     content: "Confirm selection",
-    trigger: '.modal-footer button:contains("Insert Video")',
+    trigger: '.modal-footer button:contains("Add")',
     run: "click",
 },
 {
