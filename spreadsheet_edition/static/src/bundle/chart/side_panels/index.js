@@ -17,6 +17,7 @@ const {
     FunnelChartDesignPanel,
     SunburstChartDesignPanel,
     TreeMapChartDesignPanel,
+    GenericZoomableChartDesignPanel,
 } = spreadsheet.components;
 
 chartSidePanelComponentRegistry
@@ -26,7 +27,7 @@ chartSidePanelComponentRegistry
     })
     .add("odoo_bar", {
         configuration: OdooBarChartConfigPanel,
-        design: ChartWithAxisDesignPanel,
+        design: GenericZoomableChartDesignPanel,
     })
     .add("odoo_pie", {
         configuration: CommonOdooChartConfigPanel,
@@ -54,7 +55,7 @@ chartSidePanelComponentRegistry
     })
     .add("odoo_scatter", {
         configuration: CommonOdooChartConfigPanel,
-        design: ChartWithAxisDesignPanel,
+        design: GenericZoomableChartDesignPanel,
     })
     .add("odoo_combo", {
         configuration: CommonOdooChartConfigPanel,
