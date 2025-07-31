@@ -507,7 +507,8 @@ class AccountMove(models.Model):
     def js_remove_outstanding_partial(self, partial_id):
         # EXTENDS
         if st_line := self.statement_line_id:
-            st_line.delete_reconciled_line(self.line_ids.filtered(lambda line: line.account_id.account_type in ['asset_receivable', 'liability_payable']).ids)
+            partial = self.env['account.partial.reconcile'].browse(partial_id)
+            st_line.delete_reconciled_line((partial.credit_move_id + partial.debit_move_id).ids)
         else:
             super().js_remove_outstanding_partial(partial_id)
 
