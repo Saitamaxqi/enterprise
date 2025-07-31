@@ -287,7 +287,7 @@ class UrbanPiperClient:
                     'multi_options_enabled': bool(attr_line.attribute_id.display_type == 'multi'),
                     'item_ref_ids': [self.get_item_ref_id(product)],
                     'min_selectable': 0,
-                    'max_selectable': -1
+                    'max_selectable': 30 if any(provider.technical_name == "doordash" for provider in self.config.urbanpiper_delivery_provider_ids) else -1
                 }
                 if attr_line.attribute_id.display_type != 'multi':
                     group['min_selectable'] = 1
