@@ -15,6 +15,12 @@
     ],
     'data': [
         'views/stock_landed_cost.xml',
+        'views/stock_lot_views.xml',
+        'views/stock_move_line_views.xml',
+        'views/stock_quant_views.xml',
+        'views/account_move_views.xml',
+        'views/product_template_views.xml',
+        'views/report_invoice.xml',
     ],
     'installable': True,
     'author': 'Odoo S.A.',

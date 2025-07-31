@@ -1,36 +1,48 @@
 # coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-from odoo import _, models
+from odoo import models, _
 from odoo.tools.misc import format_date
 
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
-    def _post(self, soft=True):
+    def _l10n_mx_edi_add_invoice_cfdi_values(self, cfdi_values):
         # OVERRIDE
-        for move in self.filtered(lambda move: move.is_invoice()):
-            for line in move.line_ids:
-                if line.l10n_mx_edi_customs_number:
-                    continue
-                stock_moves = line.mapped('sale_line_ids.move_ids').filtered(lambda r: r.state == 'done' and not r.scrapped)
-                if not stock_moves:
-                    continue
-                landed_costs = self.env['stock.landed.cost'].sudo().search([
-                    ('picking_ids', 'in', stock_moves.mapped('move_orig_fifo_ids.picking_id').ids),
-                    ('l10n_mx_edi_customs_number', '!=', False),
-                ])
-                if not landed_costs:
-                    continue
+        res = super()._l10n_mx_edi_add_invoice_cfdi_values(cfdi_values)
+        if cfdi_values.get("errors"):
+            return res
 
-                # keep the customs numbers and dates in the same order
-                customs_data = {(format_date(self.env, lc.date, date_format='yyyy-MM-dd'), lc.l10n_mx_edi_customs_number) for lc in landed_costs}
-                customs_dates, customs_numbers = zip(*customs_data) if customs_data else ([], [])
+        customs_dates = self._l10n_mx_edi_get_formatted_date_per_customs_number()
+        for line_values in cfdi_values['conceptos_list']:
+            record = line_values['line']['record']
+            if not record.l10n_mx_edi_can_use_customs_invoicing:
+                continue
+            customs_numbers = record._l10n_mx_edi_get_custom_numbers()
+            formatted_dates = ",".join([
+                customs_date for customs in customs_numbers
+                if (customs_date := customs_dates[customs])
+            ])
+            if formatted_dates:
+                line_values['description'] += _("\nCustoms Number Date: %s", formatted_dates)
 
-                line.l10n_mx_edi_customs_number = ','.join(customs_numbers)
-                formatted_dates = ','.join(customs_dates)
-                if formatted_dates:
-                    line.name += '\n' + _('Customs Number Date: %s', formatted_dates)
+        return res
 
-        return super()._post(soft)
+    def _l10n_mx_edi_get_formatted_date_per_customs_number(self):
+        self.ensure_one()
+        landed_costs = self.env["stock.landed.cost"].sudo().search_fetch(
+            [
+                ("l10n_mx_edi_customs_number", "in",
+                    self.invoice_line_ids.mapped("l10n_mx_edi_customs_number")),
+                ("state", "=", "done"),
+            ],
+            field_names=["date"]
+        )
+
+        customs_dates = {}
+        for lc in landed_costs:
+            customs_dates[lc.l10n_mx_edi_customs_number] = (
+                format_date(self.env, lc.date, date_format='yyyy-MM-dd')
+                if lc.date else ''
+            )
+        return customs_dates

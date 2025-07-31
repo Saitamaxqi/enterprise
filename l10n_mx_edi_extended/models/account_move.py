@@ -240,8 +240,7 @@ class AccountMoveLine(models.Model):
         'except in case of a consolidated customs initiated in the previous '
         'year of the original request for a rectification.\n'
         ' - 6 digits of the progressive numbering of the custom.',
-        string='Customs number',
-        copy=False)
+        string='Customs number')
     l10n_mx_edi_umt_aduana_id = fields.Many2one(
         comodel_name='uom.uom',
         string="UMT Aduana",

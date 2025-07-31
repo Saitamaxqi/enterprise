@@ -40,3 +40,22 @@ class StockLandedCost(models.Model):
                 raise ValidationError(self.env._(
                     "Error!, The format of the customs number is incorrect. \n%s\n"
                     "For example: 15  48  3009  0001234", help_message))
+
+    def button_validate(self):
+        res = super().button_validate()
+        for cost in self:
+            if cost.state != 'done' or cost.company_id.country_id.code != 'MX':
+                continue
+
+            lots = cost.picking_ids.move_line_ids.filtered(
+                lambda ml: (
+                    ml.product_id.l10n_mx_edi_can_use_customs_invoicing
+                    and ml.state == 'done'
+                    and not ml.lot_id.l10n_mx_edi_landed_cost_id
+                )
+            ).mapped("lot_id")
+
+            if lots:
+                lots.l10n_mx_edi_landed_cost_id = cost
+
+        return res
