@@ -196,7 +196,12 @@ class IrAttachment(models.Model):
 
         return chunks
 
-    def _ai_format(self, files_dict):
+    def _ai_read(self, fnames, files_dict):
+        """When attachments are inserted in a prompt, one send the files (or indexed contents) to
+        the LLMs.
+        """
+        if fnames:
+            return super()._ai_read(fnames, files_dict)
         vals = []
         for attachment in self:
             if attachment.checksum in files_dict:
@@ -253,4 +258,4 @@ class IrAttachment(models.Model):
                     'file_ref': file_ref
                 }
             vals.append({'id': attachment.id, 'file': file_ref})
-        return vals
+        return vals, files_dict

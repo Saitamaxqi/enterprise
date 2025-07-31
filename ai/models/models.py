@@ -141,15 +141,23 @@ class Model(models.AbstractModel):
     ################
     #  Extensions  #
     ################
-
-    def _ai_format(self, files_dict):
-        # meant to be overridden by models for which one wants to send more than just the
-        # display name or filter records to send (see mail.message for an example)
-        return self._ai_read(['display_name'], files_dict)
-
     def _ai_read(self, fnames, files_dict):
+        """Retrieve and format field values for LLM processing.
+        If no field names are given, return the display name.
+        This method can be overridden on any model that requires sending more than just the display
+        name when its records are included in a prompt (such as attachments).
+        Files are handled separately, as they must be sent independently to LLMs.
+
+        :param fnames: list of field names to read and format
+        :param files_dict: dict mapping file checksums to metadata dicts each with keys:
+            'mimetype', 'value', and 'file_ref'
+
+        :return: (vals_list, files_dict) where vals_list is a list of dicts mapping field names to
+            their formatted values with one dictionary per record, and files_dict is a dict mapping
+            file checksums to metadata dicts each with keys 'mimetype', 'value' and 'fileref'
+        """
         if not fnames:
-            return self._ai_format(files_dict)
+            fnames = ['display_name']  # by default, send display names
         vals_list = self.read(fnames, load=None)
         for fname in fnames:
             field = self._fields.get(fname)
@@ -160,7 +168,7 @@ class Model(models.AbstractModel):
                         ('res_field', '=', fname),
                         ('res_id', 'in', self.ids)  # ._origin?
                     ])
-                    attachments._ai_format(files_dict)  # populate the files_dict
+                    __, files_dict = attachments._ai_read(None, files_dict)  # populate file dict
                     attachments_by_resid = {att.res_id: att for att in attachments}
                     for vals in vals_list:
                         if not vals[fname] or (res_id := vals['id'] or vals['id'].origin) not in attachments_by_resid:
@@ -168,6 +176,8 @@ class Model(models.AbstractModel):
                         vals[fname] = files_dict[attachments_by_resid[res_id].checksum]['file_ref']
                 else:
                     for vals in vals_list:
+                        if not vals[fname]:
+                            continue
                         checksum = self.env['ir.attachment']._compute_checksum(vals[fname])
                         if checksum not in files_dict:
                             raw = base64.b64decode(vals[fname])
@@ -219,8 +229,8 @@ class Model(models.AbstractModel):
 
         for vals in vals_list:
             if not vals['id']:
-                vals['id'] = self._origin.id
-        return vals_list
+                vals['id'] = str(vals['id'])  # NewId is not JSON serializable
+        return vals_list, files_dict
 
     def _get_ai_context(self, field_paths):
         """ Get the context dict for a record given a list of field paths.
@@ -292,7 +302,7 @@ class Model(models.AbstractModel):
             records = self.env[model].browse(info['ids'])
             if model == self._name and not self.id:
                 records = records.filtered(lambda r: r.id != self._origin.id) | self  # unsaved changes
-            snapshot[model] = records._ai_read(info['fields'], files_dict)
+            snapshot[model], files_dict = records._ai_read(info['fields'], files_dict)
 
         return snapshot, list(files_dict.values())
 

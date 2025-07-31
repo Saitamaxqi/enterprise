@@ -254,11 +254,14 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
 
 
 def get_field_prompt_vals(env, field, field_prompt=None):
-    """Get the allowed values for the given field.
+    """Get the parsed prompt, the field paths inserted in the prompt and the allowed values for the
+    given field. If field_prompt is given, the values are obtained from this prompt instead of the
+    one defined on the field.
 
-    :param field: the field from which to obtain the allowed values
+    :param field: the field from which to get the values
+    :param field_prompt: prompt to use instead of the one defined on the field
 
-    :return: The allowed values if the field requires specific values
+    :return: (user_prompt, fields, allowed_values)
     """
     user_prompt, fields, allowed_values = parse_ai_prompt_values(env, field_prompt or field.ai, field.comodel_name)
     if field.type == 'selection':
@@ -267,11 +270,12 @@ def get_field_prompt_vals(env, field, field_prompt=None):
 
 
 def get_property_prompt_vals(env, property_definition):
-    """Get the allowed values for the given property field.
+    """Get the parsed prompt, the field paths inserted in the prompt and the allowed values for the
+    given property_definition.
 
-    :param property_definition: the property definition from which to obtain the allowed values
+    :param property_definition: the property definition from which to get the values
 
-    :return: the allowed values if the property requires specific values
+    :return: (user_prompt, fields, allowed_values)
     """
     property_type = property_definition.get('type')
     user_prompt = property_definition.get('system_prompt')
@@ -284,35 +288,71 @@ def get_property_prompt_vals(env, property_definition):
 
 
 def parse_ai_prompt_values(env, prompt, comodel, replace_prompt=True):
-    fields = set()
-    records = set()
+    """Parse the given prompt to extract the inserted field paths and record references.
+    Replace fields paths by {{path}} placeholders and records by their display names if
+    replace_prompt is True.
+
+    Considering the following prompt:
+    <p>
+        Based on the document <span data-ai-field="attachment_id">Content</span> and
+        <span data-ai-field="name">Name</span>, place it inside
+        <span data-ai-record-id="17">Finance</span> or <span data-ai-record-id="19">Billing</span>
+    </p>
+    Where
+    - "attachment_id" and "name" are inserted in the prompt by the end user with the /field command
+    and are extracted and returned by this method so that they can be validated (ensure read access
+    when the end user edits the prompt) or interpreted and added as context to the LLM to resolve
+    the user query.
+
+    - "Finance" and "Billing" records are inserted in the prompt by the end user with the /record
+    command and are extracted and returned by this method so that they can be validated (ensure
+    read access when the end user edits the prompt) or added as allowed values when resolving the
+    user query (for relational fields)
+
+    The method will return (prompt, field_paths, formatted_allowed_records|inserted_record_ids) as
+    follows:
+    - prompt: either the original prompt, either a cleaned prompt (field path replaced by brackets,
+        html to text, records replaced by their display names) based on replace_prompt
+    - field_paths: list of field paths from the prompt (from example: ['attachment_id', 'name'])
+    - formatted_allowed_records: dict of allowed existing records from the prompt formatted with
+        :meth:`_ai_format_records` if replace_prompt is True
+    - inserted_record_ids: set of record ids inserted in the prompt, if replace_prompt is False
+        (used for validation, should not filter non-existing records to raise missing errors)
+    """
     tree = html.fromstring(prompt)
 
-    for el in tree.xpath('//span[@data-ai-field]'):
-        field_path = el.attrib.get('data-ai-field')
+    prompt_fields = set()
+    for prompt_field_element in tree.xpath('//span[@data-ai-field]'):
+        field_path = prompt_field_element.attrib.get('data-ai-field')
         if replace_prompt:
             if field_path:
-                el.text = f"{{{{{field_path}}}}}"
+                prompt_field_element.text = f"{{{{{field_path}}}}}"
             else:
-                el.drop_tree()
-        fields.add(field_path)
+                prompt_field_element.drop_tree()
+        prompt_fields.add(field_path)
 
+    inserted_record_ids = set()
+    formatted_allowed_records = {}
     if comodel:
-        els = tree.xpath('//span[@data-ai-record-id]')
-        records = {int(i) for el in els if (i := el.attrib.get('data-ai-record-id'))}
+        inserted_record_elements = tree.xpath('//span[@data-ai-record-id]')
+        inserted_record_ids = {
+            int(record_id)
+            for inserted_record_element
+            in inserted_record_elements
+            if (record_id := inserted_record_element.attrib.get('data-ai-record-id'))
+        }
         if replace_prompt:
-            records = {r.id: r for r in env[comodel].browse(records).exists()}
-            for el in els:
-                if record := records.get(int(el.attrib.get('data-ai-record-id'))):
-                    el.text = record.display_name
+            allowed_records_by_id = env[comodel].browse(inserted_record_ids).exists().grouped("id")
+            for inserted_record_element in inserted_record_elements:
+                if allowed_record := allowed_records_by_id.get(int(inserted_record_element.attrib.get('data-ai-record-id'))):
+                    inserted_record_element.text = allowed_record._ai_truncate(allowed_record.display_name)
                 else:
-                    el.drop_tree()
-
-            records = env[comodel].browse(records)._ai_format_records()
+                    inserted_record_element.drop_tree()
+            formatted_allowed_records = env[comodel].browse(allowed_records_by_id.keys())._ai_format_records()
 
     if replace_prompt:
-        return html_to_inner_content(html.tostring(tree, encoding='unicode')), fields, records
-    return prompt, fields, records
+        return html_to_inner_content(html.tostring(tree, encoding='unicode')), prompt_fields, formatted_allowed_records
+    return prompt, prompt_fields, inserted_record_ids
 
 
 def parse_ai_response(response, field_type, allowed_values):
