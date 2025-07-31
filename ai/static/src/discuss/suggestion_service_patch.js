@@ -6,7 +6,7 @@ patch(SuggestionService.prototype, {
     /** @override */
     searchSuggestions({ delimiter, term }, { thread } = {}) {
         if (
-            ["ai_composer", "ai_chat"].includes(thread.channel_type) &&
+            ["ai_composer", "ai_chat"].includes(thread?.channel_type) &&
             ["#", "@"].includes(delimiter)
         ) {
             return {
