@@ -2,5 +2,6 @@
 
 from . import common
 from . import test_hsbc_autopay_file
+from . import test_severance_payment
 from . import test_salary_rules
 from . import test_payment_in_lieu_of_notice

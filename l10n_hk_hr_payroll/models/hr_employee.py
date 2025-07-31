@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 import re
+
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
@@ -71,12 +72,6 @@ class HrEmployee(models.Model):
         compute='_compute_l10n_hk_rentals_count',
         groups="hr.group_hr_user",
     )
-    l10n_hk_years_of_service = fields.Float(
-        string="Years of Service",
-        compute="_compute_l10n_hk_years_of_service",
-        digits=(16, 2),
-        groups="hr.group_hr_user",
-    )
 
     # Autopay fields
     l10n_hk_autopay_account_type = fields.Selection(
@@ -121,13 +116,32 @@ class HrEmployee(models.Model):
 
         super(HrEmployee, self - hk_employees)._compute_legal_name()
 
-    @api.depends('version_ids', 'contract_date_start')
-    def _compute_l10n_hk_years_of_service(self):
-        for employee in self:
-            contracts = employee.version_ids.sorted('date_start', reverse=True)
-            if contracts:
-                contract_end_date = contracts[0].date_end or fields.Date.today()
-                employee.l10n_hk_years_of_service = ((contract_end_date - employee.contract_date_start).days + 1) / 365
+    @api.model
+    def _get_years_of_service(self, period_start_date, period_end_date):
+        """
+        Calculates years of service according to the HK statutory methodology.
+
+        This involves:
+        1. Counting the number of full years of service.
+        2. Prorating the remaining incomplete year by dividing the remaining days of service
+           by the actual number of days in that specific annual cycle (365 or 366).
+        :return: a float representing the number of years of service.
+        """
+        if period_start_date > period_end_date:
+            return 0
+
+        full_years = relativedelta(period_end_date, period_start_date).years
+        last_anniversary_date = period_start_date + relativedelta(years=full_years)
+
+        remaining_days = (period_end_date - last_anniversary_date).days + 1
+
+        # The divisor is the total number of days in the 12-month cycle of the
+        # incomplete year. For example, if the last anniversary was May 1, 2027,
+        # this cycle is May 1, 2027, to April 30, 2028.
+        next_anniversary_date = last_anniversary_date + relativedelta(years=1)
+        days_in_pro_rata_year = (next_anniversary_date - last_anniversary_date).days
+
+        return full_years + (remaining_days / days_in_pro_rata_year)
 
     @api.depends('l10n_hk_rental_ids')
     def _compute_l10n_hk_rentals_count(self):
