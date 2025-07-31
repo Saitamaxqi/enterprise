@@ -15,10 +15,8 @@
         <field name="model">iot.box</field>
         <field name="inherit_id" ref="iot.iot_box_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//sheet/div[1]" position="inside">
-                <group>
-                    <field name="associated_pos_config_ids" widget="many2many_tags" invisible="not associated_pos_config_ids"/>
-                </group>
+            <xpath expr="//sheet/group/group/field[@name='company_id']" position="before">
+                <field name="associated_pos_config_ids" widget="many2many_tags" invisible="not associated_pos_config_ids"/>
             </xpath>
             <xpath expr="//notebook/page[1]/field[1]/list" position="inside">
                 <field name="associated_pos_config_ids" widget="many2many_tags"/>
