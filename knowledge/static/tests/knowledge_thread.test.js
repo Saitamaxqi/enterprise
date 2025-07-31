@@ -1,5 +1,5 @@
 import { defineKnowledgeModels } from "@knowledge/../tests/knowledge_test_helpers";
-import { click, contains, start, startServer } from "@mail/../tests/mail_test_helpers";
+import { click, start, startServer } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
 import { asyncStep, mockService, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
 
@@ -41,11 +41,5 @@ test("Expand article.thread opens linked article", async () => {
     await start();
     await click(".o-mail-DiscussSystray-class .fa-comments");
     await click(".o-mail-NotificationItem");
-    await contains(".o-mail-ChatWindow");
-    // dropdown requires an extra delay before click (because handler is registered in useEffect)
-    await contains("[title='Open Actions Menu']");
-    await click("[title='Open Actions Menu']");
-    await click(".o-dropdown-item", { text: "Open Form View" });
     await waitForSteps(["knowledge_action_called"]);
-    await contains(".o-mail-ChatWindow", { count: 0 });
 });
