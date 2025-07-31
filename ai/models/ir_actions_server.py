@@ -218,7 +218,7 @@ class IrActionsServer(models.Model):
             action_prompt += "\n" + _(
                 "The current record is {'model': {%(model)s, 'id': %(id)s}",
                 model=record._name,
-                id=record._origin.id,
+                id=record.id,
             )
 
         if isinstance(record, self.pool['mail.thread']):

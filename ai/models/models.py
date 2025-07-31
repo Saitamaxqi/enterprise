@@ -162,7 +162,7 @@ class Model(models.AbstractModel):
         for fname in fnames:
             field = self._fields.get(fname)
             if field.type in ('binary', 'image'):
-                if field.attachment and (len(self) > 1 or self._origin.id):  # attachment is not created yet in quick creation
+                if field.attachment and self.ids:  # attachment is not created yet in quick creation
                     attachments = self.env['ir.attachment'].search([
                         ('res_model', '=', self._name),
                         ('res_field', '=', fname),
@@ -269,7 +269,7 @@ class Model(models.AbstractModel):
 
         def _map_to_models(records, path):
             model = records._name
-            ids = OrderedSet(records.ids)
+            ids = OrderedSet(records._ids)
             if model not in models:
                 models[model] = {'fields': OrderedSet(), 'ids': ids}
             else:
@@ -300,8 +300,6 @@ class Model(models.AbstractModel):
         files_dict = {}  # files are sent separately to LLMs
         for model, info in models.items():
             records = self.env[model].browse(info['ids'])
-            if model == self._name and not self.id:
-                records = records.filtered(lambda r: r.id != self._origin.id) | self  # unsaved changes
             snapshot[model], files_dict = records._ai_read(info['fields'], files_dict)
 
         return snapshot, list(files_dict.values())

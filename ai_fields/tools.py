@@ -158,7 +158,7 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
 
     if context_dict:
         user_prompt += f"\n# Context Dict\n{json.dumps(context_dict, ensure_ascii=False, indent=2)}"
-        user_prompt += f"\nThe current record is {{'model': {record._name}, 'id': {record._origin.id}}}"
+        user_prompt += f"\nThe current record is {{'model': {record._name}, 'id': {record.id}}}"
 
     web_search_params = {
         'user_location':
