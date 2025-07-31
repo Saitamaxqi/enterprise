@@ -6,9 +6,7 @@
         <field name="name">Public Appointments</field>
         <field name="model_id">appointment.type</field>
         <field name="user_ids" eval="False"/>
-        <field name="domain">[
-            '|', ('end_datetime', '=', False), ('end_datetime', '>=', datetime.datetime.now())
-        ]</field>
+        <field name="domain">['|', ('end_datetime', '=', False), ('end_datetime', '&gt;=', 'now')]</field>
     </record>
 
     <record id="website_snippet_filter_appointments" model="website.snippet.filter">
