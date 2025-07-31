@@ -71,6 +71,23 @@ const getProgressBars = () => ({
                 ["2022-10-14 11:00:00", "2022-10-14 15:00:00"],
             ],
         },
+        2: {
+            value: 4,
+            max_value: 40,
+            employee_id: 2,
+            is_flexible_hours: true,
+            work_intervals: [],
+            avg_hours: 8,
+        },
+        3: {
+            value: 4,
+            max_value: 40,
+            employee_id: 3,
+            is_flexible_hours: true,
+            is_fully_flexible_hours: true,
+            work_intervals: [],
+            avg_hours: 24,
+        }
     },
 });
 
@@ -1073,4 +1090,78 @@ test("planning gantt view: print", async () => {
     await animationFrame();
     await click(".o_gantt_button_print");
     expect.verifySteps(["action_print_plannings()"]);
+});
+
+test("allocated percentage according to user work schedule ", async () => {
+    mockDate("2022-10-10 00:00:00", +1);
+    ResourceResource._records = [
+        {id: 1, name: "Itachi", resource_type: "user"},
+        {id: 2, name: "Levi", resource_type: "user"},
+        {id: 3, name: "Tanjiro", resource_type: "user"},
+    ];
+    PlanningSlot._records = [
+        // Normal Resource
+        {
+            id: 1,
+            name: "Normal Shift",
+            start_datetime: "2022-10-11 06:00:00",
+            end_datetime: "2022-10-11 08:00:00",
+            resource_id: 1,
+            allocated_percentage: 100,
+        },
+        // Flexible Resource
+        {
+            id: 2,
+            name: "Flexible Shift",
+            start_datetime: "2022-10-12 07:00:00",
+            end_datetime: "2022-10-12 11:00:00",
+            resource_id: 2,
+            allocated_hours: 4,
+            allocated_percentage: 100,
+        },
+        // Fully Flexible Resource
+        {
+            id: 3,
+            name: "Fully Flexible Shift",
+            start_datetime: "2022-10-13 06:00:00",
+            end_datetime: "2022-10-13 10:00:00",
+            resource_id: 3,
+            allocated_hours: 4,
+            allocated_percentage: 100,
+        },
+    ];
+    onRpc("get_gantt_data", ({ parent }) => {
+        const result = parent();
+        result.progress_bars = getProgressBars();
+        return result;
+    });
+    await mountGanttView({
+        resModel: "planning.slot",
+        arch: `
+            <gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" total_row="1" default_range="week"
+                precision="{'day': 'hour:full', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}" display_unavailability="1" progress_bar="resource_id"
+            >
+                <field name="allocated_percentage"/>
+                <field name="allocated_hours"/>
+                <field name="resource_id"/>
+                <field name="employee_id"/>
+                <field name="name"/>
+            </gantt>
+        `,
+        groupBy: ["resource_id","name"],
+    });
+    const groupPillHeaders = queryAll(".o_gantt_group_pill");
+    expect(groupPillHeaders.length).toBe(3);
+    expect(groupPillHeaders[0].lastChild).toHaveText("02:00 (40%)", {
+        message:
+            "The grouped pill occupancy percentage should be 40% because a shift of 5 hours was allocated and we expect 2 working hours on Tuesday",
+    });
+    expect(groupPillHeaders[1].lastChild).toHaveText("04:00 (50%)", {
+        message:
+            "The grouped pill occupancy percentage should be 50% because a shift of 8 hours was allocated and we expect 4 working hours on Wednesday",
+    });
+    expect(groupPillHeaders[2].lastChild).toHaveText("04:00 (17%)", {
+        message:
+            "The grouped pill occupancy percentage should be 17% because a shift of 24 hours was allocated and we expect 4 working hours on Thursday",
+    });
 });

@@ -418,7 +418,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
         const resource_id = this.row.resId;
         // If flexible hour contract, colour the gantt view group based on whether the aggregate value > the "average work hours" per day.
         if (this.isFlexibleHours(resource_id)) {
-            workHours = this.model.data.progressBars.resource_id[resource_id]?.work_intervals;
+            workHours = this.model.data.progressBars.resource_id[resource_id]?.avg_hours;
         } else {
             workHours = this.model.data.progressBars.resource_id[resource_id]?.work_intervals.reduce(
                 (sum, [ intervalStart, intervalEnd ]) => {
