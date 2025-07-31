@@ -1169,6 +1169,11 @@ class AccountBankStatementLine(models.Model):
         if record_data.get('tax_ids'):
             self._recompute_tax_lines()
 
+        edited_line = self.line_ids - (liquidity_lines + other_lines)
+        # Means that we tried to remove the partner
+        if 'partner_id' in record_data and not record_data['partner_id']:
+            edited_line.partner_id = False
+
     def _recompute_tax_lines(self):
         self.ensure_one()
         liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()

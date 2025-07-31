@@ -1974,3 +1974,16 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         self.assert_invoice_outstanding_reconciled_widget(invoice_2, {
             statement_line.move_id.id: 100,
         })
+
+    def test_remove_partner_from_set_account_line(self):
+        st_line = self._create_st_line(100.0, update_create_date=False, partner_id=self.partner_a.id)
+        st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, self.account_revenue_1.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': self.account_revenue_1.id, 'partner_id': self.partner_a.id, 'balance': -100.0, 'reconciled': False},
+        ])
+        st_line.edit_reconcile_line(st_line.line_ids[-1].id, {'partner_id': False})
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': self.account_revenue_1.id, 'partner_id': False, 'balance': -100.0, 'reconciled': False},
+        ])
