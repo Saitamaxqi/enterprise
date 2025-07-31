@@ -1,36 +1,40 @@
 import { expect, test } from "@odoo/hoot";
-import { contains } from "@web/../tests/web_test_helpers";
-import { defineWebsiteModels, setupWebsiteBuilder } from "@website/../tests/builder/website_helpers";
+import { contains, webModels } from "@web/../tests/web_test_helpers";
 import { patch } from "@web/core/utils/patch";
-import { IrModel } from "@web/../tests/_framework/mock_server/mock_models/ir_model";
+import {
+    defineWebsiteModels,
+    setupWebsiteBuilder,
+} from "@website/../tests/builder/website_helpers";
 
-const formSpecRecords = [{
-    id: 123,
-    model: "website_studio.custom_stuff",
-    name: "Custom stuff",
-    state: "base",
-    website_form_access: true,
-    website_form_label: "Create some stuff",
-    website_form_key: "website_studio.stuff",
-},
-{
-    id: 85,
-    model: "res.partner",
-    name: "Contact",
-    state: "base",
-    website_form_label: "Create a Customer",
-    website_form_key: "create_customer",
-},
-{
-    id: 184,
-    model: "mail.mail",
-    name: "Outgoing Mails",
-    state: "base",
-    website_form_label: "Send an E-mail",
-    website_form_key: "send_mail",
-}];
+const formSpecRecords = [
+    {
+        id: 123,
+        model: "website_studio.custom_stuff",
+        name: "Custom stuff",
+        state: "base",
+        website_form_access: true,
+        website_form_label: "Create some stuff",
+        website_form_key: "website_studio.stuff",
+    },
+    {
+        id: 85,
+        model: "res.partner",
+        name: "Contact",
+        state: "base",
+        website_form_label: "Create a Customer",
+        website_form_key: "create_customer",
+    },
+    {
+        id: 184,
+        model: "mail.mail",
+        name: "Outgoing Mails",
+        state: "base",
+        website_form_label: "Send an E-mail",
+        website_form_key: "send_mail",
+    },
+];
 
-patch(IrModel.prototype, {
+patch(webModels.IrModel.prototype, {
     get_compatible_form_models() {
         return formSpecRecords;
     },
@@ -61,7 +65,7 @@ patch(IrModel.prototype, {
         }
         expect.step(`webSave ${ids} ${JSON.stringify(values)}`);
         return result;
-    }
+    },
 });
 
 defineWebsiteModels();
@@ -106,15 +110,15 @@ test("form access is in history", async () => {
     expect("[data-action-id='studioToggleFormAccess'] input:checked").toHaveCount(1);
     // Check history
     await contains(".fa-undo").click();
-    expect.verifySteps(['webSave 123 {"website_form_access":false}',]);
+    expect.verifySteps(['webSave 123 {"website_form_access":false}']);
     expect("[data-action-id='studioToggleFormAccess'] input:not(:checked)").toHaveCount(1);
     await contains(".fa-undo").click();
-    expect.verifySteps(['webSave 123 {"website_form_access":true}',]);
+    expect.verifySteps(['webSave 123 {"website_form_access":true}']);
     expect("[data-action-id='studioToggleFormAccess'] input:checked").toHaveCount(1);
     await contains(".fa-repeat").click();
-    expect.verifySteps(['webSave 123 {"website_form_access":false}',]);
+    expect.verifySteps(['webSave 123 {"website_form_access":false}']);
     expect("[data-action-id='studioToggleFormAccess'] input:not(:checked)").toHaveCount(1);
     await contains(".fa-repeat").click();
     expect("[data-action-id='studioToggleFormAccess'] input:checked").toHaveCount(1);
-    expect.verifySteps(['webSave 123 {"website_form_access":true}',]);
+    expect.verifySteps(['webSave 123 {"website_form_access":true}']);
 });
