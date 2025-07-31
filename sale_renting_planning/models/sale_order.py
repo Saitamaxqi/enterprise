@@ -13,6 +13,7 @@ class SaleOrder(models.Model):
                 ['sale_order_id'],
                 ['id:recordset'],
             )
+            open_shifts = self.env['planning.slot']
             for rental_order, slots in slots_per_rental_order:
                 slots_to_update = slots.filtered(
                     lambda s: s.start_datetime != rental_order.rental_start_date or s.end_datetime != rental_order.rental_return_date
@@ -21,6 +22,9 @@ class SaleOrder(models.Model):
                     'start_datetime': rental_order.rental_start_date,
                     'end_datetime': rental_order.rental_return_date,
                 })
+                open_shifts += slots.filtered(lambda s: not s.resource_id)
+            if open_shifts:
+                open_shifts._set_slot_resource()
         return sale_orders
 
     def write(self, vals):

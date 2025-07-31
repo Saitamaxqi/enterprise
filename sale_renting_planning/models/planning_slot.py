@@ -1,8 +1,13 @@
+import pytz
+
 from ast import literal_eval
+from collections import defaultdict
+from random import shuffle
 
 from odoo import Command, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import float_compare
+from odoo.tools.intervals import Intervals
 
 
 class PlanningSlot(models.Model):
@@ -89,8 +94,11 @@ class PlanningSlot(models.Model):
                 'is_rental': True,
                 'product_uom_qty': 1,
                 'order_id': order.id,
+                'planning_slot_ids': self.ids,
             })
         self.state = 'published'
+        if not self.resource_id:
+            self._set_slot_resource()
         if not (order.rental_start_date == self.start_datetime and order.rental_return_date == self.end_datetime):
             min_start_datetime, max_end_datetime = self.env['planning.slot']._read_group(
                 [('sale_order_id', '=', order.id)],
@@ -111,3 +119,59 @@ class PlanningSlot(models.Model):
                 'message': self.env._('Shift added to last order'),
             },
         }
+
+    def _set_slot_resource(self):
+        # ensure role id is correctly set
+        for slot in self:
+            if not slot.role_id and slot.sale_line_id:
+                slot.role_id = slot.sale_line_id.sudo().product_id.planning_role_id
+        resources_per_role = dict(
+            self.env['resource.resource']._read_group(
+                [('role_ids', 'in', self.role_id.ids)],
+                ['role_ids'],
+                ['id:recordset'],
+            )
+        )
+        available_resources = self.role_id.resource_ids
+        if not available_resources:
+            return
+
+        def get_utc_timezone(utc_datetime):
+            return pytz.utc.localize(utc_datetime)
+
+        min_start_datetime = min(self.mapped('start_datetime'))
+        max_end_datetime = max(self.mapped('end_datetime'))
+        slots_per_resource = self.env['planning.slot']._read_group([
+            ('resource_id', 'in', available_resources.ids),
+            ('start_datetime', '<=', max_end_datetime),
+            ('end_datetime', '>=', min_start_datetime),
+        ], ['resource_id'], ['id:recordset'])
+        unavailable_intervals_per_resource = defaultdict(Intervals)
+        for resource, slots in slots_per_resource:
+            unavailable_intervals_per_resource[resource.id] |= Intervals([(get_utc_timezone(s.start_datetime), get_utc_timezone(s.end_datetime), s) for s in slots])
+        work_intervals_per_resource, _dummy = available_resources._get_valid_work_intervals(get_utc_timezone(min_start_datetime), get_utc_timezone(max_end_datetime))
+        problematic_shifts = self.env['planning.slot']
+        for slot in self:
+            slot_interval = Intervals([(get_utc_timezone(slot.start_datetime), get_utc_timezone(slot.end_datetime), slot)])
+            resources = resources_per_role.get(slot.role_id, self.env['resource.resource'])
+            free_resources = []
+            for resource in resources:
+                work_intervals = work_intervals_per_resource[resource.id]
+                unavailable_intervals = unavailable_intervals_per_resource.get(resource.id, Intervals())
+                if not (unavailable_intervals & slot_interval) and (work_intervals & slot_interval):
+                    free_resources.append(resource)
+
+            shuffle(free_resources)
+
+            resource = self.env['resource.resource']
+            if free_resources:
+                slot.resource_id = free_resources[0]
+            else:
+                problematic_shifts += slot
+        if problematic_shifts:
+            raise ValidationError(
+                self.env._(
+                    "No resources are available for the shifts in: %s.",
+                    ", ".join(problematic_shifts.sale_line_id.product_id.mapped('name'))
+                )
+            )
