@@ -22,8 +22,10 @@
                     <field name="return_type_category"/>
                     <field name="manually_created"/>
                     <field name="visible_states"/>
+                    <field name="active" invisible="1"/>
 
                     <t t-name="card" class="p-0 w-100">
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="not context.get('in_checks_view') or active"/>
                         <div class="w-100 p-2 px-3" >
                             <div class="row h-full position-relative">
                                 <div class="col-12 col-lg-3">
@@ -50,9 +52,16 @@
                                     </div>
                                 </div>
 
-                                <div id="account_tax_return_amount" class="col-12 col-lg-2 px-lg-0 d-flex align-items-center">
+                                <div id="account_tax_return_amount" class="col-12 col-lg-2 px-lg-0 d-flex align-items-center text-end">
                                     <field name="amount_to_pay_currency_id" invisible="1"/>
-                                    <h2 id="return_amount_to_pay" class="o_account_return_amount" invisible="not show_amount_to_pay or not is_main_company_active or return_type_category == 'audit'"><field name="amount_to_pay"/></h2>
+                                    <div id="return_amount_to_pay" invisible="not show_amount_to_pay or not is_main_company_active or return_type_category == 'audit'">
+                                        <h2 class="o_account_return_amount o_field_widget">
+                                            <field name="period_amount_to_pay"/>
+                                        </h2>
+                                        <span class="oe_stat_text text-black-50 fs-5 fw-bold" t-att-class="{'invisible': record.total_amount_to_pay.raw_value == record.period_amount_to_pay.raw_value}" invisible="context.get('in_checks_view') and total_amount_to_pay == period_amount_to_pay">
+                                                Balance <field name="total_amount_to_pay"/>
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <!-- States bar -->
@@ -88,7 +97,7 @@
                                     <t t-if="0">
                                     </t>
                                     <t id="default_buttons" t-else="">
-                                        <button invisible="not context.get('in_checks_view') or next_state != 'reviewed' or is_completed or not is_main_company_active or unresolved_check_count" class="btn btn-primary" type="object" name="action_validate">Validate</button>
+                                        <button invisible="not context.get('in_checks_view') or next_state != 'reviewed' or is_completed or not is_main_company_active or unresolved_check_count or not active" class="btn btn-primary" type="object" name="action_validate">Validate</button>
                                         <button invisible="not context.get('in_checks_view') or not type_external_id or next_state != 'paid' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_pay">Pay</button>
                                     </t>
 
@@ -98,9 +107,10 @@
                                         </button>
 
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" role="menu">
-                                            <a invisible="state != 'new' or is_completed or (type_external_id == 'account_reports.annual_corporate_tax_return_type')" class="dropdown-item" type="object" name="action_mark_completed" string="Mark as Completed"/>
+                                            <a invisible="state != 'new' or is_completed or (type_external_id == 'account_reports.annual_corporate_tax_return_type') or not active" class="dropdown-item" type="object" name="action_mark_completed" string="Mark as Completed"/>
                                             <a invisible="not has_move_entries or state not in ('reviewed', 'submitted', 'paid')" class="dropdown-item" type="object" name="action_view_entry" string="View Entry"/>
-
+                                            <a invisible="context.get('in_checks_view') or not active or state != 'new' or is_completed" class="dropdown-item" type="object" name="action_archive" string="Archive"/>
+                                            <a invisible="active" class="dropdown-item" type="object" name="action_unarchive" string="Unarchive"/>
                                             <a invisible="context.get('in_checks_view') or not (manually_created and state == 'new')" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
 
                                             <!-- Reset should be last-->
@@ -148,10 +158,12 @@
                     <field name="type_id"/>
                     <field name="state"/>
                     <field name="date_submission"/>
-                    <filter name="unarchived_returns" string="Unarchived" domain="[('is_completed', '=', False)]"/>
-                    <filter name="archived_returns" string="Archived" domain="[('is_completed', '!=', False)]"/>
                     <filter name="todo_returns" string="To Do" domain="[('is_completed', '=', False), ('date_to', '&lt;', 'today')]"/>
                     <filter name="done_returns" string="Done" domain="[('is_completed', '=', True)]"/>
+                    <separator/>
+                    <filter name="date_deadline_filter" string="Deadline" date="date_deadline"/>
+                    <separator/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
                     <filter name="groupby_deadline" string="Deadline" context="{'group_by': 'date_deadline:month'}"/>
                     <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
                     <separator/>

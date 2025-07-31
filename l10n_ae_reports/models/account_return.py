@@ -86,15 +86,10 @@ class AccountReturn(models.Model):
             move = self._create_accounting_entry(options['date'], tax_amount, self.company_id, expenses_account, liabilities_account)
         move.action_post()
 
-    def _evaluate_amount_to_pay_from_tax_closing_accounts(self):
-        # OVERRIDE: account_reports account.return
-        liabilities_account = self.company_id.l10n_ae_tax_report_liabilities_account
-        assets_account = self.company_id.l10n_ae_tax_report_asset_account
-
-        amount = -sum(
-            aml.balance
-            for aml in self.closing_move_ids.line_ids
-            if (aml.account_id == liabilities_account and aml.credit) or (aml.account_id == assets_account and aml.debit)
-        )
-
-        return self.amount_to_pay_currency_id.round(amount)
+    def _get_tax_closing_payable_and_receivable_accounts(self):
+        # EXTEND: account_reports account.return
+        if self.type_external_id == 'l10n_ae_reports.ae_corporate_tax_return_type':
+            liabilities_account = self.company_id.l10n_ae_tax_report_liabilities_account
+            assets_account = self.company_id.l10n_ae_tax_report_asset_account
+            return liabilities_account, assets_account
+        return super()._get_tax_closing_payable_and_receivable_accounts()

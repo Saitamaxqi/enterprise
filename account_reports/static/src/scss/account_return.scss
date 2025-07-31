@@ -110,6 +110,10 @@
         position: relative;
 
         .kanban_return_card {
+            margin: 0px 0px 40px;
+            .o_widget_web_ribbon {
+                z-index: 5;
+            }
             .o_kanban_record {
                 border-top: none;
             }

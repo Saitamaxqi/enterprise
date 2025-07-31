@@ -74,7 +74,7 @@ class AccountReturn(models.Model):
     def _get_pay_wizard(self):
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
             # If the amount is to be recovered, we don't want to open the wizard and just continue to the next state
-            if self.amount_to_pay_currency_id.compare_amounts(self.amount_to_pay, 0) == -1:
+            if self.amount_to_pay_currency_id.compare_amounts(self.total_amount_to_pay, 0) == -1:
                 return
 
             vat_pay_wizard = self.env['l10n_be_reports.vat.pay.wizard'].create([{
@@ -107,13 +107,13 @@ class AccountReturn(models.Model):
                 'return_id': self.id,
             }
 
-            if not self.amount_to_pay_currency_id.is_zero(self.amount_to_pay):
-                create_vals['amount_to_pay'] = self.amount_to_pay
+            if not self.amount_to_pay_currency_id.is_zero(self.total_amount_to_pay):
+                create_vals['amount_to_pay'] = self.total_amount_to_pay
                 # Reset amount to pay as we only save it for opening the wizard
                 # We need to reset it so the compute can work correctly
-                self.amount_to_pay = 0
+                self.total_amount_to_pay = 0
             elif account_return:
-                create_vals['amount_to_pay'] = account_return.amount_to_pay
+                create_vals['amount_to_pay'] = account_return.total_amount_to_pay
 
             wizard = self.env['l10n_be_reports.isoc.prepayment.pay.wizard'].create(create_vals)
 

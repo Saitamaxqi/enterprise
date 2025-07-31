@@ -22,7 +22,7 @@ class AccountReturnGenericPaymentWizard(models.TransientModel):
     @api.depends('return_id')
     def _compute_amount_to_pay(self):
         for wizard in self:
-            wizard.amount_to_pay = wizard.return_id.amount_to_pay
+            wizard.amount_to_pay = wizard.return_id.total_amount_to_pay
 
     @api.depends('amount_to_pay')
     def _compute_is_recoverable(self):

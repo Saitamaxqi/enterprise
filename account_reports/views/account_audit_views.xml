@@ -47,8 +47,10 @@
 
                     <t t-name="menu" class="py-2">
                         <field name="is_completed" invisible="1"/>
-                        <a class="dropdown-item" type="object" name="action_mark_completed" string="Archive" invisible="is_completed"/>
-                        <a class="dropdown-item" type="object" name="action_mark_uncompleted" string="Unarchive" invisible="not is_completed"/>
+                        <a class="dropdown-item" type="object" name="action_mark_completed" string="Mark as Completed" invisible="is_completed"/>
+                        <a class="dropdown-item" type="object" name="action_mark_uncompleted" string="Reset" invisible="not is_completed"/>
+                        <a class="dropdown-item" type="object" name="action_archive" string="Archive" invisible="state != 'new' or is_completed or not active"/>
+                        <a class="dropdown-item" type="object" name="action_unarchive" string="Unarchive" invisible="active"/>
                         <a invisible="state != 'new'" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
                     </t>
                 </kanban>
@@ -71,7 +73,7 @@
                     <filter name="done_returns" string="Done" domain="[('audit_status', '=', 'done')]"/>
                     <filter name="paused_returns" string="Paused" domain="[('audit_status', '=', 'paused')]"/>
                     <separator/>
-                    <filter name="archived_returns" string="Archived" domain="[('is_completed', '!=', False)]"/>
+                    <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
                     <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
                     <separator/>
                     <filter invisible="1" string="My Activities" name="filter_activities_my" domain="[('activity_user_id', '=', uid)]"/>
@@ -98,7 +100,7 @@
             <field name="domain">[('return_type_category', '=', 'audit')]</field>
             <field name="view_id" ref="account_reports.account_audit_kanban_view"/>
             <field name="search_view_id" ref="account_reports.account_audit_search_view"/>
-            <field name="context">{'search_default_unarchived_returns': 1}</field>
+            <field name="context">{'search_default_todo_returns': 1, 'search_default_paused_returns': 1}</field>
         </record>
 
         <!-- Account Balances -->

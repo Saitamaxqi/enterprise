@@ -20,6 +20,7 @@
                         <t t-name="card" class="o_return_check_kanban_card" >
                             <t t-set="result" t-value="record.result.raw_value"/>
                             <t t-set="bypassed" t-value="record.bypassed.raw_value"/>
+                            <t t-set="is_return_active" t-value="record.is_return_active.raw_value" />
                             <t t-if="result === 'success' || bypassed">
                                 <t t-set="color" t-value="'green'"/>
                             </t>
@@ -55,12 +56,12 @@
                                     </div>
                                     <div class="col-12 col-md-4 h-full d-flex justify-content-end align-items-center my-auto">
                                         <field name="approver_supervisor_ids" widget="kanban.many2many_avatar_user_approver" readonly="True" class="mt-1 me-2"/>
-                                        <button string="Validate" name="action_validate_check" invisible="result == 'success' or approver_id or type == 'file'" type="object" class="btn btn-secondary me-2" />
-                                        <button string="Supervise" name="action_validate_check" invisible="not show_supervise or type == 'file'" type="object" class="btn btn-secondary me-2"/>
-                                        <button string="Invalidate" name="action_invalidate_check" invisible="not show_invalidate or type == 'file'" type="object" class="btn btn-secondary me-2"/>
-                                        <widget invisible="type != 'file' or attachment_ids" name="account_return_check_file_uploader"/>
-                                        <widget invisible="type != 'file' or not attachment_ids" name="account_return_check_attachment_viewer"/>
-                                        <button invisible="type != 'file' or not attachment_ids" type="object" class="btn-link fa-lg text-dark ms-1" title="delete" icon="fa-trash" name="action_unlink_attachments"/>
+                                        <button string="Validate" name="action_validate_check" invisible="result == 'success' or approver_id or type == 'file' or not is_return_active" type="object" class="btn btn-secondary me-2" />
+                                        <button string="Supervise" name="action_validate_check" invisible="not show_supervise or type == 'file' or not is_return_active" type="object" class="btn btn-secondary me-2"/>
+                                        <button string="Invalidate" name="action_invalidate_check" invisible="not show_invalidate or type == 'file' or not is_return_active" type="object" class="btn btn-secondary me-2"/>
+                                        <widget invisible="type != 'file' or attachment_ids or not is_return_active" name="account_return_check_file_uploader"/>
+                                        <widget invisible="type != 'file' or not attachment_ids or not is_return_active" name="account_return_check_attachment_viewer"/>
+                                        <button invisible="type != 'file' or not attachment_ids or not is_return_active" type="object" class="btn-link fa-lg text-dark ms-1" title="delete" icon="fa-trash" name="action_unlink_attachments"/>
                                     </div>
                                 </div>
                             </div>

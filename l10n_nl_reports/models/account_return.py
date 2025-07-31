@@ -19,7 +19,7 @@ class AccountReturn(models.Model):
                 'company_id': self.company_id.id,
                 'partner_bank_id': self.type_id.payment_partner_bank_id.id,
                 'currency_id': self.amount_to_pay_currency_id.id,
-                'amount_to_pay': self.amount_to_pay,
+                'amount_to_pay': self.total_amount_to_pay,
                 'return_id': self.id,
             })
 

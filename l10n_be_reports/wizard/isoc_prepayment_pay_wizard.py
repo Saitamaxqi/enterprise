@@ -28,10 +28,10 @@ class L10n_Be_ReportsISOCPrepaymentPayWizard(models.TransientModel):
             wizard.amount_to_pay = wizard.profit_estimate * int(wizard.corporate_tax_rate) * 0.01 * 0.25
 
     def action_pay_later(self):
-        self.return_id.amount_to_pay = self.amount_to_pay
+        self.return_id.total_amount_to_pay = self.amount_to_pay
 
     def action_mark_as_paid(self):
-        self.return_id.amount_to_pay = self.amount_to_pay
+        self.return_id.total_amount_to_pay = self.amount_to_pay
         super().action_mark_as_paid()
 
         return {

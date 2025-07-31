@@ -254,7 +254,7 @@ class AccountReturnType(models.Model):
                 periods.append((period_date_from, period_date_to))
             date_pointer = period_date_to + relativedelta(days=1)
 
-        existing_returns = self.env['account.return'].sudo().search([
+        existing_returns = self.env['account.return'].sudo().with_context(active_test=False).search([
             ('company_id', '=', main_company.id),  # We don't want to use the check_company_domain here
             ('type_id', '=', self.id),
             ('date_to', '>=', date_from),
@@ -318,7 +318,7 @@ class AccountReturnType(models.Model):
 
     def _try_create_return_for_period(self, date_in_period, main_company, tax_unit, allow_duplicates=False):
         period_start, period_end = self._get_period_boundaries(main_company, date_in_period)
-        existing_return = self.env['account.return'].search([
+        existing_return = self.env['account.return'].with_context(active_test=False).search([
             *self.env['account.return']._check_company_domain(main_company),
             ('tax_unit_id', '=', tax_unit.id if tax_unit else None),
             ('date_from', '=', period_start),
@@ -444,6 +444,7 @@ class AccountReturn(models.Model):
     _order = "date_deadline, name, id"
     _check_company_domain = check_company_domain_account_return
 
+    active = fields.Boolean(default=True)
     name = fields.Char(string="Name", required=True)
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
@@ -513,7 +514,8 @@ class AccountReturn(models.Model):
 
     # Tax return fields
     is_tax_return = fields.Boolean(string="Is Tax Return", compute="_compute_is_tax_return")
-    amount_to_pay = fields.Monetary(currency_field='amount_to_pay_currency_id')
+    total_amount_to_pay = fields.Monetary(currency_field='amount_to_pay_currency_id')
+    period_amount_to_pay = fields.Monetary(currency_field='amount_to_pay_currency_id')
     amount_to_pay_currency_id = fields.Many2one(comodel_name='res.currency', compute='_compute_amount_to_pay_currency_id')
     show_amount_to_pay = fields.Boolean(compute='_compute_show_amount_to_pay')
 
@@ -954,7 +956,9 @@ class AccountReturn(models.Model):
                         self.env['account.report'].with_company(company)._generate_default_external_values(self.date_from, self.date_to, True)
 
                 # Generate the carryover values.
-                self.amount_to_pay = self._evaluate_amount_to_pay_from_tax_closing_accounts()
+                payable_accounts, receivable_accounts = self._get_tax_closing_payable_and_receivable_accounts()
+                self.total_amount_to_pay = self._evaluate_total_amount_to_pay_from_tax_closing_accounts(payable_accounts, receivable_accounts)
+                self.period_amount_to_pay = self._evaluate_period_amount_to_pay_from_tax_closing_accounts(payable_accounts, receivable_accounts)
 
             report.with_context(allowed_company_ids=self.company_ids.ids)._generate_carryover_external_values(options)
             self._generate_locking_attachments(options)
@@ -975,7 +979,7 @@ class AccountReturn(models.Model):
                     },
                 }
 
-    def _evaluate_amount_to_pay_from_tax_closing_accounts(self):
+    def _get_tax_closing_payable_and_receivable_accounts(self):
         country = self.type_id.report_id.country_id or self.company_id.account_fiscal_country_id
         tax_groups_sudo = self.env['account.tax'].sudo()._read_group(
             domain=[
@@ -985,10 +989,19 @@ class AccountReturn(models.Model):
             ],
             aggregates=['tax_group_id:recordset'],
         )[0][0]
+        return tax_groups_sudo.tax_payable_account_id, tax_groups_sudo.tax_receivable_account_id
 
-        payable_accounts = tax_groups_sudo.tax_payable_account_id
-        receivable_accounts = tax_groups_sudo.tax_receivable_account_id
+    def _evaluate_period_amount_to_pay_from_tax_closing_accounts(self, payable_accounts, receivable_accounts):
+        payable_receivable_accounts = payable_accounts | receivable_accounts
 
+        amount = -sum(
+            aml.balance
+            for aml in self.closing_move_ids.line_ids
+            if aml.account_id in payable_receivable_accounts
+        )
+        return self.amount_to_pay_currency_id.round(amount)
+
+    def _evaluate_total_amount_to_pay_from_tax_closing_accounts(self, payable_accounts, receivable_accounts):
         amount = -sum(
             aml.balance
             for aml in self.closing_move_ids.line_ids
@@ -1038,7 +1051,8 @@ class AccountReturn(models.Model):
     def action_pay(self):
         self.ensure_one()
         self._check_failing_checks_in_current_stage()
-        if not self.amount_to_pay_currency_id.is_zero(self.amount_to_pay) or self.state == 'new':
+        is_positive_amount = self.amount_to_pay_currency_id.compare_amounts(self.total_amount_to_pay, 0) > 0
+        if is_positive_amount or self.state == 'new':
             return (self._get_pay_wizard() or self._action_finalize_payment())
         self._action_finalize_payment()
 
@@ -1056,7 +1070,7 @@ class AccountReturn(models.Model):
         valid_moves.unlink()
 
     def action_archive(self):
-        self.active = False
+        super(AccountReturn, self.filtered(lambda record: record.state == 'new')).action_archive()
 
     def _reset_checks_for_states(self, states):
         checks_to_reset = self.check_ids.filtered(lambda check: check.state in states)
@@ -1142,7 +1156,8 @@ class AccountReturn(models.Model):
                     for company in self.company_ids:
                         company.sudo().tax_lock_date = self.date_from + relativedelta(days=-1)
 
-                self.amount_to_pay = 0
+                self.total_amount_to_pay = 0
+                self.period_amount_to_pay = 0
 
             self.closing_move_ids.button_draft()
             self.closing_move_ids.unlink()
@@ -2268,6 +2283,7 @@ class AccountReturnCheck(models.Model):
 
     # Return related
     return_id = fields.Many2one(comodel_name='account.return', string="Account Return", required=True, index=True, ondelete="cascade")
+    is_return_active = fields.Boolean(related="return_id.active")
     return_state = fields.Char(string="Return State", related="return_id.state", store=True)
     return_name = fields.Char(string="Return Name", related="return_id.name")
     date_deadline = fields.Date("Deadline", related="return_id.date_deadline")
