@@ -8,7 +8,6 @@ import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog
 import { BankRecSelectCreateDialog } from "../search_dialog/search_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { getCurrency } from "@web/core/currency";
-import { roundDecimals } from "@web/core/utils/numbers";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "../bank_reconciliation_service";
 
@@ -279,16 +278,6 @@ export class BankRecButtonList extends Component {
     // -----------------------------------------------------------------------------
     // ACTION
     // -----------------------------------------------------------------------------
-    openJournalEntry() {
-        this.action.doAction({
-            type: "ir.actions.act_window",
-            res_model: "account.move",
-            res_id: this.statementLineData.move_id.id,
-            views: [[false, "form"]],
-            target: "current",
-        });
-    }
-
     actionViewRecoModels() {
         return this.action.doAction("account.action_account_reconcile_model");
     }
@@ -302,10 +291,6 @@ export class BankRecButtonList extends Component {
 
     get lastAccountMoveLine() {
         return this.statementLineData.line_ids.records.at(-1);
-    }
-
-    get isPositiveOr0() {
-        return roundDecimals(this.statementLineData.amount, this.currencyDigits) >= 0;
     }
 
     get isCustomerRankHigher() {
@@ -428,9 +413,7 @@ export class BankRecButtonList extends Component {
 
         let primaryButtonKeys = [];
 
-        if (this.isPositiveOr0 && buttons?.partner) {
-            primaryButtonKeys = ["partner"];
-        } else if (buttons?.partner && buttons?.account) {
+        if (buttons?.partner && buttons?.account) {
             primaryButtonKeys = ["partner", "account"];
         } else if (buttons?.reconcile && !!buttons.reconcile?.count) {
             primaryButtonKeys = ["reconcile"];

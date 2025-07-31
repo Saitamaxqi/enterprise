@@ -46,7 +46,17 @@ export class BankRecKanbanController extends KanbanController {
                 checked: makeActiveField(),
             },
         };
-
+        params.config.activeFields.bank_statement_attachment_ids = makeActiveField();
+        params.config.activeFields.bank_statement_attachment_ids.related = {
+            fields: {
+                id: { name: "id", type: "int" },
+                display_name: { name: "display_name", type: "char" },
+            },
+            activeFields: {
+                id: makeActiveField(),
+                display_name: makeActiveField(),
+            },
+        };
         params.config.activeFields.attachment_ids = makeActiveField();
         params.config.activeFields.partner_id = makeActiveField();
         params.config.activeFields.partner_id.related = {
@@ -118,6 +128,16 @@ export class BankRecKanbanController extends KanbanController {
                 matched_debit_ids: makeActiveField(),
                 matched_credit_ids: makeActiveField(),
                 reconcile_model_id: makeActiveField(),
+            },
+        };
+        params.config.activeFields.line_ids.related.activeFields.move_attachment_ids.related = {
+            fields: {
+                id: { name: "id", type: "int" },
+                display_name: { name: "display_name", type: "char" },
+            },
+            activeFields: {
+                id: makeActiveField(),
+                display_name: makeActiveField(),
             },
         };
         params.config.activeFields.line_ids.related.activeFields.matched_debit_ids.related = {

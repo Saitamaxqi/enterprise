@@ -57,9 +57,6 @@
                         <DropdownItem class="'btn btn-link'" onSelected.bind="actionViewRecoModels">
                             Manage Models
                         </DropdownItem>
-                        <DropdownItem class="'btn btn-link'" onSelected.bind="openJournalEntry">
-                            Open Journal Entry
-                        </DropdownItem>
                         <DropdownItem class="'btn btn-link'" onSelected.bind="deleteTransaction">
                             Delete Transaction
                         </DropdownItem>

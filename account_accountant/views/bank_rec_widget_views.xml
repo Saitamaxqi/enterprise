@@ -162,6 +162,7 @@
                     <field name="partner_name"/>
                     <field name="transaction_details"/>
                     <field name="foreign_currency_id"/>
+                    <field name="bank_statement_attachment_ids"/>
                     <templates>
                         <!-- We are overriding the whole kanban record element, but we still need to load the template
                              card. Look at the bank_reconciliation components to work on the view. -->
@@ -232,6 +233,7 @@
                            decoration-danger="statement_complete == False or statement_valid == False"
                            readonly="not id"/>
                     <field name="state"
+                           optional="hide"
                            widget="badge"
                            decoration-info="state == 'draft'"
                            decoration-success="state == 'posted'"/>

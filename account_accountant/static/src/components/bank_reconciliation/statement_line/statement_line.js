@@ -49,16 +49,6 @@ export class BankRecStatementLine extends KanbanRecord {
         });
     }
 
-    openJournalEntry() {
-        this.action.doAction({
-            type: "ir.actions.act_window",
-            res_model: "account.move",
-            res_id: this.recordData.move_id.id,
-            views: [[false, "form"]],
-            target: "current",
-        });
-    }
-
     openPartner() {
         this.action.doAction({
             type: "ir.actions.act_window",
@@ -163,9 +153,9 @@ export class BankRecStatementLine extends KanbanRecord {
      * Checks if there is at least one attachment associated with the bank statement line or its related records.
      *
      * This getter aggregates attachment counts from:
-     * - The bank statement line record itself.
-     * - The related move.
-     * - The related move lines themselves, if they have attachments directly associated (`line.move_attachment_ids`).
+     * - The bank statement line record itself or the related move since attachment_ids is a related to move_id.attachment_ids.
+     * - The related move lines themselves, if they have attachments directly associated (`line.move_attachment_ids`)
+     *   except the attachments link to the statement.
      * - The lines reconciled with the related move lines, specifically checking for attachments on the
      *   move associated with those reconciled lines.
      *
@@ -174,9 +164,12 @@ export class BankRecStatementLine extends KanbanRecord {
      * @returns {number} The total number of attachments found. A return value greater than 0 indicates the presence of attachments.
      */
     get hasAttachment() {
+        const statementAttachment = this.recordData.bank_statement_attachment_ids.records.map(
+            (attachment) => attachment.data.id
+        );
+
         return (
             this.recordData.attachment_ids.records.length +
-            this.recordData.move_id.attachment_ids.length +
             this.linesToReconcile
                 .flatMap((line) => line.reconciled_lines_ids.records)
                 .filter((line) => line.data.move_attachment_ids?.count)
@@ -186,7 +179,13 @@ export class BankRecStatementLine extends KanbanRecord {
                     0
                 ) +
             this.linesToReconcile
-                .filter((line) => line.move_attachment_ids?.count)
+                .filter(
+                    (line) =>
+                        line.move_attachment_ids?.count &&
+                        !line.move_attachment_ids.records
+                            .map((attachment) => attachment.data.id)
+                            .every((id) => statementAttachment.includes(id))
+                )
                 .reduce(
                     (accumulator, line) =>
                         parseInt(accumulator) + parseInt(line.move_attachment_ids.count),
