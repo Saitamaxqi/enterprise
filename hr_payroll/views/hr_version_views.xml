@@ -5,9 +5,9 @@
         <field name="name">payroll.hr.version.view.list.payrun</field>
         <field name="model">hr.version</field>
         <field name="arch" type="xml">
-            <list string="Versions" default_order='date_version DESC' create="0" delete="0" js_class="hr_version_payrun_list">
+            <list string="Records" default_order='date_version DESC' create="0" delete="0" js_class="hr_version_payrun_list">
                 <field name="employee_id" optional="show" widget="many2one_avatar_employee"/>
-                <field name="date_version" readonly="False" string="Version"/>
+                <field name="date_version" readonly="False" string="Effective Date"/>
                 <field name="contract_date_start" string="Start" optional="hide"/>
                 <field name="contract_date_end" string="End" optional="hide"/>
                 <field name="currency_id" column_invisible="1"/>
@@ -60,9 +60,9 @@
         <field name="search_view_id" ref="hr_payroll.payroll_hr_version_list_view_filter_payrun"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-                No Versions.
+                No Records.
             </p><p>
-                No version fit your period and salary structure type, please go back to select another period and/or
+                No record fit your period and salary structure type, please go back to select another period and/or
                 salary structure type.
             </p>
         </field>

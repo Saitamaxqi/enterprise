@@ -51,7 +51,7 @@
 
     <menuitem
         id="hr_menu_versions"
-        name="Versions"
+        name="Employee Records"
         action="hr.action_hr_version"
         parent="menu_hr_payroll_employees"
         sequence="20"

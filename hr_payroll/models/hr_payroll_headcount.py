@@ -115,7 +115,7 @@ class HrPayrollHeadcountLine(models.Model):
     headcount_id = fields.Many2one('hr.payroll.headcount', string='headcount_id', required=True, index=True, ondelete='cascade')
     working_rate_ids = fields.Many2many('hr.payroll.headcount.working.rate', required=True, string='Working Rate')
     version_names = fields.Char(string='Version Names', required=True, readonly=True)
-    version_id = fields.Many2one('hr.version', string='Version', required=True, readonly=True)
+    version_id = fields.Many2one('hr.version', string='Employee Record', required=True, readonly=True)
     department_id = fields.Many2one(related='version_id.department_id', string='Department')
     job_id = fields.Many2one(related='version_id.job_id', string='Job Title')
     currency_id = fields.Many2one(related='version_id.currency_id', string='Currency')

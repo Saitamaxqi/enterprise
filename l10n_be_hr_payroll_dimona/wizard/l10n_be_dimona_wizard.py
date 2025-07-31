@@ -15,7 +15,7 @@ class L10nBeDimonaWizard(models.TransientModel):
         return super().default_get(fields)
 
     version_id = fields.Many2one(
-        'hr.version', string='Version', compute='_compute_version_id', store=True, readonly=False)
+        'hr.version', string='Employee Record', compute='_compute_version_id', store=True, readonly=False)
     employee_id = fields.Many2one(
         'hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'))
     employee_birthday = fields.Date(related='employee_id.birthday')

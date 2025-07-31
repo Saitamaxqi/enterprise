@@ -111,7 +111,7 @@
                 <group col="4">
                     <field name="company_id" invisible="1"/>
                     <field name="version_id" context="{'default_employee_id': employee_id}"
-                        required="1" readonly="state in ['cancel', 'done', 'paid']" string="Version"
+                        required="1" readonly="state in ['cancel', 'done', 'paid']" string="Employee Record"
                         domain="[('employee_id', '=', employee_id)]"
                         options="{
                             'no_open': True,
@@ -302,7 +302,7 @@
                 <separator/>
                 <group>
                     <filter string="Employee" name="group_by_employee_id" context="{'group_by': 'employee_id'}"/>
-                    <filter string="Version" name="group_by_version_id" context="{'group_by': 'version_id'}"/>
+                    <filter string="Employee Record" name="group_by_version_id" context="{'group_by': 'version_id'}"/>
                     <filter string="Department" name="group_by_department_id" context="{'group_by':'department_id'}"/>
                     <filter string="Job Position" name="group_by_job_id" context="{'group_by':'job_id'}"/>
                     <filter string="Status" name="group_by_state" context="{'group_by': 'state'}"/>

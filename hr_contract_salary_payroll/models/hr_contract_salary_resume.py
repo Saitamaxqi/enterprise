@@ -18,7 +18,7 @@ class HrContractSalaryResume(models.Model):
         ondelete={'payslip': 'set default'},
         help='Pick how the value of the information is computed:\n'
              'Fixed value: Set a determined value static for all links\n'
-             'Contract value: Get the value from a field on the contract record\n'
+             'Employee Record value: Get the value from a field on the Employee Record\n'
              'Payslip value: Get the value from a field on the payslip record\n'
              'Sum of Benefits value: You can pick in all benefits and compute a sum of them\n'
              'Monthly Total: The information will be a total of all the information in the category Monthly Benefits')

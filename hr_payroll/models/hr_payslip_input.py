@@ -22,5 +22,5 @@ class HrPayslipInput(models.Model):
         digits='Payroll Rate',
         help="It is used in computation. E.g. a rule for salesmen having 1%% commission of basic salary per product can defined in expression like: result = inputs['SALEURO'].amount * version.wage * 0.01.")
     version_id = fields.Many2one(
-        related='payslip_id.version_id', string='Version', required=True,
+        related='payslip_id.version_id', string='Employee Record', required=True,
         help="The version this input should be applied to")

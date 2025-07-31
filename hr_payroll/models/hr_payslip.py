@@ -98,7 +98,7 @@ class HrPayslip(models.Model):
     paid_date = fields.Date(string="Payment Date")
     note = fields.Text(string='Internal Note')
     version_id = fields.Many2one(
-        'hr.version', string='Version', precompute=True, tracking=True,
+        'hr.version', string='Employee Record', precompute=True, tracking=True,
         compute='_compute_version_id', store=True, readonly=False, index=True)
     credit_note = fields.Boolean(
         string='Credit Note',

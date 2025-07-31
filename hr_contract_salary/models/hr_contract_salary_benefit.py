@@ -31,7 +31,7 @@ class HrContractSalaryBenefit(models.Model):
     active = fields.Boolean(default=True)
     res_field_id = fields.Many2one(
         'ir.model.fields',
-        string="Contract Related Field",
+        string="Employee Record Related Field",
         compute="_compute_benefits",
         store=True,
         readonly=False,
