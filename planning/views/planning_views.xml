@@ -92,7 +92,7 @@
                         class="btn btn-secondary" close="1" groups="planning.group_planning_manager"
                         invisible="state == 'draft' or resource_type == 'material'" data-hotkey="q"/>
                     <button string="Auto Plan" type="object" name="auto_plan_id" class="btn btn-secondary"
-                        groups="planning.group_planning_manager" data-hotkey="p" invisible="context.get('my_planning_action') or resource_id"/>
+                        groups="planning.group_planning_manager" data-hotkey="p" invisible="context.get('my_planning_action') or resource_id or not start_datetime or not end_datetime"/>
                     <field name="state" widget="statusbar" groups="planning.group_planning_manager" invisible="context.get('my_planning_action')"/>
                 </header>
                 <field name="is_past" invisible="1"/>
