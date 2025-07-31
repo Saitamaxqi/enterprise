@@ -65,7 +65,7 @@ class ProjectProject(models.Model):
         profitability_items = super()._get_profitability_items(with_action)
         subscription_read_group = self.env['sale.order'].sudo()._read_group(
             [('project_id.account_id', 'in', self.account_id.ids),
-             ('subscription_state', 'not in', ['1_draft', '5_renewed']),
+             ('subscription_state', '!=', '1_draft'),
              ('is_subscription', '=', True),
             ],
             ['sale_order_template_id', 'subscription_state', 'currency_id'],

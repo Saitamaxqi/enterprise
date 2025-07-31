@@ -340,3 +340,98 @@ class TestSaleSubscriptionProjectProfitability(TestProjectProfitabilityCommon, T
                 }
             }
         )
+
+    def test_project_profitability_with_renewed_subscription(self):
+        """
+        Test that the project profitability is correctly updated when a subscription is renewed.
+
+        Test Case:
+        ==========
+        1- create a subscription and link it to a project
+        2- confirm the subscription and create an invoice and post it
+        3- renew the subscription
+        4- check that `To Invoice` reflects the new subscription amount while `Invoiced` takes
+           into account previous subscription.
+        """
+        self.env.user.group_ids += self.env.ref('analytic.group_analytic_accounting')
+
+        subscription = self.env['sale.order'].create({
+            'is_subscription': True,
+            'note': "original subscription description",
+            'partner_id': self.partner.id,
+            'project_id': self.project.id,
+            'plan_id': self.plan_month.id,
+            'end_date': fields.Date.today() + relativedelta(months=1),
+        })
+        product = self.env['product.template'].create([{
+            'name': 'Test Product',
+            'recurring_invoice': True,
+            'type': 'service',
+        }])
+        self.env['sale.order.line'].create({
+            'order_id': subscription.id,
+            'product_id': product.product_variant_id.id,
+            'price_unit': 100,
+        })
+        subscription.action_confirm()
+        invoice = subscription._create_invoices()
+        invoice.action_post()
+        self.env['account.analytic.line'].create([{
+            'name': 'Sale',
+            'move_line_id': invoice.line_ids[0].id,
+            'account_id': self.project.account_id.id,
+            'currency_id': self.company_data['currency'].id,
+            'amount': 100.0,
+        }])
+
+        self.assertDictEqual(
+            self.project._get_profitability_items(with_action=False),
+            {
+                'revenues': {
+                    'data': [{
+                        'id': 'subscriptions',
+                        'sequence': 8,
+                        'invoiced': 100.0,
+                        'to_invoice': 100.0
+                    }],
+                    'total': {'invoiced': 100.0, 'to_invoice': 100.0},
+                },
+                'costs': {
+                    'data': [],
+                    'total': {'billed': 0.0, 'to_bill': 0.0}
+                }
+            }
+        )
+
+        # Renew the subscription
+        action = subscription.prepare_renewal_order()
+        renewed_sub = self.env['sale.order'].browse(action['res_id'])
+        renewed_sub.action_confirm()
+        renewed_invoice = renewed_sub._create_invoices()
+        renewed_invoice.action_post()
+        self.env['account.analytic.line'].create([{
+            'name': 'Sale',
+            'move_line_id': invoice.line_ids[0].id,
+            'account_id': self.project.account_id.id,
+            'currency_id': self.company_data['currency'].id,
+            'amount': 100.0,
+        }])
+
+        self.assertDictEqual(
+            self.project._get_profitability_items(with_action=False),
+            {
+                'revenues': {
+                    'data': [{
+                        'id': 'subscriptions',
+                        'sequence': 8,
+                        'invoiced': 200.0,
+                        'to_invoice': 100.0,
+                    }],
+                    'total': {'invoiced': 200.0, 'to_invoice': 100.0},
+                },
+                'costs': {
+                    'data': [],
+                    'total': {'billed': 0.0, 'to_bill': 0.0}
+                }
+            }
+        )
