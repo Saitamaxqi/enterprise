@@ -79,7 +79,11 @@ export class IotAction {
                     throw new Error("Longpolling is temporarily disabled due to a recent failure.");
                 }
                 this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, actionId);
-                await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, actionId, true);
+                const response =
+                    await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, actionId, true);
+                if (response?.result === false) {
+                    onFailure({ status: "disconnected" }, deviceIdentifier, actionId);
+                }
                 this.connectionStatus = "local";
             },
             async () => {

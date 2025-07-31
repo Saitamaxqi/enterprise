@@ -35,6 +35,7 @@ patch(PaymentScreen.prototype, {
         } catch (e) {
             if (e instanceof BlackboxError) {
                 this.currentOrder.state = "draft";
+                e.retry = this._finalizeValidation.bind(this);
             }
             throw error;
         }

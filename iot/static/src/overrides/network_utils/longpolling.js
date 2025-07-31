@@ -10,13 +10,11 @@ patch(IoTLongpolling.prototype, {
      * @param message Data to send to the device
      * @param messageId Unique identifier for the message
      * @param fallback If longpolling has a fallback option (e.g. websocket), do not display errors to the user
-     * @returns {Promise<*>} messageId if the request didn't throw an error
+     * @returns {Promise<*>} response of the request (response.result tells if the device is connected or not)
      */
     async sendMessage(iotBoxIp, message, messageId = null, fallback = false) {
         messageId ??= uuid();
-        await this._rpcIoT(iotBoxIp, '/iot_drivers/action', { session_id: messageId, ...message }, undefined, fallback);
-
-        return messageId;
+        return this._rpcIoT(iotBoxIp, '/iot_drivers/action', { session_id: messageId, ...message }, undefined, fallback);
     },
 
     /**

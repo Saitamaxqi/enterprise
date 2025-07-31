@@ -19,11 +19,12 @@ const errors = {
 };
 
 export class BlackboxError extends Error {
-    constructor(code, message = null) {
+    constructor(code, message = null, retry = undefined) {
         super(message);
         this.name = "BLACKBOX_ERROR";
         this.type = "blackbox";
         this.code = code;
         this.message = message || errors[code.toString().substring(0, 3)];
+        this.retry = retry;
     }
 }

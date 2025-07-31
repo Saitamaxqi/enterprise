@@ -184,6 +184,7 @@ patch(PosStore.prototype, {
     },
     async preSyncAllOrders(orders) {
         if (this.useBlackBoxBe() && orders.length > 0) {
+            this.tmpOrders = orders;
             for (const order of orders) {
                 const serialized = order.serializeForORM({ keepCommands: true });
                 if (serialized.lines.length === 0 && serialized.state === "draft") {
@@ -509,7 +510,7 @@ patch(PosStore.prototype, {
             receipt_total: order.getTotalWithTax(),
             plu: order.getPlu(),
         });
-        return this.pushToBlackbox(dataToSend);
+        return this.pushToBlackbox(dataToSend, order);
     },
     async pushToBlackbox(dataToSend) {
         try {
@@ -533,6 +534,8 @@ patch(PosStore.prototype, {
                     },
                 });
                 throw new Error(_t("Pin code required"));
+            } else if (err.status === "disconnected") {
+                throw new BlackboxError(err.status);
             } else {
                 throw new BlackboxError(err.errorCode, err.errorMessage);
             }
