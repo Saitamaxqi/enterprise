@@ -1,4 +1,4 @@
-import { Component, useState, useRef } from "@odoo/owl";
+import { Component, onWillUpdateProps, useState, useRef } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { RecordSelector } from "@web/core/record_selectors/record_selector";
 import { _t } from "@web/core/l10n/translation";
@@ -18,6 +18,7 @@ export class SignTemplateSidebarRoleItems extends Component {
     static props = {
         signItemTypes: { type: Array },
         id: { type: Number },
+        name: { type: String },
         signTemplateId: { type: Number },
         isSignRequest: { type: Boolean },
         updateRoleName: { type: Function },
@@ -33,13 +34,13 @@ export class SignTemplateSidebarRoleItems extends Component {
         assignTo: { type: String, optional: true },
     };
 
-    async setup() {
+    setup() {
         this.orm = useService("orm");
         this.dialog = useService("dialog");
         this.roleInputRef = useRef('role_input');
         const profilePic = this.getImageSrc(this.props.assignTo);
         this.state = useState({
-            roleName: "",
+            roleName: this.props.name,
             canEditSignerName: false,
             profilePic: profilePic || "",
         });
@@ -53,10 +54,11 @@ export class SignTemplateSidebarRoleItems extends Component {
             selection: "fa-angle-down",
             strikethrough: "fa-strikethrough",
         };
-        // MASTER: this should be done in batch in SignTemplateSidebar
-        this.orm.call("sign.item.role", "read", [this.props.roleId]).then((role) => {
-            this.state.roleName = role[0].name;
-        });
+        onWillUpdateProps((nextProps) => {
+            if (nextProps.name !== this.state.roleName) {
+                this.state.roleName = nextProps.name;
+            }
+        })
     }
 
     async onDeleteDialog() {
@@ -104,7 +106,6 @@ export class SignTemplateSidebarRoleItems extends Component {
     onChangeRoleName(name) {
         // Check if the new role name is different from the current one
         if (name && this.props.roleId && name !== this.state.roleName) {
-            this.orm.write("sign.item.role", [this.props.roleId], { name: name });
             this.state.roleName = name;
             this.props.updateRoleName(this.props.roleId, this.state.roleName);
         }
@@ -139,6 +140,7 @@ export class SignTemplateSidebarRoleItems extends Component {
             size: "md",
             title: _t("Signer Settings"),
             onRecordSaved: async ({ data }) => {
+                this.state.canEditSignerName=true;
                 await this.updateRoleNameAndAvatar(data);
             },
         });

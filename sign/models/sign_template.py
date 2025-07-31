@@ -389,6 +389,7 @@ class SignTemplate(models.Model):
         for idx, role in enumerate(self.sign_item_ids.responsible_id.sorted()):
             roles_info.append({
                 'id': idx,
+                'name': role.name,
                 'roleId': role.id,
                 'colorId': idx,
                 'assignTo': role.assign_to.avatar_128 or role.assign_to.avatar_1920,

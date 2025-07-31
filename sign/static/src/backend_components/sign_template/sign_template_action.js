@@ -136,6 +136,11 @@ export class SignTemplate extends Component {
     }
 
     updateRoleName(roleId, roleName) {
+        this.orm.write("sign.item.role", [roleId], { name: roleName });
+        const signer = this.state.signers.find((s) => s.roleId === roleId);
+        if (signer) {
+            signer.name = roleName;
+        }
         this.state.documents.forEach(document => document.iframe.updateRoleName(roleId, roleName));
     }
 
@@ -216,11 +221,12 @@ export class SignTemplate extends Component {
     }
 
     async pushNewSigner() {
-        const name = "Signer " + (this.state.nextId + 1).toString();
-        const [roleId] = await this.orm.create('sign.item.role', [{ name: _t(name) }]);
+        const name = _t("Signer %s", this.state.signers.length + 1);
+        const [roleId] = await this.orm.create('sign.item.role', [{ name }]);
         const colorId = this.getNextColor();
         this.state.signers.push({
             'id': this.state.nextId,
+            'name': name,
             'roleId': roleId,
             'colorId': colorId,
             'isCollapsed': false,
