@@ -1293,7 +1293,7 @@ class AccountJournalReportHandler(models.AbstractModel):
             'res_model': 'account.move.line',
             'views': [(self.env.ref('account.view_move_line_tree').id, 'list')],
             'type': 'ir.actions.act_window',
-            'domain': [('display_type', 'not in', ('line_section', 'line_note'))],
+            'domain': [('display_type', 'not in', ('line_section', 'line_subsection', 'line_note'))],
             'context': ctx,
         }
 

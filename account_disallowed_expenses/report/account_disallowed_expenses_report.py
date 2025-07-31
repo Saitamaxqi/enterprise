@@ -67,7 +67,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         else:
             ctx['search_default_date_before'] = 1
 
-        domain = [('display_type', 'not in', ('line_section', 'line_note'))]
+        domain = [('display_type', 'not in', ('line_section', 'line_subsection', 'line_note'))]
 
         model_to_domain = {
             'account.disallowed.expenses.category': 'account_id.disallowed_expenses_category_id',

@@ -381,7 +381,7 @@ class SIE4ImportWizard(models.TransientModel):
             domain=[
                 ('account_id.code', 'in', account_codes),
                 ('date', '<=', prev_date_to),
-                ('display_type', 'not in', ('line_note', 'line_section')),
+                ('display_type', 'not in', ('line_section', 'line_subsection', 'line_note')),
             ],
             groupby=['account_id'],
             aggregates=['balance:sum'],

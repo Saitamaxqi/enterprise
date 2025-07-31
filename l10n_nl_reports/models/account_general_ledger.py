@@ -189,7 +189,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
          LEFT JOIN product_product product ON product.id = account_move_line.product_id
          LEFT JOIN product_template product_template ON product_template.id = product.product_tmpl_id
              WHERE %(search_condition)s
-               AND account_move_line.display_type NOT IN ('line_note', 'line_section')
+               AND account_move_line.display_type NOT IN ('line_section', 'line_subsection', 'line_note')
           ORDER BY account_move_line.journal_id, account_move_line.id
             """,
             journal_name=journal_name,

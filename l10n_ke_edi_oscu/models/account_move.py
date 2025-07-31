@@ -243,7 +243,7 @@ class AccountMove(models.Model):
         """ Return the values that should be sent to eTIMS for the lines in self. """
         self.ensure_one()
         lines_values = []
-        for index, line in enumerate(self.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_section', 'line_note'))):
+        for index, line in enumerate(self.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_section', 'line_subsection', 'line_note'))):
             product = line.product_id  # for ease of reference
             product_uom_qty = line.product_uom_id._compute_quantity(line.quantity, product.uom_id)
 

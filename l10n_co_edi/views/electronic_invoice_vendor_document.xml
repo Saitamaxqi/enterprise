@@ -10,7 +10,7 @@
                 <ENC_5 t-out="validation_time"/>
                 <ENC_6 t-out="invoice.move_type == 'in_invoice' and '05' or invoice.move_type == 'in_refund' and '95'"/>
                 <ENC_7 t-out="invoice.currency_id.name"/>
-                <ENC_8 t-out="len(invoice.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_note')))"/>
+                <ENC_8 t-out="len(invoice.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_subsection', 'line_note')))"/>
                 <ENC_9 t-out="invoice.invoice_date_due"/>
                 <ENC_10 t-out="'2' if invoice.company_id.l10n_co_edi_test_mode else '1'"/>
                 <ENC_11 t-out="'11' if invoice.partner_id.country_id.code != 'CO' else '10'"/>

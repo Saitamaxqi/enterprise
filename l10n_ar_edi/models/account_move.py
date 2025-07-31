@@ -610,7 +610,7 @@ class AccountMove(models.Model):
         self.ensure_one()
         details = []
         afip_ws = self.journal_id.l10n_ar_afip_ws
-        for line in self.invoice_line_ids.filtered(lambda x: x.display_type not in ('line_section', 'line_note')):
+        for line in self.invoice_line_ids.filtered(lambda x: x.display_type not in ('line_section', 'line_subsection', 'line_note')):
 
             # Unit of measure of the product if it sale in a unit of measures different from has been purchase
             if not line.product_uom_id.l10n_ar_afip_code:

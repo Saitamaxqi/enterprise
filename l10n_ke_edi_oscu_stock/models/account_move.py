@@ -111,7 +111,7 @@ class AccountMove(models.Model):
                 'invoice_lines': line.ids,
                 'date_planned': fields.Date.context_today(self),
                 'tax_ids': line.tax_ids.ids,
-                'display_type': line.display_type if line.display_type in ['line_section', 'line_note'] else False,
+                'display_type': line.display_type if line.display_type in ['line_section', 'line_subsection', 'line_note'] else False,
             }))
 
         po = self.env['purchase.order'].create({
@@ -143,7 +143,7 @@ class AccountMove(models.Model):
                 'price_unit': line.price_unit,
                 'invoice_lines': line.ids,
                 'tax_ids': line.tax_ids.ids,
-                'display_type': line.display_type if line.display_type in ['line_section', 'line_note'] else False,
+                'display_type': line.display_type if line.display_type in ['line_section', 'line_subsection', 'line_note'] else False,
             }))
 
         so = self.env['sale.order'].create({

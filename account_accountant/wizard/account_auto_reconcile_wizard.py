@@ -94,7 +94,7 @@ class AccountAutoReconcileWizard(models.TransientModel):
             domain = [
                 ('company_id', '=', self.company_id.id),
                 ('parent_state', '=', 'posted'),
-                ('display_type', 'not in', ('line_section', 'line_note')),
+                ('display_type', 'not in', ('line_section', 'line_subsection', 'line_note')),
                 ('date', '>=', self.from_date or date.min),
                 ('date', '<=', self.to_date),
                 ('reconciled', '=', False),

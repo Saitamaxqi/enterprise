@@ -2135,7 +2135,7 @@ class AccountReport(models.Model):
             raise UserError(_("Unknown date scope: %s", date_scope))
 
         domains = [
-            Domain('display_type', 'not in', ('line_section', 'line_note')),
+            Domain('display_type', 'not in', ('line_section', 'line_subsection', 'line_note')),
             Domain('company_id', 'in', self.get_report_company_ids(options)),
             self._get_options_journals_domain(options)
             if not options.get('compute_budget') else Domain.TRUE,
@@ -4676,7 +4676,7 @@ class AccountReport(models.Model):
                 })
             view_id = type_to_view_param[journal_type]['view_id']
 
-        action_domain = [('display_type', 'not in', ('line_section', 'line_note'))]
+        action_domain = [('display_type', 'not in', ('line_section', 'line_subsection', 'line_note'))]
 
         if record_id is None:
             # Default filters don't support the 'no set' value. For this case, we use a domain on the action instead

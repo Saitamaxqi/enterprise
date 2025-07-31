@@ -1046,7 +1046,7 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
                 constraints[f'dian_country_subentity_{role}'] = self._check_required_fields(vals[role], 'state_id')
                 constraints[f"dian_city_{role}"] = self._check_required_fields(vals[role], 'city_id')
         # fields on lines
-        for line in move.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_section', 'line_note')):
+        for line in move.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_section', 'line_subsection', 'line_note')):
             product = line.product_id
             constraints[f"product_{product.id}"] = self._check_required_fields(
                 product, ['default_code', 'barcode', 'unspsc_code_id'])

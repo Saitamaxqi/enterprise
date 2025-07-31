@@ -136,7 +136,7 @@ class AccountTaxReportHandler(models.AbstractModel):
         purchase_vals = []
         for in_inv in purchase_invoices:
             is_from_ecuador = in_inv.commercial_partner_id.country_id == self.env.ref('base.ec')
-            invoice_lines = in_inv.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_note'))
+            invoice_lines = in_inv.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_subsection', 'line_note'))
             if is_from_ecuador and any(len(l.tax_ids & ec_vat_taxes) != 1 for l in invoice_lines):
                 errors.append(_("%(invoice)s: Invoice lines should have exactly one VAT tax.", invoice=in_inv.name))
             if not is_from_ecuador and any(len(l.tax_ids & ec_vat_taxes) > 1 for l in invoice_lines):
@@ -513,7 +513,7 @@ class AccountTaxReportHandler(models.AbstractModel):
         invoices_values = []
         error_template = _("%s: Each invoice line must include at least one IVA or ICE tax, and no more than one tax per VAT or ICE category.")
         for invoice in invoices:
-            invoice_lines = invoice.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_note'))
+            invoice_lines = invoice.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_subsection', 'line_note'))
             if any((len(l.tax_ids & ec_vat_taxes) > 1 or len(l.tax_ids & ec_ice_taxes) > 1) or len(l.tax_ids) == 0 for l in invoice_lines):
                 errors.append(error_template % invoice.name)
 

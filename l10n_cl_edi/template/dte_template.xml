@@ -93,7 +93,7 @@
                 </OtraMoneda>
             </Encabezado>
         <t t-set="line_number" t-value="1"/>
-        <t t-foreach="move.invoice_line_ids.filtered(lambda r: r.display_type not in ('line_note', 'line_section') and r.price_subtotal &gt;= 0)" t-as="line">
+        <t t-foreach="move.invoice_line_ids.filtered(lambda r: r.display_type not in ('line_section', 'line_subsection', 'line_note') and r.price_subtotal &gt;= 0)" t-as="line">
             <t t-set="line_amounts" t-value="line._l10n_cl_get_line_amounts()"/>
             <t t-if="'second_currency' in line_amounts" t-set="line_second_currency_round" t-value="line_amounts['second_currency']['round_currency']"/>
             <Detalle>

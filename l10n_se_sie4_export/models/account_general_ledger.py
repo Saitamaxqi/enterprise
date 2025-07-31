@@ -188,7 +188,7 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
 
         common_domain = [
             ('account_id.include_initial_balance', '=', False),
-            ('display_type', 'not in', ('line_note', 'line_section')),
+            ('display_type', 'not in', ('line_section', 'line_subsection', 'line_note')),
         ]
         prev_year_domain = common_domain + [('date', '>=', dates['prev_date_from']), ('date', '<=', dates['prev_date_to'])]
         curr_year_domain = common_domain + [('date', '>=', dates['curr_date_from']), ('date', '<=', dates['curr_date_to'])]
@@ -212,7 +212,7 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         sie4_verification_lines = []
         dates = self._get_l10n_se_sie4_dates(options)
         company_id = options['companies'][0]['id']
-        unsupported_display_type = {'line_note', 'line_section'}
+        unsupported_display_type = {'line_note', 'line_section', 'line_subsection'}
         moves = self.env['account.move'].with_company(company_id).search([
             ('state', '=', 'posted'),
             ('date', '>=', dates['curr_date_from']),

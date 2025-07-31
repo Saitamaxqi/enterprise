@@ -41,7 +41,7 @@ class AccountMove(models.Model):
                 invoice_vals['invoice_line_ids'].append((0, 0, line._inter_company_prepare_invoice_line_data()))
 
             inv_new = inv.with_context(default_move_type=invoice_vals['move_type']).new(invoice_vals)
-            for line in inv_new.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_note', 'line_section')):
+            for line in inv_new.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_section', 'line_subsection', 'line_note')):
                 # We need to adapt the taxes following the fiscal position, but we must keep the
                 # price unit.
                 price_unit = line.price_unit

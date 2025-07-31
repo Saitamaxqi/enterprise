@@ -1495,7 +1495,7 @@ class L10n_InGstReturnPeriod(models.Model):
             ("date", ">=", self.start_date),
             ("date", "<=", self.end_date),
             ("move_id.state", "=", "posted"),
-            ("display_type", "not in", ('rounding', 'line_note', 'line_section'))
+            ("display_type", "not in", ('rounding', 'line_note', 'line_section', 'line_subsection'))
         ]
         match section_code:
             case "b2b":

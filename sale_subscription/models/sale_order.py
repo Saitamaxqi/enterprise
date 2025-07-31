@@ -1259,7 +1259,7 @@ class SaleOrder(models.Model):
         downpayment_line_ids = []
         pending_section = None
         for line in self.order_line:
-            if line.display_type == 'line_section':
+            if line.display_type in ('line_section', 'line_subsection'):
                 # Only add section if one of its lines is invoiceable
                 pending_section = line
                 continue

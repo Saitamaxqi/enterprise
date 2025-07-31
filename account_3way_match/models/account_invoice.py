@@ -59,7 +59,7 @@ class AccountMove(models.Model):
             else:
                 #otherwise we must compute the field
                 result = None
-                for invoice_line in invoice.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_section', 'line_note')):
+                for invoice_line in invoice.invoice_line_ids.filtered(lambda l: l.display_type not in ('line_section', 'line_subsection', 'line_note')):
                     line_status = invoice_line.can_be_paid
                     if line_status == 'exception':
                         #If one line is in exception, the entire bill is
