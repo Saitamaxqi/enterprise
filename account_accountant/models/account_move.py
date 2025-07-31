@@ -448,12 +448,15 @@ class AccountMove(models.Model):
                 ('partner_id', '!=', False),
                 ('account_id.account_type', '=', 'asset_cash'),
                 ('journal_id', 'in', self.env['account.journal']._search([
-                        *self.env['account.journal']._check_company_domain(move.company_id.id),
-                        ('type', '=', 'bank')
-                    ])),
+                    *self.env['account.journal']._check_company_domain(move.company_id.id),
+                    ('type', '=', 'bank')
+                ])),
                 ('balance', '>' if move.is_inbound() else '<', 0.0),
                 ('statement_line_id', '!=', False),
-                ('move_id.line_ids', 'any', [('account_id', '=', move.company_id.account_journal_suspense_account_id.id)])
+                ('move_id.line_ids', 'any', [
+                    ('account_id', '=', move.company_id.account_journal_suspense_account_id.id),
+                    ('reconciled', '=', False),
+                ]),
             ]
 
             payments_widget_vals = {
@@ -465,19 +468,13 @@ class AccountMove(models.Model):
 
             for line in self.env['account.move.line'].search(bank_domain):
                 st_line = line.statement_line_id
-                if st_line.line_ids.filtered(lambda l: l.reconciled):
-                    continue
-                if st_line.foreign_currency_id == move.currency_id:
-                    amount = abs(st_line.amount_residual)
-                elif st_line.currency_id == move.currency_id:
-                    amount = abs(st_line.amount)
-                else:
-                    amount = st_line.foreign_currency_id._convert(
-                        from_amount=abs(st_line.amount_residual),
-                        to_currency=move.currency_id,
-                        company=move.company_id,
-                        date=line.date,
-                    )
+                currency = st_line.foreign_currency_id or st_line.currency_id
+                amount = currency._convert(
+                    from_amount=abs(st_line.amount_residual),
+                    to_currency=move.currency_id,
+                    company=move.company_id,
+                    date=line.date,
+                )
                 if move.currency_id.is_zero(amount):
                     continue
 

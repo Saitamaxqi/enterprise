@@ -1861,7 +1861,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         else:
             current_amounts = {}
         self.assertDictEqual(current_amounts, {
-            statement_line.move_id.id: 2000.0,
+            statement_line.move_id.id: 4000.0,  # in refund currency
         })
 
         refund.js_assign_outstanding_line(statement_line_rec_line.id)
@@ -1930,3 +1930,47 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': payment.outstanding_account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
             {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': -900.0, 'currency_id': self.other_currency.id, 'balance': -900.0, 'reconciled': False},
         ])
+
+    def test_reconcile_payment_widget_vals_partials(self):
+        foreign_curr = self.setup_other_currency('EUR', rates=[
+            ('2019-06-28', 2.0),
+        ])
+        foreign_currency_journal = self.company_data['default_journal_bank'].copy({'currency_id': foreign_curr.id})
+        statement_line = self.env['account.bank.statement.line'].create({
+            'name': 'test_statement',
+            'date': '2019-06-28',
+            'payment_ref': 'line_1',
+            'partner_id': self.partner_a.id,
+            'journal_id': foreign_currency_journal.id,
+            'amount': 400.0,
+        })
+        statement_line_rec_line = statement_line.move_id.line_ids.filtered(
+            lambda x: x.account_id.account_type == 'asset_cash')
+        invoice_1 = self.init_invoice(move_type='out_invoice', invoice_date='2019-06-24', amounts=[100],
+                                      partner=self.partner_a, post=True)
+        invoice_2 = self.init_invoice(move_type='out_invoice', invoice_date='2019-06-24', amounts=[100],
+                                      partner=self.partner_a, post=True)
+
+        invoice_1.js_assign_outstanding_line(statement_line_rec_line.id)
+
+        self.assert_invoice_outstanding_to_reconcile_widget(invoice_2, {
+            statement_line.move_id.id: 100.0,  # 400/2 (rate conversion) - 100
+        })
+        invoice_2.js_assign_outstanding_line(statement_line_rec_line.id)
+
+        invoice_3 = self.init_invoice(move_type='out_invoice', invoice_date='2019-06-24', amounts=[100],
+                                      partner=self.partner_a, post=True)
+        self.assert_invoice_outstanding_to_reconcile_widget(invoice_3, {})  # nothing is available for invoice_3
+
+        partial_id = invoice_1._get_all_reconciled_invoice_partials()[0].get('partial_id')
+        statement_line_rec_line.move_id.js_remove_outstanding_partial(partial_id)
+
+        # 100 has been made available again
+        self.assert_invoice_outstanding_to_reconcile_widget(invoice_1, {
+            statement_line.move_id.id: 100.0,
+        })
+
+        # invoice_2 is still reconciled
+        self.assert_invoice_outstanding_reconciled_widget(invoice_2, {
+            statement_line.move_id.id: 100,
+        })
