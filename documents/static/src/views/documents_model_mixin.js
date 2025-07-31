@@ -449,6 +449,9 @@ export const DocumentsRecordMixin = (component) => class extends component {
             this.model.env.documentsView.bus.trigger("documents-close-preview");
         }
         this.model.multiEdit = modelMultiEdit;
+        if (this.isDetailsPanelRecord && this.data.type === "folder") {
+            this.model.env.searchModel._reloadSearchPanel();
+        }
         return ret;
     }
 

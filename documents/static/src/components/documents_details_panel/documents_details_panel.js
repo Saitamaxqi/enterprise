@@ -43,15 +43,7 @@ export class DocumentsDetailsPanel extends Component {
         this.orm = useService("orm");
         this.dialog = useService("dialog");
         onWillRender(() => {
-            this.record = new Proxy(
-                reactive(this.props.record || {}, async () => {
-                    if (this.props.record?.data?.type === "folder") {
-                        await this.env.searchModel._reloadSearchPanel();
-                        this.render();
-                    }
-                }),
-                isDetailsPanelRecordHandler
-            );
+            this.record = new Proxy(reactive(this.props.record), isDetailsPanelRecordHandler);
         });
 
         // Use a state for the model to not write on the record the model without record id
@@ -85,7 +77,8 @@ export class DocumentsDetailsPanel extends Component {
         return (
             !!this.record.data?.lock_uid ||
             this.record.data?.user_permission !== "edit" ||
-            (!this.documentService.userIsDocumentManager && this.record.data?.is_company_root_folder)
+            (!this.documentService.userIsDocumentManager &&
+                this.record.data?.is_company_root_folder)
         );
     }
 
@@ -93,7 +86,9 @@ export class DocumentsDetailsPanel extends Component {
         if (this.record.data?.type !== "folder" || this.props.record.isContainer) {
             const nBytes = this.record.data.file_size || 0;
             if (nBytes) {
-                return `${this.record.isContainer ? '~' : ''}${formatFloat(nBytes, { humanReadable: true })}B`;
+                return `${this.record.isContainer ? "~" : ""}${formatFloat(nBytes, {
+                    humanReadable: true,
+                })}B`;
             }
         }
         return "";
@@ -103,8 +98,8 @@ export class DocumentsDetailsPanel extends Component {
         return this.props.record.data?.owner_id.id === user.userId
             ? _t("My Drive")
             : this.props.record.data?.owner_id
-                ? _t("Shared with me")
-                : _t("Company");
+            ? _t("Shared with me")
+            : _t("Company");
     }
 
     get activeCompanies() {

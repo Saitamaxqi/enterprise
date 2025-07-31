@@ -117,8 +117,11 @@ export const DocumentsRendererMixin = (component) =>
                 const changesToSave = Object.fromEntries(
                     Object.entries(record._getChanges()).filter(([k, _v]) => fieldsToSave.has(k))
                 );
-                await this.env.model.orm.write('documents.document', [record.data.id], changesToSave);
-                await this.env.searchModel._reloadSearchPanel();
+                await this.env.model.orm.write(
+                    "documents.document",
+                    [record.data.id],
+                    changesToSave
+                );
             };
             /**
              * @override to reload the document's data via the search panel update, required

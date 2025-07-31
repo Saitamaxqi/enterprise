@@ -44,6 +44,9 @@ export class DocumentsDetailsMany2ManyTagsField extends Many2ManyTagsField {
             this.env.model.multiEdit = false;
             await callable();
             this.env.model.multiEdit = modelMultiEdit;
+            if (this.props.record.data.type === "folder") {
+                await this.env.searchModel._reloadSearchModel(true);
+            }
         } else {
             await callable();
         }

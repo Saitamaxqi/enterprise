@@ -2,7 +2,7 @@ import { contains, defineModels, onRpc, serverState } from "@web/../tests/web_te
 import { omit } from "@web/core/utils/objects";
 
 import { describe, expect, test } from "@odoo/hoot";
-import { waitFor } from "@odoo/hoot-dom";
+import { waitFor, waitForNone } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 import {
@@ -71,6 +71,7 @@ test("Details panel rendering for editors", async () => {
     expect(dp(".o_documents_details_panel_name input")).toHaveValue("Testing tags");
     expect(dp(".o_field_tags input")).toHaveCount(1);
     await contains(dp(".o_field_tags span:contains('Colorless') a")).click();
+    await waitForNone(dp(".o_field_tags span:contains('Colorless')"));
     await contains(dp(".o_field_tags span:contains('Colorful') a")).click();
     expect(dp(".o_field_tags input[placeholder='Add tags...']")).toHaveCount(1);
     expect(dp("input[placeholder='No owner']")).toHaveValue("Mitchell Admin");
@@ -82,7 +83,9 @@ test("Details panel rendering for editors", async () => {
     expect(dp("input[placeholder='Activity assigned to']")).toHaveCount(1);
 
     await contains(dp(".o_field_tags span:contains('Colorless') a")).click();
+    await waitForNone(dp(".o_field_tags span:contains('Colorless')"));
     await contains(dp(".o_field_tags span:contains('Colorful') a")).click();
+    await waitForNone(dp(".o_field_tags span:contains('Colorful')"));
     await waitFor(dp(".o_field_tags input[placeholder='Add an alias tag...']"));
 });
 
@@ -230,4 +233,49 @@ test("Details panel should be updated when clearing a selection", async function
     await contains(".o_unselect_all").click();
     expect(dp(".o_documents_details_panel_name input")).toHaveCount(1);
     expect(dp(".o_documents_details_panel_name input")).toHaveValue("Folder 1");
+});
+
+test("Details panel changes to folders are immediately saved and visible in the app", async function () {
+    await makeDocumentsMockEnv({ serverData: getDocumentsTestServerModelsData() });
+    await mountDocumentsKanbanView({ arch: archWithTags });
+    await contains(".o_control_panel_navigation .fa-info-circle").click();
+    await contains(
+        "li.o_search_panel_category_value:contains('COMPANY') button.o_toggle_fold"
+    ).click();
+    let counter = 0;
+    onRpc("search_panel_select_range", () => {
+        counter++;
+    });
+
+    const renameTwice = async (from) => {
+        expect(dp(".o_documents_details_panel_name input")).toHaveCount(1);
+        expect(dp(".o_documents_details_panel_name input")).toHaveValue("Folder 1");
+        expect("span.o_search_panel_label_title:contains('Folder 1')").toHaveCount(1);
+        await contains(dp(".o_documents_details_panel_name input")).edit(
+            `Folder Renamed from ${from}`
+        );
+        await animationFrame();
+        expect(dp(".o_documents_details_panel_name input")).toHaveValue(
+            `Folder Renamed from ${from}`
+        );
+        expect(
+            `span.o_search_panel_label_title:contains('Folder Renamed from ${from}')`
+        ).toHaveCount(1);
+        await contains(dp(".o_documents_details_panel_name input")).edit("Folder 1");
+        await animationFrame();
+        expect(dp(".o_documents_details_panel_name input")).toHaveValue("Folder 1");
+        expect("span.o_search_panel_label_title:contains('Folder 1')").toHaveCount(1);
+    };
+
+    // From container Record
+    await contains(`.o_kanban_record:contains('Folder 1')`).click({ ctrlKey: true });
+    await animationFrame();
+    await renameTwice("container");
+    expect(counter).toBe(2);
+
+    // From KanbanRecord
+    await contains(`.o_kanban_record:contains('Folder 1')`).click();
+    await animationFrame();
+    await renameTwice("kanban record");
+    expect(counter).toBe(4);
 });
