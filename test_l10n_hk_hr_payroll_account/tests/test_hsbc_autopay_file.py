@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
+import re
 
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
@@ -47,7 +48,22 @@ class TestHsbcAutoFile(TestL10NHkHrPayrollAccountCommon):
             'l10n_hk_autopay_partner_bank_id': cls.company_bank_account.id
         })
 
-        cls.employee = cls.env['hr.employee'].create({
+        cls._setup_common(
+            country=cls.env.ref('base.hk'),
+            structure=cls.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary'),
+            structure_type=cls.env.ref('l10n_hk_hr_payroll.structure_type_employee_cap57'),
+            resource_calendar=cls.company.resource_calendar_id,
+            contract_fields={
+                'date_version': date(2024, 3, 1),
+                'contract_date_start': date(2024, 3, 1),
+                'wage': 33570.0,
+                'l10n_hk_internet': 200.0,
+            },
+            employee_fields={
+                'marital': "single",
+            }
+        )
+        cls.employee.write({
             'name': "Test Employee",
             'work_contact_id': cls.address_home.id,
             'bank_account_id': cls.bank_account.id,
@@ -55,14 +71,6 @@ class TestHsbcAutoFile(TestL10NHkHrPayrollAccountCommon):
             'company_id': cls.env.company.id,
             'l10n_hk_autopay_account_type': 'bban',
             'identification_id': 'Z123456(7)'
-        })
-
-        cls.contract = cls.employee.version_id
-        cls.contract.write({
-            'date_version': date(2025, 4, 1),
-            'contract_date_start': date(2025, 4, 1),
-            'wage': 33570.0,
-            'l10n_hk_internet': 200.0,
         })
 
         public_holiday_to_create = [
@@ -117,9 +125,12 @@ class TestHsbcAutoFile(TestL10NHkHrPayrollAccountCommon):
         hsbc_autopay_wizard.generate_hsbc_autopay_apc_file()
 
         hsbc_autopay_file_content = base64.b64decode(payslip_run.l10n_hk_autopay_export_first_batch).decode()
-        self.assertTrue("PHFABC0" in hsbc_autopay_file_content)
-        self.assertTrue("20250531848987654321SAHKD" in hsbc_autopay_file_content)
-        self.assertTrue("HKD000000100000000003418770" in hsbc_autopay_file_content)
-        self.assertTrue("PD004BBAN1234567890" in hsbc_autopay_file_content)
-        self.assertTrue("00000000003418770Z1234567" in hsbc_autopay_file_content)
-        self.assertTrue("Test Employee" in hsbc_autopay_file_content)
+        content = re.split(r'\s{2,}', hsbc_autopay_file_content.strip())
+        self.assertListEqual(content, [
+            "PHFABC0",
+            "20250531848987654321SAHKD",
+            "HKD000000100000000003310480",
+            "PD004BBAN1234567890",
+            "00000000003310480Z1234567",
+            "Test Employee",
+        ])
