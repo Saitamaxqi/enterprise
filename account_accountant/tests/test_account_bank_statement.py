@@ -1685,3 +1685,42 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': account.id, 'tax_ids': default_tax.ids, 'tax_line_id': False, 'amount_currency': -180.0, 'currency_id': self.company_data['currency'].id, 'balance': -180.0, 'reconciled': False},
             {'account_id': account.id, 'tax_ids': [], 'tax_line_id': default_tax.id, 'amount_currency': -20.0, 'currency_id': self.company_data['currency'].id, 'balance': -20.0, 'reconciled': False},
         ])
+
+    def test_reconcile_invoice_foreign_currency_lost_precision_case(self):
+        """
+            - Rate set to 1 USD = 5.421327349 R$
+            - Invoice for a total of 143.62 R$
+            - Receive a payment for 26.05 USD
+            - Match the payment with the invoice
+
+            -> The invoice should be fully reconciled.
+        """
+        currency_brasilian_real = self.setup_other_currency('BRL', rounding=0.01, rates=[('2017-01-01', 5.421327349)])
+        receivable_line = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 143.62}], currency_id=currency_brasilian_real.id)
+        self.assertEqual(receivable_line.balance, 26.49)
+        st_line = self._create_st_line(amount=26.05)
+        st_line.set_line_bank_statement_line(receivable_line.ids)
+        # Put the rest in exchange difference account
+        exchange_diff_account = self.env.company.income_currency_exchange_account_id
+        st_line.set_account_bank_statement_line(st_line.line_ids[-1].id, exchange_diff_account.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {
+                'account_id': st_line.journal_id.default_account_id.id,
+                'amount_currency': 26.05,
+                'currency_id': self.company_data['currency'].id,
+                'reconciled': False,
+            },
+            {
+                'account_id': self.partner_a.property_account_receivable_id.id,
+                'amount_currency': -143.62,
+                'currency_id': currency_brasilian_real.id,
+                'reconciled': True,
+            },
+            {
+                'account_id': exchange_diff_account.id,
+                'amount_currency': 0.44,
+                'currency_id': self.company_data['currency'].id,
+                'reconciled': False,
+            }
+        ])
+        self.assertTrue(receivable_line.reconciled, "The invoice should have been marked as reconciled")

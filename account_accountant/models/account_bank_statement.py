@@ -1039,6 +1039,12 @@ class AccountBankStatementLine(models.Model):
             # Compute the amounts to make a partial.
             new_line_balance = move_line.company_currency_id.round(balance_after_partial * abs(move_line.amount_residual) / abs(current_balance))
             new_amount_currency = move_line.currency_id.round(new_line_balance * rate)
+
+            # Some amounts might have just lost their precision due to all the rounding operations.
+            # Assume they're the same if its raw conversion is close enough.
+            if company_currency.compare_amounts(new_line_balance, (-move_line.amount_residual_currency / rate)) == 0:
+                new_amount_currency = -move_line.amount_residual_currency
+
             return {
                 'partial_balance': balance_after_partial,
                 'partial_amount_currency': new_amount_currency,
