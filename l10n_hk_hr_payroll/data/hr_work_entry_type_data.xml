@@ -7,7 +7,6 @@
 
     <record id="hr_work_entry.l10n_hk_work_entry_type_sick_leave_80" model="hr.work.entry.type">
         <field name="l10n_hk_use_713" eval="True" />
-        <field name="l10n_hk_non_full_pay" eval="True" />
     </record>
 
     <record id="hr_work_entry.l10n_hk_work_entry_type_maternity_leave" model="hr.work.entry.type">
@@ -16,7 +15,6 @@
 
     <record id="hr_work_entry.l10n_hk_work_entry_type_maternity_leave_80" model="hr.work.entry.type">
         <field name="l10n_hk_use_713" eval="True" />
-        <field name="l10n_hk_non_full_pay" eval="True" />
     </record>
 
     <record id="hr_work_entry.l10n_hk_work_entry_type_paternity_leave" model="hr.work.entry.type">

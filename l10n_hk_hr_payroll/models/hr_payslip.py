@@ -141,7 +141,7 @@ class HrPayslip(models.Model):
         This is important information when calculating the Average Daily Wage (ADW).
         :return: Amount of non-full pay days.
         """
-        wds = self.worked_days_line_ids.filtered(lambda wd: wd.work_entry_type_id.l10n_hk_non_full_pay)
+        wds = self.worked_days_line_ids.filtered(lambda wd: wd.work_entry_type_id.amount_rate < 1)
         return sum([wd.number_of_days for wd in wds])
 
     def _get_number_of_worked_days(self, only_full_pay=False):
@@ -262,7 +262,7 @@ class HrPayslip(models.Model):
         """ Calculate the total amount from all worked day lines concerning non-fully paid work entries. """
         total = 0
         for wd_line in self.worked_days_line_ids:
-            if not wd_line.work_entry_type_id.l10n_hk_non_full_pay:
+            if wd_line.work_entry_type_id.amount_rate == 1:
                 continue
             total += wd_line.amount
         return total

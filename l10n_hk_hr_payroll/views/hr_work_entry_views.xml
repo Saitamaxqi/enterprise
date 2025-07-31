@@ -7,7 +7,6 @@
         <field name="arch" type="xml">
             <field name="round_days_type" position="after">
                 <field name="l10n_hk_use_713"/>
-                <field name="l10n_hk_non_full_pay"/>
             </field>
         </field>
     </record>
