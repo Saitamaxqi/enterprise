@@ -3,34 +3,9 @@ import { patch } from "@web/core/utils/patch";
 import { rpc } from "@web/core/network/rpc";
 import { useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
-import { AddPageConfirmDialog, AddPageDialog } from "@website/components/dialog/add_page_dialog";
+import { AddPageConfirmDialog } from "@website/components/dialog/add_page_dialog";
 
-
-patch(AddPageDialog.prototype, {
-    async addPage(sectionsArch, name) {
-        if (this.props.forcedURL) {
-            // We also skip the possibility to choose to add in menu in that
-            // case (e.g. in creation from 404 page button). The user can still
-            // create its menu afterwards if needed.
-            await this.createPage(sectionsArch, this.props.forcedURL, false, this.props.pageTitle);
-        } else {
-            this.dialogs.add(AddPageAIConfirmDialog, {
-                createPage: (...args) => this.createPage(...args),
-                name: name || this.lastTabName,
-                sectionsArch: sectionsArch || "",
-            });
-        }
-
-    },
-});
-
-class AddPageAIConfirmDialog extends AddPageConfirmDialog {
-    static props = {
-        ...AddPageConfirmDialog.props,
-        sectionsArch: String,
-    };
-    static template = "ai_website.AddPageAIConfirmDialog";
-
+patch(AddPageConfirmDialog.prototype, {
     setup() {
         super.setup();
         this.notification = useService("notification");
@@ -38,7 +13,6 @@ class AddPageAIConfirmDialog extends AddPageConfirmDialog {
             ...this.state,
             instructions: "",
             tone: "",
-            sectionsArch: this.props.sectionsArch || "",
             generateText: false,
             loading: false,
         });
@@ -65,26 +39,27 @@ class AddPageAIConfirmDialog extends AddPageConfirmDialog {
                 description: "Make it clear and explanatory",
             },
         };
-    }
+    },
 
-    onChangeGenerateText = (value) => {
+    onChangeGenerateText(value) {
         this.state.generateText = value;
-    }
+    },
 
-    onToneSelect = (tone) => {
+    onToneSelect(ev) {
+        const tone = ev.target.dataset.tone;
         if (tone === this.state.tone) {
             this.state.tone = "";
             return;
         }
         this.state.tone = tone;
-    }
+    },
 
     get buttonTitle() {
         if (this.state.generateText) {
             return _t("Create with AI");
         }
         return _t("Create");
-    }
+    },
 
     async processSectionsArch() {
         if (this.state.sectionsArch) {
@@ -93,6 +68,7 @@ class AddPageAIConfirmDialog extends AddPageConfirmDialog {
                 name: this.state.name,
                 sectionsArch: this.state.sectionsArch,
                 tone: this.state.tone ? this.tones[this.state.tone] : "",
+                templateId: this.state.templateId || "",
             });
             if (aiGeneratedContent && aiGeneratedContent.html) {
                 if (aiGeneratedContent.error) {
@@ -105,14 +81,14 @@ class AddPageAIConfirmDialog extends AddPageConfirmDialog {
                 this.state.sectionsArch = aiGeneratedContent.html;
             }
         }
-    }
+    },
 
     async addPage() {
         if (this.state.generateText) {
             this.state.loading = true;
             await this.processSectionsArch();
         }
-        await this.props.createPage(this.state.sectionsArch, this.state.name, this.state.addMenu);
+        await super.addPage();
         this.state.loading = false;
-    }
-}
+    },
+});
