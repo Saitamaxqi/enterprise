@@ -7,7 +7,6 @@
             <Wysiwyg
                 config="this.getConfig()"
                 onLoad.bind="onEditorLoad"
-                onBlur.bind="onBlur"
                 t-key="state.key"/>
         </div>
     </t>

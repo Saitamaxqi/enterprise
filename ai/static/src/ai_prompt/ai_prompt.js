@@ -73,6 +73,7 @@ export class AiPrompt extends Component {
                 const { resModel, resId } = this.props.record;
                 return { resModel, resId };
             },
+            onChange: () => this.onChange(),
             placeholder: this.props.placeholder,
             Plugins: [
                 ...CORE_PLUGINS,
@@ -100,11 +101,8 @@ export class AiPrompt extends Component {
         };
     }
 
-    onBlur() {
+    onChange() {
         const content = this.content;
-        if (content === this.lastValue) {
-            return;
-        }
         this.props.onChange(content);
         this.lastValue = content;
     }
