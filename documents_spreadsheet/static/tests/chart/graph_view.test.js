@@ -163,7 +163,7 @@ test("Chart name can be changed from the dialog", async () => {
     });
     await contains(document.body.querySelector(".o_graph_insert_spreadsheet")).click();
     /** @type {HTMLInputElement} */
-    await contains(".o_sp_name").edit("New name");
+    await contains(".o-sp-dialog-meta-name .o_input").edit("New name");
     await contains(".modal-content > .modal-footer > .btn-primary").click();
     const model = getSpreadsheetActionModel(spreadsheetAction);
     const sheetId = model.getters.getActiveSheetId();

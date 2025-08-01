@@ -6,11 +6,11 @@ import { Notebook } from "@web/core/notebook/notebook";
 import { Component, onWillStart, useState } from "@odoo/owl";
 import { SpreadsheetSelectorPanel } from "./spreadsheet_selector_panel";
 
-const LABELS = {
-    PIVOT: _t("pivot"),
-    LIST: _t("list"),
-    LINK: _t("link"),
-    GRAPH: _t("graph"),
+const NAME_LABELS = {
+    PIVOT: _t("Pivot name"),
+    LIST: _t("List name"),
+    LINK: _t("Link name"),
+    GRAPH: _t("Graph name"),
 };
 
 /**
@@ -64,18 +64,18 @@ export class SpreadsheetSelectorDialog extends Component {
                     model,
                     displayBlank: allow_create,
                     onSpreadsheetSelected: this.onSpreadsheetSelected.bind(this),
-                    onSpreadsheetDblClicked: this._confirm.bind(this),
+                    onSpreadsheetDblClicked: this._onInsert.bind(this),
                 },
             }));
         });
     }
 
     get nameLabel() {
-        return _t("Name of the %s:", LABELS[this.props.type]);
+        return NAME_LABELS[this.props.type];
     }
 
     get title() {
-        return _t("Select a spreadsheet to insert your %s.", LABELS[this.props.type]);
+        return _t("Insert in Spreadsheet");
     }
 
     /**
@@ -87,7 +87,7 @@ export class SpreadsheetSelectorDialog extends Component {
         };
     }
 
-    async _confirm() {
+    async _onInsert() {
         if (this.state.confirmationIsPending) {
             return;
         }
@@ -120,7 +120,7 @@ export class SpreadsheetSelectorDialog extends Component {
         };
     }
 
-    _cancel() {
+    _onDiscard() {
         this.props.close();
     }
 }

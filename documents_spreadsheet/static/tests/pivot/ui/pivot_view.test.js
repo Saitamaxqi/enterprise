@@ -1102,7 +1102,7 @@ test("Pivot name can be changed from the dialog", async () => {
         },
     });
     await contains(document.body.querySelector(".o_pivot_add_spreadsheet")).click();
-    await contains(".o_sp_name").edit("New name");
+    await contains(".o-sp-dialog-meta-name .o_input").edit("New name");
     await contains(".modal-content > .modal-footer > .btn-primary").click();
     const model = getSpreadsheetActionModel(spreadsheetAction);
     await waitForDataLoaded(model);
@@ -1122,7 +1122,7 @@ test("Pivot name is not changed if the name is empty", async () => {
         },
     });
     await contains(document.body.querySelector(".o_pivot_add_spreadsheet")).click();
-    document.body.querySelector(".o_sp_name").value = "";
+    document.body.querySelector(".o-sp-dialog-meta-name .o_input").value = "";
     await contains(".modal-content > .modal-footer > .btn-primary").click();
     await animationFrame();
     const model = getSpreadsheetActionModel(spreadsheetAction);
@@ -1143,7 +1143,7 @@ test("Sheet is created when pivot name contains invalid characters", async () =>
     });
     await contains(document.body.querySelector(".o_pivot_add_spreadsheet")).click();
     const pivotName = "Do not keep Unsupported characters: '-:-*-?-\\-[-]-/";
-    await contains(".o_sp_name").edit(pivotName);
+    await contains(".o-sp-dialog-meta-name .o_input").edit(pivotName);
     await contains(".modal-content > .modal-footer > .btn-primary").click();
     const model = getSpreadsheetActionModel(spreadsheetAction);
     await waitForDataLoaded(model);

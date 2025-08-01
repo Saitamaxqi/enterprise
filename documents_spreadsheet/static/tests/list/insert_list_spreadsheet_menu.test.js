@@ -122,7 +122,7 @@ test("List name can be changed from the dialog", async () => {
         },
     });
     await invokeInsertListInSpreadsheetDialog(env);
-    await contains(".o_sp_name").edit("New name");
+    await contains(".o-sp-dialog-meta-name .o_input").edit("New name");
     await contains(".modal button.btn-primary").click();
     const model = getSpreadsheetActionModel(spreadsheetAction);
     await waitForDataLoaded(model);
@@ -142,7 +142,7 @@ test("Sheet is created when list name contains invalid characters", async () => 
     });
     await invokeInsertListInSpreadsheetDialog(env);
     const listName = "Do not keep Unsupported characters: '-:-*-?-\\-[-]-/";
-    await contains(".o_sp_name").edit(listName);
+    await contains(".o-sp-dialog-meta-name .o_input").edit(listName);
     await contains(".modal button.btn-primary").click();
     const model = getSpreadsheetActionModel(spreadsheetAction);
     await waitForDataLoaded(model);
@@ -158,7 +158,7 @@ test("Unsorted List name doesn't contains sorting info", async function () {
     const { env } = await spawnListViewForSpreadsheet();
 
     await invokeInsertListInSpreadsheetDialog(env);
-    expect(".o_sp_name").toHaveValue("Partners");
+    expect(".o-sp-dialog-meta-name .o_input").toHaveValue("Partners");
 });
 
 test("Sorted List name contains sorting info", async function () {
@@ -167,7 +167,7 @@ test("Sorted List name contains sorting info", async function () {
     });
 
     await invokeInsertListInSpreadsheetDialog(env);
-    expect(".o_sp_name").toHaveValue("Partners by Bar");
+    expect(".o-sp-dialog-meta-name .o_input").toHaveValue("Partners by Bar");
 });
 
 test("List name is not changed if the name is empty", async () => {
@@ -181,7 +181,7 @@ test("List name is not changed if the name is empty", async () => {
         },
     });
     await invokeInsertListInSpreadsheetDialog(env);
-    target.querySelector(".o_sp_name").value = "";
+    target.querySelector(".o-sp-dialog-meta-name .o_input").value = "";
     await contains(".modal button.btn-primary").click();
     const model = getSpreadsheetActionModel(spreadsheetAction);
     await waitForDataLoaded(model);

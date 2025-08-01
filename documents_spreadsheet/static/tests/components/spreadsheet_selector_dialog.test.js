@@ -5,7 +5,7 @@ import {
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, test } from "@odoo/hoot";
-import { click, dblclick, press } from "@odoo/hoot-dom";
+import { click, dblclick, press, queryAllTexts } from "@odoo/hoot-dom";
 import { advanceTime, animationFrame } from "@odoo/hoot-mock";
 import { prepareWebClientForSpreadsheet } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
 import { SpreadsheetSelectorDialog } from "@spreadsheet_edition/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog";
@@ -90,29 +90,29 @@ test("Display only spreadsheet and a blank spreadsheet", async () => {
 
 test("Threshold is not displayed with pivot type", async () => {
     await mountSpreadsheetSelectorDialog({ props: { type: "PIVOT" } });
-    expect(".modal-title").toHaveText("Select a spreadsheet to insert your pivot.");
-    expect(".o-sp-dialog-meta-name-label").toHaveText("Name of the pivot:");
+    expect(".modal-title").toHaveText("Insert in Spreadsheet");
+    expect(".o-sp-dialog-meta-name-label").toHaveText("Pivot name");
     expect(".o-sp-dialog-meta-threshold").toHaveCount(0);
 });
 
 test("Threshold is not displayed with link type", async () => {
     await mountSpreadsheetSelectorDialog({ props: { type: "LINK" } });
-    expect(".modal-title").toHaveText("Select a spreadsheet to insert your link.");
-    expect(".o-sp-dialog-meta-name-label").toHaveText("Name of the link:");
+    expect(".modal-title").toHaveText("Insert in Spreadsheet");
+    expect(".o-sp-dialog-meta-name-label").toHaveText("Link name");
     expect(".o-sp-dialog-meta-threshold").toHaveCount(0);
 });
 
 test("Threshold is not displayed with graph type", async () => {
     await mountSpreadsheetSelectorDialog({ props: { type: "GRAPH" } });
-    expect(".modal-title").toHaveText("Select a spreadsheet to insert your graph.");
-    expect(".o-sp-dialog-meta-name-label").toHaveText("Name of the graph:");
+    expect(".modal-title").toHaveText("Insert in Spreadsheet");
+    expect(".o-sp-dialog-meta-name-label").toHaveText("Graph name");
     expect(".o-sp-dialog-meta-threshold").toHaveCount(0);
 });
 
 test("Threshold is displayed with list type", async () => {
     await mountSpreadsheetSelectorDialog({ props: { type: "LIST" } });
-    expect(".modal-title").toHaveText("Select a spreadsheet to insert your list.");
-    expect(".o-sp-dialog-meta-name-label").toHaveText("Name of the list:");
+    expect(".modal-title").toHaveText("Insert in Spreadsheet");
+    expect(queryAllTexts(".o-sp-dialog-meta-name-label")).toEqual(["List name", "Records"]);
     expect(".o-sp-dialog-meta-threshold").toHaveCount(1);
 });
 

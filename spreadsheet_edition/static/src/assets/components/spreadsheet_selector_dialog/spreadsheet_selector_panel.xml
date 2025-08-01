@@ -6,7 +6,7 @@
         <div class="o-sp-dialog-cp">
             <div class="o-sp-searchview">
                 <input type="text"
-                    class="o-sp-searchview-input o_input"
+                    class="o-sp-searchview-input o_input form-control"
                     placeholder="Search..."
                     t-on-input="onSearchInput"/>
                 <i class="o-sp-searchview-icon oi oi-search"
