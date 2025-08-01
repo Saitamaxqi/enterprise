@@ -30,7 +30,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product_tln_gtn8
             move.product_uom_qty = 20
 

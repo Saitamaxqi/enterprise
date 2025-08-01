@@ -54,7 +54,7 @@ class TestECDeliveryGuideCommon(TestEcEdiXmls):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.wh.out_type_id.id,
             'partner_id': self.partner_a.id,
-            'move_ids_without_package': move_lines_args,
+            'move_ids': move_lines_args,
         }
 
     def get_stock_picking(self, stock_picking_args=None, move_lines_args=None):

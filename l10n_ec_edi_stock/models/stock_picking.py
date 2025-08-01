@@ -353,7 +353,7 @@ class StockPicking(models.Model):
                 'product_partner_ref': line.product_id.with_context(lang=self.partner_id.lang).partner_ref,
                 'qty_done': line.qty_done,
                 'lot_id': line.lot_id,
-            } for line in self.mapped('move_line_ids_without_package')],
+            } for line in self.move_line_ids],
             'note': self.note.striptags().replace('\n', ' ')[:300] if self.note else None,
             'origin': self.origin or None,
         }

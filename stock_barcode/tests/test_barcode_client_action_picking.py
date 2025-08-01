@@ -389,10 +389,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Create a receipt and confirm it.
         receipt_form = Form(self.env['stock.picking'])
         receipt_form.picking_type_id = self.picking_type_in
-        with receipt_form.move_ids_without_package.new() as move:
+        with receipt_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 3
-        with receipt_form.move_ids_without_package.new() as move:
+        with receipt_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 3
         receipt_picking = receipt_form.save()
@@ -1229,13 +1229,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Create the delivery transfer.
         delivery_form = Form(self.env['stock.picking'])
         delivery_form.picking_type_id = self.picking_type_out
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 2
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 3
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = product3
             move.product_uom_qty = 4
 
@@ -1265,15 +1265,15 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Create the delivery transfer.
         delivery_form = Form(self.env['stock.picking'])
         delivery_form.picking_type_id = self.picking_type_out
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 4
 
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 0.12
 
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.productlot1
             move.product_uom_qty = 4
 
@@ -1503,7 +1503,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_out
         picking_form.location_id = self.stock_location
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 1
         delivery_picking = picking_form.save()
@@ -1601,7 +1601,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         receipt_form = Form(self.env['stock.picking'])
         receipt_form.picking_type_id = self.picking_type_in
-        with receipt_form.move_ids_without_package.new() as move:
+        with receipt_form.move_ids.new() as move:
             move.product_id = self.productlot1
             move.product_uom_qty = 13.5
 
@@ -1834,10 +1834,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Creates a delivery with three move lines: two from Section 1 and one from Section 2.
         delivery_form = Form(self.env['stock.picking'])
         delivery_form.picking_type_id = self.picking_type_out
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 2
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 1
 
@@ -1966,10 +1966,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Creates an internal transfer, from WH/Stock/Shelf 1 to WH/Stock.
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_internal
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 4
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_without_barcode
             move.product_uom_qty = 4
 
@@ -1987,10 +1987,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Creates an internal transfer, from WH/Stock/Shelf 1 to WH/Stock.
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_internal
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 4
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_without_barcode
             move.product_uom_qty = 4
 
@@ -2026,13 +2026,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 4
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_without_barcode
             move.product_uom_qty = 4
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.productlot1
             move.product_uom_qty = 6
 
@@ -2070,7 +2070,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.productlot1
             move.product_uom_qty = 2
 
@@ -2103,19 +2103,19 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         def create_picking(picking_type):
             picking_form = Form(self.env['stock.picking'])
             picking_form.picking_type_id = picking_type
-            with picking_form.move_ids_without_package.new() as move:
+            with picking_form.move_ids.new() as move:
                 move.product_id = self.product1
                 move.product_uom_qty = 2
-            with picking_form.move_ids_without_package.new() as move:
+            with picking_form.move_ids.new() as move:
                 move.product_id = self.product2
                 move.product_uom_qty = 1
-            with picking_form.move_ids_without_package.new() as move:
+            with picking_form.move_ids.new() as move:
                 move.product_id = product_without_barcode
                 move.product_uom_qty = 1
-            with picking_form.move_ids_without_package.new() as move:
+            with picking_form.move_ids.new() as move:
                 move.product_id = self.productserial1
                 move.product_uom_qty = 3
-            with picking_form.move_ids_without_package.new() as move:
+            with picking_form.move_ids.new() as move:
                 move.product_id = self.productlot1
                 move.product_uom_qty = 6
             return picking_form.save()
@@ -2315,11 +2315,11 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Creates a receipt and a delivery.
         receipt_form = Form(self.env['stock.picking'])
         receipt_form.picking_type_id = self.picking_type_in
-        with receipt_form.move_ids_without_package.new() as move:
+        with receipt_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 1
         # Adds one line with SN product, for digipad testing
-        with receipt_form.move_ids_without_package.new() as move:
+        with receipt_form.move_ids.new() as move:
             move.product_id = self.productserial1
         receipt_picking = receipt_form.save()
         receipt_picking.action_confirm()
@@ -2328,7 +2328,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         delivery_form = Form(self.env['stock.picking'])
         delivery_form.picking_type_id = self.picking_type_out
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 1
         delivery_picking = delivery_form.save()
@@ -2439,7 +2439,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_out
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 1
         delivery = picking_form.save()
@@ -2551,13 +2551,13 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # create delivery
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_out
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.productlot1
             move.product_uom_qty = 5
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 4
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 3
 
@@ -2809,7 +2809,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Create and validate a picking then try editing it."""
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product1
             move.product_uom_qty = 69
 
@@ -3063,7 +3063,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         delivery_form = Form(self.env['stock.picking'])
         delivery_form.picking_type_id = self.picking_type_out
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 5
         delivery = delivery_form.save()
@@ -3704,7 +3704,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Creates and process the delivery.
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_out
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_gtin_8
             move.product_uom_qty = 10
 
@@ -3746,7 +3746,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Test for product_gtin_8 only.
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_gtin_8
             move.product_uom_qty = 1
 
@@ -3764,7 +3764,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Test for product_gtin_12 only.
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_gtin_12
             move.product_uom_qty = 1
 
@@ -3782,10 +3782,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Test for both product_gtin_8 and product_gtin_12.
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_gtin_8
             move.product_uom_qty = 1
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_gtin_12
             move.product_uom_qty = 1
 
@@ -3840,7 +3840,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = self.product_tln_gtn8
             move.product_uom_qty = 40
 
@@ -4069,7 +4069,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         delivery_form = Form(self.env['stock.picking'])
         delivery_form.picking_type_id = self.picking_type_out
-        with delivery_form.move_ids_without_package.new() as move:
+        with delivery_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 5
         delivery_with_move = delivery_form.save()
@@ -4106,7 +4106,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Create a receipt and confirm it.
         receipt_form = Form(self.env['stock.picking'])
         receipt_form.picking_type_id = self.picking_type_in
-        with receipt_form.move_ids_without_package.new() as move:
+        with receipt_form.move_ids.new() as move:
             move.product_id = self.product2
             move.product_uom_qty = 5
         receipt_picking = receipt_form.save()

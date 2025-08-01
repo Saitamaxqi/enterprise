@@ -47,7 +47,7 @@ class TestInterCompanySaleToPurchaseWithStock(TestInterCompanyRulesCommonStock):
         delivery = sale_to_b.picking_ids
         self.assertEqual(delivery.location_dest_id, interco_location)
         with Form(delivery) as delivery_form:
-            with delivery_form.move_ids_without_package.edit(0) as move_form:
+            with delivery_form.move_ids.edit(0) as move_form:
                 move_form.lot_ids = serial
                 move_form.picked = True
             delivery = delivery_form.save()

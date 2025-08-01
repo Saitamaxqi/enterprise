@@ -410,7 +410,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         # Receive lot from vendor
         lot = self.env['stock.lot'].create({'name': 'lot', 'product_id': product.id})
         with Form(receipt_from_vendor) as receipt_form:
-            with receipt_form.move_ids_without_package.edit(0) as move_form:
+            with receipt_form.move_ids.edit(0) as move_form:
                 move_form.lot_ids = lot
                 move_form.picked = True
             receipt_from_vendor = receipt_form.save()
@@ -495,7 +495,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         # Dropship lot from vendor
         lot = self.env['stock.lot'].create({'name': 'lot', 'product_id': product.id})
         with Form(dropship_from_vendor) as receipt_form:
-            with receipt_form.move_ids_without_package.edit(0) as move_form:
+            with receipt_form.move_ids.edit(0) as move_form:
                 move_form.lot_ids = lot
                 move_form.picked = True
             dropship_from_vendor = receipt_form.save()

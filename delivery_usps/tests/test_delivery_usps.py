@@ -219,14 +219,14 @@ class TestDeliveryUSPS(TransactionCase):
                     'location_dest_id': self.customer_location.id,
                     'picking_type_id': self.env.ref('stock.picking_type_out').id,
                     'state': 'draft',
-                    'move_ids_without_package': [(0, None, order1_vals)]}
+                    'move_ids': [(0, None, order1_vals)]}
 
         delivery_order = StockPicking.create(do_vals)
         self.assertEqual(delivery_order.state, 'draft', 'Shipment state should be draft.')
 
         delivery_order.action_confirm()
         self.assertEqual(delivery_order.state, 'assigned', 'Shipment state should be ready(assigned).')
-        delivery_order.move_ids_without_package.quantity = 1.0
+        delivery_order.move_ids.quantity = 1.0
 
         try:
             delivery_order.button_validate()

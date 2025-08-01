@@ -158,7 +158,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="invoice_tbody">
-                                            <t t-set="lines" t-value="o.move_line_ids_without_package.sorted(key=lambda l: l.id)"/>
+                                            <t t-set="lines" t-value="o.move_line_ids.sorted(key=lambda l: l.id)"/>
 
                                             <t t-foreach="lines" t-as="line">
                                                 <tr>

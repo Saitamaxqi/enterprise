@@ -332,11 +332,11 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
         picking = so.picking_ids
         picking_form = Form(picking)
         # add a stock move with Product B manually (not linked to a SO line)
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_b
             move.product_uom_qty = 1.0
         # add a stock move with Product C without "product_uom_qty" (demand == 0)
-        with picking_form.move_ids_without_package.new() as move:
+        with picking_form.move_ids.new() as move:
             move.product_id = product_c
         picking_form.save()
         move_a = picking.move_ids[0]

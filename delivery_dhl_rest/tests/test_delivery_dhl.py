@@ -299,7 +299,7 @@ class TestDeliveryDHL(TransactionCase):
             'location_dest_id': self.customer_location.id,
             'picking_type_id': self.env.ref('stock.picking_type_out').id,
             'state': 'draft',
-            'move_ids_without_package': [(0, None, order1_vals)],
+            'move_ids': [(0, None, order1_vals)],
             'scheduled_date': fields.Datetime.now() + timedelta(days=1),
         }
 
@@ -308,8 +308,8 @@ class TestDeliveryDHL(TransactionCase):
 
         delivery_order.action_confirm()
         self.assertEqual(delivery_order.state, 'assigned', 'Shipment state should be ready(assigned).')
-        delivery_order.move_ids_without_package.quantity = 1.0
-        delivery_order.move_ids_without_package.picked = True
+        delivery_order.move_ids.quantity = 1.0
+        delivery_order.move_ids.picked = True
 
         delivery_order.button_validate()
         self.assertEqual(delivery_order.state, 'done', 'Shipment state should be done.')

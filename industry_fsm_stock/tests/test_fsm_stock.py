@@ -546,15 +546,15 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         })
         # Confirm two first pickings
         for picking in so.picking_ids.sorted(lambda p: p.id)[:2]:
-            picking.move_line_ids_without_package.quantity = 1
+            picking.move_line_ids.quantity = 1
             picking.button_validate()
 
         task.with_user(self.project_user).action_fsm_validate()
 
         for picking in so.picking_ids:
             self.assertEqual(picking.state, 'done')
-            self.assertEqual(len(picking.move_line_ids_without_package), 1)
-            self.assertEqual(picking.move_line_ids_without_package.quantity, 1)
+            self.assertEqual(len(picking.move_line_ids), 1)
+            self.assertEqual(picking.move_line_ids.quantity, 1)
 
     def test_fsm_qty(self):
         """ Making sure industry_fsm_stock/Product.set_fsm_quantity()
