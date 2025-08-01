@@ -7,6 +7,7 @@ from datetime import timedelta
 
 import dateutil.parser
 from markupsafe import Markup
+from werkzeug.urls import url_encode
 
 from odoo import _, api, exceptions, fields, models, modules
 from odoo.exceptions import UserError, ValidationError
@@ -310,7 +311,7 @@ class AmazonAccount(models.Model):
         }
         return {
             'type': 'ir.actions.act_url',
-            'url': f'{oauth_url}?{urls.url_encode(oauth_url_params)}',
+            'url': f'{oauth_url}?{url_encode(oauth_url_params)}',
             'target': 'self',
         }
 
