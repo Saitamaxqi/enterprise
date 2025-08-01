@@ -48,7 +48,7 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
             run: "click",
         },
         {
-            trigger: "a.o-edit-global-filters",
+            trigger: "button.o-edit-global-filters",
             content: "Open Filters Side Panel",
             run: "click",
         },
