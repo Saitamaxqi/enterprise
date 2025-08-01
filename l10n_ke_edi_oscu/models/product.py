@@ -53,6 +53,7 @@ class ProductTemplate(models.Model):
         string="KRA Item Code",
         help="The code assigned to this product on eTIMS",
         compute='_compute_l10n_ke_item_code',
+        search='_search_l10n_ke_item_code',
     )
 
     # === Computes === #
@@ -101,6 +102,10 @@ class ProductTemplate(models.Model):
     @api.depends('product_variant_ids.l10n_ke_item_code')
     def _compute_l10n_ke_item_code(self):
         self._compute_template_field_from_variant_field('l10n_ke_item_code')
+
+    @api.model
+    def _search_l10n_ke_item_code(self, operator, value):
+        return [('product_variant_ids.l10n_ke_item_code', operator, value)]
 
     # === Actions === #
 
