@@ -89,7 +89,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             self.assertEqual(len(payslip.worked_days_line_ids), 3 if month in [3, 4] else 2)
             self.assertEqual(len(payslip.input_line_ids), 1 if month == 2 else 0)
 
-            self.assertAlmostEqual(payslip._get_average_daily_wage(),
+            self.assertAlmostEqual(payslip.l10n_hk_average_daily_wage,
                                    results[month]['moving_daily_wage'],
                                    delta=0.01,
                                    msg="Incorrect moving daily wage for the %s month payslip" % month)
@@ -105,8 +105,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
         for date_from, date_to, leave_type in leaves_to_create:
             self._generate_leave(date_from, date_to, leave_type)
         results = {
-            3: {'BASIC': 26952.4, 'ALW.INT': 200.0, '713_GROSS': 27152.4, 'MPF_GROSS': 27152.4, 'EEMC': -1357.62, 'ERMC': -1357.62, 'GROSS': 28510.02, 'NET': 25794.78, 'MEA': 25794.78},
-            4: {'BASIC': 22158.1, 'ALW.INT': 200.0, '713_GROSS': 22358.1, 'MPF_GROSS': 22358.1, 'EEMC': -1117.91, 'ERMC': -1117.91, 'GROSS': 23476.01, 'NET': 21240.2, 'MEA': 21240.2}
+            3: {'BASIC': 26952.37, 'ALW.INT': 200.0, '713_GROSS': 27152.37, 'MPF_GROSS': 27152.37, 'EEMC': -1357.62, 'ERMC': -1357.62, 'GROSS': 28509.99, 'NET': 25794.75, 'MEA': 25794.75},
+            4: {'BASIC': 22158.09, 'ALW.INT': 200.0, '713_GROSS': 22358.09, 'MPF_GROSS': 22358.09, 'EEMC': -1117.9, 'ERMC': -1117.9, 'GROSS': 23475.99, 'NET': 21240.19, 'MEA': 21240.19}
         }
         payslip = self._generate_payslip(
             date(2023, 2, 1),
@@ -117,8 +117,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
         payslip = self._generate_payslip(date(2023, 3, 1), date(2023, 3, 31))
         self._validate_worked_days(payslip, {
-            'HKLEAVE210': (7.0, 56.0, 7550.0),
-            'HKLEAVE211': (18.0, 144.0, 15531.43),
+            'HKLEAVE210': (7.0, 56.0, 7549.99),
+            'HKLEAVE211': (18.0, 144.0, 15531.41),
         }, skip_lines=True)
         maternity_leave_data = payslip._get_worked_days_line_values(['HKLEAVE211'], ['amount', 'number_of_days'], True)['HKLEAVE211']['sum']
         maternity_leave_daily_wage = maternity_leave_data['amount'] / maternity_leave_data['number_of_days']
@@ -127,7 +127,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
         payslip.action_payslip_paid()
 
         payslip = self._generate_payslip(date(2023, 4, 1), date(2023, 4, 30))
-        self._validate_worked_days(payslip, {'HKLEAVE211': (11.0, 88.0, 9491.43)}, skip_lines=True)
+        self._validate_worked_days(payslip, {'HKLEAVE211': (11.0, 88.0, 9491.42)}, skip_lines=True)
         maternity_leave_data = payslip._get_worked_days_line_values(['HKLEAVE211'], ['amount', 'number_of_days'], True)['HKLEAVE211']['sum']
         self.assertAlmostEqual(maternity_leave_data['amount'] / maternity_leave_data['number_of_days'], maternity_leave_daily_wage, places=2)
         self._validate_payslip(payslip, results[4])
@@ -178,7 +178,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             self.assertEqual(len(payslip.worked_days_line_ids), 2)
             self.assertEqual(len(payslip.input_line_ids), 0)
 
-            self.assertAlmostEqual(payslip._get_average_daily_wage(),
+            self.assertAlmostEqual(payslip.l10n_hk_average_daily_wage,
                                    results[month]['moving_daily_wage'],
                                    delta=0.01,
                                    msg="Incorrect moving daily wage for the %s month payslip" % month)
