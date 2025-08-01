@@ -5927,11 +5927,13 @@ registry.category("web_tour.tours").add("test_create_backorder_after_qty_modifie
     ],
 });
 
-registry.category("web_tour.tours").add("test_barcode_lazy_cache_scan_two_lots", {  steps: () => [
-    { trigger: ".o_barcode_line", run: "scan SN-001" },
-    { trigger: ".o_barcode_line", run: "scan SN-002" },
-    { trigger: ".o_barcode_scanner_qty .qty-done:contains(2)"},
-]});
+registry.category("web_tour.tours").add("test_barcode_lazy_cache_scan_two_lots", {
+    steps: () => [
+        { trigger: ".o_barcode_line", run: "scan SN-001" },
+        { trigger: ".o_barcode_line", run: "scan SN-002" },
+        { trigger: ".o_barcode_scanner_qty .qty-done:contains(2)" },
+    ],
+});
 
 registry.category("web_tour.tours").add("test_open_picking_dont_override_assigned_user", {
     steps: () => [
@@ -6274,6 +6276,49 @@ registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mix
             trigger: ".o_notification_bar.bg-success",
             run() {},
         },
+    ],
+});
+
+registry.category("web_tour.tours").add("test_remove_sublines_and_scan_serial_again", {
+    steps: () => [
+        { trigger: ".o_barcode_line:nth-child(1)", run: "click" },
+        { trigger: ".o_barcode_line.o_selected", run: "scan abc1" },
+        { trigger: ".o_barcode_line.o_selected", run: "scan abc2" },
+        { trigger: ".o_barcode_line.o_selected", run: "scan abc3" },
+        {
+            trigger: ".o_barcode_line_summary:has(.qty-done:contains(3)) .o_toggle_sublines",
+            run: "click",
+        },
+        {
+            trigger: ".o_sublines .o_barcode_line:has(.o_line_lot_name:contains('abc1'))",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_sublines .o_barcode_line.o_selected:has(.o_line_lot_name:contains('abc1')) .o_remove_unit",
+            run: "click",
+        },
+        { trigger: ".o_sublines:not(:has(.o_line_lot_name:contains('abc1'))" },
+        {
+            trigger: ".o_sublines .o_barcode_line:has(.o_line_lot_name:contains('abc2'))",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_sublines .o_barcode_line.o_selected:has(.o_line_lot_name:contains('abc2')) .o_remove_unit",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_line_summary:has(.qty-done:contains(1)) .o_remove_unit",
+            run: "click",
+        },
+        { trigger: ".o_barcode_line_summary:has(.qty-done:contains(0))" },
+        { trigger: ".o_barcode_line", run: "scan abc3" },
+        { trigger: ".o_barcode_line", run: "scan abc2" },
+        { trigger: ".o_barcode_line", run: "scan abc1" },
+        { trigger: ".o_barcode_line:nth-child(1) .o_barcode_line_details:contains(3/3)" },
+        { trigger: ".o_validate_page", run: "click" },
+        ...stepUtils.validateBarcodeOperation(),
     ],
 });
 

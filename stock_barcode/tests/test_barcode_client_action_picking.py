@@ -3596,6 +3596,22 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {'product_uom_qty': 1.0, 'quantity': 3.5, 'product_uom': pack_of_6, 'state': 'done'},
         ])
 
+    def test_remove_sublines_and_scan_serial_again(self):
+        grp_lot = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'group_ids': [Command.link(grp_lot.id)]})
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_in.id,
+            'move_ids': [
+                Command.create({
+                    'product_id': self.productserial1.id,
+                    'product_uom_qty': 3,
+                })
+            ],
+        })
+        picking.action_assign()
+        url = self._get_client_action_url(picking.id)
+        self.start_tour(url, 'test_remove_sublines_and_scan_serial_again', login='admin')
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """

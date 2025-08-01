@@ -126,7 +126,14 @@ export default class LineComponent extends Component {
     }
 
     addQuantity(quantity) {
-        this.env.model.updateLineQty(this.line.virtual_id, quantity);
+        let lineVirtualId = this.line.virtual_id;
+        if (this.line.lines?.length > 1 && this.lotName) {
+            lineVirtualId = this.line.lines.find((subline) => {
+                const sublineLotName = subline.lot_id ? subline.lot_id.name : subline.lot_name;
+                return sublineLotName === this.lotName;
+            }).virtual_id;
+        }
+        this.env.model.updateLineQty(lineVirtualId, quantity);
     }
 
     select(ev) {
