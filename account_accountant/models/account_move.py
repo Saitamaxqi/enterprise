@@ -496,7 +496,6 @@ class AccountMove(models.Model):
                     move.invoice_outstanding_credits_debits_widget['content'].extend(payments_widget_vals['content'])
                 else:
                     move.invoice_outstanding_credits_debits_widget = payments_widget_vals
-                    move.invoice_has_outstanding = True
 
     def js_assign_outstanding_line(self, line_id):
         # EXTENDS
