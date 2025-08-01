@@ -21,6 +21,10 @@
         <field name="l10n_hk_use_713" eval="True" />
     </record>
 
+    <record id="hr_work_entry.l10n_hk_work_entry_type_paternity_leave_80" model="hr.work.entry.type">
+        <field name="l10n_hk_use_713" eval="True" />
+    </record>
+
     <record id="hr_work_entry.l10n_hk_work_entry_type_statutory_holiday" model="hr.work.entry.type">
         <field name="l10n_hk_use_713" eval="True" />
     </record>
