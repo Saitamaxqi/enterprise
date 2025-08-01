@@ -145,34 +145,36 @@ result_name = inputs['GLOBAL_DEDUCTION'].name
         <field name="sequence">109</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-last_year_payslips = payslip._get_previous_year_payslips(order='date_from desc')
-result = payslip.date_to.month == 12 and last_year_payslips
+result = payslip.l10n_hk_includes_eoy_pay
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-# Calculate the number of days in current year
-first_day = payslip.date_from + relativedelta(month=1, day=1)
-last_day = payslip.date_to + relativedelta(month=12, day=31)
-total_days = (last_day - first_day).days + 1
+if inputs.get('CUST_END_OF_YEAR_PAY'):
+    result = inputs['CUST_END_OF_YEAR_PAY'].amount
+else:
+    # Calculate the number of days in current year
+    first_day = payslip.date_from + relativedelta(month=1, day=1)
+    last_day = payslip.date_to + relativedelta(month=12, day=31)
+    total_days = (last_day - first_day).days + 1
 
-# Find past 12-month payslips
-last_year_payslips = payslip._get_previous_year_payslips(order='date_from desc')
+    # Find past 12-month payslips
+    last_year_payslips = payslip._get_previous_year_payslips(order='date_from desc')
 
-# Calculate the work rate
-number_of_days = last_year_payslips._get_number_of_worked_days(only_full_pay=True)
-number_of_months = number_of_days / total_days * 12  # total_days remains the same for last 12 months and current year
+    # Calculate the work rate
+    number_of_days = last_year_payslips._get_number_of_worked_days(only_full_pay=True)
+    number_of_months = number_of_days / total_days * 12  # total_days remains the same for last 12 months and current year
 
-# Calculate the average monthly salary
-gross = last_year_payslips._get_line_values(['713_GROSS'], compute_sum=True)['713_GROSS']['sum']['total']
-gross -= last_year_payslips._get_total_non_full_pay()
-average_monthly_salary = inputs['CUST_AVG_MONTHLY_SALARY'].amount if inputs.get('CUST_AVG_MONTHLY_SALARY') else gross / number_of_months
+    # Calculate the average monthly salary
+    gross = last_year_payslips._get_line_values(['713_GROSS'], compute_sum=True)['713_GROSS']['sum']['total']
+    gross -= last_year_payslips._get_total_non_full_pay()
+    average_monthly_salary = inputs['CUST_AVG_MONTHLY_SALARY'].amount if inputs.get('CUST_AVG_MONTHLY_SALARY') else gross / number_of_months
 
-# Calculate the pro-rata rate
-current_year_payslips = last_year_payslips.filtered(lambda p: p.date_from &gt;= first_day) + payslip
-number_of_days = current_year_payslips._get_number_of_worked_days()
-prorata_rate = number_of_days / total_days
+    # Calculate the pro-rata rate
+    current_year_payslips = last_year_payslips.filtered(lambda p: p.date_from &gt;= first_day) + payslip
+    number_of_days = current_year_payslips._get_number_of_worked_days()
+    prorata_rate = number_of_days / total_days
 
-result = average_monthly_salary * prorata_rate
+    result = average_monthly_salary * prorata_rate
         </field>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary"/>
     </record>

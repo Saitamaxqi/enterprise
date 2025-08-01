@@ -44,6 +44,12 @@ class HrPayslip(models.Model):
         help='Calculated as per the Employment (Amendment) Ordinance 2007: (Total of fully paid wages earned in the 12-month period) / (Total number of fully paid days in that period).',
         compute='_compute_average_daily_wage',
     )
+    l10n_hk_includes_eoy_pay = fields.Boolean(
+        string='End-Of-Year Pay',
+        compute='_compute_includes_eoy_pay',
+        store=True,
+        readonly=False,
+    )
 
     @api.depends('worked_days_line_ids')
     def _compute_worked_days_leaves_count(self):
@@ -117,6 +123,15 @@ class HrPayslip(models.Model):
                     adw = gross / number_of_days
 
             slip.l10n_hk_average_daily_wage = adw
+
+    @api.depends('date_to', 'company_id')
+    def _compute_includes_eoy_pay(self):
+        for slip in self.filtered(lambda s: s.country_code == 'HK'):
+            if not slip.company_id.l10n_hk_eoy_pay_month:
+                slip.l10n_hk_includes_eoy_pay = False
+
+            last_year_payslips = slip._get_previous_year_payslips(order='date_from desc')
+            slip.l10n_hk_includes_eoy_pay = str(slip.date_to.month) == slip.company_id.l10n_hk_eoy_pay_month and last_year_payslips
 
     def _get_paid_amount(self):
         """

@@ -10,6 +10,14 @@
             (4, ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_payment_in_lieu_of_notice'))]" />
     </record>
 
+    <record id="input_custom_end_of_year_pay" model="hr.payslip.input.type">
+        <field name="name">Custom End Of Year Pay</field>
+        <field name="code">CUST_END_OF_YEAR_PAY</field>
+        <field name="country_id" ref="base.hk" />
+        <field name="struct_ids" eval="[
+            (4, ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary'))]" />
+    </record>
+
     <!-- CAP57: Employees Monthly Pay -->
     <record id="input_back_pay" model="hr.payslip.input.type">
         <field name="name">Back Pay</field>

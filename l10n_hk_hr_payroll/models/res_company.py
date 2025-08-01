@@ -17,6 +17,25 @@ class ResCompany(models.Model):
     l10n_hk_employer_name = fields.Char("Employer's Name shown on reports")
     l10n_hk_employer_file_number = fields.Char("Employer's File Number")
     l10n_hk_manulife_mpf_scheme = fields.Char("Manulife MPF Scheme", size=8)
+    l10n_hk_eoy_pay_month = fields.Selection(
+        string="End of Year Payments Month",
+        help="If set, End of Year Payments will be included in the payslip of the chose month.\nLeave empty to manually choose when to include it in each payslip.",
+        selection=[
+            ('1', 'January'),
+            ('2', 'February'),
+            ('3', 'March'),
+            ('4', 'April'),
+            ('5', 'May'),
+            ('6', 'June'),
+            ('7', 'July'),
+            ('8', 'August'),
+            ('9', 'September'),
+            ('10', 'October'),
+            ('11', 'November'),
+            ('12', 'December')
+        ],
+        default='12',
+    )
 
     @api.constrains("l10n_hk_employer_file_number")
     def _check_l10n_hk_employer_file_number(self):
