@@ -1159,7 +1159,7 @@ class AccountBankStatementLine(models.Model):
 
         move_lines_to_remove = self.env['account.move.line'].browse(move_line_ids)
         liquidity_line, _suspense_lines, other_lines = self._seek_for_lines()
-        reco_model_id = self.move_id.line_ids.reconcile_model_id
+        reco_model_id = move_lines_to_remove.reconcile_model_id[:1]
 
         move_lines_to_remove.remove_move_reconcile()
         self._set_move_line_to_statement_line_move(

@@ -1703,6 +1703,41 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         self.assertEqual(len(messages), 3)
         self.assertEqual(messages.author_id, self.env.ref('base.partner_root'), "Automatic reco model set should be done by OdooBot.")
 
+    def test_delete_lines_with_different_reco_model(self):
+        reco_model1 = self.env['account.reconcile.model'].create({
+            'name': 'Test reco model',
+            'match_journal_ids': [Command.set([self.company_data['default_journal_bank'].id])],
+            'match_label': 'contains',
+            'match_label_param': 'blblbl',
+            'line_ids': [Command.create({'account_id': self.company_data['default_account_revenue'].id})],
+        })
+        reco_model2 = reco_model1.copy()
+        st_line = self._create_st_line(
+            1000.0,
+            date='2025-08-06',
+            payment_ref='blblbl',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+
+        reco_model1._trigger_reconciliation_model(st_line)
+        st_line.edit_reconcile_line(st_line.line_ids[-1].id, {'balance': -500, 'amount_currency': -500})
+        reco_model2._trigger_reconciliation_model(st_line)
+
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 1000.0, 'balance': 1000.0, 'reconciled': False, 'reconcile_model_id': False},
+            {'account_id': self.company_data['default_account_revenue'].id, 'amount_currency': -500.0, 'balance': -500.0, 'reconciled': False, 'reconcile_model_id': reco_model1.id},
+            {'account_id': self.company_data['default_account_revenue'].id, 'amount_currency': -500.0, 'balance': -500.0, 'reconciled': False, 'reconcile_model_id': reco_model2.id},
+        ])
+
+        st_line.delete_reconciled_line(st_line.line_ids[-1].id)
+
+        self.assertEqual(
+            st_line.line_ids[-1].reconcile_model_id.id,
+            reco_model2.id,
+            "The reco model from the deleted line should be assigned on the new suspense line",
+        )
+
     def test_account_default_taxes_of_reco_model(self):
         default_tax = self.env['account.tax'].create({
             'name': "default_tax",
