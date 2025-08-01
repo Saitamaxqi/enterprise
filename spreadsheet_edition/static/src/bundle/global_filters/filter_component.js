@@ -4,7 +4,9 @@ import { Component, onWillStart, onWillUnmount } from "@odoo/owl";
 import { getFacetInfo } from "@spreadsheet/global_filters/helpers";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { useService } from "@web/core/utils/hooks";
-import { FiltersSearchDialog } from "@spreadsheet/global_filters/components/filters_search_dialog/filters_search_dialog";
+import { FilterValuesList } from "@spreadsheet/global_filters/components/filters_search_dialog/filters_search_dialog";
+import { Dialog } from "@web/core/dialog/dialog";
+
 const { Menu } = spreadsheet;
 
 class FiltersTooltip extends Component {
@@ -16,6 +18,7 @@ class FiltersTooltip extends Component {
         onClick: Function,
         close: { optional: true, type: Function },
     };
+    static components = { Dialog };
 
     setup() {
         this.facets = [];
@@ -34,6 +37,16 @@ class FiltersTooltip extends Component {
         const filterValues = this.props.model.getters.getGlobalFilterValue(filter.id);
         return getFacetInfo(this.env, filter, filterValues);
     }
+}
+
+export class FilterValuesDialog extends Component {
+    static template = "spreadsheet_edition.FilterValuesDialog";
+    static components = { FilterValuesList, Dialog };
+    static props = {
+        close: Function,
+        model: Object,
+        openFiltersEditor: { type: Function, optional: true },
+    };
 }
 
 export class FilterComponent extends Component {
@@ -61,7 +74,7 @@ export class FilterComponent extends Component {
     }
 
     openDialog() {
-        const close = this.dialog.add(FiltersSearchDialog, {
+        const close = this.dialog.add(FilterValuesDialog, {
             model: this.env.model,
             openFiltersEditor: () => {
                 this.env.toggleSidePanel("GLOBAL_FILTERS_SIDE_PANEL");

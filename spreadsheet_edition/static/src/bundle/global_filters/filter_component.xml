@@ -34,4 +34,10 @@
         </div>
     </t>
 
+    <t t-name="spreadsheet_edition.FilterValuesDialog">
+        <Dialog title.translate="Global Filters" size="md" footer="false">
+            <FilterValuesList model="props.model" openFiltersEditor="props.openFiltersEditor" close="props.close"/>
+        </Dialog>
+    </t>
+
 </templates>
