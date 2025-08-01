@@ -135,7 +135,7 @@ export class QualityCheck extends MrpWorkorder {
         this.unique.epoch = Date.now();
     }
 
-    async doActionAndNext(action, stateToSet = "pass", actionParams = {}) {
+    async doActionAndNext(action, stateToSet = "pass") {
         const { model, resModel, resId, data, _parentRecord } = this.props.record;
         const result = await model.orm.call(resModel, action, [resId]);
         if ("next_check_id" in result) {
@@ -147,9 +147,6 @@ export class QualityCheck extends MrpWorkorder {
             if (result.type === "ir.actions.act_window") {
                 params.onClose = () => this.env.reload(this.props.record);
                 data.quality_state = "none";
-            }
-            if (result.type === "ir.actions.client") {
-                result.params = { ...result.params, ...actionParams };
             }
             await this.action.doAction(result, params);
         }

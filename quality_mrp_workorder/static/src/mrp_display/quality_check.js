@@ -38,7 +38,7 @@ patch(QualityCheck.prototype, {
     get passFailTypes() {
         return ["passfail", "measure", "spreadsheet"];
     },
-    clicked() {
+    async clicked() {
         switch (this.type) {
             case "passfail":
                 if (this.isComplete) {
@@ -55,10 +55,15 @@ patch(QualityCheck.prototype, {
                     confirm: this.saveMeasurement.bind(this),
                 });
             case "spreadsheet":
-                return this.doActionAndNext("action_open_spreadsheet", "none", {
+                await this.props.startWorking();
+                const { model, resModel, resId } = this.props.record;
+                const result = await model.orm.call(resModel, "action_open_spreadsheet", [resId]);
+                result.params = {
+                    ...result.params,
                     pass_action: "action_pass_and_next",
-                    fail_action: "action_fail_and_next",
-                })
+                    fail_action: "action_fail_and_next"
+                };
+                return this.action.doAction(result);
             default:
                 return super.clicked();
         }
