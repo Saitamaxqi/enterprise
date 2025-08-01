@@ -370,6 +370,8 @@ class TestL10nBREDIServices(TestL10nBREDICommon):
             single_wizard.action_send_and_print()
 
         informative_taxes = """Informative taxes:.*\
+subtotalTaxable: 435, tax: 0, taxType: cofins.*\
+subtotalTaxable: 435, tax: 0, taxType: pis.*\
 subtotalTaxable: 435, tax: 58.51, taxType: aproxtribFed.*\
 subtotalTaxable: 435, tax: 82.65, taxType: aproxtribState.*\
 subtotalTaxable: 435, tax: 0, taxType: ipi"""

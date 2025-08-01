@@ -109,16 +109,8 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, CommonPosBrEdiTest):
                 "amount_currency": 0.58,
             },
             {
-                "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.05")]).id,  # cofins
-                "amount_currency": 0.00,
-            },
-            {
                 "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.03")]).id,  # icms
                 "amount_currency": -0.58,
-            },
-            {
-                "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.04")]).id,  # pis
-                "amount_currency": 0.00,
             },
         ]
         self._test_adjustment_entry(
@@ -168,16 +160,8 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, CommonPosBrEdiTest):
                 "amount_currency": 2.93,
             },
             {
-                "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.05")]).id,  # cofins
-                "amount_currency": 0.00,
-            },
-            {
                 "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.03")]).id,  # icms
                 "amount_currency": -3.51,
-            },
-            {
-                "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.04")]).id,  # pis
-                "amount_currency": 0.00,
             },
         ]
         self._test_adjustment_entry(
@@ -219,16 +203,8 @@ class TestL10nBREDIPOS(TestL10nBREDIPOSCommon, CommonPosBrEdiTest):
                 "amount_currency": 2.93,
             },
             {
-                "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.05")]).id,  # cofins
-                "amount_currency": 0.00,
-            },
-            {
                 "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.03")]).id,  # icms
                 "amount_currency": -3.51,
-            },
-            {
-                "account_id": self.env["account.account"].search([("code", "=", "2.01.01.09.04")]).id,  # pis
-                "amount_currency": 0.00,
             },
         ]
         self._test_adjustment_entry(

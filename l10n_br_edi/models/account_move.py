@@ -566,7 +566,18 @@ class AccountMove(models.Model):
         return payment_mode
 
     def _l10n_br_log_informative_taxes(self, payload):
-        informative_taxes = payload.get("summary", {}).get("taxImpactHighlights", {}).get("informative", [])
+        non_accounting_taxes = set()
+        for line in payload.get("lines", []):
+            if line.get("taxDetails"):
+                non_accounting_taxes.update({tax_detail['taxType'] for tax_detail in line["taxDetails"] if tax_detail['taxImpact']['accounting'] == 'none'})
+
+        informative_taxes = []
+        taxes_summary = payload.get("summary", {}).get("taxImpactHighlights", {})
+        for tax_type, taxes in taxes_summary.items():
+            if tax_type == 'informative':
+                informative_taxes += taxes
+            else:
+                informative_taxes += [tax for tax in taxes if tax['taxType'] in non_accounting_taxes]
         # Informative taxes look like: [{"taxType": "aproxtribCity", "tax": 7.8, "subtotalTaxable": 200}, ...]
         # Transform to:
         # - taxType: aproxtribCity, tax: 7.8, subtotalTaxable: 200

@@ -843,8 +843,7 @@ class PosOrder(models.Model):
         for line in self.l10n_br_edi_avatax_data.get('lines', []):
             tax_descriptions = []
             for tax_detail in line.get('taxDetails', []):
-                # Taxes are guaranteed to be unarchived after tax calculation.
-                tax = self.env['account.tax'].search([('l10n_br_avatax_code', '=', tax_detail['taxType'])], limit=1)
+                tax = self.env['account.tax'].with_context(active_test=False).search([('l10n_br_avatax_code', '=', tax_detail['taxType'])], limit=1)
                 is_informative = tax_detail['taxImpact']['impactOnNetAmount'] == 'Informative'
                 has_informative_tax = has_informative_tax or is_informative
                 tax_descriptions.append(Markup("{tax_name}{informative} - {tax_amount}").format(
