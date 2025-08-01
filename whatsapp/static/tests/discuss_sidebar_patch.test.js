@@ -38,7 +38,7 @@ test("Can join whatsapp channels from search conversation button", async () => {
     ]);
     await start();
     await openDiscuss();
-    await click("input[placeholder='Find or start a conversation']");
+    await click("input[placeholder='Search conversations']");
     await insertText("input[placeholder='Search a conversation']", "WhatsApp 2");
     await click("a", { text: "WhatsApp 2" });
     await contains(".o-mail-DiscussSidebar-item", { text: "WhatsApp 2" });
