@@ -42,6 +42,6 @@ export class Orderline extends Component {
         return JSON.parse(this.preparation_line.internal_note || "[]");
     }
     get customerNotes() {
-        return this.preparation_line.customer_note.split("\n").filter((note) => note);
+        return (this.preparation_line.customer_note || "").split("\n").filter((note) => note);
     }
 }
