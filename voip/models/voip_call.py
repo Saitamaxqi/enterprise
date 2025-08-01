@@ -2,6 +2,7 @@ from typing import Optional
 
 from odoo import api, fields, models
 from odoo.fields import Domain
+from odoo.tools import SQL
 
 from odoo.addons.mail.tools.discuss import Store
 
@@ -9,7 +10,7 @@ from odoo.addons.mail.tools.discuss import Store
 class VoipCall(models.Model):
     _name = "voip.call"
     _inherit = ["mail.thread", "voip.country.code.mixin"]
-    _description = """A phone call handled using the VoIP application"""
+    _description = "Phone call"
 
     phone_number = fields.Char(required=True, readonly=True)
     direction = fields.Selection(
@@ -46,16 +47,41 @@ class VoipCall(models.Model):
     country_flag_url = fields.Char(related="country_id.image_url", string="Country Flag")
     provider_id = fields.Many2one(related="user_id.voip_provider_id", string="Provider", readonly=True)
     company_id = fields.Many2one(related="user_id.company_id", readonly=True)
-    calls_count = fields.Integer(compute="_compute_calls_count")
+    call_count = fields.Integer(compute="_compute_call_count", help="The total number of calls made to the same phone number.")
     image_1920 = fields.Binary(related="partner_id.image_1920")
     avatar_128 = fields.Binary(related="partner_id.avatar_128")
 
-    def _compute_calls_count(self):
-        for rec in self:
-            rec.calls_count = self.env["voip.call"].search_count(
-                (rec.partner_id and ["|", ("phone_number", "=", rec.phone_number), ("partner_id", "=", rec.partner_id)])
-                or [("phone_number", "=", rec.phone_number)]
-            )
+    @api.depends("partner_id", "phone_number")
+    def _compute_call_count(self):
+        if not self.ids:
+            self.call_count = 0
+            return
+        query = SQL(
+            """
+            SELECT
+                call_1.id,
+                COUNT(DISTINCT call_2.id) AS count
+            FROM
+                voip_call AS call_1
+                JOIN voip_call AS call_2 ON (
+                    (
+                        call_1.phone_number = call_2.phone_number
+                        OR call_1.partner_id = call_2.partner_id
+                    )
+                )
+            WHERE
+                call_1.id IN %(ids)s
+            GROUP BY
+                call_1.id
+            ORDER BY
+                call_1.id;
+        """,
+            ids=tuple(self.ids),
+        )
+        self.env.cr.execute(query)
+        count_by_call_id = {res["id"]: res["count"] for res in self.env.cr.dictfetchall()}
+        for call in self:
+            call.call_count = count_by_call_id.get(call.id)
 
     @api.depends("state", "partner_id.name")
     def _compute_display_name(self):
@@ -112,11 +138,18 @@ class VoipCall(models.Model):
         for call in self:
             call.country_id = country_id_by_iso_code.get(call.country_code_from_phone, False)
 
-    def write(self, vals):
-        res = super().write(vals)
-        if "partner_id" in vals:
-            self.partner_id.phone = self.phone_number
-        return res
+    def action_open_calls(self):
+        self.ensure_one()
+        domain = Domain("phone_number", "=", self.phone_number)
+        if self.partner_id:
+            domain |= Domain("partner_id", "=", self.partner_id)
+        return {
+            "type": "ir.actions.act_window",
+            "name": self.env._("Calls"),
+            "res_model": "voip.call",
+            "view_mode": "list,form",
+            "domain": domain,
+        }
 
     @api.model
     def create_and_format(
@@ -250,18 +283,3 @@ class VoipCall(models.Model):
 
     def _phone_get_number_fields(self):
         return ["phone_number"]
-
-    def action_open_calls(self):
-        self.ensure_one()
-        return {
-            "type": "ir.actions.act_window",
-            "name": "Calls",
-            "res_model": "voip.call",
-            "view_mode": "list,form",
-            "domain": (
-                self.partner_id
-                and ["|", ("phone_number", "=", self.phone_number), ("partner_id", "=", self.partner_id.id)]
-            )
-            or [("phone_number", "=", self.phone_number)],
-            "context": dict(self.env.context),
-        }

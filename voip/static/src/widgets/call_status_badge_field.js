@@ -1,7 +1,7 @@
-import { BadgeField } from "@web/views/fields/badge/badge_field";
+import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
-
 import { useService } from "@web/core/utils/hooks";
+import { BadgeField } from "@web/views/fields/badge/badge_field";
 
 export class CallStatusBadgeField extends BadgeField {
     static template = "voip.CallStatusBadgeField";
@@ -11,6 +11,7 @@ export class CallStatusBadgeField extends BadgeField {
         this.userAgent = useService("voip.user_agent");
     }
 
+    /** @returns {string} */
     get iconClass() {
         const direction = this.props.record.data.direction;
         if (direction === "outgoing") {
@@ -22,26 +23,33 @@ export class CallStatusBadgeField extends BadgeField {
         return "";
     }
 
+    /** @returns {ReturnType<_t>} */
     get statusLabel() {
-        const state = this.props.record.data.state;
-        const mapping = {
-            missed: "Missed Call",
-            aborted: "Cancelled Call",
-            terminated:
-                this.props.record.data.direction === "incoming" ? "Incoming call" : "Outgoing call",
-            rejected: "Rejected Call",
-            ongoing:
-                this.userAgent.session?.call?.id === this.props.record.data.id
-                    ? "Ongoing Call"
-                    : "Ended unexpectedly",
-            calling:
-                this.userAgent.session?.call?.id === this.props.record.data.id
-                    ? "Trying to call"
-                    : "Ended unexpectedly",
-        };
-        return mapping[state] || "Unknown";
+        switch (this.props.record.data.state) {
+            case "missed":
+                return _t("Missed Call");
+            case "aborted":
+                return _t("Cancelled Call");
+            case "terminated":
+                return this.props.record.data.direction === "incoming"
+                    ? _t("Incoming call")
+                    : _t("Outgoing call");
+            case "rejected":
+                return _t("Rejected Call");
+            case "ongoing":
+                return this.userAgent.session?.call?.id === this.props.record.data.id
+                    ? _t("Ongoing Call")
+                    : _t("Ended unexpectedly");
+            case "calling":
+                return this.userAgent.session?.call?.id === this.props.record.data.id
+                    ? _t("Trying to call")
+                    : _t("Ended unexpectedly");
+            default:
+                return _t("Unknown");
+        }
     }
 
+    /** @returns {string} */
     get badgeClass() {
         const state = this.props.record.data.state;
         if (state === "rejected" || state === "missed") {
@@ -57,8 +65,8 @@ export class CallStatusBadgeField extends BadgeField {
     }
 }
 
-registry.category("fields").add("call_status_badge", {
+registry.category("fields").add("voip_call_status_badge", {
     component: CallStatusBadgeField,
-    displayName: "Call Status Badge",
+    displayName: _t("Call Status Badge"),
     supportedTypes: ["char", "selection"],
 });
