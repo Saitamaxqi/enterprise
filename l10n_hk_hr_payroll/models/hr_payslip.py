@@ -39,6 +39,11 @@ class HrPayslip(models.Model):
         compute='_compute_gross',
         store=True,
     )
+    l10n_hk_average_daily_wage = fields.Monetary(
+        string='Average Daily Wage',
+        help='Calculated as per the Employment (Amendment) Ordinance 2007: (Total of fully paid wages earned in the 12-month period) / (Total number of fully paid days in that period).',
+        compute='_compute_average_daily_wage',
+    )
 
     @api.depends('worked_days_line_ids')
     def _compute_worked_days_leaves_count(self):
@@ -62,6 +67,56 @@ class HrPayslip(models.Model):
             payslip.l10n_hk_mpf_gross = line_values['MPF_GROSS'][payslip.id]['total']
             payslip.l10n_hk_autopay_gross = line_values['MEA'][payslip.id]['total']
             payslip.l10n_hk_second_batch_autopay_gross = line_values['SBA'][payslip.id]['total']
+
+    @api.depends('input_line_ids')
+    def _compute_average_daily_wage(self):
+        """
+        Calculate and return the Average Daily Wage (ADW), which is used to calculate payments for various statutory entitlements, including:
+        - Holiday Pay
+        - Annual Leave Pay
+        - Sickness Allowance
+        - Maternity and Paternity Leave Pay
+        - Payment in lieu of notice
+
+        The calculation is governed by the Employment (Amendment) Ordinance 2007:
+            ADW = (Total wages earned in the 12-month period) / (Total number of days in that period)
+
+        In order to be fair to the employee, the total wage calculation must exclude days for which the employee was not
+        paid their full pay (sick leave,...) as well as the wages of these days.
+
+        The period in which to look for the ADW is based on the last 365 days, and not the last 12 months.
+
+        Example:
+            Natalie Chan takes an annual leave from August 4, 2025, to August 6, 2025.
+            The wages she received in the last 12 months are of HK350,000.
+            During this period,she took 5 days of unpaid leave and 2 days of sickness leave (for which she was paid a total of HK1,500).
+
+            The calculation should then be:
+            - Disregard the days of leave not fully paid from the total calendar days.
+            - Disregard the payments made for those specific leave days from the total wages.
+
+            So the ADW is: (HK$350,000-HK$1,500) / (365 - 5 - 2) = HK$973.46
+        :return: The ADW for the period.
+        """
+        for slip in self:
+            if slip.country_code != 'HK':
+                slip.l10n_hk_average_daily_wage = 0
+                continue
+
+            adw = 0
+            average_daily_wage = sum(slip.input_line_ids.filtered(lambda line: line.code == 'AVERAGE_DAILY_WAGE').mapped('amount'))
+            if average_daily_wage:
+                adw = average_daily_wage
+
+            last_year_payslips = slip._get_previous_year_payslips(order='date_from')
+            if last_year_payslips:
+                gross = last_year_payslips._get_line_values(['713_GROSS'], compute_sum=True)['713_GROSS']['sum']['total']
+                gross -= last_year_payslips._get_total_non_full_pay()
+                number_of_days = last_year_payslips._get_number_of_worked_days(only_full_pay=True)
+                if number_of_days > 0:
+                    adw = gross / number_of_days
+
+            slip.l10n_hk_average_daily_wage = adw
 
     def _get_paid_amount(self):
         """
@@ -90,50 +145,6 @@ class HrPayslip(models.Model):
             ("struct_id", "=", self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary').id),
             ("employee_id", "=", self.employee_id.id),
         ], order=order)
-
-    def _get_average_daily_wage(self):
-        """
-        Calculate and return the Average Daily Wage (ADW), which is used to calculate payments for various statutory entitlements, including:
-        - Holiday Pay
-        - Annual Leave Pay
-        - Sickness Allowance
-        - Maternity and Paternity Leave Pay
-        - Payment in lieu of notice
-
-        The calculation is governed by the Employment (Amendment) Ordinance 2007:
-            ADW = (Total wages earned in the 12-month period) / (Total number of days in that period)
-
-        In order to be fair to the employee, the total wage calculation must exclude days for which the employee was not
-        paid their full pay (sick leave,...) as well as the wages of these days.
-
-        The period in which to look for the ADW is based on the last 365 days, and not the last 12 months.
-
-        Example:
-            Natalie Chan takes an annual leave from June 23, 2025, to June 27, 2025.
-            The wages she received in the last 12 months are of HK$300,000.
-            In January 2025, she took 5 days of unpaid leave.
-
-            The calculation should then be:
-                - Get the total amount (total_amount) from June 23, 2024, to June 26, 2025, inclusive.
-                - Divide that total by the amount of fully paid days.
-            So the ADW is: 300 000 / (365 - 5) = HK$833.33
-            And the total payment for the 5 days of leave is HK$4166.66
-        :return: The ADW for the period.
-        """
-        self.ensure_one()
-
-        average_daily_wage = sum(self.input_line_ids.filtered(lambda line: line.code == 'AVERAGE_DAILY_WAGE').mapped('amount'))
-        if average_daily_wage:
-            return average_daily_wage
-
-        last_year_payslips = self._get_previous_year_payslips(order='date_from')
-        if last_year_payslips:
-            gross = last_year_payslips._get_line_values(['713_GROSS'], compute_sum=True)['713_GROSS']['sum']['total']
-            gross -= last_year_payslips._get_total_non_full_pay()
-            number_of_days = last_year_payslips._get_number_of_worked_days(only_full_pay=True)
-            if number_of_days > 0:
-                return gross / number_of_days
-        return 0
 
     def _get_number_of_non_full_pay_days(self):
         """

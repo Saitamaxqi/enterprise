@@ -18,6 +18,10 @@
                 <attribute name="decoration-danger">total &lt; 0</attribute>
                 <attribute name="decoration-bf">code in ['713_GROSS', 'MPF_GROSS', 'GROSS', 'NET', 'MEA', 'SBA']</attribute>
             </xpath>
+            <xpath expr="//page[@name='account_info']/group/group" position="inside">
+                <field name="currency_id" invisible="1"/>  <!-- Needed for the monetary field -->
+                <field name="l10n_hk_average_daily_wage" invisible="country_code != 'HK'"/>
+            </xpath>
         </field>
     </record>
 </odoo>

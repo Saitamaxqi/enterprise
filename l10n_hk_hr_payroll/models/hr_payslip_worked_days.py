@@ -22,7 +22,7 @@ class HrPayslipWorkedDays(models.Model):
             if worked_days.payslip_id.wage_type == "hourly":
                 hourly_wage = worked_days.payslip_id.version_id.hourly_wage
                 if worked_days.work_entry_type_id.l10n_hk_use_713:
-                    hourly_wage = max(hourly_wage, worked_days.payslip_id._get_average_daily_wage() / worked_days.version_id.resource_calendar_id.hours_per_day)
+                    hourly_wage = max(hourly_wage, worked_days.payslip_id.l10n_hk_average_daily_wage / worked_days.version_id.resource_calendar_id.hours_per_day)
                 worked_days.amount = hourly_wage * worked_days.number_of_hours * amount_rate
             else:
                 payslip = worked_days.payslip_id
@@ -40,7 +40,7 @@ class HrPayslipWorkedDays(models.Model):
                 sum_worked_days = attendance_hours / worked_days.version_id.resource_calendar_id.hours_per_day
                 daily_wage = worked_days.version_id.contract_wage / (sum_worked_days or 1)
                 if worked_days.work_entry_type_id.l10n_hk_use_713:
-                    daily_wage = max(daily_wage, payslip._get_average_daily_wage())
+                    daily_wage = max(daily_wage, payslip.l10n_hk_average_daily_wage)
                 number_of_days = worked_days.number_of_hours / worked_days.version_id.resource_calendar_id.hours_per_day
                 worked_days.amount = daily_wage * number_of_days * amount_rate
 
