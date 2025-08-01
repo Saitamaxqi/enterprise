@@ -13,14 +13,14 @@ export default class LazyBarcodeCache {
             "product.uom": "barcode",
             "stock.package.type": "barcode",
             "stock.picking": "name",
-            "stock.quant.package": "name",
+            "stock.package": "name",
             "stock.lot": "name", // Also ref, should take in account multiple fields ?
         };
         this.gs1LengthsByModel = {
             "product.product": 14,
             "product.uom": 14,
             "stock.location": 13,
-            "stock.quant.package": 18,
+            "stock.package": 18,
         };
         // If there is only one active barcode nomenclature, set the cache to be compliant with it.
         if (cacheData["barcode.nomenclature"].length === 1) {

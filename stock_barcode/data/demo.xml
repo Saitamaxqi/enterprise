@@ -57,7 +57,7 @@
             <field name="barcode">6016478556530</field>
         </record>
 
-        <record id="demo_package" model="stock.quant.package" />
+        <record id="demo_package" model="stock.package" />
 
         <record id="stock.lot_product_cable_management" model="stock.lot">
             <field name="ref">0000000000017</field>

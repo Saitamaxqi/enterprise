@@ -72,7 +72,7 @@ class TestBarcodeClientAction(HttpCase):
         grp_pack = self.env.ref('stock.group_tracking_lot')
         self.env.user.write({'group_ids': [(3, grp_pack.id)]})
 
-        Package = self.env['stock.quant.package']
+        Package = self.env['stock.package']
         # Creates three packages.
         package1 = Package.create({
             'name': '1234560000000018',

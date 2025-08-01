@@ -332,13 +332,13 @@ class StockBarcodeController(http.Controller):
     def _try_open_package(self, barcode):
         """ If barcode represents a package, open it.
         """
-        package = request.env['stock.quant.package'].search([('name', '=', barcode)], limit=1)
+        package = request.env['stock.package'].search([('name', '=', barcode)], limit=1)
         if package:
-            view_id = request.env.ref('stock.view_quant_package_form').id
+            view_id = request.env.ref('stock.stock_package_view_form').id
             return {
                 'action': {
                     'name': 'Open package',
-                    'res_model': 'stock.quant.package',
+                    'res_model': 'stock.package',
                     'views': [(view_id, 'form')],
                     'type': 'ir.actions.act_window',
                     'res_id': package.id,
@@ -446,7 +446,7 @@ class StockBarcodeController(http.Controller):
             'product.uom',
             'stock.picking',
             'stock.lot',
-            'stock.quant.package',
+            'stock.package',
         ]
         return {model: request.env[model]._barcode_field for model in list_model if hasattr(request.env[model], '_barcode_field')}
 

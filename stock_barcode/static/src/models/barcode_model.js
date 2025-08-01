@@ -543,7 +543,7 @@ export default class BarcodeModel extends EventBus {
         }
         if (package_id) {
             if (typeof package_id === "number") {
-                package_id = this.cache.getRecord("stock.quant.package", args.package_id);
+                package_id = this.cache.getRecord("stock.package", args.package_id);
             }
             line.package_id = package_id;
         }
@@ -1086,7 +1086,7 @@ export default class BarcodeModel extends EventBus {
 
         if (this.groups.group_tracking_lot) {
             const packageType = recordByData.get("stock.package.type");
-            const stockPackage = recordByData.get("stock.quant.package");
+            const stockPackage = recordByData.get("stock.package");
             if (stockPackage) {
                 // TODO: should take packages only in current (sub)location.
                 result.package = stockPackage;
@@ -1170,7 +1170,7 @@ export default class BarcodeModel extends EventBus {
                 result.match = true;
             }
         } else if (type === "package") {
-            const stockPackage = await this.cache.getRecordByBarcode(value, "stock.quant.package");
+            const stockPackage = await this.cache.getRecordByBarcode(value, "stock.package");
             if (stockPackage) {
                 result.package = stockPackage;
             } else {
@@ -1439,7 +1439,7 @@ export default class BarcodeModel extends EventBus {
                     const quant = quants[0];
                     if (prefilledPackage && quant.package_id) {
                         barcodeData.package = this.cache.getRecord(
-                            "stock.quant.package",
+                            "stock.package",
                             quant.package_id
                         );
                     }

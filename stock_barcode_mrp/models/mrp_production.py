@@ -84,12 +84,12 @@ class MrpProduction(models.Model):
         destination_locations = self.env['stock.location'].search([('id', 'child_of', self.location_dest_id.ids)])
         locations = move_lines.location_id | move_lines.location_dest_id | source_locations | destination_locations | self.production_location_id
 
-        # Fetch `stock.quant.package` and `stock.package.type` if group_tracking_lot.
-        packages = self.env['stock.quant.package']
+        # Fetch `stock.package` and `stock.package.type` if group_tracking_lot.
+        packages = self.env['stock.package']
         package_types = self.env['stock.package.type']
         if self.env.user.has_group('stock.group_tracking_lot'):
             packages |= move_lines.package_id | move_lines.result_package_id
-            packages |= self.env['stock.quant.package'].with_context(pack_locs=destination_locations.ids)._get_usable_packages()
+            packages |= self.env['stock.package'].with_context(pack_locs=destination_locations.ids)._get_usable_packages()
             package_types = package_types.search([])
 
         data = {
@@ -102,7 +102,7 @@ class MrpProduction(models.Model):
                 "res.partner": owners.read(owners._get_fields_stock_barcode(), load=False),
                 "stock.location": locations.read(locations._get_fields_stock_barcode(), load=False),
                 "stock.package.type": package_types.read(package_types._get_fields_stock_barcode(), False),
-                "stock.quant.package": packages.read(packages._get_fields_stock_barcode(), load=False),
+                "stock.package": packages.read(packages._get_fields_stock_barcode(), load=False),
                 "stock.lot": lots.read(lots._get_fields_stock_barcode(), load=False),
                 "uom.uom": uoms.read(uoms._get_fields_stock_barcode(), load=False),
             },

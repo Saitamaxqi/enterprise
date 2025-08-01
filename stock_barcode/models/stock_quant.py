@@ -104,7 +104,7 @@ class StockQuant(models.Model):
             "records": {
                 "stock.quant": self.read(self._get_fields_stock_barcode(), load=False),
                 "product.product": products.read(products._get_fields_stock_barcode(), load=False),
-                "stock.quant.package": packages.read(packages._get_fields_stock_barcode(), load=False),
+                "stock.package": packages.read(packages._get_fields_stock_barcode(), load=False),
                 "res.company": companies.read(['name']),
                 "res.partner": owners.read(owners._get_fields_stock_barcode(), load=False),
                 "stock.lot": lots.read(lots._get_fields_stock_barcode(), load=False),
@@ -143,6 +143,6 @@ class StockQuant(models.Model):
             'uom.uom': self.product_id.uom_id.read(self.env['uom.uom']._get_fields_stock_barcode(), load=False),
             'stock.location': self.location_id.read(self.env['stock.location']._get_fields_stock_barcode(), load=False),
             'stock.lot': self.lot_id.read(self.env['stock.lot']._get_fields_stock_barcode(), load=False),
-            'stock.quant.package': self.package_id.read(self.env['stock.quant.package']._get_fields_stock_barcode(), load=False),
+            'stock.package': self.package_id.read(self.env['stock.package']._get_fields_stock_barcode(), load=False),
             'res.partner': self.owner_id.read(self.env['res.partner']._get_fields_stock_barcode(), load=False),
         }

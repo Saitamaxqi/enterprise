@@ -72,7 +72,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'product_id': self.productlot1.id,
             'expiration_date': '2024-12-31 13:00:00',
         })
-        package = self.env['stock.quant.package'].create({
+        package = self.env['stock.package'].create({
             'name': 'SuperPackage',
         })
         self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 1, lot_id=lot, package_id=package)

@@ -11,7 +11,7 @@
         'views/stock_barcode_picking.xml',
         'views/stock_barcode_picking_batch.xml',
         'views/stock_move_line_views.xml',
-        'views/stock_quant_package_views.xml',
+        'views/stock_package_views.xml',
         'wizard/stock_barcode_cancel_operation.xml',
         'data/data.xml',
     ],

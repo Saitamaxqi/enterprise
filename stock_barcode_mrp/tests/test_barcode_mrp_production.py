@@ -1042,7 +1042,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             ],
         })
 
-        package = self.env['stock.quant.package'].create({'name': 'package001'})
+        package = self.env['stock.package'].create({'name': 'package001'})
         self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, 10)
         self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, 20, package_id=package)
 

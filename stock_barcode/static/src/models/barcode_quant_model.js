@@ -496,7 +496,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
             currentLine.package_id.id !== packageType
         ) {
             // Changes the package type for the scanned one.
-            await this.orm.write("stock.quant.package", [currentLine.package_id.id], {
+            await this.orm.write("stock.package", [currentLine.package_id.id], {
                 package_type_id: packageType.id,
             });
             const message = _t("Package type %(type)s applied to the package %(package)s", {
@@ -516,24 +516,24 @@ export default class BarcodeQuantModel extends BarcodeModel {
                     valueList.package_type_id = packageType.id;
                 }
                 const newPackageData = await this.orm.call(
-                    "stock.quant.package",
+                    "stock.package",
                     "action_create_from_barcode",
                     [valueList]
                 );
                 this.cache.setCache(newPackageData);
-                recPackage = newPackageData["stock.quant.package"][0];
+                recPackage = newPackageData["stock.package"][0];
             }
         }
         if (!recPackage && packageName) {
             const currentLine = this.selectedLine || this.lastScannedLine;
             if (currentLine && !currentLine.package_id) {
                 const newPackageData = await this.orm.call(
-                    "stock.quant.package",
+                    "stock.package",
                     "action_create_from_barcode",
                     [{ name: packageName }]
                 );
                 this.cache.setCache(newPackageData);
-                recPackage = newPackageData["stock.quant.package"][0];
+                recPackage = newPackageData["stock.package"][0];
             }
         }
         if (!recPackage || (recPackage.location_id && recPackage.location_id != this.location.id)) {
@@ -629,7 +629,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
             const product = this.cache.getRecord("product.product", quant.product_id);
             const lot = quant.lot_id && this.cache.getRecord("stock.lot", quant.lot_id);
             const quant_package =
-                quant.package_id && this.cache.getRecord("stock.quant.package", quant.package_id);
+                quant.package_id && this.cache.getRecord("stock.package", quant.package_id);
             const searchLineParams = Object.assign({}, barcodeData, { product, lot });
             searchLineParams["package"] = quant_package;
             const currentLine = this._findLine(searchLineParams);
@@ -727,7 +727,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
             quant.location_id = this.cache.getRecord("stock.location", quant.location_id);
             quant.lot_id = quant.lot_id && this.cache.getRecord("stock.lot", quant.lot_id);
             quant.package_id =
-                quant.package_id && this.cache.getRecord("stock.quant.package", quant.package_id);
+                quant.package_id && this.cache.getRecord("stock.package", quant.package_id);
             quant.owner_id = quant.owner_id && this.cache.getRecord("res.partner", quant.owner_id);
             lines.push(Object.assign({}, quant));
         }

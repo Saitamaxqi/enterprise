@@ -335,7 +335,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         """ Simulate an adjustment where a package is scanned and edited """
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
-        pack = self.env['stock.quant.package'].create({
+        pack = self.env['stock.package'].create({
             'name': 'PACK001',
         })
 
@@ -763,15 +763,15 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         })
 
         # Creates a first package in Section 1 and adds some products.
-        pack_1 = self.env['stock.quant.package'].create({'name': '987654123487568456'})
+        pack_1 = self.env['stock.package'].create({'name': '987654123487568456'})
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 8, package_id=pack_1)
         # Creates a second package in Section 2 and adds some other products.
-        pack_2 = self.env['stock.quant.package'].create({'name': '487325612456785124'})
+        pack_2 = self.env['stock.package'].create({'name': '487325612456785124'})
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf2, 6, package_id=pack_2)
 
         self.start_tour("/odoo/barcode", 'test_gs1_inventory_package', login='admin', timeout=180)
 
-        pack_3 = self.env['stock.quant.package'].search([('name', '=', '122333444455555670')])
+        pack_3 = self.env['stock.package'].search([('name', '=', '122333444455555670')])
         self.assertEqual(pack_3.location_id.id, self.shelf2.id)
         self.assertEqual(pack_3.quant_ids.product_id.ids, [product.id])
 
@@ -847,7 +847,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
             'product_id': product.id,
             'location_id': self.env.ref('stock.stock_location_stock').id,
             'quantity': 10,
-            'package_id': self.env['stock.quant.package'].create({
+            'package_id': self.env['stock.package'].create({
                 'name': 'Package-test',
             }).id,
             'lot_id': self.env['stock.lot'].create({
@@ -878,10 +878,10 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
             'name': 'Lot-test',
             'product_id': product.id,
             })
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
                 'name': 'Pack1',
             })
-        pack2 = self.env['stock.quant.package'].create({
+        pack2 = self.env['stock.package'].create({
                 'name': 'Pack2',
             })
         self.env['stock.quant']._update_available_quantity(product, shelf1, 5, lot_id=lot, package_id=pack1)

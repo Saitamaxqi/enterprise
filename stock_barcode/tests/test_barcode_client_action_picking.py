@@ -94,7 +94,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         if we scan the package, a confirmation is asked before adding the content of the package.
         """
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
-        package1 = self.env['stock.quant.package'].create({'name': 'package001'})
+        package1 = self.env['stock.package'].create({'name': 'package001'})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 1, package_id=package1)
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 1, package_id=package1)
@@ -132,7 +132,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
         self.picking_type_internal.active = True
         # Creates a new package and add some quants.
-        package2 = self.env['stock.quant.package'].create({'name': 'P00002'})
+        package2 = self.env['stock.package'].create({'name': 'P00002'})
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 1, package_id=package2)
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 2, package_id=package2)
         self.assertEqual(package2.location_id.id, self.stock_location.id)
@@ -401,14 +401,14 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         receipt_picking.name = "receipt_test"
 
         # Set packages' sequence to 1000 to find it easily during the tour.
-        package_sequence = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')], limit=1)
+        package_sequence = self.env['ir.sequence'].search([('code', '=', 'stock.package')], limit=1)
         package_sequence.write({'number_next_actual': 1000})
 
         # Opens the barcode main menu to be able to open the pickings by scanning their name.
         self.start_tour("/odoo/barcode", "test_receipt_reserved_2_partial_put_in_pack", login="admin", timeout=180)
 
-        package1 = self.env['stock.quant.package'].search([('name', '=', 'PACK0001000')])
-        package2 = self.env['stock.quant.package'].search([('name', '=', 'PACK0001001')])
+        package1 = self.env['stock.package'].search([('name', '=', 'PACK0001000')])
+        package2 = self.env['stock.package'].search([('name', '=', 'PACK0001001')])
         self.assertRecordValues(receipt_picking.move_ids, [
             {'product_id': self.product1.id, 'product_uom_qty': 3, 'quantity': 3, 'picked': True},
             {'product_id': self.product2.id, 'product_uom_qty': 1, 'quantity': 1, 'picked': True},
@@ -552,8 +552,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         sn2 = snObj.create({'name': 'sn2', 'product_id': self.productserial1.id})
         sn3 = snObj.create({'name': 'sn3', 'product_id': self.productserial1.id})
         sn4 = snObj.create({'name': 'sn4', 'product_id': self.productserial1.id})
-        package1 = self.env['stock.quant.package'].create({'name': 'pack_sn_1'})
-        package2 = self.env['stock.quant.package'].create({'name': 'pack_sn_2'})
+        package1 = self.env['stock.package'].create({'name': 'pack_sn_1'})
+        package2 = self.env['stock.package'].create({'name': 'pack_sn_2'})
         partner = self.env['res.partner'].create({'name': 'Particulier'})
         self.env['stock.quant'].with_context(inventory_mode=True).create({
             'product_id': self.productserial1.id,
@@ -634,8 +634,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             ],
         })
         sn = self.env['stock.lot'].create({'name': 'sn', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
-        package1 = self.env['stock.quant.package'].create({'name': 'pack_sn'})
-        package2 = self.env['stock.quant.package'].create({'name': 'pack_sn_2'})
+        package1 = self.env['stock.package'].create({'name': 'pack_sn'})
+        package2 = self.env['stock.package'].create({'name': 'pack_sn_2'})
         self.env['stock.quant'].create([
             {
                 'product_id': self.productlot1.id,
@@ -692,7 +692,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.user.write({'group_ids': [Command.link(group_pack.id)]})
         self.picking_type_out.restrict_scan_source_location = 'mandatory'
         # Create an empty package (will be scanned during the tour.)
-        self.env['stock.quant.package'].create({
+        self.env['stock.package'].create({
             'name': 'pack-test',
         })
         self.start_tour('/odoo/barcode', 'test_delivery_pack_from_different_location', login='admin')
@@ -1340,14 +1340,14 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         # set sequence packages to 1000 to find it easily in the tour
         sequence = self.env['ir.sequence'].search([(
-            'code', '=', 'stock.quant.package',
+            'code', '=', 'stock.package',
         )], limit=1)
         sequence.write({'number_next_actual': 1000})
 
         self.start_tour("/odoo/barcode", 'test_pack_multiple_scan', login='admin', timeout=180)
 
         # Check the new package is well delivered
-        package = self.env['stock.quant.package'].search([
+        package = self.env['stock.package'].search([
             ('name', '=', 'PACK0001000')
         ])
         self.assertEqual(package.location_id, self.customer_location)
@@ -1360,10 +1360,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
         # Create a pack and 2 quants in this pack
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'PACK1',
         })
-        pack2 = self.env['stock.quant.package'].create({
+        pack2 = self.env['stock.package'].create({
             'name': 'PACK2',
         })
 
@@ -1410,7 +1410,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
 
         # Create a pack and 2 quants in this pack
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'PACK0000666',
         })
 
@@ -1443,7 +1443,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             ],
         })
         # Creates a package with 1 quant in it.
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'PACK0002020',
         })
         self.env['stock.quant']._update_available_quantity(
@@ -1489,7 +1489,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         # Creates a package with a quant in it.
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'PACK000666',
         })
         self.env['stock.quant']._update_available_quantity(
@@ -1529,7 +1529,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = "/web#action=" + str(action_id.id)
         # Creates a package with a quant in it.
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'PACK123666',
         })
         self.env['stock.quant']._update_available_quantity(
@@ -1591,7 +1591,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         self.start_tour(url, 'test_put_in_pack_from_multiple_pages', login='admin', timeout=180)
 
-        pack = self.env['stock.quant.package'].search([])[-1]
+        pack = self.env['stock.package'].search([])[-1]
         self.assertEqual(len(pack.quant_ids), 2)
         self.assertEqual(sum(pack.quant_ids.mapped('quantity')), 4)
 
@@ -1664,7 +1664,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         lot1 = self.env['stock.lot'].create({'name': 'lot1', 'product_id': self.productlot1.id})
         lot2 = self.env['stock.lot'].create({'name': 'serial1', 'product_id': self.productserial1.id})
 
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'THEPACK',
         })
 
@@ -1673,7 +1673,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf2, 4, package_id=pack1)
 
         # Creates a second pack with some qty in a location the delivery shouldn't have access.
-        pack2 = self.env['stock.quant.package'].create({'name': 'SUSPACK'})
+        pack2 = self.env['stock.package'].create({'name': 'SUSPACK'})
         other_loc = self.env['stock.location'].create({
             'name': "Second Stock",
             'location_id': self.stock_location.location_id.id,
@@ -1755,7 +1755,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_id': internal_picking.id,
         })
         # Resets package sequence to be sure we'll have the attended packages name.
-        seq = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')])
+        seq = self.env['ir.sequence'].search([('code', '=', 'stock.package')])
         seq.number_next_actual = 1
 
         url = self._get_client_action_url(internal_picking.id)
@@ -1808,7 +1808,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         internal_picking.action_assign()
 
         self.start_tour(url, 'test_put_in_pack_before_dest', login='admin', timeout=180)
-        pack = self.env['stock.quant.package'].search([])[-1]
+        pack = self.env['stock.package'].search([])[-1]
         self.assertEqual(len(pack.quant_ids), 2)
         self.assertEqual(pack.location_id, self.shelf2)
 
@@ -1827,7 +1827,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 1)
 
         # Resets package sequence to be sure we'll have the attended packages name.
-        seq = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')])
+        seq = self.env['ir.sequence'].search([('code', '=', 'stock.package')])
         seq.number_next_actual = 1
 
         # Creates a delivery with three move lines: two from Section 1 and one from Section 2.
@@ -1888,10 +1888,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_highlight_packs(self):
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'PACK001',
         })
-        pack2 = self.env['stock.quant.package'].create({
+        pack2 = self.env['stock.package'].create({
             'name': 'PACK002',
         })
 
@@ -2029,7 +2029,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'is_storable': True,
         })
         # Create an empty package.
-        package = self.env['stock.quant.package'].create({'name': 'pack-128'})
+        package = self.env['stock.package'].create({'name': 'pack-128'})
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
@@ -2143,16 +2143,16 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         warehouse.delivery_steps = 'pick_pack_ship'
 
         # Creates two cluster packs.
-        self.env['stock.quant.package'].create({
+        self.env['stock.package'].create({
             'name': 'cluster-pack-01',
             'package_use': 'reusable',
         })
-        self.env['stock.quant.package'].create({
+        self.env['stock.package'].create({
             'name': 'cluster-pack-02',
             'package_use': 'reusable',
         })
         # Resets package sequence to be sure we'll have the attended packages name.
-        seq = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')])
+        seq = self.env['ir.sequence'].search([('code', '=', 'stock.package')])
         seq.number_next_actual = 1
 
         # Configures the picking type's scan settings.
@@ -2390,8 +2390,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Then, checks it's the right type of line who is shown in the Barcode App."""
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         self.picking_type_out.show_entire_packs = True
-        package1 = self.env['stock.quant.package'].create({'name': 'package001'})
-        package2 = self.env['stock.quant.package'].create({'name': 'package002'})
+        package1 = self.env['stock.package'].create({'name': 'package001'})
+        package2 = self.env['stock.package'].create({'name': 'package002'})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 4, package_id=package1)
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 4, package_id=package2)
@@ -2443,7 +2443,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 
-        pack01, pack02 = self.env['stock.quant.package'].create([{
+        pack01, pack02 = self.env['stock.package'].create([{
             'name': name,
         } for name in ('PACK01', 'PACK02')])
 
@@ -2777,7 +2777,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Enables package to check the split after a put in pack.
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
         # Set packages' sequence to 1000 to find it easily during the tour.
-        package_sequence = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')], limit=1)
+        package_sequence = self.env['ir.sequence'].search([('code', '=', 'stock.package')], limit=1)
         package_sequence.write({'number_next_actual': 1000})
 
         # Creates a receipt for 4x product1 and 4x product2.
@@ -3327,7 +3327,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
                 Command.link(self.env.ref('stock.group_stock_multi_locations').id),
             ],
         })
-        package = self.env['stock.quant.package'].create({'name': 'package001'})
+        package = self.env['stock.package'].create({'name': 'package001'})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 2)
@@ -3372,7 +3372,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
                 Command.link(self.env.ref('stock.group_stock_multi_locations').id),
             ],
         })
-        package = self.env['stock.quant.package'].create({'name': 'package001'})
+        package = self.env['stock.package'].create({'name': 'package001'})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 5)
@@ -3841,7 +3841,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'barcode': '3000000015',  # Can be read as a quantity (15 units, AI 30)
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
-        self.env['stock.quant.package'].create({'name': '21-Chouette-MegaPack'})
+        self.env['stock.package'].create({'name': '21-Chouette-MegaPack'})
         self.start_tour("/odoo/barcode", 'test_gs1_receipt_conflicting_barcodes_mistaken_as_gs1', login='admin', timeout=180)
 
     def test_gs1_receipt_lot_serial(self):
@@ -3937,7 +3937,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         # Set package's sequence to 123 to generate always the same package's name in the tour.
-        sequence = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')], limit=1)
+        sequence = self.env['ir.sequence'].search([('code', '=', 'stock.package')], limit=1)
         sequence.write({'number_next_actual': 123})
 
         # Creates two products and two package's types.
@@ -3964,9 +3964,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         self.start_tour("/odoo/barcode", 'test_gs1_package_receipt', login='admin', timeout=180)
         # Checks the package is in the stock location with the products.
-        package = self.env['stock.quant.package'].search([('name', '=', '546879213579461324')])
-        package2 = self.env['stock.quant.package'].search([('name', '=', '130406658041178543')])
-        package3 = self.env['stock.quant.package'].search([('name', '=', 'PACK0000123')])
+        package = self.env['stock.package'].search([('name', '=', '546879213579461324')])
+        package2 = self.env['stock.package'].search([('name', '=', '130406658041178543')])
+        package3 = self.env['stock.package'].search([('name', '=', 'PACK0000123')])
         self.assertEqual(len(package), 1)
         self.assertEqual(len(package.quant_ids), 2)
         self.assertEqual(package.package_type_id.id, wooden_chest_package_type.id)
@@ -4072,10 +4072,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5)
         # Create two empty packs
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'THEPACK1',
         })
-        pack2 = self.env['stock.quant.package'].create({
+        pack2 = self.env['stock.package'].create({
             'name': 'THEPACK2',
         })
 
@@ -4108,10 +4108,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             ],
         })
         # Create two empty packs
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
             'name': 'THEPACK1',
         })
-        pack2 = self.env['stock.quant.package'].create({
+        pack2 = self.env['stock.package'].create({
             'name': 'THEPACK2',
         })
 
@@ -4248,7 +4248,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'restrict_scan_dest_location': 'mandatory',
             'active': True,
         })
-        pack1 = self.env['stock.quant.package'].create({
+        pack1 = self.env['stock.package'].create({
                 'name': 'Pack1',
             })
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5, package_id=pack1)

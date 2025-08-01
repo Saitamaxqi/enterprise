@@ -9,7 +9,7 @@ from . import stock_move
 from . import stock_move_line
 from . import stock_package_type
 from . import stock_lot
-from . import stock_quant_package
+from . import stock_package
 from . import stock_warehouse
 from . import product_product
 from . import product_uom

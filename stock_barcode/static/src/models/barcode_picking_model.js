@@ -257,7 +257,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         let { location_id, location_dest_id, result_package_id } = args;
         if (result_package_id) {
             if (typeof result_package_id === "number") {
-                result_package_id = this.cache.getRecord("stock.quant.package", result_package_id);
+                result_package_id = this.cache.getRecord("stock.package", result_package_id);
                 if (result_package_id.package_type_id && typeof result_package_id === "number") {
                     result_package_id.package_type_id = this.cache.getRecord(
                         "stock.package.type",
@@ -1295,7 +1295,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         smlData.owner_id =
             smlData.owner_id && this.cache.getRecord("res.partner", smlData.owner_id);
         smlData.package_id =
-            smlData.package_id && this.cache.getRecord("stock.quant.package", smlData.package_id);
+            smlData.package_id && this.cache.getRecord("stock.package", smlData.package_id);
 
         if (this.reloadingMoveLines) {
             if (prevLine) {
@@ -1328,7 +1328,7 @@ export default class BarcodePickingModel extends BarcodeModel {
 
         const resultPackage =
             smlData.result_package_id &&
-            this.cache.getRecord("stock.quant.package", smlData.result_package_id);
+            this.cache.getRecord("stock.package", smlData.result_package_id);
         if (resultPackage) {
             // Fetch the package type if needed.
             smlData.result_package_id = resultPackage;
@@ -1880,7 +1880,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         } else if (resultPackage.package_type_id.id !== packageType.id) {
             // Changes the package type for the scanned one.
             await this.save();
-            await this.orm.write("stock.quant.package", [resultPackage.id], {
+            await this.orm.write("stock.package", [resultPackage.id], {
                 package_type_id: packageType.id,
             });
             const message = _t("Package type %(type)s applied to the package %(package)s", {

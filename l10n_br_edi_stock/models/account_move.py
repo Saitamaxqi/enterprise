@@ -8,9 +8,9 @@ class AccountMove(models.Model):
 
     l10n_br_plate_number = fields.Char("Plate Number", help="Brazil: vehicle plate number of the delivery vehicle.")
     l10n_br_picking_count = fields.Integer(compute="_compute_l10n_br_picking_count")
-    l10n_br_related_package_ids = fields.Many2many("stock.quant.package", string="Related Packages", compute="_compute_l10n_br_related_package_ids")
+    l10n_br_related_package_ids = fields.Many2many("stock.package", string="Related Packages", compute="_compute_l10n_br_related_package_ids")
     l10n_br_package_ids = fields.One2many(
-        "stock.quant.package",
+        "stock.package",
         "l10n_br_move_id",
         string="Packages",
         domain="[('id', 'in', l10n_br_related_package_ids), ('l10n_br_move_id', '=', False)]",
@@ -22,7 +22,7 @@ class AccountMove(models.Model):
         """Consider packages belonging to the last validated pickings. We do this so the invoice can be validated before
         products are fully shipped out."""
         for invoice in self:
-            invoice.l10n_br_related_package_ids = self.env["stock.quant.package"]
+            invoice.l10n_br_related_package_ids = self.env["stock.package"]
 
             # Only consider the last validated pickings in each chain.
             for picking in self._l10n_br_get_pickings():

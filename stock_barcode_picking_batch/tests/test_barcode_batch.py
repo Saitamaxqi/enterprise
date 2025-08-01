@@ -39,8 +39,8 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         })
 
         # Create some packages
-        self.package1 = self.env['stock.quant.package'].create({'name': 'p5pack01'})
-        self.package2 = self.env['stock.quant.package'].create({'name': 'p5pack02'})
+        self.package1 = self.env['stock.package'].create({'name': 'p5pack01'})
+        self.package2 = self.env['stock.package'].create({'name': 'p5pack02'})
 
         # Create some quants (for deliveries)
         Quant = self.env['stock.quant']
@@ -283,8 +283,8 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         self.picking_type_out.show_entire_packs = True
 
         # Creates two packages and adds some quantities on hand.
-        pack1 = self.env['stock.quant.package'].create({'name': 'pack1'})
-        pack2 = self.env['stock.quant.package'].create({'name': 'pack2'})
+        pack1 = self.env['stock.package'].create({'name': 'pack1'})
+        pack2 = self.env['stock.package'].create({'name': 'pack2'})
         self.env['stock.quant'].with_context(inventory_mode=True).create({
             'product_id': self.product1.id,
             'inventory_quantity': 10,
@@ -567,7 +567,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
 
         self.start_tour(url, 'test_put_in_pack_from_multiple_pages', login='admin', timeout=180)
 
-        pack = self.env['stock.quant.package'].search([('location_id', '=', self.stock_location.id)], limit=1)
+        pack = self.env['stock.package'].search([('location_id', '=', self.stock_location.id)], limit=1)
         self.assertEqual(len(pack.quant_ids), 2)
         self.assertEqual(sum(pack.quant_ids.mapped('quantity')), 4)
 
@@ -638,7 +638,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         url = self._get_batch_client_action_url(batch_internal.id)
 
         self.start_tour(url, 'test_put_in_pack_before_dest', login='admin', timeout=180)
-        pack = self.env['stock.quant.package'].search([('location_id', '=', self.shelf2.id)], limit=1)
+        pack = self.env['stock.package'].search([('location_id', '=', self.shelf2.id)], limit=1)
         self.assertEqual(len(pack.quant_ids), 2)
         self.assertEqual(pack.location_id, self.shelf2)
 
@@ -703,7 +703,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         self.assertEqual(len(batch_delivery.move_line_ids), 5)
 
         # Resets package sequence to be sure we'll have the attended packages name.
-        seq = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')])
+        seq = self.env['ir.sequence'].search([('code', '=', 'stock.package')])
         seq.number_next_actual = 1
 
         url = self._get_batch_client_action_url(batch_delivery.id)

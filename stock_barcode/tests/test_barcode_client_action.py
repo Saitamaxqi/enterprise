@@ -84,7 +84,7 @@ class TestBarcodeClientAction(HttpCase):
             'barcode': 'productlot1',
             'tracking': 'lot',
         })
-        self.package = self.env['stock.quant.package'].create({
+        self.package = self.env['stock.package'].create({
             'name': 'P00001',
         })
         self.owner = self.env['res.partner'].create({
