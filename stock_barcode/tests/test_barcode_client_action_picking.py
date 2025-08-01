@@ -1808,7 +1808,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         internal_picking.action_assign()
 
         self.start_tour(url, 'test_put_in_pack_before_dest', login='admin', timeout=180)
-        pack = self.env['stock.package'].search([])[-1]
+        pack = internal_picking.move_line_ids.result_package_id
+        self.assertEqual(len(pack), 1)
         self.assertEqual(len(pack.quant_ids), 2)
         self.assertEqual(pack.location_id, self.shelf2)
 
@@ -1908,15 +1909,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         self.picking_type_out.show_entire_packs = True
-
-        self.env['stock.package_level'].create({
-            'location_id': self.stock_location.id,
-            'location_dest_id': self.customer_location.id,
-            'package_id': pack1.id,
-            'is_done': False,
-            'picking_id': out_picking.id,
-            'company_id': self.env.company.id,
-        })
+        out_picking.action_add_entire_packs(pack1)
 
         url = self._get_client_action_url(out_picking.id)
         out_picking.action_confirm()
@@ -2143,13 +2136,17 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         warehouse.delivery_steps = 'pick_pack_ship'
 
         # Creates two cluster packs.
-        self.env['stock.package'].create({
-            'name': 'cluster-pack-01',
+        reusable_type = self.env['stock.package.type'].create({
+            'name': 'Reusable cluster',
             'package_use': 'reusable',
         })
         self.env['stock.package'].create({
+            'name': 'cluster-pack-01',
+            'package_type_id': reusable_type.id,
+        })
+        self.env['stock.package'].create({
             'name': 'cluster-pack-02',
-            'package_use': 'reusable',
+            'package_type_id': reusable_type.id,
         })
         # Resets package sequence to be sure we'll have the attended packages name.
         seq = self.env['ir.sequence'].search([('code', '=', 'stock.package')])
@@ -2403,15 +2400,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'picking_type_id': self.picking_type_out.id,
             'state': 'draft',
         })
-        self.env['stock.package_level'].create({
-            'location_id': self.stock_location.id,
-            'location_dest_id': self.customer_location.id,
-            'package_id': package1.id,
-            'is_done': False,
-            'picking_id': delivery_with_package_level.id,
-            'company_id': self.env.company.id,
-        })
         delivery_with_package_level.action_confirm()
+        delivery_with_package_level.action_add_entire_packs(packages=package1)
         delivery_with_package_level.action_assign()
 
         delivery_with_move = self.env['stock.picking'].create({
@@ -2432,9 +2422,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         delivery_with_move.action_confirm()
         delivery_with_move.action_assign()
 
-        self.assertFalse(delivery_with_package_level.package_level_ids.is_done)
         self.start_tour('/odoo/barcode', 'test_show_entire_package', login='admin', timeout=180)
-        self.assertTrue(delivery_with_package_level.package_level_ids.is_done)
 
     def test_define_the_destination_package(self):
         """

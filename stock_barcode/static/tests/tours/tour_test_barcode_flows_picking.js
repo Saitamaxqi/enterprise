@@ -989,8 +989,8 @@ registry.category("web_tour.tours").add("test_delivery_lot_with_package", {
                 const [line1, line2, line3, line4] = helper.getSublines();
                 helper.assert(line1.querySelector(".o_line_lot_name").innerText, "sn1");
                 helper.assert(line1.querySelector(".o_line_owner"), null);
-                helper.assert(line1.querySelector(".result-package").innerText, "pack_sn_1");
                 helper.assert(line1.querySelector(".package").innerText, "pack_sn_1");
+                helper.assert(line1.querySelector(".result-package").innerText, "pack_sn_1");
                 helper.assert(line2.querySelector(".o_line_lot_name").innerText, "sn3");
                 helper.assert(line2.querySelector(".o_line_owner"), null);
                 helper.assert(line2.querySelector(".package").innerText, "pack_sn_2");
@@ -999,7 +999,7 @@ registry.category("web_tour.tours").add("test_delivery_lot_with_package", {
                 helper.assert(line3.querySelector(".package").innerText, "pack_sn_2");
                 helper.assert(line4.querySelector(".o_line_lot_name").innerText, "sn2");
                 helper.assert(line4.querySelector(".o_line_owner"), null);
-                helper.assert(line4.querySelector(".result-package").innerText, "pack_sn_1");
+                helper.assert(line1.querySelector(".result-package").innerText, "pack_sn_1");
                 helper.assert(line4.querySelector(".package").innerText, "pack_sn_1");
             },
         },
@@ -3848,7 +3848,7 @@ registry.category("web_tour.tours").add("test_pack_common_content_scan", {
         /* Scan 2 packages PACK1 and PACK2 that contains both product1 and
          * product 2. It also scan a single product1 before scanning both packages.
          * The purpose is to check that lines with a same product are not merged
-         * together. For product 1, we should have 3 lines. One with PACK 1, one
+         * together. We should have 3 lines. One with PACK 1, one
          * with PACK2 and the last without package.
          */
         {
@@ -3964,7 +3964,7 @@ registry.category("web_tour.tours").add("test_pack_multiple_location_02", {
             run: "scan PACK0002020",
         },
         {
-            trigger: ".o_barcode_line.o_selected",
+            trigger: ".o_barcode_line.o_line_completed",
         },
         {
             trigger: ".o_barcode_client_action",

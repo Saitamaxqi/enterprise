@@ -81,6 +81,10 @@ export default class BarcodeModel extends EventBus {
         throw new Error("Not Implemented");
     }
 
+    getDisplayCompletePackageBtn(line) {
+        return false;
+    }
+
     getDisplayIncrementBtn(line) {
         return true;
     }
@@ -422,6 +426,10 @@ export default class BarcodeModel extends EventBus {
         }
     }
 
+    completePackage(line) {
+        throw new Error("Not Implemented");
+    }
+
     /**
      * Searches for a line in the current source location. Will favor a line with no quantity
      * (or less than expected) as we assume this kind of line still need to be processed.
@@ -521,7 +529,10 @@ export default class BarcodeModel extends EventBus {
         }
         if (!line.product_id && args.product_id) {
             line.product_id = args.product_id;
-            line.product_uom_id = this.cache.getRecord("uom.uom", args.uom?.id || args.product_id.uom_id);
+            line.product_uom_id = this.cache.getRecord(
+                "uom.uom",
+                args.uom?.id || args.product_id.uom_id
+            );
         }
         if (location_id) {
             if (typeof location_id === "number") {
@@ -1732,10 +1743,15 @@ export default class BarcodeModel extends EventBus {
         return lines.sort((l1, l2) => (l1.sortIndex > l2.sortIndex ? 1 : -1));
     }
 
+    _isPackageInPackage(pack, containerPack) {
+        const parentNames = pack.dest_complete_name.split(" > ");
+        return parentNames.some((name) => name === containerPack.name);
+    }
+
     _findLine(barcodeData) {
         let foundLine = false;
         const { lot, lotName, product } = barcodeData;
-        const quantPackage = barcodeData.package;
+        const quantPackage = barcodeData.quantPackage || barcodeData.package;
         const uomId = barcodeData.uom ? barcodeData.uom.id : barcodeData.product?.uom_id;
         const dataLotName = lotName || (lot && lot.name) || false;
         const pageLines = [...this.pageLines];

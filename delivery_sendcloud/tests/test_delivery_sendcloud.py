@@ -505,7 +505,7 @@ class TestDeliverySendCloud(TransactionCase):
             picking.move_ids[0].quantity_done = 2.0
             wiz_action = picking.action_put_in_pack()
             put_in_pack = self.env[wiz_action['res_model']].with_context(wiz_action['context']).create({
-                'delivery_package_type_id': self.package_type.id,
+                'package_type_id': self.package_type.id,
             })
             put_in_pack._compute_weight_uom_name()
             put_in_pack._compute_shipping_weight()
@@ -513,7 +513,7 @@ class TestDeliverySendCloud(TransactionCase):
             picking.move_ids[1].quantity_done = 1.0
             wiz_action = picking.action_put_in_pack()
             put_in_pack = self.env[wiz_action['res_model']].with_context(wiz_action['context']).create({
-                'delivery_package_type_id': self.package_type.id,
+                'package_type_id': self.package_type.id,
             })
             put_in_pack._compute_weight_uom_name()
             put_in_pack._compute_shipping_weight()

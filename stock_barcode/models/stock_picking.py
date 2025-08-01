@@ -108,7 +108,8 @@ class StockPicking(models.Model):
         packages = self.env['stock.package']
         package_types = self.env['stock.package.type']
         if self.env.user.has_group('stock.group_tracking_lot'):
-            packages |= move_lines.package_id | move_lines.result_package_id
+            packages |= move_lines.package_id
+            packages |= self.env['stock.package'].browse(move_lines.result_package_id._get_all_package_dest_ids())
             packages |= self.env['stock.package'].with_context(pack_locs=package_locations.ids)._get_usable_packages()
             package_types = package_types.search([])
 

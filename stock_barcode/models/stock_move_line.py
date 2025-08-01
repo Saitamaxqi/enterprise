@@ -24,6 +24,12 @@ class StockMoveLine(models.Model):
     electronic_product_code = fields.Char(compute='_compute_electronic_product_code')
     packaging_uom_id = fields.Many2one('uom.uom', related='move_id.packaging_uom_id', string='Packaging Unit of Measure')
     packaging_uom_qty = fields.Float(related='move_id.packaging_uom_qty', string='Packaging Quantity')
+    outermost_result_package_id = fields.Many2one('stock.package', compute="_compute_outermost_result_package_id", inverse="_inverse_outermost_result_package_id")
+
+    @api.depends('result_package_id')
+    def _compute_outermost_result_package_id(self):
+        for line in self:
+            line.outermost_result_package_id = line.result_package_id.outermost_package_id
 
     @api.depends('tracking', 'picking_type_use_existing_lots', 'picking_type_use_create_lots', 'lot_name')
     def _compute_hide_lot_name(self):
@@ -68,6 +74,22 @@ class StockMoveLine(models.Model):
 
     def _inverse_dummy_id(self):
         pass
+
+    def _inverse_outermost_result_package_id(self):
+        def fetch_before_outermost(package):
+            if package.package_dest_id.package_dest_id:
+                return fetch_before_outermost(package.package_dest_id)
+            return package
+
+        for line in self:
+            if not line.result_package_id:
+                # TODO QUWO: Check if outermost_result_package_id would be the same so we can batch it
+                line.action_put_in_pack(package_id=line.outermost_result_package_id.id)
+                continue
+            package = fetch_before_outermost(line.result_package_id)
+            package.package_dest_id = False
+            if line.outermost_result_package_id:
+                package.action_put_in_pack(package_id=line.outermost_result_package_id.id)
 
     def _inverse_qty_done(self):
         for line in self.with_context({'preserve_state': True}):
@@ -114,6 +136,7 @@ class StockMoveLine(models.Model):
             'packaging_uom_id',
             'packaging_uom_qty',
             'description_picking',
+            'is_entire_pack',
         ]
 
     def _compute_electronic_product_code(self):
@@ -154,3 +177,15 @@ class StockMoveLine(models.Model):
             for i in range(1, len(move_line_ids)):
                 tracking_number = tracking_number_list[i]
                 move_line_ids[i].electronic_product_code = scheme.encode_partial(field_name, tracking_number)
+
+    def _check_destinations(self):
+        res = super()._check_destinations()
+        from_barcode = self.env.context.get('barcode_view')
+        if res and from_barcode:
+            res['context'] = {**res.get('context', {}), 'barcode_view': True}
+        return res
+
+    def _should_display_put_in_pack_wizard(self, package_id, package_type_id, package_name, from_package_wizard):
+        if self.env.context.get('barcode_view'):
+            return False
+        return super()._should_display_put_in_pack_wizard(package_id, package_type_id, package_name, from_package_wizard)

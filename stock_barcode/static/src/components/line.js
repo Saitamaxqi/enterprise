@@ -1,7 +1,6 @@
 import { Component } from "@odoo/owl";
 import { ProductImageDialog } from "@stock_barcode/components/product_image_dialog";
 
-
 export default class LineComponent extends Component {
     static props = ["displayUOM", "line", "subline?", "editLine"];
     static template = "stock_barcode.LineComponent";
@@ -28,11 +27,17 @@ export default class LineComponent extends Component {
     }
 
     get displayFulfillbutton() {
-        return this.incrementQty && this.env.model.getDisplayIncrementBtn(this.line);
+        return (
+            this.incrementQty && this.env.model.getDisplayIncrementBtn(this.line) && !this.isPackage
+        );
+    }
+
+    get displayCompletePackageButton() {
+        return this.isSelected && this.env.model.getDisplayCompletePackageBtn(this.line);
     }
 
     get displayIncrementButton() {
-        if (this.isSelected && this.incrementQty !== 1) {
+        if (this.isSelected && !this.isPackage && this.incrementQty !== 1) {
             return this.isTracked && this.line.product_id.tracking === "serial"
                 ? this.env.model.getDisplayIncrementBtnForSerial(this.line)
                 : this.env.model.getDisplayIncrementBtn(this.line);
@@ -55,6 +60,10 @@ export default class LineComponent extends Component {
             return false;
         }
         return true;
+    }
+
+    get isPackage() {
+        return this.line.isPackageLine;
     }
 
     get isSelected() {
@@ -134,6 +143,10 @@ export default class LineComponent extends Component {
             }).virtual_id;
         }
         this.env.model.updateLineQty(lineVirtualId, quantity);
+    }
+
+    completePackage() {
+        this.env.model.completePackage(this.line.virtual_id);
     }
 
     select(ev) {

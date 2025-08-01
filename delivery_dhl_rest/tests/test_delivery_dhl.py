@@ -113,16 +113,14 @@ class TestDeliveryDHL(TransactionCase):
             })
 
     def wiz_put_in_pack(self, picking):
-        """ Helper to use the 'choose.delivery.package' wizard
+        """ Helper to use the 'stock.put.in.pack' wizard
         in order to call the 'action_put_in_pack' method.
         """
         wiz_action = picking.action_put_in_pack()
-        self.assertEqual(wiz_action['res_model'], 'choose.delivery.package', 'Wrong wizard returned')
-        wiz = Form(self.env[wiz_action['res_model']].with_context(wiz_action['context']).create({
-            'delivery_package_type_id': picking.carrier_id.dhl_default_package_type_id.id
-        }))
-        choose_delivery_carrier = wiz.save()
-        choose_delivery_carrier.action_put_in_pack()
+        self.assertEqual(wiz_action['res_model'], 'stock.put.in.pack', 'Wrong wizard returned')
+        wiz = Form.from_action(self.env, wiz_action)
+        wiz.package_type_id = picking.carrier_id.dhl_default_package_type_id
+        wiz.save().action_put_in_pack()
 
     def test_01_dhl_basic_be_domestic_flow(self):
         SaleOrder = self.env['sale.order']

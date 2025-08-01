@@ -542,7 +542,7 @@ export default class BarcodeQuantModel extends BarcodeModel {
         // TODO: can check if quants already in cache to avoid to make a RPC if
         // there is all in it (or make the RPC only on missing quants).
         const res = await this.orm.call("stock.quant", "get_stock_barcode_data_records", [
-            recPackage.quant_ids,
+            recPackage.contained_quant_ids,
         ]);
         const quants = res.records["stock.quant"];
         if (!quants.length) {

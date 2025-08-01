@@ -87,6 +87,13 @@
                 <field name="result_package_id" placeholder="Destination Package"
                        context="{'picking_id': picking_id}"/>
             </div>
+            <div name="outermost_package" class="row" groups="stock.group_tracking_lot">
+                <div  class="text-black-50 mt-2 fs-5">
+                    <span class="fa fa-archive me-1"/>
+                    <label for="outermost_result_package_id" string="Destination Container Package" class="p-0"/>
+                </div>
+                <field name="outermost_result_package_id" placeholder="Destination Container Package"/>
+            </div>
             <div name="owner" class="row" groups="stock.group_tracking_owner">
                 <div  class="text-black-50 mt-2 fs-5">
                     <span class="fa fa-user me-1"/>

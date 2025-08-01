@@ -46,13 +46,13 @@ class TestDeliveryUPS(TransactionCase):
         self.customer_location = self.env.ref('stock.stock_location_customers')
 
     def wiz_put_in_pack(self, picking):
-        """ Helper to use the 'choose.delivery.package' wizard
+        """ Helper to use the 'stock.put.in.pack' wizard
         in order to call the 'action_put_in_pack' method.
         """
         wiz_action = picking.action_put_in_pack()
-        self.assertEqual(wiz_action['res_model'], 'choose.delivery.package', 'Wrong wizard returned')
+        self.assertEqual(wiz_action['res_model'], 'stock.put.in.pack', 'Wrong wizard returned')
         wiz = Form.from_action(self.env, wiz_action)
-        wiz.delivery_package_type_id = picking.carrier_id.ups_default_package_type_id
+        wiz.package_type_id = picking.carrier_id.ups_default_package_type_id
         wiz.save().action_put_in_pack()
 
     def test_01_ups_basic_flow(self):

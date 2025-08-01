@@ -13,7 +13,7 @@ export default class PackageLineComponent extends LineComponent {
     }
 
     get qtyDemand() {
-        return this.props.line.reservedPackage ? 1 : false;
+        return this.props.line.reserved_uom_qty ? 1 : 0;
     }
 
     get qtyDone() {

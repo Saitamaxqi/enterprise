@@ -51,12 +51,12 @@ class TestDeliveryUSPS(TransactionCase):
         self.uom_unit = self.env.ref('uom.product_uom_unit')
 
     def wiz_put_in_pack(self, picking):
-        """ Helper to use the 'choose.delivery.package' wizard
+        """ Helper to use the 'stock.put.in.pack' wizard
         in order to call the 'action_put_in_pack' method. """
         wiz_action = picking.action_put_in_pack()
-        self.assertEqual(wiz_action['res_model'], 'choose.delivery.package', 'Wrong wizard returned')
+        self.assertEqual(wiz_action['res_model'], 'stock.put.in.pack', 'Wrong wizard returned')
         wiz = Form(self.env[wiz_action['res_model']].with_context(wiz_action['context']).create({
-            'delivery_package_type_id': picking.carrier_id.usps_default_package_type_id.id,
+            'package_type_id': picking.carrier_id.usps_default_package_type_id.id,
         }))
         choose_deivery_carrier = wiz.save()
         choose_deivery_carrier.action_put_in_pack()

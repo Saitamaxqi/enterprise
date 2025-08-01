@@ -13,13 +13,13 @@ _logger = logging.getLogger(__name__)
 @tagged('-standard', 'external')
 class TestDeliveryEasypost(EasypostTestCommon):
     def wiz_put_in_pack(self, picking):
-        """ Helper to use the 'choose.delivery.package' wizard
+        """ Helper to use the 'stock.put.in.pack' wizard
         in order to call the 'action_put_in_pack' method.
         """
         wiz_action = picking.action_put_in_pack()
-        self.assertEqual(wiz_action['res_model'], 'choose.delivery.package', 'Wrong wizard returned')
+        self.assertEqual(wiz_action['res_model'], 'stock.put.in.pack', 'Wrong wizard returned')
         wiz = Form.from_action(self.env, wiz_action)
-        wiz.delivery_package_type_id = picking.carrier_id.easypost_default_package_type_id
+        wiz.package_type_id = picking.carrier_id.easypost_default_package_type_id
         wiz.save().action_put_in_pack()
 
     def test_easypost_one_package_shipping(self):

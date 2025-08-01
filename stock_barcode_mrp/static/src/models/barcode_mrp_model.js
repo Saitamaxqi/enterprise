@@ -659,7 +659,7 @@ export default class BarcodeMRPModel extends BarcodePickingModel {
         return defaultCompanyId || userCompanyId;
     }
 
-    async _putInPack(additionalContext = {}) {
+    async _putInPack(additionalParams = {}) {
         const message = _t("You are expected to scan one or more products.");
         this.notification(message, { type: "danger" });
     }

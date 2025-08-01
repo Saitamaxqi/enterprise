@@ -76,6 +76,18 @@
         </field>
     </record>
 
+    <record id="view_picking_form" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.stock.barcode</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_picking_client_action" type="object"
+                        class="oe_stat_button" icon="fa-barcode" string="Barcode"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="open_picking" model="ir.actions.act_window">
         <field name="name">Open picking form</field>
         <field name="res_model">stock.picking</field>

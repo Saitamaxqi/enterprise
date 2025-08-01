@@ -75,7 +75,7 @@
                 <span t-if="quantityIsSet" class="fa fa-lg fa-question"/>
                 <span t-else="">0</span>
             </button>
-            <button t-if="isSelected &amp;&amp; qtyDone" name="decrementButton"
+            <button t-if="isSelected &amp;&amp; qtyDone &amp;&amp; !isPackage" name="decrementButton"
                     class="o_line_button o_remove_unit btn btn-light"
                     t-att-disabled="!this.env.model.lineCanBeEdited(line)"
                     t-on-click="() => this.addQuantity(-1)">
@@ -96,6 +96,12 @@
                     t-att-disabled="!this.env.model.lineCanBeEdited(line)"
                     class="o_line_button o_delete_line btn btn-danger">
                 <span class="fa fa-lg fa-trash"/>
+            </button>
+            <button t-if="displayCompletePackageButton" name="completePackageButton"
+                    t-on-click="() => this.completePackage()"
+                    t-att-disabled="!this.env.model.lineCanBeEdited(line)"
+                    class="o_line_button btn btn-light">
+                <span class="fa f-lg fa-check"/>
             </button>
         </div>
     </t>
@@ -153,9 +159,9 @@
                 <t t-call="stock_barcode.LineQuantity"/>
                 <div t-if="line.package_id || line.result_package_id" name="package">
                     <i class="fa fa-fw fa-archive"/>
-                    <span t-if="line.package_id" class="package" t-esc="line.package_id.name"/>
+                    <span t-if="line.package_id" class="package" t-esc="line.package_id.complete_name"/>
                     <i t-if="displayResultPackage" class="fa fa-long-arrow-right mx-1"/>
-                    <span t-if="line.result_package_id" class="result-package" t-esc="line.result_package_id.name"/>
+                    <span t-if="line.result_package_id" class="result-package" t-esc="line.result_package_id.dest_complete_name"/>
                     <span t-if="line.result_package_id &amp;&amp; line.result_package_id.package_type_id"
                         class="fst-italic text-muted">
                         (<t t-esc="line.result_package_id.package_type_id.name"/>)

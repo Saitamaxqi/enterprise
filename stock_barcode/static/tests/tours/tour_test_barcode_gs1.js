@@ -521,22 +521,9 @@ registry.category("web_tour.tours").add("test_gs1_package_receipt", {
                 helper.assertLineQty(line, "12");
             },
         },
-        { trigger: ".o_barcode_client_action", run: "scan 91WOODC" },
-        {
-            trigger: '.o_barcode_line.o_selected[data-barcode="584687955629"] [name="package"]',
-            run: function () {
-                helper.assertLinesCount(4);
-                const line = helper.getLine({ selected: true });
-                helper.assertLineQty(line, "12");
-                const linePackage = line.querySelector('[name="package"]').innerText;
-                helper.assert(linePackage, "PACK0000123 (Wooden Chest)");
-            },
-        },
-        // Scan another package type => Should change the package's type.
         { trigger: ".o_barcode_client_action", run: "scan 91IRONC" },
         {
-            trigger:
-                '.o_selected[data-barcode="584687955629"] [name="package"]:contains("Iron Chest")',
+            trigger: '.o_barcode_line.o_selected[data-barcode="584687955629"] [name="package"]',
             run: function () {
                 helper.assertLinesCount(4);
                 const line = helper.getLine({ selected: true });

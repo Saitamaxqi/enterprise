@@ -11,7 +11,7 @@ Allows using IoT devices, such as scales and printers, for delivery operations.
     'depends': ['iot', 'stock_delivery'],
     'data': [
         'report/delivery_carrier_reports.xml',
-        'wizard/choose_delivery_package_views.xml',
+        'wizard/stock_put_in_pack_views.xml',
         'views/iot_views.xml',
         'views/stock_picking_views.xml',
         ],

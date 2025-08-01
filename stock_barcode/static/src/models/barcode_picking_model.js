@@ -104,6 +104,10 @@ export default class BarcodePickingModel extends BarcodeModel {
         return super.createNewLine(...arguments);
     }
 
+    getDisplayCompletePackageBtn(line) {
+        return !this.getQtyDone(line) && line.isPackageLine;
+    }
+
     getDisplayIncrementBtn(line) {
         line = (line.product_id.tracking === "lot" && this._getParentLine(line)) || line;
         return !this.getQtyDemand(line) || this.getQtyDone(line) < this.getQtyDemand(line);
@@ -145,8 +149,22 @@ export default class BarcodePickingModel extends BarcodeModel {
         return super.getEditedLineParams(...arguments);
     }
 
+    completePackage(virtualId) {
+        this.actionMutex.exec(() => {
+            const packageLine = this.packageLines.find((l) => l.virtual_id === virtualId);
+            for (const line of packageLine.lines) {
+                this.selectedLineVirtualId = line.virtual_id;
+                this._updateLineQty(line, { qty_done: line.reserved_uom_qty });
+                this._markLineAsDirty(line);
+            }
+            this.trigger("update");
+        });
+    }
+
     displayLineQtyDemand(line) {
-        if (!this.showReservedSns) {
+        if (line.isPackageLine && line.reservedPackage) {
+            return true;
+        } else if (!this.showReservedSns) {
             return (
                 this.getQtyDemand(line) &&
                 !(this.lineIsTracked(line) && !line.lines && this._getParentLine(line))
@@ -254,16 +272,19 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     async updateLine(line, args) {
         await super.updateLine(...arguments);
-        let { location_id, location_dest_id, result_package_id } = args;
+        let { location_id, location_dest_id, result_package_id, is_entire_pack } = args;
         if (result_package_id) {
             if (typeof result_package_id === "number") {
                 result_package_id = this.cache.getRecord("stock.package", result_package_id);
-                if (result_package_id.package_type_id && typeof result_package_id === "number") {
-                    result_package_id.package_type_id = this.cache.getRecord(
-                        "stock.package.type",
-                        result_package_id.package_type_id
-                    );
-                }
+            }
+            if (
+                result_package_id.package_type_id &&
+                typeof result_package_id.package_type_id === "number"
+            ) {
+                result_package_id.package_type_id = this.cache.getRecord(
+                    "stock.package.type",
+                    result_package_id.package_type_id
+                );
             }
             line.result_package_id = result_package_id;
         }
@@ -278,6 +299,9 @@ export default class BarcodePickingModel extends BarcodeModel {
                 location_dest_id = this.cache.getRecord("stock.location", args.location_dest_id);
             }
             line.location_dest_id = location_dest_id;
+        }
+        if (is_entire_pack) {
+            line.is_entire_pack = is_entire_pack;
         }
     }
 
@@ -813,30 +837,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         if (!this._moveEntirePackage()) {
             return [];
         }
-        const linesWithPackage = this.currentState.lines.filter(
-            (line) => line.package_id && line.result_package_id
-        );
-        // Groups lines by package.
-        const groupedLines = {};
-        for (const line of linesWithPackage) {
-            const packageId = line.package_id.id;
-            if (!groupedLines[packageId]) {
-                groupedLines[packageId] = [];
-            }
-            groupedLines[packageId].push(line);
-        }
-        const packageLines = [];
-        for (const key in groupedLines) {
-            // Check if the package is reserved.
-            const reservedPackage = groupedLines[key].every((line) => this.lineIsReserved(line));
-            groupedLines[key][0].reservedPackage = reservedPackage;
-            const packageLine = Object.assign({}, groupedLines[key][0], {
-                lines: groupedLines[key],
-                isPackageLine: true,
-            });
-            packageLines.push(packageLine);
-        }
-        return this._sortLine(packageLines);
+        return this._getPackageLines();
     }
 
     get pageIsDone() {
@@ -858,15 +859,15 @@ export default class BarcodePickingModel extends BarcodeModel {
     }
 
     /**
-     * Returns only the lines (filters out the package lines if relevant).
+     * Returns only the lines.
      * @returns {Array<Object>}
      */
     get pageLines() {
         let lines = super.pageLines;
-        // If we show entire package, we don't return lines with package (they
-        // will be treated as "package lines").
         if (this._moveEntirePackage()) {
-            lines = lines.filter((line) => !(line.package_id && line.result_package_id));
+            lines = lines.filter(
+                (line) => !(line.package_id && line.result_package_id && line.is_entire_pack)
+            );
         }
         return this._sortLine(lines);
     }
@@ -1172,8 +1173,7 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     _mustScanProductFirst(barcodeData) {
         const { location, product } = barcodeData;
-        const packageWithQuant = ((barcodeData.package && barcodeData.package.quant_ids) || [])
-            .length;
+        const packageWithQuant = barcodeData.package?.contained_quant_ids?.length;
         return (
             this.config.restrict_scan_product && // Restriction on product.
             !(product || packageWithQuant || this.selectedLine) && // A product/package was scanned.
@@ -1246,12 +1246,16 @@ export default class BarcodePickingModel extends BarcodeModel {
         if (args.srcLocation) {
             params.location_id = args.srcLocation;
         }
+        if (args.isEntirePack) {
+            params.is_entire_pack = args.isEntirePack;
+        }
         return params;
     }
 
     _createCommandVals(line) {
         const values = {
             dummy_id: line.virtual_id,
+            is_entire_pack: line.is_entire_pack,
             location_id: line.location_id,
             location_dest_id: line.location_dest_id,
             lot_name: line.lot_name,
@@ -1307,8 +1311,10 @@ export default class BarcodePickingModel extends BarcodeModel {
                     if (smlData.product_uom_id.id !== prevLine.product_uom_id.id) {
                         // Compatible but not the same UoM => Need a conversion.
                         const params = { digits: [false, this.precision] };
-                        const baseQty = (prevLine.reserved_uom_qty * prevLine.product_uom_id.factor) / smlData.product_uom_id.factor;
-                        smlData.reserved_uom_qty  = parseFloat(formatFloat(baseQty, params));
+                        const baseQty =
+                            (prevLine.reserved_uom_qty * prevLine.product_uom_id.factor) /
+                            smlData.product_uom_id.factor;
+                        smlData.reserved_uom_qty = parseFloat(formatFloat(baseQty, params));
                     } else {
                         // The reservation of this line is already known.
                         smlData.reserved_uom_qty = prevLine.reserved_uom_qty;
@@ -1407,6 +1413,7 @@ export default class BarcodePickingModel extends BarcodeModel {
             qty_done: 0,
             picking_id: this.resId,
             result_package_id: false,
+            is_entire_pack: false,
         });
         if (fieldsParams.product_id?.tracking === "serial" && fieldsParams.packaging) {
             newLineDefaultVals.reserved_uom_qty = 1;
@@ -1416,6 +1423,7 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     _getFieldToWrite() {
         return [
+            "is_entire_pack",
             "location_id",
             "location_dest_id",
             "lot_id",
@@ -1425,6 +1433,33 @@ export default class BarcodePickingModel extends BarcodeModel {
             "qty_done",
             "result_package_id",
         ];
+    }
+
+    _getPackageLines() {
+        const linesWithPackage = this.currentState.lines.filter(
+            (line) => line.package_id && line.result_package_id && line.is_entire_pack
+        );
+        // Groups lines by package.
+        const groupedLines = {};
+        for (const line of linesWithPackage) {
+            const packageId = line.package_id.id;
+            if (!groupedLines[packageId]) {
+                groupedLines[packageId] = [];
+            }
+            groupedLines[packageId].push(line);
+        }
+        const packageLines = [];
+        for (const key in groupedLines) {
+            // Check if the package is reserved.
+            const reservedPackage = groupedLines[key].every((line) => this.lineIsReserved(line));
+            groupedLines[key][0].reservedPackage = reservedPackage;
+            const packageLine = Object.assign({}, groupedLines[key][0], {
+                lines: groupedLines[key],
+                isPackageLine: true,
+            });
+            packageLines.push(packageLine);
+        }
+        return this._sortLine(packageLines);
     }
 
     _getSaveCommand() {
@@ -1716,33 +1751,41 @@ export default class BarcodePickingModel extends BarcodeModel {
             // scanned source location (or one of its sublocations) neither.
             return;
         }
-        // If move entire package, checks if the scanned package matches a package line.
-        if (this._moveEntirePackage()) {
-            for (const packageLine of this.packageLines) {
-                if (packageLine.package_id.name !== (packageName || recPackage.name)) {
-                    continue;
-                }
-                barcodeData.stopped = true;
-                if (packageLine.qty_done) {
-                    this.lastScanned.packageId = packageLine.package_id.id;
-                    const message = _t("This package is already scanned.");
-                    this.notification(message, { type: "danger" });
-                    return this.trigger("update");
-                }
-                for (const line of packageLine.lines) {
-                    this.selectedLineVirtualId = line.virtual_id;
-                    await this._updateLineQty(line, { qty_done: line.reserved_uom_qty });
-                    this._markLineAsDirty(line);
-                }
-                return this.trigger("update");
+
+        let alreadyDonePackId;
+        let scannedPackages = false;
+        for (const packageLine of this.packageLines) {
+            if (!this._isPackageInPackage(packageLine.package_id, recPackage)) {
+                continue;
+            }
+            // Scanned package is either a parent of a line package or the package itself,
+            // thus need to validate all relevant lines.
+            if (packageLine.qty_done) {
+                alreadyDonePackId = recPackage.id;
+                continue;
+            }
+            for (const line of packageLine.lines) {
+                this.selectedLineVirtualId = line.virtual_id;
+                await this._updateLineQty(line, { qty_done: line.reserved_uom_qty });
+                this._markLineAsDirty(line);
+                scannedPackages = true;
             }
         }
+        if (alreadyDonePackId) {
+            this.lastScanned.packageId = alreadyDonePackId;
+            this.notification(_t("This package is already scanned."), { type: "danger" });
+        }
+        if (scannedPackages || alreadyDonePackId) {
+            barcodeData.stopped = true;
+            return this.trigger("update");
+        }
+
         // Scanned a package: fetches package's quant and creates a line for
         // each of them, except if the package is already scanned.
         // TODO: can check if quants already in cache to avoid to make a RPC if
         // there is all in it (or make the RPC only on missing quants).
         const res = await this.orm.call("stock.quant", "get_stock_barcode_data_records", [
-            recPackage.quant_ids,
+            recPackage.contained_quant_ids,
         ]);
         this.cache.setCache(res.records);
         const quants = res.records["stock.quant"];
@@ -1751,9 +1794,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         const currentLine = this.selectedLine || this.lastScannedLine;
         if (
             currentLine &&
-            (!quants.length ||
-                (!currentLine.result_package_id &&
-                    recPackage.location_id === currentLine.location_dest_id.id))
+            (!quants.length || recPackage.location_id === currentLine.location_dest_id.id)
         ) {
             const linesToUpdate = [currentLine];
             if (this.config.restrict_put_in_pack === "optional") {
@@ -1766,8 +1807,16 @@ export default class BarcodePickingModel extends BarcodeModel {
                     )
                 );
             }
-            for (const line of linesToUpdate) {
-                await this._assignEmptyPackage(line, recPackage);
+            if (!currentLine.result_package_id) {
+                for (const line of linesToUpdate) {
+                    await this._assignEmptyPackage(line, recPackage);
+                }
+            } else {
+                // Need to save as we're updating the existing packages
+                await this.save();
+                await this._putPackInPack(currentLine.result_package_id.id, {
+                    default_package_id: recPackage.id,
+                });
             }
             barcodeData.stopped = true;
             this.lastScanned.packageId = recPackage.id;
@@ -1816,7 +1865,8 @@ export default class BarcodePickingModel extends BarcodeModel {
         // For each quants, creates or increments a barcode line.
         for (const quant of quants) {
             const product = this.cache.getRecord("product.product", quant.product_id);
-            const searchLineParams = Object.assign({}, barcodeData, { product });
+            const quantPackage = this.cache.getRecord("stock.package", quant.package_id);
+            const searchLineParams = Object.assign({}, barcodeData, { product, quantPackage });
             let remaining_qty = quant.quantity;
             let qty_used = 0;
             while (remaining_qty > 0) {
@@ -1847,6 +1897,7 @@ export default class BarcodePickingModel extends BarcodeModel {
                         resultPackage: quant.package_id,
                         owner: quant.owner_id,
                         srcLocation: quant.location_id,
+                        isEntirePack: qty_used === quant.quantity,
                     });
                     await this._createNewLine({ fieldsParams });
                 }
@@ -1872,12 +1923,12 @@ export default class BarcodePickingModel extends BarcodeModel {
         const resultPackage = line.result_package_id;
         if (!resultPackage) {
             // No package on the line => Do a put in pack.
-            const additionalContext = { default_package_type_id: packageType.id };
+            const additionalParams = { default_package_type_id: packageType.id };
             if (barcodeData.packageName) {
-                additionalContext.default_name = barcodeData.packageName;
+                additionalParams.default_name = barcodeData.packageName;
             }
-            await this._putInPack(additionalContext);
-        } else if (resultPackage.package_type_id.id !== packageType.id) {
+            await this._putInPack(additionalParams);
+        } else if (!resultPackage.package_type_id) {
             // Changes the package type for the scanned one.
             await this.save();
             await this.orm.write("stock.package", [resultPackage.id], {
@@ -1889,11 +1940,21 @@ export default class BarcodePickingModel extends BarcodeModel {
             });
             this.notification(message, { type: "success" });
             this.trigger("refresh");
+        } else {
+            // Put package inside the scanned one.
+            await this.save();
+            const targetPackageId = resultPackage.package_dest_id
+                ? resultPackage.outermost_package_id.id
+                : resultPackage.id;
+            await this._putPackInPack(targetPackageId, {
+                default_package_type_id: packageType.id,
+                default_name: barcodeData?.packageName,
+            });
         }
     }
 
-    async _putInPack(additionalContext = {}) {
-        const context = Object.assign({ barcode_view: true }, additionalContext);
+    async _putInPack(additionalParams = {}) {
+        const context = { barcode_view: true };
         if (!this.groups.group_tracking_lot) {
             return this.notification(_t("To use packages, enable 'Packages' in the settings"), {
                 type: "danger",
@@ -1910,6 +1971,32 @@ export default class BarcodePickingModel extends BarcodeModel {
         }
         await this.save();
         const result = await this.orm.call(this.resModel, "action_put_in_pack", [[this.resId]], {
+            package_type_id: additionalParams.default_package_type_id,
+            package_name: additionalParams.default_name,
+            context,
+        });
+        if (typeof result === "object" && result.type) {
+            this.trigger("process-action", result);
+        } else {
+            this.trigger("refresh");
+        }
+    }
+
+    async _putPackInPack(packageId, additionalParams = {}) {
+        const context = { barcode_view: true };
+        if (!this.groups.group_tracking_lot) {
+            return this.notification(_t("To use packages, enable 'Packages' in the settings"), {
+                type: "danger",
+            });
+        }
+        if (!packageId) {
+            // Nothing to do in this case
+            return;
+        }
+        const result = await this.orm.call("stock.package", "action_put_in_pack", [[packageId]], {
+            package_id: additionalParams.default_package_id,
+            package_type_id: additionalParams.default_package_type_id,
+            package_name: additionalParams.default_name,
             context,
         });
         if (typeof result === "object" && result.type) {

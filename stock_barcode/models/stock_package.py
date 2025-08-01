@@ -23,13 +23,23 @@ class StockPackage(models.Model):
 
     @api.model
     def _get_fields_stock_barcode(self):
-        return ['name', 'location_id', 'package_type_id', 'quant_ids']
+        return [
+            'name',
+            'complete_name',
+            'dest_complete_name',
+            'location_id',
+            'location_dest_id',
+            'package_dest_id',
+            'outermost_package_id',
+            'package_type_id',
+            'contained_quant_ids',
+        ]
 
     @api.model
     def _get_usable_packages(self):
         usable_packages_domain = [
             '|',
-            ('package_use', '=', 'reusable'),
+            ('package_type_id.package_use', '=', 'reusable'),
             ('location_id', '=', False),
         ]
         # Limit the number of records to load if param is set.
