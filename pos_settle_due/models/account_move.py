@@ -15,6 +15,10 @@ class AccountMove(models.Model):
     def _load_pos_data_fields(self, config):
         return ['name', 'amount_residual', 'pos_amount_unsettled']
 
+    @api.model
+    def _load_pos_data_domain(self, data, config):
+        return False
+
     @api.depends('pos_order_line_ids', 'amount_residual')
     def _compute_pos_amount_unsettled(self):
         for invoice in self:
