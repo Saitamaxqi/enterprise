@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="audit_report_blank_canvas" model="ir.actions.report">
+        <field name="name">Audit Report Blank Canvas</field>
+        <field name="model">audit.report</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Audit Report Blank Canvas</field>
+    </record>
+</odoo>

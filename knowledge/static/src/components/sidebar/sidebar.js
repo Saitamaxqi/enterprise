@@ -13,7 +13,7 @@ import { localization } from "@web/core/l10n/localization";
 import { user } from "@web/core/user";
 import { throttleForAnimation } from "@web/core/utils/timing";
 import { useNestedSortable } from "@web/core/utils/nested_sortable";
-import { useService } from "@web/core/utils/hooks";
+import { useBus, useService } from "@web/core/utils/hooks";
 import { useRecordObserver } from "@web/model/relational_model/utils";
 
 import {
@@ -102,6 +102,10 @@ export class KnowledgeSidebar extends Component {
         });
 
         this.loadArticles();
+
+        useBus(this.env.bus, "KNOWLEDGE:RELOAD_SIDEBAR", async (event) => {
+            await this.loadArticles();
+        });
 
         // Reassign the Control+k hotkey for portal users from the CommandPalette
         // to the article search feature.
@@ -363,8 +367,13 @@ export class KnowledgeSidebar extends Component {
         if (await this.props.record.isDirty()) {
             await this.props.record.save();
         }
+        const { articles, templates } = await this.orm.call(
+            "knowledge.article",
+            "get_available_templates"
+        );
         this.dialog.add(ArticleTemplatePickerDialog, {
-            record: this.props.record,
+            articles: articles,
+            templates: templates,
             /** @param {integer} articleId */
             onLoadArticle: async articleId => {
                 const newArticleIds = await this.orm.call(
@@ -380,7 +389,7 @@ export class KnowledgeSidebar extends Component {
             },
             /** @param {integer} templateId */
             onLoadTemplate: async templateId => {
-                const newArticleId = await this.orm.call(
+                const [newArticleId] = await this.orm.call(
                     "knowledge.article",
                     "create_article_from_template", [templateId]
                 );
@@ -390,7 +399,23 @@ export class KnowledgeSidebar extends Component {
                         res_id: newArticleId,
                     }
                 });
-            }
+            },
+            /** @param {integer} articleId */
+            onDeleteArticle: async (articleId) => {
+                if (this.props.record.resId === articleId) {
+                    await this.props.record.save();
+                }
+                await this.orm.write("knowledge.article", [articleId], {
+                    is_listed_in_templates_gallery: false,
+                });
+                if (this.props.record.resId === articleId) {
+                    this.props.record.load();
+                }
+            },
+            /** @param {integer} templateId */
+            onDeleteTemplate: async (templateId) => {
+                await this.orm.unlink("knowledge.article", [templateId]);
+            },
         });
     }
 

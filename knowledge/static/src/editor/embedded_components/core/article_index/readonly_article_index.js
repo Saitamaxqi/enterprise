@@ -1,6 +1,5 @@
 import { Component } from "@odoo/owl";
 import { getEmbeddedProps } from "@html_editor/others/embedded_component_utils";
-import { ArticleIndexList } from "@knowledge/editor/embedded_components/core/article_index/article_index_list";
 
 export class ReadonlyEmbeddedArticleIndexComponent extends Component {
     static props = {
@@ -8,10 +7,20 @@ export class ReadonlyEmbeddedArticleIndexComponent extends Component {
         showAllChildren: { type: Boolean, optional: true },
     };
     static defaultProps = {
+        articles: {},
         showAllChildren: true,
     };
     static template = "knowledge.ReadonlyEmbeddedArticleIndex";
-    static components = { ArticleIndexList };
+    setup() {
+        this;
+    }
+
+    /** @param {integer} articleId */
+    openArticle(articleId) {
+        if (this.env.openArticle) {
+            this.env.openArticle(articleId);
+        }
+    }
 }
 
 export const readonlyArticleIndexEmbedding = {

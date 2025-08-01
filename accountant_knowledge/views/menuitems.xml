@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_action_accountant_audit_report"
+        name="Audit Reports"
+        action="action_audit_report"
+        parent="account.account_closing_menu"
+        sequence="100"/>
+</odoo>

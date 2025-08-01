@@ -34,6 +34,7 @@
                 <field name="create_uid" invisible="1"/>
                 <field name="is_article_visible_by_everyone" invisible="1"/>
                 <field name="is_article_visible" invisible="1"/>
+                <field name="origin_template_id" invisible="1"/>
                     <!-- Article header -->
                     <widget name="knowledge_topbar"/>
                     <!-- Invisible Article Warning Banner-->
@@ -635,6 +636,7 @@
                         <field name="is_article_item" invisible="not parent_id"/>
                         <field name="article_properties" invisible="not parent_id"/>
                         <field name="template_category_id"/>
+                        <field name="template_child_default_create"/>
                     </group>
                 </sheet>
             </form>

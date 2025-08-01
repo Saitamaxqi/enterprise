@@ -13,6 +13,7 @@ import {
     useExternalListener,
     useRef,
 } from "@odoo/owl";
+import { ArticleAnnexePickerDialog } from "@knowledge/components/article_annexe_picker_dialog/article_annexe_picker_dialog";
 
 export class KnowledgeArticleFormController extends FormController {
     static template = "knowledge.ArticleFormView";
@@ -43,6 +44,11 @@ export class KnowledgeArticleFormController extends FormController {
 
         useBus(this.env.bus, 'KNOWLEDGE:OPEN_ARTICLE', (event) => {
             this.openArticle(event.detail.id);
+        });
+
+        useBus(this.env.bus, "KNOWLEDGE:OPEN_ANNEXE_TEMPLATE_PICKER", async (event) => {
+            const props = event.detail;
+            this.dialogService.add(ArticleAnnexePickerDialog, props);
         });
 
         // Unregister the current candidate recordInfo for Knowledge macros in

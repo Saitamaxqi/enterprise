@@ -4416,6 +4416,8 @@ class AccountReport(models.Model):
     def get_default_report_filename(self, options, extension):
         """The default to be used for the file when downloading pdf,xlsx,..."""
         self.ensure_one()
+        if 'sections_source_id' not in options:
+            return _('report.%(file_extension)s', file_extension=extension)
 
         sections_source_id = options['sections_source_id']
         if sections_source_id != self.id:

@@ -170,6 +170,8 @@ class KnowledgeArticle(models.Model):
     template_name = fields.Char(string="Template Title", translate=True)
     template_preview = fields.Html(string="Template Preview", compute="_compute_template_preview")
     template_sequence = fields.Integer(string="Template Sequence", help="It determines the display order of the template within its category")
+    template_child_default_create = fields.Boolean(string="Auto-Create Child Article", default=True, help="If set, this will automatically create this child article when its parent template is used")
+    origin_template_id = fields.Many2one("knowledge.article", string="Template used to generate the article")
 
     _check_permission_on_root = models.Constraint(
         'check(parent_id IS NOT NULL OR internal_permission IS NOT NULL)',
@@ -1708,6 +1710,53 @@ class KnowledgeArticle(models.Model):
                 del sorted_article['headline']
         return sorted_articles
 
+    def get_suggested_templates(self):
+        self.ensure_one()
+        if not self.origin_template_id:
+            return []
+        domain = [
+            ('is_template', '=', True),
+            ('parent_id', '=', self.origin_template_id.id),
+            ('id', 'not in', self.child_ids.mapped('origin_template_id.id')),
+        ]
+        return self.search_read(domain, fields=[
+            'id',
+            'icon',
+            'template_name',
+            'template_category_id',
+            'template_category_sequence',
+            'template_sequence'
+        ])
+
+    def load_suggested_template(self, template_id):
+        """
+        :param integer template_id: Template to load under the current article
+        """
+        template = self.browse(template_id)
+        sibling_articles = self.search([
+            ('parent_id', '=', self.id),
+            ('origin_template_id.parent_id', '=', template.parent_id)
+        ])
+        article = self.create({
+            'body': template._render_template(),
+            'cover_image_id': template.cover_image_id.id,
+            'origin_template_id': template.id,
+            'full_width': template.full_width,
+            'icon': template.icon,
+            'name': template.template_name,
+            'parent_id': self.id,
+        })
+        if sibling_articles:
+            articles_with_higher_template_sequence = sorted([
+                sibling_article for sibling_article in sibling_articles
+                    if sibling_article.origin_template_id.template_sequence > template.template_sequence],
+                key=lambda sibling_article: sibling_article.origin_template_id.template_sequence)
+            if articles_with_higher_template_sequence:
+                article.move_to(
+                    parent_id=article.parent_id.id,
+                    before_article_id=articles_with_higher_template_sequence[0].id)
+        return article
+
     # ------------------------------------------------------------
     # PERMISSIONS / MEMBERS MANAGEMENT
     # ------------------------------------------------------------
@@ -2693,11 +2742,22 @@ class KnowledgeArticle(models.Model):
     # BUSINESS METHODS
     # ------------------------------------------------------------
 
-    def create_article_from_template(self):
+    def create_article_from_template(self, parent_id=False):
         self.ensure_one()
-        article = self.env["knowledge.article"].article_create(is_private=True)
+        values = {
+            'parent_id': parent_id
+        }
+        if not parent_id:
+            values.update({
+                'internal_permission': 'none',
+                'article_member_ids': [(0, 0, {
+                    'partner_id': self.env.user.partner_id.id,
+                    'permission': 'write'
+                })]
+            })
+        article = self.env["knowledge.article"].create(values)
         article.apply_template(self.id, skip_body_update=False)
-        return article.id
+        return article
 
     def apply_template(self, template_id, skip_body_update=False):
         """Applies the given template on the current article
@@ -2749,8 +2809,12 @@ class KnowledgeArticle(models.Model):
             } for stage in parent_template_stages])
 
             # Create the child articles:
-            child_templates = parent_template.child_ids.sorted(
+            child_templates = parent_template.child_ids
+            child_templates = child_templates.filtered(
+                lambda template: template.template_child_default_create)
+            child_templates = child_templates.sorted(
                 lambda template: (template.write_date, template.id))
+
             if not child_templates:
                 continue
 
@@ -2783,7 +2847,7 @@ class KnowledgeArticle(models.Model):
                 lambda ir_model_data: ir_model_data.res_id == template.id)
 
             if ir_model_data:
-                template_xml_id = 'knowledge.' + ir_model_data.name
+                template_xml_id = ir_model_data.complete_name
                 template_xml_id_to_article_id_mapping[template_xml_id] = article.id
 
         # When rendering the template, the `ref` function should return the id
@@ -2808,6 +2872,7 @@ class KnowledgeArticle(models.Model):
                 'full_width': template.full_width,
                 'icon': template.icon,
                 'name': template.template_name,
+                'origin_template_id': template.id,
             })
 
         values = {
@@ -2817,6 +2882,7 @@ class KnowledgeArticle(models.Model):
             'full_width': root_template.full_width,
             'icon': root_template.icon,
             'name': root_article.name or root_template.template_name,
+            'origin_template_id': root_template.id,
         }
         body = root_template._render_template(ref)
         if not skip_body_update:
@@ -2925,6 +2991,23 @@ class KnowledgeArticle(models.Model):
             })
 
         return body
+
+    @api.model
+    def get_available_templates(self):
+        articles = self.env['knowledge.article'].search_read(
+            [("is_listed_in_templates_gallery", "=", True)], ["id", "icon", "name", "user_can_write"]
+        )
+
+        templates = self.env['knowledge.article'].search_read(
+            self._get_available_template_domain(),
+            ["id", "icon", "template_name", "template_category_id", "template_category_sequence", "template_sequence"]
+        )
+
+        return {"articles": articles, "templates": templates}
+
+    @api.model
+    def _get_available_template_domain(self):
+        return [("is_template", "=", True), ("parent_id", "=", False)]
 
     def create_default_item_stages(self):
         """ Need to create stages if this article has no stage yet. """

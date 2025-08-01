@@ -1,4 +1,4 @@
-import { onWillStart, useState } from "@odoo/owl";
+import { onWillStart, useState, useSubEnv, Component } from "@odoo/owl";
 import {
     getEmbeddedProps,
     useEmbeddedState,
@@ -8,20 +8,21 @@ import {
     EmbeddedComponentToolbar,
     EmbeddedComponentToolbarButton,
 } from "@html_editor/others/embedded_components/core/embedded_component_toolbar/embedded_component_toolbar";
+import { ArticleIndexList } from "@knowledge/editor/embedded_components/backend/article_index/article_index_list";
 import { useService } from "@web/core/utils/hooks";
-import { ReadonlyEmbeddedArticleIndexComponent } from "@knowledge/editor/embedded_components/core/article_index/readonly_article_index";
 import { KeepLast } from "@web/core/utils/concurrency";
 
-export class EmbeddedArticleIndexComponent extends ReadonlyEmbeddedArticleIndexComponent {
+export class EmbeddedArticleIndexComponent extends Component {
     static template = "knowledge.EmbeddedArticleIndex";
     static components = {
-        ...ReadonlyEmbeddedArticleIndexComponent.components,
+        ArticleIndexList,
         EmbeddedComponentToolbar,
         EmbeddedComponentToolbarButton,
     };
     static props = {
-        ...ReadonlyEmbeddedArticleIndexComponent.props,
         host: { type: Object },
+        articles: { type: Object, optional: true },
+        showAllChildren: { type: Boolean, optional: true },
     };
 
     setup() {
@@ -30,7 +31,13 @@ export class EmbeddedArticleIndexComponent extends ReadonlyEmbeddedArticleIndexC
         this.keepLastFetch = new KeepLast();
         this.state = useState({
             loading: false,
+            key: 0,
         });
+
+        useSubEnv({
+            reloadArticleIndex: () => this.loadArticleIndex(),
+        });
+
         onWillStart(async () => {
             if (this.embeddedState.articles === undefined) {
                 this.loadArticleIndex({ firstLoad: true });
@@ -92,16 +99,51 @@ export class EmbeddedArticleIndexComponent extends ReadonlyEmbeddedArticleIndexC
         this.state.loading = false;
         this.embeddedState.showAllChildren = showAllChildren;
         this.embeddedState.articles = buildIndex(resId);
+        this.env.bus.trigger("KNOWLEDGE:RELOAD_SIDEBAR", {});
     }
 
     async onSwitchModeBtnClick() {
-        this.loadArticleIndex({
+        await this.loadArticleIndex({
             showAllChildren: !this.embeddedState.showAllChildren,
+        });
+        this.state.key++; // restart the `ArticleIndexList` component to update
+                          // the `nest` static option.
+    }
+
+    async openTemplatePicker() {
+        const record = this.env.model.root;
+        const templates = await this.orm.call("knowledge.article", "get_suggested_templates", [
+            [record.resId],
+        ]);
+        this.env.bus.trigger("KNOWLEDGE:OPEN_ANNEXE_TEMPLATE_PICKER", {
+            articles: [],
+            templates: templates,
+            onLoadArticle: () => {},
+            /** @param {integer} templateId */
+            onLoadTemplate: async (templateId) => {
+                const [articleId] = await this.orm.call(
+                    "knowledge.article",
+                    "load_suggested_template",
+                    [record.resId, templateId]
+                );
+                await this.loadArticleIndex();
+                await this.env.openArticle(articleId);
+            },
+            onDeleteArticle: () => {},
+            /** @param {integer} templateId */
+            onDeleteTemplate: async (templateId) => {
+                await this.orm.unlink("knowledge.article", [templateId]);
+            },
         });
     }
 
-    async onRefreshBtnClick() {
-        this.loadArticleIndex();
+    async addChildToArticle() {
+        const [articleId] = await this.orm.create("knowledge.article", [
+            {
+                parent_id: this.env.model.root.resId,
+            },
+        ]);
+        await this.env.openArticle(articleId);
     }
 }
 

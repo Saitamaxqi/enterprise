@@ -1,5 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
-import { Component, onWillStart, onMounted, useEffect, useRef, useState } from "@odoo/owl";
+import { Component, onMounted, useEffect, useRef, useState } from "@odoo/owl";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { Dialog } from "@web/core/dialog/dialog";
 import { groupBy } from "@web/core/utils/arrays";
@@ -7,6 +7,7 @@ import { Record } from "@web/model/record";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { KnowledgeHtmlViewer } from "@knowledge/components/knowledge_html_viewer/knowledge_html_viewer";
+import { ArticleTemplatePickerNoContentHelper } from "@knowledge/components/article_template_picker_dialog/article_template_picker_no_content_helper";
 import { WithSubEnv } from "@knowledge/components/with_sub_env/with_sub_env";
 import { READONLY_MAIN_EMBEDDINGS } from "@html_editor/others/embedded_components/embedding_sets";
 import { KNOWLEDGE_READONLY_EMBEDDINGS } from "@knowledge/editor/embedded_components/embedding_sets";
@@ -21,12 +22,16 @@ export class ArticleTemplatePickerDialog extends Component {
         Dialog,
         Record,
         KnowledgeHtmlViewer,
+        NoContentHelper: ArticleTemplatePickerNoContentHelper,
         WithSubEnv
     };
     static props = {
-        record: { type: Object },
+        articles: { type: Object },
+        templates: { type: Object },
         onLoadArticle: { type: Function },
         onLoadTemplate: { type: Function },
+        onDeleteArticle: { type: Function },
+        onDeleteTemplate: { type: Function },
         close: { type: Function },
     };
     /**
@@ -39,36 +44,23 @@ export class ArticleTemplatePickerDialog extends Component {
         this.orm = useService("orm");
         this.dialogService = useService("dialog");
         this.scrollView = useRef("scroll-view");
-        this.state = useState({});
 
-        onWillStart(async () => {
-            const [articlesListedInTemplateGallery, templates] = await Promise.all([
-                await this.orm.searchRead(
-                    "knowledge.article",
-                    [["is_listed_in_templates_gallery", "=", true]],
-                    ["id", "icon", "name", "user_can_write"]),
-                await this.orm.searchRead(
-                    "knowledge.article",
-                    [["is_template", "=", true], ["parent_id", "=", false]],
-                    ["id", "icon", "template_name", "template_category_id",
-                        "template_category_sequence", "template_sequence"])
-            ]);
+        const articlesListedInTemplateGallery = this.props.articles;
+        const templates = this.props.templates;
 
-            const templatesGroupedByCategory = Object.values(
-                groupBy(templates, template => template["template_category_id"][0])
-            ).sort((a, b) => {
-                return a[0]["template_category_sequence"] - b[0]["template_category_sequence"];
-            }).map(group => group.sort((a, b) => {
-                return a["template_sequence"] - b["template_sequence"];
-            }));
+        const templatesGroupedByCategory = Object.values(
+            groupBy(templates, template => template["template_category_id"][0])
+        ).sort((a, b) => {
+            return a[0]["template_category_sequence"] - b[0]["template_category_sequence"];
+        }).map(group => group.sort((a, b) => {
+            return a["template_sequence"] - b["template_sequence"];
+        }));
 
-            Object.assign(this.state, {
-                articlesListedInTemplateGallery,
-                templatesGroupedByCategory,
-            });
-
-            this.selectFirstEntryFromSidebar();
+        this.state = useState({
+            articlesListedInTemplateGallery,
+            templatesGroupedByCategory,
         });
+        this.selectFirstEntryFromSidebar();
 
         onMounted(() => {
             const { el } = this.scrollView;
@@ -125,15 +117,7 @@ export class ArticleTemplatePickerDialog extends Component {
             body: _t("Are you sure you want to remove this template from the list?\nIf needed, it can be added later from the Article."),
             confirmLabel: _t("Remove Template"),
             confirm: async () => {
-                if (this.props.record.resId === articleId) {
-                    await this.props.record.save();
-                }
-                await this.orm.write("knowledge.article", [articleId], {
-                    is_listed_in_templates_gallery: false,
-                });
-                if (this.props.record.resId === articleId) {
-                    this.props.record.load();
-                }
+                await this.props.onDeleteArticle(articleId);
                 this.state.articlesListedInTemplateGallery = this.state.articlesListedInTemplateGallery.filter(article => {
                     return article.id !== articleId;
                 });
@@ -154,7 +138,7 @@ export class ArticleTemplatePickerDialog extends Component {
             body: _t("Are you sure you want to delete this template from the database?"),
             confirmLabel: _t("Remove Template"),
             confirm: async () => {
-                await this.orm.unlink("knowledge.article", [templateId]);
+                await this.props.onDeleteTemplate(templateId);
                 const groups = [];
                 for (const group of this.state.templatesGroupedByCategory) {
                     const templates = group.filter(template => {

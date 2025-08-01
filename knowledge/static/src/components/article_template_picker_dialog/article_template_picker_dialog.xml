@@ -119,14 +119,7 @@
                     </Record>
                 </div>
             </div>
-            <div t-else="" class="o_view_nocontent position-static">
-                <!-- No Content Helper -->
-                <div class="o_nocontent_help">
-                    <p class="o_view_nocontent_smiling_face">
-                        No template yet.
-                    </p>
-                </div>
-            </div>
+            <NoContentHelper t-else=""/>
             <t t-set-slot="footer">
                 <t t-if="hasArticlesListedInTemplateGallery or hasTemplates">
                     <button t-if="state.isRenderingTemplate" t-on-click="onLoadTemplate" class="btn btn-primary" data-hotkey="q">Load Template</button>

@@ -64,7 +64,7 @@
                     <DropdownItem t-elif="props.record.data.is_article_item and props.record.data.user_can_write and !data.has_item_parent" onSelected.bind="toggleItem">
                         <i class="fa fa-fw fa-lg fa-sitemap me-2"/>Convert into Article
                     </DropdownItem>
-                    <DropdownItem onSelected.bind="export">
+                    <DropdownItem onSelected.bind="export" attrs="{ 'name': 'export' }">
                         <i class="fa fa-fw fa-lg fa-download me-2"/>Export
                     </DropdownItem>
                     <DropdownItem t-if="props.record.data.user_can_write and isInternalUser" onSelected.bind="toggleIsListedInTemplatesGallery">
