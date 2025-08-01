@@ -73,10 +73,13 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
 
         for utc_time, day_diffs in test_cases.items():
             with freeze_time(utc_time):
-                day = date.today().day
-                expected = (date(2024, 1, day + diff) for diff in day_diffs)
-                for tz, local_date in zip(timezones, expected):
+                for tz, diff in zip(timezones, day_diffs):
+                    # reset all timezones on the environments
                     user.tz = tz
+                    self.env.flush_all()
+                    self.env.transaction.reset()
+                    local_date = date.today() + timedelta(diff)
+
                     self.assertTrue(ticket.display_timesheet_timer, "The timer should be available in that ticket")
                     ticket.action_timer_start()
                     action = ticket.action_timer_stop()
