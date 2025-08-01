@@ -28,27 +28,8 @@ class SaleOrderLine(models.Model):
 
     def _planning_slot_vals_list(self):
         vals_list = super()._planning_slot_vals_list()
-        rental_sol_per_id = {
-            sol.id: sol
-            for sol in self
-            if sol.is_rental and sol.product_id.planning_role_id.filtered('sync_shift_rental')
-        }
-        problematic_services = []
-        for vals in vals_list:
-            if (sol := rental_sol_per_id.get(vals.get('sale_line_id'))) and not vals.get('resource_id'):
-                problematic_services.append(sol.product_id.name)
-        if problematic_services:
-            raise ValidationError(
-                self.env._(
-                    "This Sales Order can't be confirmed. No resources are available for the shifts in: %s.",
-                    ", ".join(problematic_services)
-                )
-            )
-        return vals_list
-
-    def _planning_slot_vals_list(self):
-        vals_list = super()._planning_slot_vals_list()
         assigned_resource_ids = []
+        problematic_services = []
         for sol, vals in zip(self, vals_list):
             if not sol.is_rental:
                 continue
@@ -61,12 +42,12 @@ class SaleOrderLine(models.Model):
             if not available_resources:
                 return vals
 
-            unavailable_resource_slots = sol.env['planning.slot'].search([
+            unavailable_resource_slots = self.env['planning.slot'].search([
                 ('resource_id', 'in', available_resources.ids),
                 ('start_datetime', '<=', sol.return_date),
                 ('end_datetime', '>=', sol.start_date),
             ])
-            resource_leaves = sol.env['resource.calendar.leaves'].search([
+            resource_leaves = self.env['resource.calendar.leaves'].search([
                 ('resource_id', 'in', available_resources.ids),
                 ('date_from', '<=', sol.return_date),
                 ('date_to', '>=', sol.start_date),
@@ -98,7 +79,17 @@ class SaleOrderLine(models.Model):
             if free_resource_ids:
                 resource_id = free_resource_ids[0]
                 assigned_resource_ids.append(resource_id)
+            else:
+                problematic_services.append(sol.product_id.name)
             vals['resource_id'] = resource_id
+
+        if problematic_services:
+            raise ValidationError(
+                self.env._(
+                    "This Sales Order can't be confirmed. No resources are available for the shifts in: %s.",
+                    ", ".join(problematic_services)
+                )
+            )
         return vals_list
 
     def write(self, vals):
