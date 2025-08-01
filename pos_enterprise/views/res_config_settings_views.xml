@@ -20,7 +20,11 @@
                 <block title="Food Delivery Connector" id="pos_urban_piper_section" invisible="is_kiosk_mode">
                     <setting id="urban_piper_setting" string="Urban Piper" documentation="https://www.urbanpiper.com/" company_dependent="1" help="Manage your online orders with Urban Piper.">
                         <field name="pos_module_pos_urban_piper" readonly="pos_has_active_session"/>
-                        <div class="content-group"/>
+                        <div class="content-group" invisible="not pos_module_pos_urban_piper">
+                            <div class="text-warning mb4">
+                                Save this page and come back here to set up the feature.
+                            </div>
+                        </div>
                     </setting>
                 </block>
             </xpath>
