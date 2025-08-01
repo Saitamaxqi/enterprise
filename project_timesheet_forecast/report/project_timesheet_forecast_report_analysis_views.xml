@@ -68,13 +68,13 @@
                 <separator/>
                 <filter string="Date" name="year" date="entry_date">
                     <filter name="entry_date_this_week" string="This Week" domain="[
-                        ('entry_date', '&gt;=', '=monday'),
-                        ('entry_date', '&lt;', '=monday +1w'),
+                        ('entry_date', '&gt;=', '=week_start'),
+                        ('entry_date', '&lt;', '=week_start +1w'),
                     ]"/>
                     <filter name="entry_date_today" string="Today" domain="[('entry_date', '&gt;=', 'today')]"/>
                     <filter name="entry_date_last_week" string="Last Week" domain="[
-                        ('entry_date', '&gt;=', '=monday -1w'),
-                        ('entry_date', '&lt;', '=monday'),
+                        ('entry_date', '&gt;=', '=week_start -1w'),
+                        ('entry_date', '&lt;', '=week_start'),
                     ]"/>
                 </filter>
                 <group>

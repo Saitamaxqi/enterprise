@@ -330,12 +330,12 @@
                         ('start_datetime', '&gt;=', 'today'),
                     ]"/>
                     <filter name="start_this_week" string="This Week" domain="[
-                        ('start_datetime', '&gt;=', '=monday'),
-                        ('start_datetime', '&lt;', '=monday +1w'),
+                        ('start_datetime', '&gt;=', '=week_start'),
+                        ('start_datetime', '&lt;', '=week_start +1w'),
                     ]"/>
                     <filter name="start_next_week" string="Next Week" domain="[
-                        ('start_datetime', '&gt;=', '=monday +1w'),
-                        ('start_datetime', '&lt;', '=monday +2w'),
+                        ('start_datetime', '&gt;=', '=week_start +1w'),
+                        ('start_datetime', '&lt;', '=week_start +2w'),
                     ]"/>
                 </filter>
                 <filter string="End Date" name="end_datetime" date="end_datetime" end_month="1">
@@ -344,12 +344,12 @@
                         ('end_datetime', '&lt;', 'today +1d'),
                     ]"/>
                     <filter name="end_this_week" string="This Week" domain="[
-                        ('end_datetime', '&gt;=', '=monday'),
-                        ('end_datetime', '&lt;', '=monday +1w'),
+                        ('end_datetime', '&gt;=', '=week_start'),
+                        ('end_datetime', '&lt;', '=week_start +1w'),
                     ]"/>
                     <filter name="end_next_week" string="Next Week" domain="[
-                        ('end_datetime', '&gt;=', '=monday +1w'),
-                        ('end_datetime', '&lt;', '=monday +2w'),
+                        ('end_datetime', '&gt;=', '=week_start +1w'),
+                        ('end_datetime', '&lt;', '=week_start +2w'),
                     ]"/>
                 </filter>
                 <group>
