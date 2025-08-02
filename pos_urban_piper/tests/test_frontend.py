@@ -53,7 +53,8 @@ class TestPosUrbanPiperCommon(TestPointOfSaleHttpCommon):
             'attribute_line_ids': [(0, 0, {
                 'attribute_id': cls.attr.id,
                 'value_ids': [(6, 0, [cls.value_small.id, cls.value_large.id])]
-            })]
+            })],
+            'urbanpiper_meal_type': '1',
         })
         for ptav in cls.product.attribute_line_ids.product_template_value_ids:
             if ptav.product_attribute_value_id == cls.value_large:
@@ -148,6 +149,7 @@ class TestFrontend(TestPosUrbanPiperCommon):
                 'available': True,
                 'opt_grp_ref_ids': [f'{self.product.id}-{self.attr.id}'],
                 'price': 0.0,
+                'food_type': '1',
                 'translations': [{'language': 'fr', 'title': 'Petit'}]
             },
             {
@@ -156,6 +158,7 @@ class TestFrontend(TestPosUrbanPiperCommon):
                 'available': True,
                 'opt_grp_ref_ids': [f'{self.product.id}-{self.attr.id}'],
                 'price': 2.0,
+                'food_type': '1',
                 'translations': [{'language': 'fr', 'title': 'Grand'}]
             },
         ]

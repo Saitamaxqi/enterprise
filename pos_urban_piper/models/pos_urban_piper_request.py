@@ -311,6 +311,7 @@ class UrbanPiperClient:
                 'available': True,
                 'opt_grp_ref_ids': [f'{option.product_tmpl_id.id}-{i}' for i in option.attribute_id.ids],
                 'price': option.price_extra or option.product_attribute_value_id.default_extra_price,
+                'food_type': option.product_tmpl_id.urbanpiper_meal_type,
             }
             name_translations = option.product_attribute_value_id.get_field_translations('name')
             value_dict['translations'] = self._get_translations(name_translations, 'title')
