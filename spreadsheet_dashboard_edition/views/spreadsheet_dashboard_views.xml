@@ -31,6 +31,17 @@
         </field>
     </record>
 
+    <record id="spreadsheet_dashboard_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">spreadsheet.dashboard.kanban.inherit</field>
+        <field name="model">spreadsheet.dashboard</field>
+        <field name="inherit_id" ref="spreadsheet_dashboard.spreadsheet_dashboard_view_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <button type="object" name="action_edit_dashboard" string="Edit" icon="fa-pencil" class="btn btn-link"/>
+            </xpath>
+        </field>
+    </record>
+
     <!-- Minimal form view for dashboard creation in spreadsheet selector dialog (while inserting list/pivot/graph) -->
     <record id="spreadsheet_dashboard_creation_dialog_view_form" model="ir.ui.view">
         <field name="name">spreadsheet.dashboard.quick.create.form</field>
