@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template -->
+    <template id="audit_report_front_cover">
+        <html>
+            <head>
+                <meta charset="UTF-8"/>
+                <style>
+                    h1 {
+                        font-size: 60px;
+                    }
+                    img {
+                        max-height: 125px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div style="height: 350px"/>
+                <h1 t-out="audit_report.title"/>
+                <h2>Fiscal period from <t t-out="audit_report.start_date"/> to <t t-out="audit_report.end_date"/></h2>
+                <div style="height: 35px"/>
+                <hr/>
+                <div style="height: 35px"/>
+                <img t-if="audit_report.company_id.logo" t-att-src="image_data_uri(audit_report.company_id.logo)"/>
+                <h3 t-out="audit_report.company_id.name"/>
+                <t t-if="audit_report.company_id.vat">
+                    <p>VAT: <t t-out="audit_report.company_id.vat"/></p>
+                </t>
+                <p t-out="audit_report.company_id.street"/>
+                <p><t t-out="audit_report.company_id.zip"/> <t t-out="audit_report.company_id.city"/></p>
+            </body>
+        </html>
+    </template>
+
+    <template id="audit_report_table_of_content">
+        <html>
+            <head>
+                <meta charset="UTF-8"/>
+                <style>
+                    a {
+                        display: -webkit-box;
+                        -webkit-box-pack: justify;
+                        padding: 8px;
+                        text-decoration: none;
+                        color: black;
+                    }
+                    .title {
+                        -webkit-box-flex: 1;
+                    }
+                </style>
+            </head>
+            <body>
+                <h1>Table of content</h1>
+                <t t-foreach="headings" t-as="heading">
+                    <a t-attf-class="h#{heading['depth'] + 1}" href="http://odoo.com">
+                        <div class="title" t-out="heading['outline']['/Title']"/>
+                        <div t-out="heading['outline']['/Page'] + 1 + heading['page_offset_in_body'] + offset"/>
+                    </a>
+                </t>
+            </body>
+        </html>
+    </template>
+
+    <template id="audit_report_page_layout">
+        <html>
+            <head>
+                <meta charset="UTF-8"/>
+                <style>
+                    .d-print-none,
+                    [data-embedded="accountReport"],
+                    [data-embedded="file"],
+                    [data-embedded="signatureInput"],
+                    [data-embedded="video"],
+                    [data-embedded="view"],
+                    [data-embedded="view_link"] {
+                        display: none !important;
+                    }
+                </style>
+            </head>
+            <body t-out="body"/>
+        </html>
+    </template>
+
+    <template id="audit_report_empty_document">
+        <html>
+            <head>
+                <meta charset="UTF-8"/>
+            </head>
+            <body>
+                <t t-foreach="range(number_of_pages)" t-as="k">
+                    <div style="page-break-before: always;">&#160;</div>
+                </t>
+            </body>
+        </html>
+    </template>
+</odoo>

@@ -20,7 +20,10 @@ export class AccountReportCogMenu extends Component {
 
         for (const button of this.controller.buttons) {
             if (!button.always_show) {
-                buttons.push(button);
+                buttons.push({
+                    ...button,
+                    onClick: (ev) => this.controller.buttonAction(ev, button),
+                });
             }
         }
 

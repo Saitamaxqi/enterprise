@@ -1,13 +1,12 @@
+import { useKnowledgeArticleSelector } from "@knowledge/hooks/knowledge_article_selector";
 import { Component } from "@odoo/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
-import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
-import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
+import { useService } from "@web/core/utils/hooks";
 import { omit } from "@web/core/utils/objects";
 import { renderToElement } from "@web/core/utils/render";
-import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 
 const cogMenuRegistry = registry.category("cogMenu");
 
@@ -31,8 +30,8 @@ class InsertEmbeddedViewMenu extends Component {
     setup() {
         this.orm = useService("orm");
         this.actionService = useService("action");
-        this.addDialog = useOwnedDialogs();
         this.knowledgeCommandsService = useService("knowledgeCommandsService");
+        this.openArticleSelector = useKnowledgeArticleSelector();
     }
 
     /**
@@ -140,32 +139,6 @@ class InsertEmbeddedViewMenu extends Component {
 
     onInsertViewLinkInArticle() {
         this.insertCurrentViewInKnowledge("knowledge.EmbeddedViewLinkBlueprint");
-    }
-
-    /**
-     * @param {Function} onSelectCallback
-     */
-    openArticleSelector(onSelectCallback) {
-        this.addDialog(SelectCreateDialog, {
-            title: _t("Select an article"),
-            noCreate: false,
-            multiSelect: false,
-            resModel: "knowledge.article",
-            context: {},
-            domain: [
-                ["user_has_write_access", "=", true],
-                ["is_template", "=", false],
-            ],
-            onSelected: (resIds) => {
-                onSelectCallback(resIds[0]);
-            },
-            onCreateEdit: async () => {
-                const articleIds = await this.orm.call("knowledge.article", "article_create", [], {
-                    is_private: true,
-                });
-                onSelectCallback(articleIds[0]);
-            },
-        });
     }
 }
 

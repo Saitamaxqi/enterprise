@@ -26,18 +26,24 @@ export class WysiwygArticleHelper extends Component {
         });
     }
 
-    onLoadTemplateBtnClick() {
-        /** @param {string} body */
-        const replaceCurrentArticleBodyWith = (body) => {
-            let newBody = new HtmlUpgradeManager().processForUpgrade(body);
-            newBody = parseHTML(this.props.editor.document, body);
-            newBody = this.props.editor.shared.sanitize.sanitize(newBody);
-            this.props.editor.editable.replaceChildren(newBody);
-            this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
-            this.props.editor.shared.history.addStep();
-        };
+    /** @param {string} body */
+    replaceCurrentArticleBodyWith(body) {
+        let newBody = new HtmlUpgradeManager().processForUpgrade(body);
+        newBody = parseHTML(this.props.editor.document, body);
+        newBody = this.props.editor.shared.sanitize.sanitize(newBody);
+        this.props.editor.editable.replaceChildren(newBody);
+        this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+        this.props.editor.shared.history.addStep();
+    }
+
+    async onLoadTemplateBtnClick() {
+        const { articles, templates } = await this.orm.call(
+            "knowledge.article",
+            "get_available_templates"
+        );
         this.dialogService.add(ArticleTemplatePickerDialog, {
-            record: this.props.record,
+            articles: articles,
+            templates: templates,
             /** @param {integer} articleId */
             onLoadArticle: async (articleId) => {
                 const body = await this.orm.call(
@@ -48,7 +54,7 @@ export class WysiwygArticleHelper extends Component {
                         article_id: articleId
                     }
                 );
-                replaceCurrentArticleBodyWith(body);
+                this.replaceCurrentArticleBodyWith(body);
                 await this.actionService.doAction(
                     "knowledge.ir_actions_server_knowledge_home_page",
                     {
@@ -70,7 +76,7 @@ export class WysiwygArticleHelper extends Component {
                         skip_body_update: true,
                     }
                 );
-                replaceCurrentArticleBodyWith(body);
+                this.replaceCurrentArticleBodyWith(body);
                 // TODO: apply_template could return all modified values on the current
                 // article and record.update would reload related components
                 await this.actionService.doAction(
@@ -82,6 +88,22 @@ export class WysiwygArticleHelper extends Component {
                         },
                     }
                 );
+            },
+            /** @param {integer} articleId */
+            onDeleteArticle: async (articleId) => {
+                if (this.props.record.resId === articleId) {
+                    await this.props.record.save();
+                }
+                await this.orm.write("knowledge.article", [articleId], {
+                    is_listed_in_templates_gallery: false,
+                });
+                if (this.props.record.resId === articleId) {
+                    this.props.record.load();
+                }
+            },
+            /** @param {integer} templateId */
+            onDeleteTemplate: async (templateId) => {
+                await this.orm.unlink("knowledge.article", [templateId]);
             },
         });
     }

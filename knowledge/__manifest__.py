@@ -57,6 +57,7 @@
             'knowledge/static/src/xml/**/*',
             'knowledge/static/src/components/**/*',
             'knowledge/static/src/editor/**/*',
+            'knowledge/static/src/hooks/**/*',
             'knowledge/static/src/comments/**/*',
             'knowledge/static/src/mail/**/*',
             'knowledge/static/src/search_model/**/*',

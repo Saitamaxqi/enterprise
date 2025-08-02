@@ -6,6 +6,7 @@ import { KnowledgeDeleteFirstLinePlugin } from "@knowledge/editor/plugins/delete
 import { ArticleIndexPlugin } from "@knowledge/editor/embedded_components/plugins/article_index_plugin/article_index_plugin";
 import { EmbeddedClipboardPlugin } from "@knowledge/editor/embedded_components/plugins/embedded_clipboard_plugin/embedded_clipboard_plugin";
 import { EmbeddedViewPlugin } from "@knowledge/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin";
+import { FoldableSectionPlugin } from "@knowledge/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin";
 import { InsertPendingElementPlugin } from "@knowledge/editor/plugins/insert_pending_element_plugin/insert_pending_element_plugin";
 import { HeadingLinkPlugin } from "@knowledge/editor/plugins/heading_link_plugin/heading_link_plugin";
 
@@ -23,4 +24,5 @@ export const KNOWLEDGE_EMBEDDED_COMPONENT_PLUGINS = [
     ArticleIndexPlugin,
     EmbeddedClipboardPlugin,
     EmbeddedViewPlugin,
+    FoldableSectionPlugin,
 ];

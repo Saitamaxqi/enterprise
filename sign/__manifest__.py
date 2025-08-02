@@ -85,6 +85,7 @@ Let your customers follow the signature process easily.
             'sign/static/src/backend_components/**/*',
             'sign/static/src/views/**/*',
             'sign/static/src/dialogs/**/*',
+            'sign/static/src/editor/**/*',
             'sign/static/src/services/**/*',
             'sign/static/src/fields/**/*',
             'sign/static/src/file_viewer/**/*',
