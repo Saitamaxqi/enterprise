@@ -5,6 +5,9 @@
     "depends": ["hr_recruitment", "voip"],
     "auto_install": True,
     "license": "OEEL-1",
+    "data": [
+        "views/voip_call_views.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "voip_hr_recruitment/static/src/**/*",
