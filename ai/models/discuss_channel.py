@@ -83,31 +83,52 @@ class DiscussChannel(models.Model):
 
     @api.model
     def _get_or_create_ai_chat(self, partner):
-        channel = self.search([
+        channel = self._find_ai_chat_channel(partner)
+        if not channel:
+            channel = self._create_ai_chat(partner)
+        return channel
+
+    def _find_ai_chat_channel(self, ai_partner):
+        return self.search([
             ('is_member', '=', True),
             ('channel_type', '=', 'ai_chat'),
             ('channel_member_ids', 'any', [
-                ('partner_id', '=', partner.id)
+                ('partner_id', '=', ai_partner.id)
             ])
         ])
 
-        if not channel:
-            with mute_logger("odoo.sql_db"):
-                self.env.cr.execute(SQL("SELECT pg_advisory_xact_lock(%s, %s) NOWAIT;", self.env.user.partner_id.id, partner.id))
-            channel = self.create({
-                "channel_member_ids": [
-                    Command.create({"partner_id": self.env.user.partner_id.id}),
-                    Command.create({"partner_id": partner.id}),
-                ],
-                "channel_type": "ai_chat",
-                "name": partner.name,
-            })
+    def _create_ai_chat(self, partner):
+        guest = self.env["mail.guest"]._get_guest_from_context()
+        with mute_logger("odoo.sql_db"):
+            self.env.cr.execute(SQL(
+                "SELECT pg_advisory_xact_lock(%s, %s) NOWAIT;",
+                guest.id if self.env.user._is_public() else self.env.user.partner_id.id,
+                partner.id
+            ))
+
+        channel = self.create({
+            "channel_member_ids": [
+                Command.create({"guest_id": guest.id} if self.env.user._is_public() else {"partner_id": self.env.user.partner_id.id}),
+                Command.create({"partner_id": partner.id}),
+            ],
+            "channel_type": "ai_chat",
+            # sudo() => visitor can set the name of the channel
+            "name": partner.sudo().name,
+        })
         return channel
+
+    def _close_older_chat_channel(self, ai_partner):
+        older_channel = self._find_ai_chat_channel(ai_partner)
+        if older_channel:
+            older_channel.sudo().unlink()
 
     def close_ai_chat(self):
         self.ensure_one()
-        if self.is_member and self.channel_type in ["ai_composer", "ai_chat"]:
+        if self._should_unlink_on_close():
             self.sudo().unlink()
+
+    def _should_unlink_on_close(self):
+        return self.channel_type in ["ai_composer", "ai_chat"] and self.is_member
 
     def _ai_add_message_to_context(self, message, author):
         current_context = self.ai_context

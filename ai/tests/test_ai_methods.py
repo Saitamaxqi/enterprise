@@ -24,12 +24,12 @@ class TestAIMethods(TransactionCase):
                 "res_id": channel.id,
             }
         )
-        agent.generate_response(mail_message.id)
+        agent.generate_response(channel.id, mail_message)
         self.assertTrue(mock_generate_response.called)
 
         # Test post_error_message method
         mock_generate_response.reset_mock()
-        agent.post_error_message("Test error message")
+        agent.post_error_message(channel.id, "Test error message")
         self.assertTrue(mock_generate_response.called)
 
         # Test get_direct_response method

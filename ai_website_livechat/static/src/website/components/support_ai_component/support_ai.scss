@@ -1,0 +1,22 @@
+.o_support_ai_message_content {
+    p {
+        margin-bottom: 0 !important;
+    }
+}
+
+.o_show_on_message_hover {
+    visibility: hidden;
+}
+
+.o_support_ai_message_with_copy_button:hover {
+    .o_show_on_message_hover {
+        visibility: visible;
+    }
+}
+
+.o_support_ai_input_sticky {
+    position: sticky;
+    background-color: white;
+    padding-bottom: 20px;
+    bottom: 0;
+}

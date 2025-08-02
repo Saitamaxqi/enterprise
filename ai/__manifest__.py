@@ -36,6 +36,15 @@
         'web.assets_backend': [
             'ai/static/src/**/*',
         ],
+        'mail.assets_public': [
+            'ai/static/src/discuss/core/common/**/*',
+        ],
+        'portal.assets_chatter_helpers': [
+            'ai/static/src/discuss/core/common/**/*',
+        ],
+        'im_livechat.assets_embed_core': [
+            'ai/static/src/discuss/core/common/**/*',
+        ],
         'web.assets_unit_tests': [
             'ai/static/tests/**/*',
         ],

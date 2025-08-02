@@ -358,21 +358,27 @@ class AIAgent(models.Model):
         response = self._generate_response(prompt=prompt, extra_system_context=context_message)
         return response
 
-    def generate_response(self, mail_message_id: int):
+    def generate_response(self, discuss_channel_id: int, mail_message):
         self.ensure_one()
-        mail_message = self.env['mail.message'].browse(mail_message_id).exists()
-        if not mail_message:
-            raise UserError(_("The message does not exist or has been deleted."))
+
+        channel = self.env['discuss.channel'].search([('id', '=', discuss_channel_id)])
+        if not channel.exists():
+            raise UserError(_("The discussion channel does not exist or has been deleted."))
 
         prompt = html_to_inner_content(mail_message.body)
-        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
-        response = self._generate_response(prompt=prompt, chat_history=self._retrieve_chat_history(channel))
+        response = self.with_context(discuss_channel=channel)._generate_response(
+            prompt=prompt,
+            chat_history=self._retrieve_chat_history(channel),
+        )
         for message in response or []:
             self._post_ai_response(channel, message)
 
-    def post_error_message(self, error_message: str):
+    def post_error_message(self, discuss_channel_id: int, error_message: str):
         self.ensure_one()
-        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
+        channel = self.env['discuss.channel'].search([('id', '=', discuss_channel_id)])
+        if not channel.exists():
+            raise UserError(_("The discussion channel does not exist or has been deleted."))
+
         response = self._generate_response(
             prompt="Generate a message for the user stating that we are unable to process the request because of the following error: " + error_message,
             chat_history=self._retrieve_chat_history(channel),
@@ -689,3 +695,11 @@ class AIAgent(models.Model):
             container.getparent().replace(container, lxml.html.fromstring(replacement_html_str))
 
         return Wrapper(lxml.html.tostring(root, encoding="unicode", method="html"))
+
+    @api.model
+    def _retrieve_agent_if_access_allowed(self, agent_partner_id):
+        if self.env.user._is_public():
+            return self.env['ai.agent']
+
+        agent = self.env['ai.agent'].search([("partner_id", "=", agent_partner_id)])
+        return agent

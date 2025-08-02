@@ -6,6 +6,7 @@
     'depends': ['ai', 'website'],
     'data': [
         'data/website_ai_agent.xml',
+        'views/snippets/snippets.xml',
     ],
     'assets': {
         'website.assets_editor': [

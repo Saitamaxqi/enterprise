@@ -1,3 +1,4 @@
+import { rpc } from "@web/core/network/rpc";
 import { patch } from "@web/core/utils/patch";
 import { ChatWindow } from "@mail/core/common/chat_window_model";
 
@@ -8,12 +9,13 @@ patch(ChatWindow.prototype, {
         }
         return super.computeCanShow();
     },
-    async close(options) {
+    async _onClose() {
         const thread = this.thread;
-        const orm = this.store.env.services.orm;
         if (["ai_composer", "ai_chat"].includes(thread?.channel_type)) {
-            await orm.call("discuss.channel", "close_ai_chat", [thread.id]);
+            await rpc(
+                "/ai/close_ai_chat", {channel_id: thread.id}
+            );
         }
-        await super.close(options);
+        await super._onClose();
     },
 });
