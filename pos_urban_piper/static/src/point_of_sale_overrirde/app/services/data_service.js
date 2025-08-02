@@ -20,7 +20,9 @@ patch(PosData.prototype, {
             loadData["pos.order"] = loadData["pos.order"].filter((o) => !o.delivery_identifier);
         }
         if (loadData["pos.order.line"]) {
-            loadData["pos.order.line"] = loadData["pos.order.line"].filter((ol) => !ol.order_id);
+            loadData["pos.order.line"] = loadData["pos.order.line"].filter(
+                (ol) => ol.order_id && !ol.order_id.delivery_identifier
+            );
         }
         return loadData;
     },

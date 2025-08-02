@@ -310,7 +310,7 @@ class UrbanPiperClient:
                 'title': option.product_attribute_value_id.with_context(lang="en_US").name,
                 'available': True,
                 'opt_grp_ref_ids': [f'{option.product_tmpl_id.id}-{i}' for i in option.attribute_id.ids],
-                'price': option.price_extra or option.product_attribute_value_id.default_extra_price
+                'price': option.price_extra or option.product_attribute_value_id.default_extra_price,
             }
             name_translations = option.product_attribute_value_id.get_field_translations('name')
             value_dict['translations'] = self._get_translations(name_translations, 'title')
