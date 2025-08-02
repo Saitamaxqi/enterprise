@@ -58,6 +58,6 @@ class IrActionsServer(models.Model):
                     actions = next_actions
 
                 if self not in available_server_actions_sudo:
-                    raise UserError(_('This action can not be executed on the current document.'))
+                    raise UserError(_('This action was not made available on the containing folder.'))
 
         return super()._can_execute_action_on_records(records)

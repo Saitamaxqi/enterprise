@@ -29,8 +29,7 @@
                         <field name="tool_ids" options="{'no_create': True, 'no_create_edit': True}">
                             <list editable="bottom">
                                 <field name="display_name" string="Tool Name" />
-                                <field name="description"/>
-                                <field name="method_name" optional="hide"/>
+                                <field name="ai_tool_description"/>
                             </list>
                         </field>
                     </group>

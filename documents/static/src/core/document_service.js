@@ -30,6 +30,7 @@ export class DocumentService {
         this.notification = services["notification"];
         this.dialog = services["dialog"];
         this.fileUpload = services["file_upload"];
+        this.busService = services["bus_service"];
         this.logAccess = debounce(this._logAccess, 1000, false);
         this.currentFolderAccessToken = null;
         this.bus = new EventBus();
@@ -501,7 +502,15 @@ export class DocumentService {
 }
 
 export const documentService = {
-    dependencies: ["action", "mail.store", "notification", "orm", "dialog", "file_upload"],
+    dependencies: [
+        "action",
+        "bus_service",
+        "dialog",
+        "file_upload",
+        "mail.store",
+        "notification",
+        "orm",
+    ],
     async start(env, services) {
         const service = new DocumentService(env, services);
         await service.start();

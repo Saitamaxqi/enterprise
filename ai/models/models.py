@@ -1,14 +1,30 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import base64
 import datetime
 import pytz
 import json
 
 from odoo import models
 from odoo.exceptions import AccessError
+from odoo.tools import OrderedSet
+from odoo.tools.mail import html_to_inner_content
+from odoo.tools.misc import formatLang
+from odoo.tools.mimetypes import guess_mimetype
+
+AI_SUPPORTED_IMG_TYPES = {'png', 'jpg', 'jpeg', 'webp', 'gif'}
 
 
 class Model(models.AbstractModel):
     _inherit = 'base'
+
+    def _ai_truncate(self, value, size=60):
+        # Limit the size of the field we can, to try to limit prompt injection...
+        if not isinstance(value, str) or len(value) < size:
+            return value
+        return value[:max(0, size - 3)] + "..."
+
+    def _ai_field_names_to_truncate(self):
+        return ('name', 'display_name')
 
     def _ai_serialize_fields_data(self):
         fields_info = self.fields_get()
@@ -18,11 +34,14 @@ class Model(models.AbstractModel):
             field_type = field_attrs["type"]
             field_value = self[field_name]
 
+            if field_type == 'char' and field_name in self._ai_field_names_to_truncate():
+                field_value = self._ai_truncate(field_value)
+
             try:
                 # Handle relational fields
                 if field_type == "many2one":
                     result[field_name] = (
-                        field_value.display_name if field_value else None
+                        self._ai_truncate(field_value.display_name) if field_value else None
                     )
                 elif field_type in ["one2many", "many2many"]:
                     linked_records = self.env[field_value._name].browse(field_value.ids)
@@ -32,7 +51,7 @@ class Model(models.AbstractModel):
                         continue
                     else:
                         result[field_name] = [
-                            record.display_name for record in linked_records
+                            self._ai_truncate(record.display_name) for record in linked_records
                         ]
                 elif field_type == "binary":
                     continue  # we don't include binary fields in the record info JSON
@@ -118,3 +137,177 @@ class Model(models.AbstractModel):
             ]
 
         return context
+
+    ################
+    #  Extensions  #
+    ################
+    def _ai_read(self, fnames, files_dict):
+        """Retrieve and format field values for LLM processing.
+        If no field names are given, return the display name.
+        This method can be overridden on any model that requires sending more than just the display
+        name when its records are included in a prompt (such as attachments).
+        Files are handled separately, as they must be sent independently to LLMs.
+
+        :param fnames: list of field names to read and format
+        :param files_dict: dict mapping file checksums to metadata dicts each with keys:
+            'mimetype', 'value', and 'file_ref'
+
+        :return: (vals_list, files_dict) where vals_list is a list of dicts mapping field names to
+            their formatted values with one dictionary per record, and files_dict is a dict mapping
+            file checksums to metadata dicts each with keys 'mimetype', 'value' and 'fileref'
+        """
+        if not fnames:
+            fnames = ['display_name']  # by default, send display names
+        vals_list = self.read(fnames, load=None)
+        for fname in fnames:
+            field = self._fields.get(fname)
+            if field.type in ('binary', 'image'):
+                if field.attachment and self.ids:  # attachment is not created yet in quick creation
+                    attachments = self.env['ir.attachment'].search([
+                        ('res_model', '=', self._name),
+                        ('res_field', '=', fname),
+                        ('res_id', 'in', self.ids)  # ._origin?
+                    ])
+                    __, files_dict = attachments._ai_read(None, files_dict)  # populate file dict
+                    attachments_by_resid = {att.res_id: att for att in attachments}
+                    for vals in vals_list:
+                        if not vals[fname] or (res_id := vals['id'] or vals['id'].origin) not in attachments_by_resid:
+                            continue
+                        vals[fname] = files_dict[attachments_by_resid[res_id].checksum]['file_ref']
+                else:
+                    for vals in vals_list:
+                        if not vals[fname]:
+                            continue
+                        checksum = self.env['ir.attachment']._compute_checksum(vals[fname])
+                        if checksum not in files_dict:
+                            raw = base64.b64decode(vals[fname])
+                            mimetype = guess_mimetype(raw)
+                            extension = mimetype.split("/")[-1]
+                            file_ref = f'<file_#{len(files_dict) + 1}>'
+                            if extension in (*AI_SUPPORTED_IMG_TYPES, 'pdf'):
+                                # todo: keep 5 pages max and resize images
+                                value = vals[fname].decode()
+                            else:
+                                try:
+                                    value = self.env['ir.attachment']._index(vals[fname], mimetype, checksum=checksum)
+                                except TypeError:
+                                    value = self.env['ir.attachment']._index(vals[fname], mimetype)
+                            files_dict[checksum] = {
+                                'mimetype': mimetype,
+                                'value': value,
+                                'file_ref': file_ref,
+                            }
+                        vals[fname] = files_dict[checksum]['file_ref']
+            elif field.type in ('date', 'datetime'):
+                for vals in vals_list:
+                    vals[fname] = field.to_string(vals[fname])
+            elif field.type == 'html':
+                for vals in vals_list:
+                    vals[fname] = html_to_inner_content(vals[fname])
+            elif field.type in ('many2many', 'many2one', 'one2many'):
+                for vals in vals_list:
+                    vals[fname] = {'model': field.comodel_name, 'ids': vals[fname]}
+            elif field.type in ('many2one_reference', 'reference'):
+                vals_by_ids = {vals['id']: vals for vals in vals_list}
+                for record in self:
+                    record_vals = vals_by_ids[record.id]
+                    if not record[fname]:
+                        record_vals[fname] = False  # keep falsy values consistent for the LLM
+                    if field.type == 'many2one_reference':
+                        record_vals[fname] = {'model': model, 'ids': record_vals[fname]} if (model := record[field.model_field]) else False
+                    else:
+                        record_vals[fname] = {'model': record._name, 'ids': record.id}
+            elif field.type == 'monetary':
+                currency_field = field.get_currency_field(self)
+                if currency_field:
+                    currency = self[currency_field]
+                    for vals in vals_list:
+                        vals[fname] = formatLang(self.env, vals[fname], currency_obj=currency)
+            elif field.type == 'char' and field.name in self._ai_field_names_to_truncate():
+                for vals in vals_list:
+                    vals[fname] = self._ai_truncate(vals[fname])
+
+        for vals in vals_list:
+            if not vals['id']:
+                vals['id'] = str(vals['id'])  # NewId is not JSON serializable
+        return vals_list, files_dict
+
+    def _get_ai_context(self, field_paths):
+        """ Get the context dict for a record given a list of field paths.
+        The context dict is a mini-orm snapshot with values formatted for LLM usage.
+        It is a dictionary of the form:
+
+        .. code-block:: python
+
+            {
+                "model_A": [
+                    {
+                        "id": 1,
+                        "field_A": "val_1",
+                        "field_B": {"model": "model_B", "ids": [3]},
+                    },
+                    {
+                        "id": 2,
+                        "field_A": "val_2",
+                        "field_B": {"model": "model_B", "ids": [4]},
+                    }
+                ],
+                "model_B": [
+                    {
+                        "id": 3,
+                        "field_C": "val_3"
+                    },
+                    {
+                        "id": 4,
+                        "field_C": "val_4"
+                    }
+                ]
+            }
+        """
+        self.ensure_one()
+        models = {}
+
+        def _map_to_models(records, path):
+            model = records._name
+            ids = OrderedSet(records._ids)
+            if model not in models:
+                models[model] = {'fields': OrderedSet(), 'ids': ids}
+            else:
+                models[model]['ids'] |= ids
+            if not path:
+                return
+            fname = path[0]
+            field = records._fields.get(fname)
+            if not field:
+                return
+            if field.type in ('many2many', 'many2one', 'one2many'):
+                _map_to_models(records[fname], path[1:])
+            elif field.type == 'reference':
+                for record in records:
+                    if record[fname]:
+                        _map_to_models(record[fname], path[1:])
+            elif field.type == 'many2one_reference':
+                for record in records:
+                    if (ref_model := record[field.model_field]) and (ref_id := record[fname]):
+                        _map_to_models(self.env[ref_model].browse(ref_id), path[1:])
+            models[model]['fields'].add(fname)
+
+        # get a mapping {model: {fields, ids}} to know which fields to read on which records
+        for path in field_paths:
+            _map_to_models(self, path.split("."))
+
+        snapshot = {}
+        files_dict = {}  # files are sent separately to LLMs
+        for model, info in models.items():
+            records = self.env[model].browse(info['ids'])
+            snapshot[model], files_dict = records._ai_read(info['fields'], files_dict)
+
+        return snapshot, list(files_dict.values())
+
+    def _ai_format_records(self):
+        """Format what will be in the prompt when we inserted records.
+
+        It needs to return a dict which keys are the records ids, and
+        the value of the dict can be anything.
+        """
+        return {record.id: record.display_name for record in self}

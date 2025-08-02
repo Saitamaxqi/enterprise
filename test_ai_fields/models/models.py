@@ -44,3 +44,12 @@ class TestAiFieldsModelNoAi(models.Model):
     _name = "test.ai.fields.no.ai"
 
     name = fields.Char()
+
+
+class TestAiReadModel(models.Model):
+    _description = "Test AI Read"
+    _name = 'test.ai.read.model'
+    _inherit = ['mail.thread']
+
+    currency_id = fields.Many2one('res.currency')
+    price = fields.Monetary(currency_field='currency_id')

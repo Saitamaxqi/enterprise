@@ -1,21 +1,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import copy
 import json
 import os
 import requests
 import typing
 from logging import getLogger
 import time
+from typing import Callable, Any
 
 from odoo import _
 from odoo.api import Environment
 from odoo.exceptions import UserError
 
 _logger = getLogger(__name__)
-
-
-class ChatMessage(typing.TypedDict):
-    role: str
-    content: str
 
 
 class Embedding(typing.TypedDict):
@@ -42,77 +39,6 @@ class LLMApiService:
 
         self.base_url = base_url
         self.env = env
-
-    def get_completion(
-        self,
-        messages: list[ChatMessage],
-        model: str = 'gpt-4',
-        store: bool | None = None,
-        reasoning_effort: str | None = None,
-        metadata: dict | None = None,
-        frequency_penalty: float | None = None,
-        logit_bias: dict | None = None,
-        logprobs: bool | None = None,
-        top_logprobs: int | None = None,
-        max_completion_tokens: int | None = None,
-        n: int | None = None,
-        modalities: list[str] | None = None,
-        prediction: dict | None = None,
-        audio: dict | None = None,
-        presence_penalty: float | None = None,
-        response_format: dict | None = None,
-        seed: int | None = None,
-        service_tier: str | None = None,
-        stop: str | list[str] | None = None,
-        stream: bool | None = None,
-        stream_options: dict | None = None,
-        temperature: float | None = None,
-        top_p: float | None = None,
-        tools: list[dict] | None = None,
-        tool_choice: str | dict | None = None,
-        parallel_tool_calls: bool | None = None,
-        user: str | None = None,
-    ):
-        body = {
-            'model': model,
-            'messages': messages
-        }
-
-        self._add_if_set(body, 'store', store)
-        self._add_if_set(body, 'reasoning_effort', reasoning_effort)
-        self._add_if_set(body, 'metadata', metadata)
-        self._add_if_set(body, 'frequency_penalty', frequency_penalty)
-        self._add_if_set(body, 'logit_bias', logit_bias)
-        self._add_if_set(body, 'logprobs', logprobs)
-        if logprobs:
-            self._add_if_set(body, 'top_logprobs', top_logprobs)
-        self._add_if_set(body, 'max_completion_tokens', max_completion_tokens)
-        self._add_if_set(body, 'n', n)
-        self._add_if_set(body, 'modalities', modalities)
-        self._add_if_set(body, 'prediction', prediction)
-        if modalities and 'audio' in modalities:
-            self._add_if_set(body, 'audio', audio)
-        self._add_if_set(body, 'presence_penalty', presence_penalty)
-        self._add_if_set(body, 'response_format', response_format)
-        self._add_if_set(body, 'seed', seed)
-        self._add_if_set(body, 'service_tier', service_tier)
-        self._add_if_set(body, 'stop', stop)
-        self._add_if_set(body, 'stream', stream)
-        if stream:
-            self._add_if_set(body, 'stream_options', stream_options)
-        self._add_if_set(body, 'temperature', temperature)
-        self._add_if_set(body, 'top_p', top_p)
-        self._add_if_set(body, 'tools', tools)
-        self._add_if_set(body, 'tool_choice', tool_choice)
-        self._add_if_set(body, 'parallel_tool_calls', parallel_tool_calls)
-        self._add_if_set(body, 'user', user)
-
-        return self._request(
-            'post',
-            '/chat/completions',
-            self._get_base_headers(),
-            body,
-        )
 
     def get_embedding(
         self,
@@ -222,12 +148,17 @@ class LLMApiService:
             return api_key
         raise UserError(_("No API key set for provider '%s'", self.provider))
 
-    def _request(self, method: str, endpoint: str, headers: dict[str, str], body: dict, data: dict | None = None, files: dict | None = None) -> dict:
-        route = f"{self.base_url}/{endpoint.strip('/')}"
+    def _request(
+        self, method: str, endpoint: str, headers: dict[str, str], body: dict,
+        data: dict | None = None, files: dict | None = None, params: dict | None = None,
+        base_url: str | None = None,
+    ) -> dict:
+        route = f"{base_url or self.base_url}/{endpoint.strip('/')}"
         try:
             response = requests.request(
                 method,
                 route,
+                params=params,
                 headers=headers,
                 json=body,
                 data=data,
@@ -237,11 +168,361 @@ class LLMApiService:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            message = f"LLM API request failed: {e!r}"
+            error = repr(e)
             if e.response is not None:
                 try:
-                    message += f" {json.dumps(e.response.json(), indent=2)}"
+                    response = e.response.json()
+                    if isinstance(response, list) and response:
+                        # Gemini return error in a list
+                        response = response[0]
+                    if isinstance(response, dict) and (json_error := response.get('error', {}).get('message')):
+                        error = json_error
+                    else:
+                        error = json.dumps(response, indent=2)
                 except ValueError:  # catch JSON decode errors
-                    message += f" {e.response.text}"
-            _logger.warning(message)
-            raise
+                    error = e.response.text
+                if not error:
+                    error = repr(e)
+
+            _logger.warning("LLM API request failed: %s", error)
+            raise UserError(error)
+
+    def _request_llm_openai(
+        self, llm_model, system_prompts, user_prompts, tools=None,
+        files=None, schema=None, temperature=0.2, inputs=(),
+    ):
+        """Make a single request to the LLM.
+
+        > https://platform.openai.com/docs/guides/responses-vs-chat-completions#why-the-responses-api
+        > https://platform.openai.com/docs/guides/pdf-files?api-mode=responses
+        > https://platform.openai.com/docs/guides/function-calling?api-mode=responses
+
+        Return:
+        - a list of responses
+        - a list of tuple of the tools to call
+            [(tool_name, call_id, {argument_1: True, argument_2: 3})]
+        - a list of inputs to include in the next call in addition to the tool response
+        """
+        user_content = [{"type": "input_text", "text": prompt} for prompt in user_prompts]
+
+        if files:
+            def _build_file(idx, file):
+                if file["mimetype"] == "text/plain":
+                    return {"type": "input_text", "text": file["value"]}
+
+                file_uri = f"data:{file['mimetype']};base64,{file['value']}"
+                if file['mimetype'] == 'application/pdf':
+                    return {
+                        "type": "input_file",
+                        "filename": f"file_{idx}.pdf",
+                        "file_data": file_uri,
+                    }
+
+                assert file["mimetype"].startswith("image/")
+                return {"type": "input_image", "image_url": file_uri, "detail": "low"}
+
+            user_content.extend(
+                _build_file(idx, file)
+                for idx, file in enumerate(files, start=1)
+            )
+
+        body = {
+            "model": llm_model,
+            "input": [
+                {
+                    "role": "system",
+                    "content": [
+                        {"type": "input_text", "text": prompt}
+                        for prompt in system_prompts
+                    ],
+                },
+                {"role": "user", "content": user_content},
+                *inputs,
+            ],
+            "store": False,
+            "temperature": temperature,
+        }
+        if schema:
+            body["text"] = {
+                "format": {
+                    "type": "json_schema",
+                    "name": "json_schema",
+                    "schema": schema,
+                    "strict": True,
+                },
+            }
+
+        if tools:
+            body["tools"] = self._to_open_ai_tool_schema([{
+                "description": tool_description,
+                "parameters": tool_parameter_schema,
+                "type": "function",
+                "name": tool_name,
+                "strict": True,
+            } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()])
+
+        llm_response = self._request(
+            "post",
+            "/responses",
+            self._get_base_headers(),
+            body,
+        )
+
+        to_call = []
+        response = []
+        next_inputs = list(inputs or ())
+
+        for line in llm_response.get("output") or ():
+            if line.get('type') == 'function_call':
+                tool_name = line.get("name", "")
+                if tool_name not in tools:
+                    _logger.error("AI: Try to call a forbidden action %s", line)
+                    continue
+
+                try:
+                    arguments = json.loads(line.get("arguments") or "")
+                except json.decoder.JSONDecodeError:
+                    _logger.error("AI: Malformed arguments: %s", line)
+                    continue
+
+                to_call.append((tool_name, line.get('call_id'), arguments))
+                next_inputs.append(line)
+
+            elif text := line.get('text'):
+                response.append(text)
+            elif line.get('type') == 'message':
+                response.extend(t for c in line.get('content', ()) if (t := c.get('text')))
+        return response, to_call, next_inputs
+
+    def _request_llm_google(
+        self, llm_model, system_prompts, user_prompts, tools=None,
+        files=None, schema=None, temperature=0.2, inputs=(),
+    ):
+        """Make a single request to the LLM.
+
+        Gemini's OpenAI conversion layer does not support `type: file`, so we use the real API
+        > https://discuss.ai.google.dev/t/combining-openai-compatible-gemini-completions-with-file-uploads/75281/2
+
+        > https://ai.google.dev/gemini-api/docs/text-generation
+        > https://ai.google.dev/gemini-api/docs/function-calling
+        > https://ai.google.dev/gemini-api/docs/document-processing
+        """
+        assert not schema
+
+        body = {
+            "contents": [],
+            "generationConfig": {
+                "temperature": temperature,
+            },
+        }
+        if system_prompts:
+            body["contents"].append({
+                "role": "model",
+                "parts": [
+                    {"text": prompt}
+                    for prompt in system_prompts
+                ],
+            })
+        if user_prompts:
+            body["contents"].append({
+                "role": "user",
+                "parts": [
+                    {"text": prompt}
+                    for prompt in user_prompts
+                ],
+            })
+
+        body["contents"].extend(inputs)
+
+        if files:
+            def _build_file(idx, file):
+                if file["mimetype"] == "text/plain":
+                    return {"text": file["value"]}
+
+                # TODO: low quality for image
+                # TODO: image URL ?
+                return {"inline_data": {"mime_type": file['mimetype'], "data": file["value"]}}
+
+            body["contents"].append({"role": "user", "parts":
+                [_build_file(idx, file) for idx, file in enumerate(files, start=1)]})
+
+        if tools:
+            body["tools"] = {
+                "functionDeclarations": [{
+                    "description": tool_description,
+                    "parameters": tool_parameter_schema,
+                    "name": tool_name,
+                } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()]
+            }
+
+        llm_response = self._request(
+            "post",
+            base_url="https://generativelanguage.googleapis.com/v1beta",
+            headers={},
+            endpoint=f"/models/{llm_model}:generateContent",
+            params={"key": self._get_api_token()},
+            body=body,
+        )
+
+        to_call = []
+        response = []
+        next_inputs = list(inputs or ())
+
+        for candidate in llm_response.get("candidates") or ():
+            for line in candidate.get('content', {}).get('parts') or ():
+                if f_info := line.get('functionCall'):
+                    to_call.append((f_info['name'], f_info['name'], f_info['args']))
+                    next_inputs.append({"role": "model", "parts": [line]})
+                elif r := line.get('text'):
+                    response.append(r)
+                else:
+                    _logger.warning("Gemini: could not parse %s", line)
+
+        return response, to_call, next_inputs
+
+    def _request_llm(self, *args, **kwargs):
+        if self.provider == 'openai':
+            return self._request_llm_openai(*args, **kwargs)
+
+        if self.provider == 'google':
+            return self._request_llm_google(*args, **kwargs)
+
+        raise NotImplementedError()
+
+    def request_llm(
+        self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
+        tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
+        files: list[dict] | None = None, schema: dict | None = None, temperature: float = 0.2,
+        inputs: list[dict] | None = None,
+    ) -> list[str]:
+        """Same as `_request_llm`, but will call the tools until we are done.
+
+        >>> files = [
+        >>>     {'mimetype': 'text/plain', 'value': 'text content', 'file_ref': '<file_#1>'},
+        >>>     {'mimetype': 'image/png', 'value': 'aW1hZ2UgY29udGVudA==', 'file_ref': '<file_#2>'},
+        >>>     {'mimetype': 'application/pdf', 'value': 'cGRmIGNvbnRlbnQ=', 'file_ref': '<file_#3>'},
+        >>> ]
+
+        >>> tools = {
+        >>>     "function_1": (
+        >>>         "This function compute a sum",
+        >>>         lambda arguments: arguments['a'] + arguments['b'],
+        >>>         json_schema,
+        >>>     ),
+        >>>     "function_2": ...
+        >>> }
+        > https://json-schema.org/
+        """
+        AI_MAX_SUCCESSIVE_CALLS = int(self.env["ir.config_parameter"].sudo()
+            .get_param("ai.max_successive_calls", "5"))
+
+        AI_MAX_TOOL_CALLS_PER_CALL = int(self.env["ir.config_parameter"].sudo()
+            .get_param("ai.max_tool_calls_per_call", "5"))
+
+        if tools:
+            tools = copy.deepcopy(tools)
+            for _tool_description, _tool_call, tool_parameter_schema in tools.values():
+                tool_parameter_schema["properties"]["__end_message"] = {
+                    "type": "string",
+                    "description": "If you are not waiting a result, and you are done, write here what you did and why. If you will do action after this one, leave it empty.",
+                }
+                if "__end_message" not in tool_parameter_schema["required"]:
+                    tool_parameter_schema["required"].append("__end_message")
+
+        inputs = inputs or []
+
+        if self.provider == 'google':
+            # OpenAI / Odoo inputs -> Gemini
+            inputs = [
+                {"role": "user" if i["role"] == "user" else "model", "parts": [{"text": i["content"]}]}
+                for i in inputs
+            ]
+
+        all_responses = []
+        for api_call in range(AI_MAX_SUCCESSIVE_CALLS):
+            responses, next_actions, inputs = self._request_llm(
+                llm_model,
+                system_prompts,
+                user_prompts,
+                files=files,
+                inputs=inputs,
+                schema=schema,
+                tools=tools,
+                temperature=temperature,
+            )
+            all_responses.extend(responses)
+
+            if not next_actions:
+                break
+
+            done = False
+            for tool_name, call_id, arguments in next_actions[:AI_MAX_TOOL_CALLS_PER_CALL]:
+                if tool_name not in tools:
+                    _logger.error("AI: Try to call a forbidden action %s", tool_name)
+                    continue
+
+                # Ensure that all arguments are set in the dict, even the non-required ones
+                arguments = {n: None for n in tools[tool_name][2].get("properties", {})} | arguments
+
+                end_message = arguments.pop("__end_message", None)
+                result, error = tools[tool_name][1](arguments=arguments)
+
+                inputs.append(self._build_tool_call_response(call_id, result))
+
+                if end_message and error is None:
+                    all_responses.append(end_message)
+                    done = True
+                    _logger.info("AI: action terminate early: %s", end_message)
+
+            if done:
+                break
+
+        _logger.info("AI: API calls %s", api_call + 1)
+
+        return all_responses
+
+    def _to_open_ai_tool_schema(self, schema):
+        """Convert the tool schema if needed.
+
+        Open AI `responses` endpoints needs all parameters to be in the
+        "required" list, but it accepts `"type": ["string", "null"]`.
+
+        So we convert the base JSON schema to the array version if needed.
+        """
+        if self.provider != "openai":
+            return schema
+
+        for tool in schema:
+            required = tool["parameters"]["required"]
+            non_required = set(tool["parameters"]["properties"]) - set(required)
+            for name in non_required:
+                tool["parameters"]["properties"][name]["type"] = [tool["parameters"]["properties"][name]["type"], "null"]
+            tool["parameters"]["required"].extend(non_required)
+            tool["parameters"]["additionalProperties"] = False
+        return schema
+
+    def _build_tool_call_response(self, tool_call_id, return_value):
+        """Build the response for the given tool call.
+
+        :param tool_call_id: The identifier of the tool call
+        :param return_value: The value the tool returned
+        """
+        if self.provider == "openai":
+            return {
+                "type": "function_call_output",
+                "call_id": tool_call_id,
+                "output": str(return_value),
+            }
+
+        if self.provider == "google":
+            return {
+                "role": "user",
+                "parts": [{
+                    "functionResponse": {
+                        "name": tool_call_id,
+                        "response": {"result": str(return_value)},
+                    },
+                }],
+            }
+
+        raise NotImplementedError()

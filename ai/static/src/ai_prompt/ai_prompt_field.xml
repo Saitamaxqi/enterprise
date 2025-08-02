@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<templates xml:space="preserve">
+    <t t-name="ai.AiPromptField">
+        <AiPrompt
+            comodel="recordSelectorRelation"
+            model="modelName"
+            onChange.bind="onChange"
+            placeholder="props.placeholder"
+            prompt="prompt"
+            readonly="props.readonly"
+            aiFieldPath="updatedFieldName"
+            domain="props.recordSelectorDomain"/>
+    </t>
+</templates>

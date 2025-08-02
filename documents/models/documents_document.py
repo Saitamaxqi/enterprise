@@ -1462,13 +1462,10 @@ class DocumentsDocument(models.Model):
         if attachments:
             self.attachment_id = False
             documents = self.env['documents.document'].create([{
+                **self._message_post_after_hook_template_values(),
                 'name': attachment.name,
                 'attachment_id': attachment.id,
-                'folder_id': self.folder_id.id,
                 'company_id': self.folder_id.company_id.id,
-                'owner_id': self.folder_id.owner_id.id,
-                'partner_id': self.partner_id.id,
-                'tag_ids': self.tag_ids.ids,
             } for attachment in attachments])
 
             for attachment, document in zip(attachments, documents):
@@ -1498,11 +1495,8 @@ class DocumentsDocument(models.Model):
                 'res_model': 'documents.document',
             })
             document = self.env['documents.document'].create({
+                **self._message_post_after_hook_template_values(),
                 'attachment_id': attachment.id,
-                'folder_id': self.folder_id.id,
-                'owner_id': self.folder_id.owner_id.id,
-                'partner_id': self.partner_id.id,
-                'tag_ids': self.tag_ids.ids,
             })
             message.res_id = document.id
             attachment.res_id = document.id
@@ -1517,6 +1511,15 @@ class DocumentsDocument(models.Model):
                     document.documents_set_activity(settings_record=self.folder_id)
 
         return super()._message_post_after_hook(message, msg_vals)
+
+    def _message_post_after_hook_template_values(self):
+        """Values that will be taken from the document template."""
+        return {
+            'folder_id': self.folder_id.id,
+            'owner_id': self.folder_id.owner_id.id,
+            'partner_id': self.partner_id.id,
+            'tag_ids': self.tag_ids.ids,
+        }
 
     def documents_set_activity(self, settings_record=None):
         """

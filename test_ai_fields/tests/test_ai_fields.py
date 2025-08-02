@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import base64
 import copy
 import json
 from unittest.mock import patch
@@ -97,7 +98,7 @@ class TestAiFields(TransactionCase):
     def test_ai_field_cron_fields(self):
         """Check that the cron only process NULL textual fields (that are in the ai_domain)."""
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body.get('input')}", 'is_resolved': True})}]}]}
+            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body['input'][0]['content'][0]['text']}", 'is_resolved': True})}]}]}
 
         model = self.env["test.ai.fields.model"]
 
@@ -152,7 +153,7 @@ class TestAiFields(TransactionCase):
     def test_ai_field_cron_properties(self):
 
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body.get('input')}"})}]}]}
+            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body['input'][0]['content'][0]['text']}"})}]}]}
 
         parent = self.env["test.ai.fields.parent"].create({})
 
@@ -160,7 +161,7 @@ class TestAiFields(TransactionCase):
         record_0 = self.env["test.ai.fields.model"].create({})
         record_1 = self.env["test.ai.fields.model"].create({"parent_id": parent.id})
 
-        parent.write({"properties_definition": [{"type": "char", "name": "char", "ai": True, "system_prompt": 'id=<t t-out="object.id">id</t>'}]})
+        parent.write({"properties_definition": [{"type": "char", "name": "char", "ai": True, "system_prompt": 'id=<span data-ai-field="id">id</span>'}]})
 
         records = record_2, record_3, record_4, record_5 = self.env["test.ai.fields.model"].create([
             {"parent_id": parent.id, "properties": [{"type": "char", "name": "char"}]},
@@ -172,7 +173,7 @@ class TestAiFields(TransactionCase):
         records |= record_0 | record_1
 
         # Change the `ai_domain`
-        parent.write({"properties_definition": [{"type": "char", "name": "char", "ai": True, "system_prompt": 'id=<t t-out="object.id">id</t>', "ai_domain": [["id", "!=", record_2.id]]}]})
+        parent.write({"properties_definition": [{"type": "char", "name": "char", "ai": True, "system_prompt": 'id=<span data-ai-field="id">id</span>', "ai_domain": [["id", "!=", record_2.id]]}]})
 
         # Sanity check, ensure the values are correct in database
         self.env.cr.execute(SQL("SELECT id, properties FROM test_ai_fields_model WHERE id = ANY(%s)", records.ids))
@@ -192,38 +193,101 @@ class TestAiFields(TransactionCase):
         self.env.cr.execute(SQL("SELECT id, properties FROM test_ai_fields_model WHERE id = ANY(%s)", records.ids))
         result = dict(self.env.cr.fetchall())
         self.assertEqual(result.get(record_0.id), None)
-        self.assertEqual(result.get(record_1.id), {"char": f"response value id={record_1.id}"})
+        self.assertEqual(result.get(record_1.id), {"char": f"response value id={{{{id}}}}\n# Context Dict\n{json.dumps({'test.ai.fields.model': [{'id': record_1.id}]}, indent=2)}\nThe current record is {{'model': test.ai.fields.model, 'id': {record_1.id}}}"})
         self.assertEqual(result.get(record_2.id), {}, "The AI domain should have prevented the update of that record")
         self.assertEqual(result.get(record_3.id), {"char": False})
         self.assertEqual(result.get(record_4.id), {"char": False})
-        self.assertEqual(result.get(record_5.id), {"char": f"response value id={record_5.id}"})
+        self.assertEqual(result.get(record_5.id), {"char": f"response value id={{{{id}}}}\n# Context Dict\n{json.dumps({'test.ai.fields.model': [{'id': record_5.id}]}, indent=2)}\nThe current record is {{'model': test.ai.fields.model, 'id': {record_5.id}}}"})
 
-    def test_ai_read(self):
-        record = self.env['res.partner'].create({
-            'name': 'Name',
-            'bank_ids': [
-                Command.create({'acc_number': f'bank_{i}', 'note': f'note {i}'})
-                for i in range(3)
+    def test_get_ai_context(self):
+        partner_1, partner_2 = self.env['res.partner'].create([
+            {
+                'name': "partner 1",
+                'bank_ids': [
+                    Command.create({'acc_number': f'bank_{i}', 'note': f'note {i}'})
+                    for i in range(3)
+                ],
+            },
+            {
+                'name': "partner 2",
+                'bank_ids': [
+                    Command.create({'acc_number': f'bank_{i}', 'note': f'note {i}'})
+                    for i in range(2)
+                ]
+            }
+        ])
+        vals, files = partner_1._get_ai_context(["name", "bank_ids.acc_number", "bank_ids.note"])
+        self.assertEqual(len(vals), 2)
+        self.assertEqual(vals['res.partner'], [{'id': partner_1.id, 'bank_ids': {'model': 'res.partner.bank', 'ids': partner_1.bank_ids.ids}, 'name': partner_1.name}])
+        self.assertCountEqual(vals['res.partner.bank'], partner_1.bank_ids.read(['acc_number', 'note']))
+        self.assertFalse(files)
+
+        pdf_datas = base64.b64encode(b'%PDF-1.4\ndummy\n%%EOF')
+        png_datas = b"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII="
+        txt_datas = base64.b64encode(b'My txt content')
+
+        record = self.env['test.ai.read.model'].create({
+            'currency_id': self.env.ref('base.EUR').id,
+            'price': '123.45',
+            'message_ids': [
+                Command.create({
+                    'author_id': partner_1.id,
+                    'body': '<div data-oe-version="2.0"><span class="h2-fs"><font style="background-color:red">Hello World</font></span></div>',
+                    'attachment_ids': [
+                        Command.create({'name': 'dummy pdf', 'datas': pdf_datas}),
+                        Command.create({'name': 'dummy png', 'datas': png_datas}),
+                        Command.create({'name': 'dummy txt', 'datas': txt_datas}),
+                    ],
+                    'model': 'test.ai.read.model',
+                })
             ],
-        })
-        result = record._ai_read("name", "bank_ids.acc_number", "bank_ids.note")
-        self.assertEqual(result, json.dumps([{'id': record.id, 'name': 'Name', 'bank_ids': [
-            {'id': record.bank_ids[0].id, 'acc_number': 'bank_0', 'note': 'note 0'},
-            {'id': record.bank_ids[1].id, 'acc_number': 'bank_1', 'note': 'note 1'},
-            {'id': record.bank_ids[2].id, 'acc_number': 'bank_2', 'note': 'note 2'},
-        ]}]))
+            'message_partner_ids': [partner_1.id, partner_2.id]
+            })
+        vals, files = record._get_ai_context([
+            "price",  # check that currency is added
+            "message_ids.body",  # check that only inner_content is used
+            "message_ids.attachment_ids",  # check that images and pdfs are handled separately as binaries
+            "create_date",  # check that dates are formatted
+            "message_partner_ids.bank_ids.acc_number"  # check nested M2M
+        ])
+        self.assertEqual(len(vals), 5)
+        self.assertEqual(vals['test.ai.read.model'], [
+            {
+                'id': record.id,
+                'create_date': fields.Datetime.to_string(record.create_date),
+                'message_ids': {'model': 'mail.message', 'ids': record.message_ids.ids},
+                'message_partner_ids': {'model': 'res.partner', 'ids': record.message_partner_ids.ids},
+                'price': '123.45\xa0€'
+            }
+        ])
+        self.assertCountEqual(vals['mail.message'], [
+            {'id': record.message_ids[0].id, 'body': "Test AI Read created", 'attachment_ids': {'model': 'ir.attachment', 'ids': record.message_ids[0].attachment_ids.ids}},
+            {'id': record.message_ids[1].id, 'body': "Hello World", 'attachment_ids': {'model': 'ir.attachment', 'ids': record.message_ids[1].attachment_ids.ids}}
+        ])
 
-        # Check that the datetime object are stringified in the JSON
-        result = record._ai_read("create_date", "write_date")
-        self.assertEqual(result, json.dumps([{
-            'id': record.id,
-            'create_date': fields.Datetime.to_string(record.create_date),
-            'write_date': fields.Datetime.to_string(record.write_date),
-        }]))
+        self.assertEqual({v['id'] for v in vals['ir.attachment']}, set(record.message_ids[1].attachment_ids.ids))
+        self.assertEqual({v['file'] for v in vals['ir.attachment']}, {'<file_#1>', '<file_#2>', '<file_#3>'})
+        self.assertCountEqual(vals['res.partner'], [
+            {'id': record.message_partner_ids[0].id, 'bank_ids': {'model': 'res.partner.bank', 'ids': record.message_partner_ids[0].bank_ids.ids}},
+            {'id': record.message_partner_ids[1].id, 'bank_ids': {'model': 'res.partner.bank', 'ids': record.message_partner_ids[1].bank_ids.ids}}
+        ])
+        self.assertCountEqual(vals['res.partner.bank'], record.message_partner_ids.bank_ids.read(['acc_number']))
+        self.assertCountEqual(files, [
+            {'value': pdf_datas.decode(), 'mimetype': 'application/pdf', 'file_ref': '<file_#1>'},
+            {'value': png_datas.decode(), 'mimetype': 'image/png', 'file_ref': '<file_#2>'},
+            {'value': "My txt content", 'mimetype': 'text/plain', 'file_ref': '<file_#3>'},
+        ])
+
+        # Check that the name are truncated
+        partner_2.name = "_" * 1000
+        for field_path in ("message_partner_ids", "message_partner_ids.name", "message_partner_ids.display_name"):
+            vals, _files = record._get_ai_context([field_path])
+            self.assertNotIn(partner_2.name, str(vals))
+            self.assertIn(partner_2._ai_truncate(partner_2.name), str(vals))
 
     def test_ai_field_sanitize(self):
-        system_prompt = '<t t-out="object.name"/> <img src="x" onerror="alert(1)"/>'
-        expected = '<span><t t-out="object.name"/> <img src="x"/></span>'
+        system_prompt = '<p><span data-ai-field="name">name</span> <img src="x" onerror="alert(1)"/></p>'
+        expected = '<p><span data-ai-field="name">name</span> <img src="x"/></p>'
         properties_definition = [{
             "type": "char",
             "name": "char",

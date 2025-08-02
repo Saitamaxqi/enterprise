@@ -1,0 +1,146 @@
+import json
+from unittest.mock import patch
+
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.exceptions import AccessError
+from odoo.tests import TransactionCase
+from odoo.tools import mute_logger
+
+
+class TestAiServerActions(TransactionCase):
+    def _mock_llm_api_get_token(self):
+        def _mock_get_api_token(self):
+            return "dummy"
+        return patch.object(LLMApiService, '_get_api_token', _mock_get_api_token)
+
+    @mute_logger("odoo.addons.ai.utils.llm_api_service")
+    def test_ai_server_action_ai_tool(self):
+        llm_calls = 0
+
+        def _mocked_request_llm(
+            service, llm_model, system_prompts, user_prompts, tools=None,
+            files=None, schema=None, temperature=0.2, inputs=(),
+        ):
+            nonlocal llm_calls
+            llm_calls += 1
+            tool_names = sorted(tools, key=lambda t: tools[t][0])
+            self.assertEqual(len(tools or ()), 2)
+            self.assertEqual(tool_names[0], f"action_{ir_action_tools[0].id}")
+            self.assertEqual(tools[tool_names[0]][0], ir_action_tools[0].name)
+            self.assertEqual(tool_names[1], f"action_{ir_action_tools[1].id}")
+            self.assertEqual(tools[tool_names[1]][0], ir_action_tools[1].name)
+            if llm_calls == 1:
+                self.assertFalse(inputs)
+                # Call "Return Value" and wait the result
+                return self._ai_tool_call(tool_names[0], "call_123456", {})
+
+            if llm_calls == 2:
+                self.assertEqual(len(inputs), 2)
+                self.assertEqual(inputs[0].get('call_id'), "call_123456")
+                self.assertEqual(inputs[1].get('call_id'), "call_123456")
+                self.assertEqual(inputs[1].get('output'), "133333337")
+                self.assertEqual(inputs[1].get('type'), "function_call_output")
+                return self._ai_tool_call(
+                    tool_names[1],
+                    "call_789123",
+                    {"value": "new name", "__end_message": "Renamed!"},
+                )
+
+            return [], [], []
+
+        partner = self.env["res.partner"].create({"name": "Partner"})
+
+        ir_action_tools = self.env["ir.actions.server"].create([{
+            "model_id": self.env["ir.model"]._get_id("res.partner"),
+            "state": "code",
+            "name": "Return Value",
+            "use_in_ai": True,
+            "code": "ai['result'] = 133333337",
+        }, {
+            "model_id": self.env["ir.model"]._get_id("res.partner"),
+            "state": "code",
+            "name": "Write Name",
+            "use_in_ai": True,
+            "code": "record.write({'name': value})",
+        }])
+
+        action = self.env["ir.actions.server"].create(
+            {
+                "model_id": self.env["ir.model"]._get_id("res.partner"),
+                "state": "ai",
+                "name": "Test",
+                "ai_tool_ids": ir_action_tools.ids,
+                "ai_action_prompt": "Main Prompt",
+            },
+        )
+
+        with patch.object(LLMApiService, "_request_llm", _mocked_request_llm):
+            action.with_context(active_model=partner._name, active_id=partner.id).run()
+
+        self.assertEqual(llm_calls, 2)
+        self.assertEqual(partner.name, "new name")
+
+        # Simulate the LLM answering a forbidden action (not in the tools)
+        bad_action = self.env["ir.actions.server"].create({
+            "model_id": self.env["ir.model"]._get_id("res.partner"),
+            "state": "code",
+            "name": "Bad Action",
+            "use_in_ai": True,
+            "code": "record.write({'name': 'bad'})",
+        })
+
+        llm_calls = 0
+
+        def _mocked_request_llm_bad_action(*args, **kwargs):
+            nonlocal llm_calls
+            llm_calls += 1
+            if llm_calls == 1:
+                return self._ai_tool_call(f"action_{bad_action.id}", "call_123456", {})
+            return [], [], []
+
+        with patch.object(LLMApiService, "_request_llm", _mocked_request_llm_bad_action):
+            action.with_context(active_model=partner._name, active_id=partner.id).run()
+
+        self.assertEqual(llm_calls, 2)
+        self.assertEqual(partner.name, "new name", "Should not execute the action because it's not listed in the tools")
+
+        def _patched_can_execute_action_on_records(*__):
+            raise AccessError("")
+
+        with (
+            patch.object(self.env.registry['ir.actions.server'], "_can_execute_action_on_records", _patched_can_execute_action_on_records),
+            self.assertRaises(AccessError),
+        ):
+            action.with_context(active_model=partner._name, active_id=partner.id).run()
+
+        # Check that if we mark a tool as "not used with AI" we don't send it
+        # to the LLM even if the m2m relation still exist
+        ir_action_tools[1].use_in_ai = False
+        partner.name = 'name'
+        llm_calls = 0
+
+        def _mocked_request_llm_use_in_ai_false(
+            service, llm_model, system_prompts, user_prompts, tools=None,
+            files=None, schema=None, temperature=0.2, inputs=(),
+        ):
+            nonlocal llm_calls
+            llm_calls += 1
+            self.assertEqual(len(tools), 1)
+            if llm_calls == 1:
+                # The LLM still try to execute it
+                return self._ai_tool_call(
+                    f"action_{ir_action_tools[1].id}",
+                    "call_789123",
+                    {"value": "new name"},
+                )
+            return [], [], []
+
+        with patch.object(LLMApiService, "_request_llm", _mocked_request_llm_use_in_ai_false):
+            action.with_context(active_model=partner._name, active_id=partner.id).run()
+
+        self.assertEqual(llm_calls, 2)
+        self.assertEqual(partner.name, "name", "The action is disabled and should not be executed")
+
+    def _ai_tool_call(self, name, call_id, arguments):
+        # Simulate the response of `_request_llm` when the LLM ask to execute a tool
+        return [], [(name, call_id, arguments)], [{"call_id": call_id, "name": name, "arguments": json.dumps(arguments)}]

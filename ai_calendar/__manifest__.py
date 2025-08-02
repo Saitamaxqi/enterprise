@@ -8,7 +8,7 @@
         """,
     'depends': ['ai', 'calendar'],
     'data': [
-        'data/ai_tool_data.xml',
+        'data/ir_actions_server.xml',
         'data/ai_topic_data.xml',
     ],
     'demo': [

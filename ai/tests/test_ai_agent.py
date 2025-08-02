@@ -80,7 +80,7 @@ class TestAIAgent(TransactionCase):
             mock_request.assert_called_once()
             call_args = mock_request.call_args
             body = call_args[0][3]
-            messages = body['messages']
+            messages = body['input']
 
             user_messages = [msg for msg in messages if msg.get('role') == 'user']
             second_question_count = sum(1 for msg in user_messages if msg.get('content') == 'second question')

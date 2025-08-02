@@ -2,7 +2,6 @@
 import base64
 import logging
 import lxml.html
-import copy
 
 from datetime import timedelta
 from textwrap import dedent
@@ -18,7 +17,6 @@ from odoo.tools.mail import html_to_inner_content
 
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.ai.utils.url_scraping import URLScraper
-from odoo.addons.ai.utils.tools_schema.tools import call_ai_tool
 from odoo.addons.ai.utils.llm_providers import PROVIDERS
 
 _logger = logging.getLogger(__name__)
@@ -412,6 +410,8 @@ class AIAgent(models.Model):
         if markdown:
             raw_html = markdown(message, extras=['fenced-code-blocks', 'tables', 'strike'])
             formatted_message = html_sanitize(raw_html)
+        else:
+            formatted_message = html_sanitize(message)
         channel.sudo().message_post(
             author_id=self.partner_id.id,
             body=formatted_message,
@@ -419,71 +419,6 @@ class AIAgent(models.Model):
             silent=True,
             subtype_xmlid='mail.mt_comment'
         )
-
-    def _get_openai_compatible_schema(self, schema):
-        input_schema = copy.deepcopy(schema["parameters"])
-        input_schema_properties = input_schema["properties"]
-        required_parameters = input_schema["required"]
-        for param_name, param_definition in input_schema_properties.items():
-            param_type = input_schema_properties[param_name]["type"]
-            # OpenAI function calling strict mode https://platform.openai.com/docs/guides/function-calling#strict-mode
-            # According to OpenAI docs on strict mode "Setting strict to true will ensure function calls reliably adhere
-            # to the function schema, instead of being best effort. We recommend always enabling strict mode."
-            # In strict mode, all parameters should be set as required. To denote that a parameter is optional,
-            # we set its type to 'anyOf' the original type or 'null'. So {'type': 'string'} becomes 'anyOf': [{'type': 'string'}, {'type': 'null'}].
-            # However, if the parameter type is object, it cannot be optional i.e. 'anyOf': [{'type': 'object'}, {'type': 'null'}].
-            # For an object parameter, the required attribute must be defined as a list of the names of the required properties of the object.
-            # i.e. 'required': [<property1_name>, <property2_name>, ..]. If the whole object is optional, required is set to an empty list  'required': []
-            if param_type != "object" and param_name not in required_parameters:
-                input_schema_properties[param_name]["anyOf"] = [
-                    {"type": param_type},
-                    {"type": "null"},
-                ]
-                input_schema_properties[param_name].pop("type")
-
-            # Openai function calling api doesn't support 'pattern' attribute
-            param_definition.pop("pattern", None)
-
-            if param_type == 'object':
-                object_required_properties = param_definition['required']
-                for property_name, property_definition in param_definition['properties'].items():
-                    if property_name not in object_required_properties:
-                        property_definition["anyOf"] = [
-                            {"type": property_definition['type']},
-                            {"type": "null"},
-                        ]
-                        property_definition.pop("type")
-
-                    property_definition.pop("pattern", None)
-
-        # For any object, all properties should be set as required.
-        for property_attributes in input_schema_properties.values():
-            if property_attributes.get("type") == "object":
-                property_attributes["additionalProperties"] = False
-                property_attributes["required"] = list(
-                    property_attributes["properties"].keys()
-                )
-
-        input_schema["required"] = list(input_schema_properties.keys())
-        openai_formatted_tool_description = {
-            "type": "function",
-            "function": {
-                "name": schema["name"],
-                "description": schema["description"],
-                "parameters": {
-                    **input_schema,
-                    "additionalProperties": False,
-                },
-                "strict": True,
-            },
-        }
-        return openai_formatted_tool_description
-
-    def _get_available_ai_tools(self, provider):
-        tools = [*self.topic_ids.tool_ids.mapped('schema')]
-        if provider == 'openai':
-            return [self._get_openai_compatible_schema(tool["function"]) for tool in tools]
-        return tools
 
     def _generate_response(self, prompt, chat_history=None, extra_system_context=""):
         """Generate an AI response for the given user prompt.
@@ -495,8 +430,6 @@ class AIAgent(models.Model):
         4. Processes any tool calls in the response, executing them and continuing the conversation
         5. Stops when the LLM provides a final response or all tools request termination
 
-        NOTE: This ignores all the termination messages in a batch if any tool call in that batch didn't request termination.
-
         :param prompt: The user's input prompt
         :param chat_history: Previous conversation messages to include as context
         :param extra_system_context: Additional system instructions to include
@@ -507,48 +440,14 @@ class AIAgent(models.Model):
         system_messages = self._build_system_context(extra_system_context=extra_system_context)
         if rag_context := self._build_rag_context(prompt):
             system_messages.extend(rag_context)
-        full_conversation = system_messages + (chat_history or []) + [{'role': 'user', 'content': prompt}]
-        provider = self._get_provider()
-        available_tools = self._get_available_ai_tools(provider)
-        api_service = LLMApiService(env=self.env, provider=provider)
-        response_temperature = TEMPERATURE_MAP[self.response_style]
-
-        response_messages = []
-        prompt_processing_done = False
-        while not prompt_processing_done:
-            prompt_processing_done = True
-            api_response = api_service.get_completion(
-                model=self.llm_model,
-                messages=full_conversation,
-                tools=available_tools,
-                temperature=response_temperature,
-            )
-            if not api_response:
-                raise UserError(_("No response received from the LLM API."))
-
-            api_message = api_response['choices'][0]['message']
-            full_conversation.append(api_message)
-            termination_messages = []
-            for tool_call in api_message.get("tool_calls") or []:
-                should_terminate, tool_call_id, content = call_ai_tool(self.env['ai.tool'], tool_call)
-                full_conversation.append({
-                    "role": "tool",
-                    "tool_call_id": tool_call_id,
-                    "content": content,
-                })
-                if not should_terminate:
-                    prompt_processing_done = False
-                elif content:
-                    termination_messages.append(content)
-            # api_message.get("tool_calls") and prompt_processing_done means that all the tool calls requested termination.
-            # If only prompt_processing_done is True, then there were no tool calls performed and the content of the api_message
-            # is the final response.
-            if api_message.get("tool_calls") and prompt_processing_done:
-                response_messages.extend(termination_messages)
-            elif api_message.get('content'):
-                response_messages.append(api_message['content'])
-
-        return response_messages
+        return LLMApiService(env=self.env, provider=self._get_provider()).request_llm(
+            self.llm_model,
+            system_messages,
+            [],
+            inputs=(chat_history or []) + [{'role': 'user', 'content': prompt}],
+            tools=self.topic_ids.tool_ids._get_ai_tools(),
+            temperature=TEMPERATURE_MAP[self.response_style],
+        )
 
     def _retrieve_chat_history(self, discuss_channel, no_messages=20):
         chat_history = [
@@ -571,23 +470,19 @@ class AIAgent(models.Model):
         if self.topic_ids:
             system_content += PREPROMPTS['tools']
 
-        messages = [{'role': 'system', 'content': system_content}]
+        messages = [system_content]
 
         if self.topic_ids:
             topic_instructions = "\n\n".join(
                 [topic.instructions for topic in self.topic_ids if topic.instructions])
             if topic_instructions:
-                messages.append(
-                    {'role': 'system', 'content': f"Additional topic instructions:\n{topic_instructions}."})
+                messages.append(f"Additional topic instructions:\n{topic_instructions}.")
 
         if self.restrict_to_sources:
-            messages.append({
-                'role': 'system',
-                'content': PREPROMPTS['restrict_to_sources']
-            })
+            messages.append(PREPROMPTS['restrict_to_sources'])
 
         if extra_system_context:
-            messages.append({'role': 'system', 'content': extra_system_context})
+            messages.append(extra_system_context)
 
         return messages
 
@@ -623,7 +518,7 @@ class AIAgent(models.Model):
                 context += f"##References:\n{', '.join(referenced_attachments)}"
 
         if context:
-            messages.append({'role': 'system', 'content': f"##Context information:\n\n{context}\n{PREPROMPTS['context']}"})
+            messages.append(f"##Context information:\n\n{context}\n{PREPROMPTS['context']}")
         return messages
 
     @api.depends("attachment_ids", "url_attachment_ids")

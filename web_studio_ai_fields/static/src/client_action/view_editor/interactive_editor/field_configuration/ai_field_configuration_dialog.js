@@ -1,4 +1,4 @@
-import { AiPrompt } from "@ai_fields/ai_prompt/ai_prompt";
+import { AiPrompt } from "@ai/ai_prompt/ai_prompt";
 import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 import { usePopover } from "@web/core/popover/popover_hook";

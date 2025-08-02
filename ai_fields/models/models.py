@@ -2,15 +2,14 @@
 
 import ast
 import collections
-import json
 import logging
 
 from odoo import _, api, Command, models
-from odoo.addons.ai_fields.tools import get_ai_value, get_field_allowed_vals, get_property_allowed_vals, render_prompt
+from odoo.addons.ai_fields.tools import get_ai_value, get_field_prompt_vals, get_property_prompt_vals, parse_ai_prompt_values
 from odoo.exceptions import AccessError
 from odoo.fields import Domain
 from odoo.tools import html_sanitize
-from odoo.tools.json import json_default
+
 
 _logger = logging.getLogger(__name__)
 
@@ -88,8 +87,8 @@ class Base(models.AbstractModel):
                 # Equivalent of `sanitize='email_outgoing'` on mail template body
                 property_definition['system_prompt'] = html_sanitize(
                     property_definition['system_prompt'],
-                    sanitize_tags=False,  # keep <t/>
-                    sanitize_attributes=False,  # keep t-out
+                    sanitize_tags=True,
+                    sanitize_attributes=True,
                     sanitize_style=True,
                     strip_style=True,
                     output_method='xml',
@@ -116,30 +115,14 @@ class Base(models.AbstractModel):
         for property_definition in properties_definition:
             if prompt := property_definition.get('system_prompt'):
                 model_names = [properties_field.model_name for properties_field in field.properties_fields]
-                model_names = model_names or [None]
-
+                __, expressions, record_ids = parse_ai_prompt_values(self.env, prompt, property_definition.get('comodel'), False)
                 for model_name in model_names:
-                    if self.env['mail.render.mixin']._has_unsafe_expression_template_qweb(prompt, model_name):
-                        raise AccessError(_("You can not use that prompt expression."))
-
-    ################
-    #  Extensions  #
-    ################
-
-    def _ai_read(self, *paths_to_read):
-        specification = {}
-        for path in paths_to_read:
-            current_spec = specification
-            for field in path.split('.'):
-                if field not in current_spec:
-                    current_spec[field] = {"fields": {}}
-                current_spec = current_spec[field]["fields"]
-
-        return json.dumps(
-            self.web_read(specification),
-            ensure_ascii=False,
-            default=json_default,
-        )
+                    allowed_expressions = self.env[model_name].mail_allowed_qweb_expressions()
+                    for expression in expressions:
+                        if f"object.{expression}" not in allowed_expressions:
+                            raise AccessError(_("You can not use the field %(field)s in a prompt."))
+                if (comodel := property_definition.get('comodel')) and record_ids:
+                    self.env[comodel].browse(record_ids).check_access("read")
 
     def _fill_ai_field(self, field, field_prompt=None):
         """Assign a value to the specified field in the given records based on the response of a
@@ -151,20 +134,15 @@ class Base(models.AbstractModel):
 
         :return None
         """
-
-        cache = {}
         if field_prompt is None and not (hasattr(field, 'ai') and field.ai):
             raise ValueError(f"The field {field.name} has no AI prompt")
-        allowed_values = get_field_allowed_vals(self.env, field, field_prompt)
+        user_prompt, context_fields, allowed_values = get_field_prompt_vals(self.env, field, field_prompt)
         for record in self:
-            user_prompt = render_prompt(record, field_prompt or field.ai) + (record._get_currency_prompt(field) if field.type == 'monetary' else '')
-            if user_prompt not in cache:
-                try:
-                    cache[user_prompt] = get_ai_value(record.env, field.type, user_prompt, allowed_values)
-                except Exception as e:  # noqa: BLE001
-                    _logger.info("Could not get a value for an AI Field (%s on %s): %s", field.name, field.model_name, e)
-                    cache[user_prompt] = ""  # prevent query llm again for the field (unresolvable/timeout)
-            record[field.name] = cache[user_prompt]
+            try:
+                record[field.name] = get_ai_value(record, field.type, user_prompt, context_fields, allowed_values)
+            except Exception as e:  # noqa: BLE001
+                _logger.info("Could not get a value for an AI Field (%s on %s): %s", field.name, field.model_name, e)
+                record[field.name] = ""  # prevent query llm again for the field (unresolvable/timeout)
 
     def _fill_ai_property(self, fname, property_definition):
         """Assign values to the specified AI property field for the records in `self` using LLM.
@@ -175,26 +153,22 @@ class Base(models.AbstractModel):
 
         :return: None
         """
-
-        cache = {}
         if not property_definition.get('system_prompt'):
             raise ValueError(f"The property {property_definition['string']} has no AI prompt")
-        allowed_values = get_property_allowed_vals(self.env, property_definition)
+        user_prompt, context_fields, allowed_values = get_property_prompt_vals(self.env, property_definition)
         properties = {v['id']: v[fname] for v in self.read([fname])}
         for record in self:
-            user_prompt = render_prompt(record, property_definition.get('system_prompt'))
-            if user_prompt not in cache:
-                try:
-                    cache[user_prompt] = get_ai_value(record.env, property_definition.get('type'), user_prompt, allowed_values)
-                except Exception as e:  # noqa: BLE001
-                    _logger.info("Could not get a value for an AI property (%s in %s on %s): %s", property_definition['name'], fname, self._name, e)
-                    cache[user_prompt] = False  # prevent query llm again for the property (unresolvable/timeout)
+            try:
+                value = get_ai_value(record, property_definition.get('type'), user_prompt, context_fields, allowed_values)
+            except Exception as e:  # noqa: BLE001
+                _logger.info("Could not get a value for an AI property (%s in %s on %s): %s", property_definition['name'], fname, self._name, e)
+                value = False  # prevent query llm again for the property (unresolvable/timeout)
 
             # update the property value (without overriding existing properties)
             # we don't write the definition otherwise we will retrigger the cron if there
             # is a property that has not been processed yet
             record[fname] = {
-                p['name']: cache[user_prompt] if p['name'] == property_definition['name'] else p.get('value')
+                p['name']: value if p['name'] == property_definition['name'] else p.get('value')
                 for p in properties.get(record.id, [])
                 if p['name'] == property_definition['name'] or 'value' in p
             }
@@ -217,10 +191,12 @@ class Base(models.AbstractModel):
             raise ValueError(f"The field {fname} is not defined on {self._name}")
         if not (hasattr(field, 'ai') and field.ai):
             raise ValueError(f"The field {fname} has no AI prompt")
-        val = get_ai_value(self.env, field.type,
-            render_prompt(record, field.ai) + (self._get_currency_prompt(field) if field.type == 'monetary' else ''),
-            get_field_allowed_vals(self.env, field),
-        )
+        user_prompt, context_fields, allowed_values = get_field_prompt_vals(self.env, field)
+        if field.type in ('many2many', 'many2one') and not allowed_values:
+            # add most frequent records if no record in prompt
+            records = self.ai_find_default_records(field.comodel_name, field.domain, fname)
+            allowed_values = {r.id: r.display_name for r in records}
+        val = get_ai_value(record, field.type, user_prompt, context_fields, allowed_values)  # currency?
         if field.type == 'many2one':
             return bool(val) and self.env[field.comodel_name].browse(val).read(['id', 'display_name'])[0]
         elif field.type == 'many2many':
@@ -264,10 +240,12 @@ class Base(models.AbstractModel):
         if property_type in ('many2many', 'many2one'):
             if not property_definition.get('comodel'):
                 return property_type == 'many2many' and []
-        val = get_ai_value(self.env, property_type,
-            render_prompt(record, property_definition.get('system_prompt')),
-            get_property_allowed_vals(self.env, property_definition),
-        )
+        user_prompt, context_fields, allowed_values = get_property_prompt_vals(self.env, property_definition)
+        if property_type in ('many2many', 'many2one') and not allowed_values and property_definition.get('comodel'):
+            # add most frequent records if no record in prompt
+            records = self.ai_find_default_records(property_definition.get('comodel'), property_definition.get('domain'), fname, pname)
+            allowed_values = {r.id: r.display_name for r in records}
+        val = get_ai_value(record, property_type, user_prompt, context_fields, allowed_values)
         if property_type == 'many2one':
             return bool(val) and self.env[property_definition['comodel']].browse(val).read(['id', 'display_name'])[0]
         if property_type == 'many2many':
@@ -317,4 +295,4 @@ class Base(models.AbstractModel):
                 order="id DESC",
             )
 
-        return [[r.id, r.display_name] for r in records]
+        return records

@@ -80,15 +80,13 @@ class TestParamSchemaValidation(TransactionCase):
         )
         return schema
 
-    def validate_schema(self, schema, schema_description='description', error_type=ValueError, error_message=''):
+    def validate_schema(self, schema, error_type=ValueError, error_message=''):
         full_schema = {
-            'description': schema_description,
-            'parameters': {
-                'type': 'object',
-                'properties': schema,
-                'required': list(schema.keys())
-            }
+            'type': 'object',
+            'properties': schema,
+            'required': list(schema.keys()),
         }
+
         if error_message:
             with self.assertRaisesRegex(error_type, re.escape(error_message)):
                 validators.validate_schema(full_schema)
@@ -146,11 +144,11 @@ class TestParamSchemaValidation(TransactionCase):
     def test_missing_required_attribute(self):
         # Description attribute is missing
         schema = self.create_param(
-            excluded_attributes=['description']
+            excluded_attributes=['type']
         )
         self.validate_schema(
             schema=schema,
-            error_message="The attributes '['description']' must be defined for the parameter 'param'.",
+            error_message="The attributes '['type']' must be defined for the parameter 'param'.",
         )
 
     def test_unsupported_attribute(self):

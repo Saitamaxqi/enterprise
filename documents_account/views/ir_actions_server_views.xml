@@ -7,7 +7,7 @@
             <field name="model">ir.actions.server</field>
             <field name="inherit_id" ref="base.view_server_action_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//t[@name='action_content']" position="inside">
+                <xpath expr="//t[@name='action_content']//notebook" position="before">
                     <group invisible="state != 'documents_account_record_create'">
                         <group>
                             <field name="documents_account_create_model" string="Create"

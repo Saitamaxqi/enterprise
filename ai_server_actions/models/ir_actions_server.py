@@ -11,7 +11,7 @@ class IrActionsServer(models.Model):
     evaluation_type = fields.Selection(
         selection_add=[("ai_computed", "Update with AI")],
     )
-    ai_prompt = fields.Text("AI Prompt")
+    ai_prompt = fields.Html("AI Prompt", sanitize=True, sanitize_output_method="xml")
     update_field_name = fields.Char(related='update_field_id.name')
     update_field_relation = fields.Char(related="update_field_id.relation")
     update_field_type = fields.Selection(related='update_field_id.ttype')
@@ -27,12 +27,7 @@ class IrActionsServer(models.Model):
         if self - ai_actions:
             super(IrActionsServer, self - ai_actions)._run_action_object_write(eval_context)
 
-        if self.env.context.get("onchange_self"):
-            records = self.env.context["onchange_self"]
-        else:
-            records = eval_context.get("record") or eval_context["model"]
-            records |= eval_context.get("records") or eval_context["model"]
-
+        records = self._ai_get_records(eval_context)
         for action in ai_actions:
             field = action.update_field_id
             records._fill_ai_field(self.env[field.model]._fields.get(field.name), action.ai_prompt)
