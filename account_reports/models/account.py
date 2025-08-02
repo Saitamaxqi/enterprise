@@ -24,7 +24,7 @@ class AccountAccount(models.Model):
     audit_previous_balance_show_warning = fields.Boolean(compute="_compute_audit_previous_balance_show_warning")
     audit_var_n_1 = fields.Monetary(string="Var N-1", compute="_compute_audit_variation", currency_field="company_currency_id", search="_search_audit_var_n_1")
     audit_var_percentage = fields.Float(string="Var %", compute="_compute_audit_variation", search="_search_var_percentage", default=False)
-    audit_status = fields.Selection(selection=STATUS_SELECTION, default="todo", string="Status", compute="_compute_audit_status", inverse="_inverse_audit_status", required=True)
+    audit_status = fields.Selection(selection=STATUS_SELECTION, string="Status", compute="_compute_audit_status", inverse="_inverse_audit_status")
 
     account_status = fields.One2many(string="Account Status", comodel_name='account.audit.account.status', inverse_name='account_id')
 

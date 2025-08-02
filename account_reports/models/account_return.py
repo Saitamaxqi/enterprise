@@ -543,18 +543,38 @@ class AccountReturn(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         records = super().create(vals_list)
-
         account_status_create_vals = []
         for record in records:
             if record.return_type_category == 'audit':
-                accounts = self.env['account.account'].search_read(self.env['account.account']._check_company_domain(record.company_ids), ['id'])
+                accounts = self.env['account.account'].search_fetch(
+                    domain=self.env['account.account']._check_company_domain(record.company_ids),
+                    field_names=['id'],
+                )
+                eve_of_date_from = record.date_from - relativedelta(days=1)
+                date_from, date_to = record.type_id._get_period_boundaries(self.env.company, eve_of_date_from)
+                previous_return = self.env['account.return'].search(
+                    domain=[
+                        ('date_from', '=', date_from),
+                        ('date_to', '=', date_to),
+                        ('type_id', '=', record.type_id.id),
+                    ],
+                    limit=1,
+                )
+                previous_accounts_with_status = self.env['account.account']
+                if previous_return:
+                    previous_accounts_with_status = self.env['account.audit.account.status'].search(
+                        domain=[
+                            ('audit_id', '=', previous_return.id),
+                            ('status', '!=', False),
+                        ],
+                    ).account_id
                 account_status_create_vals += [
                     {
                         'audit_id': record.id,
                         'account_id': account['id'],
+                        'status': 'todo' if account in previous_accounts_with_status else False,
                     } for account in accounts
                 ]
-
         self.env['account.audit.account.status'].create(account_status_create_vals)
         return records
 

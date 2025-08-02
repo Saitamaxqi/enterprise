@@ -46,15 +46,15 @@ export class AccountReturnSelectionBadge extends Component {
 
     decorationForValue(value, isDropdownItem=false) {
         const colorScheme = cookie.get("color_scheme");
-        const default_style = isDropdownItem && colorScheme == 'dark' ? "text-bg-200" : "text-bg-300";
+        const defaultStyle = isDropdownItem && colorScheme == 'dark' ? "text-bg-200" : "text-bg-300";
         const decoration = this.props.options[value];
         if (decoration) {
             if (decoration === "muted") {
-                return default_style;
+                return defaultStyle;
             }
             return `text-bg-${this.props.options[value]}`;
         }
-        return default_style;
+        return isDropdownItem && colorScheme == 'dark' ? "text-bg-200" : "text-bg-100";
     }
 
     get additionalClassName() {

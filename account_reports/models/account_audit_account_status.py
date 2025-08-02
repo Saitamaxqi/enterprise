@@ -16,6 +16,4 @@ class AccountAuditAccountStatus(models.Model):
     account_id = fields.Many2one(string="Account", comodel_name='account.account', required=True, ondelete='cascade', index="btree")
     status = fields.Selection(
         selection=STATUS_SELECTION,
-        default="todo",
-        required=True
     )

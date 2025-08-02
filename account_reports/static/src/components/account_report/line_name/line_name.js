@@ -54,7 +54,7 @@ export class AccountReportLineName extends Component {
                         ['supervised', 'Supervised'],
                         ['anomaly', 'Anomaly'],
                     ],
-                    required: true,
+                    required: false,
                 }
             }
             
