@@ -227,6 +227,7 @@ class SignSendRequest(models.TransientModel):
         self.activity_id._action_done(feedback=feedback)
 
     def create_request(self):
+        send_channel = self.env.context.get('send_channel', 'email')
         template_id = self.template_id.id
         if self.signers_count:
             signers = [{'partner_id': signer.partner_id.id, 'role_id': signer.role_id.id, 'mail_sent_order': signer.mail_sent_order} for signer in self.signer_ids]
@@ -259,6 +260,7 @@ class SignSendRequest(models.TransientModel):
             'reminder_enabled': self.reminder_enabled,
             'reference_doc': reference_doc,
             'certificate_reference': self.certificate_reference,
+            'send_channel': send_channel,
         })
         sign_request.message_subscribe(partner_ids=cc_partner_ids)
         return sign_request
