@@ -242,9 +242,7 @@ class SignSendRequest(models.TransientModel):
         sign_request.message_subscribe(partner_ids=cc_partner_ids)
         return sign_request
 
-    def send_request(self):
-        self.ensure_one()
-        request = self.create_request()
+    def _create_log_and_close(self, request):
         self._create_request_log_note(request)
         if self.activity_id:
             self._activity_done()
@@ -264,6 +262,11 @@ class SignSendRequest(models.TransientModel):
                 'next': {'type': 'ir.actions.client', 'tag': 'soft_reload'},
             },
         }
+
+    def send_request(self):
+        self.ensure_one()
+        request = self.create_request()
+        return self._create_log_and_close(request)
 
     def _create_request_log_note(self, request):
         if request.reference_doc:

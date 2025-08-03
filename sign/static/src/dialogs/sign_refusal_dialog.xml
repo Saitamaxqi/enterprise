@@ -11,7 +11,7 @@
     <t t-name="sign.SignRefusalDialog">
         <Dialog t-props="dialogProps">
             <p>
-                We'll notify the sender, signer and copied contacts by email.
+                We'll notify the sender, signer and copied contacts.
                 Your refusal reason will be included to keep things clear and transparent for everyone.
             </p>
             <div>

@@ -231,24 +231,29 @@ class SignRequestItem(models.Model):
     def _get_access_token(self, signer):
         return signer.sudo().access_token
 
-    def _send_signature_access_mail(self):
+    def _get_sign_and_cancel_links(self, signer):
+        expiry_link_timestamp = signer._generate_expiry_link_timestamp()
+        url_params = self._get_url_parameters(signer, expiry_link_timestamp)
+        partial_url = "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {
+            'request_id': signer.sign_request_id.id,
+            'access_token': self._get_access_token(signer),
+            'url_params': url_params
+        }
+        link_sign = url_join(signer.get_base_url(), partial_url)
+        company = self.communication_company_id
+        if 'website_id' in company and company.website_id.domain:
+            link_sign = url_join(company.website_id.domain, partial_url)
+        link_cancel = link_sign + '&refuseDocument=1'
+
+        return link_sign, link_cancel
+
+    def _send_signature_access_message(self):
         for signer in self:
             signer_email_normalized = email_normalize(signer.signer_email or '')
             signer_lang = get_lang(self.env, lang_code=signer.partner_id.lang).code
             # We hide the validity information if it is the default (6 month from the create_date)
             has_default_validity = signer.sign_request_id.validity and signer.sign_request_id.validity - relativedelta(months=6) == signer.sign_request_id.create_date.date()
-            expiry_link_timestamp = signer._generate_expiry_link_timestamp()
-            url_params = self._get_url_parameters(signer, expiry_link_timestamp)
-            partial_url = "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {
-                    'request_id': signer.sign_request_id.id,
-                    'access_token': self._get_access_token(signer),
-                    'url_params': url_params
-                }
-            link_sign = url_join(signer.get_base_url(), partial_url)
-            company = self.communication_company_id
-            if 'website_id' in company and company.website_id.domain:
-                link_sign = url_join(company.website_id.domain, partial_url)
-            link_cancel = link_sign + '&refuseDocument=1'
+            link_sign, link_cancel = self._get_sign_and_cancel_links(signer)
             body = self.env['ir.qweb']._render('sign.sign_template_mail_request', {
                 'record': signer,
                 'link': link_sign,
@@ -421,7 +426,7 @@ class SignRequestItem(models.Model):
             if not sign_request.communication_company_id:
                 sign_request.communication_company_id = self.env.company
             sign_request.message_post(body=body)
-        self._send_signature_access_mail()
+        self._send_signature_access_message()
 
     def _get_user_signature(self, signature_type='sign_signature'):
         """ Gets the user's stored sign_signature/sign_initials (needs sudo permission)

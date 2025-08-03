@@ -82,6 +82,10 @@ class SignRequest(models.Model):
     last_reminder = fields.Date(string='Last reminder', default=lambda self: fields.Date.today())
     certificate_reference = fields.Boolean(string="Certificate Reference", default=False)
 
+    send_channel = fields.Selection([
+        ("email", "Email"),
+    ], string="Delivery Method", default='email', required=True)
+
     @api.depends('template_id')
     def _compute_template_document_ids(self):
         for sign_request in self:
@@ -400,11 +404,12 @@ class SignRequest(models.Model):
 
         # send emails to signers and cc_partners
         for sign_request_item in self.request_item_ids:
-            self._send_refused_mail(refuser, refusal_reason, sign_request_item.partner_id, access_token=sign_request_item.sudo().access_token, force_send=True)
+            self._send_refused_message(refuser, refusal_reason, sign_request_item.partner_id,
+                                       access_token=sign_request_item.sudo().access_token, force_send=True, sign_request_item=sign_request_item)
         for partner in self.cc_partner_ids.filtered(lambda p: p.email_formatted) - self.request_item_ids.partner_id:
-            self._send_refused_mail(refuser, refusal_reason, partner)
+            self._send_refused_message(refuser, refusal_reason, partner)
 
-    def _send_refused_mail(self, refuser, refusal_reason, partner, access_token=None, force_send=False):
+    def _send_refused_message(self, refuser, refusal_reason, partner, access_token=None, force_send=False, sign_request_item=None):
         self.ensure_one()
         if access_token is None:
             access_token = self.access_token
@@ -524,11 +529,12 @@ class SignRequest(models.Model):
         signers = [{'name': signer.partner_id.name, 'email': signer.signer_email, 'id': signer.partner_id.id} for signer in self.request_item_ids]
         request_edited = any(log.action == "update" for log in self.sign_log_ids)
         for sign_request_item in self.request_item_ids:
-            self._send_completed_documents_mail(signers, request_edited, sign_request_item.partner_id, access_token=sign_request_item.sudo().access_token, with_message_cc=False, force_send=True)
+            self._send_completed_documents_message(signers, request_edited, sign_request_item.partner_id,
+                                                   access_token=sign_request_item.sudo().access_token, with_message_cc=False, force_send=True, sign_request_item=sign_request_item)
 
         cc_partners_valid = self.cc_partner_ids.filtered(lambda p: p.email_formatted)
         for cc_partner in cc_partners_valid:
-            self._send_completed_documents_mail(signers, request_edited, cc_partner)
+            self._send_completed_documents_message(signers, request_edited, cc_partner)
         if cc_partners_valid:
             body = _(
                 "The mail has been sent to contacts in copy: %(contacts)s",
@@ -545,7 +551,7 @@ class SignRequest(models.Model):
                 partner_ids=cc_partners_valid.ids,
             )
 
-    def _send_completed_documents_mail(self, signers, request_edited, partner, access_token=None, with_message_cc=True, force_send=False):
+    def _send_completed_documents_message(self, signers, request_edited, partner, access_token=None, with_message_cc=True, force_send=False, sign_request_item=None):
         self.ensure_one()
         if access_token is None:
             access_token = self.access_token
