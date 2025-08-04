@@ -1285,6 +1285,32 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         reco_model._trigger_reconciliation_model(st_line)
         self.assertEqual(st_line.activity_ids.activity_type_id.id, activity_type_id)
 
+    def test_match_amount_in_between_neg_amount(self):
+        bank_stmt_line = self._create_st_line(amount=-1500)
+        between_rule = self.env['account.reconcile.model'].create(
+            {
+                'name': "Between neg amount",
+                'match_amount': 'between',
+                'match_amount_min': -1000,
+                'match_amount_max': -2000,
+                'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+            },
+        )
+        self._check_st_line_matching(bank_stmt_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': between_rule.id},
+        ], reconciled_amls=False)
+
+        # Check if it works both ways
+        between_rule.update({
+            'match_amount_min': -2000,
+            'match_amount_max': -1000,
+        })
+        self._check_st_line_matching(bank_stmt_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': between_rule.id},
+        ], reconciled_amls=False)
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes

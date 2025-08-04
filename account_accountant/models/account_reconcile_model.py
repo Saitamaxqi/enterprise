@@ -76,8 +76,16 @@ class AccountReconcileModel(models.Model):
                 LEFT JOIN account_reconcile_model_line reco_model_line ON reco_model_line.model_id = reco_model.id
                     WHERE (matching_journal_ids.ids IS NULL OR st_line.journal_id = ANY(matching_journal_ids.ids))
                       AND (matching_partner_ids.ids IS NULL OR st_line.partner_id = ANY(matching_partner_ids.ids))
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'greater') OR st_line.amount >= reco_model.match_amount_min)
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'lower') OR st_line.amount <= reco_model.match_amount_max)
+                      AND (
+                          CASE COALESCE(reco_model.match_amount, '')
+                              WHEN 'lower' THEN st_line.amount <= reco_model.match_amount_max
+                              WHEN 'greater' THEN st_line.amount >= reco_model.match_amount_min
+                              WHEN 'between' THEN
+                                  (st_line.amount BETWEEN reco_model.match_amount_min AND reco_model.match_amount_max) OR
+                                  (st_line.amount BETWEEN reco_model.match_amount_max AND reco_model.match_amount_min)
+                              ELSE TRUE
+                          END
+                          )
                       AND (
                               reco_model.match_label IS NULL
                               OR (
@@ -167,8 +175,16 @@ class AccountReconcileModel(models.Model):
                 LEFT JOIN matching_partner_ids ON reco_model.id = matching_partner_ids.account_reconcile_model_id
                     WHERE (matching_journal_ids.ids IS NULL OR st_line.journal_id = ANY(matching_journal_ids.ids))
                       AND (matching_partner_ids.ids IS NULL OR st_line.partner_id = ANY(matching_partner_ids.ids))
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'greater') OR st_line.amount > reco_model.match_amount_min)
-                      AND (COALESCE(reco_model.match_amount, '') NOT IN ('between', 'lower') OR st_line.amount < reco_model.match_amount_max)
+                      AND (
+                              CASE COALESCE(reco_model.match_amount, '')
+                                  WHEN 'lower' THEN st_line.amount <= reco_model.match_amount_max
+                                  WHEN 'greater' THEN st_line.amount >= reco_model.match_amount_min
+                                  WHEN 'between' THEN
+                                      (st_line.amount BETWEEN reco_model.match_amount_min AND reco_model.match_amount_max) OR
+                                      (st_line.amount BETWEEN reco_model.match_amount_max AND reco_model.match_amount_min)
+                                  ELSE TRUE
+                              END
+                          )
                       AND (
                               reco_model.match_label IS NULL
                               OR (
