@@ -131,22 +131,6 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
         }
     }
 
-    sortChecks(records) {
-        const getCheckPriority = (check) => {
-            const { result, bypassed } = check;
-            if (result === 'failure') return bypassed ? 20 : 0;
-            if (result === 'manual') return bypassed ? 21 : 1;
-            if (result === 'success') return 30;
-            return 10;
-        };
-        return records.toSorted((a, b) => getCheckPriority(a.data) - getCheckPriority(b.data));
-    }
-
-    get sortedChecksList() {
-        const { records } = this.props.list;
-        return { records: this.sortChecks(records) };
-    }
-
     get groups() {
         const { list } = this.props;
         if (!list.isGrouped) {
@@ -154,7 +138,6 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
         }
         return list.groups.map((group, index) => ({
             ...group,
-            records: this.sortChecks(group.records),
             key: isNull(group.value) ? `group_key_${index}` : String(group.value),
         }));
     }

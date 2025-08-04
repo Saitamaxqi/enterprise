@@ -25,7 +25,7 @@
                         </t>
                     </t>
                     <t t-else="" t-call="account_reports.return_check_list">
-                        <t t-set="list" t-value="sortedChecksList"/>
+                        <t t-set="list" t-value="props.list"/>
                     </t>
                 </div>
             </div>

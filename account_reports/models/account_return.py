@@ -2189,7 +2189,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 class AccountReturnCheck(models.Model):
     _name = "account.return.check"
     _description = "Accounting Return Check"
-    _order = "result, bypassed, name, id"
+    _order = "name, id"
 
     code = fields.Char(string="Check ID", required=True)
     type = fields.Selection(
