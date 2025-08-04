@@ -163,9 +163,10 @@ def compute_total_assets(audit_report):
             'filter': 'custom',
         },
     })
+    balance_sheet_report._init_currency_table(balance_sheet_report_options)
     all_expressions = next(iter(
         balance_sheet_report._compute_expression_totals_for_each_column_group(
-        balance_sheet_report.line_ids.expression_ids,
+            balance_sheet_report.line_ids.expression_ids,
             balance_sheet_report_options).values()))
     total_assets_line = request.env.ref('account_reports.account_financial_report_total_assets0')
     for expression, totals in all_expressions.items():
@@ -185,9 +186,10 @@ def compute_net_profit_and_total_revenue(audit_report):
             'filter': 'custom',
         },
     })
+    profit_and_loss_report._init_currency_table(profit_and_loss_report_options)
     all_expressions = next(iter(
         profit_and_loss_report._compute_expression_totals_for_each_column_group(
-        profit_and_loss_report.line_ids.expression_ids,
+            profit_and_loss_report.line_ids.expression_ids,
             profit_and_loss_report_options).values()))
 
     net_profit = 0
