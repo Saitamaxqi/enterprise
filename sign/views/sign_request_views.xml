@@ -203,7 +203,7 @@
                 <separator/>
                 <filter name="favorite" string="My Favorites" domain="[('favorited_ids', 'in', uid)]"/>
                 <separator/>
-                <filter name="activities_expiring_soon" string="Expiring Soon" domain="[('activity_ids.date_deadline', '&lt;', 'today+7d')]"/>
+                <filter name="activities_expiring_soon" string="Expiring Soon" domain="[('activity_ids.date_deadline', '&lt;', 'today +7d')]"/>
                 <separator/>
                 <filter name="waiting_for_me" string="Waiting for me" domain="[('need_my_signature', '=', True)]"/>
                 <filter name="waiting_for_others" string="Waiting for others" domain="[('create_uid', '=', uid), ('state', '=', 'sent'), '|', ('need_my_signature', '=', False), ('nb_wait', '>', 1)]"/>
