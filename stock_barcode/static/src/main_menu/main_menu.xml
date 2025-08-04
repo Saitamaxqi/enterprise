@@ -16,8 +16,7 @@
                 <main class="flex-grow-1">
                     <div t-if="state.displayDemoMessage" class="o_barcode_demo_message alert alert-info alert-dismissible" role="status">
                         <p class="m-0">
-                            Print the <a href="/stock_barcode/static/img/barcodes_demo.pdf" target="_blank" aria-label="Download demo data sheet" title="Download demo data sheet">demo data sheet</a>
-                            to test or <a href="/stock_barcode/print_inventory_commands?barcode_type=barcode_commands_and_operation_types" target="_blank" aria-label="Download operation barcodes" title="Download operation barcodes">barcodes</a> for operations.
+                            <t t-out="demoMessage"/>
                         </p>
                         <button t-on-click="removeDemoMessage" type="button" class="btn-close" title="Close"/>
                     </div>
@@ -31,13 +30,9 @@
                         </div>
                     </div>
                     <ul>
-                        <li>Scan a <b>product</b> or its <b>packaging</b> to locate it</li>
-                        <li t-if="packagesEnabled &amp;&amp; trackingEnabled">Scan a <b>tracking number</b> or a <b>package</b> to open it</li>
-                        <li t-elif="trackingEnabled">Scan a <b>tracking number</b> to open it</li>
-                        <li t-elif="packagesEnabled">Scan a <b>package</b> to open it</li>
-                        <li>Scan a <b>picking</b> to open it</li>
-                        <li t-if="locationsEnabled">Scan a <b>location</b> to initiate a transfer</li>
-                        <li>Scan an <b>operation type</b> to start it</li>
+                        <t t-foreach="barcodeHomeHelper" t-as="help_line" t-key="help_line_index">
+                            <li><t t-out="help_line"/></li>
+                        </t>
                     </ul>
                 </main>
                 <footer>

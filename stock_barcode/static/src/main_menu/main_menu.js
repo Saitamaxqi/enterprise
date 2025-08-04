@@ -3,7 +3,7 @@ import { rpc } from "@web/core/network/rpc";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { registry } from "@web/core/registry";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { Component, onWillStart, useState } from "@odoo/owl";
+import { Component, onWillStart, useState, markup } from "@odoo/owl";
 import { ManualBarcodeScanner } from "@barcodes/components/manual_barcode";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { url } from "@web/core/utils/urls";
@@ -34,7 +34,9 @@ export class MainMenu extends Component {
             this.quantCount = data.quant_count;
             this.soundEnable = data.play_sound;
             if (this.soundEnable) {
-                const fileExtension = new Audio().canPlayType("audio/ogg; codecs=vorbis") ? "ogg" : "mp3";
+                const fileExtension = new Audio().canPlayType("audio/ogg; codecs=vorbis")
+                    ? "ogg"
+                    : "mp3";
                 this.sounds = {
                     success: new Audio(
                         url(`/stock_barcode/static/src/audio/success.${fileExtension}`)
@@ -109,6 +111,55 @@ export class MainMenu extends Component {
             return this.actionService.doAction(res.action);
         }
         this.notificationService.add(res.warning, { type: "danger" });
+    }
+
+    /** Builds the barcode landing page bullet points, decribing features available depending on settings */
+    get barcodeHomeHelper() {
+        const tags = {
+            bold_s: markup`<b>`,
+            bold_e: markup`</b>`,
+        };
+
+        const bullets = [
+            _t(
+                "Scan a %(bold_s)sproduct%(bold_e)s or its %(bold_s)spackaging%(bold_e)s to locate it",
+                tags
+            ),
+        ];
+        // 2nd bullet point depends on which setting is activated
+        if (this.packageEnabled && this.trackingEnabled) {
+            bullets.push(
+                _t(
+                    "Scan a %(bold_s)stracking number%(bold_e)s or a %(bold_s)spackage%(bold_e)s to find a transfer",
+                    tags
+                )
+            );
+        } else if (this.packageEnabled) {
+            bullets.push(_t("Scan a %(bold_s)spackage%(bold_e)s to find a transfer", tags));
+        } else if (this.trackingEnabled) {
+            bullets.push(_t("Scan a %(bold_s)stracking number%(bold_e)s to find a transfer", tags));
+        }
+        bullets.push(_t("Scan a %(bold_s)spicking%(bold_e)s to open it", tags));
+        if (this.locationsEnabled) {
+            bullets.push(_t("Scan a %(bold_s)slocation%(bold_e)s to initiate a transfer", tags));
+        }
+        bullets.push(_t("Scan an %(bold_s)soperation type%(bold_e)s to start it", tags));
+        return bullets;
+    }
+
+    get demoMessage() {
+        const demo_link = _t("Download demo data sheet");
+        const barcode_link = _t("Download operation barcodes");
+
+        const sheet_s = markup`<a href="/stock_barcode/static/img/barcodes_demo.pdf" target="_blank" aria-label="${demo_link}" title="${demo_link}">`;
+        const ops_s = markup`<a href="/stock_barcode/print_inventory_commands?barcode_type=barcode_commands_and_operation_types" target="_blank" aria-label="${barcode_link}" title="${barcode_link}">`;
+        const sheet_e = markup`</a>`;
+        const ops_e = markup`</a>`;
+
+        return _t(
+            "Print the %(sheet_s)sdemo data sheet%(sheet_e)s to test, or %(ops_s)sbarcodes%(ops_e)s for operations.",
+            { sheet_s, sheet_e, ops_s, ops_e }
+        );
     }
 }
 

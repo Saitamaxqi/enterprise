@@ -217,24 +217,27 @@ class StockPicking(models.Model):
             ('picking_type_id', '=', picking_type.id),
             ('state', 'not in', ['cancel', 'done', 'draft'])
         ]
+        is_lot_enabled = self.env.user.has_group('stock.group_production_lot')
+        is_pack_enabled = self.env.user.has_group('stock.group_tracking_lot')
+        is_uom_enabled = self.env.user.has_group('uom.group_uom')
 
         picking_nums = 0
         additional_context = {'active_id': active_id}
         if barcode_type == 'product' or not barcode_type:
             product = self.env['product.product'].search([('barcode', '=', barcode)], limit=1)
-            if not product:  # Packaging barcode is also of type 'product' (barcodes unique accross product & packaging)
+            if not product and is_uom_enabled:  # Packaging barcode is also of type 'product' (barcodes unique accross product & packaging)
                 product_packaging = self.env['product.uom'].search([('barcode', '=', barcode)], limit=1)
                 product = product_packaging.product_id  # identify product linked with a packaging barcode
             if product:
                 picking_nums = self.search_count(base_domain + [('product_id', '=', product.id)])
                 additional_context['search_default_product_id'] = product.id
-        if self.env.user.has_group('stock.group_tracking_lot') and (barcode_type == 'package' or (not barcode_type and not picking_nums)):
+        if is_pack_enabled and (barcode_type == 'package' or (not barcode_type and not picking_nums)):
             package = self.env['stock.package'].search([('name', '=', barcode)], limit=1)
             if package:
                 pack_domain = ['|', ('move_line_ids.package_id', '=', package.id), ('move_line_ids.result_package_id', '=', package.id)]
                 picking_nums = self.search_count(base_domain + pack_domain)
                 additional_context['search_default_move_line_ids'] = barcode
-        if self.env.user.has_group('stock.group_production_lot') and (barcode_type == 'lot' or (not barcode_type and not picking_nums)):
+        if is_lot_enabled and (barcode_type == 'lot' or (not barcode_type and not picking_nums)):
             lot = self.env['stock.lot'].search([
                 ('name', '=', barcode),
                 '|', ('company_id', '=', False), ('company_id', '=', picking_type.company_id.id),
@@ -254,13 +257,39 @@ class StockPicking(models.Model):
                         'message': _("No %(picking_type)s ready for this %(barcode_type)s", picking_type=picking_type.name, barcode_type=barcode_type),
                     }
                 }
+            title, message = self._get_barcode_filter_warning(is_lot_enabled, is_pack_enabled, is_uom_enabled, barcode)
             return {
                 'warning': {
-                    'title': _('No product, lot or package found for barcode %s', barcode),
-                    'message': _('Scan a product, a product packaging, a lot/serial number or a package to filter the transfers.'),
+                    'title': title,
+                    'message': message,
                 }
             }
 
         action = picking_type._get_action('stock_barcode.stock_picking_action_kanban')
         action['context'].update(additional_context)
         return {'action': action}
+
+    def _get_barcode_filter_warning(self, is_lot_enabled, is_pack_enabled, is_uom_enabled, barcode):
+        if is_lot_enabled:
+            if is_pack_enabled:
+                if is_uom_enabled:
+                    return (_("No product, lot, packaging, or package found for barcode %s", barcode),
+                            _("Scan a product, a lot, a packaging, or a package to filter the transfers."))
+                return (_("No product, lot, or package found for barcode %s", barcode),
+                        _("Scan a product, a lot, or a package to filter the transfers."))
+            elif is_uom_enabled:
+                return (_("No product, lot, or packaging found for barcode %s", barcode),
+                        _("Scan a product, a lot, or a packaging to filter the transfers."))
+            return (_("No product or lot found for barcode %s", barcode),
+                    _("Scan a product or a lot to filter the transfers."))
+        elif is_pack_enabled:
+            if is_uom_enabled:
+                return (_("No product, package, or packaging found for barcode %s", barcode),
+                        _("Scan a product, a package, or a packaging to filter the transfers."))
+            return (_("No product or package found for barcode %s", barcode),
+                    _("Scan a product or a package to filter the transfers."))
+        elif is_uom_enabled:
+            return (_("No product or packaging found for barcode %s", barcode),
+                    _("Scan a product or a packaging to filter the transfers."))
+        return (_("No product found for barcode %s", barcode),
+                _("Scan a product to filter the transfers."))

@@ -27,34 +27,58 @@ export class StockBarcodeKanbanRenderer extends KanbanRenderer {
     }
 
     async onWillStart() {
-        const groups = ["stock.group_tracking_lot", "stock.group_production_lot"];
+        const groups = ["stock.group_tracking_lot", "stock.group_production_lot", "uom.group_uom"];
         const hasGroups = await Promise.all(groups.map((g) => user.hasGroup(g)));
         this.packageEnabled = hasGroups[0];
         this.trackingEnabled = hasGroups[1];
+        this.uomEnabled = hasGroups[2];
     }
 
     get transferTip() {
+        const tags = { bold_s: markup`<b>`, bold_e: markup`</b>` };
+
         if (this.trackingEnabled) {
             if (this.packageEnabled) {
+                if (this.uomEnabled) {
+                    return _t(
+                        "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %(bold_s)s lot%(bold_e)s, a %(bold_s)s packaging%(bold_e)s, or a %(bold_s)s package%(bold_e)s to filter your records",
+                        tags
+                    );
+                }
                 return _t(
-                    "Scan a %(bold_start)s transfer%(bold_end)s, a %(bold_start)s product%(bold_end)s, a %(bold_start)s lot %(bold_end)s or a %(bold_start)s package %(bold_end)s to filter your records",
-                    { bold_start: markup`<b>`, bold_end: markup`</b>` }
+                    "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %(bold_s)s lot%(bold_e)s, or a %(bold_s)s package%(bold_e)s to filter your records",
+                    tags
+                );
+            } else if (this.uomEnabled) {
+                return _t(
+                    "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %(bold_s)s lot%(bold_e)s, or a %(bold_s)s packaging%(bold_e)s to filter your records",
+                    tags
                 );
             }
             return _t(
-                "Scan a %(bold_start)s transfer%(bold_end)s, a %(bold_start)s product%(bold_end)s, or a %(bold_start)s lot %(bold_end)s to filter your records",
-                { bold_start: markup`<b>`, bold_end: markup`</b>` }
+                "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, or a %(bold_s)s lot%(bold_e)s to filter your records",
+                tags
             );
-        }
-        if (this.packageEnabled) {
+        } else if (this.packageEnabled) {
+            if (this.uomEnabled) {
+                return _t(
+                    "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, a %(bold_s)s packaging%(bold_e)s, or a %(bold_s)s package%(bold_e)s to filter your records",
+                    tags
+                );
+            }
             return _t(
-                "Scan a %(bold_start)s transfer%(bold_end)s, a %(bold_start)s product%(bold_end)s, or a %(bold_start)s package %(bold_end)s to filter your records",
-                { bold_start: markup`<b>`, bold_end: markup`</b>` }
+                "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, or a %(bold_s)s package%(bold_e)s to filter your records",
+                tags
+            );
+        } else if (this.uomEnabled) {
+            return _t(
+                "Scan a %(bold_s)s transfer%(bold_e)s, a %(bold_s)s product%(bold_e)s, or a %(bold_s)s packaging%(bold_e)s to filter your records",
+                tags
             );
         }
         return _t(
-            "Scan a %(bold_start)s transfer %(bold_end)s or a %(bold_start)s product %(bold_end)s to filter your records",
-            { bold_start: markup`<b>`, bold_end: markup`</b>` }
+            "Scan a %(bold_s)s transfer%(bold_e)s or a %(bold_s)s product%(bold_e)s to filter your records",
+            tags
         );
     }
 }
