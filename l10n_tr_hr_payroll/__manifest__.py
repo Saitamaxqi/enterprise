@@ -19,6 +19,8 @@ Türkiye Payroll and Tax Rules
         'data/hr_payroll_structure_data.xml',
         'data/hr_salary_rule_data.xml',
         'views/hr_employee_views.xml',
+        'report/report_hr_employee_employment_certificate.xml',
+        'report/report_hr_employee_employment_certificate_template.xml',
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
