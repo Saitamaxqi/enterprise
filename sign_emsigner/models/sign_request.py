@@ -50,8 +50,9 @@ class SignRequest(models.Model):
             return res
 
         request_item = self.request_item_ids.filtered(
-            lambda r: not r.partner_id or (r.state == 'sent' and r.partner_id.id == self.env.user.partner_id.id)
-        )[0]
+            lambda r: not r.partner_id or (r.state == 'sent' and r.partner_id == self.env.user.partner_id)
+        )[:1]
+
         pending_item = self._check_sign_order_with_emsigner(request_item)
         if pending_item:
             res['context']['need_to_sign'] = False
