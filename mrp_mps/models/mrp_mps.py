@@ -761,6 +761,8 @@ class MrpProductionSchedule(models.Model):
             values['supplierinfo_id'] = self.supplier_id
         if self.enable_batch_size and self.batch_size > 0:
             values['batch_size'] = self.batch_size
+        if self.bom_id and self.is_manufacture_route:
+            values['bom_id'] = self.bom_id
         return values
 
     def _get_forecasts_state(self, production_schedule_states, date_range, procurement_date):

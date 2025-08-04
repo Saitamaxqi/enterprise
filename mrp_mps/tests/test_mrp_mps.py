@@ -1321,3 +1321,49 @@ class TestMpsMps(common.TransactionCase):
                 self.env.company.with_user(dummy).write({fname: not self.env.company[fname]})
         # no access errors
         self.assertTrue(True)
+
+    def test_mps_replenish_correct_bom(self):
+        """Test that the manufacturing orders created by MPS replenishment use the correct BOM."""
+        manufacture_route = self.env.ref('mrp.route_warehouse0_manufacture').id
+        # Create a product with two BoMs
+        product = self.env['product.product'].create({
+            'name': 'MPS Test Product',
+            'is_storable': True,
+            'route_ids': [Command.set([manufacture_route])]
+        })
+
+        # BoM 1
+        self.env['mrp.bom'].create({
+            'product_tmpl_id': product.product_tmpl_id.id,
+            'product_qty': 1,
+             'bom_line_ids': [
+                Command.create({'product_id': self.screw.id, 'product_qty': 2}),
+            ],
+        })
+
+        # BoM 2
+        bom2 = self.env['mrp.bom'].create({
+            'product_tmpl_id': product.product_tmpl_id.id,
+            'product_qty': 1,
+            'bom_line_ids': [
+                Command.create({'product_id': self.bolt.id, 'product_qty': 4}),
+            ],
+        })
+
+        # Trigger procurement using the second BoM
+        mps = self.env['mrp.production.schedule'].create({
+            'product_id': product.id,
+            'warehouse_id': self.warehouse.id,
+            'bom_id': bom2.id,
+            'route_id': manufacture_route,
+        })
+        self.env['mrp.product.forecast'].create({
+            'production_schedule_id': mps.id,
+            'date': self.mps_dates_month[0][0],
+            'forecast_qty': 100
+        })
+        mps.action_replenish()
+
+        # Check if the MO is created with the second BoM
+        production = self.env['mrp.production'].search([('product_id', '=', product.id)], limit=1)
+        self.assertEqual(production.bom_id, bom2, "MO was created with an incorrect BOM")
