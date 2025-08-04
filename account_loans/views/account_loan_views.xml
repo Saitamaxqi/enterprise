@@ -231,7 +231,7 @@
             <field name="model">account.loan.line</field>
             <field name="arch" type="xml">
                 <search string="Search Loan">
-                    <field name="loan_name" string="Loan" filter_domain="['|', ('name', 'ilike', self), ('display_name', 'ilike', self)]"/>
+                    <field name="loan_name" string="Loan" filter_domain="[('loan_name', 'ilike', self)]"/>
                     <filter string="Current" name="current" domain="[('loan_state', 'in', ('draft', 'running'))]" help="Draft &amp; Running Loans"/>
                     <filter string="Closed" name="closed" domain="[('loan_state', '=', 'closed')]" help="Closed Loans"/>
                     <separator/>
