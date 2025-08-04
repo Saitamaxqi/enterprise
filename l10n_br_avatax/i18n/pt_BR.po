@@ -1368,6 +1368,23 @@ msgid "View products"
 msgstr "Visualizar produtos"
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid ""
+"Warning: An Avalara account already exists in this database. Creating a new "
+"one may cause issues when issuing electronic invoices if credentials or "
+"certificates are linked incorrectly. Only continue if you intend to manage "
+"separate Avalara accounts per company (e.g., with different IT teams). "
+"Otherwise, it is recommended to add your company to the existing Avalara "
+"account."
+msgstr ""
+"Aviso: Já existe uma conta Avalara registrada neste banco de dados. "
+"Criar uma nova conta pode causar problemas na emissão de notas fiscais eletrônicas "
+"se as credenciais ou certificados forem vinculados incorretamente. "
+"Prossiga apenas se realmente for necessário gerenciar contas Avalara separadas por empresa "
+"(por exemplo, com equipes de IT diferentes). "
+"Caso contrário, é recomendável adicionar sua empresa à conta Avalara já existente."
+
+#. module: l10n_br_avatax
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid "What:"

@@ -56,7 +56,14 @@
                                         Create a new account
                                     </button>
                                     <button name="create_account" type="object" class="btn-link" noSaveDialog="1"
-                                            invisible="l10n_br_avatax_show_overwrite_warning">
+                                            invisible="l10n_br_avatax_show_overwrite_warning or not l10n_br_avatax_show_existing_account_warning"
+                                            confirm="Warning: An Avalara account already exists in this database. Creating a new one may cause issues when issuing electronic invoices if credentials or certificates are linked incorrectly. Only continue if you intend to manage separate Avalara accounts per company (e.g., with different IT teams). Otherwise, it is recommended to add your company to the existing Avalara account.">
+                                        <i title="Create account" role="img" aria-label="Create account"
+                                           class="fa fa-plug fa-fw"/>
+                                        Create account
+                                    </button>
+                                    <button name="create_account" type="object" class="btn-link" noSaveDialog="1"
+                                            invisible="l10n_br_avatax_show_overwrite_warning or l10n_br_avatax_show_existing_account_warning">
                                         <i title="Create account" role="img" aria-label="Create account"
                                            class="fa fa-plug fa-fw"/>
                                         Create account

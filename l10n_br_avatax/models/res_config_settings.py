@@ -51,6 +51,15 @@ class ResConfigSettings(models.TransientModel):
         help="Main CNAE code registered with the government.",
         readonly=False,
     )
+    l10n_br_avatax_show_existing_account_warning = fields.Boolean(compute='_compute_l10n_br_avalara_account_count')
+
+    def _compute_l10n_br_avalara_account_count(self):
+        companies_with_avatax_account = self.env['res.company'].search_count([
+            ('l10n_br_avatax_portal_email', '!=', False),
+            ('l10n_br_avatax_api_identifier', '!=', False),
+            ('l10n_br_avatax_api_key', '!=', False),
+        ])
+        self.l10n_br_avatax_show_existing_account_warning = companies_with_avatax_account > 0
 
     @api.depends('l10n_br_avalara_environment', 'l10n_br_avatax_api_identifier', 'l10n_br_avatax_api_key')
     def _compute_show_overwrite_warning(self):

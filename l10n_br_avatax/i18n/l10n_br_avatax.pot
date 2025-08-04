@@ -1316,6 +1316,17 @@ msgid "View products"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid ""
+"Warning: An Avalara account already exists in this database. Creating a new "
+"one may cause issues when issuing electronic invoices if credentials or "
+"certificates are linked incorrectly. Only continue if you intend to manage "
+"separate Avalara accounts per company (e.g., with different IT teams). "
+"Otherwise, it is recommended to add your company to the existing Avalara "
+"account."
+msgstr ""
+
+#. module: l10n_br_avatax
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid "What:"
