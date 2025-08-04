@@ -50,9 +50,18 @@ class HrContractSalaryOffer(models.Model):
             else:
                 offer.new_car = offer.contract_template_id.available_cars_amount < offer.contract_template_id.max_unused_cars
 
-    @api.depends('applicant_id.partner_id', 'employee_id')
+    @api.depends('applicant_id.partner_id', 'employee_id', 'contract_template_id')
     def _compute_car_id(self):
         for offer in self:
+            contract = offer.contract_template_id
+            version = offer.employee_version_id
+            if contract and contract.transport_mode_car and contract.car_id:
+                offer.car_id = contract.car_id
+                continue
+            if version and version.transport_mode_car and version.car_id:
+                offer.car_id = version.car_id
+                continue
+
             partner = self.env['res.partner']
             car = self.env['fleet.vehicle']
             if offer.employee_id:
