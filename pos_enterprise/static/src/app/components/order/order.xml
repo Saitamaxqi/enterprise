@@ -20,7 +20,7 @@
                 </div>
                 <div class="o_pdis_order_card_header_bottom d-grid p-2 bg-100">
                     <div class="o_pdis_table-info d-flex justify-content-between align-items-center">
-                        <div t-esc="this.props.order.stage.name" class=" o_pdis_stage py-1 px-3 rounded-pill"
+                        <div t-if="this.prepDisplay.selectedStageId === 0" t-esc="this.props.order.stage.name" class=" o_pdis_stage py-1 px-3 rounded-pill"
                             t-att-style="`background-color: ${this.props.order.stage.color} !important; color: ${this.fontColor}`"/>
                         <div t-if="this.order.pos_order_id.preset_id?.name" class="d-flex gap-0 align-items-center justify-content-center">
                             <span

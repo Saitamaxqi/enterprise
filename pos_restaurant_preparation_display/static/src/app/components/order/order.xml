@@ -12,7 +12,7 @@
             <attribute name="t-attf-class" add="#{(isPending) ? 'd-none' : ''}" separator=" " />
         </xpath>
         <xpath expr="//div[hasclass('o_pdis_alert-timer')]" position="after">
-            <div class="rounded-pill bg-200  py-1 px-3" t-if="isPending">Pending</div>
+            <div class="rounded-pill py-1 px-3 text-bg-warning" t-if="isPending">Pending</div>
         </xpath>
     </t>
 </templates>
