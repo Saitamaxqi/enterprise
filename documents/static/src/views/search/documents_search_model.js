@@ -5,7 +5,6 @@ import { router } from "@web/core/browser/router";
 import { Domain } from "@web/core/domain";
 import { useService } from "@web/core/utils/hooks";
 
-
 export class DocumentsSearchModel extends SearchModel {
     setup(services) {
         super.setup(services);
@@ -189,10 +188,12 @@ export class DocumentsSearchModel extends SearchModel {
      */
     toggleCategoryValue(sectionId, valueId) {
         super.toggleCategoryValue(...arguments);
-        browser.localStorage.setItem("searchpanel_documents_document", valueId);
 
         const selectedFolder = this.getSelectedFolder();
-        this.documentService.updateDocumentURL(selectedFolder);
+        if (!this.context.documents_view_secondary) {
+            browser.localStorage.setItem("searchpanel_documents_document", valueId);
+            this.documentService.updateDocumentURL(selectedFolder);
+        }
         if (typeof valueId === "number") {
             this.documentService.logAccess(selectedFolder.access_token);
         }

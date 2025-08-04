@@ -28,10 +28,9 @@ export class SelectAddDocumentCreateDialog extends SelectCreateDialog {
 
     get viewProps() {
         // We force list view to be used in the dialog (even for smaller screens)
-        // eslint-disable-next-line no-unused-vars
         const baseProps = super.viewProps;
         return {
-            ...omit(baseProps, "forceGlobalClick"),
+            ...omit(baseProps, "forceGlobalClick", "display"),
             type: "list",
             allowSelectors: true,
         };

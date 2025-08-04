@@ -15,8 +15,11 @@ import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixi
 
 import { useExternalListener, useRef } from "@odoo/owl";
 
-export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) {
+export class DocumentsSecondaryListRenderer extends ListRenderer {
     static props = [...ListRenderer.props, "previewStore"];
+}
+
+export class DocumentsListRenderer extends DocumentsRendererMixin(DocumentsSecondaryListRenderer) {
     static template = "documents.DocumentsListRenderer";
     static recordRowTemplate = "documents.DocumentsListRenderer.RecordRow";
     static components = Object.assign({}, ListRenderer.components, {
@@ -43,7 +46,11 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
                     record.toggleSelection(!allSelected);
                 });
                 const focusedRecord = this.setDefaultFocus();
-                document.querySelector(`.o_data_row[data-value-id="${focusedRecord.resId}"] .o_data_cell`).focus();
+                document
+                    .querySelector(
+                        `.o_data_row[data-value-id="${focusedRecord.resId}"] .o_data_cell`
+                    )
+                    .focus();
             },
             {
                 category: "smart_action",

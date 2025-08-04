@@ -11,8 +11,8 @@
         </xpath>
 
         <xpath expr="//*[hasclass('o_control_panel_navigation')]" position="inside">
-            <button t-if="documentService.userIsInternal"
-                t-on-click="() => this.documentService.toggleRightPanelVisibility()"
+            <button t-if="documentService.userIsInternal &amp;&amp; !env.searchModel.context.documents_view_secondary"
+                t-on-click="() => documentService.toggleRightPanelVisibility()"
                 data-tooltip="Info &amp; tags"
                 class="btn btn-secondary o_switch_view o_kanban d-none d-md-inline"
                 t-att-class="{'active': rightPanelState.visible}">

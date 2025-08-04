@@ -34,6 +34,8 @@ export class MailComposerDocumentSelector extends Component {
             ],
             context: {
                 list_view_ref: "documents.documents_view_list_add_documents_attachment",
+                documents_search_panel_no_trash: true,
+                documents_view_secondary: true,
             },
             chatterParams: {
                 model,

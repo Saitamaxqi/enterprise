@@ -4,6 +4,9 @@
         t-inherit="web.SelectCreateDialog" t-inherit-mode="primary">
 
         <xpath expr="//t[@t-if='props.multiSelect']" position="replace"/>
+        <xpath expr="//Dialog" position="attributes">
+            <attribute name="size">"xl"</attribute>
+        </xpath>
 
         <!-- Add custom buttons for document actions -->
         <xpath expr="//button[hasclass('o_form_button_cancel')]" position="before">

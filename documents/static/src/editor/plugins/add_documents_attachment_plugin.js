@@ -34,6 +34,8 @@ export class AddDocumentsAttachmentPlugin extends Plugin {
             ],
             context: {
                 list_view_ref: "documents.documents_view_list_add_documents_attachment",
+                documents_search_panel_no_trash: true,
+                documents_view_secondary: true,
             },
             chatterParams: {
                 isPlugin: true,
@@ -51,9 +53,8 @@ export class AddDocumentsAttachmentPlugin extends Plugin {
             const resModel = recordInfo.resModel;
             const rawResId = recordInfo.resId;
             // Process res_id to handle the attachment for plugin case
-            const resId = resModel === "ir.ui.view" || !rawResId
-                ? false
-                : parseInt(rawResId) || false;
+            const resId =
+                resModel === "ir.ui.view" || !rawResId ? false : parseInt(rawResId) || false;
             const attachmentRecords = await this.services.orm.call(
                 "documents.document",
                 "add_documents_attachment",

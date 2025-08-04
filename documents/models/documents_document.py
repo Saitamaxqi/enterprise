@@ -2407,13 +2407,15 @@ class DocumentsDocument(models.Model):
                             'display_name': _("Recent"),
                             'id': 'RECENT',
                             'description': _("Recently accessed documents."),
-                        }, {
-                            'display_name': _("Trash"),
-                            'id': 'TRASH',
-                            'description': _("Items in trash will be deleted forever after %s days.",
-                                             self.get_deletion_delay()),
                         }]
-                ]
+                    ]
+                if not self.env.context.get('documents_search_panel_no_trash'):
+                    special_roots.append({
+                        'display_name': _("Trash"),
+                        'id': 'TRASH',
+                        'description': _("Items in trash will be deleted forever after %s days.",
+                                         self.get_deletion_delay()),
+                    })
 
             return {
                 'parent_field': 'user_folder_id',

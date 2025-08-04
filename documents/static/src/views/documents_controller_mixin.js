@@ -116,7 +116,8 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2,
                 },
                 details: {
-                    isAvailable: () => userIsInternal,
+                    isAvailable: () =>
+                        userIsInternal && !this.env.searchModel.context.documents_view_secondary,
                     sequence: 75,
                     description: _t("Info & tags"),
                     icon: "fa fa-info-circle",
