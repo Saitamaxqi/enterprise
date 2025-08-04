@@ -49,6 +49,11 @@ class AccountReturnCreationWizard(models.TransientModel):
     equity = fields.Boolean(string="Equity", default=True)
     other = fields.Boolean(string="Others", default=True)
 
+    @api.onchange('available_return_type_ids')
+    def _onchange_available_return_types(self):
+        if self.available_return_type_ids and not self.return_type_id:
+            self.return_type_id = self.available_return_type_ids[0]
+
     @api.onchange('return_type_id')
     def _onchange_return_type_id(self):
         today = fields.Date.context_today(self)

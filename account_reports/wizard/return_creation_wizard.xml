@@ -7,7 +7,7 @@
             <form string="Generate Return">
                 <group>
                         <field name="available_return_type_ids" invisible="1"/>
-                        <field name="return_type_id" required="1" widget="selection_badge" options="{'no_open': True, 'no_create_edit': True}" context="{'default_category': category}" class="w-100"/>
+                        <field name="return_type_id" required="1" widget="selection_badge" options="{'no_open': True, 'no_create_edit': True}" class="w-100"/>
                         <label for="date_from" string="Dates"/>
                         <div class="d-flex align-items-center">
                             <field name="date_to" invisible="1"/>
@@ -20,7 +20,7 @@
                             />
                         </div>
                 </group>
-                <group>
+                <group invisible="category != 'audit'">
                     <separator string="Cycles"/>
                     <group>
                         <field name="fixed_assets" />
