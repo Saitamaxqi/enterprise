@@ -70,6 +70,7 @@ export class IotAction {
             async () => {
                 await this.webRtc.onMessage(identifier, deviceIdentifier, actionId, onSuccess, onFailure);
                 await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, actionId);
+                this.connectionStatus = "local";
             },
             async () => {
                 if (
@@ -78,11 +79,19 @@ export class IotAction {
                 ) {
                     throw new Error("Longpolling is temporarily disabled due to a recent failure.");
                 }
-                this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, actionId);
-                const response =
-                    await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, actionId, true);
-                if (response?.result === false) {
-                    onFailure({ status: "disconnected" }, deviceIdentifier, actionId);
+                try {
+                    this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, actionId);
+                    const response =
+                        await this.longpolling.sendMessage(ip, {
+                            device_identifier: deviceIdentifier,
+                            data
+                        }, actionId, true);
+                    if (response?.result === false) {
+                        onFailure({status: "disconnected"}, deviceIdentifier, actionId);
+                    }
+                } catch (e) {
+                    this.longpollingFailedTimestamp = Date.now();
+                    throw e;
                 }
                 this.connectionStatus = "local";
             },
@@ -103,11 +112,11 @@ export class IotAction {
                 return await connectionType();
             } catch (e) {
                 console.debug("IoT Box action: attempted method failed, attempting another protocol.", e);
-                this.longpollingFailedTimestamp = Date.now();
             }
         }
 
         // If all the connection types failed, run the onFailure callback
+        this.connectionStatus = "offline";
         onFailure({ status: "disconnected" }, deviceIdentifier);
     }
 

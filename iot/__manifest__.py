@@ -34,5 +34,8 @@ This module provides management of your IoT Boxes inside Odoo.
             'iot/static/src/network_utils/iot_webrtc.js',
             'iot/static/tests/**/*',
         ],
+        'web.assets_tests': [
+            'iot/static/tests/tours/**/*',
+        ],
     }
 }
