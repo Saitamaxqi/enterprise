@@ -2,7 +2,7 @@ import io
 from collections import defaultdict
 
 from odoo import models, _, api
-from odoo.exceptions import UserError
+from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools import format_date
 from odoo.tools.date_utils import get_quarter_number
 
@@ -354,6 +354,12 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
                     sheet_vals['row_idx'] += 1
 
     def export_libros_de_iva(self, options):
+        if not self.env.company.l10n_es_reports_iae_group:
+            raise RedirectWarning(
+                _("Please configure the \"IAE Group or Heading\" of your company."),
+                self.env.ref('base.action_res_company_form').id,
+                _("Go to Company"),
+            )
         report = self.env['account.report'].browse(options['report_id'])
         output = io.BytesIO()
         import xlsxwriter  # noqa: PLC0415

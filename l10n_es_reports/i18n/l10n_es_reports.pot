@@ -472,6 +472,13 @@ msgid "Generic Tax Report Custom Handler"
 msgstr ""
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libros_export.py:0
+#, python-format
+msgid "Go to Company"
+msgstr ""
+
+#. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod390_export_wizard__group_number
 msgid "Group of entities - Group Number"
 msgstr ""
@@ -758,6 +765,13 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__contact_person_phone
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod349_export_wizard__contact_person_phone
 msgid "Phone number where to join the contact person"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libros_export.py:0
+#, python-format
+msgid "Please configure the \"IAE Group or Heading\" of your company."
 msgstr ""
 
 #. module: l10n_es_reports

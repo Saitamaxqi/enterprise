@@ -1,6 +1,6 @@
 from odoo import Command, fields
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
-from odoo.exceptions import UserError
+from odoo.exceptions import RedirectWarning, UserError
 from odoo.tests import tagged
 
 
@@ -381,3 +381,14 @@ class TestLibrosExport(TestAccountReportsCommon):
         self.assertEqual(line_vals_list[0]['surcharge_fee'], 10.4)
         self.assertEqual(line_vals_list[1]['withholding_type'], 15.0)
         self.assertEqual(line_vals_list[1]['withholding_amount'], 30.0)
+
+    def test_export_libros_de_iva_missing_iae_group(self):
+        """Test that RedirectWarning is raised when IAE Group is not configured."""
+        # Remove IAE group from company
+        self.company_data['company'].l10n_es_reports_iae_group = False
+
+        report = self.env.ref('account.generic_tax_report')
+        options = self._generate_options(report, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-12-31'))
+
+        with self.assertRaisesRegex(RedirectWarning, "Please configure the \"IAE Group or Heading\" of your company."):
+            self.env['account.generic.tax.report.handler'].export_libros_de_iva(options)
