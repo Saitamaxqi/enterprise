@@ -21,6 +21,7 @@ class TestPayrollExpense(TestHrPayrollAccountCommon, TestExpenseCommon):
 
         cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_manager')
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=[cls.company_data['company'].id]))
+        cls.company.tax_calculation_rounding_method = 'round_per_line'
 
         cls.payslip_run.company_id = cls.company_data['company'].id
 

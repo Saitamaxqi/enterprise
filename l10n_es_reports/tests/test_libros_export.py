@@ -323,8 +323,8 @@ class TestLibrosExport(TestAccountReportsCommon):
             'withholding_amount': 0.0,
         })
         self.assertDictEqual(amount_vals[4], {
-            'income_computable': 222.22, 'total_amount': 248.88, 'base_amount': 222.22, 'tax_rate': 21.0,
-            'taxed_amount': 46.66, 'surcharge_type': 0.0, 'surcharge_fee': 0.0, 'withholding_type': 9.0,
+            'income_computable': 222.22, 'total_amount': 248.89, 'base_amount': 222.22, 'tax_rate': 21.0,
+            'taxed_amount': 46.67, 'surcharge_type': 0.0, 'surcharge_fee': 0.0, 'withholding_type': 9.0,
             'withholding_amount': 20.0,
         })
 
