@@ -1,9 +1,6 @@
 import { registry } from "@web/core/registry";
-import { DateTimeField, dateTimeField } from "@web/views/fields/datetime/datetime_field";
-import {
-    listDateTimeField,
-    ListDateTimeField,
-} from "@web/views/fields/datetime/list_datetime_field";
+import { DateTimeField, dateField } from "@web/views/fields/datetime/datetime_field";
+import { ListDateTimeField, listDateField } from "@web/views/fields/datetime/list_datetime_field";
 
 export class EsgDateTimeField extends DateTimeField {
     static template = "esg.EsgDateTimeField";
@@ -14,7 +11,7 @@ export class EsgDateTimeField extends DateTimeField {
 }
 
 export const esgDateRangeField = {
-    ...dateTimeField,
+    ...dateField,
     component: EsgDateTimeField,
 };
 
@@ -29,7 +26,7 @@ export class EsgListDateTimeField extends ListDateTimeField {
 }
 
 export const esgListDateRangeField = {
-    ...listDateTimeField,
+    ...listDateField,
     component: EsgListDateTimeField,
 };
 
