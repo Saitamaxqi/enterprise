@@ -30,6 +30,6 @@ must submit monthly or quarterly, depending on their tax reporting period.
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
-    'auto_install': ['l10n_ro', 'account_saft'],
+    'auto_install': True,
     'post_init_hook': '_update_saft_fields_on_taxes',
 }
