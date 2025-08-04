@@ -841,7 +841,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'code': '_template_checks_1',
                     'type': 'check',
                     'result': 'manual',
-                    'bypassed': False,
+                    'bypassed': True,
                     'attachment_ids': self.env['ir.attachment'],
                 }
             ]

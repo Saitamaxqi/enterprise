@@ -587,7 +587,7 @@ class AccountReturn(models.Model):
 
             if 'audit_status' in vals:
                 if record.audit_status in ('ongoing', 'paused'):
-                    record.audit_return_state = 'new'
+                    record.state = 'new'
         return result
 
     @api.model
@@ -2245,8 +2245,9 @@ class AccountReturnCheck(models.Model):
         result = super().write(vals)
 
         for check in self:
-            if 'type' in vals:
-                check.bypassed = False
+            if 'type' in vals and check.type != vals['type']:
+                if check.bypassed:
+                    check.action_invalidate_check()
 
             type = vals.get('type', check.type)
             if type != 'file' and check.attachment_ids:
