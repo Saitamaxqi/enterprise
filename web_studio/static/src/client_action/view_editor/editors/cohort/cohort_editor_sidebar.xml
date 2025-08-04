@@ -27,7 +27,7 @@
                     name="'measure'"
                     type="'selection'"
                     value="modelParams.measure"
-                    childProps="{ choices: this.dateFields, required: false }"
+                    childProps="{ choices: this.measureFields, required: false }"
                     onChange.bind="onViewAttributeChanged"
                 >
                     Measure Field

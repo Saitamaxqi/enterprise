@@ -2261,3 +2261,26 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 <field name="x_test_binary" filename="x_test_binary_filename"/>
             </xpath>
         </data>''')
+
+    def test_cohort_measure_values(self):
+        testCohortView = self.env["ir.ui.view"].create({
+        "name": "simple partner",
+        "model": "res.partner",
+        "type": "cohort",
+        "arch": '''
+                <cohort string="foo" date_start="create_date" date_stop="create_date">
+                    <field name="name"/>
+                </cohort>
+        '''
+        })
+        self.start_tour("/web?debug=tests", "web_studio_test_cohort_measure_values", login="admin")
+
+        studio_view = _get_studio_view(testCohortView)
+
+        assertViewArchEqual(self, studio_view.arch, """
+             <data>
+                <xpath expr="/cohort" position="attributes">
+                    <attribute name="measure">color</attribute>
+                </xpath>
+            </data>
+        """)
