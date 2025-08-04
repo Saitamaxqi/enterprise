@@ -2279,3 +2279,38 @@ registry.category("web_tour.tours").add("web_studio_test_automagically_added_fie
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_apply_group_no_one", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view .o_form_editable",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_form_view_editor div[name='function']",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_many2many_tags[name='group_ids'] input",
+            run: "edit Technical Features",
+        },
+        {
+            trigger: ".dropdown-item:contains('Technical Features')",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_snackbar .fa-check",
+        },
+        {
+            trigger: ".o_tag_badge_text:contains('Technical Features')",
+        }
+    ]
+});

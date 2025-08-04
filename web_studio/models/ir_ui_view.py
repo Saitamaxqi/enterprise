@@ -83,6 +83,19 @@ class IrUiView(models.Model):
 
         return missing
 
+    def _postprocess_debug_to_cache(self, tree):
+        if self.env.context.get('studio'):
+            return tree
+        return super()._postprocess_debug_to_cache(tree)
+
+    def _postprocess_debug(self, tree):
+        if self.env.context.get('studio'):
+            for node in tree.xpath('//*[@__debug__]'):
+                node.attrib.pop('__debug__')
+            return tree
+        else:
+            return super()._postprocess_debug(tree)
+
     def _postprocess_access_rights(self, tree):
         # apply_group only returns the view groups ids.
         # As we need also need their name and display in Studio to edit these groups

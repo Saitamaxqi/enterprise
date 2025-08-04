@@ -2192,3 +2192,40 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         self.testAction.view_ids = [Command.clear()] + [Command.create({"view_mode": v.type, "view_id": v.id}) for v in all_views]
         self.start_tour(f"/odoo/action-{self.testAction.id}?debug=tests", "web_studio_test_automagically_added_fields", login="admin")
+
+    def test_apply_group_no_one(self):
+        self.testView.arch = """
+            <form>
+                <field name="name" required="True" />
+                <field name="function" />
+            </form>
+        """
+        self.start_tour("/web?debug=0", "web_studio_test_apply_group_no_one", login="admin")
+        studio_view = _get_studio_view(self.testView)
+        assertViewArchEqual(self, studio_view.arch, """
+        <data>
+            <xpath expr="/form//field[@name='function']" position="attributes">
+                <attribute name="groups">base.group_no_one</attribute>
+            </xpath>
+        </data>
+        """)
+
+    def test_get_view_with_group_no_one(self):
+        view = self.env["ir.ui.view"].create({
+            "name": "simple view",
+            "model": "res.partner",
+            "type": "form",
+            "arch": """
+                 <form>
+                    <field name="function" groups="base.group_no_one"/>
+                </form>
+            """
+        })
+        view_arch_from_studio = self.env[view.model].with_context(studio=True).get_view(view.id, view.type)["arch"]
+        tree = etree.fromstring(view_arch_from_studio)
+        field_node = tree.find("field")
+        self.assertDictEqual({**field_node.attrib}, {
+            "name": "function",
+            "groups": "base.group_no_one",
+            "studio_groups": '[{"id": 7, "name": "Technical Features", "display_name": "Technical Features", "forbid": false}]'
+        })
