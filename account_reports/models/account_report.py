@@ -6041,7 +6041,7 @@ class AccountReport(models.Model):
                 # This is needed, otherwise we could compute width on very long number such as 12.0999999998
                 # which wouldn't show well in the end result as the numbers are rounded.
                 value = float_repr(float(value), self.env.company.currency_id.decimal_places)
-            except ValueError:
+            except (ValueError, OverflowError):
                 pass
 
         # Start by computing the width of the cell if we are not using colspans.

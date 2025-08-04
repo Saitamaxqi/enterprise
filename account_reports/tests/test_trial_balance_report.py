@@ -877,3 +877,18 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
             ],
             options,
         )
+
+    def test_export_xlsx_with_inf_account_code(self):
+        account_with_inf_code = self.env['account.account'].create(
+            [{'code': '1E1000', 'name': '', 'account_type': 'asset_receivable'}])
+        move = self.env['account.move'].create({
+            'date': '2025-08-02',
+            'line_ids': [Command.create({'account_id': account_with_inf_code.id, 'name': ''})],
+        })
+        move.action_post()
+        options = self._generate_options(
+            self.report,
+            fields.Date.from_string('2025-08-01'),
+            fields.Date.from_string('2025-08-31')
+        )
+        self.report.export_to_xlsx(options)
