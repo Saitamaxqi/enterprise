@@ -99,8 +99,7 @@ class SaleOrder(models.Model):
             'domain': [('role_id', 'in', self.order_line.product_template_id.planning_role_id.ids)],
             'context': {
                 'default_sale_line_id': self.planning_first_sale_line_id.id,
-                'search_default_group_by_role': 1,
-                'search_default_group_by_resource': 2,
+                'search_default_group_by_resource': 1,
                 'initialDate': self.planning_initial_date,
                 'planning_gantt_active_sale_order_id': self.id}
         })
