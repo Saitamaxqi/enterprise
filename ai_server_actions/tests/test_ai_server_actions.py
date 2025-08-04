@@ -23,7 +23,7 @@ class TestAiServerActions(TransactionCase):
                 "state": "object_write",
                 "name": "Test",
                 "evaluation_type": "ai_computed",
-                "ai_prompt": "Write 1337",
+                "ai_update_prompt": "Write 1337",
                 "update_field_id": field,
             },
         )

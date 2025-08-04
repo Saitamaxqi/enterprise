@@ -9,7 +9,7 @@
                 <xpath expr="//field[@name='selection_value']" position="after">
                     <field name="update_field_name" invisible="1"/>  <!-- Used for the `ai_prompt` widget -->
                     <field name="update_field_relation" invisible="1"/>  <!-- Used for the `ai_prompt` widget -->
-                    <field name="ai_prompt"
+                    <field name="ai_update_prompt"
                         widget="ai_prompt"
                         options="{
                             'model_reference_field': 'model_name',

@@ -16,7 +16,7 @@
                     <label for="ai_prompt">
                         Prompt
                     </label>
-                    <div id="ai_prompt" t-on-click.prevent.stop="onSystemPromptClick" class="input-group-addon">
+                    <div id="ai_update_prompt" t-on-click.prevent.stop="onSystemPromptClick" class="input-group-addon">
                         <AiPrompt
                             prompt="props.node.field.ai"
                             readonly="true"

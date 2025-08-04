@@ -80,14 +80,14 @@ test("ai and system prompt are readonly for base fields", async () => {
     await waitFor(".o_web_studio_sidebar .o_web_studio_sidebar_checkbox input[name='AI']");
     expect(".o_web_studio_property input[name='AI']").toHaveAttribute("disabled");
     expect(".o_web_studio_property input[name='AI']").not.toBeChecked();
-    expect(".o_web_studio_property div#ai_prompt").toHaveCount(0);
+    expect(".o_web_studio_property div#ai_update_prompt").toHaveCount(0);
     await contains(".nav-link.o_web_studio_view").click();
     await contains(".o_field_char[name='ai_char']").click();
     await waitFor(".o_web_studio_sidebar .o_web_studio_sidebar_checkbox input[name='AI']");
     expect(".o_web_studio_property input[name='AI']").toHaveAttribute("disabled");
     expect(".o_web_studio_property input[name='AI']").toBeChecked();
-    expect(".o_web_studio_property div#ai_prompt").toHaveCount(1);
-    expect(".o_web_studio_property div#ai_prompt").toHaveText("My prompt");
+    expect(".o_web_studio_property div#ai_update_prompt").toHaveCount(1);
+    expect(".o_web_studio_property div#ai_update_prompt").toHaveText("My prompt");
     // click on prompt does not open the prompt edition dialog (no step)
     await contains(".o_web_studio_property input[name='AI']").click();
 });
@@ -151,12 +151,12 @@ test("make custom field use ai", async () => {
     await waitFor(".o_web_studio_sidebar .o_web_studio_sidebar_checkbox input[name='AI']");
     expect(".o_web_studio_property input[name='AI']").not.toHaveAttribute("disabled");
     expect(".o_web_studio_property input[name='AI']").not.toBeChecked();
-    expect(".o_web_studio_property div#ai_prompt").toHaveCount(0);
+    expect(".o_web_studio_property div#ai_update_prompt").toHaveCount(0);
     await contains(".o_web_studio_property input[name='AI']").check();
     expect.verifySteps(["edit_field", "edit_view"]);
     expect(".o_web_studio_property input[name='AI']").toBeChecked();
-    expect(".o_web_studio_property div#ai_prompt").toHaveCount(1);
-    await contains(".o_web_studio_property div#ai_prompt").click();
+    expect(".o_web_studio_property div#ai_update_prompt").toHaveCount(1);
+    await contains(".o_web_studio_property div#ai_update_prompt").click();
     expect.verifySteps(["ai_dialog"]);
     await waitFor(".o_ai_prompt_dialog");
     expect(".o_ai_prompt .odoo-editor-editable").toHaveText("");
