@@ -795,8 +795,8 @@ class HrPayslip(models.Model):
         leave_totals = self._l10n_au_get_unused_leave_totals()
         # Precomputed values or user input
         gross_totals = {
-            "annual": self.input_line_ids.filtered(lambda x: x.code == 'AL').amount,
-            "long_service": self.input_line_ids.filtered(lambda x: x.code == 'LSL').amount
+            "annual": self._get_input_line_amount('AL'),
+            "long_service": self._get_input_line_amount('LSL'),
         }
         leave_amounts = defaultdict(lambda: {
             "pre_1978": 0.0,

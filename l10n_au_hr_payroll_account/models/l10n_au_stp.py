@@ -633,7 +633,14 @@ class L10n_AuStp(models.Model):
                 if is_current_fiscal_year:
                     start_date = self.submit_date
                 end_date = start_date
-
+            employee_is_terminated = (
+                payslip.l10n_au_termination_type
+                or employee.slip_ids.filtered(
+                    lambda s: s.version_id == payslip.version_id
+                    and s.state == "done"
+                    and s.l10n_au_termination_type
+                ).exists()
+            )
             values = defaultdict(str, {
                 "TaxFileNumberId": employee.l10n_au_tfn,
                 "AustralianBusinessNumberId": employee.l10n_au_abn.replace(" ", "") if employee.l10n_au_abn else "",
@@ -654,9 +661,9 @@ class L10n_AuStp(models.Model):
                 "ElectronicMailAddressT": employee.private_email,
                 "TelephoneMinimalN": strip_phonenumber(employee.private_phone),
                 "EmploymentStartD": extra_data[employee.id]["EmploymentStartD"],
-                "EmploymentEndD": payslip.version_id.date_end or False,
+                "EmploymentEndD": payslip.version_id.date_end if employee_is_terminated else False,
                 "PaymentBasisC": employee.l10n_au_employment_basis_code,
-                "CessationTypeC": payslip.version_id.l10n_au_cessation_type_code,
+                "CessationTypeC": payslip.version_id.l10n_au_cessation_type_code if employee_is_terminated else False,
                 "TaxTreatmentC": employee.l10n_au_tax_treatment_code,
                 "TaxOffsetClaimTotalA": None if self.is_zeroing else employee.l10n_au_nat_3093_amount,
                 "StartD": start_date,
