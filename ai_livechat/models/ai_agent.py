@@ -54,5 +54,5 @@ class AIAgent(models.Model):
         messages = super()._build_system_context(extra_system_context)
         discuss_channel = self.env.context.get('discuss_channel', self.env['discuss.channel'])
         if discuss_channel.channel_type == 'livechat':
-            messages.append({'role': 'system', 'content': PREPROMPTS['livechat']})
+            messages.append(PREPROMPTS['livechat'])
         return messages
