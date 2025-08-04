@@ -133,17 +133,9 @@ patch(TicketScreen.prototype, {
                         await this.pos.sendOrderInPreparation(order, true);
                     }
                     await this._updateScreenState(order, "ACTIVE_ORDERS");
-                    order.uiState.displayed = false;
-                    if (order.id === this.pos.getOrder()?.id) {
-                        const orderList = this._getOrderList();
-                        if (orderList.length == 1) {
-                            this.pos.addNewOrder();
-                        } else {
-                            this.pos.selectNextOrder();
-                        }
-                    }
                     await this.pos.deleteOrders([order]);
-                    this.pos.removeOrder(order, true);
+                    await this.pos.afterOrderDeletion();
+                    this.setSelectedOrder(this.pos.getOrder());
                 }
             },
         });

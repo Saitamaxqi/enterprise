@@ -164,6 +164,21 @@ class TestFrontend(TestPosUrbanPiperCommon):
         ]
         self.assertEqual(result, expected)
 
+    def test_reject_order(self):
+        self.urban_piper_config.open_ui()
+        with MockRequest(self.env):
+            identifier_1 = str(uuid.uuid4())
+            self.env['pos.urbanpiper.test.order.wizard'].with_context(config_id=self.urban_piper_config.id).create({
+                'product_id': self.product_1.id,
+                'quantity': 5,
+                'packaging_charge': 50,
+                'delivery_charge': 100,
+                'discount_amount': 150,
+                'delivery_provider_id': self.env.ref('pos_urban_piper.pos_delivery_provider_justeat').id,
+            }).make_test_order(identifier_1)
+        self.start_pos_tour('test_reject_order', pos_config=self.urban_piper_config, login="pos_admin")
+        self.assertEqual("cancelled", self.urban_piper_config.current_session_id.order_ids[0].delivery_status)
+
     def test_payment_method_close_session(self):
         def _mock_make_api_request(self, endpoint, method='POST', data=None, timeout=10):
             return []

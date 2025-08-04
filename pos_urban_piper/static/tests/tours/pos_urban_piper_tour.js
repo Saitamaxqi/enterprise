@@ -95,3 +95,21 @@ registry.category("web_tour.tours").add("test_payment_method_close_session", {
             Dialog.confirm("Close Register"),
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("test_reject_order", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            UrbanPiper.fetchDeliveryData(),
+            UrbanPiper.checkNewOrderCount(1),
+            UrbanPiper.onDropdownStatus("New"),
+            TicketScreen.selectOrder("001"),
+            UrbanPiper.orderButtonClick("Reject"),
+            {
+                content: "select reason 'Product is out of Stock'",
+                trigger: ".selection-item:contains('Product is out of Stock')",
+                run: "click",
+            },
+        ].flat(),
+});
