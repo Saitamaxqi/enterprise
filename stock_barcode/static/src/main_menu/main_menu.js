@@ -74,7 +74,6 @@ export class MainMenu extends Component {
     }
 
     removeDemoMessage() {
-        this.state.displayDemoMessage = false;
         const params = {
             title: _t("Don't show this message again"),
             body: _t(
@@ -82,8 +81,9 @@ export class MainMenu extends Component {
                     "It won't appear anymore, so make sure you don't need the barcodes sheet or you have a copy."
             ),
             confirm: () => {
-                rpc("/stock_barcode/rid_of_message_demo_barcodes");
-                location.reload();
+                rpc("/stock_barcode/rid_of_message_demo_barcodes"); // Sets action message param false on server
+                this.state.displayDemoMessage = false; // Remove message from current view
+                this.props.action.params.message_demo_barcodes = false; // Remove message if using breadcrumbs
             },
             cancel: () => {},
             confirmLabel: _t("Remove it"),
