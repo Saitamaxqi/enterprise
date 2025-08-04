@@ -11,7 +11,7 @@ from odoo.addons.account.tests.test_account_incoming_supplier_invoice import Tes
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
 from odoo.addons.mail.tests.common import MailCase
 from odoo.tests import tagged
-from odoo.tools import file_open
+from odoo.tools import file_open, mute_logger
 
 from ..models.account_invoice import OCR_VERSION
 
@@ -629,6 +629,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
                 'total': il.price_total,
             })
 
+    @mute_logger('pypdf._reader')
     def test_automatic_sending_vendor_bill_message_post(self):
         # test that a vendor bill is automatically sent to the OCR server when a message with attachment is posted and the option is enabled
         self.env.company.extract_in_invoice_digitalization_mode = 'auto_send'
@@ -673,7 +674,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         test_attachment = self.env['ir.attachment'].create({
             'name': "an attachment",
             "mimetype": "application/pdf",
-            'datas': base64.b64encode(b'My attachment'),
+            'raw': b'My attachment',
             'res_model': 'account.move',
             'res_id': invoice.id,
         })
@@ -690,7 +691,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         invoice = self.env['account.move'].create({'move_type': 'entry', 'extract_state': 'no_extract_requested'})
         test_attachment = self.env['ir.attachment'].create({
             'name': "an attachment",
-            'datas': base64.b64encode(b'My attachment'),
+            'raw': b'My attachment',
             'res_model': 'account.move',
             'res_id': invoice.id,
         })
@@ -731,12 +732,13 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
             self.assertEqual(inv.extract_document_uuid, 'some_token')
             self.assertEqual(inv.message_main_attachment_id, att)
 
+    @mute_logger('pypdf._reader')
     def test_automatic_sending_customer_invoice_upload(self):
         # test that a customer invoice is automatically sent to the OCR server when uploaded and the option is enabled
         self.env.company.extract_out_invoice_digitalization_mode = 'auto_send'
         test_attachment = self.env['ir.attachment'].create({
             'name': "attachment.pdf",
-            'datas': base64.b64encode(b'My attachment'),
+            'raw': b'My attachment',
         })
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
             action = self.env['account.journal'].with_context(default_move_type='out_invoice').create_document_from_attachment(test_attachment.id)
@@ -774,7 +776,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         invoice = self.env['account.move'].create({'move_type': 'out_invoice', 'extract_state': 'no_extract_requested'})
         test_attachment = self.env['ir.attachment'].create({
             'name': "an attachment",
-            'datas': base64.b64encode(b'My attachment'),
+            'raw': b'My attachment',
         })
 
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
@@ -789,7 +791,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         invoice = self.env['account.move'].create({'move_type': 'out_invoice', 'extract_state': 'no_extract_requested'})
         test_attachment = self.env['ir.attachment'].create({
             'name': "an attachment",
-            'datas': base64.b64encode(b'My attachment'),
+            'raw': b'My attachment',
             'res_model': 'account.move',
             'res_id': invoice.id,
         })
@@ -809,7 +811,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
             invoice = self.env['account.move'].create({'move_type': move_type, 'extract_state': 'no_extract_requested'})
             test_attachment = self.env['ir.attachment'].create({
                 'name': "an attachment",
-                'datas': base64.b64encode(b'My attachment'),
+                'raw': b'My attachment',
             })
 
             with self._mock_iap_extract(extract_response=self.parse_success_response()):
@@ -821,7 +823,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
             invoice = self.env['account.move'].create({'move_type': move_type, 'extract_state': 'no_extract_requested'})
             test_attachment = self.env['ir.attachment'].create({
                 'name': "another attachment",
-                'datas': base64.b64encode(b'My other attachment'),
+                'raw': b'My other attachment',
                 'res_model': 'account.move',
                 'res_id': invoice.id,
             })

@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+import re
 
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.tests import common, freeze_time, Form
@@ -163,12 +164,12 @@ class TestProjectLeaves(common.TransactionCase):
 
         self.assertNotEqual(task_1.leave_warning, False,
                             "employee is on leave, should have a warning")
-        self.assertEqual(task_1.leave_warning,
-            "Test HrUser is on time off on 01/01/2020 from 9:00 AM to 1:00 PM. \n")
+        self.assertEqual(re.sub(r'\s+', ' ', task_1.leave_warning),
+            "Test HrUser is on time off on 01/01/2020 from 9:00 AM to 1:00 PM. ")
         self.assertNotEqual(task_2.leave_warning, False,
                             "employee is on leave, should have a warning")
-        self.assertEqual(task_2.leave_warning,
-            "Test HrUser is on time off on 01/02/2020 from 2:00 PM to 6:00 PM. \n")
+        self.assertEqual(re.sub(r'\s+', ' ', task_2.leave_warning),
+            "Test HrUser is on time off on 01/02/2020 from 2:00 PM to 6:00 PM. ")
         self.assertEqual(task_3.leave_warning, False,
                          "employee is not on leave, no warning")
 
