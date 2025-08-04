@@ -4,7 +4,7 @@
     'description': 'Send WhatsApp messages when a stock transfer is validated',
     'category': 'WhatsApp',
     'version': '1.0',
-    'depends': ['stock', 'whatsapp'],
+    'depends': ['stock_enterprise', 'whatsapp'],
     'data': [
         'data/whatsapp_template_data.xml',
         'views/res_config_settings_views.xml',
