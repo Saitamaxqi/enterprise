@@ -388,6 +388,11 @@ class UrbanPiperClient:
             'action': 'enable' if status else 'disable'
         }
         response_json = self._make_api_request(endpoint, method='POST', data=payload)
+        if response_json.get('status') == 'success':
+            self.config._notify('PRODUCT_UP_STATUS_CHANGED', {
+                'product_ids': [p.id for p in products],
+                'status': status,
+            })
         return response_json
 
     def urbanpiper_attribute_value_toggle(self, values, status):

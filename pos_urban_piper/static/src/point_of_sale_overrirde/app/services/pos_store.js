@@ -24,6 +24,34 @@ patch(PosStore.prototype, {
             await this._fetchUrbanpiperOrderCount(false);
         }
         this.isSoundPlaying = false;
+        this.data.connectWebSocket(
+            "PRODUCT_UP_STATUS_CHANGED",
+            this.notifyFoodDeliveryStatus.bind(this)
+        );
+    },
+
+    notifyFoodDeliveryStatus(data) {
+        const { product_ids, status } = data;
+        const products = this.models["product.template"].filter((product) =>
+            product_ids.includes(product.id)
+        );
+        if (!products.length) {
+            return;
+        }
+        products.forEach((product) => {
+            product.setFoodDeliveryAvailability(status, this.config.id);
+            this.notification.add(
+                _t(
+                    "%s is %s online food delivery for all platform in this locations.",
+                    product.name,
+                    status ? _t("enabled") : _t("disabled")
+                ),
+                {
+                    type: status ? "success" : "warning",
+                    sticky: false,
+                }
+            );
+        });
     },
 
     async saveProviderState(newStates = {}) {
