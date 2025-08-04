@@ -22,10 +22,7 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
             ('code', '=', 101401)
         ])
 
-        cls.account_101402 = cls.env['account.account'].search([
-            ('company_ids', '=', cls.company_data['company'].id),
-            ('code', '=', 101402)
-        ])
+        cls.bank_suspense_account = cls.company_data['company'].account_journal_suspense_account_id
 
         cls.account_101404 = cls.env['account.account'].search([
             ('company_ids', '=', cls.company_data['company'].id),
@@ -55,7 +52,7 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
             'journal_id': cls.company_data['default_journal_cash'].id,
             'line_ids': [
                 (0, 0, {'debit':  75.0,     'credit':   0.0,    'account_id': cls.account_101401.id}),
-                (0, 0, {'debit': 100.0,     'credit':   0.0,    'account_id': cls.account_101402.id}),
+                (0, 0, {'debit': 100.0,     'credit':   0.0,    'account_id': cls.bank_suspense_account.id}),
                 (0, 0, {'debit':  50.0,     'credit':   0.0,    'account_id': cls.account_101404.id}),
                 (0, 0, {'debit':  25.0,     'credit':   0.0,    'account_id': cls.account_121000.id}),
                 (0, 0, {'debit':   0.0,     'credit': 250.0,    'account_id': cls.account_251000.id}),

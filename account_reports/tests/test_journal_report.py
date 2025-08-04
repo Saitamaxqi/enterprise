@@ -264,6 +264,7 @@ class TestJournalReport(TestAccountReportsCommon):
         Check the journal report lines of the default bank journal with payments included
         """
         options_no_payment = self._generate_options(self.report, '2017-01-01', '2017-01-31', default_options={'unfold_all': True, 'show_payment_lines': False})
+        outstanding_account_code = self.env['account.payment']._get_outstanding_account(payment_type='inbound').code
 
         self.assertLinesValues(
             self._filter_tax_section_lines(self.report._get_lines(options_no_payment), True),
@@ -283,16 +284,16 @@ class TestJournalReport(TestAccountReportsCommon):
         options_show_payment = self._generate_options(self.report, '2017-01-01', '2017-01-31', default_options={'unfold_all': True, 'show_payment_lines': True})
         self.assertLinesValues(
             self._filter_tax_section_lines(self.report._get_lines(options_show_payment), True),
-            [   1,                 2,          3,          4],
+            [   1,                                 2,          3,          4],
             [
-                ('',              '',         '',         ''),
-                ('INV',         7150,       7150,         ''),
-                ('121000',      7150,          0,       7150),
-                ('400000',         0,       7150,      -7150),
-                ('BNK1',         570,        570,         ''),
-                ('101401',       200,          0,        200),
-                ('101403',       370,          0,        370),
-                ('400000',         0,        570,       -570),
+                ('',                              '',         '',         ''),
+                ('INV',                         7150,       7150,         ''),
+                ('121000',                      7150,          0,       7150),
+                ('400000',                         0,       7150,      -7150),
+                ('BNK1',                         570,        570,         ''),
+                ('101401',                       200,          0,        200),
+                (outstanding_account_code,       370,          0,        370),
+                ('400000',                         0,        570,       -570),
             ],
             options_show_payment,
         )
