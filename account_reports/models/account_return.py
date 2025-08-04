@@ -449,6 +449,7 @@ class AccountReturn(models.Model):
     date_to = fields.Date(string="Date To", required=True)
     type_id = fields.Many2one(comodel_name='account.return.type', string="Return Type", required=True)
     state = fields.Char(string="State", compute="_compute_state", inverse="_inverse_state")
+    next_state = fields.Char(string="Next State", compute="_compute_next_state")
     generic_state_tax_report = fields.Selection(
         string="Generic State",
         selection=[
@@ -649,6 +650,16 @@ class AccountReturn(models.Model):
     def _compute_state(self):
         for record in self:
             record.state = record[record._get_state_field()]
+
+    @api.depends('state')
+    def _compute_next_state(self):
+        for record in self:
+            state_keys = [s[0] for s in record._fields[record._get_state_field()].selection]
+            next_state_index = state_keys.index(record.state) + 1
+            if next_state_index < len(state_keys):
+                record.next_state = state_keys[next_state_index]
+            else:
+                record.next_state = False
 
     def _inverse_state(self):
         for record in self:
