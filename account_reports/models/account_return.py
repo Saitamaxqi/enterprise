@@ -1292,7 +1292,8 @@ class AccountReturn(models.Model):
         }
 
         company_ids = self.company_ids.ids
-        return report.with_context(allowed_company_ids=company_ids).get_options(previous_options=options)
+        current_company = self.env.company
+        return report.with_context(allowed_company_ids=company_ids).with_company(current_company).get_options(previous_options=options)
 
     ####################################################################################################
     ####  Tax Closing
