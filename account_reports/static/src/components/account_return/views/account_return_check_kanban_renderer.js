@@ -2,7 +2,7 @@ import {
     AccountReturnCheckKanbanRecord
 } from "@account_reports/components/account_return/views/account_return_check_kanban_record";
 import {KanbanRenderer} from "@web/views/kanban/kanban_renderer";
-import {onWillStart, useEffect} from "@odoo/owl";
+import {onWillStart, onWillDestroy} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 import {parseXML} from "@web/core/utils/xml";
@@ -31,8 +31,13 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
         this.orm = useService("orm");
         this.action = useService("action");
         this.viewService = useService("view");
-        useEffect(() => {this.runCurrentReturnChecks()}, () => [])
         const context = this.props.list.context;
+        this.destroyed = false
+        this.originalListLoad = this.props.list.model.load.bind(this.props.list.model);
+
+        onWillDestroy(async () => {
+            this.destroyed = true;
+        });
 
         if (context.active_model === "account.return") {
             this.currentReturnId = context.active_id
@@ -55,7 +60,7 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
 
                 const returnData = await this.orm.webRead(
                     'account.return',
-                        [accountReturnId],
+                    [accountReturnId],
                     { specification: this.specification }
                 );
 
@@ -78,16 +83,16 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
                     { manuallyAdded: !returnData.id }
                 )
 
-                const originalLoad = this.props.list.model.load.bind(this.props.list.model);
-
                 this.props.list.model.load = async (params) => {
                     // Reload return card
-                    const result = await originalLoad(params);
+                    const result = await this.originalListLoad(params);
+                    if (this.destroyed) return result;
                     const returnData = await this.orm.webRead(
                         'account.return',
                         [accountReturnId],
                         { specification: this.specification }
                     );
+                    if (this.destroyed) return result;
                     this.returnRecord._setData(returnData[0]);
 
                     // Reload chatter messages
@@ -98,7 +103,18 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
 
                     return result;
                 };
-        });
+
+                // Update records checks
+                const records = this.props.list.records;
+                if (records.length > 0) {
+                    const checkResults = this.orm.call("account.return", "refresh_checks", [this.currentReturnId])
+                    checkResults.then(async () => {
+                        if (!this.destroyed) {
+                            await this.props.list.model.load();
+                        }
+                    });
+                }
+            });
         }
     }
 
@@ -116,19 +132,6 @@ export class AccountReturnCheckKanbanRenderer extends KanbanRenderer {
             limit: 1,
             countLimit: 1,
         };
-    }
-
-    async runCurrentReturnChecks() {
-        const records = this.props.list.records;
-        if (records.length > 0) {
-            const account_return = records[0].data.return_id;
-            await this.orm.call(
-                'account.return',
-                'refresh_checks',
-                [account_return.id]
-            );
-            await this.props.list.model.load();
-        }
     }
 
     get groups() {
