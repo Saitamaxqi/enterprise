@@ -80,6 +80,7 @@ class PaymentTransaction(models.Model):
         self._cancel_draft_invoices()
         self._invoice_sale_orders()
         self.invoice_ids.with_company(self.company_id)._post()
+        self.invoice_ids.write({'matched_payment_ids': self.payment_id.ids})
         if not self.subscription_action and not self.env.context.get('skip_sale_auto_invoice_send'):
             self.invoice_ids.transaction_ids._send_invoice()
 
