@@ -129,7 +129,7 @@
         <field name="template_name">Balance Sheet</field>
         <field name="template_sequence">1</field>
         <field name="template_body" type="html">
-            <div data-embedded="accountReport" data-embedded-props="{
+            <div data-oe-id="e8949156e42774c3" data-embedded="accountReport" data-embedded-props="{
                 'name': 'Balance Sheet',
                 'options': {
                     'report_id': ref('account_reports.balance_sheet')
@@ -145,7 +145,7 @@
         <field name="template_name">Profit and Loss</field>
         <field name="template_sequence">2</field>
         <field name="template_body" type="html">
-            <div data-embedded="accountReport" data-embedded-props="{
+            <div data-oe-id="5d0fcb69ae09365c" data-embedded="accountReport" data-embedded-props="{
                 'name': 'Profit and Loss',
                 'options': {
                     'report_id': ref('account_reports.profit_and_loss')
@@ -161,7 +161,7 @@
         <field name="template_name">General Ledger</field>
         <field name="template_sequence">3</field>
         <field name="template_body" type="html">
-            <div data-embedded="accountReport" data-embedded-props="{
+            <div data-oe-id="57edc8adf4616525" data-embedded="accountReport" data-embedded-props="{
                 'name': 'General Ledger',
                 'options': {
                     'report_id': ref('account_reports.general_ledger_report')
@@ -568,7 +568,7 @@
         <field name="template_name">Journal Audit</field>
         <field name="template_sequence">1</field>
         <field name="template_body" type="html">
-            <div data-embedded="accountReport" data-embedded-props="{
+            <div data-oe-id="df2c0183c66bcc80" data-embedded="accountReport" data-embedded-props="{
                 'name': 'Journal Audit',
                 'options': {
                     'report_id': ref('account_reports.journal_report')
@@ -655,7 +655,7 @@
                     <p>Depreciation and Impairment</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="49faab437bb3b30f" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Depreciation Schedule',
                         'options': {
                             'report_id': ref('account_asset.assets_report')
@@ -699,7 +699,7 @@
                     <p>Aged Payable</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="61336b2d27d4707a" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Aged Payable',
                         'options': {
                             'report_id': ref('account_reports.aged_payable_report')
@@ -712,7 +712,7 @@
                     <p>Aged Receivable</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="cb71051ef8aca176" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Aged Receivable',
                         'options': {
                             'report_id': ref('account_reports.aged_receivable_report')
@@ -725,7 +725,7 @@
                     <p>Partner Ledger</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="287a5f5601a958f9" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Partner Ledger',
                         'options': {
                             'report_id': ref('account_reports.partner_ledger_report')
@@ -738,7 +738,7 @@
                     <p>Deferred Expenses</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="d1cad34ea6b97fbe" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Deferred Expenses',
                         'options': {
                             'report_id': ref('account_reports.deferred_expense_report')
@@ -807,7 +807,7 @@
                     <p>Depreciation Schedule</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="4576fb51dcaf839d" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Depreciation Schedule',
                         'options': {
                             'report_id': ref('account_asset.assets_report')
@@ -979,7 +979,7 @@
                     <p>Deferred Expenses</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="c7886d43abcb88eb" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Deferred Expenses',
                         'options': {
                             'report_id': ref('account_reports.deferred_expense_report')
@@ -992,7 +992,7 @@
                     <p>Deferred Revenues</p>
                 </div>
                 <div data-embedded-editable="content">
-                    <div data-embedded="accountReport" data-embedded-props="{
+                    <div data-oe-id="4e24e84664f43ce2" data-embedded="accountReport" data-embedded-props="{
                         'name': 'Deferred Revenues',
                         'options': {
                             'report_id': ref('account_reports.deferred_revenue_report')
@@ -1050,7 +1050,7 @@
         <field name="template_name">Cash-Flow Statement</field>
         <field name="template_sequence">1</field>
         <field name="template_body" type="html">
-            <div data-embedded="accountReport" data-embedded-props="{
+            <div data-oe-id="bd52c3c6fa8abdac" data-embedded="accountReport" data-embedded-props="{
                 'name': 'Cash-Flow Statement',
                 'options': {
                     'report_id': ref('account_reports.cash_flow_report')
@@ -1066,7 +1066,7 @@
         <field name="template_name">Currency unrealized gains/loss</field>
         <field name="template_sequence">2</field>
         <field name="template_body" type="html">
-            <div data-embedded="accountReport" data-embedded-props="{
+            <div data-oe-id="cf69a548fd57ef95" data-embedded="accountReport" data-embedded-props="{
                 'name': 'Unrealized Currency Gains/Losses',
                 'options': {
                     'report_id': ref('account_reports.multicurrency_revaluation_report')
