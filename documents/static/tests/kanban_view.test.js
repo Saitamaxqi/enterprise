@@ -349,8 +349,8 @@ test("Drag and Drop - Check access rights confirmation popup when moving from ka
 });
 
 test("Drag and Drop - Check access rights confirmation popup when moving from search panel", async function () {
-    onRpc("action_move_folder", () => {
-        expect.step("action_move_folder");
+    onRpc("action_move_folder", ({ args }) => {
+        expect.step(`action_move_folder_${args[0][0]}_${args[1]}`);
     });
     const documents = [
         [2, "Internal Viewer - Link None - Discoverable", "view", "none", false, "folder"],
@@ -399,19 +399,28 @@ test("Drag and Drop - Check access rights confirmation popup when moving from se
             relative: true,
         });
         await drop();
+        await animationFrame();
         if (expectedConfirmation) {
-            // Wait for dialog, cancel move and close dialog
-            await waitFor(".o_dialog:not(.o_inactive_modal)");
-            expect(".o_dialog:not(.o_inactive_modal)").toHaveCount(1);
-            await click(".o_dialog:not(.o_inactive_modal) .modal-footer button:contains(Cancel)");
-            await animationFrame();
-            expect(".o_dialog:not(.o_inactive_modal)").toHaveCount(0);
-        } else {
-            // Assert move
-            await animationFrame();
-            expect.verifySteps(["action_move_folder"]);
+            await contains(
+                ".o_dialog:not(.o_inactive_modal) .modal-footer button:contains(Cancel)"
+            ).click();
+            expect.step(`confirm_${docToMove}_${targetDoc}`);
+            await waitForNone(".o_dialog:not(.o_inactive_modal)");
         }
     }
+    // Dropping inside COMPANY
+    const source = contains(".o_search_panel_category_value[data-value-id='4']");
+    const { drop, moveTo } = await source.drag();
+    await moveTo(document.querySelector(".o_search_panel_category_value[data-value-id='1']"));
+    await drop();
+    await animationFrame();
+    expect.verifySteps([
+        "confirm_2_3",
+        "confirm_2_4",
+        "action_move_folder_2_5",
+        "confirm_4_6",
+        "action_move_folder_4_COMPANY",
+    ]);
 });
 
 test("Drag and Drop - Drop multiple documents at once", async function () {

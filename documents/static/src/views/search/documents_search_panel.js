@@ -8,6 +8,7 @@ import { useBus, useService } from "@web/core/utils/hooks";
 import { utils as uiUtils } from "@web/core/ui/ui_service";
 import { Component, onWillStart, useState } from "@odoo/owl";
 
+const DND_ALLOWED_SPECIAL_DESTINATIONS = ["COMPANY", "MY"];
 const LONG_TOUCH_THRESHOLD = 400;
 
 /**
@@ -68,7 +69,9 @@ export class DocumentsSearchPanel extends SearchPanel {
         onWillStart(async () => {
             if (this.env.model.config.context.active_model) {
                 // Ensure folders in search panel are folded when users come from another app
-                const categories = await this.env.searchModel.getSections((s) => s.type === "category");
+                const categories = await this.env.searchModel.getSections(
+                    (s) => s.type === "category"
+                );
                 for (const category of categories) {
                     this.state.expanded[category.id] = {};
                 }
@@ -100,10 +103,10 @@ export class DocumentsSearchPanel extends SearchPanel {
             /**
              * When the placeholder moves, unfold the new parent and show/hide carets
              * where needed.
-             * @param {DOMElement} parent - parent element of where the element was moved
-             * @param {DOMElement} newGroup - group in which the element was moved
-             * @param {DOMElement} prevPos.parent - element's parent before the move
-             * @param {DOMElement} placeholder - hint element showing the current position
+             * @param {HTMLElement} parent - parent element of where the element was moved
+             * @param {HTMLElement} newGroup - group in which the element was moved
+             * @param {{parent: HTMLElement}} prevPos - element's parent before the move
+             * @param {HTMLElement} placeholder - hint element showing the current position
              */
             onMove: ({ parent, newGroup, prevPos, placeholder }) => {
                 if (parent) {
@@ -125,10 +128,12 @@ export class DocumentsSearchPanel extends SearchPanel {
                 const draggingFolderRootId = draggingFolder.rootId;
                 let parentFolderId = parent ? parent.dataset.valueId : false;
                 const beforeFolderId = next ? parseInt(next.dataset.valueId) : false;
-                if (draggingFolderId === parentFolderId) {
-                    return;
-                }
-                if (!parentFolderId || this._notify_wrong_drop_destination(parentFolderId)) {
+                if (
+                    draggingFolderId === parseInt(parentFolderId) ||
+                    isNaN(draggingFolderId) ||
+                    !parentFolderId ||
+                    this._notifyWrongDropDestination(parentFolderId)
+                ) {
                     return;
                 }
                 const parentFolderRootId =
@@ -144,20 +149,21 @@ export class DocumentsSearchPanel extends SearchPanel {
                         "documents.document",
                         "action_create_shortcut",
                         [draggingFolderId],
-                        { location_folder_id: parentFolderId === "MY" ? false : parentFolderId },
+                        { location_folder_id: parentFolderId === "MY" ? false : parentFolderId }
                     );
                     return this.env.searchModel._reloadSearchModel(true);
                 }
-                if (!["COMPANY", "MY"].includes(parentFolderId)) {
+                if (!DND_ALLOWED_SPECIAL_DESTINATIONS.includes(parentFolderId)) {
                     parentFolderId = parseInt(parentFolderId);
                 }
                 const parentFolder = this.env.searchModel.getFolderById(parentFolderId);
                 if (
-                    draggingFolder.access_internal !== parentFolder.access_internal ||
-                    draggingFolder.access_via_link !== parentFolder.access_via_link ||
-                    (parentFolder.access_via_link !== "none" &&
-                        draggingFolder.is_access_via_link_hidden !==
-                            parentFolder.is_access_via_link_hidden)
+                    !DND_ALLOWED_SPECIAL_DESTINATIONS.includes(parentFolderId) &&
+                    (draggingFolder.access_internal !== parentFolder.access_internal ||
+                        draggingFolder.access_via_link !== parentFolder.access_via_link ||
+                        (parentFolder.access_via_link !== "none" &&
+                            draggingFolder.is_access_via_link_hidden !==
+                                parentFolder.is_access_via_link_hidden))
                 ) {
                     this.dialog.add(AccessRightsUpdageConfirmationDialog, {
                         destinationFolder: parentFolder,
@@ -281,8 +287,8 @@ export class DocumentsSearchPanel extends SearchPanel {
         }
     }
 
-    _notify_wrong_drop_destination(folderId) {
-        if (["RECENT", "SHARED"].includes(folderId)) {
+    _notifyWrongDropDestination(folderId) {
+        if (isNaN(folderId) && !DND_ALLOWED_SPECIAL_DESTINATIONS.includes(folderId)) {
             this.notification.add(
                 _t("You can't create shortcuts in or move documents to this special folder."),
                 {
