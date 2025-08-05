@@ -252,7 +252,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     if not stdnum.ro.cui.is_valid(cui):
                         faulty_partners['partner_registry_incorrect'] |= partner
                 elif not partner.vat or not partner._check_vat_number(vat_country, vat_number):
-                    faulty_partners['partner_vat_invalid'] |= partner
+                    faulty_partners['partner_vat_incorrect'] |= partner
                 elif partner.perform_vies_validation and not partner.vies_valid:
                     faulty_partners['partner_vies_failed'] |= partner
 

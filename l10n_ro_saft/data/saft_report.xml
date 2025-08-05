@@ -98,7 +98,7 @@
             <Products>
                 <Product t-if="product_vals_list" t-foreach="product_vals_list" t-as="product_vals">
                     <ProductCode t-out="product_vals['default_code'][:70]"/>
-                    <ProductGroup t-out="product_vals['product_category'][:70]"/>
+                    <ProductGroup t-out="(product_vals.get('product_category') or '')[:70]"/>
                     <Description t-out="product_vals['name'][:256]"/>
                     <ProductCommodityCode t-out="product_vals['commodity_code'][:70]"/>
                     <UOMBase t-out="unece_code_by_uom[product_vals['uom_id']]"/>
