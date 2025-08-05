@@ -11,7 +11,7 @@ import { usePopover } from "@web/core/popover/popover_hook";
 threadActionsRegistry.add("create-ticket", {
     close: (component, action) => action.popover?.close(),
     component: LivechatCommandDialog,
-    componentProps: (action) => ({
+    componentProps: (component, action) => ({
         close: () => action.close(),
         commandName: "ticket",
         placeholderText: _t("e.g. Product arrived damaged"),
