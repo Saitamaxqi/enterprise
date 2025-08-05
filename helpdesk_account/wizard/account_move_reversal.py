@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-from ast import literal_eval
-
-from odoo import Command, models, fields, api, _
+from odoo import Command, api, fields, models
 
 
 class AccountMoveReversal(models.TransientModel):
@@ -22,7 +18,7 @@ class AccountMoveReversal(models.TransientModel):
         ticket_id = result.get('helpdesk_ticket_id')
         if ticket_id:
             if 'reason' in fields:
-                result['reason'] = _('Helpdesk Ticket #%s', ticket_id)
+                result['reason'] = self.env._('Helpdesk Ticket #%s', ticket_id)
             # set default Invoice
             ticket = self.env['helpdesk.ticket'].browse(ticket_id)
             domain = self._get_default_so_domain(ticket)
@@ -36,7 +32,7 @@ class AccountMoveReversal(models.TransientModel):
 
     # Add compute method
     move_ids = fields.Many2many('account.move', 'account_move_reversal_move', 'reversal_id', 'move_id',
-        compute="_compute_move_ids", readonly=False, store=True, required=True)
+        compute="_compute_move_ids", readonly=False, store=True, required=False)
     helpdesk_ticket_id = fields.Many2one('helpdesk.ticket', export_string_translation=False)
     helpdesk_sale_order_id = fields.Many2one('sale.order', string='Sales Order', domain="[('id', 'in', suitable_sale_order_ids)]")
     suitable_move_ids = fields.Many2many('account.move', compute='_compute_suitable_moves', export_string_translation=False)
@@ -68,6 +64,13 @@ class AccountMoveReversal(models.TransientModel):
             domain = r._get_suitable_move_domain()
             r.suitable_move_ids = self.env['account.move'].search(domain)
 
+    @api.depends('move_ids')
+    def _compute_journal_id(self):
+        records_with_no_move = self.filtered(lambda record: not record.move_ids and not record.journal_id)
+        for record in records_with_no_move:
+            record.journal_id = self.env['account.journal'].search([('type', '=', 'sale'), ('company_id', '=', record.company_id.id)], limit=1)
+        super(AccountMoveReversal, self - records_with_no_move)._compute_journal_id()
+
     def _get_suitable_so_domain(self):
         self.ensure_one()
         domain = [('state', '=', 'sale'), ('invoice_ids.state', '=', 'posted'), ('invoice_ids.move_type', '=', 'out_invoice')]
@@ -83,11 +86,28 @@ class AccountMoveReversal(models.TransientModel):
 
     def reverse_moves(self, is_modify=False):
         # OVERRIDE
-        res = super().reverse_moves(is_modify)
+        if not self.move_ids:
+            lang = self.helpdesk_ticket_id.partner_id.lang or self.env.lang
+            res = {
+                'name': self.env._('Reverse Moves'),
+                'type': 'ir.actions.act_window',
+                'res_model': 'account.move',
+                'view_mode': 'form',
+                'context': {
+                    'default_move_type': 'out_refund',
+                    'default_partner_id': self.helpdesk_ticket_id.partner_id.id,
+                    'default_date': fields.Date.context_today(self),
+                    'default_journal_id': self.journal_id.id,
+                    'default_ticket_id': self.helpdesk_ticket_id.id,
+                    'default_ref': self.with_context(lang=lang).env._('Reversal of: %(reason)s', reason=self.reason),
+                },
+            }
+        else:
+            res = super().reverse_moves(is_modify=is_modify)
 
         if self.helpdesk_ticket_id:
             self.helpdesk_ticket_id.invoice_ids |= self.new_move_ids
-            message = _('Refund created')
+            message = self.env._('Refund created')
             subtype_id = self.env['ir.model.data']._xmlid_to_res_id('helpdesk_account.mt_ticket_refund_created')
             for move_id in self.new_move_ids:
                 move_id.message_post_with_source(
@@ -101,4 +121,14 @@ class AccountMoveReversal(models.TransientModel):
                     subtype_id=subtype_id,
                 )
 
+        return res
+
+    @api.constrains('journal_id', 'move_ids')
+    def _check_journal_type(self):
+        return super(AccountMoveReversal, self.filtered('move_ids'))._check_journal_type()
+
+    def _prepare_default_reversal(self, move):
+        res = super()._prepare_default_reversal(move)
+        if self.helpdesk_ticket_id:
+            res['ticket_id'] = self.helpdesk_ticket_id.id
         return res
