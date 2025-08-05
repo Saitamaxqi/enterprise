@@ -36,7 +36,7 @@
                 <field name="display_name" optional="show"/>
                 <field name="employee_id" invisible="context.get('default_employee_id') or not employee_version_id" optional="hide"/>
                 <field name="applicant_id" invisible="context.get('default_applicant_id') or not applicant_id" optional="hide" context="{'show_partner_name': True}"/>
-                <field name="final_yearly_costs" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show"/>
+                <field name="final_yearly_costs" widget="monetary" options="{'currency_field': 'currency_id'}" optional="show" width="125"/>
                 <field name="employee_job_id" optional="show"/>
                 <field name="department_id" optional="hide"/>
                 <field name="offer_end_date" optional="hide"/>

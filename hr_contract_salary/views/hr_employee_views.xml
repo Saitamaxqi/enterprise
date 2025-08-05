@@ -25,7 +25,15 @@
                         <span class="o_stat_text">Reviews</span>
                     </div>
                 </button>
-                <button name="action_show_offers" invisible="salary_offers_count == 0" class="oe_stat_button" icon="fa-handshake-o" type="object" help="Sent Offers">
+                <button name="action_generate_offer" string="Offers" class="oe_stat_button" icon="fa-handshake-o" type="object" help="Generate Offer"
+                        invisible="current_date_version &gt; date_version or salary_offers_count > 0" groups="hr.group_hr_manager" >
+                    <div class="o_field_widget o_stat_info ms-1">
+                        <span class="o_stat_value">New</span>
+                        <span class="o_stat_text">Offers</span>
+                    </div>
+                </button>
+                <button name="action_show_offers" string="Offers" class="oe_stat_button" icon="fa-handshake-o" type="object" help="Sent Offers"
+                        invisible="salary_offers_count == 0">
                     <div class="o_field_widget o_stat_info ms-1">
                         <span class="o_stat_value"><field name="salary_offers_count"/></span>
                         <span class="o_stat_text">Offers</span>
@@ -34,7 +42,6 @@
             </button>
             <header position="inside">
                 <field name="current_date_version" invisible="1"/>
-                <button name="action_generate_offer" type="object" string="Generate Offer" invisible="current_date_version &gt; date_version or salary_offers_count > 0" groups="hr.group_hr_manager" class="btn-secondary"/>
             </header>
             <group name="contract" position="inside">
                 <field name="originated_offer_id" readonly="1" invisible="not originated_offer_id"/>

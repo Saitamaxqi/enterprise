@@ -24,16 +24,10 @@
                 </button>
                 <button class="oe_stat_button" string="Salary Attachments" name="action_open_salary_attachments"
                         groups="hr_payroll.group_hr_payroll_user"
-                        type="object" icon="fa-book" invisible="salary_attachment_count == 0">
-                    <field name="salary_attachment_count" string="Salary Attachments" widget="statinfo"/>
-                </button>
-                <button class="oe_stat_button" name="%(action_hr_salary_attachment_new)d"
-                        type="action" icon="fa-book" groups="hr_payroll.group_hr_payroll_user"
-                        context="{'default_employee_ids': [employee_id]}"
-                        invisible="not employee_id or salary_attachment_count">
+                        type="object" icon="fa-book">
                         <div class="o_stat_info">
                             <span class="o_stat_text">Salary Attachments</span>
-                            <span class="o_stat_value">New</span>
+                            <span class="o_stat_value"><field name="monthly_running_attachments"/></span>
                         </div>
                 </button>
             </button>

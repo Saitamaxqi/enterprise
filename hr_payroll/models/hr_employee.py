@@ -46,6 +46,9 @@ class HrEmployee(models.Model):
     is_in_contract = fields.Boolean(related="version_id.is_in_contract", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     structure_type_id = fields.Many2one(groups="hr_payroll.group_hr_payroll_user")
     contract_type_id = fields.Many2one(groups="hr_payroll.group_hr_payroll_user")
+    monthly_running_attachments = fields.Monetary(
+        compute='_compute_monthly_running_attachments',
+        groups="hr_payroll.group_hr_payroll_user")
 
     _unique_registration_number = models.Constraint(
         'UNIQUE(registration_number, company_id)',
@@ -59,6 +62,11 @@ class HrEmployee(models.Model):
     def _compute_salary_attachment_count(self):
         for employee in self:
             employee.salary_attachment_count = len(employee.salary_attachment_ids)
+
+    def _compute_monthly_running_attachments(self):
+        for employee in self:
+            running_attachment_ids = employee.salary_attachment_ids.filtered(lambda a: a.state == 'open')
+            employee.monthly_running_attachments = sum(running_attachment_ids.mapped("monthly_amount"))
 
     def action_open_payslips(self):
         self.ensure_one()

@@ -1068,13 +1068,18 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             run: "click",
         },
         {
-            content: "Go back on the employee",
-            trigger: "li > a:contains('Mitchell Admin 3'):last",
+            content: "Show more smart buttons",
+            trigger: ".o_button_more",
             run: "click",
         },
         {
             content: "Generate Offer",
-            trigger: ".o_statusbar_buttons > button:contains('Generate Offer')",
+            trigger: ".o_popover .btn:contains(Offers)",
+            run: "click",
+        },
+        {
+            content: "Save Offer",
+            trigger: ".o_form_button_save",
             run: "click",
         },
         {

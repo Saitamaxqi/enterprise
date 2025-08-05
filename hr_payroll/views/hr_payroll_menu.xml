@@ -57,14 +57,6 @@
         sequence="20"
         groups="base.group_no_one"/>
 
-    <menuitem
-        id="hr_menu_salary_attachments"
-        name="Salary Attachments"
-        action="hr_payroll.hr_salary_attachment_action"
-        parent="menu_hr_payroll_employees"
-        groups="hr_payroll.group_hr_payroll_user"
-        sequence="30"/>
-
     <!-- **** Payslips **** -->
     <menuitem
         id="menu_hr_payroll_employee_payslips"

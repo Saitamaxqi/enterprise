@@ -32,7 +32,7 @@ class HrContractSalaryOffer(models.Model):
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id, required=True)
     currency_id = fields.Many2one(related='company_id.currency_id')
     contract_template_id = fields.Many2one(
-        'hr.version',
+        'hr.version', compute="_compute_contract_template_id", store=True,
         domain="['|', ('employee_id', '=', False), ('id', '=', employee_version_id)]", tracking=True)
     sign_template_id = fields.Many2one(
         'sign.template', compute='_compute_sign_template_id', readonly=False, store=True, string="PDF Sign Template",
@@ -58,10 +58,14 @@ class HrContractSalaryOffer(models.Model):
     employee_id = fields.Many2one('hr.employee', tracking=True, domain=[('version_ids', '!=', False)])
     applicant_id = fields.Many2one('hr.applicant', index=True, tracking=True)
     applicant_name = fields.Char(related='applicant_id.partner_name')
-    final_yearly_costs = fields.Monetary("Employer Budget", aggregator="avg", tracking=True)
-    job_title = fields.Char(tracking=True)
-    employee_job_id = fields.Many2one('hr.job', tracking=True)
-    department_id = fields.Many2one('hr.department', tracking=True)
+    final_yearly_costs = fields.Monetary("Employer Budget", aggregator="avg", store=True, tracking=True,
+        compute="_compute_offer_values_from_template")
+    job_title = fields.Char(tracking=True, store=True, readonly=False,
+        compute="_compute_offer_values_from_template")
+    employee_job_id = fields.Many2one('hr.job', tracking=True, store=True, readonly=False,
+        compute="_compute_offer_values_from_template")
+    department_id = fields.Many2one('hr.department', tracking=True, store=True, readonly=False,
+        compute="_compute_offer_values_from_template")
     contract_start_date = fields.Date(tracking=True,
                                       default=fields.Date.context_today)
     contract_end_date = fields.Date(tracking=True)
@@ -202,6 +206,24 @@ class HrContractSalaryOffer(models.Model):
                     # No active or running version, so pick the first created version
                     offer.employee_version_id = versions[0]
 
+    @api.depends('employee_version_id')
+    def _compute_contract_template_id(self):
+        for offer in self:
+            if not offer.contract_template_id:
+                offer.contract_template_id = offer.employee_version_id
+
+    @api.depends('contract_template_id')
+    def _compute_offer_values_from_template(self):
+        for offer in self:
+            if offer.contract_template_id:
+                offer.final_yearly_costs = offer.contract_template_id.final_yearly_costs
+                offer.job_title = offer.contract_template_id.job_id.name
+                offer.employee_job_id = offer.contract_template_id.job_id
+                offer.department_id = offer.contract_template_id.department_id
+                offer.company_id = offer.contract_template_id.company_id
+            else:
+                offer.company_id = offer.env.company.id
+
     def _inverse_employee_version_id(self):
         for offer in self:
             offer.employee_id = offer.employee_version_id.employee_id
@@ -211,27 +233,6 @@ class HrContractSalaryOffer(models.Model):
         self.job_title = self.employee_job_id.name
         if self.employee_job_id.department_id:
             self.department_id = self.employee_job_id.department_id
-
-        if (
-            self.employee_version_id and
-            (
-                self.employee_job_id == self.employee_version_id.job_id or
-                not self.employee_job_id.contract_template_id
-            )
-        ):
-            self.contract_template_id = self.employee_version_id
-
-        elif self.employee_job_id.contract_template_id:
-            self.contract_template_id = self.employee_job_id.contract_template_id
-
-    @api.onchange('contract_template_id')
-    def _onchange_contract_template_id(self):
-        self.final_yearly_costs = self.contract_template_id.final_yearly_costs
-
-        if self.contract_template_id:
-            self.company_id = self.contract_template_id.company_id
-        else:
-            self.company_id = self.env.company.id
 
     def action_open_refuse_wizard(self):
         action = self.env["ir.actions.actions"]._for_xml_id("hr_contract_salary.open_refuse_wizard")
