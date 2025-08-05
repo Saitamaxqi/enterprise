@@ -12,7 +12,6 @@
         <field name="name">My Australian Company</field>
         <field name="currency_id" ref="base.AUD"/>
         <field name="partner_id" ref="base.partner_demo_company_au"/>
-        <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
         <field name="street">Darling Street</field>
         <field name="zip">2039</field>
         <field name="city">Rozelle</field>
@@ -169,7 +168,6 @@
         <field name="wage">5000</field>
         <field name="date_version" eval="datetime(1975, 1, 1).date()"/>
         <field name="contract_date_start" eval="datetime(1975, 1, 1).date()"/>
-        <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
         <field name="l10n_au_leave_loading">regular</field>
         <field name="l10n_au_leave_loading_rate">5</field>
         <field name="l10n_au_workplace_giving">100</field>
@@ -222,7 +220,6 @@
         <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
         <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
         <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
-        <field name="resource_calendar_id" ref="l10n_au_hr_payroll.resource_calendar_au_38"/>
     </record>
 
     <function name="create_version" model="hr.employee">

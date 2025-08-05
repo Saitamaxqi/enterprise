@@ -21,8 +21,12 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
                 + cls.env.ref('hr_payroll.group_hr_payroll_manager')
         )
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
-        cls.resource_calendar = cls.env.ref("l10n_au_hr_payroll.resource_calendar_au_38")
-        cls.resource_calendar.company_id = cls.company
+        cls.resource_calendar = cls.company.resource_calendar_id
+        cls.bank_cba = cls.env["res.bank"].create({
+            "name": "Commonwealth Bank of Australia",
+            "bic": "CTBAAU2S",
+            "country": cls.env.ref("base.au").id,
+        })
         cls.company_bank_account = cls.env['res.partner.bank'].create({
             "acc_number": '12344321',
             "acc_type": 'aba',

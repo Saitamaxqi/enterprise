@@ -27,8 +27,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             "name": "My Superstream Australian Company",
             "country_id": cls.env.ref("base.au").id,
             "currency_id": cls.env.ref("base.AUD").id,
-            "resource_calendar_id": cls.env.ref("l10n_au_hr_payroll.resource_calendar_au_38").id,
-            "vat": '83 914 571 673',
+            "vat": '85658499097',
         })
         clearing_house = cls.env.ref('l10n_au_hr_payroll_account.res_partner_clearing_house')
         clearing_house.with_company(cls.australian_company).property_account_payable_id = cls.account_21400

@@ -23,13 +23,12 @@ class TestPayrollCommon(TransactionCase):
             "name": "Australian Company ( test )",
             "country_id": cls.env.ref("base.au").id,
             "currency_id": cls.env.ref("base.AUD").id,
-            "resource_calendar_id": cls.env.ref("l10n_au_hr_payroll.resource_calendar_au_38").id,
             "l10n_au_registered_for_whm": True,
             "l10n_au_registered_for_palm": True,
         })
         cls.env.user.company_ids |= cls.australian_company
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.australian_company.ids))
-        cls.resource_calendar = cls.env.ref("l10n_au_hr_payroll.resource_calendar_au_38")
+        cls.resource_calendar = cls.australian_company.resource_calendar_id
         cls.resource_calendar.company_id = cls.australian_company
 
         cls.employee_id = cls.env["hr.employee"].create({
