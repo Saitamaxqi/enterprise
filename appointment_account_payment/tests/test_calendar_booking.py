@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import Command
+from odoo import Command, http
 from odoo.addons.appointment_account_payment.tests.common import AppointmentAccountPaymentCommon
 from odoo.tests import users, tagged
 from odoo.tools import mute_logger
@@ -255,3 +255,38 @@ class AppointmentAccountPaymentTest(AppointmentAccountPaymentCommon):
         self.assertFalse(booking_2.exists())
         self.assertTrue(booking_3.exists())
         self.assertFalse(booking_4.exists())
+
+    @freeze_time('2022-02-13')
+    @users('apt_manager')
+    def test_no_manage_capacity_paid_resource(self):
+        """ Test that no matter the resource capacity, we only use and reserve 1 when capacity is not managed """
+        self.assertFalse(self.appointment_resources_payment.meeting_ids)  # Assert initial data
+        self.appointment_resources_payment.write({
+            'manage_capacity': False,
+            'max_bookings': 1,
+        })
+        phone_question = self.appointment_resources_payment._get_main_phone_question()
+        self.assertTrue(phone_question)
+
+        self.authenticate(self.env.user.login, self.env.user.login)
+        appointment_data = {
+            "asked_capacity": "1",
+            "available_resource_ids": [self.resource_1.id],
+            "csrf_token": http.Request.csrf_token(self),
+            "datetime_str": "2022-02-14 14:00:00",
+            "duration_str": "1.0",
+            "email": "test@test.example.com",
+            "name": "Online Meeting",
+            f"question_{phone_question.id}": "2025550999",
+        }
+
+        url = f"/appointment/{self.appointment_resources_payment.id}/submit"
+        res = self.url_open(url, data=appointment_data)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+
+        self.assertFalse(self.appointment_resources_payment.meeting_ids)
+        booking = self.env['calendar.booking'].search([('appointment_type_id', '=', self.appointment_resources_payment.id)])
+        self.assertEqual(len(booking.booking_line_ids), 1)
+        self.assertEqual(booking.booking_line_ids.capacity_reserved, 1)
+        self.assertEqual(booking.booking_line_ids.capacity_used, 1)
+        self.assertFalse(booking._filter_unavailable_bookings())

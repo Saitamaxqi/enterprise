@@ -840,7 +840,8 @@ class AppointmentController(http.Controller):
                 booking_line_values.append({
                     'appointment_resource_id': resource.id,
                     'capacity_reserved': new_capacity_reserved,
-                    'capacity_used': new_capacity_reserved if resource.shareable and appointment_type.manage_capacity else resource.capacity,
+                    'capacity_used': new_capacity_reserved if resource.shareable and appointment_type.manage_capacity else
+                        resource.capacity if appointment_type.manage_capacity else 1,
                 })
         else:
             user_remaining_capacity = users_remaining_capacity['total_remaining_capacity']
