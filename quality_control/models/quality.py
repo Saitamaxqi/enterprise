@@ -111,10 +111,10 @@ class QualityPoint(models.Model):
             elif self.measure_frequency_unit == 'month':
                 delta = relativedelta(months=self.measure_frequency_unit_value)
             date_previous = datetime.today() - delta
-            checks = self.env['quality.check'].search([
+            has_checks = bool(self.env['quality.check'].search_count([
                 ('point_id', '=', self.id),
-                ('create_date', '>=', date_previous.strftime(DEFAULT_SERVER_DATETIME_FORMAT))], limit=1)
-            return not(bool(checks))
+                ('create_date', '>=', date_previous.strftime(DEFAULT_SERVER_DATETIME_FORMAT))], limit=1))
+            return not has_checks
         return super(QualityPoint, self).check_execute_now()
 
     def _get_type_default_domain(self):

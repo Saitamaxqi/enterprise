@@ -2,6 +2,8 @@
 
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Domain
+from odoo.tools import split_every
 
 
 class RepairOrder(models.Model):
@@ -55,22 +57,40 @@ class RepairOrder(models.Model):
                     self.product_id, self.picking_type_id, measure_on=measure
                 )
             )
-            for point in points:
-                for repair in self:
-                    domain = self.env["quality.point"]._get_domain(
-                        repair.product_id, repair.picking_type_id, measure_on=measure
-                    )
-                    if not point.filtered_domain(domain):
-                        continue
-                    if point.check_execute_now():
-                        check_vals_list.append({
-                            "point_id": point.id,
-                            "team_id": point.team_id.id,
-                            "measure_on": measure,
-                            "product_id": repair.product_id.id if measure == "product" else False,
-                            "lot_ids": [Command.link(repair.lot_id.id)] if measure == "product" and repair.lot_id else False,
-                            "repair_id": repair.id,
-                        })
+            for repair in self:
+                domain = self.env["quality.point"]._get_domain(
+                    repair.product_id, repair.picking_type_id, measure_on=measure
+                )
+                for point_ids_batch in split_every(10_000, points.ids):
+                    # avoid fetching large HTML fields like `note` & `reason`
+                    fields_to_fetch = [
+                        'measure_frequency_type',
+                        'measure_frequency_unit',
+                        'measure_frequency_unit_value',
+                        'measure_frequency_value',
+                        'team_id',
+                    ]
+                    if len(self) > 1:
+                        repair_points = self.env['quality.point'].sudo().search_fetch(
+                            domain=Domain.AND([[('id', 'in', point_ids_batch)], domain]),
+                            field_names=fields_to_fetch,
+                        )
+                    else:
+                        # No need to find the intersection if there is only 1 repair,
+                        # the initial set of points are valid for said repair.
+                        repair_points = self.env['quality.point'].browse(point_ids_batch)
+                        repair_points.fetch(fields_to_fetch)
+
+                    for point in repair_points:
+                        if point.check_execute_now():
+                            check_vals_list.append({
+                                "point_id": point.id,
+                                "team_id": point.team_id.id,
+                                "measure_on": measure,
+                                "product_id": repair.product_id.id if measure == "product" else False,
+                                "lot_ids": [Command.link(repair.lot_id.id)] if measure == "product" and repair.lot_id else False,
+                                "repair_id": repair.id,
+                            })
         self.env["quality.check"].sudo().create(check_vals_list)
 
     def action_open_quality_checks(self):
