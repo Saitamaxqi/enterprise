@@ -341,6 +341,8 @@ class TestEdiXmls(TestPeEdiCommon):
         if 'sale' not in self.env["ir.module.module"]._installed():
             self.skipTest("Sale module is not installed")
 
+        self.env.user.group_ids |= self.env.ref('sales_team.group_sale_manager')
+
         with freeze_time(self.frozen_today):
             sale_order = self.env['sale.order'].create({
                 'partner_id': self.partner_a.id,
