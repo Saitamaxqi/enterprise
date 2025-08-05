@@ -417,7 +417,7 @@ class L10n_AuSuperStreamLine(models.Model):
             # payee/receiver data [R:AC] (12) (17 - 28)
             self.payee_id.abn.replace(" ", "") or "",
             self.payee_id.usi or "",
-            self.payee_id.display_name or "",
+            self.payee_id.name or "",
             self.payee_id.esa or "",
             "DirectDebit",
             fields.Date.to_string(fields.Date.today()),

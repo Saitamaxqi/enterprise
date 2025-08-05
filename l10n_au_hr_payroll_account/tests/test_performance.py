@@ -115,7 +115,7 @@ class TestPerformance(AccountTestInvoicingCommon):
         } for i in range(cls.EMPLOYEES_COUNT)])
 
         cls.super_fund = cls.env['l10n_au.super.fund'].create({
-            'display_name': 'Fund A',
+            'name': 'Fund A',
             'abn': '2345678912',
             'address_id': cls.env['res.partner'].create({'name': "Fund A Partner"}).id,
         })

@@ -129,7 +129,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "schedule_pay": "monthly",
         })
         super_fund = cls.env['l10n_au.super.fund'].create({
-            'display_name': 'Fund A',
+            'name': 'Fund A',
             'abn': '2345678912',
             'address_id': cls.env['res.partner'].create({'name': "Fund A Partner"}).id,
         })

@@ -42,7 +42,7 @@
     </record>
 
     <record id="super_fund_example_super" model="l10n_au.super.fund">
-        <field name="display_name">Example Super</field>
+        <field name="name">Example Super</field>
         <field name="abn">0987654321</field>
         <field name="address_id" ref="l10n_au_hr_payroll_account.res_partner_example_super"/>
         <field name="fund_type">APRA</field>

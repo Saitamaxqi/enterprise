@@ -8,7 +8,7 @@
                 <sheet>
                     <div class="oe_title">
                         <h1>
-                            <field name="display_name"/>
+                            <field name="name"/>
                         </h1>
                     </div>
                     <group>
@@ -36,12 +36,28 @@
         <field name="model">l10n_au.super.fund</field>
         <field name="arch" type="xml">
             <list>
-                <field name="display_name"/>
+                <field name="name"/>
                 <field name="address_id"/>
                 <field name="fund_type"/>
                 <field name="usi"/>
                 <field name="esa"/>
             </list>
+        </field>
+    </record>
+
+    <record id="l10n_au_super_fund_view_search" model="ir.ui.view">
+        <field name="name">l10n_au.super.fund.view.search</field>
+        <field name="model">l10n_au.super.fund</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="abn"/>
+                <field name="usi"/>
+                <field name="esa"/>
+                <group>
+                    <filter name="filter_fund_type" string="Fund Type" context="{'group_by': 'fund_type'}"/>
+                </group>
+            </search>
         </field>
     </record>
 

@@ -34,4 +34,4 @@ class L10n_AuSuperAccount(models.Model):
     @api.depends('employee_id', 'fund_id')
     def _compute_display_name(self):
         for account in self:
-            account.display_name = _("%(emp)s (%(fund)s)", emp=account.employee_id.name, fund=account.fund_id.display_name)
+            account.display_name = _("%(emp)s (%(fund)s)", emp=account.employee_id.name, fund=account.fund_id.name)

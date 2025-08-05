@@ -84,13 +84,13 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
         })
 
         cls.super_fund = cls.env['l10n_au.super.fund'].create({
-            'display_name': 'Fund A',
+            'name': 'Fund A',
             'abn': '2345678912',
             'address_id': cls.env['res.partner'].create({'name': "Fund A Partner"}).id,
         })
         smsf_partner = cls.env['res.partner'].create({'name': "Fund B"})
         cls.super_fund_smsf = cls.env['l10n_au.super.fund'].create({
-            'display_name': 'Fund B',
+            'name': 'Fund B',
             'abn': '2345678913',
             'fund_type': 'SMSF',
             'bank_account_id': cls.env['res.partner.bank'].create({
