@@ -66,7 +66,7 @@ function getModelOptions(isMultiCompany) {
         },
         use_sequence: {
             label: _t("Custom Sorting"),
-            help: _t("Manually sort records in the list view"),
+            help: _t("Manually sort records in the kanban and list view"),
             value: true,
         },
         use_mail: {

@@ -135,8 +135,6 @@ class IrModel(models.Model):
         # now let's check other options and accumulate potential extra models (tags, stages)
         # created during this process, they will need to get their own action and menu
         # (which will be done at the controller level)
-        if 'use_stages' in options:
-            options.add('use_sequence')
         extra_models_keys = []
         extra_models_values = []
 
@@ -461,7 +459,7 @@ class IrModel(models.Model):
                 'copied': True,
             }),
         ])
-        model_vals['order'] = 'x_studio_priority desc, x_studio_sequence asc, id asc'
+        model_vals['order'] = 'id asc'
         return stage_model_vals
 
     def _post_create_option_use_stages(self, stage_model):

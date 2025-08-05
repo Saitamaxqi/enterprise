@@ -1,4 +1,5 @@
 
+from lxml import etree
 from unittest.mock import patch
 
 import odoo
@@ -115,6 +116,9 @@ class TestStudioIrModel(TransactionCase):
         self.assertIn('x_studio_sequence', fields, 'a custom sequence field should be set up')
         default = self.env['ir.default']._get(model.model, 'x_studio_sequence')
         self.assertEqual(default, 10, 'the default value for the x_studio_sequence field should be 10')
+        list_view = self.env["ir.ui.view"].search([("model", "=", model.model), ("type", "=", "list")], limit=1)
+        tree = etree.fromstring(list_view.get_combined_arch())
+        self.assertEqual(tree.attrib['default_order'], 'x_studio_sequence asc,id desc')
 
     def test_04_model_option_responsible(self):
         """Test that the `responsible` behaviour is set up correctly."""
@@ -220,8 +224,9 @@ class TestStudioIrModel(TransactionCase):
         (model, extra_model) = self.env['ir.model'].studio_model_create('Rockets', options=model_options)
         self.assertEqual(len(extra_model), 1, 'an extra model should have been created for stages')
         stage_fields = self.env[extra_model.model]._fields
-        self.assertIn('x_studio_sequence', stage_fields, 'stages should have a sequence')
+        self.assertIn('x_studio_sequence', stage_fields, 'stages should always have a sequence even when the option is not ticked')
         fields = self.env[model.model]._fields
+        self.assertNotIn('x_studio_sequence', fields, 'no custom sequence field is set up when the sequence option is not ticked')
         self.assertIn('x_studio_stage_id', fields, 'a custom stage field should be set up')
         self.assertIn('x_studio_priority', fields, 'a custom priority field should be set up')
         self.assertIn('x_color', fields, 'a custom color field should be set up')
@@ -231,6 +236,12 @@ class TestStudioIrModel(TransactionCase):
         self.assertEqual(default, auto_stage.ids[0], 'the default stage should be set')
         stage_field = self.env['ir.model.fields'].search([('name', '=', 'x_studio_stage_id'), ('model_id', '=', model.id)])
         self.assertTrue(stage_field.tracking, 'the x_studio_stage_id field should be tracked')
+        list_view = self.env["ir.ui.view"].search([("model", "=", model.model), ("type", "=", "list")], limit=1)
+        kanban_view = self.env["ir.ui.view"].search([("model", "=", model.model), ("type", "=", "kanban")], limit=1)
+        tree = etree.fromstring(list_view.get_combined_arch())
+        self.assertEqual(tree.attrib['default_order'], 'x_studio_priority desc,id desc')
+        tree = etree.fromstring(kanban_view.get_combined_arch())
+        self.assertEqual(tree.attrib['default_order'], 'x_studio_priority desc,id desc')
 
     def test_13_model_option_tags(self):
         """Test that the `tags` behaviour is set up correctly."""
@@ -241,7 +252,7 @@ class TestStudioIrModel(TransactionCase):
         self.assertIn('x_color', stage_fields, 'tags should have a color')
         fields = self.env[model.model]._fields
         self.assertIn('x_studio_tag_ids', fields, 'a custom tags field should be set up')
-    
+
     def test_14_all_options(self):
         """Test auto-view generation for custom models with all options enabled."""
         # Enable ALL THE OPTIONS
@@ -437,6 +448,24 @@ class TestStudioIrModel(TransactionCase):
         # rename the menu name
         new_menu.name = 'new Rockets'
         self.assertEqual(action.name, new_menu.name, 'rename the menu name should rename the window action name')
+
+    def test_23_model_option_stages_with_sequence(self):
+        """Test that the `stage` behaviour is set up correctly."""
+        model_options = ['use_stages', 'use_sequence', 'use_mail']
+        (model, extra_model) = self.env['ir.model'].studio_model_create('Rockets', options=model_options)
+        self.assertEqual(len(extra_model), 1, 'an extra model should have been created for stages')
+        stage_fields = self.env[extra_model.model]._fields
+        self.assertIn('x_studio_sequence', stage_fields, 'stages should always have a sequence')
+        fields = self.env[extra_model.model]._fields
+        self.assertIn('x_studio_sequence', fields, 'a custom sequence field is set up for the main model')
+        list_view = self.env["ir.ui.view"].search([("model", "=", model.model), ("type", "=", "list")], limit=1)
+        kanban_view = self.env["ir.ui.view"].search([("model", "=", model.model), ("type", "=", "kanban")], limit=1)
+        tree = etree.fromstring(list_view.get_combined_arch())
+        self.assertEqual(tree.attrib['default_order'], 'x_studio_priority desc,x_studio_sequence asc,id desc')
+        tree = etree.fromstring(kanban_view.get_combined_arch())
+        self.assertEqual(tree.attrib['default_order'], 'x_studio_priority desc,x_studio_sequence asc,id desc')
+        sequence_field = tree.xpath("//field[@name='x_studio_sequence']")[0]
+        self.assertEqual(sequence_field.attrib, {'name': 'x_studio_sequence', 'widget': 'handle', 'invisible': '1'})
 
     def test_performance_01_fields_batch(self):
         """Test number of call to _setup_models__ when creating a model with multiple"""

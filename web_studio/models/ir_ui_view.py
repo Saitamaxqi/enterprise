@@ -227,7 +227,7 @@ class IrUiView(models.Model):
         model = self.env[res_model]
         rec_name = model._rec_name_fallback()
         fields = list()
-        if 'x_studio_sequence' in model._fields and not 'x_studio_priority' in model._fields:
+        if 'x_studio_sequence' in model._fields:
             fields.append(E.field(name='x_studio_sequence', widget='handle'))
         fields.append(E.field(name=rec_name))
         if 'x_studio_partner_id' in model._fields:
@@ -243,8 +243,14 @@ class IrUiView(models.Model):
             fields.append(E.field(name='x_studio_tag_ids', widget='many2many_tags', options="{'color_field': 'x_color'}"))
         if 'x_color' in model._fields:
             fields.append(E.field(name='x_color', widget='color_picker'))
+        order = ['id desc']
+        if 'x_studio_sequence' in model._fields:
+            order.append('x_studio_sequence asc')
+        if 'x_studio_priority' in model._fields:
+            order.append('x_studio_priority desc')
+        order = ','.join(reversed(order))
         tree_params = {} if not self.env.context.get('list_editable') else {'editable': self.env.context.get('list_editable')}
-        tree = E.list(**tree_params)
+        tree = E.list(**tree_params, default_order=order)
         tree.extend(fields)
         arch = etree.tostring(tree, encoding='unicode', pretty_print=True)
 
@@ -463,6 +469,8 @@ class IrUiView(models.Model):
         card_footer = E.footer()
         bottom_right_div = E.div({'class': "ms-auto d-flex align-items-center"})
         card_main.extend([card_header, card_body, card_footer])
+        if 'x_studio_sequence' in model._fields:
+            card_header.append(E.field(name='x_studio_sequence', widget='handle', invisible='1'))
         if 'x_studio_kanban_state' in model._fields:
             status = E.field(name='x_studio_kanban_state', widget='state_selection')
             bottom_right_div.append(status)
@@ -497,7 +505,7 @@ class IrUiView(models.Model):
             E.field({'widget': 'kanban_color_picker', 'name': 'x_color'})
         ])
         templates = E.templates(kanban_menu, kanban_card)
-        order = 'x_studio_priority desc, x_studio_sequence asc, id desc' if 'x_studio_sequence' in model._fields else 'x_studio_priority desc, id desc'
+        order = 'x_studio_priority desc,x_studio_sequence asc,id desc' if 'x_studio_sequence' in model._fields else 'x_studio_priority desc,id desc'
         kanban = E.kanban(default_group_by='x_studio_stage_id', default_order=order, highlight_color="x_color")
         kanban.extend(pre_fields)
         if 'x_studio_value' in model._fields:
