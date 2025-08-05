@@ -88,7 +88,7 @@ test("Can search whatsapp conversations on mobile", async () => {
     await start();
     await openDiscuss();
     await click("button", { text: "WhatsApp" });
-    await click("button", { text: "Start a conversation" });
+    await click(".o-mail-DiscussSearch-inputContainer");
     await click("a", { text: "slytherins" });
     await contains(".o-mail-ChatWindow-header div[title='slytherins']");
 });
