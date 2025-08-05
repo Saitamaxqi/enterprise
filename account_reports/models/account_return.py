@@ -862,13 +862,17 @@ class AccountReturn(models.Model):
 
     def action_validate(self, bypass_failing_tests=False):
         """
-        Validating return consists of two steps:
+        Validating return consists of:
         - Review the checks with optionally bypassing failing ones
+        - Mark Audit Return as completed
         - Set Lock date and generate closing entry
         """
         self.ensure_one()
 
         self._review_checks(bypass_failing_tests)
+
+        if self.return_type_category == 'audit':
+            self._mark_completed()
 
         return self._proceed_with_locking()
 
@@ -897,6 +901,7 @@ class AccountReturn(models.Model):
             ('date_deadline', '<', self.date_deadline),
             ('date_lock', '=', False),
             ('is_completed', '=', False),
+            ('return_type_category', '!=', 'audit'),
         ]
         count = self.env['account.return'].search_count(domain, limit=1)
         if count:
@@ -996,7 +1001,7 @@ class AccountReturn(models.Model):
 
     def _on_post_submission_event(self):
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
-            self.is_completed = True
+            self._mark_completed()
 
         if self.is_tax_return:
             return self.action_pay()
@@ -1011,7 +1016,7 @@ class AccountReturn(models.Model):
     def _action_finalize_payment(self):
         self.ensure_one()
         self.state = 'paid'
-        self.is_completed = True
+        self._mark_completed()
 
     ####################################################################################################
     ####  Revert Actions
@@ -1119,7 +1124,7 @@ class AccountReturn(models.Model):
             self._reset_checks_for_states([self.state, 'new'])
             self.state = 'new'
 
-        self.is_completed = False
+        self._mark_uncompleted()
         return True
 
     def action_reset_custom_return(self):
@@ -1127,7 +1132,7 @@ class AccountReturn(models.Model):
             self._reset_checks_for_states([self.state, 'new'])
             self.state = 'new'
 
-        self.is_completed = False
+        self._mark_uncompleted()
         return True
 
     def action_reset_annual_closing(self):
@@ -1145,7 +1150,7 @@ class AccountReturn(models.Model):
             self._reset_checks_for_states([self.state, 'new'])
             self.state = 'new'
 
-        self.is_completed = False
+        self._mark_uncompleted()
         return True
 
     ####################################################################################################
@@ -1160,13 +1165,25 @@ class AccountReturn(models.Model):
         self.ensure_one()
         if self.state != 'new':
             raise UserError(_("You can only revert a completed return if the previous state was new."))
+        self._mark_completed()
+
+    def _mark_completed(self):
+        self.ensure_one()
         self.is_completed = True
+        if self.return_type_category == 'audit':
+            self.audit_status = 'done'
 
     def action_mark_uncompleted(self):
         self.ensure_one()
         if not self.is_completed:
             raise UserError(_("You can only unarchive a completed return."))
+        self._mark_uncompleted()
+
+    def _mark_uncompleted(self):
+        self.ensure_one()
         self.is_completed = False
+        if self.return_type_category == 'audit':
+            self.audit_status = 'ongoing'
 
     def action_view_entry(self):
         self.ensure_one()
