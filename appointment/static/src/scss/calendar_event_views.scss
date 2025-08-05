@@ -1,0 +1,7 @@
+.o_appointment_calendar_event_form_gantt_booking {
+    // fit input to contents to avoid dead space, down to a reasonable width
+    .o_appointment_form_gantt_capacity_field input {
+        min-width: 3rem;
+        field-sizing: content;
+    }
+}

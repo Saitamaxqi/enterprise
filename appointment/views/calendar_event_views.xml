@@ -157,63 +157,59 @@
     <record id="calendar_event_view_form_gantt_booking" model="ir.ui.view">
         <field name="name">calendar.event.view.form.gantt.booking</field>
         <field name="model">calendar.event</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form_quick_create"/>
         <field name="arch" type="xml">
-            <form string="Bookings">
-                <sheet>
-                    <div class="alert alert-warning d-flex flex-wrap" role="alert" invisible="not unavailable_partner_ids and not unavailable_resource_ids">
-                        <span class="me-1">The following
-                            <span invisible="not unavailable_partner_ids">attendees</span>
-                            <span invisible="not unavailable_partner_ids or not unavailable_resource_ids">/</span>
-                            <span invisible="not unavailable_resource_ids">resources</span> are not available at the selected time
-                        </span>
-                        <field name="unavailable_partner_ids" widget="many2many_tags"/>
-                        <field name="unavailable_resource_ids" widget="many2many_tags"/>
-                    </div>
-                    <div class="oe_title mb-3">
-                        <label for="name" string="Booking Name"/>
-                        <h1>
-                            <field name="name" placeholder='e.g. "John Doe - Tennis Court Booking"' required="True"/>
-                        </h1>
-                    </div>
-                    <group>
-                        <group>
-                            <field name="appointment_status" string="Status" invisible="not appointment_type_id" required="appointment_type_id"/>
-                            <field name="appointment_type_id" options="{'no_create': True}" widget="appointment_type_sync_duration"/>
-                            <label for="start" string="Date"/>
-                            <div class="o_row">
-                                <field name="start"/>
-                                <i class="fa fa-long-arrow-right mx-2" aria-label="Until Icon" title="Arrow"/>
-                                <field name="stop"/>
-                            </div>
-                            <field name="user_id" widget="many2one_avatar_user" options="{'no_create': True}"/>
-                            <div invisible="not appointment_type_manage_capacity" colspan="2">
-                                <label for="total_capacity_reserved" class="me-5"/>
-                                <field name="total_capacity_reserved" string="Total Reserved" class="oe_inline"/>
-                                <span>people</span>
-                            </div>
-                        </group>
-                        <group>
-                            <field name="partner_ids" widget="many2many_tags_avatar"
-                                   placeholder="Select attendees..."
-                                   options="{'no_quick_create': True}"
-                                   context="{'form_view_ref': 'base.view_partner_simple_form'}"
-                                   class="oe_inline o_required_modifier o_field_highlight"  colspan="2"/>
-                            <label for="duration"/>
-                            <div>
-                                <field name="duration" widget="float_time" string="Duration" class="oe_inline"/>
-                                <span> hours</span>
-                            </div>
-                            <field name="appointment_type_manage_capacity" invisible="1"/>
-                            <field name="appointment_type_schedule_based_on" invisible="1"/>
-                            <field name="appointment_resource_ids" invisible="1"/>
-                            <field name="resource_ids" string="Resources" placeholder="Select Resources" options="{'no_create': True}"
-                                   invisible="not appointment_type_id or appointment_type_schedule_based_on != 'resources'"
-                                   domain="[('appointment_type_ids', 'in', appointment_type_id)]" widget="many2many_tags"/>
-                        </group>
-                        <field name="description" placeholder="Extra Comments..."/>
-                    </group>
-                </sheet>
-            </form>
+            <xpath expr="//form" position="attributes">
+                <attribute name="string">Bookings</attribute>
+                <attribute name="class" add="o_appointment_calendar_event_form_gantt_booking" separator=" "/>
+            </xpath>
+            <field name="name" position="attributes">
+                <attribute name="placeholder">'e.g. "John Doe - Tennis Court Booking"</attribute>
+                <attribute name="required">1</attribute>
+            </field>
+            <xpath expr="//form/*[1]" position="before">
+                <div class="alert alert-warning d-flex flex-wrap m-0 mb-3" role="alert" invisible="not unavailable_partner_ids and not unavailable_resource_ids">
+                    <span class="me-1">The following
+                        <span invisible="not unavailable_partner_ids">attendees</span>
+                        <span invisible="not unavailable_partner_ids or not unavailable_resource_ids">/</span>
+                        <span invisible="not unavailable_resource_ids">resources</span> are not available at the selected time
+                    </span>
+                    <field name="unavailable_partner_ids" widget="many2many_tags"/>
+                    <field name="unavailable_resource_ids" widget="many2many_tags"/>
+                </div>
+            </xpath>
+            <xpath expr="//div[./field[@name='partner_ids']]" position="after">
+                <div class="d-flex align-items-center" invisible="not appointment_type_manage_capacity">
+                    <i class="fa fa-user-plus text-600" title="Reserved Capacity"/>
+                    <field name="total_capacity_reserved" widget="integer"
+                        options="{'type': 'number', 'min': 1}" class="mb-0 o_appointment_form_gantt_capacity_field"
+                        readonly="appointment_type_schedule_based_on != 'resources'"
+                    />
+                    people
+                </div>
+                <div class="d-flex align-items-center" colspan="2"
+                    invisible="not appointment_type_id or appointment_type_schedule_based_on != 'resources'">
+                    <i class="fa fa-cubes text-600" title="Resources"/>
+                    <field name="resource_ids" nolabel="1"
+                        widget="many2many_tags" class="w-100 mb-0" placeholder="Resources"
+                        domain="[('appointment_type_ids', 'in', appointment_type_id)]"
+                        options="{'no_create': True}"
+                    />
+                </div>
+            </xpath>
+            <xpath expr="//div[./button[@name='clear_videocall_location']]" position="replace"/>
+            <xpath expr="//div[./field[@name='location']]" position="replace"/>
+            <xpath expr="//div[./field[@name='privacy']]" position="replace">
+                <div class="d-flex align-items-center text-600" colspan="2">
+                    <field name="appointment_type_id" invisible="1"/><!--required for default values computation-->
+                    <i class="fa fa-circle" title="Status"/>
+                    <field name="appointment_status" nolabel="1"
+                        placeholder="Status"
+                        class="w-100 mb-0"
+                    />
+                </div>
+            </xpath>
         </field>
     </record>
 
@@ -304,13 +300,37 @@
         </field>
     </record>
 
+    <record id="calendar_event_view_calendar" model="ir.ui.view">
+        <field name="name">calendar.event.view.calendar.appointment</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="/calendar" position="attributes">
+                <attribute name="quick_create_view_id">%(appointment.calendar_event_view_form_gantt_booking)d</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">appointment_type_schedule_based_on == 'resources'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="appointment_resource_ids" widget="many2many_tags" options="{'icon': 'fa fa-cubes'}"
+                    invisible="appointment_type_schedule_based_on != 'resources'" 
+                />
+            </xpath>
+            <xpath expr="//field[@name='privacy']" position="replace">
+                <field name="appointment_status" options="{'icon': 'fa fa-circle'}" invisible="not appointment_type_id"/>
+            </xpath>
+            <field name="res_model_name" position="replace"/>
+        </field>
+    </record>
+
     <record id="calendar_event_action_view_bookings_resources" model="ir.actions.act_window">
         <field name="name">Resource Bookings</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">calendar.event</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'gantt', 'view_id': ref('appointment.calendar_event_view_gantt_booking_resource')}),
-            (0, 0, {'view_mode': 'calendar', 'view_id': False}),
+            (0, 0, {'view_mode': 'calendar', 'view_id': ref('appointment.calendar_event_view_calendar')}),
             (0, 0, {'view_mode': 'list', 'view_id': ref('appointment.calendar_event_view_tree_booking')}),
         ]"/>
         <field name="view_mode">gantt,calendar,list,form</field>
@@ -333,7 +353,7 @@
         <field name="res_model">calendar.event</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'gantt', 'view_id': ref('appointment.calendar_event_view_gantt_booking_user')}),
-            (0, 0, {'view_mode': 'calendar', 'view_id': False}),
+            (0, 0, {'view_mode': 'calendar', 'view_id': ref('appointment.calendar_event_view_calendar')}),
             (0, 0, {'view_mode': 'list', 'view_id': ref('appointment.calendar_event_view_tree_booking')}),
         ]"/>
         <field name="view_mode">gantt,calendar,list,form</field>

@@ -21,7 +21,6 @@ Allow clients to Schedule Appointments through the Portal
         'security/res_groups_data.xml',
         'security/ir_rule_data.xml',
         'security/ir.model.access.csv',
-        'views/calendar_views.xml',
         'views/calendar_alarm_views.xml',
         'views/calendar_event_views.xml',
         'views/appointment_answer_input_views.xml',
