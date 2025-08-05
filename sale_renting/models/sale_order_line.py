@@ -31,7 +31,8 @@ class SaleOrderLine(models.Model):
 
     def _domain_product_id(self):
         super_part = ','.join(str(leaf) for leaf in super()._domain_product_id())
-        return f"['|', ('rent_ok', '=', order_is_rental), {super_part}]"
+        rent_part = "'&', ('rent_ok', '=', True), ('rent_ok', '=', order_is_rental)"
+        return f"['|', {rent_part}, {super_part}]"
 
     @api.depends('order_id.rental_start_date')
     def _compute_reservation_begin(self):
