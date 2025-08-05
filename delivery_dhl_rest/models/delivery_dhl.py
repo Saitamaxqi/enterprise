@@ -4,6 +4,7 @@ from markupsafe import Markup
 import json
 from json import JSONDecodeError
 import pytz
+from datetime import timedelta
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError
@@ -221,13 +222,16 @@ class ProviderDHL(models.Model):
             currency_id = picking.sale_id.currency_id or picking.company_id.currency_id
             destination_partner_id = picking.partner_id
             total_value = sum(sml.sale_price for sml in picking.move_line_ids)
-            planned_date = picking.scheduled_date
+            planned_date = picking.scheduled_date + timedelta(hours=1)
         else:
             warehouse_partner_id = order.warehouse_id.partner_id
             currency_id = order.currency_id or order.company_id.currency_id
             total_value = sum(line.price_reduce_taxinc * line.product_uom_qty for line in order.order_line.filtered(lambda l: l.product_id.type in ('consu', 'product') and not l.display_type))
             destination_partner_id = order.partner_shipping_id
-            planned_date = order.date_order
+            if hasattr(order, 'website_id') and order.website_id:
+                planned_date = fields.Datetime.now() + timedelta(hours=1)
+            else:
+                planned_date = order.date_order + timedelta(hours=1)
 
         rating_request = {}
         account_number = self.sudo().dhl_account_number
