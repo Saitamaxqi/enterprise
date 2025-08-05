@@ -3362,8 +3362,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
     def test_barcode_lazy_cache_scan_two_lots(self):
         """ Checks that you can scan 2 lots without the OWL error 'quantsByLocation is not iterable' """
-        group_tracking = self.env.ref('stock.group_tracking_owner')
-        self.env.user.write({'group_ids': [Command.link(group_tracking.id)]})
+        self.env.user.write({
+            "group_ids": [
+                Command.link(self.env.ref('stock.group_production_lot').id),
+                Command.link(self.env.ref("stock.group_tracking_owner").id),
+            ]
+        })
         self.picking_type_in.write({'use_existing_lots': True})
 
         sn1, _ = self.env['stock.lot'].create([
