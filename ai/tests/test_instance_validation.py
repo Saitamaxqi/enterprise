@@ -18,12 +18,14 @@ class TestInstanceValidation(TransactionCase):
                     instance=instance,
                     schema=schema,
                     required_parameters=required_parameters,
+                    env=self.env,
                 )
         else:
             return validators.validate_params_llm_values_with_schema(
                 instance=instance,
                 schema=schema,
                 required_parameters=required_parameters,
+                env=self.env,
             )
 
     def test_missing_optional_parameter(self):
@@ -110,11 +112,10 @@ class TestInstanceValidation(TransactionCase):
 
     def test_wrong_type_array_item(self):
         param_name = 'numbers_to_sum'
-        array_item_types = {'type': 'number'}
         schema = {
             param_name: {
                 'type': 'array',
-                'items': array_item_types,
+                'items': {'type': 'number'},
                 'description': 'the numbers whose sum is computed',
             }
         }
@@ -122,7 +123,7 @@ class TestInstanceValidation(TransactionCase):
         self.validate_instance_with_schema(
             schema=schema,
             instance=instance,
-            error_message=f"Some of the items of the array parameter '{param_name}' have an incorrect type. The valid types are '['number']'",
+            error_message="The type of the parameter 'numbers_to_sum's item' is incorrect. It should be 'number'.",
         )
 
     def test_correct_pattern_array_item(self):
@@ -156,9 +157,8 @@ class TestInstanceValidation(TransactionCase):
         schema = {
             param_name: {
                 'type': 'array',
-                'items': {'type': 'string'},
+                'items': {'type': 'string', 'pattern': param_pattern},
                 'description': 'the date of the meeting',
-                'pattern': param_pattern,
             }
         }
         invalid_value = '2025-31-01'
@@ -166,7 +166,7 @@ class TestInstanceValidation(TransactionCase):
         self.validate_instance_with_schema(
             schema=schema,
             instance=instance,
-            error_message=f"The value '{invalid_value}' of one of the items of the array parameter '{param_name}' doesn't match the expected pattern '{param_pattern}'."
+            error_message=f"The value '{invalid_value}' of the parameter 'meeting_date's item' doesn't match the expected pattern '{param_pattern}'."
         )
 
     def test_missing_optional_object_property(self):
@@ -313,3 +313,12 @@ class TestInstanceValidation(TransactionCase):
             instance=instance,
         )
         self.assertEqual(ret, {'object_param': {'str_value': '12345...', 'sub_obj': {'str_value_2': 'abc...'}}})
+
+    def test_enum(self):
+        schema = {'state': {'type': 'string', 'description': 'the date of the meeting', 'enum': ['done', 'ready']}}
+        self.validate_instance_with_schema(schema=schema, instance={'state': 'done'})
+        self.validate_instance_with_schema(
+            schema=schema,
+            instance={'state': 'invalid'},
+            error_message="Wrong value invalid, should be in: done, ready",
+        )

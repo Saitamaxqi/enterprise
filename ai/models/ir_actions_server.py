@@ -305,6 +305,7 @@ class IrActionsServer(models.Model):
                 arguments,
                 ai_tool_schema.get("properties", {}),
                 ai_tool_schema.get("required", []),
+                self.env,
             )
 
         self.ensure_one()
