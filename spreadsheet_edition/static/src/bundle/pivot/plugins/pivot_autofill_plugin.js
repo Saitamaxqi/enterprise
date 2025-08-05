@@ -56,26 +56,26 @@ export class PivotAutofillPlugin extends UIPlugin {
         if (args.some((arg) => arg === undefined)) {
             return formula;
         }
-        const evaluatedArgs = args.map((arg) => arg.toString());
-        const pivotId = this.getters.getPivotId(evaluatedArgs[0]);
+        const pivotId = this.getters.getPivotId(args[0]);
         if (!pivotId) {
             return formula;
         }
         const dataSource = this.getters.getPivot(pivotId);
         const definition = dataSource.definition;
-        for (let i = evaluatedArgs.length - 1; i > 0; i--) {
-            const fieldName = evaluatedArgs[i];
+        for (let i = args.length - 1; i > 0; i--) {
+            const fieldName = args[i];
             if (
+                typeof fieldName === "string" &&
                 fieldName.startsWith("#") &&
                 ((isColumn && this._isColumnGroupBy(dataSource, definition, fieldName)) ||
                     (!isColumn && this._isRowGroupBy(dataSource, definition, fieldName)))
             ) {
-                evaluatedArgs[i + 1] = parseInt(evaluatedArgs[i + 1], 10) + increment;
-                if (evaluatedArgs[i + 1] < 0) {
+                args[i + 1] = parseInt(args[i + 1], 10) + increment;
+                if (args[i + 1] < 0) {
                     return formula;
                 }
                 if (functionName === "PIVOT.VALUE") {
-                    const [formulaId, measure, ...domain] = evaluatedArgs;
+                    const [formulaId, measure, ...domain] = args;
                     const pivotCell = {
                         type: "VALUE",
                         measure,
@@ -83,7 +83,7 @@ export class PivotAutofillPlugin extends UIPlugin {
                     };
                     return createPivotFormula(formulaId, pivotCell);
                 } else if (functionName === "PIVOT.HEADER") {
-                    const [formulaId, ...domain] = evaluatedArgs;
+                    const [formulaId, ...domain] = args;
                     const pivotCell = {
                         type: "HEADER",
                         domain: this._toPivotDomainWithPositional(dataSource, domain),
@@ -97,7 +97,7 @@ export class PivotAutofillPlugin extends UIPlugin {
         if (functionName === "PIVOT.VALUE") {
             builder = this._autofillPivotValue.bind(this);
         } else if (functionName === "PIVOT.HEADER") {
-            if (evaluatedArgs.length === 1) {
+            if (args.length === 1) {
                 // Total
                 if (isColumn) {
                     // LEFT-RIGHT
@@ -106,16 +106,14 @@ export class PivotAutofillPlugin extends UIPlugin {
                     // UP-DOWN
                     builder = this._autofillPivotColHeader.bind(this);
                 }
-            } else if (
-                definition.rows.map((row) => row.nameWithGranularity).includes(evaluatedArgs[1])
-            ) {
+            } else if (definition.rows.map((row) => row.nameWithGranularity).includes(args[1])) {
                 builder = this._autofillPivotRowHeader.bind(this);
             } else {
                 builder = this._autofillPivotColHeader.bind(this);
             }
         }
         if (builder) {
-            return builder(pivotId, evaluatedArgs, isColumn, increment, dataSource, definition);
+            return builder(pivotId, args, isColumn, increment, dataSource, definition);
         }
         return formula;
     }
@@ -585,10 +583,7 @@ export class PivotAutofillPlugin extends UIPlugin {
             .filter((dimension) => dimension.nameWithGranularity in values)
             .map((dimension) => {
                 try {
-                    return toNormalizedPivotValue(
-                        dimension,
-                        values[dimension.nameWithGranularity]
-                    ).toString();
+                    return toNormalizedPivotValue(dimension, values[dimension.nameWithGranularity]);
                 } catch {
                     return "";
                 }
@@ -839,7 +834,7 @@ export class PivotAutofillPlugin extends UIPlugin {
     _getRowIndex(table, values) {
         const vals = JSON.stringify(values);
         return table.rows.findIndex(
-            (cell) => JSON.stringify(cell.values.map((val) => val.toString())) === vals
+            (cell) => JSON.stringify(cell.values.map((val) => val)) === vals
         );
     }
 
