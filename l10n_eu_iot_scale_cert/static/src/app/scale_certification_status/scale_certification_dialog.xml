@@ -30,7 +30,7 @@
                     <li class="d-flex justify-content-between"><b>POS name:</b><t t-out="props.details.pos_name"/></li>
                     <li class="d-flex justify-content-between"><b>Certificate number:</b><t t-out="props.details.certificate_number"/></li>
                     <li class="d-flex justify-content-between"><b>Odoo version:</b><t t-out="props.details.odoo_version"/></li>
-                    <li class="d-flex justify-content-between"><b>IoT version:</b><t t-out="props.details.iot_app_version"/></li>
+                    <li class="d-flex justify-content-between"><b>PoS version:</b><t t-out="props.details.pos_app_version"/></li>
                     <li class="d-flex justify-content-between"><b>IoT image:</b><t t-out="props.details.iot_image"/></li>
 
                     <li class="d-flex justify-content-between mt-2 flex-wrap">

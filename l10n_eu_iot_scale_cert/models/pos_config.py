@@ -40,6 +40,6 @@ class PosConfig(models.Model):
             "pos_name": "Odoo Point of Sale",
             "odoo_version": release.major_version,
             "certificate_number": "LNE-40724",
-            "iot_app_version": self.env["ir.module.module"]._get("iot").installed_version,
+            "pos_app_version": self.env["ir.module.module"]._get("point_of_sale").installed_version,
             "iot_image": self.iface_scale_id.iot_id.version,
         }
