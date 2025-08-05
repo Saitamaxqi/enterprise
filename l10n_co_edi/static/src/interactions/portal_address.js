@@ -27,7 +27,7 @@ patch(CustomerAddress.prototype, {
 
         const typeSelect = this.el.querySelector('select[name="l10n_co_edi_obligation_type_ids"]');
         this.mountComponent(typeSelect.parentElement, SelectMenuWrapper, { el: typeSelect });
-        this.el.querySelector('select[name="l10n_latam_identification_type_id"]')
+        this.el.querySelector('select[name="l10n_latam_identification_type_id"], input[name="l10n_latam_identification_type_id"]')
             .dispatchEvent(new Event('change'));
     },
 
