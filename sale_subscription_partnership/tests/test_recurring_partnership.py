@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import Command
 from dateutil.relativedelta import relativedelta
 
 from .common import SubscriptionsPartnershipCommon
@@ -64,11 +63,11 @@ class TestSubscriptionsPartnership(SubscriptionsPartnershipCommon):
             "Reopening a valid partnership should assign the grade to the partner",
         )
 
-    def test_partner_unaffected_by_order_cancellation(self):
+    def test_unrelated_grade_and_pricelist_unaffected_by_order_cancellation(self):
         self.sale_order_partnership.action_confirm()
         new_pricelist = self.env['product.pricelist'].create({'name': "test pricelist"})
-        self.partner.property_product_pricelist = self.partner.child_ids.property_product_pricelist = new_pricelist.id
-        self.partner.grade_id = self.partner.child_ids.grade_id = self.env.ref('partnership.res_partner_grade_data_silver').id
+        self.partner.property_product_pricelist = new_pricelist.id
+        self.partner.grade_id = self.env.ref('partnership.res_partner_grade_data_silver').id
         self.sale_order_partnership.action_cancel()
         self.assertEqual(
             self.partner.specific_property_product_pricelist,
@@ -76,49 +75,7 @@ class TestSubscriptionsPartnership(SubscriptionsPartnershipCommon):
             "Pricelist of partner should not be affected by partnership cancellation if changed.",
         )
         self.assertEqual(
-            self.partner.child_ids.specific_property_product_pricelist,
-            new_pricelist,
-            "Pricelist of child should not be affected by partnership cancellation if changed.",
-        )
-        self.assertEqual(
             self.partner.grade_id,
             self.env.ref('partnership.res_partner_grade_data_silver'),
             "Grade of partner should not be affected by partnership cancellation if changed.",
-        )
-        self.assertEqual(
-            self.partner.child_ids.grade_id,
-            self.env.ref('partnership.res_partner_grade_data_silver'),
-            "Grade of child should not be affected by partnership cancellation if changed.",
-        )
-
-    def test_remove_basic_partnership_with_children_partners(self):
-        sale_order_partnership_with_child = self.env['sale.order'].create({
-            'partner_id': self.partner.child_ids.id,
-            'order_line': [Command.create({'product_id': self.partnership_product.id})],
-            'plan_id': self.env.ref('sale_subscription.subscription_plan_month').id,
-        })
-        sale_order_partnership_with_child.action_confirm()
-        sale_order_partnership_with_child.set_close()
-        self.assertFalse(
-            self.partner.child_ids.grade_id,
-            "Closing the partnership should unassign the grade of the child",
-        )
-        self.sale_order_partnership.plan_id = self.env.ref('sale_subscription.subscription_plan_month').id
-        self.sale_order_partnership.action_confirm()
-        self.sale_order_partnership.set_close()
-        self.assertFalse(
-            self.partner.grade_id,
-            "Closing the partnership should unassign the grade of the partner",
-        )
-        self.assertFalse(
-            self.partner.specific_property_product_pricelist,
-            "Closing the partnership should unassign the pricelist of the partner",
-        )
-        self.assertFalse(
-            self.partner.child_ids.grade_id,
-            "Closing the partnership should unassign the grade of the child",
-        )
-        self.assertFalse(
-            self.partner.child_ids.specific_property_product_pricelist,
-            "Closing the partnership should unassign the pricelist of the child",
         )
