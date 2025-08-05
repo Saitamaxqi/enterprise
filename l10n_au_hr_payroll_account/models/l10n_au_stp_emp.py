@@ -82,4 +82,4 @@ class L10n_AuStpEmp(models.Model):
             super_contribution = ytd_vals["slip_lines"]["SALARY.SACRIFICE"]["SUPER.CONTRIBUTION"] - ytd_vals["fields"]["l10n_au_extra_compulsory_super"]
             emp.ytd_super = super_contribution + super_liability
             emp.ytd_rfba = sum(item[1]['amount'] for item in filter(lambda item: item[1]["code"] == 'FBT' and item[1]["payroll_code"] == "T", input_vals.items()))
-            emp.ytd_rfbae = sum(item[1]['amount'] for item in filter(lambda item: item[1]["code"] == 'FBT' and item[1]["payroll_code"] == "E", input_vals.items()))
+            emp.ytd_rfbae = sum(item[1]['amount'] for item in filter(lambda item: item[1]["code"] == 'FBT' and item[1]["payroll_code"] == "X", input_vals.items()))

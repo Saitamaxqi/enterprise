@@ -760,7 +760,7 @@
         <field name="country_id" ref="base.au"/>
         <field name="code">FBT</field>
         <field name="l10n_au_payment_type">other</field>
-        <field name="l10n_au_payroll_code">E</field>
+        <field name="l10n_au_payroll_code">X</field>
     </record>
 
     <!-- Payroll code is added according to the period U, T, B, or R-->
