@@ -48,3 +48,10 @@ def get_provider_for_embedding_model(env, embedding_model):
         if p.embedding_model == embedding_model:
             return p.name
     raise UserError(env._("No provider found for the embedding model"))
+
+
+def get_provider(env, llm_model):
+    for p in PROVIDERS:
+        if llm_model in [m[0] for m in p.llms]:
+            return p.name
+    raise UserError(env._("No provider found for the selected model"))

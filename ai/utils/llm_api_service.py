@@ -12,6 +12,8 @@ from odoo import _
 from odoo.api import Environment
 from odoo.exceptions import UserError
 
+from .ai_logging import ai_response_logging, api_call_logging, get_ai_logging_session
+
 _logger = getLogger(__name__)
 
 
@@ -107,7 +109,7 @@ class LLMApiService:
         self._add_if_set(body, "language", language)
         self._add_if_set(body, "temperature", temperature)
 
-        start = time.time()
+        start = time.perf_counter()
         response = self._request(
             method="post",
             endpoint="/audio/transcriptions",
@@ -117,7 +119,7 @@ class LLMApiService:
             files={"file": ("audio", data, mimetype)},
             timeout=550
         )
-        elapsed = time.time() - start
+        elapsed = time.perf_counter() - start
 
         if not response or 'text' not in response:
             _logger.warning("No transcription received.")
@@ -287,6 +289,13 @@ class LLMApiService:
             } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()])
             body["parallel_tool_calls"] = True
 
+        with api_call_logging(body["input"], tools) as record_response:
+            response, to_call, next_inputs = self._request_llm_openai_helper(body, tools, inputs)
+            if record_response:
+                record_response(to_call, response)
+            return response, to_call, next_inputs
+
+    def _request_llm_openai_helper(self, body, tools=None, inputs=()):
         llm_response = self._request(
             "post",
             "/responses",
@@ -381,6 +390,13 @@ class LLMApiService:
                 } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()]
             }
 
+        with api_call_logging(body["contents"], tools) as record_response:
+            response, to_call, next_inputs = self._request_llm_google_helper(body, llm_model, inputs)
+            if record_response:
+                record_response(to_call, response)
+            return response, to_call, next_inputs
+
+    def _request_llm_google_helper(self, body, llm_model, inputs=()):
         llm_response = self._request(
             "post",
             base_url="https://generativelanguage.googleapis.com/v1beta",
@@ -439,6 +455,25 @@ class LLMApiService:
         >>> }
         > https://json-schema.org/
         """
+        with ai_response_logging(llm_model):
+            return self._request_llm_silent(
+                llm_model=llm_model,
+                system_prompts=system_prompts,
+                user_prompts=user_prompts,
+                tools=tools,
+                files=files,
+                schema=schema,
+                temperature=temperature,
+                inputs=inputs,
+            )
+
+    def _request_llm_silent(
+        self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
+        tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
+        files: list[dict] | None = None, schema: dict | None = None, temperature: float = 0.2,
+        inputs: list[dict] | None = None,
+    ):
+        """Wraps the `_request_llm` method to handle multiple calls and tool execution."""
         AI_MAX_SUCCESSIVE_CALLS = int(self.env["ir.config_parameter"].sudo()
             .get_param("ai.max_successive_calls", "7"))
 
@@ -482,7 +517,13 @@ class LLMApiService:
                 break
 
             done = False
-            for tool_name, call_id, arguments in next_actions[:AI_MAX_TOOL_CALLS_PER_CALL]:
+            limited_next_actions = next_actions[:AI_MAX_TOOL_CALLS_PER_CALL]
+            session = get_ai_logging_session()
+
+            if session:
+                session["tool_calls"] += len(limited_next_actions)
+
+            for tool_name, call_id, arguments in limited_next_actions:
                 if tool_name not in tools:
                     _logger.error("AI: Try to call a forbidden action %s", tool_name)
                     continue
@@ -499,6 +540,9 @@ class LLMApiService:
                     all_responses.append(end_message)
                     done = True
                     _logger.info("AI: action terminate early: %s", end_message)
+
+            if session and len(limited_next_actions) > 1:  # Batch of tool calls
+                _logger.debug("[AI Tool Summary] Batch #%d completed, %d tool calls", session["current_batch_id"], len(limited_next_actions))
 
             if done:
                 break

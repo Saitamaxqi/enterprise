@@ -2,6 +2,7 @@
 
 import json
 import logging
+import time
 
 import psycopg2
 import pytz
@@ -9,6 +10,7 @@ from datetime import datetime
 from functools import partial
 
 from odoo import api, fields, models
+from odoo.addons.ai.utils.ai_logging import get_ai_logging_session
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.ai_fields.tools import parse_ai_prompt_values
 from odoo.addons.ai.utils.tools_schema.validators import validate_params_llm_values_with_schema, validate_schema
@@ -144,6 +146,7 @@ class IrActionsServer(models.Model):
 
         def _exec_tool(ir_action_tool, arguments):
             # Execute the tool, and register the call in `tool_calls_history`
+            start_time = time.perf_counter()
             error = None
             try:
                 result = ir_action_tool._ai_tool_run(record, arguments)
@@ -155,6 +158,18 @@ class IrActionsServer(models.Model):
                 error = e
                 result = _("An error occurred while executing %(action)s: %(error)s",
                            action=ir_action_tool.name, error=error)
+
+            duration = time.perf_counter() - start_time
+            if session := get_ai_logging_session():
+                session["tool_time"] += duration
+                if batch_id := session["current_batch_id"]:
+                    _logger.debug("[AI Tool - Batch #%d - %.2fs] Completed '%s'%s",
+                            batch_id, duration, ir_action_tool.name,
+                            " (with error)" if error else "")
+                else:
+                    _logger.debug("[AI Tool - %.2fs] Completed '%s'%s",
+                            duration, ir_action_tool.name,
+                            " (with error)" if error else "")
 
             if result is None and record:
                 # By adding this, prompt like "if cannot do anything, do ..." work better
@@ -269,6 +284,12 @@ class IrActionsServer(models.Model):
         :param arguments: The arguments to give to the action
         """
         _logger.info("AI: Call action %s with arguments: %s", self.name, arguments)
+        if session := get_ai_logging_session():
+            args_str = ', '.join(f"{k}={v!r}" for k, v in arguments.items() if v is not None)
+            if batch_id := session["current_batch_id"]:
+                _logger.debug("[AI Tool - Batch #%d ⚡] '%s' with args (%s)", batch_id, self.name, args_str)
+            else:
+                _logger.debug("[AI Tool →] '%s' with args (%s)", self.name, args_str)
 
         if ai_tool_schema := self.ai_tool_schema:
             ai_tool_schema = json.loads(ai_tool_schema)

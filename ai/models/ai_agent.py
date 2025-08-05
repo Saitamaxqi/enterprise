@@ -24,7 +24,7 @@ from odoo.tools.misc import submap
 
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.ai.utils.url_scraping import URLScraper
-from odoo.addons.ai.utils.llm_providers import PROVIDERS
+from odoo.addons.ai.utils.llm_providers import PROVIDERS, get_provider
 
 _logger = logging.getLogger(__name__)
 
@@ -321,10 +321,7 @@ class AIAgent(models.Model):
 
     def _get_provider(self):
         self.ensure_one()
-        for p in PROVIDERS:
-            if self.llm_model in [m[0] for m in p.llms]:
-                return p.name
-        raise UserError(_("No provider found for the selected model"))
+        return get_provider(self.env, self.llm_model)
 
     def _get_embedding_model(self):
         self.ensure_one()
@@ -590,6 +587,7 @@ class AIAgent(models.Model):
         :raises UserError: If no LLM provider is found for the selected model
         """
         self.ensure_one()
+        _logger.debug("[AI Prompt] %s", prompt)
         system_messages = self._build_system_context(extra_system_context=extra_system_context)
         if rag_context := self._build_rag_context(prompt):
             system_messages.extend(rag_context)
