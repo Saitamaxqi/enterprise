@@ -21,4 +21,12 @@ patch(PosConfig.prototype, {
             )
         );
     },
+
+    get displayTrackingNumber() {
+        return (
+            super.displayTrackingNumber ||
+            this.models["pos.prep.display"].length ||
+            this.models["pos.printer"].length
+        );
+    },
 });
