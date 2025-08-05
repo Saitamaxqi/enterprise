@@ -102,15 +102,6 @@ class StockMove(models.Model):
 
     # === Sending to KRA: Stock IO === #
 
-    def _calculate_unit_cost(self):
-        """ For stockable products we can easily use the stock valuation layers to calculate the unit price"""
-        self.ensure_one()
-        unit_price = 0
-        quantity_product_uom = self.product_uom._compute_quantity(self.quantity, self.product_id.uom_id)
-        for layer in self.stock_valuation_layer_ids:
-            unit_price += layer.unit_cost * (quantity_product_uom / layer.quantity)
-        return unit_price
-
     def _l10n_ke_oscu_save_stock_io_content(self):
         """ Send a recordset of stock moves to eTIMS.
             All records should have the same partner_id, flow type code and date.
@@ -130,7 +121,7 @@ class StockMove(models.Model):
             quantity_product_uom = move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id)
 
             # but get from product for now
-            price = abs(move._calculate_unit_cost()) * (move.quantity / quantity_product_uom)
+            price = abs(move._get_price_unit()) * (move.quantity / quantity_product_uom)
             price = price or move.product_id.standard_price  # Suppose the user forgot to set it
             base_amount = quantity_product_uom * price
 

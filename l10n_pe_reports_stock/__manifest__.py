@@ -22,7 +22,6 @@ Electronic stock reports
         "security/ir.model.access.csv",
         "views/product_views.xml",
         "views/stock_picking_views.xml",
-        "views/stock_valuation_layer_views.xml",
         "views/stock_warehouse_views.xml",
         "wizard/stock_move_ple_report.xml",
     ],

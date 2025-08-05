@@ -199,10 +199,9 @@ class MrpReport(models.Model):
             LEFT JOIN (
                 SELECT
                     mo.id                                                                    AS mo_id,
-                    COALESCE(ABS(SUM(svl.value)), 0.0)                                       AS total
+                    SUM(sm.value)                                                                 AS total
                 FROM mrp_production AS mo
                 LEFT JOIN stock_move AS sm on sm.raw_material_production_id = mo.id
-                LEFT JOIN stock_valuation_layer AS svl ON svl.stock_move_id = sm.id
                 WHERE mo.state = 'done'
                     AND (sm.state = 'done' or sm.state IS NULL)
                     AND (sm.scrapped != 't' or sm.scrapped IS NULL)

@@ -9,8 +9,9 @@
     'description': """
 Filters the stock lines out of the reconciliation widget
     """,
-    'depends': ['stock_account', 'account_accountant'],
+    'depends': ['stock_account', 'account_accountant', 'account_reports'],
     'data': [
+        'report/stock_valuation_report.xml',
         'views/res_config_settings_views.xml',
     ],
     'installable': True,

@@ -5,12 +5,6 @@
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="stock_accountant.res_config_settings_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@name='default_accounts']" position="inside">
-                <div class="row mt8">
-                    <label for="property_stock_account_production_cost_id" class="col-lg-5 o_light_label"/>
-                    <field name="property_stock_account_production_cost_id"/>
-                </div>
-            </xpath>
             <xpath expr="//setting[@id='default_stock_valuation_accounts']" position="before">
                 <setting string="WIP Account Properties">
                         <div class="content-group">

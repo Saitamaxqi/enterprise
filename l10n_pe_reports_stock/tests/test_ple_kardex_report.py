@@ -94,8 +94,8 @@ class TestPleKardexReport(TestSaleCommon):
         self.assertSequenceEqual(
             base64.b64decode(wizard.report_data).decode().split('\n'),
             [
-                '20240100|000000|M1|0000|1|99|FURN9999|1||01/01/2024|01|FFFI|00000001|01|product_order_no|NIU|0.00|-2.0|1|',
-                '20240100|000001|M1|0000|1|99|FURN9999|1||01/01/2024|01|FBILL202401|0001|02|product_order_no|NIU|5.0|0.00|1|',
+                '20240100|000000|M1|0000|1|99|FURN9999|1||01/01/2024|01|FBILL202401|0001|02|product_order_no|NIU|5.0|0.00|1|',
+                '20240100|000001|M1|0000|1|99|FURN9999|1||01/01/2024|01|FFFI|00000001|01|product_order_no|NIU|0.00|-2.0|1|',
                 '20240100|000002|M1|0000|1|99|FURN7777|1||01/01/2024|01|FFFI|00000001|01|product_delivery_no|NIU|0.00|-2.0|1|',
                 '',
             ]

@@ -29,3 +29,15 @@ class ProductTemplate(models.Model):
         string='Type of Existence',
         help="Select the type of existence according to SUNAT's Table 5 for inventory reporting.",
     )
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    def action_get_pe_ple_reports(self):
+        return {
+            'res_model': 'l10n_pe.stock.ple.wizard',
+            'views': [[False, 'form']],
+            'target': 'new',
+            'type': 'ir.actions.act_window',
+        }
