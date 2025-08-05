@@ -576,7 +576,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         # Ensure that all the data is synchronized with the database before we read it
         self.env.flush_all()
         query = report._get_report_query(options, 'strict_range')
-        account_alias = query.join(lhs_alias='account_move_line', lhs_column='account_id', rhs_table='account_account', rhs_column='id', link='account_id')
+        account_alias = query.left_join(lhs_alias='account_move_line', lhs_column='account_id', rhs_table='account_account', rhs_column='id', link='account_id')
         account_code = self.env['account.account']._field_to_sql(account_alias, 'code', query)
         account_name = self.env['account.account']._field_to_sql(account_alias, 'name')
 
