@@ -66,7 +66,7 @@
                 <!-- Invoice lines -->
                 <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='price_total']" position="after">
                     <field name="l10n_mx_edi_tax_object"
-                           required="parent.l10n_mx_edi_is_cfdi_needed"
+                           required="parent.l10n_mx_edi_is_cfdi_needed and display_type not in ('line_section', 'line_note')"
                            column_invisible="not parent.l10n_mx_edi_is_cfdi_needed"
                            readonly="parent.l10n_mx_edi_cfdi_state in ('sent', 'global_sent')"
                            optional="hide"
