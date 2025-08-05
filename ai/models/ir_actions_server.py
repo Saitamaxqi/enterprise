@@ -221,6 +221,7 @@ class IrActionsServer(models.Model):
         return action_prompt, context_fields
 
     def _ai_action_run(self, record):
+        """Run the AI action on the given record if any."""
         self.ensure_one()
         # We only check if the AI action can be executed,
         # then, we will skip all check on tools
@@ -274,6 +275,7 @@ class IrActionsServer(models.Model):
         return responses, tool_calls_history
 
     def _ai_get_records(self, eval_context):
+        """Return the record on which the AI action will be executed."""
         if self.env.context.get("onchange_self"):
             return self.env.context["onchange_self"]
         records = eval_context.get("record") or eval_context["model"]
@@ -281,8 +283,6 @@ class IrActionsServer(models.Model):
 
     def _ai_tool_run(self, record, arguments):
         """Execute the AI tools on the given record.
-
-        TODO: add test for access
 
         If we can execute the AI actions that use that tool, then we
         skip all check on the tools. In most cases it can be executed

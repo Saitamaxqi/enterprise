@@ -404,8 +404,6 @@ class LLMApiService:
                 if file["mimetype"] == "text/plain":
                     return {"text": file["value"]}
 
-                # TODO: low quality for image
-                # TODO: image URL ?
                 return {"inline_data": {"mime_type": file['mimetype'], "data": file["value"]}}
 
             body["contents"].append({"role": "user", "parts":

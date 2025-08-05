@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.exceptions import AccessError
-from odoo.tests import TransactionCase
+from odoo.tests import TransactionCase, new_test_user
 from odoo.tools import mute_logger
 
 
@@ -12,6 +12,53 @@ class TestAiServerActions(TransactionCase):
         def _mock_get_api_token(self):
             return "dummy"
         return patch.object(LLMApiService, '_get_api_token', _mock_get_api_token)
+
+    def test_ai_server_action_access(self):
+        """Test that the group check is skipped on the tool, but not on the AI action."""
+        user = new_test_user(self.env, "internal_user_ai", "base.group_user,base.group_partner_manager")
+        partner = self.env["res.partner"].create({"name": "Partner"})
+
+        ir_action_tool = self.env["ir.actions.server"].create({
+            "model_id": self.env["ir.model"]._get_id("res.partner"),
+            "state": "code",
+            "name": "Write Name",
+            "use_in_ai": True,
+            "code": "record.write({'name': value})",
+            "group_ids": self.env.ref("base.group_system").ids,
+        })
+        action = self.env["ir.actions.server"].create(
+            {
+                "model_id": self.env["ir.model"]._get_id("res.partner"),
+                "state": "ai",
+                "name": "Test",
+                "ai_tool_ids": ir_action_tool.ids,
+                "ai_action_prompt": "Main Prompt",
+            },
+        )
+        llm_calls = 0
+
+        def _mocked_request_llm(
+            service, llm_model, system_prompts, user_prompts, tools=None,
+            files=None, schema=None, temperature=0.2, inputs=(), web_grounding=None,
+        ):
+            nonlocal llm_calls
+            llm_calls += 1
+            return ["Done"], [], []
+
+        # Check that we skip the group check on the tools
+        with patch.object(LLMApiService, "_request_llm", _mocked_request_llm):
+            action.with_user(user).with_context(active_id=partner.id, active_model='res.partner').run()
+
+        self.assertEqual(llm_calls, 1)
+
+        # But not on the AI action
+        action.group_ids = self.env.ref("base.group_system").ids
+        llm_calls = 0
+
+        with patch.object(LLMApiService, "_request_llm", _mocked_request_llm), self.assertRaises(AccessError):
+            action.with_user(user).with_context(active_id=partner.id, active_model='res.partner').run()
+
+        self.assertEqual(llm_calls, 0)
 
     @mute_logger("odoo.addons.ai.utils.llm_api_service")
     def test_ai_server_action_ai_tool(self):
