@@ -68,8 +68,11 @@ export class CallService {
     async start(call) {
         this.store.insert(await this.orm.call("voip.call", "start_call", [[call.id]]));
         call.timer = {};
+        // Use the time from the client (rather than call.start_date) to avoid
+        // clock skew with the server.
+        const timerStart = luxon.DateTime.now();
         const computeDuration = () => {
-            call.timer.time = Math.floor((luxon.DateTime.now() - call.start_date) / 1000);
+            call.timer.time = Math.floor((luxon.DateTime.now() - timerStart) / 1000);
         };
         computeDuration();
         call.timer.interval = setInterval(computeDuration, 1000);
