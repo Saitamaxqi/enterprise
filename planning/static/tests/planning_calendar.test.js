@@ -1,10 +1,9 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, drag, queryText, waitFor } from "@odoo/hoot-dom";
-import { animationFrame, mockDate } from "@odoo/hoot-mock";
+import { click, drag, queryText } from "@odoo/hoot-dom";
+import { animationFrame, disableAnimations, mockDate } from "@odoo/hoot-mock";
 import {
-    clickDate,
     clickEvent,
-    resizeEventToTime,
+    resizeEventToTime
 } from "@web/../tests/views/calendar/calendar_test_helpers";
 import {
     definePlanningModels,
@@ -18,9 +17,8 @@ import {
     defineActions,
     getService,
     mockService,
-    mountView,
     mountWithCleanup,
-    onRpc,
+    onRpc
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 
@@ -117,12 +115,18 @@ beforeEach(() => {
     ];
 
     mockDate("2019-03-13 00:00:00", +1);
+    disableAnimations();
 });
 
 async function createRecordsInBatch() {
+    // select the date
+    const { drop, moveTo } = await drag(".fc-day[data-date='2019-03-14']");
+    await moveTo(".fc-day[data-date='2019-03-15']");
+    await animationFrame();
+    await drop();
+    await animationFrame();
 
-    // switch to create mode
-    await click(".o_calendar_sidebar .btn-group .btn:nth-child(2)");
+    await click(".o_multi_selection_buttons .btn:contains(Add)");
     await animationFrame();
 
     // select shift template
@@ -131,10 +135,7 @@ async function createRecordsInBatch() {
     await click(".o-autocomplete--dropdown-item:contains('template')");
     await animationFrame();
 
-    // select the date
-    const { drop, moveTo } = await drag(".fc-day[data-date='2019-03-14']");
-    await moveTo(".fc-day[data-date='2019-03-15']");
-    await drop();
+    await click(".o_multi_create_popover .popover-footer .btn:contains(Add)");
     await animationFrame();
 }
 
@@ -198,63 +199,6 @@ test("planning calendar view: copy previous week", async () => {
     await click(".o_switch_view.o_calendar");
     await animationFrame();
     expect(".o_notification_body").toHaveCount(0);
-});
-
-test("Verify Hours in Planning Dialog When Clicking on Off Days and Working Days Calendar view", async () => {
-    onRpc("get_unusual_days", () => ({ "2019-03-03": true, "2019-03-09": true }));
-    onRpc("get_calendar_filters", () => {
-        return [
-            {"id": 1, "resource_id": false, "checked": true, "resource_type": false},
-            {"id": 2, "resource_id": [1, "Chaganlal"], "checked": true, "resource_type": "user"},
-            {"id": 3, "resource_id": [2, "Maganlal"], "checked": true, "resource_type": "user"},
-        ];
-    });
-    await mountView({
-        resModel: "planning.slot",
-        type: "calendar",
-        arch: `<calendar class="o_planning_calendar_test"
-                    date_start="start_datetime"
-                    date_stop="end_datetime"
-                    color="color"
-                    mode="month"
-                    show_unusual_days="1"
-                    quick_create="1"
-                    quick_create_view_id="1"
-                    multi_create_view="multi_create_form"
-                    js_class="planning_calendar"
-                >
-                    <field name="resource_id"
-                                   filters="1"
-                                   avatar_field="avatar_128"
-                                   widget="many2one_avatar_resource"
-                                   write_model="planning.filter.resource"
-                                   write_field="resource_id"
-                                   filter_field="checked"
-                            />
-                </calendar>`,
-    });
-
-    // click on dayoff day
-    await clickDate("2019-03-09");
-    await waitFor(".o_dialog .o_form_view");
-    expect(`.o_field_widget[name="start_datetime"] button`).toHaveValue("03/09/2019 00:00:00", {
-        message: "The start date should be the minimum time for the selected date.",
-    });
-    expect(`.o_field_widget[name="end_datetime"] button`).toHaveValue("03/09/2019 23:59:59", {
-        message: "The end date should be the maximum time for the selected date.",
-    });
-    await click(".modal-dialog .o_form_button_save");
-
-    // click on working day
-    await clickDate("2019-03-21");
-    await waitFor(".o_dialog .o_form_view");
-    expect(`.o_field_widget[name="start_datetime"] button`).toHaveValue("03/21/2019 00:00:00", {
-        message: "The start date should be the minimum time for the selected date.",
-    });
-    expect(`.o_field_widget[name="end_datetime"] button`).toHaveValue("03/21/2019 23:59:59", {
-        message: "The end date should be the maximum time for the selected date.",
-    });
-    await click(".modal-dialog .o_form_button_save");
 });
 
 test("Resize or Drag-Drop should open recurrence update wizard", async () => {
@@ -398,9 +342,6 @@ test("Display confirm delete modal when deleting non recurrent task", async () =
 * - the other filters status depends on the 'checked' stored valued
 * - the input date picker is not present
 * - the material resources have a wrench icon displayed instead of their avatar icon
-* - if the current view is month & set on delete/create mode and the view is switched to another scale,
-* the calendar is correctly displayed
-* - the add & delete side panels are only available in 'month' scale
 */
 test("check filters set up, scale display & cosmetic changes", async () => {
 
@@ -428,39 +369,12 @@ test("check filters set up, scale display & cosmetic changes", async () => {
     await expect(".o_calendar_filter_item:contains('Kalandra') input").not.toBeChecked();
     await expect(".o_calendar_filter_item:contains('Zana') input").toBeChecked();
 
-     // no time input picker
-    await expect("o_time_picker_input").toHaveCount(0);
-
-    // every button of the sidebar is present
-    await expect(".o_calendar_sidebar .btn-group .btn.active").toHaveAttribute(
-        "data-tooltip",
-        "Filter by specific resources to show only their shifts"
-    );
-    await expect(".o_calendar_sidebar .btn-group .btn-secondary:nth-child(2)").toHaveAttribute(
-        "data-tooltip",
-        "Click on a day or select a range of days to create shifts for the selected resources using the shift template"
-    );
-    await expect(".o_calendar_sidebar .btn-group .btn-secondary:nth-child(3)").toHaveAttribute(
-        "data-tooltip",
-        "Clicking on a day or selecting a range of days will permanently delete its contents"
-    );
-
     await click(".o_calendar_filter .o-autocomplete--input");
     await animationFrame();
 
     // the material resource has a wrench icon displayed instead of the avatar icon
     await expect(".o_calendar_filter li.o-autocomplete--dropdown-item:contains('atlas') .fa-wrench").toHaveCount(1);
     await expect(".o_calendar_filter li.o-autocomplete--dropdown-item:contains('Maganlal') .fa-wrench").toHaveCount(0);
-
-    // switch to delete mode
-    await click(".o_calendar_sidebar .btn-group .btn:nth-child(3)");
-    await animationFrame();
-
-    // mode is correctly switched to delete
-    await expect(".o_calendar_sidebar .btn-group .btn.active").toHaveAttribute(
-        "data-tooltip",
-        "Clicking on a day or selecting a range of days will permanently delete its contents"
-    );
 
     // switch to 'week' scale
     await click(".scale_button_selection");
@@ -469,8 +383,6 @@ test("check filters set up, scale display & cosmetic changes", async () => {
     await click(".o_scale_button_week");
     await animationFrame();
 
-    // the buttons are not displayed in 'week' scale
-    await expect(".o_calendar_sidebar .btn-group").toHaveCount(0);
     // the calendar is displayed in 'week' scale
     await expect(".o_datetime_picker").toHaveCount(1);
 });

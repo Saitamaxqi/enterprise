@@ -2,7 +2,11 @@
 <templates xml:space="preserve">
 
     <t t-name="web_gantt.GanttRenderer">
-        <GanttRendererControls t-props="this.controlsProps" />
+        <GanttRendererControls t-props="this.controlsProps">
+            <t t-set-slot="multi_selection_buttons">
+                <MultiSelectionButtons reactive="this.multiSelectionButtonsReactive" />
+            </t>
+        </GanttRendererControls>
         <div t-ref="grid"
             class="o_gantt_renderer o_renderer bg-view"
             t-att-class="{ o_has_row_headers: hasRowHeaders, 'pe-auto': isDragging }"
@@ -170,7 +174,7 @@
                 t-attf-style="{{ getGridPosition({ column: column.grid.column, row: row.grid.row }) }};{{ row.cellColors[column.index] || '' }}"
                 t-att-data-row-id="row.id"
                 t-att-data-col="col"
-                t-on-click.synthetic="(ev) => row.isGroup and !column.isFolded ? this.model.toggleRow(row.id) : this.onCellClicked(row.id, column)"
+                t-on-click.synthetic="(ev) => row.isGroup and !column.isFolded ? this.model.toggleRow(row.id) : this.onCellClicked(row.id, column, row.grid.row)"
             />
         </t>
     </t>

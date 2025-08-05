@@ -20,10 +20,12 @@ export const ganttView = {
     props: (genericProps, view, config) => {
         const modelParams = {};
         let scrollPosition;
+        let multiCreateValues;
         if (genericProps.state) {
             scrollPosition = genericProps.state[scrollSymbol];
             modelParams.metaData = genericProps.state.metaData;
             modelParams.displayParams = genericProps.state.displayParams;
+            multiCreateValues = genericProps.state.multiCreateValues;
         } else {
             const { arch, fields, resModel } = genericProps;
             const parser = new view.ArchParser();
@@ -59,6 +61,7 @@ export const ganttView = {
             Renderer: view.Renderer,
             buttonTemplate: view.buttonTemplate,
             scrollPosition,
+            multiCreateValues,
         };
     },
 };

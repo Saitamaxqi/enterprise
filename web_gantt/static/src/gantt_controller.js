@@ -29,6 +29,7 @@ export class GanttController extends Component {
         Renderer: Function,
         buttonTemplate: String,
         modelParams: Object,
+        multiCreateValues: { type: Object, optional: true },
         scrollPosition: { type: Object, optional: true },
     };
     static template = "web_gantt.GanttController";

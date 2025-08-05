@@ -347,6 +347,7 @@ function getInfoFromRootNode(rootNode) {
         displayUnavailability: exprToBoolean(attrs.display_unavailability),
         formViewId: attrs.form_view_id ? parseInt(attrs.form_view_id, 10) : false,
         kanbanViewId: attrs.kanban_view_id ? evaluateExpr(attrs.kanban_view_id) : null,
+        multiCreateView: attrs.multi_create_view || null,
         pagerLimit: attrs.groups_limit ? parseInt(attrs.groups_limit, 10) : null,
         pillDecorations,
         progressBarFields: attrs.progress_bar ? attrs.progress_bar.split(",") : null,

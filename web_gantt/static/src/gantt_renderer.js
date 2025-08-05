@@ -23,7 +23,7 @@ import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { zipWith } from "@web/core/utils/arrays";
 import { KeepLast } from "@web/core/utils/concurrency";
-import { useService } from "@web/core/utils/hooks";
+import { useBus, useService } from "@web/core/utils/hooks";
 import { omit, pick } from "@web/core/utils/objects";
 import { nbsp } from "@web/core/utils/strings";
 import { debounce, throttleForAnimation } from "@web/core/utils/timing";
@@ -33,11 +33,16 @@ import { useVirtualGrid } from "@web/core/virtual_grid_hook";
 import { extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
 import { formatFloatTime } from "@web/views/fields/formatters";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
+import {
+    MultiSelectionButtons,
+    useMultiSelectionButtons,
+} from "@web/views/view_components/multi_selection_buttons";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 import { GanttConnector } from "./gantt_connector";
 import {
     dateAddFixedOffset,
     diffColumn,
+    getBadges,
     getCellColor,
     getColorIndex,
     getHoveredCellPart,
@@ -153,6 +158,14 @@ const INTERACTION_CLASSNAMES = [
 ];
 const NEW_CONNECTOR_ID = "__connector__new";
 
+const rtl = () => localization.direction === "rtl";
+
+const clearObject = (obj) => {
+    for (const key in obj) {
+        delete obj[key];
+    }
+};
+
 /**
  * Gantt Renderer
  *
@@ -165,6 +178,7 @@ export class GanttRenderer extends Component {
         GanttTimeDisplayBadge,
         GanttRowProgressBar,
         Popover: GanttPopover,
+        MultiSelectionButtons,
     };
     static props = [
         "model",
@@ -173,6 +187,7 @@ export class GanttRenderer extends Component {
         "create",
         "openDialog",
         "scrollPosition?",
+        "multiCreateValues?",
         "contentRef?",
         "context?",
     ];
@@ -287,6 +302,8 @@ export class GanttRenderer extends Component {
             className: "o_gantt_group_hovered",
         });
 
+        const scale = () => this.model.metaData.scale;
+
         // Draggable pills
         this.cellForDrag = { el: null, part: 0 };
         const dragState = useGanttDraggable({
@@ -300,20 +317,14 @@ export class GanttRenderer extends Component {
             // Style classes
             cellDragClassName: "o_gantt_cell o_drag_hover",
             ghostClassName: "o_dragged_pill_ghost",
-            rtl: () => localization.direction === "rtl",
-            scale: () => this.model.metaData.scale,
+            rtl,
+            scale,
             getBadgesInitialDates: () => ({
                 start: this.badgeInitialStartDate,
                 stop: this.badgeInitialStopDate,
             }),
-            addStickyCoordinates: (rows, columns) => {
-                this.stickyGridRows = Object.assign({}, ...rows.map((row) => ({ [row]: true })));
-                this.stickyGridColumns = Object.assign(
-                    {},
-                    ...columns.map((column) => ({ [column]: true }))
-                );
-                this.setSomeGridStyleProperties();
-            },
+            addStickyCoordinates: this.addStickyCoordinates.bind(this),
+            onWillStartDrag: this.cleanMultiSelection.bind(this),
             // Handlers
             onDragStart: ({ pill }) => {
                 this.initBadges(pill);
@@ -321,13 +332,11 @@ export class GanttRenderer extends Component {
                 this.setStickyPill(pill);
                 this.interaction.mode = "drag";
             },
-            onDrag: ({ startBadge, stopBadge }) => {
-                Object.assign(this.timeDisplayBadgeReactiveStart, startBadge);
-                Object.assign(this.timeDisplayBadgeReactiveStop, stopBadge);
-            },
+            onDrag: this.updateBadges.bind(this),
             onDragEnd: () => {
                 this.clearBadges();
                 this.setStickyPill();
+                this.removeStickyCoordinates();
                 this.interaction.mode = null;
             },
             onDrop: (params) => this.dragPillDrop(params),
@@ -340,43 +349,13 @@ export class GanttRenderer extends Component {
             elements: ".o_undraggable",
             ignore: ".o_resize_handle,.o_connector_creator_bullet",
             edgeScrolling: { enabled: false },
+            onWillStartDrag: this.cleanMultiSelection.bind(this),
             // Handlers
             onDragStart: () => {
                 this.interaction.mode = "locked";
             },
             onDragEnd: () => {
                 this.interaction.mode = null;
-            },
-        });
-
-        // Cells selection
-        const selectState = useGanttSelectable({
-            enable: () => Boolean(this.cellForDrag.el) && this.model.metaData.canCellCreate,
-            ref: this.gridRef,
-            hoveredCell: this.cellForDrag,
-            elements: ".o_gantt_cell:not(.o_gantt_group)",
-            edgeScrolling: { speed: 40, threshold: 150, direction: "horizontal" },
-            addStickyCoordinates: (columns) => {
-                this.stickyGridColumns = Object.assign(
-                    {},
-                    ...columns.map((column) => ({ [column]: true }))
-                );
-                this.setSomeGridStyleProperties();
-            },
-            scale: () => this.model.metaData.scale,
-            getBadgesInitialDate: () => ({ initialDate: this.badgeInitialStartDate }),
-            rtl: () => localization.direction === "rtl",
-            onDragStart: ({ initialCol }) => {
-                const { start } = this.getSubColumnFromColNumber(initialCol);
-                this.badgeInitialStartDate = start;
-            },
-            onDrag: ({ startBadge, stopBadge }) => {
-                Object.assign(this.timeDisplayBadgeReactiveStart, startBadge);
-                Object.assign(this.timeDisplayBadgeReactiveStop, stopBadge);
-            },
-            onDrop: ({ rowId, startCol, stopCol }) => {
-                this.clearBadges();
-                this.onCreate(rowId, startCol, stopCol);
             },
         });
 
@@ -387,11 +366,10 @@ export class GanttRenderer extends Component {
             hoveredCell: this.cellForDrag,
             elements: ".o_resizable",
             innerPills: ".o_gantt_pill",
-            cells: ".o_gantt_cell",
             // Other params
             handles: "o_resize_handle",
             edgeScrolling: { speed: 40, threshold: 150, direction: "horizontal" },
-            scale: () => this.model.metaData.scale,
+            scale,
             getBadgesInitialDates: () => ({
                 start: this.badgeInitialStartDate,
                 stop: this.badgeInitialStopDate,
@@ -404,7 +382,8 @@ export class GanttRenderer extends Component {
                     end: !pill.disableStopResize && !hideHandles,
                 };
             },
-            rtl: () => localization.direction === "rtl",
+            rtl,
+            onWillStartDrag: this.cleanMultiSelection.bind(this),
             // Handlers
             onDragStart: ({ pill, addClass }) => {
                 this.initBadges(pill);
@@ -413,10 +392,7 @@ export class GanttRenderer extends Component {
                 addClass(pill, "o_resized");
                 this.interaction.mode = "resize";
             },
-            onDrag: ({ startBadge, stopBadge }) => {
-                Object.assign(this.timeDisplayBadgeReactiveStart, startBadge);
-                Object.assign(this.timeDisplayBadgeReactiveStop, stopBadge);
-            },
+            onDrag: this.updateBadges.bind(this),
             onDragEnd: ({ pill, removeClass }) => {
                 this.clearBadges();
                 this.setStickyPill();
@@ -432,6 +408,7 @@ export class GanttRenderer extends Component {
             ref: this.gridRef,
             elements: ".o_connector_creator_bullet",
             parentWrapper: ".o_gantt_cells .o_gantt_pill_wrapper",
+            onWillStartDrag: this.cleanMultiSelection.bind(this),
             onDragStart: ({ sourcePill, x, y, addClass }) => {
                 this.popover.close();
                 initialPillId = sourcePill.dataset.pillId;
@@ -467,7 +444,9 @@ export class GanttRenderer extends Component {
             },
         });
 
-        this.dragStates = [dragState, unDragState, resizeState, selectState];
+        this.dragStates = [dragState, unDragState, resizeState];
+
+        this.prepareSelectionFeature();
 
         onWillStart(this.computeDerivedParams);
         onWillUpdateProps(this.computeDerivedParams);
@@ -561,6 +540,124 @@ export class GanttRenderer extends Component {
     //-------------------------------------------------------------------------
     // Methods
     //-------------------------------------------------------------------------
+
+    addStickyCoordinates(rows, columns) {
+        this.stickyGridRows = Object.assign({}, ...rows.map((row) => ({ [row]: true })));
+        this.stickyGridColumns = Object.assign(
+            {},
+            ...columns.map((column) => ({ [column]: true }))
+        );
+        this.setSomeGridStyleProperties();
+    }
+
+    removeStickyCoordinates() {
+        this.stickyGridRows = {};
+        this.stickyGridColumns = {};
+        this.setSomeGridStyleProperties();
+    }
+
+    appendCellGhost({ startCol, endCol, startRow, endRow }) {
+        this.cellGhost.style = this.getGridPosition({
+            row: [startRow, endRow],
+            column: [startCol, endCol],
+        });
+        this.addStickyCoordinates([startRow, endRow], [startCol, endCol]);
+        this.cellContainerRef.el.append(this.cellGhost);
+    }
+
+    removeCellGhost() {
+        this.cellGhost.remove();
+        this.removeStickyCoordinates();
+    }
+
+    updateMultiSelection({ startCol, endCol, startRow, endRow }) {
+        this.multiSelectionButtonsReactive.visible = true;
+        this.blockBounds = { startCol, endCol, startRow, endRow };
+        this.multiSelectionButtonsReactive.nbSelected = this.getSelectedRecordIds(
+            this.blockBounds
+        ).length;
+    }
+
+    cleanMultiSelection() {
+        this.multiSelectionButtonsReactive.visible = false;
+        this.blockBounds = null;
+        this.removeCellGhost();
+    }
+
+    prepareSelectionFeature() {
+        const scale = () => this.model.metaData.scale;
+        const getDatetime = (col) => this.getSubColumnFromColNumber(col).start;
+
+        this.blockBounds = null;
+        this.cellGhost = document.createElement("div");
+        this.cellGhost.classList.add("o_gantt_cell", "o_drag_hover", "pe-none");
+        this.multiSelectionButtonsReactive = useMultiSelectionButtons({
+            onCancel: this.cleanMultiSelection.bind(this),
+            onAdd: (multiCreateData) => {
+                this.onMultiCreate(multiCreateData, this.blockBounds);
+                this.cleanMultiSelection();
+            },
+            onDelete: () => {
+                this.onMultiDelete(this.blockBounds);
+                this.cleanMultiSelection();
+            },
+            nbSelected: 0,
+            resModel: this.model.metaData.resModel,
+            multiCreateView: this.model.metaData.multiCreateView,
+            multiCreateValues: this.props.multiCreateValues,
+            showMultiCreateTimeRange: this.model.showMultiCreateTimeRange,
+            context: this.model.searchParams.context,
+        });
+
+        const update = ({ startCol, endCol, startRow, endRow }) => {
+            this.appendCellGhost({ startCol, endCol, startRow, endRow });
+            if (this.model.hasMultiCreate) {
+                return;
+            }
+            const startDate = getDatetime(startCol);
+            const stopDate = getDatetime(endCol);
+            this.updateBadges(
+                getBadges(this.cellGhost, [startDate], [stopDate], {
+                    rtl: rtl(),
+                    scale: scale(),
+                })
+            );
+        };
+
+        // Cells selection
+        const selectState = useGanttSelectable({
+            enable: () =>
+                Boolean(this.cellForDrag.el) &&
+                !this.cellForDrag.el.classList.contains("o_gantt_group") &&
+                (this.model.metaData.canCellCreate || this.model.hasMultiCreate),
+            ref: this.gridRef,
+            hoveredCell: this.cellForDrag,
+            elements: ".o_gantt_cell",
+            edgeScrolling: {
+                speed: 40,
+                threshold: 150,
+                direction: this.model.hasMultiCreate ? undefined : "horizontal",
+            },
+            hasMultiCreate: () => this.model.hasMultiCreate,
+            rtl,
+            scale,
+            onDragStart: update,
+            onDrag: update,
+            onDrop: ({ rowId, startCol, endCol, startRow, endRow }) => {
+                if (this.model.hasMultiCreate) {
+                    this.updateMultiSelection({ startCol, endCol, startRow, endRow });
+                } else {
+                    this.removeCellGhost();
+                    this.clearBadges();
+                    this.onCreate(rowId, startCol, endCol - 1);
+                }
+            },
+        });
+
+        useBus(this.model.bus, "update", this.cleanMultiSelection.bind(this));
+
+        this.dragStates.push(selectState);
+    }
 
     /**
      *
@@ -1154,7 +1251,7 @@ export class GanttRenderer extends Component {
                 hoverable,
                 this.cursorPosition.x,
                 scale.cellPart,
-                localization.direction === "rtl"
+                rtl()
             );
         }
 
@@ -1397,7 +1494,7 @@ export class GanttRenderer extends Component {
         if (!focusGroup && (factor < 0 || 1 < factor)) {
             return false;
         }
-        const rtlFactor = localization.direction === "rtl" ? -1 : 1;
+        const rtlFactor = rtl() ? -1 : 1;
         if (this.columnCount === this.foldedGridColumnCount) {
             const scrollLeft = factor * this.cellContainerRef.el.clientWidth;
             this.props.contentRef.el.scrollLeft = rtlFactor * scrollLeft;
@@ -1539,7 +1636,7 @@ export class GanttRenderer extends Component {
 
     getCurrentFocusDate() {
         const { globalStart, globalStop } = this.model.metaData;
-        const rtlFactor = localization.direction === "rtl" ? -1 : 1;
+        const rtlFactor = rtl() ? -1 : 1;
         const cellGridMiddleX =
             rtlFactor * this.props.contentRef.el.scrollLeft +
             (this.contentRefWidth + this.rowHeaderWidth) / 2;
@@ -1570,7 +1667,7 @@ export class GanttRenderer extends Component {
      */
     getConnectorCreatorAlignment(vertical) {
         const alignment = { vertical };
-        if (localization.direction === "rtl") {
+        if (rtl()) {
             alignment.horizontal = vertical === "top" ? "right" : "left";
         } else {
             alignment.horizontal = vertical === "top" ? "left" : "right";
@@ -1929,7 +2026,7 @@ export class GanttRenderer extends Component {
      * @param {boolean} onRight
      */
     getPoint(pillId, onRight) {
-        if (localization.direction === "rtl") {
+        if (rtl()) {
             onRight = !onRight;
         }
         const pillEl = this.getPillEl(pillId);
@@ -2638,8 +2735,8 @@ export class GanttRenderer extends Component {
     }
 
     /*
-    * This function is made to be overwrite in other module to enable the highlight feature.
-    */
+     * This function is made to be overwrite in other module to enable the highlight feature.
+     */
     onConnectorHover() {
         return false;
     }
@@ -2871,6 +2968,11 @@ export class GanttRenderer extends Component {
         this.badgeInitialStopDate = record[dateStopField];
     }
 
+    updateBadges({ startBadge, stopBadge }) {
+        Object.assign(this.timeDisplayBadgeReactiveStart, startBadge);
+        Object.assign(this.timeDisplayBadgeReactiveStop, stopBadge);
+    }
+
     clearBadges() {
         clearObject(this.timeDisplayBadgeReactiveStart);
         clearObject(this.timeDisplayBadgeReactiveStop);
@@ -2882,7 +2984,67 @@ export class GanttRenderer extends Component {
     // Handlers
     //-------------------------------------------------------------------------
 
-    onCellClicked(rowId, column) {
+    getSelectedRecordIds({ startCol, endCol, startRow, endRow }) {
+        const ids = [];
+        for (const pill of Object.values(this.pills)) {
+            const row = this.rowByIds[pill.rowId];
+            if (
+                row.isGroup ||
+                this.getFirstGridCol(pill) >= endCol ||
+                this.getLastGridCol(pill) <= startCol ||
+                this.getFirstGridRow(pill) >= endRow ||
+                this.getLastGridRow(pill) <= startRow
+            ) {
+                continue;
+            }
+            ids.push(pill.record.id);
+        }
+        return ids;
+    }
+
+    onMultiDelete({ startCol, endCol, startRow, endRow }) {
+        const ids = this.getSelectedRecordIds({ startCol, endCol, startRow, endRow });
+        return this.model.unlinkRecords(ids);
+    }
+
+    getCellsInfo({ startCol, endCol, startRow, endRow }) {
+        const cellsInfo = [];
+        const rowIdsByFirstRow = {};
+        for (const row of this.rows) {
+            if (!row.isGroup) {
+                const [first] = row.grid.row;
+                rowIdsByFirstRow[first] = row.id;
+            }
+        }
+        for (let col = startCol; col < endCol; col++) {
+            let { start, stop } = this.getSubColumnFromColNumber(col);
+            ({ start, stop } = this.normalizeTimeRange(start, stop));
+            for (let row = startRow; row < endRow; row++) {
+                const rowId = rowIdsByFirstRow[row];
+                if (!rowId) {
+                    continue;
+                }
+                cellsInfo.push({ rowId, start, stop });
+            }
+        }
+        return cellsInfo;
+    }
+
+    onMultiCreate(multiCreateData, { startCol, endCol, startRow, endRow }) {
+        const cellsInfo = this.getCellsInfo({ startCol, endCol, startRow, endRow });
+        return this.model.multiCreateRecords(multiCreateData, cellsInfo);
+    }
+
+    onCellClicked(rowId, column, row) {
+        const startCol = column.grid.column[0];
+        if (this.model.hasMultiCreate) {
+            const endCol = startCol + this.model.metaData.scale.cellPart;
+            const [startRow, endRow] = row;
+            const cellBounds = { startCol, endCol, startRow, endRow };
+            this.appendCellGhost(cellBounds);
+            this.updateMultiSelection(cellBounds);
+            return;
+        }
         if (!this.preventClick) {
             this.preventClick = true;
             setTimeout(() => (this.preventClick = false), 1000);
@@ -2890,12 +3052,11 @@ export class GanttRenderer extends Component {
                 this.toggleFoldableColumn(column, false);
                 return;
             }
-            const col = column.grid.column[0];
             const { canCellCreate, canPlan } = this.model.metaData;
             if (canPlan) {
-                this.onPlan(rowId, col, col);
+                this.onPlan(rowId, startCol, startCol);
             } else if (canCellCreate) {
-                this.onCreate(rowId, col, col + this.model.metaData.scale.cellPart - 1);
+                this.onCreate(rowId, startCol, startCol + this.model.metaData.scale.cellPart - 1);
             }
         }
     }
@@ -3080,11 +3241,5 @@ export class GanttRenderer extends Component {
         if (ev.key === "Control") {
             this.interaction.dragAction = this.prevDragAction || "reschedule";
         }
-    }
-}
-
-function clearObject(obj) {
-    for (const key in obj) {
-        delete obj[key];
     }
 }

@@ -32,6 +32,7 @@
                         create.bind="create"
                         openDialog.bind="openDialog"
                         scrollPosition="props.scrollPosition"
+                        multiCreateValues="props.multiCreateValues"
                         contentRef="layout.contentRef"
                         context="props.context"
                     />

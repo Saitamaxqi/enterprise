@@ -1,0 +1,245 @@
+import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { click, edit } from "@odoo/hoot-dom";
+import { animationFrame, disableAnimations, mockDate, mockTimeZone } from "@odoo/hoot-mock";
+
+import { contains, defineParams, onRpc } from "@web/../tests/web_test_helpers";
+import { Tasks, defineGanttModels } from "./gantt_mock_models";
+import { getCell, getGridContent, mountGanttView } from "./web_gantt_test_helpers";
+
+describe.current.tags("desktop");
+
+Tasks._views = {
+    "form,multi_create_form": `
+        <form>
+            <group>
+                <field name="name" required="1"/>
+                <field name="progress"/>
+            </group>
+        </form>
+    `,
+    "form,multi_create_form_state": `
+        <form>
+            <group>
+                <field name="name" required="1"/>
+                <field name="progress"/>
+                <field name="user_id"/>
+            </group>
+        </form>
+    `,
+};
+
+defineGanttModels();
+beforeEach(() => {
+    mockDate("2018-12-20T08:00:00", +1);
+    defineParams({
+        lang_parameters: {
+            time_format: "%I:%M:%S",
+        },
+    });
+    disableAnimations();
+});
+
+beforeEach(() => {
+    mockTimeZone("Europe/Brussels");
+});
+
+// Utils function
+
+async function multiCreateClickAddButton() {
+    await click(".o_multi_selection_buttons .btn:contains(Add)");
+    await animationFrame();
+}
+
+async function multiCreatePopoverClickAddButton() {
+    await click(".o_multi_create_popover .popover-footer .btn:contains(Add)");
+    await animationFrame();
+}
+
+test("multi_create: render and basic creation/deletion", async () => {
+    onRpc("event", "create", ({ args: [records] }) => {
+        for (const record of records) {
+            expect.step(`${record.name}_${record.date_start}`);
+        }
+    });
+
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full'}"
+                multi_create_view="multi_create_form"
+            >
+                <field name="progress"/>
+            </gantt>
+        `,
+        groupBy: ["stage_id"],
+    });
+    let gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
+            title: "todo",
+        },
+        {
+            title: "in_progress",
+            pills: [
+                { level: 0, colSpan: "01 December 2018 -> Out of bounds (32) ", title: "Task 1" },
+                {
+                    level: 1,
+                    colSpan: "20 December 2018 -> 20 December 2018",
+                    title: "Task 7",
+                },
+            ],
+        },
+        {
+            title: "done",
+            pills: [
+                {
+                    level: 0,
+                    colSpan: "17 December 2018 -> 22 December 2018",
+                    title: "Task 2",
+                },
+            ],
+        },
+        {
+            title: "cancel",
+            pills: [
+                {
+                    level: 0,
+                    colSpan: "20 December 2018 -> 20 December 2018",
+                    title: "Task 4",
+                },
+                { level: 0, colSpan: "27 December 2018 -> Out of bounds (35) ", title: "Task 3" },
+            ],
+        },
+    ]);
+
+    let { drop, moveTo } = await contains(getCell("17", "December 2018", "todo")).drag();
+    await moveTo(getCell("17", "December 2018", "done"));
+    await animationFrame();
+    await drop();
+    await animationFrame();
+
+    expect(".o_selection_box").toHaveText("2\nselected");
+
+    await multiCreateClickAddButton();
+    expect(".o_multi_create_popover").toHaveCount(1);
+    await click(".o_multi_create_popover .o_form_view [name='name'] input");
+    await edit("Time off");
+    await multiCreatePopoverClickAddButton();
+
+    expect(".o_multi_create_popover").toHaveCount(0);
+
+    gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+                {
+                    colSpan: "17 December 2018 -> 17 December 2018",
+                    level: 0,
+                    title: "Time off",
+                },
+            ],
+            title: "todo",
+        },
+        {
+            title: "in_progress",
+            pills: [
+                { level: 0, colSpan: "01 December 2018 -> Out of bounds (32) ", title: "Task 1" },
+                {
+                    colSpan: "17 December 2018 -> 17 December 2018",
+                    level: 1,
+                    title: "Time off",
+                },
+                {
+                    level: 1,
+                    colSpan: "20 December 2018 -> 20 December 2018",
+                    title: "Task 7",
+                },
+            ],
+        },
+        {
+            title: "done",
+            pills: [
+                {
+                    colSpan: "17 December 2018 -> 17 December 2018",
+                    level: 0,
+                    title: "Time off",
+                },
+                {
+                    level: 1,
+                    colSpan: "17 December 2018 -> 22 December 2018",
+                    title: "Task 2",
+                },
+            ],
+        },
+        {
+            title: "cancel",
+            pills: [
+                {
+                    level: 0,
+                    colSpan: "20 December 2018 -> 20 December 2018",
+                    title: "Task 4",
+                },
+                { level: 0, colSpan: "27 December 2018 -> Out of bounds (35) ", title: "Task 3" },
+            ],
+        },
+    ]);
+
+    ({ drop, moveTo } = await contains(getCell("17", "December 2018", "todo")).drag());
+    await moveTo(getCell("17", "December 2018", "done"));
+    await animationFrame();
+    await drop();
+    await animationFrame();
+
+    await click(".o_multi_selection_buttons .btn .fa-trash");
+    await animationFrame();
+
+    gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> 04 December 2018",
+                    level: 0,
+                    title: "Task 5",
+                },
+            ],
+            title: "todo",
+        },
+        {
+            title: "in_progress",
+            pills: [
+                {
+                    level: 0,
+                    colSpan: "20 December 2018 -> 20 December 2018",
+                    title: "Task 7",
+                },
+            ],
+        },
+        {
+            title: "cancel",
+            pills: [
+                {
+                    level: 0,
+                    colSpan: "20 December 2018 -> 20 December 2018",
+                    title: "Task 4",
+                },
+                { level: 0, colSpan: "27 December 2018 -> Out of bounds (35) ", title: "Task 3" },
+            ],
+        },
+    ]);
+});

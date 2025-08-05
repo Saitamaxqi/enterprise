@@ -153,10 +153,7 @@ export class GanttModel extends Model {
         }
 
         if (this.metaData.dependencyEnabled) {
-            Object.assign(
-                params,
-                this._getInitialRescheduleMethod(this._buildMetaData(params)),
-            )
+            Object.assign(params, this._getInitialRescheduleMethod(this._buildMetaData(params)));
         }
 
         await this._fetchData(this._buildMetaData(params));
@@ -165,6 +162,19 @@ export class GanttModel extends Model {
     //-------------------------------------------------------------------------
     // Public
     //-------------------------------------------------------------------------
+
+    get hasMultiCreate() {
+        return (
+            !!this.metaData.multiCreateView &&
+            !this.env.isSmall &&
+            this.displayParams.displayMode === "dense" &&
+            this.metaData.scale.interval === "day"
+        );
+    }
+
+    get showMultiCreateTimeRange() {
+        return !this.dateStartFieldIsDate() && !this.dateStopFieldIsDate();
+    }
 
     collapseRows() {
         const collapse = (rows) => {
@@ -331,6 +341,39 @@ export class GanttModel extends Model {
         return this.closedRows.has(rowId);
     }
 
+    async multiCreateRecords(multiCreateData, cellsInfo) {
+        if (!cellsInfo.length) {
+            return;
+        }
+        const records = [];
+        const values = await multiCreateData.record.getChanges();
+        const timeRange = multiCreateData.timeRange;
+        for (const { start, stop, rowId } of cellsInfo) {
+            const schedule = this.getSchedule(
+                timeRange
+                    ? {
+                          start: start.set(timeRange.start.toObject()),
+                          stop: start.set(timeRange.end.toObject()),
+                          rowId,
+                      }
+                    : { start, stop, rowId }
+            );
+            records.push({ ...schedule, ...values });
+        }
+        await this.orm.create(this.metaData.resModel, records, {
+            context: { ...this.searchParams.context, multi_create: true },
+        });
+        await this.fetchData();
+    }
+
+    async unlinkRecords(ids) {
+        if (!ids.length) {
+            return;
+        }
+        await this.orm.unlink(this.metaData.resModel, ids);
+        await this.fetchData();
+    }
+
     /**
      * Removes the dependency between masterId and slaveId (slaveId is no
      * more dependent on masterId).
@@ -440,11 +483,7 @@ export class GanttModel extends Model {
 
     toggleHighlightPlannedFilter(ids) {}
 
-    async rescheduleAccordingToDependency(
-        ids,
-        schedule,
-        rescheduleAccordingToDependencyCallback
-    ) {
+    async rescheduleAccordingToDependency(ids, schedule, rescheduleAccordingToDependencyCallback) {
         const {
             dateStartField,
             dateStopField,
@@ -541,7 +580,10 @@ export class GanttModel extends Model {
             }
         }
         if (params.rescheduleMethod) {
-            browser.localStorage.setItem(this._getRescehduleMethodLocalStorageKey(), params.rescheduleMethod);
+            browser.localStorage.setItem(
+                this._getRescehduleMethodLocalStorageKey(),
+                params.rescheduleMethod
+            );
             this._nextMetaData.rescheduleMethod = params.rescheduleMethod;
         }
 
@@ -1001,16 +1043,22 @@ export class GanttModel extends Model {
     }
 
     _getInitialRescheduleMethod(metaData) {
-        return {rescheduleMethod: this._getRescheduleMethodFromLocalStorage(metaData) || metaData.defaultRescheduleMethod};
+        return {
+            rescheduleMethod:
+                this._getRescheduleMethodFromLocalStorage(metaData) ||
+                metaData.defaultRescheduleMethod,
+        };
     }
 
     _getRescehduleMethodLocalStorageKey() {
-        return `rescheduleMethod-viewId-${this.env.config.viewId}`
+        return `rescheduleMethod-viewId-${this.env.config.viewId}`;
     }
 
     _getRescheduleMethodFromLocalStorage(metaData) {
         const { rescheduleMethods } = metaData;
-        const localRescheduleMethod = browser.localStorage.getItem(this._getRescehduleMethodLocalStorageKey());
+        const localRescheduleMethod = browser.localStorage.getItem(
+            this._getRescehduleMethodLocalStorageKey()
+        );
         return localRescheduleMethod in rescheduleMethods ? localRescheduleMethod : null;
     }
 

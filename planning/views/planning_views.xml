@@ -533,6 +533,7 @@
                 js_class="planning_gantt"
                 form_view_id="%(planning_view_form_in_gantt)d"
                 kanban_view_id="%(planning.planning_view_kanban_inherit)d"
+                multi_create_view="planning.shifts_template_for_multi_create_in_calendar_view"
                 date_start="start_datetime"
                 date_stop="end_datetime"
                 default_group_by="resource_id"

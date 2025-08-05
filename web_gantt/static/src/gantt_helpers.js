@@ -4,8 +4,10 @@ import { makePopover, usePopover } from "@web/core/popover/popover_hook";
 import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
 import { useService } from "@web/core/utils/hooks";
 import { clamp } from "@web/core/utils/numbers";
-import { isObject, pick } from "@web/core/utils/objects";
+import { isObject, pick, shallowEqual } from "@web/core/utils/objects";
+import { closest as getClosest } from "@web/core/utils/ui";
 import { GanttPopoverInDialog } from "./gantt_popover_in_dialog";
+
 const { DateTime } = luxon;
 
 /** @typedef {luxon.DateTime} DateTime */
@@ -161,10 +163,24 @@ export function getHoveredCellPart(cell, pointerX, cellPart, rtl) {
     const x = Math.floor(rect.x);
     const width = Math.floor(rect.width);
     let part = Math.floor((clamp(pointerX, x, x + width - 1) - x) / (width / cellPart));
+    part = clamp(part, 0, cellPart - 1);
     if (rtl) {
         part = cellPart - 1 - part;
     }
     return part;
+}
+
+export function getClosestCell(ctx, rowId) {
+    const { hoveredCell, pointer, ref, rtl, scale } = ctx;
+    let { el: cell, part } = hoveredCell;
+    if (!cell) {
+        const selector = rowId
+            ? `.o_gantt_cells .o_gantt_cell:not(.o_drag_hover)[data-row-id='${CSS.escape(rowId)}']`
+            : `.o_gantt_cells .o_gantt_cell:not(.o_drag_hover)`;
+        cell = getClosest(ref.el.querySelectorAll(selector), pointer);
+        part = getHoveredCellPart(cell, pointer.x, scale.cellPart, rtl);
+    }
+    return { cell, part };
 }
 
 /**
@@ -265,7 +281,8 @@ function getBadgesPositions(el, rtl) {
     };
 }
 
-function getBadgeText(date, time, unitDescription, precision, diff = 0) {
+function getBadgeText(date, diff, scale) {
+    const { cellPart, time, unitDescription } = scale;
     let text;
     switch (time) {
         case "minute":
@@ -273,9 +290,7 @@ function getBadgeText(date, time, unitDescription, precision, diff = 0) {
             break;
         case "hour":
             text =
-                precision > 1
-                    ? date.toLocaleString(DateTime.DATETIME_SHORT)
-                    : date.toLocaleString();
+                cellPart > 1 ? date.toLocaleString(DateTime.DATETIME_SHORT) : date.toLocaleString();
             break;
         default:
             text = date.toLocaleString();
@@ -285,6 +300,35 @@ function getBadgeText(date, time, unitDescription, precision, diff = 0) {
         text += ` (${prefix}${diff} ${unitDescription})`;
     }
     return text;
+}
+
+function getBadge(position, text, diff) {
+    return {
+        class: diff ? (diff > 0 ? "text-success" : "text-danger") : "",
+        position,
+        text,
+    };
+}
+
+export function getBadges(
+    el,
+    [startDate, startDiff],
+    [stopDate, stopDiff],
+    { rtl, scale },
+    showDiff = true
+) {
+    const { startPosition, stopPosition } = getBadgesPositions(el, rtl);
+    const startBadge = getBadge(
+        startPosition,
+        getBadgeText(startDate, showDiff ? startDiff : 0, scale),
+        startDiff
+    );
+    const stopBadge = getBadge(
+        stopPosition,
+        getBadgeText(stopDate, showDiff ? stopDiff : 0, scale),
+        stopDiff
+    );
+    return { startBadge, stopBadge };
 }
 
 // Resizable hook handles
@@ -336,6 +380,7 @@ export const useGanttConnectorDraggable = makeDraggableHook({
     },
     onWillStartDrag: ({ ctx }) => {
         ctx.current.connectorCenter = getElementCenter(ctx.current.element);
+        return {};
     },
 });
 
@@ -349,6 +394,14 @@ export function getColumnStart(style) {
 
 export function getColumnEnd(style) {
     return getCoordinate(style, "grid-column-end");
+}
+
+function getRowStart(style) {
+    return getCoordinate(style, "grid-row-start");
+}
+
+function getRowEnd(style) {
+    return getCoordinate(style, "grid-row-end");
 }
 
 export const useGanttDraggable = makeDraggableHook({
@@ -382,7 +435,7 @@ export const useGanttDraggable = makeDraggableHook({
         return { pill: current.element };
     },
     onDrag({ ctx, addStyle }) {
-        const { cellSelector, current, getBadgesInitialDates, hoveredCell, scale, rtl } = ctx;
+        const { cellSelector, current, getBadgesInitialDates, hoveredCell, scale } = ctx;
         let { el: cell, part } = hoveredCell;
 
         const isDifferentCell = cell !== current.cell.el;
@@ -437,27 +490,12 @@ export const useGanttDraggable = makeDraggableHook({
                 current.cellGhost.remove();
             }
         }
-        const { startPosition, stopPosition } = getBadgesPositions(current.element, rtl);
-        const { cellPart, cellTime, unitDescription, time } = scale;
+        const { cellTime, time } = scale;
         const { start, stop } = getBadgesInitialDates();
-        const startDate = dateAddFixedOffset(start, {
-            [time]: current.diff * cellTime,
-        });
-        const stopDate = dateAddFixedOffset(stop, {
-            [time]: current.diff * cellTime,
-        });
-        const badgeClass = current.diff ? (current.diff > 0 ? "text-success" : "text-danger") : "";
-        const startBadge = {
-            position: startPosition,
-            text: getBadgeText(startDate, time, unitDescription, cellPart),
-            class: badgeClass,
-        };
-        const stopBadge = {
-            position: stopPosition,
-            text: getBadgeText(stopDate, time, unitDescription, cellPart),
-            class: badgeClass,
-        };
-        return { startBadge, stopBadge };
+        const diff = current.diff * cellTime;
+        const startDate = dateAddFixedOffset(start, { [time]: diff });
+        const stopDate = dateAddFixedOffset(stop, { [time]: diff });
+        return getBadges(current.element, [startDate, diff], [stopDate, diff], ctx, false);
     },
     onDragEnd({ ctx }) {
         return { pill: ctx.current.element };
@@ -514,6 +552,7 @@ export const useGanttDraggable = makeDraggableHook({
             current.placeHolder.remove();
             current.cellGhost.remove();
         });
+        return {};
     },
 });
 
@@ -540,6 +579,7 @@ export const useGanttUndraggable = makeDraggableHook({
 
         ctx.current.element.after(ctx.current.container);
         addCleanup(() => ctx.current.container.remove());
+        return {};
     },
 });
 
@@ -593,9 +633,7 @@ export const useGanttResizable = makeDraggableHook({
             }
         };
 
-        ctx.cellSelector = params.cells;
         ctx.hoveredCell = params.hoveredCell;
-        ctx.precision = params.scale.cellPart;
         ctx.scale = params.scale;
         ctx.getBadgesInitialDates = params.getBadgesInitialDates;
         ctx.rtl = params.rtl;
@@ -628,39 +666,8 @@ export const useGanttResizable = makeDraggableHook({
         return { pill: ctx.current.pill };
     },
     onDrag({ ctx, addStyle, getRect }) {
-        const {
-            getBadgesInitialDates,
-            cellSelector,
-            current,
-            hoveredCell,
-            scale,
-            pointer,
-            precision,
-            rtl,
-            ref,
-        } = ctx;
-        let { el: cell, part } = hoveredCell;
-
-        const point = [pointer.x, current.initialPosition.y];
-        if (!cell) {
-            let rect;
-            cell = document.elementsFromPoint(...point).find((el) => el.matches(cellSelector));
-            if (!cell) {
-                const cells = Array.from(ref.el.querySelectorAll(".o_gantt_cells .o_gantt_cell"));
-                if (pointer.x < current.initialPosition.x) {
-                    cell = rtl ? cells.at(-1) : cells[0];
-                } else {
-                    cell = rtl ? cells[0] : cells.at(-1);
-                }
-                rect = getRect(cell);
-                point[0] = rtl ? rect.right - 1 : rect.left + 1;
-            } else {
-                rect = getRect(cell);
-            }
-            const x = Math.floor(rect.x);
-            const width = Math.floor(rect.width);
-            part = Math.floor((point[0] - x) / (width / precision));
-        }
+        const { getBadgesInitialDates, current, scale, pointer, rtl } = ctx;
+        const { cell, part } = getClosestCell(ctx, ctx.current.rowId);
         if (cell.classList.contains("o_gantt_cell_folded")) {
             return;
         }
@@ -668,11 +675,11 @@ export const useGanttResizable = makeDraggableHook({
         const cGridColStart = getColumnStart(cellStyle);
 
         const { x, width } = getRect(cell);
-        const coef = ((rtl ? -1 : 1) * width) / precision;
+        const coef = ((rtl ? -1 : 1) * width) / scale.cellPart;
         const startBorder = (rtl ? x + width : x) + part * coef;
         const endBorder = startBorder + coef;
 
-        const theClosest = closest(point[0], [startBorder, endBorder]);
+        const theClosest = closest(pointer.x, [startBorder, endBorder]);
 
         let diff =
             cGridColStart +
@@ -693,8 +700,7 @@ export const useGanttResizable = makeDraggableHook({
         }
         current.lastDiff = diff;
 
-        const { startPosition, stopPosition } = getBadgesPositions(current.pill, rtl);
-        const { cellTime, unitDescription, time } = scale;
+        const { cellTime, time } = scale;
         const startDiff = current.isStart ? -diff * cellTime : 0;
         const stopDiff = current.isStart ? 0 : diff * cellTime;
         const { start, stop } = getBadgesInitialDates();
@@ -708,17 +714,7 @@ export const useGanttResizable = makeDraggableHook({
             : dateAddFixedOffset(stop, {
                   [time]: diff * cellTime,
               });
-        const startBadge = {
-            position: startPosition,
-            text: getBadgeText(startDate, time, unitDescription, precision, startDiff),
-            class: startDiff ? (startDiff > 0 ? "text-success" : "text-danger") : "",
-        };
-        const stopBadge = {
-            position: stopPosition,
-            text: getBadgeText(stopDate, time, unitDescription, precision, stopDiff),
-            class: stopDiff ? (stopDiff > 0 ? "text-success" : "text-danger") : "",
-        };
-        return { startBadge, stopBadge };
+        return getBadges(current.pill, [startDate, startDiff], [stopDate, stopDiff], ctx);
     },
     onDragEnd({ ctx }) {
         const { current, pillSelector } = ctx;
@@ -736,7 +732,7 @@ export const useGanttResizable = makeDraggableHook({
         return { pill: current.pill, diff: current.lastDiff, direction };
     },
     onWillStartDrag({ ctx, addClass }) {
-        const { current, pillSelector } = ctx;
+        const { current, hoveredCell, pillSelector } = ctx;
 
         const pill = ctx.current.element.closest(pillSelector);
         current.pill = pill;
@@ -746,129 +742,89 @@ export const useGanttResizable = makeDraggableHook({
         current.lastCol = getColumnEnd(pillStyle);
         current.initialDiff = current.lastCol - current.firstCol;
 
+        const { el: cell } = hoveredCell;
+        current.rowId = cell.dataset.rowId;
+
         ctx.cursor = getComputedStyle(current.element).cursor;
 
         current.isStart = current.element.classList.contains(HANDLE_CLASS_START);
 
         addClass(ctx.ref.el, "pe-auto");
+        return {};
     },
 });
 
-function getMinMax(a, b) {
-    return a <= b ? [a, b] : [b, a];
+function getCellBounds({ cell, part }) {
+    const startCol = +cell.dataset.col + part;
+    const endCol = startCol + 1;
+    const style = getComputedStyle(cell);
+    const startRow = getRowStart(style);
+    const endRow = getRowEnd(style);
+    return { startCol, endCol, startRow, endRow };
+}
+
+function getBlockBounds(current) {
+    const startCol = Math.min(current.initialCellBounds.startCol, current.cellBounds.startCol);
+    const endCol = Math.max(current.initialCellBounds.endCol, current.cellBounds.endCol);
+    const startRow = current.rowId
+        ? current.initialCellBounds.startRow
+        : Math.min(current.initialCellBounds.startRow, current.cellBounds.startRow);
+    const endRow = current.rowId
+        ? current.initialCellBounds.endRow
+        : Math.max(current.initialCellBounds.endRow, current.cellBounds.endRow);
+    return { startCol, endCol, startRow, endRow };
+}
+
+function getResult(current) {
+    return { ...getBlockBounds(current), rowId: current.rowId };
 }
 
 export const useGanttSelectable = makeDraggableHook({
     name: "useGanttSelectable",
     acceptedParams: {
         hoveredCell: [Object],
+        hasMultiCreate: [Boolean, Function],
         rtl: [Boolean, Function],
         scale: [Object, Function],
-        getBadgesInitialDate: [Function],
-        addStickyCoordinates: [Function],
     },
     onComputeParams({ ctx, params }) {
         ctx.followCursor = false;
         ctx.hoveredCell = params.hoveredCell;
+        ctx.hasMultiCreate = params.hasMultiCreate;
         ctx.rtl = params.rtl;
-        ctx.precision = params.scale.cellPart;
         ctx.scale = params.scale;
-        ctx.getBadgesInitialDate = params.getBadgesInitialDate;
-        ctx.addStickyCoordinates = params.addStickyCoordinates;
+    },
+    onWillStartDrag({ addClass, ctx }) {
+        const { current, hoveredCell, ref } = ctx;
+        const { el: cell, part } = hoveredCell;
+        const cellBounds = getCellBounds({ cell, part });
+        current.initialCellBounds = cellBounds;
+        current.cellBounds = cellBounds;
+        current.rowId = ctx.hasMultiCreate ? null : cell.dataset.rowId;
+        addClass(ref.el, "pe-auto");
+        addClass(cell, "pe-auto");
+        return getResult(current);
     },
     onDragStart({ ctx }) {
-        return { initialCol: ctx.current.initialCol };
+        const { current } = ctx;
+        return getResult(current);
     },
-    onDrag({ ctx, addStyle }) {
-        const { current, getBadgesInitialDate, hoveredCell, scale, pointer, precision, ref, rtl } =
-            ctx;
-        let { el: cell, part } = hoveredCell;
-        if (!cell) {
-            const point = [pointer.x, current.initialPosition.y];
-            cell = document
-                .elementsFromPoint(...point)
-                .find((el) => el.matches(".o_gantt_cell:not(.o_drag_hover)"));
-            if (!cell) {
-                const cells = Array.from(
-                    ref.el.querySelectorAll(".o_gantt_cells .o_gantt_cell:not(.o_drag_hover)")
-                );
-                if (pointer.x < current.initialPosition.x) {
-                    cell = rtl ? cells.at(-1) : cells[0];
-                } else {
-                    cell = rtl ? cells[0] : cells.at(-1);
-                }
-            }
-            part = getHoveredCellPart(cell, pointer.x, precision, rtl);
-        }
+    onDrag({ ctx }) {
+        const { current } = ctx;
+        const { cell, part } = getClosestCell(ctx, current.rowId);
         if (cell.classList.contains("o_gantt_cell_folded")) {
             return;
         }
-        const col = +cell.dataset.col + part;
-        const lastSelectedCol = current.lastSelectedCol;
-        current.lastSelectedCol = col;
-        if (lastSelectedCol === col) {
+        const cellBounds = getCellBounds({ cell, part });
+        if (shallowEqual(current.cellBounds, cellBounds)) {
             return;
         }
-        const startCol = Math.min(current.initialCol, col);
-        current.diff = col - current.initialCol;
-        if (current.diff >= 0) {
-            current.diff++;
-        }
-        addStyle(current.cellGhost, {
-            gridColumn: `c${startCol} / c${startCol + Math.abs(current.diff)}`,
-        });
-        // Attach cell ghost
-        cell.after(current.cellGhost);
-        ctx.addStickyCoordinates([startCol, startCol + Math.abs(current.diff)]);
-        const { startPosition, stopPosition } = getBadgesPositions(current.cellGhost, rtl);
-        const { cellTime, unitDescription, time } = scale;
-        const { initialDate } = getBadgesInitialDate();
-        const startDate =
-            current.diff < 0
-                ? dateAddFixedOffset(initialDate, {
-                      [time]: current.diff * cellTime,
-                  })
-                : initialDate;
-        const stopDate =
-            current.diff > 0
-                ? dateAddFixedOffset(initialDate, {
-                      [time]: current.diff * cellTime,
-                  })
-                : initialDate;
-        const startBadge = {
-            position: startPosition,
-            text: getBadgeText(startDate, time, unitDescription, precision),
-            class: "",
-        };
-        const stopBadge = {
-            position: stopPosition,
-            text: getBadgeText(stopDate, time, unitDescription, precision),
-            class: "",
-        };
-        return { startBadge, stopBadge };
+        current.cellBounds = cellBounds;
+        return getResult(current);
     },
     onDrop({ ctx }) {
         const { current } = ctx;
-        const { rowId, initialCol, lastSelectedCol } = current;
-        const [minCol, maxCol] = getMinMax(initialCol, lastSelectedCol);
-        return { rowId, startCol: minCol, stopCol: maxCol + (current.diff > 0 ? 0 : -1) };
-    },
-    onWillStartDrag({ ctx, addCleanup, addClass, addStyle }) {
-        const { current, hoveredCell, ref } = ctx;
-        const { el: cell, part } = hoveredCell;
-        current.rowId = cell.dataset.rowId;
-        current.initialCol = +cell.dataset.col + part;
-        current.diff = 0;
-        current.cellGhost = document.createElement("div");
-        current.cellGhost.className = "o_gantt_cell o_drag_hover";
-        addStyle(current.cellGhost, {
-            gridRow: getComputedStyle(cell).getPropertyValue("grid-row"),
-        });
-        addClass(ref.el, "pe-auto");
-        addClass(cell, "pe-auto");
-        addCleanup(() => {
-            current.cellGhost.remove();
-        });
+        return getResult(current);
     },
 });
 

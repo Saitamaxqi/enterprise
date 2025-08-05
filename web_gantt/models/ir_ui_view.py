@@ -14,6 +14,7 @@ GANTT_VALID_ATTRIBUTES = set([
     'js_class',
     'form_view_id',
     'kanban_view_id',
+    'multi_create_view',
     'progress',
     'consolidation',
     'consolidation_max',

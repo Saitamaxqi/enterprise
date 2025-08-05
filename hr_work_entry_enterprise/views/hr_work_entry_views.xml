@@ -27,7 +27,8 @@
                    decoration-warning="state == 'conflict'"
                    scales="day,week,month,year"
                    default_range="month"
-                   precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:half', 'year': 'day:full'}"
+                   precision="{'day': 'hour:quarter', 'week': 'day:full', 'month': 'day:full', 'year': 'day:full'}"
+                   multi_create_view="hr_work_entry.hr_work_entry_view_calendar_multi_create_form"
                    plan="0"
                    sample="1">
                 <templates>

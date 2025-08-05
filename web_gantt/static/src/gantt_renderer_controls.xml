@@ -46,6 +46,7 @@
                     </t>
                 </Dropdown>
             </div>
+            <t t-slot="multi_selection_buttons" />
         </div>
     </t>
 

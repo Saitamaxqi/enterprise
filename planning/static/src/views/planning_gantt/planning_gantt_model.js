@@ -1,3 +1,4 @@
+import { user } from "@web/core/user";
 import { router } from "@web/core/browser/router";
 import { Domain } from "@web/core/domain";
 import { deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
@@ -38,6 +39,7 @@ export class PlanningGanttModel extends GanttModel {
             getHighlightPlannedIds: () => this.env.searchModel.highlightPlannedIds,
             getContext: () => this.env.searchModel._context,
         }).getHighlightIds;
+        this.isManager = null;
     }
 
     /**
@@ -73,7 +75,21 @@ export class PlanningGanttModel extends GanttModel {
         else if (displayOpenShift) {
             searchParams.domain = Domain.or([domain, "[('resource_id', '=', false)]"]).toList();
         }
-        return super.load({ ...searchParams, context: { ...context, show_job_title: true } });
+
+        let groupProm;
+        if (this.isManager === null) {
+            groupProm = user.hasGroup("planning.group_planning_manager").then(result => this.isManager = result);
+        }
+
+        return Promise.all([super.load({ ...searchParams, context: { ...context, show_job_title: true } }), groupProm]);
+    }
+
+    get hasMultiCreate() {
+        return super.hasMultiCreate && this.isManager;
+    }
+
+    get showMultiCreateTimeRange() {
+        return false;
     }
 
     /**
@@ -158,6 +174,32 @@ export class PlanningGanttModel extends GanttModel {
             result.recurrence_update = params.recurrence_update;
         }
         return result;
+    }
+
+    /**
+     * @override
+     */
+    async multiCreateRecords(multiCreateData, cellsInfo) {
+        const values = await multiCreateData.record.getChanges();
+        const records = [];
+        if (values.template_id) {
+            const [{ start_time, end_time, duration_days }] = await this.orm.read("planning.slot.template", [values.template_id], ["start_time", "end_time", "duration_days"]);
+            const days_to_hours = duration_days > 1 ?  (duration_days - 1) * 24 : 0;
+            for (const { rowId, start } of cellsInfo) {
+                const schedule = this.getSchedule({
+                    start: start.plus({ hour: start_time }),
+                    stop: start.plus({ hour: end_time + days_to_hours }),
+                    rowId,
+                });
+                records.push({ ...schedule, ...values });
+            }
+        }
+        if (records.length) {
+            await this.orm.create(this.metaData.resModel, records, {
+                context: { ...this.searchParams.context, multi_create: true },
+            });
+            await this.fetchData();
+        }
     }
 
     /**

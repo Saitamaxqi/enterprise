@@ -27,7 +27,7 @@ export class PlanningCalendarModel extends CalendarModel {
     }
 
     get hasMultiCreate() {
-        return !!this.meta.multiCreateView && !this.env.isSmall && this.isManager && this.meta.scale === "month";
+        return super.hasMultiCreate && this.isManager && this.meta.scale === "month";
     }
 
     get showMultiCreateTimeRange() {
@@ -129,18 +129,11 @@ export class PlanningCalendarModel extends CalendarModel {
     /**
      * @override
      */
-    async multiCreateRecords(dates) {
+    async multiCreateRecords(multiCreateData, dates) {
         if (!dates.length) {
             return this.load();
         }
-        // Check required attribute of fields in form view
-        const isValid = await this.data.multiCreate.record.checkValidity({
-            displayNotification: true,
-        });
-        if (!isValid) {
-            return;
-        }
-        const values = await this.data.multiCreate.record.getChanges();
+        const values = await multiCreateData.record.getChanges();
         if (values.template_id) {
             const schedule = await this.orm.read("planning.slot.template", [values['template_id']], ["start_time", "end_time", "duration_days"]);
             const records = [];

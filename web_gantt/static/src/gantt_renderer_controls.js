@@ -19,7 +19,13 @@ export class GanttRendererControls extends Component {
         DropdownItem,
         GanttScaleSelector,
     };
-    static props = ["model", "displayExpandCollapseButtons", "focusToday", "getCurrentFocusDate"];
+    static props = [
+        "model",
+        "displayExpandCollapseButtons",
+        "focusToday",
+        "getCurrentFocusDate",
+        "slots?",
+    ];
     static toolbarContentTemplate = "web_gantt.GanttRendererControls.ToolbarContent";
     static rangeMenuTemplate = "web_gantt.GanttRendererControls.RangeMenu";
 
@@ -118,14 +124,13 @@ export class GanttRendererControls extends Component {
     }
 
     get displayRescheduleMethods() {
-        return this.model.metaData.dependencyEnabled && !this.model.useSampleModel && !this.env.isSmall;
+        return (
+            this.model.metaData.dependencyEnabled && !this.model.useSampleModel && !this.env.isSmall
+        );
     }
 
     selectRescheduleMethod(method) {
-        Object.assign(
-            this.state,
-            { rescheduleMethod: method }
-        );
+        Object.assign(this.state, { rescheduleMethod: method });
         this.updateMetaData();
     }
 }
