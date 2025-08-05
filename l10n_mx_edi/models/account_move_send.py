@@ -1,4 +1,5 @@
 from odoo import _, api, models
+from odoo.exceptions import UserError
 
 
 class AccountMoveSend(models.AbstractModel):
@@ -35,7 +36,23 @@ class AccountMoveSend(models.AbstractModel):
                     name=_("Check Country on Partner(s)")
                 ),
             }
+        if invalid_mx_partners := moves.filtered(
+            lambda m: m.company_id.country_id.code == 'MX' and not m.l10n_mx_edi_cfdi_to_public and (not m.partner_id.country_id or not m.partner_id.zip)
+        ).partner_id:
+            alerts['partner_country_or_zip_missing'] = {
+                "message": _("CFDI is not set to Public but the following partner(s) do not have country and/or ZIP configured."),
+                "action_text": _("View Partner(s)"),
+                "action": invalid_mx_partners._get_records_action(
+                    name=_("Check Country/ZIP on Partner(s)")
+                ),
+            }
         return alerts
+
+    @api.model
+    def _check_move_constrains(self, moves):
+        super()._check_move_constrains(moves)
+        if any(move.company_id.country_id.code == 'MX' and not move.l10n_mx_edi_cfdi_to_public and (not move.commercial_partner_id.country_id or not move.commercial_partner_id.zip) for move in moves):
+            raise UserError(_("CFDI not set to Public: The partner specified does not have recognized country and/or ZIP code set."))
 
     # -------------------------------------------------------------------------
     # ATTACHMENTS
