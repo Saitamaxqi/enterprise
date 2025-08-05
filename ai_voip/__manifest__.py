@@ -9,6 +9,7 @@
     'version': '1.0',
     'data': [
         'views/voip_call_views.xml',
+        'views/voip_provider_views.xml',
         'data/ir_cron.xml',
     ],
     "assets": {

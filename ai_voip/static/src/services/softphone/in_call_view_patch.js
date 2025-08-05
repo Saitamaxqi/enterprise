@@ -7,6 +7,9 @@ import { useService } from "@web/core/utils/hooks";
 patch(InCallView.prototype, {
     setup() {
         super.setup(...arguments);
-        this.mode = useService("voip").mode;
+        this.voip = useService("voip");
+    },
+    get transcriptionEnabled() {
+        return this.voip.mode === "prod" && this.voip.transcriptionPolicy === "always";
     },
 });

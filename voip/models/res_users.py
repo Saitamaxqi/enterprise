@@ -119,19 +119,24 @@ class ResUsers(models.Model):
         last_call = self.env["voip.call"].search(domain, order="id desc", limit=1)
         self.env.user.last_seen_phone_call = last_call.id
 
-    def _init_store_data(self, store: Store):
-        super()._init_store_data(store)
-        if not self.env.user._is_internal():
-            return
+    def _get_voip_config(self) -> dict:
+        """ Build the value for the voipConfig key, used in the web client through the mail.tools.discuss.Store
+        Subclass to inject additional options.
+        """
         provider = self.env.user.voip_provider_id
-        voip_config = {
+        return {
             "callActivityTypeId": self.env["mail.activity.type"].search([("category", "=", "phonecall")], limit=1).id,
             "mode": provider.mode or "demo",
             "missedCalls": self.env["voip.call"]._get_number_of_missed_calls(),
             "pbxAddress": provider.pbx_ip or "localhost",
             "webSocketUrl": provider.ws_server or "ws://localhost",
         }
-        store.add_global_values(voipConfig=voip_config)
+
+    def _init_store_data(self, store: Store):
+        super()._init_store_data(store)
+        if not self.env.user._is_internal():
+            return
+        store.add_global_values(voipConfig=self._get_voip_config())
 
     def _reflect_change_in_res_users_settings(self):
         """

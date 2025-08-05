@@ -37,6 +37,7 @@ def _get_init_store_data_result(self):
                 "missedCalls": 0,
                 "pbxAddress": "localhost",
                 "webSocketUrl": provider.ws_server or "ws://localhost",
+                "transcriptionPolicy": provider.transcription_policy or "disabled",
             },
         }
     )

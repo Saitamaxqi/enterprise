@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="ai_voip.voip_provider_tree_view_inherit" model="ir.ui.view">
+        <field name="name">voip.provider.tree.inherit</field>
+        <field name="model">voip.provider</field>
+        <field name="inherit_id" ref="voip.voip_provider_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="transcription_policy"/>
+            </field>
+        </field>
+    </record>
+</odoo>
