@@ -307,13 +307,15 @@ export class Keypad extends Component {
     onClickKey(key) {
         if (this.props.dtmf) {
             this.userAgent.session?.sipSession?.sessionDescriptionHandler.sendDtmf(key);
+            this.props.state.input.value += key;
+        } else {
+            const { selectionStart, selectionEnd, value } = this.inputRef.el;
+            this.props.state.input.value =
+                value.slice(0, selectionStart) + key + value.slice(selectionEnd);
+            this.selection.moveCursor(selectionStart + 1);
+            this.props.state.input.focus = true;
+            this.onInputSearchBar();
         }
-        const { selectionStart, selectionEnd, value } = this.inputRef.el;
-        this.props.state.input.value =
-            value.slice(0, selectionStart) + key + value.slice(selectionEnd);
-        this.selection.moveCursor(selectionStart + 1);
-        this.props.state.input.focus = true;
-        this.onInputSearchBar();
     }
 
     onClickShowMore() {
