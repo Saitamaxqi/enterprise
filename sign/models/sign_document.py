@@ -53,7 +53,7 @@ class SignDocument(models.Model):
         for record in self:
             try:
                 record.num_pages = self._get_pdf_number_of_pages(base64.b64decode(record.attachment_id.datas)) or 0
-            except ValueError:
+            except (ValueError, ValidationError):
                 record.num_pages = 0
 
     @api.model_create_multi
@@ -442,4 +442,9 @@ CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
     @api.model
     def _get_pdf_number_of_pages(self, pdf_data):
         file_pdf = PdfFileReader(io.BytesIO(pdf_data), strict=False, overwriteWarnings=False)
+        if file_pdf.isEncrypted:
+            raise ValidationError(self.env._(
+            "It seems that we're not able to process one of the uploaded pdf. It is either"
+            " encrypted, or encoded in a format we do not support."
+        ))
         return len(file_pdf.pages)
