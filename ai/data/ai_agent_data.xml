@@ -120,7 +120,7 @@ Each view type has specific parameters:
 - **selected_filters**: Array of filter names from the search view (e.g., ["draft", "posted"])
 - **selected_groupbys**: Array of field names from the group_by_field attribute (e.g., ["partner_id", "date_order"])
 - **search**: Array of field=text strings where field MUST be from searchable_fields section, or empty array []. Examples: `["partner_id=Azure"]`, `["partner_id=Azure", "product_id=laptop"]`, or `[]`
-- **custom_domain**: (Optional) Custom domain as JSON string to supplement search view elements (e.g., `"[[\\"lines.product_id.pos_categ_ids.name\\", \\"ilike\\", \\"drinks\\"]]"`)
+- **custom_domain**: (Optional) Custom domain as JSON string to supplement search view elements (e.g., `"[[\"lines.product_id.pos_categ_ids.name\", \"ilike\", \"drinks\"]]"`)
 
 **Pivot** (open_menu_pivot):
 - **menu_id**: The menu to open
@@ -587,7 +587,7 @@ Query: "Orders containing service products"
 3. Search view has product searchable field but NOT product type
 4. Call: `get_fields("sale.order")` to find product type field path
 5. Build custom domain: `[["order_line.product_id.detailed_type", "=", "service"]]`
-6. Call: `open_menu_list(menu_id, "sale.order", [], [], [], custom_domain="[[\\"order_line.product_id.detailed_type\\", \\"=\\", \\"service\\"]]")`
+6. Call: `open_menu_list(menu_id, "sale.order", [], [], [], custom_domain="[[\"order_line.product_id.detailed_type\", \"=\", \"service\"]]")`
 
 ### Example 5: Using Custom Domain - Categories
 Query: "List of POS orders in the restaurant config that contain drinks category"
@@ -596,7 +596,7 @@ Query: "List of POS orders in the restaurant config that contain drinks category
 3. Parse searchable fields: config_id is searchable, but category filtering is not
 4. Call: `get_fields("pos.order")` to understand model structure
 5. Use search for config_id and custom domain for category:
-6. Call: `open_menu_list(menu_id, "pos.order", [], [], ["config_id=restaurant"], custom_domain="[[\\"lines.product_id.pos_categ_ids.name\\", \\"ilike\\", \\"drinks\\"]]")`
+6. Call: `open_menu_list(menu_id, "pos.order", [], [], ["config_id=restaurant"], custom_domain="[[\"lines.product_id.pos_categ_ids.name\", \"ilike\", \"drinks\"]]")`
 
 Note: This combines search (for config) and custom_domain (for category) in one call
 
@@ -751,7 +751,7 @@ Query: "POS orders from restaurant config containing products from food category
 1. Find POS Orders menu and call `get_menu_details([menu_id])`
 2. Parse searchable fields: `&lt;field name="config_id" string="Point of Sale"/&gt;`
 3. "food category" requires custom domain as product category isn't a searchable field
-4. Call: `open_menu_list(menu_id, "pos.order", [], [], ["config_id=restaurant"], custom_domain="[[\\"lines.product_id.pos_categ_ids.name\\", \\"ilike\\", \\"food\\"]]")`
+4. Call: `open_menu_list(menu_id, "pos.order", [], [], ["config_id=restaurant"], custom_domain="[[\"lines.product_id.pos_categ_ids.name\", \"ilike\", \"food\"]]")`
 
 This demonstrates combining search (for config) with custom_domain (for category filtering)
 
@@ -774,7 +774,7 @@ Query: "Draft sales orders for Azure customer containing service products groupe
    - Searchable: `&lt;field name="partner_id" string="Customer"/&gt;`
    - Groupby: `&lt;filter name="salesperson_groupby" group_by_field="user_id"/&gt;`
    - Product type not searchable → needs custom domain
-3. Call: `open_menu_list(menu_id, "sale.order", ["draft"], ["user_id"], ["partner_id=Azure"], custom_domain="[[\\"order_line.product_id.detailed_type\\", \\"=\\", \\"service\\"]]")`
+3. Call: `open_menu_list(menu_id, "sale.order", ["draft"], ["user_id"], ["partner_id=Azure"], custom_domain="[[\"order_line.product_id.detailed_type\", \"=\", \"service\"]]")`
 
 This example uses ALL parameters together: filters + groupbys + search + custom_domain
 
@@ -785,7 +785,7 @@ Query: "Tasks due this week"
    - Start: Monday "2025-08-04" 
    - End: Sunday "2025-08-10" (FULL WEEK, not just to today)
 3. Build custom domain for date range on deadline field:
-4. Call: `open_menu_list(menu_id, "project.task", [], [], [], custom_domain="[\\"&amp;\\", [\\"date_deadline\\", \\"&gt;=\\", \\"2025-08-04\\"], [\\"date_deadline\\", \\"&lt;=\\", \\"2025-08-10\\"]]", __end_message="Tasks with deadlines from Monday to Sunday")`
+4. Call: `open_menu_list(menu_id, "project.task", [], [], [], custom_domain="[\"&amp;\", [\"date_deadline\", \"&gt;=\", \"2025-08-04\"], [\"date_deadline\", \"&lt;=\", \"2025-08-10\"]]", __end_message="Tasks with deadlines from Monday to Sunday")`
 
 ### Example 15b: Date Range Query
 Query: "Sales orders from last month"
@@ -794,7 +794,7 @@ Query: "Sales orders from last month"
    - Start: "2025-06-01"
    - End: "2025-06-30"
 3. Build custom domain for date range:
-4. Call: `open_menu_list(menu_id, "sale.order", [], [], [], custom_domain="[\\"&amp;\\", [\\"date_order\\", \\"&gt;=\\", \\"2025-06-01\\"], [\\"date_order\\", \\"&lt;=\\", \\"2025-06-30\\"]]", __end_message="Sales orders from June 2025")`
+4. Call: `open_menu_list(menu_id, "sale.order", [], [], [], custom_domain="[\"&amp;\", [\"date_order\", \"&gt;=\", \"2025-06-01\"], [\"date_order\", \"&lt;=\", \"2025-06-30\"]]", __end_message="Sales orders from June 2025")`
 
 ### Example 16: Natural Language Date with Search
 Query: "Invoices for Azure created in the last 7 days"
@@ -802,7 +802,7 @@ Query: "Invoices for Azure created in the last 7 days"
 2. Parse searchable fields: `&lt;field name="partner_id" string="Customer"/&gt;`
 3. Calculate date 7 days ago from today (2025-07-23): "2025-07-16"
 4. Combine search and date domain:
-5. Call: `open_menu_list(menu_id, "account.move", [], [], ["partner_id=Azure"], custom_domain="[[\\"create_date\\", \\"&gt;=\\", \\"2025-07-16 00:00:00\\"]]")`
+5. Call: `open_menu_list(menu_id, "account.move", [], [], ["partner_id=Azure"], custom_domain="[[\"create_date\", \"&gt;=\", \"2025-07-16 00:00:00\"]]")`
 
 Note: create_date is datetime, so we include time component
 
@@ -814,7 +814,7 @@ Query: "POS orders from restaurant config this week containing food category"
    - Start: Monday 2025-07-21
    - End: Sunday 2025-07-27 (NOT just to "today")
 4. Build combined query:
-5. Call: `open_menu_list(menu_id, "pos.order", [], [], ["config_id=restaurant"], custom_domain="[\\"&amp;\\", \\"&amp;\\", [\\"date_order\\", \\"&gt;=\\", \\"2025-07-21\\"], [\\"date_order\\", \\"&lt;=\\", \\"2025-07-27\\"], [\\"lines.product_id.pos_categ_ids.name\\", \\"ilike\\", \\"food\\"]]", __end_message="Restaurant POS orders this week containing food items")`
+5. Call: `open_menu_list(menu_id, "pos.order", [], [], ["config_id=restaurant"], custom_domain="[\"&amp;\", \"&amp;\", [\"date_order\", \"&gt;=\", \"2025-07-21\"], [\"date_order\", \"&lt;=\", \"2025-07-27\"], [\"lines.product_id.pos_categ_ids.name\", \"ilike\", \"food\"]]", __end_message="Restaurant POS orders this week containing food items")`
 
 This combines search (config) with date range AND category filtering in custom domain
 
