@@ -27,7 +27,7 @@ test("Expiration Panel one app installed", async () => {
     await animationFrame();
     await getService("action").doAction("menu");
 
-    expect(".oe_instance_register").toHaveText("Your subscription expires in 15 days.");
+    expect(".oe_instance_register").toHaveText("This database will expire in 1 month.");
 
     // Color should be grey
     expect(".database_expiration_panel").toHaveClass("alert-info");
@@ -133,7 +133,7 @@ test("Expiration Panel one app installed, try several times to register subscrip
     await animationFrame();
 
     expect(".oe_instance_register").toHaveText(
-        "Your subscription expired 4 days ago. This database will be blocked soon. Register your subscription or buy a subscription."
+        "This database will expire in 5 days. Register your subscription or buy a subscription."
     );
 
     expect(".database_expiration_panel").toHaveClass("alert-danger", {
@@ -282,7 +282,7 @@ test("Expiration Panel one app installed, subscription already linked", async ()
     await animationFrame();
 
     expect(".oe_instance_register").toHaveText(
-        "Your subscription expired 4 days ago. This database will be blocked soon. Register your subscription or buy a subscription."
+        "This database will expire in 5 days. Register your subscription or buy a subscription."
     );
     // Click on 'register your subscription'
     await click(".oe_instance_register_show");
@@ -512,7 +512,7 @@ test("One app installed, upgrade database", async () => {
     await runAllTimers();
 
     expect(".oe_instance_register").toHaveText(
-        "Your subscription expired 9 days ago. This database will be blocked soon. You have more users or more apps installed than your subscription allows.\n\n" +
+        "This database will expire in 10 days. You have more users or more apps installed than your subscription allows.\n\n" +
             "Upgrade your subscription\n" +
             "I paid, please recheck!"
     );
@@ -542,7 +542,7 @@ test("One app installed, message for non admin user", async () => {
     await animationFrame();
 
     expect(".oe_instance_register").toHaveText(
-        "Your subscription expires in 14 days. Log in as an administrator to correct the issue."
+        "This database will expire in 29 days. Log in as an administrator to correct the issue."
     );
 
     expect(".database_expiration_panel").toHaveClass("alert-info", {

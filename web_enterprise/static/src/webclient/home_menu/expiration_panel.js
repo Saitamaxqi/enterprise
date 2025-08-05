@@ -59,16 +59,20 @@ export class ExpirationPanel extends Component {
         const today = DateTime.now();
         const diff = expirationDate.diff(today);
 
-        if (daysLeft > 15) {
-            return _t(
-                "Your subscription expires in %s days. ",
-                daysLeft - 15
-            );
+        if (this.subscription.expirationReason !== 'renewal') {
+            return _t("This database will expire in %s. ", delay);
         } else {
-            return _t(
-                "Your subscription expired %s days ago. This database will be blocked soon. ",
-                (diff.as("days") | 0)
-            );
+            if (daysLeft > 15) {
+                return _t(
+                    "Your subscription expires in %s days. ",
+                    daysLeft - 15
+                );
+            } else {
+                return _t(
+                    "Your subscription expired %s days ago. This database will be blocked soon. ",
+                    (diff.as("days") | 0)
+                );
+            }
         }
     }
 
