@@ -13,5 +13,5 @@ class AccountMove(models.Model):
     def _compute_l10n_es_is_simplified(self):
         super()._compute_l10n_es_is_simplified()
         for move in self:
-            if any(move.invoice_line_ids.sale_line_ids.mapped('amazon_item_ref')):
+            if any(move.line_ids.sale_line_ids.mapped('amazon_item_ref')):
                 move.l10n_es_is_simplified = True
