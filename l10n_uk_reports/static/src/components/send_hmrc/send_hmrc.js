@@ -28,7 +28,7 @@ export class SendHmrcButton extends Component {
             await this.orm.call(
                 'l10n_uk.vat.obligation',
                 'action_submit_vat_return',
-                [this.props.record.data.obligation_id[0], clientData]
+                [this.props.record.data.obligation_id.id, clientData]
             );
             this.actionService.doAction({'type': 'ir.actions.act_window_close'})
         } finally {
