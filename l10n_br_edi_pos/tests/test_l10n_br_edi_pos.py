@@ -396,7 +396,7 @@ class TestUi(TestL10nBREDIPOSCommon, TestPointOfSaleHttpCommon):
 
     def setUp(self):
         super().setUp()
-        self.main_pos_config.sequence_id.number_next_actual = 1  # the mocked requests expect orders to be the first
+        self.main_pos_config.order_seq_id.number_next_actual = 1  # the mocked requests expect orders to be the first
 
     def test_01_anonymous_order(self):
         with self._with_mocked_l10n_br_iap_request(

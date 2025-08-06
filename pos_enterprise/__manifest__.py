@@ -46,6 +46,7 @@ for IoT Box config.
             'web/static/src/webclient/webclient.scss',
             'web/static/src/webclient/icons.scss',
             'point_of_sale/static/src/utils.js',
+            "point_of_sale/static/src/app/utils/devices_identifier_sequence.js",
 
             'mail/static/src/core/common/sound_effects_service.js',
             'point_of_sale/static/src/overrides/sound_effects_service.js',

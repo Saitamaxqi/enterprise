@@ -15,6 +15,9 @@ patch(PosData.prototype, {
 
         this.models.loadConnectedData(data, this.modelToLoad);
     },
+    async initializeDeviceIdentifier() {
+        return false;
+    },
     initializeWebsocket() {
         return false;
     },

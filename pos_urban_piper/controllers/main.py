@@ -240,7 +240,7 @@ class PosUrbanPiperController(http.Controller):
                 'note': self.reframe_notes(charge.get('title')),
                 'uuid': str(uuid.uuid4())
             }))
-        pos_reference, order_sequence_number, tracking_number = pos_config_sudo.current_session_id.get_next_order_refs(ref_prefix=pos_delivery_provider.name)
+        pos_reference, tracking_number = pos_config_sudo._get_next_order_refs()
         discounts = details.get('ext_platforms', [{}])[0].get('discounts', [])
         general_note = "\n".join([
             f"{pos_delivery_provider.name} Discount: {pos_config_sudo.company_id.currency_id.symbol} {discount.get('value')}"
@@ -270,7 +270,6 @@ class PosUrbanPiperController(http.Controller):
         delivery_order = PosOrder.create({
             'partner_id': customer_sudo.id,
             'pos_reference': pos_reference,
-            'sequence_number': order_sequence_number,
             'tracking_number': tracking_number,
             'config_id': pos_config_sudo.id,
             'session_id': pos_config_sudo.current_session_id.id,

@@ -69,7 +69,7 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
             // Settle partially
             PartnerList.clickPartnerOptions("A Partner"),
             PartnerList.clickDropDownItemText("Settle orders"),
-            PartnerList.clickSettleOrderName("Shop/0001"),
+            PartnerList.clickSettleOrderName("Shop - 000001"),
             ProductScreen.modeIsActive("Price"),
             ProductScreen.clickNumpad("1", "0"),
             ProductScreen.totalAmountIs("10.00"),
@@ -85,7 +85,7 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
             // Settle the rest and invoice it
             PartnerList.clickPartnerOptions("A Partner"),
             PartnerList.clickDropDownItemText("Settle orders"),
-            PartnerList.clickSettleOrderName("Shop/0001"),
+            PartnerList.clickSettleOrderName("Shop - 000001"),
             ProductScreen.totalAmountIs("9.80"),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),

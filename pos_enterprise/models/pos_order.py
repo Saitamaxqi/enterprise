@@ -35,7 +35,7 @@ class PosOrder(models.Model):
             options = self.env.context.get('preparation').get('process_order_options')
             order = self.browse(data["pos.order"][0]['id'])
             self.env['pos.prep.order'].process_order(order.id, options)
-            order.config_id.notify_synchronisation(order.config_id.current_session_id.id, self.env.context.get('login_number', 0))
+            order.config_id.notify_synchronisation(order.config_id.current_session_id.id, self.env.context.get('device_identifier', 0))
 
         return data
 

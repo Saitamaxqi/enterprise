@@ -294,7 +294,7 @@ class PosConfig(models.Model):
         return True
 
     def _clock_kiosk_user(self, clock_in):
-        pos_reference, _, _ = self.current_session_id.get_next_order_refs()
+        pos_reference, _ = self._get_next_order_refs()
         clock_order = self.env['pos.order'].create({
             'session_id': self.current_session_id.id,
             'company_id': self.company_id.id,
