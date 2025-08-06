@@ -633,7 +633,7 @@ class AccountJournalReportHandler(models.AbstractModel):
                     ELSE 5
                 END,
                 j.sequence,
-                CASE WHEN am.name = '/' THEN 1 ELSE 0 END, am.date, am.name,
+                CASE WHEN am.name = '/' THEN 1 ELSE 0 END, am.date, am.name, am.id,
                 CASE %(account_alias)s.account_type
                     WHEN 'liability_payable' THEN 1
                     WHEN 'asset_receivable' THEN 1
