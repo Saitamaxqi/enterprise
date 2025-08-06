@@ -27,6 +27,7 @@ class SaleCommissionReport(models.Model):
     forecast_id = fields.Many2one('sale.commission.plan.target.forecast', 'fc')
     payment_date = fields.Date("Payment Date", readonly=True)
     forecast = fields.Monetary("Forecast", readonly=True, currency_field='currency_id')
+    date_from = fields.Date(related='target_id.date_from')
     date_to = fields.Date(related='target_id.date_to')
     notes = fields.Text(related='forecast_id.notes', readonly=True)
 
