@@ -44,11 +44,15 @@
                 tooltipPosition: 'bottom',
                 run: "click",
             }, {
+                isActive: ["auto"],
+                trigger: ".o_bank_reconciliation_container",
+            }, {
                 trigger: 'button.o-kanban-button-new',
                 content: _t('Create a new transaction.'),
+                tooltipPosition: "bottom",
                 run: "click",
             }, {
-                trigger: "div[name=amount] div input[id=amount_0]",
+                trigger: "div[name=amount] input",
                 content: _t("Set an amount."),
                 tooltipPosition: "bottom",
                 run: "edit -19250.00",
@@ -63,17 +67,19 @@
                 tooltipPosition: "bottom",
                 run: "click",
             }, {
+                isActive: ["auto"],
                 trigger: '.o_kanban_renderer:not(:has(.o_bank_rec_quick_create))',
-                content: _t('Quick create is closed'),
+            }, {
+                isActive: ["auto"],
+                trigger: ".o_bank_reconciliation_container",
             }, {
                 trigger: 'div[name="bank_statement_line"]:first',
                 content: _t('Unfold first statement'),
                 run: "click",
             }, {
+                isActive: ["auto"],
                 trigger: "div.o_button_line",
-                content: "line is unfolded",
             }, {
-                isActive: ['auto'],
                 trigger: '.dropdown-item[data-menu-xmlid="account.menu_board_journal_1"]',
                 content: _t('Let’s go back to the dashboard.'),
                 run: "click",
