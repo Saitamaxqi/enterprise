@@ -1,7 +1,5 @@
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
-import { TextInputPopup } from "@point_of_sale/app/components/popups/text_input_popup/text_input_popup";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 
@@ -67,22 +65,6 @@ patch(PaymentScreen.prototype, {
             return true;
         }
         return result;
-    },
-    async validateOrder(isForceValidate) {
-        if (
-            this.pos.isChileanCompany() &&
-            this.paymentLines.some((line) => line.payment_method_id.is_card_payment)
-        ) {
-            const voucherNumber = await makeAwaitable(this.dialog, TextInputPopup, {
-                rows: 4,
-                title: _t("Please register the voucher number"),
-            });
-            if (!voucherNumber) {
-                return;
-            }
-            this.currentOrder.voucher_number = voucherNumber;
-        }
-        await super.validateOrder(...arguments);
     },
     shouldDownloadInvoice() {
         return this.pos.isChileanCompany()

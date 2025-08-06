@@ -57,41 +57,6 @@ patch(PaymentScreen.prototype, {
         return super._postPushOrderResolve(...arguments);
     },
 
-    async validateOrder(isForceValidate) {
-        if (this.pos.config.is_kenyan) {
-            let errorMessage = "";
-            const unregisteredProducts = this.currentOrder.lines.filter(
-                (line) => !line.product_id.checkEtimsFields()
-            );
-
-            if (unregisteredProducts.length > 0) {
-                errorMessage += _t(
-                    "All product have to be registered to eTIMS, you can register them in the product view.\n"
-                );
-            }
-
-            if (
-                ![0, this.currentOrder.lines.length].includes(
-                    this.currentOrder.lines.filter(
-                        (line) => line.refunded_orderline_id !== undefined
-                    ).length
-                )
-            ) {
-                errorMessage += _t("You can't mix refund lines and order lines.\n");
-            }
-
-            if (errorMessage) {
-                this.dialog.add(AlertDialog, {
-                    title: _t("Error"),
-                    body: _t(errorMessage),
-                });
-                return false;
-            }
-        }
-
-        await super.validateOrder(isForceValidate);
-    },
-
     shouldDownloadInvoice() {
         return this.pos.config.is_kenyan ? false : super.shouldDownloadInvoice();
     },

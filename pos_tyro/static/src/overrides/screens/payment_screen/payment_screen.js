@@ -5,6 +5,9 @@ import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment
 patch(PaymentScreen.prototype, {
     get refundLines() {
         const order = this.pos.getOrder();
+        if (!order || !order.lines.length) {
+            return [];
+        }
         const orderLinesToRefund = order.lines
             .map((line) => line.refunded_orderline_id)
             .filter((line) => line != null);
