@@ -21,7 +21,7 @@
                 Manage your Offers
             </p><p>
                 Offers are sent to employee with a predefined selection of data.
-                It allows to reflect on the propositon and discuss it.<br/><br/>
+                It allows to reflect on the proposition and discuss it.<br/><br/>
                 <a name="hr_contract_salary.action_hr_offer_new" type="action" class="btn btn-secondary">Create a Offer</a>
             </p>
         </field>
@@ -162,12 +162,13 @@
                         </group>
                         <group name="group_offer_to">
                             <field name="employee_id" invisible="applicant_id or not context.get('is_hr_payroll', True)"
+                                required="context.get('is_hr_payroll')" domain="[('company_id', 'in', allowed_company_ids)]"
                                 readonly="not context.get('is_hr_payroll', False) or state == 'full_signed'" placeholder="Select an employee..."/>
                             <field name="applicant_id" invisible="employee_version_id or context.get('is_hr_payroll', False)"
+                                required="not context.get('is_hr_payroll')" domain="[('company_id', 'in', allowed_company_ids)]"
                                 readonly="context.get('is_hr_payroll', True) or state == 'full_signed'"
                                 context="{'show_partner_name': True}" placeholder="Select an applicant..."/>
-                            <field name="company_id" groups="base.group_multi_company" readonly="state in ['cancelled', 'full_signed']"/>
-                            <field name="company_id" invisible="1" groups="!base.group_multi_company"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
                             <field name="refusal_reason" readonly="1" invisible="not refusal_reason"/>
                             <field name="refusal_date" readonly="1" invisible="not refusal_date"/>
                             <field name="currency_id" invisible="1"/>

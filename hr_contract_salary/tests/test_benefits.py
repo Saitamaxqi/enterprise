@@ -95,6 +95,7 @@ class TestInformationUpdate(HttpCase):
             {
                 'contract_template_id': contract_template.id,
                 'employee_version_id': contract_employee.id,
+                'employee_id': contract_employee.employee_id.id,
             }
         ])
 

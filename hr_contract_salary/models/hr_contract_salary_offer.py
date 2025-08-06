@@ -3,6 +3,7 @@
 from dateutil.relativedelta import relativedelta
 from odoo import api, fields, models, SUPERUSER_ID, _
 from werkzeug.urls import url_encode
+from odoo.exceptions import ValidationError
 
 
 class HrContractSalaryOffer(models.Model):
@@ -29,7 +30,13 @@ class HrContractSalaryOffer(models.Model):
         return result
 
     display_name = fields.Char(string="Title", compute="_compute_display_name", readonly=False, store=True)
-    company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id, required=True)
+    company_id = fields.Many2one(
+        'res.company',
+        string="Company",
+        compute="_compute_company_id",
+        store=True,
+        default=lambda self: self.env.company.id,
+    )
     currency_id = fields.Many2one(related='company_id.currency_id')
     contract_template_id = fields.Many2one(
         'hr.version', compute="_compute_contract_template_id", store=True,
@@ -183,6 +190,16 @@ class HrContractSalaryOffer(models.Model):
         for offer in self:
             offer.validity_days_count = (offer.offer_end_date - offer.offer_create_date).days \
                 if offer.offer_end_date else False
+
+    @api.depends('employee_id', 'applicant_id')
+    def _compute_company_id(self):
+        for offer in self:
+            if offer.employee_id:
+                offer.company_id = offer.employee_id.company_id
+            elif offer.applicant_id:
+                offer.company_id = offer.applicant_id.company_id
+            else:
+                offer.company_id = self.env.company.id
 
     @api.depends('employee_id')
     def _compute_employee_version_id(self):
@@ -354,3 +371,11 @@ class HrContractSalaryOffer(models.Model):
             record.id: record.applicant_id.email_from or record.employee_id.work_email
             for record in self
         }
+
+    @api.constrains('applicant_id', 'employee_id')
+    def _check_applicant_id_or_employee_id(self):
+        for offer in self:
+            if not (offer.applicant_id or offer.employee_id):
+                raise ValidationError(
+                    self.env._("An offer must be linked to either an applicant or an employee.")
+                )

@@ -57,8 +57,6 @@ class TestOfferMailFeatures(MailCommon):
 
         cls.salary_offers = cls.env['hr.contract.salary.offer'].create([
             {
-                'contract_template_id': cls.contract_template.id,
-            }, {
                 'applicant_id': cls.applicant.id,
                 'contract_template_id': cls.contract_template.id,
             }, {
@@ -67,6 +65,7 @@ class TestOfferMailFeatures(MailCommon):
             }, {
                 'contract_template_id': cls.contract_template.id,
                 'employee_version_id': cls.contract_employee.id,
+                'employee_id': cls.contract_employee.employee_id.id,
             },
         ])
 
@@ -87,23 +86,19 @@ class TestOfferMailFeatures(MailCommon):
         defaults = offers._message_get_default_recipients()
         expected_all = {
             offers[0].id: {
-                'email_cc': '', 'email_to': '', 'partner_ids': [],
-            },
-            offers[1].id: {
                 'email_cc': '', 'email_to': '', 'partner_ids': self.applicant.partner_id.ids,
             },
-            offers[2].id: {
+            offers[1].id: {
                 'email_cc': '',
                 'email_to': '"Mr Applicant NoPartner" <applicant.nopartner@test.example.com>',
                 'partner_ids': [],
             },
-            offers[3].id: {
+            offers[2].id: {
                 'email_cc': '', 'email_to': '', 'partner_ids': self.employee.work_contact_id.ids,
             },
         }
 
         for offer, user in zip(offers, (
-            self.user_contract_manager,
             self.user_recruitment_manager,
             self.user_recruitment_manager,
             self.user_contract_manager), strict=True
@@ -119,7 +114,6 @@ class TestOfferMailFeatures(MailCommon):
         when present in order to have people to propose. """
         offers = self.salary_offers.with_env(self.env)
         expected_all = [
-            [],
             [
                 {
                     'create_values': {},
@@ -145,7 +139,6 @@ class TestOfferMailFeatures(MailCommon):
         ]
 
         for offer, user, expected in zip(offers, (
-            self.user_contract_manager,
             self.user_recruitment_manager,
             self.user_recruitment_manager,
             self.user_contract_manager
@@ -162,12 +155,11 @@ class TestOfferMailFeatures(MailCommon):
         template_app = self.env.ref('hr_contract_salary.mail_template_send_offer_applicant')
         for offer, exp_template, exp_notif in zip(
             self.salary_offers,
-            (template_emp, template_app, template_app, template_emp),
+            (template_app, template_app, template_emp),
             (
-                [],  # no-one on first offer, just void message
-                [{'partner': self.applicant.partner_id, 'type': 'email',}],
+                [{'partner': self.applicant.partner_id, 'type': 'email'}],
                 [],  # specific, partner created during sending
-                [{'partner': self.employee.work_contact_id, 'type': 'email',}],
+                [{'partner': self.employee.work_contact_id, 'type': 'email'}],
             ),
             strict=True,
         ):
@@ -178,7 +170,7 @@ class TestOfferMailFeatures(MailCommon):
                 with self.mock_mail_gateway():
                     _mails, message = composer._action_send_mail()
                 # partner was created during sending mail process
-                if offer == self.salary_offers[2]:
+                if offer == self.salary_offers[1]:
                     new_partner = self.env['res.partner'].search([('email_normalized', '=', 'applicant.nopartner@test.example.com')])
                     self.assertTrue(new_partner)
                     exp_notif = [{'partner': new_partner, 'type': 'email'}]
