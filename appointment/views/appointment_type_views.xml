@@ -12,15 +12,17 @@
                 <field name="resource_ids"/>
                 <field name="category"/>
                 <filter string="My Appointments" name="my_appointments" domain="['|', ('staff_user_ids', 'in', [uid]), ('create_uid', '=', uid)]"/>
+                <filter string="My Calendar Link" name="my_calendar_link" domain="[('category', '=', 'anytime'), ('staff_user_ids', 'in', [uid])]"/>
                 <separator/>
-                <filter string="Regular" name="filter_category_recurring" domain="[('category', '=', 'recurring')]"/>
-                <filter string="Punctual" name="filter_category_punctual" domain="[('category', '=', 'punctual')]"/>
-                <filter string="Shared Calendar" name="filter_category_anytime" domain="[('category', '=', 'anytime')]"/>
+                <filter string="Weekly Schedule" name="filter_category_recurring" domain="[('category', '=', 'recurring')]"/>
+                <filter string="Flexible Schedule" name="filter_category_custom" domain="[('category', '=', 'custom')]"/>
+                <filter string="Date-limited" name="filter_category_punctual" domain="[('category', '=', 'punctual')]"/>
+                <filter string="Calendar Links" name="filter_category_anytime" domain="[('category', '=', 'anytime')]"/>
                 <separator/>
                 <filter name="filter_active" string="Archived" domain="[('active', '=', False)]"/>
                 <group>
+                    <filter string="Category" name="group_by_category" context="{'group_by': 'category'}"/>
                     <filter string="Timezone" name="group_by_timezone" context="{'group_by': 'appointment_tz'}"/>
-                    <filter string="Type" name="group_by_category" context="{'group_by': 'category'}"/>
                 </group>
             </search>
         </field>
@@ -119,25 +121,6 @@
         </field>
     </record>
 
-    <record id="appointment_type_view_tree_invitation" model="ir.ui.view">
-        <field name="name">appointment.type.list.invitation</field>
-        <field name="model">appointment.type</field>
-        <field name="priority">20</field>
-        <field name="arch" type="xml">
-            <list string="Appointment Invitations" multi_edit="1" sample="1">
-                <field name="sequence" widget="handle"/>
-                <field name="name" readonly="1"/>
-                <field name="appointment_tz"/>
-                <field name="schedule_based_on" column_invisible="True"/>
-                <field name="staff_user_ids" widget="many2many_tags" optional="hide"
-                    invisible="schedule_based_on != 'users'"/>
-                <field name="resource_ids" string="Resources" widget="many2many_tags" optional="hide"
-                    invisible="schedule_based_on == 'users'"/>
-                <field name="category" groups="base.group_no_one"/>
-            </list>
-        </field>
-    </record>
-
     <record id="appointment_type_view_form" model="ir.ui.view">
         <field name="name">appointment.type.form</field>
         <field name="model">appointment.type</field>
@@ -196,11 +179,10 @@
                                 <field name="appointment_duration" class="oe_inline me-1 o_input_5ch" widget="float_time"/><span> hours</span>
                             </div>
                             <span class="text-muted" invisible="category != 'custom'">Depending on the Slots</span>
-                            <label for="slot_creation_interval"/>
+                            <label for="slot_creation_interval" invisible="category == 'custom'"/>
                             <div invisible="category == 'custom'">
                                 <field name="slot_creation_interval" class="oe_inline me-1 o_input_5ch" widget="float_time"/><span> hours</span>
                             </div>
-                            <span class="text-muted" invisible="category != 'custom'">Schedule Line</span>
                             <label for="min_schedule_hours" string="Pre-Booking Time"/>
                             <div>
                                 <field name="min_schedule_hours" class="oe_inline me-1 o_input_5ch" widget="float_time"/><span> hours before the meeting</span>
@@ -276,8 +258,9 @@
                                         column_invisible="parent.category == 'custom'"/>
                                     <field name="end_hour" string="To" widget="float_time"
                                         column_invisible="parent.category == 'custom'"/>
-                                    <field name="start_datetime" column_invisible="parent.category != 'custom'"/>
-                                    <field name="end_datetime" column_invisible="parent.category != 'custom'"/>
+                                    <field name="start_datetime" string="Slots" widget="daterange"
+                                        options="{'end_date_field': 'end_datetime', 'always_range': '1'}"
+                                        column_invisible="parent.category != 'custom'"/>
                                     <field name="restrict_to_user_ids" widget="many2many_avatar_user" domain="[('id', 'in', parent.staff_user_ids)]"
                                         column_invisible="parent.schedule_based_on != 'users' or parent.category in ['custom', 'anytime']"
                                         options="{'no_create': True}" optional="hide"/>
@@ -309,6 +292,7 @@
                                     </div>
                                 </group>
                                 <group name="options_right_details">
+                                    <field name="category_slot_scheduling" widget="radio" options="{'horizontal': true}" invisible="category == 'anytime'"/>
                                     <field name="reminder_ids" widget="many2many_tags"/>
                                     <field name="booked_mail_template_id"
                                         placeholder="If empty, Odoo will not send emails"
@@ -428,21 +412,4 @@
         <field name="context"></field>
     </record>
 
-    <record id="appointment_type_action_custom" model="ir.actions.act_window">
-        <field name="name">Invitations</field>
-        <field name="res_model">appointment.type</field>
-        <field name="view_mode">list,form</field>
-        <field name="view_id" ref="appointment_type_view_tree_invitation"/>
-        <field name="domain">[('category', '=', 'custom')]</field>
-        <field name="context">{
-            'default_category': 'custom',
-        }</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                No Specific Slots Availabilities Shared!
-            </p><p>
-                Create invites on the fly from your calendar and share them with anyone by using the Share Availabilities button.
-            </p>
-        </field>
-    </record>
 </odoo>

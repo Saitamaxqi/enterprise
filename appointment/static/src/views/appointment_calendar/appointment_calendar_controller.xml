@@ -35,21 +35,17 @@
                 </t>
                 <div t-else="" class="btn-group w-100 w-sm-auto mx-2 mx-sm-0 px-0">
                     <t t-set="appointments" t-value="appointmentState.data.appointment_types_info"/>
-                    <button t-if="isAppointmentUser" t-on-click="onClickSelectAvailabilities" class="btn btn-secondary o_appointment_select_slots" aria-label="Share Availabilities" title="Share Availabilities">
-                        Share Availabilities
-                    </button>
-
                     <div class="btn-group">
                         <Dropdown t-if="isAppointmentUser or (!isAppointmentUser and appointments.length)">
-                            <button t-if="isAppointmentUser" class="btn btn-secondary dropdownAppointmentLink o-dropdown-caret"></button>
+                            <button t-if="isAppointmentUser" class="btn btn-secondary dropdownAppointmentLink o-dropdown-caret">Share</button>
                             <button t-else="" class="btn btn-secondary dropdownAppointmentLink">Share Appointment Link</button>
                             <t t-set-slot="content">
-                                <button t-if="isAppointmentUser" t-on-click="onClickSelectAvailabilities" class="o_appointment_select_slots dropdown-item">
-                                    <span class="align-bottom">Propose Slots</span>
-                                </button>
                                 <button t-if="isAppointmentUser" t-on-click="onClickSearchCreateAnytimeAppointment"
                                     class="o_appointment_button_link o_appointment_search_create_anytime_appointment dropdown-item">
-                                    <span class="align-bottom">Share Calendar</span>
+                                    <span class="align-bottom">My Calendar</span>
+                                </button>
+                                <button t-if="isAppointmentUser" t-on-click="onClickSelectAvailabilities" class="o_appointment_select_slots dropdown-item">
+                                    <span class="align-bottom">Specific Slots</span>
                                 </button>
                                 <button t-on-click="onClickCustomLink" class="dropdown-item">
                                     <span class="align-bottom">Custom Link</span>

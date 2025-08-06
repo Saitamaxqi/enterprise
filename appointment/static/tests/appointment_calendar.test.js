@@ -63,15 +63,15 @@ test("verify appointment links button are displayed", async () => {
             </calendar>`,
     });
 
-    expect('button:contains("Share Availabilities")').toHaveCount(1);
+    expect('button:contains("Share"):not(:contains("Link"))').toHaveCount(1);
 
     await contains(".dropdownAppointmentLink").click();
 
-    expect('button:contains("Test Appointment")').toHaveCount(1);
+    expect('button:contains("My Calendar")').toHaveCount(1);
 
-    expect('button:contains("Propose Slots")').toHaveCount(1);
+    expect('button:contains("Specific Slots")').toHaveCount(1);
 
-    expect('button:contains("Share Calendar")').toHaveCount(1);
+    expect('button:contains("Custom Link")').toHaveCount(1);
 });
 
 test("create/search anytime appointment type", async () => {
@@ -153,6 +153,7 @@ test("discard slot in calendar", async () => {
                 <field name="partner_ids" write_model="filter.partner" write_field="partner_id" filter_field="partner_checked"/>
             </calendar>`,
     });
+    await contains(".dropdownAppointmentLink").click();
     await contains(".o_appointment_select_slots").click();
     await animationFrame();
     expect('.o_appointment_scheduling_box b:contains("Pick your availabilities")').toHaveCount(1);
@@ -211,6 +212,7 @@ test("cannot move real event in slots-creation mode", async () => {
             </calendar>`,
     });
 
+    await contains(".dropdownAppointmentLink").click();
     await contains(".o_appointment_select_slots").click();
 
     expect('.o_appointment_scheduling_box b:contains("Pick your availabilities")').toHaveCount(1);
@@ -258,6 +260,7 @@ test("create slots for custom appointment type", async () => {
                 </calendar>`,
     });
 
+    await contains(".dropdownAppointmentLink").click();
     await contains(".o_appointment_select_slots").click();
 
     expect('.o_appointment_scheduling_box b:contains("Pick your availabilities")').toHaveCount(1);
@@ -313,6 +316,7 @@ test("filter works in slots-creation mode", async () => {
     expect(".o_calendar_slot").toHaveCount(0);
 
     // Switch to slot-creation mode and create a slot for a custom appointment type
+    await contains(".dropdownAppointmentLink").click();
     await contains(".o_appointment_select_slots").click();
 
     expect('.o_appointment_scheduling_box b:contains("Pick your availabilities")').toHaveCount(1);

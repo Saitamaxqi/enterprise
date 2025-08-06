@@ -4,6 +4,7 @@ import pytz
 
 from datetime import date, datetime, timedelta, timezone
 from freezegun import freeze_time
+from psycopg2.errors import CheckViolation
 from werkzeug.urls import url_encode
 
 import odoo
@@ -323,6 +324,72 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
             'name': 'Custom with users',
         })
         self.assertEqual(apt_type.staff_user_ids, self.staff_users)
+
+    @users('apt_manager')
+    def test_appointment_type_form_category_slot_scheduling_category_time_display(self):
+        """ Test form reactivity and consistency on changing category_slot_scheduling and category_time_display """
+        apt_type = self.env['appointment.type'].create({
+            'category': 'recurring',
+            'name': 'Starting as Recurring',
+            'slot_ids': [(0, 0, {
+                'weekday': '1',  # Monday
+                'start_hour': 9,
+                'end_hour': 17,
+            })],
+        })
+        self.assertEqual(len(apt_type.slot_ids), 1)
+        self.assertFalse(apt_type.start_datetime or apt_type.end_datetime)
+
+        appt_form = Form(apt_type)
+        self.assertEqual(appt_form.category_slot_scheduling, 'weekly')
+        self.assertEqual(appt_form.category, 'recurring')
+
+        appt_form.category_slot_scheduling = 'flexible'
+        self.assertEqual(appt_form.category, 'custom')
+        self.assertFalse(appt_form.slot_ids)
+
+        appt_form.category_slot_scheduling = 'weekly'
+        self.assertEqual(appt_form.category, 'recurring')
+        self.assertEqual(len(appt_form.slot_ids), 10)
+
+        appt_form.category_time_display = 'punctual_fields'
+        self.assertEqual(appt_form.category, 'recurring')
+        appt_form.start_datetime = self.reference_monday
+        appt_form.end_datetime = self.reference_monday + timedelta(days=7)
+        self.assertEqual(appt_form.category, 'punctual')
+        self.assertEqual(len(appt_form.slot_ids), 10)
+
+        appt_form.category_slot_scheduling = 'flexible'
+        self.assertEqual(appt_form.category, 'custom')
+        self.assertFalse(appt_form.slot_ids)
+        self.assertFalse(apt_type.start_datetime or apt_type.end_datetime)
+
+    @mute_logger('odoo.sql_db')
+    @users('apt_manager')
+    def test_appointment_slot_start_and_end_datetimes_constraint(self):
+        """ Test that 'unique' slot start_datetime is before end_datetime. """
+        with self.assertRaises(CheckViolation):
+            self.env['appointment.type'].create({
+                'category': 'custom',
+                'name': 'A custom appointment',
+                'slot_ids': [Command.create({
+                    'start_datetime': self.reference_monday,
+                    'end_datetime': self.reference_monday - timedelta(days=7),
+                })]
+            })
+
+        # Ensure constraint does not fail when changing to 'custom' manually
+        apt_type = self.env['appointment.type'].create({
+            'category': 'recurring',
+            'name': 'Starting as Recurring',
+            'slot_ids': [(0, 0, {
+                'weekday': '1',
+                'start_hour': 9,
+                'end_hour': 17,
+            })],
+        })
+        apt_type.category = 'custom'
+        self.assertFalse(apt_type.slot_ids)
 
     @mute_logger('odoo.sql_db')
     @users('apt_manager')

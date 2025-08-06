@@ -111,6 +111,10 @@ class AppointmentType(models.Model):
             - Punctual: regular slots limited between 2 datetimes. Accessible from the website\n
             - Specific Slots: the user will create and share to another user a custom appointment type with hand-picked time slots\n
             - Shared Calendar: the user will create and share to another user an appointment type covering all their time slots""")
+    category_slot_scheduling = fields.Selection(
+        [('weekly', 'Weekly'), ('flexible', 'Flexible')],
+         string="Schedule", readonly=False, compute="_compute_category_slot_scheduling"
+    )
     category_time_display = fields.Selection([
         ('recurring_fields', 'Available now'),
         ('punctual_fields', 'Within a date range')],
@@ -258,18 +262,43 @@ class AppointmentType(models.Model):
 
     @api.depends('start_datetime', 'end_datetime')
     def _compute_category(self):
-        for appointment_type in self:
+        for appointment_type in self.filtered(lambda apt: apt.category != 'custom'):
             appointment_type.category = 'punctual' if appointment_type.start_datetime or appointment_type.end_datetime else 'recurring'
             if not appointment_type.slot_ids:
                 appointment_type.slot_ids = appointment_type._get_default_slots(appointment_type.category)
 
     def _inverse_category(self):
         """ Generate the default slots for the anytime appointment types.
-        If the category is 'custom', no need to generate default slots. """
-        anytime_appointment_types = self.filtered_domain([('category', '=', 'anytime')])
-        anytime_appointment_types.slot_ids = False # Reset slots if existing
-        for appointment_type in anytime_appointment_types:
-            appointment_type.slot_ids = appointment_type._get_default_slots('anytime')
+        If the category is 'custom', remove irrelevant slots and set punctual fields to False. """
+        for appointment_type in self:
+            if appointment_type.category == 'anytime':
+                appointment_type.slot_ids = appointment_type._get_default_slots('anytime')
+            if appointment_type.category == 'custom':
+                appointment_type.slot_ids -= appointment_type.slot_ids.filtered(
+                    lambda slot: not (slot.start_datetime and slot.end_datetime)
+                )
+                appointment_type.update({
+                    'start_datetime': False,
+                    'end_datetime': False,
+                })
+
+    @api.depends('category')
+    def _compute_category_slot_scheduling(self):
+        for apt in self:
+            apt.category_slot_scheduling = 'flexible' if apt.category == 'custom' else 'weekly'
+
+    @api.onchange('category_slot_scheduling')
+    def _onchange_category_slot_scheduling(self):
+        for apt in self.filtered(lambda apt: apt.category != 'anytime'):
+            apt.category = (
+                'custom' if apt.category_slot_scheduling == 'flexible' else
+                'punctual' if apt.start_datetime or apt.end_datetime else
+                'recurring'
+            )
+            if apt.category != 'custom':
+                apt.slot_ids = apt._get_default_slots(apt.category)
+            else:
+                apt.slot_ids = False
 
     @api.depends('category')
     def _compute_category_time_display(self):

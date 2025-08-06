@@ -56,6 +56,14 @@ class AppointmentSlot(models.Model):
         "The end time must be later than the start time.",
     )
 
+    _check_start_and_end_datetimes = models.Constraint(
+        '''CHECK(
+            slot_type='recurring' OR (
+            start_datetime IS NOT NULL AND end_datetime IS NOT NULL AND (start_datetime <= end_datetime))
+        )''',
+        "The unique slot end datetime must be later than the start datetime.",
+    )
+
     @api.depends('start_datetime', 'end_datetime')
     def _compute_duration(self):
         for slot in self:
@@ -65,7 +73,7 @@ class AppointmentSlot(models.Model):
             else:
                 slot.duration = 0
 
-    @api.depends('appointment_type_id')
+    @api.depends('appointment_type_id', 'appointment_type_id.category')
     def _compute_slot_type(self):
         for slot in self:
             slot.slot_type = 'unique' if slot.appointment_type_id.category == 'custom' else 'recurring'

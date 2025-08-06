@@ -360,7 +360,7 @@
 
     <!-- Section in details column that gives information about which operator the customer will meet or which ressource he selected. -->
     <template id="appointment_meeting_user" name="Meeting user">
-        <t t-if="isDetails or (isDate and not selectionPossible) or appointment_type.category not in ['punctual', 'recurring']">
+        <t t-if="isDetails or (isDate and not selectionPossible)">
             <div class="mt-3 pt-3 border-top">
                 <small class="text-uppercase text-muted">
                     <t t-if="staff_user">Operator</t>
