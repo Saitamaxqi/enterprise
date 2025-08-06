@@ -8,8 +8,8 @@ patch(MessagingMenu, {
 });
 
 patch(MessagingMenu.prototype, {
-    get tabs() {
-        const items = super.tabs;
+    get _tabs() {
+        const items = super._tabs;
         const hasWhatsApp = Object.values(this.store.Thread.records).some(
             ({ channel_type }) => channel_type === "whatsapp"
         );
@@ -19,6 +19,7 @@ patch(MessagingMenu.prototype, {
                 icon: "fa fa-whatsapp",
                 id: "whatsapp",
                 label: _t("WhatsApp"),
+                sequence: 80,
             });
         }
         return items;

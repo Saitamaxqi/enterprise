@@ -39,7 +39,7 @@ test("'backbutton' event should close attachment viewer", async () => {
     });
     await start();
     await openDiscuss();
-    await contains("button.active", { text: "Inbox" });
+    await contains("button.o-active", { text: "Notifications" });
     await click("button", { text: "Channels" });
     await click(".o-mail-NotificationItem", { text: "channel" });
     await click(".o-mail-AttachmentImage");
