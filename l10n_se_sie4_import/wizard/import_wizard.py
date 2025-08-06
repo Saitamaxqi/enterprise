@@ -317,15 +317,16 @@ class SIE4ImportWizard(models.TransientModel):
                     idx += 1
                     inner_line_items = self._get_sie4_line_items(re.sub(r"\{.*}", ' "" ', sie4_lines[idx]))
 
-                ver_series, ver_nb, ver_date = line_items[1:4]
-                ver_text = line_items[4] if len(line_items) > 4 else ''
-                sie4_data.append({
-                    'label': label,
-                    'verification_str': f"sie4_{ver_date}{ver_series}{ver_nb}",
-                    'verification_date': ver_date,
-                    'verification_text': ver_text,
-                    'transactions': transactions,
-                })
+                if transactions:
+                    ver_series, ver_nb, ver_date = line_items[1:4]
+                    ver_text = line_items[4] if len(line_items) > 4 else ''
+                    sie4_data.append({
+                        'label': label,
+                        'verification_str': f"sie4_{ver_date}{ver_series}{ver_nb}",
+                        'verification_date': ver_date,
+                        'verification_text': ver_text,
+                        'transactions': transactions,
+                    })
 
             elif label:  # normal items (ex: "#KONTO", "#FNAMN", "#IB", etc.)
                 sie4_data.append({

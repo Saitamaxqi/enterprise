@@ -335,6 +335,25 @@ class AccountTestSIE4Import(AccountTestInvoicingCommon):
         ])
         self.assertSequenceEqual(imported_moves.line_ids.mapped('balance'), (300.0, -300.0, 200.0, -200.0, 100.0, -100.0))
 
+    def test_sie4_import_move_with_btrans_and_rtrans_transactions(self):
+        """ Ensure the imported moves with BTRANS/RTRANS transactions only are not imported. """
+        self.wizard.attachment_file = base64.b64encode(b"""
+            #VER A 1 20240107 "item btrans"
+            {
+                #BTRANS 1060 {} 300.0
+                #BTRANS 2030 {} -300.0
+            }
+            #VER A 2 20240107 "item rtrans"
+            {
+                #RTRANS 1060 {} 100.0
+                #RTRANS 2030 {} -100.0
+            }
+        """)
+        self.wizard.action_import_sie4()
+
+        imported_moves = self.env['account.move'].search([('company_id', '=', self.company_id.id)])
+        self.assertEqual(len(imported_moves), 0)
+
     # --------------------------------------------------------------------------
     # Import Key Algorithm Tests
     # --------------------------------------------------------------------------
