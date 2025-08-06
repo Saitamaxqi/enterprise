@@ -2,6 +2,7 @@
 <odoo>
     <record id="l10n_ie_bs" model="account.report">
         <field name="name">Balance Sheet</field>
+        <field name="active" eval="False"/>
         <field name="root_report_id" ref="account_reports.balance_sheet"/>
         <field name="filter_date_range" eval="False"/>
         <field name="country_id" ref="base.ie"/>

@@ -181,6 +181,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_ie_reports.l10n_ie_bs_assets_total',
         'liability_line_ref': 'l10n_ie_reports.l10n_ie_bs_liabilities_total',
     },
+    'l10n_ie_reports.l10n_ie_bs_tags': {
+        'asset_line_ref': 'l10n_ie_reports.l10n_ie_bs_tags_assets_total',
+        'liability_line_ref': 'l10n_ie_reports.l10n_ie_bs_tags_liabilities_total',
+    },
     'l10n_it_reports.account_financial_report_it_sp': {
         'asset_line_ref': 'l10n_it_reports.account_financial_report_line_it_sp_assets_total',
         'liability_line_ref': 'l10n_it_reports.account_financial_report_line_it_sp_passif_total',
