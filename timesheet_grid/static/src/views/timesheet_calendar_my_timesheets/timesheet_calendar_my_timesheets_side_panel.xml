@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
-    <t t-name="timesheet_grid.TimesheetCalendarMyTimesheetsSidePanel" t-inherit="hr_timesheet.TimesheetCalendarMyTimesheetsSidePanel" t-inherit-mode="extension">
+    <t t-name="timesheet_grid.TimesheetCalendarMyTimesheetsSidePanel" t-inherit="web.CalendarSidePanel" t-inherit-mode="primary">
         <xpath expr="//div[hasclass('o_calendar_sidebar')]" position="inside">
             <div class="mt-4">
                 <h5>Legend</h5>
