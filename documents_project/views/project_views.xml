@@ -30,7 +30,7 @@
                                 <label for="documents_tag_ids" class="fw-bold"/>
                             </div>
                             <div class="col-9 ps-0">
-                                <field name="documents_tag_ids" class="ps-3 w-100" widget="many2many_tags" options="{'no_quick_create': True}" context="{'documents_project_folder': documents_folder_id}"/>
+                                <field name="documents_tag_ids" class="ps-3 w-100" widget="many2many_tags" options="{'no_quick_create': True, 'color_field': 'color'}" context="{'documents_project_folder': documents_folder_id}"/>
                             </div>
                         </div>
                     </div>
