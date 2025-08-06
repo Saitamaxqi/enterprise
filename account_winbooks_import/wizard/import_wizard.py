@@ -143,7 +143,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
             account_tax is a dictionary whose keys are the Winbooks account
                 references and the values are the Winbooks tax references.
         """
-        def manage_centralid(account, centralid):
+        def manage_centralid(account, centralid, skip_constraints_check=False):
             "Set account to being a central account"
             property_name = None
             account_central[centralid] = account.id
@@ -161,7 +161,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
             if property_name:
                 self.env['ir.default'].set(model_name, property_name, account.id, company_id=self.env.company.id)
             if tax_group_name:
-                self.env['account.tax.group'].search(self.env['account.tax.group']._check_company_domain(self.env.company))[tax_group_name] = account
+                self.env['account.tax.group'].search(self.env['account.tax.group']._check_company_domain(self.env.company)).with_context(skip_constraints_check=skip_constraints_check)[tax_group_name] = account
 
         _logger.info("Import Accounts")
         account_data = {}
@@ -201,7 +201,7 @@ class AccountWinbooksImportWizard(models.TransientModel):
                     ], limit=1)
                     if account:
                         account_data[rec.get('NUMBER')] = account.id
-                        rec['CENTRALID'] and manage_centralid(account, rec['CENTRALID'])
+                        rec['CENTRALID'] and manage_centralid(account, rec['CENTRALID'], skip_constraints_check=True)
                     if not account and rec.get('NUMBER') not in rec_number_list:
                         data = {
                             'code': rec.get('NUMBER'),
