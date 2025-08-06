@@ -79,7 +79,7 @@
                                 <field name="condition_other_input_id" invisible="condition_select != 'input'" required="condition_select == 'input'"/>
                             </group>
                             <group colspan="4">
-                                <field name="condition_python" invisible="condition_select != 'python'" required="condition_select == 'python'"/>
+                                <field name="condition_python" invisible="condition_select != 'python'" required="condition_select == 'python'" widget="code" options="{'mode': 'python'}"/>
                             </group>
                             <group string="Computation">
                                 <field name="amount_select"/>
@@ -90,7 +90,7 @@
                                 <field name="amount_percentage" invisible="amount_select != 'percentage'" required="amount_select == 'percentage'"/>
                             </group>
                             <group colspan="4">
-                                <field name="amount_python_compute" invisible="amount_select != 'code'" required="amount_select == 'code'"/>
+                                <field name="amount_python_compute" invisible="amount_select != 'code'" required="amount_select == 'code'" widget="code" options="{'mode': 'python'}"/>
                             </group>
                             <group string="Company Contribution">
                                 <field name="partner_id"/>

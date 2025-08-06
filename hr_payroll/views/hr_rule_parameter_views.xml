@@ -21,7 +21,7 @@
                     <h1 class="w-100"><field name="name"/></h1>
                     <group>
                         <field name="code"/>
-                        <field name="current_value"/>
+                        <field name="current_value" widget="code" options="{'mode': 'python'}"/>
                         <field name="valid_since"/>
                     </group>
                     <notebook>
@@ -35,7 +35,7 @@
                                     context="{'default_rule_parameter_id': id}">
                                 <list editable="top">
                                     <field name="date_from"/>
-                                    <field name="parameter_value"/>
+                                    <field name="parameter_value" widget="code" options="{'mode': 'python'}"/>
                                 </list>
                             </field>
                         </page>
