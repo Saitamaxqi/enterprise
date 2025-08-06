@@ -33,7 +33,7 @@ class SaleCommissionPlan(models.Model):
 
     achievement_ids = fields.One2many('sale.commission.plan.achievement', 'plan_id', default=[Command.create({'type': 'amount_invoiced'})], copy=True)
     target_ids = fields.One2many('sale.commission.plan.target', 'plan_id', compute='_compute_targets',
-                                 store=True, readonly=False)
+                                 store=True, readonly=False, copy=True)
     target_commission_ids = fields.One2many('sale.commission.plan.target.commission', 'plan_id',
                                             compute='_compute_target_commission_ids',
                                             inverse='_inverse_target_commission_ids',

@@ -18,6 +18,13 @@ class SaleCommissionAchievementReport(models.Model):
     user_id = fields.Many2one('res.users', "Sales Person", readonly=True)
     team_id = fields.Many2one('crm.team', "Sales Team", readonly=True)
     achieved = fields.Monetary("Achieved", readonly=True, currency_field='currency_id')
+    target_amount = fields.Monetary(readonly=True, currency_field='currency_id')
+    commission_target_amount = fields.Monetary(readonly=True, currency_field='currency_id', aggregator='avg',
+                                               help="Sum of target amount per plan paid on the same date")
+    target_rate = fields.Float("Achieved Rate", readonly=True, aggregator='avg',
+                               help="Achieved over the target of that period, meaningless in group by")
+    commission_rate = fields.Float("Commission Rate", readonly=True, aggregator='sum',
+                                   help="Achieved over the commission target amount")
     currency_id = fields.Many2one('res.currency', "Currency", readonly=True)
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
     date = fields.Date(string="Date", readonly=True)
@@ -67,8 +74,8 @@ class SaleCommissionAchievementReport(models.Model):
             JOIN sale_commission_plan scp ON scp.id = scpa.plan_id
             JOIN sale_commission_plan_user scpu ON scpa.plan_id = scpu.plan_id
             WHERE scp.active
-            AND scp.state = 'approved'
-            AND scpa.type IN ({','.join("'%s'" % r for r in self._get_invoices_rates())})
+              AND scp.state = 'approved'
+              AND scpa.type IN ({','.join("'%s'" % r for r in self._get_invoices_rates())})
             {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
         );
         -- Create a supporting index to avoid seq.scans
@@ -176,12 +183,25 @@ SELECT
     cl.related_res_model,
     cl.related_res_id,
     cl.date::date AS date,
-    cl.partner_id
+    cl.partner_id,
+    era.amount * cr.rate AS target_amount,
+    era.payment_amount * cr.rate AS commission_target_amount,
+    CASE
+        WHEN era.amount IS NULL OR era.amount = 0 THEN 0
+        ELSE cl.achieved / (era.amount * cr.rate)
+    END as target_rate,
+    CASE
+        WHEN era.payment_amount IS NULL OR era.payment_amount = 0 THEN 0
+        ELSE cl.achieved / (era.payment_amount * cr.rate)
+    END as commission_rate
 FROM commission_lines cl
 JOIN sale_commission_plan_target era
     ON cl.plan_id = era.plan_id
     AND cl.date::date >= era.date_from
     AND cl.date::date <= era.date_to
+JOIN sale_commission_plan scp ON scp.id = cl.plan_id
+JOIN currency_rate cr
+  ON cr.company_id = scp.company_id
 """
 
     @api.model

@@ -120,6 +120,7 @@ subscription_rules AS (
     JOIN sale_commission_plan scp ON scp.id = scpa.plan_id
     JOIN sale_commission_plan_user scpu ON scpa.plan_id = scpu.plan_id
     WHERE scp.state = 'approved'
+      AND scp.active
       AND scpa.type IN ({','.join("'%s'" % r for r in self._get_sale_order_log_rates())})
     {'AND scpu.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
 ), subscription_commission_lines_team AS (

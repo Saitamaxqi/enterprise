@@ -9,7 +9,11 @@
                 <field name="team_id" optional="hide"/>
                 <field name="plan_id" optional="visible"/>
                 <field name="date" optional="hide"/>
-                <field name="target_id"/>
+                <field name="commission_target_amount" string="Commission Target" optional="hide"/>
+                <field name="target_rate" widget="percentage" optional="hide"/>
+                <field name="target_amount" string="Target"/>
+                <field name="commission_rate" widget="percentage" optional="hide"/>
+                <field name="target_id" string="Period"/>
                 <field name="related_res_id" string="Source"/>
                 <field name="partner_id" optional="show"/>
                 <field name="currency_id" optional="hide"/>
@@ -62,7 +66,7 @@
                 <group>
                     <filter string="Salesperson" name="salesperson" context="{'group_by':'user_id'}"/>
                     <filter string="Sales Team" name="salesteam" context="{'group_by':'team_id'}"/>
-                    <filter string="Period" name="target" context="{'group_by':'target_id'}"/>
+                    <filter string="Target" name="target" context="{'group_by':'target_id'}"/>
                     <filter string="Commission Plan" name="plan" context="{'group_by':'plan_id'}" groups="sales_team.group_sale_manager"/>
                     <filter string="Company" name="company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
                 </group>

@@ -7,7 +7,7 @@
             <list create="0" delete="0" editable="top">
                 <field name="user_id"/>
                 <field name="plan_id" optional="visible"/>
-                <field name="date_to" string="Period"/>
+                <field name="date_from" string="Period"/>
                 <field name="payment_date" optional="hide"/>
                 <field name="forecast" readonly="0" optional="hide"/>
                 <field name="notes" readonly="0" optional="hide"/>
@@ -63,8 +63,6 @@
                 <separator/>
                 <filter string="Active Plans" name="active_plans"
                         domain="[('plan_id.date_from', '&lt;', 'today'), ('plan_id.date_to', '&gt;', 'today')]"/>
-                <separator/>
-                <filter string="By Quarter" name="quarter" context="{'group_quarter':'1'}" domain="[('company_id', '!=', False)]"/>
                 <separator/>
                 <filter string="Period" name="filter_date_to" date="date_to"/>
                 <separator/>

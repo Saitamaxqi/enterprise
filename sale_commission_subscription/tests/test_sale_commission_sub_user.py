@@ -116,7 +116,8 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             'rate': 0.1,
             'plan_id': self.commission_plan_user.id,
         }])
-
+        # Make sure the commissions are 100% on target, achievements force the commission rate
+        self.commission_plan_user.target_commission_ids.target_rate = 1
         self.commission_plan_user.action_approve()
         self.commission_plan_sub.action_approve()
         inv_sub = sub._create_recurring_invoice()
@@ -200,6 +201,8 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
                 'product_categ_id': category.id,
             }
         ])
+        # Make sure the commissions are 100% on target, achievements force the commission rate
+        self.commission_plan_user.target_commission_ids.target_rate = 1
         self.commission_plan_user.action_approve()
         self.commission_plan_sub.action_approve()
         sub.action_confirm()

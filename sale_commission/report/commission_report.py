@@ -75,11 +75,18 @@ class SaleCommissionReport(models.Model):
         self.ensure_one()
         domain = [('plan_id', '=', self.plan_id.id),
                   ('user_id', '=', self.user_id.id),
-                  ('date', '>=', self.target_id.date_from),
-                  ('date', '<=', self.target_id.date_to),
                 ]
+        # As we group commission by payment_date, we need to get all target_id shaing the same date
+        target_ids = self.plan_id.target_ids.filtered(lambda t: t.payment_date == self.target_id.payment_date)
+        if target_ids:
+            date_from = min(target_ids.mapped('date_from'))
+            date_to = max(target_ids.mapped('date_to'))
+            domain = Domain.AND([
+                domain,
+                Domain([('date', '>=', date_from), ('date', '<=', date_to)]),
+            ])
         context = {'active_plan_ids': self.plan_id.ids,
-                   'active_target_ids': self.target_id.ids,
+                   'active_target_ids': target_ids.ids,
         }
         if self.plan_id.user_type == 'team':
             team_ids = self.env['crm.team'].search([('user_id', '=', self.user_id.id)])
@@ -121,13 +128,6 @@ class SaleCommissionReport(models.Model):
                 self.env.cache._set_field_cache(self, self._fields.get('notes')).update(dict.fromkeys(self.ids, notes))
         return True
 
-    def _get_date_range(self):
-        if self.env.context.get('group_quarter'):
-            return "date_trunc('quarter', a.payment_date)"
-        elif self.env.context.get('group_year'):
-            return "date_trunc('year', a.payment_date)"
-        return "a.payment_date"
-
     @property
     def _table_query(self):
         # Deactivate the jit for this transaction
@@ -162,7 +162,7 @@ achievement AS (
         END AS achieved_rate,
         cl.currency_id AS currency_id,
         MAX(era.amount) AS amount,
-        MAX(era.date_to) AS payment_date,
+        MAX(era.payment_date) AS payment_date,
         MAX(scpf.id) AS forecast_id,
         MAX(scpf.amount) AS forecast,
         MAX(scpf.notes) AS notes
@@ -179,6 +179,8 @@ achievement AS (
     LEFT JOIN sale_commission_plan_target_forecast scpf
         ON (scpf.target_id = era.id AND u.user_id = scpf.user_id)
     LEFT JOIN sale_commission_plan scp ON scp.id = u.plan_id
+        WHERE scp.active
+          AND scp.state = 'approved'
     GROUP BY
         era.id,
         era.plan_id,
@@ -204,9 +206,9 @@ achievement AS (
         a.company_id,
         {self.env.company.currency_id.id} AS currency_id,
         MIN(a.forecast_id) as forecast_id,
-        {self._get_date_range()} as payment_date,
+        MIN(a.payment_date) as payment_date,
         SUM(a.achieved) AS achieved,
-        CASE WHEN SUM(a.amount) > 0 THEN SUM(a.achieved) / (SUM(a.amount) * cr.rate) ELSE NULL END AS achieved_rate,
+        CASE WHEN SUM(a.amount) > 0 THEN SUM(a.achieved) / (SUM(a.amount) * cr.rate) ELSE 0.0 END AS achieved_rate,
         SUM(a.amount) * cr.rate AS target_amount,
         SUM(a.forecast) * cr.rate AS forecast,
         MAX(a.notes) AS notes,
@@ -215,7 +217,7 @@ achievement AS (
     LEFT JOIN currency_rate cr
         ON cr.company_id = a.company_id
     GROUP BY
-        a.plan_id, a.user_id, a.company_id, cr.rate, {self._get_date_range()}
+        a.plan_id, a.user_id, a.company_id, cr.rate, a.payment_date
 )
 SELECT
     a.*,

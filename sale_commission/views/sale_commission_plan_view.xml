@@ -73,11 +73,14 @@
                             <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company" readonly="state != 'draft'"/>
                         </group>
                         <group>
-                            <label for="date_from" string="Effective Period"/>
-                            <div class="d-inline-flex">
-                                <field name="date_from" string="Date" widget="daterange" options="{'end_date_field': 'date_to'}" required="1" readonly="state != 'draft'" force_save="1"/>
+                            <label for="date_from" string="Effective Period" />
+                            <div class="d-flex align-items-center">
+                                <field name="date_from" string="Date" widget="daterange"
+                                    options="{'end_date_field': 'date_to'}" required="1"
+                                    readonly="state != 'draft'" force_save="1" />
                             </div>
-                            <field name="periodicity" string="Target Frequency" readonly="state != 'draft'" force_save="1"/>
+                            <field name="periodicity" string="Target Frequency"
+                                readonly="state != 'draft'" force_save="1" />
                         </group>
                     </group>
                     <notebook name="main_book">
@@ -108,6 +111,8 @@
                                     <field name="name" force_save="1"/>
                                     <field name="date_from" optional="hide" force_save="1"/>
                                     <field name="date_to" optional="hide" force_save="1"/>
+                                    <field name="payment_date" optional="hide" force_save="1"/>
+                                    <field name="payment_amount" widget="monetary" options="{'currency_field': 'currency_id'}" optional="hide" />
                                     <field name="amount" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                     <field name="currency_id" column_invisible="1"/> <!-- For monetary field -->
                                 </list>
