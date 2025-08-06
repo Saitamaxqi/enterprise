@@ -8,7 +8,8 @@ class AccountReturn(models.Model):
 
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
-        if return_type_external_id == 'l10n_ee_reports.ee_tax_return_type':
+        # Extends account_reports
+        if return_type_external_id in ('l10n_ee_reports.ee_tax_return_type', 'l10n_ee_reports.ee_ec_sales_list_return_type', 'l10n_ee_reports.ee_kmd_inf_tax_return_type'):
             return date_to + relativedelta(days=20)
 
         return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
@@ -32,3 +33,14 @@ class AccountReturn(models.Model):
             return self._vat_closing_entry_results_rounding(company, options, results, rounding_accounts, vat_results_summary)
 
         return super()._postprocess_vat_closing_entry_results(company, options, results)
+
+    def action_submit(self):
+        # Extends account_reports
+        if self.type_external_id == "l10n_ee_reports.ee_tax_return_type":
+            return self.env["l10n_ee_reports.tax.return.submission.wizard"]._open_submission_wizard(self)
+        if self.type_external_id == "l10n_ee_reports.ee_ec_sales_list_return_type":
+            return self.env["l10n_ee_reports.ec.sales.list.submission.wizard"]._open_submission_wizard(self)
+        if self.type_external_id == "l10n_ee_reports.ee_kmd_inf_tax_return_type":
+            return self.env["l10n_ee_reports.kmd.inf.return.submission.wizard"]._open_submission_wizard(self)
+
+        return super().action_submit()

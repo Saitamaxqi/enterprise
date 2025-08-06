@@ -24,6 +24,10 @@ Accounting Reports for Estonia
         'data/kmd_inf/kmd_inf_report_part_b.xml',
         'data/kmd_inf/kmd_inf_report.xml',
         'data/account_return_data.xml',
+        'security/ir.model.access.csv',
+        'wizard/ec_sales_list_submission_wizard.xml',
+        'wizard/kmd_inf_return_wizard.xml',
+        'wizard/tax_return_type_wizard.xml',
     ],
     'installable': True,
     'auto_install': [
