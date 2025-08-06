@@ -26,10 +26,7 @@ patch(ControlButtons.prototype, {
         const order = this.pos.getOrder();
         if (this.pos.useBlackBoxBe() && order.getOrderlines().length > 0) {
             this.pos.addPendingOrder([order.id]);
-            const result = await this.pos.syncAllOrders({ throw: true });
-            if (!result) {
-                return;
-            }
+            await this.pos.syncAllOrders({ throw: true });
         }
         await super.clickPrintBill();
     },
