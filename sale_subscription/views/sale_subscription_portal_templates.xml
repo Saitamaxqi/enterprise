@@ -22,88 +22,90 @@
         </div>
 
         <div id="modalaccept" position="after">
-            <!-- ====== MODAL: Switch Plan ====== -->
-            <div role="dialog" t-attf-class="modal fade" id="wc-modal-change-plan" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <header class="modal-header">
-                            <h4 class="modal-title">
-                                Change Plan for <span t-field="sale_order.display_name" class="text-primary"/>
-                            </h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
-                        </header>
-                        <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/change_plan?access_token=#{sale_order.access_token}">
-                            <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <main class="modal-body">
-                                <select id="subscription-change-plan-select" class="form-select" name="plan_id">
-                                    <option t-att-value="sale_order.plan_id.id" t-out="sale_order.plan_id.name"/>
-                                    <t t-foreach="sale_order.plan_id.related_plan_id" t-as="plan">
-                                        <option t-att-value="plan.id" t-out="plan.name"/>
-                                    </t>
-                                </select>
-                            </main>
-                            <footer class="modal-footer">
-                                <button class="btn btn-primary">Submit</button>
-                            </footer>
-                        </form>
+            <t t-if="sale_order.is_subscription">
+                <!-- ====== MODAL: Switch Plan ====== -->
+                <div role="dialog" t-attf-class="modal fade" id="wc-modal-change-plan" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <header class="modal-header">
+                                <h4 class="modal-title">
+                                    Change Plan for <span t-field="sale_order.display_name" class="text-primary"/>
+                                </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                            </header>
+                            <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/change_plan?access_token=#{sale_order.access_token}">
+                                <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <main class="modal-body">
+                                    <select id="subscription-change-plan-select" class="form-select" name="plan_id">
+                                        <option t-att-value="sale_order.plan_id.id" t-out="sale_order.plan_id.name"/>
+                                        <t t-foreach="sale_order.plan_id.related_plan_id" t-as="plan">
+                                            <option t-att-value="plan.id" t-out="plan.name"/>
+                                        </t>
+                                    </select>
+                                </main>
+                                <footer class="modal-footer">
+                                    <button class="btn btn-primary">Submit</button>
+                                </footer>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- ====== MODAL: Pause Subscription ====== -->
-            <div role="dialog" t-attf-class="modal fade" id="wc-modal-pause" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <header class="modal-header">
-                            <h4 class="modal-title">
-                                Pause <span t-field="sale_order.display_name" class="text-primary"/>
-                            </h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
-                        </header>
-                        <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/pause?access_token=#{sale_order.access_token}">
-                            <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <t t-set="modal_start_time" t-value="sale_order.user_pause_start or sale_order.next_invoice_date or sale_order.start_date"/>
-                            <main t-if="modal_start_time" class="modal-body d-flex">
-                                <t t-set="modal_max_pause_time" t-value="modal_start_time + sale_order.plan_id.billing_period"/>
-                                Pause the subscription from<span class="mx-1" t-field="sale_order.next_invoice_date"/> to
-                                <input type="text" id="start" name="until"
-                                    class="form-control datetimepicker-input bg-transparent rounded p-0 d-inline w-auto ms-1"
-                                    t-att-value="modal_start_time + relativedelta(days=1)"
-                                    t-att-data-min-date="modal_start_time + relativedelta(days=1)"
-                                    data-widget="datetime-picker" data-widget-type="date"
-                                    t-att-data-max-date="modal_max_pause_time" />
-                            </main>
-                            <footer class="modal-footer">
-                                <button class="btn btn-primary">Submit</button>
-                                <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
-                            </footer>
-                        </form>
+                <!-- ====== MODAL: Pause Subscription ====== -->
+                <div role="dialog" t-attf-class="modal fade" id="wc-modal-pause" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <header class="modal-header">
+                                <h4 class="modal-title">
+                                    Pause <span t-field="sale_order.display_name" class="text-primary"/>
+                                </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                            </header>
+                            <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/pause?access_token=#{sale_order.access_token}">
+                                <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <t t-set="modal_start_time" t-value="sale_order.user_pause_start or sale_order.next_invoice_date or sale_order.start_date"/>
+                                <main t-if="modal_start_time" class="modal-body d-flex">
+                                    <t t-set="modal_max_pause_time" t-value="modal_start_time + sale_order.plan_id.billing_period"/>
+                                    Pause the subscription from<span class="mx-1" t-field="sale_order.next_invoice_date"/> to
+                                    <input type="text" id="start" name="until"
+                                        class="form-control datetimepicker-input bg-transparent rounded p-0 d-inline w-auto ms-1"
+                                        t-att-value="modal_start_time + relativedelta(days=1)"
+                                        t-att-data-min-date="modal_start_time + relativedelta(days=1)"
+                                        data-widget="datetime-picker" data-widget-type="date"
+                                        t-att-data-max-date="modal_max_pause_time" />
+                                </main>
+                                <footer class="modal-footer">
+                                    <button class="btn btn-primary">Submit</button>
+                                    <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
+                                </footer>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- ====== MODAL: Resume Subscription ====== -->
-            <div role="dialog" t-attf-class="modal fade" id="wc-modal-resume" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <header class="modal-header">
-                            <h4 class="modal-title">
-                                Resume <span t-field="sale_order.display_name" class="text-primary"/>
-                            </h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
-                        </header>
-                        <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/resume?access_token=#{sale_order.access_token}">
-                            <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <main class="modal-body">
+                <!-- ====== MODAL: Resume Subscription ====== -->
+                <div role="dialog" t-attf-class="modal fade" id="wc-modal-resume" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <header class="modal-header">
+                                <h4 class="modal-title">
+                                    Resume <span t-field="sale_order.display_name" class="text-primary"/>
+                                </h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                            </header>
+                            <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/resume?access_token=#{sale_order.access_token}">
+                                <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <main class="modal-body">
                                 Do you want to resume the subscription today?<br/>
-                                Next invoice date: <t t-if="sale_order.is_subscription and sale_order.state == 'sale' and next_invoice_date_at_resume" t-out="format_date(next_invoice_date_at_resume)"/>
-                            </main>
-                            <footer class="modal-footer">
-                                <button class="btn btn-primary">Resume</button>
-                                <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
-                            </footer>
-                        </form>
+                                Next invoice date: <t t-if="sale_order.state == 'sale' and next_invoice_date_at_resume" t-out="format_date(next_invoice_date_at_resume)"/>
+                                </main>
+                                <footer class="modal-footer">
+                                    <button class="btn btn-primary">Resume</button>
+                                    <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
+                                </footer>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </t>
         </div>
     </template>
 
