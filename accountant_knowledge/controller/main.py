@@ -65,7 +65,7 @@ def get_attached_pdfs(root):
     for domain in domains:
         ir_attachments = all_ir_attachments.filtered_domain(domain)
         if ir_attachments:
-            yield PdfFileReader(BytesIO(ir_attachments[0]))
+            yield PdfFileReader(BytesIO(ir_attachments[0].raw))
 
 
 def get_account_reports_pdfs(root):
