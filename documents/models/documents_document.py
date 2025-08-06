@@ -1496,6 +1496,8 @@ class DocumentsDocument(models.Model):
             context['default_is_readonly_model'] = True
             context['default_model_id'] = self.env['ir.model']._get_id(model)
             first_valid_id = self.env[model].search([], limit=1).id
+            if not first_valid_id:
+                raise UserError(_("There are no records to link this document. Create one first."))
             context['default_resource_ref'] = f'{model},{first_valid_id}'
 
         return {

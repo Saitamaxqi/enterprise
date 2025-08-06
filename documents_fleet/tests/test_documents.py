@@ -164,3 +164,41 @@ class TestCaseDocumentsBridgeFleet(TransactionCase):
         self.assertFalse(doc.res_model)
         self.assertEqual(doc.attachment_id.res_id, doc.id)
         self.assertEqual(doc.attachment_id.res_model, 'documents.document')
+
+    def test_link_document_when_no_vehicle_exists(self):
+        """
+        Ensure that a document cannot be linked when no vehicles exist.
+
+        Test Case:
+        =========
+            - Archive all vehicles to ensure no vehicle exists.
+            - create a document in the fleet folder
+            - Try to link the document.
+            - Check that a UserError is raised
+            - If a vehicle exists, it should be used as `default_resource_ref`.
+        """
+        self.env['fleet.vehicle'].search([]).write({
+            'active': False
+        })
+        self.assertFalse(self.env['fleet.vehicle'].search([]), "There should be no active vehicles.")
+        attachment = self.env['ir.attachment'].create({
+            'name': "An Email without attachment",
+            'type': 'binary',
+            'raw':  '<p>A mail body</p>',
+            'mimetype': 'application/documents-email',
+            'res_model': 'documents.document',
+        })
+        document = self.env['documents.document'].create({
+            'name': "An Email with attachment",
+            'folder_id': self.fleet_folder.id,
+            'attachment_id': attachment.id,
+        })
+        with self.assertRaises(UserError):
+            document.action_link_to_record("fleet.vehicle")
+
+        vehicle = self.env["fleet.vehicle"].create({
+            "model_id": self.fleet_vehicle.model_id.id,
+        })
+        res = document.action_link_to_record("fleet.vehicle")
+        context = res.get('context', {})
+        self.assertEqual(context.get('default_resource_ref'), f"fleet.vehicle,{vehicle.id}")
