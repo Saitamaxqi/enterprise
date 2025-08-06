@@ -375,10 +375,3 @@ class ApprovalRequest(models.Model):
         if 'request_status' in init_values:
             return self.env.ref('approvals.mt_approval_request_status')
         return super()._track_subtype(init_values)
-
-    @api.constrains('approver_ids')
-    def _check_approver_ids(self):
-        for request in self:
-            # make sure the approver_ids are unique per request
-            if len(request.approver_ids) != len(request.approver_ids.user_id):
-                raise UserError(_("You cannot assign the same approver multiple times on the same request."))

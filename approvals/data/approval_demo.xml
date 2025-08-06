@@ -28,11 +28,6 @@
             <field name="request_id" ref="approval_request_demo_business_trip"/>
         </record>
 
-        <record id="approval_approver_business_trip_2" model="approval.approver">
-            <field name="user_id" ref="base.user_admin"/>
-            <field name="request_id" ref="approval_request_demo_business_trip"/>
-        </record>
-
         <record id="approval_request_demo_borrow_items" model="approval.request">
             <field name="name">Borrow the screwdriver</field>
             <field name="request_status">pending</field>
