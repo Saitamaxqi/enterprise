@@ -98,6 +98,16 @@ registry.category("web_tour.tours").add("sign_tour", {
             run: "click",
         },
         {
+            // Click Sign All button of the Signature Dialog.
+            // if auto_value is set, the dialog does not show.
+            // In such case, we need to skip this step.
+            isActive: ["body:not(:has(input[data-item_type='signature'][data-auto_value]))"],
+            trigger: "footer.modal-footer button.btn-primary:enabled",
+            content: _t("Nearly there, keep going!"),
+            tooltipPosition: "bottom",
+            run: "click",
+        },
+        {
             trigger: ":iframe body:not(:has(footer.modal-footer button.btn-primary))",
         },
         {
@@ -107,6 +117,7 @@ registry.category("web_tour.tours").add("sign_tour", {
             run: "click",
         },
         {
+            isActive: ["manual"], // Previous step takes long time, resulting in time out in auto mode
             trigger: '.modal-dialog button:contains("' + _t("Close") + '")',
             content: markup(
                 _t(
