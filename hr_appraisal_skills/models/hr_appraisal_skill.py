@@ -18,6 +18,9 @@ class HrAppraisalSkill(models.Model):
     def _linked_field_name(self):
         return 'appraisal_id'
 
+    def _get_passive_fields(self):
+        return ["justification"]
+
     @api.depends('appraisal_id.manager_ids')
     def _compute_manager_ids(self):
         for appraisal_skill in self:
