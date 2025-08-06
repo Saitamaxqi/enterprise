@@ -10,6 +10,7 @@ INTERFACE_KEYS = [
     ("chatter_ai_button", "Get help on a record"),
     ("html_prompt_shortcut", "Convert a prompt in an email"),
     ("systray_ai_button", "Ask AI for help"),
+    ("voice_transcription_component", "Summary Buttons for Voice Transcription Component")
 ]
 
 

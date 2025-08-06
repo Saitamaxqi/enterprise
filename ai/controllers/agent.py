@@ -13,14 +13,11 @@ class AgentController(http.Controller):
 
         session_params = {
             "input_audio_transcription": {
-                "model": "whisper-1",
+                "model": "gpt-4o-transcribe",
                 "language": language,
                 "prompt": prompt
             },
-            "turn_detection": {
-                "type": "semantic_vad",
-                "eagerness": "high"
-            },
+            "turn_detection": None,
             "input_audio_noise_reduction": {
                 "type": "near_field"
             },

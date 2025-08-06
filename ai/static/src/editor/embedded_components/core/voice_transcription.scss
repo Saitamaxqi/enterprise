@@ -1,4 +1,4 @@
-[data-embedded="recorder"] {
+[data-embedded="voice-transcription"] {
   $rounding: 4px;
 
   .transcript-block {
@@ -31,5 +31,28 @@
 
   .ai-icon-sm {
     width: 1rem;
+  }
+
+  .o-ai-summary-processing * {
+    color: #6c757d;
+  }
+
+  .o-ai-transcription-listening {
+    color: #6c757d;
+    animation: fade-in-out 2s infinite;
+  }
+
+  @keyframes fade-in-out {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.4;
+    }
+
+    100% {
+      opacity: 1;
+    }
   }
 }

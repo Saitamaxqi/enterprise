@@ -77,13 +77,4 @@ When one (or more) of these triggers is TRUE for the user's query, use Natural L
         <field name="response_style">analytical</field>
         <field name="create_uid" ref="base.user_admin"/>
     </record>
-    <record id="ai_information_retrieval_agent" model="ai.agent">
-        <field name="name">Search with AI</field>
-        <field name="subtitle">An agent dedicated to retrieve and analyze data from your database.</field>
-        <field name="llm_model">gemini-2.5-flash</field>
-        <field name="topic_ids" eval="[(6, 0, [ref('ai.ai_topic_information_retrieval_query')])]"/>
-        <field name="system_prompt"></field>
-        <field name="response_style">creative</field>
-        <field name="create_uid" ref="base.user_admin"/>
-    </record>
 </odoo>

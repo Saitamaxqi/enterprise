@@ -149,7 +149,7 @@ class LLMApiService:
         self._add_if_set(body, "input_audio_noise_reduction", input_audio_noise_reduction)
         self._add_if_set(body, "input_audio_transcription", input_audio_transcription)
         self._add_if_set(body, "modalities", modalities)
-        self._add_if_set(body, "turn_detection", turn_detection)
+        body["turn_detection"] = turn_detection
 
         headers = self._get_base_headers()
 

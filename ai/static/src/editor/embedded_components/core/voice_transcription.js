@@ -11,36 +11,23 @@ import { useService } from "@web/core/utils/hooks";
 import VADAudioRecorder from "@ai/vad_audio_recorder";
 import { _t } from "@web/core/l10n/translation";
 
-const DEFAULT_PROMPT = `
-Summarize the transcript below.
-Your summary should have 3 sections.
-
-In the first one called "Overview", explain in a few words what the conversation is about.
-
-In the second one called "Key Notes", write a summary of what was said as bullet points
-
-In the third one called "Action items", write bullet points of all the actions that were decided.
-If it has been decided in the transcript, make sure to include the responsible and the deadline for each item.
-
-Your summary will be integrated as is in an HTML field, do not include any other commentary
-that shouldn't be part of this summary. It must be in markdown format.
-
-`;
-
-export class AudioTranscriber extends Component {
-    static template = "ai.AudioTranscriber";
+export class VoiceTranscription extends Component {
+    static template = "ai.VoiceTranscription";
     static components = {};
     static props = {
         host: { type: Object },
         resModel: { type: String },
-        resId: { type: Number },
+        resId: { type: Number, optional: true },
         firstRecordingDate: { type: Function },
         getTabContent: { type: Function },
         getTranscriptContent: { type: Function },
         onTranscriptionStarted: { type: Function },
-        onTranscriptionReceived: { type: Function },
-        onTranscriptionDone: { type: Function },
+        onTranscriptionUpdated: { type: Function },
         onRecorderStopped: { type: Function },
+    };
+
+    static defaultProps = {
+        resId: null,
     };
 
     setup() {
@@ -64,19 +51,37 @@ export class AudioTranscriber extends Component {
         const onMessage = (data) => {
             const eventType = data.type;
             if (eventType === "conversation.item.input_audio_transcription.delta") {
-                this.props.onTranscriptionReceived(this.embeddedState.id, data.delta, data.item_id);
-            } else if (eventType === "conversation.item.input_audio_transcription.completed") {
-                const result = this.props.onTranscriptionDone(
+                const result = this.props.onTranscriptionUpdated(
+                    "delta",
                     this.embeddedState.id,
-                    data.transcript,
-                    data.item_id
+                    data.item_id,
+                    data.delta
+                );
+
+                if (result === null) {
+                    this.audioRecorder.stopRecording();
+                    return;
+                }
+            } else if (eventType === "conversation.item.input_audio_transcription.completed") {
+                const result = this.props.onTranscriptionUpdated(
+                    "completed",
+                    this.embeddedState.id,
+                    data.item_id,
+                    data.transcript
                 );
                 if (result === null) {
-                    this.storeTranscript(data);
+                    this.audioRecorder.stopRecording();
+                    return;
                 }
+                this.props.onTranscriptionUpdated(
+                    "listening",
+                    this.embeddedState.id,
+                    null,
+                    _t("AI is listening...")
+                );
             }
         };
-        this.audioRecorder = VADAudioRecorder.getInstance(onMessage);
+        this.audioRecorder = new VADAudioRecorder(onMessage);
 
         onWillStart(async () => {
             const languages = await this.orm.call("res.lang", "get_installed", []);
@@ -88,53 +93,71 @@ export class AudioTranscriber extends Component {
             if (this.audioRecorder.state === "recording") {
                 this.embeddedState.status = "recording";
             }
+
+            this.composerPrompts = (
+                await this.orm.webSearchRead(
+                    "ai.composer",
+                    [["interface_key", "=", "voice_transcription_component"]],
+                    {
+                        specification: {
+                            ai_agent: {},
+                            default_prompt: {},
+                            available_prompts: {
+                                fields: {
+                                    name: {},
+                                },
+                            },
+                        },
+                    }
+                )
+            ).records[0];
+            if (this.embeddedState.hasSummary) {
+                this.state.currentTab = "summary";
+            }
         });
 
         onMounted(() => {
             this.state.firstRecordingDate = this.props.firstRecordingDate(this.embeddedState.id);
-            const storedTranscript = this.getStoredTranscript();
-            if (storedTranscript) {
-                storedTranscript.forEach((item) =>
-                    this.props.onTranscriptionDone(
-                        this.embeddedState.id,
-                        item.transcript,
-                        item.item_id
-                    )
-                );
-                this.clearStoredTranscript();
-            }
         });
     }
 
     setCurrentTab(tabName) {
-        this.state["currentTab"] = tabName;
-    }
+        if (tabName === "summary") {
+            const summaryContent = this.props.getTabContent(this.embeddedState.id, "summary");
 
-    onTabClicked(event, tabName) {
-        this.setCurrentTab(tabName);
+            if (summaryContent && summaryContent.innerText.trim() === "") {
+                this.updateSummary();
+            }
+        }
+
+        this.state["currentTab"] = tabName;
     }
 
     onLanguageChange(event) {
         this.state.currentLanguage = event.target.value;
     }
 
-    async toggleRecording(event) {
+    async toggleRecording() {
         this.state.isRecording = !this.state.isRecording;
         if (this.embeddedState.status === "idle") {
-            this.props.onTranscriptionStarted(this.embeddedState.id);
             const transcriptPrompt = this.props.getTabContent(this.embeddedState.id, "notes");
             try {
                 this.embeddedState.status = "waiting";
-                this.embeddedState.recordingOwnerId = user.userId;
                 await this.audioRecorder.startRecording(
                     this.state.currentLanguage.split("_")[0],
                     transcriptPrompt?.innerText.trim()
                 );
-                this.setCurrentTab("transcript");
                 this.embeddedState.status = "recording";
+                this.props.onTranscriptionStarted(this.embeddedState.id);
+                this.props.onTranscriptionUpdated(
+                    "listening",
+                    this.embeddedState.id,
+                    null,
+                    _t("AI is listening...")
+                );
+                this.setCurrentTab("transcript");
             } catch (error) {
                 this.embeddedState.status = "idle";
-                this.embeddedState.recordingOwnerId = null;
                 this.state.isRecording = false;
                 if (error instanceof DOMException && error.name === "NotAllowedError") {
                     this.notificationService.add(
@@ -154,53 +177,42 @@ export class AudioTranscriber extends Component {
                 }
             }
         } else if (this.embeddedState.status === "recording") {
+            this.props.onTranscriptionUpdated("stopped", this.embeddedState.id);
             this.audioRecorder.stopRecording();
-            this.embeddedState.recordingOwnerId = null;
-            this.embeddedState.status = "summarizing";
-            const summary = await this.getSummary();
-            if (summary) {
-                this.props.onRecorderStopped(this.embeddedState.id, summary);
-                this.embeddedState.hasSummary = true;
-                this.setCurrentTab("summary");
-            }
-            this.embeddedState.status = "idle";
+            this.updateSummary();
         }
     }
 
-    storeTranscript(item) {
-        const localStorageId = `ai.transcript-${this.embeddedState.id}`;
-        const storedItems = this.getStoredTranscript();
-
-        let updatedItems = [];
-        updatedItems = [...(storedItems ?? []), item];
-        updatedItems.push(item);
-
-        localStorage.setItem(localStorageId, JSON.stringify(updatedItems));
+    async updateSummary(prompt = "") {
+        this.embeddedState.status = "summarizing";
+        const summary = await this.getSummary(prompt);
+        if (summary) {
+            this.props.onRecorderStopped(this.embeddedState.id, summary);
+            this.embeddedState.hasSummary = true;
+            this.setCurrentTab("summary");
+        }
+        this.embeddedState.status = "idle";
     }
 
-    getStoredTranscript() {
-        const localStorageId = `ai.transcript-${this.embeddedState.id}`;
-        return JSON.parse(localStorage.getItem(localStorageId));
-    }
-
-    clearStoredTranscript() {
-        const localStorageId = `transcript-${this.embeddedState.id}`;
-        localStorage.removeItem(localStorageId);
-    }
-
-    async getSummary() {
+    async getSummary(prompt = "") {
         const textToSummarize = this.props.getTranscriptContent(this.embeddedState.id);
-        if (!textToSummarize || textToSummarize.trim() === "") {
+        if (!this.composerPrompts || !textToSummarize || textToSummarize.trim() === "") {
             return null;
         }
-        const summary = await this.orm.call("ai.agent", "get_direct_response", [1], {
-            prompt: `${DEFAULT_PROMPT}${textToSummarize}`,
-            enable_html_response: true,
-        });
+
+        const summary = await this.orm.call(
+            "ai.agent",
+            "get_direct_response",
+            [this.composerPrompts.ai_agent],
+            {
+                prompt: `${this.composerPrompts.default_prompt}\n${prompt}\n${textToSummarize}`,
+                enable_html_response: true,
+            }
+        );
         return String(summary);
     }
 
-    async openComposer(event) {
+    async openComposer() {
         this.actionService.doAction(
             {
                 type: "ir.actions.act_window",
@@ -232,9 +244,9 @@ export class AudioTranscriber extends Component {
     }
 }
 
-export const aiRecorderEmbeddedComponent = {
-    name: "recorder",
-    Component: AudioTranscriber,
+export const aiVoiceTranscriptionEmbeddedComponent = {
+    name: "voice-transcription",
+    Component: VoiceTranscription,
     getEditableDescendants: getEditableDescendants,
     getProps: (host) => ({ host }),
     getStateChangeManager: (config) =>
@@ -247,6 +259,12 @@ export const aiRecorderEmbeddedComponent = {
                         props.status = currentState.next?.status;
                     }
                     props.status ??= "idle";
+                    return props;
+                },
+                stateToEmbeddedProps: (host, state) => {
+                    const props = getEmbeddedProps(host);
+                    props.id = state.id;
+                    props.hasSummary = state.hasSummary;
                     return props;
                 },
             })

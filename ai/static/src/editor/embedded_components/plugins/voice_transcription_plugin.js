@@ -9,12 +9,12 @@ import { uuid } from "@web/core/utils/strings";
 
 const componentSelector = (id) => `#transcriber-${id}`;
 
-const RECORDER_SELECTOR = "[data-embedded='recorder']";
+const RECORDER_SELECTOR = "[data-embedded='voice-transcription']";
 const NOTES_CONTENT_SELECTOR = "[data-embedded-editable='notesContent']";
 const TRANSCRIPT_CONTENT_SELECTOR = "[data-embedded-editable='transcriptContent']";
 
 export class TranscriptionPlugin extends Plugin {
-    static id = "recorder";
+    static id = "voice-transcription";
     static dependencies = ["baseContainer", "dom", "history", "selection", "embeddedComponents"];
 
     resources = {
@@ -54,7 +54,7 @@ export class TranscriptionPlugin extends Plugin {
     };
 
     insertTranscriptionComponent(params = {}) {
-        const transcriptBlock = renderToElement("ai.RecorderBlueprint", {
+        const transcriptBlock = renderToElement("ai.VoiceTranscriptionBlueprint", {
             embeddedProps: JSON.stringify({
                 id: uuid(),
             }),
@@ -64,7 +64,7 @@ export class TranscriptionPlugin extends Plugin {
     }
 
     setupTranscriptionComponent({ name, props }) {
-        if (name === "recorder") {
+        if (name === "voice-transcription") {
             const { resModel, resId } = this.config.getRecordInfo();
             Object.assign(props, {
                 resModel,
@@ -73,10 +73,8 @@ export class TranscriptionPlugin extends Plugin {
                 getTabContent: (id, tabName) => this.getTabContent(id, tabName),
                 getTranscriptContent: (id) => this.getTranscriptContent(id),
                 onTranscriptionStarted: (id) => this.startTranscription(id),
-                onTranscriptionReceived: (id, text, chunkId) =>
-                    this.updateTranscription(id, text, chunkId),
-                onTranscriptionDone: (id, transcript, chunkId) =>
-                    this.commitTranscription(id, transcript, chunkId),
+                onTranscriptionUpdated: (state, componentId, chunkId, textContent) =>
+                    this.updateTranscription(state, componentId, chunkId, textContent),
                 onRecorderStopped: (id, transcript) => this.updateSummary(id, transcript),
             });
         }
@@ -89,7 +87,9 @@ export class TranscriptionPlugin extends Plugin {
      * @returns {HtmlElement} the content of the tab
      */
     getTabContent(id, tabName) {
-        return this.editable.querySelector(`${componentSelector(id)} #${tabName}-content`);
+        return this.editable.querySelector(
+            `${componentSelector(id)} #${tabName}-content>[data-embedded-editable]`
+        );
     }
 
     getTranscriptContent(id) {
@@ -137,13 +137,46 @@ export class TranscriptionPlugin extends Plugin {
         this.dependencies.history.addStep();
     }
 
-    updateTranscription(id, textContent, chunkId) {
+    updateTranscription(state, componentId, chunkId = "", textContent = "") {
+        switch (state) {
+            case "listening": {
+                const anchorNode = this.getTabContent(componentId, "transcript");
+                const textElement = document.createElement("p");
+                textElement.classList.add(
+                    "o-ai-transcription-listening",
+                    "ps-2",
+                    "border-start",
+                    "border-2",
+                    "border-muted"
+                );
+                textElement.textContent = _t("AI is listening...");
+                anchorNode.appendChild(textElement);
+                this.dependencies.history.addStep();
+                break;
+            }
+            case "delta":
+                return this.updateDelta(componentId, chunkId, textContent);
+            case "completed":
+                return this.commitTranscription(componentId, chunkId, textContent);
+            case "stopped": {
+                const listeningNode = this.editable.querySelector(
+                    `${componentSelector(componentId)} .o-ai-transcription-listening`
+                );
+                listeningNode?.remove();
+                this.dependencies.history.addStep();
+                break;
+            }
+        }
+    }
+
+    updateDelta(componentId, chunkId, textContent) {
         let textElement = this.editable.querySelector(
-            `${componentSelector(id)} #current-transcript-${chunkId}`
+            `${componentSelector(componentId)} #current-transcript-${chunkId}`
         );
         if (!textElement) {
-            const anchorNode = this.editable.querySelector(
-                `${componentSelector(id)} #transcript-content>div`
+            const anchorNode = this.getTabContent(componentId, "transcript");
+            const listeningNode = this.editable.querySelector(
+                `${componentSelector(componentId)} .o-ai-transcription-listening`
             );
             if (!anchorNode) {
                 return null;
@@ -151,26 +184,30 @@ export class TranscriptionPlugin extends Plugin {
             textElement = document.createElement("p");
             textElement.setAttribute("id", `current-transcript-${chunkId}`);
             textElement.classList.add(
-                "text-secondary",
+                "text-muted",
                 "ps-2",
                 "border-start",
                 "border-2",
-                "border-secondary"
+                "border-muted"
             );
-            anchorNode.appendChild(textElement);
+            if (listeningNode) {
+                anchorNode.replaceChild(textElement, listeningNode);
+            } else {
+                anchorNode.appendChild(textElement);
+            }
             this.dependencies.history.addStep();
         }
         textElement.textContent = textElement.textContent + textContent;
         return textElement;
     }
 
-    commitTranscription(id, transcription, chunkId) {
+    commitTranscription(componenentId, chunkId, textContent) {
         let currentTranscript = this.editable.querySelector(
-            `${componentSelector(id)} #current-transcript-${chunkId}`
+            `${componentSelector(componenentId)} #current-transcript-${chunkId}`
         );
         if (!currentTranscript) {
             const anchorNode = this.editable.querySelector(
-                `${componentSelector(id)} #transcript-content>div`
+                `${componentSelector(componenentId)} #transcript-content>div`
             );
             if (!anchorNode) {
                 return null;
@@ -181,26 +218,34 @@ export class TranscriptionPlugin extends Plugin {
             currentTranscript.removeAttribute("id");
             currentTranscript.removeAttribute("class");
         }
-        currentTranscript.textContent = transcription;
+        currentTranscript.textContent = textContent;
         this.dependencies.history.addStep();
         return currentTranscript;
     }
 
-    updateSummary(id, transcript) {
+    updateSummary(componentId, transcript) {
+        /** @type {HTMLElement} */
         const anchorNode = this.editable.querySelector(
-            `${componentSelector(id)} #summary-content>div`
+            `${componentSelector(componentId)} #summary-content>div`
         );
-        const summarySection = document.createElement("section");
+
+        const existingSummary = anchorNode.querySelector("section");
         const htmlTranscript = parseHTML(document, transcript);
+        const summarySection = document.createElement("section");
         summarySection.appendChild(htmlTranscript);
-        anchorNode.appendChild(summarySection);
+
+        if (existingSummary === null) {
+            anchorNode.appendChild(summarySection);
+        } else {
+            anchorNode.replaceChild(summarySection, existingSummary);
+        }
         this.dependencies.history.addStep();
     }
 
     normalize(element) {
         for (const emptyRecorderNode of selectElements(
             element,
-            `[data-embedded='recorder'] [data-embedded-editable]:empty`
+            `${RECORDER_SELECTOR} [data-embedded-editable]:empty`
         )) {
             const baseContainer = this.dependencies.baseContainer.createBaseContainer();
             baseContainer.appendChild(this.document.createElement("br"));

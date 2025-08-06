@@ -25,6 +25,9 @@
         'web.assets_backend': [
             'ai_app/static/src/**/*',
         ],
+        'web.assets_unit_tests': [
+            'ai_app/static/tests/**/*',
+        ],
     },
     'application': True,
     'author': 'Odoo S.A.',
