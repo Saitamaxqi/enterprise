@@ -377,7 +377,8 @@ class SignTemplate(models.Model):
         if template.has_sign_requests:
             template = template.copy({
                 'favorited_ids': [Command.link(self.env.user.id)],
-                'active': False
+                'active': False,
+                'sign_item_ids': False,
             })
         return {
             'type': 'ir.actions.client',
