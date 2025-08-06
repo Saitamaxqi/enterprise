@@ -79,47 +79,47 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
     record_context, files = record._get_ai_context(context_fields)
     llm_api = LLMApiService(record.env, 'openai')
     if field_type == 'boolean':
-        schema = {
+        field_schema = {
             'type': 'boolean',
         }
     elif field_type == 'char':
-        schema = {
+        field_schema = {
             'type': 'string',
             'description': 'A short, concise string, without any Markdown formatting.'
         }
     elif field_type == 'date':
-        schema = {
+        field_schema = {
             'type': ['string', 'null'],
             'format': 'date',
             'description': 'A date (year, month and day should be correct), or null to leave empty',
         }
     elif field_type == 'datetime':
-        schema = {
+        field_schema = {
             'type': ['string', 'null'],
             'format': 'date-time',
             'description': 'A datetime (year, month and day should be correct), including the correct timezone or null to leave empty'
         }
     elif field_type == 'integer':
-        schema = {
+        field_schema = {
             'type': 'integer',
             'description': "A whole number. If a number is expressed in words (e.g. '6.67 billion'), it must be converted into its full numeric form (e.g. '6670000000')"
         }
     elif field_type in ('float', 'monetary'):
-        schema = {
+        field_schema = {
             'type': 'number'
         }
     elif field_type == 'html':
-        schema = {
+        field_schema = {
             'type': 'string',
             'description': 'A well-structured Markdown (it may contain tables). It will be converted to HTML after generation'
         }
     elif field_type == 'text':
-        schema = {
+        field_schema = {
             'type': 'string',
             'description': 'A few sentences, without any Markdown formatting'
         }
     elif field_type == 'many2many':
-        schema = {
+        field_schema = {
             'type': 'array',
             'items': {
                 'type': 'integer',
@@ -128,19 +128,19 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
             'description': 'The list of IDs of records to select. Leave empty to leave the field empty'
         }
     elif field_type == 'many2one':
-        schema = {
+        field_schema = {
             'type': ['integer', 'null'],
             'enum': list(allowed_values) + [None],
             'description': 'The ID of the record to select. null to leave the field empty if no value matches the user query'
         }
     elif field_type == 'selection':
-        schema = {
+        field_schema = {
             'type': ['string', 'null'],
             'enum': list(allowed_values) + [None],
             'description': 'Key of the value to select. null to leave the field empty'
         }
     elif field_type == 'tags':
-        schema = {
+        field_schema = {
             'type': 'array',
             'items': {
                 'type': 'string',
@@ -149,7 +149,24 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
             'description': 'List of keys of the tags to select. Leave empty to leave the field empty'
         }
     else:
-        schema = {'type': 'text'}
+        field_schema = {'type': 'text'}
+
+    schema = {
+        'type': 'object',
+        'properties': {
+            'value': field_schema,
+            'could_not_resolve': {
+                'type': 'boolean',
+                'description': 'True if the model could not confidently determine a value due to missing information, ambiguity, or unknown references in the input.'
+            },
+            'unresolved_cause': {
+                'type': ['string', 'null'],
+                'description': 'Short explanation of what is missing or why no value could be generated. Required if could_not_resolve is true.'
+            },
+        },
+        'required': ['value', 'could_not_resolve', 'unresolved_cause'],
+        'additionalProperties': False
+    }
 
     instructions = f"{AI_FIELDS_INSTRUCTIONS}\n# Context"
     if allowed_values:
@@ -160,87 +177,25 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
         user_prompt += f"\n# Context Dict\n{record_context}"
         user_prompt += f"\nThe current record is {{'model': {record._name}, 'id': {record.id}}}"
 
-    web_search_params = {
-        'user_location':
-        {
-            'type': 'approximate',
-            'country': country_code,
-            'city': record.env.company.partner_id.city,
-        }
-    } if (country_code := record.env.company.country_id.code) else {}
-
     try:
-        # TODO: remove and use `_request_llm`
-        llm_response = llm_api._request(
-            'post',
-            OPENAI_ENDPOINT,
-            llm_api._get_base_headers(),
-            body={
-                'model': OPENAI_MODEL,
-                'instructions': instructions,
-                'input': [{
-                    'role': 'user',
-                    'content': [
-                        {'type': 'input_text', 'text': user_prompt},
-                        *(
-                            {'type': 'input_file', 'filename': f"file_{idx}.pdf", 'file_data': f"data:{file['mimetype']};base64,{file['value']}"}
-                            if file['mimetype'] == 'application/pdf' else
-                            {'type': 'input_image', 'image_url': f"data:{file['mimetype']};base64,{file['value']}", 'detail': 'low'}
-                            if file['mimetype'].startswith("image/") else
-                            {'type': 'input_text', 'text': file['value']}
-                            for idx, file in enumerate(files, start=1)
-                        )
-                    ]
-                }],
-                'store': False,
-                'temperature': 0.2,
-                'text': {
-                    'format': {
-                        'type': 'json_schema',
-                        'description': 'Value to assign to the field',
-                        'name': 'generate_field_value',
-                        'schema': {
-                            'type': 'object',
-                            'properties': {
-                                'value': schema,
-                                'could_not_resolve': {
-                                    'type': 'boolean',
-                                    'description': 'True if the model could not confidently determine a value due to missing information, ambiguity, or unknown references in the input.'
-                                },
-                                'unresolved_cause': {
-                                    'type': ['string', 'null'],
-                                    'description': 'Short explanation of what is missing or why no value could be generated. Required if could_not_resolve is true.'
-                                },
-                            },
-                            'required': ['value', 'could_not_resolve', 'unresolved_cause'],
-                            'additionalProperties': False
-                        },
-                        'strict': True
-                    }
-                },
-                'tools': [{
-                    'type': 'web_search_preview',
-                    **web_search_params,
-                }],
-            }
+        response, *__ = llm_api._request_llm(
+            llm_model=OPENAI_MODEL,
+            system_prompts=[instructions],
+            user_prompts=[user_prompt],
+            files=files,
+            schema=schema,
+            web_grounding=True,
         )
     except requests.exceptions.Timeout:
         raise UserError(record.env._("Oops, the request timed out."))
     except requests.exceptions.ConnectionError:
         raise UserError(record.env._("Oops, the connection failed."))
 
-    if (error := llm_response.get('error')):
-        raise UserError(error.get('message'))
-
-    if (
-        not (output := llm_response.get('output'))
-        or not (content := output[-1].get('content'))
-        or not (response := content[0].get('text'))
-        ):
+    if not response:
         raise UserError(record.env._("Oops, an unexpected error occurred."))
 
     try:
-        response = json.loads(response, strict=False)
+        response = json.loads(response[0], strict=False)
     except json.JSONDecodeError:
         raise UserError(record.env._("Oops, the response could not be processed."))
     if response.get('could_not_resolve'):

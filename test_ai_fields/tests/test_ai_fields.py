@@ -98,7 +98,7 @@ class TestAiFields(TransactionCase):
     def test_ai_field_cron_fields(self):
         """Check that the cron only process NULL textual fields (that are in the ai_domain)."""
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body['input'][0]['content'][0]['text']}", 'is_resolved': True})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': f"response value {body['input'][1]['content'][0]['text']}", 'is_resolved': True})}]}]}
 
         model = self.env["test.ai.fields.model"]
 
@@ -153,7 +153,7 @@ class TestAiFields(TransactionCase):
     def test_ai_field_cron_properties(self):
 
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': f"response value {body['input'][0]['content'][0]['text']}"})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': f"response value {body['input'][1]['content'][0]['text']}"})}]}]}
 
         parent = self.env["test.ai.fields.parent"].create({})
 
@@ -358,7 +358,7 @@ class TestAiFields(TransactionCase):
         })
 
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': '<p><img src="x" onerror="alert(1)"/></p>'})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': '<p><img src="x" onerror="alert(1)"/></p>'})}]}]}
 
         with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
             self._mock_llm_api_get_token():
@@ -392,7 +392,7 @@ class TestAiFields(TransactionCase):
         record = self.env['test.ai.fields.model']
 
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': 'Sorry', 'could_not_resolve': True, 'unresolved_cause': "Missing context"})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': 'Sorry', 'could_not_resolve': True, 'unresolved_cause': "Missing context"})}]}]}
 
         with patch.object(LLMApiService, '_request', _mocked_llm_api_request), self.enter_registry_test_mode(), \
             self._mock_llm_api_get_token(), self.assertRaises(UnresolvedQuery) as cm_1:
@@ -414,7 +414,7 @@ class TestAiFields(TransactionCase):
     def test_fill_ai_field_exception(self):
         """Check that if an error occurs during the method filling the fields, an empty string is set so that field will not be reprocessed for the record"""
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': "", 'could_not_resolve': True, 'unresolved_cause': "missing context"})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': "", 'could_not_resolve': True, 'unresolved_cause': "missing context"})}]}]}
 
         model = self.env["test.ai.fields.model"]
         self.env["ir.model.fields"].create({"name": "x_ai_char", "ttype": "char", "ai": True, "system_prompt": "char prompt", "model_id": self.env["ir.model"]._get(model._name).id})
@@ -432,7 +432,7 @@ class TestAiFields(TransactionCase):
     def test_fill_ai_property_exception(self):
         """Check that if an error occurs during the method filling the properties, a falsy value is set so that the property will not be reprocessed for the record"""
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': "", 'could_not_resolve': True, 'unresolved_cause': "missing context"})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': "", 'could_not_resolve': True, 'unresolved_cause': "missing context"})}]}]}
 
         parent = self.env["test.ai.fields.parent"].create({})
         ai_char_p_def = {"type": "char", "name": "char", "ai": True, "system_prompt": 'hey'}

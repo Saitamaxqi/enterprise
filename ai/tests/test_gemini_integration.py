@@ -79,22 +79,11 @@ class TestGeminiIntegration(TransactionCase):
                 self.assertEqual(body.get("generationConfig", {}).get("temperature"), 0.2)
                 self.assertEqual(params.get("key"), "test-gemini-key")
 
-                messages = body["contents"]
-                rag_context_found = any(
-                    msg["role"] == "model"
-                    and "##Context information:" in str(msg["parts"])
-                    for msg in messages
-                )
+                instructions = body["systemInstruction"]
+                rag_context_found = "##Context information:" in str(instructions["parts"])
                 self.assertTrue(rag_context_found, "RAG context not found in messages")
-
-                rag_message = next(
-                    msg
-                    for msg in messages
-                    if msg["role"] == "model"
-                    and "##Context information:" in str(msg["parts"])
-                )
                 self.assertIn(
-                    "Odoo is an open-source ERP system", str(rag_message["parts"])
+                    "Odoo is an open-source ERP system", str(instructions["parts"])
                 )
 
                 return {

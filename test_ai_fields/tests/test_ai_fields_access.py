@@ -42,7 +42,7 @@ class TestAiFieldsAccess(TransactionCase):
     def test_ai_field_access_properties(self):
         """Test that only the template editor can use expressions that are not in the allowed expressions list."""
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': 1337})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': 1337})}]}]}
 
         # allowed field
         self.record.with_user(self.internal).write({"properties": [{"type": "char", "name": "char", "definition_changed": True, "ai": True, "system_prompt": "This is my prompt <span data-ai-field='test_ai_fields'>test ai fields</span>"}]})
@@ -90,7 +90,7 @@ class TestAiFieldsAccess(TransactionCase):
 
     def test_ai_fields_validation_many2one(self):
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': response})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': response})}]}]}
 
         records = self.env['res.partner'].create([{'name': f'partner {i}'} for i in range(4)])
 
@@ -146,7 +146,7 @@ class TestAiFieldsAccess(TransactionCase):
 
     def test_ai_fields_validation_many2many(self):
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': response})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': response})}]}]}
 
         records = self.env['res.partner'].create([{'name': f'partner {i}'} for i in range(5)])
 
@@ -196,7 +196,7 @@ class TestAiFieldsAccess(TransactionCase):
 
     def test_ai_fields_validation_tags(self):
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': response})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': response})}]}]}
 
         system_prompt = 'This is my prompt 99 <t t-out="object.name"/>}}.'
 
@@ -233,7 +233,7 @@ class TestAiFieldsAccess(TransactionCase):
     def test_get_ai_property_value_new_record(self):
         """Test `get_ai_property_value` when the record does not exist."""
         def _mocked_llm_api_request(self, method, endpoint, headers, body):
-            return {'output': [{'content': [{'text': json.dumps({'value': f"response {body['input'][0]['content'][0]['text']}"})}]}]}
+            return {'output': [{'type': 'message', 'content': [{'text': json.dumps({'value': f"response {body['input'][0]['content'][0]['text']}"})}]}]}
 
         values = {"properties": [{"type": "char", "name": "char", "ai": True, "system_prompt": 'This is my prompt <span data-ai-field="name">name</span>', "value": "value"}]}
         with patch.object(LLMApiService, '_request', _mocked_llm_api_request), \

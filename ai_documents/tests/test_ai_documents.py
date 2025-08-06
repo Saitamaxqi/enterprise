@@ -53,7 +53,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
 
         def _mocked_request_llm(
             service, llm_model, system_prompts, user_prompts, tools=None,
-            files=None, schema=None, temperature=0.2, inputs=(),
+            files=None, schema=None, temperature=0.2, inputs=(), web_grounding=False
         ):
             nonlocal llm_calls
             llm_calls += 1
@@ -121,7 +121,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
 
         def _mocked_request_llm_loop(
             service, llm_model, system_prompts, user_prompts, tools=None,
-            files=None, schema=None, temperature=0.2, inputs=(),
+            files=None, schema=None, temperature=0.2, inputs=(), web_grounding=False,
         ):
             nonlocal llm_calls
             llm_calls += 1

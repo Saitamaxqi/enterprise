@@ -226,7 +226,7 @@ class LLMApiService:
 
     def _request_llm_openai(
         self, llm_model, system_prompts, user_prompts, tools=None,
-        files=None, schema=None, temperature=0.2, inputs=(),
+        files=None, schema=None, temperature=0.2, inputs=(), web_grounding=False
     ):
         """Make a single request to the LLM.
 
@@ -302,6 +302,19 @@ class LLMApiService:
             } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()])
             body["parallel_tool_calls"] = True
 
+        if web_grounding:
+            search_tool = {
+                'type': 'web_search_preview',
+            }
+            if country_code := self.env.company.country_id.code:
+                search_tool['user_location'] = {
+                    'type': 'approximate',
+                    'country': country_code,
+                }
+                if city := self.env.company.city:
+                    search_tool['user_location']['city'] = city
+            body.setdefault("tools", []).append(search_tool)
+
         with api_call_logging(body["input"], tools) as record_response:
             response, to_call, next_inputs = self._request_llm_openai_helper(body, tools, inputs)
             if record_response:
@@ -344,7 +357,7 @@ class LLMApiService:
 
     def _request_llm_google(
         self, llm_model, system_prompts, user_prompts, tools=None,
-        files=None, schema=None, temperature=0.2, inputs=(),
+        files=None, schema=None, temperature=0.2, inputs=(), web_grounding=False,
     ):
         """Make a single request to the LLM.
 
@@ -355,8 +368,13 @@ class LLMApiService:
         > https://ai.google.dev/gemini-api/docs/function-calling
         > https://ai.google.dev/gemini-api/docs/document-processing
         """
-        assert not schema
-
+        if (tools or web_grounding) and schema:
+            # https://discuss.ai.google.dev/t/why-is-using-a-response-schema-not-supported-when-using-grounded-search/92327
+            raise NotImplementedError("Gemini does not support structured output with tools")
+        if web_grounding and tools:
+            # https://ai.google.dev/gemini-api/docs/function-calling?example=meeting#native-tools
+            # see note, live api feature only for the moment
+            raise NotImplementedError("Gemini does not support tools with web grounding")
         body = {
             "contents": [],
             "generationConfig": {
@@ -364,13 +382,12 @@ class LLMApiService:
             },
         }
         if system_prompts:
-            body["contents"].append({
-                "role": "model",
+            body["systemInstruction"] = {
                 "parts": [
                     {"text": prompt}
                     for prompt in system_prompts
                 ],
-            })
+            }
         if user_prompts:
             body["contents"].append({
                 "role": "user",
@@ -394,6 +411,10 @@ class LLMApiService:
             body["contents"].append({"role": "user", "parts":
                 [_build_file(idx, file) for idx, file in enumerate(files, start=1)]})
 
+        if schema:
+            body["generationConfig"]["responseMimeType"] = "application/json"
+            body["generationConfig"]["responseJsonSchema"] = schema
+
         if tools:
             body["tools"] = {
                 "functionDeclarations": [{
@@ -402,6 +423,8 @@ class LLMApiService:
                     "name": tool_name,
                 } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()]
             }
+        if web_grounding:
+            body["tools"] = {'google_search': {}}
 
         with api_call_logging(body["contents"], tools) as record_response:
             response, to_call, next_inputs = self._request_llm_google_helper(body, llm_model, inputs)
@@ -448,7 +471,7 @@ class LLMApiService:
         self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
         tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
         files: list[dict] | None = None, schema: dict | None = None, temperature: float = 0.2,
-        inputs: list[dict] | None = None,
+        inputs: list[dict] | None = None, web_grounding: bool = False,
     ) -> list[str]:
         """Same as `_request_llm`, but will call the tools until we are done.
 
@@ -478,13 +501,14 @@ class LLMApiService:
                 schema=schema,
                 temperature=temperature,
                 inputs=inputs,
+                web_grounding=web_grounding,
             )
 
     def _request_llm_silent(
         self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
         tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
         files: list[dict] | None = None, schema: dict | None = None, temperature: float = 0.2,
-        inputs: list[dict] | None = None,
+        inputs: list[dict] | None = None, web_grounding: bool = False,
     ):
         """Wraps the `_request_llm` method to handle multiple calls and tool execution."""
         AI_MAX_SUCCESSIVE_CALLS = int(self.env["ir.config_parameter"].sudo()
@@ -523,6 +547,7 @@ class LLMApiService:
                 schema=schema,
                 tools=tools,
                 temperature=temperature,
+                web_grounding=web_grounding,
             )
             all_responses.extend(responses)
 
