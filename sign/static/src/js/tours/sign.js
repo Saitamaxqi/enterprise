@@ -1,46 +1,24 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_utils";
+import tourUtils from "@sign/js/tours/tour_utils";
 
 import { markup } from "@odoo/owl";
 
-function dragAndDropSignItemAtHeight(from, to, height = 0.5, width = 0.5) {
-    function triggerDragEvent(element, type, data = {}) {
-        const event = new DragEvent(type, { bubbles: true });
-        for (const key in data) {
-            Object.defineProperty(event, key, {
-                value: data[key],
-            });
-        }
-        element.dispatchEvent(event);
-    }
-
-    const iframe = document.querySelector("iframe");
-    const toPosition = to.getBoundingClientRect();
-    toPosition.x += iframe.contentWindow.scrollX + to.clientWidth * width;
-    toPosition.y += iframe.contentWindow.scrollY + to.clientHeight * height;
-
-    const dataTransferObject = {};
-    const dataTransferMock = {
-        setData: (key, value) => {
-            dataTransferObject[key] = value;
-        },
-        getData: (key) => dataTransferObject[key],
-        setDragImage: () => {},
-        items: [],
+function dragAndDropSignature(isActive) {
+    return {
+        isActive: [isActive],
+        trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
+        content: markup(_t('<b>Drag & drop "Signature"</b> into the bottom of the document.')),
+        tooltipPosition: "bottom",
+        run:
+            isActive == "manual"
+                ? "drag_and_drop :iframe #viewer"
+                : function ({ queryFirst }) {
+                      const to = queryFirst(`:iframe .page[data-page-number="1"]`);
+                      tourUtils.dragAndDropSignItemAtHeight(this.anchor, to, 0.5, 0.25);
+                  },
     };
-
-    triggerDragEvent(from, "dragstart", {
-        dataTransfer: dataTransferMock,
-    });
-
-    triggerDragEvent(to, "drop", {
-        pageX: toPosition.x,
-        pageY: toPosition.y,
-        dataTransfer: dataTransferMock,
-    });
-
-    triggerDragEvent(from, "dragend");
 }
 
 registry.category("web_tour.tours").add("sign_tour", {
@@ -60,20 +38,12 @@ registry.category("web_tour.tours").add("sign_tour", {
             run: "click",
         },
         {
-            isActive: ["manual"],
-            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
-            content: markup(_t("<b>Drag & drop “Signature”</b> into the bottom of the document.")),
-            tooltipPosition: "bottom",
-            run: "drag_and_drop :iframe #viewer",
+            content: "Wait for page to be loaded",
+            trigger: ":iframe .page[data-page-number='1'] .textLayer",
+            timeout: 30000, // In view mode, pdf loading can take a long time
         },
-        {
-            isActive: ["auto"],
-            trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
-            run({ queryFirst }) {
-                const to = queryFirst(`:iframe .page[data-page-number="1"]`);
-                dragAndDropSignItemAtHeight(this.anchor, to, 0.5, 0.25);
-            },
-        },
+        dragAndDropSignature("manual"),
+        dragAndDropSignature("auto"),
         {
             trigger: ".o_control_panel .o_sign_template_send",
             content: markup(

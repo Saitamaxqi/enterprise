@@ -161,6 +161,7 @@ Let your customers follow the signature process easily.
             'sign/static/src/services/**/*',
 
             'sign/static/tests/tours/**/*',
+            'sign/static/src/js/tours/tour_utils.js',
             'web_tour/static/src/js/**/*',
             'web_tour/static/src/tour_utils.js',
             'web/static/lib/hoot-dom/**/*',

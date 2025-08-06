@@ -103,3 +103,9 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
 
     def test_report_modal(self):
         self.start_tour("/odoo", "sign_report_modal_tour", login="admin")
+
+    def test_sign_tour(self):
+        sign_requests = self.env['sign.request'].search([])
+        # Step 2 of the `sign_tour` onboarding tour assumes that there's no sign.request record in the database.
+        sign_requests.active = False
+        self.start_tour("/odoo", "sign_tour", login="admin")

@@ -1,45 +1,7 @@
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_utils";
 import { _t } from "@web/core/l10n/translation";
-
-function triggerDragEvent(element, type, data = {}) {
-    const event = new DragEvent(type, { bubbles: true });
-    for (const key in data) {
-        Object.defineProperty(event, key, {
-            value: data[key],
-        });
-    }
-    element.dispatchEvent(event);
-}
-
-function dragAndDropSignItemAtHeight(from, to, height = 0.5, width = 0.5) {
-    const iframe = document.querySelector("iframe");
-    const toPosition = to.getBoundingClientRect();
-    toPosition.x += iframe.contentWindow.scrollX + to.clientWidth * width;
-    toPosition.y += iframe.contentWindow.scrollY + to.clientHeight * height;
-
-    const dataTransferObject = {};
-    const dataTransferMock = {
-        setData: (key, value) => {
-            dataTransferObject[key] = value;
-        },
-        getData: (key) => dataTransferObject[key],
-        setDragImage: () => {},
-        items: [],
-    };
-
-    triggerDragEvent(from, "dragstart", {
-        dataTransfer: dataTransferMock,
-    });
-
-    triggerDragEvent(to, "drop", {
-        pageX: toPosition.x,
-        pageY: toPosition.y,
-        dataTransfer: dataTransferMock,
-    });
-
-    triggerDragEvent(from, "dragend");
-}
+import tourUtils from "@sign/js/tours/tour_utils";
 
 export function createSelectionRectangle(viewerContainer, page, startPos = 0.25, endPos = 0.75) {
     const pageRect = page.getBoundingClientRect();
@@ -130,7 +92,7 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
             run({ queryFirst }) {
                 const to = queryFirst(`:iframe .page[data-page-number="1"]`);
-                dragAndDropSignItemAtHeight(this.anchor, to, 0.5, 0.25);
+                tourUtils.dragAndDropSignItemAtHeight(this.anchor, to, 0.5, 0.25);
             },
         },
         {
@@ -138,7 +100,7 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             trigger: ".o_sign_field_type_button:contains(" + _t("Name") + ")",
             run({ queryFirst }) {
                 const to = queryFirst(`:iframe .page[data-page-number="1"]`);
-                dragAndDropSignItemAtHeight(this.anchor, to, 0.25, 0.25);
+                tourUtils.dragAndDropSignItemAtHeight(this.anchor, to, 0.25, 0.25);
             },
         },
         {
@@ -146,7 +108,7 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
             trigger: ".o_sign_field_type_button:contains(" + _t("Text") + ")",
             run({ queryFirst }) {
                 const to = queryFirst(`:iframe .page[data-page-number="1"]`);
-                dragAndDropSignItemAtHeight(this.anchor, to, 0.15, 0.25);
+                tourUtils.dragAndDropSignItemAtHeight(this.anchor, to, 0.15, 0.25);
             },
         },
         {
