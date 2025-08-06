@@ -56,7 +56,7 @@ class PlanningSlot(models.Model):
     job_title = fields.Char(related='employee_id.job_title')
     company_id = fields.Many2one('res.company', string="Company", required=True, compute="_compute_planning_slot_company_id", store=True, readonly=False)
     role_id = fields.Many2one('planning.role', string="Role", compute="_compute_role_id", store=True, readonly=False, copy=True, group_expand='_read_group_role_id',
-        help="Define the roles your resources perform (e.g. Chef, Bartender, Waiter...). Create open shifts for the roles you need to complete a mission. Then, assign those open shifts to the resources that are available.")
+        help="Define the roles your resources will perform (e.g. Chef, Bartender, Waiter). Create open shifts based on the roles needed for a mission, then assign those shifts to available resources.")
     color = fields.Integer("Color", compute='_compute_color')
     was_copied = fields.Boolean("This Shift Was Copied From Previous Week", default=False, readonly=True)
     access_token = fields.Char(default=lambda self: str(uuid.uuid4()), required=True, copy=False, readonly=True, export_string_translation=False)
