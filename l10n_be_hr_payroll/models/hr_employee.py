@@ -5,7 +5,7 @@ from collections import defaultdict
 from functools import reduce
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError, AccessError
+from odoo.exceptions import ValidationError, UserError
 
 
 class HrEmployee(models.Model):
@@ -223,3 +223,15 @@ Earnings are made of professional income, remuneration, unemployment allocations
         employees = super().create(vals_list)
         employees.current_version_id.filtered('contract_date_start')._trigger_l10n_be_next_activities()
         return employees
+
+    def action_employee_work_schedule_change_wizard(self):
+        if len(self) != 1:
+            raise UserError(self.env._("This feature can only be used on a single employee."))
+        action = self.env['ir.actions.actions']._for_xml_id('l10n_be_hr_payroll.schedule_change_wizard_action')
+        action['context'] = {'default_version_id': self.current_version_id.id}
+        return action
+
+    def _index_employee_contracts(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_hr_payroll_index")
+        action['context'] = {'default_version_ids': self.mapped('current_version_id.id')}
+        return action

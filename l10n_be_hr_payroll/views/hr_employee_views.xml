@@ -307,4 +307,26 @@
 
         </field>
     </record>
+
+    <record id="action_employee_working_schedule_change_request" model="ir.actions.server">
+        <field name="name">Working Schedule Change</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = records.action_employee_work_schedule_change_wizard()
+        </field>
+    </record>
+
+    <record id="action_index_employee_contracts" model="ir.actions.server">
+        <field name="name">Index contract(s)</field>
+        <field name="model_id" ref="hr.model_hr_employee"/>
+        <field name="binding_model_id" ref="hr.model_hr_employee"/>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = records._index_employee_contracts()
+        </field>
+    </record>
 </odoo>
