@@ -1078,13 +1078,13 @@ class AIAgent(models.Model):
 
     def _ai_tool_get_fields(self, model_name, include_description=True):
         if not isinstance(model_name, str):
-            return "Error: Model name must be a string."
+            raise TypeError("Model name must be a string.")
 
         if not model_name:
-            return "Error: Model name must be provided."
+            raise ValueError("Model name must be provided.")
 
         if model_name not in self.env:
-            return f"Error: Model '{model_name}' not found."
+            raise ValueError(f"Model '{model_name}' not found.")
 
         model = self.env[model_name]
         model_fields = model.fields_get()
@@ -1125,18 +1125,18 @@ class AIAgent(models.Model):
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
         if not menu:
-            return f"Error: Menu with ID {menu_id} not found."
+            raise ValueError(f"Menu with ID {menu_id} not found.")
         action = self.env["ir.actions.act_window"].browse(menu["action_id"])
         if not action.exists():
-            return f"Error: The action associated with menu ID {menu_id} does not exist."
+            raise ValueError(f"The action associated with menu ID {menu_id} does not exist.")
 
         action_dict = action._get_action_dict()
         if action_dict.get("res_model") != model_name:
-            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+            raise ValueError(f"The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}.")
 
         available_views = [view[1] for view in action_dict.get("views", [])]
         if "list" not in available_views:
-            return f"Error: List view is not available for the action associated with menu ID {menu_id}."
+            raise ValueError(f"List view is not available for the action associated with menu ID {menu_id}.")
 
         # Validate custom domain if provided
         domain_array = None
@@ -1145,9 +1145,9 @@ class AIAgent(models.Model):
                 domain_array = json.loads(custom_domain)
                 Domain(domain_array).optimize_full(self.env[model_name])
             except json.JSONDecodeError as e:
-                return f"Error: Invalid JSON format for custom domain: {e}"
+                raise ValueError(f"Invalid JSON format for custom domain: {e}")
             except ValueError as e:
-                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
 
         bus_data = {
             "menuID": menu_id,
@@ -1164,18 +1164,18 @@ class AIAgent(models.Model):
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
         if not menu:
-            return f"Error: Menu with ID {menu_id} not found."
+            raise ValueError(f"Menu with ID {menu_id} not found.")
         action = self.env["ir.actions.act_window"].browse(menu["action_id"])
         if not action.exists():
-            return f"Error: The action associated with menu ID {menu_id} does not exist."
+            raise ValueError(f"The action associated with menu ID {menu_id} does not exist.")
 
         action_dict = action._get_action_dict()
         if action_dict.get("res_model") != model_name:
-            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+            raise ValueError(f"The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}.")
 
         available_views = [view[1] for view in action_dict.get("views", [])]
         if "kanban" not in available_views:
-            return f"Error: Kanban view is not available for the action associated with menu ID {menu_id}."
+            raise ValueError(f"Kanban view is not available for the action associated with menu ID {menu_id}.")
 
         # Validate custom domain if provided
         domain_array = None
@@ -1184,9 +1184,9 @@ class AIAgent(models.Model):
                 domain_array = json.loads(custom_domain)
                 Domain(domain_array).optimize_full(self.env[model_name])
             except json.JSONDecodeError as e:
-                return f"Error: Invalid JSON format for custom domain: {e}"
+                raise ValueError(f"Invalid JSON format for custom domain: {e}")
             except ValueError as e:
-                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
 
         bus_data = {
             "menuID": menu_id,
@@ -1203,10 +1203,10 @@ class AIAgent(models.Model):
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
         if not menu:
-            return f"Error: Menu with ID {menu_id} not found."
+            raise ValueError(f"Menu with ID {menu_id} not found.")
         action = self.env["ir.actions.act_window"].browse(menu["action_id"])
         if not action.exists():
-            return f"Error: The action associated with menu ID {menu_id} does not exist."
+            raise ValueError(f"The action associated with menu ID {menu_id} does not exist.")
 
         # Log menu and action details
         menu_obj = self.env["ir.ui.menu"].browse(menu_id)
@@ -1215,7 +1215,7 @@ class AIAgent(models.Model):
 
         action_dict = action._get_action_dict()
         if action_dict.get("res_model") != model_name:
-            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+            raise ValueError(f"The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}.")
 
         # Parse measures and extract ordering information
         parsed_measures = []
@@ -1235,19 +1235,19 @@ class AIAgent(models.Model):
                             'order': order
                         }
                 else:
-                    return f"Error: Invalid ordering specification '{measure_parts[1]}' for measure '{measure_name}'. Use 'asc' or 'desc'."
+                    raise ValueError(f"Invalid ordering specification '{measure_parts[1]}' for measure '{measure_name}'. Use 'asc' or 'desc'.")
 
             parsed_measures.append(measure_name)
 
         # Validate measures
         for measure in parsed_measures:
             if measure != "__count" and measure not in self.env[model_name]._fields:
-                return f"Error: Measure '{measure}' not found in model '{model_name}' for menu ID {menu_id}."
+                raise ValueError(f"Measure '{measure}' not found in model '{model_name}' for menu ID {menu_id}.")
 
         # Check if pivot view is in available views
         available_views = [view[1] for view in action_dict.get("views", [])]
         if "pivot" not in available_views:
-            return f"Error: Pivot view is not available for the action associated with menu ID {menu_id}."
+            raise ValueError(f"Pivot view is not available for the action associated with menu ID {menu_id}.")
 
         # Validate custom domain if provided
         domain_array = None
@@ -1256,9 +1256,9 @@ class AIAgent(models.Model):
                 domain_array = json.loads(custom_domain)
                 Domain(domain_array).optimize_full(self.env[model_name])
             except json.JSONDecodeError as e:
-                return f"Error: Invalid JSON format for custom domain: {e}"
+                raise ValueError(f"Invalid JSON format for custom domain: {e}")
             except ValueError as e:
-                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
 
         bus_data = {
             "menuID": menu_id,
@@ -1290,10 +1290,10 @@ class AIAgent(models.Model):
         menus = self.env["ir.ui.menu"].load_menus(debug=debug)
         menu = menus.get(menu_id)
         if not menu:
-            return f"Error: Menu with ID {menu_id} not found."
+            raise ValueError(f"Menu with ID {menu_id} not found.")
         action = self.env["ir.actions.act_window"].browse(menu["action_id"])
         if not action.exists():
-            return f"Error: The action associated with menu ID {menu_id} does not exist."
+            raise ValueError(f"The action associated with menu ID {menu_id} does not exist.")
 
         # Log menu and action details
         menu_obj = self.env["ir.ui.menu"].browse(menu_id)
@@ -1302,24 +1302,24 @@ class AIAgent(models.Model):
 
         action_dict = action._get_action_dict()
         if action_dict.get("res_model") != model_name:
-            return f"Error: The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}."
+            raise ValueError(f"The model '{model_name}' does not match the model of the action associated with menu ID {menu_id}.")
 
         # Validate measure
         if measure != "__count" and measure not in self.env[model_name]._fields:
-            return f"Error: Measure '{measure}' not found in model '{model_name}' for menu ID {menu_id}."
+            raise ValueError(f"Measure '{measure}' not found in model '{model_name}' for menu ID {menu_id}.")
 
         # Validate mode
         if mode not in ["bar", "line", "pie"]:
-            return f"Error: Invalid mode '{mode}'. Must be 'bar', 'line', or 'pie'."
+            raise ValueError(f"Invalid mode '{mode}'. Must be 'bar', 'line', or 'pie'.")
 
         # Validate order
         if order not in ["ASC", "DESC"]:
-            return f"Error: Invalid order '{order}'. Must be 'ASC' or 'DESC'."
+            raise ValueError(f"Invalid order '{order}'. Must be 'ASC' or 'DESC'.")
 
         # Check if graph view is in available views
         available_views = [view[1] for view in action_dict.get("views", [])]
         if "graph" not in available_views:
-            return f"Error: Graph view is not available for the action associated with menu ID {menu_id}."
+            raise ValueError(f"Graph view is not available for the action associated with menu ID {menu_id}.")
 
         # Validate custom domain if provided
         domain_array = None
@@ -1328,9 +1328,9 @@ class AIAgent(models.Model):
                 domain_array = json.loads(custom_domain)
                 Domain(domain_array).optimize_full(self.env[model_name])
             except json.JSONDecodeError as e:
-                return f"Error: Invalid JSON format for custom domain: {e}"
+                raise ValueError(f"Invalid JSON format for custom domain: {e}")
             except ValueError as e:
-                return f"Error: Invalid custom domain for model '{model_name}': {e}"
+                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
 
         bus_data = {
             "menuID": menu_id,
@@ -1350,22 +1350,20 @@ class AIAgent(models.Model):
 
     def _ai_tool_compute_report_measures(self, menu_id, model):
         if model not in self.env:
-            return f"Error: Model '{model}' not found."
+            raise ValueError(f"Model '{model}' not found.")
 
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
         if not menu:
-            return f"Error: Menu with ID {menu_id} not found."
+            raise ValueError(f"Menu with ID {menu_id} not found.")
 
         action = self.env["ir.actions.act_window"].browse(menu["action_id"])
         if not action.exists():
-            return (
-                f"Error: The action associated with menu ID {menu_id} does not exist."
-            )
+            raise ValueError(f"The action associated with menu ID {menu_id} does not exist.")
 
         action_dict = action._get_action_dict()
         if action_dict.get("res_model") != model:
-            return f"Error: The model '{model}' does not match the model of the action associated with menu ID {menu_id}."
+            raise ValueError(f"The model '{model}' does not match the model of the action associated with menu ID {menu_id}.")
 
         # Get field definitions
         model_obj = self.env[model]
@@ -1411,10 +1409,10 @@ class AIAgent(models.Model):
 
     def _ai_tool_get_menu_details(self, menu_ids):
         if not isinstance(menu_ids, list):
-            return "Error: menu_ids must be a list of menu IDs."
+            raise TypeError("menu_ids must be a list of menu IDs.")
 
         if not menu_ids:
-            return "Error: At least one menu ID must be provided."
+            raise ValueError("At least one menu ID must be provided.")
 
         # Load all menus to validate IDs
         menus = self.env["ir.ui.menu"].load_menus(False)
