@@ -413,16 +413,30 @@ class KnowledgeAuditReportController(http.Controller):
 
         # Add the outlines:
         writer.setPageMode("/UseOutlines")
+
+        bookmarks_stack = []
         for heading in headings:
-            writer.addBookmark(
+            parent_heading_depth, parent_bookmark = bookmarks_stack[-1] \
+                if bookmarks_stack else (0, None)
+
+            while bookmarks_stack and heading['depth'] <= parent_heading_depth:
+                bookmarks_stack.pop()
+                parent_heading_depth, parent_bookmark = bookmarks_stack[-1] \
+                    if bookmarks_stack else (0, None)
+
+            bookmark = writer.addBookmark(
                 heading['outline']['/Title'],
                 heading['outline']['/Page'] + front_cover_pdf.getNumPages() + toc_pdf_num_pages + heading['page_offset_in_body'],
-                None, None, False, False,
+                parent_bookmark, None, False, False,
                 '/XYZ',
                 heading['outline']['/Left'],
                 heading['outline']['/Top'],
                 heading['outline']['/Zoom']
             )
+
+            if heading['depth'] >= parent_heading_depth:
+                # Record heading depth to handle skipped levels
+                bookmarks_stack.append((heading['depth'], bookmark))
 
         # Add the page numbers:
         number_of_pages = writer.getNumPages() \
