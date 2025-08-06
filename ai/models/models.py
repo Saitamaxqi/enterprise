@@ -5,6 +5,7 @@ import pytz
 import json
 
 from odoo import models
+from odoo.api import NewId
 from odoo.exceptions import AccessError
 from odoo.tools import OrderedSet
 from odoo.tools.mail import html_to_inner_content
@@ -163,19 +164,19 @@ class Model(models.AbstractModel):
             elif field.type == 'html':
                 for vals in vals_list:
                     vals[fname] = html_to_inner_content(vals[fname])
-            elif field.type in ('many2many', 'many2one', 'one2many'):
-                for vals in vals_list:
-                    vals[fname] = {'model': field.comodel_name, 'ids': vals[fname]}
-            elif field.type in ('many2one_reference', 'reference'):
+            elif field.type in ('many2many', 'many2one', 'many2one_reference', 'one2many', 'reference'):
+                # can't use result of read because we might have temporary records (with NewId), so
+                # the ids won't be the ids we expect (origin ids or none for virtual records)
                 vals_by_ids = {vals['id']: vals for vals in vals_list}
                 for record in self:
                     record_vals = vals_by_ids[record.id]
-                    if not record[fname]:
+                    co_records = record[fname]
+                    if not co_records:
                         record_vals[fname] = False  # keep falsy values consistent for the LLM
                     if field.type == 'many2one_reference':
                         record_vals[fname] = {'model': model, 'ids': record_vals[fname]} if (model := record[field.model_field]) else False
                     else:
-                        record_vals[fname] = {'model': record._name, 'ids': record.id}
+                        record_vals[fname] = {'model': co_records._name, 'ids': co_records._ids}
             elif field.type == 'monetary':
                 currency_field = field.get_currency_field(self)
                 if currency_field:
@@ -186,13 +187,10 @@ class Model(models.AbstractModel):
                 for vals in vals_list:
                     vals[fname] = self._ai_truncate(vals[fname])
 
-        for vals in vals_list:
-            if not vals['id']:
-                vals['id'] = str(vals['id'])  # NewId is not JSON serializable
         return vals_list, files_dict
 
     def _get_ai_context(self, field_paths):
-        """ Get the context dict for a record given a list of field paths.
+        """ Get the json-encoded context dict for a record given a list of field paths.
         The context dict is a mini-orm snapshot with values formatted for LLM usage.
         It is a dictionary of the form:
 
@@ -261,7 +259,13 @@ class Model(models.AbstractModel):
             records = self.env[model].browse(info['ids'])
             snapshot[model], files_dict = records._ai_read(info['fields'], files_dict)
 
-        return snapshot, list(files_dict.values())
+        def _ai_context_json_default(obj):
+            """NewId is not json serializable, use its string representation"""
+            if isinstance(obj, NewId):
+                return obj.origin or str(obj)
+            return obj
+
+        return json.dumps(snapshot, default=_ai_context_json_default, ensure_ascii=False, indent=2), list(files_dict.values())
 
     def _ai_format_records(self):
         """Format what will be in the prompt when we inserted records.

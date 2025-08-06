@@ -234,10 +234,10 @@ class IrActionsServer(models.Model):
         action_prompt, context_fields = self._ai_prepare_prompt_values(record)
         date = datetime.now(pytz.utc).astimezone().replace(second=0, microsecond=0).isoformat()
         action_prompt += "\n" + _("The current date is %s", date)
-        context_dict, files = record._get_ai_context(context_fields)
-        if context_dict:
+        record_context, files = record._get_ai_context(context_fields)
+        if record_context:
             action_prompt += "\n" + _("Context Dict")
-            action_prompt += "\n" + json.dumps(context_dict, ensure_ascii=False, indent=2)
+            action_prompt += "\n" + record_context
             action_prompt += "\n" + _(
                 "The current record is {'model': {%(model)s, 'id': %(id)s}",
                 model=record._name,

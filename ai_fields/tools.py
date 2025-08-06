@@ -76,7 +76,7 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
     """
     if field_type in ('many2many', 'many2one', 'selection', 'tags') and not allowed_values:
         raise UnresolvedQuery(record.env._("No allowed values are provided in the prompt."))
-    context_dict, files = record._get_ai_context(context_fields)
+    record_context, files = record._get_ai_context(context_fields)
     llm_api = LLMApiService(record.env, 'openai')
     if field_type == 'boolean':
         schema = {
@@ -156,8 +156,8 @@ def get_ai_value(record, field_type, user_prompt, context_fields, allowed_values
         instructions += f"\n## Allowed Values\n{json.dumps(allowed_values)}"
     instructions += f"\n The current date is {datetime.now(pytz.utc).astimezone().replace(second=0, microsecond=0).isoformat()}"
 
-    if context_dict:
-        user_prompt += f"\n# Context Dict\n{json.dumps(context_dict, ensure_ascii=False, indent=2)}"
+    if record_context != '{}':
+        user_prompt += f"\n# Context Dict\n{record_context}"
         user_prompt += f"\nThe current record is {{'model': {record._name}, 'id': {record.id}}}"
 
     web_search_params = {

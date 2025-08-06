@@ -217,6 +217,7 @@ class TestAiFields(TransactionCase):
             }
         ])
         vals, files = partner_1._get_ai_context(["name", "bank_ids.acc_number", "bank_ids.note"])
+        vals = json.loads(vals)
         self.assertEqual(len(vals), 2)
         self.assertEqual(vals['res.partner'], [{'id': partner_1.id, 'bank_ids': {'model': 'res.partner.bank', 'ids': partner_1.bank_ids.ids}, 'name': partner_1.name}])
         self.assertCountEqual(vals['res.partner.bank'], partner_1.bank_ids.read(['acc_number', 'note']))
@@ -250,6 +251,7 @@ class TestAiFields(TransactionCase):
             "create_date",  # check that dates are formatted
             "message_partner_ids.bank_ids.acc_number"  # check nested M2M
         ])
+        vals = json.loads(vals)
         self.assertEqual(len(vals), 5)
         self.assertEqual(vals['test.ai.read.model'], [
             {
@@ -282,8 +284,30 @@ class TestAiFields(TransactionCase):
         partner_2.name = "_" * 1000
         for field_path in ("message_partner_ids", "message_partner_ids.name", "message_partner_ids.display_name"):
             vals, _files = record._get_ai_context([field_path])
-            self.assertNotIn(partner_2.name, str(vals))
-            self.assertIn(partner_2._ai_truncate(partner_2.name), str(vals))
+            self.assertNotIn(partner_2.name, vals)
+            self.assertIn(partner_2._ai_truncate(partner_2.name), vals)
+
+        # Check we have correct ids when record is a temporary record
+        tmp_record = record.new(origin=record)
+        vals, files = tmp_record._get_ai_context(["message_partner_ids.bank_ids"])
+        vals = json.loads(vals)
+        self.assertEqual(vals['test.ai.read.model'][0]['id'], tmp_record.id.origin)
+        self.assertEqual(vals['test.ai.read.model'][0]['message_partner_ids']['ids'], [_id.origin for _id in tmp_record.message_partner_ids._ids])
+        self.assertCountEqual(vals['res.partner'], [
+            {'id': tmp_record.message_partner_ids[0].id.origin, 'bank_ids': {'model': 'res.partner.bank', 'ids': [_id.origin for _id in tmp_record.message_partner_ids[0].bank_ids._ids]}},
+            {'id': tmp_record.message_partner_ids[1].id.origin, 'bank_ids': {'model': 'res.partner.bank', 'ids': [_id.origin for _id in tmp_record.message_partner_ids[1].bank_ids._ids]}}
+        ])
+
+        # Check we have correct ids when record is a new record
+        new_record = self.env['test.ai.read.model'].new({'message_partner_ids': [[0, 'virtual_1', {'name': 'Frank'}], [0, 'virtual_2', {'name': 'Bill'}]]})
+        vals, files = new_record._get_ai_context(["message_partner_ids.name"])
+        vals = json.loads(vals)
+        self.assertEqual(vals['test.ai.read.model'][0]['id'], str(new_record.id))
+        self.assertEqual(vals['test.ai.read.model'][0]['message_partner_ids']['ids'], [str(_id) for _id in new_record.message_partner_ids._ids])
+        self.assertCountEqual(vals['res.partner'], [
+            {'id': str(new_record.message_partner_ids[0].id), 'name': 'Frank'},
+            {'id': str(new_record.message_partner_ids[1].id), 'name': 'Bill'}
+        ])
 
     def test_ai_field_sanitize(self):
         system_prompt = '<p><span data-ai-field="name">name</span> <img src="x" onerror="alert(1)"/></p>'
