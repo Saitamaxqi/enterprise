@@ -863,7 +863,8 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     def action_work_schedule_change_wizard(self):
         if len(self) != 1:
             raise UserError(_("This feature can only be used on a single contract."))
-
+        if not self.contract_date_start:
+            raise UserError(self.env._('This feature can only be used on versions that have a contract start date'))
         if not self.is_current:
             return False
         action = self.env['ir.actions.actions']._for_xml_id('l10n_be_hr_payroll.schedule_change_wizard_action')

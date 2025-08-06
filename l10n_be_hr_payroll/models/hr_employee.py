@@ -295,6 +295,8 @@ Earnings are made of professional income, remuneration, unemployment allocations
     def action_employee_work_schedule_change_wizard(self):
         if len(self) != 1:
             raise UserError(self.env._("This feature can only be used on a single employee."))
+        if not self.contract_date_start:
+            raise UserError(self.env._('This feature can only be used on versions that have a contract start date'))
         action = self.env['ir.actions.actions']._for_xml_id('l10n_be_hr_payroll.schedule_change_wizard_action')
         action['context'] = {'default_version_id': self.current_version_id.id}
         return action
