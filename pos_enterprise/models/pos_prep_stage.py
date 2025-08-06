@@ -19,4 +19,5 @@ class PosPrepStage(models.Model):
         return [('id', 'in', stage_ids)]
 
     def is_stage_position(self, position):
-        return self.id == self.prep_display_id.stage_ids[position].id
+        stage_ids = self.prep_display_id.stage_ids
+        return len(stage_ids) >= abs(position) and self.id == stage_ids[position].id
