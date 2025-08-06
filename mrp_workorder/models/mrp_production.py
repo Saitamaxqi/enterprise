@@ -25,6 +25,14 @@ class MrpProduction(models.Model):
 
     picking_type_auto_close = fields.Boolean(related='picking_type_id.auto_close_production')
 
+    state_color = fields.Integer("State Color", compute='_compute_state_color')
+
+    @api.depends('state')
+    def _compute_state_color(self):
+        colors = {'draft': 0, 'confirmed': 4, 'progress': 3, 'to_close': 5, 'done': 10, 'cancel': 1}
+        for production in self:
+            production.state_color = colors[production.state]
+
     def write(self, vals):
         if 'lot_producing_id' in vals:
             self.sudo().workorder_ids.check_ids.filtered(lambda c: c.test_type_id.technical_name == 'register_production').write({'lot_id': vals['lot_producing_id']})

@@ -25,7 +25,46 @@
         }</field>
     </record>
 
-    <!-- Manufacturing Order for Planing view -->
+
+    <record id="mrp_production_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.kanban</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_kanban_view"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//footer" position="after">
+                <field name="date_deadline" invisible="1"/>
+                <field name="is_delayed" invisible="1"/>
+                <p class="text-warning mt-2 mb-0" t-if="record.is_delayed.raw_value">
+                    The deadline of this MO is on  <t t-out="record.date_deadline.value"/>
+                </p>
+            </xpath>
+        </field>
+        </record>
+
+        <record id="mrp_production_gantt_view" model="ir.ui.view">
+            <field name="name">mrp.production.gantt</field>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <gantt 
+                kanban_view_id="%(mrp_workorder.mrp_production_kanban_view_inherit)d"
+                date_start="date_start"
+                date_stop="date_finished"
+                default_group_by="product_id"
+                default_range="week"
+                default_scale="week"
+                string="Manufacturing Orders"
+                color="state_color"
+                decoration-warning="is_delayed">
+                </gantt>
+            </field>
+        </record>
+
+    <record id="mrp.mrp_production_action" model="ir.actions.act_window">
+    <field name="view_mode">list,kanban,form,gantt,calendar,pivot,graph,activity</field>
+    </record>
+
+    <!-- Manufacturing Order for Planning view -->
     <record id="mrp_production_tree_view_planning" model="ir.ui.view">
         <field name="name">mrp.production.list.inherit.planning</field>
         <field name="model">mrp.production</field>
