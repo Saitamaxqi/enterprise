@@ -89,25 +89,25 @@ class DiscussChannel(models.Model):
 
     @api.model
     def _get_or_create_ai_chat(self, partner, channel_id=None):
-        channel = self._find_ai_chat_channel(partner, channel_id)
+        channel = self.search(self._get_ai_chat_channel_domain(partner, channel_id))
         if not channel:
             channel = self._create_ai_chat(partner)
         return channel
 
-    def _find_ai_chat_channel(self, ai_partner, channel_id=None):
-        search_domain = [
+    def _get_ai_chat_channel_domain(self, ai_partner, channel_id=None):
+        search_domain = Domain([
             ('is_member', '=', True),
-            ('channel_type', '=', 'ai_chat'),
             ('channel_member_ids', 'any', [
                 ('partner_id', '=', ai_partner.id)
             ]),
-        ]
+        ])
+        search_domain &= self._get_ai_channel_type_domain()
         if channel_id:
-            search_domain = Domain.AND([
-                search_domain,
-                [('id', '=', channel_id)]
-            ])
-        return self.search(search_domain)
+            search_domain &= Domain('id', '=', channel_id)
+        return search_domain
+
+    def _get_ai_channel_type_domain(self):
+        return Domain('channel_type', '=', 'ai_chat')
 
     def _create_ai_chat(self, partner):
         guest = self.env["mail.guest"]._get_guest_from_context()
@@ -130,7 +130,7 @@ class DiscussChannel(models.Model):
         return channel
 
     def _close_older_chat_channel(self, ai_partner):
-        older_channel = self._find_ai_chat_channel(ai_partner)
+        older_channel = self.search(self._get_ai_chat_channel_domain(ai_partner))
         if older_channel:
             older_channel.sudo().unlink()
 

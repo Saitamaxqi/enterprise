@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.fields import Domain
 from odoo.addons.mail.tools.discuss import Store
 from odoo.addons.im_livechat.models.discuss_channel import is_livechat_channel
 
@@ -11,6 +12,7 @@ class DiscussChannel(models.Model):
 
     @api.depends('livechat_bot_partner_ids', 'channel_member_ids.partner_id')
     def _compute_livechat_with_ai_agent(self):
+        old_values = {channel: channel.livechat_with_ai_agent for channel in self}
         # livechat_bot_partner_ids, maintains a historical record of all partner_id values for bots that were members of this channel.
         # Even if A bot is removed from the channel, its partner_id is present in livechat_bot_partner_ids.
         current_bot_member_partner_ids = self.livechat_bot_partner_ids & self.channel_member_ids.partner_id
@@ -18,6 +20,12 @@ class DiscussChannel(models.Model):
         for channel in self:
             channel_bot_partner_ids = channel.livechat_bot_partner_ids & channel.channel_member_ids.partner_id
             channel.livechat_with_ai_agent = bool(ai_agent_partner_ids & channel_bot_partner_ids)
+            if channel.livechat_with_ai_agent != old_values[channel]:
+                Store(bus_channel=channel).add(channel, "livechat_with_ai_agent").bus_send()
+
+    def _get_ai_channel_type_domain(self):
+        domain = super()._get_ai_channel_type_domain()
+        return domain | Domain([('channel_type', '=', 'livechat'), ('livechat_with_ai_agent', '=', True)])
 
     def _forward_scripted_chatbot(self, chatbot_script_id):
         # sudo - discuss.channel: let the AI Agent proceed to the forward step (change channel operator, add scripted chatbot
