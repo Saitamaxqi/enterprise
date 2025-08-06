@@ -44,8 +44,6 @@ class PlanningSlotTemplate(models.Model):
     @api.depends('start_time', 'end_time')
     def _compute_name(self):
         for shift_template in self:
-            if not (0 <= shift_template.start_time < 24 and 0 <= shift_template.end_time < 24):
-                raise ValidationError(_('The start and end hours must be greater or equal to 0 and lower than 24.'))
             shift_template.name = shift_template._get_name()
 
     @api.depends('name', 'duration_days', 'role_id')
@@ -69,6 +67,8 @@ class PlanningSlotTemplate(models.Model):
         return res
 
     def _get_name(self, time_condensed=False):
+        if not (0 <= self.start_time < 24 and 0 <= self.end_time < 24):
+            raise ValidationError(_('The start and end hours must be greater or equal to 0 and lower than 24.'))
 
         def _format_time(float_time):
             time_str = format_time(

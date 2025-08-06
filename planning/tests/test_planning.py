@@ -4,7 +4,7 @@ import re
 from datetime import datetime, time, timedelta
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 from odoo import fields
 from odoo.tests import Form, new_test_user
@@ -1073,3 +1073,13 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         self.assertEqual(sum(open_slot.mapped('allocated_hours')), 16, "16 hours should be allocated to open slot")
         self.assertEqual(slot.allocated_hours, sum(copied_slot.mapped('allocated_hours')),
             "The allocated hours of slot and allocated hours of copied slots must be same")
+
+    def test_change_planning_template_start_or_end_time_to_invalid_value(self):
+        with self.assertRaises(ValidationError):
+            self.template.write({'end_time': 24})
+            self.template.read()
+        with self.assertRaises(ValidationError):
+            self.template.write({'start_time': 24})
+            self.template.read()
+        self.assertEqual(self.template.end_time, 14)
+        self.assertEqual(self.template.start_time, 11)
