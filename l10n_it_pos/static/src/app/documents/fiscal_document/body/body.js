@@ -105,7 +105,7 @@ export class Body extends Component {
 
     get payments() {
         return this.order.payment_ids
-            .filter((payment) => !payment.is_change)
+            .filter((payment) => !payment.is_change && payment.amount > 0)
             .map((payment) => ({
                 description: _t("Payment in %s", payment.payment_method_id.name),
                 payment: this._itFormatCurrency(payment.amount),
