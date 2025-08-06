@@ -38,6 +38,9 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
             limit=1,
         )
 
+        with file_open('base/tests/minimal.pdf', 'rb') as file:
+            cls.sample_pdf_bytes = file.read()
+
     @classmethod
     def default_env_context(cls):
         # OVERRIDE to reactivate the tracking
@@ -90,8 +93,8 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
             'status': 'success',
         }
 
-    def _get_email_for_journal_alias(self, attachment=b'My attachment', attach_content_type='application/octet-stream', message_id='some_msg_id'):
-        attachment = base64.b64encode(attachment).decode()
+    def _get_email_for_journal_alias(self, message_id='some_msg_id'):
+        attachment = base64.b64encode(self.sample_pdf_bytes).decode()
         alias = self.journal_with_alias.alias_id
         return textwrap.dedent(f'''\
             MIME-Version: 1.0
@@ -107,7 +110,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
 
 
             --000000000000a47519057e029630
-            Content-Type: {attach_content_type}
+            Content-Type: application/pdf
             Content-Transfer-Encoding: base64
 
             {attachment}
@@ -636,7 +639,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'extract_state': 'no_extract_requested'})
         test_attachment = self.env['ir.attachment'].create({
             'name': "attachment.pdf",
-            'raw': b'My attachment',
+            'raw': self.sample_pdf_bytes,
         })
 
         expected_parse_params = {
@@ -674,7 +677,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         test_attachment = self.env['ir.attachment'].create({
             'name': "an attachment",
             "mimetype": "application/pdf",
-            'raw': b'My attachment',
+            'raw': self.sample_pdf_bytes,
             'res_model': 'account.move',
             'res_id': invoice.id,
         })
@@ -706,17 +709,15 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         # test that when multiple pdf attachments are posted and the option is enabled each one is split
         # into a separate move
         self.env.company.extract_in_invoice_digitalization_mode = 'auto_send'
-        with file_open('base/tests/minimal.pdf', 'rb') as file:
-            pdf_bytes = file.read()
         attachments_vals = [
             {
                 'name': 'Attachment 1',
-                'raw': pdf_bytes,
+                'raw': self.sample_pdf_bytes,
                 'mimetype': 'application/pdf',
             },
             {
                 'name': 'Attachment 2',
-                'raw': pdf_bytes,
+                'raw': self.sample_pdf_bytes,
                 'mimetype': 'application/pdf',
             },
         ]
@@ -738,7 +739,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         self.env.company.extract_out_invoice_digitalization_mode = 'auto_send'
         test_attachment = self.env['ir.attachment'].create({
             'name': "attachment.pdf",
-            'raw': b'My attachment',
+            'raw': self.sample_pdf_bytes,
         })
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
             action = self.env['account.journal'].with_context(default_move_type='out_invoice').create_document_from_attachment(test_attachment.id)
@@ -750,11 +751,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
     def test_automatic_sending_customer_invoice_email_alias(self):
         # test that a customer invoice is automatically sent to the OCR server when sent via email alias and the option is enabled
         self.env.company.extract_out_invoice_digitalization_mode = 'auto_send'
-        with file_open('base/tests/minimal.pdf', 'rb') as file:
-            pdf_bytes = file.read()
         mail = self._get_email_for_journal_alias(
-            attachment=pdf_bytes,
-            attach_content_type='application/pdf',
             message_id='message_2'
         )
         with self._mock_iap_extract(self.parse_success_response()):
