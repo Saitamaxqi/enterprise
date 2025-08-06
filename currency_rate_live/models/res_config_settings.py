@@ -90,6 +90,7 @@ MAP_CURRENCIES = {
     'Serbian Dinar': 'RSD',
     'Russia Rouble': 'RUB',
     'Saudi Riyal': 'SAR',
+    'Sudanese Pound': 'SDG',
     'Singapore Dollar': 'SGD',
     'Swedish Krona': 'SEK',
     'Syrian pound': 'SYP',
