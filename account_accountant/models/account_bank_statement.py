@@ -808,11 +808,19 @@ class AccountBankStatementLine(models.Model):
 
             return label
 
-        def get_all_substrings(s):
+        def get_all_substrings(label):
+            """
+                Generate all possible substrings of a given string.
+                Example:
+                    get_all_substrings("abc")
+                    {'a', 'b', 'c', 'ab', 'bc', 'abc'}
+                :param label: string that has been normalised
+                :return: A set containing all unique substrings of the input string.
+            """
             return {
-                s[i:j]
-                for i in range(len(s))
-                for j in range(i + 1, len(s) + 1)
+                label[i:j]
+                for i in range(len(label))
+                for j in range(i + 1, len(label) + 1)
             }
 
         normalised = [normalise_label(label.upper()) for label in labels if label]
@@ -823,7 +831,11 @@ class AccountBankStatementLine(models.Model):
         # if the size of the substring drops under 10.
         normalised.sort(key=len)
 
-        # After normalising, we need to get the longest possible substring.
+        # To achieve this:
+        # 1. Use `get_all_substrings` on each normalized label to get all possible substrings.
+        # 2. Perform a set intersection on the resulting sets to find substrings common to all labels.
+        # 3. From the common substrings, select the longest one using `max` with `key=len`.
+        # 4. If no common substring exists, return an empty string as the default.
         substring = max(set.intersection(*map(get_all_substrings, normalised)), key=len, default="")
 
         return substring.strip() if len(substring) >= 10 else None
