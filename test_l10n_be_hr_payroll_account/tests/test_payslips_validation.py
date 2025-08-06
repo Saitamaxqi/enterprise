@@ -3069,7 +3069,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "date_end": '2020-12-31',
         })
 
-        payslip_run.generate_payslips(payslip_run._get_valid_versions())
+        payslip_run.generate_payslips(payslip_run._get_valid_version_ids())
 
         payslips = payslip_run.slip_ids
         self.assertEqual(len(payslips), 2)

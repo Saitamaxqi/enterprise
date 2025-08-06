@@ -123,7 +123,7 @@ class HrPayslipRun(models.Model):
             name += " - " + structure_id.name
         return name
 
-    def _get_valid_versions(self, date_start=None, date_end=None, structure_id=None, company_id=None, employee_ids=None):
+    def _get_valid_version_ids(self, date_start=None, date_end=None, structure_id=None, company_id=None, employee_ids=None):
         date_start = date_start or self.date_start
         date_end = date_end or self.date_end
         structure = self.env["hr.payroll.structure"].browse(structure_id) if structure_id else self.structure_id
@@ -286,19 +286,31 @@ class HrPayslipRun(models.Model):
 
     def action_payroll_hr_version_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):
         action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_payroll_hr_version_list_view_payrun')
-        action['domain'] = [("id", "in", self._get_valid_versions(
+
+        valid_version_ids = self._get_valid_version_ids(
             fields.Date.from_string(date_start),
             fields.Date.from_string(date_end),
             structure_id,
             company_id,
-        ))]
+        )
+
+        payslip_domain = Domain.AND([
+           Domain('version_id', 'in', valid_version_ids),
+           Domain('date_from', '=', fields.Date.from_string(date_start) if date_start else self.date_start),
+           Domain('date_to', '=', fields.Date.from_string(date_end) if date_end else self.date_end),
+           Domain('struct_id', '=', structure_id if structure_id else (self.structure_id.id if self.structure_id else False)),
+           Domain('state', '!=', 'cancel'),
+        ])
+        existing_version_ids = self.env['hr.payslip'].search(payslip_domain).version_id.ids
+        filtered_version_ids = set(valid_version_ids) - set(existing_version_ids)
+        action['domain'] = [("id", "in", list(filtered_version_ids))]
         return action
 
     def generate_payslips(self, version_ids=None, employee_ids=None):
         self.ensure_one()
 
         if employee_ids and not version_ids:
-            version_ids = self._get_valid_versions(employee_ids=employee_ids)
+            version_ids = self._get_valid_version_ids(employee_ids=employee_ids)
 
         if not version_ids:
             raise UserError(self.env._("You must select employee(s) version(s) to generate payslip(s)."))
@@ -363,23 +375,6 @@ class HrPayslipRun(models.Model):
         self.state = '02_verify'
 
         return 1
-
-    def add_payslips(self):
-        self.ensure_one()
-        return {
-            'type': 'ir.actions.act_window',
-            'name': self.env._('Add Payslips'),
-            'res_model': 'hr.payslip',
-            'views': [[False, 'list']],
-            'target': 'new',
-            'context': {
-                'create': 0,
-                'delete': 0,
-                'edit': 0,
-                'add_payslips': 1,
-            },
-            'domain': [('payslip_run_id', '=', False)],
-        }
 
     @api.ondelete(at_uninstall=False)
     def _unlink_if_draft_or_cancel(self):

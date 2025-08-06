@@ -89,12 +89,6 @@
                                     record="props.record"
                                     string.translate="Set to Draft"/>
                     </t>
-                    <t t-set-slot="add_payslip" isVisible="['01_draft', '02_verify', '05_cancel'].includes(payrun.state)">
-                        <ViewButton className="'btn btn-secondary'"
-                                    clickParams="{type: 'object', name: 'add_payslips'}"
-                                    record="props.record"
-                                    string.translate="Add payslips"/>
-                    </t>
                     <t t-set-slot="gen_payslip" isVisible="['01_draft', '02_verify', '05_cancel'].includes(payrun.state)">
                         <ViewButton className="'btn btn-secondary'"
                                     clickParams="{type: 'object', name: 'action_payroll_hr_version_list_view_payrun'}"

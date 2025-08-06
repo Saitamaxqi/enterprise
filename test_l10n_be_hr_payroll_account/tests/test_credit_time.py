@@ -144,7 +144,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
             "date_end": "2020-03-31",
         })
 
-        payslip_run.generate_payslips(payslip_run._get_valid_versions())
+        payslip_run.generate_payslips(payslip_run._get_valid_version_ids())
 
         self.assertEqual(len(payslip_run.slip_ids), 2)
 
@@ -278,7 +278,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
             "date_end": "2020-03-31",
         })
 
-        payslip_run.generate_payslips(payslip_run._get_valid_versions())
+        payslip_run.generate_payslips(payslip_run._get_valid_version_ids())
 
         self.assertEqual(len(payslip_run.slip_ids), 2)
 

@@ -26,7 +26,7 @@
             <button class="btn btn-primary" t-on-click="createNewPayRun" t-if="!payrunId &amp;&amp; !this.env.inDialog">
                 Pay Run
             </button>
-            <button class="btn btn-primary" t-on-click="addPayslips" t-if="this.env.inDialog &amp;&amp; this.props.context.add_payslips">
+            <button class="btn btn-primary" t-on-click="addPayslips" t-if="this.env.inDialog &amp;&amp; this.props.context.add_payslips" t-att-disabled="!hasSelectedRecords">
                 Select
             </button>
             <button class="btn btn-secondary" t-on-click="onClose" t-if="this.env.inDialog &amp;&amp; this.props.context.add_payslips">

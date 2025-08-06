@@ -82,7 +82,7 @@ class TestPayslipFlow(TestPayslipBase):
         })
 
         with self.assertRaises(UserError):
-            payslip_run.generate_payslips(payslip_run._get_valid_versions())
+            payslip_run.generate_payslips(payslip_run._get_valid_version_ids())
 
         # Update the structure type and generate payslips again
         specific_structure_type.default_struct_id = specific_structure.id
@@ -95,7 +95,7 @@ class TestPayslipFlow(TestPayslipBase):
             'name': 'Batch for Structure',
         })
 
-        payslip_run.generate_payslips(payslip_run._get_valid_versions())
+        payslip_run.generate_payslips(payslip_run._get_valid_version_ids())
 
         self.richard_emp.structure_type_id = specific_structure_type.id
 
@@ -352,7 +352,7 @@ class TestPayslipFlow(TestPayslipBase):
         # Expected employees/contracts
         # Timmy  contract A (YEAR-1/01/01 -> YEAR-1/03/15)
         # Gerard contract A (YEAR-1/01/01 -> no end date )
-        payslip_runA.generate_payslips(payslip_runA._get_valid_versions())
+        payslip_runA.generate_payslips(payslip_runA._get_valid_version_ids())
         self.assertEqual(len(payslip_runA.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runA.slip_ids.ids), 2)
         self.assertTrue(all(
@@ -365,7 +365,7 @@ class TestPayslipFlow(TestPayslipBase):
         # Expected employees/contracts
         # Timmy  contract B (YEAR-1/03/16 -> no end date)
         # Michel contract B (YEAR-1/01/01 -> no end date)
-        payslip_runB.generate_payslips(payslip_runB._get_valid_versions())
+        payslip_runB.generate_payslips(payslip_runB._get_valid_version_ids())
         self.assertEqual(len(payslip_runB.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runB.slip_ids.ids), 2)
         self.assertTrue(all(
@@ -380,7 +380,7 @@ class TestPayslipFlow(TestPayslipBase):
         #      | contract B (YEAR-1/03/16 -> no end date )
         # Gerard contract A (YEAR-1/01/01 -> no end date )
         # Michel contract B (YEAR-1/01/01 -> no end date )
-        payslip_runC.generate_payslips(payslip_runC._get_valid_versions())
+        payslip_runC.generate_payslips(payslip_runC._get_valid_version_ids())
         self.assertEqual(len(payslip_runC.slip_ids.employee_id.ids), 2)
         self.assertEqual(len(payslip_runC.slip_ids.ids), 2)
         self.assertTrue(all(

@@ -2604,7 +2604,7 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
             "date_start": str(first_of_month),
             "date_end": str(end_of_month)
         })
-        batch.sudo().generate_payslips(batch.sudo()._get_valid_versions())
+        batch.sudo().generate_payslips(batch.sudo()._get_valid_version_ids())
         batch.sudo().action_validate()
         cls.env.flush_all()
         return batch

@@ -50,7 +50,6 @@
                         <button name="action_unpaid" type="object" class="btn btn-secondary" string="Revert" invisible="state != '04_paid'"/>
                         <button name="action_payment_report" type="object" class="btn btn-secondary" string="Payment Report" invisible="state != '03_close'"/>
                         <button name="action_draft" type="object" class="btn btn-secondary" string="Set to Draft" invisible="state not in ('02_verify', '03_close')"/>
-                        <button name="add_payslips" type="object" class="btn btn-secondary" string="Add Payslips" invisible="state in ('03_close', '04_paid')"/>
                         <button name="action_payroll_hr_version_list_view_payrun" type="object" class="btn btn-secondary" string="Generate Payslips" invisible="state in ('03_close', '04_paid')"/>
                         <button name="unlink" type="object" class="btn text-danger" string="Delete"/>
                     </t>

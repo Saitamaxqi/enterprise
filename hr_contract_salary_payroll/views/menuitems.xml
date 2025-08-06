@@ -33,7 +33,8 @@
         id="hr_contract_salary.menu_salary_package_offer"
         name="Offers"
         parent="hr_payroll.menu_hr_payroll_employees"
-        sequence="50"/>
+        sequence="50"
+        groups="base.group_no_one"/>
 
     <record id="hr_contract_salary.salary_package_menu" model="ir.ui.menu">
         <field name="parent_id" ref="hr_work_entry_enterprise.menu_hr_payroll_configuration"/>
