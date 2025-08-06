@@ -861,3 +861,55 @@ class TestAccountReturn(TestAccountReportsCommon):
                 }
             ]
         )
+
+    def test_reset_account_reviewed_audit_status_on_balance_change(self):
+        audit_return_type = self.env['account.return.type'].create([{
+            'category': 'audit',
+            'default_deadline_periodicity': 'monthly',
+            'default_deadline_start_date': '2024-01-01',
+            'name': "Audit",
+        }])
+
+        audit_return_type.with_company(self.env.company).deadline_periodicity = 'monthly'
+
+        audits = self.env['account.return']
+        audits |= audit_return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-01-31'))
+        audits |= audit_return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-02-01'), forced_date_to=fields.Date.from_string('2024-02-29'))
+        audits |= audit_return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-03-01'), forced_date_to=fields.Date.from_string('2024-03-31'))
+        audits |= audit_return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-04-01'), forced_date_to=fields.Date.from_string('2024-04-30'))
+        audits |= audit_return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-05-01'), forced_date_to=fields.Date.from_string('2024-05-31'))
+        audits |= audit_return_type._try_create_returns_for_fiscal_year(
+            self.env.company, False, forced_date_from=fields.Date.from_string('2024-06-01'), forced_date_to=fields.Date.from_string('2024-06-30'))
+
+        invoices = self.env['account.move']
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-01-21')
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-01-22')
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-02-21')
+        # No invoice in March
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-04-21')
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-04-21')
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-05-21')
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-06-21')
+        invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2025-03-21')
+
+        # Set account audit status to 'reviewed'
+        accounts = invoices.line_ids.account_id
+        for account in accounts:
+            for account_status in account.account_status:
+                account_status.status = 'reviewed'
+
+        invoices.action_post()
+
+        for audit in audits:
+            for account in accounts:
+                audit_status = account.with_context(working_file_id=audit.id).audit_status
+                if audit.date_from == fields.Date.from_string('2024-03-01'):
+                    # No reset, as no effect on accounts in March
+                    self.assertEqual('reviewed', audit_status)
+                else:
+                    self.assertEqual('todo', audit_status)
