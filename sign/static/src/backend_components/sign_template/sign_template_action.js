@@ -29,8 +29,14 @@ export class SignTemplate extends Component {
         this.dialog = useService("dialog");
         const params = this.props.action.params;
         this.templateID = params.id;
+        const name = this.props.action.name || params.name;
+
         if (this.templateID) {
             this.props.updateActionState({ id: this.templateID });
+        }
+        if (name) {
+            this.env.config.setDisplayName(name);
+            this.props.updateActionState({ name: name });
         }
         this.actionType = params.sign_edit_call || "";
         this.resModel = params.resModel || "";
