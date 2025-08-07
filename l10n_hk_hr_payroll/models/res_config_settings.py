@@ -32,3 +32,4 @@ class ResConfigSettings(models.TransientModel):
     l10n_hk_employer_file_number = fields.Char("Employer's File Number", related='company_id.l10n_hk_employer_file_number', readonly=False)
     l10n_hk_manulife_mpf_scheme = fields.Char("Manulife MPF Scheme", related='company_id.l10n_hk_manulife_mpf_scheme', readonly=False)
     l10n_hk_eoy_pay_month = fields.Selection(related='company_id.l10n_hk_eoy_pay_month', readonly=False)
+    l10n_hk_use_mpf_offsetting = fields.Boolean(related='company_id.l10n_hk_use_mpf_offsetting', readonly=False)

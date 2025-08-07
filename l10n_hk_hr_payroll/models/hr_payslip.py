@@ -50,6 +50,12 @@ class HrPayslip(models.Model):
         store=True,
         readonly=False,
     )
+    l10n_hk_use_mpf_offsetting = fields.Boolean(
+        string='Apply MPF Offsetting',
+        compute='_compute_l10n_hk_use_mpf_offsetting',
+        store=True,
+        readonly=False,
+    )
 
     @api.depends('worked_days_line_ids')
     def _compute_worked_days_leaves_count(self):
@@ -132,6 +138,11 @@ class HrPayslip(models.Model):
 
             last_year_payslips = slip._get_previous_year_payslips(order='date_from desc')
             slip.l10n_hk_includes_eoy_pay = str(slip.date_to.month) == slip.company_id.l10n_hk_eoy_pay_month and last_year_payslips
+
+    @api.depends('company_id')
+    def _compute_l10n_hk_use_mpf_offsetting(self):
+        for slip in self.filtered(lambda s: s.country_code == 'HK'):
+            slip.l10n_hk_use_mpf_offsetting = slip.company_id.l10n_hk_use_mpf_offsetting
 
     def _get_paid_amount(self):
         """
@@ -293,40 +304,31 @@ class HrPayslip(models.Model):
             total += wd_line.amount
         return total
 
-    def _get_last_payslip_amount(self, code):
-        """ Small helper to return the amount of a specific code from the last payslip before self. """
+    def _get_713_gross_at_date(self, request_date):
+        """
+        Helper returning the amount of the 713 gross at a specified date.
+        The way it is done is by finding the last monthly payslip before that date, and getting the value from it.
+        """
         employee_salary_struct = self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary')
         latest_payslip = next(iter(self.employee_id.slip_ids.filtered(
-            lambda s: s != self and s.struct_id == employee_salary_struct
+            lambda s: s.struct_id == employee_salary_struct and s.date_to < request_date
         ).sorted()))
-        return latest_payslip._get_line_values([code])[code][latest_payslip.id]['total']
+        if not latest_payslip:
+            return 0.0
+        return latest_payslip._get_line_values(['713_GROSS'])['713_GROSS'][latest_payslip.id]['total']
 
-    def _calculate_long_service_or_severance_pay(self, minimum_yos=2):
+    def _get_years_of_services_per_period(self):
         """
-        Calculates Hong Kong Severance or Long Service Payment (SP/LSP).
+        Calculate the years of services for the employee of the payslip, for both pre- and post-transition periods.
 
-        This function computes the statutory SP/LSP entitlement in compliance with the
-        Hong Kong Employment Ordinance. It fully incorporates the "Abolition of
-        MPF Offsetting" which took effect on the transition date of May 1, 2025.
-
-        The calculation is split into two distinct periods:
-        1.  Pre-Transition: Service period before May 1, 2025. The SP/LSP
-            entitlement for this portion IS subject to offsetting by the
-            employer's vested MPF contributions.
-        2.  Post-Transition: Service period on or after May 1, 2025. The SP/LSP
-            entitlement for this portion IS NOT subject to offsetting by the
-            employer's mandatory MPF contributions.
-
-        :param minimum_yos: the minimum number of years of service required to receive the payment.
-        :return: The amount of the payment, or 0 if the employee is not eligible for it.
+        :return: a tuple (pre_transition_yos, post_transition_yos)
         """
         self.ensure_one()
         contracts = self.employee_id.version_ids.sorted("contract_date_start", reverse=True)
         if not contracts:
-            return 0
+            return 0, 0
 
         transition_date = date(2025, 5, 1)
-        salary_base = min(self._get_last_payslip_amount('713_GROSS'), self._rule_parameter('l10n_hk_final_payment_threshold'))
         contract_end_date = contracts[0].date_end or self.date_to
         # Starts by calculating the pre-transition years of service.
         pre_transition_end_date = transition_date - relativedelta(days=1)  # April 30, 2025
@@ -336,18 +338,7 @@ class HrPayslip(models.Model):
         post_transition_start_date = transition_date
         post_transition_years = self.employee_id._get_years_of_service(max(self.employee_id.contract_date_start, post_transition_start_date), contract_end_date)
 
-        if pre_transition_years + post_transition_years < minimum_yos:
-            # SP/LSP is only due for employee having more than two years of services.
-            return 0
-
-        # Then, calculate the actual payment amounts and sum them up.
-        pre_transition_payment = salary_base * 2 / 3 * pre_transition_years
-        post_transition_payment = salary_base * 2 / 3 * post_transition_years
-
-        total_payment = pre_transition_payment + post_transition_payment
-        capped_payment = min(total_payment, self._rule_parameter('l10n_hk_final_payment_cap'))
-        # Note, we are missing the support of MPF Offsetting, which needs to be added and deducted from the payment after capping it.
-        return capped_payment
+        return pre_transition_years, post_transition_years
 
     def _generate_h2h_autopay(self, header_data: dict) -> str:
         ctime = datetime.now()

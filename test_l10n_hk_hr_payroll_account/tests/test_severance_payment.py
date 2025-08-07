@@ -66,3 +66,65 @@ class TestSeverancePay(TestL10NHkHrPayrollAccountCommon):
             'NET': 40375.3,
         }
         self._validate_payslip(payslip, result)
+
+    def test_severance_payment_mpf_offsetting(self):
+        """ Validate calculation of severance payment when MPF offsetting is in use. """
+        date_start = date(2025, 1, 1)
+        date_end = date(2027, 12, 31)
+        self.contract.write({
+            'date_version': date_start,
+            'contract_date_start': date_start,
+            'contract_date_end': date_end,
+            'l10n_hk_mpf_vc_option': 'custom',
+            'l10n_hk_mpf_vc_percentage': 0.05,
+        })
+
+        for dt in rrule(MONTHLY, dtstart=date_start, until=date_end):
+            payslip = self._generate_payslip(dt.date(), dt.date() + relativedelta(day=31))
+            payslip.action_payslip_done()
+            payslip.action_payslip_paid()
+
+        self.contract.company_id.l10n_hk_use_mpf_offsetting = True
+        payslip = self._generate_payslip(
+            date_end, date(2027, 12, 31),
+            struct_id=self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_severance_payment').id,
+        )
+        result = {
+            'SEVERANCE_PAYMENT_PRE_TRANSITION': 4427.4,
+            'SEVERANCE_PAYMENT_POST_TRANSITION': 35947.91,
+            'SEVERANCE_PAYMENT': 40375.3,
+            'SEVERANCE_PAYMENT_PRE_TRANSITION_OFFSET': -4427.4,
+            'SEVERANCE_PAYMENT_POST_TRANSITION_OFFSET': -35351.76,
+            'NET': 596.15,
+        }
+        self._validate_payslip(payslip, result)
+
+    def test_severance_payment_mpf_offsetting_post_transition_only(self):
+        """ Validate calculation of severance payment when MPF offsetting is in use. """
+        date_start = date(2025, 10, 1)
+        date_end = date(2027, 12, 31)
+        self.contract.write({
+            'date_version': date_start,
+            'contract_date_start': date_start,
+            'contract_date_end': date_end,
+            'l10n_hk_mpf_vc_option': 'custom',
+            'l10n_hk_mpf_vc_percentage': 0.05,
+        })
+
+        for dt in rrule(MONTHLY, dtstart=date_start, until=date_end):
+            payslip = self._generate_payslip(dt.date(), dt.date() + relativedelta(day=31))
+            payslip.action_payslip_done()
+            payslip.action_payslip_paid()
+
+        self.contract.company_id.l10n_hk_use_mpf_offsetting = True
+        payslip = self._generate_payslip(
+            date_end, date(2027, 12, 31),
+            struct_id=self.env.ref('l10n_hk_hr_payroll.hr_payroll_structure_cap57_severance_payment').id,
+        )
+        result = {
+            'SEVERANCE_PAYMENT_POST_TRANSITION': 30318.4,
+            'SEVERANCE_PAYMENT': 30318.4,
+            'SEVERANCE_PAYMENT_POST_TRANSITION_OFFSET': -29543.88,
+            'NET': 774.52,
+        }
+        self._validate_payslip(payslip, result)

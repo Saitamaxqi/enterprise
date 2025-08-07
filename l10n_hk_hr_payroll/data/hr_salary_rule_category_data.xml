@@ -25,4 +25,10 @@
         <field name="parent_id" ref="MPF" />
         <field name="country_id" ref="base.hk"/>
     </record>
+
+    <record id="SLSP" model="hr.salary.rule.category">
+        <field name="name">Severance/Long Service Payment</field>
+        <field name="code">SLSP</field>
+        <field name="country_id" ref="base.hk"/>
+    </record>
 </odoo>

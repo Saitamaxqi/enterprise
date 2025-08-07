@@ -36,6 +36,10 @@ class ResCompany(models.Model):
         ],
         default='12',
     )
+    l10n_hk_use_mpf_offsetting = fields.Boolean(
+        string="Use MPF Offsetting",
+        help="If set, MPF Offsetting will be applied in case of Severance Pay/Long Service Pay for the pre-transition period.\nThis can be overridden for each payment.",
+    )
 
     @api.constrains("l10n_hk_employer_file_number")
     def _check_l10n_hk_employer_file_number(self):

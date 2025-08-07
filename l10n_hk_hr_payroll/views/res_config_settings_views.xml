@@ -60,6 +60,12 @@
                                     <field name="l10n_hk_eoy_pay_month" nolabel="1"/>
                                 </div>
                             </div>
+                            <div class="row ms-2">
+                                <label for="l10n_hk_use_mpf_offsetting" class="col-md-7 p-0 m-0"/>
+                                <div class="col-md-5 p-0">
+                                    <field name="l10n_hk_use_mpf_offsetting" nolabel="1"/>
+                                </div>
+                            </div>
                         </div>
                     </setting>
                 </block>
