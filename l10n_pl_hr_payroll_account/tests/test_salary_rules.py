@@ -13,6 +13,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     @TestPayslipValidationCommon.setup_country('pl')
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref('hr.group_hr_user')
+        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_user')
         cls._setup_common(
             country=cls.env.ref('base.pl'),
             structure=cls.env.ref('l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary'),
