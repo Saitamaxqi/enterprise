@@ -320,6 +320,11 @@ msgid "Debit Card"
 msgstr ""
 
 #. module: l10n_br_edi_pos
+#: model:ir.actions.server,name:l10n_br_edi_pos.action_download_pos_order_xml
+msgid "Download NFC-e XML"
+msgstr ""
+
+#. module: l10n_br_edi_pos
 #: model:ir.model.fields.selection,name:l10n_br_edi_pos.selection__pos_payment_method__l10n_br_payment_method__14
 msgid "Duplicate Mercantil"
 msgstr ""
@@ -508,6 +513,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_edi_pos/models/pos_order.py:0
 msgid "One or more POS orders couldn't be processed."
+msgstr ""
+
+#. module: l10n_br_edi_pos
+#. odoo-python
+#: code:addons/l10n_br_edi_pos/models/pos_order.py:0
+msgid ""
+"Oops! Some orders are not ready for XML download: %(orders)s\n"
+"Please make sure all selected orders have been accepted by SEFAZ before proceeding."
 msgstr ""
 
 #. module: l10n_br_edi_pos

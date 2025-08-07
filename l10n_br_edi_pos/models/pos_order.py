@@ -9,6 +9,7 @@ from markupsafe import Markup
 from odoo import models, api, _, fields, Command
 from odoo.addons.iap import InsufficientCreditError
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools import format_list
 
 
 # Copied from account.external.tax.mixin in l10n_br_edi
@@ -894,3 +895,23 @@ class PosOrder(models.Model):
                             response, save_avalara_pdf=save_avalara_pdf
                         ).ids,
                     )
+
+    def _l10n_br_edi_action_download(self):
+        valid_orders = self.filtered(lambda o: o.l10n_br_edi_xml_attachment_file and o.l10n_br_last_avatax_status == "accepted")
+        if len(valid_orders) != len(self):
+            invalid_orders = (self - valid_orders).mapped('name')
+            raise UserError(self.env._(
+                "Oops! Some orders are not ready for XML download: %(orders)s\n"
+                "Please make sure all selected orders have been accepted by SEFAZ before proceeding."
+                , orders=format_list(self.env, invalid_orders)
+            ))
+        attachments = self.env['ir.attachment'].search([
+            ('res_model', '=', 'pos.order'),
+            ('res_id', 'in', valid_orders.ids),
+            ('res_field', '=', 'l10n_br_edi_xml_attachment_file'),
+        ])
+        return {
+            'type': 'ir.actions.act_url',
+            'url': f'/l10n_br_edi_pos/download_nfce_attachments/{",".join(map(str, attachments.ids))}',
+            'target': 'self',
+        }

@@ -344,6 +344,11 @@ msgid "Debit Card"
 msgstr "Cartão de débito"
 
 #. module: l10n_br_edi_pos
+#: model:ir.actions.server,name:l10n_br_edi_pos.action_download_pos_order_xml
+msgid "Download NFC-e XML"
+msgstr "Baixar XML da NFC-e"
+
+#. module: l10n_br_edi_pos
 #: model:ir.model.fields.selection,name:l10n_br_edi_pos.selection__pos_payment_method__l10n_br_payment_method__14
 msgid "Duplicate Mercantil"
 msgstr "Duplicar Mercantil"
@@ -535,6 +540,16 @@ msgstr "Sem pagamentos"
 #: code:addons/l10n_br_edi_pos/models/pos_order.py:0
 msgid "One or more POS orders couldn't be processed."
 msgstr "Não foi possível processar um ou mais pedidos do PDV."
+
+#. module: l10n_br_edi_pos
+#. odoo-python
+#: code:addons/l10n_br_edi_pos/models/pos_order.py:0
+msgid ""
+"Oops! Some orders are not ready for XML download: %(orders)s\n"
+"Please make sure all selected orders have been accepted by SEFAZ before proceeding."
+msgstr ""
+"Ops! Alguns pedidos não estão prontos para download do XML: %(orders)s\n"
+"Certifique-se de que todos os pedidos selecionados tenham sido autorizados pela SEFAZ antes de prosseguir."
 
 #. module: l10n_br_edi_pos
 #. odoo-python
