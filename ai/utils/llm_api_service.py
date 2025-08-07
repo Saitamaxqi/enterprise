@@ -166,13 +166,23 @@ class LLMApiService:
         }
 
     def _get_api_token(self):
-        config_param_sudo = self.env['ir.config_parameter'].sudo()
-        if self.provider == 'openai' and config_param_sudo.get_param('ai.openai_key'):
-            return config_param_sudo.get_param('ai.openai_key')
-        elif self.provider == 'google' and config_param_sudo.get_param('ai.google_key'):
-            return config_param_sudo.get_param('ai.google_key')
-        elif api_key := os.getenv('ODOO_AI_CHATGPT_TOKEN'):
+        provider_config = {
+            "openai": {
+                "config_key": "ai.openai_key",
+                "env_var": "ODOO_AI_CHATGPT_TOKEN",
+            },
+            "google": {
+                "config_key": "ai.google_key",
+                "env_var": "ODOO_AI_GEMINI_TOKEN",
+            },
+        }
+        config = provider_config.get(self.provider)
+        if config is None:
+            raise UserError(_("Unsupported provider '%s'", self.provider))
+
+        if api_key := self.env["ir.config_parameter"].sudo().get_param(config["config_key"]) or os.getenv(config["env_var"]):
             return api_key
+
         raise UserError(_("No API key set for provider '%s'", self.provider))
 
     def _request(
