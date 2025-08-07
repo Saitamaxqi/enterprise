@@ -1,8 +1,10 @@
-import { Component } from "@odoo/owl";
+import { Component, markRaw } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { imageUrl } from "@web/core/utils/urls";
-import { DefaultCommandItem } from "@web/core/commands/command_palette";
+import { DefaultCommandItem, CommandPalette } from "@web/core/commands/command_palette";
+import { patch } from "@web/core/utils/patch";
+import { highlightText } from "@web/core/utils/html";
 
 const commandProviderRegistry = registry.category("command_provider");
 
@@ -14,29 +16,56 @@ class AskAICommand extends Component {
     };
 }
 
+async function askAIProvide(env, options) {
+    const orm = env.services.orm;
+    const actions = env.services.action;
+    const agent = await orm.cache().call("ai.agent", "get_ask_ai_agent", []);
+    return [
+        {
+            action: async () => {
+                const action = await orm.call("ai.agent", "action_ask_ai", [options.searchValue]);
+                if (action) {
+                    // Don't await so that the command palette can close immediately
+                    actions.doAction(action);
+                }
+            },
+            category: "app",
+            Component: AskAICommand,
+            props: {
+                imgUrl: imageUrl("ai.agent", agent.id, "image_128"),
+            },
+            name: _t("Ask AI"),
+        },
+    ];
+}
+
 commandProviderRegistry.add("ask_ai", {
     namespace: "/",
     async provide(env, options) {
-        const orm = env.services.orm;
-        const actions = env.services.action;
-        const agent = await orm.cache().call("ai.agent", "get_ask_ai_agent", []);
-        return [
-            {
-                action: async () => {
-                    const action = await orm.call("ai.agent", "action_ask_ai", [
+        return askAIProvide(env, options);
+    },
+});
+
+// TODO: Add a unit test for this. The Ask AI command should be available in the default
+// namespace (CTRL+K) when no commands are found.
+patch(CommandPalette.prototype, {
+    async setCommands(namespace, options = {}) {
+        const [askAICommand] = await askAIProvide(this.env, options);
+        const result = await super.setCommands(namespace, options);
+        if (namespace === "default" && this.state.commands.length === 0 && options.searchValue) {
+            this.state.commands = markRaw([
+                {
+                    ...askAICommand,
+                    keyId: this.keyId++,
+                    text: highlightText(
                         options.searchValue,
-                    ]);
-                    if (action) {
-                        // Don't await so that the command palette can close immediately
-                        actions.doAction(action);
-                    }
+                        askAICommand.name,
+                        "fw-bolder text-primary"
+                    ),
                 },
-                Component: AskAICommand,
-                props: {
-                    imgUrl: imageUrl("ai.agent", agent.id, "image_128"),
-                },
-                name: _t("Ask AI"),
-            },
-        ];
+            ]);
+            this.selectCommand(this.state.commands.length ? 0 : -1);
+        }
+        return result;
     },
 });
