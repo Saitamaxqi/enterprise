@@ -67,8 +67,8 @@ class L10nInHrPayrollEpfReport(models.Model):
 
         payslips = self.env['hr.payslip'].search([
             ('employee_id', 'in', indian_employees.ids),
-            ('date_from', '>=', f'{self.year}-{self.month}-1'),
-            ('date_to', '<=', f'{self.year}-{self.month}-{end_date}'),
+            ('date_from', '>=', f'{self.year}-{int(self.month):02d}-01'),
+            ('date_to', '<=', f'{self.year}-{int(self.month):02d}-{end_date:02d}'),
             ('state', 'in', ('done', 'paid'))
         ])
 
