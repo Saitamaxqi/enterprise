@@ -123,13 +123,17 @@ class DeliveryCarrier(models.Model):
         if picking.sale_id and picking.sale_id.incoterm:
             terms_of_shipment = picking.sale_id.incoterm
 
+        currency_code = self.env.company.currency_id.name
+        if picking.sale_id:
+            currency_code = picking.sale_id.currency_id.name
+
         shipment_info = {
             'require_invoice': picking._should_generate_commercial_invoice(),
             'invoice_date': fields.Date.today().strftime('%Y%m%d'),
             'description': picking.origin or picking.name,
             'total_qty': sum(sml.quantity for sml in picking.move_line_ids),
             'ilt_monetary_value': '%d' % sum(sml.sale_price for sml in picking.move_line_ids),
-            'itl_currency_code': self.env.company.currency_id.name,
+            'itl_currency_code': currency_code,
             'phone': picking.partner_id.phone or picking.sale_id.partner_id.phone,
             'terms_of_shipment': terms_of_shipment.code if terms_of_shipment else None,
             'purchase_order_number': picking.sale_id.name if picking.sale_id else None,

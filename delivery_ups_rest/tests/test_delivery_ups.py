@@ -4,7 +4,7 @@ from unittest.mock import patch
 import requests
 
 from odoo.tests.common import tagged
-
+from odoo import Command
 from odoo.addons.delivery_ups_rest.tests.common import DeliveryUPSCommon
 
 
@@ -110,3 +110,42 @@ class TestDeliveryUPS(DeliveryUPSCommon):
     def test_ups_rest_sends_correct_delivery_type_for_amazon(self):
         amazon_expected_delivery_type = self.ups_delivery._get_delivery_type()
         self.assertEqual(amazon_expected_delivery_type, 'ups')
+
+    def test_ups_invoice_uses_correct_currency(self):
+        usd = self.env.ref('base.USD')
+        eur = self.env.ref('base.EUR')
+        pricelists = self.env['product.pricelist'].create([
+            {
+                'name': 'USD Pricelist',
+                'currency_id': usd.id,
+            },
+            {
+                'name': 'EUR Pricelist',
+                'currency_id': eur.id,
+            },
+        ])
+        for pricelist in pricelists:
+            sale_order = self.env['sale.order'].create({
+                'partner_id': self.partner.id,
+                'pricelist_id': pricelist.id,
+                'order_line': [Command.create({
+                    'product_id': self.product.id,
+                    'name': "Fancy box",
+                    'product_uom_qty': 1.0,
+                    'price_unit': 20,
+                })]
+            })
+            wiz_action = sale_order.action_open_delivery_wizard()
+            choose_delivery_carrier = self.env[wiz_action['res_model']].with_context(wiz_action['context']).create({
+                'carrier_id': self.ups_delivery.id,
+                'order_id': sale_order.id
+            })
+            with _mock_request_call():
+                choose_delivery_carrier.update_price()
+                choose_delivery_carrier.button_confirm()
+                sale_order.action_confirm()
+                picking = sale_order.picking_ids[0]
+                picking.action_assign()
+                picking._action_done()
+                _, shipment_info, _, _, _ = self.ups_delivery._prepare_shipping_data(picking)
+                self.assertEqual(shipment_info['itl_currency_code'], pricelist.currency_id.name)
