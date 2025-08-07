@@ -27,6 +27,9 @@ export class DocumentsAction extends Component {
                 this.state.topbarActions = Object.values(this.documentService.getSelectionActions().getTopbarActions()).sort((a, b) => b.groupNumber - a.groupNumber)
                 if (this.props.isPreview) {
                     const actionMenuProps = selectionActions.getMenuProps();
+                    actionMenuProps.items.action = actionMenuProps.items.action.filter(
+                        this.isPreviewAction
+                    );
                     this.state.actionMenuProps = actionMenuProps;
                 }
             }
@@ -34,10 +37,16 @@ export class DocumentsAction extends Component {
     }
 
     get topbarActions() {
-        return this.state.topbarActions.filter(action => !action.isAvailable || action.isAvailable());
+        return this.state.topbarActions.filter(
+            (action) => !action.isAvailable || action.isAvailable()
+        );
     }
 
     get visibleTopbarActions() {
         return this.ui.size >= SIZES.XL ? 3 : 2;
+    }
+
+    isPreviewAction(action) {
+        return action.key !== "export";
     }
 }

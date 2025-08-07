@@ -1,5 +1,4 @@
 import { TemplateDialog } from "@documents_spreadsheet/spreadsheet_template/spreadsheet_template_dialog";
-import { omit } from "@web/core/utils/objects";
 import { useService } from "@web/core/utils/hooks";
 import { loadBundle } from "@web/core/assets";
 
@@ -155,6 +154,7 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
 
     getStaticActionMenuItems() {
         const menuItems = super.getStaticActionMenuItems(...arguments);
-        return omit(menuItems, "export", "insert");
+        menuItems.insert.isAvailable = () => this.documentService.userIsInternal;
+        return menuItems;
     },
 });

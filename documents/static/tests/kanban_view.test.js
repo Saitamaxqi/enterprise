@@ -2,6 +2,7 @@ import { describe, expect, test } from "@odoo/hoot";
 import {
     click,
     keyDown,
+    press,
     queryAll,
     queryAllTexts,
     setInputFiles,
@@ -10,10 +11,14 @@ import {
 } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { inputFiles } from "@web/../tests/utils";
+import { WebClient } from "@web/webclient/webclient";
 import {
     contains,
+    defineActions,
     defineModels,
+    getService,
     mockService,
+    mountWithCleanup,
     onRpc,
     patchWithCleanup,
     toggleSearchBarMenu,
@@ -28,6 +33,7 @@ import {
 import { makeDocumentsMockEnv } from "./helpers/model";
 import { embeddedActionsServerData } from "./helpers/test_server_data";
 import { basicDocumentsKanbanArch, mountDocumentsKanbanView } from "./helpers/views/kanban";
+import { getEnrichedSearchArch } from "./helpers/views/search";
 
 import { documentsClientThumbnailService } from "@documents/views/helper/documents_client_thumbnail_service";
 import { EventBus } from "@odoo/owl";
@@ -36,6 +42,15 @@ import { Deferred } from "@web/core/utils/concurrency";
 describe.current.tags("desktop");
 
 defineModels(DocumentsModels);
+
+defineActions([
+    {
+        id: 1,
+        name: "Documents",
+        res_model: "documents.document",
+        views: [[false, "kanban"]],
+    },
+]);
 
 test("Open share with edit user_permission", async function () {
     onRpc("/documents/touch/accessTokenFolder1", () => ({}));
@@ -653,23 +668,85 @@ test("Split PDF button availability", async function () {
         { id: 3, name: "pdf2.pdf", mimetype: "application/pdf" },
     ];
 
-    await makeDocumentsMockEnv({ serverData });
-    await mountDocumentsKanbanView();
+    DocumentsModels.DocumentsDocument._views = {
+        kanban: basicDocumentsKanbanArch,
+        [["search", false]]: getEnrichedSearchArch(),
+    };
 
-    // Non-PDF with edit permission
+    await makeDocumentsMockEnv({ serverData });
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction(1);
+
+    // Non-PDF with edit permission in control panel
+    await contains(".o_kanban_record:contains('text_file.txt') .o_record_selector").click();
+    await contains(".o_dropdown_title").click();
+    await waitForNone(".o-dropdown-item:contains('Split PDF')");
+
+    // Non-PDF with edit permission in preview
     await contains(".o_kanban_record:contains('text_file.txt') [name='document_preview']").click();
     await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
     await waitForNone(".o-dropdown-item:contains('Split PDF')");
+    await press("escape");
+    await waitForNone(".o-FileViewer");
 
-    // PDF with view permission
+    // PDF with view permission in control panel
+    await contains(".o_kanban_record:contains('pdf1.pdf') .o_record_selector").click();
+    await contains(".o_dropdown_title").click();
+    await waitForNone(".o-dropdown-item:contains('Split PDF')");
+
+    // PDF with view permission in preview
     await contains(".o_kanban_record:contains('pdf1.pdf') [name='document_preview']").click();
     await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
     await waitForNone(".o-dropdown-item:contains('Split PDF')");
+    await press("escape");
+    await waitForNone(".o-FileViewer");
 
-    // PDF with edit permission
+    // PDF with edit permission in control panel
+    await contains(".o_kanban_record:contains('pdf2.pdf') .o_record_selector").click();
+    await contains(".o_dropdown_title").click();
+    await waitFor(".o-dropdown-item:contains('Split PDF')");
+
+    // PDF with edit permission in preview
     await contains(".o_kanban_record:contains('pdf2.pdf') [name='document_preview']").click();
     await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
     await waitFor(".o-dropdown-item:contains('Split PDF')");
+});
+
+test("Export action is not available in file viewer ", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        {
+            folder_id: 1,
+            id: 2,
+            url: "https://youtu.be/Ayab6wZ_U1A",
+            type: "url",
+        },
+    ]);
+
+    const archWithURL = basicDocumentsKanbanArch.replace(
+        '<field name="name"/>',
+        '<field name="name"/>\n' + '<field name="url"/>'
+    );
+
+    DocumentsModels.DocumentsDocument._views = {
+        kanban: archWithURL,
+        [["search", false]]: getEnrichedSearchArch(),
+    };
+
+    await makeDocumentsMockEnv({ serverData });
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction(1);
+
+    await contains(
+        ".o_kanban_record:contains('https://youtu.be/Ayab6wZ_U1A') .o_record_selector"
+    ).click();
+    await contains(".o_dropdown_title").click();
+    await waitFor(".o-dropdown-item:contains('Export')");
+
+    await contains(
+        ".o_kanban_record:contains('https://youtu.be/Ayab6wZ_U1A') [name='document_preview']"
+    ).click();
+    await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
+    await waitForNone(".o-dropdown-item:contains('Export')");
 });
 
 test("Select a range with SHIFT key", async () => {
