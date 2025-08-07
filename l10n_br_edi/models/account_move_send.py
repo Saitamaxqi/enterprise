@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import _, api, models
-from odoo.exceptions import UserError
 
 
 class AccountMoveSend(models.AbstractModel):
@@ -16,15 +15,16 @@ class AccountMoveSend(models.AbstractModel):
         res.update({'br_edi': {'label': _("e-invoice (Brazil)"), 'is_applicable': self._is_br_edi_applicable}})
         return res
 
-    def _check_move_constrains(self, moves):
+    @api.model
+    def _get_move_constraints(self, move):
         # EXTENDS 'account'. Allow sending Avalara vendor bills."""
-        avatax_moves = moves.filtered('l10n_br_is_avatax')
-        if any(move.state != 'posted' for move in avatax_moves):
-            raise UserError(_("You can't electronically send invoices or bills that are not posted."))
-        if any(not move.is_sale_document() and not move.is_purchase_document() for move in avatax_moves):
-            raise UserError(_("You can only electronically send invoices and bills."))
+        constraints = super()._get_move_constraints(move) or {}
 
-        return super()._check_move_constrains(moves - avatax_moves)
+        if move.is_purchase_document() and move.l10n_br_is_avatax:
+            constraints.pop('not_sale_document', None)
+        if 'not_sale_document' in constraints:
+            constraints['not_sale_document'] = _("You can only electronically send invoices and bills.")
+        return constraints
 
     # -------------------------------------------------------------------------
     # ALERTS

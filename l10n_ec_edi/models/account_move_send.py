@@ -28,14 +28,13 @@ class AccountMoveSend(models.AbstractModel):
         raise UserError(_("There is no template that applies to this move type."))
 
     @api.model
-    def _check_move_constrains(self, moves):
+    def _get_move_constraints(self, move):
         """ Withhold moves are of type entry which will fail the constraint of account.move.send
             Since we are printing one specific report we can ignore this for withhold moves and only
             check for other move types
         """
-        withhold_moves = moves.filtered(lambda move: move._l10n_ec_is_withholding() and move.state == 'posted')
-        rest = moves - withhold_moves
-        super()._check_move_constrains(rest)
+        if not (move._l10n_ec_is_withholding() and move.state == 'posted'):
+            return super()._get_move_constraints(move)
 
     @api.model
     def _check_invoice_report(self, moves, **custom_settings):
