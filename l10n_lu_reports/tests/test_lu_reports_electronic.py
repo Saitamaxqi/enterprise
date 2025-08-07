@@ -175,8 +175,6 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
         move.action_post()
 
         options, declaration_to_compare = self._get_xml_declaration('l10n_lu.tax_report')
-        # Depending on the modules installed, the following values can change and the test is more about the values being present than their actual value.
-        oss, ioss, sme = self._get_oss_ioss_sme_values()
         expected_xml = """
         <eCDFDeclarations xmlns="http://www.ctie.etat.lu/2011/ecdf">
             <FileReference>%s</FileReference>
@@ -232,9 +230,6 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                                 <NumericField id="105">-39,50</NumericField>
                                 <Choice id="204">0</Choice>
                                 <Choice id="205">1</Choice>
-                                <Choice id="491">%s</Choice>
-                                <Choice id="492">%s</Choice>
-                                <Choice id="493">%s</Choice>
                                 <NumericField id="403">0</NumericField>
                                 <NumericField id="418">0</NumericField>
                                 <NumericField id="453">0</NumericField>
@@ -250,9 +245,6 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
         </eCDFDeclarations>
         """ % (
             options['filename'],
-            oss,
-            ioss,
-            sme,
         )
 
         self.assertXmlTreeEqual(
@@ -304,8 +296,6 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
         self.env['account.report.external.value'].create(create_vals)
 
         options, declaration_to_compare = self._get_xml_declaration('l10n_lu_reports.l10n_lu_annual_tax_report', yearly=True)
-        # Depending on the modules installed, the following values can change and the test is more about the values being present than their actual value.
-        oss, ioss, sme = self._get_oss_ioss_sme_values()
         expected_xml = """
             <eCDFDeclarations xmlns="http://www.ctie.etat.lu/2011/ecdf">
                 <FileReference>%s</FileReference>
@@ -362,6 +352,7 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                                     <NumericField id="110">35,00</NumericField>
                                     <NumericField id="108">35,00</NumericField>
                                     <NumericField id="192">271,82</NumericField>
+                                    <NumericField id="193">25,42</NumericField>
                                     <NumericField id="253">271,82</NumericField>
                                     <NumericField id="254">42,00</NumericField>
                                     <NumericField id="255">271,82</NumericField>
@@ -372,9 +363,6 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                                     <NumericField id="415">25,42</NumericField>
                                     <Choice id="204">0</Choice>
                                     <Choice id="205">1</Choice>
-                                    <Choice id="491">%s</Choice>
-                                    <Choice id="492">%s</Choice>
-                                    <Choice id="493">%s</Choice>
                                     <NumericField id="403">0</NumericField>
                                     <NumericField id="418">0</NumericField>
                                     <NumericField id="453">0</NumericField>
@@ -387,7 +375,6 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
                                     <NumericField id="234">1</NumericField>
                                     <NumericField id="235">31</NumericField>
                                     <NumericField id="236">12</NumericField>
-                                    <NumericField id="193">25,42</NumericField>
                                     <Table>
                                         <Line num="1">
                                             <TextField id="411">Holistic Detective Agency</TextField>
@@ -402,11 +389,7 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
             </eCDFDeclarations>
         """ % (
             options['filename'],
-            oss,
-            ioss,
-            sme,
         )
-
         self.assertXmlTreeEqual(
             self.get_xml_tree_from_string(declaration_to_compare),
             self.get_xml_tree_from_string(expected_xml)
@@ -667,6 +650,121 @@ class LuxembourgElectronicReportTest(TestAccountReportsCommon):
         new_context['report_generation_options'] = options
         wizard.with_context(new_context).get_xml()
         declaration_to_compare = b64decode(wizard.report_data.decode("utf-8"))[38:]
+
+        self.assertXmlTreeEqual(
+            self.get_xml_tree_from_string(declaration_to_compare),
+            self.get_xml_tree_from_string(expected_xml)
+        )
+
+    @freeze_time('2025-12-31')
+    def test_generate_xml_post_2025(self):
+        """From 2025, the tax report must contain tags 491, 492 and 493 for OSS, IOSS and SME."""
+        first_tax = self.env['account.tax'].search([('name', '=', '17% G'), ('company_id', '=', self.company_data['company'].id)], limit=1)
+        second_tax = self.env['account.tax'].search([('name', '=', '14% S'), ('company_id', '=', self.company_data['company'].id)], limit=1)
+
+        # Create and post a move with two move lines to get some data in the report
+        move = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'journal_id': self.company_data['default_journal_purchase'].id,
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2025-11-12',
+            'date': '2025-11-12',
+            'invoice_line_ids': [(0, 0, {
+                'product_id': self.product_a.id,
+                'quantity': 1.0,
+                'name': 'product test 1',
+                'price_unit': 150,
+                'tax_ids': first_tax.ids,
+            }), (0, 0, {
+                'product_id': self.product_b.id,
+                'quantity': 1.0,
+                'name': 'product test 2',
+                'price_unit': 100,
+                'tax_ids': second_tax.ids,
+            })]
+        })
+        move.action_post()
+
+        options, declaration_to_compare = self._get_xml_declaration('l10n_lu.tax_report')
+        # Depending on the modules installed, the following values can change and the test is more about the values being present than their actual value.
+        oss, ioss, sme = self._get_oss_ioss_sme_values()
+        expected_xml = """
+        <eCDFDeclarations xmlns="http://www.ctie.etat.lu/2011/ecdf">
+            <FileReference>%s</FileReference>
+            <eCDFFileVersion>2.0</eCDFFileVersion>
+            <Interface>MODL5</Interface>
+            <Agent>
+                <MatrNbr>12345678900</MatrNbr>
+                <RCSNbr>NE</RCSNbr>
+                <VATNbr>12345613</VATNbr>
+            </Agent>
+            <Declarations>
+                <Declarer>
+                    <MatrNbr>12345678900</MatrNbr>
+                    <RCSNbr>NE</RCSNbr>
+                    <VATNbr>12345613</VATNbr>
+                    <Declaration model="1" type="TVA_DECM" language="EN">
+                        <Year>2025</Year>
+                        <Period>11</Period>
+                        <FormData>
+                                <NumericField id="012">0,00</NumericField>
+                                <NumericField id="021">0,00</NumericField>
+                                <NumericField id="457">0,00</NumericField>
+                                <NumericField id="014">0,00</NumericField>
+                                <NumericField id="018">0,00</NumericField>
+                                <NumericField id="423">0,00</NumericField>
+                                <NumericField id="419">0,00</NumericField>
+                                <NumericField id="022">0,00</NumericField>
+                                <NumericField id="037">0,00</NumericField>
+                                <NumericField id="033">0,00</NumericField>
+                                <NumericField id="046">0,00</NumericField>
+                                <NumericField id="051">0,00</NumericField>
+                                <NumericField id="056">0,00</NumericField>
+                                <NumericField id="152">0,00</NumericField>
+                                <NumericField id="065">0,00</NumericField>
+                                <NumericField id="407">0,00</NumericField>
+                                <NumericField id="409">0,00</NumericField>
+                                <NumericField id="436">0,00</NumericField>
+                                <NumericField id="463">0,00</NumericField>
+                                <NumericField id="765">0,00</NumericField>
+                                <NumericField id="410">0,00</NumericField>
+                                <NumericField id="462">0,00</NumericField>
+                                <NumericField id="464">0,00</NumericField>
+                                <NumericField id="766">0,00</NumericField>
+                                <NumericField id="767">0,00</NumericField>
+                                <NumericField id="768">0,00</NumericField>
+                                <NumericField id="076">0,00</NumericField>
+                                <NumericField id="093">39,50</NumericField>
+                                <NumericField id="458">39,50</NumericField>
+                                <NumericField id="097">0,00</NumericField>
+                                <NumericField id="102">39,50</NumericField>
+                                <NumericField id="103">0,00</NumericField>
+                                <NumericField id="104">39,50</NumericField>
+                                <NumericField id="105">-39,50</NumericField>
+                                <Choice id="204">0</Choice>
+                                <Choice id="205">1</Choice>
+                                <Choice id="491">%s</Choice>
+                                <Choice id="492">%s</Choice>
+                                <Choice id="493">%s</Choice>
+                                <NumericField id="403">0</NumericField>
+                                <NumericField id="418">0</NumericField>
+                                <NumericField id="453">0</NumericField>
+                                <NumericField id="042">0,00</NumericField>
+                                <NumericField id="416">0,00</NumericField>
+                                <NumericField id="417">0,00</NumericField>
+                                <NumericField id="451">0,00</NumericField>
+                                <NumericField id="452">0,00</NumericField>
+                        </FormData>
+                    </Declaration>
+                </Declarer>
+            </Declarations>
+        </eCDFDeclarations>
+        """ % (
+            options['filename'],
+            oss,
+            ioss,
+            sme,
+        )
 
         self.assertXmlTreeEqual(
             self.get_xml_tree_from_string(declaration_to_compare),
