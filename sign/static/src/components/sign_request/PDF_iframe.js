@@ -60,7 +60,32 @@ export class PDFIframe {
             this.addCanvasLayer();
             this.renderSignItems();
             this.postRender();
+
+            const { eventBus } = this.root.defaultView.PDFViewerApplication;
+            eventBus.on("pagerendered",  (ev) => this.refreshSignItems(ev.pageNumber));
+            eventBus.on("scalechange",   ()  => this.updateFontSize());
+            eventBus.on("rotationchanging",() => this.updateFontSize());
         });
+    }
+
+    refreshSignItemsForPage(page) {
+        const pageContainer = this.getPageContainer(page);
+        if (!pageContainer) return;
+
+        for (const id in this.signItems[page]) {
+            const signItem = this.signItems[page][id].el;
+            signItem.classList.remove("d-none");
+            if (signItem && signItem.hasAttribute("data-signature")) {
+                signItem.addEventListener("dragstart", (event) => {
+                    event.preventDefault();
+                });
+            }
+            if (!signItem.parentElement || !signItem.parentElement.classList.contains("page")) {
+                pageContainer.append(signItem);
+            }
+            this.updateSignItemFontSize(this.signItems[page][id]);
+        }
+        this.renderAllConnectingLines();
     }
 
     unmount() {
@@ -218,29 +243,15 @@ export class PDFIframe {
         });
     }
 
-    /**
-     * PDF.js removes custom elements every once in a while.
-     * So we need to constantly re-render them :(
-     * We keep the elements stored in memory, so we don't need to call the qweb engine everytime a element is detached
-     */
-    refreshSignItems() {
-        for (const page in this.signItems) {
-            const pageContainer = this.getPageContainer(page);
-            for (const id in this.signItems[page]) {
-                const signItem = this.signItems[page][id].el;
-                signItem.classList.remove("d-none");
-                if (signItem && signItem.hasAttribute("data-signature")) {
-                    signItem.addEventListener("dragstart", (event) => {
-                        event.preventDefault();
-                    });
-                }
-                if (!signItem.parentElement || !signItem.parentElement.classList.contains("page")) {
-                    pageContainer.append(signItem);
-                }
+    refreshSignItems(page = false) {
+        if (page) {
+            this.refreshSignItemsForPage(page);
+        }
+        else {
+            for (const page in this.signItems) {
+                this.refreshSignItemsForPage(page);
             }
         }
-        this.updateFontSize();
-        this.renderAllConnectingLines();
     }
 
     /**
@@ -301,8 +312,6 @@ export class PDFIframe {
     }
 
     postRender() {
-        const refreshSignItemsIntervalId = setInterval(() => this.refreshSignItems(), 1000);
-        this.cleanupFns.push(() => clearInterval(refreshSignItemsIntervalId));
     }
 
     /**
