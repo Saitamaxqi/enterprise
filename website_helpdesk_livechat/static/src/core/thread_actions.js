@@ -9,15 +9,15 @@ import { _t } from "@web/core/l10n/translation";
 import { usePopover } from "@web/core/popover/popover_hook";
 
 threadActionsRegistry.add("create-ticket", {
-    close: (component, action) => action.popover?.close(),
-    component: LivechatCommandDialog,
-    componentProps: (component, action) => ({
+    actionPanelComponent: LivechatCommandDialog,
+    actionPanelComponentProps: (component, action) => ({
         close: () => action.close(),
         commandName: "ticket",
         placeholderText: _t("e.g. Product arrived damaged"),
         title: _t("Create Ticket"),
         icon: "fa fa-life-ring",
     }),
+    close: (component, action) => action.popover?.close(),
     condition: (component) => false,
     panelOuterClass: "bg-100",
     icon: "fa fa-life-ring fa-fw",
@@ -38,7 +38,7 @@ threadActionsRegistry.add("create-ticket", {
     open(component, action) {
         action.popover?.open(component.root.el.querySelector(`[name="${action.id}"]`), {
             thread: component.thread,
-            ...action.componentProps,
+            ...action.actionPanelComponentProps,
         });
     },
 });
