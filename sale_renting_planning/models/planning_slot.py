@@ -71,7 +71,7 @@ class PlanningSlot(models.Model):
             **action,
             'view_mode': 'form',
             'views': [(view_id, view_type) for view_id, view_type in action['views'] if view_type == 'form'],
-            'target': 'new',
+            'target': 'current',
             'context': context,
         }
 
