@@ -140,10 +140,7 @@
             <xpath expr="//div[@id='allocated_hours_container']" position="attributes">
                 <attribute name="invisible">not allow_timesheets or is_fsm</attribute>
             </xpath>
-            <xpath expr="//field[@name='priority']" position="attributes">
-                <attribute name="invisible">is_fsm</attribute>
-            </xpath>
-            <xpath expr="//field[@name='tag_ids']" position="before">
+            <xpath expr="//field[@name='user_ids']" position="after">
                 <label for="date_deadline" string="Planned Date" invisible="not is_fsm"/>
                 <div id="date_deadline_and_recurring_task" class="d-inline-flex w-100" invisible="not is_fsm">
                     <field
@@ -173,7 +170,6 @@
                     </span>
                     (<field name="progress" invisible="not project_id" class="oe_inline" nolabel="1" decoration-danger="progress > 1.005" digits="[1, 0]" widget="percentage"/>)
                 </div>
-                <field name="priority" widget="priority_switch" invisible="not is_fsm"/>
             </xpath>
         </field>
     </record>
