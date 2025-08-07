@@ -92,3 +92,61 @@ class TestCFDIInvoiceDocuments(TestMxEdiCommon):
             'invoice_ids': (invoice + new_invoice).ids,
         }])
         self.assertRecordValues(sale_order.order_line, [{'qty_invoiced': 2}])
+
+    @freeze_time('2017-02-01')
+    def test_invoice_cancellation_01_from_sale_orders_in_locked_period(self):
+        """
+        Test that a compute of invoiced_qty is triggered after a cfdi state change
+        """
+        with freeze_time('2017-02-01'):
+            sale_order = self.env['sale.order'].create({
+                'partner_id': self.partner_mx.id,
+                'l10n_mx_edi_payment_method_id': self.env.ref('l10n_mx_edi.payment_method_efectivo').id,
+                'order_line': [Command.create({
+                    'product_id': self.product.id,
+                    'product_uom_qty': 1,
+                })],
+            })
+            sale_order.action_confirm()
+
+        with freeze_time('2017-01-31'):
+            invoice = sale_order._create_invoices()
+            invoice.action_post()
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+        lock_date_wizard = self.env['account.change.lock.date'].create({
+            'fiscalyear_lock_date': '2017-01-31',
+        })
+        lock_date_wizard.change_lock_date()
+
+        action_results = self.env['l10n_mx_edi.invoice.cancel'] \
+            .with_context(invoice.button_request_cancel()['context']) \
+            .create({}) \
+            .action_create_replacement_invoice()
+
+        with freeze_time('2017-02-01'):
+            new_invoice = self.env['account.move'].browse(action_results['res_id'])
+            new_invoice.action_post()
+            with self.with_mocked_pac_sign_success():
+                new_invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            invoice.invalidate_recordset(fnames=['l10n_mx_edi_cfdi_cancel_id'])
+
+            credit_note_wizard = self.env['account.move.reversal']\
+                .with_context(active_model='account.move', active_ids=invoice.ids)\
+                .create({
+                    'reason': 'refund',
+                    'journal_id': invoice.journal_id.id,
+                })
+            credit_note_wizard.refund_moves()
+        reversal_move = self.env['account.move'].browse(credit_note_wizard.refund_moves()['res_id'])
+        reversal_move.action_post()
+
+        self.env.invalidate_all()
+        with self.with_mocked_pac_cancel_success():
+            self.env['l10n_mx_edi.invoice.cancel']\
+                .with_context(**invoice.button_request_cancel()['context'])\
+                .create({})\
+                .action_cancel_invoice()
+
+        self.assertRecordValues(sale_order.order_line, [{'qty_invoiced': 0.0}])

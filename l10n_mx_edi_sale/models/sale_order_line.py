@@ -1,4 +1,4 @@
-from odoo import models
+from odoo import models, api
 
 
 class SaleOrderLine(models.Model):
@@ -16,3 +16,11 @@ class SaleOrderLine(models.Model):
                 .l10n_mx_edi_cfdi_cancel_id
         )
         return invoice_lines.filtered(lambda x: x.move_id not in excluded_invoices)
+
+    @api.depends('invoice_lines.move_id.l10n_mx_edi_cfdi_state')
+    def _compute_qty_invoiced(self):
+        """
+        We need to ensure that invoiced_qty is recomputed when the cfdi state is updated
+        For instance in the case of confirming a cfdi cancellation
+        """
+        super()._compute_qty_invoiced()
