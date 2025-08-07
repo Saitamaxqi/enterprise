@@ -69,6 +69,7 @@ class ReportL10n_In_Hr_PayrollReport_Hryearlysalary(models.AbstractModel):
     def _cal_monthly_amt(self, form, emp_id, months, date_from, date_to):
         result = {}
         salaries = {}
+        lang_code = self.env.context.get('lang', 'en_US')
 
         self.env.cr.execute(SQL(
             """
@@ -88,6 +89,7 @@ class ReportL10n_In_Hr_PayrollReport_Hryearlysalary(models.AbstractModel):
         ))
 
         for category_code, item_name, amount, payslip_date, structure_name in self.env.cr.fetchall():
+            structure_name = structure_name.get(lang_code, '')
             salaries.setdefault(structure_name, {}).setdefault(category_code, {}).setdefault(item_name, {}).setdefault(payslip_date, 0.0)
             salaries[structure_name][category_code][item_name][payslip_date] += amount
 
