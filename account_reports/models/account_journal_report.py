@@ -212,9 +212,7 @@ class AccountJournalReportHandler(models.AbstractModel):
             'base_url': base_url,
             'company': self.env.company,
         }
-
-        footer = self.env['ir.actions.report']._render_template('account_reports.internal_layout', values=rcontext)
-        footer = self.env['ir.actions.report']._render_template('web.minimal_layout', values=dict(rcontext, subst=True, body=Markup(footer.decode())))
+        footer = self.env['account.report']._get_layout_footer(rcontext)
 
         document_data = self._generate_document_data_for_export(report, print_options, 'pdf')
         render_values = {
@@ -228,7 +226,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         action_report = self.env['ir.actions.report']
         pdf_file_stream = io.BytesIO(action_report._run_wkhtmltopdf(
             [body],
-            footer=footer.decode(),
+            footer=footer,
             landscape=False,
             specific_paperformat_args={
                 'data-report-margin-top': 10,

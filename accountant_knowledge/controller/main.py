@@ -74,7 +74,9 @@ def get_account_reports_pdfs(root):
         embedded_props = json.loads(element.get('data-embedded-props', '{}'))
         all_account_report_options.append(embedded_props.get('options', {}))
 
-    all_account_reports = request.env['account.report'].browse({
+    AccountReport = request.env['account.report'].with_context(
+        exclude_page_footer=True)
+    all_account_reports = AccountReport.browse({
         account_report_options['report_id']
             for account_report_options in all_account_report_options
     })

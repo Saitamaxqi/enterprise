@@ -5822,8 +5822,7 @@ class AccountReport(models.Model):
             key=lambda report: len(report[1]['columns']) > 5 or report[1].get('horizontal_split')
         )
 
-        footer = self.env['ir.actions.report']._render_template("account_reports.internal_layout", values=rcontext)
-        footer = self.env['ir.actions.report']._render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=markupsafe.Markup(footer.decode())))
+        footer = self._get_layout_footer(rcontext)
 
         action_report = self.env['ir.actions.report']
         files_stream = []
@@ -5839,7 +5838,7 @@ class AccountReport(models.Model):
             files_stream.append(
                 io.BytesIO(action_report._run_wkhtmltopdf(
                     bodies,
-                    footer=footer.decode(),
+                    footer=footer,
                     landscape=is_landscape or self.env.context.get('force_landscape_printing'),
                     specific_paperformat_args={
                         'data-report-margin-top': 10,
@@ -5864,6 +5863,14 @@ class AccountReport(models.Model):
             'file_content': result,
             'file_type': 'pdf',
         }
+
+    def _get_layout_footer(self, rcontext):
+        if self.env.context.get('exclude_page_footer'):
+            return None
+        else:
+            footer_html = self.env['ir.actions.report']._render_template("account_reports.internal_layout", values=rcontext)
+            footer_html = self.env['ir.actions.report']._render_template("web.minimal_layout", values=dict(rcontext, subst=True, body=markupsafe.Markup(footer_html.decode())))
+            return footer_html.decode()
 
     def _get_pdf_export_html(self, options, lines, additional_context=None, template=None):
         report_info = self.get_report_information(options)
