@@ -262,6 +262,10 @@ class VoipCall(models.Model):
             domain = [("phone_mobile_search", "=", number)]
         partner = self.env["res.partner"].search(domain, limit=1)
         if not partner:
+            partner = self.env["res.users.settings"].search([
+                ("voip_username", "=", number)
+            ], limit=1).user_id.partner_id
+        if not partner:
             return False
         self.partner_id = partner
         return Store().add(self, self._get_voip_store_fields()).get_result()
