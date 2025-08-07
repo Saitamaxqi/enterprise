@@ -2020,7 +2020,7 @@ registry.category("web_tour.tours").add("web_studio_related_monetary_creation", 
         },
         {
             // The related monetary is created
-            trigger: ".o_web_studio_view_renderer .o_form_label:contains('New Related Field')",
+            trigger: ".o_web_studio_view_renderer .o_form_label:contains('X Studio Monetary Test')",
             run: "click",
         },
         {

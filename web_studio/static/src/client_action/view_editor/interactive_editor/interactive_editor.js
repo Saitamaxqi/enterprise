@@ -25,6 +25,7 @@ import {
     countPreviousSiblings,
 } from "@web_studio/client_action/view_editor/editors/xml_utils";
 import { DefaultViewSidebar } from "@web_studio/client_action/view_editor/default_view_sidebar/default_view_sidebar";
+import { waitUntil } from "@odoo/hoot-dom";
 
 const NO_M2O_AVAILABLE = _t(`
     There are no many2one fields related to the current model.
@@ -168,7 +169,7 @@ export class InteractiveEditor extends Component {
             },
         });
 
-        this.applyAutoClick = () => {
+        this.applyAutoClick = async () => {
             if (!this.autoClick) {
                 return;
             }
@@ -200,9 +201,14 @@ export class InteractiveEditor extends Component {
             }
 
             // Second step: locate corresponding dom element
-            const domEl = this.props.rendererRef.el.querySelector(
-                `[data-studio-xpath='${xpathToClick}'], [studioxpath='${xpathToClick}']`
-            );
+            let domEl;
+            await waitUntil(() => {
+                domEl = this.props.rendererRef.el?.querySelector(
+                    `[data-studio-xpath='${xpathToClick}'], [studioxpath='${xpathToClick}']`
+                );     
+                return domEl && domEl.isConnected;
+            }).catch(() => true);
+            
             if (domEl) {
                 domEl.click();
             }

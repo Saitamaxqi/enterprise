@@ -250,7 +250,7 @@ class TestEditView(TestStudioController):
                             <form>
                                 <sheet>
                                     <field name="display_name"/>
-                                    <field name="group_ids" widget="many2many_tags" options="{&quot;color_field&quot;: &quot;x_color&quot;, &quot;no_create&quot;: true}"/>
+                                    <field name="group_ids" widget="many2many_tags" options="{&quot;color_field&quot;:&quot;color&quot;,&quot;no_create&quot;:true}"/>
                                 </sheet>
                             </form>
                         </field>

@@ -6,7 +6,6 @@ import {
     queryAllTexts,
     unload,
     queryFirst,
-    waitFor,
     waitForNone,
 } from "@odoo/hoot-dom";
 import { animationFrame, runAllTimers } from "@odoo/hoot-mock";
@@ -904,33 +903,6 @@ test("One2Many can edit its placeholder", async () => {
     });
     await contains(".o_cell[data-field-name=product_ids]").click();
     expect(".o_web_studio_property input[name=placeholder]").toHaveCount(1);
-});
-
-test("form editor - chatter edition", async () => {
-    onRpc("/web_studio/get_email_alias", () => ({ email_alias: "coucou" }));
-    await mountViewEditor({
-        type: "form",
-        resModel: "coucou",
-        arch: /*xml*/ `
-            <form>
-                <sheet>
-                    <field name='display_name'/>
-                </sheet>
-                <chatter/>
-            </form>
-        `,
-        filterRegistry: false,
-    });
-    // click on the chatter
-    await contains(".o-mail-Form-chatter .o_web_studio_overlay").click();
-    expect(".o_web_studio_sidebar .nav-link.active").toHaveText("Properties", {
-        message: "the Properties tab should now be active",
-    });
-    await waitFor(".o_web_studio_sidebar input[name='email_alias']");
-    expect(".o_web_studio_sidebar input[name='email_alias']").toHaveValue("coucou", {
-        message: "the email alias in sidebar should be fetched",
-    });
-    await waitFor(".o-mail-Form-chatter.o-web-studio-editor--element-clicked");
 });
 
 test("always invisible fields are flagged as not present in arch", async () => {
@@ -3159,9 +3131,11 @@ test("Auto save: don't auto-save a form editor", async () => {
     patchWithCleanup(RelationalModel.prototype, {
         setup(...args) {
             super.setup(...args);
-            this.bus.addEventListener("WILL_SAVE_URGENTLY", () => expect.step("WILL_SAVE_URGENTLY"))
-        }
-    })
+            this.bus.addEventListener("WILL_SAVE_URGENTLY", () =>
+                expect.step("WILL_SAVE_URGENTLY")
+            );
+        },
+    });
 
     await mountViewEditor({
         type: "form",
@@ -4306,4 +4280,50 @@ test("Add tooltip support on the button", async () => {
     });
     await contains(".o_statusbar_buttons button").click();
     expect(".o_web_studio_sidebar .o_web_studio_property #title").toHaveValue("Test");
+});
+
+test("Change color on many2many tags", async () => {
+    Product._fields.product_color = fields.Integer({ string: "Product Color" });
+    Partner._fields.partner_color = fields.Integer({ string: "Partner Color" });
+
+    await mountViewEditor({
+        type: "form",
+        resModel: "product",
+        arch: /*xml*/ `
+            <form>
+                <sheet>
+                    <group>
+                        <field name="m2m_employees" widget="many2many_avatar_user"/>
+                    </group>
+                </sheet>
+            </form>
+        `,
+    });
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        expect(params.operations[0].new_attrs).toEqual({
+            options: '{"color_field":"partner_color"}',
+        });
+        const newArch = /* xml */ `
+            <form>
+                <sheet>
+                    <group>
+                        <field name="m2m_employees" widget="many2many_tags" options="{'color_field': 'partner_color'}"/>
+                    </group>
+                </sheet>
+            </form>`;
+        return editView(params, "form", newArch);
+    });
+
+    onRpc("partner", "fields_get", () => {
+        expect.step("fields_get");
+    });
+
+    await contains(".o_form_label").click();
+    await contains("input[name='color_field']").click();
+    expect.verifySteps(["fields_get"]);
+    expect(queryAllTexts(".dropdown-item")).toEqual(["Id", "Partner Color"]);
+    await contains(".dropdown-item:contains('Partner Color')").click();
+    expect("input[name='color_field']").toHaveValue("Partner Color");
+    expect.verifySteps(["fields_get"]);
 });

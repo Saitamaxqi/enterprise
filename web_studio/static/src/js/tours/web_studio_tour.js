@@ -131,23 +131,6 @@ registry.category("web_tour.tours").add("web_studio_new_app_tour", {
             run: "click",
         },
         {
-            trigger: ".o_web_studio_form_view_editor .o-mail-Chatter",
-            content: _t("Click to edit messaging features on your model."),
-            tooltipPosition: "top",
-            run: "click",
-            timeout: 15000, // this can take some time on 'slow' builds (coverage, etc.)
-        },
-        {
-            trigger: '.o_web_studio_sidebar input[name="email_alias"]',
-            content: markup(
-                _t(
-                    "Set an <b>email alias</b>. Then, try to send an email to this address; it will create a document automatically for you. Pretty cool, huh?"
-                )
-            ),
-            tooltipPosition: "bottom",
-            run: "edit Test",
-        },
-        {
             trigger: ".o_web_studio_leave",
             content: markup(
                 _t(

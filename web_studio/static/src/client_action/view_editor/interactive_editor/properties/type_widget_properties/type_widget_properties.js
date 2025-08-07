@@ -23,6 +23,7 @@ export class TypeWidgetProperties extends Component {
 
     setup() {
         this.orm = useService("orm");
+        this.fieldService = useService("field");
         this.attributes = useState({
             field: [],
             selection: [],
@@ -202,6 +203,18 @@ export class TypeWidgetProperties extends Component {
 
     async getFieldChoices(attribute, fields) {
         let availableFields = fields;
+        if (
+            attribute.isRelationalField &&
+            this.props.node.field.relation !== this.env.viewEditorModel.resModel
+        ) {
+            const newFields = await this.fieldService.loadFields(this.props.node.field.relation);
+            availableFields = Object.entries(newFields).map(([key, value]) => {
+                return {
+                    ...value,
+                    name: value.name || key,
+                };
+            });
+        }
         // Specific code to filter available fields to display is handled here as supportedOptions
         // is a generic description and don't allow to describe the full spec of an option
         if (attribute.name === "fold_field") {

@@ -289,6 +289,20 @@ export class ViewEditorModel extends Reactive {
     }
 
     //-----------------------------------------------------------------
+    // Static methods
+    //-----------------------------------------------------------------
+    static sanitizeString(string) {
+        string = string.normalize("NFD");
+        string = string
+            .toLowerCase()
+            .trim()
+            .replace(/[^\w\s-]/g, "") // remove non-word [a-z0-9_], non-whitespace, non-hyphen characters
+            .replace(/[\s_-]+/g, "_") // swap any length of whitespace, underscore, hyphen characters with a single _
+            .replace(/^-+|-+$/g, ""); // remove leading, trailing
+        return string;
+    }
+
+    //-----------------------------------------------------------------
     // Public getters and setters
     //-----------------------------------------------------------------
     get editorInfo() {
@@ -605,13 +619,7 @@ export class ViewEditorModel extends Reactive {
     }
 
     async renameField(fieldName, newName, { label, autoUnique = true } = {}) {
-        // Sanitization
-        newName = newName
-            .toLowerCase()
-            .trim()
-            .replace(/[^\w\s-]/g, "") // remove non-word [a-z0-9_], non-whitespace, non-hyphen characters
-            .replace(/[\s_-]+/g, "_") // swap any length of whitespace, underscore, hyphen characters with a single _
-            .replace(/^-+|-+$/g, ""); // remove leading, trailing
+        newName = ViewEditorModel.sanitizeString(newName);
 
         if (!newName.startsWith("x_studio_")) {
             newName = `x_studio_${newName}`;

@@ -45,7 +45,7 @@
             <h6 class="mb-3 fw-bolder" t-esc="category_value.title" />
             <div class="grid" style="grid-template-columns: repeat(3, 115px); gap: 20px;">
               <t t-foreach="getOrderedViewTypes(category_value.viewTypes)" t-as="viewInfo" t-key="viewInfo.name">
-                <ThumbnailItem onClick="() => this.onThumbnailClicked(viewInfo.name)" icon="{src: viewInfo.imgUrl, alt:'View ' + viewInfo.title }" canClick="isActionEditable or viewInfo.isActive" showMoreMenu="viewInfo.isActive and (viewInfo.canBeDefault or viewInfo.canBeDisabled)" className="`o_web_studio_thumbnail_${viewInfo.name} overflow-hidden ${viewInfo.isActive ? '' : 'disabled'}`">
+                <ThumbnailItem onClick="() => this.onThumbnailClicked(viewInfo.name)" icon="{src: viewInfo.imgUrl, alt:'View ' + viewInfo.title }" canClick="isActionEditable or viewInfo.isActive" showMoreMenu="viewInfo.isActive and (viewInfo.canBeDefault or viewInfo.canBeDisabled)" className="`o_web_studio_thumbnail_${viewInfo.name} overflow-hidden ${viewInfo.isActive ? '' : 'disabled'} ${ isActionEditable or viewInfo.isActive ? 'cursor-pointer' : '' }`">
                   <t t-set-slot="default">
                     <t t-out="viewInfo.title" />
                     <span t-if="viewInfo.isDefault" class="o_web_studio_default_view fa-stack fa-sm position-absolute top-0 end-0 text-primary m-1" role="img" aria-label="Default view" title="Default view">

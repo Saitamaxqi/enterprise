@@ -339,6 +339,13 @@ class WebStudioController(http.Controller):
         if type_ := values.pop('type', None):
             values['ttype'] = type_
 
+        # For related fields
+        if (string := values.get("string")) and values.get('related'):
+            if request.env['ir.model.fields'].search_count([("model", "=", model_name), ("field_description", "=", string)]):
+                values["field_description"] = _('%s (Copy)', string)
+            else:
+                values["field_description"] = string
+
         # For many2one and many2many fields
         if rel_id := values.pop('relation_id', None):
             values['relation'] = request.env['ir.model'].browse(rel_id).model
@@ -568,6 +575,7 @@ class WebStudioController(http.Controller):
                 'name': filename,
                 'type': 'char',
                 'field_description': request.env._('Filename for %s', op['node']['field_description']['name']),
+                'string': f"{bin_file_field_name} Filename",
             })
             node = op.get('node')
             if node and node.get('tag') == 'field' and node.get('field_description') and node['field_description'].get('related'):
@@ -1068,27 +1076,6 @@ Are you sure you want to remove the selection values of those records?""", len(r
                     eval_attr.append(group_attr)
             eval_attr = ",".join(eval_attr)
             new_attrs['groups'] = eval_attr
-
-        if new_attrs.get('options'):
-            options = json.loads(new_attrs['options'])
-            if 'color_field' in options:
-                field_name = operation['node']['attrs']['name']
-                field_id = request.env['ir.model.fields'].search([('model', '=', model), ('name', '=', field_name)])
-                related_model_id = request.env['ir.model']._get(field_id.relation)
-
-                if 'color' in related_model_id.field_id.mapped('name'):
-                    options['color_field'] = 'color'
-                else:
-                    if 'x_color' not in related_model_id.field_id.mapped('name'):
-                        request.env['ir.model.fields'].with_context(studio=True).create({
-                            'model': related_model_id.name,
-                            'model_id': related_model_id.id,
-                            'name': 'x_color',
-                            'field_description': 'Color',
-                            'ttype': 'integer',
-                        })
-                    options['color_field'] = 'x_color'
-                new_attrs['options'] = json.dumps(options)
 
         if new_attrs.get('type') and operation['target']['tag'] == 'button':
             # Set an empty name value for the button
