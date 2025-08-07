@@ -256,6 +256,7 @@ class SignRequestItem(models.Model):
                 'show_validity': signer.sign_request_id.validity and not has_default_validity,
             }, lang=signer_lang, minimal_qcontext=True)
 
+            attachment_ids = signer.sign_request_id.attachment_ids.ids
             self.env['sign.request'].with_context(lang=signer.partner_id.lang or self.env.lang)._message_send_mail(
                 body,
                 record_name=signer.sign_request_id.reference,
@@ -269,6 +270,7 @@ class SignRequestItem(models.Model):
                     'email_from': signer.create_uid.email_formatted,
                     'email_to': formataddr((signer.partner_id.name, signer_email_normalized)),
                     'subject': signer.sign_request_id.subject,
+                    'attachment_ids': attachment_ids,
                 },
                 force_send=self.env.context.get('force_send', True),  # only force_send if not from cron
             )
