@@ -205,6 +205,9 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
 
         for column_group_key, options in options_by_column_group.items():
             query = report._get_report_query(options, 'strict_range')
+            # make sure account_move is always joined
+            if 'account_move_line__move_id' not in query._joins:
+                query.join('account_move_line', 'move_id', 'account_move', 'id', 'move_id')
 
             # Fetch the base amounts.
             self.env.cr.execute(SQL(
