@@ -18,17 +18,17 @@ export class OdooLineChartConfigPanel extends CommonOdooChartConfigPanel {
     }
 
     onUpdateStacked(stacked) {
-        this.props.updateChart(this.props.figureId, {
+        this.props.updateChart(this.props.chartId, {
             stacked,
         });
     }
     onUpdateCumulative(cumulative) {
-        this.props.updateChart(this.props.figureId, {
+        this.props.updateChart(this.props.chartId, {
             cumulative,
         });
     }
     onUpdateCumulatedStart(cumulatedStart) {
-        this.props.updateChart(this.props.figureId, {
+        this.props.updateChart(this.props.chartId, {
             cumulatedStart,
         });
     }

@@ -12,7 +12,7 @@
                 <div><t t-esc="modelDisplayName" /> (<t t-esc="model" />)</div>
             </Section>
             <Section title.translate="Domain">
-                <DomainSelector resModel="model" domain="domain" t-key="'odoo_chart_' + props.figureId" />
+                <DomainSelector resModel="model" domain="domain" t-key="'odoo_chart_' + props.chartId" />
                 <div class="btn btn-link o_edit_domain" t-on-click="openDomainEdition">
                     <i class="oi oi-arrow-right me-1" />Edit domain
                 </div>

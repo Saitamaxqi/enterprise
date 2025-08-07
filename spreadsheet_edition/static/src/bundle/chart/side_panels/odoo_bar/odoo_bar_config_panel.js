@@ -12,7 +12,7 @@ export class OdooBarChartConfigPanel extends CommonOdooChartConfigPanel {
     };
 
     onUpdateStacked(stacked) {
-        this.props.updateChart(this.props.figureId, {
+        this.props.updateChart(this.props.chartId, {
             stacked,
         });
     }

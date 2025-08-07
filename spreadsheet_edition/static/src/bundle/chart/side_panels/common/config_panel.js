@@ -14,7 +14,7 @@ export class CommonOdooChartConfigPanel extends Component {
     static template = "spreadsheet_edition.CommonOdooChartConfigPanel";
     static components = { IrMenuSelector, DomainSelector, Section, ValidationMessages };
     static props = {
-        figureId: String,
+        chartId: String,
         definition: Object,
         updateChart: Function,
         canUpdateChart: Function,
@@ -24,20 +24,20 @@ export class CommonOdooChartConfigPanel extends Component {
 
     setup() {
         this.dialog = useService("dialog");
-        const loadData = async (figureId) => {
-            const dataSource = this.env.model.getters.getChartDataSource(figureId);
+        const loadData = async (chartId) => {
+            const dataSource = this.env.model.getters.getChartDataSource(chartId);
             this.isModelValid = dataSource.isModelValid();
             this.isDataLoaded = dataSource.isReady();
             if (this.isModelValid) {
                 this.modelDisplayName = await dataSource.getModelLabel();
             }
         };
-        onWillStart(() => loadData(this.props.figureId));
-        onWillUpdateProps((nextProps) => loadData(nextProps.figureId));
+        onWillStart(() => loadData(this.props.chartId));
+        onWillUpdateProps((nextProps) => loadData(nextProps.chartId));
     }
 
     get invalidChartModel() {
-        const model = this.env.model.getters.getChartDefinition(this.props.figureId).metaData
+        const model = this.env.model.getters.getChartDefinition(this.props.chartId).metaData
             .resModel;
         return _t(
             "The model (%(model)s) of this chart is not valid (it may have been renamed/deleted). Please re-insert a new chart.",
@@ -48,23 +48,25 @@ export class CommonOdooChartConfigPanel extends Component {
     }
 
     get model() {
-        const definition = this.env.model.getters.getChartDefinition(this.props.figureId);
+        const definition = this.env.model.getters.getChartDefinition(this.props.chartId);
         return definition.metaData.resModel;
     }
 
     get domain() {
-        const definition = this.env.model.getters.getChartDefinition(this.props.figureId);
+        const definition = this.env.model.getters.getChartDefinition(this.props.chartId);
         return new Domain(definition.searchParams.domain).toString();
     }
 
     onNameChanged(title) {
         const definition = {
-            ...this.env.model.getters.getChartDefinition(this.props.figureId),
+            ...this.env.model.getters.getChartDefinition(this.props.chartId),
             title,
         };
+        const figureId = this.env.model.getters.getFigureIdFromChartId(this.props.chartId);
         this.env.model.dispatch("UPDATE_CHART", {
-            figureId: this.props.figureId,
-            sheetId: this.env.model.getters.getFigureSheetId(this.props.figureId),
+            chartId: this.props.chartId,
+            figureId,
+            sheetId: this.env.model.getters.getFigureSheetId(figureId),
             definition,
         });
     }
@@ -75,7 +77,7 @@ export class CommonOdooChartConfigPanel extends Component {
      * @returns {string} date formatted
      */
     getLastUpdate() {
-        const dataSource = this.env.model.getters.getChartDataSource(this.props.figureId);
+        const dataSource = this.env.model.getters.getChartDataSource(this.props.chartId);
         const lastUpdate = dataSource.lastUpdate;
         if (lastUpdate) {
             return new Date(lastUpdate).toLocaleTimeString();
@@ -89,7 +91,7 @@ export class CommonOdooChartConfigPanel extends Component {
             domain: new Domain(this.domain).toString(),
             isDebugMode: !!this.env.debug,
             onConfirm: (domain) => {
-                const definition = this.env.model.getters.getChartDefinition(this.props.figureId);
+                const definition = this.env.model.getters.getChartDefinition(this.props.chartId);
                 const updatedDefinition = {
                     ...definition,
                     searchParams: {
@@ -97,17 +99,20 @@ export class CommonOdooChartConfigPanel extends Component {
                         domain: new Domain(domain).toJson(),
                     },
                 };
-                this.env.model.dispatch("UPDATE_CHART", {
-                    figureId: this.props.figureId,
-                    sheetId: this.env.model.getters.getFigureSheetId(this.props.figureId),
+                const figureId = this.env.model.getters.getFigureIdFromChartId(this.props.chartId);
+                const result = this.env.model.dispatch("UPDATE_CHART", {
+                    chartId: this.props.chartId,
+                    figureId,
+                    sheetId: this.env.model.getters.getFigureSheetId(figureId),
                     definition: updatedDefinition,
                 });
+                console.log("Update chart result", result);
             },
         });
     }
 
     get odooMenuId() {
-        const menu = this.env.model.getters.getChartOdooMenu(this.props.figureId);
+        const menu = this.env.model.getters.getChartOdooMenu(this.props.chartId);
         return menu ? menu.id : undefined;
     }
     /**
@@ -116,14 +121,14 @@ export class CommonOdooChartConfigPanel extends Component {
     updateOdooLink(odooMenuId) {
         if (!odooMenuId) {
             this.env.model.dispatch("LINK_ODOO_MENU_TO_CHART", {
-                chartId: this.props.figureId,
+                chartId: this.props.chartId,
                 odooMenuId: undefined,
             });
             return;
         }
         const menu = this.env.model.getters.getIrMenu(odooMenuId);
         this.env.model.dispatch("LINK_ODOO_MENU_TO_CHART", {
-            chartId: this.props.figureId,
+            chartId: this.props.chartId,
             odooMenuId: menu.xmlid || menu.id,
         });
     }

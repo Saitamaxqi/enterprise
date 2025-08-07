@@ -11,7 +11,8 @@ class OdooLinkClipboardHandler extends AbstractFigureClipboardHandler {
         if (figure.tag !== "chart") {
             return;
         }
-        const odooMenuId = this.getters.getChartOdooMenu(data.figureId);
+        const chartId = this.getters.getChartIdFromFigureId(data.figureId);
+        const odooMenuId = this.getters.getChartOdooMenu(chartId);
         if (odooMenuId) {
             return { odooMenuId };
         }

@@ -5,11 +5,12 @@ const { clipboardHandlersRegistries } = registries;
 
 class OdooChartFieldMatchingClipboardHandler extends AbstractFigureClipboardHandler {
     copy({ figureId }) {
-        if (!this.getters.getChart(figureId)?.type.startsWith("odoo")) {
+        const chartId = this.getters.getChartIdFromFigureId(figureId);
+        if (!this.getters.getChart(chartId)?.type.startsWith("odoo")) {
             return;
         }
         return {
-            odooChartFieldMatching: this.getters.getChartFieldMatch(figureId),
+            odooChartFieldMatching: this.getters.getChartFieldMatch(chartId),
         };
     }
 

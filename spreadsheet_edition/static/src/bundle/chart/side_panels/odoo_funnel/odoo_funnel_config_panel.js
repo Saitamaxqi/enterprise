@@ -11,7 +11,7 @@ export class OdooFunnelChartConfigPanel extends CommonOdooChartConfigPanel {
     };
 
     onUpdateCumulative(cumulative) {
-        this.props.updateChart(this.props.figureId, {
+        this.props.updateChart(this.props.chartId, {
             cumulative,
         });
     }

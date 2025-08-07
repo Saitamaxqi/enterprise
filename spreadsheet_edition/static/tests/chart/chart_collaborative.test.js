@@ -20,9 +20,9 @@ beforeEach(async () => {
 test("Chart link to odoo menu collaborative", async () => {
     const chartId = "1";
     const sheetId = alice.getters.getActiveSheetId();
-    createBasicChart(alice, chartId);
+    createBasicChart(alice, chartId, {}, undefined, "figure1");
     await network.concurrent(() => {
-        alice.dispatch("DELETE_FIGURE", { figureId: chartId, sheetId });
+        alice.dispatch("DELETE_FIGURE", { figureId: "figure1", sheetId });
         bob.dispatch("LINK_ODOO_MENU_TO_CHART", {
             chartId,
             odooMenuId: "odooTestMenu",

@@ -20,17 +20,18 @@ patch(ChartTypePicker.prototype, {
     },
 
     onTypeChange(type) {
-        if (this.getChartDefinition(this.props.figureId).type.startsWith("odoo_")) {
+        if (this.getChartDefinition(this.props.chartId).type.startsWith("odoo_")) {
             const newChartInfo = chartSubtypeRegistry.get(type);
             const definition = {
                 verticalAxisPosition: "left",
-                ...this.env.model.getters.getChartDefinition(this.props.figureId),
+                ...this.env.model.getters.getChartDefinition(this.props.chartId),
                 ...newChartInfo.subtypeDefinition,
                 type: newChartInfo.chartType,
             };
             this.env.model.dispatch("UPDATE_CHART", {
                 definition,
-                figureId: this.props.figureId,
+                chartId: this.props.chartId,
+                figureId: this.env.model.getters.getFigureIdFromChartId(this.props.chartId),
                 sheetId: this.env.model.getters.getActiveSheetId(),
             });
             this.closePopover();
@@ -39,11 +40,11 @@ patch(ChartTypePicker.prototype, {
         }
     },
     updateChartTypeByCategories(props) {
-        const definition = this.env.model.getters.getChartDefinition(props.figureId);
+        const definition = this.env.model.getters.getChartDefinition(props.chartId);
         const isOdoo = definition.type.startsWith("odoo_");
         const registryItems = chartSubtypeRegistry.getAll().filter((item) => {
             if (isOdoo && item.chartType === "odoo_geo") {
-                return this.isGeoChartTypeAvailable(props.figureId);
+                return this.isGeoChartTypeAvailable(props.chartId);
             }
             return isOdoo
                 ? item.chartType.startsWith("odoo_")
@@ -59,8 +60,8 @@ patch(ChartTypePicker.prototype, {
             }
         }
     },
-    isGeoChartTypeAvailable(figureId) {
-        const chart = this.env.model.getters.getChart(figureId);
+    isGeoChartTypeAvailable(chartId) {
+        const chart = this.env.model.getters.getChart(chartId);
         const groupBy = chart.getDefinition().metaData.groupBy;
         if (!groupBy || groupBy.length !== 1 || !chart.dataSource.isValid()) {
             return false;
