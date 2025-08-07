@@ -1,10 +1,8 @@
 import { Domain } from "@web/core/domain";
 import { useService } from "@web/core/utils/hooks";
 import { RelationalModel } from "@web/model/relational_model/relational_model";
-import {
-    DocumentsModelMixin,
-    DocumentsRecordMixin,
-} from "../documents_model_mixin";
+import { DocumentsModelMixin } from "../documents_model_mixin";
+import { DocumentsRecordMixin } from "../documents_record_mixin";
 
 export class DocumentsKanbanModel extends DocumentsModelMixin(RelationalModel) {
     setup() {
@@ -35,7 +33,6 @@ export class DocumentsKanbanModel extends DocumentsModelMixin(RelationalModel) {
 }
 
 export class DocumentsKanbanRecord extends DocumentsRecordMixin(RelationalModel.Record) {
-
     async onReplaceDocument(ev) {
         if (!ev.target.files.length) {
             return;
