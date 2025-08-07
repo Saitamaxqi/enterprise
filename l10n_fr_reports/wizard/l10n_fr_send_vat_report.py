@@ -572,6 +572,9 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                 carryover_reimbursment_move._post()
 
             self._send_reimbursement_xml_to_aspone(options)
+            # As we added the external values, we need to regenerate the pdf with the right values
+            self.return_id.attachment_ids.filtered(lambda att: att.res_name == self.return_id.name and att.name.endswith('.pdf')).unlink()
+            self.return_id._generate_locking_attachments(options)
 
         # Send xml to ASPOne
         vat_report_name = self._get_vat_report_name(self.date_from, self.date_to)

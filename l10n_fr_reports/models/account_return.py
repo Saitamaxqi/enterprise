@@ -51,3 +51,21 @@ class AccountReturn(models.Model):
             return l10n_fr_vat_report._get_records_action(name=_("EDI VAT"), target='new', res_id=l10n_fr_vat_report.id)
 
         return super().action_submit()
+
+    def action_reset_tax_return_common(self):
+        """ Extends of account report to remove the external value if we reset a submitted return.
+            This external value is created when the locking move is created.
+        """
+        # EXTENDS account_reports
+        self.ensure_one()
+        if self.state == 'submitted' and self.company_id.account_fiscal_country_id.code == 'FR':
+            external_values = self.env['account.report.external.value'].search([
+                ('date', '=', self.date_to),
+                ('target_report_expression_id', 'in', {
+                    self.env.ref('l10n_fr_account.tax_report_26_external_tag', raise_if_not_found=False).id,
+                    self.env.ref('l10n_fr_account.tax_report_22_applied_carryover', raise_if_not_found=False).id,
+                }),
+            ])
+            external_values.unlink()
+
+        return super().action_reset_tax_return_common()
