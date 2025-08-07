@@ -631,8 +631,8 @@
                             <record id="l10n_lu_annual_tax_report_sections_110_balance" model="account.report.expression">
                                 <field name="label">balance</field>
                                 <field name="engine">aggregation</field>
+                                <field name="figure_type">float</field>
                                 <field name="formula">L10N_LU_TAX_108.balance + L10N_LU_TAX_109.balance</field>
-                                <field name="figure_type">integer</field>
                             </record>
                         </field>
                         <field name="children_ids">
@@ -642,7 +642,15 @@
                                 <field name="name@de">108 - mit Gehalt oder Lohn</field>
                                 <field name="name@lb">108 - mat Pai oder Loun</field>
                                 <field name="code">L10N_LU_TAX_108</field>
-                                <field name="external_formula">integer</field>
+                                <field name="expression_ids">
+                                    <record id="l10n_lu_annual_tax_report_sections_108_balance" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">external</field>
+                                        <field name="figure_type">float</field>
+                                        <field name="formula">sum</field>
+                                        <field name="subformula">editable;rounding=2</field>
+                                    </record>
+                                </field>
                             </record>
                             <record id="l10n_lu_annual_tax_report_sections_109" model="account.report.line">
                                 <field name="name">109 - With no salary (family members)</field>
@@ -650,7 +658,15 @@
                                 <field name="name@de">109 - ohne Gehalt (Familienangehörige)</field>
                                 <field name="name@lb">109 - ouni Pai (Familljememberen)</field>
                                 <field name="code">L10N_LU_TAX_109</field>
-                                <field name="external_formula">integer</field>
+                                <field name="expression_ids">
+                                    <record id="l10n_lu_annual_tax_report_sections_109_balance" model="account.report.expression">
+                                        <field name="label">balance</field>
+                                        <field name="engine">external</field>
+                                        <field name="figure_type">float</field>
+                                        <field name="formula">sum</field>
+                                        <field name="subformula">editable;rounding=2</field>
+                                    </record>
+                                </field>
                             </record>
                         </field>
                     </record>

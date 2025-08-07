@@ -16,6 +16,8 @@ VAT_MANDATORY_FIELDS = {
     # 033 and 042 are mandatory when 403 is specified (always true for us, with 0% tax)
     '033', '042', '403', '414', '415', '418', '416',
     '417', '453', '452', '451',
+    # custom rate (%) fields are mandatory when their related custom rate (value) are specified
+    '394', '128', '153', '136', '149', '144', '396', '162',
 }
 
 # Mapping dictionary: monthly fields as keys, list of corresponding annual fields as values
