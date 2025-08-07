@@ -12,15 +12,15 @@ class TestPayrollSocialBalanceSheet(TestPayrollCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.journal = cls.env['account.journal'].create({
-            'name': 'Salary Journal - Test',
-            'code': 'SLR',
-            'type': 'general',
-            'company_id': cls.belgian_company.id,
-        })
-
         cls.cp200_salary_structure = cls.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
-        cls.cp200_salary_structure.journal_id = cls.journal.id
+
+        if 'account.journal' in cls.env:
+            cls.cp200_salary_structure.journal_id = cls.env['account.journal'].create({
+                'name': 'Salary Journal - Test',
+                'code': 'SLR',
+                'type': 'general',
+                'company_id': cls.belgian_company.id,
+            })
 
         cls.date_from = date(2024, 1, 1)
         cls.date_to = date(2024, 1, 31)
