@@ -1,10 +1,10 @@
-import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
-import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import OrderPaymentValidation from "@point_of_sale/app/utils/order_payment_validation";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
-patch(PaymentScreen.prototype, {
-    async _isOrderValid(isForceValidate) {
+patch(OrderPaymentValidation.prototype, {
+    async isOrderValid(isForceValidate) {
         if (this.pos.isEcuadorianCompany()) {
             if (
                 this.currentOrder.isRefund &&
@@ -17,7 +17,7 @@ patch(PaymentScreen.prototype, {
                 return false;
             }
         }
-        return super._isOrderValid(...arguments);
+        return super.isOrderValid(...arguments);
     },
     shouldDownloadInvoice() {
         return this.pos.isEcuadorianCompany() ? false : super.shouldDownloadInvoice();

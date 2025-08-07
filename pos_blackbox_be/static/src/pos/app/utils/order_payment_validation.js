@@ -1,14 +1,14 @@
-import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
-import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import OrderPaymentValidation from "@point_of_sale/app/utils/order_payment_validation";
 import { patch } from "@web/core/utils/patch";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { BlackboxError } from "@pos_blackbox_be/pos/app/utils/blackbox_error";
 const EMPTY_SIGNATURE = "                                        ";
 
-patch(PaymentScreen.prototype, {
+patch(OrderPaymentValidation.prototype, {
     async validateOrder(isForceValidate) {
         if (this.pos.useBlackBoxBe() && !this.pos.userSessionStatus) {
-            this.dialog.add(AlertDialog, {
+            this.pos.add(AlertDialog, {
                 title: _t("POS error"),
                 body: _t(
                     "The government's Fiscal Data Module requires every user to Clock In before " +
@@ -35,7 +35,7 @@ patch(PaymentScreen.prototype, {
         } catch (e) {
             if (e instanceof BlackboxError) {
                 this.currentOrder.state = "draft";
-                e.retry = this._finalizeValidation.bind(this);
+                e.retry = this.finalizeValidation.bind(this);
             }
             throw error;
         }

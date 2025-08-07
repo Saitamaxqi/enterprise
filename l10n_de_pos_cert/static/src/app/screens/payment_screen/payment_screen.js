@@ -21,60 +21,7 @@ patch(PaymentScreen.prototype, {
                     _super_handlePushOrderError(error);
                 }
             };
-            this.validateOrderFree = true;
-        }
-    },
-    //@override
-    async validateOrder(isForceValidate) {
-        if (this.pos.isCountryGermanyAndFiskaly()) {
-            if (this.validateOrderFree) {
-                this.validateOrderFree = false;
-                try {
-                    await super.validateOrder(...arguments);
-                } finally {
-                    this.validateOrderFree = true;
-                }
-            }
-        } else {
-            await super.validateOrder(...arguments);
-        }
-    },
-    //@override
-    async _finalizeValidation() {
-        if (this.pos.isCountryGermanyAndFiskaly()) {
-            if (this.currentOrder.isTransactionInactive()) {
-                try {
-                    await this.pos.createTransaction(this.currentOrder);
-                } catch (error) {
-                    if (error.status === 0) {
-                        this.pos.showFiskalyNoInternetConfirmPopup(this);
-                    } else {
-                        const message = {
-                            unknown: _t("An unknown error has occurred! Please, contact Odoo."),
-                        };
-                        this.pos.fiskalyError(error, message);
-                    }
-                }
-            }
-            if (this.currentOrder.isTransactionStarted()) {
-                try {
-                    await this.pos.finishShortTransaction(this.currentOrder);
-                    await super._finalizeValidation(...arguments);
-                } catch (error) {
-                    if (error.status === 0) {
-                        this.pos.showFiskalyNoInternetConfirmPopup(this);
-                    } else {
-                        const message = {
-                            unknown: _t("An unknown error has occurred! Please, contact Odoo."),
-                        };
-                        this.pos.fiskalyError(error, message);
-                    }
-                }
-            } else if (this.currentOrder.isTransactionFinished()) {
-                await super._finalizeValidation(...arguments);
-            }
-        } else {
-            await super._finalizeValidation(...arguments);
+            this.pos.validateOrderFree = true;
         }
     },
 });

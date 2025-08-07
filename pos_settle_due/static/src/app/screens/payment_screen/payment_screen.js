@@ -166,14 +166,12 @@ patch(PaymentScreen.prototype, {
             return super.validateOrder(...arguments);
         }
     },
-    async afterOrderValidation(suggestToSync = false) {
-        await super.afterOrderValidation(...arguments);
-        const hasCustomerAccountAsPaymentMethod = this.currentOrder.payment_ids.find(
-            (paymentline) => paymentline.payment_method_id.type === "pay_later"
+    getLineToRemove() {
+        return this.currentOrder.lines.filter(
+            (line) =>
+                line.product_id.uom_id.isZero(line.qty) &&
+                !line.isSettleDueLine() &&
+                !line.isSettleInvoiceLine()
         );
-        const partner = this.currentOrder.getPartner();
-        if (hasCustomerAccountAsPaymentMethod && partner.total_due !== undefined) {
-            this.pos.refreshTotalDueOfPartner(partner);
-        }
     },
 });

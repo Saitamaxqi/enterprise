@@ -1,26 +1,17 @@
-/** @odoo-module */
-
-import { useService } from "@web/core/utils/hooks";
+import OrderPaymentValidation from "@point_of_sale/app/utils/order_payment_validation";
+import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { patch } from "@web/core/utils/patch";
-import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
 import { qrCodeSrc } from "@point_of_sale/utils";
 
-patch(PaymentScreen.prototype, {
-    setup() {
-        super.setup();
-        this.dialog = useService("dialog");
-        this.orm = useService("orm");
-    },
-
-    async _postPushOrderResolve(order, order_server_ids) {
+patch(OrderPaymentValidation.prototype, {
+    async beforePostPushOrderResolve(order, order_server_ids) {
         if (this.pos.config.is_kenyan) {
             this.env.services.ui.block();
             try {
-                await this.orm.call("pos.order", "action_post_order", [order_server_ids], {});
+                await this.pos.data.call("pos.order", "action_post_order", [order_server_ids], {});
             } catch (error) {
-                this.dialog.add(AlertDialog, {
+                this.pos.dialog.add(AlertDialog, {
                     title: _t("Error"),
                     body: _t(error.data.message),
                 });
@@ -54,10 +45,43 @@ patch(PaymentScreen.prototype, {
             }
         }
 
-        return super._postPushOrderResolve(...arguments);
+        return super.beforePostPushOrderResolve(...arguments);
     },
 
     shouldDownloadInvoice() {
         return this.pos.config.is_kenyan ? false : super.shouldDownloadInvoice();
+    },
+
+    async askBeforeValidation() {
+        if (this.pos.config.is_kenyan) {
+            let errorMessage = "";
+            const unregisteredProducts = this.order.lines.filter(
+                (line) => !line.product_id.checkEtimsFields()
+            );
+
+            if (unregisteredProducts.length > 0) {
+                errorMessage += _t(
+                    "All product have to be registered to eTIMS, you can register them in the product view.\n"
+                );
+            }
+
+            if (
+                ![0, this.order.lines.length].includes(
+                    this.order.lines.filter((line) => line.refunded_orderline_id !== undefined)
+                        .length
+                )
+            ) {
+                errorMessage += _t("You can't mix refund lines and order lines.\n");
+            }
+
+            if (errorMessage) {
+                this.pos.dialog.add(AlertDialog, {
+                    title: _t("Error"),
+                    body: _t(errorMessage),
+                });
+                return false;
+            }
+        }
+        return await super.askBeforeValidation();
     },
 });

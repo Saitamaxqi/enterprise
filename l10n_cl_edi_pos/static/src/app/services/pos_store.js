@@ -1,8 +1,5 @@
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { patch } from "@web/core/utils/patch";
-import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
-import { TextInputPopup } from "@point_of_sale/app/components/popups/text_input_popup/text_input_popup";
-import { _t } from "@web/core/l10n/translation";
 
 patch(PosStore.prototype, {
     // @Override
@@ -38,22 +35,5 @@ patch(PosStore.prototype, {
             order.partner_id = this.config._consumidor_final_anonimo_id;
         }
         return order;
-    },
-
-    async askBeforeValidation() {
-        if (
-            this.isChileanCompany() &&
-            this.getOrder()?.payment_ids?.some((line) => line.payment_method_id.is_card_payment)
-        ) {
-            const voucherNumber = await makeAwaitable(this.dialog, TextInputPopup, {
-                rows: 4,
-                title: _t("Please register the voucher number"),
-            });
-            if (!voucherNumber) {
-                return;
-            }
-            this.getOrder().voucher_number = voucherNumber;
-        }
-        return await super.askBeforeValidation();
     },
 });

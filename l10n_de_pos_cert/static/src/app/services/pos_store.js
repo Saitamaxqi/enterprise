@@ -20,6 +20,7 @@ patch(PosStore.prototype, {
     async setup() {
         this.token = "";
         this.vatRateMapping = {};
+        this.validateOrderFree = false;
         await super.setup(...arguments);
     },
     // @Override
