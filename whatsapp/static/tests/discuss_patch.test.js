@@ -22,12 +22,12 @@ test("Basic topbar rendering for whatsapp channels", async () => {
     });
     await start();
     await openDiscuss(channelId);
-    await contains(".o-mail-Discuss-header .o-mail-ThreadIcon .fa-whatsapp");
-    await contains(".o-mail-Discuss-threadName", { value: "WhatsApp 1" });
-    await contains(".o-mail-Discuss-header button[title='Invite People']");
-    await contains(".o-mail-Discuss-header button[name='member-list']");
-    await contains(".o-mail-Discuss-header button[name='call']", { count: 0 });
-    await contains(".o-mail-Discuss-header button[name='settings']", { count: 0 });
+    await contains(".o-mail-DiscussContent-header .o-mail-ThreadIcon .fa-whatsapp");
+    await contains(".o-mail-DiscussContent-threadName", { value: "WhatsApp 1" });
+    await contains(".o-mail-DiscussContent-header button[title='Invite People']");
+    await contains(".o-mail-DiscussContent-header button[name='member-list']");
+    await contains(".o-mail-DiscussContent-header button[name='call']", { count: 0 });
+    await contains(".o-mail-DiscussContent-header button[name='settings']", { count: 0 });
 });
 
 test("Invite users into whatsapp channel", async () => {
@@ -40,7 +40,7 @@ test("Invite users into whatsapp channel", async () => {
     pyEnv["res.users"].create({ partner_id: partnerId });
     await start();
     await openDiscuss(channelId);
-    await click(".o-mail-Discuss-header button[title='Invite People']");
+    await click(".o-mail-DiscussContent-header button[title='Invite People']");
     await click(".o-discuss-ChannelInvitation-selectable");
     await click(".o-discuss-ChannelInvitation [title='Invite']:enabled");
     await contains(".o_mail_notification", { text: "invited WhatsApp User to the channel" });

@@ -32,7 +32,7 @@ registry
                 content:
                     "Check that first message of #test-mail-channel-expand-tour is shown in Discuss app",
                 trigger:
-                    '.o-mail-Discuss-content .o-mail-Message-body:contains("test-message-mail-channel-expand-tour")',
+                    '.o-mail-DiscussContent .o-mail-Message-body:contains("test-message-mail-channel-expand-tour")',
             },
         ],
     });

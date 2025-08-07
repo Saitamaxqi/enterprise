@@ -40,7 +40,7 @@ test("[technical] /ticket command gets a body as kwarg", async () => {
     });
     await start();
     await openDiscuss(channelId);
-    await contains(".o-mail-Discuss-threadName[title='General']");
+    await contains(".o-mail-DiscussContent-threadName[title='General']");
     await insertText(".o-mail-Composer-input", "/ticket something");
     await press("Enter");
     await waitForSteps(["execute command helpdesk. body: /ticket something"]);
