@@ -4,7 +4,7 @@
         <field name="name">VoIP Calls list view</field>
         <field name="model">voip.call</field>
         <field name="arch" type="xml">
-            <list string="Calls">
+            <list string="Calls" create="false">
                 <field name="create_date" string="Date" widget="voip_simple_datetime"/>
                 <field name="partner_id" string="Contact"/>
                 <field name="company_id" optional="hide"/>
@@ -84,7 +84,7 @@
         <field name="name">voip.call.form</field>
         <field name="model">voip.call</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="false">
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_open_calls" type="object" class="oe_stat_button" icon="fa-phone">
