@@ -4,6 +4,8 @@ import odoo
 from odoo.tests import tagged
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo import Command, fields
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.point_of_sale.tests.test_generic_localization import TestGenericLocalization
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -281,3 +283,12 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
 
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_refund_with_gift_card_mx', login="pos_user")
         self.assertEqual(gift_card_program.coupon_ids.points, 4.2)
+
+
+@tagged('post_install', '-at_install', 'post_install_l10n')
+class TestGenericMX(TestGenericLocalization):
+
+    @classmethod
+    @AccountTestInvoicingCommon.setup_country('mx')
+    def setUpClass(cls):
+        super().setUpClass()

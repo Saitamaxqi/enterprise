@@ -9,6 +9,8 @@ from odoo.addons.l10n_br_edi_pos.tests.common import CommonPosBrEdiTest
 from odoo.addons.l10n_br_edi_pos.models.pos_order import PosOrder
 from odoo.exceptions import UserError
 from odoo.tests import tagged, freeze_time
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.point_of_sale.tests.test_generic_localization import TestGenericLocalization
 
 # All tested POS orders are mocked to use this ID when calculating the access key
 TEST_POS_ORDER_ID = 548
@@ -416,3 +418,26 @@ class TestUi(TestL10nBREDIPOSCommon, TestPointOfSaleHttpCommon):
 
             order = self.env['pos.order'].search([], limit=1, order='id desc')
             self.assertEqual(order.is_invoiced, False)
+
+
+@tagged('post_install', '-at_install', 'post_install_l10n')
+class TestGenericBR(TestGenericLocalization, TestL10nBREDIPOSCommon):
+    @classmethod
+    @AccountTestInvoicingCommon.setup_country('br')
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.main_pos_config.write(
+            {
+                "l10n_br_is_nfce": True,
+                "l10n_br_invoice_serial": "1",
+            }
+        )
+        cls.main_pos_config.company_id.write({
+            "name": "Company BR"
+        })
+        cls.wall_shelf.write({
+            'taxes_id': False,
+        })
+        cls.whiteboard_pen.write({
+            'taxes_id': False,
+        })
