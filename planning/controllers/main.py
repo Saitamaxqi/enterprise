@@ -392,7 +392,7 @@ class ShiftController(http.Controller):
         if not slot or not vobject:
             return request.not_found()
 
-        calendar = slot._get_ics_file(vobject.iCalendar(), slot.employee_id.tz)
+        calendar = slot._get_ics_file(vobject.iCalendar(), slot.employee_id.tz or request.env.user.tz or 'UTC')
         if not calendar:
             return request.not_found()
         content = calendar.serialize().encode('utf-8')
