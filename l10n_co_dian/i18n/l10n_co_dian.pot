@@ -222,6 +222,12 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "All Documents"
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
 #: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
 msgid "All products in an AIU invoice should be a service."
 msgstr ""
@@ -261,6 +267,11 @@ msgstr ""
 #. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Barcode"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
+msgid "Begin Certification Process"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -316,6 +327,12 @@ msgstr ""
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__certification_process
 msgid "Certification Process"
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "Certification Process Has Concluded"
 msgstr ""
 
 #. module: l10n_co_dian
@@ -755,6 +772,27 @@ msgid ""
 msgstr ""
 
 #. module: l10n_co_dian
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_cert_credit_count
+msgid "Number of Credit Notes to Certify"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_cert_debit_count
+msgid "Number of Debit Notes to Certify"
+msgstr ""
+
+#. module: l10n_co_dian
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_cert_invoice_count
+msgid "Number of Invoices to Certify"
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "Open"
+msgstr ""
+
+#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_tree
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
 msgid "Operation Modes"
@@ -769,6 +807,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_state__invoice_pending
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__state__invoice_pending
 msgid "Pending"
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "Please click below to check the status of your documents."
 msgstr ""
 
 #. module: l10n_co_dian
@@ -823,7 +867,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
 msgid ""
 "Send test electronic documents with your certificate to achieve the "
-"'Enabled' status in the DIAN portal for 'in house software' operation mode"
+"'Enabled' status in the DIAN portal for 'in house software' operation mode. "
+"In the fields below, define the number of 'Total Required Accepted Documents' "
+"specified in the Test Set assigned by the DIAN."
 msgstr ""
 
 #. module: l10n_co_dian
@@ -1008,6 +1054,14 @@ msgstr ""
 
 #. module: l10n_co_dian
 #. odoo-python
+#: code:addons/l10n_co_dian/models/res_config_settings.py:0
+msgid ""
+"The number of invoices, credit notes, or debit notes to certify must be "
+"between 0 and 10."
+msgstr ""
+
+#. module: l10n_co_dian
+#. odoo-python
 #: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
 msgid "The software PIN is required to compute the CUDE/CUDS."
 msgstr ""
@@ -1113,6 +1167,14 @@ msgstr ""
 msgid ""
 "Volume in milliliters should be set on the %(field_description)s "
 "field for product: %(product_name)s when using IBUA taxes."
+msgstr ""
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
+msgid ""
+"Warning! This action will perform irreversible changes to your database to "
+"best guarantee certification with DIAN. Please make sure you are only "
+"running this on a testing database."
 msgstr ""
 
 #. module: l10n_co_dian

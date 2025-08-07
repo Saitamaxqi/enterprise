@@ -32,8 +32,29 @@
                             <field name="l10n_co_dian_test_environment"/>
                         </setting>
                         <setting class="col-lg-12" invisible="not l10n_co_dian_test_environment"
-                                 help="Send test electronic documents with your certificate to achieve the 'Enabled' status in the DIAN portal for 'in house software' operation mode">
+                                 help="Send test electronic documents with your certificate to achieve the 'Enabled' status in the DIAN portal for 'in house software' operation mode. In the fields below, define the number of 'Total Required Accepted Documents' specified in the Test Set assigned by the DIAN.">
                             <field name="l10n_co_dian_certification_process"/>
+                            <t invisible="not l10n_co_dian_certification_process">
+                                <div class="mt16">
+                                    <label for="l10n_co_dian_cert_invoice_count" class="col-3 o_light_label"/>
+                                    <field name="l10n_co_dian_cert_invoice_count"/>
+                                </div>
+                                <div class="mt16">
+                                    <label for="l10n_co_dian_cert_credit_count" class="col-3 o_light_label"/>
+                                    <field name="l10n_co_dian_cert_credit_count"/>
+                                </div>
+                                <div class="mt16">
+                                    <label for="l10n_co_dian_cert_debit_count" class="col-3 o_light_label"/>
+                                    <field name="l10n_co_dian_cert_debit_count"/>
+                                </div>
+                                <div class="mt16">
+                                    <button name="action_l10n_co_certify_with_dian" type="object"
+                                        string="Begin Certification Process"
+                                        class="btn-primary"
+                                        noSaveDialog="1"
+                                        confirm="Warning! This action will perform irreversible changes to your database to best guarantee certification with DIAN. Please make sure you are only running this on a testing database."/>
+                                </div>
+                            </t>
                         </setting>
                         <setting class="col-lg-12" invisible="l10n_co_dian_test_environment"
                                 help="Activate this mode to be able to test electronic invoicing only with internal validations, but no responce from the DIAN environment.">

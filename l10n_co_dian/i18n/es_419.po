@@ -303,6 +303,12 @@ msgstr "Agregue sus certificados para firmar sus documentos."
 
 #. module: l10n_co_dian
 #. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "All Documents"
+msgstr "Todos los Documentos"
+
+#. module: l10n_co_dian
+#. odoo-python
 #: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
 msgid "All products in an AIU invoice should be a service."
 msgstr "Todos los productos de una factura AIU debem de ser de tipo servicio."
@@ -352,6 +358,11 @@ msgstr "Autorretenedor"
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.report_invoice_document
 msgid "Barcode"
 msgstr "Código de barras"
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
+msgid "Begin Certification Process"
+msgstr "Iniciar Proceso de Habilitaciòn"
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_identifier_type__cude
@@ -407,6 +418,12 @@ msgstr "Certificados a utilizar para la facturación electrónica."
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__certification_process
 msgid "Certification Process"
 msgstr "Proceso de certificación"
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "Certification Process Has Concluded"
+msgstr "El Proceso de Habilitación ha Concluido"
 
 #. module: l10n_co_dian
 #: model:ir.model,name:l10n_co_dian.model_l10n_co_dian_document
@@ -861,6 +878,27 @@ msgstr ""
 "código corto ‘%(actual)s’, se encontró ‘%(expected)s’."
 
 #. module: l10n_co_dian
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_cert_credit_count
+msgid "Number of Credit Notes to Certify"
+msgstr "Cantidad de Notas Crédito a Certificar"
+
+#. module: l10n_co_dian
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_cert_debit_count
+msgid "Number of Debit Notes to Certify"
+msgstr "Cantidad de Notas Débito a Certificar"
+
+#. module: l10n_co_dian
+#: model:ir.model.fields,field_description:l10n_co_dian.field_res_config_settings__l10n_co_dian_cert_invoice_count
+msgid "Number of Invoices to Certify"
+msgstr "Cantidad de Facturas a Certificar"
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "Open"
+msgstr "Abrir"
+
+#. module: l10n_co_dian
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.l10n_co_dian_operation_mode_view_tree
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
 msgid "Operation Modes"
@@ -876,6 +914,12 @@ msgstr "Modo de operación"
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__l10n_co_dian_document__state__invoice_pending
 msgid "Pending"
 msgstr "Pendiente"
+
+#. module: l10n_co_dian
+#. odoo-python
+#: code:addons/l10n_co_dian/models/res_company.py:0
+msgid "Please click below to check the status of your documents."
+msgstr "Dar clic abajo para consultar el estado de tus documentos."
 
 #. module: l10n_co_dian
 #. odoo-python
@@ -936,11 +980,15 @@ msgstr "Envíe el documento soporte a la DIAN"
 #: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
 msgid ""
 "Send test electronic documents with your certificate to achieve the "
-"'Enabled' status in the DIAN portal for 'in house software' operation mode"
+"'Enabled' status in the DIAN portal for 'in house software' operation mode. "
+"In the fields below, define the number of 'Total Required Accepted Documents' "
+"specified in the Test Set assigned by the DIAN."
 msgstr ""
 "Envíe documentos electrónicos de prueba con su certificado para lograr el "
-"estado “Habilitado” en el portal de la DIAN para el modo de operación "
-"“Software propio”"
+"estado 'Habilitado' en el portal de la DIAN para el modo de operación "
+"'Software propio'. En los campos de abajo, defina la cantidad de "
+"'Total de Documentos Aceptados Requeridos' especificados en el "
+"Set de Pruebas asignado por la DIAN."
 
 #. module: l10n_co_dian
 #: model:ir.model.fields.selection,name:l10n_co_dian.selection__account_move__l10n_co_dian_state__invoice_sending_failed
@@ -1133,6 +1181,16 @@ msgstr "La factura debitada original no tiene CUFE."
 
 #. module: l10n_co_dian
 #. odoo-python
+#: code:addons/l10n_co_dian/models/res_config_settings.py:0
+msgid ""
+"The number of invoices, credit notes, or debit notes to certify must be "
+"between 0 and 10."
+msgstr ""
+"La cantidad de facturas, notas crédito o notas débito a certificar debe "
+"estar entre 0 y 10."
+
+#. module: l10n_co_dian
+#. odoo-python
 #: code:addons/l10n_co_dian/models/account_edi_xml_ubl_dian.py:0
 msgid "The software PIN is required to compute the CUDE/CUDS."
 msgstr "Se requiere el NIP del software para calcular el CUDE/CUDS."
@@ -1253,6 +1311,17 @@ msgid ""
 "field for product: %(product_name)s when using IBUA taxes."
 msgstr "El volumen en mililitros debe establecerse en el campo del %(field_description)s "
 "para el producto: %(product_name)s al usar impuestos IBUA."
+
+#. module: l10n_co_dian
+#: model_terms:ir.ui.view,arch_db:l10n_co_dian.res_config_settings_view_form
+msgid ""
+"Warning! This action will perform irreversible changes to your database to "
+"best guarantee certification with DIAN. Please make sure you are only "
+"running this on a testing database."
+msgstr ""
+"Atención! Al activar esta acción se realizarán cambios irreversibles a su "
+"base de datos con el objetivo de garantizar el éxito de su habilitación con la DIAN. "
+"Por favor asegurese de correr la acción en una base de datos de prueba."
 
 #. module: l10n_co_dian
 #: model:ir.model.fields,field_description:l10n_co_dian.field_l10n_co_dian_document__zip_key
