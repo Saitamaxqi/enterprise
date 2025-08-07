@@ -1,9 +1,10 @@
 import { registry } from "@web/core/registry";
 import { Dropdown } from "@web/core/dropdown/dropdown";
-import { Component } from "@odoo/owl";
+import { Component, onWillStart } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { cookie } from "@web/core/browser/cookie";
+import { user } from "@web/core/user";
 
 export class AccountReturnSelectionBadge extends Component {
     static template = "account_reports.AccountReturnSelectionBadgeField";
@@ -14,6 +15,12 @@ export class AccountReturnSelectionBadge extends Component {
         class: { type: String, optional: true },
         size: { type: String, optional: true },
     };
+
+    setup() {
+        onWillStart(async () => {
+            this.editableOptions = await this.getEditableOptions();
+        });
+    }
 
     static defaultProps = {
         size: "normal"
@@ -44,15 +51,27 @@ export class AccountReturnSelectionBadge extends Component {
         return null;
     }
 
+    async getEditableOptions () {
+        const editableOptions = [false]
+
+        for (let [key, value] of Object.entries(this.props.options)) {
+            if ([true, undefined].includes(value.can_edit) || typeof value.can_edit == 'string' && await user.hasGroup(value.can_edit)) {
+                editableOptions.push(key);
+            }
+        }
+
+        return editableOptions;
+    }
+
     decorationForValue(value, isDropdownItem=false) {
         const colorScheme = cookie.get("color_scheme");
         const defaultStyle = isDropdownItem && colorScheme == 'dark' ? "text-bg-200" : "text-bg-300";
-        const decoration = this.props.options[value];
+        const decoration = this.props.options[value]?.decoration;
         if (decoration) {
             if (decoration === "muted") {
                 return defaultStyle;
             }
-            return `text-bg-${this.props.options[value]}`;
+            return `text-bg-${this.props.options[value].decoration}`;
         }
         return isDropdownItem && colorScheme == 'dark' ? "text-bg-200" : "text-bg-100";
     }
@@ -70,11 +89,12 @@ export class AccountReturnSelectionBadge extends Component {
         }
     }
 
-    onChange(value) {
-        this.props.record.update(
+    async onChange(value) {
+        await this.props.record.update(
             { [this.props.name]: value },
             { save: true }
         );
+        this.env.reload?.()
     }
 }
 

@@ -1,10 +1,6 @@
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 
 export class AccountReturnCheckKanbanRecord extends KanbanRecord {
-    setup() {
-        super.setup();
-    }
-    
     onGlobalClick(ev, newWindow) {
         if (this.props.record.data.action)
             super.onGlobalClick(ev, newWindow);

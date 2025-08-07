@@ -8,7 +8,7 @@
             onClick.bind="onClick"
         >
             <t t-set-slot="toggler">
-                <button class="btn btn-secondary ms-1">
+                <button class="btn btn-secondary">
                     Upload File
                 </button>
             </t>

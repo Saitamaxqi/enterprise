@@ -21,6 +21,6 @@ class AccountReturn(models.Model):
                     'name': _("Fixed Assets"),
                     'message': _("Odoo manages depreciation for your fixed assets. No depreciation was recorded for this period. Ensure assets are properly registered for automatic depreciation calculation."),
                     'code': 'check_fixed_assets',
-                    'result': 'manual',
+                    'result': 'todo',
                 })
         return checks

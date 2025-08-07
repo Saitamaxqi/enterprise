@@ -68,7 +68,7 @@ class AccountReturn(models.Model):
                 'records_count': non_business_partners_count,
                 'records_name': self.env._('Partner') if non_business_partners_count == 1 else self.env._('Partners'),
                 'action': non_business_partner_ids._get_records_action() if non_business_partner_ids else False,
-                'result': 'success' if not non_business_partner_ids else 'failure',
+                'result': 'reviewed' if not non_business_partner_ids else 'anomaly',
             })
 
         if 'check_intrastat_only_intra_eu' not in check_codes_to_ignore:
@@ -76,7 +76,7 @@ class AccountReturn(models.Model):
                 'code': 'check_intrastat_only_intra_eu',
                 'name': self.env._('Only intra-EU transactions'),
                 'message': self.env._('Exclude any domestic or extra-EU sales from the Intrastat report.'),
-                'result': 'success',
+                'result': 'reviewed',
             })
 
         if 'check_intrastat_vat_exclusive' not in check_codes_to_ignore:
@@ -84,7 +84,7 @@ class AccountReturn(models.Model):
                 'code': 'check_intrastat_vat_exclusive',
                 'name': self.env._('VAT exclusive'),
                 'message': self.env._('The value of goods should be VAT exclusive.'),
-                'result': 'success',
+                'result': 'reviewed',
             })
 
         if 'check_intrastat_only_goods' not in check_codes_to_ignore:
@@ -92,7 +92,7 @@ class AccountReturn(models.Model):
                 'code': 'check_intrastat_only_goods',
                 'name': self.env._('Only goods included'),
                 'message': self.env._('Exclude services from the report.'),
-                'result': 'manual',
+                'result': 'todo',
             })
 
         if 'check_intrastat_commodity_code' not in check_codes_to_ignore:
@@ -102,7 +102,7 @@ class AccountReturn(models.Model):
                 'message': self.env._(
                     'Verify that each item has the appropriate code and description according to the CN (Combined Nomenclature) codes.'
                 ),
-                'result': 'manual',
+                'result': 'todo',
             })
 
         if 'check_intrastat_uom' not in check_codes_to_ignore:
@@ -110,7 +110,7 @@ class AccountReturn(models.Model):
                 'code': 'check_intrastat_uom',
                 'name': self.env._('Unit of measure configuration'),
                 'message': self.env._('Verify that each good is assigned the right unit of measure.'),
-                'result': 'manual',
+                'result': 'todo',
             })
 
         if 'check_intrastat_threshold' not in check_codes_to_ignore:
@@ -120,7 +120,7 @@ class AccountReturn(models.Model):
                 'message': self.env._(
                     'Intrastat thresholds may change annually. Verify that your transactions exceed the threshold for reporting.'
                 ),
-                'result': 'manual',
+                'result': 'todo',
             })
 
         return checks

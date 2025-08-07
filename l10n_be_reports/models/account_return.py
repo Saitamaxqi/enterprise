@@ -195,7 +195,7 @@ class AccountReturn(models.Model):
                 'code': 'tax_report_code_13',
                 'name': _("No negative amount in VAT report"),
                 'message': _("The Belgian VAT report should only include positive values. A negative amount probably means a misconfiguration."),
-                'result': 'success' if success else 'failure'
+                'result': 'reviewed' if success else 'anomaly'
             })
 
         return checks
@@ -208,7 +208,7 @@ class AccountReturn(models.Model):
                 'name': _("Sales above 250€"),
                 'message': _("Only include customers with total annual taxable sales exceeding 250€ (excluding VAT) or a credit note."),
                 'code': 'sales_threshold',
-                'result': 'success',
+                'result': 'reviewed',
             })
 
         if 'customer_without_country' not in check_codes_to_ignore:
@@ -235,7 +235,7 @@ class AccountReturn(models.Model):
                 'code': 'customer_without_country',
                 'records_count': no_country_moves_count,
                 'records_name': _("Invoice") if no_country_moves_count == 1 else _("Invoices"),
-                'result': 'failure' if no_country_moves_count else 'success',
+                'result': 'anomaly' if no_country_moves_count else 'reviewed',
                 'action': action if no_country_moves_count else False,
             }
 

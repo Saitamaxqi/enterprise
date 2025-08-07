@@ -82,7 +82,7 @@ class TestIntrastatReturn(TestAccountReportsCommon):
         only_b2b_customer_check = checks.filtered(lambda c: c.code == 'check_intrastat_only_b2b_customer')
         self.assertEqual(
             only_b2b_customer_check.result,
-            'success',
+            'reviewed',
             "The check for only B2B customers should pass as there are no private individuals in the January return",
         )
 
@@ -132,21 +132,21 @@ class TestIntrastatReturn(TestAccountReportsCommon):
         ])
         invoices.action_post()
 
-        january_return.refresh_checks(force_bypassed=True)
+        january_return.refresh_checks()
 
         only_b2b_customer_check = self.env['account.return.check'].browse(only_b2b_customer_check.id)
         self.assertEqual(
             only_b2b_customer_check.result,
-            'failure',
+            'anomaly',
             "The check for only B2B customers should fail as there is now a private individual in the January return",
         )
 
         self.assertEqual(only_b2b_customer_check.records_count, 1, "Only one partner must fail, as one has a VAT but the other not")
 
         invoices[1].button_draft()
-        january_return.refresh_checks(force_bypassed=True)
+        january_return.refresh_checks()
         self.assertEqual(
             only_b2b_customer_check.result,
-            'success',
+            'reviewed',
             "The check should now succeed as we removed the failing partner move",
         )

@@ -6,11 +6,13 @@ from collections import defaultdict
 from markupsafe import Markup
 from datetime import date
 from dateutil.relativedelta import relativedelta
-from odoo import Command, _, api, fields, models
-from odoo.exceptions import RedirectWarning, UserError, ValidationError
+from odoo import Command, _, api, fields, models, SUPERUSER_ID
+from odoo.exceptions import AccessError, RedirectWarning, UserError, ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL
 from odoo.tools.misc import format_date
+
+from .account_audit_account_status import STATUS_SELECTION
 
 PERIODS = [
     ('monthly', 'Monthly'),
@@ -35,10 +37,6 @@ CHECK_TYPES = [
     ('file', "Upload Document"),
 ]
 
-INITIAL_RESULT_BY_CHECK_TYPE = {
-    'check': 'failure',
-    'file': 'manual',
-}
 
 LIMIT_CHECK_ENTRIES = 21
 
@@ -647,7 +645,7 @@ class AccountReturn(models.Model):
         for record in self:
             if record._get_state_field() in vals:
                 if record.date_from <= fields.Date.end_of(fields.Date.context_today(record), "month"):
-                    record.refresh_checks(force_bypassed=True)
+                    record.refresh_checks()
 
             if 'audit_status' in vals:
                 if record.audit_status in ('ongoing', 'paused'):
@@ -771,12 +769,12 @@ class AccountReturn(models.Model):
         for record in self:
             record.check_count = len(record.check_ids)
 
-    @api.depends('state', 'check_ids.state', 'check_ids.result', 'check_ids.bypassed')
+    @api.depends('state', 'check_ids.state', 'check_ids.result')
     def _compute_unresolved_check_count(self):
         for record in self:
             failed_count = 0
             for check in record.check_ids:
-                failed_count += 1 if check.result in ('failure', 'manual') and not check.bypassed else 0
+                failed_count += 1 if check.result in ('todo', 'anomaly') else 0
 
             record.unresolved_check_count = failed_count
 
@@ -1010,7 +1008,7 @@ class AccountReturn(models.Model):
         self.refresh_checks()
 
         if bypass_failing_tests:
-            self.check_ids.filtered(lambda check: check.result == 'failure').bypassed = True
+            self.check_ids.filtered(lambda check: check.result == 'anomaly').result = 'reviewed'
 
         self._check_failing_checks_in_current_stage()
 
@@ -1172,8 +1170,8 @@ class AccountReturn(models.Model):
     def _reset_checks_for_states(self, states):
         checks_to_reset = self.check_ids.filtered(lambda check: check.state in states)
         checks_to_reset.write({
-            'bypassed': False,
-            'approver_id': False,
+            'refresh_result': True,
+            'approver_ids': False,
             'supervisor_id': False,
         })
         for account_return in checks_to_reset.return_id:
@@ -1741,16 +1739,14 @@ class AccountReturn(models.Model):
         domain = [
             ('return_id', '=', self.id),
             ('state', '=', self.state),
-            ('result', 'in', ('failure', 'manual')),
-            ('bypassed', '=', False),
+            ('result', 'in', ('todo', 'anomaly')),
         ]
         if self.env['account.return.check'].search_count(domain, limit=1):
             raise UserError(_("Some checks fail in the current stage, please solve them before proceeding."))
 
-    def refresh_checks(self, force_bypassed=False):
+    def refresh_checks(self):
         """
         Recompute all checks for every return in self of the current state
-        :param force_bypassed: Will recompute all existing checks for the current state
         """
         if not self.env['account.return.check'].has_access('write'):
             return
@@ -1760,20 +1756,22 @@ class AccountReturn(models.Model):
             if record.company_id not in self.env.companies:  # We do not run checks if the main company is not selected
                 continue
 
-            if record._should_run_checks() or force_bypassed:
-                check_codes_to_ignore = set(record.check_ids.filtered(lambda x: x.state == record.state and x.bypassed and not force_bypassed).mapped('code'))
-
+            if record._should_run_checks():
+                check_codes_to_ignore = set(record.check_ids.filtered(lambda x: x.state == record.state))
                 rslt = record._run_checks(check_codes_to_ignore)
                 rslt += record._execute_template_checks(check_codes_to_ignore)
 
                 checks_by_code = record.check_ids.grouped(lambda x: x.code)
                 for vals in rslt:
                     if existing_check := checks_by_code.get(vals['code']):
-                        existing_check.write(vals)
+                        # If a user has updated `result`, we no longer updates its value automatically.
+                        if not existing_check.refresh_result:
+                            vals.pop('result', None)
+                        existing_check.with_user(SUPERUSER_ID).write(vals)
                     else:
                         to_create.append({**vals, 'state': record.state, 'return_id': record.id})
 
-        self.env['account.return.check'].create(to_create)
+        self.env['account.return.check'].with_user(SUPERUSER_ID).create(to_create)
 
     def _should_run_checks(self):
         # To override in order to run checks in other custom-made states
@@ -1811,16 +1809,13 @@ class AccountReturn(models.Model):
                 action_record = self.env[action.sudo().type].browse(action.sudo().id)
                 vals_dict['action'] = action_record._get_action_dict()
 
-            initial_result = template._get_initial_result()
-
             if template not in existing_check_by_template_id:
                 vals_dict.update({
                     'template_id': template.id,
-                    'result': initial_result,
                 })
             elif existing_check_by_template_id[template].type != template.type:
                 # If the existing check type does not match we have to reset the result
-                vals_dict['result'] = initial_result
+                vals_dict['result'] = 'todo'
                 if existing_check_by_template_id[template].type == 'file' and existing_check_by_template_id[template].attachment_ids:
                     existing_check_by_template_id[template].attachment_ids.unlink()
 
@@ -1864,10 +1859,10 @@ class AccountReturn(models.Model):
                         'action': action,
                         'records_count': len(entries),
                         'records_name': model._description,
-                        'result': initial_result,
+                        'result': 'anomaly',
                     })
                 else:
-                    vals_dict['result'] = 'success'
+                    vals_dict['result'] = 'reviewed'
 
             vals_list.append(vals_dict)
 
@@ -1918,7 +1913,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'records_count': invalid_fields_count,
                 'records_name': _("Missing"),
                 'action': review_action,
-                'result': 'failure' if invalid_fields_count else 'success',
+                'result': 'anomaly' if invalid_fields_count else 'reviewed',
             })
 
         if 'check_match_all_bank_entries' not in check_codes_to_ignore:
@@ -1965,7 +1960,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'records_count': bills_without_attachments_count,
                 'records_name': _("Bill") if bills_without_attachments_count == 1 else _("Bills"),
                 'action': review_action if bills_without_attachments_count else None,
-                'result': 'failure' if bills_without_attachments_count else 'success',
+                'result': 'anomaly' if bills_without_attachments_count else 'reviewed',
             })
 
         if 'check_tax_countries' not in check_codes_to_ignore:
@@ -2025,7 +2020,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'records_count': country_error_moves_count,
                 'records_name': _("Invoice") if country_error_moves_count == 1 else _("Invoices"),
                 'action': review_action if country_error_move_ids else None,
-                'result': 'failure' if country_error_move_ids else 'success',
+                'result': 'anomaly' if country_error_move_ids else 'reviewed',
             })
 
         return checks
@@ -2078,7 +2073,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'message': _("Review receivables without a partner."),
                 'code': 'check_unkown_partner_receivables',
                 'action': aml_ids._get_records_action() if aml_ids else None,
-                'result': 'failure' if aml_ids else 'success',
+                'result': 'anomaly' if aml_ids else 'reviewed',
             })
 
         if 'check_overdue_receivables' not in check_codes_to_ignore:
@@ -2094,7 +2089,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'message': _("Review overdue receivables aged over 60 days and assess the need for an allowance for doubtful accounts or expected credit loss provision, as per IFRS 9 guidelines."),
                 'code': 'check_overdue_receivables',
                 'action': action,
-                'result': 'failure' if has_overdue_receivables else 'success',
+                'result': 'anomaly' if has_overdue_receivables else 'reviewed',
             })
 
         if 'check_total_receivables' not in check_codes_to_ignore:
@@ -2102,7 +2097,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'name': _("Total Receivables"),
                 'message': _("Verify that the total aged receivables equals the customer account balance."),
                 'code': 'check_total_receivables',
-                'result': 'success',
+                'result': 'reviewed',
             })
 
         if 'check_unkown_partner_payables' not in check_codes_to_ignore:
@@ -2113,7 +2108,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'message': _("Review payables without a partner."),
                 'code': 'check_unkown_partner_payables',
                 'action': aml_ids._get_records_action() if aml_ids else None,
-                'result': 'failure' if aml_ids else 'success',
+                'result': 'anomaly' if aml_ids else 'reviewed',
             })
 
         if 'check_overdue_payables' not in check_codes_to_ignore:
@@ -2129,7 +2124,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'message': _("Review overdue payables aged over 60 days and assess the need for an allowance for uncertain liabilities."),
                 'code': 'check_overdue_payables',
                 'action': action,
-                'result': 'failure' if has_overdue_payables else 'success',
+                'result': 'anomaly' if has_overdue_payables else 'reviewed',
             })
 
         if 'check_total_payables' not in check_codes_to_ignore:
@@ -2137,7 +2132,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'name': _("Total payables"),
                 'message': _("Verify that the total aged payables equals the vendor account balance."),
                 'code': 'check_total_payables',
-                'result': 'success',
+                'result': 'reviewed',
             })
 
         if 'check_deferred_entries' not in check_codes_to_ignore:
@@ -2155,7 +2150,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     'code': 'check_deferred_entries',
                     'records_count': deferred_entries_count,
                     'records_name': _("Entry") if deferred_entries_count == 1 else _("Entries"),
-                    'result': 'manual',
+                    'result': 'todo',
                 })
 
         if 'manual_adjustments' not in check_codes_to_ignore:
@@ -2163,7 +2158,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'name': _("Manual Adjustments"),
                 'message': _("Complete any necessary manual adjustments and internal checks."),
                 'code': 'manual_adjustments',
-                'result': 'manual',
+                'result': 'todo',
             })
 
         if 'earnings_allocation' not in check_codes_to_ignore:
@@ -2176,7 +2171,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'message': _("After adjustements, transfer the undistributed Profits/Losses to an equity account."),
                 'code': 'earnings_allocation',
                 'action': action,
-                'result': 'manual',
+                'result': 'todo',
             })
 
         return checks
@@ -2216,7 +2211,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     if invalid_vies_partners_count
                     else None
                 ),
-                'result': 'failure' if invalid_vies_partners_count else 'success',
+                'result': 'anomaly' if invalid_vies_partners_count else 'reviewed',
             })
 
     def _check_suite_common_ec_sales_list(self, check_codes_to_ignore):
@@ -2241,7 +2236,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     'name': _("Goods and services classification"),
                     'message': _("Review the tax code and ensure each transaction is correctly classified as a supply of goods or services."),
                     'code': 'goods_service_classification',
-                    'result': 'manual',
+                    'result': 'todo',
                     'action': {
                         'type': 'ir.actions.act_window',
                         'name': _("Journal Items"),
@@ -2256,7 +2251,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     'name': _("Reverse charge mention"),
                     'message': _('Make sure the "Reverse Charge" mention appears on all invoices.'),
                     'code': 'reverse_charge_mentioned',
-                    'result': 'manual',
+                    'result': 'todo',
                     'action': {
                         'type': 'ir.actions.act_window',
                         'name': _("Invoices"),
@@ -2289,7 +2284,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     'name': _("Only intra-EU customers"),
                     'message': _("Exclude any domestic or extra-EU sales from the EC Sales List."),
                     'code': 'eu_cross_border',
-                    'result': 'failure' if cross_border_failure else 'success',
+                    'result': 'anomaly' if cross_border_failure else 'reviewed',
                     'action': cross_border_action,
                 })
 
@@ -2301,7 +2296,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     'name': _("Only business customers"),
                     'message': _("Exclude any private customers."),
                     'code': 'only_b2b',
-                    'result': 'failure' if non_b2b_partners else 'success',
+                    'result': 'anomaly' if non_b2b_partners else 'reviewed',
                     'action': (
                         non_b2b_partners._get_records_action(name=self.env._("Private Customers"))
                         if non_b2b_partners else None
@@ -2316,7 +2311,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     'name': _("VAT Numbers"),
                     'message': _("All customers have a VAT number."),
                     'code': 'no_partners_without_vat',
-                    'result': 'failure' if no_vat_partners else 'success',
+                    'result': 'anomaly' if no_vat_partners else 'reviewed',
                     'action': (
                         no_vat_partners._get_records_action(name=self.env._("Partners without VAT"))
                         if no_vat_partners else None
@@ -2353,7 +2348,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             'records_count': unreconciled_bank_entries_count,
             'records_name': _("Transaction") if unreconciled_bank_entries_count == 1 else _("Transactions"),
             'action': review_action if unreconciled_bank_entries_count else None,
-            'result': 'failure' if unreconciled_bank_entries_count else 'success',
+            'result': 'anomaly' if unreconciled_bank_entries_count else 'reviewed',
         }
 
     def action_open_account_return(self):
@@ -2404,7 +2399,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             'records_count': draft_entries_count,
             'records_name': _("Entry") if draft_entries_count == 1 else _("Entries"),
             'action': review_action if draft_entries_count else None,
-            'result': 'failure' if draft_entries_count else 'success',
+            'result': 'anomaly' if draft_entries_count else 'reviewed',
         }
 
     def get_kanban_view_id(self):
@@ -2441,12 +2436,8 @@ class AccountReturnCheck(models.Model):
     records_name = fields.Char()
     action = fields.Json()
     result = fields.Selection(
-        selection=[
-            ('success', "Passed"),
-            ('manual', "To Do"),
-            ('failure', "Failed"),
-        ],
-        default='manual',
+        selection=STATUS_SELECTION,
+        default='todo',
         required=True,
     )
     attachment_ids = fields.Many2many(
@@ -2462,21 +2453,75 @@ class AccountReturnCheck(models.Model):
     date_deadline = fields.Date("Deadline", related="return_id.date_deadline")
 
     # Editable fields
-    bypassed = fields.Boolean(string="Bypassed")
-    approver_id = fields.Many2one(comodel_name='res.users', string="Approved By")
-    supervisor_id = fields.Many2one(comodel_name='res.users', string="Supervised By")
-    approver_supervisor_ids = fields.Many2many(comodel_name='res.users', string="Approver and Supervisor", compute='_compute_approver_supervisor_ids')
-    show_supervise = fields.Boolean(string="Show Supervise", compute='_compute_show_supervise')
-    show_invalidate = fields.Boolean(string="Show Invalidate", compute='_compute_show_invalidate')
+    refresh_result = fields.Boolean(default=True)
+    approver_ids = fields.Many2many(
+        comodel_name='res.users',
+        string="Approved By",
+        readonly=True,
+        context={"active_test": False},
+    )
+    supervisor_id = fields.Many2one(comodel_name='res.users', string="Supervised By", readonly=True)
+    approver_supervisor_ids = fields.Many2many(
+        comodel_name='res.users',
+        string="Approvers and Supervisor",
+        compute='_compute_approver_supervisor_ids',
+        context={"active_test": False},
+    )
 
     cycle = fields.Selection(related="template_id.cycle")
 
     def write(self, vals):
+        for check in self:
+            user = self.env.user
+            if 'supervisor_id' in vals and not user.has_groups('account.group_account_manager'):
+                raise AccessError(self.env._("Only an accounting administrator can set/unset a supervisor."))
+
+            if 'result' in vals:
+                if check.return_state != 'new':
+                    raise UserError(self.env._("You're only allowed to change the check state when the return hasn't been reviewed."))
+
+                if user.id != SUPERUSER_ID:
+                    check.refresh_result = False
+
+                    result_selection = dict(self._fields['result']._description_selection(self.env))
+                    msg_body = Markup("""
+                        <i>{check_name}</i> {check_updated}:
+                        <ul class='mb-0 ps-4'>
+                            <li>
+                                <span class='o-mail-Message-trackingOld me-1 px-1 text-muted fw-bold'>{old_result}</span>
+                                <i class='o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600'/>
+                                <span class='o-mail-Message-trackingNew me-1 fw-bold text-info'>{new_result}</span>
+                                <span class='o-mail-Message-trackingField fst-italic text-muted'>({tracking_field})</span>
+                            </li>
+                        </ul>
+                    """).format(
+                        check_updated=self.env._("check updated"),
+                        check_name=check.name,
+                        old_result=result_selection[check.result],
+                        new_result=result_selection[vals['result']],
+                        tracking_field=self.env._("Check State")
+                    )
+                    check.return_id.message_post(body=msg_body)
+
+                if vals['result'] in ('anomaly', 'todo'):
+                    check.approver_ids = False
+                    # Writing on supervisor_id is only allowed for account admin, we don't want to raise
+                    # an access error to a bookmaker if nothing is unset.
+                    if check.supervisor_id:
+                        check.supervisor_id = False
+                elif vals['result'] == 'reviewed':
+                    check.approver_ids |= user
+                    # Same as above
+                    if check.supervisor_id:
+                        check.supervisor_id = False
+                elif vals['result'] == 'supervised':
+                    check.supervisor_id = user
+
         result = super().write(vals)
 
         for check in self:
             if 'type' in vals and check.type != vals['type']:
-                if check.bypassed:
+                if not check.refresh_result:
                     check.action_invalidate_check()
 
             type = vals.get('type', check.type)
@@ -2484,7 +2529,7 @@ class AccountReturnCheck(models.Model):
                 check.attachment_ids.unlink()
 
             if 'attachment_ids' in vals and type == 'file':
-                check.bypassed = bool(check.attachment_ids)
+                check.refresh_result = not bool(check.attachment_ids)
 
         return result
 
@@ -2494,25 +2539,10 @@ class AccountReturnCheck(models.Model):
             if len(record.return_id.check_ids.filtered(lambda check: check.code == record.code)) > 1:
                 raise ValidationError(_("You can only have a unique check code for each return."))
 
-    @api.depends('approver_id', 'supervisor_id')
+    @api.depends('approver_ids', 'supervisor_id')
     def _compute_approver_supervisor_ids(self):
         for check in self:
-            check.approver_supervisor_ids = check.approver_id | check.supervisor_id
-
-    @api.depends_context('uid')
-    @api.depends('approver_id', 'supervisor_id')
-    def _compute_show_supervise(self):
-        is_admin = self.env.user.has_group('account.group_account_manager')
-        for check in self:
-            check.show_supervise = is_admin and check.approver_id and not check.supervisor_id
-
-    @api.depends_context('uid')
-    @api.depends('approver_id', 'supervisor_id', 'bypassed')
-    def _compute_show_invalidate(self):
-        is_admin = self.env.user.has_group('account.group_account_manager')
-        for check in self:
-            is_only_approved = check.approver_id and not check.supervisor_id
-            check.show_invalidate = is_admin and check.bypassed or is_only_approved
+            check.approver_supervisor_ids = check.approver_ids | check.supervisor_id
 
     def _get_evaluation_context(self):
         def generate_journals_options():
@@ -2605,110 +2635,6 @@ class AccountReturnCheck(models.Model):
 
             return action
 
-    def action_validate_check(self):
-        self.ensure_one()
-
-        changes = {}
-        if not self.bypassed:
-            self.bypassed = True
-            changes['bypassed'] = {
-                'old': False,
-                'new': True,
-            }
-
-        original_approvers = self.approver_id | self.supervisor_id
-
-        is_admin = self.env.user.has_group('account.group_account_manager')
-
-        if not self.approver_id:
-            self.approver_id = self.env.user
-
-        if not self.supervisor_id and is_admin:
-            self.supervisor_id = self.env.user
-
-        new_approvers = self.approver_id | self.supervisor_id
-
-        if original_approvers != new_approvers:
-            changes['approved_by'] = {
-                'old': original_approvers,
-                'new': new_approvers,
-            }
-        self._log_return_changes(changes)
-
-    def action_invalidate_check(self):
-        self.ensure_one()
-
-        is_admin = self.env.user.has_group('account.group_account_manager')
-        if not is_admin and self.supervisor_id:
-            raise UserError(_("You can't invalidate a check approved by an Administrator"))
-
-        changes = {
-            'approved_by': {
-            'old': self.approver_id | self.supervisor_id,
-            'new': self.env['res.users'],
-        }}
-        self.approver_id = False
-        self.supervisor_id = False
-
-        self.bypassed = False
-        changes['bypassed'] = {
-            'old': True,
-            'new': False,
-        }
-        self._log_return_changes(changes)
-
-        if self.return_id.state == 'reviewed':
-            self.return_id.state = 'new'
-
-    def _log_return_changes(self, changes=None):
-        """Log the changes of checks on the return's chatter"""
-        if not changes:
-            changes = {}
-
-        messages = []
-
-        if changes.get('bypassed'):
-            messages.append(Markup("""
-                <li>
-                    <span class='o-mail-Message-trackingOld me-1 px-1 text-muted fw-bold'>{old}</span>
-                    <i class='o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600'/>
-                    <span class='o-mail-Message-trackingNew me-1 fw-bold text-info'>{new}</span>
-                    <span class='o-mail-Message-trackingField ms-1 fst-italic text-muted'>({field_name})</span>
-                </li>
-                """).format(
-                old=changes['bypassed']['old'],
-                new=changes['bypassed']['new'],
-                field_name=_("Bypassed"),
-            ))
-
-        if changes.get('approved_by'):
-            old_approvers = ', '.join(changes['approved_by']['old'].mapped('name')) or _("None")
-            new_approvers = ', '.join(changes['approved_by']['new'].mapped('name')) or _("None")
-            messages.append(Markup("""
-                <li>
-                    <span class='o-mail-Message-trackingOld me-1 px-1 text-muted fw-bold'>{old}</span>
-                    <i class='o-mail-Message-trackingSeparator fa fa-long-arrow-right mx-1 text-600'/>
-                    <span class='o-mail-Message-trackingNew me-1 fw-bold text-info'>{new}</span>
-                    <span class='o-mail-Message-trackingField ms-1 fst-italic text-muted'>({field_name})</span>
-                </li>
-            """).format(
-                old=old_approvers,
-                new=new_approvers,
-                field_name=_("Approved by"),
-            ))
-
-        if messages:
-            body = Markup("""
-                <i>{check_name}</i> check updated:
-                <ul class='mb-0 ps-4'>
-                    {changes}
-                </ul>
-            """).format(
-                check_name=self.name,
-                changes=Markup("").join(messages),
-            )
-            self.return_id.message_post(body=body)
-
     def action_open_document(self):
         return {
             "type": "ir.actions.act_url",
@@ -2719,7 +2645,7 @@ class AccountReturnCheck(models.Model):
     def action_unlink_attachments(self):
         self.ensure_one()
         self.attachment_ids.unlink()
-        self.bypassed = False
+        self.refresh_result = True
         return True
 
 
@@ -2768,10 +2694,6 @@ class AccountReturnCheckTemplate(models.Model):
     description = fields.Text(string="Description", translate=True)
     model = fields.Selection(selection=lambda r: r._get_model_selection(), string="Model")
     domain = fields.Char(string="Domain")
-
-    def _get_initial_result(self):
-        self.ensure_one()
-        return INITIAL_RESULT_BY_CHECK_TYPE.get(self.type, 'failure') if self.type != 'check' or self.model else 'manual'
 
     def _get_model_selection(self):
         return [

@@ -829,13 +829,13 @@ class TestAccountReturn(TestAccountReportsCommon):
         self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-01-01')
 
         # 5. Refresh checks
-        account_return.refresh_checks(force_bypassed=True)
+        account_return.refresh_checks()
 
         self.assertEqual(len(account_return.check_ids), 4)
 
         self.assertEqual(account_return.activity_ids[0].activity_type_id, mail_activity_type)
 
-        account_return.refresh_checks(force_bypassed=True)
+        account_return.refresh_checks()
 
         self.assertEqual(len(account_return.check_ids), 4)
         self.assertEqual(len(account_return.activity_ids), 1)
@@ -848,7 +848,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'code': '_template_checks_1',
                     'message': False,
                     'type': 'check',
-                    'result': 'manual',
+                    'result': 'todo',
                     'return_id': account_return,
                     'template_id': templates[0],
                 },
@@ -857,7 +857,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'code': '_template_checks_2',
                     'message': False,
                     'type': 'check',
-                    'result': 'failure',
+                    'result': 'anomaly',
                     'return_id': account_return,
                     'cycle': 'equity',
                     'template_id': templates[1],
@@ -867,8 +867,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'code': '_template_checks_3',
                     'message': False,
                     'type': 'check',
-                    'result': 'success',
-                    'bypassed': False,
+                    'result': 'reviewed',
                     'return_id': account_return,
                     'template_id': templates[2],
                 },
@@ -877,7 +876,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'code': '_template_checks_4',
                     'message': False,
                     'type': 'file',
-                    'result': 'manual',
+                    'result': 'todo',
                     'return_id': account_return,
                     'cycle': 'other',
                     'template_id': templates[3],
@@ -906,7 +905,7 @@ class TestAccountReturn(TestAccountReportsCommon):
             forced_date_to=fields.Date.from_string('2024-12-31'),
         )._try_create_returns_for_fiscal_year(self.env.company, False)
 
-        account_return.refresh_checks(force_bypassed=True)
+        account_return.refresh_checks()
 
         self.assert_checks_equal(
             account_return,
@@ -915,7 +914,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'name': "Check 1",
                     'code': '_template_checks_1',
                     'type': 'file',
-                    'result': 'manual',
+                    'result': 'todo',
                     'return_id': account_return,
                     'template_id': template,
                 }
@@ -937,8 +936,8 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'name': "Check 1",
                     'code': '_template_checks_1',
                     'type': 'file',
-                    'result': 'manual',
-                    'bypassed': True,
+                    'result': 'todo',
+                    'refresh_result': False,
                     'return_id': account_return,
                     'template_id': template,
                 }
@@ -953,8 +952,8 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'name': "Check 1",
                     'code': '_template_checks_1',
                     'type': 'file',
-                    'result': 'manual',
-                    'bypassed': False,
+                    'result': 'todo',
+                    'refresh_result': True,
                     'return_id': account_return,
                     'template_id': template,
                 }
@@ -982,7 +981,7 @@ class TestAccountReturn(TestAccountReportsCommon):
             forced_date_to=fields.Date.from_string('2024-12-31'),
         )._try_create_returns_for_fiscal_year(self.env.company, False)
 
-        account_return.refresh_checks(force_bypassed=True)
+        account_return.refresh_checks()
 
         attachment = self.env['ir.attachment'].create({
             'res_model': 'account.return.check',
@@ -1000,8 +999,8 @@ class TestAccountReturn(TestAccountReportsCommon):
                     'name': "Check 1",
                     'code': '_template_checks_1',
                     'type': 'file',
-                    'result': 'manual',
-                    'bypassed': True,
+                    'result': 'todo',
+                    'refresh_result': False,
                     'return_id': account_return,
                     'template_id': template,
                     'attachment_ids': attachment,
@@ -1010,7 +1009,7 @@ class TestAccountReturn(TestAccountReportsCommon):
         )
 
         template.type = 'check'
-        account_return.refresh_checks(force_bypassed=True)
+        account_return.refresh_checks()
 
         self.assert_checks_equal(
             account_return,
@@ -1018,15 +1017,15 @@ class TestAccountReturn(TestAccountReportsCommon):
                 {
                     'code': '_template_checks_1',
                     'type': 'check',
-                    'result': 'manual',
-                    'bypassed': True,
+                    'result': 'todo',
+                    'refresh_result': False,
                     'attachment_ids': self.env['ir.attachment'],
                 }
             ]
         )
 
         template.type = 'file'
-        account_return.refresh_checks(force_bypassed=True)
+        account_return.refresh_checks()
 
         self.assert_checks_equal(
             account_return,
@@ -1034,7 +1033,7 @@ class TestAccountReturn(TestAccountReportsCommon):
                 {
                     'code': '_template_checks_1',
                     'type': 'file',
-                    'result': 'manual',
+                    'result': 'todo',
                     'attachment_ids': self.env['ir.attachment'],
                 }
             ]
@@ -1131,10 +1130,10 @@ class TestAccountReturn(TestAccountReportsCommon):
         draft_entries_check = checks.filtered(lambda c: c.code == 'check_draft_entries')
         bills_attachment_check = checks.filtered(lambda c: c.code == 'check_bills_attachment')
 
-        self.assertEqual(company_data_check.result, 'failure', "The company data check should fail as the VAT is not set")
-        self.assertEqual(match_all_bank_entries_check.result, 'failure', "The match all bank entries check should fail as there's a bank statement line but not reconciled")
-        self.assertEqual(draft_entries_check.result, 'failure', "The draft entries check should fail as the invoice is not posted")
-        self.assertEqual(bills_attachment_check.result, 'failure', "The bills attachment check should fail as the bill has no attachment")
+        self.assertEqual(company_data_check.result, 'anomaly', "The company data check should fail as the VAT is not set")
+        self.assertEqual(match_all_bank_entries_check.result, 'anomaly', "The match all bank entries check should fail as there's a bank statement line but not reconciled")
+        self.assertEqual(draft_entries_check.result, 'anomaly', "The draft entries check should fail as the invoice is not posted")
+        self.assertEqual(bills_attachment_check.result, 'anomaly', "The bills attachment check should fail as the bill has no attachment")
 
         self.env.company.vat = 'BE123456789'
         draft_invoice.action_post()
@@ -1160,10 +1159,10 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         january_return.refresh_checks()
 
-        self.assertEqual(company_data_check.result, 'success', "The company data check should succeed as the VAT is set")
-        self.assertEqual(match_all_bank_entries_check.result, 'success', "The match all bank entries check should succeed as the bank statement line is reconciled")
-        self.assertEqual(draft_entries_check.result, 'success', "The draft entries check should succeed as the invoice is posted")
-        self.assertEqual(bills_attachment_check.result, 'success', "The bills attachment check should succeed as the bill has an attachment")
+        self.assertEqual(company_data_check.result, 'reviewed', "The company data check should succeed as the VAT is set")
+        self.assertEqual(match_all_bank_entries_check.result, 'reviewed', "The match all bank entries check should succeed as the bank statement line is reconciled")
+        self.assertEqual(draft_entries_check.result, 'reviewed', "The draft entries check should succeed as the invoice is posted")
+        self.assertEqual(bills_attachment_check.result, 'reviewed', "The bills attachment check should succeed as the bill has an attachment")
 
     def test_ec_sales_list_return_checks(self):
         """ Checks that the checks for the EC Sales List return are correctly generated.
@@ -1194,9 +1193,9 @@ class TestAccountReturn(TestAccountReportsCommon):
         only_b2b_check = checks.filtered(lambda c: c.code == 'only_b2b')
         no_partners_without_vat_check = checks.filtered(lambda c: c.code == 'no_partners_without_vat')
 
-        self.assertEqual(eu_cross_border_check.result, 'success', "The EU cross border check should succeed as there is a cross-border transaction")
-        self.assertEqual(only_b2b_check.result, 'success', "The only B2B check should succeed as there is a B2B transaction")
-        self.assertEqual(no_partners_without_vat_check.result, 'success', "The no partners without VAT check should succeed as there is a partner without VAT")
+        self.assertEqual(eu_cross_border_check.result, 'reviewed', "The EU cross border check should succeed as there is a cross-border transaction")
+        self.assertEqual(only_b2b_check.result, 'reviewed', "The only B2B check should succeed as there is a B2B transaction")
+        self.assertEqual(no_partners_without_vat_check.result, 'reviewed', "The no partners without VAT check should succeed as there is a partner without VAT")
 
     def test_annual_return_checks(self):
         """ Checks that the checks for the Annual return are correctly generated.
@@ -1253,9 +1252,9 @@ class TestAccountReturn(TestAccountReportsCommon):
         check_total_receivables = checks.filtered(lambda c: c.code == 'check_total_receivables')
         check_total_payables = checks.filtered(lambda c: c.code == 'check_total_payables')
 
-        self.assertEqual(check_bank_reconcile.result, 'failure', "The bank reconcile check should fail as the bank statement line is not reconciled")
-        self.assertEqual(check_draft_entries.result, 'failure', "The draft entries check should fail as the invoice is not posted")
-        self.assertEqual(check_overdue_payables.result, 'success', "The overdue payables check should succeed as the payable is paid")
+        self.assertEqual(check_bank_reconcile.result, 'anomaly', "The bank reconcile check should fail as the bank statement line is not reconciled")
+        self.assertEqual(check_draft_entries.result, 'anomaly', "The draft entries check should fail as the invoice is not posted")
+        self.assertEqual(check_overdue_payables.result, 'reviewed', "The overdue payables check should succeed as the payable is paid")
 
         payment = self.env['account.payment'].create({
             'amount': 100.0,
@@ -1273,17 +1272,17 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         annual_return.refresh_checks()
 
-        self.assertEqual(check_unkown_partner_payables.result, 'success', "The unknown partner payables check should succeed as the invoice is posted")
-        self.assertEqual(check_unkown_partner_receivables.result, 'success', "The unknown partner receivables check should succeed as the invoice is posted")
-        self.assertEqual(check_bank_reconcile.result, 'success', "The bank reconcile check should succeed as the bank statement line is reconciled")
-        self.assertEqual(check_deferred_entries.result, 'manual', "The deferred entries check should be manual as it requires user intervention")
-        self.assertEqual(earnings_allocation.result, 'manual', "The earnings allocation check should be manual as it requires user intervention")
-        self.assertEqual(manual_adjustments.result, 'manual', "The manual adjustments check should be manual as it requires user intervention")
-        self.assertEqual(check_draft_entries.result, 'success', "The draft entries check should succeed as the invoice is posted")
-        self.assertEqual(check_overdue_payables.result, 'failure', "The overdue payables check should fail as the payable is not paid")
-        self.assertEqual(check_overdue_receivables.result, 'failure', "The overdue receivables check should fail as the receivable is not paid")
-        self.assertEqual(check_total_receivables.result, 'success', "The total receivables check should succeed as the invoice is posted")
-        self.assertEqual(check_total_payables.result, 'success', "The total payables check should succeed as the invoice is posted")
+        self.assertEqual(check_unkown_partner_payables.result, 'reviewed', "The unknown partner payables check should succeed as the invoice is posted")
+        self.assertEqual(check_unkown_partner_receivables.result, 'reviewed', "The unknown partner receivables check should succeed as the invoice is posted")
+        self.assertEqual(check_bank_reconcile.result, 'reviewed', "The bank reconcile check should succeed as the bank statement line is reconciled")
+        self.assertEqual(check_deferred_entries.result, 'todo', "The deferred entries check should be todo as it requires user intervention")
+        self.assertEqual(earnings_allocation.result, 'todo', "The earnings allocation check should be todo as it requires user intervention")
+        self.assertEqual(manual_adjustments.result, 'todo', "The manual adjustments check should be todo as it requires user intervention")
+        self.assertEqual(check_draft_entries.result, 'reviewed', "The draft entries check should succeed as the invoice is posted")
+        self.assertEqual(check_overdue_payables.result, 'anomaly', "The overdue payables check should fail as the payable is not paid")
+        self.assertEqual(check_overdue_receivables.result, 'anomaly', "The overdue receivables check should fail as the receivable is not paid")
+        self.assertEqual(check_total_receivables.result, 'reviewed', "The total receivables check should succeed as the invoice is posted")
+        self.assertEqual(check_total_payables.result, 'reviewed', "The total payables check should succeed as the invoice is posted")
 
     def test_tax_return_recoverable_amounts(self):
         tax_account = self.env['account.account'].create({

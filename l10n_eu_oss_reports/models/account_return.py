@@ -76,7 +76,7 @@ class AccountReturn(models.Model):
                 'message': _("""
                     OSS reports must be submitted in euros.
                 """),
-                'result': 'success' if self.company_id.currency_id.name == 'EUR' else 'failure',
+                'result': 'reviewed' if self.company_id.currency_id.name == 'EUR' else 'anomaly',
             })
 
         if 'check_oss_only_intra_eu_transactions' not in check_codes_to_ignore:
@@ -86,7 +86,7 @@ class AccountReturn(models.Model):
                 'message': _("""
                     Exclude any domestic or extra-EU sales from the OSS report.
                 """),
-                'result': 'success',
+                'result': 'reviewed',
             })
 
         if 'check_oss_only_b2c_customer' not in check_codes_to_ignore:
@@ -123,7 +123,7 @@ class AccountReturn(models.Model):
                 'records_count': business_partners_count,
                 'records_name': _("Partner") if business_partners_count == 1 else _("Partners"),
                 'action': review_action if business_partner_ids else False,
-                'result': 'success' if not business_partner_ids else 'failure',
+                'result': 'reviewed' if not business_partner_ids else 'anomaly',
             })
 
         return checks

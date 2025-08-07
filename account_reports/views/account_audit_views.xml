@@ -17,9 +17,9 @@
                                         widget="account_return_selection_badge"
                                         name="audit_status"
                                         options="{
-                                            'ongoing': 'muted',
-                                            'paused': 'danger',
-                                            'done': 'success',
+                                            'ongoing': {'decoration': 'muted'},
+                                            'paused': {'decoration': 'danger'},
+                                            'done': {'decoration': 'success'},
                                         }"
                                         />
                                 </div>
@@ -125,10 +125,10 @@
                         widget="account_return_selection_badge"
                         name="audit_status"
                         options="{
-                            'todo': 'muted',
-                            'reviewed': 'info',
-                            'supervised': 'success',
-                            'anomaly': 'danger',
+                            'todo': {'decoration': 'muted'},
+                            'reviewed': {'decoration': 'info'},
+                            'supervised': {'decoration': 'success'},
+                            'anomaly': {'decoration': 'danger'},
                         }"
                         />
                 </list>

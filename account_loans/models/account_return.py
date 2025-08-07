@@ -19,6 +19,6 @@ class AccountReturn(models.Model):
                     'name': _("Loans"),
                     'message': _("Odoo manages your amortizations automatically. No loans were found for this period. Ensure your loans are properly registered for automatic amortizations calculation."),
                     'code': 'check_loans',
-                    'result': 'manual',
+                    'result': 'todo',
                 })
         return checks
