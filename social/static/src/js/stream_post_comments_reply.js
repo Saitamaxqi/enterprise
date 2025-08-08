@@ -94,7 +94,8 @@ export class StreamPostCommentsReply extends Component {
             // convert to base 64 encoded file into a Blob object
             // (with the correct Content-Type)
             const base64Response = await fetch(this.state.attachmentSrc);
-            const file = new File([await base64Response.blob()], "attachment");
+            const blob = await base64Response.blob();
+            const file = new File([blob], "attachment", { type: blob.type });
             formData.set("attachment", file);
         }
         const existingAttachmentId = textarea.dataset.existingAttachmentId;
