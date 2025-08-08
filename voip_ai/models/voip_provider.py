@@ -1,15 +1,15 @@
-from odoo import models, fields
+from odoo import fields, models
 
 
 class VoipProvider(models.Model):
-    _inherit = 'voip.provider'
+    _inherit = "voip.provider"
 
     transcription_policy = fields.Selection(
         string="Transcription Policy",
         selection=[
-            ('disabled', 'Disable'),
-            ('always', 'Force for all users'),
+            ("disabled", "Disable"),
+            ("always", "Force for all users"),
         ],
-        default='disabled',
-        required=True
+        default="disabled",
+        required=True,
     )

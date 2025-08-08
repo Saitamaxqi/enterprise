@@ -1,8 +1,7 @@
-/** @odoo-module **/
+import { UserAgent } from "@voip/core/user_agent_service";
 
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
-import { UserAgent } from "@voip/core/user_agent_service";
 
 patch(UserAgent.prototype, {
     async _onSessionEstablished(session) {

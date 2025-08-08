@@ -1,11 +1,12 @@
-from logging import getLogger
-from requests.exceptions import RequestException
 from json.decoder import JSONDecodeError
+from logging import getLogger
 
-from odoo.exceptions import UserError
+from requests.exceptions import RequestException
+
 from odoo import api, fields, models
-from odoo.addons.ai.utils.llm_api_service import LLMApiService
+from odoo.exceptions import UserError
 
+from odoo.addons.ai.utils.llm_api_service import LLMApiService
 
 _logger = getLogger(__name__)
 
@@ -14,7 +15,8 @@ class VoipCall(models.Model):
     _inherit = "voip.call"
 
     transcript = fields.Text()
-    transcription_status = fields.Selection([
+    transcription_status = fields.Selection(
+        [
             ("pending", "Pending"),  # waiting for cron
             ("queued", "Queued"),  # picked by cron, might get stuck in this state
             ("done", "Done"),  # success
@@ -49,7 +51,9 @@ class VoipCall(models.Model):
             return
 
         if len(recordings) > 1:
-            _logger.warning("Call %s has multiple recordings; processing only the newest one (%s).", call.id, recordings[0].id)
+            _logger.warning(
+                "Call %s has multiple recordings; processing only the newest one (%s).", call.id, recordings[0].id
+            )
 
         recording = recordings[0]
 
@@ -59,5 +63,5 @@ class VoipCall(models.Model):
             call.transcript = (call.transcript or "") + header + text
             call.transcription_status = "done"
         except (RequestException, JSONDecodeError, UserError) as err:
-            _logger.error("Call %s: transcription failed: %s", call.id, err)
+            _logger.exception("Call %s: transcription failed: %s", call.id, err)
             call.transcription_status = "error"

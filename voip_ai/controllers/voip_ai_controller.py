@@ -3,8 +3,7 @@ from odoo.http import request
 
 
 class VoipAiController(http.Controller):
-
-    @http.route('/voip_ai/transcribe_call', type='http', auth='user', methods=['POST'], csrf=True)
+    @http.route("/voip_ai/transcribe_call", type="http", auth="user", methods=["POST"], csrf=True)
     def transcribe_call(self, **post):
         call_id = int(post.get("voip_call_id", 0))
         recording = request.httprequest.files.get("file", False)
@@ -27,15 +26,17 @@ class VoipAiController(http.Controller):
             call.transcription_status = "too_big_to_process"
             return request.make_json_response({"error": "File too large"}, status=413)
 
-        request.env["ir.attachment"].sudo().create({
-            "name": "call_recording.ogg",
-            "res_model": "voip.call",
-            "res_id": call.id,
-            "type": "binary",
-            "mimetype": "audio/ogg",
-            "raw": recording_raw,
-        })
+        request.env["ir.attachment"].sudo().create(
+            {
+                "name": "call_recording.ogg",
+                "res_model": "voip.call",
+                "res_id": call.id,
+                "type": "binary",
+                "mimetype": "audio/ogg",
+                "raw": recording_raw,
+            }
+        )
         request.env.cr.commit()
 
-        request.env.ref('voip_ai.ir_cron_transcribe_recent_voip_call').sudo()._trigger()
+        request.env.ref("voip_ai.ir_cron_transcribe_recent_voip_call").sudo()._trigger()
         return request.make_json_response({"success": True})
