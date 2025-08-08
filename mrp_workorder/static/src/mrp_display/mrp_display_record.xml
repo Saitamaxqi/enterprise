@@ -27,8 +27,8 @@
                             <MrpTimerField name="'duration'" record="props.record" readonly="true"/>
                         </div>
                         <div class="d-flex flex-wrap justify-content-end positon-relative z-1">
-                            <t t-foreach="this.props.record.data.employee_ids.records" t-as="employee" t-key="employee.resId">
-                                <img t-attf-src="/web/image/hr.employee/{{employee.resId}}/avatar_128" class="o_avatar border border-2 rounded-circle" t-att-class="{'ms-n2': !employee_first}" t-attf-style="position: relative; z-index: -{{employee_index}}"/>
+                            <t t-foreach="this.props.record.data.employee_ids.resIds" t-as="employee" t-key="employee">
+                                <img t-attf-src="/web/image/hr.employee/{{employee}}/avatar_128" class="o_avatar border border-2 rounded-circle" t-att-class="{'ms-n2': !employee_first}" t-attf-style="position: relative; z-index: -{{employee_index}}"/>
                             </t>
                         </div>
                     </div>

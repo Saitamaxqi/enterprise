@@ -409,10 +409,7 @@ export class MrpDisplayRecord extends Component {
         }
         await this.props.updateEmployees();
         const admin_id = this.props.sessionOwner.id;
-        if (
-            admin_id &&
-            !this.props.record.data.employee_ids.records.some((emp) => emp.resId === admin_id)
-        ) {
+        if (admin_id && !this.props.record.data.employee_ids.resIds.includes(admin_id)) {
             await this.model.orm.call(resModel, "button_start", [resId], {
                 context: { mrp_display: true },
             });
