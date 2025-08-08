@@ -1,5 +1,16 @@
 import { GanttController } from "@web_gantt/gantt_controller";
 import { AppointmentBookingActionHelper } from "@appointment/components/appointment_booking_action_helper/appointment_booking_action_helper";
+import {
+    CalendarQuickCreate,
+    QUICK_CREATE_CALENDAR_EVENT_FIELDS,
+} from "@calendar/views/calendar_form/calendar_quick_create";
+
+// add fields to be carried over when clicking "options" button on quick-edit form dialog
+Object.assign(QUICK_CREATE_CALENDAR_EVENT_FIELDS, {
+    appointment_status: { type: "string" },
+    resource_ids: { type: "many2many" },
+    total_capacity_reserved: { type: "number" },
+});
 
 const { DateTime } = luxon;
 
@@ -47,5 +58,18 @@ export class AppointmentBookingGanttController extends GanttController {
         const stop = start.plus({ hour: 1 });
         const context = this.model.getDialogContext({ start, stop, withDefault: true });
         this.create(context);
+    }
+
+    /**
+     * @override
+     * Add props required by the quick create form view
+     * and open the calendar-specific form dialog
+     * unless otherwise specified.
+     */
+    openDialog(props, options = {}, dialogComponent = null) {
+        if (dialogComponent !== null) {
+            return super.openDialog(...arguments);
+        }
+        return super.openDialog(props, options, CalendarQuickCreate);
     }
 }
