@@ -13,7 +13,7 @@ class TestSignContract(SignRequestCommon):
         # Prepare contract and vehicles
         employee = self.env['hr.employee'].create({
             'name': 'John Tester',
-            'work_contact_id': self.partner_1.id,
+            'work_contact_id': self.partner_2.id,
         })
 
         brand = self.env['fleet.vehicle.model.brand'].create({
@@ -40,18 +40,16 @@ class TestSignContract(SignRequestCommon):
             'company_id': employee.company_id.id,
         })
 
-        # Create sign request with 1 closed signature
-        sign_request = self.create_sign_request_1_role(self.partner_1, self.env['res.partner'])
-        sign_request_item = sign_request.request_item_ids[0]
-        sign_request_item.state = 'completed'
-        sign_request.nb_closed = 1  # Only one party has signed
+        sign_request = self.create_sign_request_2_roles(self.partner_2, self.partner_3, self.env['res.partner'])
+        role2sign_request_item = {sign_request_item.role_id: sign_request_item for sign_request_item in sign_request.request_item_ids}
+        sign_request_item_signer_1 = role2sign_request_item[self.role_signer_1]
+        sign_request_item_signer_2 = role2sign_request_item[self.role_signer_2]
 
         # Create a salary offer linked to the sign request
         offer = self.env['hr.contract.salary.offer'].create({
             'company_id': employee.company_id.id,
             'contract_template_id': version.id,
             'sign_request_ids': [(4, sign_request.id)],
-            'state': 'half_signed',
         })
 
         # Instantiate your custom controller and call the method
@@ -59,21 +57,24 @@ class TestSignContract(SignRequestCommon):
         SignContract.__bases__ = (main.SignContract,)
         controller = SignContract()
 
+        # Employee signs the contract
+        sign_request_item_signer_1.sign(self.signer_1_sign_values_2_roles)
         with MockRequest(sign_request.env):
-            controller._update_version_on_signature(sign_request_item, version, offer)
+            controller._update_version_on_signature(sign_request_item_signer_1, version, offer)
 
         # Assertions to verify that your custom logic is executed
-        self.assertEqual(version.car_id.future_driver_id, self.partner_1, "Car future driver should be updated")
+        self.assertEqual(version.car_id.future_driver_id, self.partner_2, "Car future driver should be updated")
         self.assertFalse(version.car_id.plan_to_change_car, "Car should not be flagged for change")
 
-        # Create sign request with 2 closed signature and a new car request
-        sign_request.nb_closed = 2
+        # Add a new car request to the version
         version.new_car = True
         version.ordered_car_id = False
         version.new_car_model_id = model
 
+        # Company (HR Responsible) signs the contract
+        sign_request_item_signer_2.sign(self.signer_2_sign_values_2_roles)
         with MockRequest(sign_request.env):
-            controller._update_version_on_signature(sign_request_item, version, offer)
+            controller._update_version_on_signature(sign_request_item_signer_2, version, offer)
 
-        self.assertEqual(version.car_id.future_driver_id, self.partner_1, "Car future driver should be updated")
+        self.assertEqual(version.car_id.future_driver_id, self.partner_2, "Car future driver should be updated")
         self.assertFalse(version.car_id.plan_to_change_car, "Car should not be flagged for change")

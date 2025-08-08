@@ -87,6 +87,38 @@ class SignRequestCommon(TransactionCase):
             'attachment_id': cls.attachment.id,
             'template_id': cls.template_3_roles.id,
         })
+
+        cls.template_2_roles = cls.env['sign.template'].create({
+            'name': 'template_2_roles',
+        })
+        cls.document_4 = cls.env['sign.document'].create({
+            'attachment_id': cls.attachment.id,
+            'template_id': cls.template_2_roles.id,
+        })
+        cls.env['sign.item'].create([
+            {
+                'type_id': cls.env.ref('sign.sign_item_type_text').id,
+                'required': True,
+                'responsible_id': cls.role_signer_1.id,
+                'page': 1,
+                'posX': 0.373,
+                'posY': 0.258,
+                'document_id': cls.document_4.id,
+                'width': 0.150,
+                'height': 0.015,
+            }, {
+                'type_id': cls.env.ref('sign.sign_item_type_text').id,
+                'required': True,
+                'responsible_id': cls.role_signer_2.id,
+                'page': 1,
+                'posX': 0.373,
+                'posY': 0.358,
+                'document_id': cls.document_4.id,
+                'width': 0.150,
+                'height': 0.015,
+            },
+        ])
+
         cls.env['sign.item'].create([
             {
                 'type_id': cls.env.ref('sign.sign_item_type_text').id,
@@ -147,6 +179,9 @@ class SignRequestCommon(TransactionCase):
         cls.signer_1_sign_values = cls.create_sign_values(cls, cls.template_3_roles.sign_item_ids, cls.role_signer_1.id)
         cls.signer_2_sign_values = cls.create_sign_values(cls, cls.template_3_roles.sign_item_ids, cls.role_signer_2.id)
         cls.signer_3_sign_values = cls.create_sign_values(cls, cls.template_3_roles.sign_item_ids, cls.role_signer_3.id)
+
+        cls.signer_1_sign_values_2_roles = cls.create_sign_values(cls, cls.template_2_roles.sign_item_ids, cls.role_signer_1.id)
+        cls.signer_2_sign_values_2_roles = cls.create_sign_values(cls, cls.template_2_roles.sign_item_ids, cls.role_signer_2.id)
 
         cls.user_1 = new_test_user(cls.env, login="user_1", groups='sign.group_sign_user')
         cls.partner_1 = cls.user_1.partner_id
@@ -242,6 +277,21 @@ class SignRequestCommon(TransactionCase):
     def create_sign_request_1_role_sms_auth(self, signer, cc_partners):
         self.role_signer_1.auth_method = 'sms'
         return self.create_sign_request_1_role(signer, cc_partners)
+
+    def create_sign_request_2_roles(self, signer_1, signer_2, cc_partners):
+        sign_request = self.env['sign.request'].create({
+            'template_id': self.template_2_roles.id,
+            'reference': self.template_2_roles.display_name,
+            'request_item_ids': [Command.create({
+                'partner_id': signer_1.id,
+                'role_id': self.role_signer_1.id,
+            }), Command.create({
+                'partner_id': signer_2.id,
+                'role_id': self.role_signer_2.id,
+            })],
+        })
+        sign_request.message_subscribe(partner_ids=cc_partners.ids)
+        return sign_request
 
     def create_sign_request_3_roles(self, signer_1, signer_2, signer_3, cc_partners):
         sign_request = self.env['sign.request'].create({

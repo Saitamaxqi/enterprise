@@ -69,8 +69,8 @@ class SignContract(Sign):
                 self._create_activity_benefit(version, ('running'))
                 offer.state = "half_signed"
 
-        # Both applicant/employee and HR responsible have signed
-        if request_item.sign_request_id.nb_closed == 2:
+        # All signers have signed
+        if request_item.sign_request_id.nb_wait == 0:
             current_employee_version = version.employee_id.version_id
             must_archive_current_version = version.applicant_id or False
             if current_employee_version.date_version >= version.date_version:

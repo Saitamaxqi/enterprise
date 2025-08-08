@@ -11,7 +11,7 @@ class SignContract(Sign):
 
     def _update_version_on_signature(self, request_item, version, offer):
         result = super()._update_version_on_signature(request_item, version, offer)
-        if request_item.sign_request_id.nb_closed == 2 and not version.leave_allocation_id:
+        if request_item.sign_request_id.nb_wait == 0 and not version.leave_allocation_id:
             auto_allocation = version.company_id.hr_contract_timeoff_auto_allocation
             if auto_allocation and version.holidays:
                 time_off_type = version.company_id.hr_contract_timeoff_auto_allocation_type_id
