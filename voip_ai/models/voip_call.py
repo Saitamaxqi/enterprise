@@ -24,6 +24,7 @@ class VoipCall(models.Model):
             ("too_big_to_process", "Too long to process"),  # >25 MB
             ("no_audio", "No audio"),  # attachment missing
         ],
+        default="no_audio",
         copy=False,
         index=True,
     )
@@ -62,6 +63,6 @@ class VoipCall(models.Model):
             header = f"\n--- {fields.Datetime.now()} ---\n"
             call.transcript = (call.transcript or "") + header + text
             call.transcription_status = "done"
-        except (RequestException, JSONDecodeError, UserError) as err:
-            _logger.exception("Call %s: transcription failed: %s", call.id, err)
+        except (RequestException, JSONDecodeError, UserError):
+            _logger.exception("Call %s: transcription failed", call.id)
             call.transcription_status = "error"

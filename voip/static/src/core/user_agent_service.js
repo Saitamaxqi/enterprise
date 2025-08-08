@@ -15,7 +15,7 @@ import { session } from "@web/session";
  * @property {boolean} isMute
  * @property {boolean} isOnHold
  * @property {import("@voip/core/call_model").Call} call
- * @property {window.sip.Session} [sipSession]
+ * @property {SIP.Session} [sipSession]
  * @property {string} [transferTarget]
  */
 
@@ -50,6 +50,7 @@ export class UserAgent extends Reactive {
         this.env = env;
         this.callService = services["voip.call"];
         this.multiTabService = services.multi_tab;
+        this.recordingService = services["voip.recording"];
         this.ringtoneService = services["voip.ringtone"];
         this.voip = services.voip;
         this.softphone = this.voip.softphone;
@@ -683,12 +684,17 @@ export class UserAgent extends Reactive {
         await this.callService.end(this.session.call);
     }
 
-    async _onSessionEstablished(session) {
-        // Empty method to be overridden by external modules.
-    }
-
-    async _onSessionTerminated(session) {
-        // Empty method to be overridden by external modules.
+    /**
+     * Triggered when the state of the session changes to Established.
+     * Only triggered by actual RTC sessions (production mode).
+     *
+     * @param {Session} session
+     */
+    _onSessionEstablished(session) {
+        this._setUpRemoteAudio();
+        session.sipSession.sessionDescriptionHandler.remoteMediaStream.onaddtrack = (
+            mediaStreamTrackEvent
+        ) => this._setUpRemoteAudio();
     }
 
     /** @param {SIP.SessionState} newState */
@@ -698,26 +704,12 @@ export class UserAgent extends Reactive {
                 break;
             case SIP.SessionState.Establishing:
                 break;
-            case SIP.SessionState.Established: {
-                this._setUpRemoteAudio();
-                this.session.sipSession.sessionDescriptionHandler.remoteMediaStream.onaddtrack = (
-                    mediaStreamTrackEvent
-                ) => this._setUpRemoteAudio();
-
-                // Record call
-                (async () => {
-                    try {
-                        await this._onSessionEstablished(this.session);
-                    } catch (error) {
-                        console.error("Error starting recording:", error);
-                    }
-                })();
+            case SIP.SessionState.Established:
+                this._onSessionEstablished(this.session);
                 break;
-            }
             case SIP.SessionState.Terminating:
                 break;
             case SIP.SessionState.Terminated: {
-                this._onSessionTerminated(this.session);
                 break;
             }
             default:
@@ -758,7 +750,7 @@ export class UserAgent extends Reactive {
 }
 
 export const userAgentService = {
-    dependencies: ["multi_tab", "voip", "voip.call", "voip.ringtone"],
+    dependencies: ["multi_tab", "voip", "voip.call", "voip.recording", "voip.ringtone"],
     start(env, services) {
         return new UserAgent(env, services);
     },
