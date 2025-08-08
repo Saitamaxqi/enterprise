@@ -122,16 +122,11 @@ class AccountMove(models.Model):
             cr.execute("""
                 UPDATE account_move
                 SET l10n_pe_edi_operation_type = '0101'
-                WHERE company_id IN (
-                    SELECT id
-                    FROM res_company
-                    WHERE account_fiscal_country_id = (
-                        SELECT id
-                        FROM res_country
-                        WHERE code = 'PE'
-                    )
-                )
-                AND move_type IN ('out_invoice', 'out_refund')
+                FROM res_company
+                JOIN res_country ON res_country.id = res_company.account_fiscal_country_id
+                WHERE res_company.id = account_move.company_id
+                   AND move_type IN ('out_invoice', 'out_refund')
+                   AND res_country.code = 'PE';
             """)
 
         return super()._auto_init()
