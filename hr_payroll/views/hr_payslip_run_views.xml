@@ -147,10 +147,9 @@
                     <field name="schedule_pay"/>
                     <label for="date_start" string="Period"/>
                     <div class="o_row">
-                        <field name="date_start" class="oe_inline" widget="daterange"
-                               options="{'end_date_field': 'date_end'}" readonly="state != '01_draft'"/>
-                        <field name="date_end" class="oe_inline" invisible="1"
-                               readonly="state != '01_draft'"/>
+                        <field name="date_start" class="oe_inline" readonly="state != '01_draft'"/>
+                        <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                        <field name="date_end" class="oe_inline" readonly="(not date_start) or (state != '01_draft')"/>
                     </div>
                 </group>
             </form>
