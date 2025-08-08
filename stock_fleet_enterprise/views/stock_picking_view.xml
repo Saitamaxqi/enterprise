@@ -14,6 +14,7 @@
     <record id="stock_picking_action_view_map" model="ir.actions.act_window">
         <field name="name">Map</field>
         <field name="res_model">stock.picking</field>
-        <field name="view_mode">map</field>
+        <field name="view_ids"
+           eval="[(0, 0, {'view_mode': 'map', 'view_id': ref('stock_picking_view_map')})]"/>
     </record>
 </odoo>
