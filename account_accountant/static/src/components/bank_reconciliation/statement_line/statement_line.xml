@@ -12,7 +12,7 @@
                     t-on-touchcancel="onTouchMoveOrCancel"
                     t-on-touchend="onTouchEnd"
                     t-ref="root">
-                <div class="statement_separator text-center hide-mobile w-100" t-if="!recordData.statement_id">
+                <div class="statement_separator text-end hide-mobile w-100" t-if="!recordData.statement_id">
                     <button type="button" class="btn btn-secondary btn-sm" t-on-click.stop="openStatementCreate">
                         Statement
                     </button>
