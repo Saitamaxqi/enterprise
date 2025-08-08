@@ -83,12 +83,4 @@ patch(PosStore.prototype, {
         }
         return Promise.resolve();
     },
-
-    getDisplayDeviceIP() {
-        if (this.config.iface_display_id) {
-            return this.config.iface_display_id.iot_ip;
-        } else {
-            return super.getDisplayDeviceIP();
-        }
-    },
 });

@@ -177,19 +177,6 @@ patch(PosStore.prototype, {
         }
     },
 
-    /**
-     * @override
-     */
-    addOrderIfEmpty(forceEmpty) {
-        if (
-            !this.getOrder() ||
-            (this.getOrder().delivery_identifier && this.getOrder().state == "paid")
-        ) {
-            return this.addNewOrder();
-        }
-        return super.addOrderIfEmpty(...arguments);
-    },
-
     async goToBack() {
         this.addPendingOrder([this.getOrder().id]);
         await this.syncAllOrders();

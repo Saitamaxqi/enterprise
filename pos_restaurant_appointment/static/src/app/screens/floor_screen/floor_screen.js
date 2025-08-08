@@ -27,30 +27,6 @@ patch(FloorScreen.prototype, {
 
         return table;
     },
-    async duplicateTableOrFloor() {
-        await super.duplicateTableOrFloor(...arguments);
-        if (this.selectedTables.length == 0) {
-            const tableWoAppointment = [];
-
-            for (const table of this.activeTables) {
-                const appointmentRessource = this.pos.models["appointment.resource"].get(
-                    table.appointment_resource_id?.id
-                );
-
-                if (!appointmentRessource) {
-                    tableWoAppointment.push(table.id);
-                }
-            }
-
-            if (tableWoAppointment.length > 0) {
-                await this.pos.data.searchRead(
-                    "appointment.resource",
-                    [["pos_table_ids", "in", tableWoAppointment]],
-                    this.pos.data.fields["appointment.resource"]
-                );
-            }
-        }
-    },
     async createTableFromRaw(table) {
         delete table.appointment_resource_id;
         return super.createTableFromRaw(table);
@@ -105,12 +81,6 @@ patch(FloorScreen.prototype, {
         const dateStart = deserializeDateTime(this.getFirstAppointment(table)?.start).ts;
         return (
             dateNow > dateStart && this.getFirstAppointment(table).appointment_status === "booked"
-        );
-    },
-    appointmentStarted(table) {
-        return (
-            this.getFirstAppointment(table) &&
-            deserializeDateTime(this.getFirstAppointment(table).start).ts < DateTime.now().ts
         );
     },
     onClickAppointment(ev, table) {

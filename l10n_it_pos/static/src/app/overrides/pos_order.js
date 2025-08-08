@@ -10,12 +10,4 @@ patch(PosOrder.prototype, {
     get isRefunded() {
         return this.lines.every((line) => line.qty < 0);
     },
-
-    getRefundInfo(it_fiscal_printer_serial_number) {
-        let { it_z_rep_number, it_fiscal_receipt_number, it_fiscal_receipt_date } = this;
-        it_z_rep_number = it_z_rep_number.padStart(4, "0");
-        it_fiscal_receipt_number = it_fiscal_receipt_number.padStart(4, "0");
-        it_fiscal_receipt_date = this._convertToDDMMYYYY(it_fiscal_receipt_date);
-        return `REFUND ${it_z_rep_number} ${it_fiscal_receipt_number} ${it_fiscal_receipt_date} ${it_fiscal_printer_serial_number}`;
-    },
 });

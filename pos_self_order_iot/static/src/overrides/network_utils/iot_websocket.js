@@ -8,10 +8,6 @@ patch(IotWebsocket.prototype, {
     async setup({ bus_service }) {
         this.busService = bus_service;
     },
-    async setIotChannel() {
-        const access_token = new URLSearchParams(browser.location.search).get("access_token");
-        this.iotChannel = await rpc("/pos-self-order/iot-box-websocket-channel", { access_token });
-    },
     async sendMessage(iotBoxIdentifier, message, messageId = null, messageType = "iot_action") {
         messageId ??= uuid();
 

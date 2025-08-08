@@ -176,12 +176,4 @@ patch(PaymentScreen.prototype, {
             this.pos.refreshTotalDueOfPartner(partner);
         }
     },
-    getLineToRemove() {
-        return this.currentOrder.lines.filter(
-            (line) =>
-                line.product_id.uom_id.isZero(line.qty) &&
-                !line.isSettleDueLine() &&
-                !line.isSettleInvoiceLine()
-        );
-    },
 });

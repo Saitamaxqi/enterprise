@@ -94,11 +94,6 @@ class EpsonFiscalPrinter extends Reactive {
         return result.addInfo.responseData;
     }
 
-    async roundCashPayments() {
-        const result = await this.directIO("4015", "27001");
-        return result;
-    }
-
     async sendCommand(command, { timeout, devid } = {}) {
         if (CONFIG.logCommands) {
             console.log(command.toXML());
