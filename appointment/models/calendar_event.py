@@ -79,6 +79,7 @@ class CalendarEvent(models.Model):
     name = fields.Char(compute='_compute_name', store=True, readonly=False)
     access_token = fields.Char('Access Token', default=_default_access_token, readonly=True)
     alarm_ids = fields.Many2many(compute='_compute_alarm_ids', store=True, readonly=False)
+
     appointment_answer_input_ids = fields.One2many('appointment.answer.input', 'calendar_event_id', string="Appointment Answers")
     appointment_status = fields.Selection([
         ('request', 'Request'),

@@ -60,6 +60,7 @@ Allow clients to Schedule Appointments through the Portal
         ],
         'web.assets_backend': [
             'appointment/static/src/scss/appointment_type_views.scss',
+            'appointment/static/src/scss/calendar_event_views.scss',
             'appointment/static/src/scss/web_calendar.scss',
             'appointment/static/src/views/**/*',
             'appointment/static/src/fields/**/*',

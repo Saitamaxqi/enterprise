@@ -212,6 +212,45 @@
             </xpath>
         </field>
     </record>
+    
+    <record id="calendar_event_view_gantt_kanban_popover" model="ir.ui.view">
+        <field name="name">calendar.event.view.gantt.kanban.popover</field>
+        <field name="model">calendar.event</field>
+        <field name="priority">90</field><!--this view aims to be used in gantt pop-ups, not as a full kanban view.-->
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                <t t-name="card" class="o_appointment_gantt_popover_kanban_card gap-2">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-clock-o text-400 me-1" title="Date and time"/>
+                        <field name="start" widget="daterange" options="{'end_date_field': 'stop'}"/>
+                        <field name="stop" invisible="1"/>
+                    </div>
+                    <div class="d-flex align-items-center" invisible="not location">
+                        <i class="fa fa-map-marker text-400 me-1" title="Location"/>
+                        <field name="location"/>
+                    </div>
+                    <div class="d-flex align-items-center" invisible="not videocall_location">
+                        <i class="fa fa-video-camera text-400 me-1" title="Video Call URL"/>
+                        <field name="videocall_location" widget="CopyClipboardChar"/>
+                    </div>
+                    <div class="d-flex align-items-center" invisible="not appointment_type_manage_capacity">
+                        <i class="fa fa-user text-400 me-1" title="Guests"/>
+                        <field name="total_capacity_reserved" class="me-1"/>guests
+                    </div>
+                    <div class="o_field_selection d-flex align-items-center" invisible="not appointment_status">
+                        <i class="fa fa-circle text-400 me-1" title="Appointment Status"/>
+                        <field name="appointment_status" widget="selection"/>
+                    </div>
+                    <div class="d-flex" invisible="not description">
+                        <i class="fa fa-sticky-note text-400 mt-1 me-1" title="Description"/>
+                        <field class="d-inline-block w-100 o_appointment_gantt_popover_html_field" name="description"/>
+                    </div>
+                </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 
     <record id="calendar_event_view_gantt_booking_resource" model="ir.ui.view">
         <field name="name">calendar.event.view.gantt.booking.resource</field>
@@ -227,12 +266,14 @@
                 display_unavailability="1"
                 form_view_id="%(calendar_event_view_form_gantt_booking)d"
                 js_class="appointment_booking_gantt"
+                kanban_view_id="%(calendar_event_view_gantt_kanban_popover)d"
                 precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:half', 'year': 'day:full'}"
                 sample="0"
                 string="Resources"
                 total_row="0">
 
                 <field name="active"/>
+                <field name="appointment_booker_id"/>
                 <field name="appointment_resource_ids"/>
                 <field name="appointment_type_id"/>
                 <field name="appointment_type_manage_capacity"/>
@@ -243,47 +284,8 @@
                 <field name="start"/>
                 <field name="stop"/>
                 <field name="user_id"/>
-                <!--required for the 'set appointment status' feature-->
-                <field name="appointment_status"/>
-                <!--required for popover-->
-                <field name="appointment_booker_id"/>
                 <field name="partner_id"/>
                 <field name="partner_ids"/>
-
-                <templates>
-                    <div t-name="gantt-popover">
-                        <ul class="ps-1 mb-0 list-unstyled">
-                            <strong t-if="appointment_type_id">Booking Details</strong>
-                            <strong t-else="">Event Details</strong>
-                            <li t-if="appointment_type_manage_capacity"><strong>Booked for: </strong> <t t-out="total_capacity_reserved"/></li>
-                            <li t-if="appointment_type_id"><strong>Type: </strong> <t t-out="appointment_type_id.display_name"/></li>
-                            <li><strong>Start Date: </strong> <t t-out="start.toFormat('f')"/></li>
-                            <li><strong>Stop Date: </strong> <t t-out="stop.toFormat('f')"/></li>
-                            <li t-if="appointment_status" class="o_field_selection d-flex align-items-center gap-2 mt-2">
-                                <strong>Status: </strong>
-                                <select t-if="can_edit" class="o_appointment_booking_status o_input">
-                                    <option value="request" t-att-selected="appointment_status === 'request'">Request</option>
-                                    <option value="booked" t-att-selected="appointment_status === 'booked'">Booked</option>
-                                    <option value="attended" t-att-selected="appointment_status === 'attended'">Checked-In</option>
-                                    <option value="no_show" t-att-selected="appointment_status === 'no_show'">No Show</option>
-                                    <option value="cancelled" t-att-selected="appointment_status === 'cancelled'">Cancelled</option>
-                                </select>
-                                <t t-else="">
-                                    <t t-if="appointment_status === 'request'">Request</t>
-                                    <t t-elif="appointment_status === 'booked'">Booked</t>
-                                    <t t-elif="appointment_status === 'attended'">Checked-In</t>
-                                    <t t-elif="appointment_status === 'no_show'">No Show</t>
-                                    <t t-elif="appointment_status === 'cancelled'">Cancelled</t>
-                                </t>
-                            </li>
-                            <li t-if="!isHtmlEmpty(description)">
-                                <br/>
-                                <t t-out="description"/>
-                            </li>
-                        </ul>
-                    </div>
-                </templates>
-
             </gantt>
         </field>
     </record>
