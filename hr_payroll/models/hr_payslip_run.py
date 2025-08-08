@@ -60,7 +60,7 @@ class HrPayslipRun(models.Model):
         ('bi-weekly', 'Bi-weekly'),
         ('weekly', 'Weekly'),
         ('daily', 'Daily')],
-        compute='_compute_schedule_pay', default="monthly", readonly=False, store=True, precompute=True)
+        compute='_compute_schedule_pay', default="monthly", readonly=False, store=True, precompute=True, string='Pay Schedule')
     payslip_count = fields.Integer(compute='_compute_payslip_count', store=True)
     company_id = fields.Many2one('res.company', string='Company', required=True,
         default=lambda self: self.env.company)

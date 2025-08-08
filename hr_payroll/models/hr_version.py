@@ -14,7 +14,7 @@ class HrVersion(models.Model):
 
     schedule_pay = fields.Selection(
         selection=lambda self: self.env['hr.payroll.structure.type']._get_selection_schedule_pay(),
-        compute='_compute_schedule_pay', store=True, readonly=False, groups="hr.group_hr_user", default='monthly')
+        compute='_compute_schedule_pay', store=True, readonly=False, groups="hr.group_hr_user", default='monthly', string='Pay Schedule')
     show_schedule_pay = fields.Boolean(compute='_compute_show_schedule_pay', groups="hr.group_hr_user")
     resource_calendar_id = fields.Many2one(default=lambda self: self.env.company.resource_calendar_id,
         help='''Employee's working schedule.
