@@ -163,7 +163,7 @@
         <field name="hr_responsible_id" ref="base.user_demo"/>
         <field name="contract_date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
         <field name="contract_type_id" ref="hr.contract_type_permanent"/>
-
+        <field name="structure_type_id" ref="ksa_employee_payroll_structure_type"/>
         <field name="l10n_sa_housing_allowance">2000</field>
         <field name="l10n_sa_transportation_allowance">1000</field>
         <field name="l10n_sa_other_allowances">500</field>
@@ -208,7 +208,7 @@
         <field name="hr_responsible_id" ref="base.user_demo"/>
         <field name="contract_date_start" eval="DateTime.today() + relativedelta(years=-3,months=2,days=25)"/>
         <field name="contract_type_id" ref="hr.contract_type_permanent"/>
-
+        <field name="structure_type_id" ref="ksa_employee_payroll_structure_type"/>
         <field name="l10n_sa_housing_allowance">1700</field>
         <field name="l10n_sa_transportation_allowance">250</field>
         <field name="l10n_sa_other_allowances">550</field>

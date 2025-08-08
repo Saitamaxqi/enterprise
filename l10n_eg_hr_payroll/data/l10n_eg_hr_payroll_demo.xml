@@ -157,6 +157,7 @@
         <field name="contract_date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
         <field name="contract_date_end" eval="DateTime.today() + relativedelta(months=2, days=-10)"/>
         <field name="contract_type_id" ref="hr.contract_type_temporary"/>
+        <field name="structure_type_id" ref="structure_type_employee_eg"/>
         <field name="l10n_eg_housing_allowance">1000</field>
         <field name="l10n_eg_other_allowances">1000</field>
         <field name="bank_account_id" ref="l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_abeer"/>
@@ -200,6 +201,7 @@
         <field name="contract_date_start" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
         <field name="contract_date_end" eval="DateTime(DateTime.today().year-2,month=2,day=25)"/>
         <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="structure_type_id" ref="structure_type_employee_eg"/>
         <field name="l10n_eg_housing_allowance">1000</field>
         <field name="l10n_eg_other_allowances">1000</field>
         <field name="bank_account_id" ref="l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_hany"/>
@@ -212,6 +214,7 @@
             'contract_date_start': DateTime(DateTime.today().year-2,month=2,day=25) + relativedelta(days=1),
             'contract_date_end': False,
             'contract_type_id': ref('hr.contract_type_permanent'),
+            'structure_type_id': ref('structure_type_employee_eg'),
             'wage': 42000.00
         }"/>
     </function>

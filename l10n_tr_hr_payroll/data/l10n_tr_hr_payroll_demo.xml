@@ -158,6 +158,7 @@
         <field name="contract_date_start" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
         <field name="date_version" eval="DateTime.today() + relativedelta(months=-4, days=-10)"/>
         <field name="contract_type_id" ref="hr.contract_type_temporary"/>
+        <field name="structure_type_id" ref="structure_type_employee_tr"/>
     </record>
 
     <record id="hr_employee_narin" model="hr.employee">
@@ -201,5 +202,6 @@
         <field name="contract_date_start" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
         <field name="date_version" eval="DateTime(DateTime.today().year-3,month=2,day=25)"/>
         <field name="contract_type_id" ref="hr.contract_type_full_time"/>
+        <field name="structure_type_id" ref="structure_type_employee_tr"/>
     </record>
 </odoo>
