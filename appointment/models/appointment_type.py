@@ -836,7 +836,6 @@ class AppointmentType(models.Model):
         # as he should still be able to interact with the screen and select another capacity.
         if not total_nb_slots and asked_capacity == 1:
             return []
-        nb_slots_previous_months = 0
 
         # Compute calendar rendering and inject available slots
         today = requested_tz.fromutc(reference_date)
@@ -845,7 +844,6 @@ class AppointmentType(models.Model):
         month_dates_calendar = cal.Calendar(locale.first_week_day).monthdatescalendar
         months = []
         while (start.year, start.month) <= (last_day.year, last_day.month):
-            nb_slots_next_months = sum(slot_field_label in slot for slot in slots)
             has_availabilities = False
             dates = month_dates_calendar(start.year, start.month)
             for week_index, week in enumerate(dates):
@@ -903,7 +901,6 @@ class AppointmentType(models.Model):
                                     url_parameters.update(available_resource_ids=str(slots[0]['available_resource_ids'].ids))
                                 slot['url_parameters'] = url_encode(url_parameters)
                                 today_slots.append(slot)
-                                nb_slots_next_months -= 1
                             slots.pop(0)
                     today_slots = sorted(today_slots, key=lambda d: d['datetime'])
                     dates[week_index][day_index] = {
@@ -921,10 +918,7 @@ class AppointmentType(models.Model):
                 'month': format_datetime(start, 'MMMM Y', locale=get_lang(self.env).code),
                 'weeks': dates,
                 'has_availabilities': has_availabilities,
-                'nb_slots_previous_months': nb_slots_previous_months,
-                'nb_slots_next_months': nb_slots_next_months,
             })
-            nb_slots_previous_months = total_nb_slots - nb_slots_next_months
             start = start + relativedelta(months=1)
         return months
 
