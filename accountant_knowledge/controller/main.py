@@ -266,6 +266,12 @@ class KnowledgeAuditReportController(http.Controller):
             article = stack.pop()
             root = html.fragment_fromstring(article.body, create_parent='div')
 
+            # Remove elements with the `d-print-none` class to avoid empty pages:
+            for element in root.xpath('//*[contains(concat(" ", normalize-space(@class), " "), " d-print-none ")]'):
+                parent = element.getparent()
+                if parent is not None:
+                    parent.remove(element)
+
             # Append the account reports present in the article:
             account_report_pdfs = list(get_account_reports_pdfs(root))
             body_pdfs.extend(account_report_pdfs)

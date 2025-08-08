@@ -2,7 +2,7 @@
 <templates>
     <t t-name="knowledge.ReadonlyEmbeddedFoldableSection">
         <div class="border-bottom">
-            <div class="d-flex bg-100 py-1 align-items-center">
+            <div class="d-flex bg-100 py-1 align-items-center d-print-none">
                 <div class="form-check form-switch">
                     <input
                         t-att-checked="state.showContent"

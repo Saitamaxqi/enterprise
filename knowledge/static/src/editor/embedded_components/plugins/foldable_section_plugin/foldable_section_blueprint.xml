@@ -2,7 +2,7 @@
     <t t-name="knowledge.FoldableSectionBlueprint">
         <div data-embedded="foldableSection"
             data-oe-protected="true" contenteditable="false" t-att-data-embedded-props="embeddedProps">
-            <div data-embedded-editable="title" data-oe-protected="false" contenteditable="true">
+            <div class="d-print-none" data-embedded-editable="title" data-oe-protected="false" contenteditable="true">
                 <t t-tag="baseContainerNodeName" t-att="baseContainerAttributes"><br/></t>
             </div>
             <div data-embedded-editable="content" data-oe-protected="false" contenteditable="true">

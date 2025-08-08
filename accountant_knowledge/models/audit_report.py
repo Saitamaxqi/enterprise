@@ -102,14 +102,30 @@ class AuditReport(models.Model):
             for (template, article) in reversed(template_to_article_pairs):
                 fragment = html.fragment_fromstring(template.template_body, create_parent='div')
 
+                # Populate the article index:
                 for element in fragment.xpath('//*[@data-embedded="articleIndex"]'):
-                    element.set('data-embedded-props', json.dumps({
-                        'articles': [{
-                            'id': child.id,
-                            'name': child.display_name,
-                            'childIds': []
-                        } for child in article.child_ids],
-                    }))
+                    embedded_props = json.loads(element.get('data-embedded-props', '{}'))
+                    if embedded_props.get('showAllChildren'):
+                        def build_article_index(parent_article):
+                            return [{
+                                'id': child_article.id,
+                                'name': child_article.display_name,
+                                'childIds': build_article_index(child_article)
+                            } for child_article in parent_article.child_ids
+                                if not child_article.is_template]
+                        element.set('data-embedded-props', json.dumps({
+                            'articles': build_article_index(article),
+                            'showAllChildren': True
+                        }))
+                    else:
+                        element.set('data-embedded-props', json.dumps({
+                            'articles': [{
+                                'id': child.id,
+                                'name': child.display_name,
+                                'childIds': []
+                            } for child in article.child_ids],
+                            'showAllChildren': False
+                        }))
 
                 for element in fragment.xpath('//*[@data-embedded="accountReport"]'):
                     embedded_props = ast.literal_eval(re.sub(
@@ -128,6 +144,7 @@ class AuditReport(models.Model):
                                     'mode': 'range',
                                     'filter': 'custom',
                                 },
+                                **embedded_props['options']
                             })
                     element.set('data-embedded-props', json.dumps(embedded_props))
 
@@ -146,6 +163,10 @@ class AuditReport(models.Model):
                     'name': template.template_name,
                     'origin_template_id': template.id,
                 })
+
+            root_article.write({
+                'name': audit_report.title
+            })
 
             # Invite the responsible users:
             for user in audit_report.responsible_user_ids:
