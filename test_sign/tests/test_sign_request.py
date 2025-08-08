@@ -7,6 +7,11 @@ from odoo.addons.sign.tests.sign_request_common import SignRequestCommon
 @tagged('post_install', '-at_install')
 class TestSignRequest(SignRequestCommon):
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product = cls.env['product.product'].create({'name': 'test_product'})
+
     def create_sign_request_wizard(self, model_name, record_id, subject):
         """Helper to create a sign request wizard with context from a reference document."""
         context = {
@@ -60,7 +65,7 @@ class TestSignRequest(SignRequestCommon):
         """Test default signer is set to user_id.partner_id for MRP Production."""
 
         mrp_production = self.env['mrp.production'].sudo().create({
-            'product_id': 1,
+            'product_id': self.product.id,
             'user_id': self.env.user.id,
         })
 
