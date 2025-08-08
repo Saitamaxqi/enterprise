@@ -12,6 +12,7 @@ Adds the ability to set workspace templates on products.
     'demo': [
         'data/documents_demo.xml',
         'data/project_sale_demo.xml',
+        'data/res_users_settings_embedded_action_demo.xml',
     ],
     'auto_install': True,
     'author': 'Odoo S.A.',
