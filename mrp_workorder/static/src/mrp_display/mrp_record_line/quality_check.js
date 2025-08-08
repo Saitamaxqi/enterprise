@@ -91,7 +91,9 @@ export class QualityCheck extends MrpWorkorder {
         if (this.type === "register_production") {
             return product_tracking != "none"
                 ? lot_id && lot_id.display_name
-                : this.passed ? this.props.qtyProducing : false;
+                : this.passed
+                ? this.props.qtyProducing
+                : false;
         }
         return false;
     }
@@ -110,7 +112,7 @@ export class QualityCheck extends MrpWorkorder {
             case "picture":
                 return this.fileUploaderToggle.el.click();
             case "register_production":
-                if(["lot", "serial"].includes(this.check.product_tracking) && !this.check.lot_id) {
+                if (["lot", "serial"].includes(this.check.product_tracking) && !this.check.lot_id) {
                     await this.props.record.load();
                 }
                 return this.isComplete || this.check.lot_id
@@ -136,7 +138,7 @@ export class QualityCheck extends MrpWorkorder {
         const result = await model.orm.call(resModel, action, [resId]);
         if ("next_check_id" in result) {
             data.quality_state = stateToSet;
-            _parentRecord.data.current_quality_check_id = [result.next_check_id];
+            _parentRecord.data.current_quality_check_id.id = result.next_check_id;
         }
         if ("type" in result) {
             const params = {};
