@@ -2,6 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="l10n_it_pos.FiscalReceipt">
         <printerFiscalReceipt>
+            <Header />
             <beginFiscalReceipt operator="1" /> 
             <Body />
             <Footer />
