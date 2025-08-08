@@ -132,6 +132,9 @@ class AccountJournalReportHandler(models.AbstractModel):
         """
         new_lines = []
 
+        if not lines:
+            return new_lines
+
         for i, line in enumerate(lines):
             new_lines.append(line)
             line_id = line['id']
