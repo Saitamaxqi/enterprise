@@ -3,8 +3,6 @@ import "@mail/discuss/call/common/thread_actions";
 
 import { LivechatCommandDialog } from "@im_livechat/core/common/livechat_command_dialog";
 
-import { useComponent } from "@odoo/owl";
-
 import { _t } from "@web/core/l10n/translation";
 import { usePopover } from "@web/core/popover/popover_hook";
 
@@ -25,12 +23,11 @@ threadActionsRegistry.add("create-ticket", {
     name: _t("Create Ticket"),
     sequence: 15,
     sequenceGroup: 25,
-    setup(action) {
-        const component = useComponent();
+    setup(component) {
         if (!component.env.inChatWindow) {
-            action.popover = usePopover(LivechatCommandDialog, {
-                onClose: () => action.close(),
-                popoverClass: action.panelOuterClass,
+            this.popover = usePopover(LivechatCommandDialog, {
+                onClose: () => this.close(),
+                popoverClass: this.panelOuterClass,
             });
         }
     },

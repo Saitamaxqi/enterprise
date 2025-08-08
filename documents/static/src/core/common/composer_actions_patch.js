@@ -4,7 +4,7 @@ import { _t } from "@web/core/l10n/translation";
 import { SelectAddDocumentCreateDialog } from "@documents/views/view_dialogs/select_add_document_create_dialog";
 
 composerActionsRegistry.add("add-documents", {
-    icon: "fa fa-file-text",
+    icon: { template: "documents.DocumentsIcon" },
     name: _t("Add from Documents"),
     onSelected: (component) => {
         const thread = component.props.composer?.message?.thread || component.thread;

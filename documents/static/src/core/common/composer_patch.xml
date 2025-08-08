@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
-    <t t-inherit="mail.Composer.quickActionButton" t-inherit-mode="extension">
-
-        <xpath expr="//i" position="attributes">
-            <attribute name="t-if">action.id !== 'add-documents'</attribute>
-        </xpath>
-        <xpath expr="//button" position="attributes">
-            <attribute name="class" add="opacity-trigger-hover" separator=" "/>
-        </xpath>
-        <xpath expr="//button" position="inside">
-            <span t-if="action.id === 'add-documents'" t-call="documents.DocumentsIcon"/>
-        </xpath>
-    </t>
     <t t-name="documents.DocumentsIcon">
         <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg" class="o_ui_app_icon oi-large">
             <path class="opacity-50 opacity-100-hover" d="M33.5968 11.6512C35.27 9.97042 37.9829 9.97042 39.6561 11.6512L48.7451 20.7814C50.4183 22.4622 50.4183 25.1873 48.7451 26.8681L32.082 43.6067C30.4088 45.2875 27.6959 45.2875 26.0227 43.6067L16.9337 34.4766C15.2605 32.7958 15.2605 30.0706 16.9337 28.3898L33.5968 11.6512Z" fill="var(--oi-color, #FBB945)"/>

@@ -1,7 +1,5 @@
 import { threadActionsRegistry } from "@mail/core/common/thread_actions";
 
-import { useComponent } from "@odoo/owl";
-
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 
@@ -27,8 +25,7 @@ threadActionsRegistry.add("view-contact", {
     icon: "fa fa-fw fa-address-book",
     iconLarge: "fa fa-fw fa-lg fa-address-book",
     name: _t("View Contact"),
-    setup() {
-        const component = useComponent();
+    setup(component) {
         component.action = useService("action");
         component.ui = useService("ui");
     },
