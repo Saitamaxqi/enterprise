@@ -8,7 +8,7 @@ export const timesheetLeaderboardService = {
     async: ["getLeaderboardData"],
     dependencies: ["orm"],
     start(env, { orm }) {
-        let leaderboardData = { leaderboard: [] };
+        let leaderboardData = { leaderboard: [], tip: null };
         if (!browser.localStorage.getItem("leaderboardType")) {
             browser.localStorage.setItem("leaderboardType", "billing_rate");
         }
@@ -31,7 +31,7 @@ export const timesheetLeaderboardService = {
         };
 
         const resetLeaderboard = () => {
-            leaderboardData = { leaderboard: [] };
+            leaderboardData = { leaderboard: [], tip: null };
         };
 
         return {
@@ -63,6 +63,7 @@ export const timesheetLeaderboardService = {
                     leaderboard,
                     employee_id,
                     show_leaderboard,
+                    tip
                 } = await orm.call(
                     "res.company",
                     "get_timesheet_ranking_data",
@@ -78,6 +79,11 @@ export const timesheetLeaderboardService = {
                 leaderboardData.leaderboardRaw = leaderboard;
                 leaderboardData.leaderboard = sortAndFilterLeaderboard(leaderboard);
                 leaderboardData.showLeaderboard = show_leaderboard;
+
+                if (fetchTips && tip) {
+                    leaderboardData.tip = tip;
+                }
+
                 currentEmployeeId = employee_id;
                 leaderboardData.currentEmployee = setCurrentEmployeeIndexFromLeaderboard(
                     leaderboardData.leaderboard

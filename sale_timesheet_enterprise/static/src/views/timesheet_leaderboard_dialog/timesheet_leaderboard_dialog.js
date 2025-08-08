@@ -24,6 +24,7 @@ export class TimesheetLeaderboardDialog extends Component {
         this.state = useState({
             date: this.props.date.startOf("month"),
             type: this.timesheetLeaderboardService.leaderboardType,
+            showAll: false,
             leaderboard: [],
             current_employee: {},
         });
@@ -106,6 +107,10 @@ export class TimesheetLeaderboardDialog extends Component {
 
     get isMobile() {
         return this.env.isSmall;
+    }
+    
+    get tip() {
+        return this.timesheetLeaderboardService.data.tip;
     }
 
     get currentFormattedDate() {

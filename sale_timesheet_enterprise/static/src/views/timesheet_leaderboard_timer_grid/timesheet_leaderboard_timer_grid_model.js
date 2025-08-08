@@ -33,6 +33,7 @@ patch(TimerTimesheetGridModel.prototype, {
             this.timesheetLeaderboardService.getLeaderboardData({
                 periodStart,
                 periodEnd,
+                fetchTips: true,
                 kwargs: { context: user.context },
             });
         }

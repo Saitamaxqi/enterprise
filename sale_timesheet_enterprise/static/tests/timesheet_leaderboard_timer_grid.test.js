@@ -72,6 +72,7 @@ beforeEach(() => {
             employee_id: 1,
             billable_time_target: 100.0,
             total_time_target: 144.0,
+            tip: "February motivation tip!",
         },
         "2017-03-01": {
             leaderboard: [
@@ -88,6 +89,7 @@ beforeEach(() => {
             billable_time_target: 100.0,
             employee_id: 1,
             total_time_target: 144.0,
+            tip: "March productivity tip!",
         },
         "2017-04-01": {
             leaderboard: [
@@ -140,6 +142,7 @@ beforeEach(() => {
             employee_id: 1,
             billable_time_target: 100.0,
             total_time_target: 144.0,
+            tip: "Great work this month!",
         },
         "2017-05-01": {
             leaderboard: [
@@ -156,6 +159,7 @@ beforeEach(() => {
             employee_id: 1,
             billable_time_target: 100.0,
             total_time_target: 120.0,
+            tip: "May excellence tip!",
         },
     };
 });
@@ -299,4 +303,19 @@ test("Check that the 'Show more' and 'Show less' buttons works.", async () => {
     expect(".modal-body td:contains('Test 10')").toHaveCount(1);
     await contains(".o_leaderboard_modal_table ~ span").click();
     expect(".modal-body td:contains('Test 10')").toHaveCount(0);
+});
+test("Check that tip is visible when leaderboard dialog is opened", async () => {
+    await initAndOpenView();
+    await contains(".o_timesheet_leaderboard div[role='button']").click();
+    await animationFrame();
+    expect(".modal-content").toHaveCount(1);
+    expect(".modal-content:contains('April 2017')").toHaveCount(1);
+    expect(".modal-content .o_timesheet_leaderboard_tip").toHaveCount(1);
+    await contains(queryOne(".modal-content .oi-chevron-left").parentNode).click();
+    expect(".modal-content:contains('March 2017')").toHaveCount(1);
+    expect(".modal-content .o_timesheet_leaderboard_tip").toHaveCount(1);
+    await contains(queryOne(".modal-content .oi-chevron-right").parentNode).click();
+    await contains(queryOne(".modal-content .oi-chevron-right").parentNode).click();
+    expect(".modal-content:contains('May 2017')").toHaveCount(1);
+    expect(".modal-content .o_timesheet_leaderboard_tip").toHaveCount(1);
 });
