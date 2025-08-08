@@ -2613,6 +2613,8 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
     @AccountTestInvoicingCommon.setup_country('ch')
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_manager')
+
         cls.maxDiff = None
         cls.env['res.company'].search([('name', '=', 'Muster AG')]).write({'name': 'Muster AG (Old)'})
         cls.muster_ag_company = cls.env['res.company'].create({
