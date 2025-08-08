@@ -7,7 +7,6 @@
     'auto_install': ['test_discuss_full', 'web_enterprise'],
     'depends': [
         'ai',
-        'ai_voip',
         'account_accountant',
         'account_invoice_extract',
         'approvals',
@@ -17,6 +16,7 @@
         'sign',
         'test_discuss_full',
         'voip',
+        'voip_ai',
         'voip_onsip',
         'web_enterprise',
         'website_helpdesk_livechat',

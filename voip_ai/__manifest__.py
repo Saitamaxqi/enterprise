@@ -12,7 +12,7 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "ai_voip/static/src/**/*",
+            "voip_ai/static/src/**/*",
         ],
     },
     "author": "Odoo S.A.",

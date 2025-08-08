@@ -52,7 +52,7 @@ patch(UserAgent.prototype, {
             formData.append("csrf_token", odoo.csrf_token);
             formData.append("file", file);
             formData.append("voip_call_id", callId);
-            const response = await fetch("/ai_voip/transcribe_call", {
+            const response = await fetch("/voip_ai/transcribe_call", {
                 method: "POST",
                 body: formData,
             });

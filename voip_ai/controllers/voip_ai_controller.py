@@ -2,9 +2,9 @@ from odoo import http
 from odoo.http import request
 
 
-class AiVoipController(http.Controller):
+class VoipAiController(http.Controller):
 
-    @http.route('/ai_voip/transcribe_call', type='http', auth='user', methods=['POST'], csrf=True)
+    @http.route('/voip_ai/transcribe_call', type='http', auth='user', methods=['POST'], csrf=True)
     def transcribe_call(self, **post):
         call_id = int(post.get("voip_call_id", 0))
         recording = request.httprequest.files.get("file", False)
@@ -37,5 +37,5 @@ class AiVoipController(http.Controller):
         })
         request.env.cr.commit()
 
-        request.env.ref('ai_voip.ir_cron_transcribe_recent_voip_call').sudo()._trigger()
+        request.env.ref('voip_ai.ir_cron_transcribe_recent_voip_call').sudo()._trigger()
         return request.make_json_response({"success": True})
