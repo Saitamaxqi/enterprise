@@ -1,7 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
-import { messageActionsRegistry } from "@mail/core/common/message_actions";
+import { registerMessageAction } from "@mail/core/common/message_actions";
 
-messageActionsRegistry.add("closeThread", {
+registerMessageAction("closeThread", {
     condition: (component) => component.env.closeThread && !component.env.isResolved(),
     icon: "fa fa-check",
     iconLarge: "fa fa-lg fa-check",
@@ -10,7 +10,7 @@ messageActionsRegistry.add("closeThread", {
     sequence: 0,
 });
 
-messageActionsRegistry.add("openThread", {
+registerMessageAction("openThread", {
     condition: (component) => component.env.openThread && component.env.isResolved(),
     icon: "fa fa-retweet",
     iconLarge: "fa fa-lg fa-retweet",

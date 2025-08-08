@@ -1,9 +1,9 @@
-import { composerActionsRegistry } from "@mail/core/common/composer_actions";
+import { registerComposerAction } from "@mail/core/common/composer_actions";
 import { _t } from "@web/core/l10n/translation";
 
 import { SelectAddDocumentCreateDialog } from "@documents/views/view_dialogs/select_add_document_create_dialog";
 
-composerActionsRegistry.add("add-documents", {
+registerComposerAction("add-documents", {
     icon: { template: "documents.DocumentsIcon" },
     name: _t("Add from Documents"),
     onSelected: (component) => {

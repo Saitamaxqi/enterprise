@@ -1,11 +1,11 @@
 import {
     composerActionsInternal,
-    composerActionsRegistry,
+    registerComposerAction,
 } from "@mail/core/common/composer_actions";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 
-composerActionsRegistry.add("revive-whatsapp-conversation", {
+registerComposerAction("revive-whatsapp-conversation", {
     condition: (component) =>
         component.props.composer.thread?.channel_type === "whatsapp" && !component.state.active,
     icon: "fa fa-whatsapp",
