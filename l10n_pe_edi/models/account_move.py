@@ -7,6 +7,7 @@ from lxml import etree
 from num2words import num2words
 
 from odoo import api, fields, models, _
+from odoo.tools.sql import column_exists, create_column
 from odoo.tools.float_utils import float_repr, float_round
 from odoo.exceptions import UserError, ValidationError
 
@@ -106,6 +107,34 @@ class AccountMove(models.Model):
         string="Legend",
         store=True, readonly=False, compute='_compute_l10n_pe_edi_legend_value',
         help="Peru: Specific operation type value.")
+
+    def _auto_init(self):
+        cr = self.env.cr
+
+        # Skip the computation of the field `l10n_pe_edi_legend_value` at the module installation
+        if not column_exists(cr, "account_move", "l10n_pe_edi_legend_value"):
+            create_column(cr, "account_move", "l10n_pe_edi_legend_value", "varchar")
+
+        # Skip the computation of the field `l10n_pe_edi_operation_type` at the module installation
+        if not column_exists(cr, "account_move", "l10n_pe_edi_operation_type"):
+            create_column(cr, "account_move", "l10n_pe_edi_operation_type", "varchar")
+
+            cr.execute("""
+                UPDATE account_move
+                SET l10n_pe_edi_operation_type = '0101'
+                WHERE company_id IN (
+                    SELECT id
+                    FROM res_company
+                    WHERE account_fiscal_country_id = (
+                        SELECT id
+                        FROM res_country
+                        WHERE code = 'PE'
+                    )
+                )
+                AND move_type IN ('out_invoice', 'out_refund')
+            """)
+
+        return super()._auto_init()
 
     @api.constrains('name', 'company_id', 'move_type')
     def _prevent_invoices_with_same_edi_filename(self):
