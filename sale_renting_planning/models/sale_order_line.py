@@ -40,7 +40,8 @@ class SaleOrderLine(models.Model):
             })
             available_resources = sol.product_id.planning_role_id.resource_ids
             if not available_resources:
-                return vals
+                problematic_services.append(sol.product_id.name)
+                continue
 
             unavailable_resource_slots = self.env['planning.slot'].search([
                 ('resource_id', 'in', available_resources.ids),
@@ -54,7 +55,8 @@ class SaleOrderLine(models.Model):
             ])
             available_resources -= (unavailable_resource_slots.resource_id + resource_leaves.resource_id)
             if not available_resources:
-                return vals
+                problematic_services.append(sol.product_id.name)
+                continue
 
             date_from = utc.localize(sol.start_date)
             date_to = utc.localize(sol.return_date)
