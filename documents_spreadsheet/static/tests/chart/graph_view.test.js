@@ -199,7 +199,7 @@ test("graph with a contextual domain", async () => {
         },
     });
     const sheetId = model.getters.getActiveSheetId();
-    const chartId = model.getters.getFigures(sheetId)[0].id;
+    const chartId = model.getters.getChartIds(sheetId)[0];
 
     const chart = model.getters.getChartDefinition(chartId);
     expect(chart.searchParams.domain).toBe('[("foo", "=", uid)]');

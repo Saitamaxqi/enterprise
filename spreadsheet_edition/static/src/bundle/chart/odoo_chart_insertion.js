@@ -37,17 +37,15 @@ export function insertChart(chartData) {
     return (model, stores) => {
         model.dispatch("CREATE_CHART", {
             sheetId: model.getters.getActiveSheetId(),
-            figureId: definition.id,
+            figureId: uuidGenerator.smallUuid(),
+            chartId: definition.id,
             col: 0,
             row: 0,
-            offset: {
-                x: 10,
-                y: 10,
-            },
+            offset: { x: 10, y: 10 },
             definition,
         });
         const sidePanel = stores.get(SidePanelStore);
-        sidePanel.open("ChartPanel", { figureId: definition.id });
+        sidePanel.open("ChartPanel", { chartId: definition.id });
     };
 }
 

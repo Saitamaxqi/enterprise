@@ -5,7 +5,7 @@
     >
         <xpath expr="//Section[1]" position="before">
             <GeoChartRegionSelectSection
-                figureId="props.figureId"
+                chartId="props.chartId"
                 definition="props.definition"
                 updateChart="props.updateChart"
             />

@@ -79,7 +79,7 @@ test("From a spreadsheet chart, can only change to a spreadsheet chart", async (
 
 test("Possible chart types are correct when switching from a spreadsheet to an odoo chart", async () => {
     const { model, env } = await createSpreadsheetFromGraphView();
-    createBasicChart(model, "nonOdooChartId");
+    createBasicChart(model, "nonOdooChartId", {}, undefined, "figureId");
     await openChartSidePanel(model, env);
     const target = getFixture();
     await contains(".o-type-selector").click();
@@ -89,7 +89,7 @@ test("Possible chart types are correct when switching from a spreadsheet to an o
     let optionValues = Array.from(options).map((option) => option.dataset.id);
     expect(optionValues.every((value) => value.startsWith("odoo_"))).toBe(true);
 
-    model.dispatch("SELECT_FIGURE", { figureId: "nonOdooChartId" });
+    model.dispatch("SELECT_FIGURE", { figureId: "figureId" });
     await animationFrame();
 
     await contains(".o-type-selector").click();
@@ -257,10 +257,10 @@ test("Open chart odoo's data properties", async function () {
     const target = getFixture();
     const { model, env } = await createSpreadsheetFromGraphView();
     const sheetId = model.getters.getActiveSheetId();
-    const chartId = model.getters.getChartIds(sheetId)[0];
+    const figureId = model.getters.getFigures(sheetId)[0].id;
 
     // opening from a chart
-    model.dispatch("SELECT_FIGURE", { figureId: chartId });
+    model.dispatch("SELECT_FIGURE", { figureId });
     env.openSidePanel("ChartPanel");
     await animationFrame();
 
@@ -282,7 +282,8 @@ test("Update the chart domain from the side panel", async function () {
     const { model, env } = await createSpreadsheetFromGraphView();
     const sheetId = model.getters.getActiveSheetId();
     const chartId = model.getters.getChartIds(sheetId)[0];
-    model.dispatch("SELECT_FIGURE", { figureId: chartId });
+    const figureId = model.getters.getFigures(sheetId)[0].id;
+    model.dispatch("SELECT_FIGURE", { figureId });
     env.openSidePanel("ChartPanel");
     await animationFrame();
     const fixture = getFixture();

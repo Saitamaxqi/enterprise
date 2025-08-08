@@ -37,7 +37,8 @@ test("Chart focus changes on top bar menu click", async function () {
         message: "No chart should be selected",
     });
     await doMenuAction(topbarMenuRegistry, ["data", `item_chart_${chartId}`], env);
-    expect(model.getters.getSelectedFigureId()).toBe(chartId, {
+    const selectedFigureId = model.getters.getSelectedFigureId();
+    expect(model.getters.getChartIdFromFigureId(selectedFigureId)).toBe(chartId, {
         message: "The selected chart should have id " + chartId,
     });
 });
