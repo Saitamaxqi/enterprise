@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from freezegun import freeze_time
+from lxml import etree
 
 from odoo import fields
 from odoo.addons.account_reports.tests.account_sales_report_common import AccountSalesReportCommon
@@ -47,8 +48,62 @@ class BelgiumGeneralLedgerTest(AccountSalesReportCommon):
         report = self.env.ref('account_reports.general_ledger_report')
         options = self._generate_options(report, '2023-01-01', '2023-01-01')
         annual_accounts_data = self.env[report.custom_handler_model_name].l10n_be_get_annual_accounts(options)
-        expected = b"""400000\tCustomers\t1000,0\t0,0
-440000\tSuppliers\t250,0\t0,0
-600000\tRaw Materials\t0,0\t250,0
-700000\tSales in Belgium (Trade Goods)\t0,0\t1000,0"""
-        self.assertEqual(annual_accounts_data['file_content'], expected)
+        actual_xml_root = etree.fromstring(annual_accounts_data['file_content'])
+
+        receivable = self.company_data['default_account_receivable']
+        revenue = self.company_data['default_account_revenue']
+        payable = self.company_data['default_account_payable']
+        expense = self.company_data['default_account_expense']
+
+        expected_xml = f"""
+            <TussentijdseStaat>
+                <Versie>1.0</Versie>
+                <Rekeningen>
+                    <Rekening>
+                        <DiverseOperatie></DiverseOperatie>
+                        <RekeningNummer>{receivable.code}</RekeningNummer>
+                        <BedragCredit>0.0</BedragCredit>
+                        <BedragDebet>1000.0</BedragDebet>
+                        <OmschrijvingNederlands>{receivable.name}</OmschrijvingNederlands>
+                        <OmschrijvingFrans>{receivable.name}</OmschrijvingFrans>
+                        <OmschrijvingEngels>{receivable.name}</OmschrijvingEngels>
+                        <OmschrijvingDuits>{receivable.name}</OmschrijvingDuits>
+                    </Rekening>
+                    <Rekening>
+                        <DiverseOperatie></DiverseOperatie>
+                        <RekeningNummer>{payable.code}</RekeningNummer>
+                        <BedragCredit>0.0</BedragCredit>
+                        <BedragDebet>250.0</BedragDebet>
+                        <OmschrijvingNederlands>{payable.name}</OmschrijvingNederlands>
+                        <OmschrijvingFrans>{payable.name}</OmschrijvingFrans>
+                        <OmschrijvingEngels>{payable.name}</OmschrijvingEngels>
+                        <OmschrijvingDuits>{payable.name}</OmschrijvingDuits>
+                    </Rekening>
+                    <Rekening>
+                        <DiverseOperatie></DiverseOperatie>
+                        <RekeningNummer>{expense.code}</RekeningNummer>
+                        <BedragCredit>250.0</BedragCredit>
+                        <BedragDebet>0.0</BedragDebet>
+                        <OmschrijvingNederlands>{expense.name}</OmschrijvingNederlands>
+                        <OmschrijvingFrans>{expense.name}</OmschrijvingFrans>
+                        <OmschrijvingEngels>{expense.name}</OmschrijvingEngels>
+                        <OmschrijvingDuits>{expense.name}</OmschrijvingDuits>
+                    </Rekening>
+                    <Rekening>
+                        <DiverseOperatie></DiverseOperatie>
+                        <RekeningNummer>{revenue.code}</RekeningNummer>
+                        <BedragCredit>1000.0</BedragCredit>
+                        <BedragDebet>0.0</BedragDebet>
+                        <OmschrijvingNederlands>{revenue.name}</OmschrijvingNederlands>
+                        <OmschrijvingFrans>{revenue.name}</OmschrijvingFrans>
+                        <OmschrijvingEngels>{revenue.name}</OmschrijvingEngels>
+                        <OmschrijvingDuits>{revenue.name}</OmschrijvingDuits>
+                    </Rekening>
+                </Rekeningen>
+                <Datum>2023-01-01</Datum>
+                <Omschrijving>Annual Balance Report</Omschrijving>
+                <Herkomst>Odoo</Herkomst>
+            </TussentijdseStaat>
+            """
+
+        self.assertXmlTreeEqual(actual_xml_root, etree.fromstring(expected_xml))
