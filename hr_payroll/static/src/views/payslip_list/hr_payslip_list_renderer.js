@@ -19,6 +19,17 @@ export class PayslipListRenderer extends ListRenderer {
         this.orm = useService("orm");
     }
 
+    get payslipActionHelperProps() {
+        const helperProps = {
+            onClickCreate: this.props.onAdd.bind(this.onClickCreate),
+            onClickGenerate: this.props.onGenerate.bind(this.onGenerate),
+        };
+        if (this.props.payRunInfo.id) {
+            helperProps.payrunId = this.props.payRunInfo.id;
+        }
+        return helperProps;
+    }
+
     /**
      * @override
      */
