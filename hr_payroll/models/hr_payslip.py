@@ -432,7 +432,12 @@ class HrPayslip(models.Model):
             if not version or not slip.date_from:
                 continue
             if not version._is_overlapping_period(slip.date_from, slip.date_to) and not slip.is_refund_payslip:
-                raise ValidationError(_("Employee must have a running contract for payslip duration"))
+                raise ValidationError(
+                    self.env._(
+                        "The employee (%(name)s) contract (%(c_date_from)s - %(c_date_to)s) must be running "
+                        "during the payslip duration (%(p_date_from)s - %(p_date_to)s)",
+                        name=slip.employee_id.name, c_date_from=slip.version_id.contract_date_start,
+                        c_date_to=slip.version_id.contract_date_end, p_date_from=slip.date_from, p_date_to=slip.date_to))
 
     @api.constrains('date_from', 'date_to')
     def _check_dates(self):

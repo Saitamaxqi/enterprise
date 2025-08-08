@@ -20,7 +20,11 @@ class HrVersion(models.Model):
     l10n_ke_is_secondary = fields.Boolean(
         string="Secondary Contract", groups="hr_payroll.group_hr_payroll_user",
         help="Check if the employee got a main contract in another company.")
-    l10n_ke_mortgage = fields.Monetary(string="Mortgage Interest", currency_field='currency_id', groups="hr.group_hr_user")
+    l10n_ke_mortgage = fields.Monetary(string="Mortgage Interest", currency_field='currency_id', groups="hr_payroll.group_hr_payroll_user")
+    l10n_ke_tier_2_remit = fields.Selection(
+        selection=[('nssf', 'NSSF'), ('insurance', 'Insurance')], required=True, default='nssf', groups="hr_payroll.group_hr_payroll_user")
+    l10n_ke_pension_remit = fields.Selection(
+        selection=[('nssf', 'NSSF'), ('insurance', 'Insurance')], required=True, default='nssf', groups="hr_payroll.group_hr_payroll_user")
 
     @api.constrains('l10n_ke_mortgage')
     def _check_l10n_ke_mortgage(self):

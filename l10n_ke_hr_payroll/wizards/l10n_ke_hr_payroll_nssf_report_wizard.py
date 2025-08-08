@@ -87,7 +87,7 @@ class L10nKeHrPayrollNssfReportWizard(models.TransientModel):
                             'payslip_nssf_code': nssf_code,
                             'payslip_nssf_amount_employee': line.total,
                             'payslip_nssf_amount_employer': line.total,
-                            'payslip_income': payslip._get_salary_line_total('GROSS'),
+                            'payslip_income': payslip._get_line_values(['GROSS'], compute_sum=True)['GROSS']['sum']['total'],
                         }))
             wizard.line_ids = result
 

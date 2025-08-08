@@ -8,7 +8,7 @@
             <xpath expr="//group[@name='citizenship']" position="inside">
                 <field name="l10n_ke_pin" invisible="company_country_code != 'KE'"/>
                 <field name="l10n_ke_helb_number" invisible="company_country_code != 'KE'"/>
-                <field name="l10n_ke_mortgage" invisible="company_country_code != 'KE'"/>
+                <field name="l10n_ke_mortgage" invisible="company_country_code != 'KE' or l10n_ke_is_secondary"/>
                 <field name="l10n_ke_nssf_number" invisible="company_country_code != 'KE'"/>
                 <field name="l10n_ke_kra_pin" invisible="company_country_code != 'KE'"/>
                 <field name="l10n_ke_nhif_number" invisible="company_country_code != 'KE'"/>
@@ -16,12 +16,16 @@
             </xpath>
             <group name="payroll_group" position="inside">
                 <group string="Tax Deduction" name="l10n_ke_tax_deduction" class="o_form_fw_labels" invisible="country_code != 'KE'">
-                    <label for="l10n_ke_pension_contribution" invisible="wage_type == 'hourly'"/>
-                    <div class="o_row" invisible="wage_type == 'hourly'">
+                    <field name="l10n_ke_is_secondary"/>
+                    <field name="l10n_ke_tier_2_remit" string="TIER 2 Remit To"
+                           invisible="l10n_ke_is_secondary or not l10n_ke_pension_contribution"/>
+                    <label for="l10n_ke_pension_contribution" invisible="wage_type == 'hourly' or l10n_ke_is_secondary"/>
+                    <div class="o_row" invisible="wage_type == 'hourly' or l10n_ke_is_secondary">
                         <field name="l10n_ke_pension_contribution" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <field name="l10n_ke_is_secondary"/>
+                    <field name="l10n_ke_pension_remit" string="Pension Remit To"
+                           invisible="l10n_ke_is_secondary or not l10n_ke_pension_contribution"/>
 
                     <separator string="Benefits"/>
                     <label for="l10n_ke_food_allowance"/>
@@ -40,20 +44,20 @@
                         <span>/ month</span>
                     </div>
 
-                    <separator string="Insurance"/>
-                    <label for="l10n_ke_voluntary_medical_insurance"/>
-                    <div class="o_row">
+                    <separator string="Insurance" invisible="l10n_ke_is_secondary"/>
+                    <label for="l10n_ke_voluntary_medical_insurance" invisible="l10n_ke_is_secondary"/>
+                    <div class="o_row" invisible="l10n_ke_is_secondary">
                         <field name="l10n_ke_voluntary_medical_insurance" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <label for="l10n_ke_life_insurance"/>
-                    <div class="o_row">
+                    <label for="l10n_ke_life_insurance" invisible="l10n_ke_is_secondary"/>
+                    <div class="o_row" invisible="l10n_ke_is_secondary">
                         <field name="l10n_ke_life_insurance" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>
-                    <field name="l10n_ke_is_li_managed_by_employee" invisible="not l10n_ke_life_insurance"/>
-                    <label for="l10n_ke_education"/>
-                    <div class="o_row">
+                    <field name="l10n_ke_is_li_managed_by_employee" invisible="not l10n_ke_life_insurance or l10n_ke_is_secondary"/>
+                    <label for="l10n_ke_education" invisible="l10n_ke_is_secondary"/>
+                    <div class="o_row" invisible="l10n_ke_is_secondary">
                         <field name="l10n_ke_education" class="o_hr_narrow_field" nolabel="1"/>
                         <span>/ month</span>
                     </div>

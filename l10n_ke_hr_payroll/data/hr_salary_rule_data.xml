@@ -173,20 +173,6 @@ result = categories['BASIC'] + categories['ALW']
         <field name="struct_id" ref="hr_payroll_structure_ken_employee_salary"/>
     </record>
 
-    <record id="l10n_ke_employees_salary_pension_contribution" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">Pension Contribution</field>
-        <field name="code">PENSION</field>
-        <field name="sequence">35</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = not version.l10n_ke_is_secondary</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = version.l10n_ke_pension_contribution
-        </field>
-        <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-    </record>
-
     <record id="l10n_ke_employees_salary_gross_taxable" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">Mortgage Interest</field>
@@ -229,7 +215,7 @@ result_rate = 6
         <field name="code">NSSF_EMPLOYEE_TIER_2</field>
         <field name="sequence">38</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = not version.l10n_ke_is_secondary</field>
+        <field name="condition_python">result = not version.l10n_ke_is_secondary and version.l10n_ke_tier_2_remit == 'nssf'</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 lower_limit = payslip._rule_parameter('l10n_ke_nssf_lower_limit')
@@ -609,11 +595,11 @@ result = categories['OTHER_DED']
     <record id="l10n_ke_employees_salary_pension_contribution" model="hr.salary.rule">
         <field name="category_id" ref="l10n_ke_hr_payroll.TOTAL_DED"/>
         <field name="name">Pension Contribution</field>
-        <field name="code">PENSION</field>
+        <field name="code">NSSF_EMPLOYEE_TIER_3</field>
         <field name="sequence">72</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
-result = version.l10n_ke_pension_contribution and not version.l10n_ke_is_secondary
+result = version.l10n_ke_pension_contribution and not version.l10n_ke_is_secondary and version.l10n_ke_pension_remit == 'nssf'
         </field>
         <field name="amount_select">percentage</field>
         <field name="amount_percentage_base">version.l10n_ke_pension_contribution</field>

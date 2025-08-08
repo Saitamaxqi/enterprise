@@ -47,10 +47,14 @@ class HrPayslip(models.Model):
         payslips_to_post = all_payslips.filtered(lambda slip: slip.state == 'done' and not slip.move_id)
 
         # Check that a journal exists on all the structures
-        if any(not payslip.struct_id for payslip in payslips_to_post):
-            raise ValidationError(_('One of the contract for these payslips has no structure type.'))
-        if any(not structure.journal_id for structure in payslips_to_post.mapped('struct_id')):
-            raise ValidationError(_('One of the payroll structures has no account journal defined on it.'))
+        contracts_no_structure_type = payslips_to_post.version_id.filtered(lambda c: not c.structure_type_id)
+        if contracts_no_structure_type:
+            raise ValidationError(self.env._('Some contracts for these payslips have no structure type, employees: %s',
+                                    ', '.join(contracts_no_structure_type.employee_id.mapped('name'))))
+        structures_no_journal = payslips_to_post.struct_id.filtered(lambda s: not s.journal_id)
+        if structures_no_journal:
+            raise ValidationError(self.env._('Some payroll structures have no account journal defined on it: %s',
+                                             ', '.join(structures_no_journal.mapped('name'))))
 
         # Map all payslips by structure journal and pay slips month.
         # Case 1: Batch all the payslips together -> {'journal_id': {'month': slips}}
