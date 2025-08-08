@@ -1,4 +1,5 @@
-import { PosStore } from "@point_of_sale/app/services/pos_store";
+import { CONSOLE_COLOR, PosStore } from "@point_of_sale/app/services/pos_store";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 import { patch } from "@web/core/utils/patch";
 import { uuidv4 } from "@point_of_sale/utils";
 
@@ -117,7 +118,9 @@ patch(PosStore.prototype, {
                 await this._authenticate();
                 return this.createAndFinishOrderTransaction(transactionUuid, lineDifference);
             }
-            console.error("Error in createAndFinishOrderTransaction:", error);
+            logPosMessage("Store", "createAndFinishOrderTransaction", "Error", CONSOLE_COLOR, [
+                error,
+            ]);
             throw error; // Re-throw for higher-level error handling
         }
     },

@@ -4,6 +4,7 @@ import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 
 patch(Navbar.prototype, {
     setup() {
@@ -28,7 +29,13 @@ patch(Navbar.prototype, {
                             displayId: display.displayId,
                         })
                         .catch((error) => {
-                            console.error("Error opening customer display", error);
+                            logPosMessage(
+                                "Navbar",
+                                "setup",
+                                "Error opening customer display",
+                                false,
+                                [error]
+                            );
                         });
                 });
             });
@@ -80,7 +87,13 @@ patch(Navbar.prototype, {
                 }
             })
             .catch((error) => {
-                console.error("Error opening customer display:", error);
+                logPosMessage(
+                    "Navbar",
+                    "openCustomerDisplay",
+                    "Error opening customer display",
+                    false,
+                    [error]
+                );
                 this.notification.add(_t("An error occurred while opening the display."));
             });
     },
@@ -91,7 +104,13 @@ patch(Navbar.prototype, {
                 displayId: displayId,
             })
             .catch((error) => {
-                console.error("Error opening customer display");
+                logPosMessage(
+                    "Navbar",
+                    "_showDisplayAndGoToUrl",
+                    "Error opening customer display",
+                    false,
+                    [error]
+                );
                 this.notification.add(_t("An error occurred while opening the display."));
             });
     },

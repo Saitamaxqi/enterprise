@@ -1,7 +1,8 @@
 import { patch } from "@web/core/utils/patch";
-import { PosStore } from "@point_of_sale/app/services/pos_store";
+import { CONSOLE_COLOR, PosStore } from "@point_of_sale/app/services/pos_store";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 
 patch(PosStore.prototype, {
     async setup() {
@@ -44,7 +45,13 @@ patch(PosStore.prototype, {
                     o.updateSavedQuantity();
                 }
             } catch (error) {
-                console.warn(error);
+                logPosMessage(
+                    "Store",
+                    "sendOrderInPreparation",
+                    "Error while sending order to preparation display",
+                    CONSOLE_COLOR,
+                    [error]
+                );
 
                 // Show error popup only if warningTriggered is false
                 if (!this.data.network.warningTriggered) {

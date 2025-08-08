@@ -1,4 +1,5 @@
-import { PosStore } from "@point_of_sale/app/services/pos_store";
+import { CONSOLE_COLOR, PosStore } from "@point_of_sale/app/services/pos_store";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 import { patch } from "@web/core/utils/patch";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ask } from "@point_of_sale/app/utils/make_awaitable_dialog";
@@ -325,7 +326,9 @@ patch(PosStore.prototype, {
                 });
             })
             .catch((error) => {
-                console.info("Error fetching VAT data:", error);
+                logPosMessage("Store", "initVatRates", "Error fetching VAT data", CONSOLE_COLOR, [
+                    error,
+                ]);
                 // This is a fallback where we hardcode the taxes hoping that they didn't change ...
                 this.vatRateMapping = {
                     19: "NORMAL",

@@ -3,6 +3,7 @@ import { usePrepDisplay } from "@pos_enterprise/app/services/preparation_display
 import { Orderline } from "@pos_enterprise/app/components/orderline/orderline";
 import { computeFontColor, useDelayedValueChange } from "@pos_enterprise/app/utils/utils";
 import { TagsList } from "@web/core/tags_list/tags_list";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 
 export class Order extends Component {
     static components = { Orderline, TagsList };
@@ -139,7 +140,7 @@ export class Order extends Component {
                 );
             }
         } catch (error) {
-            console.warn(error);
+            logPosMessage("Order", "clickOrder", "Error clicking order", false, [error]);
         } finally {
             this.actionInProgress = false;
         }

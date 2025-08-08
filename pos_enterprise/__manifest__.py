@@ -56,6 +56,7 @@ for IoT Box config.
             'point_of_sale/static/src/lazy_getter.js',
             "point_of_sale/static/src/app/models/data_service_options.js",
             "point_of_sale/static/src/app/models/utils/indexed_db.js",
+            "point_of_sale/static/src/app/utils/pretty_console_log.js",
             "point_of_sale/static/src/app/models/related_models/**/*",
             "point_of_sale/static/src/app/services/data_service.js",
             "point_of_sale/static/src/app/models/pos_preset.js",

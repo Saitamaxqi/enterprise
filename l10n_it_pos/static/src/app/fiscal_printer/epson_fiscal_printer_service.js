@@ -3,6 +3,7 @@ import { registry } from "@web/core/registry";
 import { parseXML } from "@web/core/utils/xml";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 import {
     FiscalReceipt,
     FiscalInvoice,
@@ -96,7 +97,9 @@ class EpsonFiscalPrinter extends Reactive {
 
     async sendCommand(command, { timeout, devid } = {}) {
         if (CONFIG.logCommands) {
-            console.log(command.toXML());
+            logPosMessage("EpsonFiscalPrinter", "sendCommand", "Sending command", false, [
+                command.toXML(),
+            ]);
         }
         const url = this._getUrl({ timeout, devid });
         const response = await fetch(url, {
@@ -116,7 +119,13 @@ class EpsonFiscalPrinter extends Reactive {
             const code = result.attributes["code"].value;
             const status = result.attributes["status"].value;
             if (!success) {
-                console.error(result);
+                logPosMessage(
+                    "EpsonFiscalPrinter",
+                    "sendCommand",
+                    `Command failed with code ${code} and status ${status}`,
+                    false,
+                    [result]
+                );
                 if (CONFIG.showErrorInDialog && CONFIG.dialogService) {
                     CONFIG.dialogService.add(AlertDialog, {
                         title: _t("Fiscal Printer Error"),
