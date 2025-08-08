@@ -129,8 +129,7 @@ class ProjectProject(models.Model):
 
         for old_project, new_project in zip(self, copied_projects):
             if not self.env.context.get('no_create_folder') and new_project.use_documents and old_project.documents_folder_id:
-                new_project.documents_folder_id = old_project.documents_folder_id.with_context(
-                    documents_copy_folders_only=True).sudo().copy(
+                new_project.documents_folder_id = old_project.documents_folder_id.sudo().copy(
                         {'name': new_project.name, 'owner_id': False}
                     )
         return copied_projects
