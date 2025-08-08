@@ -155,6 +155,20 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
         const popoverProps = await super.getPopoverProps(...arguments);
         const { record } = pill;
         Object.assign(popoverProps, {
+            buttons: [
+                {
+                    class: "btn btn-sm btn-primary",
+                    text: _t("Save & Close"),
+                    onClick: this.popover.close.bind(this.popover),
+                },
+                ...popoverProps.buttons,
+                {
+                    class: "btn btn-sm btn-secondary ms-auto",
+                    icon: "fa fa-trash",
+                    iconTitle: _t("Remove"),
+                    onClick: () => this.model.unlinkRecords([record.id]),
+                },
+            ],
             title: record.appointment_booker_id?.display_name || this.getDisplayName(pill),
         });
         return popoverProps;
