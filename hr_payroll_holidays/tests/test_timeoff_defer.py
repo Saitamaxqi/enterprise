@@ -3,7 +3,7 @@
 
 from datetime import date, datetime
 
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import UserError
 from odoo.fields import Datetime
 from odoo.tests.common import tagged
 from odoo.addons.hr_payroll_holidays.tests.common import TestPayrollHolidaysBase
@@ -308,8 +308,8 @@ class TestTimeoffDefer(TestPayrollHolidaysBase):
             'employee_id': self.emp.id,
             'request_date_from': date(2022, 1, 31),
             'request_date_to': date(2022, 1, 31),
-            'request_unit_half': True,
             'request_date_from_period': 'am',
+            'request_date_to_period': 'am',
         })
         leave._compute_date_from_to()
         leave = self.env['hr.leave'].create(leave._convert_to_write(leave._cache))

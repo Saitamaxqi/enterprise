@@ -5988,14 +5988,14 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'mobile': 0,
             'transport_mode_car': False,
         })
-
+        self.unpaid_time_off_type.request_unit = 'half_day'
         unpaid_time_off = self.env['hr.leave'].create({
             'name': 'Unpaid Leave 4 hours',
             'holiday_status_id': self.unpaid_time_off_type.id,
             'request_date_from': '2018-11-06',
             'request_date_to': '2018-11-06',
-            'request_unit_half': True,
             'request_date_from_period': 'am',
+            'request_date_to_period': 'am',
             'employee_id': self.employee.id,
         })
         unpaid_time_off.action_approve()

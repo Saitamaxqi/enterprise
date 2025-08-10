@@ -12,6 +12,7 @@ from odoo import Command
 class TestPlanningLeaves(TestCommon):
     def test_simple_employee_leave(self):
         self.leave_type.responsible_ids = [Command.link(self.env.ref('base.user_admin').id)]
+        self.leave_type.request_unit = 'day'
         leave = self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
@@ -136,20 +137,21 @@ class TestPlanningLeaves(TestCommon):
                 }, "The Working days and Allocated hours should be updated")
 
     def test_half_day_employee_leave(self):
+        self.leave_type.request_unit = 'half_day'
         leave_1, leave_2 = self.env['hr.leave'].create([{
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
             'request_date_from': '2020-01-01 09:00:00',
             'request_date_to': '2020-01-01 13:00:00',
-            'request_unit_half': True,
             'request_date_from_period': 'am',
+            'request_date_to_period': 'am',
         }, {
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_bert.id,
             'request_date_from': '2020-01-02 14:00:00',
             'request_date_to': '2020-01-02 18:00:00',
-            'request_unit_half': True,
             'request_date_from_period': 'pm',
+            'request_date_to_period': 'pm',
         }])
 
         slot_1, slot_2 = self.env['planning.slot'].create([{
@@ -230,6 +232,7 @@ class TestPlanningLeaves(TestCommon):
         })
         employee = self.employee_bert
         employee.resource_calendar_id = flexible_calendar
+        self.leave_type.request_unit = 'half_day'
 
         # Test AM half-day leave
         leave_am = self.env['hr.leave'].sudo().create({
@@ -238,8 +241,8 @@ class TestPlanningLeaves(TestCommon):
             'holiday_status_id': self.leave_type.id,
             'request_date_from': '2025-03-05',
             'request_date_to': '2025-03-05',
-            'request_unit_half': True,
             'request_date_from_period': 'am',
+            'request_date_to_period': 'am',
             'state': 'confirm',
         })
         leave_am.sudo().action_approve()
@@ -261,8 +264,8 @@ class TestPlanningLeaves(TestCommon):
             'holiday_status_id': self.leave_type.id,
             'request_date_from': '2025-03-06',
             'request_date_to': '2025-03-06',
-            'request_unit_half': True,
             'request_date_from_period': 'pm',
+            'request_date_to_period': 'pm',
             'state': 'confirm',
         })
         leave_pm.sudo().action_approve()
@@ -328,6 +331,7 @@ class TestPlanningLeaves(TestCommon):
             'attendance_ids': [],
         })
         self.employee_bert.resource_calendar_id = flexible_calendar
+        self.leave_type.request_unit = 'half_day'
         leave_am, leave_pm = self.env['hr.leave'].sudo().create([
             {
                 'name': 'AM Half Day Off',
@@ -335,8 +339,8 @@ class TestPlanningLeaves(TestCommon):
                 'holiday_status_id': self.leave_type.id,
                 'request_date_from': '2025-04-30',
                 'request_date_to': '2025-04-30',
-                'request_unit_half': True,
                 'request_date_from_period': 'am',
+                'request_date_to_period': 'am',
                 'state': 'confirm',
             }, {
                 'name': 'PM Half Day Off',
@@ -344,8 +348,8 @@ class TestPlanningLeaves(TestCommon):
                 'holiday_status_id': self.leave_type.id,
                 'request_date_from': '2025-04-30',
                 'request_date_to': '2025-04-30',
-                'request_unit_half': True,
                 'request_date_from_period': 'pm',
+                'request_date_to_period': 'pm',
                 'state': 'confirm',
             },
         ])

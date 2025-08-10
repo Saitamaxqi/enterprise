@@ -33,10 +33,6 @@
                             <field name="request_date_to" invisible="1"/>
                             <label for="request_date_from" invisible="not request_unit_half and not request_unit_hours" string="Date" />
                             <label for="request_date_from" invisible="request_unit_half or request_unit_hours" string="Dates" />
-                            <div class="o_row" invisible="not request_unit_half and not request_unit_hours">
-                                <field name="request_date_from" class="oe_inline" string="Date" readonly="state not in ('draft', 'confirm')" />
-                                <field name="request_date_from_period" invisible="not request_unit_half" required="request_unit_half" readonly="state not in ('draft', 'confirm')"/>
-                            </div>
                             <div class="o_row" invisible="request_unit_half or request_unit_hours">
                                 <field
                                     name="request_date_from"
@@ -46,19 +42,15 @@
                                     options="{'end_date_field': 'request_date_to'}"/>
                                 <field name="request_date_to" invisible="1" />
                             </div>
-                            <label for="request_unit_half" string="" invisible="leave_type_request_unit == 'day'"/>
-                            <div class="o_row o_row_readonly oe_edit_only" style="margin-left: -2px;" invisible="leave_type_request_unit == 'day'">
-                                <field name="request_unit_half" class="oe_inline" invisible="leave_type_request_unit == 'day'" readonly="state not in ('draft', 'confirm')" />
-                                <label for="request_unit_half" invisible="leave_type_request_unit == 'day'" />
-                                <field name="request_unit_hours" invisible="leave_type_request_unit != 'hour'" readonly="state not in ('draft', 'confirm')" class="ms-5" />
-                                <label for="request_unit_hours" invisible="leave_type_request_unit != 'hour'" />
+                            <label for="request_date_from_period" invisible="not request_unit_half" string="Day Period"/>
+                            <div class="o_row" invisible="not request_unit_half">
+                                <field name="request_date_from_period" invisible="not request_unit_half" required="request_unit_half" readonly="state not in ('draft', 'confirm')" class="o_hr_narrow_field me-2"/>
+                                <field name="request_date_to_period" invisible="not request_unit_half" required="request_unit_half" readonly="state not in ('draft', 'confirm')" class="o_hr_narrow_field"/>
                             </div>
-                            <label for="request_hour_from" string="" invisible="not request_unit_hours"/>
+                            <label for="request_hour_from" invisible="not request_unit_hours" string="Hours"/>
                             <div class="o_row o_row_readonly" invisible="not request_unit_hours">
-                                <label for="request_hour_from" string="From" />
-                                <field name="request_hour_from" invisible="not request_unit_hours" readonly="state == 'validate'" required="request_unit_hours" />
-                                <label for="request_hour_to" string="To" />
-                                <field name="request_hour_to" invisible="not request_unit_hours" readonly="state == 'validate'" required="request_unit_hours" />
+                                <field name="request_hour_from" readonly="state == 'validate'" required="request_unit_hours" widget="float_time_selection" class="o_hr_narrow_field me-2"/>
+                                <field name="request_hour_to" readonly="state == 'validate'" required="request_unit_hours" widget="float_time_selection" class="o_hr_narrow_field"/>
                             </div>
                             <field name="l10n_ch_continued_pay_percentage" readonly="state not in ('draft', 'confirm')" widget="percentage" invisible="l10n_ch_swissdec_work_interruption"/>
                             <field name="l10n_ch_disability_percentage" readonly="state not in ('draft', 'confirm')" widget="percentage" invisible="l10n_ch_swissdec_work_interruption"/>

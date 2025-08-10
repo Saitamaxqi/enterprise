@@ -22,12 +22,16 @@ class ResourceCalendarInherit(models.Model):
         ])
         # Check if the leave contains a half-day granularity
         tz = dt0.tzinfo
-        if len(leave_data) == 1 and leave_data.request_date_from_period:
+        if len(leave_data) == 1 and leave_data.request_unit_half:
             if leave_data.request_date_from_period == 'am':
                 dt0 = datetime.combine(dt0.date(), time.min).replace(tzinfo=tz)
-                dt1 = datetime.combine(dt1.date(), time.min).replace(hour=12, tzinfo=tz)
-            elif leave_data.request_date_from_period == 'pm':
+            else:
                 dt0 = datetime.combine(dt0.date(), time.min).replace(hour=12, tzinfo=tz)
+
+            if leave_data.request_date_to_period == 'am':
+                dt1 = datetime.combine(dt1.date(), time.min).replace(hour=12, tzinfo=tz)
+            else:
                 dt1 = datetime.combine(dt1.date(), time.max).replace(tzinfo=tz)
             return dt0, dt1
+
         return super()._handle_flexible_leave_interval(dt0, dt1, leave)

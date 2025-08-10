@@ -117,20 +117,21 @@ class TestProjectLeaves(common.TransactionCase):
                          "should show the start of the 1st leave and end of the 2nd")
 
     def test_half_day_employee_leave(self):
+        self.leave_type.request_unit = 'half_day'
         leave_1, leave_2 = self.env['hr.leave'].create([{
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
             'request_date_from':  datetime.datetime(2020, 1, 1, 9, 0),
             'request_date_to':  datetime.datetime(2020, 1, 1, 13, 0),
-            'request_unit_half': True,
             'request_date_from_period': 'am',
+            'request_date_to_period': 'am',
         }, {
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
             'request_date_from': datetime.datetime(2020, 1, 2, 14, 0),
             'request_date_to': datetime.datetime(2020, 1, 2, 18, 0),
-            'request_unit_half': True,
             'request_date_from_period': 'pm',
+            'request_date_to_period': 'pm',
         }])
 
         task_1, task_2, task_3 = self.env['project.task'].create([{
@@ -174,6 +175,7 @@ class TestProjectLeaves(common.TransactionCase):
                          "employee is not on leave, no warning")
 
     def test_leave_warning_on_creation(self):
+        self.leave_type.request_unit = 'day'
         self.env['hr.leave'].sudo().create({
             'holiday_status_id': self.leave_type.id,
             'employee_id': self.employee_hruser.id,
@@ -193,7 +195,7 @@ class TestProjectLeaves(common.TransactionCase):
             task_form.planned_date_begin = datetime.datetime(2020, 1, 2)
             self.assertFalse(task_form.leave_warning)
 
-    def test_multicompany_with_time_off_warnning(self):
+    def test_multicompany_with_time_off_warning(self):
         """
         Ensure that time-off warnings are displayed if multi-company is activated.
         Flow:

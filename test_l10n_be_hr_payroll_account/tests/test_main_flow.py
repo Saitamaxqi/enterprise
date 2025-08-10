@@ -206,9 +206,10 @@ class TestHR(AccountTestInvoicingCommon):
         # User request a leave which does not require validation
         leave_form = Form(self.env['hr.leave'].with_user(self.user))
         leave_form.holiday_status_id = allocation_no_validation.holiday_status_id
-        leave_form.request_unit_half = True
         leave_form.request_date_from = Date.today() + relativedelta(days=1)
+        leave_form.request_date_to = Date.today() + relativedelta(days=1)
         leave_form.request_date_from_period = 'am'
+        leave_form.request_date_to_period = 'am'
         leave = leave_form.save()  # need to be saved to have access to record
         self.assertEqual(leave.number_of_days, 0.5, "Onchange should have computed 0.5 days")
         self.assertEqual(leave.state, 'validate', "Should be automatically validated")
