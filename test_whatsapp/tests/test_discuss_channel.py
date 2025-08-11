@@ -142,7 +142,6 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
                     "type": "reaction",
                 },
             )
-        self._reset_bus()
         with self.assertBus(
             [
                 (self.cr.dbname, "discuss.channel", discuss_channel.id),
