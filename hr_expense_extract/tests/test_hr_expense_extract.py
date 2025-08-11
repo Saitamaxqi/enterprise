@@ -75,7 +75,6 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.assertEqual(self.expense.extract_state, 'waiting_extraction')
         self.assertEqual(self.expense.extract_document_uuid, 'some_token')
         self.assertTrue(self.expense.extract_state_processed)
-        self.assertEqual(self.expense.predicted_category, 'miscellaneous')
         self.assertFalse(self.expense.total_amount)
         self.assertEqual(self.expense.currency_id, usd_currency)
 

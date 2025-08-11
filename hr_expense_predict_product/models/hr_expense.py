@@ -10,27 +10,11 @@ from odoo import api, fields, models, _
 class HrExpense(models.Model):
     _inherit = 'hr.expense'
 
-    # Description is the field from which we would find the product
-    # Limit_parameter should be the limit of expenses to analyse ( 10000 seems to be the best )
-    predicted_category = fields.Selection(
-        selection=[
-            ('toll', "Toll"),
-            ('parking', "Parking"),
-            ('gasoline', "Gasoline"),
-            ('transport', "Transport"),
-            ('miscellaneous', "Miscellaneous"),
-            ('food', "Food"),
-            ('accommodation', "Accommodation"),
-        ],
-        string="Predicted Category",
-        index=True,
-        default='miscellaneous')
-
     def _get_predict_postgres_dictionary(self):
         lang = self.env.context.get('lang') and self.env.context.get('lang')[:2]
         return {'fr': 'french'}.get(lang, 'english')
 
-    def _predict_field(self, sql_query, description, category):
+    def _predict_field(self, sql_query, description):
         psql_lang = self._get_predict_postgres_dictionary()
         parsed_description = re.sub("[*&()|!':<]+", " ", description)
         parsed_description = ' | '.join(parsed_description.split())
@@ -38,7 +22,6 @@ class HrExpense(models.Model):
         params = {
             'lang': psql_lang,
             'description': parsed_description,
-            'category': category,
             'company_id': self.company_id.id or self.env.company.id,
             'limit_parameter': int(limit_parameter),
         }
@@ -53,67 +36,37 @@ class HrExpense(models.Model):
 
         return False
 
-
-    def _predict_product(self, description, category = False):
+    def _predict_product(self, description):
         if not description:
             return False
-        if not category:
-            sql_query = """
+        sql_query = """
+            SELECT
+                max(f.rel) AS ranking,
+                f.product_id,
+                count(coalesce(f.product_id, 1)) AS count
+            FROM (
                 SELECT
-                    max(f.rel) AS ranking,
-                    f.product_id,
-                    count(coalesce(f.product_id, 1)) AS count
+                    p_search.product_id,
+                    ts_rank(p_search.document, query_plain) AS rel
                 FROM (
                     SELECT
-                        p_search.product_id,
-                        ts_rank(p_search.document, query_plain) AS rel
-                    FROM (
-                        SELECT
-                            expense.product_id,
-                            (setweight(to_tsvector(%(lang)s, expense.name), 'B'))
-                            AS document
-                        FROM hr_expense expense
-                        WHERE expense.state IN ('paid', 'in_payment', 'posted')
-                            AND expense.company_id = %(company_id)s
-                        ORDER BY expense.date DESC, expense.id DESC
-                        LIMIT %(limit_parameter)s
-                    ) p_search,
-                    to_tsquery(%(lang)s, %(description)s) query_plain
-                    WHERE (p_search.document @@ query_plain)
-                ) AS f
-                JOIN product_product p ON p.id = f.product_id AND p.active
-                GROUP BY f.product_id
-                ORDER BY ranking desc, count desc
-            """
-        else:
-            sql_query = """
-                SELECT
-                    max(f.rel) AS ranking,
-                    f.product_id,
-                    count(coalesce(f.product_id, 1)) AS count
-                FROM (
-                    SELECT
-                        p_search.product_id,
-                        ts_rank(p_search.document, query_plain) AS rel
-                    FROM (
-                        SELECT
-                            expense.product_id,
-                            (setweight(to_tsvector(%(lang)s, expense.predicted_category), 'A'))
-                            AS document
-                        FROM hr_expense expense
-                        WHERE expense.state IN ('paid', 'in_payment', 'posted')
-                            AND expense.company_id = %(company_id)s
-                        ORDER BY expense.date DESC, expense.id DESC
-                        LIMIT %(limit_parameter)s
-                    ) p_search,
-                    to_tsquery(%(lang)s,  %(description)s) query_plain
-                    WHERE (p_search.document @@ query_plain)
-                ) AS f
-                JOIN product_product p ON p.id = f.product_id AND p.active
-                GROUP BY f.product_id
-                ORDER BY ranking desc, count desc
-            """
-        return self._predict_field(sql_query, description, category)
+                        expense.product_id,
+                        (setweight(to_tsvector(%(lang)s, expense.name), 'B'))
+                        AS document
+                    FROM hr_expense expense
+                    WHERE expense.state IN ('paid', 'in_payment', 'posted')
+                        AND expense.company_id = %(company_id)s
+                    ORDER BY expense.date DESC, expense.id DESC
+                    LIMIT %(limit_parameter)s
+                ) p_search,
+                to_tsquery(%(lang)s, %(description)s) query_plain
+                WHERE (p_search.document @@ query_plain)
+            ) AS f
+            JOIN product_product p ON p.id = f.product_id AND p.active
+            GROUP BY f.product_id
+            ORDER BY ranking desc, count desc
+        """
+        return self._predict_field(sql_query, description)
 
     @api.onchange('name')
     def _onchange_predict_product(self):
