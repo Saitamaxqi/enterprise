@@ -11,7 +11,6 @@ Export payments as NACHA files for use in the United States.
     "data": [
         "data/l10n_us_payment_nacha.xml",
         "views/account_journal_views.xml",
-        "views/res_partner_bank_views.xml",
     ],
     "auto_install": ["l10n_us"],
     "author": "Odoo S.A.",
