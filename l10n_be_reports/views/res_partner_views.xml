@@ -59,7 +59,7 @@
         <record id="res_partner_view_form_281_50_required_field" model="ir.ui.view">
             <field name="name">res.partner.view.form</field>
             <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="inherit_id" ref="l10n_be_reports.res_partner_view_form_inherit"/>
             <field name="priority" eval="1"/>
             <field name="mode">primary</field>
             <field name="arch" type="xml">
