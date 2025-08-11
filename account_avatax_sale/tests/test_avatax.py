@@ -173,7 +173,7 @@ class TestSaleAvalara(TestTaxCommonSale, TestAccountAvataxSaleCommon):
             {'price_unit': 15.0, 'price_total': 16.28},
             {'price_unit': 15.0, 'price_total': 16.28},
             {'price_unit': 0.0, 'price_total': 0.00},
-            {'price_unit': 42.33, 'price_total': -50.01},
+            {'price_unit': 45.00, 'price_total': -48.84},
         ])
 
         with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:

@@ -1,5 +1,3 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-from collections import defaultdict
 from datetime import timedelta
 
 from odoo import SUPERUSER_ID, api, fields, models, Command
@@ -155,10 +153,12 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
         for base_line, tax_values_list in base_line_with_tax_values:
             manual_tax_amounts = base_line['manual_tax_amounts'] = {}  # clear old taxes
-            for _tax_group_values, tax_values, amount in tax_values_list:
+            for _tax_group_values, tax_values, manual_amounts in tax_values_list:
                 tax_id = str(tax_by_name[tax_values['name']].id)
-                manual_tax_amounts.setdefault(tax_id, defaultdict(float))
-                manual_tax_amounts[tax_id]['tax_amount_currency'] += amount
+                if tax_id in manual_tax_amounts:
+                    manual_tax_amounts[tax_id]['tax_amount_currency'] += manual_amounts['tax_amount_currency']
+                else:
+                    manual_tax_amounts[tax_id] = manual_amounts
 
         return {base_line['record']: base_line for base_line, _amount in base_line_with_tax_values}
 

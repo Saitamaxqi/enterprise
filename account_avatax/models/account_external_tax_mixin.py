@@ -153,14 +153,14 @@ class AccountExternalTaxMixin(models.AbstractModel):
         return res
 
     @api.model
-    def _extract_tax_values_from_avatax_detail(self, service_params, detail):
+    def _extract_tax_values_from_avatax_detail(self, service_params, line_details, tax_detail):
         company = service_params['line_data'][0]['base_line']['record'].company_id
         fiscal_position = service_params['fiscal_position']
-        amount_type = 'fixed' if detail.get('unitOfBasis') == 'FlatAmount' else 'percent'
-        amount = detail['rate'] * (1 if amount_type == 'fixed' else 100)
+        amount_type = 'fixed' if tax_detail.get('unitOfBasis') == 'FlatAmount' else 'percent'
+        amount = tax_detail['rate'] * (1 if amount_type == 'fixed' else 100)
 
         rounded_amount = float_round(amount, precision_digits=4)
-        tax_group_name = detail['taxName'].removesuffix(' TAX')
+        tax_group_name = tax_detail['taxName'].removesuffix(' TAX')
         if amount_type == 'fixed':
             tax_name_suffix = "$ %.4g" % rounded_amount
         else:
@@ -171,6 +171,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
         is_return = service_params['document_type'] == 'ReturnInvoice'
         line_amount_sign = -1 if is_return else 1
 
+        tax_amount = tax_detail['tax'] * line_amount_sign
         return (
             {'name': tax_group_name, 'company_id': company.id},
             {
@@ -187,7 +188,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                     Command.create({'repartition_type': 'tax', 'account_id': fiscal_position.avatax_refund_account_id.id}),
                 ],
             },
-            detail['tax'] * line_amount_sign
+            {'tax_amount_currency': tax_amount}
         )
 
     def _get_external_taxes(self):
@@ -217,8 +218,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
                 for base_line, line_results in zip(base_lines, api_response['lines']):
                     tax_values_list = []
-                    for detail in line_results['details']:
-                        tax_values_list.append(self._extract_tax_values_from_avatax_detail(service_params, detail))
+                    for tax_detail in line_results['details']:
+                        tax_values_list.append(self._extract_tax_values_from_avatax_detail(service_params, line_results, tax_detail))
                     base_line_with_tax_values.append((base_line, tax_values_list))
 
             if errors:

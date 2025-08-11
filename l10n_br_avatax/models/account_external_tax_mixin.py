@@ -540,25 +540,26 @@ class AccountExternalTaxMixin(models.AbstractModel):
         }
 
     @api.model
-    def _extract_tax_values_from_l10n_br_avatax_detail(self, service_params, detail):
-        tax_amount = detail['tax']
+    def _extract_tax_values_from_l10n_br_avatax_detail(self, service_params, line_detail, tax_detail):
+        tax_amount = tax_detail['tax']
         if service_params['is_return']:
             tax_amount = -tax_amount
 
-        if detail['taxImpact']['impactOnNetAmount'] == 'Subtracted':
-            tax_amount = -tax_amount
+        if tax_detail['taxImpact']['impactOnNetAmount'] == 'Subtracted':
+            tax_amount *= -1
 
+        base_amount_currency = line_detail['lineNetFigure'] - line_detail['lineTaxedDiscount']
         return (
             {'name': 'Avalara Brazil', 'company_id': service_params['company'].id},
             {
-                'name': detail['taxType'],
-                'l10n_br_avatax_code': detail['taxType'],
+                'name': tax_detail['taxType'],
+                'l10n_br_avatax_code': tax_detail['taxType'],
                 'company_id': service_params['company'].id,
                 'amount': 1,
                 'amount_type': 'percent',
-                'price_include_override': 'tax_included' if detail['taxImpact']['impactOnNetAmount'] == 'Included' else 'tax_excluded',
+                'price_include_override': 'tax_included' if tax_detail['taxImpact']['impactOnNetAmount'] == 'Included' else 'tax_excluded',
             },
-            tax_amount
+            {'tax_amount_currency': tax_amount, 'base_amount_currency': base_amount_currency},
         )
 
     def _l10n_br_call_avatax_taxes(self, company, document_data):
@@ -599,9 +600,9 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
                 for base_line, line_results in zip(base_lines, api_response['lines']):
                     tax_values_list = []
-                    for detail in line_results['taxDetails']:
-                        if detail['taxImpact']['impactOnNetAmount'] != 'Informative':
-                            tax_values_list.append(self._extract_tax_values_from_l10n_br_avatax_detail(service_params, detail))
+                    for tax_detail in line_results['taxDetails']:
+                        if tax_detail['taxImpact']['impactOnNetAmount'] != 'Informative':
+                            tax_values_list.append(self._extract_tax_values_from_l10n_br_avatax_detail(service_params, line_results, tax_detail))
                     base_line_with_tax_values.append((base_line, tax_values_list))
 
             if errors:
