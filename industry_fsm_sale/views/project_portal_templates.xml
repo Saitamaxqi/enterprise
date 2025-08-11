@@ -64,11 +64,7 @@
                                     <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"/>
                                 </t>
 
-                                <tr t-att-class="{
-                                    'fw-bolder': line.display_type == 'line_section',
-                                    'fw-bold': line.display_type == 'line_subsection',
-                                    'fst-italic': line.display_type == 'line_note',
-                                }" t-att-style="'background-color: #F1F1F1;' if line_index % 2 == 0 else ''">
+                                <tr t-att-class="'fw-bolder o_line_section' if line.display_type == 'line_section' else 'fw-bold o_line_subsection' if line.display_type == 'line_subsection' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''" t-att-style="'background-color: #F1F1F1;' if line_index % 2 == 0 else ''">
                                     <t t-if="not line.display_type and not line.is_downpayment">
                                         <td><span t-field="line.name"/></td>
                                         <td class="text-end">
