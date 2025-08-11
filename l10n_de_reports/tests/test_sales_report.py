@@ -22,10 +22,10 @@ class GermanySalesReportTest(AccountSalesReportCommon):
     def _get_report_from_csv(self, report, options):
         csv_content = self.env['l10n_de.ec.sales.report.handler'].get_csvs(report, options)[0]
         lines = csv_content.strip().split('\n')
-        headers = lines[0].split(',')
+        headers = lines[2].split(',')
         return [
             {headers[i]: value.strip() for i, value in enumerate(line.split(','))}
-            for line in lines[1:]
+            for line in lines[3:]
         ]
 
     @freeze_time('2019-12-31')
