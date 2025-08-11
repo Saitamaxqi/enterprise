@@ -8,7 +8,8 @@
         'hr_payroll',
         'hr_work_entry_holidays',
         'hr_payroll_holidays',
-        'base_address_extended'
+        'base_address_extended',
+        'l10n_us',  # for l10n_us_bank_account_type
     ],
     'auto_install': ['hr_payroll'],
     'version': '1.0',
@@ -40,6 +41,8 @@ United States Payroll Rules.
         'views/hr_contract_template_views.xml',
         'views/hr_employee_views.xml',
         'views/res_config_settings_views.xml',
+        'views/l10n_us_940_views.xml',
+        'views/l10n_us_941_views.xml',
         'views/l10n_us_w2_views.xml',
         'views/l10n_us_worker_compensation_views.xml',
         'views/hr_leave_type_views.xml',

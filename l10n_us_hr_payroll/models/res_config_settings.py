@@ -11,6 +11,14 @@ class ResConfigSettings(models.TransientModel):
         string="ETT Tax",
         related='company_id.l10n_us_ca_ett_tax',
         readonly=False)
+    l10n_us_signatory_id = fields.Many2one(
+        string="Signatory",
+        related='company_id.l10n_us_signatory_id',
+        readonly=False)
+    l10n_us_business_structure = fields.Selection(
+        string="Business Structure",
+        related='company_id.l10n_us_business_structure',
+        readonly=False)
 
     def action_open_suta_rule_parameters(self):
         self.ensure_one()
