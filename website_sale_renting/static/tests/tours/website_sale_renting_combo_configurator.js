@@ -13,8 +13,8 @@ registry
             configuratorTourUtils.assertPriceInfo("1 Hour"),
             configuratorTourUtils.selectComboItem("Test Product"),
             {
-                content: "Proceed to checkout",
-                trigger: 'button:contains(Proceed to Checkout)',
+                content: "Go to checkout",
+                trigger: 'button:contains(Go to Checkout)',
                 run: 'click',
                 expectUnloadPage: true,
             },
