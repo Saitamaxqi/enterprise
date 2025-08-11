@@ -157,8 +157,8 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
             with self.subTest(report=report.name):
                 options = report.get_options({})
 
-                # Remove aggregations from those report lines, so that we still can set a groupby on the line
-                (expressions.report_line_id.expression_ids.filtered(lambda x: x.engine == 'aggregation')).unlink()
+                # Remove aggregations and external value expressions from those report lines, so that we always can set a groupby on the line
+                (expressions.report_line_id.expression_ids.filtered(lambda x: x.engine in ('aggregation', 'external'))).unlink()
 
                 expressions.report_line_id.user_groupby = 'account_code' # account_code is a  non-stored related field on aml
                 self.env.flush_all()
