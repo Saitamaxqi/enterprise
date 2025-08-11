@@ -21,7 +21,7 @@
                 <div class="container s_allow_columns" style="text-align: center;">
                     <p><br/></p>
                     <img
-                        src="/web_editor/shape/marketing_automation_website_sale/anniversary/big-cake.svg?c1=%23714B67&amp;unique=c21752e3"
+                        src="/html_editor/shape/marketing_automation_website_sale/anniversary/big-cake.svg?c1=%23714B67&amp;unique=c21752e3"
                         class="mx-auto d-block mw-100 img img-fluid o_we_custom_image"
                         style="padding: 10px; width: 50% !important;"
                         data-mimetype="image/svg+xml"
@@ -189,7 +189,7 @@
           </div>
         </section>
         <section class="s_cover o_mail_snippet_general" data-snippet="s_cover" data-name="Cover">
-          <img src="/web_editor/shape/marketing_automation_website_sale/purchase_followup/wavybuddies-support-call-center-customer-ecommerce-retail-order-question-simple.svg?c2=%238595A2&amp;c4=%23FFFFFF&amp;c1=%230000FF&amp;unique=a237383d" class="img-fluid w-100 mx-auto img o_we_custom_image" data-mimetype="image/svg+xml" style="width: 50% !important"/>
+          <img src="/html_editor/shape/marketing_automation_website_sale/purchase_followup/wavybuddies-support-call-center-customer-ecommerce-retail-order-question-simple.svg?c2=%238595A2&amp;c4=%23FFFFFF&amp;c1=%230000FF&amp;unique=a237383d" class="img-fluid w-100 mx-auto img o_we_custom_image" data-mimetype="image/svg+xml" style="width: 50% !important"/>
         </section>
         <section class="s_title o_mail_snippet_general px-3 pb0 pt0" data-snippet="s_title" data-name="Title">
           <div class="container s_allow_columns">
@@ -294,7 +294,7 @@
           </div>
         </section>
         <section class="s_cover o_mail_snippet_general pt0" data-snippet="s_cover" data-name="Cover">
-          <img src="/web_editor/shape/marketing_automation_website_sale/repeat_customer/product-tour.svg?c1=%23FF0000&amp;unique=08e60e72" class="img-fluid w-100 mx-auto img o_we_custom_image" style="padding: 15px; width: 50% !important" data-mimetype="image/svg+xml"/>
+          <img src="/html_editor/shape/marketing_automation_website_sale/repeat_customer/product-tour.svg?c1=%23FF0000&amp;unique=08e60e72" class="img-fluid w-100 mx-auto img o_we_custom_image" style="padding: 15px; width: 50% !important" data-mimetype="image/svg+xml"/>
         </section>
         <section class="s_text_block o_mail_snippet_general pt32 pb32" data-snippet="s_text_block" data-name="Text" style="padding-left: 15px; padding-right: 15px">
           <div class="container s_allow_columns">
@@ -399,7 +399,7 @@
         <section class="s_picture o_mail_snippet_general o_cc o_cc2 bg-o-color-4 pt4 pb4" style="padding-left: 15px; padding-right: 15px" data-snippet="s_picture" data-name="Picture">
           <div class="container s_allow_columns">
             <h2 style="text-align: center">&#xA0;<br /></h2>
-            <img src="/web_editor/shape/marketing_automation_website_sale/repeat_customer/celebration.svg?c1=%23FF0000&amp;unique=7403313f" class="mx-auto d-block mw-100 img img-fluid o_we_custom_image" style="padding: 10px; width: 50% !important" data-mimetype="image/svg+xml"/>
+            <img src="/html_editor/shape/marketing_automation_website_sale/repeat_customer/celebration.svg?c1=%23FF0000&amp;unique=7403313f" class="mx-auto d-block mw-100 img img-fluid o_we_custom_image" style="padding: 10px; width: 50% !important" data-mimetype="image/svg+xml"/>
             <h2 style="text-align: center">
               <span style="font-size: 1.07143rem">THANKS FOR YOUR PURCHASE</span>
             </h2>
@@ -421,7 +421,7 @@
           <div class="container s_allow_columns">
             <p><br/></p>
             <img
-              src="/web_editor/shape/marketing_automation_website_sale/repeat_customer/winners.svg?c1=%23FF0000&amp;unique=f98df402"
+              src="/html_editor/shape/marketing_automation_website_sale/repeat_customer/winners.svg?c1=%23FF0000&amp;unique=f98df402"
               class="mx-auto d-block mw-100 img img-fluid o_we_custom_image"
               style="padding: 10px; width: 50% !important"
               data-mimetype="image/svg+xml"
