@@ -283,7 +283,7 @@ class PosOrder(models.Model):
                             )
                         ))
                     )
-                    or (not order.refunded_order_id and order.amount_total < 0.0)
+                    or (not order.refunded_order_id and order.currency_id.round(order.amount_total) < 0.0)
                 )
             ):
                 raise ValidationError(_("The amount of the order must be positive for a sale and negative for a refund."))
