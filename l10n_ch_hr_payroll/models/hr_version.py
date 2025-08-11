@@ -254,7 +254,7 @@ class HrVersion(models.Model):
     l10n_ch_compensation_fund_id = fields.Many2one(
         'l10n.ch.compensation.fund', string="Family Compensation Fund", groups="hr.group_hr_user")
     l10n_ch_lesson_wage = fields.Float('Lesson Wage', tracking=True, help="Employee's gross wage by lesson.", groups="hr.group_hr_user")
-    l10n_ch_contractual_13th_month_rate = fields.Float("Contractual allowances for 13th/14th month", digits='Payroll Rate', default=8.33, groups="hr.group_hr_user")
+    l10n_ch_contractual_13th_month_rate = fields.Float("Contractual allowances for 13th/14th month", digits='Payroll Rate', default=8.3333, groups="hr.group_hr_user")
     l10n_ch_location_unit_id = fields.Many2one("l10n.ch.location.unit", string="Workplace", groups="hr.group_hr_user")
     l10n_ch_avs_status = fields.Selection([
         ('youth', 'Youth'),
