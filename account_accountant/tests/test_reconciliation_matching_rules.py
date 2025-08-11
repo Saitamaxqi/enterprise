@@ -631,6 +631,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': payment.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
         ])
 
+    @freeze_time("2025-03-15")
     def test_matching_rules_with_empty_aml_move_name(self):
         """Test reconciliation if there is aml with empty move_name"""
         # The payment we want to match
