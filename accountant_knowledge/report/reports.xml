@@ -60,6 +60,21 @@
         </html>
     </template>
 
+    <template id="audit_report_title_page">
+        <html>
+            <head>
+                <meta charset="UTF-8"/>
+                <base t-att-href="base_url"/>
+                <t t-call-assets="accountant_knowledge.report_assets" t-autoprefix="true"/>
+            </head>
+            <body>
+                <div style="height: 350px"/>
+                <h1 t-out="article.name"/>
+                <hr/>
+            </body>
+        </html>
+    </template>
+
     <template id="audit_report_empty_document">
         <html>
             <head>

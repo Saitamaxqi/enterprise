@@ -299,21 +299,47 @@ class KnowledgeAuditReportController(http.Controller):
                 if parent is not None:
                     parent.remove(element)
 
+            is_article_empty = is_html_element_empty(root)
+
+            # Append a title page for empty articles:
+            if is_article_empty:
+                title_page_html = request.env['ir.qweb']._render(
+                    'accountant_knowledge.audit_report_title_page', {
+                        'article': article,
+                        'base_url': base_url})
+                title_page_pdf = convert_html_to_pdf(title_page_html)
+                if generate_headings:
+                    try:
+                        for (depth, outline) in flatten_outline(title_page_pdf.outlines):
+                            headings.append({
+                                'page_offset_in_body': page_offset_in_body,
+                                'depth': depth,
+                                'outline': outline
+                            })
+                    except PdfReadError:
+                        # version 1.26 of PyPDF2 is not capable of generating the outline / headers
+                        # see https://github.com/py-pdf/pypdf/issues/193
+                        _logger.warning('Unable to generate Audit Report heading, please update your PyPDF version.')
+                        generate_headings = False
+
+                body_pdfs.append(title_page_pdf)
+                page_offset_in_body += title_page_pdf.getNumPages()
+
             # Append the account reports present in the article:
             account_report_pdfs = list(get_account_reports_pdfs(root))
             body_pdfs.extend(account_report_pdfs)
             page_offset_in_body += sum(
                 account_report_pdf.getNumPages() for account_report_pdf in account_report_pdfs)
 
-            # Append the article body:
-            if not is_html_element_empty(root):
+            # Append the article body if not empty:
+            if not is_article_empty:
                 article_body = render_article_body(root, template_variables)
                 article_html = request.env['ir.qweb']._render(
                     'accountant_knowledge.audit_report_page_layout', {
                         'base_url': base_url,
                         'body': article_body})
-                article_pdf = convert_html_to_pdf(
-                    article_html, [])
+                article_pdf = convert_html_to_pdf(article_html)
+
                 if generate_headings:
                     try:
                         for (depth, outline) in flatten_outline(article_pdf.outlines):
@@ -326,6 +352,8 @@ class KnowledgeAuditReportController(http.Controller):
                         # version 1.26 of PyPDF2 is not capable of generating the outline / headers
                         # see https://github.com/py-pdf/pypdf/issues/193
                         _logger.warning('Unable to generate Audit Report heading, please update your PyPDF version.')
+                        generate_headings = False
+
                 body_pdfs.append(article_pdf)
                 page_offset_in_body += article_pdf.getNumPages()
 
