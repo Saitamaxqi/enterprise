@@ -1,10 +1,12 @@
 import copy
 import json
 import logging
+import re
 
 from io import BytesIO
 from lxml import html
 from markupsafe import Markup
+from urllib.parse import parse_qs, urlparse
 
 from odoo import http
 from odoo.fields import Domain
@@ -32,6 +34,14 @@ def is_html_element_empty(root):
     return not root.xpath("//*[translate(normalize-space(.), ' ', '') != '']")
 
 
+def xpath_has_class(class_name):
+    """ Returns an XPath expression that checks whether an element contains the
+        specified class name. This provides the same behavior as a hypothetical
+        hasclass() function, which is not available in lxml's XPath implementation.
+        :param str class_name: Class name """
+    return f'contains(concat(" ", normalize-space(@class), " "), " { class_name } ")'
+
+
 def render_placeholder(text, template_variables):
     for to_replace, value in template_variables.items():
         text = text.replace(to_replace, value)
@@ -50,17 +60,29 @@ def get_toc_pdf(headings, offset=0):
 
 def get_attached_pdfs(root):
     domains = []
-    for element in root.xpath('.//*[@data-embedded="file"]'):
-        embedded_props = json.loads(element.get('data-embedded-props'))
-        file_data = embedded_props.get('fileData')
-        if file_data:
-            file_type = file_data.get('type')
-            if file_type == 'binary':
-                domains.extend([[
-                    ('mimetype', '=', 'application/pdf'),
-                    ('id', '=', file_data.get('id')),
-                    ('access_token', '=', file_data.get('access_token'))
-                ]])
+    for element in root.xpath(f'.//*[@data-embedded="file" or { xpath_has_class("o_file_box") }]'):
+        if element.get('data-embedded') == 'file':
+            embedded_props = json.loads(element.get('data-embedded-props'))
+            file_data = embedded_props.get('fileData')
+            if file_data:
+                file_type = file_data.get('type')
+                if file_type == 'binary':
+                    domains.extend([[
+                        ('mimetype', 'in', ['application/pdf', 'application/pdf;base64']),
+                        ('id', '=', file_data.get('id')),
+                        ('access_token', '=', file_data.get('access_token'))
+                    ]])
+        else:
+            for link in element.xpath(f'.//*[{ xpath_has_class("o_link_readonly") }]'):
+                parsed_url = urlparse(link.get('href'))
+                match = re.search(r'^\/web\/content\/(?P<ir_attachment_id>[0-9]+)$', parsed_url.path)
+                if match:
+                    url_params = parse_qs(parsed_url.query)
+                    domains.extend([[
+                        ('mimetype', 'in', ['application/pdf', 'application/pdf;base64']),
+                        ('id', '=', int(match.group('ir_attachment_id'))),
+                        ('access_token', '=', url_params.get('access_token', [False])[0])
+                    ]])
     if not domains:
         return
     all_ir_attachments = request.env['ir.attachment'].search(Domain.OR(domains))
@@ -272,7 +294,7 @@ class KnowledgeAuditReportController(http.Controller):
             root = html.fragment_fromstring(article.body, create_parent='div')
 
             # Remove elements with the `d-print-none` class to avoid empty pages:
-            for element in root.xpath('//*[contains(concat(" ", normalize-space(@class), " "), " d-print-none ")]'):
+            for element in root.xpath(f'//*[{ xpath_has_class("d-print-none") }]'):
                 parent = element.getparent()
                 if parent is not None:
                     parent.remove(element)
