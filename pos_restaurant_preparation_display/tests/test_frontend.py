@@ -176,3 +176,33 @@ class TestUi(test_frontend.TestFrontendCommon, TestPreparationDisplayHttpCommon)
         pdis_order = self.env['pos.prep.order'].search([('pos_order_id', '=', order.id)], limit=1)
         self.assertEqual(len(pdis_order.prep_line_ids), 1, "Should have 1 preparation orderline")
         self.assertEqual(pdis_order.prep_line_ids.quantity, 1, "Should have 1 quantity of Coca-Cola")
+
+    def test_order_preparation(self):
+        self.env['pos.prep.display'].create({
+            'name': 'Preparation Display (Food only)',
+            'pos_config_ids': [(4, self.pos_config.id)],
+        })
+
+        self.pos_config.write({'module_pos_restaurant': False})
+        self.pos_config.with_user(self.pos_admin).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.pos_config.id, 'test_order_preparation_preparation_printer', login='pos_admin')
+
+        current_session = self.pos_config.current_session_id
+        current_session.post_closing_cash_details(0)
+        current_session.close_session_from_ui()
+        self.pos_config.write({'printer_ids': [], 'is_order_printer': False, 'module_pos_restaurant': True})
+        self.pos_config.with_user(self.pos_admin).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.pos_config.id, 'test_order_preparation_preparation_display', login='pos_admin')
+        last_orders = self.pos_config.current_session_id.order_ids
+
+        first_order = last_orders[1]
+        preparation_change = self.env['pos.prep.order'].search([('pos_order_id', '=', first_order.id)])
+        product_quantity = preparation_change.prep_line_ids.mapped('quantity')
+        product_cancelled = preparation_change.prep_line_ids.mapped('cancelled')
+        self.assertEqual(product_cancelled, product_quantity, "A one-time order must be successfully cancelled.")
+
+        second_order = last_orders[0]
+        preparation_change = self.env['pos.prep.order'].search([('pos_order_id', '=', second_order.id)])
+        product_quantity = preparation_change.prep_line_ids.mapped('quantity')
+        product_cancelled = preparation_change.prep_line_ids.mapped('cancelled')
+        self.assertEqual(product_cancelled, product_quantity, "A two-times order must be successfully cancelled")

@@ -1,6 +1,7 @@
 from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCommon
 from odoo.addons.point_of_sale.tests.common_setup_methods import setup_product_combo_items
-from odoo import Command
+from odoo import Command, api
+from unittest.mock import patch
 import odoo.tests
 
 
@@ -112,3 +113,27 @@ class TestUi(TestPreparationDisplayHttpCommon):
         self.start_pos_tour('MakePosOrderWithCombo')
 
         self.start_pdis_tour('PreparationDisplayFrontEndTour')
+
+    def test_sending_order_in_preparation_should_not_sync_more(self):
+        self.env['pos.prep.display'].create({
+            'name': 'Preparation Display',
+            'pos_config_ids': [(4, self.main_pos_config.id)],
+        })
+
+        stats = {'nb_call': 0}
+        pos_order = self.env.registry.models['pos.order']
+        self.main_pos_config.write({
+            'is_order_printer': True,
+            'printer_ids': [Command.set(self.env['pos.printer'].search([]).ids)],
+        })
+
+        @api.model
+        def sync_from_ui_patch(self, orders):
+            stats['nb_call'] += 1
+            return super(pos_order, self).sync_from_ui(orders)
+
+        with patch.object(pos_order, "sync_from_ui", sync_from_ui_patch):
+            self.main_pos_config.with_user(self.pos_admin).open_ui()
+            self.start_pos_tour('test_sending_order_in_preparation_should_not_sync_more')
+
+        self.assertEqual(stats['nb_call'], 2, "sync_from_ui should be called once")
