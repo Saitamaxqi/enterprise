@@ -360,7 +360,7 @@ export class QWebTablePlugin extends Plugin {
     createElementFrom(fromElement) {
         const tagName = fromElement.tagName.toLowerCase();
         const newElement = this.document.createElement(tagName);
-        const baseContainer = this.dependencies.baseContainer.createBaseContainer();
+        const baseContainer = this.dependencies.baseContainer.createBaseContainer("DIV");
         baseContainer.append(this.document.createElement("br"));
         newElement.append(baseContainer);
         newElement.classList.add("oe_unbreakable");

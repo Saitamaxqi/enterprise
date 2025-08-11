@@ -99,23 +99,23 @@ test("add column", async () => {
         <q-table>
             <q-thead>
                 <q-tr>
-                    <q-th>HEAD1</q-th><q-th><p><br></p></q-th>
+                    <q-th>HEAD1</q-th><q-th><div><br></div></q-th>
                     <q-th>HEAD2</q-th>
                 </q-tr>
             </q-thead>
             <q-tbody>
                 <q-tr>
                     <t t-if="true">
-                        <q-td>1</q-td><q-td><p><br></p></q-td>
+                        <q-td>1</q-td><q-td><div><br></div></q-td>
                         <q-td>2</q-td>
                     </t>
                     <t t-else="">
-                        <q-td>3</q-td><q-td><p><br></p></q-td>
+                        <q-td>3</q-td><q-td><div><br></div></q-td>
                         <q-td>4</q-td>
                     </t>
                 </q-tr>
                 <q-tr>
-                    <q-td>5</q-td><q-td><p><br></p></q-td>
+                    <q-td>5</q-td><q-td><div><br></div></q-td>
                     <q-td>6</q-td>
                 </q-tr>
             </q-tbody>
