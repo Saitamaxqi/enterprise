@@ -63,7 +63,7 @@ class TestLibrosExport(TestAccountReportsCommon):
         line_vals = [inc_line_vals[m][t] for m in inc_line_vals for t in inc_line_vals[m]][0]
         self.assertDictEqual(line_vals, {
             'activity_code': 'A', 'activity_group': '6533', 'activity_type': '03', 'base_amount': 1000.0,
-            'billing_agreement': '', 'date_expedition': '10/12/2019', 'date_transaction': '', 'external_reference': '',
+            'billing_agreement': '', 'date_expedition': '12/10/2019', 'date_transaction': '', 'external_reference': '',
             'income_computable': 1000.0, 'income_concept': 'I01', 'invoice_final_number': '',
             'invoice_number': 'INV/2019/00001', 'invoice_series': '', 'invoice_type': 'F1', 'operation_code': '01',
             'operation_exempt': '', 'operation_qualification': 'S1', 'partner_name': 'Esperado Espagnole',
@@ -76,7 +76,7 @@ class TestLibrosExport(TestAccountReportsCommon):
         line_vals = [exp_line_vals[m][t] for m in exp_line_vals for t in exp_line_vals[m]][0]
         self.assertDictEqual(line_vals, {
             'activity_code': 'A', 'activity_group': '6533', 'activity_type': '03', 'base_amount': 1000.0,
-            'billing_agreement': '', 'date_expedition': '06/15/2019', 'date_reception': '06/15/2019',
+            'billing_agreement': '', 'date_expedition': '15/06/2019', 'date_reception': '15/06/2019',
             'date_transaction': '', 'deductible_later': '', 'deduction_period': '', 'deduction_year': '',
             'expense_concept': 'G01', 'expense_deductible': 1000.0, 'expense_final_number': '',
             'expense_series_number': 'test ref', 'external_reference': '', 'investment_good': 'N',
