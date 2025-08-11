@@ -84,34 +84,27 @@ class L10n_Nl_ReportsTaxReportHandler(models.AbstractModel):
         codes_values = codes_values or {}
         # Maps the needed taxes to their codewords used by the XBRL template.
         tax_report_lines_to_codes = {
-            'l10n_nl.tax_report_rub_3c': 'InstallationDistanceSalesWithinTheEC',
-            'l10n_nl.tax_report_rub_1e': 'SuppliesServicesNotTaxed',
-            'l10n_nl.tax_report_rub_3a': 'SuppliesToCountriesOutsideTheEC',
-            'l10n_nl.tax_report_rub_3b': 'SuppliesToCountriesWithinTheEC',
-            'l10n_nl.tax_report_rub_1d': 'TaxedTurnoverPrivateUse',
-            'l10n_nl.tax_report_rub_1a': 'TaxedTurnoverSuppliesServicesGeneralTariff',
-            'l10n_nl.tax_report_rub_1c': 'TaxedTurnoverSuppliesServicesOtherRates',
-            'l10n_nl.tax_report_rub_1b': 'TaxedTurnoverSuppliesServicesReducedTariff',
-            'l10n_nl.tax_report_rub_4a': 'TurnoverFromTaxedSuppliesFromCountriesOutsideTheEC',
-            'l10n_nl.tax_report_rub_4b': 'TurnoverFromTaxedSuppliesFromCountriesWithinTheEC',
-            'l10n_nl.tax_report_rub_2a': 'TurnoverSuppliesServicesByWhichVATTaxationIsTransferred',
-            'l10n_nl.tax_report_rub_btw_5b': 'ValueAddedTaxOnInput',
-            'l10n_nl.tax_report_rub_btw_4a': 'ValueAddedTaxOnSuppliesFromCountriesOutsideTheEC',
-            'l10n_nl.tax_report_rub_btw_4b': 'ValueAddedTaxOnSuppliesFromCountriesWithinTheEC',
-            'l10n_nl.tax_report_rub_btw_5a': 'ValueAddedTaxOwed',
-            'l10n_nl.tax_report_rub_btw_5g': 'ValueAddedTaxOwedToBePaidBack',
-            'l10n_nl.tax_report_rub_btw_1d': 'ValueAddedTaxPrivateUse',
-            'l10n_nl.tax_report_rub_btw_2a': 'ValueAddedTaxSuppliesServicesByWhichVATTaxationIsTransferred',
-            'l10n_nl.tax_report_rub_btw_1a': 'ValueAddedTaxSuppliesServicesGeneralTariff',
-            'l10n_nl.tax_report_rub_btw_1c': 'ValueAddedTaxSuppliesServicesOtherRates',
-            'l10n_nl.tax_report_rub_btw_1b': 'ValueAddedTaxSuppliesServicesReducedTariff',
+            'l10n_nl.tax_report_rub_3c': [('InstallationDistanceSalesWithinTheEC', 'base')],
+            'l10n_nl.tax_report_rub_1e': [('SuppliesServicesNotTaxed', 'base')],
+            'l10n_nl.tax_report_rub_3a': [('SuppliesToCountriesOutsideTheEC', 'base')],
+            'l10n_nl.tax_report_rub_3b': [('SuppliesToCountriesWithinTheEC', 'base')],
+            'l10n_nl.tax_report_rub_1d': [('TaxedTurnoverPrivateUse', 'base'), ('ValueAddedTaxPrivateUse', 'tax')],
+            'l10n_nl.tax_report_rub_1a': [('TaxedTurnoverSuppliesServicesGeneralTariff', 'base'), ('ValueAddedTaxSuppliesServicesGeneralTariff', 'tax')],
+            'l10n_nl.tax_report_rub_1c': [('TaxedTurnoverSuppliesServicesOtherRates', 'base'), ('ValueAddedTaxSuppliesServicesOtherRates', 'tax')],
+            'l10n_nl.tax_report_rub_1b': [('TaxedTurnoverSuppliesServicesReducedTariff', 'base'), ('ValueAddedTaxSuppliesServicesReducedTariff', 'tax')],
+            'l10n_nl.tax_report_rub_4a': [('TurnoverFromTaxedSuppliesFromCountriesOutsideTheEC', 'base'), ('ValueAddedTaxOnSuppliesFromCountriesOutsideTheEC', 'tax')],
+            'l10n_nl.tax_report_rub_4b': [('TurnoverFromTaxedSuppliesFromCountriesWithinTheEC', 'base'), ('ValueAddedTaxOnSuppliesFromCountriesWithinTheEC', 'tax')],
+            'l10n_nl.tax_report_rub_2a': [('TurnoverSuppliesServicesByWhichVATTaxationIsTransferred', 'base'), ('ValueAddedTaxSuppliesServicesByWhichVATTaxationIsTransferred', 'tax')],
+            'l10n_nl.tax_report_rub_btw_5b': [('ValueAddedTaxOnInput', 'tax')],
+            'l10n_nl.tax_report_rub_btw_5a': [('ValueAddedTaxOwed', 'tax')],
+            'l10n_nl.tax_report_rub_btw_5g': [('ValueAddedTaxOwedToBePaidBack', 'tax')],
         }
         model_trl_to_codes = {}
-        for tax_report_line_id, code in tax_report_lines_to_codes.items():
-            model_trl_to_codes[self.env.ref(tax_report_line_id).id] = code
+        for tax_report_line_id, codes in tax_report_lines_to_codes.items():
+            model_trl_to_codes[self.env.ref(tax_report_line_id).id] = codes
 
         for line in lines:
-            code = model_trl_to_codes.get(self.env['account.report']._get_model_info_from_id(line['id'])[1])
-            if code:
-                codes_values[code] = str(int(line['columns'][0]['no_format']))
+            codes = model_trl_to_codes.get(self.env['account.report']._get_model_info_from_id(line['id'])[1]) or []
+            for code, label in codes:
+                codes_values[code] = str(int(next(col for col in line['columns'] if col['expression_label'] == label)['no_format']))
         return codes_values
