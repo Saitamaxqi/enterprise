@@ -63,6 +63,39 @@ export const RentingMixin = {
         return unitInput && unitInput.value === "hour";
     },
 
+    _canSelectHours() {
+        const overnightPeriod = this.el.querySelector("input[name=overnight_period]");
+        if (overnightPeriod) {
+            const isOvernight = overnightPeriod.value === "True";
+            return this._isDurationWithHours() && !isOvernight;
+        }
+        return this._isDurationWithHours();
+    },
+
+    _getPickupTime() {
+        const defaultStartDate = this.el.querySelector("input[name=default_start_date]").value;
+        const StartDateUTC = parseDateTime(defaultStartDate, { tz: 'UTC' });
+        const websiteTz = this.el.querySelector("input[name=website_tz]")?.value;
+        // Fallback to UTC values when websiteTz is undefined (on first loop)
+        const dateInWebsiteTzorUTC = websiteTz ? StartDateUTC.setZone(websiteTz) : StartDateUTC;
+        const pickupHour = dateInWebsiteTzorUTC.hour;
+        const pickupMinute = dateInWebsiteTzorUTC.minute;
+
+        return [pickupHour, pickupMinute];
+    },
+
+    _getReturnTime() {
+        const defaultEndDate = this.el.querySelector("input[name=default_end_date]").value;
+        const EndDateUTC = parseDateTime(defaultEndDate, { tz: 'UTC' });
+        const websiteTz = this.el.querySelector("input[name=website_tz]")?.value;
+        // Fallback to UTC values when websiteTz is undefined (on first loop)
+        const dateInWebsiteTzorUTC = websiteTz ? EndDateUTC.setZone(websiteTz) : EndDateUTC;
+        const returnHour = dateInWebsiteTzorUTC.hour;
+        const returnMinute = dateInWebsiteTzorUTC.minute;
+
+        return [returnHour, returnMinute];
+    },
+
     /**
      * Get the date from the daterange input or the default
      *
@@ -93,6 +126,19 @@ export const RentingMixin = {
         if (startDate || endDate) {
             let startDateValue = this._getDateFromInputOrDefault(startDate, "startDate", "start_date");
             let endDateValue = this._getDateFromInputOrDefault(endDate, "endDate", "end_date");
+            // User cannot choose the time, using the previously set time
+            if (!this._canSelectHours() && this._isDurationWithHours()) {
+                const [pickupHour, pickupMinute] = this._getPickupTime();
+                startDateValue = startDateValue.set({
+                    hour: pickupHour,
+                    minute: pickupMinute,
+                });
+                const [returnHour, returnMinute] = this._getReturnTime();
+                endDateValue = endDateValue.set({
+                    hour: returnHour,
+                    minute: returnMinute,
+                });
+            }
             if (startDateValue && endDateValue && !this._isDurationWithHours()) {
                 startDateValue = startDateValue.startOf('day');
                 endDateValue = endDateValue.endOf('day');

@@ -20,6 +20,15 @@
         <field name="unit">day</field>
     </record>
 
+    <record id="recurrence_nightly" model="sale.temporal.recurrence">
+        <field name="name">Nightly</field>
+        <field name="duration">24</field>
+        <field name="unit">hour</field>
+        <field name="overnight">True</field>
+        <field name="pickup_time">15</field>
+        <field name="return_time">10</field>
+    </record>
+
     <record id="recurrence_weekly" model="sale.temporal.recurrence">
         <field name="name">Weekly</field>
         <field name="duration">1</field>

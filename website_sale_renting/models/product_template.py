@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
-from math import ceil
+from math import ceil, floor
 
 from dateutil.relativedelta import relativedelta
 from pytz import UTC, timezone
@@ -67,14 +67,20 @@ class ProductTemplate(models.Model):
             current_duration = ProductPricing._compute_duration_vals(
                 start_date, end_date
             )[current_unit]
+            # Ensure minimum duration is 24 (hours) to ensure the return date is start date + 1
+            # Needed when the start date / end date are taken from the cart
+            if current_pricing.recurrence_id.overnight:
+                current_duration = max(current_duration, 24)
         else:
             current_unit = pricing.recurrence_id.unit
             current_duration = pricing.recurrence_id.duration
             current_pricing = pricing
 
-        # Compute current price
+        # Compute current price & set default times
+        pickup_time = current_pricing.recurrence_id.pickup_time
+        return_time = current_pricing.recurrence_id.return_time
         start_date, end_date = self._get_default_renting_dates(
-            start_date, end_date, current_duration, current_unit
+            start_date, end_date, current_duration, current_unit, pickup_time, return_time
         )
 
         # Here we don't add the current_attributes_price_extra nor the
@@ -130,6 +136,9 @@ class ProductTemplate(models.Model):
             for p in suitable_pricings
         ]
         recurrence = pricing.recurrence_id
+        current_duration, current_rental_unit = (
+            current_pricing.recurrence_id._get_converted_duration_and_label(current_duration)
+        )
 
         return {
             **res,
@@ -137,10 +146,11 @@ class ProductTemplate(models.Model):
             'rental_duration': recurrence.duration,
             'rental_duration_unit': recurrence.unit,
             'rental_unit': recurrence._get_unit_label(recurrence.duration),
+            'overnight_period': recurrence.overnight,
             'default_start_date': start_date,
             'default_end_date': end_date,
             'current_rental_duration': ceil(current_duration),
-            'current_rental_unit': current_pricing.recurrence_id._get_unit_label(current_duration),
+            'current_rental_unit': current_rental_unit,
             'current_rental_price': current_price,
             'current_rental_price_per_unit': current_price / (ratio or 1),
             'base_unit_price': 0,
@@ -152,29 +162,41 @@ class ProductTemplate(models.Model):
         }
 
     @api.model
-    def _get_default_renting_dates(self, start_date, end_date, duration, unit):
+    def _get_default_renting_dates(self, start_date, end_date, duration, unit, pickup_time, return_time):
         """ Get default renting dates to help user
 
         :param datetime start_date: a start_date which is directly returned if defined
         :param datetime end_date: a end_date which is directly returned if defined
         :param int duration: the duration expressed in int, in the unit given
         :param string unit: The duration unit, which can be 'hour', 'day', 'week' or 'month'
+        :param float pickup_time: The pickup time in hours (0-23.99)
+        :param float return_time: The return time in hours (0-23.99)
         """
         if start_date and end_date and start_date >= end_date:
             raise UserError(_("Please choose a return date that is after the pickup date."))
 
-        if start_date or end_date:
+        if (start_date or end_date) and not (pickup_time or return_time):
             return start_date, end_date
 
-        default_start_dt = self._get_default_start_date()
+        default_start_dt = self._get_default_start_date(pickup_time)
         if unit == 'hour':
-            default_end_dt = self._get_default_end_date(default_start_dt, duration, unit)
+            default_end_dt = self._get_default_end_date(
+                default_start_dt,
+                duration,
+                unit,
+                return_time,
+            )
         else:
             # If unit in day, week, month, take into account the entire day.
             # 21st + 1 day --> from 21st 00:00:00 to 22nd 23:59:59
             default_start_dt = datetime.combine(default_start_dt.date(), datetime.min.time())
             # remove a second to avoid adding a day (from date point of view)
-            default_end_dt = self._get_default_end_date(default_start_dt + relativedelta(seconds=-1), duration, unit)
+            default_end_dt = self._get_default_end_date(
+                default_start_dt + relativedelta(seconds=-1),
+                duration,
+                unit,
+                return_time,
+            )
             # Consider the timezone if frontend request
             # Return the UTC value according to the client
             # because the frontend will convert values according to its timezone
@@ -186,24 +208,46 @@ class ProductTemplate(models.Model):
         return default_start_dt, default_end_dt
 
     @api.model
-    def _get_default_start_date(self):
+    def _get_default_start_date(self, pickup_time):
         """ Get the default pickup date and make it extensible """
-        return self._get_first_potential_date(
+        first_date = self._get_first_potential_date(
             fields.Datetime.now() + relativedelta(days=1, hours=1, minute=0, second=0, microsecond=0)
         )
+        if pickup_time:
+            website_tz = timezone(request.website.tz)
+            # convert first_date in website TZ before replacing the hours
+            pickup_hour = floor(pickup_time)
+            first_date_website_tz = website_tz.localize(first_date).replace(
+                hour=pickup_hour,
+                minute=round((pickup_time - pickup_hour) * 60),
+            )
+            # send it back in UTC (naive)
+            first_date = first_date_website_tz.astimezone(UTC).replace(tzinfo=None)
+        return first_date
 
     @api.model
-    def _get_default_end_date(self, start_date, duration, unit):
+    def _get_default_end_date(self, start_date, duration, unit, return_time):
         """ Get the default return date based on pickup date and duration
 
         :param datetime start_date: the default start_date
         :param int duration: the duration expressed in int, in the unit given
         :param string unit: The duration unit, which can be 'hour', 'day', 'week' or 'month'
         """
-        return self._get_first_potential_date(max(
+        return_date = self._get_first_potential_date(max(
             start_date + relativedelta(**{f'{unit}s': duration}),
-            start_date + self.env.company._get_minimal_rental_duration()
+            start_date + self.env.company._get_minimal_rental_duration(),
         ))
+        if return_time:
+            website_tz = timezone(request.website.tz)
+            # convert return_date in website TZ before replacing the hours
+            return_hour = floor(return_time)
+            return_date_website_tz = return_date.astimezone(website_tz).replace(
+                hour=return_hour,
+                minute=round((return_time - return_hour) * 60),
+            )
+            # send it back in UTC (naive)
+            return_date = return_date_website_tz.astimezone(UTC).replace(tzinfo=None)
+        return return_date
 
     @api.model
     def _get_first_potential_date(self, date):
@@ -220,13 +264,19 @@ class ProductTemplate(models.Model):
         if not combination_info.get('is_rental'):
             return super()._search_render_results_prices(mapping, combination_info)
 
+        duration = combination_info['rental_duration']
+        unit = combination_info['rental_unit']
+        if combination_info['overnight_period']:
+            duration = combination_info['current_rental_duration']
+            unit = combination_info['current_rental_unit']
+
         return self.env['ir.ui.view']._render_template(
             'website_sale_renting.rental_search_result_price',
             values={
                 'currency': mapping['detail']['display_currency'],
                 'price': combination_info['price'],
-                'duration': combination_info['rental_duration'],
-                'unit': combination_info['rental_unit'],
+                'duration': duration,
+                'unit': unit,
             }
         ), None
 
@@ -240,8 +290,9 @@ class ProductTemplate(models.Model):
             pricing = self.env['product.pricing']._get_first_suitable_pricing(template, pricelist)
             if pricing:
                 recurrence = pricing.recurrence_id
-                prices[template.id]['rental_duration'] = recurrence.duration
-                prices[template.id]['rental_unit'] = recurrence._get_unit_label(recurrence.duration)
+                duration, unit = recurrence._get_converted_duration_and_label(recurrence.duration)
+                prices[template.id]['rental_duration'] = duration
+                prices[template.id]['rental_unit'] = unit
             else:
                 prices[template.id]['rental_duration'] = 0
                 prices[template.id]['rental_unit'] = False
@@ -253,3 +304,6 @@ class ProductTemplate(models.Model):
         if options.get('rent_only') or (options.get('from_date') and options.get('to_date')):
             search_details['base_domain'].append([('rent_ok', '=', True)])
         return search_details
+
+    def _website_show_quick_add(self):
+        return super()._website_show_quick_add() and self.product_variant_id._can_be_added_to_current_cart()

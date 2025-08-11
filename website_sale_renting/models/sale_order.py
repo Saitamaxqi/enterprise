@@ -168,6 +168,15 @@ class SaleOrder(models.Model):
         return all('hour' in line.product_id.product_pricing_ids.mapped('recurrence_id.unit')
                    for line in rental_order_lines)
 
+    def _all_hourly_periods_are_overnight(self):
+        """Whether the cart contains hourly periods all overnight."""
+        rental_order_lines = self.order_line.filtered('is_rental')
+        for line in rental_order_lines:
+            for pricing in line.product_id.product_pricing_ids:
+                if pricing.recurrence_id.unit != 'hour' or not pricing.recurrence_id.overnight:
+                    return False
+        return True
+
     def _cart_update_renting_period(self, start_date, end_date):
         self.ensure_one()
         current_start_date = self.rental_start_date

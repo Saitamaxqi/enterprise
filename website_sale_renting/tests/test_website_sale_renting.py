@@ -6,6 +6,7 @@ from freezegun import freeze_time
 from odoo import fields
 from odoo.tests import tagged
 
+from odoo.addons.website_sale.tests.common import MockRequest
 from odoo.addons.website_sale_renting.tests.common import TestWebsiteSaleRentingCommon
 
 
@@ -113,13 +114,14 @@ class TestWebsiteSaleRenting(TestWebsiteSaleRentingCommon):
         Make sure that we can add a rental product
         (only marked as "can be rented" and not "can be sold") to the shopping cart
         """
-        self.computer.write({
-            'website_published': True,
-            'active': True,
-            'sale_ok': False,
-            'rent_ok': True,
-        })
-        self.assertTrue(self.computer._is_add_to_cart_allowed(), "Rental product should be addable to the cart")
+        with MockRequest(self.env, website=self.website):
+            self.computer.write({
+                'website_published': True,
+                'active': True,
+                'sale_ok': False,
+                'rent_ok': True,
+            })
+            self.assertTrue(self.computer._is_add_to_cart_allowed(), "Rental product should be addable to the cart")
 
     def test_now_is_valid_date(self):
         with freeze_time('2023-01-02 00:00:00'):

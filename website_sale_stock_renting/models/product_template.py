@@ -1,24 +1,37 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
-
 from dateutil.relativedelta import relativedelta
+from math import floor
+from pytz import UTC, timezone
 
 from odoo import fields, models
+from odoo.http import request
 
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    def _get_default_start_date(self):
+    def _get_default_start_date(self, pickup_time):
         """ Override to take the padding time into account """
-        if self.preparation_time > 24:
-            return self._get_first_potential_date(
-                fields.Datetime.now() + relativedelta(
-                    hours=self.preparation_time, minute=0, second=0, microsecond=0
+        start_date = super()._get_default_start_date(pickup_time)
+
+        now = fields.Datetime.now()
+        hours_before_start_date = (start_date - now).total_seconds() / 3600
+        if hours_before_start_date < self.preparation_time:
+            # we need more time to prepare
+            start_date = (now + relativedelta(hours=self.preparation_time))
+            if pickup_time:
+                # we need to respect the pickup time constraint
+                website_tz = timezone(request.website.tz)
+                # convert start_date in website TZ before replacing the hours
+                pickup_hour = floor(pickup_time)
+                start_date_website_tz = website_tz.localize(start_date).replace(
+                    hour=pickup_hour,
+                    minute=round((pickup_time - pickup_hour) * 60),
                 )
-            )
-        return super()._get_default_start_date()
+                start_date = start_date_website_tz.astimezone(UTC).replace(tzinfo=None)
+        return start_date
 
     def _filter_on_available_rental_products(self, from_date, to_date, warehouse_id):
         """

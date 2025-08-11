@@ -106,6 +106,8 @@
                     <input type="hidden" name="default_start_date" t-att-value="combination_info['default_start_date']"/>
                     <input type="hidden" name="default_end_date" t-att-value="combination_info['default_end_date']"/>
                     <input type="hidden" name="rental_duration_unit" t-att-value="combination_info['rental_duration_unit']"/>
+                    <input type="hidden" name="overnight_period" t-att-value="combination_info['overnight_period']"/>
+                    <input type="hidden" name="website_tz" t-att-value="website.tz"/>
                     <h6 class="attribute_name">
                         <span>Rental Period</span>
                         <span
@@ -275,6 +277,8 @@
                 <input type="hidden" name="default_start_date" t-att-value="website_sale_order.rental_start_date"/>
                 <input type="hidden" name="default_end_date" t-att-value="website_sale_order.rental_return_date"/>
                 <input type="hidden" name="rental_duration_unit" t-attf-value="{{'hour' if website_sale_order._is_renting_possible_in_hours() else 'day'}}"/>
+                <input type="hidden" name="overnight_period" t-attf-value="{{website_sale_order._all_hourly_periods_are_overnight()}}"/>
+                <input type="hidden" name="website_tz" t-att-value="website.tz"/>
                 <div class="oe_unremovable w-100">
                     <div class="s_website_form_datetime date o_daterange_picker" data-target-input="nearest">
                         <div class="d-flex gap-2 align-items-center flex-column">

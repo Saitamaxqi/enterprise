@@ -218,10 +218,13 @@ class ProductTemplate(models.Model):
                 )[pricing.recurrence_id.unit]
                 # Some locales might swap the duration and the unit, so we need to use the
                 # translation function.
+                duration, label = pricing.recurrence_id._get_converted_duration_and_label(
+                    rental_duration
+                )
                 data['price_info'] = _(
                     "%(duration)s %(unit)s",
-                    duration=ceil(rental_duration),
-                    unit=pricing.recurrence_id._get_unit_label(rental_duration),
+                    duration=ceil(duration),
+                    unit=label,
                 )
         return data
 

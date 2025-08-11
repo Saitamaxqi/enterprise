@@ -21,8 +21,11 @@
                     <group>
                         <group>
                             <field name="name"/>
-                            <field name="duration"/>
-                            <field name="unit"/>
+                            <field name="duration" invisible="displayed_unit == 'night'"/>
+                            <field name="displayed_unit" string="Unit"/>
+                            <field name="overnight" invisible="1"/>
+                            <field name="pickup_time" widget="float_time" invisible="displayed_unit != 'night'"/>
+                            <field name="return_time" widget="float_time" invisible="displayed_unit != 'night'"/>
                         </group>
                     </group>
                 </sheet>

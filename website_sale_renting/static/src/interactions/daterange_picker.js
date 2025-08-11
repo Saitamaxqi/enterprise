@@ -93,24 +93,45 @@ export class DaterangePicker extends Interaction {
                 pickerProps: {
                     value,
                     range: true,
-                    type: this._isDurationWithHours() ? 'datetime' : 'date',
+                    // overnight period in hours but not selectable
+                    type: this._canSelectHours() ? 'datetime' : 'date',
                     minDate: DateTime.min(datetimeWebsiteTz, this.startDate),
                     maxDate: DateTime.max(datetimeWebsiteTz.plus({ years: 3 }), this.endDate),
                     isDateValid: this._isValidDate.bind(this),
-                    dayCellClass: (date) => this._isCustomDate(date).join(' '),
+                    dayCellClass: (date) => this._isCustomDate(date, this.startDate).join(' '),
                     tz: this.websiteTz,
                 },
                 onApply: ([startDate, endDate]) => {
-                    if (areDatesEqual([this.startDate, this.endDate], [startDate, endDate])) {
-                        return;
+                    // User cannot choose the time, using the previously set time
+                    if (!this._canSelectHours() && this._isDurationWithHours()) {
+                        const [pickupHour, pickupMinute] = this._getPickupTime();
+                        const startDateWithTime = startDate.set({
+                            hour: pickupHour,
+                            minute: pickupMinute,
+                        });
+                        const [returnHour, returnMinute] = this._getReturnTime();
+                        const endDateWithTime = endDate.set({
+                            hour: returnHour,
+                            minute: returnMinute,
+                        });
+                        if (areDatesEqual([this.startDate, this.endDate], [startDateWithTime, endDateWithTime])) {
+                            return;
+                        }
+                        this.startDate = startDateWithTime;
+                        this.endDate = endDateWithTime;
                     }
-                    this.startDate = startDate;
-                    this.endDate = endDate;
+                    else {
+                        if (areDatesEqual([this.startDate, this.endDate], [startDate, endDate])) {
+                            return;
+                        }
+                        this.startDate = startDate;
+                        this.endDate = endDate;
+                    }
                     this._verifyValidPeriod();
                     this.el.querySelector('input[name=renting_start_date]')
                         .dispatchEvent(new Event('change', { bubbles: true }));
                     this.el.dispatchEvent(new CustomEvent(
-                        'daterangepicker_apply', { detail: { startDate, endDate }, bubbles: true },
+                        'daterangepicker_apply', { detail: { startDate: this.startDate, endDate: this.endDate }, bubbles: true },
                     ));
                 },
                 getInputs: () => [
@@ -206,18 +227,19 @@ export class DaterangePicker extends Interaction {
      * @param {DateTime} date
      * @private
      */
-    _isCustomDate(date) {
+    _isCustomDate(date, startDate) {
         const result = [];
         const productId = this._getProductId();
         if (!productId || !this.rentingAvailabilities[productId]) {
             return result;
         }
-        const dateStart = date.startOf('day');
+        // Consider the pickup time to check the availability
+        const dateStart = date.set({hour: startDate.hour, minute: startDate.minute});
         for (const interval of this.rentingAvailabilities[productId]) {
-            if (interval.start.startOf('day') > dateStart) {
+            if (interval.start > dateStart) {
                 return result;
             }
-            if (interval.end.endOf('day') > dateStart && interval.quantity_available <= 0) {
+            if (interval.end > dateStart && interval.quantity_available <= 0) {
                 result.push('o_daterangepicker_danger');
                 return result;
             }
