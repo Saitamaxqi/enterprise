@@ -2,14 +2,13 @@
 
 from datetime import timedelta
 from unittest.mock import patch
-import datetime
 
+from odoo import Command, fields
 from odoo.exceptions import AccessError
 from odoo.tests import tagged, JsonRpcException, freeze_time
 from odoo.tools import mute_logger
 
 from odoo.addons.mail.tests.common import MockEmail
-from odoo import fields
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 from odoo.addons.http_routing.tests.common import MockRequest
 from odoo.addons.sale_subscription.tests.test_sale_subscription import TestSubscriptionCommon
@@ -24,6 +23,7 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
         cls.order = cls.env['sale.order'].create({
             'partner_id': cls.partner.id,
         })
+        cls.subscription.partner_id = cls.partner
         cls.user_with_so_access = cls.env['res.users'].create({
             'group_ids': [(6, 0, [cls.env.ref('base.group_portal').id])],
             'login': 'user_a_pouet',
@@ -38,6 +38,9 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
         })
         # Portal access rule currently relies on customer of the order -> put in same company
         cls.user_with_so_access.partner_id.parent_id = cls.partner.id
+
+        cls.inbound_payment_method_line.payment_provider_id = cls.provider
+        cls.enable_post_process_patcher = False
 
     def _my_sub_assign_token(self, **values):
         url = self._build_url(f"/my/subscriptions/assign_token/{self.order.id}")
@@ -198,7 +201,7 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
         with freeze_time("2024-05-01"):
             self.subscription.require_payment = True
             self.subscription.payment_token_id = self.payment_token.id
-            self.subscription.end_date = datetime.date(2024, 8, 1)
+            self.subscription.end_date = '2024-08-01'
             self.subscription.action_confirm()
             with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._do_payment', wraps=self._mock_subscription_do_payment):
                 self.env['sale.order']._cron_recurring_create_invoice()
@@ -299,3 +302,33 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
             tx_mandate_values['start_datetime'].timestamp(), (now - timedelta(days=1)).timestamp(),
             f"Subscription mandate should start at least {now}",
         )
+
+    @mute_logger('odoo.http')
+    def test_invoice_document_generation(self):
+        """Check that invoice documents get generated when posting subscription invoices."""
+        self.subscription.action_confirm()
+
+        AccountMoveSend = self.env.registry['account.move.send']
+        with (
+            patch.object(AccountMoveSend, '_get_default_extra_edis', lambda self, move: {'dummy'}),
+            patch.object(AccountMoveSend, '_call_web_service_before_invoice_pdf_render') as mock,
+        ):
+            response = self._make_http_get_request(
+                f'/my/subscriptions/{self.subscription.id}',
+                params={'access_token': self.subscription.access_token},
+            )
+            tx_context = self._get_payment_context(response)
+            tx_sudo = self._create_transaction(
+                flow='direct',
+                amount=tx_context['amount'],
+                landing_route=tx_context['landing_route'],
+                currency_id=self.subscription.currency_id.id,
+                sale_order_ids=[Command.set(self.subscription.ids)],
+                subscription_action='assign_token',
+            )
+            tx_sudo._set_done()
+            tx_sudo._post_process()
+            self.assertEqual(
+                mock.call_count, 1,
+                "Web services should have been called for document generation",
+            )

@@ -168,7 +168,6 @@ class PaymentTransaction(models.Model):
             self._post_subscription_action()
         return res
 
-
     def _post_subscription_action(self):
         """
         Execute the subscription action once the transaction is in an acceptable state
@@ -189,7 +188,7 @@ class PaymentTransaction(models.Model):
                 # Once the token is assigned, we are done because we don't send emails in that case.
                 continue
             orders.set_open()
-            if tx.subscription_action in ['manual_send_mail', 'automatic_send_mail']:
+            if tx.subscription_action:
                 automatic = tx.subscription_action == 'automatic_send_mail'
                 for order in orders:
                     order._subscription_post_success_payment(tx, tx.invoice_ids, automatic=automatic)
