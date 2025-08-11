@@ -1,9 +1,10 @@
 import { _t } from '@web/core/l10n/translation';
-import { rpc, RPCError } from "@web/core/network/rpc";
+import { rpc, RPCError } from '@web/core/network/rpc';
+import { patch } from '@web/core/utils/patch';
 
-import paymentForm from '@payment/js/payment_form';
+import { PaymentForm } from '@payment/interactions/payment_form';
 
-paymentForm.include({
+patch(PaymentForm.prototype, {
 
     // #=== DOM MANIPULATION ===#
 
@@ -23,7 +24,7 @@ paymentForm.include({
      */
     _prepareInlineForm(providerId, providerCode, paymentOptionId, paymentMethodCode, flow) {
         if (providerCode !== 'sepa_direct_debit') {
-            this._super(...arguments);
+            super._prepareInlineForm(...arguments);
             return;
         } else if (flow === 'token') {
             return; // Don't show the form for tokens.
@@ -48,7 +49,8 @@ paymentForm.include({
      */
     async _initiatePaymentFlow(providerCode, paymentOptionId, paymentMethodCode, flow) {
         if (providerCode !== 'sepa_direct_debit' || flow === 'token') {
-            await this._super(...arguments); // Tokens are handled by the generic flow.
+            // Tokens are handled by the generic flow.
+            await super._initiatePaymentFlow(...arguments);
             return;
         }
 
@@ -59,7 +61,7 @@ paymentForm.include({
             return; // Let the browser request to fill out required fields
         }
 
-        await this._super(...arguments);
+        await super._initiatePaymentFlow(...arguments);
     },
 
     /**
@@ -73,28 +75,29 @@ paymentForm.include({
      * @param {object} processingValues - The processing values of the transaction.
      * @return {void}
      */
-    _processDirectFlow (providerCode, paymentOptionId, paymentMethodCode, processingValues) {
+    async _processDirectFlow(providerCode, paymentOptionId, paymentMethodCode, processingValues) {
         if (providerCode !== 'sepa_direct_debit') {
-            this._super(...arguments);
+            await super._processDirectFlow(...arguments);
             return;
         }
 
         // Assign the SDD mandate corresponding to the IBAN to the transaction.
         const ibanInput = this._getIbanInput();
-        rpc('/payment/sepa_direct_debit/set_mandate', {
-            'reference': processingValues.reference,
-            'iban': ibanInput.value,
-            'access_token': processingValues.access_token,
-        }).then(() => {
+        try {
+            await this.waitFor(rpc('/payment/sepa_direct_debit/set_mandate', {
+                'reference': processingValues.reference,
+                'iban': ibanInput.value,
+                'access_token': processingValues.access_token,
+            }));
             window.location = '/payment/status';
-        }).catch((error) => {
+        } catch (error) {
             if (error instanceof RPCError) {
                 this._displayErrorDialog(_t("Payment processing failed"), error.data.message);
                 this._enableButton();
             } else {
                 return Promise.reject(error);
             }
-        });
+        }
     },
 
     // #=== GETTERS ===#

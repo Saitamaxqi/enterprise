@@ -22,7 +22,7 @@
     'uninstall_hook': 'uninstall_hook',
     'assets': {
         'web.assets_frontend': [
-            'payment_sepa_direct_debit/static/src/js/payment_form.js',
+            'payment_sepa_direct_debit/static/src/interactions/payment_form.js',
         ],
     },
     'author': 'Odoo S.A.',

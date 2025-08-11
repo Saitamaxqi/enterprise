@@ -76,7 +76,6 @@ Features:
             'sale_subscription/static/src/js/tours/sale_subscription.js',
         ],
         'web.assets_frontend': [
-            'sale_subscription/static/src/js/payment_form.js',
             'sale_subscription/static/src/interactions/**/*',
             'sale_subscription/static/src/xml/*.xml',
         ],
