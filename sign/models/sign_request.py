@@ -632,7 +632,7 @@ class SignRequest(models.Model):
                 } for document in record.template_id.document_ids])
                 record.completed_document_ids._generate_completed_document()
                 attachment_ids = self.env['ir.attachment'].create([{
-                    'name': "%s.pdf" % record.reference,
+                    'name': document.document_id.name,
                     'datas': document.file,
                     'type': 'binary',
                     'res_model': self._name,
