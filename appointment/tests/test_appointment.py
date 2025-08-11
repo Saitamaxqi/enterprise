@@ -957,9 +957,9 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         )
 
     @users('apt_manager')
-    def test_generate_slots_unique_and_restrict_users(self):
+    def test_generate_slots_unique_and_options(self):
         """ Check unique slots (note: custom appointment type does not check working
-        hours). Also check user restriction with restrict_to_user_ids"""
+        hours). Also check min_schedule_hours, and user restriction with restrict_to_user_ids"""
         unique_slots = [{
             'start_datetime': self.reference_monday.replace(microsecond=0),
             'end_datetime': (self.reference_monday + timedelta(hours=1)).replace(microsecond=0),
@@ -972,6 +972,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         apt_type = self.env['appointment.type'].create({
             'category': 'custom',
             'assign_method': 'time_resource',
+            'min_schedule_hours': 1,
             'name': 'Custom with unique slots',
             'slot_ids': [(5, 0)] + [
                 (0, 0, {'allday': slot['allday'],
@@ -1007,6 +1008,17 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
             'slots_weekdays_nowork': range(2, 7)  # working hours only on Monday/Tuesday (0, 1)
         }
         self.assertSlots(slots, expected_months, expected_slot_data)
+
+        # Check min schedule hours
+        with freeze_time(self.reference_monday - timedelta(minutes=30)):
+            slots = apt_type._get_appointment_slots('Europe/Brussels')
+
+        expected_slots_custom = expected_slot_data.copy()
+        expected_slots_custom.update({
+            'slots_day_specific': {(self.reference_monday + timedelta(days=1)).date(): [{'allday': True, 'end': False, 'start': 8}]},
+            'slots_weekdays_nowork': [0, 2, 3, 4, 5, 6],  # only slot is Tuesday as Monday slot is only 30 min after freeze_time
+        })
+        self.assertSlots(slots, expected_months, expected_slots_custom)
 
         # With restrict_to_user_ids:
         apt_type.slot_ids[0].restrict_to_user_ids = [self.apt_manager.id, self.staff_user_bxls.id]

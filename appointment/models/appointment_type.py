@@ -727,7 +727,10 @@ class AppointmentType(models.Model):
                     append_slot(day, slot)
         else:
             # Custom appointment type, we use "unique" slots here that have a defined start/end datetime
-            unique_slots = self.slot_ids.filtered(lambda slot: slot.slot_type == 'unique' and slot.end_datetime > reference_date)
+            # We compare it with ref_start (which is localized here, so we adapt slot start_datetime to compare)
+            unique_slots = self.slot_ids.filtered(
+                lambda slot: slot.slot_type == 'unique' and slot.start_datetime.astimezone(appt_tz) > ref_start
+            )
 
             for slot in unique_slots:
                 start = slot.start_datetime.astimezone(tz=None)
@@ -801,12 +804,10 @@ class AppointmentType(models.Model):
         unique_slots = self.slot_ids.filtered(lambda slot: slot.slot_type == 'unique')
 
         if self.category == 'custom' and unique_slots:
-            # Custom appointment type, the first day should depend on the first slot datetime
+            # Custom appointment type, the first day is the earliest slot start if in the future, else now
             start_first_slot = unique_slots[0].start_datetime
-            first_day_utc = start_first_slot if reference_date > start_first_slot else reference_date
-            first_day = requested_tz.fromutc(first_day_utc + relativedelta(hours=self.min_schedule_hours))
-            appointment_duration_days = (unique_slots[-1].end_datetime.date() - reference_date.date()).days
-            last_day = requested_tz.fromutc(reference_date + relativedelta(days=appointment_duration_days))
+            first_day = requested_tz.fromutc(start_first_slot if reference_date < start_first_slot else reference_date)
+            last_day = requested_tz.fromutc(max(unique_slots.mapped('end_datetime')))
         elif self.category == 'punctual':
             # Punctual appointment type, the first day is the start_datetime if it is in the future, else the first day is now
             first_day = requested_tz.fromutc(self.start_datetime if self.start_datetime > now else now)
