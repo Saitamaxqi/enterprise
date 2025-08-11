@@ -39,8 +39,10 @@ def render_placeholder(text, template_variables):
 
 
 def get_toc_pdf(headings, offset=0):
+    base_url = request.env['ir.qweb'].get_base_url()
     toc_html = request.env['ir.qweb']._render(
         'accountant_knowledge.audit_report_table_of_content', {
+            'base_url': base_url,
             'headings': headings,
             'offset': offset})
     return convert_html_to_pdf(toc_html, [])
@@ -130,10 +132,12 @@ def delete_all_annotations(page):
 
 
 def get_front_cover_pdf(article):
+    base_url = request.env['ir.qweb'].get_base_url()
     front_cover_layout_pdf = PdfFileReader(BytesIO(
         request.env.ref('accountant_knowledge.front_cover_layout').raw))
     front_cover_html = request.env['ir.qweb']._render('accountant_knowledge.audit_report_front_cover', {
         'audit_report': article.inherited_audit_report_id,
+        'base_url': base_url,
         'image_data_uri': image_data_uri,
     })
     front_cover_pdf = convert_html_to_pdf(front_cover_html, [])
@@ -244,6 +248,7 @@ class KnowledgeAuditReportController(http.Controller):
         root_article_body = html.fragment_fromstring(root_article.body, create_parent='div')
         generate_headings = root_article_body.find('.//*[@data-embedded="articleIndex"]') is not None
         page_offset_in_body = 0
+        base_url = request.env['ir.qweb'].get_base_url()
 
         stack = [root_article]
         template_variables = get_template_variables(root_article)
@@ -283,6 +288,7 @@ class KnowledgeAuditReportController(http.Controller):
                 article_body = render_article_body(root, template_variables)
                 article_html = request.env['ir.qweb']._render(
                     'accountant_knowledge.audit_report_page_layout', {
+                        'base_url': base_url,
                         'body': article_body})
                 article_pdf = convert_html_to_pdf(
                     article_html, [])
