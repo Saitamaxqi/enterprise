@@ -822,7 +822,7 @@
             "chartDefinitions": {
               "af11f776-28fb": {
                 "title": {
-                  "text": "Countries by Revenue",
+                  "text": "Revenues by country",
                   "fontSize": 21,
                   "color": "#01666B",
                   "bold": true
@@ -852,7 +852,7 @@
               },
               "df10a4eb-48ac": {
                 "title": {
-                  "text": "Countries by Lead",
+                  "text": "Leads by country",
                   "color": "#01666B",
                   "fontSize": 21,
                   "bold": true
@@ -922,7 +922,7 @@
             "chartDefinitions": {
               "6aeb5a7c-00a7": {
                 "title": {
-                  "text": "Sources by Revenue",
+                  "text": "Revenues by source",
                   "fontSize": 21,
                   "color": "#01666B",
                   "bold": true
@@ -1692,6 +1692,7 @@
     "2a5063b0-4c4b": "crm.crm_opportunity_report_menu",
     "a53f3ad6-5a53": "crm.crm_opportunity_report_menu",
     "df10a4eb-48ac": "crm.crm_opportunity_report_menu",
-    "6aeb5a7c-00a7": "crm.crm_opportunity_report_menu"
+    "6aeb5a7c-00a7": "crm.crm_opportunity_report_menu",
+    "af11f776-28fb": "crm.crm_opportunity_report_menu"
   }
 }
