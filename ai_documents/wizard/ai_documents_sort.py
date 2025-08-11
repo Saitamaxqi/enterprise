@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import lxml.html
 from markupsafe import Markup
 
 from odoo import _, Command, api, fields, models
@@ -72,8 +71,7 @@ class AiDocumentsSort(models.TransientModel):
     # UI fields
     model = fields.Char(compute="_compute_ui_fields")
     relation = fields.Char(compute="_compute_ui_fields")
-    show_incomplete_prompt_warning = fields.Boolean("No Record Warning", compute="_compute_show_incomplete_prompt_warning")
-    is_ai_sort_prompt_set = fields.Boolean("Is Prompt Set", compute="_compute_show_incomplete_prompt_warning")
+    is_ai_sort_prompt_set = fields.Boolean("Is Prompt Set", compute="_compute_is_prompt_set")
 
     def _compute_ui_fields(self):
         # Because the widget is generic for all models / fields
@@ -82,24 +80,9 @@ class AiDocumentsSort(models.TransientModel):
         self.relation = "documents.document"
 
     @api.depends("ai_sort_prompt")
-    def _compute_show_incomplete_prompt_warning(self):
-        """Show a warning saying that no record are inserted in the prompt.
-
-        If the user writes a prompt but forget to insert record, then the
-        LLM won't be able to move the documents. So if there are
-        instructions but no record, we show the warning.
-        """
+    def _compute_is_prompt_set(self):
         for record in self:
             record.is_ai_sort_prompt_set = not is_html_empty(record.folder_id.ai_sort_prompt)
-            content = lxml.html.fromstring(f"<div>{record.ai_sort_prompt or ''}</div>")
-            xml_records_els = content.xpath('//*[@data-ai-record-id]')
-            has_records = bool(xml_records_els)
-            for el in xml_records_els:
-                el.drop_tree()
-            record.show_incomplete_prompt_warning = (
-                not has_records
-                and not is_html_empty(lxml.html.tostring(content).decode())
-            )
 
     @api.depends("folder_id")
     def _compute_allowed_tools_ids(self):

@@ -6,6 +6,8 @@
             comodel="recordSelectorRelation"
             model="modelName"
             onChange.bind="onChange"
+            updatePrompt.bind="updatePrompt"
+            missingRecordsWarning="props.showMissingRecordsWarning ? missingRecordsMessage : undefined"
             placeholder="props.placeholder"
             prompt="prompt"
             readonly="props.readonly"

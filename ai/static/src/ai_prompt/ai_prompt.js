@@ -8,7 +8,6 @@ import { HintPlugin } from "@html_editor/main/hint_plugin";
 import { PlaceholderPlugin } from "@html_editor/main/placeholder_plugin";
 import { PowerboxPlugin } from "@html_editor/main/powerbox/powerbox_plugin";
 import { SearchPowerboxPlugin } from "@html_editor/main/powerbox/search_powerbox_plugin";
-import { QWebPlugin } from "@html_editor/others/qweb_plugin";
 import { CORE_PLUGINS } from "@html_editor/plugin_sets";
 import { childNodeIndex } from "@html_editor/utils/position";
 import { withSequence } from "@html_editor/utils/resource";
@@ -26,25 +25,31 @@ export class AiPrompt extends Component {
         comodel: { type: String, optional: true },
         domain: { type: String, optional: true },
         model: { type: String, optional: true },
-        onChange: { type: Function },
+        onChange: { type: Function, optional: true },
         placeholder: { type: String, optional: true },
         prompt: { type: String },
         readonly: { type: Boolean, optional: true },
         aiFieldPath: { type: String, optional: true },
+        missingRecordsWarning: { type: String, optional: true },
+        updatePrompt: { type: Function, optional: true },
     };
 
     setup() {
         super.setup();
-        this.state = useState({ key: 0 });
+        this.state = useState({
+            key: 0,
+            hasRecords: this.props.prompt.includes("data-ai-record"),
+        });
+        this.lastValue = this.props.prompt;
 
         onWillUpdateProps((newProps) => {
             if ((newProps.prompt || "").toString() !== (this.lastValue || "").toString()) {
                 this.lastValue = newProps.prompt;
                 this.state.key++;
-            } else if (newProps.comodel !== this.props.comodel) {
-                this.editor.shared.AIRecordsSelector.updateDisplayNames();
-                this.state.key++;
-            } else if (newProps.domain !== this.props.domain) {
+            } else if (
+                newProps.comodel !== this.props.comodel ||
+                newProps.domain !== this.props.domain
+            ) {
                 this.state.key++;
             }
         });
@@ -56,6 +61,14 @@ export class AiPrompt extends Component {
             return "";
         }
         return elContent.innerHTML;
+    }
+
+    get hasRecords() {
+        return Boolean(this.editor.getElContent().querySelector(AI_RECORD_SELECTOR));
+    }
+
+    get missingRecordsWarning() {
+        return this.props.comodel && !this.state.hasRecords && this.props.missingRecordsWarning;
     }
 
     get value() {
@@ -74,6 +87,7 @@ export class AiPrompt extends Component {
                 return { resModel, resId };
             },
             onChange: () => this.onChange(),
+            onEditorReady: () => (this.state.hasRecords = this.hasRecords),
             placeholder: this.props.placeholder,
             Plugins: [
                 ...CORE_PLUGINS,
@@ -83,7 +97,6 @@ export class AiPrompt extends Component {
                 HintPlugin,
                 PlaceholderPlugin,
                 PowerboxPlugin,
-                QWebPlugin,
                 SearchPowerboxPlugin,
             ],
             baseContainers: ["DIV"],
@@ -101,10 +114,17 @@ export class AiPrompt extends Component {
         };
     }
 
-    onChange() {
+    onBlur() {
         const content = this.content;
-        this.props.onChange(content);
-        this.lastValue = content;
+        if (content !== this.lastValue) {
+            this.props.updatePrompt(this.content);
+            this.lastValue = content;
+        }
+    }
+
+    onChange() {
+        this.state.hasRecords = this.hasRecords;
+        this.props.onChange?.();
     }
 
     onClick(ev) {
@@ -122,7 +142,7 @@ export class AiPrompt extends Component {
         });
         if (target.matches(AI_FIELD_SELECTOR)) {
             this.editor.shared.AIFieldSelector.open([target.dataset.aiField]);
-        } else {
+        } else if (this.props.comodel) {
             this.editor.shared.AIRecordsSelector.open([Number(target.dataset.aiRecordId)]);
         }
     }
@@ -149,7 +169,7 @@ export class AiPromptDialog extends Component {
     get aiPromptProps() {
         return {
             ...this.props.aiPromptProps,
-            onChange: (prompt) => (this.confirmVals.prompt = prompt),
+            updatePrompt: (prompt) => (this.confirmVals.prompt = prompt),
         };
     }
 

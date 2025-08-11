@@ -20,7 +20,7 @@
                         <AiPrompt
                             prompt="props.node.field.ai"
                             readonly="true"
-                            onChange="() => {}"
+                            updatePrompt="() => {}"
                             aiFieldPath="this.props.node.field.name"
                         />
                     </div>

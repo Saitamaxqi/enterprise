@@ -44,7 +44,7 @@
             prompt="state.prompt || ''"
             comodel="relation"
             model="props.propertiesModel"
-            onChange.bind="(prompt) => this.state.prompt = prompt"
+            updatePrompt.bind="(prompt) => this.state.prompt = prompt"
             placeholder.translate="Write a prompt, use '/field' to insert dynamic values"
             />
         <t t-set-slot="footer">
