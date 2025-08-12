@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from .test_common import TestPlmCommon
 from odoo import Command
+from odoo.exceptions import ValidationError
 from odoo.tests import Form
 from odoo.tests.common import new_test_user
-from odoo.exceptions import ValidationError
+
+from .test_common import TestPlmCommon
+
 
 class TestMrpPlm(TestPlmCommon):
 
@@ -640,3 +642,95 @@ class TestMrpPlm(TestPlmCommon):
         self.bom_table.invalidate_recordset(['eco_count'])
         self.assertEqual(self.table.eco_count, 1)
         self.assertEqual(self.bom_table.eco_count, 0)
+
+    def _create_eco_approval_workflow(self):
+        """Create an ECO type with an approval workflow for testing purposes."""
+        self.random_approver = new_test_user(
+            self.env, "random_approver", "mrp_plm.group_plm_manager"
+        )
+        self.mrp_admin = new_test_user(
+            self.env, "mrp_admin", "mrp_plm.group_plm_manager"
+        )
+        self.approval_eco_type = self.env["mrp.eco.type"].create(
+            {
+                "name": "ECO Type with approval",
+            }
+        )
+        self.approval_new_stage = self.env["mrp.eco.stage"].create(
+            {
+                "name": "New",
+                "sequence": 0,
+                "type_ids": [Command.link(self.approval_eco_type.id)],
+            }
+        )
+        self.approval_first_stage = self.env["mrp.eco.stage"].create(
+            {
+                "name": "First approval",
+                "type_ids": [Command.link(self.approval_eco_type.id)],
+                "sequence": 10,
+                "approval_template_ids": [
+                    Command.create(
+                        {
+                            "name": "First Approval",
+                            "user_ids": [Command.set(self.mrp_admin.ids)],
+                            "approval_type": "optional",
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "name": "Second Approval",
+                            "user_ids": [Command.set(self.random_approver.ids)],
+                            "approval_type": "mandatory",
+                        }
+                    ),
+                ],
+            }
+        )
+        self.approval_done_stage = self.env["mrp.eco.stage"].create(
+            {
+                "name": "Done",
+                "type_ids": [Command.link(self.approval_eco_type.id)],
+                "final_stage": True,
+                "sequence": 30,
+            }
+        )
+
+    def test_dashboard_waiting_for_me(self):
+        """Test that the dashboard computes the ECOs waiting for my approval properly."""
+        self._create_eco_approval_workflow()
+        eco = self._create_eco(
+            "ECO1",
+            self.bom_table,
+            self.approval_eco_type.id,
+            self.approval_new_stage.id,
+        )
+        eco.action_new_revision()
+        eco.stage_id = self.approval_first_stage
+        # Just landed on first stage, both users need to approve
+        self.approval_eco_type.invalidate_recordset(["nb_approvals_my"])
+        self.assertEqual(
+            self.approval_eco_type.with_user(self.random_approver).nb_approvals_my,
+            1,
+            "Random approver should have 1 approval waiting",
+        )
+        self.approval_eco_type.invalidate_recordset(["nb_approvals_my"])
+        self.assertEqual(
+            self.approval_eco_type.with_user(self.mrp_admin).nb_approvals_my,
+            1,
+            "Admin should have 1 approval waiting",
+        )
+        # Admin approves
+        eco.with_user(self.mrp_admin).approve()
+        # Check that counter is correct
+        self.approval_eco_type.invalidate_recordset(["nb_approvals_my"])
+        self.assertEqual(
+            self.approval_eco_type.with_user(self.random_approver).nb_approvals_my,
+            1,
+            "Random approver should have 1 approval waiting",
+        )
+        self.approval_eco_type.invalidate_recordset(["nb_approvals_my"])
+        self.assertEqual(
+            self.approval_eco_type.with_user(self.mrp_admin).nb_approvals_my,
+            0,
+            "Admin should have 0 approval waiting",
+        )

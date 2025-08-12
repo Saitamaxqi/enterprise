@@ -42,11 +42,14 @@ class MrpEcoType(models.Model):
                 ('type_id', 'in', eco_type.ids),
                 ('approval_ids.status', '=', 'none')
             ])
-            eco_type.nb_approvals_my = MrpEco.search_count([
-                ('type_id', 'in', eco_type.ids),
-                ('approval_ids.status', '=', 'none'),
-                ('approval_ids.required_user_ids', '=', self.env.user.id)
-            ])
+            approvals_waiting_for_me = self.env['mrp.eco.approval'].search_read([
+                ('eco_id.type_id', 'in', eco_type.ids),
+                ('eco_id.active', '=', True),
+                ('status', '=', 'none'),
+                ('required_user_ids', '=', self.env.user.id)
+            ], fields=['eco_id'])
+            num_eco = len({app_data['eco_id'] for app_data in approvals_waiting_for_me})
+            eco_type.nb_approvals_my = num_eco
 
     def _alias_get_creation_values(self):
         values = super(MrpEcoType, self)._alias_get_creation_values()
