@@ -7,6 +7,7 @@
     'auto_install': ['test_discuss_full', 'web_enterprise'],
     'depends': [
         'ai',
+        'ai_voip',
         'account_accountant',
         'account_invoice_extract',
         'approvals',
