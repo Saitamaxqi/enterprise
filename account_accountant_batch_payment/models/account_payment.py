@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 from odoo import Command, models
+from odoo.tools.float_utils import float_compare
 
 
 class AccountPayment(models.Model):
@@ -22,7 +23,10 @@ class AccountPayment(models.Model):
                 if not remaining:
                     break
 
-                current = min(remaining, line.currency_id._convert(from_amount=line.amount_currency, to_currency=payment.currency_id))
+                if float_compare(payment.amount_signed, 0, payment.currency_id.decimal_places) >= 0:
+                    current = min(remaining, line.currency_id._convert(from_amount=line.amount_currency, to_currency=payment.currency_id))
+                else:
+                    current = max(remaining, line.currency_id._convert(from_amount=line.amount_currency, to_currency=payment.currency_id))
                 remaining -= current
                 line2amount[line] -= current
 

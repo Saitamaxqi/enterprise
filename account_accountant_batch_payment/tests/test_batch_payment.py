@@ -433,3 +433,48 @@ class TestBatchPayment(AccountTestInvoicingCommon):
             {'account_id': invoice_1.line_ids[-1].account_id.id, 'amount_currency': -1000.0, 'balance': -1000.0, 'reconciled': True},
             {'account_id': invoice_2.line_ids[-1].account_id.id, 'amount_currency': -1000.0, 'balance': -1000.0, 'reconciled': True},
         ])
+
+    def test_bank_rec_widget_batch_without_entries_grouped_with_bills(self):
+        bills_1 = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 1000,
+                }),
+            ],
+        })
+        bills_1.action_post()
+        bills_2 = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2017-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 1000,
+                }),
+            ],
+        })
+        bills_2.action_post()
+
+        payments = self.env['account.payment.register'].with_context(
+            active_model='account.move',
+            active_ids=(bills_1 + bills_2).ids,
+        ).create({
+            'amount': 2000,
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.batch_deposit.id,
+            'group_payment': True,
+        })._create_payments()
+        payments.create_batch_payment()
+        st_line = self._create_st_line(amount=-2000)
+        st_line.set_batch_payment_bank_statement_line(payments.batch_payment_id.id)
+
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': -2000.0, 'balance': -2000.0, 'reconciled': False},
+            {'account_id': bills_1.line_ids[-1].account_id.id, 'amount_currency': 1000.0, 'balance': 1000.0, 'reconciled': True},
+            {'account_id': bills_2.line_ids[-1].account_id.id, 'amount_currency': 1000.0, 'balance': 1000.0, 'reconciled': True},
+        ])
