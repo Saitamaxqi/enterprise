@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 import time
 
-from odoo import api, _, models, Command
+from odoo import Command, _, api, models
 
 
 class AccountChartTemplate(models.AbstractModel):
@@ -15,7 +14,7 @@ class AccountChartTemplate(models.AbstractModel):
         }
         demo_data['account.journal'].update({
             'auto_transfer_journal': {
-                'name': _("IFRS Automatic Transfers"),
+                'name': _("IFRS Transfers"),
                 'code': "IFRSA",
                 'type': 'general',
                 'show_on_dashboard': False,

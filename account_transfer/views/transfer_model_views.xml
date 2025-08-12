@@ -15,7 +15,7 @@
     <!-- ACTIONS -->
     <!--    MOVE MODELS (FROM MENU) -->
     <record model="ir.actions.act_window" id="transfer_model_action">
-        <field name="name">Automatic Transfers</field>
+        <field name="name">Transfers</field>
         <field name="res_model">account.transfer.model</field>
             <field name="path">transfers</field>
         <field name="view_mode">list,form</field>
@@ -59,27 +59,33 @@
         <field name="arch" type="xml">
             <form string="Move Model" class="o_auto_transfer_form">
                 <header>
-                    <button name="action_activate" type="object"
-                            string="Activate" class="oe_highlight"
-                            invisible="state == 'in_progress' or not active"/>
                     <button name="action_perform_auto_transfer" type="object"
-                            string="Compute Transfer" class="oe_highlight"
-                            invisible="state != 'in_progress' or not active"/>
+                            string="Compute Transfer" class="oe_highlight btn btn-primary"
+                            invisible="not active"/>
                     <button name="action_disable" type="object"
-                            string="Disable"
-                            invisible="state != 'in_progress' or not active"/>
+                            string="Disable" invisible="state == 'disabled' and active"
+                            help="Puts the transfer model in a state in which it will not automatically recompute its draft entries' values every day."/>
+                    <button name="action_enable" type="object"
+                            string="Enable" invisible="state == 'in_progress' and active"
+                            help="Puts the transfer model in a state in which it will automatically recompute its draft entries' values every day."/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <div name="button_box" class="oe_button_box" invisible="not id">
                         <button class="oe_stat_button" type="action"
                                 name="%(generated_transfers_action)d" icon="fa-book"
-                                context="{'search_default_transfer_model_id': id, 'default_transfer_model_id': id}">
+                                context="{'search_default_transfer_model_id': id, 'default_transfer_model_id': id}"
+                                invisible="has_draft_moves">
+                            <field name="move_ids_count" string="Transfers" widget="statinfo"/>
+                        </button>
+                        <button class="oe_stat_button text-info" type="action"
+                                name="%(generated_transfers_action)d" icon="fa-book"
+                                context="{'search_default_transfer_model_id': id, 'default_transfer_model_id': id}"
+                                invisible="not has_draft_moves">
                             <field name="move_ids_count" string="Transfers" widget="statinfo"/>
                         </button>
                     </div>
                     <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible="active"/>
-                    <field name="active" invisible="1"/>
                     <div class="oe_title">
                         <label for="name" string="Description"/>
                         <h1>
@@ -92,38 +98,23 @@
                             <div>
                                 <field name="date_start" class="oe_inline"/>
                                 <span> to </span>
-                                <field name="date_stop" class="oe_inline"/>
+                                <field name="date_stop" class="oe_inline" placeholder="forever"/>
                             </div>
-                            <field name="frequency"/>
+                            <field name="account_ids" string="Accounts" required="1" widget="many2many_tags"/>
                         </group>
                         <group>
                             <field name="journal_id" string="Journal" domain="[('type', '=', 'general')]"/>
+                            <field name="frequency"/>
                         </group>
+                        <field name="conditions" widget="domain" options="{'model': 'account.move.line'}"/>
                     </group>
-                    <group>
-                        <group string="Origin Accounts">
-                            <field name="account_ids" nolabel="1" colspan="2">
-                                <list>
-                                    <field name="code"/>
-                                    <field name="name"/>
-                                    <field name="account_type"/>
-                                </list>
-                            </field>
-                        </group>
-                        <group string="Automated Transfer">
-                            <field name="line_ids" nolabel="1" colspan="2"
-                                   context="{'default_transfer_model_id': id}">
-                                <list editable="bottom">
-                                    <field name="percent_is_readonly" column_invisible="True"/>
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="analytic_account_ids"
-                                           widget="many2many_tags"/>
-                                    <field name="partner_ids" widget="many2many_tags" domain="[('parent_id', '=', False)]"/>
-                                    <field name="percent" string="Percent (%)" readonly="percent_is_readonly"/>
-                                    <field name="account_id"/>
-                                </list>
-                            </field>
-                        </group>
+                    <group string="Destination">
+                        <field name="line_ids" nolabel="1" colspan="2">
+                            <list editable="bottom">
+                                <field name="account_id" string="Account" placeholder="Keep Original"/>
+                                <field name="percent" string="Rate (%)"/>
+                            </list>
+                        </field>
                     </group>
                 </sheet>
             </form>
