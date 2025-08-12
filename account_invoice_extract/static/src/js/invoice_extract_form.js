@@ -18,7 +18,7 @@ export class InvoiceExtractFormRenderer extends ExtractMixinFormRenderer(Account
         return (
             super.shouldRenderBoxes() &&
             this.props.record.data.state === 'draft' &&
-            ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'].includes(this.props.record.data.move_type)
+            ['in_invoice', 'in_refund', 'in_receipt', 'out_invoice', 'out_refund', 'out_receipt'].includes(this.props.record.data.move_type)
         )
     }
 

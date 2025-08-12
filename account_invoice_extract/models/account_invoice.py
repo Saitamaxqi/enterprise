@@ -639,10 +639,14 @@ class AccountMove(models.Model):
         if 'detected_layout_id' in ocr_results:
             self.extract_detected_layout = ocr_results['detected_layout_id']
 
-        if ocr_results.get('type') == 'refund' and self.move_type in ('in_invoice', 'out_invoice'):
-            # We only switch from an invoice to a credit note, not the other way around.
-            # We assume that if the user has specifically created a credit note, it is indeed a credit note.
-            self.action_switch_move_type()
+        if self.move_type in ('in_invoice', 'out_invoice'):
+            # We only change the move type for invoices.
+            # We assume that if the user has specifically created a credit note/receipt, it is indeed a credit note/receipt.
+            detected_move_type = ocr_results.get('type')
+            if detected_move_type == 'receipt':
+                self.move_type = self.move_type.replace('invoice', 'receipt')
+            elif detected_move_type == 'refund':
+                self.action_switch_move_type()
 
         def get_first_value_without(feature, not_allowed):
             return next((
