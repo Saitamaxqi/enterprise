@@ -1,4 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import time
+
 from lxml import etree
 from unittest import mock
 
@@ -78,12 +80,11 @@ class TestEdi(TestAr):
         # connection until there is not token error.
         _logger.log(25, 'Setting homologation private key to company %s', company.name)
         company = company.with_context(l10n_ar_invoice_skip_commit=True)
-        checked_certificate_token = False
 
-        while not checked_certificate_token:
+        for p in range(5):
             try:
                 company._l10n_ar_get_connection(afip_ws)
-                checked_certificate_token = True
+                return
             except Exception as error:
                 if 'El CEE ya posee un TA valido para el acceso al WSN solicitado' in repr(error):
                     _logger.log(25, 'Connection Failed')
@@ -101,6 +102,7 @@ class TestEdi(TestAr):
                 company.l10n_ar_afip_ws_crt_id = self.env['certificate.certificate'].search([('name', '=', 'AR Test certificate %d' % new_cert_number)], limit=1)
                 _logger.log(25, 'Setting demo certificate from %s to %s in %s company' % (
                     old, company.l10n_ar_afip_ws_crt_id.name, company.name))
+            time.sleep(2**p)
 
     def _prepare_multicurrency_values(self):
         super()._prepare_multicurrency_values()
