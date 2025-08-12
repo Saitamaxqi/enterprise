@@ -180,3 +180,61 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
         self.assertEqual(len(invoice.timesheet_ids), 1)
         self.assertEqual(invoice.invoice_line_ids.quantity, present_timesheet.unit_amount)
         self.assertEqual(invoice.timesheet_ids.id, present_timesheet.id)
+
+    @freeze_time("2025-08-03")
+    def test_sub_link_timesheet_to_invoice(self):
+        subscription = self.env['sale.order'].create({
+            'name': 'CopyTestSubscriptionWithTimeSheet',
+            'is_subscription': True,
+            'plan_id': self.plan_month.id,
+            'note': "original subscription description",
+            'partner_id': self.user_portal.partner_id.id,
+            'order_line': [
+                    Command.create({
+                        'product_id': self.product_deliver_timesheet.id,
+                        'product_uom_qty': 6
+                    }),
+                ],
+            'start_date': '2025-07-01',
+        })
+        subscription.action_confirm()
+        subscription.write({'next_invoice_date': '2025-08-01'})
+
+        task = subscription.tasks_ids
+        self.env['account.analytic.line'].create([
+            {
+                'name': 'Test Include Line',
+                'date': '2025-07-01',
+                'project_id': task.project_id.id,
+                'task_id': task.id,
+                'unit_amount': 3,
+                'employee_id': self.employee_user.id,
+            },
+            {
+                'name': 'Test Line',
+                'date': '2025-07-31',
+                'project_id': task.project_id.id,
+                'task_id': task.id,
+                'unit_amount': 3,
+                'employee_id': self.employee_user.id,
+            },
+            {
+                'name': 'Test Exclude Line',
+                'date': '2025-08-01',
+                'project_id': task.project_id.id,
+                'task_id': task.id,
+                'unit_amount': 4,
+                'employee_id': self.employee_user.id,
+            },
+        ])
+
+        moves = self.env['sale.advance.payment.inv'].with_context({
+            'active_model': 'sale.order',
+            'active_ids': [subscription.id],
+            'active_id': subscription.id,
+        }).create({
+            'advance_payment_method': 'delivered'
+        }).create_invoices()
+        invoice = self.env['account.move'].browse(moves['res_id'])
+
+        self.assertEqual(len(invoice.timesheet_ids), 2)

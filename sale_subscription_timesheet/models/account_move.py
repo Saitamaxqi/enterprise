@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
+from datetime import timedelta
 
 
 class AccountMove(models.Model):
@@ -15,5 +16,5 @@ class AccountMove(models.Model):
         '''
         start_date, end_date = super()._get_range_dates(order)
         if order.is_subscription and order.order_line.product_id.filtered(lambda p: p._is_delivered_timesheet()):
-            return order.last_invoice_date, order.next_invoice_date
+            return order.last_invoice_date, order.next_invoice_date + timedelta(days=-1)
         return start_date, end_date
