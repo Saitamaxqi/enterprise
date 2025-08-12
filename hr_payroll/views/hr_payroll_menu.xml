@@ -82,12 +82,6 @@
         parent="menu_hr_payroll_payslips"/>
 
     <!-- **** Reporting **** -->
-    <menuitem id="menu_report_payroll"
-        name="Payroll Analysis"
-        action="ir_actions_server_action_open_reporting"
-        sequence="1"
-        parent="menu_hr_payroll_report"/>
-
     <menuitem
         id="menu_hr_work_entry_report"
         name="Work Entries Analysis"

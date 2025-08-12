@@ -73,7 +73,6 @@ result = min(maximum, version.l10n_ke_pension_allowance)
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories['KE_UT_ALW']</field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_taxed_food_allowance" model="hr.salary.rule">
@@ -134,7 +133,6 @@ result = version.l10n_ke_pension_allowance - payslip._rule_parameter('l10n_ke_pe
         <field name="amount_select">code</field>
         <field name="amount_python_compute">result = categories['KE_T_ALW']</field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_fixed_bonus" model="hr.salary.rule">
@@ -187,7 +185,6 @@ result = categories['BASIC'] + categories['ALW']
 result = version.l10n_ke_pension_contribution
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_gross_taxable" model="hr.salary.rule">
@@ -204,7 +201,6 @@ result = employee.l10n_ke_mortgage and not version.l10n_ke_is_secondary
 result = employee.l10n_ke_mortgage
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="False"/>
     </record>
 
     <!-- INCOME TAX -->
@@ -224,7 +220,6 @@ result = min(lower_limit, pensionable)
 result_rate = 6
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
     </record>
 
@@ -248,7 +243,6 @@ elif lower_limit &lt; pensionable:
 result_rate = 6
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
     </record>
 
@@ -271,7 +265,6 @@ for high, rate in payslip._rule_parameter('l10n_ke_nhif'):
         break
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
     </record>
 
@@ -290,7 +283,6 @@ result = result_rules['NHIF_AMOUNT_HIDDEN']['total']
 result_rate = -15
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_med_insurance_relief" model="hr.salary.rule">
@@ -308,7 +300,6 @@ result = version.l10n_ke_voluntary_medical_insurance
 result_rate = -15
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_life_insurance_relief" model="hr.salary.rule">
@@ -326,7 +317,6 @@ result = version.l10n_ke_life_insurance
 result_rate = -15
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_education_relief" model="hr.salary.rule">
@@ -344,7 +334,6 @@ result = version.l10n_ke_education
 result_rate = -15
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_ahl_amount" model="hr.salary.rule">
@@ -359,7 +348,6 @@ result = categories['BASIC'] - employee.disabled * payslip._rule_parameter('l10n
 result_rate = payslip._rule_parameter('l10n_ke_ahl_employee') * 100
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_ahl_relief" model="hr.salary.rule">
@@ -380,7 +368,6 @@ else:
     result_rate = - payslip._rule_parameter('l10n_ke_ahl_relief_rate') * 100
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_insurance_relief" model="hr.salary.rule">
@@ -400,7 +387,6 @@ result = - min(
 )
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="color">#00A09D</field>
     </record>
 
@@ -418,7 +404,6 @@ result = payslip._rule_parameter('l10n_ke_personal_relief') and not version.l10n
 result = - payslip._rule_parameter('l10n_ke_personal_relief')
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <!-- DEDUCTIONS -->
@@ -435,7 +420,6 @@ result = - payslip._rule_parameter('l10n_ke_personal_relief')
 result = result_rules['NSSF_EMPLOYEE_TIER_1']['total'] + result_rules['NSSF_EMPLOYEE_TIER_2']['total']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
     </record>
 
@@ -451,7 +435,6 @@ result = result_rules['NSSF_EMPLOYEE_TIER_1']['total'] + result_rules['NSSF_EMPL
 result = result_rules['NHIF_AMOUNT_HIDDEN']['total']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_shif_amount" model="hr.salary.rule">
@@ -471,7 +454,6 @@ else:
     result = payslip._rule_parameter('l10n_ke_shif_rate') * gross
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_gross_taxable" model="hr.salary.rule">
@@ -490,7 +472,6 @@ if payslip.date_to &gt;= datetime(2024,12,27).date():
     result -= result_rules['SHIF_AMOUNT']['total'] + result_rules['AHL_AMOUNT']['total']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_income_tax" model="hr.salary.rule">
@@ -517,7 +498,6 @@ else:
     result = income_tax
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_salary_paye" model="hr.salary.rule">
@@ -532,7 +512,6 @@ else:
 result = max(result_rules['INCOME_TAX']['total'] + categories['RELIEF'], 0)
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_statutory_deduction" model="hr.salary.rule">
@@ -547,7 +526,6 @@ result = max(result_rules['INCOME_TAX']['total'] + categories['RELIEF'], 0)
 result = categories['STATUTORY_DED']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="color">#00A09D</field>
     </record>
 
@@ -563,7 +541,6 @@ result = 'HELB' in inputs and not version.l10n_ke_is_secondary
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_ke_hr_payroll.input_helb"/>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_volontary_medical_insurance" model="hr.salary.rule">
@@ -580,7 +557,6 @@ result = version.l10n_ke_voluntary_medical_insurance and not version.l10n_ke_is_
 result = version.l10n_ke_voluntary_medical_insurance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_life_insurance" model="hr.salary.rule">
@@ -597,7 +573,6 @@ result = version.l10n_ke_life_insurance and not version.l10n_ke_is_li_managed_by
 result = version.l10n_ke_life_insurance
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_education" model="hr.salary.rule">
@@ -614,7 +589,6 @@ result = version.l10n_ke_education and not version.l10n_ke_is_secondary
 result = version.l10n_ke_education
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_other_deductions" model="hr.salary.rule">
@@ -629,7 +603,6 @@ result = version.l10n_ke_education
 result = categories['OTHER_DED']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="color">#00A09D</field>
     </record>
 
@@ -646,7 +619,6 @@ result = version.l10n_ke_pension_contribution and not version.l10n_ke_is_seconda
         <field name="amount_percentage_base">version.l10n_ke_pension_contribution</field>
         <field name="amount_percentage">100</field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_fringe_benefit" model="hr.salary.rule">
@@ -661,7 +633,6 @@ result = 'FRINGE_BENEFIT' in inputs and not version.l10n_ke_is_secondary
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_ke_hr_payroll.input_fringe_benefit"/>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_total_deductions" model="hr.salary.rule">
@@ -676,7 +647,6 @@ result = 'FRINGE_BENEFIT' in inputs and not version.l10n_ke_is_secondary
 result = categories['TOTAL_DED']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <!-- NET -->
@@ -691,7 +661,6 @@ result = payslip._rule_parameter('l10n_ke_nita')
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employer_nssf_employer" model="hr.salary.rule">
@@ -707,7 +676,6 @@ result = result_rules['NSSF_AMOUNT']['total']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employer_salary_ahl_amount" model="hr.salary.rule">
@@ -723,7 +691,6 @@ result_rate = payslip._rule_parameter('l10n_ke_ahl_employer') * 100
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_employees_non_cash" model="hr.salary.rule">
@@ -739,7 +706,6 @@ result = inputs['NON_CASH_BENEFIT'].amount
 result_name = inputs['NON_CASH_BENEFIT'].name
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_ke_hr_payroll_structure_ken_employee_salary_attachment_of_salary_rule" model="hr.salary.rule">

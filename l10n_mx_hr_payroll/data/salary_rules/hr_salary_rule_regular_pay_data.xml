@@ -450,7 +450,6 @@ result = version.l10n_mx_savings_fund
 month_to_period_ratio = payslip._rule_parameter('l10n_mx_schedule_table')[version.l10n_mx_schedule_pay] / payslip._rule_parameter('l10n_mx_days_per_month')
 result = min(version.l10n_mx_savings_fund * month_to_period_ratio, result_rules['SAVINGS_FUND_SALARY_LIMIT']['total'], result_rules['SAVINGS_FUND_LIMIT_UMA']['total'])
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -474,7 +473,6 @@ result = inputs['EXPENSES'].amount > 0.0 if 'EXPENSES' in inputs else False
         <field name="amount_python_compute">
 result = inputs['EXPENSES'].amount if 'EXPENSES' in inputs else 0
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -487,7 +485,6 @@ result = inputs['EXPENSES'].amount if 'EXPENSES' in inputs else 0
         <field name="condition_other_input_id" ref="l10n_mx_input_commissions"/>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_mx_input_commissions"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -500,7 +497,6 @@ result = inputs['EXPENSES'].amount if 'EXPENSES' in inputs else 0
         <field name="condition_other_input_id" ref="l10n_mx_input_bonus"/>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_mx_input_bonus"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -581,7 +577,6 @@ if gross:
 else:
     result = 0
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
         <field name="note">
 Income Tax Law
@@ -632,7 +627,6 @@ else:
     result = taxed_amount
     result_rate = - fraction_5 * 100
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -649,7 +643,6 @@ result = version.l10n_mx_savings_fund
         <field name="amount_python_compute">
 result = - result_rules['SAVINGS_FUND_EMPLOYER_ALW']['total']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -666,7 +659,6 @@ result = version.l10n_mx_savings_fund
         <field name="amount_python_compute">
 result = - result_rules['SAVINGS_FUND_EMPLOYER_ALW']['total']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -787,7 +779,6 @@ result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy
         <field name="amount_python_compute">
 result = result_rules['SUBSIDY_CURRENT_MONTH']['total'] + result_rules['SUBSIDY_NEXT_MONTH']['total'] + result_rules['SUBSIDY_ADJUSTMENT']['total']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -897,7 +888,6 @@ for disc in discount_line_ids:
 
 result = - (fixed_amount + percentage_amount + discount_amount)
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
@@ -918,7 +908,6 @@ for line in fonacot_line_ids:
     amount += line.extra_fixed_monthly_contribution + line.monthly_import
 result = - (amount * days_in_period / total_days_in_month)
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 

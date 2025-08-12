@@ -37,7 +37,6 @@ result = payslip.paid_amount - result_rules['HRA']['total']
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_hk_hr_payroll.input_commission"/>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cap57_employees_salary_back_pay" model="hr.salary.rule">
@@ -50,7 +49,6 @@ result = payslip.paid_amount - result_rules['HRA']['total']
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_hk_hr_payroll.input_back_pay"/>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <!-- Fixed Allowance -->
@@ -86,7 +84,6 @@ result = -inputs['GLOBAL_DEDUCTION'].amount
 result_name = inputs['GLOBAL_DEDUCTION'].name
         </field>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cap57_employees_salary_reimbursement" model="hr.salary.rule">
@@ -99,7 +96,6 @@ result_name = inputs['GLOBAL_DEDUCTION'].name
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_hk_hr_payroll.input_global_reimbursement"/>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <!-- 713 Gross -->

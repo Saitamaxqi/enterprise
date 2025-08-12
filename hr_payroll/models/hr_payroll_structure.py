@@ -80,20 +80,3 @@ class HrPayrollStructure(models.Model):
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)
         return [dict(vals, name=self.env._("%s (copy)", structure.name)) for structure, vals in zip(self, vals_list)]
-
-    def write(self, vals):
-        # Keep track of which rules are being modified
-        rules = self.env['hr.salary.rule']
-        # Write on rules if the country has changed values
-        is_country_diff = vals.get('country_id') != self.country_id.id
-        # Before the write to country_id, unlink all the salary rules' fields
-        # previously generated based on the current country_id
-        if 'country_id' in vals and is_country_diff:
-            rules = self.rule_ids.filtered(lambda r: r.appears_on_payroll_report)
-            rules.write({'appears_on_payroll_report': False})
-        res = super().write(vals)
-        # After the write to country_id, generate all the salary rules' fields
-        # based on the new country_id
-        if 'country_id' in vals and is_country_diff:
-            rules.write({'appears_on_payroll_report': True})
-        return res

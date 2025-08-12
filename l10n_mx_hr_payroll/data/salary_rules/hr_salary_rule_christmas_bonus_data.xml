@@ -22,7 +22,6 @@ unpaid_days = sum(worked_day_line['sum']['number_of_days'] for worked_day_line i
 work_ratio = (days_of_year_in_contract_until_payslip - unpaid_days) / payslip.l10n_mx_days_of_year
 result = payslip.l10n_mx_daily_salary * payslip._rule_parameter('l10n_mx_christmas_bonus') * work_ratio
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_christmas_bonus"/>
     </record>
 
@@ -36,7 +35,6 @@ result = payslip.l10n_mx_daily_salary * payslip._rule_parameter('l10n_mx_christm
         <field name="amount_python_compute">
 result = payslip._rule_parameter('l10n_mx_christmas_bonus_exemption') * payslip._rule_parameter('l10n_mx_uma')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_christmas_bonus"/>
     </record>
 
@@ -50,7 +48,6 @@ result = payslip._rule_parameter('l10n_mx_christmas_bonus_exemption') * payslip.
         <field name="amount_python_compute">
 result = max(categories['BASIC'] - categories['MX_EXEMPTION'], 0)
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_christmas_bonus"/>
     </record>
 
@@ -90,7 +87,6 @@ else:
     result = categories['GROSS']
     result_rate = - fraction_V * 100
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_christmas_bonus"/>
         <field name="note">
         </field>
@@ -106,7 +102,6 @@ else:
         <field name="amount_python_compute">
 result = categories['BASIC'] + categories['TAXES']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_mx_christmas_bonus"/>
     </record>
 </odoo>

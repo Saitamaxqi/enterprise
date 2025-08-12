@@ -24,7 +24,6 @@ result = payslip.paid_amount
         <field name="condition_other_input_id" ref="l10n_id_hr_payroll.input_transport_allowance"/>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_id_hr_payroll.input_transport_allowance"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
     </record>
 
@@ -38,7 +37,6 @@ result = payslip.paid_amount
         <field name="condition_other_input_id" ref="l10n_id_hr_payroll.input_insurance_allowance"/>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_id_hr_payroll.input_insurance_allowance"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
     </record>
 
@@ -51,7 +49,6 @@ result = payslip.paid_amount
         <field name="condition_other_input_id" ref="l10n_id_hr_payroll.input_laptop_allowance"/>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_id_hr_payroll.input_laptop_allowance"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
     </record>
 
@@ -64,7 +61,6 @@ result = payslip.paid_amount
         <field name="condition_other_input_id" ref="l10n_id_hr_payroll.input_incentive"/>
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_id_hr_payroll.input_incentive"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
     </record>
 
@@ -78,7 +74,6 @@ result = payslip.paid_amount
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_id_hr_payroll.input_holiday_allowance"/>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="salary_rule_id_meal_allowance" model="hr.salary.rule">
@@ -91,7 +86,6 @@ result = payslip.paid_amount
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_id_hr_payroll.input_meal_allowance"/>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="salary_rule_id_level_allowance" model="hr.salary.rule">
@@ -104,7 +98,6 @@ result = payslip.paid_amount
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_id_hr_payroll.input_level_allowance"/>
         <field name="struct_id" ref="l10n_id_hr_payroll.hr_payroll_structure_id_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <!-- BASE: show the BASIC + benefits -->

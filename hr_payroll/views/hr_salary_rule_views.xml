@@ -67,7 +67,6 @@
                    <field name="active" widget="boolean_toggle"/>
                    <field name="appears_on_payslip"/>
                    <field name="appears_on_employee_cost_dashboard"/>
-                   <field name="appears_on_payroll_report"/>
                 </group>
                 <notebook colspan="6">
                     <page name="general" string="General">

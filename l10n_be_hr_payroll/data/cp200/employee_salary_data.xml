@@ -71,7 +71,6 @@ result = not salary_simulation and is_next_year and to_recover and not already_d
         <field name="amount_select">input</field>
         <field name="amount_other_input_id" ref="l10n_be_hr_payroll.input_fixed_commission"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_hiring_bonus" model="hr.salary.rule">
@@ -154,7 +153,6 @@ if not salary_simulation:
     result = result if (first_period_contract and payslip.version_id == target_contract) else 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_atn_mobile" model="hr.salary.rule">
@@ -179,7 +177,6 @@ if not salary_simulation:
     result = result if (first_period_contract and payslip.version_id == target_contract) else 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_atn_laptop" model="hr.salary.rule">
@@ -198,7 +195,6 @@ if first_period_contract:
 result = payslip._rule_parameter('cp200_bik_laptop') if (first_period_contract and payslip.version_id == target_contract) else 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_gross_salary" model="hr.salary.rule">
@@ -352,7 +348,6 @@ if not salary_simulation:
     result = result if (first_period_contract and payslip.version_id == target_contract) else 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_gross_with_ip" model="hr.salary.rule">
@@ -518,7 +513,6 @@ result = -result_rules['ATN.LAP']['amount']
         <field name="appears_on_payslip" eval="True"/>
         <field name="partner_id" ref="res_partner_meal_vouchers"/>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_atn_mobile_2" model="hr.salary.rule">
@@ -590,7 +584,6 @@ else:
             result = 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_private_car" model="hr.salary.rule">
@@ -620,7 +613,6 @@ else:
         result = 0
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_cycle_transportation" model="hr.salary.rule">
@@ -650,7 +642,6 @@ result = min(amount_max, amount_per_km * version.employee_id.km_home_work * 2)
         <field name="condition_python">result = bool(version.representation_fees)</field>
         <field name="amount_python_compute">result = payslip._get_serious_representation_fees(localdict)</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_representation_fees_volatile" model="hr.salary.rule">
@@ -666,7 +657,6 @@ result = payslip._get_volatile_representation_fees(localdict)
 if 'REPFEESREGUL' in inputs:
     result = max(0, result - inputs['REPFEESREGUL'].amount)</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_ip" model="hr.salary.rule">
@@ -679,7 +669,6 @@ if 'REPFEESREGUL' in inputs:
         <field name="condition_python">result = bool(version.ip)</field>
         <field name="amount_python_compute">result = payslip._get_be_ip(localdict)</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_ip_deduction" model="hr.salary.rule">
@@ -692,7 +681,6 @@ if 'REPFEESREGUL' in inputs:
         <field name="condition_python">result = bool(version.ip)</field>
         <field name="amount_python_compute">result = payslip._get_be_ip_deduction(localdict)</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_employee_cost_dashboard" eval="True"/>
     </record>
 
@@ -851,7 +839,6 @@ result = result_rules['DOUBLE.DECEMBER.BASIC']['total'] + result_rules['DOUBLE.D
         <field name="condition_python">result = 'MOBILITY.PAYMENT' in inputs</field>
         <field name="amount_python_compute">result = inputs['MOBILITY.PAYMENT'].amount</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_mobility_budget_tax" model="hr.salary.rule">
@@ -867,7 +854,6 @@ result = result_rules['MOBILITY.PAYMENT']['total']
 result_rate = -payslip._rule_parameter('mobility_budget_tax')
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_expense_refund" model="hr.salary.rule">
@@ -984,7 +970,6 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED'] + result_ru
 result = categories['BASIC'] + categories['COMMISSION'] + result_rules['HIRINGBONUS']['total'] + result_rules['REPFEESREGUL']['total'] + result_rules['ADDITIONALGROSS']['total'] +  categories['AFTERPUB'] + result_rules['SIMPLE.DECEMBER']['total'] - abs(result_rules['IP']['total'] if version.ip else 0)</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_onss_employer_basic" model="hr.salary.rule">
@@ -999,7 +984,6 @@ result_rate = payslip._rule_parameter('l10n_be_global_rate') - 13.07
 result = SALARY</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_onss_employer_ffe" model="hr.salary.rule">
@@ -1015,7 +999,6 @@ result_rate = payslip._get_ffe_contribution_rate(worker_count)
 result = SALARY</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_onss_employer_special_ffe" model="hr.salary.rule">
@@ -1030,7 +1013,6 @@ result_rate = payslip._rule_parameter('l10n_be_special_ffe_rate')
 result = SALARY</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_onss_employer_cpae" model="hr.salary.rule">
@@ -1045,7 +1027,6 @@ result_rate = payslip._rule_parameter('l10n_be_cpae_rate')
 result = SALARY</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_onss_employer_wage_restreint" model="hr.salary.rule">
@@ -1060,7 +1041,6 @@ result_rate = payslip._rule_parameter('l10n_be_wage_restreint')
 result = SALARY</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_onss_employer_temporary_unemployment" model="hr.salary.rule">
@@ -1075,7 +1055,6 @@ result_rate = payslip._rule_parameter('l10n_be_temporary_unemployment_rate')
 result = SALARY</field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="cp200_employees_salary_onss_employer" model="hr.salary.rule">
@@ -1090,7 +1069,6 @@ result = result_rules['ONSSEMPLOYERBASIC']['total'] + result_rules['ONSSEMPLOYER
         <field name="partner_id" ref="res_partner_onss"/>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_payslip" eval="False"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_employee_cost_dashboard" eval="True"/>
     </record>
 

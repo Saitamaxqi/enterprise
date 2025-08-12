@@ -47,7 +47,6 @@ result = sum(ote_inputs.mapped('amount')) + sum(ote_worked_day.mapped('amount'))
 result = sum(payslip.input_line_ids.filtered(lambda i: i.code == 'EXTRA.INPUT').mapped('amount'))
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
-        <field name="appears_on_payroll_report" eval="True"/>
     </record>
 
     <record id="l10n_au_salary_sacrifice_total_structure_1" model="hr.salary.rule">
@@ -415,7 +414,6 @@ if "BACKPAY.INPUT" in inputs:
     result += backpay_stsl
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
-        <field name="appears_on_payroll_report" eval="False"/>
     </record>
 
     <record id="l10n_au_tax_offset_structure_1" model="hr.salary.rule">

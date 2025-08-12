@@ -44,7 +44,6 @@ else:
     else:
         result = categories['BASIC']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
 
@@ -72,7 +71,6 @@ else:
     else:
         result = categories['BASIC']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -88,7 +86,6 @@ else:
 result_rate = payslip._rule_parameter('l10n_pl_disability_employee_rate')
 result = categories['BASIC']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
 
@@ -103,7 +100,6 @@ result = categories['BASIC']
 result_rate = payslip._rule_parameter('l10n_pl_disability_employer_rate')
 result = categories['BASIC']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -119,7 +115,6 @@ result = categories['BASIC']
 result_rate = payslip._rule_parameter('l10n_pl_sickness_employee_rate')
 result = categories['BASIC']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
 
@@ -134,7 +129,6 @@ result = categories['BASIC']
 result_rate = payslip._rule_parameter('l10n_pl_accident_employer_rate')
 result = categories['BASIC']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -150,7 +144,6 @@ result = categories['BASIC']
 result_rate = payslip._rule_parameter('l10n_pl_labour_employer_rate')
 result = categories['BASIC']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -165,7 +158,6 @@ result = categories['BASIC']
         <field name="amount_python_compute">
 result = categories['SOCIAL']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -180,7 +172,6 @@ result = categories['SOCIAL']
         <field name="amount_python_compute">
 result = categories['SOCIAL.EMPLOYER']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -208,7 +199,6 @@ result = categories['BASIC'] + categories['ALW']
         <field name="amount_python_compute">
 result = -payslip._rule_parameter('l10n_pl_standard_earning')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -223,7 +213,6 @@ result = -payslip._rule_parameter('l10n_pl_standard_earning')
         <field name="amount_python_compute">
 result = categories['GROSS'] + result_rules['STANDARD.EARNING']['total']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -268,7 +257,6 @@ elif already_taxed &lt;= cap_low and already_taxed + taxable &lt;= cap_high:
 elif already_taxed &gt;= cap_low and already_taxed + taxable &gt;= cap_high:
     result = (already_taxed + taxable - cap_high) * rate_high / 100 + (cap_high - already_taxed) * rate_low / 100
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -284,7 +272,6 @@ elif already_taxed &gt;= cap_low and already_taxed + taxable &gt;= cap_high:
 result = categories['GROSS']
 result_rate = payslip._rule_parameter('l10n_pl_health_employee_rate')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -310,7 +297,6 @@ elif children == 3:
 elif children &gt;= 4:
     result = amounts[0] + amounts[1] + amounts[2] + (children - 3) * amounts[3]
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_pl_hr_payroll.hr_payroll_structure_pl_employee_salary"/>
     </record>
@@ -404,5 +390,3 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED']
         <field name="struct_id" ref="hr_payroll_structure_pl_employee_salary"/>
     </record>
 </odoo>
-
-

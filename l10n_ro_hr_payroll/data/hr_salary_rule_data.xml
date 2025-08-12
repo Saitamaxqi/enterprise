@@ -38,7 +38,6 @@ result = categories['BASIC'] + categories['ALW']
 result_rate = -25
 result = categories['GROSS']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_ro_hr_payroll.hr_payroll_structure_ro_employee_salary"/>
     </record>
@@ -54,7 +53,6 @@ result = categories['GROSS']
 result_rate = -10
 result = categories['GROSS']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_ro_hr_payroll.hr_payroll_structure_ro_employee_salary"/>
     </record>
@@ -70,7 +68,6 @@ result = categories['GROSS']
 result_rate = -10
 result = categories['GROSS']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="True"/>
         <field name="struct_id" ref="l10n_ro_hr_payroll.hr_payroll_structure_ro_employee_salary"/>
     </record>
@@ -86,7 +83,6 @@ result = categories['GROSS']
 result_rate = 2.25
 result = categories['GROSS']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_ro_hr_payroll.hr_payroll_structure_ro_employee_salary"/>
     </record>
@@ -103,7 +99,6 @@ number_of_employees = len(version.employee_id._get_all_versions_with_contract_ov
 result_rate = 4 if number_of_employees &gt; 50 else 0
 result = categories['GROSS']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_ro_hr_payroll.hr_payroll_structure_ro_employee_salary"/>
     </record>
@@ -124,7 +119,6 @@ else:
     result_rate = 0
 result = categories['GROSS']
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_ro_hr_payroll.hr_payroll_structure_ro_employee_salary"/>
     </record>

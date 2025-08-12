@@ -58,7 +58,6 @@
         'views/report_light_payslip_templates.xml',
         'views/hr_work_entry_type_views.xml',
         'views/hr_rule_parameter_views.xml',
-        'views/hr_payroll_report_views.xml',
         'views/hr_work_entry_report_views.xml',
         'views/hr_payroll_dashboard_views.xml',
         'views/hr_payroll_dashboard_warning_views.xml',
@@ -71,13 +70,9 @@
     'assets': {
         'web.assets_backend': [
             'hr_payroll/static/src/**/*',
-            ('remove', 'hr_payroll/static/src/js/hr_payroll_report_graph_view.js'),
-            ('remove', 'hr_payroll/static/src/js/hr_payroll_report_pivot_*'),
             ('remove', 'hr_payroll/static/src/js/hr_work_entries_gantt.*'),
         ],
         'web.assets_backend_lazy': [
-            'hr_payroll/static/src/js/hr_payroll_report_graph_view.js',
-            'hr_payroll/static/src/js/hr_payroll_report_pivot_*',
             'hr_payroll/static/src/js/hr_work_entries_gantt.*',
         ],
         'web.assets_tests': [

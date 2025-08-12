@@ -45,7 +45,6 @@ if not salary_simulation:
     result = result if (first_period_contracts and payslip.version_id == target_contract) else 0</field>
             <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
             <field name="appears_on_payslip" eval="False"/>
-            <field name="appears_on_payroll_report" eval="True"/>
         </record>
 
         <!-- PFI -->

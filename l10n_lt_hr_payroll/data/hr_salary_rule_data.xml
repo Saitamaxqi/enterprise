@@ -30,7 +30,6 @@ result = payslip.paid_amount
         <field name="amount_python_compute">
 result = version.l10n_lt_benefits_in_kind
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -75,7 +74,6 @@ result = taxable_amount
         </field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="appears_on_employee_cost_dashboard" eval="False"/>
-        <field name="appears_on_payroll_report" eval="False"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -91,7 +89,6 @@ result = sum(payslip.worked_days_line_ids.filtered(lambda wd: wd.code == 'LEAVE1
         </field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="appears_on_employee_cost_dashboard" eval="False"/>
-        <field name="appears_on_payroll_report" eval="False"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -106,7 +103,6 @@ result = sum(payslip.worked_days_line_ids.filtered(lambda wd: wd.code == 'LEAVE1
 result = max(result_rules["TAXABLEAMOUNT"]['total'] - result_rules["SICKAMOUNT"]['total'] , 0)
 result_rate = -payslip._rule_parameter('l10n_lt_pit_rate_low')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -122,7 +118,6 @@ result = min(result_rules['TAXABLEAMOUNT']['total'], result_rules["SICKAMOUNT"][
 
 result_rate = -payslip._rule_parameter('l10n_lt_pit_rate_sick')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -139,7 +134,6 @@ result = inputs['PITLAST'].amount
 result_name = inputs['PITLAST'].name
 result_rate = -payslip._rule_parameter('l10n_lt_pit_rate_high')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -157,7 +151,6 @@ if version.l10n_lt_pension:
 else:
     result_rate = -payslip._rule_parameter('l10n_lt_ssc_rate')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -173,7 +166,6 @@ else:
 result = max(result_rules["TAXABLEAMOUNT"]['total'] - result_rules["SICKAMOUNT"]['total'], 0)
 result_rate = -payslip._rule_parameter('l10n_lt_pension_rate')
         </field>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
@@ -281,9 +273,7 @@ else:
     result_rate = payslip._rule_parameter('l10n_lt_sscemp_rate')
         </field>
         <field name="appears_on_employee_cost_dashboard" eval="True"/>
-        <field name="appears_on_payroll_report" eval="True"/>
         <field name="struct_id" ref="l10n_lt_hr_payroll.hr_payroll_structure_lt_employee_salary"/>
     </record>
 
 </odoo>
-
