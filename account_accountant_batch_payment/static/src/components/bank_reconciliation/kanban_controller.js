@@ -15,10 +15,12 @@ patch(BankRecKanbanController.prototype, {
             fields: {
                 id: { name: "id", type: "int" },
                 display_name: { name: "display_name", type: "char" },
+                batch_payment_id: { name: "batch_payment_id", type: "many2one" },
             },
             activeFields: {
                 id: makeActiveField(),
                 display_name: makeActiveField(),
+                batch_payment_id: makeActiveField(),
             },
         };
         return params;

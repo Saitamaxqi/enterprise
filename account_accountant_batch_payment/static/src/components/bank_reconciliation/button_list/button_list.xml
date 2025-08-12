@@ -4,7 +4,6 @@
         <xpath expr="//t[@t-if='!props.isTopLine']" position="before">
             <BankRecBatchPaymentButton
                 t-if="!props.isTopLine and !ui.isSmall and isBatchPaymentsButtonShown"
-                availableBatchPayments="props.availableBatchPayments"
                 onSelected.bind="onSelectBatchPayment"
             />
         </xpath>

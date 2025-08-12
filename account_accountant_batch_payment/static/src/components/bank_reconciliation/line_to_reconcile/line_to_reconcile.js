@@ -19,6 +19,21 @@ patch(BankRecLineToReconcile.prototype, {
         super.openMove();
     },
 
+    async deleteLine() {
+        await super.deleteLine();
+        const batchPaymentIds = [
+            ...this.lineData.payment_lines_ids.records.map(
+                (payment) => payment.batch_payment_id?.id
+            ),
+        ];
+        if (batchPaymentIds.length) {
+            await this.bankReconciliation.updateAvailableBatchPayments(
+                this.statementLineData.journal_id.id
+            );
+            this.props.statementLine.load();
+        }
+    },
+
     get paymentLinesId() {
         return this.lineData.payment_lines_ids.records.length === 1
             ? this.lineData.payment_lines_ids.records[0].data

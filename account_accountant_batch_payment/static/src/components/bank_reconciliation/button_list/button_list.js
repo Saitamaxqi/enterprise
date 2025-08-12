@@ -9,14 +9,6 @@ patch(BankRecButtonList, {
         ...BankRecButtonList.components,
         BankRecBatchPaymentButton,
     },
-    props: {
-        ...BankRecButtonList.props,
-        availableBatchPayments: { type: Array, optional: true },
-    },
-    defaultProps: {
-        ...BankRecButtonList.defaultProps,
-        availableBatchPayments: [],
-    },
 });
 
 patch(BankRecButtonList.prototype, {
@@ -39,6 +31,10 @@ patch(BankRecButtonList.prototype, {
             "set_batch_payment_bank_statement_line",
             [this.statementLineData.id, batchPaymentId]
         );
+        // delete the selected batch from availableBatchPayments to remove the button
+        await this.bankReconciliation.updateAvailableBatchPayments(
+            this.statementLineData.journal_id.id
+        );
         this.props.statementLine.load();
         this.bankReconciliation.reloadChatter();
     },
@@ -55,6 +51,6 @@ patch(BankRecButtonList.prototype, {
     },
 
     get isBatchPaymentsButtonShown() {
-        return !!this.props.availableBatchPayments?.length;
+        return !!this.bankReconciliation.availableBatchPayments?.length;
     },
 });

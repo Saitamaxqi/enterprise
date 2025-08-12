@@ -2,9 +2,13 @@ import { EventBus, reactive, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
 
-class BankReconciliationService {
+export class BankReconciliationService {
     constructor(env, services) {
         this.env = env;
+        this.setup(env, services);
+    }
+
+    setup(env, services) {
         this.bus = new EventBus();
         this.orm = services["orm"];
 

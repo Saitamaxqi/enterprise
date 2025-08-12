@@ -13,7 +13,7 @@ export class BatchPaymentPopoverLine extends Component {
                 id: Number,
                 date: String,
                 name: String,
-                amount: Number,
+                amount_residual: Number,
                 currency_id: Number,
             },
         },
@@ -47,7 +47,7 @@ export class BatchPaymentPopoverLine extends Component {
     }
 
     get formattedAmount() {
-        return formatMonetary(this.props.batchPayment.amount, {
+        return formatMonetary(this.props.batchPayment.amount_residual, {
             digits: getCurrency(this.props.batchPayment.currency_id)?.digits,
             currencyId: this.props.batchPayment.currency_id,
         });
