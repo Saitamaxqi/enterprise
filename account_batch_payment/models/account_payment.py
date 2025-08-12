@@ -69,6 +69,8 @@ class AccountPayment(models.Model):
     def write(self, vals):
         old_batch_payments = {payment: payment.batch_payment_id for payment in self}
         result = super().write(vals)
+        if 'batch_payment_id' not in vals:
+            return result
         batch_payment_id = vals.get('batch_payment_id')
         batch_payment = self.env['account.batch.payment'].browse(batch_payment_id) if batch_payment_id else None
         for payment in self:
