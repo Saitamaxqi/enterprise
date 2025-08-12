@@ -386,7 +386,7 @@ class KnowledgeAuditReportController(http.Controller):
             IrConfigParameterSudo.set_param('report.print_delay', print_delay)
 
         return request.make_response(pdf_bytes, headers=[
-            ('Content-Disposition', content_disposition(root_article.name)),  # File name
+            ('Content-Disposition', content_disposition(f'{root_article.name}.pdf')),  # File name
             ('Content-Type', 'application/pdf'),
             ('Content-Length', len(pdf_bytes)),
         ])
