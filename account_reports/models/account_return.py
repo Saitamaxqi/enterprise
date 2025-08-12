@@ -1292,11 +1292,11 @@ class AccountReturn(models.Model):
         self._mark_uncompleted()
         return True
 
-    def action_reset_ec_sales_return_common(self):
+    def action_reset_2_states(self):
         self.ensure_one()
 
         if not self.env.user.has_group('account.group_account_manager'):
-            raise UserError(_("Only an Accounting Administrator can reset an EC Sales List"))
+            raise UserError(_("Only an Accounting Administrator can reset a return"))
 
         if self.state == 'submitted':
             self._reset_checks_for_states([self.state, 'reviewed'])
@@ -1308,6 +1308,7 @@ class AccountReturn(models.Model):
             self.state = 'new'
 
         self._mark_uncompleted()
+        self.report_opened_once = False
         return True
 
     ####################################################################################################

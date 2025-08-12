@@ -302,26 +302,6 @@ class AccountReturn(models.Model):
         if self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_to_xml_sales_report'))
 
-    def l10n_be_reset_2_sates_common(self):
-        self.ensure_one()
-
-        if not self.env.user.has_group('account.group_account_manager'):
-            raise UserError(_("Only an Accounting Administrator can reset a tax return"))
-
-        if self.state == 'submitted':
-            self._reset_checks_for_states([self.state, 'reviewed'])
-            self.date_submission = False
-            self.state = 'reviewed'
-
-        if self.state == 'reviewed':
-            self._reset_checks_for_states([self.state, 'new'])
-            self.state = 'new'
-
-        self.report_opened_once = False
-        self.is_completed = False
-
-        return True
-
     def l10n_be_reset_tax_prepayment(self):
         self.ensure_one()
 
