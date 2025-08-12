@@ -46,6 +46,7 @@
                             <field name="esg_emissions_value" widget="esg_value" readonly="gas_line_ids" class="oe_inline"/>
                             <field name="source_id"/>
                             <field name="company_id"/>
+                            <field name="region"/>
                             <field name="valid_from" widget="daterange" options="{'end_date_field': 'valid_to'}"/>
                         </group>
                         <group>
@@ -101,6 +102,7 @@
                 <field name="valid_from" optional="hide"/>
                 <field name="valid_to" optional="hide"/>
                 <field name="company_id" optional="hide"/>
+                <field name="region" optional="hide"/>
             </list>
         </field>
     </record>
@@ -157,6 +159,7 @@
                     <filter name="group_by_database_id" context="{'group_by': 'database_id'}"/>
                     <filter name="group_by_uncertainty" context="{'group_by': 'esg_uncertainty_value'}"/>
                     <filter name="group_by_uom_id" context="{'group_by': 'uom_id'}"/>
+                    <filter name="group_by_region" context="{'group_by': 'region'}"/>
                 </group>
             </search>
         </field>

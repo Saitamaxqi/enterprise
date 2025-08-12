@@ -42,6 +42,7 @@ class EsgEmissionFactor(models.Model):
     account_move_line_ids = fields.One2many('account.move.line', 'esg_emission_factor_id')
     esg_other_emission_ids = fields.One2many('esg.other.emission', 'esg_emission_factor_id')
     nb_linked_emissions = fields.Integer(compute='_compute_nb_linked_emissions')
+    region = fields.Char('Region / Regional Conditions')
 
     @api.depends('uom_id', 'currency_id', 'compute_method')
     def _compute_unit_name(self):

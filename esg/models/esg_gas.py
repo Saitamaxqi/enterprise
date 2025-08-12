@@ -19,6 +19,9 @@ class EsgGas(models.Model):
         ('hfc', 'Hydrofluorocarbons (HFCs)'),
         ('pfc', 'Perfluorocarbons (PFCs)'),
         ('sf6', 'Sulfur Hexafluoride (SF₆)'),
+        ('nf3', 'Nitrogen Trifluoride'),
+        ('other', 'Other Halogenated substances'),
+        ('precursors', 'Precursors'),
     ])
     code = fields.Char(string='Code', required=True, help='Unique code identifying the gas')
     is_mandatory_gas = fields.Boolean(compute='_compute_is_mandatory_gas')

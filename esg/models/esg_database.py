@@ -1,9 +1,13 @@
+import contextlib
 import datetime
 import json
 import logging
 import math
 import re
 import requests
+
+from io import BytesIO
+from openpyxl import load_workbook
 from requests.exceptions import HTTPError, RequestException
 
 from odoo import Command, api, fields, models
@@ -43,13 +47,18 @@ class EsgDatabase(models.Model):
     @api.ondelete(at_uninstall=False)
     def _prevent_database_deletion(self):
         ademe_db = self.env.ref('esg.esg_database_ademe')
-        if any(db == ademe_db for db in self):
+        ipcc_db = self.env.ref('esg.esg_database_ipcc')
+        if ademe_db in self:
             raise ValidationError(self.env._("You can't delete the ADEME database."))
+        if ipcc_db in self:
+            raise ValidationError(self.env._("You can't delete the IPCC database."))
 
     def action_load_data(self):
         self.ensure_one()
-        if self == self.env.ref('esg.esg_database_ademe', raise_if_not_found=False):
+        if self == self.env.ref('esg.esg_database_ademe'):
             result = self._action_import_ademe_file()
+        elif self == self.env.ref('esg.esg_database_ipcc'):
+            result = self._action_import_efdb_from_ipcc()
         else:
             raise ValidationError(self.env._("Database file is missing"))
         if 'type' in result and result['type'] == 'ir.actions.act_window':
@@ -331,6 +340,281 @@ class EsgDatabase(models.Model):
         except KeyError as e:
             _logger.error(e)
             raise ValidationError(self.env._("The file format doesn't seem to be correct."))
+        return True
+
+    # =============
+    # IPCC IMPORT
+    # =============
+    def _get_ipcc_xls_file(self, reset=False):
+        request_headers = {
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate, br, zstd',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        }
+        if reset:
+            request_response = requests.request(
+                'GET',
+                'https://www.ipcc-nggip.iges.or.jp/EFDB/find_ef.php?reset=',
+                timeout=(30, 30),
+            )
+            request_response.raise_for_status()
+            request_response = requests.request(
+                'POST',
+                'https://www.ipcc-nggip.iges.or.jp/EFDB/find_ef.php',
+                headers=request_headers,
+                data={'action': 'apply_filter', 'source_data': 'default'},
+                timeout=(30, 30),
+            )
+            request_response.raise_for_status()
+            cookie = request_response.headers.get('Set-Cookie', '')
+            cookie_parts = [part.split('=', 1) for part in cookie.split(';') if '=' in part]
+            for cookie_name, cookie_value in cookie_parts:
+                if cookie_name == 'PHPSESSID':
+                    request_headers['Cookie'] = f'PHPSESSID={cookie_value}'
+                    break
+        request_response = requests.request(
+            'POST',
+            'https://www.ipcc-nggip.iges.or.jp/EFDB/find_ef_xls.php',
+            headers=request_headers,
+            data={'lang_id': 1, 'tableName': 'tmp_e63ckbntq05n963ul2451jk2sp', 'mi_show_fuel': True, 'mi_show_cpool': True},
+            timeout=(30, 30),
+        )
+        request_response.raise_for_status()
+        if request_response.content:
+            xls_file = BytesIO(request_response.content)
+        elif not reset:
+            xls_file = self._get_ipcc_xls_file(reset=True)
+        else:
+            raise ValidationError(self.env._("The IPCC server did not return any file to import the data."))
+        return xls_file
+
+    def _action_import_efdb_from_ipcc(self):
+        response_error = {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'warning',
+            },
+        }
+        ipcc_ef_data_list = []
+        parent_source_names = set()
+        try:
+            filename = self._get_ipcc_xls_file()
+            workbook = load_workbook(filename=filename)
+            sheet = workbook.active
+            column_id_per_vals_key = {}
+
+            for row in sheet.iter_rows():
+                ipcc_data = {}
+                is_header = True
+                for cell in row:
+                    if cell.row == 1:
+                        if cell.value == 'EF ID':
+                            column_id_per_vals_key[cell.column] = 'code'
+                        elif cell.value == 'IPCC 1996 Source/Sink Category':
+                            column_id_per_vals_key[cell.column] = 'parent_source_id'
+                        elif cell.value == 'IPCC 2006 Source/Sink Category':
+                            column_id_per_vals_key[cell.column] = 'source_id'
+                        elif cell.value == 'Gas':
+                            column_id_per_vals_key[cell.column] = 'gas_id'
+                        elif cell.value == 'Description':
+                            column_id_per_vals_key[cell.column] = 'name'
+                        elif cell.value == 'Region / Regional Conditions':
+                            column_id_per_vals_key[cell.column] = 'region'
+                        elif cell.value == 'Value':
+                            column_id_per_vals_key[cell.column] = 'quantity'
+                        elif cell.value == 'Unit':
+                            column_id_per_vals_key[cell.column] = 'unit'
+                        elif cell.value == 'Technologies / Practices':
+                            column_id_per_vals_key[cell.column] = 'note1'
+                        elif cell.value == 'Parameters / Conditions':
+                            column_id_per_vals_key[cell.column] = 'note2'
+                    elif cell.column in column_id_per_vals_key:
+                        is_header = False
+                        key = column_id_per_vals_key[cell.column]
+                        value = str(cell.value).strip()
+                        if key == 'parent_source_id':
+                            parent_source_names.add(value)
+                        ipcc_data[key] = value
+                if not is_header:
+                    ipcc_ef_data_list.append(ipcc_data)
+        except (ValueError, HTTPError, RequestException) as exception:
+            response_error['params']['message'] = self.env._(
+                "Server returned an unexpected error: %(error)s",
+                error=str(exception),
+            )
+            return response_error
+
+        parent_sources = self.env['esg.emission.source']._load_records([{'xml_id': f'esg.ipcc_emission_source_{i}', 'noupdate': True, 'values': {'name': source_name.strip()}} for i, source_name in enumerate(parent_source_names, 1)])
+        parent_source_per_name = {es.name: es for es in parent_sources}
+        source_name_per_parent_source = {
+            ef_data['source_id']: parent_source_per_name[ef_data['parent_source_id'].strip()]
+            for ef_data in ipcc_ef_data_list
+            if ef_data.get('source_id') and parent_source_per_name.get(ef_data.get('parent_source_id', '').strip())
+        }
+        source_per_name = {
+            es.name: es
+            for es in self.env['esg.emission.source']._load_records([
+                {'xml_id': f'esg.ipcc_emission_source_{parent.id}_{i}', 'noupdate': True, 'values': {'name': source_name.strip(), 'parent_id': parent.id}}
+                for i, (source_name, parent) in enumerate(source_name_per_parent_source.items(), 1)
+            ])
+        }
+        gas_mapping = {
+            'METHANE': self.env.ref('esg.esg_gas_ch4'),
+            'CARBON DIOXIDE': self.env.ref('esg.esg_gas_co2'),
+            'c-C4F8': self.env.ref('esg.esg_gas_pfc_c-c4f8'),
+            'C2F6': self.env.ref('esg.esg_gas_pfc_c2f6'),
+            'C3F8': self.env.ref('esg.esg_gas_pfc_c3f8'),
+            'C4F6': self.env.ref('esg.esg_gas_pfc_c4f6'),
+            'C4F8O': self.env.ref('esg.esg_gas_c4f8o'),
+            'C5F8': self.env.ref('esg.esg_gas_pfc_c5f8'),
+            'C6F14': self.env.ref('esg.esg_gas_pfc_c6f14'),
+            'CARBON MONOXIDE': self.env.ref('esg.esg_gas_co'),
+            'CF4': self.env.ref('esg.esg_gas_pfc_cf4'),
+            'HFC-125': self.env.ref('esg.esg_gas_hfc_125'),
+            'HFC-134a': self.env.ref('esg.esg_gas_hfc_134a'),
+            'HFC-134a\nHFC-152a': self.env.ref('esg.esg_gas_hfc_134a'),
+            'HFC-143a': self.env.ref('esg.esg_gas_hfc_143a'),
+            'HFC-152a': self.env.ref('esg.esg_gas_hfc_152a'),
+            'HFC-23': self.env.ref('esg.esg_gas_hfc_23'),
+            'HFC-23\nHFC-32\nHFC-125\nHFC-134a\nHFC-143a\nCF4\nC2F6\nC3F8\nC4F8\nC5F8\nC6F14': self.env.ref('esg.esg_gas_hfc_23'),
+            'HFC-23\nHFC-32\nHFC-125\nHFC-134a\nHFC-152a\nHFC-143a\nHFC-227ea\nHFC-236fa': self.env.ref('esg.esg_gas_hfc_23'),
+            'HFC-23\nHFC-32\nHFC-41\nHFC-43-10mee\nHFC-125\nHFC-134\nHFC-134a\nHFC-152a\nHFC-143\nHFC-143a\nHFC-227ea\nHFC-236fa\nHFC-245ca\nCF4\nC2F6\nC3F8\nC4F10\nc-C4F8\nC5F12\nC6F14': self.env.ref('esg.esg_gas_hfc_23'),
+            'HFC-23\nHFC-32\nHFC-41\nHFC-43-10mee\nHFC-125\nHFC-134\nHFC-134a\nHFC-152a\nHFC-143\nHFC-143a\nHFC-227ea\nHFC-236fa\nHFC-245ca\nHFC-152\nHFC-161\nHFC-236cb\nHFC-236ea\nHFC-245fa\nHFC-365mfc': self.env.ref('esg.esg_gas_hfc_23'),
+            'HFC-32': self.env.ref('esg.esg_gas_hfc_32'),
+            'HFC-41': self.env.ref('esg.esg_gas_hfc_41'),
+            'HFE-125\nHFC-43-10mee\nHFC-125\nHFC-134\nHFC-134a\nHFC-152a\nHFC-143\nHFC-143a\nHFC-227ea\nHFC-236fa\nHFC-245ca\nHFC-152\nHFC-161\nHFC-236cb\nHFC-236ea\nHFC-245fa\nHFC-365mfc': self.env.ref('esg.esg_gas_cf3ochf2'),
+            'HFE-245fa1\nHFE-365mcf3\nHFC-134a\nHFC-152a\nHFC-227ea': self.env.ref('esg.esg_gas_chf2ch2ocf3'),
+            'HFE-245fa1\nHFE-365mcf3\nHFC-43-10mee\nHFC-134a\nHFC-152a\nHFC-227ea': self.env.ref('esg.esg_gas_chf2ch2ocf3'),
+            'HFE-365mcf3\nHFC-43-10mee\nC6F14': self.env.ref('esg.esg_gas_cf3cf2ch2och3'),
+            'HFE-7100': self.env.ref('esg.esg_gas_chf2_c4f9och3'),
+            'METHANE\nCARBON DIOXIDE\nNITROUS OXIDE': self.env.ref('esg.esg_gas_ch4'),
+            'METHANE\nNITROUS OXIDE': self.env.ref('esg.esg_gas_ch4'),
+            "NITROGEN OXIDES (NO+NO2)\nMETHANE\nCARBON MONOXIDE\nCARBON DIOXIDE\nNITROUS OXIDE": self.env.ref('esg.esg_gas_co'),
+            "NITROGEN OXIDES (NO+NO2)\nMETHANE\nCARBON MONOXIDE\nNITROUS OXIDE": self.env.ref('esg.esg_gas_co'),
+            'Nitrogen Trifluoride': self.env.ref('esg.esg_gas_nf3'),
+            "Nitrogen Trifluoride\nHFC-23\nHFC-32\nCF4\nC2F6\nC3F8\nc-C4F8\nSulphur Hexafluoride": self.env.ref('esg.esg_gas_nf3'),
+            'NITROUS OXIDE': self.env.ref('esg.esg_gas_n2o'),
+            "SULPHUR DIOXIDE (SO2+SO3)\nNITROGEN OXIDES (NO+NO2)\nNON METHANE VOLATILE ORGANIC COMPOUNDS\nMETHANE\nCARBON MONOXIDE\nCARBON DIOXIDE\nNITROUS OXIDE": self.env.ref('esg.esg_gas_so2'),
+            "Sulphur Hexafluoride": self.env.ref('esg.esg_gas_sf6'),
+        }
+
+        def parse_float(value):
+            amount = None
+            with contextlib.suppress(ValueError, TypeError):
+                amount = float(value)
+            return amount
+
+        emission_factor_xmlid_list = []
+        uom_kg = self.env.ref('uom.product_uom_kgm')
+        uom_unit = self.env.ref('uom.product_uom_unit')
+        uom_m3 = self.env.ref('uom.product_uom_cubic_meter')
+        uom_tonne = self.env.ref('uom.product_uom_ton')
+        uom_ha, uom_lto = self.env['uom.uom']._load_records([
+            {'xml_id': 'esg.uom_ha', 'noupdate': True, 'values': {'name': 'ha', 'relative_factor': 1}},
+            {'xml_id': 'esg.uom_lt', 'noupdate': True, 'values': {'name': 'LTO', 'relative_factor': 1}},
+        ])
+        nb_skipped_records = 0
+        for ef_data in ipcc_ef_data_list:
+            code = ef_data['code']
+            note = ef_data.get('note1', '')
+            uom = uom_kg
+            gaz_id = False
+            source_id = False
+            name = ef_data['name'].strip()
+            if not name:
+                id = int(code)
+                if 327476 <= id <= 327568:
+                    name = "Combustion factor (Cf) for fires in vegetation types"
+                elif 327569 <= id <= 327644:
+                    name = "Below-ground biomass (BGB): root-to-shoot ratio"
+                elif 327645 <= id <= 328060:
+                    name = "Above-ground biomass (AGB): net biomass growth in natural forests"
+                elif 327427 <= id <= 327475:
+                    name = "Soil organic carbon stocks (SOCREF) in mineral soils"
+                elif 327386 <= id <= 327426:
+                    name = "Dead wood carbon stock"
+                elif 327260 <= id <= 327385:
+                    name = "Litter carbon stock"
+                else:
+                    nb_skipped_records += 1
+                    continue
+            if source_name := ef_data['source_id'].strip():
+                source = source_per_name.get(source_name)
+                if not source:
+                    nb_skipped_records += 1
+                    continue
+                source_id = source.id
+            else:
+                parent_source = parent_source_per_name.get(ef_data['parent_source_id'].strip())
+                if not parent_source:
+                    nb_skipped_records += 1
+                    continue
+                source_id = parent_source.id
+            if gaz := gas_mapping.get(ef_data['gas_id']):
+                gaz_id = gaz.id
+            else:
+                nb_skipped_records += 1
+                continue
+            if note2 := ef_data.get('note2', ''):
+                note += '\n' + note2
+            value = parse_float(ef_data['quantity'])
+            if value is None:
+                nb_skipped_records += 1
+                continue
+            if unit := ef_data.get('unit'):
+                if unit.startswith('%') or unit.lower().startswith('fraction') or unit.lower().startswith('year') or unit in ['per year', 'months', 'parts per billion by volume', 'asse', 'installe', 'equipment']:
+                    nb_skipped_records += 1
+                    continue
+                elif unit.startswith('g'):
+                    value /= 1000
+                elif (
+                    unit.lower().startswith('kg')
+                ):
+                    value *= 1
+                elif unit.startswith('TJ'):
+                    value *= 1.11 * (10 ** -5)
+                elif unit.lower().startswith('gg'):
+                    value *= 10 ** 9
+                elif unit.lower().startswith('ton') or uom in ['(kg PFC/tAl)/(AE-Minutes/cellday)', '(kg PFC/tAl)/(mV/day)', 'kg SF6/tonnes magnesium produced or smelted']:
+                    uom = uom_tonne
+                elif unit == 'm3/m3 beer':
+                    value *= 1.020
+                    uom = uom_m3
+                elif unit == 'm3/m3 ethanol':
+                    value *= 789
+                    uom = uom_m3
+                elif unit == 'kg CH4/head/yr':
+                    uom = uom_unit
+                elif unit == 't dm/ha':
+                    uom = uom_ha
+                    value *= 1000
+                elif unit == 'kg/LTO':
+                    uom = uom_lto
+                note += '\nUnit converted in kg: ' + unit
+            emission_factor_xmlid_list.append({
+                'xml_id': f'esg.ipcc_emission_factor_{code}',
+                'noupdate': True,
+                'values': {
+                    'code': code,
+                    'name': name,
+                    'description': note,
+                    'uom_id': uom.id,
+                    'source_id': source_id,
+                    'region': ef_data['region'],
+                    'database_id': self.id,
+                    'gas_line_ids': [
+                        Command.create({
+                            'gas_id': gaz_id,
+                            'quantity': value,
+                        }),
+                    ],
+                },
+            })
+        if nb_skipped_records:
+            _logger.warning("%s entries from IPCC Database were skipped because of missing information", nb_skipped_records)
+        self.env['esg.emission.factor']._load_records(emission_factor_xmlid_list)
         return {
             'name': self.env._('Emission Factors'),
             'type': 'ir.actions.act_window',
