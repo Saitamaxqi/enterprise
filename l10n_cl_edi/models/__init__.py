@@ -3,7 +3,7 @@ from . import account_journal
 from . import account_move
 from . import certificate
 from . import fetchmail_server
-from . import l10n_cl_account_invoice_reference
+from . import l10n_cl_edi_reference
 from . import l10n_cl_company_activities
 from . import l10n_cl_dte_caf
 from . import l10n_latam_document_type

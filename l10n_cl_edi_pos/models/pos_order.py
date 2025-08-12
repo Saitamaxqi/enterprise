@@ -60,7 +60,7 @@ class PosOrder(models.Model):
                 if refunded_order_order_lines_set == refunded_order_lines_set:
                     reference_doc_code = '1'
 
-                self.env['l10n_cl.account.invoice.reference'].create({
+                self.env['l10n_cl.edi.reference'].create({
                     'move_id': move.id,
                     'origin_doc_number': reversed_move_id.l10n_latam_document_number,
                     'l10n_cl_reference_doc_type_id': reversed_move_id.l10n_latam_document_type_id.id,

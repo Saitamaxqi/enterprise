@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class L10n_ClAccountInvoiceReference(models.Model):
-    _name = 'l10n_cl.account.invoice.reference'
+class L10n_ClEdiReference(models.Model):
+    _name = 'l10n_cl.edi.reference'
     _description = 'Cross Reference Docs for Chilean Electronic Invoicing'
     _rec_name = 'origin_doc_number'
 

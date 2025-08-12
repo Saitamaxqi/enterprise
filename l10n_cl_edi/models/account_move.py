@@ -80,7 +80,7 @@ class AccountMove(models.Model):
     Claimed: the DTE was claimed by us for vendor bills, by our customers for customer invoices.
     Accepted: the DTE was accepted by us for vendor bills, by our customers for customer invoices.
     Reception 19983: means that the merchandise or services reception has been created and sent.
-    Accepted and RG 19983: means that both the content of the document has been accepted and the merchandise or 
+    Accepted and RG 19983: means that both the content of the document has been accepted and the merchandise or
 services reception has been received as well.
     """)
     l10n_cl_claim = fields.Selection([
@@ -96,7 +96,7 @@ services reception has been received as well.
     l10n_cl_dte_file = fields.Many2one('ir.attachment', string='DTE file', copy=False, groups='base.group_system')
     l10n_cl_sii_send_ident = fields.Text(string='SII Send Identification(Track ID)', copy=False, tracking=True)
     l10n_cl_journal_point_of_sale_type = fields.Selection(related='journal_id.l10n_cl_point_of_sale_type')
-    l10n_cl_reference_ids = fields.One2many('l10n_cl.account.invoice.reference', 'move_id', string='Reference Records')
+    l10n_cl_reference_ids = fields.One2many('l10n_cl.edi.reference', 'move_id', string='Reference Records')
 
     def button_cancel(self):
         for record in self.filtered(lambda x: x.company_id.country_id.code == "CL"):
