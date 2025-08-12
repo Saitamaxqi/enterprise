@@ -143,7 +143,7 @@
                                     <record id="balance_pymes_line_12400_sub_balances" model="account.report.expression">
                                         <field name="label">sub_balances</field>
                                         <field name="engine">account_codes</field>
-                                        <field name="formula">5303 + 5304 + 5313 + 5314 + 5323 + 5324 + 5333 + 5334 + 5343 + 5344 + 5353 + 5354 + 5393 + 5394 + 5523 + 5524 + 593 + 5943 + 5944 + 5953 + 5954</field>
+                                        <field name="formula">5303 + 5304 + 5313 + 5314 + 5323 + 5324 + 5333 + 5334 + 5343 + 5344 + 5353 + 5354 + 5393 + 5394 + 593 + 5943 + 5944 + 5953 + 5954</field>
                                     </record>
                                     <record id="balance_pymes_line_12400_sub_debits" model="account.report.expression">
                                         <field name="label">sub_debits</field>
