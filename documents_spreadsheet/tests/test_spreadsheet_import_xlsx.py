@@ -3,7 +3,7 @@
 import base64
 
 from odoo import http
-from odoo.tests.common import HttpCase
+from odoo.tests.common import HttpCase, new_test_user
 
 from .common import SpreadsheetTestCommon
 from odoo.tools import file_open, mute_logger
@@ -161,3 +161,36 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), [document.id])
         self.assertEqual(document.is_multipage, True)
+
+    def test_spreadsheet_conversion_with_portal_user(self):
+        """Test XLSX to Spreadsheet conversion with portal user who is `edit` role of the folder."""
+        portal_user = new_test_user(self.env, login='test_portal', groups='base.group_portal')
+        portal_user_doc_owner = new_test_user(self.env, login='test_portal_doc_owner', groups='base.group_portal')
+
+        partners = {
+            portal_user.partner_id: ('edit', False),
+            portal_user_doc_owner.partner_id: ('edit', False),
+        }
+
+        folder = self.env['documents.document'].create({'name': 'Test folder', 'type': 'folder'})
+        folder.action_update_access_rights(partners=partners)
+
+        with file_open('documents_spreadsheet/tests/data/test.xlsx', 'rb') as f:
+            spreadsheet_data = base64.encodebytes(f.read())
+
+        document_xlsx = self.env['documents.document'].create({
+            'datas': spreadsheet_data,
+            'name': 'text.xlsx',
+            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'folder_id': folder.id,
+            'owner_id': portal_user_doc_owner.id
+        })
+        with mute_logger('odoo.addons.documents.models.documents_document'):  # Creating document(s) as superuser
+            spreadsheet_id = document_xlsx.import_to_spreadsheet()
+        spreadsheet = self.env['documents.document'].browse(spreadsheet_id).exists()
+
+        self.assertTrue(spreadsheet)
+        # Spreadsheets can not be shared in edit mode to non-internal users.
+        # `clone_xlsx_into_spreadsheet()` should have adjusted portal users' role during the conversion.
+        portal_user_roles = spreadsheet.access_ids.filtered(lambda x: x.partner_id.user_ids.share).mapped('role')
+        self.assertListEqual(portal_user_roles, ['view', 'view'])

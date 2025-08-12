@@ -324,7 +324,21 @@ class DocumentsDocument(models.Model):
 
         unzipped, attachments = self._unzip_xlsx()
 
+        def adjust_role(partner, role):
+            """Ensure non-internal users do not have 'edit' access."""
+            user_ids = partner.with_context(active_test=False).user_ids
+            return 'view' if not user_ids or user_ids.share else role
+
+        access_ids = [
+            Command.create({
+                'partner_id': acc.partner_id.id,
+                'role': adjust_role(acc.partner_id, acc.role)
+            })
+            for acc in self.access_ids.filtered("role")
+        ]
+
         doc = self.copy({
+            "access_ids": access_ids,
             "attachment_id": False,
             "handler": "spreadsheet",
             "mimetype": "application/o-spreadsheet",

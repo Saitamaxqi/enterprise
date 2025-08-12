@@ -67,7 +67,7 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
                     },
                     confirmLabel: _t("Restore"),
                 });
-            } else {
+            } else if (this.documentService.userIsInternal) {
                 const fileType = mainDocument.data.mimetype === "text/csv" ? "CSV" : "Excel";
                 this.dialogService.add(SpreadsheetCloneCSVXlsxDialog, {
                     title: fileType + _t(" file preview"),
