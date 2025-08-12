@@ -30,7 +30,7 @@
     <record model="sign.item.type" id="sign_item_type_signature">
         <field name="name">Signature</field>
         <field name="item_type">signature</field>
-        <field name="tip">sign it</field>
+        <field name="tip">Sign it</field>
         <field name="placeholder">Signature</field>
         <field name="default_width" type="float">0.200</field>
         <field name="default_height" type="float">0.050</field>
@@ -40,7 +40,7 @@
     <record model="sign.item.type" id="sign_item_type_initial">
         <field name="name">Initials</field>
         <field name="item_type">initial</field>
-        <field name="tip">mark it</field>
+        <field name="tip">Mark it</field>
         <field name="placeholder">Initials</field>
         <field name="default_width" type="float">0.085</field>
         <field name="default_height" type="float">0.030</field>

@@ -33,7 +33,10 @@ class Sign(http.Controller):
         if current_request_item and current_request_item.partner_id.lang:
             http.request.update_context(lang=current_request_item.partner_id.lang)
 
-        sign_item_types = http.request.env['sign.item.type'].sudo().search_read([])
+        # This context is needed since we want to show in the sidebar only non
+        # archive fields but we want to be able to still use archived fields
+        # in the documents to avoid breaking existing sign requests and templates.
+        sign_item_types = http.request.env['sign.item.type'].with_context(active_test=False).sudo().search_read([])
         if not sign_item_types:
             raise UserError(_("Unable to sign the document due to missing required data. Please contact an administrator."))
 

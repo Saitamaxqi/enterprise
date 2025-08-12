@@ -96,8 +96,9 @@ export class SignTemplate extends Component {
     }
 
     get signTemplateSidebarProps() {
+        this.signItemTypesActive = this.signItemTypes.filter(item => item.active);
         return {
-            signItemTypes: this.signItemTypes,
+            signItemTypes: this.signItemTypesActive,
             isSignRequest: this.resModel === "sign.request",
             updateRoleName: (roleId, roleName) => this.updateRoleName(roleId, roleName),
             deleteRole: (roleId) => this.deleteRole(roleId),
@@ -338,7 +339,10 @@ export class SignTemplate extends Component {
             domain = ['|', ['model_name', '=', false], ['model_name', 'in', [modelName, 'res.partner']]];
         }
         this.signItemTypes = await this.orm.call("sign.item.type", "search_read", [domain], {
-            context: user.context,
+            context: {
+                ...user.context,
+                active_test: false,
+            },
         });
     }
 
