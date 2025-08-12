@@ -13,6 +13,7 @@
             hasSignersWithoutItems ="hasSignersWithoutItems"
             documentId="this.state.selectedDocumentId"
             onEditTemplate.bind="onEditTemplate"
+            referenceDoc="referenceDoc"
         />
         <div class="d-flex flex-grow-1 h-100 overflow-hidden">
             <SignTemplateSidebar t-if="showSidebar" t-props="signTemplateSidebarProps"/>

@@ -34,6 +34,7 @@ export class SignTemplate extends Component {
         }
         this.actionType = params.sign_edit_call || "";
         this.resModel = params.resModel || "";
+        this.referenceDoc = this.props.action.context.default_reference_doc;
         this.signStatus = useState({
             isTemplateChanged: false,
             // isSignTemplateSaved is used as a flag to know if the template is saved or not.
