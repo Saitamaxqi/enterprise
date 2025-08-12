@@ -316,15 +316,11 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
         super()._add_invoice_config_vals(vals)
 
         invoice = vals['invoice']
-        # Customer and supplier depend on the invoice type
-        if invoice.l10n_co_dian_identifier_type == 'cude':
-            algorithm = "CUDE-SHA384"
-        elif invoice.l10n_co_dian_identifier_type == 'cuds':
-            algorithm = "CUDS-SHA384"
-            # If CUDS, switch the party roles
-            vals['supplier'], vals['customer'] = vals['customer'], vals['supplier']
-        else:
-            algorithm = "CUFE-SHA384"
+
+        algorithm = {
+            'cude': "CUDE-SHA384",
+            'cuds': "CUDS-SHA384",
+        }.get(invoice.l10n_co_dian_identifier_type, "CUFE-SHA384")
 
         prepayments = invoice._l10n_co_dian_get_invoice_prepayments()
 
