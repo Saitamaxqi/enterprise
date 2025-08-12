@@ -2,20 +2,17 @@ import base64
 from lxml import etree
 
 from odoo import Command
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.account_iso20022.tests.test_iso20022_common import TestISO20022CommonCreditTransfer
 from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 from odoo.tests.common import test_xsd
 from odoo.tests import tagged, Form
 
 
-class TestSEPACreditTransferCommon(AccountTestInvoicingCommon):
+class TestSEPACreditTransferCommon(TestISO20022CommonCreditTransfer):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.env.ref('base.EUR').active = True
-
-        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
-
         # tests doesn't go through the sanitization (_ is invalid)
         cls.partner_a.name = sanitize_communication(cls.partner_a.name)
         cls.partner_b.name = sanitize_communication(cls.partner_b.name)

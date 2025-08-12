@@ -23,9 +23,6 @@
       <BtchBookg>true</BtchBookg>
       <NbOfTxs>2</NbOfTxs>
       <CtrlSum>1100.00</CtrlSum>
-      <PmtTpInf>
-        <InstrPrty>NORM</InstrPrty>
-      </PmtTpInf>
       <ReqdExctnDt>2024-03-04</ReqdExctnDt>
       <Dbtr>
         <Nm>Grunnings</Nm>
@@ -58,9 +55,6 @@
         <CdtrAgt>
           <FinInstnId>
             <BIC>BQBHCHGG</BIC>
-            <ClrSysMmbId>
-              <MmbId>123456</MmbId>
-            </ClrSysMmbId>
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
@@ -88,9 +82,6 @@
         <CdtrAgt>
           <FinInstnId>
             <BIC>BQBHCHGG</BIC>
-            <ClrSysMmbId>
-              <MmbId>123456</MmbId>
-            </ClrSysMmbId>
           </FinInstnId>
         </CdtrAgt>
         <Cdtr>
