@@ -245,9 +245,9 @@ class SignEmsigner(SignController):
         )
         if sign_user_sudo:
             # sign as a known user
-            request_item_sudo = request_item.with_user(sign_user_sudo).sudo()
+            request_item = request_item.with_user(sign_user_sudo).sudo()
 
-        sign_request = request_item_sudo.sign_request_id
+        sign_request = request_item.sign_request_id
 
         document_id = sign_request.template_id.document_ids
         if len(document_id) != 1:
