@@ -10,7 +10,11 @@ async function executeAccountReportDownload({ env, action }) {
     try {
         await download({ url, data });
         if (!data.no_closing_after_download ?? true)
-            env.services.action.doAction({type: 'ir.actions.act_window_close'});
+            if (data.next_action) {
+                env.services.action.doAction(data.next_action);
+            } else {
+                env.services.action.doAction({type: 'ir.actions.act_window_close'});
+            }
     } catch (e) {
         if (e.exceptionName === 'AccountReportFileDownloadException') {
             const reportOptions = JSON.parse(data.options);

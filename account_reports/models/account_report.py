@@ -5865,7 +5865,7 @@ class AccountReport(models.Model):
         date_to = fields.Date.from_string(options[dt_filter]['date_to'])
         return self._get_dates_period(date_from, date_to, options['date']['mode'])['string']
 
-    def export_file(self, options, file_generator):
+    def export_file(self, options, file_generator, next_action=None):
         self.ensure_one()
 
         export_options = {**options, 'export_mode': 'file'}
@@ -5875,6 +5875,7 @@ class AccountReport(models.Model):
             'data': {
                 'options': json.dumps(export_options),
                 'file_generator': file_generator,
+                'next_action': next_action,
             }
         }
 
