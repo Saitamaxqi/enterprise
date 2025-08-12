@@ -897,7 +897,7 @@ class DocumentsDocument(models.Model):
                 'name', 'partner_id', 'type', 'url', 'url_preview_image'}
 
     def action_update_access_rights(self, access_internal=None, access_via_link=None, is_access_via_link_hidden=None,
-                                    partners=None):
+                                    partners=None, no_propagation=False):
         """Update access to a document and propagate if applicable.
 
         This method can be called to update the access of internal users, with
@@ -917,6 +917,7 @@ class DocumentsDocument(models.Model):
             Mapping of partner(_id) to the tuple:
                 role: 'edit', 'view', False (=>delete),
                 expiration: datetime string, False (removed/None)
+        :param bool no_propagation: whether to propagate rights to sub-folders
         """
         if len(self.ids) == 0:
             return
@@ -945,18 +946,20 @@ class DocumentsDocument(models.Model):
                 "Incorrect values. Use one of the following for the following fields: %(hints)s.)", hints=hints
             ))
 
-        self._action_update_access(access_internal, access_via_link, is_access_via_link_hidden)
+        self._action_update_access(access_internal, access_via_link, is_access_via_link_hidden,
+                                   no_propagation=no_propagation)
         if partners:
             partners = {
                 self.env['res.partner'].browse(int(partner)) if isinstance(partner, str | int) else partner:
                 (role, fields.Datetime.to_datetime(exp) if exp and isinstance(exp, str) else exp)
                 for partner, (role, exp) in (partners or {}).items()
             }
-            self._action_update_members(partners)
+            self._action_update_members(partners, no_propagation=no_propagation)
 
         return self.mapped('user_permission')
 
-    def _action_update_access(self, access_internal, access_via_link, is_access_via_link_hidden):
+    def _action_update_access(self, access_internal, access_via_link, is_access_via_link_hidden,
+                              no_propagation=False):
         """Update the access on self and children.
 
         Stop the propagation when the value is already the right one.
@@ -964,6 +967,7 @@ class DocumentsDocument(models.Model):
         :param str | None access_internal: change the `access_internal` if not None
         :param str | None access_via_link: change the `access_via_link` if not None
         :param bool | None is_access_via_link_hidden: change the `is_access_via_link_hidden` if not None
+        :param bool no_propagation: whether to propagate access update to sub-folders
         """
         self.flush_model()
         for field, value in (
@@ -980,7 +984,7 @@ class DocumentsDocument(models.Model):
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
-                ('id', 'child_of', self.ids),
+                ('id', 'in' if no_propagation else 'child_of', self.ids),
             ])
             candidates_domain &= self._get_access_update_domain()
 
@@ -1024,10 +1028,11 @@ class DocumentsDocument(models.Model):
             'user_permission',
         ])
 
-    def _action_update_members(self, partners):
+    def _action_update_members(self, partners, no_propagation=False):
         """Update the members access on all files bellow the current folder.
 
         :param partners: Partners to add as members / change access
+        :param bool no_propagation: whether to propagate members update to sub-folders
         """
         self.env['documents.access'].flush_model()
 
@@ -1045,7 +1050,7 @@ class DocumentsDocument(models.Model):
         # use `_search` to respect access rules and to use `_search_user_permission`
         to_update_domain = Domain([
             ('shortcut_document_id', '=', False),  # update "target -> shortcuts" but not "shortcut -> target"
-            ('id', 'child_of', self.ids),
+            ('id', 'in' if no_propagation else 'child_of', self.ids),
         ])
         to_update_domain &= self._get_access_update_domain()
 
@@ -2386,52 +2391,6 @@ class DocumentsDocument(models.Model):
                 "url": f"/odoo/action-documents.document_action?{url_params}"
             }
         return super()._get_access_action(access_uid=access_uid, force_website=force_website)
-
-    @api.readonly
-    def permission_panel_data(self):
-        """Provide access related data for a given document/folder"""
-        if self.env.user.share:
-            raise AccessError(_("You are not allowed to read the permission panel data."))
-        specification = self._permission_specification()
-        self.check_access('read')
-        result = self.sudo().with_context(active_test=False).web_search_read([('id', '=', self.id)], specification)
-        record = result['records'][0]
-        selections = {
-            'access_via_link': self._fields.get('access_via_link')._description_selection(self.env),
-            'access_via_link_options': [('1', _("Must have the link to access")), ('0', _("Discoverable"))],
-            'access_internal': self._fields.get('access_internal')._description_selection(self.env),
-            'doc_access_roles': self.env['documents.access']._fields.get('role')._description_selection(self.env)}
-        record['access_ids'] = [a for a in record['access_ids']
-                                if a['role']
-                                and (not record['owner_id'] or a['partner_id'] != record['owner_id']['partner_id'])]
-        return {'record': record, 'selections': selections}
-
-    def _permission_specification(self):
-        partner_id_spec = {'fields': {'email': {}, 'name': {}, 'user_ids': {}}}
-        return {
-            'access_internal': {},
-            'access_via_link': {},
-            'access_url': {},
-            'active': {},
-            'display_name': {},
-            'folder_id': {},
-            'is_access_via_link_hidden': {},
-            'type': {},
-            'user_permission': {},
-            'access_ids': {
-                    'fields': {
-                        'document_id': {},
-                        'partner_id': partner_id_spec,
-                        'role': {},
-                        'expiration_date': {},
-                    },
-                },
-            'owner_id': {
-                'fields': {
-                    'partner_id': partner_id_spec,
-                },
-            }
-        }
 
     @api.model
     def _data_embed_if_records_exist(self, folder_xmlid, server_action_xmlid):

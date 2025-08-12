@@ -514,13 +514,6 @@ class DocumentsDocument(models.Model):
             "allow_create": True,
         }
 
-    def _permission_specification(self):
-        specification = super()._permission_specification()
-        specification['handler'] = {}
-        if self.env.user.has_group('base.group_user'):
-            specification['access_ids']['fields']['partner_id']['fields']['partner_share'] = {}
-        return specification
-
     def _contains_live_data(self):
         """Return true if the spreadsheet contains live data, like Odoo pivots, chart, etc."""
         self.ensure_one()

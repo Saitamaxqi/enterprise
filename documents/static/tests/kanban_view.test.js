@@ -18,11 +18,9 @@ import {
     patchWithCleanup,
     toggleSearchBarMenu,
 } from "@web/../tests/web_test_helpers";
-import { browser } from "@web/core/browser/browser";
 
 import {
     DocumentsModels,
-    getBasicPermissionPanelData,
     getDocumentsTestServerModelsData,
     makeDocumentRecordData,
     mimetypeExamplesBase64,
@@ -31,7 +29,6 @@ import { makeDocumentsMockEnv } from "./helpers/model";
 import { embeddedActionsServerData } from "./helpers/test_server_data";
 import { basicDocumentsKanbanArch, mountDocumentsKanbanView } from "./helpers/views/kanban";
 
-import { DocumentsPermissionPanel } from "@documents/components/documents_permission_panel/documents_permission_panel";
 import { documentsClientThumbnailService } from "@documents/views/helper/documents_client_thumbnail_service";
 import { EventBus } from "@odoo/owl";
 import { Deferred } from "@web/core/utils/concurrency";
@@ -42,28 +39,12 @@ defineModels(DocumentsModels);
 
 test("Open share with edit user_permission", async function () {
     onRpc("/documents/touch/accessTokenFolder1", () => ({}));
-    onRpc("permission_panel_data", ({ args }) => {
-        expect(args[0]).toBe(folder1Id);
-        expect.step("permission_panel_data");
-        return getBasicPermissionPanelData({
-            access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
-            access_internal: "edit",
-            user_permission: "edit",
-        });
-    });
     const serverData = getDocumentsTestServerModelsData();
     const { id: folder1Id, name: folder1Name } = serverData["documents.document"][0];
-    patchWithCleanup(DocumentsPermissionPanel.prototype, {
-        async onInviteMembersSelected(selectedPartners) {
-            expect(selectedPartners.length).toEqual(1);
-            expect(selectedPartners[0].display_name).toEqual("Hermit");
-            expect.step("Select invite member");
-        },
-    });
-    patchWithCleanup(browser.navigator.clipboard, {
-        writeText: async (url) => {
-            expect.step("Document url copied");
-            expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenFolder1");
+    mockService("document.document", {
+        openSharingDialog: (documentIds) => {
+            expect(documentIds).toEqual([folder1Id]);
+            expect.step("open_share");
         },
     });
     await makeDocumentsMockEnv({ serverData });
@@ -72,13 +53,7 @@ test("Open share with edit user_permission", async function () {
         ctrlKey: true,
     });
     await contains("button:contains(Share)").click();
-
-    // Check that selecting a partner calls onInviteMembersSelected with the partner (to open the access invite wizard)
-    await contains("input.o-autocomplete--input").click();
-    await contains(".dropdown-item", { text: "Hermit" }).click();
-
-    await contains(".o_clipboard_button", { timeout: 1500 }).click();
-    expect.verifySteps(["permission_panel_data", "Select invite member", "Document url copied"]);
+    expect.verifySteps(["open_share"]);
 });
 
 test("Colorless-tags are also visible on cards", async function () {
@@ -359,6 +334,7 @@ test("Drag and Drop - Check access rights confirmation popup when moving from se
         [5, "Internal Viewer - Link None - Must have link", "view", "none", true, "folder"],
         [6, "Internal Viewer - Link Viewer - Must have link", "view", "view", true, "folder"],
     ];
+    const labelByCode = { none: "None", view: "Viewer", edit: "Editor" };
     const serverData = getDocumentsTestServerModelsData(
         documents.map(
             ([id, name, access_internal, access_via_link, is_access_via_link_hidden, type]) =>
@@ -401,6 +377,17 @@ test("Drag and Drop - Check access rights confirmation popup when moving from se
         await drop();
         await animationFrame();
         if (expectedConfirmation) {
+            await waitFor(".o_dialog:not(.o_inactive_modal)");
+            expect(".o_dialog:not(.o_inactive_modal)").toHaveCount(1);
+            const targetFolder = documents.find((doc) => doc[0] === targetDoc);
+            const accessInternal = labelByCode[targetFolder[2]];
+            const accessViaLink = labelByCode[targetFolder[3]];
+            expect(
+                `[aria-labelledby="o_documents_access_update_confirmation_access_internal"]:contains(${accessInternal})`
+            ).toBeVisible();
+            expect(
+                `[aria-labelledby="o_documents_access_update_confirmation_access_via_link"]:contains(${accessViaLink})`
+            ).toBeVisible();
             await contains(
                 ".o_dialog:not(.o_inactive_modal) .modal-footer button:contains(Cancel)"
             ).click();

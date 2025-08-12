@@ -12,10 +12,7 @@ export class DocumentsCogMenuItemShare extends DocumentsCogMenuItem {
     }
 
     async doActionOnFolder(folder) {
-        this.env?.documentsView.bus.trigger("documents-open-share", {
-            id: folder.id,
-            shortcut_document_id: folder.shortcut_document_id,
-        });
+        await this.documentService.openSharingDialog([folder.id]);
     }
 }
 

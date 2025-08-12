@@ -38,8 +38,6 @@ export const DocumentsControllerMixin = (component) =>
         }
 
         getTopBarActionMenuItems() {
-            const selectionCount = this.targetRecords.length;
-            const singleSelection = selectionCount === 1 && this.targetRecords[0];
             const embeddedActions = this.getEmbeddedActions();
             const userIsInternal = this.documentService.userIsInternal;
             return {
@@ -53,7 +51,7 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 1,
                 },
                 share: {
-                    isAvailable: () => userIsInternal && singleSelection,
+                    isAvailable: () => userIsInternal && this.targetRecords.length > 0,
                     sequence: 51,
                     description: _t("Share"),
                     icon: "fa fa-share",

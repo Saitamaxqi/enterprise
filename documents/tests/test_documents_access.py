@@ -416,6 +416,33 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.document_gif.action_update_access_rights(access_internal='view')
         self.assertEqual((self.folder_b + self.document_gif).mapped('access_internal'), ['edit', 'view'])
 
+    def test_action_update_access_rights_no_propagation(self):
+        doc_partner = self.doc_user.partner_id
+        self.folder_b.action_update_access_rights(
+            access_internal='view', access_via_link='view', is_access_via_link_hidden=True,
+            partners={self.doc_user.partner_id: ('view', False)})
+        self.assertEqual(self.folder_b.access_ids.filtered(lambda a: a.partner_id == doc_partner).mapped(
+            lambda a: (a.role, a.expiration_date)), [('view', False)])
+        self.assertEqual(self.document_gif.access_ids.filtered(lambda a: a.partner_id == doc_partner).mapped(
+            lambda a: (a.role, a.expiration_date)), [('view', False)])
+        self.assertEqual(set((self.folder_b + self.document_gif).mapped(
+            lambda d: (d.access_internal, d.access_via_link, d.is_access_via_link_hidden))), {('view', 'view', True)})
+        IN_ONE_DAY = fields.Datetime.now() + datetime.timedelta(days=1)
+
+        self.folder_b.action_update_access_rights(
+            access_internal='edit', access_via_link='edit', is_access_via_link_hidden=False,
+            partners={doc_partner: ('edit', IN_ONE_DAY)}, no_propagation=True)
+
+        self.assertEqual(self.folder_b.mapped(
+            lambda d: (d.access_internal, d.access_via_link, d.is_access_via_link_hidden)), [('edit', 'edit', False)])
+        self.assertEqual(self.folder_b.access_ids.filtered(lambda a: a.partner_id == doc_partner).mapped(
+            lambda a: (a.role, a.expiration_date)), [('edit', IN_ONE_DAY)])
+
+        self.assertEqual(self.document_gif.mapped(
+            lambda d: (d.access_internal, d.access_via_link, d.is_access_via_link_hidden)), [('view', 'view', True)])
+        self.assertEqual(self.document_gif.access_ids.filtered(lambda a: a.partner_id == doc_partner).mapped(
+            lambda a: (a.role, a.expiration_date)), [('view', False)])
+
     def test_action_update_access_rights_link_propagation(self):
         self.assertEqual(set((self.folder_b + self.document_gif).mapped('access_via_link')), {'none'})
         self.folder_b.action_update_access_rights(access_via_link='view')
@@ -1467,29 +1494,6 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         doc = self.env['documents.document'].with_user(self.doc_user).create({'access_ids': False})
         self.assertEqual(set(doc.access_ids.mapped(lambda a: (a.partner_id, a.role, a.last_access_date))),
                          {(self.doc_user.partner_id, False, fields.Datetime.now())})
-
-    def test_permission_panel_access_ids_without_logs_and_owner(self):
-        doc = self.env['documents.document'].create({
-            'folder_id': self.folder_a.id,
-            'owner_id': self.document_manager.id,
-            'access_ids': False,
-        })
-        self.assertEqual(doc.access_ids.partner_id, self.document_manager.partner_id)
-        self.env['documents.access'].create({
-            'document_id': doc.id,
-            'last_access_date': fields.Datetime.now(),
-            'partner_id': self.internal_user.partner_id.id,
-            'role': False,
-        })
-        doc.owner_id = False
-        self.assertEqual(len(doc.access_ids), 2)
-        self.assertEqual([a['partner_id']['id'] for a in doc.permission_panel_data()['record']['access_ids']],
-                         [self.document_manager.partner_id.id])
-        doc.owner_id = self.document_manager
-        self.assertEqual(len(doc.access_ids), 2)
-        self.assertEqual([a['partner_id']['id'] for a in doc.permission_panel_data()['record']['access_ids']],
-                         [],
-                         "Owner, and logs shouldn't be shown")
 
     @users('documents@example.com')
     def test_embedded_actions_unembed(self):

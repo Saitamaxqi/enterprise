@@ -191,6 +191,11 @@ export class DocumentService {
         this.dialog.add(DocumentsManageVersions, { documentId });
     }
 
+    async openSharingDialog(documentIds) {
+        const action = await this.orm.call("documents.sharing", "action_open", [documentIds]);
+        await this.action.doAction(action, { onClose: () => this.reload() });
+    }
+
     async goToServerActionsView() {
         const userHasAccessRight = await user.checkAccessRight("ir.actions.server", "create");
         if (!userHasAccessRight) {

@@ -11,6 +11,7 @@ from . import test_documents_document_folder
 from . import test_documents_multicompany
 from . import test_documents_multipage
 from . import test_documents_request
+from . import test_documents_sharing
 from . import test_documents_tag
 from . import test_mail_activity
 from . import test_mail_gateway

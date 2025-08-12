@@ -138,24 +138,6 @@ export class DocumentsDocument extends models.Model {
         record.folder_id = target;
     }
 
-    permission_panel_data(recordId) {
-        return {
-            record: this.browse([recordId])[0],
-            selections: {
-                access_via_link: this._fields.access_via_link.selection,
-                access_via_link_options: [
-                    ("1", "Must have the link to access"),
-                    ("0", "Discoverable"),
-                ],
-                access_internal: this._fields.access_internal.selection,
-                doc_access_roles: [
-                    ["view", "Viewer"],
-                    ["edit", "Editor"],
-                ],
-            },
-        };
-    }
-
     /**
      * @override to avoid super() not working for us.
      */
@@ -269,6 +251,22 @@ export class DocumentsTag extends models.Model {
     sequence = fields.Integer();
 }
 
+export class DocumentsSharing extends models.Model {
+    _name = "documents.sharing";
+
+    access_internal = fields.Selection({
+        selection: [
+            ["edit", "Editor"],
+            ["write_edit", "Editor"],
+            ["view", "Viewer"],
+            ["write_view", "Viewer"],
+            ["none", "None"],
+            ["write_none", "None"],
+            ["mixed", "Mixed rights"],
+        ],
+    });
+}
+
 export class IrEmbeddedActions extends models.Model {
     _name = "ir.embedded.actions";
 
@@ -367,39 +365,6 @@ export function getDocumentsTestServerModelsData(additionalRecords = []) {
     };
 }
 
-export function getBasicPermissionPanelData(recordExtra) {
-    const record = {
-        access_internal: "view",
-        access_via_link: "view",
-        access_ids: [],
-        active: true,
-        owner_id: false,
-        user_permission: "view",
-        ...recordExtra,
-    };
-    const selections = {
-        access_via_link: [
-            ["view", "Viewer"],
-            ["edit", "Editor"],
-            ["none", "None"],
-        ],
-        access_via_link_options: [
-            ["1", "Must have the link to access"],
-            ["0", "Discoverable"],
-        ],
-        access_internal: [
-            ["view", "Viewer"],
-            ["edit", "Editor"],
-            ["none", "None"],
-        ],
-        doc_access_roles: [
-            ["view", "Viewer"],
-            ["edit", "Editor"],
-        ],
-    };
-    return { record, selections };
-}
-
 export const DocumentsModels = {
     ...mailModels,
     IrEmbeddedActions,
@@ -408,6 +373,7 @@ export const DocumentsModels = {
     ResCompany: webModels.ResCompany,
     DocumentsDocument,
     DocumentsTag,
+    DocumentsSharing,
 };
 
 export function getDocumentsModel(modelName) {

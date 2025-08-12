@@ -4,16 +4,15 @@ import { animationFrame } from "@odoo/hoot-mock";
 import {
     contains,
     defineModels,
+    mockService,
     onRpc,
     patchWithCleanup,
     serverState,
 } from "@web/../tests/web_test_helpers";
-import { browser } from "@web/core/browser/browser";
 import { user } from "@web/core/user";
 
 import {
     DocumentsModels,
-    getBasicPermissionPanelData,
     getDocumentsTestServerModelsData,
     makeDocumentRecordData,
 } from "./helpers/data";
@@ -34,19 +33,12 @@ const dp = (selector) => `.o_documents_details_panel ${selector}`;
 
 test("Open share with view user_permission", async function () {
     onRpc("/documents/touch/accessTokenFolder1", () => ({}));
-    onRpc("permission_panel_data", ({ args }) => {
-        expect(args[0]).toBe(folder1Id);
-        expect.step("permission_panel_data");
-        return getBasicPermissionPanelData({
-            access_url: "https://localhost:8069/odoo/documents/accessTokenFolder1",
-        });
-    });
     const serverData = getDocumentsTestServerModelsData();
     const { id: folder1Id, name: folder1Name } = serverData["documents.document"][0];
-    patchWithCleanup(browser.navigator.clipboard, {
-        writeText: async (url) => {
-            expect.step("Document url copied");
-            expect(url).toBe("https://localhost:8069/odoo/documents/accessTokenFolder1");
+    mockService("document.document", {
+        openSharingDialog: (documentIds) => {
+            expect(documentIds).toEqual([folder1Id]);
+            expect.step("open_share");
         },
     });
     await makeDocumentsMockEnv({ serverData });
@@ -54,8 +46,7 @@ test("Open share with view user_permission", async function () {
     await contains(`.o_data_row:contains(${folder1Name}) .o_list_record_selector`).click();
     await contains("button:contains(Share)").click();
 
-    await contains(".o_clipboard_button", { timeout: 1500 }).click();
-    expect.verifySteps(["permission_panel_data", "Document url copied"]);
+    expect.verifySteps(["open_share"]);
 });
 
 test("Right panel shows and updates focused or container record only", async function () {

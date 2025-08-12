@@ -2,6 +2,7 @@ from . import common
 from . import test_controller
 from . import test_spreadsheet_bus
 from . import test_spreadsheet_collaborative
+from . import test_spreadsheet_documents_sharing
 from . import test_spreadsheet_import_xlsx
 from . import test_spreadsheet_import_csv
 from . import test_spreadsheet_share
