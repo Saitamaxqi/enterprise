@@ -412,6 +412,12 @@ class ShareRoute(http.Controller):
         """
         document_sudo = self._from_access_token(access_token, skip_log=True)
         if not document_sudo:
+            Redirect = request.env['documents.redirect'].sudo()
+            if document_sudo := Redirect._get_redirection(access_token):
+                return request.redirect(
+                    f'/odoo/documents/{quote(document_sudo.access_token, safe="")}',
+                    HTTPStatus.MOVED_PERMANENTLY,
+                )
             raise request.not_found()
         if document_sudo.type == 'url':
             return request.redirect(
