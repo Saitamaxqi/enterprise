@@ -4,8 +4,8 @@ import datetime
 from odoo import fields
 from odoo.addons.hr_expense.tests.common import TestExpenseCommon
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
-from odoo.tests import users, tagged, Form
-from odoo.tools import float_compare
+from odoo.tests import tagged, Form
+from odoo.tools import file_open, float_compare
 
 from ..models.hr_expense import OCR_VERSION
 
@@ -24,10 +24,15 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
             'product_id': cls.product_c.id,
         })
 
-        cls.attachment = cls.env['ir.attachment'].create({
-            'name': "product_c.jpg",
-            'raw': b'My expense',
-        })
+        with file_open('base/tests/minimal.pdf', 'rb') as file:
+            pdf_bytes = file.read()
+        cls.attachment = cls.env['ir.attachment'].create([{
+            'name': 'Attachment 1',
+            'res_model': 'hr.expense',
+            'raw': pdf_bytes,
+            'mimetype': 'application/pdf',
+        }])
+        cls.env.company.expense_extract_show_ocr_option_selection = 'auto_send'
 
     @classmethod
     def default_env_context(cls):
@@ -47,14 +52,13 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
     def test_auto_send_for_digitization(self):
         # test that the uploaded attachment is sent to the extract server when `auto_send` is set
-        self.env.company.expense_extract_show_ocr_option_selection = 'auto_send'
         expected_parse_params = {
             'version': OCR_VERSION,
             'account_token': 'test_token',
             'dbuuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
             'documents': [self.attachment.datas.decode('utf-8')],
             'user_infos': {
-                'user_email': self.user.email,
+                'user_email': self.expense_user_employee.email,
                 'user_lang': self.env.ref('base.user_root').lang,
             },
             'webhook_url': f'{self.expense.get_base_url()}/hr_expense_extract/request_done',
@@ -65,37 +69,38 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         eur_currency.rate_ids.unlink()
         eur_currency.active = True
 
-        self.expense.name = '.'.join(self.attachment.name.split('.')[:-1])
+        Expense = self.env['hr.expense'].with_user(self.expense_user_employee)
         with self._mock_iap_extract(
             extract_response=self.parse_success_response(),
             assert_params=expected_parse_params,
         ):
-            self.expense.message_post(attachment_ids=[self.attachment.id])
+            expense_id = Expense.sudo().create_expense_from_attachments(self.attachment.id)
+            expense = Expense.browse(expense_id)
 
-        self.assertEqual(self.expense.extract_state, 'waiting_extraction')
-        self.assertEqual(self.expense.extract_document_uuid, 'some_token')
-        self.assertTrue(self.expense.extract_state_processed)
-        self.assertFalse(self.expense.total_amount)
-        self.assertEqual(self.expense.currency_id, usd_currency)
+        self.assertEqual(expense.extract_state, 'waiting_extraction')
+        self.assertEqual(expense.extract_document_uuid, 'some_token')
+        self.assertTrue(expense.extract_state_processed)
+        self.assertFalse(expense.total_amount)
+        self.assertEqual(expense.currency_id, usd_currency)
 
         extract_response = self.get_result_success_response()
         expected_get_results_params = {
             'version': OCR_VERSION,
             'document_token': 'some_token',
-            'account_token': self.expense._get_iap_account().account_token,
+            'account_token': expense._get_iap_account().account_token,
         }
         with self._mock_iap_extract(
             extract_response=extract_response,
             assert_params=expected_get_results_params,
         ):
-            self.expense.check_all_status()
+            expense.check_all_status()
 
         ext_result = extract_response['results'][0]
-        self.assertEqual(self.expense.extract_state, 'waiting_validation')
-        self.assertEqual(float_compare(self.expense.total_amount, ext_result['total']['selected_value']['content'], 2), 0)
-        self.assertEqual(self.expense.currency_id, eur_currency)
-        self.assertEqual(str(self.expense.date), ext_result['date']['selected_value']['content'])
-        self.assertEqual(self.expense.product_id, self.product_c)
+        self.assertEqual(expense.extract_state, 'waiting_validation')
+        self.assertEqual(expense.name, 'Pizzeria')
+        self.assertEqual(float_compare(expense.total_amount, ext_result['total']['selected_value']['content'], 2), 0)
+        self.assertEqual(expense.currency_id, eur_currency)
+        self.assertEqual(str(expense.date), ext_result['date']['selected_value']['content'])
 
     def test_manual_send_for_digitization(self):
         # test the `manual_send` mode for digitization.
@@ -108,8 +113,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.assertEqual(self.expense.extract_state, 'no_extract_requested')
         self.assertFalse(self.expense.extract_can_show_send_button)
 
-        with self._mock_iap_extract(extract_response=self.parse_success_response()):
-            self.expense.message_post(attachment_ids=[self.attachment.id])
+        self.expense.message_post(attachment_ids=[self.attachment.id])
 
         self.assertEqual(self.expense.extract_state, 'no_extract_requested')
         self.assertTrue(self.expense.extract_can_show_send_button)
@@ -120,12 +124,13 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         # upon success, no button shall be provided
         self.assertFalse(self.expense.extract_can_show_send_button)
 
-        self.expense.name = '.'.join(self.attachment.name.split('.')[:-1])
+        old_expense_name = self.expense.name
         with self._mock_iap_extract(extract_response=extract_response):
             self.expense.check_all_status()
 
         ext_result = extract_response['results'][0]
         self.assertEqual(self.expense.extract_state, 'waiting_validation')
+        self.assertEqual(self.expense.name, old_expense_name)  # The expense already had a name, it shouldn't be updated
         self.assertEqual(float_compare(self.expense.total_amount, ext_result['total']['selected_value']['content'], 2), 0)
         self.assertEqual(self.expense.currency_id, eur_currency)
         self.assertEqual(str(self.expense.date), ext_result['date']['selected_value']['content'])
@@ -143,8 +148,6 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
     def test_show_resend_button_when_not_enough_credits(self):
         # test that upon not enough credit error, the retry button is provided
-        self.env.company.expense_extract_show_ocr_option_selection = 'auto_send'
-
         with self._mock_iap_extract(extract_response=self.parse_credit_error_response()):
             self.expense.message_post(attachment_ids=[self.attachment.id])
 
@@ -152,8 +155,6 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
     def test_status_not_ready(self):
         # test the 'processing' ocr status effects
-        self.env.company.expense_extract_show_ocr_option_selection = 'auto_send'
-
         with self._mock_iap_extract(extract_response=self.parse_processing_response()):
             self.expense._check_ocr_status()
 
@@ -161,9 +162,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.assertFalse(self.expense.extract_can_show_send_button)
 
     def test_expense_validation(self):
-        # test that when the expense is hired, the validation is sent to the server
-        self.env.company.expense_extract_show_ocr_option_selection = 'auto_send'
-
+        # test that when the expense is submitted, the validation is sent to the server
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
             self.expense.message_post(attachment_ids=[self.attachment.id])
 
@@ -194,14 +193,13 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
     def test_no_digitisation_for_posted_entries(self):
         # Tests that if a move is created from an expense, it is not digitised again.
-        self.env.company.expense_extract_show_ocr_option_selection = 'auto_send'
         self.expense.message_post(attachment_ids=[self.attachment.id])
 
         # We need to set a value, because if it is zero it would trigger non-zero constraints
         self.expense.total_amount_currency = 1
 
         self.expense.action_submit()
-        self.expense.action_approve()
+        self.expense.with_user(self.expense_user_manager).action_approve()
         self.post_expenses_with_wizard(self.expense)
 
         move = self.expense.account_move_id
@@ -221,12 +219,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         with Form(expense) as form:
             self.assertEqual(form.price_unit, 800)
 
-        self.env['ir.attachment'].create({
-            'raw': b"R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs=",
-            'name': 'file1.png',
-            'res_model': 'hr.expense',
-            'res_id': expense.id,
-        })
+        self.attachment.res_id = expense.id
 
         with Form(expense) as form:
             form.quantity = 2
@@ -322,25 +315,18 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.assertEqual(self.expense.currency_id.name, 'EUR')
         self.assertEqual(self.expense.date, fields.Date.to_date('2024-01-01'))
 
-    @users('admin')
     def test_expense_ocr_note_author(self):
-        attachment = self.env['ir.attachment'].create({
-            'name': 'test_attachment.png',
-            'res_model': 'hr.expense',
-            'raw': b'My expense',
-        })
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
-            self.env['hr.expense'].create_expense_from_attachments(attachment.ids)
+            self.expense.message_post(attachment_ids=[self.attachment.id])
 
         self.env.cr.precommit.clear()  # Clear the tracking values
-        expense = self.env['hr.expense'].search([('attachment_ids', '=', attachment.id)]).ensure_one()
         with self._mock_iap_extract(extract_response=self.get_result_success_response()):
-            expense.check_all_status()
+            self.expense.check_all_status()
 
         self.env.cr.flush()  # Runs the precommit hooks to create the tracking message
         message = self.env['mail.message'].search([
             ('model', '=', 'hr.expense'),
-            ('res_id', '=', expense.id),
+            ('res_id', '=', self.expense.id),
             ('tracking_value_ids', '!=', False),
         ]).ensure_one()
         author_name = message.author_id.complete_name
