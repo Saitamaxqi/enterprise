@@ -8,8 +8,10 @@ from odoo import Command
 from odoo.tests.common import HttpCase
 from odoo.addons.helpdesk.tests.common import HelpdeskCommon
 from odoo.exceptions import ValidationError
+from odoo.tests import tagged
 
 
+@tagged("post_install", "-at_install")
 class TestWebsiteHelpdeskLivechat(HttpCase, HelpdeskCommon):
     def setUp(self):
         super().setUp()
@@ -20,6 +22,7 @@ class TestWebsiteHelpdeskLivechat(HttpCase, HelpdeskCommon):
         })
 
         user = self.helpdesk_manager
+        user.group_ids |= self.env.ref('im_livechat.im_livechat_group_user')
 
         def _compute_available_operator_ids(channel_self):
             for record in channel_self:
@@ -115,3 +118,65 @@ class TestWebsiteHelpdeskLivechat(HttpCase, HelpdeskCommon):
                 Command.create({'step_type': 'create_ticket'}),
             ]
         })
+
+    def test_get_livechat_session_fields_to_store(self):
+        parent_partner, other_partner = self.env["res.partner"].create(
+            [
+                {"name": "Parent Partner"},
+                {"name": "Other Partner"},
+            ]
+        )
+        child_partner = self.env["res.partner"].create(
+            {
+                "name": "Child Partner",
+                "parent_id": parent_partner.id,
+            }
+        )
+        helpdesk_team = self.env["helpdesk.team"].create(
+            {
+                "name": "Test Team",
+                "message_follower_ids": [
+                    Command.create(
+                        {
+                            "res_model": "helpdesk.team",
+                            "partner_id": self.helpdesk_manager.partner_id.id,
+                        }
+                    )
+                ],
+            }
+        )
+        discuss_channel = self.env["discuss.channel"].create(
+            {
+                "channel_member_ids": [
+                    Command.create({"partner_id": parent_partner.id, "livechat_member_type": "visitor"})
+                ],
+                "channel_type": "livechat",
+                "livechat_channel_id": self.livechat_channel.id,
+                "livechat_operator_id": self.helpdesk_manager.partner_id.id,
+                "name": "Test Channel",
+            }
+        )
+        self.env["helpdesk.ticket"].create(
+            [
+                {
+                    "name": "Ticket 1",
+                    "partner_id": parent_partner.id,
+                    "team_id": helpdesk_team.id,
+                },
+                {
+                    "name": "Ticket 2",
+                    "partner_id": child_partner.id,
+                    "team_id": helpdesk_team.id,
+                },
+                {
+                    "name": "Ticket Not Related",
+                    "partner_id": other_partner.id,
+                    "team_id": helpdesk_team.id,
+                },
+            ]
+        )
+        self.start_tour(
+            f"/odoo/discuss?active_id=discuss.channel_{discuss_channel.id}",
+            "helpdesk_livechat_info_panel_tour",
+            login="hm",
+        )

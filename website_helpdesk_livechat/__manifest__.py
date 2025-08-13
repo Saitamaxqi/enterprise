@@ -45,6 +45,9 @@ Features:
             'website_helpdesk_livechat/static/tests/**/*',
             ("remove", "website_helpdesk_livechat/static/tests/tours/**/*"),
         ],
+        'web.assets_tests': [
+            'website_helpdesk_livechat/static/tests/tours/**/*',
+        ],
         "im_livechat.assets_livechat_support_tours": [
             "website_helpdesk_livechat/static/tests/tours/support/*",
         ],

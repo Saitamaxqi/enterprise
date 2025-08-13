@@ -181,10 +181,26 @@ class DiscussChannel(models.Model):
 
     def _get_livechat_session_fields_to_store(self):
         fields_to_store = super()._get_livechat_session_fields_to_store()
+        if not self.env["helpdesk.ticket"].has_access("read"):
+            return fields_to_store
+        # Fetch all parent partners and children recursively to get partners from the same company
+        partners = self.livechat_customer_partner_ids
+        while True:
+            new_partners = partners | partners.parent_id
+            if partners == new_partners:
+                break
+            partners = new_partners
+        while True:
+            new_partners = partners | partners.child_ids
+            if partners == new_partners:
+                break
+            partners = new_partners
         helpdesk_tickets = self.env["helpdesk.ticket"].search(
-            [
-                ("partner_id", "=", self.livechat_customer_partner_ids.id),
-            ],
+            Domain("partner_id", "in", partners.ids)
+            & (
+                Domain("team_id.message_follower_ids.partner_id", "=", self.env.user.partner_id.id)
+                | Domain("message_follower_ids.partner_id", "=", self.env.user.partner_id.id)
+            ),
             limit=5,
         )
         fields_to_store.append(
