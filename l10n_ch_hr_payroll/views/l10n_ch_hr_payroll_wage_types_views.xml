@@ -95,7 +95,7 @@
                 </page>
             </page>
             <form position="inside">
-                <chatter reload_on_attachment="True"/>
+                <chatter reload_on_attachment="True" invisible="1"/>
             </form>
         </field>
     </record>
