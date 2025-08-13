@@ -62,7 +62,7 @@ export class History extends Component {
     }
 
     getStatusColor(call) {
-        const pendingCall = this.userAgent.session?.call;
+        const pendingCall = this.userAgent.activeSession?.call;
         switch (call.state) {
             case "rejected":
             case "missed":
@@ -79,7 +79,7 @@ export class History extends Component {
 
     /** @returns {string} */
     getStatusText(call) {
-        const pendingCall = this.userAgent.session?.call;
+        const pendingCall = this.userAgent.activeSession?.call;
         switch (call.state) {
             case "aborted":
                 return _t("Cancelled call");
@@ -109,7 +109,7 @@ export class History extends Component {
         } else {
             classes.push("oi-arrow-up-right");
         }
-        const pendingCall = this.userAgent.session?.call;
+        const pendingCall = this.userAgent.activeSession?.call;
         switch (call.state) {
             case "terminated":
                 classes.push("text-success");

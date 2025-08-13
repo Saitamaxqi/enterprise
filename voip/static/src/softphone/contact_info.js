@@ -1,7 +1,5 @@
 import { Component } from "@odoo/owl";
 
-import { Call } from "@voip/core/call_model";
-
 import { _t } from "@web/core/l10n/translation";
 import { url } from "@web/core/utils/urls";
 
@@ -11,7 +9,11 @@ import { url } from "@web/core/utils/urls";
  */
 export class ContactInfo extends Component {
     static defaultProps = { extraClass: "" };
-    static props = { call: Call, extraClass: { type: String, optional: true } };
+    static props = {
+        contact: { type: [Object, Boolean], optional: true, default: null },
+        phoneNumber: { type: String, optional: true },
+        extraClass: { type: String, optional: true },
+    };
     static template = "voip.ContactInfo";
 
     /** @returns {string} */
@@ -36,7 +38,7 @@ export class ContactInfo extends Component {
 
     /** @returns {import("models").ResPartner} */
     get contact() {
-        return this.props.call.partner_id;
+        return this.props.contact;
     }
 
     /** @returns {string} */
@@ -57,6 +59,6 @@ export class ContactInfo extends Component {
 
     /** @returns {string} */
     get contactName() {
-        return this.contact?.voipName || this.props.call.phone_number;
+        return this.contact?.voipName || this.props.phoneNumber;
     }
 }

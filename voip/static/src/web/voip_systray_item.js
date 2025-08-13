@@ -21,7 +21,7 @@ export class VoipSystrayItem extends Component {
 
     /** @returns {boolean} */
     get hasOngoingCall() {
-        const call = this.userAgent.session?.call;
+        const call = this.userAgent.activeSession?.call;
         if (!call) {
             return false;
         }
@@ -30,7 +30,7 @@ export class VoipSystrayItem extends Component {
 
     /** @returns {string} */
     get iconClass() {
-        if (this.userAgent.session?.isOnHold) {
+        if (this.userAgent.activeSession?.isOnHold) {
             return "fa fa-pause";
         }
         return "oi oi-voip";
@@ -62,7 +62,7 @@ export class VoipSystrayItem extends Component {
         if (this.pendingUploads.size !== 0) {
             return "rounded-pill px-2 bg-warning text-warning-emphasis";
         }
-        if (this.userAgent.session?.isOnHold) {
+        if (this.userAgent.activeSession?.isOnHold) {
             return "rounded-pill px-2 bg-warning-subtle text-warning-emphasis";
         }
         if (this.hasOngoingCall) {

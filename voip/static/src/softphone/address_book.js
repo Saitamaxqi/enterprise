@@ -14,8 +14,9 @@ import { useDebounced } from "@web/core/utils/timing";
  */
 export class AddressBook extends Component {
     static components = tabComponents;
-    static defaultProps = { extraClass: "" };
+    static defaultProps = { contactsFilter: (contact) => true, extraClass: "" };
     static props = {
+        contactsFilter: { type: Function, optional: true },
         extraClass: { type: String, optional: true },
         onClickBack: { type: Function, optional: true },
         slots: { type: Object, optional: true },
@@ -52,7 +53,7 @@ export class AddressBook extends Component {
 
     /** @returns {ResPartner[]} Contacts filtered by search terms. */
     get filteredContacts() {
-        const contacts = this.voip.softphone.contacts;
+        const contacts = this.voip.softphone.contacts.filter(this.props.contactsFilter);
         const searchTerms = this.state.searchInputValue;
         if (!searchTerms) {
             return contacts;

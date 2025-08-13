@@ -5,15 +5,16 @@
         <t t-if="softphone.inCallView.transferView.activeView === 'keypad'">
             <Keypad
                 state="props.state.keypad"
-                onClickBack.bind="() => softphone.inCallView.activeView = 'default'"
-                onClickFirstResult.bind="transfer"
+                onClickBack.bind="onClickBack"
+                onClickFirstResult.bind="props.onClickTransferContact"
+                onClickTransferPhone.bind="props.onClickTransferPhone"
             >
                 <t t-set-slot="primaryAction" t-slot-scope="scope">
                     <ActionButton
                         icon="'oi-transfer'"
                         name.translate="Transfer"
                         type="scope.isSmall ? 'outline-success' : 'success'"
-                        onClick="() => this.transfer(scope.contact)"
+                        onClick="() => props.onClickTransferContact(scope.contact)"
                         isSmall="scope.isSmall"
                         hideLabel="scope.isSmall"
                     />
@@ -21,13 +22,14 @@
             </Keypad>
         </t>
         <t t-if="softphone.inCallView.transferView.activeView === 'contacts'">
-            <AddressBook onClickBack.bind="() => softphone.inCallView.activeView = 'default'">
+            <AddressBook contactsFilter="(contact) => contact.id !== userAgent.activeSession?.call?.partner_id?.id"
+                onClickBack.bind="onClickBack">
                 <t t-set-slot="primaryAction" t-slot-scope="scope">
                     <ActionButton
                         icon="'oi-transfer'"
                         name.translate="Transfer"
                         type="scope.isSmall ? 'outline-success' : 'success'"
-                        onClick="() => this.transfer(scope.contact)"
+                        onClick="() => props.onClickTransferContact(scope.contact)"
                         isSmall="scope.isSmall"
                         hideLabel="scope.isSmall"
                     />

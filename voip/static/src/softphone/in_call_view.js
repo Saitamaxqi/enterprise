@@ -1,16 +1,17 @@
-import { Component, useEffect } from "@odoo/owl";
+import { Component, useEffect, useState } from "@odoo/owl";
 
 import { Call } from "@voip/core/call_model";
 import { ActionButton } from "@voip/softphone/action_button";
 import { ContactInfo } from "@voip/softphone/contact_info";
 import { Keypad } from "@voip/softphone/keypad";
+import { TransferConfirmation } from "@voip/softphone/transfer_confirmation";
 import { TransferView } from "@voip/softphone/transfer_view";
 
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 
 export class InCallView extends Component {
-    static components = { ActionButton, ContactInfo, Keypad, TransferView };
+    static components = { ActionButton, ContactInfo, Keypad, TransferConfirmation, TransferView };
     static props = { call: Call };
     static template = "voip.InCallView";
 
@@ -20,6 +21,10 @@ export class InCallView extends Component {
         this.softphone = this.voip.softphone;
         this.userAgent = useService("voip.user_agent");
         this.ui = useService("ui");
+        this.state = useState({
+            targetContact: false,
+            targetPhoneNumber: "",
+        });
         useEffect(
             // Pair the state of the UI with the state of the tracks, so if it
             // says you're muted, you can be confident you're muted.
@@ -34,23 +39,28 @@ export class InCallView extends Component {
     }
 
     /** @returns {boolean} */
+    get hasPendingTransfer() {
+        return this.userAgent.mainSession && this.userAgent.transferSession && this.userAgent.activeSession.call?.state === "ongoing";
+    }
+
+    /** @returns {boolean} */
     get isKeypadOpen() {
         return this.softphone.inCallView.keypad.isOpen;
     }
 
     /** @returns {boolean} */
     get isOnHold() {
-        return this.userAgent.session?.isOnHold ?? false;
+        return this.userAgent.activeSession?.isOnHold ?? false;
     }
 
     /** @returns {boolean} */
     get isMuted() {
-        return this.userAgent.session?.isMute ?? false;
+        return this.userAgent.activeSession?.isMute ?? false;
     }
 
     /** @returns {boolean} */
     get isRecording() {
-        const recorder = this.userAgent.session?.recorder;
+        const recorder = this.userAgent.activeSession?.recorder;
         if (!recorder) {
             return false;
         }
@@ -91,7 +101,7 @@ export class InCallView extends Component {
     }
 
     onClickHold() {
-        this.userAgent.session.isOnHold = !this.isOnHold;
+        this.userAgent.activeSession.isOnHold = !this.isOnHold;
     }
 
     onClickKeypad() {
@@ -99,11 +109,15 @@ export class InCallView extends Component {
     }
 
     onClickMute() {
-        this.userAgent.session.isMute = !this.userAgent.session.isMute;
+        this.userAgent.activeSession.isMute = !this.userAgent.activeSession.isMute;
     }
 
     onClickTransfer() {
         this.softphone.inCallView.activeView = "transfer";
+    }
+
+    async onClickConfirmTransfer() {
+        this.userAgent.performAttendedTransfer();
     }
 
     onClickTransferContacts() {
@@ -112,23 +126,28 @@ export class InCallView extends Component {
 
     onClickTransferKeypad() {
         this.softphone.inCallView.transferView.activeView = "keypad";
+        this.softphone.inCallView.transferView.keypad.input.focus = true;
     }
 
-    onClickTransferTransfer() {
-        const input = this.softphone.inCallView.transferView.keypad.input.value.trim();
-        if (!input) {
-            return;
-        }
-        this.userAgent.transfer(input);
+    onClickTransferPhone() {
+        this.state.targetContact = false;
+        this.state.targetPhoneNumber = this.softphone.inCallView.transferView.keypad.input.value.trim();
+        this.softphone.inCallView.transferView.activeView = "confirmation";
+    }
+
+    onClickTransferContact(contact) {
+        this.state.targetContact = contact;
+        this.state.targetPhoneNumber = contact.phone;
+        this.softphone.inCallView.transferView.activeView = "confirmation";
     }
 
     toggleRecording() {
         if (this.voip.recordingPolicy !== "user") {
             return;
         }
-        const recorder = this.userAgent.session.recorder;
+        const recorder = this.userAgent.activeSession.recorder;
         if (!recorder) {
-            this.userAgent.session.record();
+            this.userAgent.activeSession.record();
             return;
         }
         switch (recorder.state) {

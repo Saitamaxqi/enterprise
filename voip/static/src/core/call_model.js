@@ -48,13 +48,6 @@ export class Call extends Record {
     /** @type {"aborted"|"calling"|"missed"|"ongoing"|"rejected"|"terminated"} */
     state = fields.Attr("calling", {
         onUpdate() {
-            const currentCall = this.store.env.services["voip.user_agent"].session?.call;
-            if (!currentCall) {
-                return;
-            }
-            if (!this.eq(currentCall)) {
-                return;
-            }
             switch (this.state) {
                 case "aborted":
                 case "missed":
@@ -114,10 +107,24 @@ export class Call extends Record {
 
     onCallEnd() {
         const softphone = this.store.env.services.voip.softphone;
-        this.store.env.services["voip.user_agent"].session = null;
-        softphone.showSummary(this);
-        softphone.dialer.reset();
-        softphone.inCallView.reset();
+        const userAgent = this.store.env.services["voip.user_agent"];
+        if (!userAgent.mainSession?.call && !userAgent.transferSession?.call) {
+            return;
+        }
+        if (this.eq(userAgent.mainSession?.call)) {
+            userAgent.mainSession = userAgent.transferSession;
+            userAgent.transferSession = null;
+        } else if (this.eq(userAgent.transferSession?.call)) {
+            userAgent.transferSession = null;
+        } else {
+            return;
+        }
+        userAgent.activeSession = userAgent.mainSession;
+        if (!userAgent.activeSession) {
+            softphone.showSummary(this);
+            softphone.dialer.reset();
+            softphone.inCallView.reset();
+        }
     }
 
     /**

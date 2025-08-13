@@ -37,11 +37,11 @@ export class CallStatusBadgeField extends BadgeField {
             case "rejected":
                 return _t("Rejected Call");
             case "ongoing":
-                return this.userAgent.session?.call?.id === this.props.record.data.id
+                return this.userAgent.activeSession?.call?.id === this.props.record.data.id
                     ? _t("Ongoing Call")
                     : _t("Ended unexpectedly");
             case "calling":
-                return this.userAgent.session?.call?.id === this.props.record.data.id
+                return this.userAgent.activeSession?.call?.id === this.props.record.data.id
                     ? _t("Trying to call")
                     : _t("Ended unexpectedly");
             default:

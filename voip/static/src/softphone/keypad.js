@@ -36,6 +36,7 @@ export class Keypad extends Component {
         dtmf: { type: Boolean, optional: true },
         onClickBack: { type: Function, optional: true },
         onClickFirstResult: { type: Function, optional: true },
+        onClickTransferPhone: { type: Function, optional: true },
         state: KeypadModel,
         slots: { type: Object, optional: true },
     };
@@ -312,7 +313,7 @@ export class Keypad extends Component {
     /** @param {string} key */
     onClickKey(key) {
         if (this.props.dtmf) {
-            this.userAgent.session?.sipSession?.sessionDescriptionHandler.sendDtmf(key);
+            this.userAgent.activeSession?.sipSession?.sessionDescriptionHandler.sendDtmf(key);
             this.props.state.input.value += key;
         } else {
             const { selectionStart, selectionEnd, value } = this.inputRef.el;
@@ -347,8 +348,8 @@ export class Keypad extends Component {
         if (!inputValue) {
             return;
         }
-        if (this.userAgent.session?.sipSession) {
-            this.userAgent.transfer(inputValue);
+        if (this.userAgent.activeSession?.sipSession && this.props.onClickTransferPhone) {
+            this.props.onClickTransferPhone();
         } else {
             this.userAgent.makeCall({ phone_number: inputValue });
         }

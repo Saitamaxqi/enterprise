@@ -7,7 +7,11 @@ import { useService } from "@web/core/utils/hooks";
 
 export class TransferView extends Component {
     static components = { ActionButton, AddressBook, Keypad };
-    static props = { state: Object }; // TODO: type
+    static props = {
+        state: Object,
+        onClickTransferContact: Function,
+        onClickTransferPhone: Function,
+    }; // TODO: type
     static template = "voip.TransferView";
 
     setup() {
@@ -17,7 +21,7 @@ export class TransferView extends Component {
         this.props.state.keypad.input.value ||= this.settings.external_device_number || "";
     }
 
-    transfer(contact) {
-        this.userAgent.transfer(contact.phone);
+    onClickBack() {
+        this.softphone.inCallView.activeView = "default";
     }
 }

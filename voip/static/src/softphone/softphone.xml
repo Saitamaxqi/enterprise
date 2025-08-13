@@ -17,6 +17,7 @@
             </button>
         </header>
         <div class="position-relative d-flex flex-column flex-grow-1 overflow-y-auto z-0">
+            <CallBanner call="bannerCall" t-if="shouldShowCallBanner"/>
             <t t-if="voip.error">
                 <ErrorScreen
                     title="voip.error.title"

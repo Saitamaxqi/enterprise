@@ -6,7 +6,7 @@
             <div class="progress-bar w-100"/>
         </div>
         <div class="my-auto">
-            <ContactInfo call="props.call"/>
+            <ContactInfo contact="props.call?.partner_id" phoneNumber="props.call.phone_number"/>
             <h2 t-esc="statusText" class="m-0 py-3 text-center"/>
             <div class="d-flex gap-3 justify-content-center flex-wrap">
                 <ActionButton

@@ -2,6 +2,7 @@ import { Component, useState } from "@odoo/owl";
 
 import { AddressBook } from "@voip/softphone/address_book";
 import { Agenda } from "@voip/softphone/agenda";
+import { CallBanner } from "@voip/softphone/call_banner";
 import { CallInvitation } from "@voip/softphone/call_invitation";
 import { CallSummary } from "@voip/softphone/call_summary";
 import { Dialer } from "@voip/softphone/dialer";
@@ -17,6 +18,7 @@ export class Softphone extends Component {
     static components = {
         AddressBook,
         Agenda,
+        CallBanner,
         CallInvitation,
         Dialer,
         DndSelector,
@@ -41,13 +43,25 @@ export class Softphone extends Component {
         return this.softphone.activeTab;
     }
 
+    /** @returns {import("@voip/core/call_model").Call} */
+    get bannerCall() {
+        return this.userAgent.activeSession === this.userAgent.mainSession
+            ? this.userAgent.transferSession.call
+            : this.userAgent.mainSession.call;
+    }
+
     /** @returns {boolean} */
     get isOnSmallDevice() {
         return this.env.services.ui.isSmall;
     }
 
     get pendingCall() {
-        return this.userAgent.session?.call;
+        return this.userAgent.activeSession?.call;
+    }
+
+    /** @returns {boolean} */
+    get shouldShowCallBanner() {
+        return this.userAgent.mainSession && this.userAgent.transferSession && this.pendingCall.state === "ongoing";
     }
 
     get tabs() {
@@ -61,7 +75,7 @@ export class Softphone extends Component {
 
     /** @returns {string} */
     get topBarIcon() {
-        if (this.userAgent.session?.isOnHold) {
+        if (this.userAgent.activeSession?.isOnHold) {
             return "fa fa-pause text-warning";
         }
         return "oi oi-voip text-success";
@@ -75,7 +89,7 @@ export class Softphone extends Component {
         if (this.userAgent.hasCallInvitation) {
             return _t("Incoming call");
         }
-        if (this.userAgent.session?.inviteState === "ringing") {
+        if (this.userAgent.activeSession?.inviteState === "ringing") {
             return _t("Ringing…");
         }
         if (this.pendingCall.state === "calling") {

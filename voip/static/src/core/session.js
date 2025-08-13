@@ -5,6 +5,8 @@ import { SessionRecorder } from "@voip/core/session_recorder";
 import { _t } from "@web/core/l10n/translation";
 
 export class Session {
+    /** @type {import("@voip/core/call_service").CallService} */
+    callService;
     /**
      * Only defined on sessions associated with an outbound call.
      *
@@ -41,6 +43,7 @@ export class Session {
         if (!call) {
             throw new Error("Required argument 'call' is missing.");
         }
+        this.callService = call.store.env.services["voip.call"];
         if (call.direction === "outgoing") {
             this.inviteState = "trying";
         }
@@ -78,8 +81,14 @@ export class Session {
         if (this.sipSession) {
             throw new Error("Redefining sipSession is not allowed.");
         }
-        sipSession?.stateChange.addListener((state) => this._onSessionStateChange(state));
         this._sipSession = sipSession;
+        if (!this._sipSession) {
+            return;
+        }
+        this._sipSession.delegate = {
+            onBye: (bye) => this._onBye(bye),
+        };
+        this._sipSession.stateChange.addListener((state) => this._onSessionStateChange(state));
     }
 
     /**
@@ -114,6 +123,19 @@ export class Session {
         this.remoteAudio.srcObject = null;
         this.remoteAudio.load();
         this.remoteAudio = null;
+    }
+
+    /**
+     * Triggered when receiving a BYE request. Useful to detect when the callee
+     * of an outgoing call hangs up.
+     *
+     * @param {SIP.IncomingByeRequest} bye
+     */
+    _onBye({ incomingByeRequest: bye }) {
+        if (!this.callService) {
+            throw new Error("callService is not set.");
+        }
+        this.callService.end(this.call);
     }
 
     /**
