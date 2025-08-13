@@ -142,7 +142,8 @@ class Base(models.AbstractModel):
                 record[field.name] = get_ai_value(record, field.type, user_prompt, context_fields, allowed_values)
             except Exception as e:  # noqa: BLE001
                 _logger.info("Could not get a value for an AI Field (%s on %s): %s", field.name, field.model_name, e)
-                record[field.name] = ""  # prevent query llm again for the field (unresolvable/timeout)
+                if field.type in ('char', 'text', 'html'):
+                    record[field.name] = ""  # prevent query llm again for the field (unresolvable/timeout)
 
     def _fill_ai_property(self, fname, property_definition):
         """Assign values to the specified AI property field for the records in `self` using LLM.
