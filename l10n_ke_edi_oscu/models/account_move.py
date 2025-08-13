@@ -377,7 +377,7 @@ class AccountMove(models.Model):
         # EXTENDS 'account'
         for move in self.filtered(lambda move: move.country_code == 'KE' and move.reversed_entry_id):
             original_move = move.reversed_entry_id
-            reversals = original_move.reversal_move_ids
+            reversals = original_move._get_reconciled_invoices().filtered(lambda move: move.move_type == 'out_refund')
 
             # Unless all the invoices / credit notes are made in the same currency, we can't conveniently
             # check that the credit notes don't exceed the invoices (due to exchange rate differences),
