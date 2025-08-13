@@ -12,6 +12,7 @@ from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 
 class TestTimesheetGridHolidays(TestCommonTimesheet):
 
+    @freeze_time('2018-2-6')
     def test_timer_methods_handle_project_access_restrictions(self):
         """Ensure timer visibility computation does not raise AccessError for restricted users.
             1. Create a private project with a task and a linked timesheet.
@@ -19,6 +20,7 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
             3. Call _should_not_display_timer() and action_timer_start() as that user.
             4. Verify that no AccessError is raised due to the use of sudo() within these methods.
         """
+        self.timesheet.date = fields.Date.today()
         self.timesheet_manager_no_project_user.action_create_employee()
         employee = self.timesheet_manager_no_project_user.employee_id
         timesheet = self.timesheet.with_user(self.timesheet_manager_no_project_user)
