@@ -242,7 +242,7 @@ export class SignablePDFIframe extends PDFIframe {
                 signatureType: type.item_type,
                 displaySignatureRatio: width / height,
                 activeFrame: Boolean(signFrame) || !type.auto_value,
-                mode: signMode,
+                mode: "auto",
                 defaultFrame: type.frame_value || "",
                 hash: this.frameHash,
                 signatureImage,
