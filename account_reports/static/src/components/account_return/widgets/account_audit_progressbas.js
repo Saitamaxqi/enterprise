@@ -4,11 +4,18 @@ export class AccountAuditProgressbar extends ProgressBarField {
     static template = "account_reports.AccountAuditProgresbar";
 
     get progressBarColorClass() {
+        if (this.maxValue == 0) {
+            return "";
+        }
         return this.currentValue > this.maxValue ? this.props.overflowClass : "bg-success";
     }
 
+    get maxValue() {
+        return this.props.record.data[this.maxValueField];
+    }
+
     get hasMaxValue() {
-        return !!this.props.record.data[this.maxValueField]
+        return this.props.record.data.hasOwnProperty(this.maxValueField)
     }
 }
 

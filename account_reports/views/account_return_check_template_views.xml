@@ -54,6 +54,9 @@
             <field name="model">account.return.check.template</field>
             <field name="arch" type="xml">
                 <search>
+                    <field name="name"/>
+                    <field name="return_type"/>
+                    <field name="cycle"/>
                     <filter name="filter_manual" string="Manual" domain="[('type', '=', 'check'), ('model', '=', False)]"/>
                     <filter name="filter_automated" string="Automated" domain="[('type', '=', 'check'), ('model', '!=', False)]"/>
                     <filter name="filter_file_upload" string="Document Upload" domain="[('type', '=', 'file')]"/>

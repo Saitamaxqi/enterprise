@@ -714,7 +714,7 @@ class AccountReturn(models.Model):
     @api.depends('audit_account_status_ids')
     def _compute_audit_balances_count(self):
         for record in self:
-            record.audit_balances_count = len(record.audit_account_status_ids)
+            record.audit_balances_count = len(record.audit_account_status_ids.filtered('status'))
 
     @api.depends('audit_account_status_ids')
     def _compute_audit_balances_completed_count(self):
@@ -1597,7 +1597,7 @@ class AccountReturn(models.Model):
 
             if action:
                 action_record = self.env[action.sudo().type].browse(action.sudo().id)
-                vals_dict['action'] = action_record._get_action_dict()
+                action = action_record._get_action_dict()
 
             initial_result = template._get_initial_result()
 

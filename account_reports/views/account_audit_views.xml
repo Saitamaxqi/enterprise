@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="d-flex flex-column w-100 h-100 px-2 mt-2 gap-3">
-                                <div class="w-100" invisible="not audit_balances_count">
+                                <div class="w-100">
                                     <label for="resolved_check_count">Balances</label>
                                     <field name="audit_balances_count" invisible="1"/>
                                     <field name="audit_balances_completed_count" class="w-100 audit_return_progressbar" widget="account_audit_progressbar" options="{ 'max_value': 'audit_balances_count'}"/>
@@ -67,11 +67,11 @@
                     <field name="type_id"/>
                     <field name="state"/>
                     <field name="date_submission"/>
-                    <filter name="unarchived_returns" string="Unarchived" domain="[('is_completed', '=', False)]"/>
-                    <filter name="archived_returns" string="Archived" domain="[('is_completed', '!=', False)]"/>
                     <filter name="todo_returns" string="Ongoing" domain="[('audit_status', '=', 'ongoing')]"/>
                     <filter name="done_returns" string="Done" domain="[('audit_status', '=', 'done')]"/>
                     <filter name="paused_returns" string="Paused" domain="[('audit_status', '=', 'paused')]"/>
+                    <separator/>
+                    <filter name="archived_returns" string="Archived" domain="[('is_completed', '!=', False)]"/>
                     <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
                     <separator/>
                     <filter invisible="1" string="My Activities" name="filter_activities_my" domain="[('activity_user_id', '=', uid)]"/>

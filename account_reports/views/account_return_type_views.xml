@@ -21,9 +21,9 @@
                                 <field name="report_id"/>
                             </group>
                             <group>
-                                <field name="country_id" string="Country"/>
-                                <field name="payment_partner_id" readonly="0"/>
-                                <field name="payment_partner_bank_id"/>
+                                <field name="country_id" string="Country" invisible="category == 'audit'"/>
+                                <field name="payment_partner_id" readonly="0" invisible="category == 'audit'"/>
+                                <field name="payment_partner_bank_id" invisible="category == 'audit'"/>
                             </group>
                         </group>
                     </sheet>
@@ -37,7 +37,8 @@
             <field name="model">account.return.type</field>
             <field name="arch" type="xml">
                 <list>
-                    <field name="name" string="Return Type"/>
+                    <field name="name" string="Return Name"/>
+                    <field name="category" string="Type"/>
                     <field name="deadline_periodicity"/>
                     <field name="country_id"/>
                 </list>
