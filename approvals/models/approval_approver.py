@@ -67,8 +67,8 @@ class ApprovalApprover(models.Model):
     def _compute_can_edit(self):
         is_user = self.env.user.has_group('approvals.group_approval_user')
         for approval in self:
-            approval.can_edit = not approval.user_id or not approval.category_approver or is_user
-            approval.can_edit_user_id = is_user or approval.request_id.request_owner_id == self.env.user or not approval.user_id
+            approval.can_edit = is_user
+            approval.can_edit_user_id = is_user or not approval.user_id
 
     _unique_request_user = models.Constraint(
         'UNIQUE(request_id, user_id)',

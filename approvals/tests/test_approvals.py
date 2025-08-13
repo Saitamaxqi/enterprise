@@ -274,3 +274,59 @@ class TestRequest(common.TransactionCase):
         # approval owner cannot approved his own approval
         with self.assertRaises(AccessError):
             record.with_user(user_1).write({'request_status': 'approved'})
+
+    def test_approval_approvers_access(self):
+        user1 = new_test_user(self.env, login='user1')
+        user2 = new_test_user(self.env, login='user2')
+        user3 = new_test_user(self.env, login='user3', groups='approvals.group_approval_user')
+        category1 = self.env['approval.category'].create({
+            'name': 'Test category 1',
+            'company_id': user1.company_id.id,
+            'approver_ids': [
+                Command.create({'user_id': user2.id}),
+            ]
+        })
+        approval = self.env['approval.request'].with_user(user1).create({
+            'name': 'Test request',
+            'request_owner_id': user1.id,
+            'category_id': category1.id,
+            'date_start': fields.Datetime.now(),
+            'date_end': fields.Datetime.now(),
+            'location': 'testland'
+        })
+
+        # Only an officer can edit an approver
+        with self.assertRaises(AccessError):
+            approval.approver_ids.with_user(user1).write({'required': True})
+        approval.approver_ids.with_user(user3).write({'required': True})
+        self.assertTrue(approval.approver_ids.required)
+
+        # Only an officer can add an approver to the request
+        with self.assertRaises(AccessError):
+            self.env['approval.approver'].with_user(user1).create({'user_id': user3.id, 'request_id': approval.id})
+        self.env['approval.approver'].with_user(user3).create({'user_id': user3.id, 'request_id': approval.id})
+        self.assertEqual(len(approval.approver_ids), 2)
+
+        approver2 = approval.approver_ids.filtered(lambda a: a.user_id.id == user2.id)
+        approver3 = approval.approver_ids.filtered(lambda a: a.user_id.id == user3.id)
+
+        # user1 cannot approve the user 2 approver, but user 2 can
+        with self.assertRaises(AccessError):
+            approver2.with_user(user1).action_approve()
+        approver2.with_user(user2).action_approve()
+        self.assertEqual(approver2.status, 'approved')
+
+        # Officer can access, and user2 can access because they are the approver
+        approver2.with_user(user2).read()
+        approver2.with_user(user3).read()
+
+        # Only officer can read the approvers
+        with self.assertRaises(AccessError):
+            approver3.with_user(user2).read()
+        approver3.with_user(user3).read()
+
+        # Only officer can unlink an approver
+        with self.assertRaises(AccessError):
+            approver3.with_user(user1).unlink()
+        approver3.with_user(user3).unlink()
+        self.assertEqual(approval.approver_ids.user_id.id, user2.id)

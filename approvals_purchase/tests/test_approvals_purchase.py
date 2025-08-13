@@ -354,7 +354,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
             'name': 'Clément Tall',
             'email': 'clementtall@example.com',
             # TODO: Check why this is necessary
-            'group_ids': self.env.ref('purchase.group_purchase_manager'),
+            'group_ids': [(6, 0, [self.env.ref('purchase.group_purchase_manager').id, self.env.ref('approvals.group_approval_user').id])],
         })
         # Create new purchase approval request and create purchase order.
         request_form = self.create_request_form(
