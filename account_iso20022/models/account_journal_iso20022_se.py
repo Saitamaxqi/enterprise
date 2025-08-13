@@ -11,16 +11,10 @@ class AccountJournal(models.Model):
         return super()._get_SvcLvlText(payment_method_code)
 
     def _get_company_PartyIdentification32(self, payment_method_code, postal_address=True, nm=True, issr=True, schme_nm=False):
-        result = super()._get_company_PartyIdentification32(postal_address=postal_address, issr=issr, payment_method_code=payment_method_code)
+        result = super()._get_company_PartyIdentification32(postal_address=postal_address, issr=issr, schme_nm=schme_nm, payment_method_code=payment_method_code)
         if payment_method_code == 'iso20022_se':
             if not nm:
                 result = list(filter(lambda x: x.tag != 'Nm', result))
-            if schme_nm:
-                index = next((i for i, v in enumerate(result) if v.tag == 'Id'), None)
-                Othr = result[index].find(".//Othr")
-                SchmeNm = etree.SubElement(Othr, "SchmeNm")
-                Cd = etree.SubElement(SchmeNm, "Cd")
-                Cd.text = schme_nm
         return result
 
     def _get_InitgPty(self, payment_method_code):
