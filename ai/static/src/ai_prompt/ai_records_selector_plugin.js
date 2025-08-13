@@ -46,10 +46,19 @@ export class AIRecordsSelectorPlugin extends Plugin {
     }
 
     async updateDisplayNames() {
+        const recordEls = this.editable.querySelectorAll(AI_RECORD_SELECTOR);
+        if (recordEls.length === 0) {
+            return;
+        }
+        if (!this.config.recordsSelectorResModel) {
+            for (const recordEl of recordEls) {
+                recordEl.innerText = _t("Invalid Record");
+            }
+            return;
+        }
         // display names might have been updated, making the prompt incoherent (because references
         // to these records in the prompt were not updated). They are therefore updated so that the
         // user can observe that the prompt needs to be reworked.
-        const recordEls = this.editable.querySelectorAll(AI_RECORD_SELECTOR);
         const recordIds = [...recordEls].map((el) => Number(el.dataset.aiRecordId));
         const displayNames = await this.services.name.loadDisplayNames(
             this.config.recordsSelectorResModel,
