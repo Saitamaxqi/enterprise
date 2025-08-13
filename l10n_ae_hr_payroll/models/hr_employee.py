@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime
-
 from odoo import fields, models
 
 
@@ -19,10 +17,9 @@ class HrEmployee(models.Model):
 
     def _l10n_ae_get_worked_years(self):
         self.ensure_one()
-        if self.version_id.date_start and self.version_id.date_end:
-            start_datetime = datetime.combine(self.version_id.contract_date_start, datetime.min.time())
-            end_datetime = datetime.combine(self.version_id.date_end, datetime.max.time())
-            return self._get_work_days_data_batch(start_datetime, end_datetime)[self.id]["days"] / 365
+        dates = self._get_all_contract_dates()
+        if (start_first_contract := dates[0][0]) and (end_last_contract := dates[-1][1]):
+            return ((end_last_contract - start_first_contract).days + 1) / 365
         return 0
 
     def _compute_l10n_ae_annual_leave_days(self):
