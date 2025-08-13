@@ -241,6 +241,9 @@ class SaleOrderLog(models.Model):
         """
         self._write_uninvoiced_logs(log_date_values["subscription"])
         self._write_uninvoiced_logs(log_date_values["upsell"], upsell=True)
+        # This method is call as precommit and need to flush manually
+        # because precommit.run happened right after the main flush
+        self.env.flush_all()
 
     def _write_uninvoiced_logs(self, log_date_values, upsell=False):
         if not log_date_values:

@@ -2520,6 +2520,9 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.flush_tracking()
         log = subscription.order_log_ids
         self.assertEqual(log.effective_date, datetime.date(2025, 1, 1))
+        # Simulate a new transaction, without flush after précommit
+        self.env.invalidate_all(flush=False)
+        self.assertEqual(log.effective_date, datetime.date(2025, 1, 1))
 
     def test_product_subscription_pricing_copy(self):
         """Check that product variants on product pricings after copying
