@@ -34,7 +34,6 @@
             </t>
         </xpath>
         <xpath expr="//div[@id='header']" position="replace">
-            <strong>THIS IS NOT A VALID VAT TICKET</strong>
             <h2 t-if="state == 'closed' or state == 'opened'" id="daily_report_title">Daily Report
                 <t t-if="state == 'closed'">Z</t>
                 <t t-else="">X</t>
@@ -312,7 +311,6 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
-                        <strong>THIS IS NOT A VALID VAT TICKET</strong>
                         <t t-if="o.stop_at">
                             <h2>Z USERS</h2>
                         </t>

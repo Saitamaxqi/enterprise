@@ -124,22 +124,11 @@
         </record>
 
         <template id="include_vat_notice_report_external_header" inherit_id="web.external_layout_standard">
-            <xpath expr="//div[hasclass('o_company_tagline')]" position="replace">
-                <div class="col-5 text-center" style="margin-top:20px;">
-                    <strong>THIS IS NOT A VALID VAT TICKET</strong>
-                </div>
-                <div t-field="company.report_header"/>
-            </xpath>
+            <!-- TODO: to remove in master -->
         </template>
 
         <template id="include_vat_notice_report_internal" inherit_id="web.internal_layout">
-            <xpath expr="//div[hasclass('row')]" position="before">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <strong>THIS IS NOT A VALID VAT TICKET</strong>
-                    </div>
-                </div>
-            </xpath>
+            <!-- TODO: to remove in master -->
         </template>
 
         <template id="fdm_source">
