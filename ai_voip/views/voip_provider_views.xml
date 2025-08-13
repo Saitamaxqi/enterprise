@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
-    <record id="ai_voip.voip_provider_tree_view_inherit" model="ir.ui.view">
-        <field name="name">voip.provider.tree.inherit</field>
+    <record id="voip_provider_tree_view" model="ir.ui.view">
+        <field name="name">voip.provider.tree.inherit.ai.voip</field>
         <field name="model">voip.provider</field>
         <field name="inherit_id" ref="voip.voip_provider_tree_view"/>
         <field name="arch" type="xml">
