@@ -8,7 +8,7 @@ from unittest.mock import patch
 from odoo import modules
 from odoo.exceptions import UserError
 from odoo.fields import Command
-from odoo.tests.common import TransactionCase, tagged
+from odoo.tests.common import TransactionCase, freeze_time, tagged
 from odoo.tools import file_open
 
 from .mocked_invoice_response import generate_response
@@ -21,6 +21,7 @@ _logger = logging.getLogger(__name__)
 
 DUMMY_SANDBOX_ID = "DUMMY_ID"
 DUMMY_SANDBOX_KEY = "DUMMY_KEY"
+TEST_DATETIME = "2025-02-05T22:55:17+00:00"
 
 
 class TestBRMockedRequests(TransactionCase):
@@ -101,7 +102,7 @@ class TestBRMockedRequests(TransactionCase):
 
 
 @tagged('post_install_l10n', '-at_install', 'post_install')
-class TestAvalaraBrCommon(AccountTestInvoicingCommon):
+class TestAvalaraBrCommon(AccountTestInvoicingCommon, TestBRMockedRequests):
     @classmethod
     @AccountTestInvoicingCommon.setup_country('br')
     def setUpClass(cls):
@@ -516,6 +517,42 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         with self._capture_request_br(return_value=response), \
              self.assertRaisesRegex(UserError, "Cannot find TaxCitation based on NCM for PIS"):
             invoice.button_external_tax_calculation()
+
+    @freeze_time(TEST_DATETIME)
+    def test_11_service_invoice(self):
+        """ Make sure that service invoices are handled correctly and can have CNAE overriden. """
+        rio_city = self.env.ref("l10n_br.city_br_002")
+        invoice = self._create_invoice_02(operation_types=(False, ) * 4)
+        invoice.invoice_line_ids.mapped('product_id').write(
+            {
+                "type": "service",
+                "l10n_br_property_service_code_origin_id": self.env["l10n_br.service.code"].create(
+                    {"code": "12345", "city_id": rio_city.id},
+                ),
+            },
+        )
+
+        invoice.write({
+            'invoice_date': TEST_DATETIME,
+            'l10n_latam_document_type_id': self.env.ref('l10n_br.dt_SE').id,
+            'l10n_br_cnae_code_id': self.env.ref("l10n_br_avatax.cnae_6209100").id,
+        })
+        invoice.partner_id.city_id = rio_city
+
+        ncm_code_id = self.env.ref('l10n_br_avatax.49021000')
+        ncm_code_id.l10n_br_cnae_code_id = self.env.ref('l10n_br_avatax.cnae_6204000')
+        invoice.invoice_line_ids[-1].product_id.l10n_br_ncm_code_id = ncm_code_id
+
+        with self._with_mocked_l10n_br_iap_request([
+            ("calculate_tax", "anonymous_tax_request", "anonymous_tax_response"),
+        ]):
+            invoice.action_post()
+
+        self.assertRecordValues(invoice, [{
+            'amount_total': 95.0,
+            'amount_untaxed': 95.0,
+            'amount_tax': 0.0,
+        }])
 
 
 @tagged('post_install_l10n', '-at_install', 'post_install')

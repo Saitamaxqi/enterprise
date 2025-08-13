@@ -366,6 +366,15 @@ msgstr ""
 "cenários e acionem a isenção a despeito das demais configurações."
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_ncm_code__l10n_br_cnae_code_id
+msgid "Brazil: Use this field to indicate the CNAE code related to the service "
+"being provided. This field is used in municipalities that require CNAE "
+"identification per service to validate the NFS-e."
+msgstr "Brasil: Utilize este campo para indicar o código CNAE vinculado ao "
+"serviço prestado. Esse campo é utilizado em municípios que exigem a "
+"identificação do CNAE por serviço para validar a NFS-e."
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_ncm_code__ex
 msgid ""
 "Brazil: Use this field to indicate an 'EX Citation' which identifies "
@@ -444,6 +453,7 @@ msgstr "Código CEST"
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_cnae_code_id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_company__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_cnae_code_id
@@ -489,6 +499,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__code
 msgid "Code"
 msgstr "Código"
+
+#. module: l10n_br_avatax
+#: model:ir.model.constraint,message:l10n_br_avatax.constraint_l10n_br_cnae_code_code_uniq
+msgid "Code must be unique!"
+msgstr "O Código deve ser único!"
 
 #. module: l10n_br_avatax
 #: model:ir.model,name:l10n_br_avatax.model_res_company

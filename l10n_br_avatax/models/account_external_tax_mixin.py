@@ -397,6 +397,9 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 service_codes.filtered(lambda code: code.city_id == partner_shipping.city_id).code
                 or product.l10n_br_property_service_code_origin_id.code
             )
+            # Override the CNAE code if the product has a specific one.
+            if product.l10n_br_ncm_code_id.l10n_br_cnae_code_id:
+                descriptor['cnae'] = product.l10n_br_ncm_code_id.l10n_br_cnae_code_id.sanitized_code
         else:
             descriptor['cest'] = product.l10n_br_cest_code or ''
             descriptor['source'] = product.l10n_br_source_origin or ''

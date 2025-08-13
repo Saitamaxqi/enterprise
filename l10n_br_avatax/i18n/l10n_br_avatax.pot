@@ -324,6 +324,13 @@ msgid ""
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_ncm_code__l10n_br_cnae_code_id
+msgid "Brazil: Use this field to indicate the CNAE code related to the service "
+"being provided. This field is used in municipalities that require CNAE "
+"identification per service to validate the NFS-e."
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_ncm_code__ex
 msgid ""
 "Brazil: Use this field to indicate an 'EX Citation' which identifies exceptions to Avalara’s standard fiscal rules.\n"
@@ -388,6 +395,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_cnae_code_id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_company__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_cnae_code_id
@@ -430,6 +438,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__code
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__code
 msgid "Code"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model.constraint,message:l10n_br_avatax.constraint_l10n_br_cnae_code_code_uniq
+msgid "Code must be unique!"
 msgstr ""
 
 #. module: l10n_br_avatax

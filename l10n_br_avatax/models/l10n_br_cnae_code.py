@@ -14,6 +14,11 @@ class L10n_BrCnaeCode(models.Model):
         help="Technical field that contains the code without special characters, as expected by the Avalara API.",
     )
 
+    _code_uniq = models.Constraint(
+        'UNIQUE(code)',
+        'Code must be unique!',
+    )
+
     @api.depends("code", "name")
     def _compute_display_name(self):
         for cnae in self:

@@ -15,6 +15,12 @@ class L10n_BrNcmCode(models.Model):
             "EX Citations help define specific tax treatments (e.g., CST, ST, rate reductions, special benefits) for products "
             "with tax behavior different from Avalara’s default settings."
     )
+    l10n_br_cnae_code_id = fields.Many2one(
+        "l10n_br.cnae.code",
+        string="CNAE Code",
+        help="Brazil: Use this field to indicate the CNAE code related to the service being provided. This field is used in "
+        "municipalities that require CNAE identification per service to validate the NFS-e.",
+    )
 
     _name_uniq = models.Constraint(
         'UNIQUE(name, code)',

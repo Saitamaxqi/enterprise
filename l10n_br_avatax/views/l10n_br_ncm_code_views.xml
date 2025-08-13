@@ -10,6 +10,7 @@
                         <field name="code"/>
                         <field name="name"/>
                         <field name="ex"/>
+                        <field name="l10n_br_cnae_code_id"/>
                     </group>
                 </sheet>
             </form>
