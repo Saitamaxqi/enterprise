@@ -12,6 +12,7 @@ from odoo import Command, http
 from odoo.addons.appointment.tests.common import AppointmentCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.tests import common, tagged, users
+from odoo.tools.misc import mute_logger
 
 
 class AppointmentUICommon(AppointmentCommon, common.HttpCase):
@@ -325,6 +326,65 @@ class AppointmentUITest(AppointmentUICommon):
         self.assertEqual(meeting.attendee_ids.state, "accepted",
             "Crossing over the manual confirmation percentage should confirm the attendees immediately.")
         self.assertEqual(meeting.total_capacity_reserved, 4)
+
+    @freeze_time('2022-02-14')
+    @mute_logger('odoo.http')
+    @users('apt_manager')
+    def test_appointment_answer_required_questions(self):
+        """ Check that when submitting a form through the controller, the required
+        questions have indeed been answered. """
+        self.authenticate(self.env.user.login, self.env.user.login)
+        self.apt_type_bxls_2days.write({
+            'max_bookings': 10,
+            'meeting_ids': False,
+            'question_ids': False
+        })
+        event_values = {
+            'csrf_token': http.Request.csrf_token(self),
+            'datetime_str': '2022-02-14 11:00:00',
+            'duration_str': '1.0',
+            'email': 'test1@test.example.com',
+            'name': 'Meeting Test',
+            'staff_user_id': self.staff_user_bxls.id,
+        }
+
+        answers_vals = [
+            {'name': 'answer 0', 'sequence': 0},
+            {'name': 'answer 1', 'sequence': 1}
+        ]
+        questions = self.env['appointment.question'].create([{
+            'answer_ids': [Command.create(vals) for vals in answers_vals] if question_type in ['select', 'checkbox'] else False,
+            'appointment_type_ids': self.apt_type_bxls_2days.ids,
+            'name': f'question {i}',
+            'question_type': question_type,
+            'question_required': question_required,
+            'sequence': i,
+        } for i, (question_type, question_required) in enumerate(
+            [('phone', False), ('phone', True), ('char', True), ('select', True), ('checkbox', True)]
+        )])
+        self.assertEqual(len(questions), 5)
+        self.assertEqual(len(questions.answer_ids), 4)
+        self.assertListEqual(self.apt_type_bxls_2days.question_ids.ids, questions.ids)
+
+        event_answers = {
+            f'question_{questions[0].id}': '   ',
+            f'question_{questions[1].id}': '01234',
+            f'question_{questions[2].id}': 'Hello',
+            f'question_{questions[3].id}': str(questions[3].answer_ids[1].id),
+            f'question_{questions[4].id}_answer_{questions[4].answer_ids[0].id}': True,
+        }
+
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", {**event_values, **event_answers})
+        self.assertEqual(res.status_code, 200, "Response should be OK")
+        self.assertEqual(len(self.apt_type_bxls_2days.meeting_ids), 1)
+        self.assertEqual(len(self.apt_type_bxls_2days.meeting_ids.appointment_answer_input_ids), 4)  # main phone was stripped out
+
+        for question_key in [key for key in event_answers if key != f'question_{questions[0].id}']:
+            with self.subTest(missing_mandatory_question_key=question_key):
+                event_answers_copy = event_answers.copy()
+                event_answers_copy.pop(question_key)
+                res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", {**event_values, **event_answers_copy})
+                self.assertEqual(res.status_code, 422)
 
     @freeze_time('2022-02-14')
     @users('apt_manager')

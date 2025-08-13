@@ -13,7 +13,8 @@ from urllib.parse import quote, unquote_plus
 from werkzeug.exceptions import Forbidden, NotFound
 from werkzeug.urls import url_encode
 
-from odoo import fields, http
+from odoo import fields, http, _
+from odoo.exceptions import UserError
 from odoo.fields import Command, Domain
 from odoo.http import request, route
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as dtf, email_normalize
@@ -720,9 +721,15 @@ class AppointmentController(http.Controller):
             if question.question_type == 'checkbox':
                 partner_inputs[question.id] = question.answer_ids.filtered(lambda answer: kwargs.get(f'question_{question.id}_answer_{answer.id}')).ids
             elif answer := kwargs.get(f'question_{question.id}'):
-                partner_inputs[question.id] = answer
+                if question.question_type in ['phone', 'char', 'text']:
+                    answer = answer.strip()
                 if question == main_phone_question:
-                    phone = answer.strip()
+                    phone = answer
+                if answer:
+                    partner_inputs[question.id] = answer
+            # Make sure all required questions have been answered
+            if question.question_required and not partner_inputs.get(question.id):
+                raise UserError(_("Some required answers are missing in the form."))
 
         # The answer inputs will be created in _prepare_calendar_event_values from the values in answer_input_values
         answer_input_values = []
@@ -738,7 +745,7 @@ class AppointmentController(http.Controller):
                 )
             elif question.question_type in ['char', 'text', 'phone']:
                 answer_input_values.append(
-                    dict(question_id=question.id, value_text_box=partner_inputs[question.id].strip())
+                    dict(question_id=question.id, value_text_box=partner_inputs[question.id])
                 )
 
         # avoid doing anything based on visitor if csrf isn't checked to avoid leaking last-login info
