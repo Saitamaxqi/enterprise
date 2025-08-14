@@ -9,6 +9,18 @@ export default class HeaderComponent extends Component {
         this.line = this.props.line;
     }
 
+    get displayGenerateSerialButton() {
+        if (this.isTracked) {
+            const { tracking } = this.order.product_id;
+            if (tracking === "lot") {
+                return this.isTracked && !this.lotName;
+            } else if (tracking === "serial") {
+                return (this.order.lot_producing_ids?.length || 0) < this.qtyDemand;
+            }
+        }
+        return false;
+    }
+
     get order() {
         return this.env.model.record;
     }

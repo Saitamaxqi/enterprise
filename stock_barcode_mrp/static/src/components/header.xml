@@ -15,8 +15,10 @@
 
     <t t-name="stock_barcode_mrp.MOButtons">
         <div>
-            <button t-if="isTracked and !lotName" t-on-click="() => this.env.model.generateSerial()"
-                    class="o_line_button o_add_lot btn btn-primary ms-2">
+            <button t-if="displayGenerateSerialButton"
+                    t-on-click="() => this.env.model.generateSerial()"
+                    class="o_line_button o_add_lot ms-2"
+                    t-attf-class="btn btn-{{lotName ? 'secondary' : 'primary'}}">
                 <i class="fa fa-plus" />
             </button>
             <button t-on-click="this.props.openDetails"

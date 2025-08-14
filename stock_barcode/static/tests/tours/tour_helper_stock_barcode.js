@@ -218,6 +218,12 @@ export function assertLineLocations(lineOrIndex, source = null, destination = nu
     }
 }
 
+export function assertLineLot(lineOrIndex, lotName) {
+    const line = _getLineOrFail(lineOrIndex, "Can't check line's lot or serial number");
+    const lineLotName = line.querySelector(".o_line_lot_name").innerText;
+    assert(lineLotName, lotName, "Not the expected product");
+}
+
 export function assertLineProduct(lineOrIndex, productName) {
     const line = _getLineOrFail(lineOrIndex, "Can't check line's product");
     const lineProduct = line.querySelector(".o_product_label").innerText;

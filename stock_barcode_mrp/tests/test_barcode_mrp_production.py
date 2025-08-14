@@ -166,6 +166,30 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             {'product_id': self.by_product.id, 'product_uom_qty': 2, 'quantity': 2},
         ])
 
+    def test_barcode_production_generate_serial_numbers(self):
+        """ Ensures the generate serial numbers works as expected in the Barcode app."""
+        # Configuration: enable tracking and set final product as tracked by SN.
+        group_tracking = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'group_ids': [Command.link(group_tracking.id)]})
+        self.final_product_lot.tracking = 'serial'
+        # Set lot/serial sequence to have deterministic result regardless number of time the test is run.
+        sequence = self.env['ir.sequence'].search([('code', '=', 'stock.lot.serial')], limit=1)
+        sequence.write({'number_next_actual': 128})
+        # Add enough components in stock.
+        lot = self.env['stock.lot'].create({'name': "boptilot-001", 'product_id': self.component_lot.id})
+        self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, quantity=99)
+        self.env['stock.quant']._update_available_quantity(self.component_lot, self.stock_location, quantity=99, lot_id=lot)
+        # Create and confirm MO for 1, 5 and 10 products.
+        productions = self.env['mrp.production'].create([{
+            'name': f'MO/TEST/{i}',
+            'bom_id': self.bom_lot.id,
+            'product_id': self.final_product_lot.id,
+            'product_qty': qty,
+        } for (i, qty) in [(1, 1), (2, 5), (3, 10)]])
+        productions.action_confirm()
+        # Process the three productions one after each other.
+        self.start_tour('/odoo/barcode', 'test_barcode_production_generate_serial_numbers', login='admin')
+
     def test_barcode_production_reserved_from_multiple_locations(self):
         """ Process a production with components reserved in different locations
         and with the scan of the source for each component.

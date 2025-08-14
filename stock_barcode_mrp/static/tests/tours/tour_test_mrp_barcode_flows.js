@@ -484,6 +484,79 @@ registry.category("web_tour.tours").add("test_barcode_production_create_tracked_
     ],
 });
 
+registry.category("web_tour.tours").add("test_barcode_production_generate_serial_numbers", {
+    steps: () => [
+        // First MO: produce 1 product.
+        { trigger: ".o_stock_barcode_main_menu", run: "scan MO/TEST/1" },
+        { trigger: ".o_add_lot", run: "click" },
+        {
+            trigger: ".o_header_completed",
+            run: () => {
+                helper.assertLineLot(0, "0000128");
+            },
+        },
+        ...stepUtils.validateBarcodeOperation(),
+        // Second MO: produce 5 products.
+        { trigger: ".o_stock_barcode_main_menu", run: "scan MO/TEST/2" },
+        { trigger: ".o_add_lot", run: "click" },
+        { trigger: ".modal-dialog button[name='action_generate_serial_numbers']", run: "click" },
+        { trigger: ".modal-dialog button[name='action_apply']", run: "click" },
+        {
+            trigger: ".o_header_completed",
+            run: () => {
+                helper.assertLineLot(0, "0000129, 0000130, 0000131, 0000132, 0000133");
+            },
+        },
+        ...stepUtils.validateBarcodeOperation(),
+        // Third MO: produce 10 products.
+        { trigger: ".o_stock_barcode_main_menu", run: "scan MO/TEST/3" },
+        { trigger: ".o_add_lot.btn-primary", run: "click" },
+        // Produce only 5 serial numbers first (they should be all visible on the barcode line.)
+        {
+            trigger: ".modal-content .o_field_widget[name='lot_quantity'] input",
+            run: "edit 5",
+        },
+        { trigger: ".modal-content button[name='action_generate_serial_numbers']", run: "click" },
+        {
+            content: "Wait that the serial numbers are generated before to apply.",
+            trigger:
+                ".modal .o_field_widget[name='serial_numbers'] textarea:value('0000134\n0000135\n0000136\n0000137\n0000138')",
+        },
+        { trigger: ".modal-content button[name='action_apply']", run: "click" },
+        {
+            trigger: "body:not(.modal-open) .o_barcode_line .qty-done:contains('5')",
+            run: () => {
+                helper.assertLineQty(0, "5/10");
+                helper.assertLineLot(0, "0000134, 0000135, 0000136, 0000137, 0000138");
+            },
+        },
+        // Then produce the 5 remaining (only the three firsts and the last one should be visible.)
+        { trigger: ".o_add_lot.btn-secondary", run: "click" },
+        { trigger: ".modal-content button[name='action_generate_serial_numbers']", run: "click" },
+        { trigger: ".modal-dialog button[name='action_apply']", run: "click" },
+        {
+            trigger: ".o_header_completed",
+            run: () => {
+                helper.assertLineLot(0, "0000134, 0000135, 0000136, …, 0000143");
+            },
+        },
+        // Correct the Compo Lot consumption lines.
+        { trigger: ".o_barcode_line button.o_toggle_sublines", run: "click" },
+        {
+            content: "Delete the second Comp Lot line (line with no lot.)",
+            trigger: ".o_barcode_line.o_selected button.o_line_button.o_delete_line",
+            run: "click",
+        },
+        {
+            content: "Increase qty for 5/10 to 10/10 for the Comp Lot line with a lot.",
+            trigger: ".o_barcode_line[data-barcode='compo_lot'] button.o_add_remaining_quantity",
+            run: "click",
+        },
+        { trigger: ".o_barcode_line.o_line_completed.o_selected" },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});
+
 registry
     .category("web_tour.tours")
     .add("test_barcode_production_reserved_from_multiple_locations", {
@@ -1501,7 +1574,7 @@ registry.category("web_tour.tours").add("test_not_allowing_component_lot_creatio
 registry.category("web_tour.tours").add("test_mo_barcode_byproduct_destination_location", {
     steps: () => [
         {
-            trigger: '.o_by_products',
+            trigger: ".o_by_products",
             run: "click",
         },
         // Check that lines are grouped by destination location.
@@ -1518,14 +1591,16 @@ registry.category("web_tour.tours").add("test_mo_barcode_byproduct_destination_l
         },
         // Check that destination location is shown on the by-product line.
         {
-            trigger: '.o_barcode_line:contains("By Product").o_selected .o_line_destination_location:contains("../Section 1")',
+            trigger:
+                '.o_barcode_line:contains("By Product").o_selected .o_line_destination_location:contains("../Section 1")',
         },
         {
             trigger: '.o_barcode_line:contains("Compo 01")',
             run: "click",
         },
         {
-            trigger: '.o_barcode_line:contains("Compo 01").o_selected .o_line_destination_location:contains("../Section 2")',
+            trigger:
+                '.o_barcode_line:contains("Compo 01").o_selected .o_line_destination_location:contains("../Section 2")',
         },
         {
             trigger: '.o_barcode_line:contains("Compo 01") .o_line_button.o_edit',
@@ -1533,10 +1608,16 @@ registry.category("web_tour.tours").add("test_mo_barcode_byproduct_destination_l
         },
         // Check that no 'location_id' field is shown in the by-product edit form.
         {
-            trigger: '.o_form_view_container',
-            run: function() {
-                const srclocation = document.querySelectorAll('.o_field_widget[name="location_id"] input');
-                helper.assert(srclocation.length, 0, "Expected no 'location_id' field in the by-product edit form, but found.");
+            trigger: ".o_form_view_container",
+            run: function () {
+                const srclocation = document.querySelectorAll(
+                    '.o_field_widget[name="location_id"] input'
+                );
+                helper.assert(
+                    srclocation.length,
+                    0,
+                    "Expected no 'location_id' field in the by-product edit form, but found."
+                );
             },
         },
         {
