@@ -623,7 +623,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
         params = {
             'db_uuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
-            'account_token': self.env['iap.account'].get(IAP_SERVICE_NAME).account_token,
+            'account_token': self.env['iap.account'].get(IAP_SERVICE_NAME).sudo().account_token,
             'avatax': {
                 'is_production': environment and environment == 'production',
                 'json': json or {},

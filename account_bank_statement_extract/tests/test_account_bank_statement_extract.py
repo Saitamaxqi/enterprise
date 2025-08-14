@@ -108,7 +108,7 @@ class TestBankStatementExtractProcess(AccountTestInvoicingCommon, TestExtractMix
         expected_get_results_params = {
             'version': OCR_VERSION,
             'document_token': 'some_token',
-            'account_token': self.bank_statement._get_iap_account().account_token,
+            'account_token': self.bank_statement._get_iap_account().sudo().account_token,
         }
         with self._mock_iap_extract(
             extract_response=extract_response,

@@ -148,7 +148,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
             expected_get_results_params = {
                 'version': OCR_VERSION,
                 'document_token': 'some_token',
-                'account_token': invoice._get_iap_account().account_token,
+                'account_token': invoice._get_iap_account().sudo().account_token,
             }
 
             with self._mock_iap_extract(
@@ -596,7 +596,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
                 }
             },
             'document_token': 'some_token',
-            'account_token': invoice._get_iap_account().account_token,
+            'account_token': invoice._get_iap_account().sudo().account_token,
         }
 
         with self._mock_iap_extract(

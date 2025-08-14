@@ -27,8 +27,8 @@ class SignItsme(SignController):
             referrer = request.httprequest.referrer
             if not referrer:
                 return {'success': False}
-            account_token = request.env['iap.account'].sudo().get(IAP_SERVICE_NAME)
-            if not account_token.account_token:
+            account = request.env['iap.account'].sudo().get(IAP_SERVICE_NAME)
+            if not account.sudo().account_token:
                 return {
                     'success': False,
                     'message': _("itsme® IAP service could not be found.")
@@ -42,7 +42,7 @@ class SignItsme(SignController):
                     'success': True
                 }
             response = jsonrpc(url_join(endpoint, '/itsme/v1/sign_identity_request'), params={
-                'account_token': account_token.account_token,
+                'account_token': account.sudo().account_token,
                 'itsme_state': '%s.%s' % (request_item_sudo.sign_request_id.id, request_item_sudo.access_token),
                 'referrer': parsed_referrer._replace(path='', query='', fragment='').geturl()
             })

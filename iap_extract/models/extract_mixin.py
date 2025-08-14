@@ -208,7 +208,7 @@ class ExtractMixin(models.AbstractModel):
         return self.extract_state, self.extract_error_message, self.extract_document_uuid
 
     def buy_credits(self):
-        url = self.env['iap.account'].get_credits_url(base_url='', service_name='invoice_ocr')
+        url = self.env['iap.account'].get_credits_url(service_name='invoice_ocr')
         return {
             'type': 'ir.actions.act_url',
             'url': url,
@@ -251,9 +251,9 @@ class ExtractMixin(models.AbstractModel):
             return False
         attachment = self.message_main_attachment_id
         if attachment and self.extract_state in ['no_extract_requested', 'not_enough_credit', 'error_status']:
-            account_token = self._get_iap_account()
+            account = self._get_iap_account()
 
-            if not account_token.account_token:
+            if not account.sudo().account_token:
                 self.extract_state = 'error_status'
                 self.extract_status = 'error_invalid_account_token'
                 return

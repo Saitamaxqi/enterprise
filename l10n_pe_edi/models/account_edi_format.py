@@ -322,7 +322,7 @@ class AccountEdiFormat(models.Model):
         else:
             default_endpoint = DEFAULT_IAP_ENDPOINT
         iap_server_url = ir_params.get_param('l10n_pe_edi.endpoint', default_endpoint)
-        iap_token = self.env['iap.account'].get('l10n_pe_edi').account_token
+        iap_token = self.env['iap.account'].get('l10n_pe_edi').sudo().account_token
         dbuuid = ir_params.get_param('database.uuid')
         return dbuuid, iap_server_url, iap_token
 

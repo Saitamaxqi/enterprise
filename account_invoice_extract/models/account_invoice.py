@@ -76,7 +76,7 @@ class AccountMove(models.Model):
     @api.model
     def _contact_iap_extract(self, pathinfo, params):
         params['version'] = OCR_VERSION
-        params['account_token'] = self._get_iap_account().account_token
+        params['account_token'] = self._get_iap_account().sudo().account_token
         endpoint = self.env['ir.config_parameter'].sudo().get_param('iap_extract_endpoint', 'https://extract.api.odoo.com')
         return iap_tools.iap_jsonrpc(endpoint + '/api/extract/invoice/2/' + pathinfo, params=params)
 

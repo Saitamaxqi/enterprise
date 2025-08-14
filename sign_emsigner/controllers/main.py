@@ -176,8 +176,8 @@ class SignEmsigner(SignController):
 
     def _validate_auth_method(self, request_item_sudo, **kwargs):
         if request_item_sudo.role_id.auth_method == 'emsigner':
-            account_token = request.env['iap.account'].sudo().get(IAP_SERVICE_NAME)
-            if not account_token.account_token:
+            account = request.env['iap.account'].sudo().get(IAP_SERVICE_NAME)
+            if not account.sudo().account_token:
                 return {
                     'success': False,
                     'message': _("emSigner IAP service could not be found.")
@@ -194,7 +194,7 @@ class SignEmsigner(SignController):
                 }
             params = {
                 'signature_data': self._get_emsigner_params(request_item_sudo, **kwargs),
-                'account_token': account_token.account_token,  # FOR IAP CREDIT
+                'account_token': account.sudo().account_token,  # FOR IAP CREDIT
                 'emsigner_state': '%s.%s' % (request_item_sudo.sign_request_id.id, request_item_sudo.access_token),
                 'db_uuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
             }
