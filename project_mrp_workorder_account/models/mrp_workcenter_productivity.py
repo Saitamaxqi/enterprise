@@ -13,7 +13,7 @@ class MrpWorkcenterProductivity(models.Model):
                 - Update of the project's MO, in which case previous_duration is unused
         """
         self.ensure_one()
-        employee_aal = self.workorder_id.employee_analytic_account_line_ids.filtered(
+        employee_aal = self.workorder_id.employee_analytic_account_line_ids.sudo().filtered(
             lambda line: line.employee_id and line.employee_id == self.employee_id
         )
         distribution_update = old_dist and employee_aal

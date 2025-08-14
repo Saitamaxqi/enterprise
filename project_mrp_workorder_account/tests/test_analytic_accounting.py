@@ -5,7 +5,7 @@ from freezegun import freeze_time
 from unittest import skip
 
 from odoo import Command
-from odoo.tests import Form
+from odoo.tests import Form, new_test_user
 from odoo.addons.project_mrp_account.tests.test_analytic_account import TestMrpAnalyticAccount
 
 
@@ -249,3 +249,32 @@ class TestMrpAnalyticAccountHr(TestMrpAnalyticAccount):
                 line.date_end = "2025-05-15 14:16:46"
                 self.assertEqual(self.env["account.analytic.line"].search([('employee_id', '=', self.employee1.id)]).amount, first_amount,
                 "changing the date_end and triggering the compute_duration method should not modify the aal amount")
+
+    def test_mrp_aa_employee_without_account_rights(self):
+        """
+            Test adding a user time to a work order with
+            a user admin on mrp but no rights on accounting.
+        """
+        user = new_test_user(self.env, 'temp_stock_manager', 'hr.group_hr_user,mrp.group_mrp_manager,project.group_project_user,hr_timesheet.group_hr_timesheet_approver')
+        self.env['hr.employee'].create({
+            'user_id': user.id,
+            'image_1920': False,
+            'hourly_cost': 15,
+        })
+
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.product_id = self.product
+        mo_form.bom_id = self.bom
+        mo_form.product_qty = 1.0
+        mo_form.project_id = self.project
+        mo_form.workorder_ids.duration_expected = 60
+        mo = mo_form.save()
+        mo.action_confirm()
+        with freeze_time('2027-10-01 10:00:00'):
+            mo.workorder_ids.with_user(user).start_employee(self.employee1.id)
+        with freeze_time('2027-10-01 12:00:00'):
+            self.env.invalidate_all()
+            mo.workorder_ids.with_user(user).stop_employee([self.employee1.id])
+        employee1_aa_line = mo.workorder_ids.employee_analytic_account_line_ids.filtered(lambda l: l.employee_id == self.employee1)
+        self.assertEqual(employee1_aa_line.amount, -200.0)
+        self.assertEqual(employee1_aa_line[self.analytic_plan._column_name()], self.analytic_account)
