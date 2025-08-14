@@ -210,10 +210,9 @@ class IoTController(http.Controller):
 
                 data_device = devices[device_identifier]
                 if data_device['type'] in available_types and data_device['connection'] in available_connections:
-                    if data_device['connection'] == 'network':
-                        device = request.env['iot.device'].sudo().search([('identifier', '=', device_identifier)])
-                    else:
-                        device = request.env['iot.device'].sudo().search([('iot_id', '=', box.id), ('identifier', '=', device_identifier)])
+                    device = connected_iot_devices.search([
+                        ('iot_id', '=', box.id), ('identifier', '=', device_identifier)
+                    ])
                 
                     # If an `iot.device` record isn't found for this `device`, create a new one.
                     if not device:
