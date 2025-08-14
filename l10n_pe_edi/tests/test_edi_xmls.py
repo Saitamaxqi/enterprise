@@ -399,6 +399,7 @@ class TestEdiXmls(TestPeEdiCommon):
 
         if self.env["ir.module.module"]._get('sale').state != 'installed':
             self.skipTest("Sale module is not installed")
+        self.env.user.group_ids += self.env.ref('sales_team.group_sale_salesman')
 
         pricelist = self.env['product.pricelist'].create({
             'name': 'Test Pricelist',

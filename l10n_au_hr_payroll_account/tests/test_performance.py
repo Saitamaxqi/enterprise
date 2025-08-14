@@ -22,6 +22,7 @@ class TestPerformance(AccountTestInvoicingCommon):
     @AccountTestInvoicingCommon.setup_country('au')
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref("hr_payroll.group_hr_payroll_user")
 
         cls.company_data['company'].write({
             'country_id': cls.env.ref('base.au').id,

@@ -14,6 +14,7 @@ class TestPayrollSuperStreamApi(TestPayrollSuperStream, TestL10nAUPayrollAPIComm
     @AccountTestInvoicingCommon.setup_country("au")
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref("hr_payroll.group_hr_payroll_manager")
         cls.env["ir.config_parameter"].sudo().set_param("l10n_au_payroll_test_server_url", "http://127.0.0.1:8070")
         # Created as 'demo' and switched to 'test' so no api request is tiggered
         cls.proxy_user = cls.env['account_edi_proxy_client.user']._register_proxy_user(cls.company_data['company'], 'l10n_au_payroll', 'demo')

@@ -7,6 +7,9 @@ from odoo.addons.sale_timesheet.tests.common import TestCommonSaleTimesheet
 
 @tagged("-at_install", "post_install", "helpdesk_sale_timesheet")
 class TestSaleTimesheetInTicket(TestCommonSaleTimesheet):
+    @classmethod
+    def get_default_groups(cls):
+        return super().get_default_groups() + cls.env.ref('helpdesk.group_helpdesk_manager')
 
     @classmethod
     def setUpClass(cls):

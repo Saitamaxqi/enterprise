@@ -13,6 +13,7 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids += cls.env.ref('hr_payroll.group_hr_payroll_user')
 
     @classmethod
     def _setup_common(cls, country, structure, structure_type, resource_calendar=False, car=False, contract_fields=False, employee_fields=False, tz=False):
@@ -239,9 +240,9 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             ('date_from', '=', date)
         ])
         if value_on_same_date:
-            value_on_same_date.write({'parameter_value': value})
+            value_on_same_date.sudo().write({'parameter_value': value})
         else:
-            self.env['hr.rule.parameter.value'].create({
+            self.env['hr.rule.parameter.value'].sudo().create({
                 'rule_parameter_id': rule_parameter_id,
                 'parameter_value': value,
                 'date_from': date,

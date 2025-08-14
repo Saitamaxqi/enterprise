@@ -16,4 +16,4 @@ class ResPartnerBank(models.Model):
         return ["acc_number", "aba_bsb", "partner_id", "bank_id"]
 
     def _records_to_log(self):
-        return self.filtered(lambda r: r.partner_id and "AU" in r.partner_id.employee_ids.mapped("company_country_code"))
+        return self.filtered(lambda r: r.partner_id and "AU" in r.partner_id.sudo().employee_ids.mapped("company_country_code"))

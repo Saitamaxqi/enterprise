@@ -10,6 +10,7 @@ class TestMxEdiHrPayrollCommon(TestMxEdiCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids += cls.env.ref('hr_payroll.group_hr_payroll_user')
         cls.company.partner_id.zip = '20000'
         cls.company.l10n_mx_imss_id = 'B5510768108'
         cls.company.vat = 'URE180429TM6'
@@ -31,7 +32,7 @@ class TestMxEdiHrPayrollCommon(TestMxEdiCommon):
             'company_id': cls.company.id,
         })
 
-        cls.job = cls.env['hr.job'].create({
+        cls.job = cls.env['hr.job'].sudo().create({
             'name': 'Ingeniero de Software',
             'company_id': cls.company.id,
         })

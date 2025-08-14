@@ -6,6 +6,7 @@ class TestMXEdiStockCommon(TestMxExtendedEdiCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.group_ids += cls.env.ref('fleet.fleet_group_user')
 
         cls.customer_location = cls.env.ref('stock.stock_location_customers')
 
@@ -29,7 +30,7 @@ class TestMXEdiStockCommon(TestMxExtendedEdiCommon):
             'l10n_mx_edi_operator_licence': 'a234567890',
         })
 
-        cls.model = cls.env['fleet.vehicle.model'].create({
+        cls.model = cls.env['fleet.vehicle.model'].sudo().create({
             'name': 'Clio',
             'brand_id': cls.env.ref('fleet.brand_renault').id,
             'model_year': '2023'

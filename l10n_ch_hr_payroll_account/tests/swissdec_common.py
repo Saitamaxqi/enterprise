@@ -447,7 +447,7 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
                 'l10n_ch_cs_other_fringe_benefits': "Avantages sur primes d'assurance",
             })
 
-            _job_1 = cls.env['hr.job'].create({'name': 'Informaticienne'})
+            cls.env['hr.job'].sudo().create({'name': 'Informaticienne'})
 
             # Generate AVS
             avs_1 = cls.env['l10n.ch.social.insurance'].create({
@@ -1013,45 +1013,25 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
             internship = {"contract_type_id": cls.env.ref('l10n_ch_hr_payroll.l10n_ch_contract_type_internshipContract').id}
             administrative = {"contract_type_id": cls.env.ref('l10n_ch_hr_payroll.l10n_ch_contract_type_administrativeBoard').id}
 
-            info_m = cls.env['hr.job'].create({
-                "name": "Informaticien"
-            })
+            info_m = cls.env['hr.job'].sudo().create({"name": "Informaticien"})
 
-            info_f = cls.env['hr.job'].create({
-                "name": "Informaticienne"
-            })
+            info_f = cls.env['hr.job'].sudo().create({"name": "Informaticienne"})
 
-            edb = cls.env['hr.job'].create({
-                "name": "Employé de bureau"
-            })
+            edb = cls.env['hr.job'].sudo().create({"name": "Employé de bureau"})
 
-            teacher = cls.env['hr.job'].create({
-                "name": "Enseignant du primaire"
-            })
+            teacher = cls.env['hr.job'].sudo().create({"name": "Enseignant du primaire"})
 
-            comm = cls.env['hr.job'].create({
-                "name": "Apprenti de commerce"
-            })
+            comm = cls.env['hr.job'].sudo().create({"name": "Apprenti de commerce"})
 
-            journ = cls.env['hr.job'].create({
-                "name": "Journaliste"
-            })
+            journ = cls.env['hr.job'].sudo().create({"name": "Journaliste"})
 
-            cons_cl = cls.env['hr.job'].create({
-                "name": "Conseiller à la clientèle"
-            })
+            cons_cl = cls.env['hr.job'].sudo().create({"name": "Conseiller à la clientèle"})
 
-            logist = cls.env['hr.job'].create({
-                "name": "Logisticien"
-            })
+            logist = cls.env['hr.job'].sudo().create({"name": "Logisticien"})
 
-            commis_daff = cls.env['hr.job'].create({
-                "name": "Commis d'affaires"
-            })
+            commis_daff = cls.env['hr.job'].sudo().create({"name": "Commis d'affaires"})
 
-            account = cls.env['hr.job'].create({
-                "name": "Comptable financier"
-            })
+            account = cls.env['hr.job'].sudo().create({"name": "Comptable financier"})
 
             pub_hol_comp = {'l10n_ch_contractual_holidays_rate': 8.33, 'l10n_ch_contractual_public_holidays_rate': 4}
 
