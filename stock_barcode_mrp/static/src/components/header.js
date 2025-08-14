@@ -1,4 +1,5 @@
 import { Component } from "@odoo/owl";
+import { _t } from "@web/core/l10n/translation";
 
 export default class HeaderComponent extends Component {
     static props = ["displayUOM", "openDetails", "line"];
@@ -29,8 +30,18 @@ export default class HeaderComponent extends Component {
     }
 
     get lotName() {
-        if(this.order.lot_producing_ids.length == 1) {
-            return this.order.lot_producing_ids[0].name;
+        if (this.order.lot_producing_ids.length) {
+            const serialNames = this.order.lot_producing_ids.map((sn) => sn.name);
+            if (serialNames.length > 5) {
+                // Too many serial numbers, display the three firsts and the last one instead.
+                return _t("%(firstSN)s, %(secondSN)s, %(thirdSN)s, …, %(lastSN)s", {
+                    firstSN: serialNames[0],
+                    secondSN: serialNames[1],
+                    thirdSN: serialNames[2],
+                    lastSN: serialNames.pop(),
+                });
+            }
+            return serialNames.join(", ");
         }
         return this.order.lot_name || "";
     }
