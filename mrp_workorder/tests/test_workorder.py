@@ -677,6 +677,7 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         user_admin.write({
             'group_ids': [Command.link(self.ref('mrp.group_mrp_routings'))],
         })
+        (self.product_1 | self.product_2).is_favorite = True
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = self.bom_2.product_id
         mo_form.bom_id = self.bom_2
@@ -713,6 +714,7 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
             self.env.ref('mrp.group_mrp_routings')
         )
         warehouse = self.warehouse_1
+        self.product_1.is_favorite = True
         # manufacture in 2 steps
         warehouse.manufacture_steps = "pbm"
         mo_form = Form(self.env['mrp.production'].with_context(warehouse_id=warehouse.id))
