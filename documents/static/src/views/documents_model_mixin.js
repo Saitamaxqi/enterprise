@@ -159,11 +159,16 @@ export const DocumentsModelMixin = (component) =>
         }
 
         get canDuplicateRecords() {
-            const currentFolder = this.env.searchModel.getSelectedFolder();
             return (
-                currentFolder?.id !== "TRASH" &&
-                this.documentService.isEditable(currentFolder) &&
-                this.targetRecords.every((r) => !r.data.lock_uid)
+                this.documentService.hasFolderEditorAccess &&
+                this.targetRecords.every((r) => !r.data.lock_uid && r.data.active)
+            );
+        }
+
+        get canMoveRecords() {
+            return (
+                this.documentService.hasFolderEditorAccess &&
+                this.targetRecords.some((r) => r.data.user_can_move)
             );
         }
 
@@ -336,7 +341,7 @@ export const DocumentsModelMixin = (component) =>
          * Open dialog to move the selected document(s).
          */
         async onMove() {
-            const documents = this.targetRecords;
+            const documents = this.targetRecords.filter((r) => r.data.user_can_move);
             await this.documentService.openOperationDialog({
                 documents: documents.map((d) => ({
                     id: d.data.id,

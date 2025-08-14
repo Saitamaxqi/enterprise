@@ -108,11 +108,7 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 1,
                 },
                 rename: {
-                    isAvailable: () =>
-                        (userIsInternal || editMode) &&
-                        singleSelection &&
-                        someUnlocked &&
-                        !isInTrash,
+                    isAvailable: () => editMode && singleSelection && someUnlocked && !isInTrash,
                     sequence: 70,
                     description: _t("Rename"),
                     icon: "fa fa-edit",
@@ -128,10 +124,10 @@ export const DocumentsControllerMixin = (component) =>
                     groupNumber: 2,
                 },
                 move: {
-                    isAvailable: () => true,
+                    isAvailable: () => this.model.canMoveRecords,
                     sequence: 78,
                     description: _t("Move"),
-                    icon: "fa fa-share",
+                    icon: "fa fa-sign-in",
                     callback: () => this.model.onMove(),
                     groupNumber: 2,
                 },

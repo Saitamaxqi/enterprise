@@ -10,6 +10,7 @@ export const basicDocumentsKanbanArch = /* xml */ `
         <field name="mimetype"/>
         <field name="folder_id"/>
         <field name="user_folder_id"/>
+        <field name="user_can_move"/>
         <field name="company_id"/>
         <field name="owner_id"/>
         <field name="partner_id"/>

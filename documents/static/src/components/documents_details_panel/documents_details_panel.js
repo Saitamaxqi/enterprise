@@ -78,7 +78,7 @@ export class DocumentsDetailsPanel extends Component {
             !!this.record.data?.lock_uid ||
             this.record.data?.user_permission !== "edit" ||
             (!this.documentService.userIsDocumentManager &&
-                this.record.data?.is_company_root_folder)
+                this.record.data?.user_folder_id === "COMPANY")
         );
     }
 

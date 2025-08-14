@@ -61,6 +61,7 @@
                 <field name="res_id"/>
                 <field name="folder_id"/>
                 <field name="user_folder_id"/>
+                <field name="user_can_move"/>
                 <field name="lock_uid"/>
                 <field name="type"/>
                 <field name="shortcut_document_id"/>
@@ -257,6 +258,7 @@
                 <field name="name" required="True" readonly="False"/>
                 <field name="folder_id" optional="show"/>
                 <field name="user_folder_id" column_invisible="True"/>
+                <field name="user_can_move" column_invisible="True"/>
                 <field name="display_name" column_invisible="1"/>
                 <field name="owner_id" widget="many2one_avatar_user" optional="show"/>
                 <field name="partner_id" optional="show"/>

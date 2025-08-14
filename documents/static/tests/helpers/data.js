@@ -39,7 +39,7 @@ export class DocumentsDocument extends models.Model {
     is_folder = fields.Boolean(); // used for ordering
     is_multipage = fields.Boolean();
 
-    is_company_root_folder = fields.Boolean({ string: "Pinned to Company roots" });
+    user_can_move = fields.Boolean({ default: true });
     is_editable_attachment = fields.Boolean();
     mimetype = fields.Char();
     partner_id = fields.Many2one({ string: "Related partner", relation: "res.partner" });

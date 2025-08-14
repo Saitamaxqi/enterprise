@@ -128,6 +128,7 @@ class DocumentsDocument(models.Model):
     user_permission = fields.Selection(
         [('edit', 'Editor'), ('view', 'Viewer'), ('none', 'None')], string='User permission',
         compute='_compute_user_permission', search='_search_user_permission', compute_sudo=True)
+    user_can_move = fields.Boolean(string='Can move it', compute='_compute_user_can_move')
 
     # Folder = parent document
     parent_path = fields.Char(index=True)  # see '_parent_store' implementation in the ORM for details
@@ -1495,6 +1496,25 @@ class DocumentsDocument(models.Model):
             _logger.warning(message, self.name, exc_info=True)
             return False
 
+    @api.depends('active', 'user_permission', 'folder_id.user_permission', 'owner_id', 'user_folder_id')
+    @api.depends_context('uid')
+    def _compute_user_can_move(self):
+        active_documents = self.filtered('active')
+        (self - active_documents).user_can_move = False
+        if self.env.is_admin() or self.env.user.has_group('documents.group_documents_system'):
+            active_documents.user_can_move = True
+            return
+        owned_documents = active_documents.filtered(lambda doc: doc.owner_id == self.env.user)
+        owned_documents.user_can_move = True
+        if unowned_documents := active_documents - owned_documents:
+            is_manager = self.env.user.has_group('documents.group_documents_manager')
+            for document in unowned_documents:
+                document.user_can_move = (
+                    document.user_permission == 'edit'
+                    and (not document.folder_id or document.folder_id.user_permission == 'edit')
+                    and (is_manager or document.user_folder_id != 'COMPANY')
+                )
+
     @api.depends('favorited_ids')
     @api.depends_context('uid')
     def _compute_is_favorited(self):
@@ -2152,7 +2172,7 @@ class DocumentsDocument(models.Model):
                 for doc in documents_to_move:
                     if doc.user_permission != 'edit':
                         raise AccessError(_("You are not allowed to move (some of) these documents."))
-                    if doc.owner_id != self.env.user and doc.folder_id and doc.folder_id.user_permission != 'edit':
+                    if not doc.user_can_move:
                         raise AccessError(_("You can't move documents you do not own out of folders you cannot edit."))
 
             if new_parent_folder.shortcut_document_id:
@@ -2510,7 +2530,7 @@ class DocumentsDocument(models.Model):
         """Return the list of fields used by the search panel."""
         search_panel_fields = ['access_internal', 'access_token', 'access_via_link', 'active', 'company_id',
                                'description', 'display_name', 'user_folder_id', 'is_access_via_link_hidden',
-                               'is_company_root_folder', 'is_favorited', 'mail_alias_domain_count',
+                               'is_favorited', 'mail_alias_domain_count',
                                'owner_id', 'shortcut_document_id', 'user_permission']
         if not self.env.user.share:
             search_panel_fields += ['alias_domain_id', 'alias_name', 'alias_tag_ids', 'create_activity_type_id',

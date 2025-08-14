@@ -155,7 +155,7 @@ export class DocumentService {
             document &&
             typeof document.id === "number" &&
             document.user_permission === "edit" &&
-            (!document.is_company_root_folder || this.userIsDocumentManager)
+            (document.user_folder_id !== "COMPANY" || this.userIsDocumentManager)
         );
     }
 
