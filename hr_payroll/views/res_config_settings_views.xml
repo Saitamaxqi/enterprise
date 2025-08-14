@@ -41,12 +41,9 @@
                                 </div>
                             </setting>
                         </block>
-                        <block title="Accounting" id="hr_payroll_accountant">
-                            <setting name="module_hr_payroll_account" string="Payroll Entries" help="Post payroll slips in accounting">
-                                <field name="module_hr_payroll_account"/>
-                            </setting>
+                        <block title="Accounting" id="hr_payroll_accountant" invisible="'SEPA' not in company_country_group_codes">
                             <setting name="module_hr_payroll_account_iso20022" string="Payroll SEPA" help="Create SEPA payment"
-                                invisible="'SEPA' not in company_country_group_codes or not module_hr_payroll_account">
+                                invisible="'SEPA' not in company_country_group_codes">
                                 <field name="module_hr_payroll_account_iso20022"/>
                             </setting>
                         </block>
