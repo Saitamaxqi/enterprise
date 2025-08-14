@@ -3,6 +3,7 @@
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError
+from odoo.tools import float_compare
 
 
 class L10n_FrReportHandler(models.AbstractModel):
@@ -70,17 +71,17 @@ class L10n_FrReportHandler(models.AbstractModel):
             )
 
         def _compare_expression_totals(expression_totals):
-            return sum(
+            return float_compare(sum(
                 expression_totals[balance_line_expression_per_line_code[code]]['value']
                 for code in ['box_A1', 'box_A2', 'box_A3', 'box_B1', 'box_B2', 'box_B3', 'box_B4']
-            ) == sum(
+            ), sum(
                 expression_totals[balance_line_expression_per_line_code[code]]['value']
                 for code in [
                     'box_08_base', 'box_09_base', 'box_9B_base', 'box_10_base',
                     'box_11_base', 'box_T1_base', 'box_T2_base', 'box_T3_base',
                     'box_T4_base', 'box_T5_base', 'box_T6_base', 'box_T7_base',
                 ]
-            )
+            ), 2) == 0
 
         super()._customize_warnings(report, options, all_column_groups_expression_totals, warnings)
         balance_line_expression_per_line_code = {
