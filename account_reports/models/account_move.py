@@ -13,7 +13,10 @@ class AccountMove(models.Model):
             'res_model': 'account.return.check',
             'view_mode': 'kanban',
             'context': {
-                'account_return_id': self.closing_return_id.id,
+                'active_model': 'account.return',
+                'active_id': self.closing_return_id.id,
+                'active_ids': self.closing_return_id.ids,
+                'account_return_view_id': self.env.ref('account_reports.account_return_kanban_view').id,
             },
             'domain': [['return_id', '=', self.closing_return_id.id]],
             'views': [(self.env.ref('account_reports.account_return_check_kanban_view').id, 'kanban')],
