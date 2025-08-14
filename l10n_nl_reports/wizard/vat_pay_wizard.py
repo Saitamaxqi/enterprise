@@ -13,11 +13,12 @@ class VATPayWizard(models.TransientModel):
         company = self.return_id.company_id
         periodicity = self.return_id.type_id._get_periodicity(company)
         try:
-            vat = validate(company.vat)
+            nl_vat = company.l10n_nl_reports_sbr_ob_nummer or company.vat
+            vat = validate(nl_vat)
         except Exception as e:
             raise UserError(_(
                 "Something went wrong while validating the VAT number: %s. You can modify it in the company settings.",
-                company.vat
+                nl_vat
             )) from e
         head, tail = vat.split("B")
         date = self.return_id.date_from
