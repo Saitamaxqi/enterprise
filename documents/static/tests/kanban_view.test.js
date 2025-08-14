@@ -289,25 +289,24 @@ test("Drag and Drop - Check permission when dropping documents", async function 
 test("Drag and Drop - Check access rights confirmation popup when moving from kanban view", async function () {
     onRpc("documents.document", "write", ({ args }) => {
         expect(args[0][0]).toBe(2);
-        expect(args[1].folder_id).toBe(5);
+        expect(args[1].user_folder_id).toBe("5");
         expect.step("action_move_documents");
     });
     const documents = [
-        [2, "Internal Viewer - Link None - Discoverable", "view", "none", false, "folder"],
-        [3, "Internal Editor - Link None - Discoverable", "edit", "none", false, "folder"],
-        [4, "Internal Viewer - Link Viewer - Discoverable", "view", "view", false, "folder"],
-        [5, "Internal Viewer - Link None - Must have link", "view", "none", true, "folder"],
-        [6, "Internal Viewer - Link Viewer - Must have link", "view", "view", true, "folder"],
+        [2, "Internal Viewer - Link None - Discoverable", "view", "none", false],
+        [3, "Internal Editor - Link None - Discoverable", "edit", "none", false],
+        [4, "Internal Viewer - Link Viewer - Discoverable", "view", "view", false],
+        [5, "Internal Viewer - Link None - Must have link", "view", "none", true],
+        [6, "Internal Viewer - Link Viewer - Must have link", "view", "view", true],
     ];
     const serverData = getDocumentsTestServerModelsData(
-        documents.map(
-            ([id, name, access_internal, access_via_link, is_access_via_link_hidden, type]) =>
-                makeDocumentRecordData(id, name, {
-                    access_internal,
-                    access_via_link,
-                    is_access_via_link_hidden,
-                    type,
-                })
+        documents.map(([id, name, access_internal, access_via_link, is_access_via_link_hidden]) =>
+            makeDocumentRecordData(id, name, {
+                access_internal,
+                access_via_link,
+                is_access_via_link_hidden,
+                type: "folder",
+            })
         )
     );
     const cases = [
@@ -345,22 +344,21 @@ test("Drag and Drop - Check access rights confirmation popup when moving from se
         expect.step(`action_move_folder_${args[0][0]}_${args[1]}`);
     });
     const documents = [
-        [2, "Internal Viewer - Link None - Discoverable", "view", "none", false, "folder"],
-        [3, "Internal Editor - Link None - Discoverable", "edit", "none", false, "folder"],
-        [4, "Internal Viewer - Link Viewer - Discoverable", "view", "view", false, "folder"],
-        [5, "Internal Viewer - Link None - Must have link", "view", "none", true, "folder"],
-        [6, "Internal Viewer - Link Viewer - Must have link", "view", "view", true, "folder"],
+        [2, "Internal Viewer - Link None - Discoverable", "view", "none", false],
+        [3, "Internal Editor - Link None - Discoverable", "edit", "none", false],
+        [4, "Internal Viewer - Link Viewer - Discoverable", "view", "view", false],
+        [5, "Internal Viewer - Link None - Must have link", "view", "none", true],
+        [6, "Internal Viewer - Link Viewer - Must have link", "view", "view", true],
     ];
     const labelByCode = { none: "None", view: "Viewer", edit: "Editor" };
     const serverData = getDocumentsTestServerModelsData(
-        documents.map(
-            ([id, name, access_internal, access_via_link, is_access_via_link_hidden, type]) =>
-                makeDocumentRecordData(id, name, {
-                    access_internal,
-                    access_via_link,
-                    is_access_via_link_hidden,
-                    type,
-                })
+        documents.map(([id, name, access_internal, access_via_link, is_access_via_link_hidden]) =>
+            makeDocumentRecordData(id, name, {
+                access_internal,
+                access_via_link,
+                is_access_via_link_hidden,
+                type: "folder",
+            })
         )
     );
     const cases = [
@@ -464,21 +462,6 @@ test("Drag and Drop - Drop document while holding CTRL", async function () {
     );
     await moveTo(".o_search_panel_category_value[data-value-id='1'] div.o_search_panel_label");
     expect(".o_documents_dnd_modifier").toBeVisible(); // check after moveTo to be sure it's still visible
-    await drop();
-    await waitFor(".o_notification");
-    expect(".o_notification_content:eq(-1)").toHaveText("A shortcut has been created.");
-});
-
-test("Drag and Drop - Dropping in 'My Drive' should create a shortcut", async function () {
-    const serverData = getDocumentsTestServerModelsData([
-        makeDocumentRecordData(2, "Test Document", { folder_id: 1 }),
-    ]);
-    await makeDocumentsMockEnv({ serverData });
-    await mountDocumentsKanbanView();
-
-    const { drop, moveTo } = await contains(".o_kanban_record[data-value-id='2']").drag();
-    await moveTo(".o_search_panel_category_value[data-value-id='MY'] div.o_search_panel_label");
-    expect(".o_documents_dnd_modifier").toBeVisible();
     await drop();
     await waitFor(".o_notification");
     expect(".o_notification_content:eq(-1)").toHaveText("A shortcut has been created.");

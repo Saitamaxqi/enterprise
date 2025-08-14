@@ -112,9 +112,7 @@ export const useDraggableDocuments = makeDraggableHook({
                     current.dragMessageText,
                     true
                 );
-                if (!ev.ctrlKey && targetFolder.rootId === "MY") {
-                    ref.el.classList.add("o_documents_dnd_shortcut");
-                } else if (!ev.ctrlKey) {
+                if (!ev.ctrlKey) {
                     ref.el.classList.remove("o_documents_dnd_shortcut");
                 }
 
@@ -250,6 +248,7 @@ export const useDraggableDocuments = makeDraggableHook({
 
         let expectedAccessRightsChanges = false;
         if (
+            !isNaN(targetFolder.id) && // no change for these fields
             this._getMovableRecords(model).some(
                 (record) =>
                     record.data.access_internal !== targetFolder.access_internal ||
@@ -260,17 +259,6 @@ export const useDraggableDocuments = makeDraggableHook({
             )
         ) {
             expectedAccessRightsChanges = true;
-        }
-
-        if (targetFolder.rootId === "MY" && sourceFolder.rootId !== "MY") {
-            await model.documentService.moveOrCreateShortcut(
-                this.draggedRecords,
-                targetFolder,
-                true,
-                expectedAccessRightsChanges
-            );
-            model.env.searchModel._reloadSearchModel(true);
-            return;
         }
 
         await model.documentService.moveOrCreateShortcut(

@@ -270,11 +270,11 @@ export class DocumentService {
 
     async moveOrCreateShortcut(records, targetFolder, forceShortcut, expectedAccessRightsChanges) {
         let message = "";
-        const targetFolderId = targetFolder.id === "MY" ? false : targetFolder.id;
+        const userFolderId = targetFolder.id.toString();
         if (forceShortcut) {
             await this.orm.call("documents.document", "action_create_shortcut", [
                 records.all,
-                targetFolderId,
+                userFolderId,
             ]);
             message =
                 records.all.length === 1
@@ -297,11 +297,10 @@ export class DocumentService {
                     if (!confirmed) {
                         return;
                     }
-                } else {
-                    await this.orm.write("documents.document", records.movableRecordIds, {
-                        folder_id: targetFolderId,
-                    });
                 }
+                await this.orm.write("documents.document", records.movableRecordIds, {
+                    user_folder_id: userFolderId,
+                });
             }
             if (records.nonMovableRecordIds.length) {
                 this.notification.add(
