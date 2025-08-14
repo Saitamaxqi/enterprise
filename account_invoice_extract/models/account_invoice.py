@@ -322,20 +322,21 @@ class AccountMove(models.Model):
         return None
 
     def _find_partner_id_with_vat(self, vat_number_ocr):
+        rank_field = 'supplier_rank' if self.is_purchase_document() else 'customer_rank'
         partner_vat = self.env["res.partner"].search([
             *self.env['res.partner']._check_company_domain(self.company_id),
             ("vat", "=ilike", vat_number_ocr),
-        ], limit=1)
+        ], order=f'{rank_field} desc', limit=1)
         if not partner_vat:
             partner_vat = self.env["res.partner"].search([
                 *self.env['res.partner']._check_company_domain(self.company_id),
                 ("vat", "=ilike", vat_number_ocr[2:]),
-            ], limit=1)
+            ], order=f'{rank_field} desc', limit=1)
         if not partner_vat:
             for partner in self.env["res.partner"].search([
                 *self.env['res.partner']._check_company_domain(self.company_id),
                 ("vat", "!=", False),
-            ], limit=1000):
+            ], order=f'{rank_field} desc', limit=1000):
                 vat = partner.vat.upper()
                 vat_cleaned = vat.replace("BTW", "").replace("MWST", "").replace("ABN", "")
                 vat_cleaned = re.sub(r'[^A-Z0-9]', '', vat_cleaned)
