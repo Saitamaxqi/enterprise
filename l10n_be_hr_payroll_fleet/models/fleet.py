@@ -22,8 +22,7 @@ class FleetVehicle(models.Model):
         help="This includes all the depreciated costs and the CO2 fee")
     total_cost = fields.Float(compute='_compute_total_cost', string="Total Cost", help="This include all the costs and the CO2 fee")
     fuel_type = fields.Selection(required=True, default='diesel')
-    atn = fields.Float(compute='_compute_car_atn', string="BIK")
-    acquisition_date = fields.Date(required=True)
+    atn = fields.Float(compute='_compute_car_atn', string="BIK", help="In order to be computed, you need to fill in the Registration Date, Catalog Value, Fuel Type, and CO₂ Emissions of the vehicle")
     tax_deduction = fields.Float(compute='_compute_tax_deduction')
 
     def _from_be(self):
@@ -120,7 +119,7 @@ class FleetVehicle(models.Model):
         super(FleetVehicle, self)._compute_vehicle_name()
         for vehicle in self:
             acquisition_date = vehicle._get_acquisition_date()
-            vehicle.name += u" \u2022 " + acquisition_date
+            vehicle.name += (" \u2022 " + acquisition_date) if acquisition_date else ""
 
     def _get_analytic_name(self):
         # This function is used in fleet_account
