@@ -669,14 +669,21 @@ class L10n_Mx_EdiDocument(models.Model):
         :param journal:            An optional accounting journal to retrieve the custom timezone from it.
         :param document_post_time: An optional exact time of sending the document if available.
         """
-        if not document_post_time:
-            document_post_time = self._get_datetime_now_with_mx_timezone(cfdi_values, journal).replace(tzinfo=None)
-
-        document_date = datetime.combine(document_date, time(hour=23, minute=59, second=00))
-        cfdi_date = min(document_date, document_post_time)
+        if document_post_time:
+            cfdi_date = document_post_time
+        else:
+            cfdi_date = self._get_min_of_now_and_document_date(document_date, cfdi_values['issued_address'], journal=journal)
 
         cfdi_values['fecha'] = cfdi_date.strftime(CFDI_DATE_FORMAT)
-        cfdi_values['fecha_datetime'] = cfdi_date
+
+    def _get_min_of_now_and_document_date(self, document_date, issued_address, journal=None):
+        """ This method returns the lesser of the document date and the current time in the
+        Mexican timezone determined by the issued address and the journal. """
+        cfdi_values = {'issued_address': issued_address}
+        now_mx = self._get_datetime_now_with_mx_timezone(cfdi_values, journal).replace(tzinfo=None)
+        document_datetime = datetime.combine(document_date, time(hour=23, minute=59, second=00))
+        min_datetime = min(document_datetime, now_mx)
+        return min_datetime
 
     @api.model
     def _add_payment_policy_cfdi_values(self, cfdi_values, payment_policy=None, payment_method=None):
@@ -2257,12 +2264,6 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             if self._can_commit():
                 self.env.cr.commit()
             return
-
-        # == Commit before sending to PAC ==
-        # This ensures the `l10n_mx_edi_post_time` is written to DB regardless of whether
-        # an exception happens when calling the PAC.
-        if self._can_commit():
-            self.env.cr.commit()
 
         # == Check PAC ==
         sign_results = self._get_pac_method_map()['sign'][pac_name](credentials, cfdi_str)

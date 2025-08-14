@@ -1816,16 +1816,23 @@ class AccountMove(models.Model):
             self._l10n_mx_edi_cfdi_invoice_document_sent_failed("\n".join(errors))
             return
 
+        # == Set the post time and commit ==
+        if not self.l10n_mx_edi_post_time:
+            self.l10n_mx_edi_post_time = self.env['l10n_mx_edi.document']._get_min_of_now_and_document_date(
+                self.invoice_date,
+                self.company_id.partner_id.commercial_partner_id,
+                self.journal_id,
+            )
+
+            if self.env['l10n_mx_edi.document']._can_commit():
+                self._cr.commit()
+
         # == Lock ==
         self.env['res.company']._with_locked_records(self)
 
         # == Send ==
         def on_populate(cfdi_values):
             self._l10n_mx_edi_add_invoice_cfdi_values(cfdi_values)
-
-            # Set the post time
-            if not self.l10n_mx_edi_post_time and cfdi_values.get('fecha_datetime'):
-                self.l10n_mx_edi_post_time = fields.Datetime.to_string(cfdi_values['fecha_datetime'])
 
         def on_failure(error, cfdi_filename=None, cfdi_str=None):
             if error == 'empty_cfdi':
@@ -2329,6 +2336,18 @@ class AccountMove(models.Model):
             invoices._l10n_mx_edi_cfdi_global_invoice_document_sent_failed("\n".join(set(errors)))
             return
 
+        # == Set the post time and commit ==
+        invoices_without_post_time = self.filtered(lambda m: not m.l10n_mx_edi_post_time)
+        if invoices_without_post_time:
+            for invoice in invoices_without_post_time:
+                invoice.l10n_mx_edi_post_time = self.env['l10n_mx_edi.document']._get_min_of_now_and_document_date(
+                    invoice.invoice_date,
+                    invoice.company_id.partner_id.commercial_partner_id,
+                    invoice.journal_id,
+                )
+            if self.env['l10n_mx_edi.document']._can_commit():
+                self._cr.commit()
+
         # == Lock ==
         self.env['res.company']._with_locked_records(invoices)
 
@@ -2395,10 +2414,6 @@ class AccountMove(models.Model):
                 inv_cfdi_values = dict(cfdi_values)
                 Document._add_date_cfdi_values(inv_cfdi_values, invoice.invoice_date, journal=invoice.journal_id, document_post_time=invoice.l10n_mx_edi_post_time)
                 document_dates.append(datetime.strptime(inv_cfdi_values['fecha'], CFDI_DATE_FORMAT).date())
-
-                # Set the post time
-                if not invoice.l10n_mx_edi_post_time and cfdi_values.get('fecha_datetime'):
-                    invoice.l10n_mx_edi_post_time = fields.Datetime.to_string(cfdi_values['fecha_datetime'])
 
             document_date = max(document_dates)
 
