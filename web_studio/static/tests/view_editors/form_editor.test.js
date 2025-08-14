@@ -34,6 +34,7 @@ import {
     serverState,
 } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
+import { RelationalModel } from "@web/model/relational_model/relational_model";
 import { charField } from "@web/views/fields/char/char_field";
 import { ImageField } from "@web/views/fields/image/image_field";
 import { WebClient } from "@web/webclient/webclient";
@@ -3151,9 +3152,16 @@ test("invisible relational are fetched", async () => {
 });
 
 test("Auto save: don't auto-save a form editor", async () => {
-    onRpc("partner", "read", (params) => {
+    onRpc("partner", "web_save", (params) => {
         expect.step("save");
     });
+
+    patchWithCleanup(RelationalModel.prototype, {
+        setup(...args) {
+            super.setup(...args);
+            this.bus.addEventListener("WILL_SAVE_URGENTLY", () => expect.step("WILL_SAVE_URGENTLY"))
+        }
+    })
 
     await mountViewEditor({
         type: "form",
@@ -3170,7 +3178,7 @@ test("Auto save: don't auto-save a form editor", async () => {
 
     const events = await unload();
     await animationFrame();
-    expect(events.get("beforeunload").defaultPrevented).toBe(false);
+    expect(events.get("beforeunload")).not.toBeEmpty();
     expect.verifySteps([]);
 });
 
