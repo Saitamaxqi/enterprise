@@ -824,7 +824,10 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         renewal_so.action_confirm()
 
         forecast_data = self.env['stock.forecasted_product_product']._get_report_data(product_ids=[product.id])
-        self.assertEqual(forecast_data['subscription_qty'], 1, 'Renewed subscription should no longer require stock')
+        subscription_qty = 0
+        for p in forecast_data['product'].values():
+            subscription_qty += p.get('subscription_qty', {}).get('out', 0)
+        self.assertEqual(subscription_qty, 1, 'Renewed subscription should no longer require stock')
 
     def test_cron_product_multiple_delivery_creation(self):
         """This check ensures that the cron creates the deliveries for all subscriptions """
