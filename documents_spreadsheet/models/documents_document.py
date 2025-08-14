@@ -166,6 +166,12 @@ class DocumentsDocument(models.Model):
             'copy_in_my_drive': self._cannot_create_sibling(),
         }
 
+    @api.constrains('owner_id')
+    def _check_owner_is_internal_user(self):
+        spreadsheet_docs = self.filtered(lambda rec: rec.handler in ("spreadsheet", "frozen_spreadsheet"))
+        if any(user.share for user in spreadsheet_docs.owner_id):
+            raise AccessError(_("Portal users cannot be the owner of a spreadsheet."))
+
     def _check_spreadsheet_share(self, operation, access_token):
         if not self.env.su and operation == 'write' and self.sudo().handler == 'frozen_spreadsheet':
             raise AccessError(_("You can not edit a frozen spreadsheet"))

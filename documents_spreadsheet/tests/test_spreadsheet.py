@@ -952,3 +952,11 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             }],
             "total": 1,
         })
+
+    def test_spreadsheet_prevent_portal_owner(self):
+        portal = new_test_user(self.env, "Test user", groups="base.group_portal")
+        spreadsheet = self.create_spreadsheet()
+        with self.assertRaises(
+            AccessError, msg="Portal users cannot be the owner of a spreadsheet."
+        ):
+            spreadsheet.owner_id = portal
