@@ -19,6 +19,9 @@
             'website_generator/static/src/client_actions/*/*',
             'website_generator/static/src/systray_items/*',
         ],
+        'website.website_builder_assets': [
+            'website_generator/static/src/builder/**/*',
+        ],
     },
     'installable': True,
     'author': 'Odoo S.A.',
