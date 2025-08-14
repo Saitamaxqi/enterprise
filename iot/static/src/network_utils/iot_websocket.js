@@ -63,7 +63,10 @@ export class IotWebsocket {
         const timeoutId = setTimeout(() => {
             this.busService.unsubscribe(messageType);
             console.debug("Websocket timeout for", iotBoxIdentifier, deviceIdentifier, requestId);
-            this.callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, requestId, { status: "error" });
+            this.callbackListeners(iotBoxIdentifier, deviceIdentifier, messageType, requestId, {
+                status: "error",
+                message: "Timeout waiting for IoT Box response, please try again.",
+            });
         }, 6000); // error callback if the listener is not called within 6 seconds
         this.busService.addChannel(this.iotChannel);
         this.busService.subscribe(messageType, (payload) => {
