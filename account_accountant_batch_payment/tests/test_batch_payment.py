@@ -208,10 +208,10 @@ class TestBatchPayment(AccountTestInvoicingCommon):
             st_line.set_batch_payment_bank_statement_line(batch.id)
             bank_account = self.journal.default_account_id
             if payment_type == 'inbound':
-                self.assertRecordValues(payments.move_id.line_ids.sorted(lambda l: (l.move_id, l.balance)), [
+                self.assertRecordValues(payments.move_id.line_ids.sorted('balance'), [
+                    {'account_id': account_b.id, 'partner_id': self.partner_b.id, 'balance': -200.0},
                     {'account_id': account_a.id, 'partner_id': self.partner_a.id, 'balance': -100.0},
                     {'account_id': outstanding_account.id, 'partner_id': self.partner_a.id, 'balance': 100.0},
-                    {'account_id': account_b.id, 'partner_id': self.partner_b.id, 'balance': -200.0},
                     {'account_id': outstanding_account.id, 'partner_id': self.partner_b.id, 'balance': 200.0},
                 ])
                 self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
@@ -220,10 +220,10 @@ class TestBatchPayment(AccountTestInvoicingCommon):
                     {'account_id': bank_account.id, 'partner_id': False, 'balance': 300.0},
                 ])
             else:
-                self.assertRecordValues(payments.move_id.line_ids.sorted(lambda l: (l.move_id, l.balance)), [
+                self.assertRecordValues(payments.move_id.line_ids.sorted('balance'), [
+                    {'account_id': outstanding_account.id, 'partner_id': self.partner_b.id, 'balance': -200.0},
                     {'account_id': outstanding_account.id, 'partner_id': self.partner_a.id, 'balance': -100.0},
                     {'account_id': account_a.id, 'partner_id': self.partner_a.id, 'balance': 100.0},
-                    {'account_id': outstanding_account.id, 'partner_id': self.partner_b.id, 'balance': -200.0},
                     {'account_id': account_b.id, 'partner_id': self.partner_b.id, 'balance': 200.0},
                 ])
                 self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
