@@ -16,7 +16,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
         # Company Setup
         cls.company = cls.company_data['company']
         cls.env.user.company_ids |= cls.company
-        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account') + cls.env.ref('hr.group_hr_manager') + cls.env.ref('hr_payroll.group_hr_payroll_user')
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.resource_calendar = cls.env.ref("l10n_au_hr_payroll.resource_calendar_au_38")
         cls.resource_calendar.company_id = cls.company
