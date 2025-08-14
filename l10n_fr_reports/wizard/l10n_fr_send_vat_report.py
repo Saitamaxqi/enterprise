@@ -419,12 +419,12 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                 'recipients': [{'designation': self.recipient}],
                 # T-IDENTIF form
                 'identif': {
-                    'millesime': "24",
+                    'millesime': "25",
                     'zones': identif_vals,
                 },
                 # 3310CA3
                 'form': {
-                    'millesime': "24",
+                    'millesime': "25",
                     'name': "3310CA3",
                     'zones': edi_values,
                 }
@@ -621,12 +621,12 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                 'recipients': [{'designation': self.recipient}],
                 # T-IDENTIF form
                 'identif': {
-                    'millesime': "24",
+                    'millesime': "25",
                     'zones': identif_vals,
                 },
                 # 3519
                 'form': {
-                    'millesime': "24",
+                    'millesime': "25",
                     'name': "3519",
                     'zones': zones,
                 }
