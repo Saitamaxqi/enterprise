@@ -27,7 +27,9 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
 }, {
     trigger: '.o_gantt_renderer_controls .dropdown-toggle:contains("Week")',
     content: "The initial default range should be week",
-},{
+}, {
+    trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM)",
+}, {
     trigger: ".o_searchview_dropdown_toggler",
     content: "Open Filter",
     run: "click",
@@ -48,6 +50,8 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Add custom filter",
     run: "click",
 }, {
+    trigger: "body:not(:has(.o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM)))",
+}, {
     trigger: ".o_searchview_input",
     content: "Search planning shifts assigned to Aramis",
     run: "fill Aramis",
@@ -55,6 +59,10 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     trigger: ".o_searchview_autocomplete .o-dropdown-item > a:not(.o_expand)",
     content: "Select filter resource = Aramis",
     run: 'click',
+}, {
+    trigger: ".o_searchview_facet:last:contains(Aramis)"
+}, {
+    trigger: ".o_gantt_row_headers:has(.o_gantt_row_header:contains(Aramis))",
 }, {
     trigger: ".o_searchview_input",
     content: "Search planning shifts assigned to Athos",
@@ -64,6 +72,10 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Select filter resource = Athos",
     run: 'click',
 }, {
+    trigger: ".o_searchview_facet:last:contains(Aramis):contains(Athos)"
+}, {
+    trigger: ".o_gantt_row_headers:has(.o_gantt_row_header:contains(Athos))",
+}, {
     trigger: ".o_searchview_input",
     content: "Search planning shifts assigned to Porthos",
     run: "fill Porthos",
@@ -72,6 +84,10 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Select filter resource = Porthos",
     run: 'click',
 }, {
+    trigger: ".o_searchview_facet:last:contains(Aramis):contains(Athos):contains(Porthos)"
+}, {
+    trigger: ".o_gantt_row_headers:has(.o_gantt_row_header:contains(Porthos))",
+}, {
     trigger: ".o_searchview_input",
     content: "Search planning shifts assigned to Rochefort",
     run: "fill Rochefort",
@@ -79,6 +95,10 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     trigger: ".o-dropdown-item > a:not(.o_expand)",
     content: "Select filter resource = Rochefort",
     run: 'click',
+}, {
+    trigger: ".o_searchview_facet:last:contains(Aramis):contains(Athos):contains(Porthos):contains(Rochefort)"
+}, {
+    trigger: ".o_gantt_row_headers:has(.o_gantt_row_header:contains(Rochefort)):has(.o_gantt_row_header:contains(Porthos)):has(.o_gantt_row_header:contains(Athos)):has(.o_gantt_row_header:contains(Aramis))",
 }, {
     trigger: ".o_gantt_cells .o_gantt_pill_wrapper:eq(3)",
     content: "Wait for 4 pills to be displayed",
