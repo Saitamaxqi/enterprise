@@ -992,13 +992,12 @@ class AccountReturn(models.Model):
         return tax_groups_sudo.tax_payable_account_id, tax_groups_sudo.tax_receivable_account_id
 
     def _evaluate_period_amount_to_pay_from_tax_closing_accounts(self, payable_accounts, receivable_accounts):
-        payable_receivable_accounts = payable_accounts | receivable_accounts
-
         amount = -sum(
             aml.balance
             for aml in self.closing_move_ids.line_ids
-            if aml.account_id in payable_receivable_accounts
+            if aml.account_id in payable_accounts + receivable_accounts
         )
+
         return self.amount_to_pay_currency_id.round(amount)
 
     def _evaluate_total_amount_to_pay_from_tax_closing_accounts(self, payable_accounts, receivable_accounts):
@@ -1007,7 +1006,6 @@ class AccountReturn(models.Model):
             for aml in self.closing_move_ids.line_ids
             if (aml.account_id in payable_accounts and aml.credit) or (aml.account_id in receivable_accounts and aml.debit)
         )
-
         return self.amount_to_pay_currency_id.round(amount)
 
     def _get_amount_to_pay_additional_tax_domain(self):
@@ -1513,34 +1511,27 @@ class AccountReturn(models.Model):
 
         Used to balance the tax group accounts for the creation of the vat closing entry.
         """
-        def _add_line(account, name, company_currency):
-            self.env.cr.execute(sql_account, (
-                account,
-                self.date_to,
-                self.company_id.id,
-            ))
-            result = self.env.cr.dictfetchone()
-            advance_balance = result.get('balance') or 0
+        def _add_line(account_id, name, company_currency):
+            advance_balance = self.env['account.move.line']._read_group(
+                [
+                    ('date', '<=', self.date_to),
+                    ('account_id', '=', account_id),
+                    ('company_id', '=', self.company_id.id),
+                ],
+                aggregates=['balance:sum'],
+            )[0][0]
+
             # Deduct/Add advance payment
             if not company_currency.is_zero(advance_balance):
                 line_ids_vals.append(Command.create({
                     'name': name,
                     'debit': abs(advance_balance) if advance_balance < 0 else 0,
                     'credit': abs(advance_balance) if advance_balance > 0 else 0,
-                    'account_id': account,
+                    'account_id': account_id,
                 }))
             return advance_balance
 
         currency = self.company_id.currency_id
-        sql_account = '''
-            SELECT SUM(aml.balance) AS balance
-            FROM account_move_line aml
-            LEFT JOIN account_move move ON move.id = aml.move_id
-            WHERE aml.account_id = %s
-              AND aml.date <= %s
-              AND move.state = 'posted'
-              AND aml.company_id = %s
-        '''
         line_ids_vals = []
         # keep track of already balanced account, as one can be used in several tax group
         account_already_balanced = []
@@ -1553,9 +1544,7 @@ class AccountReturn(models.Model):
             if key[1] and key[1] not in account_already_balanced:
                 total += _add_line(key[1], _('Balance tax current account (receivable)'), currency)
                 account_already_balanced.append(key[1])
-            if key[2] and key[2] not in account_already_balanced:
-                total += _add_line(key[2], _('Balance tax current account (payable)'), currency)
-                account_already_balanced.append(key[2])
+
             # Balance on the receivable/payable tax account
             if not currency.is_zero(total):
                 line_ids_vals.append(Command.create({

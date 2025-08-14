@@ -2,7 +2,7 @@ from datetime import date
 from freezegun import freeze_time
 from unittest.mock import patch
 
-from odoo import fields
+from odoo import fields, Command
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.tests import tagged
 from odoo.exceptions import UserError
@@ -1143,3 +1143,154 @@ class TestAccountReturn(TestAccountReportsCommon):
         self.assertEqual(check_overdue_receivables.result, 'failure', "The overdue receivables check should fail as the receivable is not paid")
         self.assertEqual(check_total_receivables.result, 'success', "The total receivables check should succeed as the invoice is posted")
         self.assertEqual(check_total_payables.result, 'success', "The total payables check should succeed as the invoice is posted")
+
+    def test_tax_return_recoverable_amounts(self):
+        tax_account = self.env['account.account'].create({
+            'name': 'Tax Account',
+            'code': 'test.tax.account',
+            'account_type': 'liability_current',
+        })
+
+        sale_tax = self.env['account.tax'].create({
+            'name': 'sale tax',
+            'amount': 21,
+            'amount_type': 'percent',
+            'type_tax_use': 'sale',
+            'invoice_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+            'refund_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+        })
+
+        purchase_tax = self.env['account.tax'].create({
+            'name': 'purchase tax',
+            'amount': 21,
+            'amount_type': 'percent',
+            'type_tax_use': 'purchase',
+            'invoice_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+            'refund_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+        })
+
+        (sale_tax + purchase_tax).repartition_line_ids.filtered(lambda x: x.repartition_type == 'tax').write({'account_id': tax_account.id})
+
+        tax_receivable = self.company_data['default_tax_account_receivable']
+        tax_payable = self.company_data['default_tax_account_payable']
+
+        self.init_invoice('in_invoice', amounts=[10], taxes=purchase_tax, post=True, invoice_date='2024-01-01')
+        self.init_invoice('out_invoice', amounts=[20], taxes=sale_tax, post=True, invoice_date='2024-02-01')
+        self.init_invoice('out_invoice', amounts=[30], taxes=sale_tax, post=True, invoice_date='2024-03-01')
+        self.init_invoice('in_invoice', amounts=[100], taxes=purchase_tax, post=True, invoice_date='2024-04-01')
+        self.init_invoice('out_invoice', amounts=[10], taxes=sale_tax, post=True, invoice_date='2024-05-01')
+        self.init_invoice('out_invoice', amounts=[90], taxes=sale_tax, post=True, invoice_date='2024-06-01')
+
+        # January Return: 2.10 to recover
+        january_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('date_to', '=', '2024-01-31')])
+        with self.allow_pdf_render():
+            january_return.action_validate(bypass_failing_tests=True)
+        self.assertEqual(january_return.total_amount_to_pay, -2.1)
+        self.assertEqual(january_return.period_amount_to_pay, -2.1)
+        self.assertRecordValues(
+            january_return.closing_move_ids.line_ids,
+            [
+                {'account_id': tax_account.id, 'debit': 0.0, 'credit': 2.1},
+                {'account_id': tax_receivable.id, 'debit': 2.1, 'credit': 0.0},
+            ],
+        )
+
+        # February Return: 4.20 in period -2.10 to recover from January
+        february_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('date_to', '=', '2024-02-29')])
+        with self.allow_pdf_render():
+            february_return.action_validate(bypass_failing_tests=True)
+        self.assertEqual(february_return.total_amount_to_pay, 2.1)
+        self.assertEqual(february_return.period_amount_to_pay, 4.2)
+        self.assertRecordValues(
+            february_return.closing_move_ids.line_ids,
+            [
+                {'account_id': tax_account.id, 'debit': 4.2, 'credit': 0.0},
+                {'account_id': tax_receivable.id, 'debit': 0.0, 'credit': 2.1},
+                {'account_id': tax_payable.id, 'debit': 0.0, 'credit': 2.1},
+            ],
+        )
+
+        # March Return: 6.3 in period; nothing coming from previous periods
+        march_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('date_to', '=', '2024-03-31')])
+        with self.allow_pdf_render():
+            march_return.action_validate(bypass_failing_tests=True)
+        self.assertEqual(march_return.total_amount_to_pay, 6.3)
+        self.assertEqual(march_return.period_amount_to_pay, 6.3)
+        self.assertRecordValues(
+            march_return.closing_move_ids.line_ids,
+            [
+                {'account_id': tax_account.id, 'debit': 6.3, 'credit': 0.0},
+                {'account_id': tax_payable.id, 'debit': 0.0, 'credit': 6.3},
+            ],
+        )
+
+        # April Return: 21 in period; to recover
+        april_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('date_to', '=', '2024-04-30')])
+        with self.allow_pdf_render():
+            april_return.action_validate(bypass_failing_tests=True)
+        self.assertEqual(april_return.total_amount_to_pay, -21.0)
+        self.assertEqual(april_return.period_amount_to_pay, -21.0)
+        self.assertRecordValues(
+            april_return.closing_move_ids.line_ids,
+            [
+                {'account_id': tax_account.id, 'debit': 0.0, 'credit': 21.0},
+                {'account_id': tax_receivable.id, 'debit': 21.0, 'credit': 0.0},
+            ],
+        )
+
+        # May Return: 2.1 in period ; 21 to recover => Nothing to pay in period, still 18.90 to recovver in next periods
+        may_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('date_to', '=', '2024-05-31')])
+        with self.allow_pdf_render():
+            may_return.action_validate(bypass_failing_tests=True)
+        self.assertEqual(may_return.total_amount_to_pay, -18.90)
+        self.assertEqual(may_return.period_amount_to_pay, 2.1)
+        self.assertRecordValues(
+            may_return.closing_move_ids.line_ids,
+            [
+                {'account_id': tax_account.id, 'debit': 2.1, 'credit': 0.0},
+                {'account_id': tax_receivable.id, 'debit': 0.0, 'credit': 21.0},
+                {'account_id': tax_receivable.id, 'debit': 18.9, 'credit': 0.0},
+            ],
+        )
+
+        # June Return: 18.90 in period - 18.90 to recover => nothing to pay
+        june_return = self.env['account.return'].search([('type_id', '=', self.basic_return_type.id), ('date_to', '=', '2024-06-30')])
+        with self.allow_pdf_render():
+            june_return.action_validate(bypass_failing_tests=True)
+        self.assertEqual(june_return.total_amount_to_pay, 0.0)
+        self.assertEqual(june_return.period_amount_to_pay, 18.9)
+        self.assertRecordValues(
+            june_return.closing_move_ids.line_ids,
+            [
+                {'account_id': tax_account.id, 'debit': 18.9, 'credit': 0.0},
+                {'account_id': tax_receivable.id, 'debit': 0.0, 'credit': 18.9},
+            ],
+        )
