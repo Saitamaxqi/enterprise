@@ -12,7 +12,7 @@ patch(Thread.prototype, {
     },
     get importantCounter() {
         if (this.channel_type === "whatsapp") {
-            return this.selfMember?.message_unread_counter || this.message_needaction_counter;
+            return this.self_member_id?.message_unread_counter || this.message_needaction_counter;
         }
         return super.importantCounter;
     },
