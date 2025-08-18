@@ -30,7 +30,7 @@
                     <attribute name="invisible" add="evaluation_type == 'ai_computed'" separator=" or "></attribute>
                 </xpath>
                 <xpath expr="//field[@name='update_path']" position="attributes">
-                    <attribute name="required">evaluation_type == 'ai_computed'</attribute>
+                    <attribute name="required">state == 'object_write' and evaluation_type == 'ai_computed'</attribute>
                 </xpath>
             </data>
         </field>

@@ -16,10 +16,10 @@ class IrActionsServer(models.Model):
     update_field_relation = fields.Char(related="update_field_id.relation")
     update_field_type = fields.Selection(related='update_field_id.ttype')
 
-    @api.constrains('evaluation_type', 'update_field_id')
+    @api.constrains('evaluation_type', 'update_field_id', 'state')
     def _check_ai_evaluation_type(self):
         for action in self:
-            if action.evaluation_type == 'ai_computed' and not action.update_field_id.store:
+            if action.state == 'object_write' and action.evaluation_type == 'ai_computed' and not action.update_field_id.store:
                 raise ValidationError(_("This field can not be computed with AI (not stored)."))
 
     def _run_action_object_write(self, eval_context=None):
