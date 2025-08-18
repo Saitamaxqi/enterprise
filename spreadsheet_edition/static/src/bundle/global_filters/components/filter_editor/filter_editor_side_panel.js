@@ -101,17 +101,24 @@ export class AbstractFilterEditorSidePanel extends Component {
     }
 
     onSave() {
-        this.store.saveGlobalFilter();
+        const sourcePanel = `${this.constructor.name}_${this.props.id}`;
+        this.store.saveGlobalFilter(sourcePanel);
     }
 
     onCancel() {
-        this.env.openSidePanel("GLOBAL_FILTERS_SIDE_PANEL", {});
+        this.env.replaceSidePanel(
+            "GLOBAL_FILTERS_SIDE_PANEL",
+            `${this.constructor.name}_${this.props.id}`
+        );
     }
 
     onDelete() {
         if (this.props.id) {
             this.env.model.dispatch("REMOVE_GLOBAL_FILTER", { id: this.props.id });
         }
-        this.env.openSidePanel("GLOBAL_FILTERS_SIDE_PANEL", {});
+        this.env.replaceSidePanel(
+            "GLOBAL_FILTERS_SIDE_PANEL",
+            `${this.constructor.name}_${this.props.id}`
+        );
     }
 }

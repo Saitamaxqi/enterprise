@@ -45,7 +45,7 @@ export class GlobalFiltersSidePanel extends Component {
     }
 
     newText() {
-        this.env.openSidePanel("TEXT_FILTER_SIDE_PANEL");
+        this.env.replaceSidePanel("TEXT_FILTER_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL");
     }
 
     newSelection() {
@@ -53,15 +53,15 @@ export class GlobalFiltersSidePanel extends Component {
     }
 
     newDate() {
-        this.env.openSidePanel("DATE_FILTER_SIDE_PANEL");
+        this.env.replaceSidePanel("DATE_FILTER_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL");
     }
 
     newRelation() {
-        this.env.openSidePanel("RELATION_FILTER_SIDE_PANEL");
+        this.env.replaceSidePanel("RELATION_FILTER_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL");
     }
 
     newBoolean() {
-        this.env.openSidePanel("BOOLEAN_FILTERS_SIDE_PANEL");
+        this.env.replaceSidePanel("BOOLEAN_FILTERS_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL");
     }
 
     newNumeric() {
@@ -78,16 +78,28 @@ export class GlobalFiltersSidePanel extends Component {
         }
         switch (filter.type) {
             case "text":
-                this.env.openSidePanel("TEXT_FILTER_SIDE_PANEL", { id });
+                this.env.replaceSidePanel("TEXT_FILTER_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL", {
+                    id,
+                });
                 break;
             case "date":
-                this.env.openSidePanel("DATE_FILTER_SIDE_PANEL", { id });
+                this.env.replaceSidePanel("DATE_FILTER_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL", {
+                    id,
+                });
                 break;
             case "relation":
-                this.env.openSidePanel("RELATION_FILTER_SIDE_PANEL", { id });
+                this.env.replaceSidePanel(
+                    "RELATION_FILTER_SIDE_PANEL",
+                    "GLOBAL_FILTERS_SIDE_PANEL",
+                    { id }
+                );
                 break;
             case "boolean":
-                this.env.openSidePanel("BOOLEAN_FILTERS_SIDE_PANEL", { id });
+                this.env.replaceSidePanel(
+                    "BOOLEAN_FILTERS_SIDE_PANEL",
+                    "GLOBAL_FILTERS_SIDE_PANEL",
+                    { id }
+                );
                 break;
             case "selection":
                 this.env.openSidePanel("SELECTION_FILTERS_SIDE_PANEL", { id });

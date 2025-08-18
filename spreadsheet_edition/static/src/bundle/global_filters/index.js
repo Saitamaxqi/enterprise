@@ -23,11 +23,21 @@ const { sidePanelRegistry, topbarComponentRegistry, cellMenuRegistry } = spreads
 sidePanelRegistry.add("DATE_FILTER_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: DateFilterEditorSidePanel,
+    computeState: (getters, props) => ({
+        isOpen: true,
+        props,
+        key: `DateFilterEditorSidePanel_${props.id}`,
+    }),
 });
 
 sidePanelRegistry.add("TEXT_FILTER_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: TextFilterEditorSidePanel,
+    computeState: (getters, props) => ({
+        isOpen: true,
+        props,
+        key: `TextFilterEditorSidePanel_${props.id}`,
+    }),
 });
 
 sidePanelRegistry.add("SELECTION_FILTERS_SIDE_PANEL", {
@@ -38,11 +48,21 @@ sidePanelRegistry.add("SELECTION_FILTERS_SIDE_PANEL", {
 sidePanelRegistry.add("RELATION_FILTER_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: RelationFilterEditorSidePanel,
+    computeState: (getters, props) => ({
+        isOpen: true,
+        props,
+        key: `RelationFilterEditorSidePanel_${props.id}`,
+    }),
 });
 
 sidePanelRegistry.add("BOOLEAN_FILTERS_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: BooleanFilterEditorSidePanel,
+    computeState: (getters, props) => ({
+        isOpen: true,
+        props,
+        key: `BooleanFilterEditorSidePanel_${props.id}`,
+    }),
 });
 
 sidePanelRegistry.add("NUMERIC_FILTERS_SIDE_PANEL", {
