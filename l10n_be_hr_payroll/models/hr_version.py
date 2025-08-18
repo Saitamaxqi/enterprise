@@ -574,8 +574,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         work_data = defaultdict(lambda: [0, 0])  # [days, hours]
 
         # TODO DBE: Seems to return wrong value in case of flexible hours
-        attendances = self.resource_calendar_id.attendance_ids.filtered(lambda a: a.day_period != 'lunch' and (
-                (not a.date_from or not a.date_to) or (a.date_from <= date_to.date() and a.date_to >= date_from.date())))
+        attendances = self.resource_calendar_id.attendance_ids.filtered(lambda a: a.day_period != 'lunch')
         mapped_data = defaultdict(lambda: 0)
         for attendance in attendances:
             mapped_data[attendance.week_type, attendance.dayofweek] += attendance.hour_to - attendance.hour_from
