@@ -1,4 +1,4 @@
-import { DashboardLoader } from "@spreadsheet_dashboard/bundle/dashboard_action/dashboard_loader";
+import { DashboardLoader } from "@spreadsheet_dashboard/bundle/dashboard_action/dashboard_loader_service";
 import { patch } from "@web/core/utils/patch";
 
 patch(DashboardLoader.prototype, {
