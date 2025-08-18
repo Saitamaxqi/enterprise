@@ -98,10 +98,12 @@ class TestSaleReport(TestSubscriptionCommon):
         self.env.flush_all()
 
         report_lines = self.env['sale.report'].search([('name', 'in', [self.original_subscription.name, upsell_sub.name])])
-        self.assertEqual(len(report_lines), 1)
+        self.assertEqual(len(report_lines), 2)
         recurring_line = report_lines.filtered(lambda l: l.product_id == self.recurring_product)
         self.assertEqual(recurring_line.product_uom_qty, 2)
         self.assertEqual(recurring_line.price_subtotal, 200)
+        no_recurring_line = report_lines.filtered(lambda l: l.product_id == self.no_recurring_product)
+        self.assertEqual(no_recurring_line.product_uom_qty, 5)
 
     def test_report_confirm_upsell_with_same_product_and_discount(self):
         with freeze_time("2024-08-30 02:01:00 UTC"):

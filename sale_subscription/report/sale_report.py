@@ -15,6 +15,8 @@ class SaleReport(models.Model):
         res += """
             AND (
                 s.subscription_state IS NULL OR
+                (t.recurring_invoice IS False AND
+                s.subscription_state = '7_upsell') OR
                 s.subscription_state != '7_upsell'
             )
         """
