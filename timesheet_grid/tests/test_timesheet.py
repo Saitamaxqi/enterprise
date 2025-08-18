@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields, Command
 from odoo.tools.float_utils import float_compare
-from odoo.addons.mail.tests.common import MockEmail
+from odoo.addons.mail.tests.common import MockEmail, mail_new_test_user
 from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import Form, freeze_time
@@ -758,3 +758,132 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
         timer_timesheet.with_user(self.user_employee).action_timer_stop()
         count = AccountAnalyticLine.with_user(self.user_employee).search_count([('task_id', '=', self.task2.id)])
         self.assertEqual(count, 2, "There should be two entries for timesheet.")
+
+    def test_timesheet_timer_timezone_resilience(self):
+        """
+        Test that recording time on a timesheet via the timer adds time to the
+        client's local Date's timesheet entry. This specifically checks that
+        the Date of the timesheet entry matches the Date of the timer
+        recording.
+
+        Note that if a timesheet entry already exists for the Date of the timer
+        "stop", we will just add time to that entry. We can test that time is
+        _only_ added to the local Date's entry by creating entries one day
+        before and one day after the local Date. If time was added to those
+        entries instead of the local Date's entry, this test should fail.
+
+        This is to prevent Datetime versus Date storage/logic issues.
+        """
+        # This user is AHEAD of UTC. Used to test "off by -1" errors.
+        new_zealand_user = mail_new_test_user(
+            self.env,
+            name='Billy Butcher',
+            login='butcher',
+            email='butcher@theboys.com',
+            groups='hr_timesheet.group_hr_timesheet_user',
+            tz='Pacific/Auckland',
+        )
+        new_zealand_employee = self.env['hr.employee'].create({
+            'name': 'Billy Butcher',
+            'user_id': new_zealand_user.id,
+        })
+        # This user is BEHIND UTC. Used to test "off by +1" errors.
+        united_states_user = mail_new_test_user(
+            self.env,
+            name='Homelander',
+            login='homelander',
+            email='homelander@theboys.com',
+            groups='hr_timesheet.group_hr_timesheet_user',
+            tz='America/New_York',
+        )
+        united_states_employee = self.env['hr.employee'].create({
+            'name': 'Homelander',
+            'user_id': united_states_user.id,
+        })
+
+        Timesheet = self.env['account.analytic.line']
+        # Setting the timesheet rounding here so that we don't rely on the
+        # settings configured, and possibly changed, in other tests.
+        self.env['res.config.settings'].create({
+            'timesheet_encode_method': 'hours',
+            'timesheet_min_duration': 60,  # Minimum timesheet time is 1 hour
+            'timesheet_rounding': 60,      # Round to nearest hour
+        }).execute()
+
+        # Note that the below time is in UTC. This time falls on August 19th
+        # in the Pacific/Auckland timezone.
+        @freeze_time('2025-08-18 15:00:00')
+        def test_off_by_minus_one():
+            yesterday_timesheet, today_timesheet = \
+                Timesheet.with_user(new_zealand_user).create([
+                    {
+                        'name': '/',
+                        'project_id': self.project_customer.id,
+                        'task_id': self.task1.id,
+                        'employee_id': new_zealand_employee.id,
+                        'unit_amount': 2.0,
+                        'date': date.today(),  # August 18th, timezone-agnostic
+                    },
+                    {
+                        'name': '/',
+                        'project_id': self.project_customer.id,
+                        'task_id': self.task1.id,
+                        'employee_id': new_zealand_employee.id,
+                        'unit_amount': 0.0,
+                    }
+                ])
+            # This timer is being started on August 19th from the perspective
+            # of somebody in the Pacific/Auckland timezone.
+            today_timesheet.with_user(new_zealand_user).action_timer_start()
+            with freeze_time(datetime.now() + timedelta(hours=1)):
+                # Simulate stopping the timer as if the "stop" button was pressed
+                # by the user. Stopping on August 19th in New Zealand.
+                today_timesheet.with_user(new_zealand_user).action_timer_stop(try_to_match=True)
+            self.assertEqual(
+                yesterday_timesheet.unit_amount, 2.0,
+                "Yesterday's timesheet entry should not have been updated.",
+            )
+            self.assertEqual(
+                today_timesheet.unit_amount, 1.0,
+                "Today's timesheet should have been updated.",
+            )
+
+        # Again, this time is in UTC. This time falls on August 18th in the
+        # America/New_York timezone.
+        @freeze_time('2025-08-19 02:00:00')
+        def test_off_by_positive_one():
+            tomorrow_timesheet, today_timesheet = \
+                Timesheet.with_user(united_states_user).create([
+                    {
+                        'name': '/',
+                        'project_id': self.project_customer.id,
+                        'task_id': self.task1.id,
+                        'employee_id': united_states_employee.id,
+                        'unit_amount': 2.0,
+                        'date': date.today(),  # August 19th, timezone-agnostic
+                    },
+                    {
+                        'name': '/',
+                        'project_id': self.project_customer.id,
+                        'task_id': self.task1.id,
+                        'employee_id': united_states_employee.id,
+                        'unit_amount': 0.0,
+                    }
+                ])
+            # This timer is being started on August 18th from the perspective
+            # of somebody in the America/New_York timezone.
+            today_timesheet.with_user(united_states_user).action_timer_start()
+            with freeze_time(datetime.now() + timedelta(hours=1)):
+                # Stopping on August 18th in New York.
+                today_timesheet.with_user(united_states_user).action_timer_stop(try_to_match=True)
+            self.assertEqual(
+                tomorrow_timesheet.unit_amount, 2.0,
+                "Tomorrow's timesheet entry should not have been updated.",
+            )
+            self.assertEqual(
+                today_timesheet.unit_amount, 1.0,
+                "Today's timesheet should have been updated.",
+            )
+
+        test_off_by_minus_one()
+        test_off_by_positive_one()

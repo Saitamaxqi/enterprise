@@ -470,7 +470,7 @@ class AccountAnalyticLine(models.Model):
             ('user_id', '=', self.env.user.id),
             ('project_id', '=', self.project_id.id),
             ('task_id', '=', self.task_id.id),
-            ('date', '=', fields.Date.today()),
+            ('date', '=', fields.Date.context_today(self)),
             ('name', '=', '/'),
             ('validated', '=', False),
         ]
