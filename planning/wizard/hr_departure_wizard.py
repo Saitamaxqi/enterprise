@@ -9,7 +9,7 @@ class HrDepartureWizard(models.TransientModel):
     _inherit = 'hr.departure.wizard'
 
     def action_register_departure(self):
-        super().action_register_departure()
+        action = super().action_register_departure()
 
         departure_date = datetime.combine(self.departure_date + timedelta(days=1), time.min)
         planning_slots = self.env['planning.slot'].sudo().search([
@@ -17,3 +17,4 @@ class HrDepartureWizard(models.TransientModel):
             ('end_datetime', '>=', departure_date),
         ])
         planning_slots._manage_archived_resources(departure_date)
+        return action
