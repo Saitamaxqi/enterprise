@@ -293,11 +293,13 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
     def test_default_company_id_for_timesheet(self):
         """ This test ensures that the default company_id used when a timesheet is created from the ticket form view is the company_id of its project. """
         new_company = self.env['res.company'].create({'name': "Do the extra miles"})
+        company_second = self.env['res.company'].create({'name': "Second company"})
+        self.env['hr.employee'].create({'user_id': self.env.uid, 'company_id': new_company.id})
+        self.env['hr.employee'].create({'user_id': self.env.uid, 'company_id': company_second.id})
         project = self.env['project.project'].create({
             'name': 'Project',
             'allow_timesheets': True,
             'partner_id': self.partner.id,
-            'company_id': new_company.id,
         })
         helpdesk_team = self.env['helpdesk.team'].create({
             'name': 'Test Team new company',
@@ -313,6 +315,12 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
         # Use the default values sent by the form view
         vals = {'date': '2023-11-03', 'user_id': False, 'employee_id': self.env['hr.employee'].create({'user_id': self.env.uid}).id, 'name': False,
                 'unit_amount': 0, 'project_id': self.project.id, 'task_id': False, 'helpdesk_ticket_id': helpdesk_ticket.id}
+        timesheet = self.env['account.analytic.line'].create([vals])
+        self.assertEqual(timesheet.company_id, new_company, 'The expected company of the timesheet is the company from the project of its ticket')
+
+        # Test to ensure provided company_id is not overridden
+        vals.update({'company_id': new_company.id, 'date': '2023-11-04', 'user_id': self.env.uid})
+        vals.pop('employee_id')
         timesheet = self.env['account.analytic.line'].create([vals])
         self.assertEqual(timesheet.company_id, new_company, 'The expected company of the timesheet is the company from the project of its ticket')
 
