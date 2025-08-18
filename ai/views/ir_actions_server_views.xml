@@ -25,7 +25,7 @@
                     </group>
                 </xpath>
                 <xpath expr="//page[@name='usage']" position="attributes">
-                    <attribute name="invisible" add="not ai_tool_is_candidate" separator="and"/>
+                    <attribute name="invisible" add="not ai_tool_is_candidate or context.get('is_modal')" separator="and"/>
                 </xpath>
                 <xpath expr="//page[@name='usage']" position="after">
                     <page string="Prompt" name="ai_action_prompt" invisible="state != 'ai'">
