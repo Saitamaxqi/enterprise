@@ -16,8 +16,8 @@
                 <div name="transport_mode_car" invisible="country_code != 'BE'"
                     class="o_checkbox_optional_field"
                     groups="fleet.fleet_group_manager">
-                    <field name="transport_mode_car" invisible="wage_type == 'hourly'" nolabel="1"/>
-                    <field name="car_id" nolabel="1" invisible="not transport_mode_car" required="transport_mode_car" placeholder="Select a car ..."/>
+                    <field name="transport_mode_car"/>
+                    <field name="car_id" invisible="not transport_mode_car" required="transport_mode_car" placeholder="Select a car ..."/>
                 </div>
             </div>
             <xpath expr="//label[@for='fuel_card']" position="before">
@@ -29,8 +29,8 @@
                     class="o_checkbox_optional_field"
                     groups="fleet.fleet_group_manager"
                     invisible="country_code != 'BE'">
-                    <field name="new_car" invisible="wage_type == 'hourly'" nolabel="1"/>
-                    <field name="new_car_model_id" invisible="not new_car" nolabel="1"/>
+                    <field name="new_car"/>
+                    <field name="new_car_model_id" invisible="not new_car"/>
                 </div>
                 <field name="ordered_car_id" invisible="not ordered_car_id"/>
             </xpath>
@@ -64,8 +64,8 @@
                     class="o_checkbox_optional_field"
                     groups="fleet.fleet_group_manager"
                     invisible="country_code != 'BE'">
-                    <field name="new_bike" invisible="wage_type == 'hourly'" nolabel="1"/>
-                    <field name="new_bike_model_id" invisible="not new_bike" required="new_bike" nolabel="1"/>
+                    <field name="new_bike"/>
+                    <field name="new_bike_model_id" invisible="not new_bike" required="new_bike"/>
                 </div>
             </field>
         </field>

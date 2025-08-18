@@ -22,7 +22,7 @@
                     invisible="country_code != 'AU' or wage_type == 'monthly'"/>
             </div>
             <div name="wage" position="after">
-                <field name="l10n_au_yearly_wage"/>
+                <field name="l10n_au_yearly_wage" invisible="country_code != 'AU'"/>
             </div>
             <group name="payroll_group" position="inside">
                 <group name="l10n_au_general" string="General" invisible="country_code != 'AU'">

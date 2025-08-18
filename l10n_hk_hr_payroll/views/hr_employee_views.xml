@@ -46,13 +46,12 @@
                     <label for="l10n_hk_internet" string="Internet Subscription"/>
                     <div class="o_row">
                         <field name="l10n_hk_internet" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
                     </div>
                     <label for="l10n_hk_rental_id"/>
                     <div class="o_row">
                         <field name="l10n_hk_rental_id" readonly="1"/>
-                        <button class="btn btn-link" type="object" name="action_open_rentals">
-                            <span class="fa fa-arrow-right"></span><span>History</span>
-                        </button>
+                        <button class="btn btn-link" type="object" name="action_open_rentals">History</button>
                     </div>
                 </group>
             </group>

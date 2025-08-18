@@ -112,36 +112,36 @@
             </div>
             <group name="payroll_group" position="inside">
                 <group name="l10n_lu_bik" string="Benefits in Kind" invisible="country_code != 'LU'">
-                    <label for="l10n_lu_bik_vehicle"/>
+                    <label for="l10n_lu_bik_vehicle" string="Vehicle"/>
                     <div class="o_row">
-                        <field name="l10n_lu_bik_vehicle" string="Vehicle" class="o_hr_narrow_field"/>
-                        <div>/ month</div>
+                        <field name="l10n_lu_bik_vehicle" class="o_hr_narrow_field"/>
+                        <span class="me-3">/ month</span>
                         <field name="l10n_lu_bik_vehicle_vat_included"/>
-                        <div>VAT Included</div>
+                        <span>VAT Included</span>
                     </div>
                     <label for="l10n_lu_bik_other_benefits"/>
                     <div class="o_row">
                         <field name="l10n_lu_bik_other_benefits" class="o_hr_narrow_field"/>
-                        <div>/ month</div>
+                        <span>/ month</span>
                     </div>
 
                     <separator string="Allowances"/>
-                    <label for="l10n_lu_alw_vehicle"/>
+                    <label for="l10n_lu_alw_vehicle" string="Vehicle Package"/>
                     <div class="o_row">
-                        <field name="l10n_lu_alw_vehicle" string="Vehicle Package" class="o_hr_narrow_field"/>
-                        <div>/ month</div>
+                        <field name="l10n_lu_alw_vehicle" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
                     </div>
 
                     <separator string="Meal Vouchers"/>
-                    <label for="l10n_lu_meal_voucher_amount"/>
+                    <label for="l10n_lu_meal_voucher_amount" string="Daily Amount"/>
                     <div class="o_row">
-                        <field name="l10n_lu_meal_voucher_amount" string="Daily Amount" class="o_hr_narrow_field"/>
-                        <div>/ worked day</div>
+                        <field name="l10n_lu_meal_voucher_amount" class="o_hr_narrow_field"/>
+                        <span>/ worked day</span>
                     </div>
-                    <label for="l10n_lu_meal_voucher_employer_cost"/>
+                    <label for="l10n_lu_meal_voucher_employer_cost" string="Employer Contribution"/>
                     <div class="o_row">
-                        <field name="l10n_lu_meal_voucher_employer_cost" string="Employer Contribution" class="o_hr_narrow_field"/>
-                        <div>/ worked day</div>
+                        <field name="l10n_lu_meal_voucher_employer_cost" class="o_hr_narrow_field"/>
+                        <span>/ worked day</span>
                     </div>
                     <field name="l10n_lu_meal_voucher_employee_computation" string="Employee Computation" widget="radio"/>
                 </group>

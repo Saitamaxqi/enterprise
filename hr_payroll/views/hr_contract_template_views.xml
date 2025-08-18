@@ -17,6 +17,12 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
+            <field name="structure_type_id" position="attributes">
+                <attribute name="required">1</attribute>
+            </field>
+            <page name="information" position="attributes">
+                <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
+            </page>
             <label for="wage" position="before">
                 <field name="wage_type"/>
                 <field name="schedule_pay"/>
@@ -26,12 +32,25 @@
                     <span>/ hour</span>
                 </div>
             </label>
+            <div name="wage_period_label" position="attributes">
+                <attribute name="invisible">schedule_pay != 'monthly'</attribute>
+            </div>
+            <div name="wage_period_label" position="after">
+                <span invisible="schedule_pay != 'annually'">/ year</span>
+                <span invisible="schedule_pay != 'semi-annually'">/ half-year</span>
+                <span invisible="schedule_pay != 'quarterly'">/ quarter</span>
+                <span invisible="schedule_pay != 'bi-monthly'">/ two months</span>
+                <span invisible="schedule_pay != 'semi-monthly'">/ half-month</span>
+                <span invisible="schedule_pay != 'bi-weekly'">/ two weeks</span>
+                <span invisible="schedule_pay != 'weekly'">/ week</span>
+                <span invisible="schedule_pay != 'daily'">/ day</span>
+            </div>
+            <field name="resource_calendar_id" position="attributes">
+                <attribute name="groups">hr.group_hr_manager</attribute>
+            </field>
             <page name="information" position="attributes">
                 <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
             </page>
-            <group name="salary_right" position="attributes">
-                <attribute name="invisible">wage_type == 'hourly'</attribute>
-            </group>
         </field>
     </record>
 

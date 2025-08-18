@@ -5,8 +5,10 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
-            <group name="salary_left" position="inside">
-                <field name="l10n_nl_30_percent" invisible="country_code != 'NL'"/>
+            <group name="salary_info" position="inside">
+                <group string="Netherlands Payroll" invisible="country_code != 'NL'">
+                    <field name="l10n_nl_30_percent"/>
+                </group>
             </group>
         </field>
     </record>

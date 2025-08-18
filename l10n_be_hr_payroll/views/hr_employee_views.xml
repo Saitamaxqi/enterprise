@@ -58,7 +58,7 @@
                     </div>
                     <label for="ip"/>
                     <div class="o_row">
-                        <field name="ip" invisible="wage_type == 'hourly' or ip_wage_rate == 0.0"/>
+                        <field name="ip" invisible="ip_wage_rate == 0.0"/>
                         <field name="ip_wage_rate" class="o_hr_narrow_field"/>
                         <span>%</span>
                     </div>
@@ -158,8 +158,16 @@
                 <group string="Insurances" invisible="country_code != 'BE'">
                     <field name="l10n_be_has_ambulatory_insurance"/>
                     <field name="l10n_be_ambulatory_insured_spouse" string="Insured Spouse" invisible="not l10n_be_has_ambulatory_insurance"/>
-                    <field name="l10n_be_ambulatory_insured_adults" string="# Insured Children &gt;= 19 y/o" invisible="not l10n_be_has_ambulatory_insurance"/>
-                    <field name="l10n_be_ambulatory_insured_children" string="# Insured Children &lt; 19 y/o" invisible="not l10n_be_has_ambulatory_insurance"/>
+                    <label for="l10n_be_ambulatory_insured_adults" string="Insured Children" invisible="not l10n_be_has_ambulatory_insurance"/>
+                    <div class="o_row" invisible="not l10n_be_has_ambulatory_insurance">
+                        <field name="l10n_be_ambulatory_insured_adults" class="o_hr_narrow_field"/>
+                        <span>adults (19 and above)</span>
+                    </div>
+                    <label for="l10n_be_ambulatory_insured_children" string="Insured Children" invisible="not l10n_be_has_ambulatory_insurance"/>
+                    <div class="o_row" invisible="not l10n_be_has_ambulatory_insurance">
+                        <field name="l10n_be_ambulatory_insured_children" class="o_hr_narrow_field"/>
+                        <span>minors (18 or under)</span>
+                    </div>
                     <label for="l10n_be_ambulatory_insurance_amount" string="Insurance Amount" invisible="not l10n_be_has_ambulatory_insurance"/>
                     <div class="o_row o_hr_narrow_field" invisible="not l10n_be_has_ambulatory_insurance">
                         <field name="l10n_be_ambulatory_insurance_amount" nolabel="1"/>
@@ -170,8 +178,16 @@
                     <field name="l10n_be_ambulatory_amount_per_adult" string="Amount per Adult" invisible="1"/>
                     <field name="has_hospital_insurance"/>
                     <field name="insured_relative_spouse" invisible="not has_hospital_insurance"/>
-                    <field name="insured_relative_adults" invisible="not has_hospital_insurance"/>
-                    <field name="insured_relative_children" invisible="not has_hospital_insurance"/>
+                    <label for="insured_relative_adults" string="Insured Children" invisible="not has_hospital_insurance"/>
+                    <div class="o_row" invisible="not has_hospital_insurance">
+                        <field name="insured_relative_adults" class="o_hr_narrow_field"/>
+                        <span>adults (19 and above)</span>
+                    </div>
+                    <label for="insured_relative_children" string="Insured Children" invisible="not has_hospital_insurance"/>
+                    <div class="o_row" invisible="not has_hospital_insurance">
+                        <field name="insured_relative_children" class="o_hr_narrow_field"/>
+                        <span>minors (18 or under)</span>
+                    </div>
                     <label for="insurance_amount" invisible="not has_hospital_insurance"/>
                     <div class="o_row" invisible="not has_hospital_insurance">
                         <field name="insurance_amount" class="o_hr_narrow_field"/>

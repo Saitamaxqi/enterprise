@@ -22,16 +22,29 @@
                         <field name="l10n_ae_other_allowances" class="o_hr_narrow_field"/>
                         <span>/ month</span>
                     </div>
+                    <label for="l10n_ae_total_salary"/>
+                    <div class="o_row" name="l10n_ae_total_salary">
+                        <field name="l10n_ae_total_salary" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
 
                     <separator string="Annual Leave Provision"/>
-                    <field name="l10n_ae_number_of_leave_days"/>
+                    <label for="l10n_ae_number_of_leave_days" string="Leaves"/>
+                    <div class="o_row" name="l10n_ae_number_of_leave_days">
+                        <field name="l10n_ae_number_of_leave_days" class="o_hr_narrow_field"/>
+                        <span>days</span>
+                    </div>
 
                     <separator string="DEWS Benefits"/>
                     <field name="l10n_ae_is_dews_applied"/>
 
                     <separator string="End Of Service"/>
-                    <field name="l10n_ae_is_computed_based_on_daily_salary"/>
-                    <field name="l10n_ae_eos_daily_salary" invisible="not l10n_ae_is_computed_based_on_daily_salary"/>
+                    <label for="l10n_ae_is_computed_based_on_daily_salary"/>
+                    <div name="o_row">
+                        <field name="l10n_ae_is_computed_based_on_daily_salary" class="me-1"/>
+                        <field name="l10n_ae_eos_daily_salary" invisible="not l10n_ae_is_computed_based_on_daily_salary" class="o_hr_narrow_field" widget="monetary"/>
+                        <span invisible="not l10n_ae_is_computed_based_on_daily_salary">/ day</span>
+                    </div>
                 </group>
             </group>
         </field>

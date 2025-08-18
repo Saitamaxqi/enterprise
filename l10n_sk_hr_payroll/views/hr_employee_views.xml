@@ -7,12 +7,12 @@
         <field name="arch" type="xml">
             <group name="payroll_group" position="inside">
                 <group string="Meal Vouchers" invisible="company_country_code != 'SK'">
-                    <label for="l10n_sk_meal_voucher_employee"/>
+                    <label for="l10n_sk_meal_voucher_employee" string="Employee"/>
                     <div class="o_row">
                         <field name="l10n_sk_meal_voucher_employee" class="o_hr_narrow_field"/>
                         <span>/ voucher</span>
                     </div>
-                    <label for="l10n_sk_meal_voucher_employer"/>
+                    <label for="l10n_sk_meal_voucher_employer" string="Employer"/>
                     <div class="o_row">
                         <field name="l10n_sk_meal_voucher_employer" class="o_hr_narrow_field"/>
                         <span>/ voucher</span>

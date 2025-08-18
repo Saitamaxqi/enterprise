@@ -13,13 +13,37 @@
                 <field name="l10n_ma_mut_number" invisible="company_country_code != 'MA'"/>
             </group>
             <group name="payroll_group" position="inside">
-                <group name="untaxed" string="Options" invisible="country_code != 'MA'">
-                    <field name="l10n_ma_hra" class="o_hr_narrow_field"/>
-                    <field name="l10n_ma_da" class="o_hr_narrow_field"/>
-                    <field name="l10n_ma_meal_allowance" class="o_hr_narrow_field"/>
-                    <field name="l10n_ma_medical_allowance" class="o_hr_narrow_field"/>
-                    <field name="l10n_ma_kilometric_exemption" class="o_hr_narrow_field"/>
-                    <field name="l10n_ma_transport_exemption" class="o_hr_narrow_field"/>
+                <group string="Options" invisible="country_code != 'MA'">
+                    <label for="l10n_ma_hra"/>
+                    <div class="o_row">
+                        <field name="l10n_ma_hra" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="l10n_ma_da"/>
+                    <div class="o_row">
+                        <field name="l10n_ma_da" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="l10n_ma_meal_allowance"/>
+                    <div class="o_row">
+                        <field name="l10n_ma_meal_allowance" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="l10n_ma_medical_allowance"/>
+                    <div class="o_row">
+                        <field name="l10n_ma_medical_allowance" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="l10n_ma_kilometric_exemption"/>
+                    <div class="o_row">
+                        <field name="l10n_ma_kilometric_exemption" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                    <label for="l10n_ma_transport_exemption"/>
+                    <div class="o_row">
+                        <field name="l10n_ma_transport_exemption" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
                 </group>
             </group>
         </field>

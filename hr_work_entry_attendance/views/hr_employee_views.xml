@@ -9,11 +9,7 @@
                 <attribute name="invisible">0</attribute>
             </field>
             <field name="work_entry_source" position="after">
-                <div/>
-                <div class="o_row flex-d justify-content-align" invisible="work_entry_source != 'attendance'">
-                    <field name="overtime_from_attendance" nolabel="1"/>
-                    <span>Use working hours for overtime</span>
-                </div>
+                <field name="overtime_from_attendance" invisible="work_entry_source == 'attendance'"/>
             </field>
         </field>
     </record>

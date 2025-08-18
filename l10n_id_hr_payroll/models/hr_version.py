@@ -6,7 +6,7 @@ from odoo import fields, models
 class HrVersion(models.Model):
     _inherit = "hr.version"
 
-    l10n_id_bpjs_jkk = fields.Float(string="BPJS JKK(%)", groups="hr.group_hr_user")
+    l10n_id_bpjs_jkk = fields.Float(string="BPJS JKK", groups="hr.group_hr_user")
     l10n_id_kode_ptkp = fields.Selection(
         selection=[
             ('tk0', "TK/0"),

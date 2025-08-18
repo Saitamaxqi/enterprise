@@ -5,8 +5,14 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
-            <group name="salary_left" position="inside">
-                <field name="l10n_hk_internet" invisible="country_code != 'HK'" string="Internet Subscription" class="o_hr_narrow_field"/>
+            <group name="salary_info" position="inside">
+                <group string="Benefits" invisible="country_code != 'HK'">
+                    <label for="l10n_hk_internet" string="Internet Subscription"/>
+                    <div class="o_row">
+                        <field name="l10n_hk_internet" class="o_hr_narrow_field"/>
+                        <span>/ month</span>
+                    </div>
+                </group>
             </group>
         </field>
     </record>

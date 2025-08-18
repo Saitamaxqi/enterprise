@@ -17,8 +17,8 @@
                     <field name="l10n_ch_yearly_holidays" class="o_hr_narrow_field"/>
                     <field name="l10n_ch_yearly_paid_public_holidays" class="o_hr_narrow_field"/>
                     <field name="l10n_ch_lpp_not_insured"/>
-                </group>
-                <group name="ch_salary_insurances" string="Insurances" invisible="country_code != 'CH'">
+
+                    <separator string="Insurances"/>
                     <field name="l10n_ch_location_unit_id"/>
                     <field name="l10n_ch_avs_status"/>
                     <field name="l10n_ch_social_insurance_id"/>
@@ -27,14 +27,6 @@
                     <field name="l10n_ch_additional_accident_insurance_line_ids" widget="many2many_tags" options="{'no_create':True}"/>
                     <field name="l10n_ch_sickness_insurance_line_ids" widget="many2many_tags" options="{'no_create':True}"/>
                     <field name="l10n_ch_lpp_insurance_id"/>
-                </group>
-                <group name="is_additional_info" string="IS Additional Info" groups="hr_payroll.group_hr_payroll_user" invisible="country_code != 'CH' or not l10n_ch_has_withholding_tax">
-                    <field name="l10n_ch_monthly_effective_days" class="o_hr_narrow_field"/>
-                    <field name="l10n_ch_is_model"/>
-                    <field name="l10n_ch_other_employers"/>
-                    <field name="l10n_ch_other_employers_occupation_rate" class="o_hr_narrow_field"/>
-                    <field name="l10n_ch_total_occupation_rate" class="o_hr_narrow_field"/>
-                    <field name="l10n_ch_is_predefined_category"/>
                 </group>
             </group>
             <div name="hourly_wage" position="after">

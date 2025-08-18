@@ -24,12 +24,11 @@
                     </div>
 
                     <separator string="Annual Leave Provision"/>
-                    <field name="l10n_eg_total_leave_days"/>
-
-                    <separator string="End Of Service benefit"/>
-                    <field name="l10n_eg_number_of_days"/>
-                    <field name="l10n_eg_total_number_of_days"/>
-                    <field name="l10n_eg_total_eos_benefit" invisible="active_employee"/>
+                    <label for="l10n_eg_total_leave_days" string="Number of Leave"/>
+                    <div class="o_row" name="l10n_eg_total_leave_days">
+                        <field name="l10n_eg_total_leave_days" class="o_hr_narrow_field"/>
+                        <span>days</span>
+                    </div>
 
                     <separator string="Social Insurance Reference"/>
                     <field name="l10n_eg_social_insurance_reference"/>

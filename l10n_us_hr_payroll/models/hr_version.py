@@ -18,7 +18,7 @@ class HrVersion(models.Model):
         tracking=True,
         help="Check if Step 2 (c) in employee's W4 form is selected.")
     l10n_us_w4_step_3 = fields.Float(
-        string="Step 3: Dependents Amount (USD)",
+        string="Step 3: Dependents Amount",
         groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         help="The total amount in USD from Step 3 (Dependants and Other Credits) of the W4 form.")

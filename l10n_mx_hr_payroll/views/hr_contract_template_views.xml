@@ -5,28 +5,24 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr_payroll.hr_contract_template_view_form"/>
         <field name="arch" type="xml">
-            <group name="salary_left" position="inside">
-                <label for="l10n_mx_holiday_bonus_rate" invisible="country_code != 'MX'" string="Holiday Bonus Rate"/>
-                <div class="o_row" invisible="country_code != 'MX'">
-                    <field name="l10n_mx_holiday_bonus_rate" class="o_hr_narrow_field"/>
-                    <span>%</span>
-                </div>
-                <field name="l10n_mx_savings_fund" string="Savings Fund" class="o_hr_narrow_field" invisible="country_code != 'MX'"/>
-            </group>
+            <group name="salary_info" position="inside">
+                <group string="Options" invisible="country_code != 'MX'">
+                    <label for="l10n_mx_holiday_bonus_rate" string="Holiday Bonus Rate"/>
+                    <div class="o_row">
+                        <field name="l10n_mx_holiday_bonus_rate" class="o_hr_narrow_field"/>
+                        <span>%</span>
+                    </div>
+                    <field name="l10n_mx_savings_fund" string="Savings Fund"/>
 
-            <!--Vouchers-->
-            <group name="salary_info" position="after">
-                <group>
-                    <group string="Vouchers" invisible="country_code != 'MX'">
-                        <field name="l10n_mx_payment_period_vouchers" string="Payment Period"/>
-                        <field name="l10n_mx_meal_voucher_amount" string="Meal Vouchers" class="o_hr_narrow_field"/>
-                        <field name="l10n_mx_transport_amount" string="Transport Vouchers" class="o_hr_narrow_field"/>
-                        <field name="l10n_mx_gasoline_amount" string="Gasoline Vouchers" class="o_hr_narrow_field"/>
-                    </group>
+                    <separator string="Vouchers"/>
+                    <field name="l10n_mx_payment_period_vouchers" string="Payment Period"/>
+                    <field name="l10n_mx_meal_voucher_amount" string="Meal Vouchers"/>
+                    <field name="l10n_mx_transport_amount" string="Transport Vouchers"/>
+                    <field name="l10n_mx_gasoline_amount" string="Gasoline Vouchers"/>
                 </group>
             </group>
 
-            <page name="other" position="after">
+            <page name="information" position="after">
                 <page string="Infonavit / Fonacot" name="other" invisible="country_code != 'MX'">
                     <separator string="Infonavit"/>
                     <field name="l10n_mx_infonavit" nolabel="1" force_save="1" string="an Infonavit Credit">

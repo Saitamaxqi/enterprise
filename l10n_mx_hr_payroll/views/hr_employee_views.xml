@@ -9,10 +9,11 @@
                 <group string="Options" invisible="company_country_code != 'MX'">
                     <label for="l10n_mx_holiday_bonus_rate" string="Holiday Bonus Rate"/>
                     <div class="o_row">
-                        <field name="l10n_mx_holiday_bonus_rate" class="o_hr_narrow_field" nolabel="1"/>
+                        <field name="l10n_mx_holiday_bonus_rate" class="o_hr_narrow_field"/>
                         <span>%</span>
                     </div>
                     <field name="l10n_mx_savings_fund" string="Savings Fund"/>
+
                     <separator string="Vouchers"/>
                     <field name="l10n_mx_payment_period_vouchers" string="Payment Period"/>
                     <field name="l10n_mx_meal_voucher_amount" string="Meal Vouchers"/>
