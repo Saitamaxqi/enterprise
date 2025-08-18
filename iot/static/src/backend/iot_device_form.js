@@ -4,12 +4,14 @@ import { formView } from "@web/views/form/form_view";
 import { _t } from "@web/core/l10n/translation";
 import { useSubEnv } from "@odoo/owl";
 import { PRINTER_MESSAGES } from "@iot/network_utils/iot_http_service";
+import { printReport } from "@iot/iot_report_action";
 
 class IoTDeviceController extends formView.Controller {
     setup() {
         super.setup();
         this.iotHttpService = useService("iot_http");
         this.notificationService = useService("notification");
+        this.orm = useService("orm");
 
         useSubEnv({ onClickViewButton: this.onClickButtonTest.bind(this) });
     }
@@ -89,9 +91,21 @@ class IoTDeviceController extends formView.Controller {
 
     async onClickButtonTest(params) {
         if (params.clickParams.name === "test_printer") {
-            const { iot_id, identifier } = this.model.root.data;
+            const { iot_id, identifier, subtype } = this.model.root.data;
 
-            this.iotHttpService.action(
+            if (subtype === "office_printer") {
+                // We print a "real" pdf report: the external report sample
+                const reportId = (await this.orm.searchRead(
+                    "ir.actions.report",
+                    [["report_type", "=", "qweb-pdf"], ["report_name", "=", "web.preview_externalreport"]],
+                    ["id"],
+                    { limit: 1 }
+                ))[0].id;
+                const deviceId = this.model.root._config.resId;
+                return printReport(this.env, [reportId, [deviceId], null], [deviceId]);
+            }
+
+            return this.iotHttpService.action(
                 iot_id.id,
                 identifier,
                 { action: "status" },
