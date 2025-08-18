@@ -2,7 +2,7 @@
 <templates>
     <t t-inherit="web_studio.ViewEditor.InteractiveEditorProperties.Field" t-inherit-mode="extension">
         <xpath expr="//Property[contains(@name, 'help')]" position="after">
-            <t t-if="'ai' in this.props.node.field and !['binary', 'one2many', 'related'].includes(this.props.node.field.type)">
+            <t t-if="'ai' in this.props.node.field and !['binary', 'one2many', 'related', 'properties'].includes(this.props.node.field.type)">
                 <Property
                     isReadonly="!props.node.field.manual"
                     name.translate="AI"
