@@ -543,18 +543,15 @@ class PosOrder(models.Model):
             Document = self.env['l10n_mx_edi.document']
             order_lines = self.lines._l10n_mx_edi_cfdi_lines()
             base_lines = order_lines._prepare_tax_base_line_values()
-            Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
-            lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
-            if lines_dispatching['orphan_negative_lines']:
+            base_lines = Document._add_and_round_tax_details(base_lines, self.company_id)
+            dispatched_lines = Document._dispatch_negative_base_lines(base_lines, self.company_id)
+            if dispatched_lines['remaining_negative_base_lines']:
                 cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
                 return
-
-            cfdi_lines = lines_dispatching['result_lines']
-            if not cfdi_lines:
+            base_lines = dispatched_lines['base_lines']
+            if not base_lines:
                 cfdi_values['errors'] = ['empty_cfdi']
                 return
-
-            self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, self.company_id)
 
             cfdi_values['tipo_de_comprobante'] = 'E'
             if self.amount_total < 0:
@@ -573,8 +570,8 @@ class PosOrder(models.Model):
                 usage=self.l10n_mx_edi_usage,
                 to_public=self.l10n_mx_edi_cfdi_to_public,
             )
-            Document._add_tax_objected_cfdi_values(cfdi_values, cfdi_lines)
-            Document._add_base_lines_cfdi_values(cfdi_values, cfdi_lines)
+            Document._add_tax_objected_cfdi_values(cfdi_values, base_lines)
+            Document._add_base_lines_cfdi_values(cfdi_values, base_lines)
             Document._add_payment_policy_cfdi_values(cfdi_values, payment_method=self.l10n_mx_edi_payment_method_id)
             cfdi_values['condiciones_de_pago'] = None
 
@@ -666,6 +663,7 @@ class PosOrder(models.Model):
         :param periodicity: The value to fill the 'Periodicidad' value.
         :param origin:      The origin of the GI when cancelling an existing one.
         """
+        AccountTax = self.env['account.tax']
         Document = self.env['l10n_mx_edi.document']
         orders = self._l10n_mx_edi_check_orders_for_global_invoice(origin=origin)
 
@@ -700,9 +698,9 @@ class PosOrder(models.Model):
 
         # == Send ==
         def on_populate(cfdi_values):
-            cfdi_lines = []
             _set_issued_address(cfdi_values)
 
+            all_base_lines = []
             for order in orders:
                 # The refund are managed by the refunded order.
                 if order.refunded_order_id:
@@ -711,14 +709,13 @@ class PosOrder(models.Model):
                 # Dispatch the negative lines on the order itself.
                 order_lines = order.lines._l10n_mx_edi_cfdi_lines()
                 base_lines = order_lines._prepare_tax_base_line_values()
-                Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
-                lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
-                if lines_dispatching['orphan_negative_lines']:
+                base_lines = Document._add_and_round_tax_details(base_lines, self.company_id)
+                dispatched_lines = Document._dispatch_negative_base_lines(base_lines, self.company_id)
+                if dispatched_lines['remaining_negative_base_lines']:
                     cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
                     return
 
-                base_lines = lines_dispatching['result_lines']
-                base_line_ids = {x['id'] for x in base_lines}
+                base_lines = dispatched_lines['base_lines']
                 for base_line in base_lines:
                     base_line['document_name'] = order.name
 
@@ -728,36 +725,33 @@ class PosOrder(models.Model):
                     ._l10n_mx_edi_cfdi_lines()
 
                 # Manage the refunds.
-                all_refund_base_lines = []
                 for refund_order_lines in all_refund_order_lines.grouped('order_id').values():
 
                     # Dispatch the positive lines on the refund itself.
                     refund_base_lines = refund_order_lines._prepare_tax_base_line_values()
-                    for refund_base_line in refund_base_lines:
-                        refund_base_line['quantity'] *= -1
-                    Document._add_base_lines_tax_amounts(refund_base_lines, cfdi_values['company'])
-                    lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
-                    if lines_dispatching['result_lines']:
+                    refund_base_lines = Document._add_and_round_tax_details(refund_base_lines, self.company_id)
+                    refund_dispatched_lines = Document._dispatch_negative_base_lines(refund_base_lines, self.company_id)
+                    if refund_dispatched_lines['remaining_negative_base_lines']:
                         cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
                         return
 
                     # Dispatch the remaining negative lines from the refund on the invoice.
-                    refund_base_lines = lines_dispatching['orphan_negative_lines']
-                    lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines + refund_base_lines)
-                    if lines_dispatching['orphan_negative_lines']:
+                    refund_base_lines = AccountTax._turn_base_lines_is_refund_flag_off(refund_dispatched_lines['base_lines'])
+                    dispatched_lines = Document._dispatch_negative_base_lines(base_lines + refund_base_lines, self.company_id)
+                    if dispatched_lines['remaining_negative_base_lines']:
                         cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
                         return
 
-                    all_refund_base_lines += [x for x in lines_dispatching['result_lines'] if x['id'] not in base_line_ids]
-                cfdi_lines += base_lines + all_refund_base_lines
+                    base_lines = dispatched_lines['base_lines']
+                all_base_lines += base_lines
 
             # Nothing left. Everything is refunded or empty.
-            cfdi_lines = [x for x in cfdi_lines if not x['currency_id'].is_zero(x['tax_details']['raw_total_excluded_currency'])]
-            if not cfdi_lines:
+            base_lines = [x for x in all_base_lines if not x['currency_id'].is_zero(x['tax_details']['raw_total_excluded_currency'])]
+            if not base_lines:
                 cfdi_values['errors'] = ['empty_cfdi']
                 return
 
-            self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, cfdi_values['company'])
+            AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
             _biggest_amount_total, biggest_used_payment_method = max(
                 [
                     (sum(sub_orders.mapped('amount_total')), payment_method)
@@ -768,7 +762,7 @@ class PosOrder(models.Model):
             Document._add_payment_policy_cfdi_values(cfdi_values, payment_method=biggest_used_payment_method)
             Document._add_global_invoice_cfdi_values(
                 cfdi_values,
-                cfdi_lines,
+                base_lines,
                 periodicity=periodicity,
                 origin=origin,
             )

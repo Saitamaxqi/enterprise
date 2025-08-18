@@ -985,6 +985,7 @@ class AccountMove(models.Model):
     def _l10n_mx_edi_cfdi_check_invoice_config(self):
         """ Prepare the CFDI xml for the invoice. """
         self.ensure_one()
+        Document = self.env['l10n_mx_edi.document']
         errors = []
 
         # == Check the 'l10n_mx_edi_decimal_places' field set on the currency  ==
@@ -998,10 +999,17 @@ class AccountMove(models.Model):
             ))
 
         # == Check the invoice ==
-        invoice_lines = self._l10n_mx_edi_cfdi_invoice_line_ids()
-        if not invoice_lines:
+        base_lines, tax_lines = self._l10n_mx_edi_get_invoice_cfdi_base_lines()
+        base_lines = Document._add_and_round_tax_details(base_lines, self.company_id, tax_lines=tax_lines)
+        dispatched_lines = Document._dispatch_negative_base_lines(base_lines, self.company_id)
+        base_lines = dispatched_lines['base_lines']
+        nullified_base_lines = dispatched_lines['nullified_base_lines']
+        if not base_lines and not nullified_base_lines:
             errors.append(_("The invoice must contain at least one positive line to generate the CFDI."))
-        invalid_unspcs_products = invoice_lines.product_id.filtered(lambda product: not product.unspsc_code_id)
+        invalid_unspcs_products = self.env['product.product']
+        for base_line in base_lines:
+            if not base_line['product_unspsc_code']:
+                invalid_unspcs_products |= base_line['product_id']
         if invalid_unspcs_products:
             errors.append(_(
                 "You need to define an 'UNSPSC Product Category' on the following products: %s",
@@ -1011,43 +1019,35 @@ class AccountMove(models.Model):
 
     def _l10n_mx_edi_get_invoice_cfdi_base_lines(self, global_invoice=False):
         self.ensure_one()
-        Document = self.env['l10n_mx_edi.document']
-
-        base_lines = [
-            {
-                **self._prepare_product_base_line_for_taxes_computation(invl),
-                'quantity': (-1 if global_invoice and invl.move_id.move_type in ('out_refund', 'in_refund') else 1) * invl.quantity,
+        base_lines, tax_lines = self._get_rounded_base_and_tax_lines()
+        for base_line in base_lines:
+            invl = base_line['record']
+            base_line.update({
                 'uom_id': invl.product_uom_id,
                 'name': invl._l10n_mx_edi_get_cfdi_line_name(),
                 'product_unspsc_code': invl._get_product_unspsc_code(),
                 'uom_unspsc_code': invl._get_uom_unspsc_code(),
                 'tax_objected': invl.l10n_mx_edi_tax_object,
-            }
-            for invl in self._l10n_mx_edi_cfdi_invoice_line_ids()
-        ]
-        Document._add_base_lines_tax_amounts(base_lines, self.company_id)
-        return base_lines
+            })
+        return base_lines, tax_lines
 
     def _l10n_mx_edi_add_invoice_cfdi_values(self, cfdi_values):
         self.ensure_one()
         Document = self.env['l10n_mx_edi.document']
 
         # Manage the negative lines.
-        base_lines = self._l10n_mx_edi_get_invoice_cfdi_base_lines()
-        lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
-        if lines_dispatching['orphan_negative_lines']:
+        base_lines, tax_lines = self._l10n_mx_edi_get_invoice_cfdi_base_lines()
+        base_lines = Document._add_and_round_tax_details(base_lines, self.company_id, tax_lines=tax_lines)
+        dispatched_lines = Document._dispatch_negative_base_lines(base_lines, self.company_id)
+        remaining_negative_base_lines = dispatched_lines['remaining_negative_base_lines']
+        if remaining_negative_base_lines:
             cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
             return
-
-        # Nothing left. Everything is refunded or empty.
-        cfdi_lines = lines_dispatching['result_lines']
-        if not cfdi_lines:
+        base_lines = dispatched_lines['base_lines']
+        if not base_lines:
             cfdi_values['errors'] = ['empty_cfdi']
             return
 
-        tax_amls = self.line_ids.filtered('tax_repartition_line_id')
-        tax_lines = [self._prepare_tax_line_for_taxes_computation(tax_line) for tax_line in tax_amls]
-        self.env['account.tax']._round_base_lines_tax_details(base_lines, self.company_id, tax_lines=tax_lines)
         self._l10n_mx_edi_add_common_cfdi_values(cfdi_values)
         cfdi_values['tipo_de_comprobante'] = 'I' if self.move_type == 'out_invoice' else 'E'
         Document._add_customer_cfdi_values(
@@ -1056,8 +1056,8 @@ class AccountMove(models.Model):
             usage=self.l10n_mx_edi_usage,
             to_public=self.l10n_mx_edi_cfdi_to_public,
         )
-        Document._add_tax_objected_cfdi_values(cfdi_values, cfdi_lines)
-        Document._add_base_lines_cfdi_values(cfdi_values, cfdi_lines)
+        Document._add_tax_objected_cfdi_values(cfdi_values, base_lines)
+        Document._add_base_lines_cfdi_values(cfdi_values, base_lines)
         Document._add_date_cfdi_values(
             cfdi_values,
             self.invoice_date,
@@ -2325,6 +2325,7 @@ class AccountMove(models.Model):
         :param periodicity:     The value to fill the 'Periodicidad' value.
         :param origin:          The origin of the GI when cancelling an existing one.
         """
+        AccountTax = self.env['account.tax']
         Document = self.env['l10n_mx_edi.document']
 
         # == Check the config ==
@@ -2353,52 +2354,52 @@ class AccountMove(models.Model):
 
         # == Send ==
         def on_populate(cfdi_values):
-            cfdi_lines = []
+            all_base_lines = []
             for invoice in invoices:
                 # The refund are managed by the invoice.
                 if invoice.reversed_entry_id:
                     continue
 
                 # Dispatch the negative lines on the invoice itself.
-                base_lines = invoice._l10n_mx_edi_get_invoice_cfdi_base_lines(global_invoice=True)
-                lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
-                if lines_dispatching['orphan_negative_lines']:
+                base_lines, tax_lines = invoice._l10n_mx_edi_get_invoice_cfdi_base_lines()
+                base_lines = Document._add_and_round_tax_details(base_lines, self.company_id, tax_lines=tax_lines)
+                dispatched_lines = Document._dispatch_negative_base_lines(base_lines, self.company_id)
+                if dispatched_lines['remaining_negative_base_lines']:
                     cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
                     return
 
-                base_lines = lines_dispatching['result_lines']
-                base_line_ids = {x['id'] for x in base_lines}
+                base_lines = dispatched_lines['base_lines']
                 for base_line in base_lines:
                     base_line['document_name'] = invoice.name
 
                 # Manage the refunds.
-                all_refund_base_lines = []
                 for refund in invoice.reversal_move_ids:
 
                     # Dispatch the positive lines on the refund itself.
-                    refund_base_lines = refund._l10n_mx_edi_get_invoice_cfdi_base_lines(global_invoice=True)
-                    lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
-                    if lines_dispatching['result_lines']:
+                    refund_base_lines, refund_tax_lines = refund._l10n_mx_edi_get_invoice_cfdi_base_lines()
+                    refund_base_lines = Document._add_and_round_tax_details(refund_base_lines, self.company_id, tax_lines=refund_tax_lines)
+                    refund_dispatched_lines = Document._dispatch_negative_base_lines(refund_base_lines, self.company_id)
+                    if refund_dispatched_lines['remaining_negative_base_lines']:
                         cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
                         return
 
                     # Dispatch the remaining negative lines from the refund on the invoice.
-                    refund_base_lines = lines_dispatching['orphan_negative_lines']
-                    lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines + refund_base_lines)
-                    if lines_dispatching['orphan_negative_lines']:
+                    refund_base_lines = AccountTax._turn_base_lines_is_refund_flag_off(refund_dispatched_lines['base_lines'])
+                    dispatched_lines = Document._dispatch_negative_base_lines(base_lines + refund_base_lines, self.company_id)
+                    if dispatched_lines['remaining_negative_base_lines']:
                         cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
                         return
 
-                    all_refund_base_lines += [x for x in lines_dispatching['result_lines'] if x['id'] not in base_line_ids]
-                cfdi_lines += base_lines + all_refund_base_lines
+                    base_lines = dispatched_lines['base_lines']
+                all_base_lines += base_lines
 
             # Nothing left. Everything is refunded or empty.
-            cfdi_lines = [x for x in cfdi_lines if not x['currency_id'].is_zero(x['tax_details']['raw_total_excluded_currency'])]
-            if not cfdi_lines:
+            base_lines = [x for x in all_base_lines if not x['currency_id'].is_zero(x['tax_details']['raw_total_excluded_currency'])]
+            if not base_lines:
                 cfdi_values['errors'] = ['empty_cfdi']
                 return
 
-            self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, cfdi_values['company'])
+            AccountTax._round_base_lines_tax_details(base_lines, cfdi_values['company'])
             _biggest_amount_total, biggest_used_payment_method = max(
                 [
                     (sum(sub_invoices.mapped('amount_total')), payment_method)
@@ -2419,7 +2420,7 @@ class AccountMove(models.Model):
 
             Document._add_global_invoice_cfdi_values(
                 cfdi_values,
-                cfdi_lines,
+                base_lines,
                 document_date=document_date,
                 periodicity=periodicity,
                 origin=origin,

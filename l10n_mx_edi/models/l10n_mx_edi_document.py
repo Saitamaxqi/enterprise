@@ -826,46 +826,96 @@ class L10n_Mx_EdiDocument(models.Model):
             self._add_tax_objected_base_line(cfdi_values, base_line)
 
     @api.model
-    def _dispatch_cfdi_base_lines(self, base_lines):
-        """ Process the base lines passed as parameter and try to distribute the negative ones across the
-        others since negative lines are not allowed in the CFDI.
+    def _add_and_round_tax_details(self, base_lines, company, tax_lines=None):
+        """ Add the tax details on the base lines and round them.
 
-        :param base_lines:              A list of dictionaries representing the base lines.
-        :return: A dictionary containing:
-            * cfdi_lines:               A list of dictionaries representing the remaining base lines for the CFDI
-                                        after the distribution of the negative lines.
-            * orphan_negative_lines:    A list of remaining negative lines that failed to be distributed.
+        :param base_lines:          A list of base lines generated using the '_prepare_base_line_for_taxes_computation' method.
+        :param company:             The company owning the base lines.
+        :param tax_lines:           A optional list of base lines generated using the '_prepare_tax_line_for_taxes_computation'
+                                    method. If specified, the tax amounts will be computed based on those existing tax lines.
+                                    It's used to keep the manual tax amounts set by the user.
+        :return:                    A new list of base lines.
         """
-        def same_document_first(candidate, negative_line):
-            return negative_line.get('document_id') != candidate.get('document_id')
+        AccountTax = self.env['account.tax']
 
-        def prior_records_first(candidate, negative_line):
-            return candidate.get('record_id') not in negative_line.get('prior_record_ids', [])
+        AccountTax._add_tax_details_in_base_lines(base_lines, company)
+        AccountTax._round_base_lines_tax_details(base_lines, company, tax_lines=tax_lines)
 
-        sorting_criteria = [same_document_first, prior_records_first] + self.env['account.tax']._get_negative_lines_sorting_candidate_criteria()
-        return self.env['account.tax']._dispatch_negative_lines(base_lines, sorting_criteria=sorting_criteria)
+        for base_line in base_lines:
+            is_negative = base_line['tax_details']['raw_total_excluded_currency'] < 0.0
+            if is_negative and not base_line['special_type']:
+                base_line['special_type'] = 'global_discount'
+        return base_lines
 
     @api.model
-    def _add_base_lines_tax_amounts(self, base_lines, company):
+    def _dispatch_negative_base_lines(self, base_lines, company):
+        """ Dispatch the negative lines and put them on the others like discounts.
+        - Pre-compute in advance some data on taxes_data to be used later on the aggregators.
+
+        :param base_lines:                  A list of base lines generated using the '_prepare_base_line_for_taxes_computation' method.
+        :param company:                     The company owning the base lines.
+        :return:                            A dictionary containing:
+            * base_lines:                       The remaining positive base lines.
+            * remaining_negative_base_lines:    The remaining negative base lines.
+            * nullified_base_lines:             The base lines that are fully discounted at the end.
+        """
         AccountTax = self.env['account.tax']
-        AccountTax._add_tax_details_in_base_lines(base_lines, company)
+
+        # Return of merchandise.
+        # The negative lines will try to reduce the 'quantity' instead of be added as a discount.
+        base_lines = AccountTax._dispatch_return_of_merchandise_lines(base_lines, company)
+        AccountTax._squash_return_of_merchandise_lines(base_lines, company)
+
+        # Global discount.
+        # Let's spread the global discount equally across the others lines instead of adding the full amount
+        # on the biggest lines.
+        base_lines = AccountTax._dispatch_global_discount_lines(base_lines, company)
+        AccountTax._squash_global_discount_lines(base_lines, company)
 
         for base_line in base_lines:
             discount = base_line['discount']
             price_unit = base_line['price_unit']
             quantity = base_line['quantity']
             tax_details = base_line['tax_details']
-            price_subtotal = base_line['price_subtotal'] = tax_details['raw_total_excluded_currency']
+            price_subtotal = tax_details['raw_total_excluded_currency'] - sum(
+                discount_base_line['tax_details']['raw_total_excluded_currency']
+                for discount_base_line in base_line['discount_base_lines']
+            )
 
             if discount == 100.0:
-                gross_price_subtotal_before_discount = price_unit * quantity
+                raw_gross_price_subtotal = price_unit * quantity
             else:
-                gross_price_subtotal_before_discount = price_subtotal / (1 - discount / 100.0)
+                raw_gross_price_subtotal = price_subtotal / (1 - discount / 100.0)
+            base_line['raw_gross_price_subtotal'] = raw_gross_price_subtotal
+            base_line['discount_amount'] = raw_gross_price_subtotal - tax_details['raw_total_excluded_currency']
 
-            base_line['gross_price_subtotal'] = gross_price_subtotal_before_discount
-            base_line['discount_amount_before_dispatching'] = gross_price_subtotal_before_discount - price_subtotal
+        results = {
+            'base_lines': [],
+            'remaining_negative_base_lines': [],
+            'nullified_base_lines': [],
+        }
+        for base_line in base_lines:
+            compare_results = base_line['currency_id'].compare_amounts(base_line['raw_gross_price_subtotal'], 0)
+            if compare_results > 0.0:
+                results['base_lines'].append(base_line)
+            elif compare_results < 0.0:
+                results['remaining_negative_base_lines'].append(base_line)
+            else:
+                results['nullified_base_lines'].append(base_line)
+        return results
 
-            for tax_data in tax_details['taxes_data']:
+    @api.model
+    def _add_base_lines_cfdi_values(self, cfdi_values, base_lines):
+        """ Add the values about the lines to 'cfdi_values'.
+
+        :param cfdi_values:     The current CFDI values.
+        :param base_lines:      A list of dictionaries representing the lines of the document.
+        """
+        currency = cfdi_values['currency']
+        AccountTax = self.env['account.tax']
+
+        for base_line in base_lines:
+            for tax_data in base_line['tax_details']['taxes_data']:
                 tax = tax_data['tax']
                 l10n_mx_tax_data_values = tax_data['l10n_mx'] = {
                     'tipo_factor': tax.l10n_mx_factor_type,
@@ -901,16 +951,6 @@ class L10n_Mx_EdiDocument(models.Model):
                 else:
                     l10n_mx_tax_data_values['tasa_o_cuota'] = None
 
-    @api.model
-    def _add_base_lines_cfdi_values(self, cfdi_values, base_lines):
-        """ Add the values about the lines to 'cfdi_values'.
-
-        :param cfdi_values:     The current CFDI values.
-        :param base_lines:      A list of dictionaries representing the lines of the document.
-        """
-        currency = cfdi_values['currency']
-        AccountTax = self.env['account.tax']
-
         def grouping_function_base_line_tax_details(base_line, tax_data):
             if not tax_data:
                 return None
@@ -924,11 +964,11 @@ class L10n_Mx_EdiDocument(models.Model):
         base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_base_line_tax_details)
         cfdi_values['conceptos_list'] = line_values_list = []
         receptor = cfdi_values['receptor']
-        for line, aggregated_values in base_lines_aggregated_values:
-            product = line['product_id']
-            quantity = line['quantity']
-            uom = line['uom_id']
-            discount = line['discount_amount']
+        for base_line, aggregated_values in base_lines_aggregated_values:
+            product = base_line['product_id']
+            quantity = base_line['quantity']
+            uom = base_line['uom_id']
+            discount_amount = base_line['discount_amount']
 
             is_refund_gi = receptor['uso_cfdi'] == 'G02'
             if is_refund_gi:
@@ -936,15 +976,15 @@ class L10n_Mx_EdiDocument(models.Model):
                 uom_unspsc_code = 'ACT'
                 description = "Devoluciones, descuentos o bonificaciones"
             else:
-                product_unspsc_code = line.get('product_unspsc_code') or product.unspsc_code_id.code
-                uom_unspsc_code = line.get('uom_unspsc_code') or uom.unspsc_code_id.code
-                description = line['name']
+                product_unspsc_code = base_line.get('product_unspsc_code') or product.unspsc_code_id.code
+                uom_unspsc_code = base_line.get('uom_unspsc_code') or uom.unspsc_code_id.code
+                description = base_line['name']
 
             cfdi_line_values = {
-                'line': line,
+                'line': base_line,
                 'clave_prod_serv': product_unspsc_code,
-                'objeto_imp': line['tax_objected'],
-                'ieps_breakdown': line['ieps_breakdown'],
+                'objeto_imp': base_line['tax_objected'],
+                'ieps_breakdown': base_line['ieps_breakdown'],
                 'no_identificacion': product.default_code,
                 'cuenta_predial': product.l10n_mx_edi_predial_account,
                 'cantidad': quantity,
@@ -956,9 +996,9 @@ class L10n_Mx_EdiDocument(models.Model):
             }
 
             # Discount.
-            if currency.is_zero(discount):
-                discount = None
-            cfdi_line_values['descuento'] = discount
+            if currency.is_zero(discount_amount):
+                discount_amount = None
+            cfdi_line_values['descuento'] = discount_amount
 
             # Taxes
             for values in aggregated_values.values():
@@ -978,7 +1018,7 @@ class L10n_Mx_EdiDocument(models.Model):
 
                 if grouping_key['tipo_factor'] == 'Cuota':
                     if grouping_key['scale_from_quantity']:
-                        tax_values['base'] = line['quantity']
+                        tax_values['base'] = base_line['quantity']
                     elif product[grouping_key['product_field']]:
                         tax_values['base'] = product[grouping_key['product_field']]
                     else:
@@ -1018,13 +1058,13 @@ class L10n_Mx_EdiDocument(models.Model):
             # and remove the tax values to avoid rounding issues.
             if removed_tax_values:
                 cfdi_line_values['importe'] = (
-                    line['currency_id'].round(line['gross_price_subtotal'])
-                    + line['tax_details']['delta_total_excluded_currency']
+                    base_line['currency_id'].round(base_line['raw_gross_price_subtotal'])
+                    + base_line['tax_details']['delta_total_excluded_currency']
                 )
                 for sign, tax_values in removed_tax_values:
                     cfdi_line_values['importe'] += sign * tax_values['importe']
             else:
-                cfdi_line_values['importe'] = line['gross_price_subtotal']
+                cfdi_line_values['importe'] = base_line['raw_gross_price_subtotal']
 
             for results_key in ('retenciones_list', 'traslados_list'):
                 for tax_values in cfdi_line_values[results_key]:
