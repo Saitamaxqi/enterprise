@@ -739,7 +739,7 @@ class KnowledgeArticle(models.Model):
     # ------------------------------------------------------------
 
     @api.model
-    def search_fetch(self, domain, field_names, offset=0, limit=None, order=None):
+    def search_fetch(self, domain, field_names=None, offset=0, limit=None, order=None):
         """ Override to support ordering on is_user_favorite.
 
         Ordering through web client calls search_read with an order parameter set.
