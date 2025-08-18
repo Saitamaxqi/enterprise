@@ -52,7 +52,8 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             self.commission_plan_sub.action_approve()
             inv = sub._create_recurring_invoice()
             self.assertAlmostEqual(inv.amount_untaxed, 1000, 2, msg="The untaxed invoiced amount should be equal to 1000")
-
+            self.env.invalidate_all()
+            self.env['sale.commission.achievement.report']._pre_achievement_operation()
             achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
 
@@ -72,7 +73,7 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             inv2._post()
             self.assertAlmostEqual(inv2.amount_untaxed, 517.2, 2, msg="The untaxed upsell invoiced amount should be equal to 517.2")
             self.env.invalidate_all()
-
+            self.env['sale.commission.achievement.report']._pre_achievement_operation()
             achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
 
@@ -86,6 +87,7 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
         with freeze_time('2024-03-02'):
             inv3 = sub._create_recurring_invoice()
             self.env.invalidate_all()
+            self.env['sale.commission.achievement.report']._pre_achievement_operation()
             achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             achievements = achievements.filtered(lambda x: x.related_res_id == inv3.id and x.related_res_model == 'account.move')
             commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
@@ -135,6 +137,8 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
         inv2 = other_sale._create_invoices()
         inv2._post()
         self.assertAlmostEqual(inv2.amount_untaxed, 100, 2, msg="The amount of the non recurring invoice is 100")
+        self.env.invalidate_all()
+        self.env['sale.commission.achievement.report']._pre_achievement_operation()
         achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
         commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
 
@@ -207,6 +211,9 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
         self.commission_plan_sub.action_approve()
         sub.action_confirm()
         inv = sub._create_recurring_invoice()
+        self.env.flush_all()
+        self.env.invalidate_all()
+        self.env['sale.commission.achievement.report']._pre_achievement_operation()
         achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
         commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
         self.assertAlmostEqual(inv.amount_untaxed, 500, 2, msg="The invoice amount should be equal to 500")
@@ -265,6 +272,9 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
                 ('0_creation', datetime.date(2024, 2, 2), '1_draft', 100, 100, datetime.date(2024, 2, 2)),
                 ('1_expansion', datetime.date(2024, 2, 3), '3_progress', 400.0, 500.0, False)
             ])
+            self.env.flush_all()
+            self.env.invalidate_all()
+            self.env['sale.commission.achievement.report']._pre_achievement_operation()
             achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             self.assertEqual(sum(achievements.mapped('achieved')), 10, 'Regular invoice, 10 percent of 100')
             self.assertEqual(len(achievements), 1, "Only one achievement because the other log is not effective")
@@ -333,6 +343,9 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             self.assertAlmostEqual(inv.amount_untaxed, 9000, 2, msg="The untaxed invoiced amount should be equal to 9000")
             self.assertEqual(sub.order_log_ids.effective_date, datetime.date(2024, 2, 2))
             self.flush_tracking()
+            self.env.flush_all()
+            self.env.invalidate_all()
+            self.env['sale.commission.achievement.report']._pre_achievement_operation()
             achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             self.assertEqual(len(commissions), 24, "24 commissions for two users")
@@ -401,6 +414,7 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
             ])
             self.flush_tracking()
             self.env.invalidate_all()
+            self.env['sale.commission.achievement.report']._pre_achievement_operation()
             achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             self.assertEqual(sum(achievements.mapped('achieved')), 100, 'Regular invoice, 10 percent of 100')
             self.assertEqual(len(achievements), 3, "3 achievements")
@@ -471,6 +485,7 @@ class TestSaleSubCommissionUser(TestSaleSubscriptionCommissionCommon):
                                           ('15_contraction', datetime.date(2024, 7, 1), '3_progress', -16.67, 83.33, datetime.date(2024, 7, 1))])
 
             self.env.invalidate_all()
+            self.env['sale.commission.achievement.report']._pre_achievement_operation()
             achievements = self.env['sale.commission.achievement.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             commissions = self.env['sale.commission.report'].search([('plan_id', '=', self.commission_plan_sub.id)])
             self.assertEqual(len(achievements), 4, 'We should have 4 ahcievements: creation, 2 transfer and one contraction')
