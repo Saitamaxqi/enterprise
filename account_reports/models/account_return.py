@@ -1110,6 +1110,9 @@ class AccountReturn(models.Model):
         if report := self.type_id.report_id:
             options = {**self._get_closing_report_options(), **(options_to_inject or {})}
 
+            report.with_context(allowed_company_ids=self.company_ids.ids)._generate_carryover_external_values(options)
+            self._generate_locking_attachments(options)
+
             if self.is_tax_return:
                 # Create the tax closing move
                 self._generate_tax_closing_entries(options)
@@ -1126,16 +1129,13 @@ class AccountReturn(models.Model):
                 if (report.country_id and report.country_id == main_company.account_fiscal_country_id and
                         (not main_company.tax_lock_date or self.date_to > main_company.tax_lock_date)):
                     for company in self.company_ids:
-                        company.sudo().tax_lock_date = self.date_to
                         self.env['account.report'].with_company(company)._generate_default_external_values(self.date_from, self.date_to, True)
+                        company.sudo().tax_lock_date = self.date_to
 
                 # Generate the carryover values.
                 payable_accounts, receivable_accounts = self._get_tax_closing_payable_and_receivable_accounts()
                 self.total_amount_to_pay = self._evaluate_total_amount_to_pay_from_tax_closing_accounts(payable_accounts, receivable_accounts)
                 self.period_amount_to_pay = self._evaluate_period_amount_to_pay_from_tax_closing_accounts(payable_accounts, receivable_accounts)
-
-            report.with_context(allowed_company_ids=self.company_ids.ids)._generate_carryover_external_values(options)
-            self._generate_locking_attachments(options)
 
         self.date_lock = fields.Date.context_today(self)
 

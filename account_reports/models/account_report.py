@@ -7527,6 +7527,62 @@ class AccountReportExpression(models.Model):
         }
 
 
+class AccountReportExternalValue(models.Model):
+    _inherit = 'account.report.external.value'
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        self._check_lock_date_violation(set(self._build_vals_to_check_for_lock_date(records)))
+        return records
+
+    def write(self, vals):
+        # We need to build vals_to_check before the super() call because of the 'target_report_expression_id' field :
+        # if the user tries to modify this specific field, it'll potentially change the linked report id, and so he can
+        # bypass the lock dates from the original report (if it was a tax report for example)
+        vals_to_check = set(self._build_vals_to_check_for_lock_date(self))
+        res = super().write(vals)
+        # Then we add the modified records
+        for lock_date_to_check in self._build_vals_to_check_for_lock_date(self):
+            vals_to_check.add(lock_date_to_check)
+        self._check_lock_date_violation(vals_to_check)
+        return res
+
+    @api.model
+    def _build_vals_to_check_for_lock_date(self, records):
+        """
+        Generator method to build tuples out of records. The tuples will contain 3 values:
+        - is tax, bool: is the external value linked to a tax report
+        - date to check, date: the date we want to check the lock dates for
+        - company, res.company: the company we want to check the lock dates for
+        """
+        generic_tax_report = self.env.ref('account.generic_tax_report')
+        for external_value in records:
+            report = external_value.target_report_expression_id.report_line_id.report_id
+            yield (
+                not self.env.context.get('ignore_tax_lock_date') and generic_tax_report in (report + report.root_report_id + report.section_main_report_ids.root_report_id),  # is tax
+                external_value.date,  # date to check
+                external_value.company_id,  # company
+            )
+
+    def _check_lock_date_violation(self, vals_to_check):
+        """
+        This method raises an error if the companies have lock dates after the date we want to create/write the values
+        :param vals_to_check: a set of tuples like: `{(is_tax, date, company_id)}`
+        """
+        for is_tax, date, company_id in vals_to_check:
+            violated_lock_dates = company_id._get_lock_date_violations(
+                date,
+                sale=False,
+                purchase=False,
+                tax=is_tax,
+            )
+            if violated_lock_dates:
+                lock_date_names = [company_id._fields[lock_date[1]].get_description(self.env)['string'] for lock_date in violated_lock_dates]
+                lock_dates = "\n- " + "\n -".join(lock_date_names)
+                raise ValidationError(_("You cannot update this value as it's locked by: %s", lock_dates))
+
+
 class AccountReportHorizontalGroup(models.Model):
     _name = 'account.report.horizontal.group'
     _description = "Horizontal group for reports"

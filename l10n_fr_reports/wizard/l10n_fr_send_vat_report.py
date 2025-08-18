@@ -541,7 +541,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             if external_value_26 := self.env.ref('l10n_fr_account.tax_report_26_external_tag',
                                                  raise_if_not_found=False):
                 # xml_id in module l10n_fr_account may not be updated yet
-                self.env['account.report.external.value'].create({
+                self.env['account.report.external.value'].with_context(ignore_tax_lock_date=True).create({
                     'name': _(
                         "Carryover reimbursement from %(date_from)s to %(date_to)s",
                         date_from=format_date(self.env, self.date_from),
@@ -553,7 +553,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
                     'company_id': self.env.company.id,
                 })
             origin_expression = self.env.ref('l10n_fr_account.tax_report_27_carryover')
-            self.env['account.report.external.value'].create({
+            self.env['account.report.external.value'].with_context(ignore_tax_lock_date=True).create({
                 'name': _(
                     "Carryover reimbursement from %(date_from)s to %(date_to)s",
                     date_from=format_date(self.env, self.date_from),
