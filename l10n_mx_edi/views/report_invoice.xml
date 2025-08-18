@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="l10n_mx_fiscal_regime_receptor">
-      <t t-if="o.partner_id.l10n_mx_edi_fiscal_regime or o.l10n_mx_edi_cfdi_to_public">
+      <t t-set="invoice_partner" t-value="o.partner_id if o.partner_id.type == 'invoice' else o.partner_id.commercial_partner_id"/>
+      <t t-if="invoice_partner.l10n_mx_edi_fiscal_regime or o.l10n_mx_edi_cfdi_to_public">
           <div name="l10n_mx_fiscal_regime_receptor">
               <span>Fiscal Regime: </span>
-              <span t-if="not o.l10n_mx_edi_cfdi_to_public" t-field="o.partner_id.l10n_mx_edi_fiscal_regime">601</span>
+              <span t-if="not o.l10n_mx_edi_cfdi_to_public" t-field="invoice_partner.l10n_mx_edi_fiscal_regime">601</span>
               <span t-else="">Without fiscal obligations</span>
           </div>
       </t>
