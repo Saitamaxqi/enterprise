@@ -160,7 +160,7 @@ class DHLProvider():
             piece.Weight = carrier._dhl_convert_weight(package.weight, carrier.dhl_package_weight_unit)
             pieces.append(piece)
         bkg_details.Pieces = {'Piece': pieces}
-        bkg_details.PaymentAccountNumber = carrier.dhl_account_number
+        bkg_details.PaymentAccountNumber = carrier.sudo().dhl_account_number
         if carrier.dhl_dutiable:
             bkg_details.IsDutiable = "Y"
         else:
