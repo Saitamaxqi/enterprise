@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import _, models
 from odoo.tools.sql import SQL
-from odoo.tools.misc import get_lang
 
 
 class L10n_PhGenericReportHandler(models.AbstractModel):
@@ -91,29 +90,22 @@ class L10n_PhGenericReportHandler(models.AbstractModel):
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
             domain = self._get_grand_total_line_domain(options)
             query = report._get_report_query(column_group_options, date_scope="strict_range", domain=domain)
-            lang = self.env.user.lang or get_lang(self.env).code
-            if self.pool['account.account.tag'].name.translate:
-                account_tag_name = SQL("COALESCE(account_tag.name->>%(lang)s, account_tag.name->>'en_US')", lang=lang)
-            else:
-                account_tag_name = SQL.identifier('account_tag', 'name')
+            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s                                                                               AS column_group_key,
-                         REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '')                                                  AS tag_name,
-                         SUM(%(balance_select)s
-                             * CASE WHEN account_tag.tax_negate THEN -1 ELSE 1 END
-                             * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                         )                                                                                                  AS balance
+                         %(account_tag_name)s                                                                               AS tag_name,
+                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)                          AS balance
                     FROM %(table_references)s
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                     %(currency_table_join)s
                    WHERE %(search_condition)s
                 GROUP BY column_group_key, %(account_tag_name)s
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=account_tag_name,
+                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 table_references=query.from_clause,
                 search_condition=query.where_clause,

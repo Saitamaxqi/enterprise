@@ -253,12 +253,12 @@ class TestReportEngines(TestAccountReportsCommon):
 
         # Create the journal entries.
         move = self._create_test_account_moves([
-            self._prepare_test_account_move_line(2000.0, account_code='101001', tax_tags=['+11', '-222T']),
-            self._prepare_test_account_move_line(1000.0, account_code='101001', tax_tags=['+11', '-222T']),
-            self._prepare_test_account_move_line(3600.0, account_code='101001', tax_tags=['+222T']),
-            self._prepare_test_account_move_line(-600.0, account_code='101001', tax_tags=['+222T', '-3333']),
-            self._prepare_test_account_move_line(-900.0, account_code='101002', tax_tags=['-11']),
-            self._prepare_test_account_move_line(1500.0, account_code='101002', tax_tags=['+11']),
+            self._prepare_test_account_move_line(    2000.0, account_code='101001', tax_tags=['11', '222T']),
+            self._prepare_test_account_move_line(    1000.0, account_code='101001', tax_tags=['11', '222T']),
+            self._prepare_test_account_move_line(   -3600.0, account_code='101001', tax_tags=['222T']),
+            self._prepare_test_account_move_line(     600.0, account_code='101001', tax_tags=['222T', '3333']),
+            self._prepare_test_account_move_line(     900.0, account_code='101002', tax_tags=['11']),
+            self._prepare_test_account_move_line(    1500.0, account_code='101002', tax_tags=['11']),
         ])
 
         options = self._generate_options(report, '2020-01-01', '2020-01-01', default_options={'unfold_all': True})
@@ -976,7 +976,7 @@ class TestReportEngines(TestAccountReportsCommon):
         # Create the journal entries.
         moves = self._create_test_account_moves([
             self._prepare_test_account_move_line(100000.0, account_code='101002', date='2019-01-01'),
-            self._prepare_test_account_move_line(2000.0, account_code='101001', tax_tags=['+11']),
+            self._prepare_test_account_move_line(2000.0, account_code='101001', tax_tags=['11']),
             self._prepare_test_account_move_line(-300.0, account_code='101002'),
             self._prepare_test_account_move_line(1500.0, account_code='101003'),
         ])
@@ -1587,7 +1587,7 @@ class TestReportEngines(TestAccountReportsCommon):
         self.assertEqual(len(tags), 0)
         report.line_ids[0].expression_ids[0].engine = 'tax_tags'
         tags = self.env['account.account.tag']._get_tax_tags(formula, self.fake_country.id)
-        self.assertEqual(tags.mapped('name'), ['-' + formula, '+' + formula])
+        self.assertEqual(tags.mapped('name'), [formula])
 
     def test_integer_rounding(self):
         line_1 = self._prepare_test_report_line(
@@ -1619,7 +1619,7 @@ class TestReportEngines(TestAccountReportsCommon):
         report = self._create_report([line_1, line_2, line_3, line_4, line_5, line_6], country_id=self.fake_country.id,)
 
         self._create_test_account_moves([
-            self._prepare_test_account_move_line(5.4, account_code='101001', tax_tags=['+42'], date='2023-01-01'),
+            self._prepare_test_account_move_line(5.4, account_code='101001', tax_tags=['42'], date='2023-01-01'),
         ])
 
         # Test with a first rounding
@@ -1699,16 +1699,16 @@ class TestReportEngines(TestAccountReportsCommon):
             groupby='account_id',
         )
         test_line_2 = self._prepare_test_report_line(
-            self._prepare_test_expression_tax_tags('222T'),
+            self._prepare_test_expression_tax_tags('-222T'),
             groupby='account_id',
         )
         report = self._create_report([test_line_1, test_line_2], country_id=self.fake_country.id)
 
         # Create the journal entries.
         self._create_test_account_moves([
-            self._prepare_test_account_move_line(3000.0, account_code='101001', tax_tags=['+11', '-222T']),
-            self._prepare_test_account_move_line(3600.0, account_code='101001', tax_tags=['+222T']),
-            self._prepare_test_account_move_line(-600.0, account_code='101001', tax_tags=['+222T', '-11']),
+            self._prepare_test_account_move_line(3000.0, account_code='101001', tax_tags=['11', '222T']),
+            self._prepare_test_account_move_line(-3600.0, account_code='101001', tax_tags=['222T']),
+            self._prepare_test_account_move_line(600.0, account_code='101001', tax_tags=['222T', '11']),
         ])
 
         # To ensure that the lines are shown when hide_0_lines isn't toggled and vice versa, we test both scenarios.

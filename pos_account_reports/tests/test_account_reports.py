@@ -31,8 +31,8 @@ class POSTestTaxReport(TestAccountReportsCommon):
             'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance'})]
         })
 
-        cls.pos_tax_report_line_invoice_base = cls._create_tax_report_line("Invoice Base", cls.tax_report, tag_name='pos_invoice_base', sequence=0)
-        cls.pos_tax_report_line_invoice_tax = cls._create_tax_report_line("Invoice Tax", cls.tax_report, tag_name='pos_invoice_tax', sequence=1)
+        cls.pos_tax_report_line_invoice_base = cls._create_tax_report_line("Invoice Base", cls.tax_report, tag_name='-pos_invoice_base', sequence=0)
+        cls.pos_tax_report_line_invoice_tax = cls._create_tax_report_line("Invoice Tax", cls.tax_report, tag_name='-pos_invoice_tax', sequence=1)
         cls.pos_tax_report_line_refund_base = cls._create_tax_report_line("Refund Base", cls.tax_report, tag_name='pos_refund_base', sequence=2)
         cls.pos_tax_report_line_refund_tax = cls._create_tax_report_line("Refund Tax", cls.tax_report, tag_name='pos_refund_tax', sequence=3)
 
@@ -45,23 +45,23 @@ class POSTestTaxReport(TestAccountReportsCommon):
             'invoice_repartition_line_ids': [
                 (0,0, {
                     'repartition_type': 'base',
-                    'tag_ids': cls._get_tag_ids("+", cls.pos_tax_report_line_invoice_base.expression_ids),
+                    'tag_ids': cls._get_tag_ids(cls.pos_tax_report_line_invoice_base.expression_ids),
                 }),
 
                 (0,0, {
                     'repartition_type': 'tax',
-                    'tag_ids': cls._get_tag_ids("+", cls.pos_tax_report_line_invoice_tax.expression_ids),
+                    'tag_ids': cls._get_tag_ids(cls.pos_tax_report_line_invoice_tax.expression_ids),
                 }),
             ],
             'refund_repartition_line_ids': [
                 (0,0, {
                     'repartition_type': 'base',
-                    'tag_ids': cls._get_tag_ids("+", cls.pos_tax_report_line_refund_base.expression_ids),
+                    'tag_ids': cls._get_tag_ids(cls.pos_tax_report_line_refund_base.expression_ids),
                 }),
 
                 (0,0, {
                     'repartition_type': 'tax',
-                    'tag_ids': cls._get_tag_ids("+", cls.pos_tax_report_line_refund_tax.expression_ids),
+                    'tag_ids': cls._get_tag_ids(cls.pos_tax_report_line_refund_tax.expression_ids),
                 }),
             ],
         })

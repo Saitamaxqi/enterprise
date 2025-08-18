@@ -1114,11 +1114,11 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         st_line.set_line_bank_statement_line(bill.line_ids.filtered(lambda x: x.account_type == 'liability_payable').ids)
 
         self.assertRecordValues(st_line.line_ids.sorted('balance'), [
-            {'amount_currency': -980.0, 'tax_ids': [], 'tax_tag_ids': [], 'tax_tag_invert': False},
-            {'amount_currency': -20.0, 'tax_ids': intracomm_tax.ids, 'tax_tag_ids': tax_tags[3].ids, 'tax_tag_invert': True},
-            {'amount_currency': -4.0, 'tax_ids': [], 'tax_tag_ids': tax_tags[4].ids, 'tax_tag_invert': True},
-            {'amount_currency': 4.0, 'tax_ids': [], 'tax_tag_ids': tax_tags[5].ids, 'tax_tag_invert': True},
-            {'amount_currency': 1000.0, 'tax_ids': [], 'tax_tag_ids': [], 'tax_tag_invert': False},
+            {'amount_currency': -980.0, 'tax_ids': [], 'tax_tag_ids': []},
+            {'amount_currency': -20.0, 'tax_ids': intracomm_tax.ids, 'tax_tag_ids': tax_tags[3].ids},
+            {'amount_currency': -4.0, 'tax_ids': [], 'tax_tag_ids': tax_tags[4].ids},
+            {'amount_currency': 4.0, 'tax_ids': [], 'tax_tag_ids': tax_tags[5].ids},
+            {'amount_currency': 1000.0, 'tax_ids': [], 'tax_tag_ids': []},
         ])
 
     def test_partial_reconciliation_suggestion_with_mixed_invoice_and_refund(self):

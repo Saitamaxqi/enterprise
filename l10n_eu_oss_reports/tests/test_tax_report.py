@@ -270,7 +270,7 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             'name': "Fictive Return Type",
             'report_id': cls.tax_report.id,
         })
-        report_line_invoice_base_line = cls._create_tax_report_line('Invoice base', cls.tax_report, sequence=1, tag_name='invoice_base_line')
+        report_line_invoice_base_line = cls._create_tax_report_line('Invoice base', cls.tax_report, sequence=1, tag_name='-invoice_base_line')
         report_line_refund_base_line = cls._create_tax_report_line('Refund base', cls.tax_report, sequence=2, tag_name='refund_base_line')
 
         # Create an OSS tax from scratch
@@ -295,7 +295,7 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             'invoice_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': [Command.set(report_line_invoice_base_line.expression_ids._get_matching_tags("+").ids + oss_tag.ids)],
+                    'tag_ids': [Command.set(report_line_invoice_base_line.expression_ids._get_matching_tags().ids + oss_tag.ids)],
                 }),
                 Command.create({
                     'repartition_type': 'tax',
@@ -305,7 +305,7 @@ class TestTaxReportOSSNoMapping(TestAccountReportsCommon):
             'refund_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': [Command.set(report_line_refund_base_line.expression_ids._get_matching_tags("+").ids + oss_tag.ids)],
+                    'tag_ids': [Command.set(report_line_refund_base_line.expression_ids._get_matching_tags().ids + oss_tag.ids)],
                 }),
                 Command.create({
                     'repartition_type': 'tax',

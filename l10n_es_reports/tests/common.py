@@ -22,14 +22,22 @@ class TestEsAccountReportsCommon(TestAccountReportsCommon):
             cls.env.ref('l10n_es.mod_111_casilla_02_balance')
             + cls.env.ref('l10n_es.mod_115_casilla_02_balance')
             + cls.env.ref('l10n_es.mod_303_casilla_01_balance')
-        )._get_matching_tags('+')
-        base_refund_tags = cls.env.ref('l10n_es.mod_111_casilla_02_balance')._get_matching_tags('-') + cls.env.ref('l10n_es.mod_115_casilla_02_balance')._get_matching_tags('-') + cls.env.ref('l10n_es.mod_303_casilla_14_aeat_mod_303_14_sale_balance')._get_matching_tags('+')
-        tax_tags = cls.env.ref('l10n_es.mod_111_casilla_03_balance')._get_matching_tags('-') + cls.env.ref('l10n_es.mod_115_casilla_03_balance')._get_matching_tags('-') + cls.env.ref('l10n_es.mod_303_casilla_03_balance')._get_matching_tags('+')
+        )._get_matching_tags()
+        base_refund_tags = (
+            cls.env.ref('l10n_es.mod_111_casilla_02_balance')
+            + cls.env.ref('l10n_es.mod_115_casilla_02_balance')
+            + cls.env.ref('l10n_es.mod_303_casilla_14_aeat_mod_303_14_sale_balance')
+        )._get_matching_tags()
+        tax_tags = (
+            cls.env.ref('l10n_es.mod_111_casilla_03_balance')
+            + cls.env.ref('l10n_es.mod_115_casilla_03_balance')
+            + cls.env.ref('l10n_es.mod_303_casilla_03_balance')
+        )._get_matching_tags()
         tax_refund_tags = (
             cls.env.ref('l10n_es.mod_111_casilla_03_balance')
             + cls.env.ref('l10n_es.mod_115_casilla_03_balance')
             + cls.env.ref('l10n_es.mod_303_casilla_15_balance')
-        )._get_matching_tags('+')
+        )._get_matching_tags()
 
         cls.spanish_test_tax = cls.env['account.tax'].create({
             'name': "Test ES BOE tax",

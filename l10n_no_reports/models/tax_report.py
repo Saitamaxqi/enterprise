@@ -128,7 +128,7 @@ class L10n_NoTaxReportHandler(models.AbstractModel):
                 tag.id = repartition_rel.account_account_tag_id
                 AND tag.applicability = 'taxes'
                 AND tag.country_id = %(base_no_id)s
-            JOIN account_report_expression expression ON expression.engine = 'tax_tags' AND expression.formula = SUBSTRING(%(acc_tag_name)s from 2)
+            JOIN account_report_expression expression ON expression.engine = 'tax_tags' AND LTRIM(expression.formula, '-') = %(acc_tag_name)s
             JOIN account_report_line report_line ON expression.report_line_id = report_line.id
             JOIN res_country tax_country ON tax_country.id = tax.country_id
             WHERE tdr.tax_exigible

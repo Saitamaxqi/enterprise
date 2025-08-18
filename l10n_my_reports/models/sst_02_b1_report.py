@@ -43,15 +43,15 @@ class L10n_MySST02B1ReportHandler(models.AbstractModel):
                 """
                   SELECT %(column_group_key)s                                                           AS column_group_key,
                          pt.l10n_my_tax_classification_code                                             AS customs_code,
-                         SUM(CASE WHEN REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '') = 'SST02_8'
+                         SUM(CASE WHEN %(account_tag_name)s = 'SST02_8'
                              THEN account_move_line.price_subtotal
                              ELSE 0
                          END)                                                                           AS value_goods_sold,
-                         SUM(CASE WHEN REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '') = 'SST02_9'
+                         SUM(CASE WHEN %(account_tag_name)s = 'SST02_9'
                              THEN account_move_line.price_subtotal
                              ELSE 0
                          END)                                                                           AS value_goods_own_use,
-                         SUM(CASE WHEN REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '') = 'SST02_10'
+                         SUM(CASE WHEN %(account_tag_name)s = 'SST02_10'
                              THEN account_move_line.price_subtotal
                              ELSE 0
                          END)                                                                           AS value_taxable_service
@@ -61,7 +61,7 @@ class L10n_MySST02B1ReportHandler(models.AbstractModel):
                     JOIN account_account_tag_account_move_line_rel rel ON account_move_line.id = rel.account_move_line_id
                     JOIN account_account_tag tag ON rel.account_account_tag_id = tag.id
                    WHERE %(search_condition)s
-                     AND REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '') IN ('SST02_8', 'SST02_9', 'SST02_10')
+                     AND %(account_tag_name)s IN ('SST02_8', 'SST02_9', 'SST02_10')
                 GROUP BY pt.l10n_my_tax_classification_code
                 """,
                 table_references=query.from_clause,

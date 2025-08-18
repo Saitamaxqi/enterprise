@@ -38,11 +38,7 @@ class LithuanianTaxReportHandler(models.AbstractModel):
         WITH tax_amounts_details AS (
         -- The amounts need to be grouped by tax, with base amount and tax amount for each.
         -- To do so, we group all tax amounts by tax and move, which we lateral join to associate the base amounts
-            SELECT SUM(
-                      CASE WHEN account_move_line.tax_tag_invert IS TRUE THEN -account_move_line.balance
-                      ELSE account_move_line.balance
-                      END
-                   ) as base_amount,
+            SELECT SUM(account_move_line.balance) * CASE WHEN account_move_line__move_id.move_type IN %(inbound_types)s THEN 1 ELSE -1 END AS base_amount,
                    MIN(tax_amounts.tax_amount) as tax_amount,
                    account_tax.l10n_lt_tax_code,
                    account_tax.amount as percentage,
@@ -51,11 +47,7 @@ class LithuanianTaxReportHandler(models.AbstractModel):
               JOIN account_move_line_account_tax_rel ON account_move_line_account_tax_rel.account_move_line_id = account_move_line.id
               JOIN account_tax ON account_tax.id = account_move_line_account_tax_rel.account_tax_id
          LEFT JOIN LATERAL (
-                     SELECT SUM(
-                                CASE WHEN tax_aml.tax_tag_invert IS TRUE THEN -tax_aml.balance
-                                ELSE tax_aml.balance
-                                END
-                            ) as tax_amount
+                     SELECT SUM(tax_aml.balance) * CASE WHEN account_move_line__move_id.move_type IN %(inbound_types)s THEN 1 ELSE -1 END AS tax_amount
                        FROM account_move_line tax_aml
                       WHERE tax_aml.tax_line_id = account_tax.id
                         AND tax_aml.move_id = account_move_line__move_id.id
@@ -92,6 +84,7 @@ class LithuanianTaxReportHandler(models.AbstractModel):
          WHERE %(search_condition)s
       GROUP BY account_move_line__move_id.id, res_partner.id, reversed_move.id, res_country.code;
             ''',
+            inbound_types=tuple(self.env['account.move'].get_inbound_types()),
             table_references=query.from_clause,
             search_condition=query.where_clause,
         )

@@ -16,9 +16,9 @@ class CzechTaxReportTest(CzechReportsCommon):
         second_tax = self.env.ref(f'account.{company.id}_l10n_cz_import_goods_tax_authority')
         invoice_date = '2019-11-12'
 
-        self.env['account.move'].create({
-            'move_type': 'in_invoice',
-            'journal_id': self.company_data['default_journal_purchase'].id,
+        self.env['account.move'].create([{
+            'move_type': 'out_invoice',
+            'journal_id': self.company_data['default_journal_sale'].id,
             'partner_id': self.partner_a.id,
             'invoice_date': invoice_date,
             'date': invoice_date,
@@ -31,6 +31,15 @@ class CzechTaxReportTest(CzechReportsCommon):
                     'price_unit': 100,
                     'tax_ids': first_tax.ids,
                 }),
+            ]
+        }, {
+            'move_type': 'in_invoice',
+            'journal_id': self.company_data['default_journal_purchase'].id,
+            'partner_id': self.partner_a.id,
+            'invoice_date': invoice_date,
+            'date': invoice_date,
+            'taxable_supply_date': invoice_date,
+            'invoice_line_ids': [
                 Command.create({
                     'product_id': self.product_b.id,
                     'quantity': 1.0,
@@ -39,7 +48,7 @@ class CzechTaxReportTest(CzechReportsCommon):
                     'tax_ids': second_tax.ids,
                 }),
             ]
-        }).action_post()
+        }]).action_post()
         self._fill_tax_report_line_external_value('l10n_cz.l10n_cz_vat_declaration_line_54_coefficient', 35, invoice_date)
         self._fill_tax_report_line_external_value('l10n_cz.l10n_cz_vat_declaration_line_55_value', 83, invoice_date)
 

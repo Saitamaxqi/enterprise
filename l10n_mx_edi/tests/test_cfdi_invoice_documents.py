@@ -1782,7 +1782,7 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
                 'balance': -272.57,
                 'debit': 0.0,
                 'credit': 272.57,
-                'tax_base_amount': 1703.57,
+                'tax_base_amount': -1703.57,
             },
             {
                 'amount_currency': 116.0,

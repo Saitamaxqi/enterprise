@@ -3816,10 +3816,9 @@ class AccountReport(models.Model):
     def _compute_formula_batch_with_engine_tax_tags(self, options, date_scope, formulas_dict, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         """ Report engine.
 
-        The formulas made for this report simply consist of a tag label. When an expression using this engine is created, it also creates two
-        account.account.tag objects, namely -tag and +tag, where tag is the chosen formula. The balance of the expressions using this engine is
-        computed by gathering all the move lines using their tags, and applying the sign of their tag to their balance, together with a -1 factor
-        if the tax_tag_invert field of the move line is True.
+        The formulas made for this report simply consist of a tag label. When an expression using this engine is created, it also creates one
+        account.account.tag object, where the tag name is the chosen formula striped of the sign. The balance of the expressions using this engine is
+        computed by gathering all the move lines using their tags, and applying the sign of their tag to their balance.
 
         This engine does not support any subformula.
         """
@@ -3832,16 +3831,12 @@ class AccountReport(models.Model):
         query = self._get_report_query(options, date_scope)
         groupby_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else None
         tail_query = self._get_engine_query_tail(offset, limit)
-        lang = get_lang(self.env, self.env.user.lang).code
         acc_tag_name = self.with_context(lang='en_US').env['account.account.tag']._field_to_sql('acc_tag', 'name')
         sql = SQL(
             """
             SELECT
-                SUBSTRING(%(acc_tag_name)s, 2, LENGTH(%(acc_tag_name)s) - 1) AS formula,
-                SUM(%(balance_select)s
-                    * CASE WHEN acc_tag.tax_negate THEN -1 ELSE 1 END
-                    * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                ) AS balance,
+                %(acc_tag_name)s AS formula,
+                SUM(%(balance_select)s) AS balance,
                 COUNT(account_move_line.id) AS aml_count
                 %(select_groupby_sql)s
 
@@ -3851,10 +3846,10 @@ class AccountReport(models.Model):
                 ON aml_tag.account_move_line_id = account_move_line.id
             JOIN account_account_tag acc_tag
                 ON aml_tag.account_account_tag_id = acc_tag.id
-                AND acc_tag.id IN %(tag_ids)s
             %(currency_table_join)s
 
             WHERE %(search_condition)s
+              AND aml_tag.account_account_tag_id IN %(tag_ids)s
 
             GROUP BY %(groupby_clause)s
 
@@ -3870,24 +3865,27 @@ class AccountReport(models.Model):
             currency_table_join=self._currency_table_aml_join(options),
             search_condition=query.where_clause,
             groupby_clause=SQL(
-                "SUBSTRING(%(acc_tag_name)s, 2, LENGTH(%(acc_tag_name)s) - 1)%(groupby_sql)s",
+                "%(acc_tag_name)s %(groupby_sql)s",
                 acc_tag_name=acc_tag_name,
                 groupby_sql=SQL(', %s', groupby_sql) if groupby_sql else SQL(),
             ),
             tail_query=tail_query,
         )
 
-        self.env.cr.execute(sql)
-
-        rslt = {formula_expr: [] if current_groupby else {'result': 0, 'has_sublines': False} for formula_expr in formulas_dict.items()}
-        for query_res in self.env.cr.dictfetchall():
-
-            formula = query_res['formula']
-            rslt_dict = {'result': query_res['balance'], 'has_sublines': query_res['aml_count'] > 0}
-            if current_groupby:
-                rslt[(formula, formulas_dict[formula])].append((query_res['grouping_key'], rslt_dict))
+        rslt = {
+            (formula_str.lstrip('-'), formula_expr): [] if current_groupby else {'result': 0, 'has_sublines': False}
+            for formula_str, formula_expr in formulas_dict.items()
+        }
+        for tax_tag, balance, aml_count, *grouping_key in self.env.execute_query(sql):
+            if expression := formulas_dict.get(f'-{tax_tag}'):
+                balance *= -1
             else:
-                rslt[(formula, formulas_dict[formula])] = rslt_dict
+                expression = formulas_dict[tax_tag]
+            rslt_dict = {'result': balance, 'has_sublines': aml_count > 0}
+            if current_groupby:
+                rslt[tax_tag, expression].append((grouping_key[0], rslt_dict))
+            else:
+                rslt[tax_tag, expression] = rslt_dict
 
         return rslt
 

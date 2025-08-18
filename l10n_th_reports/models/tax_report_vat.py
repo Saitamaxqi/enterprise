@@ -132,18 +132,16 @@ class L10n_ThTaxReportHandler(models.AbstractModel):
                         tax_lines_per_tag.setdefault(tag, []).append(line)
 
             total_base = total_tax = 0
-            # Sum the base lines, minding the sign on the tag (tax_negate) and the line (tax_tag_invert)
+            # Sum the base lines
             for base_tag_id, base_lines in base_lines_per_tag.items():
-                tag_sign = -1 if base_tag_id.tax_negate else 1
+                balance_negate = -1 if base_tag_id.balance_negate else 1
                 for line in base_lines:
-                    line_sign = -1 if line.tax_tag_invert else 1
-                    total_base += line.balance * line_sign * tag_sign
+                    total_base += line.balance * balance_negate
             # Repeat that for the tax lines
             for tax_tag_id, tax_lines in tax_lines_per_tag.items():
-                tag_sign = -1 if tax_tag_id.tax_negate else 1
+                balance_negate = -1 if tax_tag_id.balance_negate else 1
                 for line in tax_lines:
-                    line_sign = -1 if line.tax_tag_invert else 1
-                    total_tax += line.balance * line_sign * tag_sign
+                    total_tax += line.balance * balance_negate
             # Get the amount including taxes
             total = total_base + total_tax
 

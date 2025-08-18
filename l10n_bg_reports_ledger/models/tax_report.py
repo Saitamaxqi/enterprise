@@ -57,7 +57,7 @@ class L10nBgReportsTaxReportHandler(models.AbstractModel):
                 if ledger_type == 'sale':
                     result['total_tax' if is_tax_line else 'total_base'] += amount
 
-                tax = tax_tags[tax_tag].name[1:]
+                tax = tax_tags[tax_tag].name
 
                 if tax in self.TAX_TAGS_PER_TYPE_IN_ORDER[ledger_type]:
                     result[f'tax_{tax}'] = result.get(f'tax_{tax}', 0) + amount
@@ -70,7 +70,7 @@ class L10nBgReportsTaxReportHandler(models.AbstractModel):
 
         query_params = report._get_report_query(options, 'strict_range')
 
-        tax_tags_names = tuple(name for tag in self.TAX_TAGS_PER_TYPE_IN_ORDER[ledger_type] for name in (f'+{tag}', f'-{tag}'))
+        tax_tags_names = tuple(self.TAX_TAGS_PER_TYPE_IN_ORDER[ledger_type])
         tax_tags = self.env['account.account.tag'].search([
             ('name', 'in', tax_tags_names),
             ('country_id.code', '=', 'BG'),

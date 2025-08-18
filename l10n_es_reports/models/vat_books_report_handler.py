@@ -493,7 +493,7 @@ class L10n_EsVATBooksReportHandler(models.AbstractModel):
             sheet_line_vals = inc_line_vals if is_income else exp_line_vals
             move, tax = line.move_id, line.tax_line_id
             sign = -1 if is_income else 1
-            remaining_tax_base_amount = line.tax_base_amount
+            remaining_tax_base_amount = sign * line.tax_base_amount
             remaining_tax_balance = line.balance
             for tax_key, data in base_amount_by_tax[move].items():
                 if tax not in tax_key:
@@ -503,7 +503,7 @@ class L10n_EsVATBooksReportHandler(models.AbstractModel):
                     tax_amount = remaining_tax_balance
                     remaining_tax_balance = 0
                 else:
-                    ratio = data[tax] / line.tax_base_amount if line.tax_base_amount else 0
+                    ratio = sign * data[tax] / line.tax_base_amount if line.tax_base_amount else 0
                     tax_amount = move.company_id.currency_id.round(line.balance * ratio)
                     remaining_tax_balance -= tax_amount
                 # update the report line with the tax amount

@@ -319,12 +319,12 @@ class TestAccountReportsCommon(AccountTestInvoicingCommon):
         return cls.env['account.report.line'].create(create_vals)
 
     @classmethod
-    def _get_tag_ids(cls, sign, expressions, company=False):
+    def _get_tag_ids(cls, expressions, company=False):
         """ Helper function to define tag ids for taxes """
         return [(6, 0, cls.env['account.account.tag'].search([
             ('applicability', '=', 'taxes'),
             ('country_id.code', '=', (company or cls.env.company).account_fiscal_country_id.code),
-            ('name', 'in', [f"{sign}{f}" for f in expressions.mapped('formula')]),
+            ('name', 'in', [formula.lstrip('-') for formula in expressions.mapped('formula')]),
         ]).ids)]
 
     @classmethod

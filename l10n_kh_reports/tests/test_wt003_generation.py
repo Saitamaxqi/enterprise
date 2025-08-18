@@ -79,7 +79,6 @@ class TestWT003Generation(TestAccountReportsCommon):
                 .create({})
             wizard._create_payments()
 
-        self.env['account.move.line'].flush_model(['tax_tag_invert'])  # Required for the tax_tag_invert computation which is used in the sql query for the export.
         report = self.env.ref('l10n_kh.l10n_kh_wt003')
         options = self._generate_options(report, '2025-01-01', '2025-01-31')
 
@@ -130,7 +129,6 @@ class TestWT003Generation(TestAccountReportsCommon):
         invoices = self.env['account.move'].create(invoice_vals)
         invoices.action_post()
 
-        self.env['account.move.line'].flush_model()  # Required for the tax_tag_invert computation which is used in the sql query for the export.
         report = self.env.ref('l10n_kh.l10n_kh_wt003')
         options = self._generate_options(report, '2025-01-01', '2025-01-31')
 
@@ -201,7 +199,6 @@ class TestWT003Generation(TestAccountReportsCommon):
                 .create({})
             wizard._create_payments()
 
-        self.env['account.move.line'].flush_model(['tax_tag_invert'])  # Required for the tax_tag_invert computation which is used in the sql query for the export.
         report = self.env.ref('l10n_kh.l10n_kh_wt003')
         options = self._generate_options(report, '2025-01-01', '2025-01-31')
 
@@ -251,7 +248,6 @@ class TestWT003Generation(TestAccountReportsCommon):
                 .create({})
             wizard._create_payments()
 
-        self.env['account.move.line'].flush_model(['tax_tag_invert'])  # Required for the tax_tag_invert computation which is used in the sql query for the export.
         report = self.env.ref('l10n_kh.l10n_kh_wt003')
         options = self._generate_options(report, '2025-01-01', '2025-01-31')
 

@@ -38,7 +38,7 @@ class TestL10nBgLedgerReports(TestAccountReportsCommon):
         })
 
         cls.sales_tags = cls.env['account.account.tag'].search([
-            ('name', 'in', ('+11', '+21')),
+            ('name', 'in', ('11', '21')),
             ('country_id.code', '=', 'BG'),
         ])
 
@@ -48,13 +48,13 @@ class TestL10nBgLedgerReports(TestAccountReportsCommon):
             'amount_type': 'percent',
             'amount': 20,
             'invoice_repartition_line_ids': [
-                Command.create({'tag_ids': [tag.id for tag in cls.sales_tags if tag.display_name == '+11'], 'repartition_type': 'base'}),
-                Command.create({'tag_ids': [tag.id for tag in cls.sales_tags if tag.display_name == '+21'], 'repartition_type': 'tax'}),
+                Command.create({'tag_ids': [tag.id for tag in cls.sales_tags if tag.display_name == '11'], 'repartition_type': 'base'}),
+                Command.create({'tag_ids': [tag.id for tag in cls.sales_tags if tag.display_name == '21'], 'repartition_type': 'tax'}),
             ],
         })
 
         cls.purchase_tags = cls.env['account.account.tag'].search([
-            ('name', 'in', ('+31', '+41')),
+            ('name', 'in', ('31', '41')),
             ('country_id.code', '=', 'BG'),
         ])
 
@@ -64,8 +64,8 @@ class TestL10nBgLedgerReports(TestAccountReportsCommon):
             'amount_type': 'percent',
             'amount': 20,
             'invoice_repartition_line_ids': [
-                Command.create({'tag_ids': [tag.id for tag in cls.purchase_tags if tag.display_name == '+31'], 'repartition_type': 'base'}),
-                Command.create({'tag_ids': [tag.id for tag in cls.purchase_tags if tag.display_name == '+41'], 'repartition_type': 'tax'}),
+                Command.create({'tag_ids': [tag.id for tag in cls.purchase_tags if tag.display_name == '31'], 'repartition_type': 'base'}),
+                Command.create({'tag_ids': [tag.id for tag in cls.purchase_tags if tag.display_name == '41'], 'repartition_type': 'tax'}),
             ],
         })
 

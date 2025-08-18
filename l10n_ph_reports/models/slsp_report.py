@@ -109,8 +109,9 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
             if not column_group_options.get('include_no_tin'):
                 domain.append(('partner_id.vat', '!=', False))
             query = report._get_report_query(column_group_options, "strict_range", domain=domain)
+            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
             tail_query = report._get_engine_query_tail(offset, limit)
-            account_tag_name = self.env['account.account.tag']._field_to_sql('account_tag', 'name')
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s                                                                   AS column_group_key,
@@ -120,16 +121,11 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                          case when p.is_company = false then p.name else '' end                                 AS partner_name,
                          p.last_name || ' ' || p.first_name || ' ' || p.middle_name                             AS formatted_partner_name,
                          p.is_company                                                                           AS is_company,
-                         REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '')                                      AS tag_name,
-                         SUM(%(balance_select)s
-                             * CASE WHEN account_tag.tax_negate THEN -1 ELSE 1 END
-                             * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                         )                                                                                      AS balance
+                         %(account_tag_name)s                                                                   AS tag_name,
+                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)              AS balance
                     FROM %(table_references)s
                     JOIN res_partner p ON p.id = account_move_line__move_id.partner_id
                     JOIN res_partner cp ON cp.id = p.commercial_partner_id
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                     %(currency_table_join)s
                    WHERE %(search_condition)s
                 GROUP BY p.id, cp.id, %(account_tag_name)s
@@ -137,7 +133,8 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=account_tag_name,
+                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 table_references=query.from_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 search_condition=query.where_clause,
@@ -219,21 +216,17 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 ('date', '<=', end_date),
                 ('move_id.partner_id', '=', partner_id),
             ])
+            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
             tail_query = report._get_engine_query_tail(offset, limit)
-            account_tag_name = self.env['account.account.tag']._field_to_sql('account_tag', 'name')
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s                                                                   AS column_group_key,
                          account_move_line__move_id.id                                                          AS move_id,
                          account_move_line__move_id.name                                                        AS move_name,
-                         REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '')                                      AS tag_name,
-                         SUM(%(balance_select)s
-                             * CASE WHEN account_tag.tax_negate THEN -1 ELSE 1 END
-                             * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                         )                                                                                      AS balance
+                         %(account_tag_name)s                                                                   AS tag_name,
+                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)              AS balance
                     FROM %(table_references)s
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                     %(currency_table_join)s
                    WHERE %(search_condition)s
                 GROUP BY account_move_line__move_id.id, %(account_tag_name)s
@@ -241,7 +234,8 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=account_tag_name,
+                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 table_references=query.from_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 search_condition=query.where_clause,

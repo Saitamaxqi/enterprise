@@ -211,7 +211,7 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
                     and line_id in lines_grids_map
                     and not currency_id.is_zero(line['columns'][colname_to_idx['balance']]['no_format'])
             ):
-                grids_list.append((lines_grids_map[line_id],
+                grids_list.append((lines_grids_map[line_id].lstrip('-'),
                                    line['columns'][colname_to_idx['balance']]['no_format'],
                                    line['columns'][colname_to_idx['balance']].get('carryover_bounds', False),
                                    line['columns'][colname_to_idx['balance']].get('report_line_id', False)))

@@ -25,10 +25,9 @@ class GermanTaxReportTest(AccountSalesReportCommon):
         first_tax = self.env['account.tax'].search([('name', '=', '19%'), ('company_id', '=', self.company_data['company'].id)], limit=1)
         second_tax = self.env['account.tax'].search([('name', '=', '19% EU'), ('company_id', '=', self.company_data['company'].id)], limit=1)
 
-        # Create and post a move with two move lines to get some data in the report
-        move = self.env['account.move'].create({
-            'move_type': 'in_invoice',
-            'journal_id': self.company_data['default_journal_purchase'].id,
+        move = self.env['account.move'].create([{
+            'move_type': 'out_invoice',
+            'journal_id': self.company_data['default_journal_sale'].id,
             'partner_id': self.partner_a.id,
             'invoice_date': '2019-11-12',
             'date': '2019-11-12',
@@ -38,14 +37,21 @@ class GermanTaxReportTest(AccountSalesReportCommon):
                 'name': 'product test 1',
                 'price_unit': 150,
                 'tax_ids': first_tax.ids,
-            }), (0, 0, {
+            })]
+        }, {
+            'move_type': 'in_invoice',
+            'journal_id': self.company_data['default_journal_purchase'].id,
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2019-11-12',
+            'date': '2019-11-12',
+            'invoice_line_ids': [(0, 0, {
                 'product_id': self.product_b.id,
                 'quantity': 1.0,
                 'name': 'product test 2',
                 'price_unit': 75,
                 'tax_ids': second_tax.ids,
             })]
-        })
+        }])
         move.action_post()
 
         report = self.env.ref('l10n_de.tax_report')

@@ -213,34 +213,30 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
             groupby_clauses.append(groupby_field_sql)
 
         tail_query = report._get_engine_query_tail(offset, limit)
-        query = SQL(
+        tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+        tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
+        sqL_query = SQL(
             """
                 SELECT
                     %(select_from_groupby)s
                     %(select_clause)s
                     SUM(CASE WHEN base_tax.id IS NOT NULL AND base_tax_group.id = %(tax_group_12)s THEN account_move_line.balance ELSE 0 END
-                        * CASE WHEN tag.tax_negate THEN -1 ELSE 1 END
-                        * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
+                        * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END
                     ) AS tax_base_2,
                     SUM(CASE WHEN base_tax.id IS NOT NULL AND base_tax_group.id != %(tax_group_12)s THEN account_move_line.balance ELSE 0 END
-                        * CASE WHEN tag.tax_negate THEN -1 ELSE 1 END
-                        * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
+                        * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END
                     ) AS tax_base_1,
                     SUM(CASE WHEN base_tax.id IS NULL AND net_tax_group.id = %(tax_group_12)s THEN account_move_line.balance ELSE 0 END
-                        * CASE WHEN tag.tax_negate THEN -1 ELSE 1 END
-                        * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
+                        * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END
                     ) AS tax_2,
                     SUM(CASE WHEN base_tax.id IS NULL AND net_tax_group.id != %(tax_group_12)s THEN account_move_line.balance ELSE 0 END
-                        * CASE WHEN tag.tax_negate THEN -1 ELSE 1 END
-                        * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
+                        * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END
                     ) AS tax_1
 
                 FROM %(table_references)s
 
                 LEFT JOIN res_partner partner ON partner.id = account_move_line__move_id.commercial_partner_id
                 LEFT JOIN res_country country ON country.id = partner.country_id
-                LEFT JOIN account_account_tag_account_move_line_rel tag_aml_rel ON tag_aml_rel.account_move_line_id = account_move_line.id
-                LEFT JOIN account_account_tag tag ON tag.id = tag_aml_rel.account_account_tag_id
                 LEFT JOIN account_tax net_tax ON account_move_line.tax_line_id = net_tax.id
                 LEFT JOIN account_move_line_account_tax_rel aml_tax_rel ON account_move_line.id = aml_tax_rel.account_move_line_id
                 LEFT JOIN account_tax base_tax ON aml_tax_rel.account_tax_id = base_tax.id
@@ -256,6 +252,7 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
             select_from_groupby=SQL('%s AS grouping_key,', groupby_field_sql) if groupby_field_sql else SQL(''),
             select_clause=SQL("%s,", SQL(", ").join(select_clauses)) if select_clauses else SQL(),
             tax_group_12=tax_group_12.id if tax_group_12 else 0,
+            balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
             table_references=query.from_clause,
             search_condition=query.where_clause,
             search_condition_remaining=SQL(search_condition_remaining),
@@ -263,8 +260,7 @@ class CzechVATControlReportCustomHandler(models.AbstractModel):
             orderby_clause=SQL("ORDER BY %s", SQL(", ").join(groupby_clauses)) if groupby_clauses else SQL(),
             tail_query=SQL(tail_query),
         )
-        self.env.cr.execute(query)
-        query_res_lines = self.env.cr.dictfetchall()
+        query_res_lines = self.env.execute_query_dict(sqL_query)
 
         if not current_groupby:
             return build_result_dict(query_res_lines)

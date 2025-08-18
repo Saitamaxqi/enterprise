@@ -93,6 +93,8 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
             like the tax amounts that are grouped by tax grid and move """
 
         query = report._get_report_query(options, 'strict_range')
+        tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+        tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
 
         # To get if the line contains a tag, we get the expression (if needed), to get the id. It is then given to the params
         oss_tag = self.env.ref('l10n_eu_oss.tag_oss', raise_if_not_found=False)
@@ -112,7 +114,7 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
 
         return SQL(
                 r"""
-            WITH 
+            WITH
               -- payment_date is necessary in case of payment received before the invoice_date
               -- invoice_date_due in case of payment overdue, where we need the due date of the invoice
               partial_reconcile_date AS (
@@ -140,29 +142,23 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
                   ),
                   -- aml_aggregates corresponds to aggregate aml amount per tax tag for each move
                   aml_aggregates as (
-                    SELECT SUM( 
-                               CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                               * CASE WHEN tag.tax_negate THEN -1 ELSE 1 END
-                               * account_move_line.balance
-                           ) AS amounts,
+                    SELECT SUM(account_move_line.balance * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END) AS amounts,
                            %(move_to_group_by)s AS move_id,
-                           SUBSTRING(%(tag_name)s, 4) AS tag_number
+                           SUBSTRING(%(tag_name)s, 3) AS tag_number
                       FROM %(table_references)s
-                      JOIN account_account_tag_account_move_line_rel aatamlr ON aatamlr.account_move_line_id = "account_move_line".id
-                      JOIN account_account_tag tag ON aatamlr.account_account_tag_id = tag.id
                       %(additional_joined_table_for_aml_aggregates)s
                      WHERE %(search_condition)s
-                       AND %(tag_name)s SIMILAR TO '(-|\+)K_\d\d'
-                       AND tag.country_id = %(country_id)s
+                       AND %(tag_name)s SIMILAR TO 'K_\d\d'
+                       AND %(tag_country_id)s = %(country_id)s
                   GROUP BY tag_number, %(move_to_group_by)s
               )
             SELECT jsonb_object_agg(aml_aggregates.tag_number, aml_aggregates.amounts) FILTER(WHERE aml_aggregates.tag_number IS NOT NULL) AS tax_values,
                    array_agg(DISTINCT pt.l10n_pl_vat_gtu) FILTER (WHERE pt.l10n_pl_vat_gtu IS NOT NULL) AS gtus,
-                   COUNT(1) FILTER (WHERE tag.id = %(oss_tag_id)s) AS oss_tag,
-                   COUNT(1) FILTER (WHERE tag.id IN %(triangular_sale_tags_ids)s) AS l10n_pl_vat_tt_d,
-                   COUNT(1) FILTER (WHERE tag.id IN %(triangular_purchase_tags_ids)s) AS l10n_pl_vat_tt_wnt,
-                   COUNT(1) FILTER (WHERE tag.id IN %(i_42_tags_ids)s) AS l10n_pl_vat_i_42,
-                   COUNT(1) FILTER (WHERE tag.id IN %(i_63_tags_ids)s) AS l10n_pl_vat_i_63,
+                   COUNT(1) FILTER (WHERE %(tag_id)s = %(oss_tag_id)s) AS oss_tag,
+                   COUNT(1) FILTER (WHERE %(tag_id)s IN %(triangular_sale_tags_ids)s) AS l10n_pl_vat_tt_d,
+                   COUNT(1) FILTER (WHERE %(tag_id)s IN %(triangular_purchase_tags_ids)s) AS l10n_pl_vat_tt_wnt,
+                   COUNT(1) FILTER (WHERE %(tag_id)s IN %(i_42_tags_ids)s) AS l10n_pl_vat_i_42,
+                   COUNT(1) FILTER (WHERE %(tag_id)s IN %(i_63_tags_ids)s) AS l10n_pl_vat_i_63,
                    "account_move_line__move_id".l10n_pl_vat_b_spv,
                    "account_move_line__move_id".l10n_pl_vat_b_spv_dostawa,
                    "account_move_line__move_id".l10n_pl_vat_b_mpv_prowizja,
@@ -180,10 +176,10 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
                    -- If the first payment/delivery arrives before the invoice date else null
                    NULLIF(
                           LEAST(
-                                min(partial_reconcile_date.date), 
-                                "account_move_line__move_id".delivery_date, 
+                                min(partial_reconcile_date.date),
+                                "account_move_line__move_id".delivery_date,
                                 COALESCE("account_move_line__move_id".invoice_date, "account_move_line__move_id".date)
-                                ), 
+                                ),
                           COALESCE("account_move_line__move_id".invoice_date, "account_move_line__move_id".date)
                           ) as sale_date
                    %(additional_select_list)s
@@ -193,16 +189,15 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
                 LEFT JOIN aml_aggregates ON aml_aggregates.move_id = "account_move_line__move_id".id
                 LEFT JOIN res_partner partn ON "account_move_line__move_id".partner_id = partn.id
                 LEFT JOIN res_country country ON partn.country_id = country.id
-                LEFT JOIN account_account_tag_account_move_line_rel aa_tag_aml_rel ON aa_tag_aml_rel.account_move_line_id = "account_move_line".id
-                LEFT JOIN account_account_tag tag ON aa_tag_aml_rel.account_account_tag_id = tag.id
                 LEFT JOIN partial_reconcile_date ON partial_reconcile_date.id = "account_move_line__move_id".id
                 %(additional_joined_table)s
             WHERE %(search_condition)s
             GROUP BY "account_move_line__move_id".id, partn.id, country.code;
                 """,
-                table_references=query.from_clause,
-                search_condition=query.where_clause,
-                tag_name=self.with_context(lang='en_US').env['account.account.tag']._field_to_sql('tag', 'name'),
+                tag_id=self.env['account.account.tag']._field_to_sql(tag_alias, 'id', query),
+                tag_name=self.with_context(lang='en_US').env['account.account.tag']._field_to_sql(tag_alias, 'name'),
+                tag_country_id=self.env['account.account.tag']._field_to_sql(tag_alias, 'country_id', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 move_to_group_by=move_to_group_by or SQL('account_move_line__move_id.id'),
                 additional_joined_table_for_aml_aggregates=additional_joined_table_for_aml_aggregates or SQL(),
                 country_id=self.env.ref('base.pl').id,
@@ -213,6 +208,8 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
                 i_63_tags_ids=i_63_tags_ids,
                 additional_select_list=additional_select_list or SQL(),
                 additional_joined_table=additional_joined_table or SQL(),
+                table_references=query.from_clause,
+                search_condition=query.where_clause,
             )
 
     @api.model
@@ -316,8 +313,8 @@ class L10n_PlTaxReportHandler(models.AbstractModel):
             line_48 = self.env.ref('l10n_pl.account_tax_report_line_podatek_razem_d')
 
             for expression, expression_values in list(lines.values())[0].items():
-                if expression.formula and expression.formula[:2] == 'K_':
-                    agg_values[expression.formula[2:]] = expression_values.get('value')
+                if expression.formula and expression.formula.lstrip('-')[:2] == 'K_':
+                    agg_values[expression.formula.lstrip('-')[2:]] = expression_values.get('value')
                 if expression == line_38.expression_ids[0]:
                     agg_values['38'] = expression_values.get('value')
                 if expression == line_48.expression_ids[0]:

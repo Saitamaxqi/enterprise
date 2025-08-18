@@ -13,7 +13,7 @@ class NigeriaReportTest(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
         company = cls.company_data['company']
-        cls.tax_tag_carryover = cls.env['account.account.tag'].with_company(company).search([('name', '=', '-100')])
+        cls.tax_tag_carryover = cls.env['account.account.tag'].with_company(company).search([('name', '=', '100')])
         cls.purchase_tax = cls.env['account.tax'].with_company(company).search([
             ('name', '=', '7.5%'),
             ('type_tax_use', '=', 'purchase'),

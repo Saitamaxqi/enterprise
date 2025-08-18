@@ -68,13 +68,13 @@ class AccountChartTemplate(models.AbstractModel):
             schedule_1_rule_withholding_net: {
                 "credit": "62430",
                 "debit": "21420",
-                "debit_tags": "+W2",
-                "credit_tags": "+W1",
+                "debit_tags": "W2",
+                "credit_tags": "W1",
             },
             schedule_1_rule_net: {
                 "credit": "21300",
                 "debit": "62430",
-                "debit_tags": "+W1",
+                "debit_tags": "W1",
             },
             schedule_1_rule_super: {
                 "credit": "21400",
@@ -87,7 +87,7 @@ class AccountChartTemplate(models.AbstractModel):
             schedule_1_rule_child_support: {
                 "credit": "62460",
                 "debit": "21500",
-                "credit_tags": "+W1",
+                "credit_tags": "W1",
             },
             schedule_1_deductions: {
                 "debit": "21800",

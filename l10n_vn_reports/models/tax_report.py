@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import _, fields, models
 from odoo.tools import date_utils, SQL
-from odoo.tools.misc import format_date, get_lang
+from odoo.tools.misc import format_date
 
 
 class L10n_VnTaxReportHandler(models.AbstractModel):
@@ -89,27 +89,16 @@ class L10n_VnTaxReportHandler(models.AbstractModel):
                 ('date', '<=', end_date),
             ]
             query = report._get_report_query(column_group_options, date_scope="strict_range", domain=domain)
+            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
             tail_query = report._get_engine_query_tail(offset, limit)
-            lang = self.env.user.lang or get_lang(self.env).code
-            if self.pool['account.account.tag'].name.translate:
-                account_tag_name = SQL(
-                    "COALESCE(account_tag.name->>%(lang)s, account_tag.name->>'en_US')", lang=lang)
-            else:
-                account_tag_name = SQL.identifier('account_tag', 'name')
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s AS column_group_key,
-                         REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '')                                                  AS tag_name,
+                         %(account_tag_name)s                                                                               AS tag_name,
                          SUM(account_move_line.tax_base_amount)                                                             AS tax_base_amount,
-                         SUM(%(balance_select)s
-                             * CASE WHEN account_tag.tax_negate THEN -1 ELSE 1 END
-                             * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                         )                                                                                                  AS balance
+                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)                          AS balance
                     FROM %(table_references)s
-                    JOIN res_partner p ON p.id = account_move_line__move_id.partner_id
-                    JOIN res_partner cp ON cp.id = p.commercial_partner_id
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                     %(currency_table_join)s
                    WHERE %(search_condition)s
                 GROUP BY %(account_tag_name)s
@@ -117,7 +106,8 @@ class L10n_VnTaxReportHandler(models.AbstractModel):
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=account_tag_name,
+                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 table_references=query.from_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 search_condition=query.where_clause,
@@ -183,48 +173,39 @@ class L10n_VnTaxReportHandler(models.AbstractModel):
                 ('date', '<=', end_date),
             ]
             query = report._get_report_query(column_group_options, date_scope="strict_range", domain=domain)
+            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
             tail_query = report._get_engine_query_tail(offset, limit)
-            lang = self.env.user.lang or get_lang(self.env).code
             invoice_number_column = SQL('l10n_vn_e_invoice_number' if options['move_type'] == 'out_invoice' else 'payment_reference')
-            if self.pool['account.account.tag'].name.translate:
-                account_tag_name = SQL("COALESCE(account_tag.name->>%(lang)s, account_tag.name->>'en_US')", lang=lang)
-            else:
-                account_tag_name = SQL.identifier('account_tag', 'name')
-            tax_groups_condition = SQL("REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '') = ANY(%(tax_groups)s)",
-                                       account_tag_name=account_tag_name,
-                                       tax_groups=tax_groups)
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s                                                                               AS column_group_key,
                          partner.name                                                                                       AS partner_name,
                          partner.vat                                                                                        AS vat,
-                         REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '')                                                  AS tag_name,
+                         %(account_tag_name)s                                                                               AS tag_name,
                          account_move_line__move_id.id                                                                      AS move_id,
                          account_move_line__move_id.name                                                                    AS move_name,
                          account_move_line__move_id.ref                                                                     AS move_ref,
                          account_move_line__move_id.%(invoice_number_column)s                                               AS invoice_number,
                          account_move_line__move_id.invoice_date                                                            AS invoice_date,
-                         SUM(%(balance_select)s
-                             * CASE WHEN account_tag.tax_negate THEN -1 ELSE 1 END
-                             * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                         )                                                                                                  AS balance
+                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)                          AS balance
                     FROM %(table_references)s
                     JOIN res_partner partner ON partner.id = account_move_line.partner_id
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                     %(currency_table_join)s
-                    WHERE %(search_condition)s AND %(tax_groups_condition)s
+                   WHERE %(search_condition)s
+                     AND %(account_tag_name)s = ANY(%(tax_groups)s)
                 GROUP BY partner.id, account_move_line__move_id.id, %(account_tag_name)s
                 %(tail_query)s
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=account_tag_name,
+                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 invoice_number_column=invoice_number_column,
                 table_references=query.from_clause,
                 search_condition=query.where_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
-                tax_groups_condition=tax_groups_condition,
+                tax_groups=tax_groups,
                 tail_query=tail_query,
             ))
 
@@ -298,47 +279,34 @@ class L10n_VnTaxReportHandler(models.AbstractModel):
                 ('move_id', '=', move_id),
             ]
             query = report._get_report_query(column_group_options, date_scope="strict_range", domain=domain)
+            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
             tail_query = report._get_engine_query_tail(offset, limit)
-            lang = self.env.user.lang or get_lang(self.env).code
-            if self.pool['account.account.tag'].name.translate:
-                account_tag_name = SQL("COALESCE(account_tag.name->>%(lang)s, account_tag.name->>'en_US')", lang=lang)
-            else:
-                account_tag_name = SQL.identifier('account_tag', 'name')
-            tax_groups_condition = SQL("REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '') = ANY(%(tax_groups)s)",
-                                       account_tag_name=account_tag_name,
-                                       tax_groups=tax_groups)
-            if self.pool['account.tax'].description.translate:
-                account_tax_description = SQL("COALESCE(account_tax.description->>%(lang)s, account_tax.description->>'en_US')", lang=lang)
-            else:
-                account_tax_description = SQL.identifier('account_tax', 'description')
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s                                                                               AS column_group_key,
                          account_tax.id                                                                                     AS tax_id,
                          REGEXP_REPLACE(%(account_tax_description)s, '(<([^>]+)>)', '', 'g')                                AS tax_description,
-                         REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '')                                                  AS tag_name,
+                         %(account_tag_name)s                                                                               AS tag_name,
                          account_move_line.tax_base_amount                                                                  AS untaxed_amount,
-                         SUM(%(balance_select)s
-                             * CASE WHEN account_tag.tax_negate THEN -1 ELSE 1 END
-                             * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                         )                                                                                                  AS balance
+                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)                          AS balance
                     FROM %(table_references)s
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                     JOIN account_tax account_tax ON account_tax.id = account_move_line.tax_line_id
                     %(currency_table_join)s
-                   WHERE %(search_condition)s AND %(tax_groups_condition)s
+                   WHERE %(search_condition)s
+                     AND %(account_tag_name)s = ANY(%(tax_groups)s)
                 GROUP BY %(account_tag_name)s, account_tax.id, account_move_line.id
                 %(tail_query)s
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tax_description=account_tax_description,
-                account_tag_name=account_tag_name,
+                account_tax_description=self.env['account.tax']._field_to_sql(tag_alias, 'description', query),
+                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 table_references=query.from_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 search_condition=query.where_clause,
-                tax_groups_condition=tax_groups_condition,
+                tax_groups=tax_groups,
                 tail_query=tail_query,
             ))
 
@@ -385,29 +353,22 @@ class L10n_VnTaxReportHandler(models.AbstractModel):
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
             domain = [('move_id.move_type', '=', options['move_type'])]
             query = report._get_report_query(column_group_options, date_scope="strict_range", domain=domain)
-            lang = self.env.user.lang or get_lang(self.env).code
-            if self.pool['account.account.tag'].name.translate:
-                account_tag_name = SQL("COALESCE(account_tag.name->>%(lang)s, account_tag.name->>'en_US')", lang=lang)
-            else:
-                account_tag_name = SQL.identifier('account_tag', 'name')
+            tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+            tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
             queries.append(SQL(
                 """
                   SELECT %(column_group_key)s                                                                               AS column_group_key,
-                         REGEXP_REPLACE(%(account_tag_name)s, '^[+-]', '')                                                  AS tag_name,
-                         SUM(%(balance_select)s
-                             * CASE WHEN account_tag.tax_negate THEN -1 ELSE 1 END
-                             * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                         )                                                                                                  AS balance
+                         %(account_tag_name)s                                                                               AS tag_name,
+                         SUM(%(balance_select)s * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END)                          AS balance
                     FROM %(table_references)s
-                    JOIN account_account_tag_account_move_line_rel account_tag_rel ON account_tag_rel.account_move_line_id = account_move_line.id
-                    JOIN account_account_tag account_tag ON account_tag.id = account_tag_rel.account_account_tag_id
                     %(currency_table_join)s
                    WHERE %(search_condition)s
                 GROUP BY column_group_key, %(account_tag_name)s
                 """,
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
                 column_group_key=column_group_key,
-                account_tag_name=account_tag_name,
+                account_tag_name=self.env['account.account.tag']._field_to_sql(tag_alias, 'name', query),
+                balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
                 table_references=query.from_clause,
                 currency_table_join=report._currency_table_aml_join(column_group_options),
                 search_condition=query.where_clause,

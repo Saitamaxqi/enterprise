@@ -1118,30 +1118,25 @@ class AccountJournalReportHandler(models.AbstractModel):
         country_name = self.env['res.country']._field_to_sql('country', 'name')
         tag_name = self.env['account.account.tag']._field_to_sql('tag', 'name')
         query = SQL("""
-            WITH tag_info (country_name, tag_id, tag_name, tag_sign, balance) AS (
+            WITH tag_info (country_name, tag_id, tag_name, balance) AS (
                 SELECT
                     %(country_name)s AS country_name,
                     tag.id,
                     %(tag_name)s AS name,
-                    CASE WHEN tag.tax_negate IS TRUE THEN '-' ELSE '+' END,
-                    SUM(COALESCE("account_move_line".balance, 0)
-                        * CASE WHEN "account_move_line".tax_tag_invert THEN -1 ELSE 1 END
-                        ) AS balance
-                FROM account_account_tag tag
-                JOIN account_account_tag_account_move_line_rel rel ON tag.id = rel.account_account_tag_id
+                    -SUM(COALESCE("account_move_line".balance, 0)) AS balance
+                FROM %(table_references)s
+                JOIN account_account_tag_account_move_line_rel rel ON "account_move_line".id = rel.account_move_line_id
+                JOIN account_account_tag tag ON tag.id = rel.account_account_tag_id
                 JOIN res_country country ON country.id = tag.country_id
-                , %(table_references)s
                 WHERE %(search_condition)s
                   AND applicability = 'taxes'
-                  AND "account_move_line".id = rel.account_move_line_id
                 GROUP BY country_name, tag.id
             )
             SELECT
                 country_name,
                 tag_id,
-                REGEXP_REPLACE(tag_name, '^[+-]', '') AS name, -- Remove the sign from the grid name
-                balance,
-                tag_sign AS sign
+                tag_name AS name,
+                balance
             FROM tag_info
             ORDER BY country_name, name
         """, country_name=country_name, tag_name=tag_name, table_references=query.from_clause, search_condition=query.where_clause)
@@ -1149,18 +1144,13 @@ class AccountJournalReportHandler(models.AbstractModel):
         query_res = self.env.cr.fetchall()
 
         res = {}
-        opposite = {'+': '-', '-': '+'}
-        for country_name, tag_id, name, balance, sign in query_res:
+        for country_name, tag_id, name, balance in query_res:
             res.setdefault(country_name, {}).setdefault(name, {})
             res[country_name][name].setdefault('tag_ids', []).append(tag_id)
-            res[country_name][name][sign] = report._format_value(options, balance, 'monetary')
+            res[country_name][name]['balance'] = report._format_value(options, balance, 'monetary')
 
-            # We need them formatted, to ensure they are displayed correctly in the report. (E.g. 0.0, not 0)
-            if not opposite[sign] in res[country_name][name]:
-                res[country_name][name][opposite[sign]] = report._format_value(options, 0, 'monetary')
-
-            res[country_name][name][sign + '_no_format'] = balance
-            res[country_name][name]['impact'] = report._format_value(options, res[country_name][name].get('+_no_format', 0) - res[country_name][name].get('-_no_format', 0), 'monetary')
+            res[country_name][name]['balance_no_format'] = balance
+            res[country_name][name]['impact'] = report._format_value(options, res[country_name][name].get('balance_no_format', 0), 'monetary')
 
         return res
 

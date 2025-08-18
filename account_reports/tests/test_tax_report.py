@@ -303,17 +303,17 @@ class TestTaxReport(TestAccountReportsCommon):
         })
 
         to_write = {}
+        sign = "-" if type_tax_use == 'sale' else ""
         for move_type_suffix in ('invoice', 'refund'):
-            sign = "-" if move_type_suffix == 'refund' else "+"
             report_line_sequence = tax_report.line_ids[-1].sequence + 1 if tax_report.line_ids else 0
 
 
             # Create a report line for the base
             base_report_line_name = f"{tax.id}-{move_type_suffix}-base"
-            base_report_line = cls._create_tax_report_line(base_report_line_name, tax_report, tag_name=base_report_line_name, sequence=report_line_sequence)
+            base_report_line = cls._create_tax_report_line(base_report_line_name, tax_report, tag_name=sign + base_report_line_name, sequence=report_line_sequence)
             report_line_sequence += 1
 
-            base_tag = base_report_line.expression_ids._get_matching_tags(sign)
+            base_tag = base_report_line.expression_ids._get_matching_tags()
 
             repartition_vals = [
                 Command.clear(),
@@ -323,10 +323,10 @@ class TestTaxReport(TestAccountReportsCommon):
             for (factor_percent, account, use_in_tax_closing) in tax_repartition:
                 # Create a report line for the repartition line
                 tax_report_line_name = f"{tax.id}-{move_type_suffix}-{factor_percent}"
-                tax_report_line = cls._create_tax_report_line(tax_report_line_name, tax_report, tag_name=tax_report_line_name, sequence=report_line_sequence)
+                tax_report_line = cls._create_tax_report_line(tax_report_line_name, tax_report, tag_name=sign + tax_report_line_name, sequence=report_line_sequence)
                 report_line_sequence += 1
 
-                tax_tag = tax_report_line.expression_ids._get_matching_tags(sign)
+                tax_tag = tax_report_line.expression_ids._get_matching_tags()
 
                 repartition_vals.append(Command.create({
                     'account_id': account.id if account else None,
@@ -489,12 +489,12 @@ class TestTaxReport(TestAccountReportsCommon):
         # so that we ensure sequence is taken into account properly when rendering the report
         tax_section = self._create_tax_report_line('Tax', tax_report, sequence=4, formula="tax_42.balance + tax_11.balance + tax_neg_100.balance")
         base_section = self._create_tax_report_line('Base', tax_report, sequence=1, formula="base_11.balance + base_42.balance")
-        base_42_line = self._create_tax_report_line('Base 42%', tax_report, sequence=2, parent_line=base_section, code='base_42', tag_name='base_42')
-        base_11_line = self._create_tax_report_line('Base 11%', tax_report, sequence=3, parent_line=base_section, code='base_11', tag_name='base_11')
+        base_42_line = self._create_tax_report_line('Base 42%', tax_report, sequence=2, parent_line=base_section, code='base_42', tag_name='-base_42')
+        base_11_line = self._create_tax_report_line('Base 11%', tax_report, sequence=3, parent_line=base_section, code='base_11', tag_name='-base_11')
         tax_42_section = self._create_tax_report_line('Tax 42%', tax_report, sequence=5, parent_line=tax_section, code='tax_42', formula='tax_31_5.balance + tax_10_5.balance')
-        tax_31_5_line = self._create_tax_report_line('Tax 31.5%', tax_report, sequence=7, parent_line=tax_42_section, code='tax_31_5', tag_name='tax_31_5')
-        tax_10_5_line = self._create_tax_report_line('Tax 10.5%', tax_report, sequence=6, parent_line=tax_42_section, code='tax_10_5', tag_name='tax_10_5')
-        tax_11_line = self._create_tax_report_line('Tax 11%', tax_report, sequence=8, parent_line=tax_section, code='tax_11', tag_name='tax_11')
+        tax_31_5_line = self._create_tax_report_line('Tax 31.5%', tax_report, sequence=7, parent_line=tax_42_section, code='tax_31_5', tag_name='-tax_31_5')
+        tax_10_5_line = self._create_tax_report_line('Tax 10.5%', tax_report, sequence=6, parent_line=tax_42_section, code='tax_10_5', tag_name='-tax_10_5')
+        tax_11_line = self._create_tax_report_line('Tax 11%', tax_report, sequence=8, parent_line=tax_section, code='tax_11', tag_name='-tax_11')
         tax_neg_100_line = self._create_tax_report_line('Tax -100%', tax_report, sequence=9, parent_line=tax_section, code='tax_neg_100', tag_name='tax_neg_100')
         self._create_tax_report_line('Tax difference (42%-11%)', tax_report, sequence=10, formula='tax_42.balance - tax_11.balance')
 
@@ -507,21 +507,21 @@ class TestTaxReport(TestAccountReportsCommon):
             'invoice_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': self._get_tag_ids("+", base_11_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(base_11_line.expression_ids),
                 }),
                 Command.create({
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("+", tax_11_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_11_line.expression_ids),
                 }),
             ],
             'refund_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': self._get_tag_ids("-", base_11_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(base_11_line.expression_ids),
                 }),
                 Command.create({
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("-", tax_11_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_11_line.expression_ids),
                 }),
             ],
         })
@@ -534,49 +534,49 @@ class TestTaxReport(TestAccountReportsCommon):
             'invoice_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': self._get_tag_ids("+", base_42_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(base_42_line.expression_ids),
                 }),
 
                 Command.create({
                     'factor_percent': 25,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("+", tax_10_5_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_10_5_line.expression_ids),
                 }),
 
                 Command.create({
                     'factor_percent': 75,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("+", tax_31_5_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_31_5_line.expression_ids),
                 }),
 
                 Command.create({
                     'factor_percent': -100,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("-", tax_neg_100_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_neg_100_line.expression_ids),
                 }),
             ],
             'refund_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': self._get_tag_ids("-", base_42_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(base_42_line.expression_ids),
                 }),
 
                 Command.create({
                     'factor_percent': 25,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("-", tax_10_5_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_10_5_line.expression_ids),
                 }),
 
                 Command.create({
                     'factor_percent': 75,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("-", tax_31_5_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_31_5_line.expression_ids),
                 }),
 
                 Command.create({
                     'factor_percent': -100,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("+", tax_neg_100_line.expression_ids),
+                    'tag_ids': self._get_tag_ids(tax_neg_100_line.expression_ids),
                 }),
             ],
         })
@@ -683,28 +683,28 @@ class TestTaxReport(TestAccountReportsCommon):
                 'invoice_repartition_line_ids': [
                     Command.create({
                         'repartition_type': 'base',
-                        'tag_ids': self._get_tag_ids("+", report_line.expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line.expression_ids),
                     }),
                     Command.create({
                         'factor_percent': 25,
                         'repartition_type': 'tax',
-                        'tag_ids': self._get_tag_ids("+", report_line.expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line.expression_ids),
                     }),
                     Command.create({
                         'factor_percent': 75,
                         'repartition_type': 'tax',
-                        'tag_ids': self._get_tag_ids("+", report_line.expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line.expression_ids),
                     }),
                 ],
                 'refund_repartition_line_ids': [
                     Command.create({
                         'repartition_type': 'base',
-                        'tag_ids': self._get_tag_ids("-", report_line.expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line.expression_ids),
                     }),
                     Command.create({
                         'factor_percent': 25,
                         'repartition_type': 'tax',
-                        'tag_ids': self._get_tag_ids("-", report_line.expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line.expression_ids),
                     }),
                     Command.create({
                         'factor_percent': 75,
@@ -725,21 +725,21 @@ class TestTaxReport(TestAccountReportsCommon):
                 'invoice_repartition_line_ids': [
                     Command.create({
                         'repartition_type': 'base',
-                        'tag_ids': self._get_tag_ids("+", report_line[0].expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line[0].expression_ids),
                     }),
                     Command.create({
                         'repartition_type': 'tax',
-                        'tag_ids': self._get_tag_ids("+", report_line[1].expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line[1].expression_ids),
                     }),
                 ],
                 'refund_repartition_line_ids': [
                     Command.create({
                         'repartition_type': 'base',
-                        'tag_ids': self._get_tag_ids("+", report_line[0].expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line[0].expression_ids),
                     }),
                     Command.create({
                         'repartition_type': 'tax',
-                        'tag_ids': self._get_tag_ids("+", report_line[1].expression_ids),
+                        'tag_ids': self._get_tag_ids(report_line[1].expression_ids),
                     }),
                 ],
             }
@@ -808,7 +808,7 @@ class TestTaxReport(TestAccountReportsCommon):
 
         # We create some report lines
         report_lines_dict = {
-            'sale': self._create_tax_report_line('Sale', tax_report, sequence=1, tag_name='sale'),
+            'sale': self._create_tax_report_line('Sale', tax_report, sequence=1, tag_name='-sale'),
             'purchase': self._create_tax_report_line('Purchase', tax_report, sequence=2, tag_name='purchase'),
         }
 
@@ -1902,8 +1902,8 @@ class TestTaxReport(TestAccountReportsCommon):
         # We create some report lines
         report_lines_dict = {
             'sale': [
-                self._create_tax_report_line('Sale base', tax_report, sequence=1, tag_name='sale_b'),
-                self._create_tax_report_line('Sale tax', tax_report, sequence=1, tag_name='sale_t'),
+                self._create_tax_report_line('Sale base', tax_report, sequence=1, tag_name='-sale_b'),
+                self._create_tax_report_line('Sale tax', tax_report, sequence=1, tag_name='-sale_t'),
             ],
             'purchase': [
                 self._create_tax_report_line('Purchase base', tax_report, sequence=2, tag_name='purchase_b'),
@@ -1983,8 +1983,8 @@ class TestTaxReport(TestAccountReportsCommon):
             'root_report_id': self.env.ref("account.generic_tax_report").id,
             'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance'})],
         })
-        report_line_invoice_base = self._create_tax_report_line('Invoice base', tax_report, sequence=1, tag_name='caba_invoice_base')
-        report_line_invoice_tax = self._create_tax_report_line('Invoice tax', tax_report, sequence=2, tag_name='caba_invoice_tax')
+        report_line_invoice_base = self._create_tax_report_line('Invoice base', tax_report, sequence=1, tag_name='-caba_invoice_base')
+        report_line_invoice_tax = self._create_tax_report_line('Invoice tax', tax_report, sequence=2, tag_name='-caba_invoice_tax')
         report_line_refund_base = self._create_tax_report_line('Refund base', tax_report, sequence=3, tag_name='caba_refund_base')
         report_line_refund_tax = self._create_tax_report_line('Refund tax', tax_report, sequence=4, tag_name='caba_refund_tax')
 
@@ -1997,21 +1997,21 @@ class TestTaxReport(TestAccountReportsCommon):
             'invoice_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': [Command.set(report_line_invoice_base.expression_ids._get_matching_tags("+").ids)],
+                    'tag_ids': [Command.set(report_line_invoice_base.expression_ids._get_matching_tags().ids)],
                 }),
                 Command.create({
                     'repartition_type': 'tax',
-                    'tag_ids': [Command.set(report_line_invoice_tax.expression_ids._get_matching_tags("+").ids)],
+                    'tag_ids': [Command.set(report_line_invoice_tax.expression_ids._get_matching_tags().ids)],
                 }),
             ],
             'refund_repartition_line_ids': [
                 Command.create({
                     'repartition_type': 'base',
-                    'tag_ids': [Command.set(report_line_refund_base.expression_ids._get_matching_tags("+").ids)],
+                    'tag_ids': [Command.set(report_line_refund_base.expression_ids._get_matching_tags().ids)],
                 }),
                 Command.create({
                     'repartition_type': 'tax',
-                    'tag_ids': [Command.set(report_line_refund_tax.expression_ids._get_matching_tags("+").ids)],
+                    'tag_ids': [Command.set(report_line_refund_tax.expression_ids._get_matching_tags().ids)],
                 }),
             ],
         })
@@ -2092,8 +2092,8 @@ class TestTaxReport(TestAccountReportsCommon):
     def setup_multi_vat_context(self):
         """Setup 2 tax reports, taxes and partner to represent a multiVat context in which both taxes affect both tax report"""
 
-        def get_positive_tag(report_line):
-            return report_line.expression_ids._get_matching_tags().filtered(lambda x: not x.tax_negate)
+        def get_tag(report_line):
+            return report_line.expression_ids._get_matching_tags()
 
         local_tax_report, foreign_tax_report = self.env['account.report'].create([
             {
@@ -2109,10 +2109,10 @@ class TestTaxReport(TestAccountReportsCommon):
                 'column_ids': [Command.create({'name': 'balance', 'sequence': 1, 'expression_label': 'balance', })],
             },
         ])
-        local_tax_report_base_line = self._create_tax_report_line("base_local", local_tax_report, sequence=1, code="base_local", tag_name="base_local")
-        local_tax_report_tax_line = self._create_tax_report_line("tax_local", local_tax_report, sequence=2, code="tax_local", tag_name="tax_local")
-        foreign_tax_report_base_line = self._create_tax_report_line("base_foreign", foreign_tax_report, sequence=1, code="base_foreign", tag_name="base_foreign")
-        foreign_tax_report_tax_line = self._create_tax_report_line("tax_foreign", foreign_tax_report, sequence=2, code="tax_foreign", tag_name="tax_foreign")
+        local_tax_report_base_line = self._create_tax_report_line("base_local", local_tax_report, sequence=1, code="base_local", tag_name="-base_local")
+        local_tax_report_tax_line = self._create_tax_report_line("tax_local", local_tax_report, sequence=2, code="tax_local", tag_name="-tax_local")
+        foreign_tax_report_base_line = self._create_tax_report_line("base_foreign", foreign_tax_report, sequence=1, code="base_foreign", tag_name="-base_foreign")
+        foreign_tax_report_tax_line = self._create_tax_report_line("tax_foreign", foreign_tax_report, sequence=2, code="tax_foreign", tag_name="-tax_foreign")
 
         local_tax_affecting_foreign_tax_report = self.env['account.tax'].create({'name': "The local tax affecting the foreign report", 'amount': 20})
         foreign_tax_affecting_local_tax_report = self.env['account.tax'].create({
@@ -2122,8 +2122,8 @@ class TestTaxReport(TestAccountReportsCommon):
         })
         for tax in (local_tax_affecting_foreign_tax_report, foreign_tax_affecting_local_tax_report):
             base_line, tax_line = tax.invoice_repartition_line_ids
-            base_line.tag_ids = get_positive_tag(local_tax_report_base_line) + get_positive_tag(foreign_tax_report_base_line)
-            tax_line.tag_ids = get_positive_tag(local_tax_report_tax_line) + get_positive_tag(foreign_tax_report_tax_line)
+            base_line.tag_ids = get_tag(local_tax_report_base_line) + get_tag(foreign_tax_report_base_line)
+            tax_line.tag_ids = get_tag(local_tax_report_tax_line) + get_tag(foreign_tax_report_tax_line)
             tax_line.account_id = self.tax_account_1
 
         local_partner = self.partner_a

@@ -35,6 +35,8 @@ class WT003ReportCustomHandler(models.AbstractModel):
         currency = self.env.company.currency_id
 
         query = report._get_report_query(options, 'strict_range')
+        tag_rel_alias = query.left_join(query.table, 'id', 'account_account_tag_account_move_line_rel', 'account_move_line_id', 'tag_rel')
+        tag_alias = query.left_join(tag_rel_alias, 'account_account_tag_id', 'account_account_tag', 'id', 'tag')
         query = SQL(
             """
             WITH tag_amounts_per_move AS (
@@ -49,20 +51,17 @@ class WT003ReportCustomHandler(models.AbstractModel):
                            WHEN payment.id IS NOT NULL THEN account_move_line__move_id.ref
                            ELSE account_move_line__move_id.name
                            END                                              AS name,
-                       REGEXP_REPLACE(%(tag_name)s, '^[+-]', '')            AS tag_name,
+                       %(tag_name)s                                         AS tag_name,
                        SUM(
                            account_move_line.balance
-                           * CASE WHEN account_move_line.tax_tag_invert THEN -1 ELSE 1 END
-                           * CASE WHEN tag.tax_negate THEN -1 ELSE 1 END
+                           * CASE WHEN %(balance_negate)s THEN -1 ELSE 1 END
                        )                                                    AS tag_amount
                  FROM %(table_references)s
-                 JOIN account_account_tag_account_move_line_rel aml_tag ON account_move_line.id = aml_tag.account_move_line_id
-                 JOIN account_account_tag tag ON aml_tag.account_account_tag_id = tag.id
                  JOIN res_partner commercial_partner ON commercial_partner.id = account_move_line__move_id.commercial_partner_id
             LEFT JOIN account_payment payment ON payment.move_id = account_move_line__move_id.id
                 WHERE %(search_condition)s
-                  AND %(tag_name)s ~ '^[+-]WT 003.*[BD]$'
-             GROUP BY account_move_line__move_id.id, tag_name, tag.id, payment.id, commercial_partner.id
+                  AND %(tag_name)s ~ '^WT 003.*[BD]$'
+             GROUP BY account_move_line__move_id.id, %(tag_id)s, payment.id, commercial_partner.id
             )
             SELECT commercial_partner_name,
                    commercial_partner_vat,
@@ -74,12 +73,13 @@ class WT003ReportCustomHandler(models.AbstractModel):
         GROUP BY commercial_partner_name, commercial_partner_vat, fiscal_position_id, date, name
         ORDER BY date desc, name desc
             """,
+            tag_name=self.env['account.account.tag'].with_context(lang='en_US')._field_to_sql(tag_alias, 'name'),
+            balance_negate=self.env['account.account.tag']._field_to_sql(tag_alias, 'balance_negate', query),
+            tag_id=self.env['account.account.tag']._field_to_sql(tag_alias, 'id', query),
             table_references=query.from_clause,
             search_condition=query.where_clause,
-            tag_name=self.env['account.account.tag'].with_context(lang='en_US')._field_to_sql('tag', 'name'),
         )
-        self.env.cr.execute(query)
-        fetched_row_data = self.env.cr.dictfetchall()
+        fetched_row_data = self.env.execute_query_dict(query)
 
         fpos_ntax = ChartTemplate.ref('l10n_kh_fiscal_position_non_taxable_person', raise_if_not_found=False)
         fpos_oc = ChartTemplate.ref('l10n_kh_fiscal_position_overseas_company', raise_if_not_found=False)

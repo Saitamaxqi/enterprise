@@ -12,16 +12,16 @@ class HrPayslipLine(models.Model):
         '''
         if not self:
             return
-        plus_w3_tag_id, minus_w3_tag_id = self.env.ref('l10n_au.account_tax_report_payg_w3_tag')._get_matching_tags().sorted(lambda tag: tag.tax_negate).ids
-        plus_w2_tag_id, minus_w2_tag_id = self.env.ref('l10n_au.account_tax_report_payg_w2_tag')._get_matching_tags().sorted(lambda tag: tag.tax_negate).ids
-        w1_tag_ids = self.env.ref('l10n_au.account_tax_report_payg_w1_tag')._get_matching_tags().sorted(lambda tag: tag.tax_negate).ids
+        w3_tag = self.env.ref('l10n_au.account_tax_report_payg_w3_tag')._get_matching_tags()
+        w2_tag = self.env.ref('l10n_au.account_tax_report_payg_w2_tag')._get_matching_tags()
+        w1_tag = self.env.ref('l10n_au.account_tax_report_payg_w1_tag')._get_matching_tags()
         for record in self:
             tag_ids = []
             tags_list = record.salary_rule_id.debit_tag_ids if debit_credit == 'debit' else record.salary_rule_id.credit_tag_ids
             for tag in tags_list:
-                if tag.id in (plus_w2_tag_id, minus_w2_tag_id):
-                    tag_ids += [minus_w3_tag_id] if tag.tax_negate else [plus_w3_tag_id]
-                elif tag.id in w1_tag_ids:
+                if tag == w2_tag:
+                    tag_ids += w3_tag.id
+                elif tag == w1_tag:
                     continue
                 else:
                     tag_ids += [tag.id]
