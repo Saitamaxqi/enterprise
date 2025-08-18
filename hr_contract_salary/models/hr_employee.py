@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import uuid
+
 from odoo import fields, models, _
 
 
@@ -61,4 +63,5 @@ class HrEmployee(models.Model):
             'default_employee_job_id':  self.job_id.id,
             'default_department_id': self.department_id.id,
             'default_display_name': _("Offer for %(recipient)s", recipient=self.name),
+            'default_access_token': uuid.uuid4().hex if not self.employee_id.user_id else False
         }

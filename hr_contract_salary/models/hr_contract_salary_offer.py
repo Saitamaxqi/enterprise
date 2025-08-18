@@ -275,7 +275,7 @@ class HrContractSalaryOffer(models.Model):
     def action_jump_to_offer(self):
         self.ensure_one()
         url = f'/salary_package/simulation/offer/{self.id}'
-        if self.applicant_id:
+        if self.access_token:
             url += '?' + url_encode({'token': self.access_token})
         return {
             'type': 'ir.actions.act_url',

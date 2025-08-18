@@ -529,6 +529,7 @@ export class SalaryPackage extends Interaction {
                 'new_value': newValue,
                 'offer_id': parseInt($("input[name='offer_id']").val()),
                 'benefits': this.getBenefits({includeFiles: false}),
+                'token': $("input[name='token']").val(),
             });
             if (type !== "select") {
                 $("input[name='" + benefitField + "']").val(result.new_value);
@@ -572,6 +573,7 @@ export class SalaryPackage extends Interaction {
                 'offer_id': parseInt($("input[name='offer_id']").val()),
                 'benefits': self.getBenefits({includeFiles: false}),
                 'simulation_working_schedule': $("select[name='simulation_working_schedule']").val(),
+                'token': $("input[name='token']").val(),
             }).then(data => {
                 $("input[name='wage']").val(data["new_gross"]);
                 $("a[name='recompute']").addClass("d-none");

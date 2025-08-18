@@ -58,24 +58,20 @@ class SignContract(Sign):
 
 class HrContractSalary(main.HrContractSalary):
 
-    @route()
-    def salary_package(self, offer_id=None, **kw):
-        request.env.flush_all()
-        with request.env.cr.savepoint(flush=False) as sp:
-            version = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)._get_version()
-            work_time_rate = version._get_work_time_rate()
-            request.env.flush_all()
-            sp.rollback()
+    def check_access_to_salary_configurator(self, request_token, offer, version):
+        has_access, error_page = super().check_access_to_salary_configurator(request_token, offer, version)
+        if not has_access:
+            return has_access, error_page
 
-        if work_time_rate == 0:
-            return request.render('http_routing.http_error', {
-                'status_code': _('Oops'),
-                'status_message': _('This contract is a full time credit time... No simulation can be done for this type of contract as its wage is equal to 0.')})
-        return super().salary_package(offer_id, **kw)
+        if version.sudo()._get_work_time_rate() == 0:
+            return False, request.render('http_routing.http_error', {
+                'status_code': self.env._('Oops'),
+                'status_message': self.env._('This contract is a full time credit time... No simulation can be done for this type of contract as its wage is equal to 0.')})
+        return True, None
 
     @route()
-    def onchange_benefit(self, benefit_field, new_value, offer_id, benefits):
-        res = super().onchange_benefit(benefit_field, new_value, offer_id, benefits)
+    def onchange_benefit(self, benefit_field, new_value, offer_id, benefits, **kw):
+        res = super().onchange_benefit(benefit_field, new_value, offer_id, benefits, **kw)
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
         request.env.flush_all()
         with request.env.cr.savepoint(flush=False) as sp:

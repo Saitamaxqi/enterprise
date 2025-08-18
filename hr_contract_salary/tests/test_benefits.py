@@ -126,4 +126,4 @@ class TestInformationUpdate(HttpCase):
         res = self.url_open("/salary_package/submit", json=data)
         content = json.loads(res.content)
         self.assertIn('error', content)
-        self.assertIn('AccessError', content['error']['data']['name'])
+        self.assertEqual(404, content['error']['code'])

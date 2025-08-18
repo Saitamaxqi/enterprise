@@ -151,10 +151,6 @@ class SignContract(Sign):
 
 class HrContractSalary(http.Controller):
 
-    def _check_access_rights(self, version):
-        if version.sudo().employee_id and version.sudo().employee_id.user_id != request.env.user:
-            version.sudo(False).with_context(allowed_company_ids=request.env.user.company_ids.ids).check_access('read')
-
     def _get_default_template_values(self, version, offer):
         values = self._get_salary_package_values(version, offer)
         values.update({
@@ -180,28 +176,51 @@ class HrContractSalary(http.Controller):
     def _can_submit_offer(self, values):
         return not values['redirect_to_job']
 
-    def _check_access_token(self, offer, token):
-        return token and offer.access_token and consteq(offer.access_token, token)
-
-    def _check_link_access(self, offer, **kw):
+    def check_access_to_salary_configurator(self, request_token, offer, version):
+        """
+        Methods of access:
+        1 - User access (inside 'group_hr_manager')
+        2 - User access (the user of the offered employee, if exists)
+        3 - Token
+        """
         if not offer.exists() or offer.state in ['expired', 'refused']:
-            return False, self.env._('This offer has been updated, please request an updated link..')
+            return False, request.render('http_routing.http_error', {
+                'status_code': self.env._('Oops'),
+                'status_message': self.env._('This offer has been updated, please request an updated link..')})
 
-        if not request.env.user.has_group('hr.group_hr_manager'):
-            if offer.applicant_id:
-                if not self._check_access_token(offer, kw.get('token')) or \
-                        offer.offer_end_date and offer.offer_end_date < fields.Date.today():
-                    return False, self.env._('This link is invalid. Please contact the HR Responsible to get a new one...')
-            if offer.employee_id and not offer.employee_id.user_id and not offer.applicant_id:
-                return False, self.env._('The employee is not linked to an existing user, please contact the administrator..')
-            if offer.employee_id and offer.employee_id.user_id != request.env.user:
-                raise NotFound()
-            if offer.offer_end_date and offer.employee_id and offer.offer_end_date < fields.Date.today():
-                return False, self.env._('This link is invalid. Please contact the HR Responsible to get a new one...')
-            if offer.employee_version_id and offer.employee_version_id.employee_id \
-                and offer.employee_version_id.employee_id.user_id != request.env.user:
-                raise NotFound()
-        return True, ''
+        if offer.offer_end_date and offer.offer_end_date < fields.Date.today():
+            error_msg = self.env._("This link is invalid. Please contact the HR Responsible to get a new one...")
+            return False, request.render('http_routing.http_error', {
+                'status_code': self.env._('Oops'),
+                'status_message': error_msg})
+
+        request_user = request.env.user
+        if request_user.has_group('hr.group_hr_manager'):
+            return True, None
+
+        if offer.access_token and request_token and consteq(offer.access_token, request_token):
+            return True, None
+
+        offer_user = offer.employee_id.user_id
+        if offer_user:
+            if offer_user == request_user:
+                return True, None
+            else:
+                version.with_user(request_user.id).with_context(
+                    allowed_company_ids=request_user.company_ids.ids
+                ).check_access('read')
+                return True, None
+
+        if offer.access_token:
+            if not request_token:
+                error_msg = self.env._('Access Denied: Missing Token')
+            else:
+                error_msg = self.env._('Access Denied: Invalid Token')
+        else:
+            raise NotFound()
+        return False, request.render('http_routing.http_error', {
+            'status_code': self.env._('Oops'),
+            'status_message': error_msg})
 
     @http.route(['/salary_package/simulation/offer/<int:offer_id>'], type='http', auth="public", website=True, sitemap=False)
     def salary_package(self, offer_id=None, **kw):
@@ -217,13 +236,10 @@ class HrContractSalary(http.Controller):
         request.env.flush_all()
         with request.env.cr.savepoint(flush=False) as sp:
             offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
-            access, error_msg = self._check_link_access(offer, **kw)
-            if not access:
-                return request.render('http_routing.http_error', {
-                        'status_code': self.env._('Oops'),
-                        'status_message': error_msg})
-
             version = offer._get_version()
+            has_access, error_page = self.check_access_to_salary_configurator(kw.get('token'), offer, version)
+            if not has_access:
+                return error_page
 
             if offer.applicant_id:
                 version = version.with_context(is_applicant=True)
@@ -237,7 +253,7 @@ class HrContractSalary(http.Controller):
                 if field_name == 'part':
                     values['part_time'] = True
                 # Allow simulation on url's in public offers
-                if field_name == 'final_yearly_costs' and not (offer.applicant_id or offer.employee_id):
+                if field_name == 'final_yearly_costs' and not (offer.applicant_id or offer.employee_id or offer.access_token):
                     values['final_yearly_costs'] = float(value)
             new_gross = version.sudo()._get_gross_from_employer_costs(values['final_yearly_costs'])
             version.write({
@@ -707,7 +723,9 @@ class HrContractSalary(http.Controller):
 
             offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
             version = offer._get_version()
-            self._check_access_rights(version)
+            has_access, error_page = self.check_access_to_salary_configurator(kw.get('token'), offer, version)
+            if not has_access:
+                return error_page
             version_vals = version._get_values_dict()
             new_version = self.create_new_version(version_vals, offer_id, benefits, no_write=True)[0]
             final_yearly_costs = float(benefits['version']['final_yearly_costs'] or 0.0)
@@ -777,7 +795,7 @@ class HrContractSalary(http.Controller):
         return result
 
     @http.route(['/salary_package/onchange_benefit'], type='jsonrpc', auth='public')
-    def onchange_benefit(self, benefit_field, new_value, offer_id, benefits):
+    def onchange_benefit(self, benefit_field, new_value, offer_id, benefits, **kw):
         # Return a dictionary describing the new benefit configuration:
         # - new_value: The benefit new_value (same by default)
         # - description: The dynamic description corresponding to the benefit new value
@@ -789,7 +807,9 @@ class HrContractSalary(http.Controller):
         request.env.flush_all()
         with request.env.cr.savepoint(flush=False) as sp:
             version = offer._get_version()
-            self._check_access_rights(version)
+            has_access, error_page = self.check_access_to_salary_configurator(kw.get('token'), offer, version)
+            if not has_access:
+                return error_page
             benefit = request.env['hr.contract.salary.benefit'].sudo().search([
                 ('structure_type_id', '=', version.structure_type_id.id),
                 ('res_field_id.name', '=', benefit_field)], limit=1)
@@ -907,7 +927,9 @@ class HrContractSalary(http.Controller):
         request.env.flush_all()
         with request.env.cr.savepoint(flush=False) as sp:
             version = offer._get_version()
-            self._check_access_rights(version)
+            has_access, error_page = self.check_access_to_salary_configurator(kw.get('token'), offer, version)
+            if not has_access:
+                return error_page
             if version.employee_id.user_id == request.env.user:
                 kw['employee'] = version.employee_id
             version_vals = version._get_values_dict()
@@ -1058,8 +1080,9 @@ class HrContractSalary(http.Controller):
         request.env.flush_all()
         with request.env.cr.savepoint(flush=False) as sp:
             version = offer._get_version()
-            self._check_access_rights(version)
-
+            has_access, error_page = self.check_access_to_salary_configurator(token, offer, version)
+            if not has_access:
+                return error_page
             if not version and (not token or not consteq(offer.access_token, token)):
                 raise UserError(_('This link is invalid. Please contact the HR Responsible to get a new one...'))
 
