@@ -52,6 +52,7 @@ You must return a structured output:
 - Before resolving any value, verify that the entity (company, product, location, or other referenced subject) exists in reality or is verifiable.
 - If the entity is fictional, unknown, or unverifiable, do not attempt to guess or fabricate any values.
 - In such cases, set `value: null`, `could_not_resolve: true`, and include a `resolution_note`.
+- Answer in the same language as the user’s request, unless the task explicitly asks for an output in another language.
 """
 
 OPENAI_ENDPOINT = '/responses'

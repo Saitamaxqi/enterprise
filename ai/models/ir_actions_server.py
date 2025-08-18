@@ -164,8 +164,7 @@ class IrActionsServer(models.Model):
                 # If something went wrong (e.g., not enough access) we return the error to the LLM
                 # so we can do prompt like "Do ... if it failed, to ..."
                 error = e
-                result = _("An error occurred while executing %(action)s: %(error)s",
-                           action=ir_action_tool.name, error=error)
+                result = f"An error occurred while executing {ir_action_tool.name}: {error}"
 
             duration = time.perf_counter() - start_time
             if session := get_ai_logging_session():
@@ -181,11 +180,7 @@ class IrActionsServer(models.Model):
 
             if result is None and record:
                 # By adding this, prompt like "if cannot do anything, do ..." work better
-                result = _(
-                    'Action "%(action)s" executed for "%(record)s"',
-                    action=ir_action_tool.name,
-                    record=self._ai_truncate(record.name),
-                )
+                result = f'Action "{ir_action_tool.name}"" executed for "{self._ai_truncate(record.name)}"'
 
             if tool_calls_history is not None:
                 tool_calls_history.append({
@@ -233,16 +228,12 @@ class IrActionsServer(models.Model):
 
         action_prompt, context_fields = self._ai_prepare_prompt_values(record)
         date = datetime.now(pytz.utc).astimezone().replace(second=0, microsecond=0).isoformat()
-        action_prompt += "\n" + _("The current date is %s", date)
+        action_prompt += "Always answer in the same language the user used in their request (unless explicitly asked), regardless of the tools output language"
+        action_prompt += f"\nThe current date is {date}"
         record_context, files = record._get_ai_context(context_fields)
         if record_context:
-            action_prompt += "\n" + _("Context Dict")
-            action_prompt += "\n" + record_context
-            action_prompt += "\n" + _(
-                "The current record is {'model': {%(model)s, 'id': %(id)s}",
-                model=record._name,
-                id=record.id,
-            )
+            action_prompt += f"\n# Context Dict\n{record_context}"
+            action_prompt += f"\nThe current record is {{'model': {record._name}, 'id': {record.id}}}"
 
         if isinstance(record, self.pool['mail.thread']):
             if author := self._ai_partner():
@@ -253,7 +244,7 @@ class IrActionsServer(models.Model):
         tool_calls_history = []
         responses = LLMApiService(env=self.env, provider=self.AI_PROVIDER).request_llm(
             self.AI_MODEL,
-            [_("You are an agent responsible to execute actions on a record. Don't ask for confirmation. You are not forced to use a tool.")],
+            ["You are an agent responsible to execute actions on a record. Don't ask for confirmation. You are not forced to use a tool."],
             [action_prompt],
             tools=self.ai_tool_ids._get_ai_tools(record, tool_calls_history),
             files=files,
