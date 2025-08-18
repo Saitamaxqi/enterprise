@@ -42,6 +42,7 @@ registry.category("group_config_items").add(
         method: "openAutomations",
         isVisible: ({ permissions }) => permissions.canEditAutomations,
         class: "o_column_automations",
+        icon: "fa-magic",
     },
     { sequence: 25, force: true }
 );
