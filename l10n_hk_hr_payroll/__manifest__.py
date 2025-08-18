@@ -28,7 +28,6 @@ Hong Kong Payroll Rules.
         "data/hr_salary_rule_category_data.xml",
         "data/hr_rule_parameters_data.xml",
         "data/ir_cron_data.xml",
-        'data/ir_default_data.xml',
         'data/ir_sequence_data.xml',
         "data/report_paperformat_data.xml",
         "data/cap57/employee_salary_data.xml",
