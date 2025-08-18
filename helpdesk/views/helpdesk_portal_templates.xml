@@ -79,7 +79,7 @@
                                         <span t-else="tickets[0].kanban_state">Ready</span>
                                     </t>
                                     <t  t-if="groupby == 'partner_id'">
-                                        <span t-if="tickets[0].partner_id" t-field="tickets[0].partner_id.name"/>
+                                        <span t-if="tickets[0].partner_id" t-field="tickets[0].partner_id.sudo().name"/>
                                         <span t-else="">No Customer</span>
                                     </t>
                                 </th>
