@@ -11,7 +11,7 @@ patch(PosStore.prototype, {
     },
     async sendOrderInPreparation(o, opts = {}) {
         const result = await super.sendOrderInPreparation(o, opts);
-        if (this.models["pos.prep.display"].length > 0) {
+        if (this.config.preparationDisplayCategories.size > 0) {
             for (const note of Object.values(o.uiState.noteHistory)) {
                 for (const n of note) {
                     const line = o.getOrderline(n.lineId);

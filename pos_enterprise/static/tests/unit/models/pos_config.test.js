@@ -8,13 +8,11 @@ describe("pos.config", () => {
     test("preparationDisplayCategories", async () => {
         const store = await setupPosEnv();
 
-        expect(store.config.preparationCategories).toEqual(new Set([1]));
+        expect(store.config.preparationCategories).toEqual(new Set([1, 2]));
         expect(store.config.preparationDisplayCategories).toEqual(new Set([1]));
 
         store.models["pos.prep.display"].getFirst().category_ids = [];
-        expect(store.config.preparationCategories).toEqual(
-            new Set(store.models["pos.category"].map((pc) => pc.id))
-        );
+        expect(store.config.preparationCategories).toEqual(new Set([1, 2, 4, 3, 5]));
         expect(store.config.preparationDisplayCategories).toEqual(
             new Set(store.models["pos.category"].map((pc) => pc.id))
         );

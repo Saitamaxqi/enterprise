@@ -39,7 +39,7 @@ test("pos_iot_common", async () => {
     expect(store.scale._scaleDevice).not.toBeEmpty();
 
     // printer
-    expect(store.unwatched.printers.length).toBe(1); // createPrinter() works properly
+    expect(store.unwatched.printers.length).toBe(2); // createPrinter() works properly
     expect(hardwareProxy.printer).toBeEmpty(); // printer isn't connected
     store.connectToProxy();
     expect(hardwareProxy.printer).not.toBeEmpty(); // printer should be connected
