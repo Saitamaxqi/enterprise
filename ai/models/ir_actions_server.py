@@ -25,6 +25,12 @@ class IrActionsServer(models.Model):
 
     AI_PROVIDER = "openai"
     AI_MODEL = "gpt-4.1"
+    ALLOWED_STATES_FOR_AI = {
+        'code', 'next_activity', 'object_create', 'object_copy',
+        'followers', 'remove_followers', 'webhook', 'mail_post',
+        # `documents_account`, hard-coded to not create a bridge module
+        'documents_account_record_create',
+    }
 
     # AI Action
     state = fields.Selection(
@@ -92,12 +98,7 @@ class IrActionsServer(models.Model):
     def _compute_ai_tool_is_candidate(self):
         for action in self:
             action.ai_tool_is_candidate = (
-                action.state in {
-                    'code', 'next_activity', 'object_create', 'object_copy',
-                    'followers', 'remove_followers', 'webhook', 'mail_post',
-                    # `documents_account`, hard-coded to not create a bridge module
-                    'documents_account_record_create',
-                }
+                action.state in self.ALLOWED_STATES_FOR_AI
                 or (action.state == 'object_write' and action.evaluation_type == 'value')
                 or (action.state == "multi" and all(c.ai_tool_is_candidate for c in action.child_ids))
             )
@@ -109,6 +110,13 @@ class IrActionsServer(models.Model):
                 action.state == 'code'
                 or (action.state == "multi" and any(c.ai_tool_has_schema for c in action.child_ids))
             )
+
+    @api.depends_context('default_use_in_ai')
+    def _compute_allowed_states(self):
+        if self.env.context.get('default_use_in_ai'):
+            self.allowed_states = [*self.ALLOWED_STATES_FOR_AI, 'object_write']
+        else:
+            self.allowed_states = [value for value, __ in self._fields['state'].selection]
 
     @api.constrains("state", "use_in_ai")
     def _check_use_in_ai(self):

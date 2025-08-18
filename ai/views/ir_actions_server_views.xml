@@ -10,7 +10,7 @@
                 <xpath expr="//page[@name='usage']" position="inside">
                     <group col="6">
                         <group>
-                            <field name="use_in_ai" invisible="not ai_tool_is_candidate"/>
+                            <field name="use_in_ai" invisible="not ai_tool_is_candidate" readonly="context.get('default_use_in_ai', False)"/>
                         </group>
                         <group colspan="5">
                             <field name="ai_tool_description" nolabel="1"
@@ -53,6 +53,12 @@
                     <li invisible="not use_in_ai">
                         To return a result to the AI agent, do <code>ai['result'] = ...</code>
                     </li>
+                </xpath>
+                <xpath expr="//field[@name='evaluation_type']" position="attributes">
+                    <attribute name="readonly">context.get('default_use_in_ai', False)</attribute>
+                </xpath>
+                <xpath expr="//button[@name='create_action']" position="attributes">
+                    <attribute name="invisible" add="context.get('default_use_in_ai', False)" separator="or"/>
                 </xpath>
             </data>
         </field>

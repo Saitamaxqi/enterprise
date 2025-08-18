@@ -32,7 +32,8 @@
                     </div>
                     <group>
                         <field name="instructions" placeholder="Explain to the Agent what they need to do..."/>
-                        <field name="tool_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                        <field name="tool_ids" widget="many2many_tags" options="{'no_quick_create': True, 'edit_tags': True}" 
+                            context="{'default_use_in_ai': True}"/>
                     </group>
                 </sheet>
             </form>
