@@ -10,7 +10,7 @@ class QualityCheck(models.Model):
     def add_check_in_chain(self, notify_bom=False):
         self.ensure_one()
         super().add_check_in_chain(notify_bom=notify_bom)
-        if not self.workorder_id.production_id.bom_id or not self.env.user.has_group('mrp.group_mrp_user'):
+        if not self.workorder_id.production_id.bom_id or not self.workorder_id.operation_id or not self.env.user.has_group('mrp.group_mrp_user'):
             return
         # Need to sudo all ECOs calls as we want to make this available to all MRP basic users.
         eco = self.env['mrp.eco'].sudo().search([

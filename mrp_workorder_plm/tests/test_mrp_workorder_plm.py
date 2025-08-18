@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from odoo import Command
 from odoo.addons.mrp_plm.tests.test_common import TestPlmCommon
 from odoo.tests import Form
 
@@ -118,6 +119,39 @@ class TestMrpWorkorderPlm(TestPlmCommon):
         self.assertEqual(eco1.routing_change_ids[0].change_type, 'update', "Wrong type on operation change line.")
         self.assertEqual(eco1.routing_change_ids[1].change_type, 'remove', "Wrong type on operation change line.")
         self.assertEqual(eco1.routing_change_ids[2].change_type, 'add', "Wrong type on operation change line.")
+
+    def test_add_new_step_to_wo_aside_bom(self):
+        """
+        Test that adding a step to WO that isn't in the BoM
+        doesn't create any QCP/ECO
+        """
+        mo = self.env['mrp.production'].create({
+            'product_id': self.table.id,
+            'bom_id': self.bom_table.id,
+            'product_qty': 1,
+            'workorder_ids': [
+                Command.create({
+                    'name': 'Test WO',
+                    'product_uom_id': self.table.uom_id.id,
+                    'workcenter_id': self.workcenter_1.id,
+                }),
+            ]
+        })
+        mo.action_confirm()
+
+        wo = mo.workorder_ids
+
+        add_step_check = self.env['quality.check'].create({
+            'test_type_id': self.env.ref('quality.test_type_instructions').id,
+            'workorder_id': wo.id,
+            'production_id': mo.id,
+            'product_id': self.table.id,
+            'team_id': self.env['quality.alert.team'].search(['|', ('company_id', '=', self.env.company.id), ('company_id', '=', False)], limit=1).id,
+            'name': 'QC Test',
+        })
+        add_step_check.add_check_in_chain()
+        self.assertFalse(add_step_check.point_id)
+        self.assertFalse(self.bom_table.eco_ids)
 
     def test_add_new_step_to_multi_mo(self):
         """ Test that adding a step to multiple MOs of the same bom does not trigger
