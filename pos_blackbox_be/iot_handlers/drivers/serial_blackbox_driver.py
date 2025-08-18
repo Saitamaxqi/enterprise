@@ -84,23 +84,25 @@ class BlackBoxDriver(SerialDriver):
         :return: whether the device is supported by the driver
         :rtype: bool
         """
-        try:
-            protocol = cls._protocol
-            probe_message = cls._wrap_low_level_message_around("S000")
-            with serial_connection(device['identifier'], protocol) as connection:
-                connection.reset_output_buffer()
-                connection.reset_input_buffer()
-
-                # ask for status then acknowledge the response
-                connection.write(probe_message)
-                buffer = connection.read_until(ETX)
-                connection.write(ACK)
-                connection.reset_input_buffer()  # flush in case bb sends status again (ACK too late)
-                return len(buffer) > 0 and buffer[0:1] == ACK
-        except serial.serialutil.SerialTimeoutException:
-            pass
-        except Exception:
-            _logger.exception('Error while probing %s with protocol %s', device, protocol.name)
+        for _ in range(3):
+            try:
+                protocol = cls._protocol
+                probe_message = cls._wrap_low_level_message_around("S000")
+                with serial_connection(device['identifier'], protocol) as connection:
+                    connection.reset_output_buffer()
+                    connection.reset_input_buffer()
+                    # ask for status then acknowledge the response
+                    connection.write(probe_message)
+                    buffer = connection.read_until(ETX)
+                    _logger.info('Probing %s as a blackbox. Expecting "%s" in response. Device response: "%s"', device, ACK, buffer)
+                    connection.write(ACK)
+                    connection.reset_input_buffer()  # flush in case bb sends status again (ACK too late)
+                    if len(buffer) > 0 and buffer[0:1] == ACK:
+                        return True
+            except serial.SerialException:
+                _logger.exception('Error while probing %s with protocol %s', device, protocol.name)
+            time.sleep(3)
+        return False
 
     @classmethod
     def _wrap_low_level_message_around(cls, high_level_message):
