@@ -261,7 +261,10 @@ class HrVersion(models.Model):
     def _get_gross_from_employer_costs(self, yearly_cost):
         self.ensure_one()
         remaining_for_gross = yearly_cost - self._get_benefits_costs()
-        return remaining_for_gross / self._get_salary_costs_factor()
+        salary_costs_factor = self._get_salary_costs_factor()
+        if salary_costs_factor:
+            return remaining_for_gross / salary_costs_factor
+        return 0
 
     def _get_employer_costs_from_gross(self, gross):
         self.ensure_one()

@@ -235,6 +235,12 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
             if validation_error_message:
                 raise ValidationError("\n".join(validation_error_message))
 
+    @api.constrains("l10n_be_group_insurance_rate")
+    def _check_l10n_be_group_insurance_rate(self):
+        for version in self:
+            if version.l10n_be_group_insurance_rate and (version.l10n_be_group_insurance_rate < 0 or version.l10n_be_group_insurance_rate > 100):
+                raise ValidationError(self.env._("Group insurance rate must be between 0 and 100."))
+
     def _get_whitelist_fields_from_template(self):
         whitelisted_fields = super()._get_whitelist_fields_from_template()
         return whitelisted_fields + ['ip', 'ip_wage_rate', 'wage_on_signature', 'fuel_card', 'has_laptop']
