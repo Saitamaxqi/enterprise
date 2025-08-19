@@ -117,6 +117,9 @@ class L10n_EeTaxReportHandler(models.AbstractModel):
             balance = line['columns'][colexpr_to_idx['balance']]['no_format']
             if balance and xml_variable.endswith('_cars'):  # line indicating number of cars
                 xml_data[xml_variable] = f"{balance:.0f}"
+            elif balance and xml_variable in ('line_1', 'line_1_2'):
+                total_balance = balance + float(xml_data.get('line_1', '0.0'))
+                xml_data['line_1'] = f'{total_balance:.2f}'
             elif balance:
                 xml_data[xml_variable] = float_repr(currency.round(balance), currency.decimal_places)
 
