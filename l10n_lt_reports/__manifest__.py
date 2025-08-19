@@ -19,7 +19,13 @@ Contains Balance Sheet, Profit/Loss reports
     ],
     'data': [
         'data/account_financial_html_report_data.xml',
-        'data/account_report_ec_sales_list_report.xml'
+        'data/account_report_ec_sales_list_report.xml',
+        'data/account_return_data.xml',
+        'data/iSAF_template.xml',
+        'data/tax_report.xml',
+        'security/ir.model.access.csv',
+        'wizard/ec_sales_list_submission_wizard.xml',
+        'wizard/vat_return_submission_wizard.xml',
     ],
     'auto_install': ['l10n_lt', 'account_reports'],
     'installable': True,

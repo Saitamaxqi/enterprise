@@ -4,16 +4,26 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 11:09+0000\n"
-"PO-Revision-Date: 2024-02-19 11:09+0000\n"
+"POT-Creation-Date: 2025-09-01 15:22+0000\n"
+"PO-Revision-Date: 2025-09-01 15:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "<span>Download the VAT statement</span><br/>"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "<span>Download your EC Sales List to submit</span><br/>"
+msgstr ""
 
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_h
@@ -33,6 +43,16 @@ msgstr ""
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_b_2
 msgid "AMOUNTS RECEIVABLE WITHIN ONE YEAR"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model,name:l10n_lt_reports.model_account_return
+msgid "Accounting Return"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model,name:l10n_lt_reports.model_account_return_type
+msgid "Accounting Return Type"
 msgstr ""
 
 #. module: l10n_lt_reports
@@ -158,6 +178,12 @@ msgid "CURRENT ASSETS"
 msgstr ""
 
 #. module: l10n_lt_reports
+#. odoo-python
+#: code:addons/l10n_lt_reports/models/tax_report.py:0
+msgid "Company Settings"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_4_1
 msgid "Compulsory reserve or emergency (reserve) capital"
 msgstr ""
@@ -168,15 +194,61 @@ msgid "Concessions, patents, licences, trade marks and similar rights"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_2_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_2
 msgid "Cost of sales"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_country
+msgid "Country Code"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__create_date
+msgid "Created on"
 msgstr ""
 
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_g_1_1
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_g_2_1
 msgid "Debenture loans"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_account_return__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_account_return_type__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_ec_sales_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_tax_report_handler__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "Download XLSX"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Download XML"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:account.return.type,name:l10n_lt_reports.lt_ec_sales_list_return_type
+msgid "EC Sales List"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:account.report,name:l10n_lt_reports.lithuanian_ec_sales_report
+msgid "EC sales Report (FR0564)"
 msgstr ""
 
 #. module: l10n_lt_reports
@@ -195,9 +267,18 @@ msgid "FIXED ASSETS"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_3_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_3
 msgid "Fair value adjustments of the biological assets"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "Find the EC Sales List"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Find the i.SAF"
 msgstr ""
 
 #. module: l10n_lt_reports
@@ -216,13 +297,11 @@ msgid "GRANTS, SUBSIDIES"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_4_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_4
 msgid "GROSS PROFIT (LOSS)"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_6_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_6
 msgid "General and administrative expenses"
 msgstr ""
@@ -238,12 +317,21 @@ msgid "Goodwill"
 msgstr ""
 
 #. module: l10n_lt_reports
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_account_return__id
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_account_return_type__id
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_ec_sales_report_handler__id
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__id
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__id
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_tax_report_handler__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_1
 msgid "INTANGIBLE ASSETS"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_8_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_8
 msgid ""
 "Income from investments in the shares of parent, subsidiaries and associated"
@@ -251,13 +339,17 @@ msgid ""
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_9_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_9
 msgid "Income from other long-term investments and loans"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_12_balance
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__instructions
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__instructions
+msgid "Instructions"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_12
 msgid "Interest and other similar expenses"
 msgstr ""
@@ -274,6 +366,18 @@ msgid "Land"
 msgstr ""
 
 #. module: l10n_lt_reports
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_g_2_8
 msgid "Liabilities of tax on profit"
 msgstr ""
@@ -281,6 +385,26 @@ msgstr ""
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_g_2_9
 msgid "Liabilities related to employment relations"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model,name:l10n_lt_reports.model_l10n_lt_reports_ec_sales_list_submission_wizard
+msgid "Lithuanian EC Sales List Submission Wizard"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model,name:l10n_lt_reports.model_l10n_lt_ec_sales_report_handler
+msgid "Lithuanian EC Sales Report Custom Handler"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model,name:l10n_lt_reports.model_l10n_lt_reports_vat_return_submission_wizard
+msgid "Lithuanian Periodic VAT Report Export Wizard"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:ir.model,name:l10n_lt_reports.model_l10n_lt_tax_report_handler
+msgid "Lithuanian Tax Report Custom Handler"
 msgstr ""
 
 #. module: l10n_lt_reports
@@ -294,6 +418,12 @@ msgid "Loans to entities of the entities group"
 msgstr ""
 
 #. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Log in to"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_3_7
 msgid "Long-term investments"
 msgstr ""
@@ -304,13 +434,16 @@ msgid "Machinery and plant"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_15_balance
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.invoice_template
+msgid "ND"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_15
 msgid "NET PROFIT (LOSS)"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_1_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_1
 msgid "Net turnover"
 msgstr ""
@@ -318,6 +451,16 @@ msgstr ""
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_4
 msgid "OTHER FIXED ASSETS"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.iSAF_template
+msgid "Odoo"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.iSAF_template
+msgid "Odoo SA"
 msgstr ""
 
 #. module: l10n_lt_reports
@@ -356,7 +499,6 @@ msgid "Other intangible assets"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_10_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_10
 msgid "Other interest and similar income"
 msgstr ""
@@ -367,7 +509,6 @@ msgid "Other investments"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_7_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_7
 msgid "Other operating results"
 msgstr ""
@@ -398,7 +539,6 @@ msgid "PREPAYMENTS AND ACCRUED INCOME"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_13_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_13
 msgid "PROFIT (LOSS) BEFORE TAXATION"
 msgstr ""
@@ -415,24 +555,22 @@ msgid "Payments received on account"
 msgstr ""
 
 #. module: l10n_lt_reports
+#. odoo-python
+#: code:addons/l10n_lt_reports/models/tax_report.py:0
+msgid "Please define the VAT on your company."
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_b_1_2
 msgid "Production and work in progress"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_2_balance
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_2_balance_account_codes
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_2_balance_aggregate
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_2_bs_ppl_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_2
 msgid "Profit (loss) brought forward"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_1_balance
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_1_balance_account_codes
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_1_balance_aggregate
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_1_bs_pl_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_5_1
 msgid "Profit (loss) for the reporting year "
 msgstr ""
@@ -479,6 +617,17 @@ msgid "Reserve for acquiring own shares"
 msgstr ""
 
 #. module: l10n_lt_reports
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__return_id
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__return_id
+msgid "Return"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.invoice_template
+msgid "SF"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_2
 msgid "SHARE PREMIUM ACCOUNT"
 msgstr ""
@@ -494,7 +643,6 @@ msgid "STOCKS"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_5_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_5
 msgid "Selling expenses"
 msgstr ""
@@ -513,6 +661,11 @@ msgstr ""
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_1_3
 msgid "Software"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "Submit the statement"
 msgstr ""
 
 #. module: l10n_lt_reports
@@ -536,13 +689,16 @@ msgid "TOTAL EQUITY AND LIABILITIES"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_14_balance
+#: model:account.return.type,name:l10n_lt_reports.lt_tax_return_type
+msgid "Tax"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_14
 msgid "Tax on profit"
 msgstr ""
 
 #. module: l10n_lt_reports
-#: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_11_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_11
 msgid "The impairment of the financial assets and short-term investments"
 msgstr ""
@@ -559,6 +715,48 @@ msgid "Trade debtors"
 msgstr ""
 
 #. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Upload the XML file from your computer and click \"Submit\""
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_vat
+msgid "VAT Number"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "VMI"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Validate the VAT return"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_goods_value
+msgid "Value of the goods"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_triangular_goods_value
+msgid "Value of the goods (triangular trade)"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_service_value
+msgid "Value of the services"
+msgstr ""
+
+#. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_2_4
 msgid "Vehicles"
+msgstr ""
+
+#. module: l10n_lt_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "using your electronic ID"
 msgstr ""

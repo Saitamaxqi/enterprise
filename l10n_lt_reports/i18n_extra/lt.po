@@ -17,6 +17,14 @@ msgstr ""
 "Plural-Forms: \n"
 "X-Generator: Poedit 2.3\n"
 
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "<span>Download the VAT statement</span><br/>"
+msgstr "<span>Atsisiųskite PVM ataskaitą</span><br/>"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "<span>Download your EC Sales List to submit</span><br/>"
+msgstr "<span>Atsisiųskite ES pardavimų sąrašą, kad pateiktumėte</span><br/>"
+
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_h
 msgid "ACCRUALS AND DEFERRED INCOME"
@@ -36,6 +44,14 @@ msgstr "MOKĖTINOS SUMOS IR KITI ĮSIPAREIGOJIMAI"
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_b_2
 msgid "AMOUNTS RECEIVABLE WITHIN ONE YEAR"
 msgstr "PER VIENUS METUS GAUTINOS SUMOS"
+
+#: model:ir.model,name:l10n_lt_reports.model_account_return
+msgid "Accounting Return"
+msgstr "Apskaitos ataskaita"
+
+#: model:ir.model,name:l10n_lt_reports.model_account_return_type
+msgid "Accounting Return Type"
+msgstr "Apskaitos ataskaitos tipas"
 
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_1_6
@@ -159,6 +175,10 @@ msgstr "BENDRA SĄSKAITŲ SANTRAUKA"
 msgid "CURRENT ASSETS"
 msgstr "TRUMPALAIKIS TURTAS"
 
+#: code:addons/l10n_lt_reports/models/tax_report.py:0
+msgid "Company Settings"
+msgstr "Įmonės nustatymai"
+
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_4_1
 msgid "Compulsory reserve or emergency (reserve) capital"
@@ -175,11 +195,40 @@ msgstr "Koncesijos, patentai, licencijos, prekių ženklai ir panašios teisės"
 msgid "Cost of sales"
 msgstr "Pardavimo savikaina"
 
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_country
+msgid "Country Code"
+msgstr "Šalies kodas"
+
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_g_1_1
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_g_2_1
 msgid "Debenture loans"
 msgstr "Skoliniai įsipareigojimai"
+
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_account_return__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_account_return_type__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_ec_sales_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_tax_report_handler__display_name
+msgid "Display Name"
+msgstr "Rodomas vardas"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "Download XLSX"
+msgstr "Atsisiųsti XLSX"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Download XML"
+msgstr "Atsisiųsti XML"
+
+#: model:account.return.type,name:l10n_lt_reports.lt_ec_sales_list_return_type
+msgid "EC Sales List"
+msgstr "ES pardavimų sąrašas"
+
+#: model:account.report,name:l10n_lt_reports.lithuanian_ec_sales_report
+msgid "EC sales Report (FR0564)"
+msgstr "ES pardavimų ataskaita (FR0564)"
 
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d
@@ -201,6 +250,14 @@ msgstr "ILGALAIKIS TURTAS"
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_3
 msgid "Fair value adjustments of the biological assets"
 msgstr "Biologinio turto tikrosios vertės pokytis"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "Find the EC Sales List"
+msgstr "Rasti ES pardavimų sąrašą"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Find the i.SAF"
+msgstr "Rasti i.SAF"
 
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_b_1_3
@@ -260,6 +317,11 @@ msgstr ""
 msgid "Income from other long-term investments and loans"
 msgstr "Kitų ilgalaikių investicijų ir paskolų pajamos"
 
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__instructions
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__instructions
+msgid "Instructions"
+msgstr "Nurodymai"
+
 #. module: l10n_lt_reports
 #: model:account.report.expression,report_line_name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_12_balance
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_pnl_lt_12
@@ -296,6 +358,11 @@ msgstr "Paskolos asocijuotosioms įmonėms"
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_3_2
 msgid "Loans to entities of the entities group"
 msgstr "Paskolos įmonių grupės įmonėms"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Log in to"
+msgstr "Prisijungti prie"
 
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_3_7
@@ -418,6 +485,10 @@ msgstr "ATIDĖJINIAI"
 msgid "Payments received on account"
 msgstr "Gauti avansai"
 
+#: code:addons/l10n_lt_reports/models/tax_report.py:0
+msgid "Please define the VAT on your company."
+msgstr "Prašome nurodyti PVM savo įmonėje."
+
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_b_1_2
 msgid "Production and work in progress"
@@ -482,6 +553,11 @@ msgstr "Žaliavos, medžiagos ir komplektavimo detalės"
 msgid "Reserve for acquiring own shares"
 msgstr "Savoms akcijoms įsigyti"
 
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_ec_sales_list_submission_wizard__return_id
+#: model:ir.model.fields,field_description:l10n_lt_reports.field_l10n_lt_reports_vat_return_submission_wizard__return_id
+msgid "Return"
+msgstr "Ataskaita"
+
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_2
 msgid "SHARE PREMIUM ACCOUNT"
@@ -518,6 +594,10 @@ msgstr "Įmonių grupės įmonių akcijos"
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_1_3
 msgid "Software"
 msgstr "Programinė įranga"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+msgid "Submit the statement"
+msgstr "Pateikti ataskaitą"
 
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_d_1_2
@@ -562,7 +642,36 @@ msgstr "Skolos tiekėjams"
 msgid "Trade debtors"
 msgstr "Pirkėjų skolos"
 
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Upload the XML file from your computer and click \"Submit\""
+msgstr "Įkelkite XML failą iš savo kompiuterio ir spustelėkite \"Pateikti\""
+
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_vat
+msgid "VAT Number"
+msgstr "PVM mokėtojo kodas"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "Validate the VAT return"
+msgstr "Patvirtinti PVM deklaraciją"
+
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_goods_value
+msgid "Value of the goods"
+msgstr "Prekių vertė"
+
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_triangular_goods_value
+msgid "Value of the goods (triangular trade)"
+msgstr "Prekių vertė (trikampė prekyba)"
+
+#: model:account.report.column,name:l10n_lt_reports.account_financial_report_ec_sales_service_value
+msgid "Value of the services"
+msgstr "Paslaugų vertė"
+
 #. module: l10n_lt_reports
 #: model:account.report.line,name:l10n_lt_reports.account_financial_html_report_line_bs_lt_a_2_4
 msgid "Vehicles"
 msgstr "Transporto priemonės"
+
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lt_reports.l10n_lt_reports_vat_return_submission_wizard_form
+msgid "using your electronic ID"
+msgstr "naudojant savo elektroninį ID"
