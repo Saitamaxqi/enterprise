@@ -59,5 +59,13 @@
             <field name="country_id" ref="base.be" />
             <field name="payment_partner_bank_id" ref="l10n_be_reports.centre_de_perception_current_account"/>
         </record>
+
+        <!-- Audit (BE) -->
+        <record id="l10n_be_audit_return_type" model="account.return.type">
+            <field name="name">Audit (BE)</field>
+            <field name="category">audit</field>
+            <field name="country_id" ref="base.be"/>
+            <field name="default_deadline_periodicity">year</field>
+        </record>
     </data>
 </odoo>
