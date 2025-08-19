@@ -363,6 +363,7 @@ class AccountBankStatementLine(models.Model):
                            AND aml.reconciled = false
                            AND aml.account_id IN %s
                            AND aml.company_id = st_line.company_id
+                           AND aml.currency_id = COALESCE(st_line.foreign_currency_id, st_line.currency_id)
                            AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
                            AND (aml.parent_state IN ('draft', 'posted'))
                            AND st_line.id IN %s

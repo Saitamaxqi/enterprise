@@ -1959,7 +1959,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             company_id=company_2.id,
         )
         # To emulate the launch of the try auto reconcile with the cron environment, we use the with company
-        st_line._try_auto_reconcile_statement_lines()
+        st_line.set_line_bank_statement_line(payment.move_id.line_ids.filtered(lambda l: l.account_id == payment.outstanding_account_id).ids)
         self.assertRecordValues(st_line.line_ids, [
             {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 1000.0, 'currency_id': self.other_currency.id, 'balance': 1000.0, 'reconciled': False},
             {'account_id': payment.outstanding_account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},

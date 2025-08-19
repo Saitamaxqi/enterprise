@@ -446,13 +446,23 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         ])
         self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
 
+        # proposal should only be in the same currency
+        self._check_st_line_matching(bank_line_1, [
+            {'account_id': self.bank_journal.default_account_id.id, 'amount_currency': 5000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': 5000},
+            {'account_id': self.account_rec.id, 'amount_currency': -3000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': -3000},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'amount_currency': -2000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': -2000},
+        ], reconciled_amls=[invoice_line_2])
+
+        # add manually the invoice_line_1
+        bank_line_1.set_line_bank_statement_line(invoice_line_1.id)
+
         # Handle when invoices have different currency
         self._check_st_line_matching(bank_line_1, [
             {'account_id': self.bank_journal.default_account_id.id, 'amount_currency': 5000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': 5000},
-            {'account_id': self.account_rec.id, 'amount_currency': -2000.0, 'partner_id': self.partner_1.id, 'currency_id': self.other_currency.id, 'balance': -1000},
             {'account_id': self.account_rec.id, 'amount_currency': -3000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': -3000},
+            {'account_id': self.account_rec.id, 'amount_currency': -2000.0, 'partner_id': self.partner_1.id, 'currency_id': self.other_currency.id, 'balance': -1000},
             {'account_id': self.bank_journal.suspense_account_id.id, 'amount_currency': -1000.0, 'partner_id': self.partner_1.id, 'currency_id': self.company_data['currency'].id, 'balance': -1000},
-        ], reconciled_amls=[invoice_line_1, invoice_line_2])
+        ], reconciled_amls=[invoice_line_2, invoice_line_1])
 
     def test_matching_algorithm_for_multiple_invoices_for_negative_amount(self):
         """Test matching algorithm for multiple invoices with negative statement balance"""
