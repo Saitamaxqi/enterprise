@@ -208,7 +208,7 @@ class AccountReturnType(models.Model):
             if return_type.category == 'audit':
                 return_type.with_company(self.env.company).deadline_periodicity = 'year'
 
-    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, forced_date_from=None, forced_date_to=None, allow_duplicates=False):
+    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, allow_duplicates=False):
         """
         Creates or updates the tax returns (possibly deleting the 'new' ones, if needed) for the provided main_company and tax_unit, so that all the
         returns are created from the start of the current fiscal year, up to one year after the current date.
@@ -226,10 +226,10 @@ class AccountReturnType(models.Model):
         today = datetime.date.today()
         next_year = today + relativedelta(years=1)
 
-        has_forced_dates = forced_date_from and forced_date_to
+        has_forced_dates = self.env.context.get('forced_date_from') and self.env.context.get('forced_date_to')
         if has_forced_dates:
-            date_from = forced_date_from
-            date_to = forced_date_to
+            date_from = self.env.context['forced_date_from']
+            date_to = self.env.context['forced_date_to']
         else:
             fy_dates_dict = main_company.compute_fiscalyear_dates(today)
             date_from = fy_dates_dict['date_from']
@@ -335,7 +335,7 @@ class AccountReturnType(models.Model):
                 'date_from': period_from,
                 'date_to': period_to,
                 'tax_unit_id': tax_unit.id if tax_unit else False,
-                'manually_created': bool(forced_date_from),
+                'manually_created': bool(self.env.context.get('manually_created')),
             })
 
         return self.env['account.return'].sudo().create(create_vals_list)
@@ -880,6 +880,20 @@ class AccountReturn(models.Model):
             }
         }
 
+    def action_open_audit_balances(self):
+        self.ensure_one
+        return {
+            **self.with_context(active_id=self.id, active_model=self._name).env["ir.actions.act_window"]._for_xml_id('account_reports.action_view_account_balances'),
+            'context': {
+                'account_return_view_id': self.env.ref('account_reports.account_return_kanban_view').id,
+                'search_default_groupby_cycle': 1,
+                'active_model': 'account.return',
+                'active_id': self.id,
+                'max_number_opened_groups': 100000,
+                'working_file_id': self.id,
+            }
+        }
+
     def _get_pay_wizard(self):
         """
         To be overridden in l10n which want to open a specific wizard on pay
@@ -927,7 +941,8 @@ class AccountReturn(models.Model):
         self._review_checks(bypass_failing_tests)
 
         if self.return_type_category == 'audit':
-            self._mark_completed()
+            self.state = 'reviewed'
+            return self._mark_completed()
 
         return self._proceed_with_locking()
 
@@ -1055,7 +1070,7 @@ class AccountReturn(models.Model):
 
     def action_submit(self):
         self.ensure_one()
-        self._proceed_with_submission()
+        return self._proceed_with_submission()
 
     def _proceed_with_submission(self):
         self._check_failing_checks_in_current_stage()
@@ -1065,7 +1080,7 @@ class AccountReturn(models.Model):
 
     def _on_post_submission_event(self):
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
-            self._mark_completed()
+            return self._mark_completed()
 
         if self.is_tax_return:
             return self.action_pay()
@@ -1076,12 +1091,12 @@ class AccountReturn(models.Model):
         is_positive_amount = self.amount_to_pay_currency_id.compare_amounts(self.total_amount_to_pay, 0) > 0
         if is_positive_amount or self.state == 'new':
             return (self._get_pay_wizard() or self._action_finalize_payment())
-        self._action_finalize_payment()
+        return self._action_finalize_payment()
 
     def _action_finalize_payment(self):
         self.ensure_one()
         self.state = 'paid'
-        self._mark_completed()
+        return self._mark_completed()
 
     ####################################################################################################
     ####  Revert Actions
@@ -1231,13 +1246,30 @@ class AccountReturn(models.Model):
         self.ensure_one()
         if self.state != 'new':
             raise UserError(_("You can only revert a completed return if the previous state was new."))
-        self._mark_completed()
+        return self._mark_completed()
 
     def _mark_completed(self):
         self.ensure_one()
         self.is_completed = True
         if self.return_type_category == 'audit':
             self.audit_status = 'done'
+        if not self.env.context.get('in_checks_view'):
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'success',
+                    'sticky': False,
+                    'message': _("Return Completed"),
+                    'next': {
+                        'type': 'ir.actions.client',
+                        'tag': 'action_return_refresh',
+                        'params': {
+                            'return_ids': self.ids,
+                        },
+                    }
+                }
+            }
 
     def action_mark_uncompleted(self):
         self.ensure_one()
@@ -1659,7 +1691,7 @@ class AccountReturn(models.Model):
 
             if action:
                 action_record = self.env[action.sudo().type].browse(action.sudo().id)
-                action = action_record._get_action_dict()
+                vals_dict['action'] = action_record._get_action_dict()
 
             initial_result = template._get_initial_result()
 
@@ -1695,7 +1727,7 @@ class AccountReturn(models.Model):
                 ]
                 entries = model.sudo().search(domain, limit=LIMIT_CHECK_ENTRIES)
                 if entries:
-                    if not action:
+                    if vals_dict['action']:
                         if action := template._get_default_check_action_from_model():
                             action['domain'] = [
                                 *action.get('domain', []),

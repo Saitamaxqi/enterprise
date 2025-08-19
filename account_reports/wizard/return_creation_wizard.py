@@ -1,7 +1,7 @@
 from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, models, fields, _
+from odoo import api, models, fields
 from odoo.exceptions import UserError
 
 
@@ -31,11 +31,15 @@ class AccountReturnCreationWizard(models.TransientModel):
         string="Return Type",
         comodel_name='account.return.type',
         required=True,
+        compute="_compute_return_type_id",
+        readonly=False,
+        store=True,
         domain="[('id', 'in', available_return_type_ids)]",
     )
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
     show_warning_wrong_dates = fields.Boolean(compute='_compute_warnings')
+    show_warning_existing_return = fields.Boolean(compute='_compute_warnings')
 
     regulatory_compliance = fields.Boolean(string="Regulatory compliance", default=True)
     treasury_financing = fields.Boolean(string="Treasury and financing", default=True)
@@ -49,10 +53,13 @@ class AccountReturnCreationWizard(models.TransientModel):
     equity = fields.Boolean(string="Equity", default=True)
     other = fields.Boolean(string="Others", default=True)
 
-    @api.onchange('available_return_type_ids')
-    def _onchange_available_return_types(self):
-        if self.available_return_type_ids and not self.return_type_id:
-            self.return_type_id = self.available_return_type_ids[0]
+    @api.depends('available_return_type_ids')
+    def _compute_return_type_id(self):
+        for wizard in self:
+            if self.available_return_type_ids and not self.return_type_id:
+                wizard.return_type_id = wizard.available_return_type_ids[0]
+            else:
+                wizard.return_type_id = False
 
     @api.onchange('return_type_id')
     def _onchange_return_type_id(self):
@@ -105,8 +112,18 @@ class AccountReturnCreationWizard(models.TransientModel):
 
     @api.depends('date_from', 'date_to', 'return_type_id')
     def _compute_warnings(self):
+        returns_companies_map = {
+            (date_from, date_to, tuple(type_id.ids)): returns.mapped('company_ids')
+            for date_from, date_to, type_id, returns in self.env['account.return']._read_group(
+                domain=[],
+                groupby=['date_from:day', 'date_to:day', 'type_id'],
+                aggregates=['id:recordset'],
+            )
+        }
+
         for wizard in self:
             wizard.show_warning_wrong_dates = False
+            wizard.show_warning_existing_return = False
 
             if not wizard.date_from or not wizard.date_to or not wizard.return_type_id:
                 continue
@@ -122,6 +139,11 @@ class AccountReturnCreationWizard(models.TransientModel):
                     wizard.show_warning_wrong_dates = True
                     break
 
+                # check if a return already exists in this period
+                companies_with_return_in_period = returns_companies_map.get((period_start, period_end, tuple(wizard.return_type_id.ids)), self.env['res.company'])
+                if wizard.company_id in companies_with_return_in_period and wizard.category == 'account_return':
+                    wizard.show_warning_existing_return = True
+
                 date_pointer = period_end + relativedelta(days=1)
                 first_period = False
 
@@ -129,11 +151,18 @@ class AccountReturnCreationWizard(models.TransientModel):
             if date_pointer - relativedelta(days=1) != wizard.date_to:
                 wizard.show_warning_wrong_dates = True
 
+            # only display at most one warning
+            if wizard.show_warning_wrong_dates:
+                wizard.show_warning_existing_return = False
+
     def action_create_manual_account_returns(self):
         self.ensure_one()
 
         if self.show_warning_wrong_dates:
-            raise UserError(_("The selected range doesn't match any fiscal period."))
+            raise UserError(self.env._("The selected range doesn't match any fiscal period."))
+
+        if self.show_warning_existing_return:
+            raise UserError(self.env._("A return already exists for the selected period."))
 
         all_branch_companies_with_same_vat = self.company_id._get_branches_with_same_vat()
         root_company = sorted(all_branch_companies_with_same_vat, key=lambda comp: len(comp.parent_path.split('/')))[0]
@@ -141,9 +170,13 @@ class AccountReturnCreationWizard(models.TransientModel):
         apply_tax_unit = tax_unit and self.return_type_id.report_id.filter_multi_company == 'tax_units'
         company = tax_unit.main_company_id if apply_tax_unit else root_company
         if not company.has_access('write'):
-            raise UserError(_("You are trying to create returns for a company you don't have access to, please select it in the company selector"))
+            raise UserError(self.env._("You are trying to create returns for a company you don't have access to, please select it in the company selector"))
 
-        returns_created = self.return_type_id._try_create_returns_for_fiscal_year(company, tax_unit, forced_date_from=self.date_from, forced_date_to=self.date_to, allow_duplicates=True)
+        returns_created = self.return_type_id.with_context(
+            forced_date_from=self.date_from,
+            forced_date_to=self.date_to,
+            manually_created=True
+        )._try_create_returns_for_fiscal_year(company, tax_unit, allow_duplicates=self.category == 'audit')
         returns_created.skipped_check_cycles = ','.join(
             field for field in [
                 'regulatory_compliance', 'treasury_financing', 'purchases',

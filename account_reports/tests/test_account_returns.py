@@ -238,17 +238,17 @@ class TestAccountReturn(TestAccountReportsCommon):
             },
         ])
 
-        monthly_return = return_types[0]._try_create_returns_for_fiscal_year(self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-01-31'))
+        monthly_return = return_types[0].with_context(forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-01-31'))._try_create_returns_for_fiscal_year(self.env.company, False)
         monthly_return_options = monthly_return._get_closing_report_options()
         self.assertEqual(monthly_return_options['date']['date_from'], '2024-01-01')
         self.assertEqual(monthly_return_options['date']['date_to'], '2024-01-31')
 
-        bimonthly_return = return_types[1]._try_create_returns_for_fiscal_year(self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-02-29'))
+        bimonthly_return = return_types[1].with_context(forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-02-29'))._try_create_returns_for_fiscal_year(self.env.company, False)
         bimonthly_return_options = bimonthly_return._get_closing_report_options()
         self.assertEqual(bimonthly_return_options['date']['date_from'], '2024-01-01')
         self.assertEqual(bimonthly_return_options['date']['date_to'], '2024-02-29')
 
-        monthly_return_june = return_types[0]._try_create_returns_for_fiscal_year(self.env.company, False, forced_date_from=fields.Date.from_string('2024-06-01'), forced_date_to=fields.Date.from_string('2024-06-30'))
+        monthly_return_june = return_types[0].with_context(forced_date_from=fields.Date.from_string('2024-06-01'), forced_date_to=fields.Date.from_string('2024-06-30'))._try_create_returns_for_fiscal_year(self.env.company, False)
         monthly_return_june_options = monthly_return_june._get_closing_report_options()
         self.assertEqual(monthly_return_june_options['date']['date_from'], '2024-06-01')
         self.assertEqual(monthly_return_june_options['date']['date_to'], '2024-06-30')
@@ -820,8 +820,10 @@ class TestAccountReturn(TestAccountReportsCommon):
         ])
 
         # 3. Create audit return
-        account_return = audit_return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-12-31'))
+        account_return = audit_return_type.with_context(
+            forced_date_from=fields.Date.from_string('2024-01-01'),
+            forced_date_to=fields.Date.from_string('2024-12-31'),
+        )._try_create_returns_for_fiscal_year(self.env.company, False)
 
         self.assertEqual(len(account_return), 1, "Only one return should be created for a period of one year using an annual return type.")
 
@@ -902,8 +904,10 @@ class TestAccountReturn(TestAccountReportsCommon):
             }
         ])
 
-        account_return = return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-12-31'))
+        account_return = return_type.with_context(
+            forced_date_from=fields.Date.from_string('2024-01-01'),
+            forced_date_to=fields.Date.from_string('2024-12-31'),
+        )._try_create_returns_for_fiscal_year(self.env.company, False)
 
         account_return.refresh_checks(force_bypassed=True)
 
@@ -977,8 +981,10 @@ class TestAccountReturn(TestAccountReportsCommon):
             }
         ])
 
-        account_return = return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-12-31'))
+        account_return = return_type.with_context(
+            forced_date_from=fields.Date.from_string('2024-01-01'),
+            forced_date_to=fields.Date.from_string('2024-12-31'),
+        )._try_create_returns_for_fiscal_year(self.env.company, False)
 
         account_return.refresh_checks(force_bypassed=True)
 
@@ -1049,18 +1055,12 @@ class TestAccountReturn(TestAccountReportsCommon):
         audit_return_type.with_company(self.env.company).deadline_periodicity = 'monthly'
 
         audits = self.env['account.return']
-        audits |= audit_return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-01-31'))
-        audits |= audit_return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-02-01'), forced_date_to=fields.Date.from_string('2024-02-29'))
-        audits |= audit_return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-03-01'), forced_date_to=fields.Date.from_string('2024-03-31'))
-        audits |= audit_return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-04-01'), forced_date_to=fields.Date.from_string('2024-04-30'))
-        audits |= audit_return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-05-01'), forced_date_to=fields.Date.from_string('2024-05-31'))
-        audits |= audit_return_type._try_create_returns_for_fiscal_year(
-            self.env.company, False, forced_date_from=fields.Date.from_string('2024-06-01'), forced_date_to=fields.Date.from_string('2024-06-30'))
+        audits |= audit_return_type.with_context(
+            forced_date_from=fields.Date.from_string('2024-01-01'),
+            forced_date_to=fields.Date.from_string('2024-06-30'),
+        )._try_create_returns_for_fiscal_year(self.env.company, False)
+
+        self.assertEqual(len(audits), 6)
 
         invoices = self.env['account.move']
         invoices |= self.init_invoice('out_invoice', amounts=[10], invoice_date='2024-01-21')
@@ -1441,3 +1441,47 @@ class TestAccountReturn(TestAccountReportsCommon):
                 {'account_id': tax_receivable.id, 'debit': 0.0, 'credit': 18.9},
             ],
         )
+
+    def test_account_return_duplicates(self):
+        self.basic_return_type.with_context(
+            forced_date_from=fields.Date.from_string('2024-01-01'),
+            forced_date_to=fields.Date.from_string('2024-01-31'),
+        )._try_create_returns_for_fiscal_year(self.env.company, False)
+
+        wizard = self.env['account.return.creation.wizard'].create([{
+            'return_type_id': self.basic_return_type.id,
+            'company_id': self.env.company.id,
+            'date_from': fields.Date.from_string('2024-01-01'),
+            'date_to': fields.Date.from_string('2024-01-31'),
+            'category': 'account_return',
+        }])
+
+        # Should raise an error as we cannot have duplicate returns for return type of category 'account_return'
+        with self.assertRaises(UserError):
+            wizard.action_create_manual_account_returns()
+
+        # Simulate two creation of an audit for the same period, it should be allowed
+        audit_return_type = self.env['account.return.type'].create([{
+            'category': 'audit',
+            'default_deadline_periodicity': 'monthly',
+            'default_deadline_start_date': '2024-01-01',
+            'name': "Audit",
+        }])
+
+        wizard = self.env['account.return.creation.wizard'].create([{
+            'return_type_id': audit_return_type.id,
+            'company_id': self.env.company.id,
+            'date_from': fields.Date.from_string('2024-01-01'),
+            'date_to': fields.Date.from_string('2024-12-31'),
+            'category': 'audit',
+        }])
+        wizard.action_create_manual_account_returns()
+
+        wizard = self.env['account.return.creation.wizard'].create([{
+            'return_type_id': audit_return_type.id,
+            'company_id': self.env.company.id,
+            'date_from': fields.Date.from_string('2024-01-01'),
+            'date_to': fields.Date.from_string('2024-12-31'),
+            'category': 'audit',
+        }])
+        wizard.action_create_manual_account_returns()

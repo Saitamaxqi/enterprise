@@ -318,13 +318,3 @@ class AccountReturn(models.Model):
         self.is_completed = False
 
         return True
-
-    def action_open_account_return(self):
-        # OVERRIDE
-        self.ensure_one()
-        if self.type_external_id == 'l10n_be_reports.be_isoc_prepayment_return_type':
-            action = self.action_pay()
-            if action:
-                return action
-            return False
-        return super().action_open_account_return()

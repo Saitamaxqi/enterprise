@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from datetime import date
+import datetime
+from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+
+from odoo import fields, models
 
 
 class AccountFinancialYearOp(models.TransientModel):
@@ -17,6 +19,10 @@ class AccountFinancialYearOp(models.TransientModel):
     def action_save_onboarding_fiscal_year(self):
         result_action = super().action_save_onboarding_fiscal_year()
 
+        self.env['account.return.type'].with_context(
+            forced_date_from=self.opening_date,
+            forced_date_to=datetime.date.today() + relativedelta(years=1),
+        )._generate_or_refresh_all_returns(self.company_id)
         if self.env.context.get('open_account_return_on_save'):
             return self.env['account.return'].action_open_tax_return_view()
 

@@ -122,7 +122,7 @@
                                        options="{'warn_future': true}"/>
                                 <span class="text-muted"
                                       invisible="min_tax_lock_date_exception_for_me_id or min_tax_lock_date_exception_for_everyone_id">
-                                    <i>after a tax closing</i>
+                                    <i class="ms-2">after a tax closing</i>
                                 </span>
                                 <span class="text-muted o_form_label"
                                       invisible="not min_tax_lock_date_exception_for_me_id">
@@ -160,7 +160,7 @@
                                        options="{'warn_future': true}"/>
                                 <span class="text-muted"
                                       invisible="min_fiscalyear_lock_date_exception_for_me_id or min_fiscalyear_lock_date_exception_for_everyone_id">
-                                    <i>but allow exceptions</i>
+                                    <i class="ms-2">but allow exceptions</i>
                                 </span>
                                 <span class="text-muted o_form_label"
                                       invisible="not min_fiscalyear_lock_date_exception_for_me_id">

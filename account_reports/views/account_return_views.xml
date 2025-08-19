@@ -164,7 +164,7 @@
                     <filter name="date_deadline_filter" string="Deadline" date="date_deadline"/>
                     <separator/>
                     <filter name="filter_archived" string="Archived" domain="[('active', '=', False)]"/>
-                    <filter name="groupby_deadline" string="Deadline" context="{'group_by': 'date_deadline:month'}"/>
+                    <filter name="groupby_date_to" string="Date" context="{'group_by': 'date_to:month'}"/>
                     <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
                     <separator/>
                     <filter invisible="1" string="My Activities" name="filter_activities_my" domain="[('activity_user_id', '=', uid)]"/>
@@ -191,7 +191,7 @@
             <field name="path">tax-return</field>
             <field name="view_id" ref="account_reports.account_return_kanban_view"/>
             <field name="search_view_id" ref="account_reports.account_return_search_view"/>
-            <field name="context">{'search_default_groupby_deadline': 1, 'search_default_todo_returns': 1, 'max_number_opened_groups': 100000}</field>
+            <field name="context">{'search_default_groupby_date_to': 1, 'search_default_todo_returns': 1, 'max_number_opened_groups': 100000}</field>
         </record>
 
         <record id="action_create_account_return" model="ir.actions.act_window">

@@ -26,11 +26,13 @@
                             </div>
 
                             <div class="d-flex flex-column w-100 h-100 px-2 mt-2 gap-3">
-                                <div class="w-100">
-                                    <label for="resolved_check_count">Balances</label>
-                                    <field name="audit_balances_count" invisible="1"/>
-                                    <field name="audit_balances_completed_count" class="w-100 audit_return_progressbar" widget="account_audit_progressbar" options="{ 'max_value': 'audit_balances_count'}"/>
-                                </div>
+                                <a type="object" class="link_balances_progressbar" name="action_open_audit_balances">
+                                    <div class="w-100">
+                                        <label for="resolved_check_count">Balances</label>
+                                        <field name="audit_balances_count" invisible="1"/>
+                                        <field name="audit_balances_completed_count" class="w-100 audit_return_progressbar" widget="account_audit_progressbar" options="{ 'max_value': 'audit_balances_count'}"/>
+                                    </div>
+                                </a>
 
                                 <div class="w-100" >
                                     <label for="resolved_check_count">Checks</label>
@@ -112,7 +114,7 @@
                     <field name="audit_balance_show_warning" column_invisible="1"/>
                     <field name="audit_previous_balance_show_warning" column_invisible="1"/>
                     <field name="code" readonly="1"/>
-                    <field name="display_name" readonly="1" string="name" widget="accountAuditClickableCharField" options="{'onclick': 'action_audit_account'}"/>
+                    <field name="name" readonly="1" string="Name" widget="accountAuditClickableCharField" options="{'onclick': 'action_audit_account'}"/>
                     <field name="audit_debit" readonly="1" optional="hide"/>
                     <field name="audit_credit" readonly="1" optional="hide"/>
                     <field name="audit_balance" readonly="1"/>
@@ -189,6 +191,15 @@
             <field name="name">Balances</field>
             <field name="context" eval="False"/>
             <field name="action_id" ref="account_reports.action_view_account_balances"/>
+        </record>
+
+        <record id="account_audit_embedded_action_cycles_view" model="ir.embedded.actions">
+            <field name="parent_res_model">account.return</field>
+            <field name="parent_action_id" ref="account_reports.action_view_account_balances"/>
+            <field name="sequence">10</field>
+            <field name="name">Cycle</field>
+            <field name="context" eval="False"/>
+            <field name="python_method">action_open_audit_return</field>
         </record>
     </data>
 </odoo>
