@@ -14,7 +14,7 @@ patch(WebFileViewer.prototype, {
 
         onWillStart(async () => {
             const fileThread = this.state.file?.thread;
-            this.allowSignTemplateCreation = fileThread && fileThread.res_model !== "sign.request";
+            this.allowSignTemplateCreation = fileThread && fileThread.model !== "sign.request";
             this.hasUserAccess = await user.hasGroup("sign.group_sign_user");
         });
     },
