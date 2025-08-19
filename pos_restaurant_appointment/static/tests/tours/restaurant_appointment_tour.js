@@ -46,3 +46,99 @@ registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
             ProductScreen.clickDisplayedProduct("Coca-Cola", true),
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("test_appointment_kanban_view", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            {
+                trigger: ".pos-leftheader button:contains('Booking')",
+                run: "click",
+            },
+            {
+                trigger: ".pos .o-kanban-button-new",
+                run: "click",
+            },
+            {
+                trigger: ".o_form_renderer .oe_title .o_input",
+                run: "edit Test Appointment",
+            },
+            {
+                trigger: ".o_form_renderer .o_field_integer .o_input",
+                run: "edit 3",
+            },
+            {
+                trigger: ".o_form_renderer .o_field_many2many_selection .o_input",
+                run: "click",
+            },
+            RestaurantAppointment.selectTable("Test Main Floor - Table 4"),
+            {
+                trigger: ".o_form_button_save",
+                run: "click",
+            },
+            RestaurantAppointment.checkAppointment("Test Appointment"),
+            {
+                content: "Store the current active hour filter label",
+                trigger: ".hour-filter span, .hour-filter",
+                run: function () {
+                    const current = document.querySelector(".hour-filter span")?.innerText || "";
+                    window._currentHourFilter = current || "Morning";
+                },
+            },
+            {
+                trigger: ".hour-filter",
+                run: "click",
+            },
+            {
+                content: "Select a different hour filter than the current one",
+                trigger: ".dropdown-menu",
+                run: function () {
+                    const options = Array.from(
+                        document.querySelectorAll(".dropdown-menu .dropdown-item")
+                    );
+                    const diff = options.find(
+                        (o) => !o.innerText.includes(window._currentHourFilter)
+                    );
+                    diff?.click();
+                    window._otherHourFilter = diff?.innerText;
+                },
+            },
+            RestaurantAppointment.checkAppointmentNotVisible("Test Appointment"),
+            {
+                trigger: ".hour-filter",
+                run: "click",
+            },
+            {
+                content: "Re-select the original hour filter",
+                trigger: ".dropdown-menu",
+                run: function () {
+                    const options = Array.from(
+                        document.querySelectorAll(".dropdown-menu .dropdown-item")
+                    );
+                    const orig = options.find((o) =>
+                        o.innerText.includes(window._currentHourFilter)
+                    );
+                    orig?.click();
+                },
+            },
+            RestaurantAppointment.checkAppointment("Test Appointment"),
+            {
+                trigger: ".o_kanban_record:contains('Test Appointment')",
+                run: "click",
+            },
+            {
+                trigger: ".popover-footer button:contains('Edit')",
+                run: "click",
+            },
+            {
+                trigger: ".o_form_renderer .o_field_many2many_selection .o_input",
+                run: "click",
+            },
+            RestaurantAppointment.checkTableOption("3p"),
+            RestaurantAppointment.selectTable("Search more..."),
+            {
+                trigger: ".o_list_renderer tbody tr:first-child td:contains('3p')",
+            },
+        ].flat(),
+});

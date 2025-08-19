@@ -4,14 +4,14 @@ import { patch } from "@web/core/utils/patch";
 patch(ControlPanel.prototype, {
     switchView(viewType, newWindow) {
         const searchModel = this.env.searchModel;
-        const kanbanDateFilter = Object.values(searchModel.searchItems).find(
-            (sm) => sm.name === "kanban_date_filter"
+        const filterNamesToDisable = ["kanban_date_filter", "kanban_hour_filter"];
+        const filtersToDisable = Object.values(searchModel.searchItems).filter(
+            (sm) =>
+                filterNamesToDisable.includes(sm.name) &&
+                searchModel.query.some((q) => q.searchItemId === sm.id)
         );
-        if (
-            kanbanDateFilter &&
-            searchModel.query.some((sm) => sm.searchItemId === kanbanDateFilter.id)
-        ) {
-            searchModel.toggleSearchItem(kanbanDateFilter.id);
+        for (const filter of filtersToDisable) {
+            searchModel.toggleSearchItem(filter.id);
         }
         super.switchView(...arguments);
     },

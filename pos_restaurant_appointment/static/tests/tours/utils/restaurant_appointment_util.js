@@ -9,6 +9,35 @@ export function appointmentLabel(table_num, appointment_name) {
     ];
 }
 
+export function checkTableOption(tableText) {
+    return {
+        content: `Check that table option ${tableText} is present`,
+        trigger: `.o_form_renderer .o-autocomplete--dropdown-menu li a.dropdown-item:contains("${tableText}")`,
+    };
+}
+
+export function selectTable(tableText) {
+    return {
+        content: `Select table option containing ${tableText}`,
+        trigger: `.o_form_renderer .o-autocomplete--dropdown-menu li a.dropdown-item:contains("${tableText}")`,
+        run: "click",
+    };
+}
+
+export function checkAppointment(appointmentName) {
+    return {
+        content: `Check that appointment ${appointmentName} is visible in Kanban`,
+        trigger: `.o_kanban_record:contains("${appointmentName}")`,
+    };
+}
+
+export function checkAppointmentNotVisible(appointmentName) {
+    return {
+        content: `Check that appointment ${appointmentName} is not visible`,
+        trigger: negate(`.o_kanban_record:contains("${appointmentName}")`),
+    };
+}
+
 export function checkAppointmentLabelNotPresent(table_num, appointment_name) {
     return [
         {

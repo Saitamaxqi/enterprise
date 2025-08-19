@@ -13,7 +13,7 @@
                 <t t-esc="row.name"/>
             </t>
             <t t-else="">
-                <span>Waiting List</span>
+                <span>Unassigned</span>
             </t>
         </xpath>
     </t>

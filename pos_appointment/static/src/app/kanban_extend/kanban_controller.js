@@ -6,73 +6,129 @@ import { KanbanController } from "@web/views/kanban/kanban_controller";
 import { DateTimePickerPopover } from "@web/core/datetime/datetime_picker_popover";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { Domain } from "@web/core/domain";
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 
 const { DateTime } = luxon;
 
 export class PosKanbanController extends KanbanController {
     static template = "pos_restaurant_appointment.KanbanController";
+    static components = {
+        ...KanbanController.components,
+        Dropdown,
+        DropdownItem,
+    };
 
     setup() {
         super.setup(...arguments);
         this.popover = usePopover(DateTimePickerPopover, { position: "bottom" });
         this.state = useState({
             date: DateTime.now(),
+            period: "",
         });
         this.model = this.env.model;
         this.localization = localization;
+        this.searchModel = this.model.env.searchModel;
+        this.timeRanges = {
+            morning: { startHour: 0, endHour: 11 },
+            lunch: { startHour: 11, endHour: 17 },
+            evening: { startHour: 17, endHour: 24 },
+        };
         onMounted(async () => {
-            await this.createStartFilter(this.state.date);
+            const kanbanDateFilter = Object.values(this.searchModel.searchItems).find(
+                (sm) => sm.name === "kanban_date_filter"
+            );
+            if (!kanbanDateFilter?.id) {
+                await this._applyFilter("date", this.state.date);
+            } else {
+                this.state.date = DateTime.fromFormat(
+                    kanbanDateFilter.description.replace("Start is ", ""),
+                    this.localization.dateFormat
+                );
+                this.searchModel.toggleSearchItem(kanbanDateFilter.id);
+            }
+            const kanbanHourFilter = Object.values(this.searchModel.searchItems).find(
+                (sm) => sm.name === "kanban_hour_filter"
+            );
+            if (!kanbanHourFilter?.id) {
+                const currentHour = DateTime.now().hour;
+                if (currentHour < 11) {
+                    this._applyFilter("hour", "morning");
+                } else if (currentHour < 17) {
+                    this._applyFilter("hour", "lunch");
+                } else {
+                    this._applyFilter("hour", "evening");
+                }
+            } else {
+                this.state.period = kanbanHourFilter.description.replace("Hour is ", "");
+                this.searchModel.toggleSearchItem(kanbanHourFilter.id);
+            }
         });
     }
 
-    async createStartFilter(date) {
-        const searchModel = this.model.env.searchModel;
-        const kanbanDateFilter = Object.values(searchModel.searchItems).find(
-            (si) => si.name === "kanban_date_filter"
+    async _applyFilter(filterType, value) {
+        const searchModel = this.searchModel;
+        let domain;
+        let description;
+        let name;
+        if (filterType === "date") {
+            name = "kanban_date_filter";
+            description = `Start is ${value.toFormat(this.localization.dateFormat)}`;
+            domain = Domain.and([
+                new Domain([
+                    [
+                        "start",
+                        ">=",
+                        value
+                            .set({ hour: 0, minute: 0, second: 0 })
+                            .toUTC()
+                            .toFormat("yyyy-MM-dd HH:mm:ss", { numberingSystem: "latn" }),
+                    ],
+                ]),
+                new Domain([
+                    [
+                        "start",
+                        "<=",
+                        value
+                            .set({ hour: 23, minute: 59, second: 59 })
+                            .toUTC()
+                            .toFormat("yyyy-MM-dd HH:mm:ss", { numberingSystem: "latn" }),
+                    ],
+                ]),
+            ]);
+        } else if (filterType === "hour") {
+            this.state.period = value.charAt(0).toUpperCase() + value.slice(1);
+            name = "kanban_hour_filter";
+            description = `Hour is ${this.state.period}`;
+            const date = this.state.date || DateTime.now();
+            const { startHour, endHour } = this.timeRanges[value];
+            const from = date.set({ hour: startHour, minute: 0, second: 0 });
+            const to = date.set({ hour: endHour - 1, minute: 59, second: 59 });
+            domain = new Domain([
+                ["start", ">=", from.toUTC().toFormat("yyyy-MM-dd HH:mm:ss")],
+                ["start", "<=", to.toUTC().toFormat("yyyy-MM-dd HH:mm:ss")],
+            ]);
+        } else {
+            return;
+        }
+        const existingFilter = Object.values(searchModel.searchItems).find(
+            (si) => si.name === name
         );
-        const startIsDomain = Domain.and([
-            new Domain([
-                [
-                    "start",
-                    ">",
-                    `${date
-                        .set({ hour: 0, minute: 0, second: 0 })
-                        .toUTC()
-                        .toFormat("yyyy-MM-dd HH:mm:ss", {
-                            numberingSystem: "latn",
-                        })}`,
-                ],
-            ]),
-            new Domain([
-                [
-                    "start",
-                    "<=",
-                    `${date
-                        .set({ hour: 23, minute: 59, second: 59 })
-                        .toUTC()
-                        .toFormat("yyyy-MM-dd HH:mm:ss", {
-                            numberingSystem: "latn",
-                        })}`,
-                ],
-            ]),
-        ]);
-        if (kanbanDateFilter) {
-            kanbanDateFilter.domain = startIsDomain.toString();
-            kanbanDateFilter.description = `Start is ${date.toFormat(
-                this.localization.dateFormat
-            )}`;
+        if (existingFilter) {
+            existingFilter.domain = domain.toString();
+            existingFilter.description = description;
             searchModel._notify();
-            if (!searchModel.query.some((sm) => sm.searchItemId === kanbanDateFilter.id)) {
-                searchModel.toggleSearchItem(kanbanDateFilter.id);
+            if (!searchModel.query.some((q) => q.searchItemId === existingFilter.id)) {
+                searchModel.toggleSearchItem(existingFilter.id);
             }
         } else {
             searchModel.createNewFilters([
                 {
-                    description: `Start is ${date.toFormat(this.localization.dateFormat)}`,
-                    domain: startIsDomain.toString(),
+                    description: description,
+                    domain: domain.toString(),
                     invisible: "True",
                     type: "filter",
-                    name: "kanban_date_filter",
+                    name: name,
                 },
             ]);
         }
@@ -84,7 +140,16 @@ export class PosKanbanController extends KanbanController {
                 onSelect: async (value) => {
                     if (value) {
                         this.state.date = value;
-                        await this.createStartFilter(value);
+                        await this._applyFilter("date", value);
+                        const kanbanHourFilter = Object.values(this.searchModel.searchItems).find(
+                            (sm) => sm.name === "kanban_hour_filter"
+                        );
+                        if (kanbanHourFilter && this.state.period) {
+                            this.onClickHourFilter(
+                                this.state.period.charAt(0).toLowerCase() +
+                                    this.state.period.slice(1)
+                            );
+                        }
                     } else {
                         this.onRemove();
                     }
@@ -94,6 +159,25 @@ export class PosKanbanController extends KanbanController {
                 value: this.state.date,
             },
         });
+    }
+
+    onRemove(ev, filterType) {
+        ev.stopPropagation();
+        var filterName = filterType === "date" ? "kanban_date_filter" : "kanban_hour_filter";
+        const kanbanFilter = Object.values(this.searchModel.searchItems).find(
+            (sm) => sm.name === filterName
+        );
+        if (
+            kanbanFilter &&
+            this.searchModel.query.some((sm) => sm.searchItemId === kanbanFilter.id)
+        ) {
+            this.searchModel.toggleSearchItem(kanbanFilter.id);
+        }
+        if (filterType === "date") {
+            this.state.date = null;
+        } else {
+            this.state.period = "";
+        }
     }
 
     get totalPersonCount() {
@@ -119,5 +203,9 @@ export class PosKanbanController extends KanbanController {
                 await root.load({ offset, limit });
             },
         });
+    }
+
+    onClickHourFilter(period) {
+        this._applyFilter("hour", period);
     }
 }

@@ -31,6 +31,7 @@
             'web_gantt/static/src/**/*',
             'pos_appointment/static/src/**/*',
             'appointment/static/src/components/appointment_booking_action_helper/*',
+            'appointment/static/src/components/appointment_type_sync_duration/*',
             'appointment/static/src/views/gantt/**/*',
             'appointment/static/src/xml/appointment_svg.xml',
             'calendar/static/src/views/**/*',

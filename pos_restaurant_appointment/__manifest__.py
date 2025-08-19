@@ -11,7 +11,9 @@
     'depends': ['pos_restaurant', 'pos_appointment'],
     'auto_install': True,
     'data': [
+        'views/appointment_resource_views.xml',
         'views/pos_restaurant_views.xml',
+        'views/calendar_event_views.xml',
     ],
     'demo': [
         'demo/pos_restaurant_appointment_demo.xml',
@@ -22,6 +24,9 @@
     'assets': {
         'point_of_sale._assets_pos': [
             'pos_restaurant_appointment/static/src/**/*',
+        ],
+        'web.assets_backend': [
+            'pos_restaurant_appointment/static/src/backend/json_field_resource/**/*',
         ],
         'web.assets_tests': [
             'pos_restaurant_appointment/static/tests/tours/**/*',

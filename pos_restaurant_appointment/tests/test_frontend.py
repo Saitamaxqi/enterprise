@@ -71,3 +71,6 @@ class TestUi(TestFrontend):
         self.pos_config.with_user(self.pos_admin).open_ui()
 
         self.start_pos_tour('RestaurantAppointmentTour', login="pos_admin")
+
+    def test_appointment_kanban_view(self):
+        self.start_pos_tour("test_appointment_kanban_view", login="pos_admin")

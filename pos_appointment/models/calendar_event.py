@@ -48,6 +48,7 @@ class CalendarEvent(models.Model):
                 (False, 'calendar'),
                 (False, 'pivot'),
                 (self.env.ref("pos_appointment.calendar_event_view_form_gantt_booking_inherited_pos_appointment").id, 'form'),
+                (self.env.ref("pos_appointment.calendar_event_view_graph_pos_appointment").id, 'graph'),
             ],
             'target': 'current',
             'context': {
@@ -60,6 +61,7 @@ class CalendarEvent(models.Model):
                 "no_breadcrumbs": True,
                 'hide_no_content_helper': True,
                 'from_pos_booking': True,
+                "appointment_type_id": self.env.context.get("appointment_type_id"),
             }
         }
 

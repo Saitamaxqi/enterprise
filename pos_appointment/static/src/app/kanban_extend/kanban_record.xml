@@ -27,6 +27,9 @@
                 <li>
                     <strong>Duration: </strong> <t t-out="hours"/>:<t t-out="(minutes+'').padStart(2, '0')"/> hours
                 </li>
+                <li t-if="data.phone_number">
+                    <strong>Phone: </strong> <t t-out="data.phone_number"/>
+                </li>
             </div>
 
             <div class="popover-footer d-flex justify-content-between">
