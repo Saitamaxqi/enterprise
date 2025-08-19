@@ -73,6 +73,7 @@ export class AccountReturnDashboardList extends Component {
      */
     async openTaxReturn(accountReturn) {
         const returnTypeId = accountReturn?.type_id || '';
+        const viewId = await this.orm.call("account.return", "get_kanban_view_id", [[accountReturn.id]]);
 
         // Open the filtered Tax Return view
         this.action.doAction({
@@ -80,7 +81,7 @@ export class AccountReturnDashboardList extends Component {
             type: 'ir.actions.act_window',
             res_model: 'account.return',
             views: [
-                [false, 'kanban'],
+                [viewId || false, 'kanban'],
                 [false, 'calendar'],
             ],
             context: {

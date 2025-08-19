@@ -2230,6 +2230,13 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             'result': 'failure' if draft_entries_count else 'success',
         }
 
+    def get_kanban_view_id(self):
+        if self.return_type_category == 'audit':
+            xml_id = 'account_reports.account_audit_kanban_view'
+        else:
+            xml_id = 'account_reports.account_return_kanban_view'
+        return self.env.ref(xml_id).id
+
 
 class AccountReturnCheck(models.Model):
     _name = "account.return.check"
