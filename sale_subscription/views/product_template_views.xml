@@ -42,20 +42,17 @@
             <page name="sales_price" position="after">
                 <page string="Recurring prices" name="subscription_pricing" invisible="not recurring_invoice">
                     <field
-                        name="subscription_rule_ids"
+                        name="subscription_rule_ids_fixed"
                         context="{
                             'form_view_ref': 'sale_subscription.product_pricelist_item_sale_subscription_view',
                             'default_pricelist_id': False,
                         }"
                     >
-                        <list default_order="pricelist_id, plan_id, fixed_price">
-                            <control>
-                                <create name="add_product_pricing" string="Add a price rule"/>
-                            </control>
-                            <field name="pricelist_id" groups="product.group_product_pricelist"/>
+                        <list default_order="plan_id, pricelist_id, fixed_price" editable="bottom">
                             <field name="plan_id"/>
+                            <field name="pricelist_id" groups="product.group_product_pricelist"/>
                             <field name="name" string="Applied On" column_invisible="parent.product_variant_count &lt; 2"/>
-                            <field name="price"/>
+                            <field name="fixed_price" string="Price"/>
                             <field name="min_quantity" optional="hide"/>
                             <field name="date_start" optional="hide"/>
                             <field name="date_end" optional="hide"/>

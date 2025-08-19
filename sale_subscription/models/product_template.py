@@ -34,7 +34,17 @@ class ProductTemplate(models.Model):
         copy=False,
         groups='sales_team.group_sale_salesman',
     )
-
+    # Just like the other subscription_rule_ids field but only including fixed price rules.
+    # This is needed to use in the Recurring Prices list view in the product form.
+    subscription_rule_ids_fixed = fields.One2many(
+        comodel_name='product.pricelist.item',
+        inverse_name='product_tmpl_id',
+        string="Fixed Subscription Pricings",
+        domain=lambda self: self._domain_subscription_rule_ids_fixed(),
+        bypass_search_access=True,
+        copy=False,
+        groups='sales_team.group_sale_salesman',
+    )
     display_subscription_pricing = fields.Char(
         string='Display Price', compute='_compute_display_subscription_pricing',
     )
@@ -43,6 +53,17 @@ class ProductTemplate(models.Model):
         return Domain.AND([
             self._base_domain_item_ids(),
             [('plan_id', '!=', False)],
+        ])
+
+    def _domain_subscription_rule_ids_fixed(self):
+        """
+        Alternative domain computation for the subscription_rule_ids
+        field that filters out every record except the ones where
+        the price is fixed (not computed)
+        """
+        return Domain.AND([
+            self._domain_subscription_rule_ids(),
+            [('compute_price', '=', 'fixed')],
         ])
 
     def _domain_pricelist_rule_ids(self):
