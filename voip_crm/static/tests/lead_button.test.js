@@ -14,7 +14,7 @@ test("LeadButton is hidden when user doesn't have sales team groups", async () =
     });
     onRpc("has_group", () => false);
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await click(".o-voip-TabEntry:contains('Test Partner')");
     await contains("button[title='Create a lead']", { count: 0 });
@@ -31,7 +31,7 @@ test("LeadButton is shown when user has sales team groups", async () => {
         return group === "sales_team.group_sale_salesman";
     });
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await click(".o-voip-TabEntry:contains('Test Partner')");
     await contains("button[title='Create a lead']");
@@ -48,7 +48,7 @@ test("LeadButton is shown when user has sales manager group", async () => {
         return group === "sales_team.group_sale_manager";
     });
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await click(".o-voip-TabEntry:contains('Test Partner')");
     await contains("button[title='Create a lead']");
@@ -66,7 +66,7 @@ test("LeadButton is shown with title 'View lead' and icon 'fa-star' when user ha
         return group === "sales_team.group_sale_salesman";
     });
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await click(".o-voip-TabEntry:contains('Test Partner')");
     await contains("button[title='View leads'] i.fa-star");
@@ -84,7 +84,7 @@ test("LeadButton is shown with title 'View lead' and icon 'fa-star' when user ha
         return group === "sales_team.group_sale_manager";
     });
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await click(".o-voip-TabEntry:contains('Test Partner')");
     await contains("button[title='View leads'] i.fa-star");

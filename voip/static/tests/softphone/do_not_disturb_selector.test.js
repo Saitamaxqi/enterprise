@@ -13,7 +13,7 @@ setupVoipTests();
 test("Do not disturb selector show all options", async () => {
     await startServer();
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     // don't click on the dropdown too early: handler may not be registered yet
     await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");
@@ -30,7 +30,7 @@ test("Do not disturb selector changes state correctly with limited time", async 
     mockDate("2025-01-01 01:00:00", +0);
     await startServer();
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     // don't click on the dropdown too early: handler may not be registered yet
     await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");
@@ -50,7 +50,7 @@ test("Do not disturb selector changes state correctly with limited time", async 
 test("Do not disturb selector change state correctly with infinite time", async () => {
     await startServer();
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     // don't click on the dropdown too early: handler may not be registered yet
     await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");

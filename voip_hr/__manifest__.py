@@ -1,5 +1,6 @@
-{
-    "name": "VoIP for HR",
+{  # noqa: B018
+    "name": "Phone - Human Resources",
+    "summary": "Phone integration with Human Resources module.",
     "category": "Human Resources",
     "version": "1.0",
     "depends": ["voip", "hr"],

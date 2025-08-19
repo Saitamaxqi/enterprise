@@ -21,7 +21,7 @@ test("Clicking on the “open record” button opens the corresponding record.",
         user_id: serverState.userId,
     });
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Activities')");
     await click(".o-voip-TabEntry", { text: "Vincent's Birthday" });
     await contains(".o_form_view", { count: 0 });

@@ -1,7 +1,7 @@
-{
-    "name": "VoIP OnSIP",
-    "description": """Enables VoIP compatibility with OnSIP.""",
-    "category": "Productivity/VOIP",
+{  # noqa: B018
+    "name": "Phone - OnSIP",
+    "description": "Enables Phone compatibility with OnSIP.",
+    "category": "Productivity/Phone",
     "version": "1.0",
     "depends": ["voip"],
     "data": [

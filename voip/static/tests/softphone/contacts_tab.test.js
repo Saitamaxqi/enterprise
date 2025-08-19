@@ -20,7 +20,7 @@ test("Partners with a phone number are displayed in Contacts tab", async () => {
         { name: "Patrice Nomo" },
     ]);
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await contains(".o-voip-TabEntry", { count: 1 });
     await contains(".o-voip-TabEntry span", { text: "Michel Landline" });
@@ -30,7 +30,7 @@ test("Partners with a phone number are displayed in Contacts tab", async () => {
 test("Typing in the search bar fetches and displays the matching contacts", async () => {
     const pyEnv = await startServer();
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     pyEnv["res.partner"].create([
         { name: "Morshu RTX", phone: "+61-855-527-77" },
@@ -49,7 +49,7 @@ test("Scrolling to bottom loads more contacts", async () => {
     for (let i = 0; i < 10; ++i) {
         pyEnv["res.partner"].create({ name: `Contact ${i}`, phone: `09225 982 ext. ${i}` });
     }
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await contains(".o-voip-TabEntry", { count: 10 });
     expect(rpcCount).toBe(1);
@@ -70,7 +70,7 @@ test("Contacts with are listed under the their corresponding section", async () 
         { name: "Alice", phone: "+1-555-0003" }, // Normal contact
     ]);
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Contacts')");
     await contains(".o-voip-TabEntry", { count: 3 });
     await contains(".o-voip-TabEntry span", { text: "Alice", parent: ["section", { contains: [["h2", { text: "A" }]] }] });

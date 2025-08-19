@@ -35,20 +35,16 @@ class ResUsersSettings(models.Model):
 
     # Mobile stuff
     how_to_call_on_mobile = fields.Selection(
-        [("ask", "Ask"), ("voip", "VoIP"), ("phone", "Device's phone")],
+        [("ask", "Always Ask"), ("voip", "Odoo Phone"), ("phone", "Phone's Default App")],
         default="ask",
-        string="How to place calls on mobile",
-        help="""Choose the method to be used to place a call when using the mobile application:
-            • VoIP: Always use the Odoo softphone
-            • Device's phone: Always use the device's phone
-            • Ask: Always ask whether the softphone or the device's phone must be used
-        """,
+        string="Default phone app",
+        help="""Choose which app to open when clicking on a phone number in the Odoo Mobile app.""",
         required=True,
     )
 
     do_not_disturb_until_dt = fields.Datetime(
         string="Do Not Disturb until",
-        help="If set, VoIP will be in Do Not Disturb mode until this time."
+        help="If set, Odoo Phone will be in Do Not Disturb mode until this time."
     )
 
     @api.model

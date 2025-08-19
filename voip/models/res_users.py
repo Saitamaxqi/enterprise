@@ -22,7 +22,7 @@ class ResUsers(models.Model):
         groups="base.group_user",
     )
     how_to_call_on_mobile = fields.Selection(
-        [("ask", "Ask"), ("voip", "VoIP"), ("phone", "Device's phone")],
+        [("ask", "Always Ask"), ("voip", "Odoo Phone"), ("phone", "Phone's Default App")],
         compute="_compute_how_to_call_on_mobile",
         inverse="_reflect_change_in_res_users_settings",
         groups="base.group_user",

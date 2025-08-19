@@ -19,7 +19,7 @@ test.skip("Scrolling to bottom loads more recent calls", async () => {
             user_id: serverState.userId,
         });
     }
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Recent')");
     await contains(".o-voip-TabEntry", { count: 13 });
     expect(rpcCount).toBe(1);

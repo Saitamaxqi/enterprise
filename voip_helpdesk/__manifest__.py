@@ -1,6 +1,6 @@
-{
-    "name": "VoIP for Helpdesk",
-    "summary": "VoIP integration with Helpdesk module.",
+{  # noqa: B018
+    "name": "Phone - Helpdesk",
+    "summary": "Phone integration with Helpdesk module.",
     "category": "Helpdesk",
     "version": "1.0",
     "author": "Odoo S.A.",

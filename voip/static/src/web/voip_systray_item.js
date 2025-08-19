@@ -48,7 +48,7 @@ export class VoipSystrayItem extends Component {
      * @returns {string}
      */
     get titleText() {
-        return this.softphone.isDisplayed ? _t("Close Softphone") : _t("Open Softphone");
+        return this.softphone.isDisplayed ? _t("Hide Softphone") : _t("Show Softphone");
     }
 
     /** @returns {string} */

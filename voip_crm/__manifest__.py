@@ -1,10 +1,10 @@
-{
-    "name": "VoIP for CRM",
-    "summary": "VoIP integration with CRM module.",
-    "description": """Adds a button to schedule calls from leads in Kanban.""",
+{  # noqa: B018
+    "name": "Phone - CRM",
+    "summary": "Phone integration with CRM module.",
+    "description": "Adds a button to schedule calls from kanban leads.",
     "category": "Sales/CRM",
     "version": "1.0",
-    "depends": ["base", "crm", "voip"],
+    "depends": ["crm", "voip"],
     "auto_install": True,
     "data": [
         "views/crm_lead_views.xml",

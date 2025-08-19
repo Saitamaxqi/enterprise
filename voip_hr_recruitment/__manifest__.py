@@ -1,5 +1,6 @@
-{
-    "name": "VoIP Integration for Recruitment",
+{  # noqa: B018
+    "name": "Phone - Recruitement",
+    "summary": "Phone integration with Recruitment module.",
     "version": "1.0",
     "category": "Human Resources/Recruitment",
     "depends": ["hr_recruitment", "voip"],

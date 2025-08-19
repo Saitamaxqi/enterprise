@@ -40,7 +40,7 @@ test("Call activities are displayed in the “Activities” tab.", async () => {
         },
     ]);
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Activities')");
     await contains(".o-voip-TabEntry", { count: 2 });
     await contains("h2.text-danger", {
@@ -75,7 +75,7 @@ test("The name of the partner linked to an activity is displayed in the activity
         },
     ]);
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Activities')");
     await contains("button[title='Open related record']", {
         text: "Gwendoline Zumba",

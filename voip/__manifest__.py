@@ -1,8 +1,8 @@
-{
-    "name": "VoIP",
+{  # noqa: B018
+    "name": "Phone",
     "summary": """Make and receive phone calls from within Odoo.""",
     "description": """Adds a softphone and helpers to make phone calls directly from within your Odoo database.""",
-    "category": "Productivity/VOIP",
+    "category": "Productivity/Phone",
     "sequence": 280,
     "version": "2.0",
     "depends": ["base", "mail", "phone_validation", "web", "web_mobile"],

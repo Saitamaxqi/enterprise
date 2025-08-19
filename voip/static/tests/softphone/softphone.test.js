@@ -16,7 +16,7 @@ setupVoipTests();
 
 test("Clicking on close button closes the softphone.", async () => {
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await contains(".o-voip-Softphone");
     await click(".o-voip-Softphone button[title='Hide']");
     await contains(".o-voip-Softphone", { count: 0 });
@@ -25,7 +25,7 @@ test("Clicking on close button closes the softphone.", async () => {
 test.tags("focus required");
 test("Search bar is focused after switching to a tab with search bar.", async () => {
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Keypad')");
     await contains(".o-voip-Dialer input:focus");
     await click("button span:contains('Recent')");
@@ -35,21 +35,21 @@ test("Search bar is focused after switching to a tab with search bar.", async ()
 test.tags("focus required");
 test("Search bar is focused after reopen the softphone.", async () => {
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await click("button span:contains('Keypad')");
     await contains(".o-voip-Dialer input:focus");
     await click(".o-voip-Softphone button[title='Hide']");
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await contains(".o-voip-Dialer input:focus");
     await click("button span:contains('Recent')");
     await click(".o-voip-Softphone button[title='Hide']");
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await contains("input[placeholder='Search…']:focus");
 });
 
 test("Clicking on a tab makes it the active tab.", async () => {
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await contains("button.active span:contains('Keypad')");
     await contains("button.active span:contains('Recent')", { count: 0 });
     await click("button span:contains('Recent')");
@@ -66,7 +66,7 @@ test("Using VoIP in prod mode without configuring the server shows an error", as
     });
     pyEnv["res.users"].write([serverState.userId], { voip_provider_id: providerId });
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     await contains(".o-voip-ErrorScreen");
 });
 
@@ -76,7 +76,7 @@ test("When a call is created, a partner with a corresponding phone number is dis
     const phoneNumber = "0456 703 6196";
     pyEnv["res.partner"].create({ name: "Maxime Randonnées", phone: phoneNumber });
     await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".o_menu_systray button[title='Show Softphone']");
     // dropdown requires an extra delay before click (because handler is registered in useEffect)
     await contains("button span:contains('Keypad')");
     await click("button span:contains('Keypad')");
