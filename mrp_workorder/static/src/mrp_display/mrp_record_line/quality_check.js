@@ -138,9 +138,9 @@ export class QualityCheck extends MrpWorkorder {
     async doActionAndNext(action, stateToSet = "pass", actionParams = {}) {
         const { model, resModel, resId, data, _parentRecord } = this.props.record;
         const result = await model.orm.call(resModel, action, [resId]);
-        if (_parentRecord.data.current_quality_check_id && "next_check_id" in result) {
+        if ("next_check_id" in result) {
             data.quality_state = stateToSet;
-            _parentRecord.data.current_quality_check_id.id = result.next_check_id;
+            _parentRecord.data.current_quality_check_id = { id: result.next_check_id };
         }
         if ("type" in result) {
             const params = {};
