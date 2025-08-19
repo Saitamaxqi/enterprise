@@ -2,11 +2,14 @@
 <templates xml:space="preserve">
     <t t-name="ai.AiJsonSchema">
         <t t-if="this.state.technical_mode">
-            <textarea
-                class="o_input"
-                t-on-blur="onBlur"
-                t-out="props.record.data[props.name] or ''"
-            />
+            <div>
+                <textarea
+                    t-ref="textarea"
+                    class="o_input"
+                    t-on-blur="onBlur"
+                    t-out="props.record.data[props.name] or ''"
+                />
+            </div>
             <button class="btn btn-link mt-1"
                 t-on-click="() => (this.state.technical_mode = false)">
                 Pretty Edit
@@ -103,7 +106,6 @@
                                 t-if="arg_type === 'string'"
                                 class="o_input"
                                 type="number"
-                                placeholder="Max length"
                                 t-att-value="values.maxLength"
                                 t-on-change="(ev) => this.onMaxLengthChange(ev.target.value, name)"
                             />
@@ -119,12 +121,12 @@
             <button
                 class="btn btn-link mt-1"
                 t-on-click="() => this.onNewArgument()">
-                Add Argument
+                Add
             </button>
             <button
                 class="btn btn-link mt-1"
                 t-on-click="() => (this.state.technical_mode = true)">
-                Edit Manually
+                Edit
             </button>
         </t>
     </t>

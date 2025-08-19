@@ -2,6 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { Component, useRef, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
+import { useAutoresize } from "@web/core/utils/autoresize";
 import { useService } from "@web/core/utils/hooks";
 
 /**
@@ -15,12 +16,14 @@ export class AiJsonSchema extends Component {
 
     setup() {
         this.tableEl = useRef("table");
+        this.textareaEl = useRef("textarea");
         this.notification = useService("notification");
         this.state = useState({
             technical_mode: false,
             // There's no order in the arguments, so we try to not move them when editing
             orderArguments: Object.keys(this.value?.properties || {}).sort(),
         });
+        useAutoresize(this.textareaEl);
     }
 
     get types() {

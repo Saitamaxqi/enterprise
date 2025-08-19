@@ -10,6 +10,6 @@ class AIComposer(models.Model):
     _inherit = ["ai.composer"]
 
     interface_key = fields.Selection(
-        selection_add=[("html_field_knowledge", "HTML Field 'AI' Shortcut for Knowledge")],
+        selection_add=[("html_field_knowledge", "Write a new Knowledge article")],
         ondelete={"html_field_knowledge": "cascade"},
     )

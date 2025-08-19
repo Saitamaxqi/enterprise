@@ -4,17 +4,24 @@
         <field name="name">ir.actions.server.view.form.inherit.ai</field>
         <field name="model">ir.actions.server</field>
         <field name="inherit_id" ref="base.view_server_action_form"/>
+        <field name="priority">20</field>
         <field name="arch" type="xml">
             <data>
                 <xpath expr="//page[@name='usage']" position="inside">
+                    <group col="6">
+                        <group>
+                            <field name="use_in_ai" invisible="not ai_tool_is_candidate"/>
+                        </group>
+                        <group colspan="5">
+                            <field name="ai_tool_description" nolabel="1"
+                            invisible="not ai_tool_is_candidate or not use_in_ai" placeholder="Short explanation of what this does"/>
+                        </group>
+                    </group>
                     <group>
-                        <field name="use_in_ai" invisible="not ai_tool_is_candidate"/>
                         <field name="ai_tool_schema"
                             placeholder="JSON schema for the parameters of the action (leave empty if no arguments are needed)"
                             invisible="not ai_tool_is_candidate or not use_in_ai or not ai_tool_has_schema"
                             widget="ai_json_schema"/>
-                        <field name="ai_tool_description"
-                            invisible="not ai_tool_is_candidate or not use_in_ai"/>
                     </group>
                 </xpath>
                 <xpath expr="//page[@name='usage']" position="attributes">

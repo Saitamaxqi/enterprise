@@ -4,12 +4,12 @@ from odoo import fields, models, _, api
 from odoo.exceptions import UserError
 
 INTERFACE_KEYS = [
-    ("html_field_record", "HTML Field 'AI' Shortcut in Records"),
-    ("html_field_composer", "HTML Field 'AI' Shortcut in Messages"),
-    ("composer_ai_button", "Message / Note Composer Button"),
-    ("html_field_text_select", "Text Selection Tooltip"),
-    ("chatter_ai_button", "Chatter AI Button"),
-    ("html_prompt_shortcut", "HTML Field 'Prompt' Shortcut in Mail Templates")
+    ("html_field_record", "Write in an HTML field"),
+    ("html_field_composer", "Write in a message"),
+    ("composer_ai_button", "Write a message"),
+    ("html_field_text_select", "Rewrite content"),
+    ("chatter_ai_button", "Get help on a record"),
+    ("html_prompt_shortcut", "Convert a prompt in an email")
 ]
 
 
@@ -21,14 +21,12 @@ class AIComposer(models.Model):
         return self.env["ir.model.data"]._xmlid_to_res_id("ai.ai_default_agent")
 
     name = fields.Char(
-        "Rule Name", help="The identifier for the interface component to agent rule"
+        "Rule Name", help="The identifier for the interface component to agent rule", required=True,
     )
-    interface_key = fields.Selection(selection=INTERFACE_KEYS, string="Interface Key", required=True)
+    interface_key = fields.Selection(selection=INTERFACE_KEYS, string="Action", required=True)
     focused_models = fields.Many2many('ir.model', string="Models")
     ai_agent = fields.Many2one('ai.agent', string="Agent", default=_get_default_agent)
-    default_prompt = fields.Text(
-        "Default Prompt", help="The default prompt passed to this mail assistant"
-    )
+    default_prompt = fields.Text("Instructions")
     is_system_default = fields.Boolean('Is the rule a system default or user created', default=False, readonly=True, copy=False)
     available_prompts = fields.One2many('ai.prompt.button', 'composer_id', string="Available User Prompts")
 

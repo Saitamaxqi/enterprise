@@ -24,28 +24,22 @@
                             </div>
                         </div>
                     </t>
-                    <t t-name="card" class="m-1 row g-0">
-                        <aside t-if="record.image_128.raw_value" class="oe_avatar col-auto">
-                            <field name="image_128" widget="image" options="{'img_class': 'object-fit-contain'}" alt="Agent"/>
-                        </aside>
-                        <main class="pe-4 py-2 ps-2 col">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="w-50">
-                                    <h4 class="o_kanban_title o_value mb-0 d-inline-block text-break">
-                                        <field name="name"/>
-                                    </h4>
-                                </div>
-                                <span class="badge bg-primary o_value ms-2 text-white">
-                                    <field name="llm_model"/>
-                                </span>
-                            </div>
-                            <p class="o_kanban_subtitle text-muted" t-if="record.subtitle.raw_value">
-                                <field name="subtitle"/>
-                            </p>
-                            <div class="o_kanban_tags mb-2">
-                                <field name="topic_ids" widget="many2many_tags" readonly="True"/>
-                            </div>
-                        </main>
+                    <t t-name="card">
+                        <div class="d-flex">
+                            <aside>
+                                <field name="image_128" widget="image" alt="Agent"/>
+                            </aside>
+                            <main class="ms-2">
+                                <h4>
+                                    <field name="name"/>
+                                </h4>
+                                <field name="llm_model" class="small px-1 text-bg-primary rounded"/>
+                            </main>
+                        </div>
+                        <div class="mt-1">
+                            <field name="subtitle" class="text-muted"/>
+                            <field name="topic_ids" widget="many2many_tags" readonly="True" class="mt-2"/>
+                        </div>
                     </t>
                 </templates>
             </kanban>
@@ -97,10 +91,10 @@
                             options="{'preview_image': 'image_128', 'size': [128, 128]}"/>
                         <div class="flex-grow-1">
                             <label for="name"/>
-                            <h1>
+                            <h1 class="mb-0">
                                 <field name="name" placeholder="e.g. SDR Advisor"/>
                             </h1>
-                            <h4 class="agent-subtitle">
+                            <h4>
                                 <field name="subtitle" placeholder="e.g. Get tips to close more sales"/>
                             </h4>
                         </div>
@@ -109,10 +103,12 @@
                         <group>
                             <field name="llm_model" widget="selection"/>
                             <field name="response_style" widget="radio" options="{'horizontal': true}"/>
-                            <field name="system_prompt" placeholder="e.g. You are a support operator, you can answer questions related to ..."/>
-                            <field name="restrict_to_sources"/>
-                            <field name="topic_ids" widget="many2many_tags" options="{'horizontal': true}"/>
                         </group>
+                    </group>
+                    <group>
+                        <field name="restrict_to_sources"/>
+                        <field name="topic_ids" widget="many2many_tags" options="{'horizontal': true}"/>
+                        <field name="system_prompt" placeholder="e.g. You are a support operator, you can answer questions related to ..."/>
                     </group>
                     <notebook>
                         <page string="Attachments" name="attachments">

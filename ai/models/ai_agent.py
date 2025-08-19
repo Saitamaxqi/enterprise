@@ -216,7 +216,7 @@ class AIAgent(models.Model):
         return selection
 
     name = fields.Char(string="Agent Name", related='partner_id.name', required=True, readonly=False)
-    subtitle = fields.Char(string="Subtitle")
+    subtitle = fields.Char(string="Description")
     system_prompt = fields.Text(string="System Prompt", help="Customize to control relevance and formatting.")
     response_style = fields.Selection(
         selection=[
@@ -239,6 +239,7 @@ class AIAgent(models.Model):
         string="Restrict to Sources",
         help="If checked, the agent will only respond based on the provided sources.")
     image_128 = fields.Image("Image", related="partner_id.image_1920", max_width=128, max_height=128, readonly=False)
+    avatar_128 = fields.Image("Avatar", related="partner_id.avatar_128")
     attachment_ids = fields.One2many(
         comodel_name='ir.attachment',
         inverse_name='res_id',
