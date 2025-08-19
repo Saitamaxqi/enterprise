@@ -57,6 +57,7 @@ export class AiPromptField extends Component {
 export const aiPrompt = {
     component: AiPromptField,
     supportedTypes: ["html"],
+    additionalClasses: ["d-inline"],
 
     extractProps: ({ attrs, options }) => {
         return {
