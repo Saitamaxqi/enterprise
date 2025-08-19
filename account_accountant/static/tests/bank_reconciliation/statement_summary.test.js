@@ -50,5 +50,5 @@ test("label in text danger when isValid set to False", async () => {
             amount: "$1,000.00",
         },
     });
-    expect("div.o_statement_summary > div > span").toHaveClass("text-danger");
+    expect("div.o_statement_summary > div > h4").toHaveClass("text-danger");
 });

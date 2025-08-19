@@ -105,7 +105,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget", {
         {
             content: "Unfold statement line",
             trigger:
-                "div[name=bank_statement_line]:contains(set partner):has(.fa-chevron-down):contains(150)",
+                "div[name=bank_statement_line]:contains(set partner):has(.oi-chevron-down):contains(150)",
             async run(helpers) {
                 await new Promise((resolve) => setTimeout(resolve, 1000));
                 await helpers.click();

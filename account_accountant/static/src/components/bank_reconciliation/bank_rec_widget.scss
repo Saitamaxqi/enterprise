@@ -3,10 +3,6 @@
     font-size: $o-font-size-base;
     overflow: hidden;
 
-    .hide-mobile {
-        display: none !important;
-    }
-
     .user-select-text {
         user-select: text;
     }
@@ -16,40 +12,17 @@
     }
 
     .o_bank_reconciliation_kanban_renderer {
+        --Kanban-padding: 0;
+
         overflow: auto;
 
-        .o_bank_reconciliation_quick_create {
-            .o_quick_create {
-                grid-template-columns: 90px minmax(70px, auto) 70px;
-                margin: 0;
-
-                .o_cell_custom:last-child {
-                    grid-column: 1/4;
-                    margin: 0 !important;
-                }
-            }
-        }
-
-        .o_statement_summary {
-            padding: 0 15px;
-            margin: 15px 0;
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
         .o_statement_line {
-            border-left: 3px solid transparent;
-            padding-left: 3px;
-            box-sizing: border-box;
+            border-left: calc(#{$border-width} * 4) solid transparent;
 
             .o_grid_container {
                 display: grid;
                 grid-template-columns: 130px minmax(70px, auto) 110px;
-                gap: 5px;
-                line-height: 32px;
+                gap: map-get($spacers, 1);
 
                 .o_row {
                     display: contents;
@@ -60,13 +33,12 @@
 
                     .activity-badge {
                         margin-right: -.5em;
-                        border: 0;
-                        padding: 3px 6px;
-                        background-color: var(--o-navbar-badge-bg, #dc3545);
-                        font-size: 0.7em;
-                        color: var(--o-navbar-badge-color, #FFF);
-                        text-shadow: var(--o-navbar-badge-text-shadow, none);
-                        transform: translate(-0.8em, -30%);
+                        padding: ($o-navbar-badge-padding * .5) $o-navbar-badge-padding;
+                        background-color: var(--o-navbar-badge-bg, #{$o-navbar-badge-bg});
+                        font-size: $o-navbar-badge-size;
+                        color: var(--o-navbar-badge-color, $o-navbar-badge-color);
+                        text-shadow: var(--o-navbar-badge-text-shadow, #{$o-navbar-badge-text-shadow});
+                        transform: translate(-0.6em, -30%);
                     }
 
                     .o_payment_ref {
@@ -83,13 +55,6 @@
                 }
             }
 
-            .o_button_count {
-                padding: 0 3px;
-                border-radius: 3px;
-                background-color: $white;
-                color: var(--body-color);
-            }
-
             .o_button_line {
                 grid-column: 1 / 3;
             }
@@ -103,127 +68,96 @@
             }
 
             &.o_selected_statement_line {
-                border-left: 3px solid $link-color;
+                border-color: $primary;
             }
         }
     }
 }
 
 
-@media only screen and (min-width: 760px) {
-    .o_bank_reconciliation_container {
-        font-size: $o-font-size-base;
-
-        .hide-desktop {
-            display: none !important;
-        }
-
-        .hide-mobile {
-            display: initial !important;
-        }
-
-        .o_bank_rec_widget_chatter_container {
-            border-left: 1px solid var(--border-color);
-            .o-mail-Chatter-topbar {
-                padding-top: 0.25rem;
-            }
-            .o-mail-ActivityList {
-                padding-left: 0.25rem;
-            }
-            &.o-mail-ChatterContainer.o-aside {
-                width: calc(#{$o-mail-Chatter-minWidth} + 20px + var(--Chatter-asideExtraWidth));
-            }
-        }
-
+.o_bank_reconciliation_container {
+    @include media-breakpoint-up(md) {
         .o_bank_reconciliation_kanban_renderer {
-            .o_bank_reconciliation_quick_create {
-                padding: 10px !important;
-                .o_quick_create {
-                    grid-template-columns: 90px 2fr 1fr 1fr;
-                    .o_cell_custom:last-child {
-                        grid-column: 4;
-                        margin: 0 !important;
+            .o_statement_line .o_grid_container {
+                grid-template-columns: 90px 2fr 1fr 2fr 1.5fr 40px;
+                column-gap: map-get($spacers, 3);
+                row-gap: map-get($spacers, 2);
+                line-height: 24px;
+
+                .o_row {
+                    .o_line_name {
+                        grid-column: 2 / 3;
                     }
+
+                    .o_payment_ref {
+                        grid-column: 2 / 3;
+                    }
+
+                    .o_line_amount {
+                        grid-column: 5 / 6;
+                    }
+
+                    .o_line_to_reconcile_button {
+                        grid-column: 6 / 7;
+                    }
+
+                    .o_top_button_line {
+                        display: flex !important;
+                        gap: 5px;
+                        align-items: center;
+                    }
+                }
+
+                .o_button_line {
+                    grid-column: 2 / 5;
+                }
+
+                .o_statement_line_divider {
+                    grid-column: 2 / 7;
+                    height: $border-width;
+                    background-color: var(--border-color);
+                }
+
+                .o_partner_button {
+                    grid-column: 3 / 3;
                 }
             }
 
-            .o_statement_line {
-                padding: 10px;
+            .statement_separator {
+                position: absolute;
+                height: 4px;
+                padding-top: 2px;
+                padding-right: 25px;
+                z-index: 2;
 
-                .o_grid_container {
-                    grid-template-columns: 90px 2fr 1fr 2fr 1.5fr 30px;
-                    column-gap: 10px;
-                    line-height: 24px;
-
-                    .o_row {
-                        .o_line_name {
-                            grid-column: 2 / 3;
-                        }
-
-                        .o_payment_ref {
-                            grid-column: 2 / 3;
-                        }
-
-                        .o_line_amount {
-                            grid-column: 5 / 6;
-                        }
-
-                        .o_line_to_reconcile_button {
-                            grid-column: 6 / 7;
-                            display: flex !important;
-                            justify-content: space-between;
-                            align-items: center;
-                        }
-
-                        .o_top_button_line {
-                            display: flex !important;
-                            gap: 5px;
-                            align-items: center;
-                        }
-                    }
-
-                    .o_button_line {
-                        grid-column: 2 / 5;
-                    }
-
-                    .o_partner_button {
-                        grid-column: 3 / 3;
-                    }
+                .btn-sm {
+                    position: relative;
+                    padding: 0 2px;
+                    transform: translateY(-15px) translateX(10px);
+                    opacity: 0;
                 }
             }
 
-            .o_kanban_record {
-                &:hover {
-                    .statement_separator .btn-sm {
-                       opacity: 1;
-                   }
-                }
-                .statement_separator {
-                    position: absolute;
-                    height: 4px;
-                    padding-top: 2px;
-                    padding-right: 25px;
-                    z-index: 2;
-
-                    .btn-sm {
-                        position: relative;
-                        padding: 0 2px;
-                        transform: translateY(-15px) translateX(10px);
-                        opacity: 0;
-                    }
-                }
-            }
             .o_kanban_record:not(.o_kanban_ghost) {
                 border: 0;
                 border-bottom: 1px solid lightgrey;
                 padding: 0;
                 margin:0;
                 width: 100%;
-                &:focus {
-                    outline: none;
-                    box-shadow: inset 0 0 0 2px var(--KanbanColumn__highlight-selected-border);
+
+                &:hover {
+                    .statement_separator .btn-sm {
+                        opacity: 1;
+                    }
                 }
             }
+        }
+    }
+
+    &:where(:has(.o_bank_rec_widget_chatter_container)) {
+        .o_kanban_record:focus, .o_kanban_record:has(.o_selected_statement_line) {
+            outline: none;
+            box-shadow: inset 0 0 0 1px $primary;
         }
     }
 }

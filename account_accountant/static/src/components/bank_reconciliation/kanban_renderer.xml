@@ -53,13 +53,12 @@
 
         <xpath expr="//div[hasclass('o_kanban_renderer')]" position="after">
             <div t-if="bankReconciliation.chatterState.visible and !ui.isSmall"
-                 class="o_bank_rec_widget_chatter_container o-mail-ChatterContainer h-100 o-aside d-flex flex-column"
+                 class="o_bank_rec_widget_chatter_container o-mail-ChatterContainer h-100 o-aside d-flex flex-column border-start"
             >
                 <BankRecChatter
                     statementLine="bankReconciliation.chatterState.statementLine"
                     threadId="bankReconciliation.statementLineMoveId"
                     threadModel="'account.move'"
-                    compactHeight="true"
                     isChatterAside="!ui.isSmall"
                     hasParentReloadOnActivityChanged="true"
                     hasParentReloadOnAttachmentsChanged="true"
