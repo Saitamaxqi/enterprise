@@ -4,7 +4,7 @@ import { isComponentNode, appendAttr } from "@web/views/view_compiler";
 const nodeWeak = new WeakMap();
 
 export function countPreviousSiblings(node) {
-    const countXpath = `count(preceding-sibling::${node.tagName})`;
+    const countXpath = `count(preceding-sibling::${node.tagName}[not(@data-used-by)])`;
     return node.ownerDocument.evaluate(countXpath, node, null, XPathResult.NUMBER_TYPE).numberValue;
 }
 

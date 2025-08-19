@@ -29,6 +29,9 @@ class EditorArchParser extends listView.ArchParser {
 
     parseFieldNode(node, models, modelName) {
         const parsed = super.parseFieldNode(...arguments);
+        if (node.hasAttribute("data-used-by")) {
+            return parsed;
+        }
         parsed.studioXpath = computeXpath(node, "list, tree");
         parsed.studio_groups = parseStudioGroups(node);
         return parsed;

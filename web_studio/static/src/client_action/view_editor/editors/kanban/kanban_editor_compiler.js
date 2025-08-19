@@ -7,7 +7,7 @@ const interestingSelector = [
     "div",
     "aside",
     "footer",
-    "field",
+    "field:not([data-used-by])",
     "main",
     "kanban",
     "widget",
@@ -192,6 +192,9 @@ export class KanbanEditorCompiler extends KanbanCompiler {
     }
 
     compileNode(node, params) {
+        if (node.tagName === "field" && node.hasAttribute("data-used-by")) {
+            return;
+        }
         let compiled;
         if (node.getAttribute?.("t-name") === "card") {
             compiled = this.compileCard(node);

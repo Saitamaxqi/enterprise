@@ -2196,3 +2196,86 @@ registry.category("web_tour.tours").add("web_studio_test_subview_multiple_occure
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_automagically_added_fields", {
+    steps: () => [
+        {
+            trigger: ".o_list_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_editor_manager .o_list_view",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_view",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar input[name='show_invisible']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_editor_manager .o_list_view .o_web_studio_show_invisible",
+            run: () => {
+                const allTh = document.querySelectorAll(".o_list_view th:not(.o_web_studio_hook)");
+                assertEqual([...allTh].map((th) => th.textContent).toString(), "Display Name,Name");
+            },
+        },
+        {
+            trigger: ".o_web_studio_views_icons a[title='Kanban']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_editor_manager .o_kanban_view",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_view",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar input[name='show_invisible']",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_web_studio_editor_manager .o_kanban_record:has(.o_web_studio_show_invisible)",
+            run() {
+                const allInvisible = [...document.querySelectorAll(".o_web_studio_show_invisible")];
+                assertEqual(allInvisible.length, 2);
+                assertEqual(
+                    allInvisible.map((el) => el.getAttribute("name")).toString(),
+                    "display_name,name"
+                );
+            },
+        },
+        {
+            trigger: ".o_web_studio_views_icons a[title='Form']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_editor_manager .o_form_view",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_view",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar input[name='show_invisible']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_editor_manager .o_form_view:has(.o_web_studio_show_invisible)",
+            run() {
+                const allInvisible = [...document.querySelectorAll(".o_field_widget")];
+                assertEqual(allInvisible.length, 2);
+                assertEqual(
+                    allInvisible.map((el) => el.getAttribute("name")).toString(),
+                    "display_name,name"
+                );
+            },
+        },
+    ],
+});

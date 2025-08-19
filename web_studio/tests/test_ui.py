@@ -2135,3 +2135,60 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.start_tour("/odoo?debug=tests", 'web_studio_test_create_action_in_form_view', login="admin")
         action.unlink()
         self.start_tour("/odoo?debug=tests", 'web_studio_test_remove_action_in_form_view', login="admin")
+
+    def test_automagically_added_fields(self):
+        form = self.env["ir.ui.view"].create({
+            "name": "pForm",
+            "model": "res.partner",
+            "type": "form",
+            "arch": """
+                <form>
+                    <group>
+                        <field name="display_name" invisible="not function" />
+                        <field name="name" invisible="1"/>
+                    </group>
+                </form>
+            """,
+        })
+
+        list_view = self.env["ir.ui.view"].create({
+            "name": "pList",
+            "model": "res.partner",
+            "type": "list",
+            "arch": """
+                <list>
+                    <field name="display_name" invisible="not function" />
+                    <field name="name" invisible="1"/>
+                </list>
+            """,
+        })
+
+        kanban = self.env["ir.ui.view"].create({
+            "name": "pList",
+            "model": "res.partner",
+            "type": "kanban",
+            "arch": """
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <field name="display_name" invisible="not function" widget="char" />
+                        <field name="name" invisible="1" widget="char"/>
+                    </t>
+                </templates>
+            </kanban>
+            """,
+        })
+
+        all_views = [list_view, form, kanban]
+
+        res = self.env["res.partner"].get_views([[v.id, v.type] for v in all_views])
+        self.assertEqual(len(res["views"]), 3)
+        for v in res["views"].values():
+            tree = etree.fromstring(v["arch"])
+            added = tree.xpath("//field[@name='function']")[0]
+            self.assertTrue(added.get("data-used-by"))
+            self.assertEqual(added.getparent(), tree)
+            self.assertEqual(added.getnext(), None)
+
+        self.testAction.view_ids = [Command.clear()] + [Command.create({"view_mode": v.type, "view_id": v.id}) for v in all_views]
+        self.start_tour(f"/odoo/action-{self.testAction.id}?debug=tests", "web_studio_test_automagically_added_fields", login="admin")

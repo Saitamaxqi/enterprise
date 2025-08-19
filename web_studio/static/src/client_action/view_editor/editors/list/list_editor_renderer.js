@@ -128,6 +128,7 @@ export class ListEditorRenderer extends listView.Renderer {
 
     get allColumns() {
         let cols = this._allColumns;
+        cols = cols.filter((c) => !c.attrs?.["data-used-by"]);
         if (this.viewEditorModel.showInvisible) {
             cols = cols.map((c) => ({
                 ...c,
