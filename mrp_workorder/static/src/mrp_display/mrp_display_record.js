@@ -105,7 +105,7 @@ export class MrpDisplayRecord extends Component {
     }
 
     get cssClass() {
-        const active = this.active ? "o_active" : "";
+        const active = this.props.record.data.employee_ids.records.length ? "o_active" : "";
         const disabled = this.disabled ? "o_disabled" : "";
         const demo = this.props.demoRecord ? "o_demo" : "";
         return `${active} ${disabled} ${demo}`;
@@ -183,6 +183,14 @@ export class MrpDisplayRecord extends Component {
         return this.props.production.data.log_note;
     }
 
+    get showAssignedEmployees(){
+        return this.props.record.resModel === 'mrp.workorder'
+            && !this.props.isMyWO
+            && !this.record.is_user_working
+            && this.record.employee_assigned_ids
+            && this.record.employee_assigned_ids.resIds.length < 14;
+    }
+
     subRecordProps(subRecord) {
         const props = {
             clickable: !this.state.underValidation && !this.disabled,
@@ -225,6 +233,7 @@ export class MrpDisplayRecord extends Component {
             props.clickable =
                 subRecord.data.state !== "done" &&
                 this.props.workcenters.map((wc) => wc.id).includes(subRecord.data.workcenter_id.id);
+            props.sessionOwnerId = this.props.sessionOwner.id;
         }
         return props;
     }

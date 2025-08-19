@@ -9,6 +9,7 @@ export class MrpWorkorder extends Component {
         clickable: Boolean,
         record: Object,
         selectWorkcenter: { optional: true, type: Function },
+        sessionOwnerId: { optional: true, type: Number },
     };
 
     get active() {
@@ -17,6 +18,10 @@ export class MrpWorkorder extends Component {
 
     get isComplete() {
         return this.props.record.data.state === "done";
+    }
+
+    get isEmployeeAssigned(){
+        return this.props.record.data.employee_assigned_ids?.resIds.includes(this.props.sessionOwnerId)
     }
 
     get workcenter() {
