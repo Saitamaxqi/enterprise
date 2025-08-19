@@ -99,7 +99,7 @@
                                 <field class="o_hr_narrow_field" name="final_yearly_costs" nolabel="1" invisible="budget_type == 'monthly_gross'"/>
                                 <field name="budget_type" nolabel="1" required="1"/>
                             </div>
-                            <field name="structure_id" required="1"/>
+                            <field name="structure_id" required="1" options="{'no_open': True}"/>
                             <field name="resource_calendar_id" required="1"/>
                             <label for="simulation_employee_id" string="Employee"/>
                             <field name="simulation_employee_id" placeholder="Optional" nolabel="1"/>
