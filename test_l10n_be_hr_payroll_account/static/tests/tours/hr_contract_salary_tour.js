@@ -748,6 +748,14 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             trigger: 'span[name="Gross"][value="2671.14"]',
         },
         {
+            content: "Take Extra-Legal Leaves",
+            trigger: 'input[list="holidays_range"]',
+            run: "range 3",
+        },
+        {
+            trigger: 'span[name="Gross"][value="2629.19"]',
+        },
+        {
             content: "submit",
             trigger: "button#hr_cs_submit",
             run: "click",
