@@ -727,25 +727,26 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
 
     def _get_billing_reference_node(self, invoice):
         """Get the BillingReference node for credit/debit notes."""
+        reference_invoice = None
         if invoice.l10n_co_edi_operation_type == '20' or invoice.move_type == 'in_refund':
             reference_invoice = invoice.reversed_entry_id
             scheme_name = "CUDS" if invoice.move_type == 'in_refund' else "CUFE"
         elif invoice.l10n_co_edi_operation_type == '30':
             reference_invoice = invoice.debit_origin_id
             scheme_name = "CUFE"
-        else:
-            return None
 
-        return {
-            'cac:InvoiceDocumentReference': {
-                'cbc:ID': {'_text': reference_invoice.name},
-                'cbc:UUID': {
-                    '_text': reference_invoice.l10n_co_edi_cufe_cude_ref,
-                    'schemeName': f"{scheme_name}-SHA384"
-                },
-                'cbc:IssueDate': {'_text': reference_invoice.invoice_date.isoformat()},
+        if reference_invoice:
+            return {
+                'cac:InvoiceDocumentReference': {
+                    'cbc:ID': {'_text': reference_invoice.name},
+                    'cbc:UUID': {
+                        '_text': reference_invoice.l10n_co_edi_cufe_cude_ref,
+                        'schemeName': f"{scheme_name}-SHA384"
+                    },
+                    'cbc:IssueDate': {'_text': reference_invoice.invoice_date.isoformat()},
+                }
             }
-        }
+        return None
 
     # -------------------------------------------------------------------------
     # EXPORT: Templates for invoice amount nodes

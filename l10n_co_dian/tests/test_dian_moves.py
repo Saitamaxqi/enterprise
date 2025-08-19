@@ -2,6 +2,7 @@ from datetime import datetime
 from lxml import etree
 
 from odoo import Command
+from odoo.exceptions import UserError
 from odoo.tests import tagged, freeze_time
 from .common import TestCoDianCommon
 from odoo.addons.l10n_co_edi.models.account_invoice import L10N_CO_EDI_TYPE
@@ -536,3 +537,26 @@ class TestDianMoves(TestCoDianCommon):
         xml = self._generate_xml(credit_note)
         self.env['l10n_co_dian.document']._create_document(xml, credit_note, state='invoice_accepted')
         self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/credit_note_foreign_currency.xml")
+
+    def test_send_confirmed_move(self):
+        """ Test that sending a confirmed invoice with operation type '30' and no debit origin raises error without crashing. """
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'price_unit': 100,
+                    'tax_ids': [Command.set([self.tax_iva_19.id])],
+                }),
+            ],
+        })
+        invoice.l10n_co_edi_operation_type = '30'
+        invoice.action_post()
+
+        self.assertEqual(invoice.state, 'posted')
+        self.assertEqual(invoice.l10n_co_edi_operation_type, '30')
+        self.assertFalse(invoice.debit_origin_id)
+
+        with self.assertRaisesRegex(UserError, "There is no original debited invoice but the operation type is '30'."):
+            self._mock_send_and_print(move=invoice, response_file='SendTestSetAsync.xml')
