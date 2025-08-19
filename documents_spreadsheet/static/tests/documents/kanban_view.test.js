@@ -21,6 +21,7 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { download } from "@web/core/network/download";
 import { SearchPanel } from "@web/search/search_panel/search_panel";
+import { createSpreadsheetWithList } from "@spreadsheet/../tests/helpers/list";
 
 describe.current.tags("desktop");
 defineDocumentSpreadsheetModels();
@@ -168,6 +169,46 @@ test("Freeze&Share a spreadsheet", async () => {
     });
     await contains("button:contains(Freeze and share)").click();
     expect.verifySteps(["spreadsheet_shared", "open_share"]);
+});
+
+test("Freeze&Share a spreadsheet with an odoo list", async function () {
+    const { model } = await createSpreadsheetWithList();
+    const serverData = getTestServerData();
+    mockService("document.document", {
+        openSharingDialog: () => {
+            expect.step("open_share");
+        },
+    });
+    onRpc(
+        "/spreadsheet/data/documents.document/2",
+        () => ({
+            data: model.exportData(),
+            revisions: [],
+        }),
+        {
+            pure: true,
+        }
+    );
+    await makeDocumentsSpreadsheetMockEnv({
+        serverData,
+        mockRPC: async function (route, args) {
+            if (args.method === "action_freeze_and_copy") {
+                return { id: 1234 };
+            }
+        },
+    });
+    await mountView({
+        type: "kanban",
+        resModel: "documents.document",
+        arch: basicDocumentKanbanArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+    expect(".spreadsheet_share_dropdown").toHaveCount(0);
+    await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click({
+        ctrlKey: true,
+    });
+    await contains("button:contains(Freeze and share)").click();
+    expect.verifySteps(["open_share"]);
 });
 
 test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", async () => {
