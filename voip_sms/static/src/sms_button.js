@@ -22,7 +22,7 @@ export class SmsButton extends Component {
     onClick(ev) {
         const action = {
             type: "ir.actions.act_window",
-            name: _t("Send an SMS"),
+            name: _t("Send text message"),
             res_model: "sms.composer",
             views: [[false, "form"]],
             target: "new",
