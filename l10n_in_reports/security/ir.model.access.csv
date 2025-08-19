@@ -3,3 +3,4 @@ l10n_in_gst_return_period,l10n_in.gst.return.period,model_l10n_in_gst_return_per
 l10n_in_gst_otp_validation,l10n_in_gst_otp_validation,model_l10n_in_gst_otp_validation,account.group_account_manager,1,1,1,1
 access_enet_template,access.enet.template,model_enet_template,base.group_user,1,0,0,0
 access_enet_bank_template,access.enet.bank.template,model_enet_bank_template,base.group_user,1,0,0,0
+access_gstr_document_summary_line,access_gstr_document_summary_line,model_l10n_in_gstr_document_summary_line,account.group_account_manager,1,1,1,1

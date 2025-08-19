@@ -75,6 +75,20 @@
         ]
     },
     "doc_issue": {
-        "doc_det": []
+        "doc_det": [
+            {
+                "doc_num": 1,
+                "docs": [
+                    {
+                        "cancel": 0,
+                        "from": "INV/23-24/0001",
+                        "net_issue": 1,
+                        "num": 1,
+                        "to": "INV/23-24/0001",
+                        "totnum": 1
+                    }
+                ]
+            }
+        ]
     }
 }

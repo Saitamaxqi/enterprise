@@ -117,6 +117,19 @@
                             <ol id="gstr1-list" style="list-style-type:decimal">
                                 <li>Verify the <button name="action_view_gstr1_return_period" type="object" class="btn btn-link p-0" string="GSTR-1 Report"/>
                                 </li>
+                                <li>
+                                    <span invisible="document_summary_line_ids or gstr1_status == 'filed'">
+                                        <button name="action_generate_document_summary" class="btn btn-link p-0" type="object" string="Generate Document Summary"/>
+                                    </span>
+                                    <span invisible="not document_summary_line_ids or gstr1_status == 'filed'">
+                                        <button name="action_generate_document_summary" class="btn btn-link p-0" type="object" string="Regenerate Document Summary"/>
+                                    </span>
+                                    <span invisible="gstr1_status != 'filed'">
+                                        Generate Document summary
+                                    </span>
+                                        and
+                                    <button name="action_open_document_summary" class="btn btn-link p-0" type="object" string="View"/>
+                                </li>
 
                                 <li invisible="gstr1_blocking_level not in ['error', 'warning']">Error, <button name="button_send_gstr1" type="object" class="btn btn-link p-0" string="Re-Push to GSTN"/> or <button name="button_check_gstr1_status" type="object" class="btn btn-link p-0" string="Check Status"/>
                                 </li>

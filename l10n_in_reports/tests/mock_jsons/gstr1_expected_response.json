@@ -446,6 +446,33 @@
         ]
     },
     "doc_issue": {
-        "doc_det": []
+        "doc_det": [
+            {
+                "doc_num": 1,
+                "docs": [
+                    {
+                        "cancel": 0,
+                            "from": "INV/23-24/0001",
+                            "net_issue": 14,
+                            "num": 1,
+                            "to": "INV/23-24/0014",
+                            "totnum": 14
+                    }
+                ]
+            },
+            {
+                "doc_num": 5,
+                    "docs": [
+                        {
+                            "cancel": 0,
+                            "from": "RINV/23-24/0001",
+                            "net_issue": 11,
+                            "num": 1,
+                            "to": "RINV/23-24/0011",
+                            "totnum": 11
+                        }
+                    ]
+            }
+        ]
     }
 }

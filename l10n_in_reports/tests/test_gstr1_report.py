@@ -107,12 +107,15 @@ class TestReports(L10nInTestAccountReportsCommon):
         b2b_sez_invoice_gst_and_nil_rated_tax.action_post()
 
     def _create_gstr_report(self, company=None, periodicity='monthly', year=None, month=None):
-        return self.env['l10n_in.gst.return.period'].create({
+        gstr_report = self.env['l10n_in.gst.return.period'].create({
             'company_id': (company or self.default_company).id,
             'periodicity': periodicity,
             'year': year or self.test_date.strftime('%Y'),
             'month': month or self.test_date.strftime('%m'),
         })
+        # Generate Document Summary for the following gstr report.
+        gstr_report.action_generate_document_summary()
+        return gstr_report
 
     def test_gstr1_b2b_summary(self):
         report = self.env.ref('l10n_in_reports.account_report_gstr1')
