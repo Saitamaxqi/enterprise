@@ -180,6 +180,18 @@ class FedexRequest:
 
         return response_data['access_token']
 
+    def _parse_state_code(self, state_code, country_code):
+        if country_code == 'CH':
+            # For Switzerland, keep the part before the hyphen
+            return state_code.split('-')[0]
+        else:
+            # For other countries, keep the part after the hyphen
+            split_code = state_code.split('-')
+            if split_code[0] == country_code:
+                return split_code[1]
+            else:
+                return state_code
+
     def _get_location_from_partner(self, partner, check_residential=False):
         res = {'countryCode': partner.country_id.code}
         if partner.city:
@@ -187,7 +199,7 @@ class FedexRequest:
         if partner.zip:
             res['postalCode'] = partner.zip
         if partner.state_id:
-            state_code = partner.state_id.code
+            state_code = self._parse_state_code(partner.state_id.code, partner.country_id.code)
         # need to adhere to two character length state code
             if partner.country_id.code == 'MX':
                 state_code = FEDEX_MX_STATE_MATCH[state_code]
