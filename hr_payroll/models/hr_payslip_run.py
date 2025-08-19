@@ -278,13 +278,6 @@ class HrPayslipRun(models.Model):
             search_default_payslip_run_id=self.id or False)
         return action
 
-    def action_open_off_cycle(self):
-        action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_view_hr_payslip_month_form')
-        action['context'] = dict(
-            literal_eval(action["context"]),
-            search_default_filter_off_cycle=1)
-        return action
-
     def action_payroll_hr_version_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):
         action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_payroll_hr_version_list_view_payrun')
 

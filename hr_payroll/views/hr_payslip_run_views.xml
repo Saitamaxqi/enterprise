@@ -33,9 +33,6 @@
                 records_draggable="0"
                 js_class="payslip_run_kanban"
                 group_create="false">
-                <header>
-                    <button name="action_open_off_cycle" type="object" string="See Off-Cycle" display="always"/>
-                </header>
                 <field name="color"/>
                 <field name="currency_id"/>
                 <field name="payment_report_format"/>
