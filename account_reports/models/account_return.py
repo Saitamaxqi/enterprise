@@ -448,15 +448,17 @@ class AccountReturn(models.Model):
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
     type_id = fields.Many2one(comodel_name='account.return.type', string="Return Type", required=True)
+
+    # IMPORTANT: To change the state of a return you should always use the field state as it will rewrite the value in the correct field implementation using 'get_state_field'
     state = fields.Char(string="State", compute="_compute_state", inverse="_inverse_state")
     next_state = fields.Char(string="Next State", compute="_compute_next_state")
     generic_state_tax_report = fields.Selection(
         string="Generic State",
         selection=[
             ('new', 'New'),
-            ('reviewed', 'Reviewed'),
-            ('submitted', 'Submitted'),
-            ('paid', 'Paid'),
+            ('reviewed', 'Review'),
+            ('submitted', 'Submit'),
+            ('paid', 'Pay'),
         ],
         default='new',
         help="The state of the return for generic tax report flows",
@@ -466,7 +468,7 @@ class AccountReturn(models.Model):
         string="Generic State Only Pay",
         selection=[
             ('new', 'New'),
-            ('paid', 'Paid'),
+            ('paid', 'Pay'),
         ],
         default='new',
         help="The state of the return for report flows when only payment is needed",
@@ -476,11 +478,21 @@ class AccountReturn(models.Model):
         string="Generic State Review Submit",
         selection=[
             ('new', 'New'),
-            ('reviewed', 'Reviewed'),
-            ('submitted', 'Submitted'),
+            ('reviewed', 'Review'),
+            ('submitted', 'Submit'),
         ],
         default='new',
         help="The state of the return for report flows when review and submission are needed",
+        tracking=True,
+    )
+    generic_state_review = fields.Selection(
+        string="Generic State Review",
+        selection=[
+            ('new', 'New'),
+            ('reviewed', 'Review'),
+        ],
+        default='new',
+        help="The default state for audit and custom generated return types",
         tracking=True,
     )
     is_completed = fields.Boolean(string="Is Completed", default=False, tracking=True)  # Set to true when all steps are done
@@ -514,6 +526,7 @@ class AccountReturn(models.Model):
     show_companies = fields.Boolean(compute="_compute_show_companies")
     is_main_company_active = fields.Boolean(compute="_compute_is_main_company_active")
     return_type_category = fields.Selection(related="type_id.category")
+    visible_states = fields.Json(string="Visible States", compute="_compute_visible_states")
 
     # Audit
     audit_status = fields.Selection(
@@ -526,16 +539,7 @@ class AccountReturn(models.Model):
         required=True,
         tracking=True,
     )
-    audit_return_state = fields.Selection(
-        string="Audit State",
-        selection=[
-            ('new', 'New'),
-            ('reviewed', 'Reviewed'),
-        ],
-        default='new',
-        help="The state of the return for audit",
-        tracking=True,
-    )
+
     audit_account_status_ids = fields.One2many(string="Account Status", comodel_name='account.audit.account.status', inverse_name='audit_id')
     audit_balances_count = fields.Integer(string="Balances Count", compute="_compute_audit_balances_count")
     audit_balances_completed_count = fields.Integer(string="Completed Balances Count", compute="_compute_audit_balances_completed_count")
@@ -646,7 +650,7 @@ class AccountReturn(models.Model):
         for record in self:
             record.show_amount_to_pay = record.is_tax_return and record.closing_move_ids
 
-    @api.depends('type_id', 'generic_state_tax_report', 'generic_state_only_pay', 'generic_state_review_submit')
+    @api.depends('type_id')
     def _compute_state(self):
         for record in self:
             record.state = record[record._get_state_field()]
@@ -664,6 +668,24 @@ class AccountReturn(models.Model):
     def _inverse_state(self):
         for record in self:
             record[record._get_state_field()] = record.state
+
+    @api.depends('type_id', 'state')
+    def _compute_visible_states(self):
+        for record in self:
+            current_state = record.state
+            visible_states = []
+            active = True
+            for state, label in self._fields[record._get_state_field()].selection:
+                if state == current_state:
+                    active = False
+
+                if state != 'new':
+                    visible_states.append({
+                        'active': active or state == current_state or record.is_completed,
+                        'name': state,
+                        'label': label,
+                    })
+            record.visible_states = visible_states
 
     @api.depends('tax_unit_id', 'company_id')
     def _compute_amount_to_pay_currency_id(self):
@@ -860,8 +882,8 @@ class AccountReturn(models.Model):
         self.ensure_one()
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
             return 'generic_state_review_submit'
-        elif self.return_type_category == 'audit':
-            return 'audit_return_state'
+        elif not self.type_external_id or self.return_type_category == 'audit':
+            return 'generic_state_review'
         return 'generic_state_tax_report'
 
     def action_validate(self, bypass_failing_tests=False):

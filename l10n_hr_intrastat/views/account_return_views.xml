@@ -5,12 +5,6 @@
         <field name="model">account.return</field>
         <field name="inherit_id" ref="account_reports.account_return_kanban_view"/>
         <field name="arch" type="xml">
-            <t id="account_tax_return_states" position="after">
-                <t t-if="record.type_external_id.raw_value == 'l10n_hr_intrastat.hr_intrastat_goods_return_type'"
-                   t-set="states"
-                   t-value="[{value: 'reviewed', display: reviewedLabel}, {value: 'submitted', display: submittedLabel}]"/>
-            </t>
-
             <a name="action_reset_tax_return_common" position="after">
                 <a invisible="state == 'new' and not is_completed or type_external_id != 'l10n_hr_intrastat.hr_intrastat_goods_return_type'"
                    class="dropdown-item"

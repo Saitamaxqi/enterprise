@@ -21,6 +21,7 @@
                     <field name="days_to_deadline"/>
                     <field name="return_type_category"/>
                     <field name="manually_created"/>
+                    <field name="visible_states"/>
 
                     <t t-name="card" class="p-0 w-100">
                         <div class="w-100 p-2 px-3" >
@@ -56,19 +57,10 @@
 
                                 <!-- States bar -->
                                 <div class="col-12 col-lg-3 o_account_return_state">
-                                    <t t-set="reviewedLabel">Review</t>
-                                    <t t-set="submittedLabel">Submit</t>
-                                    <t t-set="paidLabel">Pay</t>
-                                    <t id="account_tax_return_states" t-set="states"
-                                       t-value="[{value: 'reviewed', display:reviewedLabel}, {value: 'submitted', display:submittedLabel}, {value: 'paid', display:paidLabel}]"/>
-                                    <t t-if="record.type_external_id.raw_value == 'account_reports.annual_corporate_tax_return_type'" t-set="states" t-value="[{value: 'reviewed', display:reviewedLabel}, {value: 'submitted', display:submittedLabel}]"/>
-                                    <t t-if="record.type_external_id.raw_value == false || record.return_type_category.raw_value === 'audit'" t-set="states" t-value="[{value: 'reviewed', display:reviewedLabel}]"/>
-
-                                    <t t-set="index" t-value="states.findIndex((state) => state.value === record.state.raw_value)"/>
-                                    <t t-foreach="states" t-as="state" t-key="state.value">
-                                        <div class="state-container" t-att-class="{'active': index &gt;= state_index || record.is_completed.raw_value}">
+                                    <t t-foreach="record.visible_states.raw_value" t-as="state" t-key="state.name">
+                                        <div class="state-container" t-att-class="{'active': state.active}">
                                             <div class="state-bubble"/>
-                                            <span class="state-label" t-esc="state.display"/>
+                                            <span class="state-label" t-esc="state.label"/>
                                         </div>
                                     </t>
                                 </div>
