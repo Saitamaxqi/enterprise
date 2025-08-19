@@ -42,14 +42,23 @@ class TestBRMockedRequests(TransactionCase):
         expected_communications = iter(expected_communications)
 
         def mocked_l10n_br_iap_request(self, route, company, json=None):
+            edi_installed = self.env['ir.module.module']._get('l10n_br_edi').state == 'installed'
 
             def replace_ignore(dict_to_replace):
                 """Replace `___ignore___` in the expected request JSONs by unittest.mock.ANY,
-                which is equal to everything."""
+                which is equal to everything. In addition, itemCode is always added to all tax
+                requests if l10n_br_edi is installed. This means that a test case could pass with
+                a specific file if only l10n_br_avatax is installed but fail if l10n_br_edi
+                is also installed (or vise versa). As such, we skip it if edi is not installed that
+                way we don't need to duplicate input files."""
+                new_dict = {}
                 for k, v in dict_to_replace.items():
+                    if k == 'itemCode' and not edi_installed:
+                        continue
                     if v == "___ignore___":
-                        dict_to_replace[k] = mock.ANY
-                return dict_to_replace
+                        v = mock.ANY
+                    new_dict[k] = v
+                return new_dict
 
             expected_route, expected_request_filename, expected_response_filename = next(expected_communications)
             test_case.assertEqual(route, expected_route)
