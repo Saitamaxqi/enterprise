@@ -66,11 +66,11 @@ export class Registerer {
             switch (response.message.statusCode) {
                 case 401: // Unauthorized
                     return _t(
-                        "The server failed to authenticate you. Please have an administrator verify that you are reaching the right server (PBX server IP in the General Settings) and that the credentials in your user preferences are correct."
+                        "The server failed to authenticate you. Please have an administrator verify that you are reaching the right server (PBX server IP in the VoIP Provider Settings) and that the credentials in your user preferences are correct."
                     );
                 case 503: // Service Unavailable
                     return _t(
-                        "The error may come from the transport layer. Please have an administrator verify the websocket server URL in the General Settings. If the problem persists, this is probably an issue with the server."
+                        "The error may come from the transport layer. Please have an administrator verify the websocket server URL in the VoIP Provider Settings. If the problem persists, this is probably an issue with the server."
                     );
                 default:
                     return _t(

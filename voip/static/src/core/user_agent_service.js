@@ -284,7 +284,7 @@ export class UserAgent extends Reactive {
         } catch {
             this.voip.triggerError(
                 _t(
-                    "The user agent could not be started. The websocket server URL may be incorrect. Please have an administrator check the websocket server URL in the General Settings."
+                    "The user agent could not be started. The websocket server URL may be incorrect. Please have an administrator check the websocket server URL in the VoIP Provider Settings."
                 )
             );
             return;
