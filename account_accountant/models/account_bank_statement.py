@@ -10,7 +10,7 @@ from odoo import Command, _, api, fields, models, modules, SUPERUSER_ID
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL
-from odoo.addons.base.models.res_bank import sanitize_account_number
+from odoo.addons.account.tools.structured_reference import is_valid_structured_reference
 
 _logger = logging.getLogger(__name__)
 
@@ -807,21 +807,14 @@ class AccountBankStatementLine(models.Model):
         :return: Longest common substring if 10+ chars, normalised label if all identical post-normalisation, otherwise None
         """
         def normalise_label(label):
-            # Keep structured references.
-            structured_refs = re.findall(r'\+{3}\d+/\d+/\d+\+{3}', label)
-            placeholder_map = {}
-            for idx, ref in enumerate(structured_refs):
-                placeholder = f"__REF_{string.ascii_uppercase[idx]}__"
-                label = label.replace(ref, placeholder)
-                ref = ref.replace(r'+', r'\+')
-                placeholder_map[placeholder] = ref
-
-            label = re.sub(r'\d+', r'\\d+', label)
-
-            # Put the structured references back.
-            for placeholder, ref in placeholder_map.items():
-                label = label.replace(placeholder, ref)
-
+            """
+                This method will escape the special characters and the digits (if and only if) the label is a
+                structured reference.
+            """
+            is_valid = is_valid_structured_reference(label)
+            label = re.escape(label)
+            if not is_valid:
+                label = re.sub(r'\d+', r'\\d+', label)
             return label
 
         def get_all_substrings(label):
@@ -854,7 +847,7 @@ class AccountBankStatementLine(models.Model):
         # 4. If no common substring exists, return an empty string as the default.
         substring = max(set.intersection(*map(get_all_substrings, normalised)), key=len, default="")
 
-        return substring.strip() if len(substring) >= 10 else None
+        return substring if len(substring) >= 10 else None
 
     def _create_account_model_fee(self, account_id):
         """

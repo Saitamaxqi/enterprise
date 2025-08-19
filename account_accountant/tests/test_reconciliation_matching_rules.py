@@ -693,7 +693,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         reco_model = self.env['account.reconcile.model'].search([
             ('created_automatically', '=', True),
             ('match_label', '=', 'match_regex'),
-            ('match_label_param', '=', 'VISA PAYMENT RENT ON \\d+-\\d+-\\d+ FOR'),
+            ('match_label_param', '=', 'VISA\\ PAYMENT\\ RENT\\ ON\\ \\d+\\-\\d+\\-\\d+\\ FOR\\ '),
             ('match_partner_ids', '=', self.partner_a.ids),
             ('line_ids.account_id', '=', account_a.id),
         ])
@@ -723,7 +723,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         reco_model = self.env['account.reconcile.model'].search([
             ('created_automatically', '=', True),
             ('match_label', '=', 'match_regex'),
-            ('match_label_param', '=', 'TAX \\+\\+\\+123/12345/1234\\+\\+\\+ \\d+ EUR'),
+            ('match_label_param', '=', 'TAX\\ \\+\\+\\+\\d+/\\d+/\\d+\\+\\+\\+\\ \\d+\\ EUR'),
         ])
         self.assertTrue(reco_model.exists())
 
@@ -828,7 +828,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         # a payment reference.
         reco_model = self.env['account.reconcile.model'].search([
             ('match_label', '=', 'match_regex'),
-            ('match_label_param', '=', 'VISA PAYMENT \\d+ EUR'),
+            ('match_label_param', '=', 'VISA\\ PAYMENT\\ \\d+\\ EUR'),
         ])
         self.assertTrue(reco_model.exists())
 
@@ -851,7 +851,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
         reco_models = self.env['account.reconcile.model'].search([
             ('match_label', '=', 'match_regex'),
-            ('match_label_param', 'in', ['DINNER PAYMENT \\d+ EUR', 'VISA PAYMENT \\d+ EUR']),
+            ('match_label_param', 'in', ['DINNER\\ PAYMENT\\ \\d+\\ EUR', 'VISA\\ PAYMENT\\ \\d+\\ EUR']),
         ])
         self.assertTrue(reco_models.exists())
         self.assertEqual(len(reco_models), 2, "Reco model should be created for both type of payment refs")
@@ -876,7 +876,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
         reco_models = self.env['account.reconcile.model'].search([
             ('match_label', '=', 'match_regex'),
-            ('match_label_param', 'in', ['OFFICE RENT PAYMENT \\d+ EUR']),
+            ('match_label_param', 'in', ['OFFICE\\ RENT\\ PAYMENT\\ \\d+\\ EUR']),
         ])
         self.assertTrue(reco_models.exists())
         self.assertEqual(len(reco_models), 1, "Only one Reco model should be created for same payment refs")
@@ -1119,11 +1119,11 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         # Long (>=10) common substring
         long_common_refs = [x + ' is Gamora.' for x in ('Where', 'Who', 'Why')]
         long_common_bl = [self._create_st_line(payment_ref=x) for x in long_common_refs]
-        self.assertEqual(long_common_bl[0]._get_common_substring([x.payment_ref for x in long_common_bl]), 'IS GAMORA.')
+        self.assertEqual(long_common_bl[0]._get_common_substring([x.payment_ref for x in long_common_bl]), '\\ IS\\ GAMORA\\.')
         # Short (<10) but identical normalised string
         short_normalised_refs = ['Odoo ' + str(x) for x in (18, 19, 9000)]
         short_normalised_bl = [self._create_st_line(payment_ref=x) for x in short_normalised_refs]
-        self.assertEqual(short_normalised_bl[0]._get_common_substring([x.payment_ref for x in short_normalised_bl]), r'ODOO \d+')
+        self.assertEqual(short_normalised_bl[0]._get_common_substring([x.payment_ref for x in short_normalised_bl]), r'ODOO\ \d+')
         # Short (<10) non-identical normalised string
         short_common_refs = ['Great ' + x for x in ('power', 'responsibility')]
         short_common_bl = [self._create_st_line(payment_ref=x) for x in short_common_refs]
