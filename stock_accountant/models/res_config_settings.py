@@ -11,6 +11,9 @@ class ResConfigSettings(models.TransientModel):
     valuation_method = fields.Selection(
         related="company_id.inventory_valuation", required=True,
         string="Inventory Valuation", readonly=False)
+    cost_method = fields.Selection(
+        related="company_id.cost_method", required=True,
+        string="Inventory Cost Method", readonly=False)
     inventory_period = fields.Selection(
         related='company_id.inventory_period', required=True,
         string="Inventory Period", readonly=False)
@@ -20,6 +23,3 @@ class ResConfigSettings(models.TransientModel):
     stock_valuation_account_id = fields.Many2one(
         'account.account', "Stock Valuation Account", readonly=False,
         related='company_id.account_stock_valuation_id')
-    account_cogs_id = fields.Many2one(
-        'account.account', "COGS Account", readonly=False,
-        related='company_id.account_cogs_id')

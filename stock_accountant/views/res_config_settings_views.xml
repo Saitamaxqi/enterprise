@@ -6,16 +6,20 @@
         <field name="inherit_id" ref="account.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//block[@id='default_accounts']" position="after">
-                <block title="Stock Valuation" id="stock_valuation">
-                    <setting string="Automatic Accounting" help="Enable automatic accounting entries for stock movements" id="default_stock_valuation_accounts">
+                <block title="Inventory Valuation" id="stock_valuation">
+                    <setting string="Inventory Accounting" help="Global accounts, valuation and cost method for the company" id="default_stock_valuation_accounts">
                         <div name="default_accounts" class="content-group">
                             <div class="row mt8">
                                 <label for="valuation_method" class="col-lg-5 o_light_label"/>
                                 <field name="valuation_method"/>
                             </div>
-                            <div class="row mt8">
+                            <div class="row mt8" invisible="valuation_method == 'real_time'">
                                 <label for="inventory_period" string="Periodicity" class="col-lg-5 o_light_label"/>
                                 <field name="inventory_period"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="cost_method" class="col-lg-5 o_light_label"/>
+                                <field name="cost_method"/>
                             </div>
                             <div class="row mt8">
                                 <label for="stock_valuation_account_id" string="Valuation Account" class="col-lg-5 o_light_label"/>
@@ -24,10 +28,6 @@
                             <div class="row mt8">
                                 <label for="stock_journal" string="Journal" class="col-lg-5 o_light_label"/>
                                 <field name="stock_journal"/>
-                            </div>
-                            <div class="row mt8" invisible="not use_anglo_saxon">
-                                <label for="account_cogs_id" string="Cogs Account" class="col-lg-5 o_light_label"/>
-                                <field name="account_cogs_id"/>
                             </div>
                         </div>
                     </setting>
