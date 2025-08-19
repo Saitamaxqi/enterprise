@@ -215,6 +215,7 @@ class AIAgent(models.Model):
             selection.extend(provider.llms)
         return selection
 
+    active = fields.Boolean(default=True)
     name = fields.Char(string="Agent Name", related='partner_id.name', required=True, readonly=False)
     subtitle = fields.Char(string="Description")
     system_prompt = fields.Text(string="System Prompt", help="Customize to control relevance and formatting.")

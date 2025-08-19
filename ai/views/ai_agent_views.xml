@@ -15,6 +15,7 @@
                 <field name="llm_model"/>
                 <field name="image_128"/>
                 <field name="topic_ids"/>
+                <field name="active"/>
 
                 <templates>
                     <t t-name="menu">
@@ -25,6 +26,7 @@
                         </div>
                     </t>
                     <t t-name="card">
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                         <div class="d-flex">
                             <aside>
                                 <field name="image_128" widget="image" alt="Agent"/>
@@ -86,6 +88,7 @@
                     </div>
                 </header>
                 <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title mb-4 d-flex align-items-center">
                         <field name="image_128" widget="image" class="oe_avatar me-3"
                             options="{'preview_image': 'image_128', 'size': [128, 128]}"/>
@@ -149,6 +152,7 @@
                        ('attachment_ids.name','ilike',self),
                        ('url_attachment_ids.name','ilike',self),
                        ('url_attachment_ids.url','ilike',self)]"/>
+                <filter name="filter_is_archived" string="Archived" domain="[('active', '=', False)]"/>
                 <group>
                     <filter string="Model" name="model" domain="[]" context="{'group_by':'llm_model'}"/>
                     <filter string="Topics" name="topics" domain="[]" context="{'group_by':'topic_ids'}"/>

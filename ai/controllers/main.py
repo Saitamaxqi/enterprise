@@ -26,7 +26,7 @@ class AIController(ThreadController):
     @http.route(["/ai/generate_response"], type="jsonrpc", auth="public")
     @add_guest_to_context
     def generate_response(self, mail_message_id, agent_partner_id, channel_id):
-        agent_id = request.env['ai.agent']._retrieve_agent_if_access_allowed(agent_partner_id=agent_partner_id)
+        agent_id = request.env['ai.agent'].with_context(active_test=False)._retrieve_agent_if_access_allowed(agent_partner_id=agent_partner_id)
         channel = self._get_ai_channel_from_id(channel_id)
         if not channel:
             raise NotFound()
