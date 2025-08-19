@@ -20,7 +20,6 @@ export class TaskGanttModel extends TaskGanttModelCommon {
         super.setup(...arguments);
         this.getHighlightIds = useProjectModelActions({
             getContext: () => this.env.searchModel._context,
-            getHighlightPlannedIds: () => this.env.searchModel.highlightPlannedIds,
         }).getHighlightIds;
     }
 
@@ -31,11 +30,6 @@ export class TaskGanttModel extends TaskGanttModelCommon {
             delete context.user_ids;
         }
         return { ...context, search_default_open_tasks: true };
-    }
-
-    toggleHighlightPlannedFilter(ids) {
-        super.toggleHighlightPlannedFilter(...arguments);
-        this.env.searchModel.toggleHighlightPlannedFilter(ids);
     }
 
     /**
@@ -70,9 +64,6 @@ export class TaskGanttModel extends TaskGanttModelCommon {
                         },
                     }
                 );
-                if (result && Array.isArray(result) && result.length > 1) {
-                    this.toggleHighlightPlannedFilter(Object.keys(result[1]).map(Number));
-                }
                 if (callback) {
                     callback(result);
                 }

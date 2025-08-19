@@ -8,7 +8,7 @@ patch(ProjectTaskCalendarCommonRenderer.prototype, {
     eventClassNames(info) {
         const classesToAdd = super.eventClassNames(info);
         const { event } = info;
-        const highlightIds = this.env.searchModel.highlightPlannedIds;
+        const highlightIds = this.props.model.highlightIds;
         const record = this.props.model.records[event.id];
 
         if (record && highlightIds?.length && !highlightIds.includes(record.id)) {

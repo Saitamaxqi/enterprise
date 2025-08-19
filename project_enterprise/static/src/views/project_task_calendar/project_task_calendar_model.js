@@ -8,7 +8,6 @@ patch(ProjectTaskCalendarModel.prototype, {
         super.setup(...arguments);
         this.getHighlightIds = useProjectModelActions({
             getContext: () => this.env.searchModel._context,
-            getHighlightPlannedIds: () => this.env.searchModel.highlightPlannedIds,
         }).getHighlightIds;
     },
 

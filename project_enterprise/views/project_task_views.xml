@@ -7,7 +7,6 @@
         <field name="inherit_id" ref="project.view_task_search_form_project_fsm_base"/>
         <field name="arch" type="xml">
             <filter name="unassigned" position="before">
-                <filter name="tasks_scheduled" string="Tasks Scheduled" context="{'highlight_planned': 1}" invisible="1"/>
                 <filter name="conflict_task" string="Tasks in Conflict" context="{'highlight_conflicting_task': 1}" invisible="1"/>
             </filter>
         </field>

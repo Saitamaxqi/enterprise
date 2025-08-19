@@ -26,7 +26,6 @@ Bridge module for project and enterprise
     'assets': {
         'web.assets_backend': [
             'project_enterprise/static/src/views/project_highlight_tasks.js',
-            'project_enterprise/static/src/views/project_task_search_model.js',
             'project_enterprise/static/src/views/highlight_project_task_search_model.js',
             'project_enterprise/static/src/components/**/*',
             'project_enterprise/static/src/views/project_task_calendar/**',
