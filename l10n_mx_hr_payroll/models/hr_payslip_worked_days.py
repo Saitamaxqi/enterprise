@@ -18,7 +18,7 @@ class HrPayslipWorkedDays(models.Model):
             if not worked_days.payslip_id.date_from or not worked_days.payslip_id.date_to:
                 continue
 
-            start_date = max(worked_days.payslip_id.date_from, worked_days.version_id.contract_date_start)
+            start_date = max(worked_days.payslip_id.date_from, worked_days.version_id.contract_date_start or worked_days.version_id.date_version)
             end_date = min(worked_days.payslip_id.date_to, worked_days.version_id.contract_date_end) if worked_days.version_id.contract_date_end else worked_days.payslip_id.date_to
             in_contract_days = (end_date - start_date).days + 1
             actual_period_days = (worked_days.payslip_id.date_to - worked_days.payslip_id.date_from).days + 1
