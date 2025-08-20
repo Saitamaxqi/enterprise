@@ -90,8 +90,10 @@ class AccountMove(models.Model):
              ('company_id', '=', self.company_id.id)], limit=1)
         if setting:
             Documents_sudo = self.env['documents.document'].sudo()
-            doc_sudo = Documents_sudo.search([('attachment_id', '=', attachment_id)], limit=1)
+            doc_sudo = Documents_sudo.with_context(active_test=False).search(
+                [('attachment_id', '=', attachment_id)], limit=1)
             values = {
+                'active': True,  # if archived, unarchive it
                 'folder_id': setting.folder_id.id,
                 'partner_id': self.partner_id.id or doc_sudo.partner_id.id,
                 'owner_id': self.create_uid.active and self.create_uid.id,

@@ -15,6 +15,15 @@ class TestInvoices(AccountTestInvoicingCommon, DocumentsAccountHelpersCommon):
         super().setUpClass()
 
         cls.env.user.group_ids += cls.quick_ref('documents.group_documents_manager')
+        cls.test_partner = cls.env['res.partner'].create({'name': 'test Azure'})
+        cls.document = cls.env['documents.document'].create({
+            'datas': base64.b64encode(b"test_suspense_statement_line_id"),
+            'name': 'file.txt',
+            'mimetype': 'text/plain',
+            'partner_id': cls.test_partner.id,
+        })
+        cls.folder_test = cls.env['documents.document'].create({'name': 'Test Bills', 'type': 'folder'})
+        cls.invoice = cls.init_invoice("in_invoice", amounts=[1000], post=True)
 
     def test_suspense_statement_line_id(self):
         # Remove all autoconfigured journal synchronization settings for documents
@@ -55,7 +64,7 @@ class TestInvoices(AccountTestInvoicingCommon, DocumentsAccountHelpersCommon):
         # Upload an attachment.
         attachment = self.env['ir.attachment'].create({
             'name': "test_suspense_statement_line_id",
-            'datas': base64.b64encode(bytes("test_suspense_statement_line_id", 'utf-8')),
+            'datas': base64.b64encode(b"test_suspense_statement_line_id"),
             'res_model': move._name,
             'res_id': move.id,
         })
@@ -68,19 +77,18 @@ class TestInvoices(AccountTestInvoicingCommon, DocumentsAccountHelpersCommon):
 
         self.assertRecordValues(vendor_bill, [{'suspense_statement_line_id': st_line.id}])
 
-        folder_test = self.env['documents.document'].create({'name': 'Test Bills','type':'folder'})
+        self.setup_sync_journal_folder(self.invoice.journal_id, self.folder_test)
 
-        invoice = self.init_invoice("in_invoice", amounts=[1000], post=True)
-        self.setup_sync_journal_folder(invoice.journal_id, folder_test)
+        action = self.document.account_create_account_move('in_invoice')
+        self.assertEqual(self.document.partner_id, self.test_partner)
+        self.assertEqual(self.env['account.move'].browse([action['res_id']]).partner_id, self.test_partner,
+                         "Document partner must be set on the created account move")
 
-        test_partner = self.env['res.partner'].create({'name':'test Azure'})
-        document = self.env['documents.document'].create({
-            'datas': base64.b64encode(bytes("test_suspense_statement_line_id", 'utf-8')),
-            'name': 'file.txt',
-            'mimetype': 'text/plain',
-            'partner_id':test_partner.id,
-        })
-
-        document.account_create_account_move('in_invoice')
-
-        self.assertTrue(document.partner_id.id,test_partner.id)
+    def test_create_account_move_on_archived_document(self):
+        """Check that when creating an account move on an archived document, it updates and unarchives it."""
+        self.setup_sync_journal_folder(self.invoice.journal_id, self.folder_test)
+        self.document.action_archive()
+        self.assertFalse(self.document.folder_id)
+        self.document.account_create_account_move('in_invoice')
+        self.assertEqual(self.document.folder_id, self.folder_test)
+        self.assertTrue(self.document.active)
