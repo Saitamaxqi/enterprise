@@ -1,12 +1,12 @@
 {
-    'name': 'Danish - RSU',
+    'name': 'Denmark - RSU',
     'version': '1.0',
     'author': 'Odoo S.A.',
     'category': 'Accounting/Localizations/SBR',
-    'summary': 'Danish Localization - RSU',
+    'summary': 'Denmark Localization - RSU',
     'description': """
-RSU Danish Localization.
-========================
+RSU Denmark Localization.
+============================
 Submit your Tax Reports to the Danish tax authorities
     """,
     'depends': ['l10n_dk_reports'],
