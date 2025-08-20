@@ -236,7 +236,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
 
     def test_reconciliation_with_unique_label_memo_match(self):
         """Test reconciliation when a unique memo fragment matches the label and amount also match."""
-        payment = self._create_and_post_payment(amount=100, memo="INV/24-25/0001 - pay_AretqwwXerereE")
+        payment = self._create_and_post_payment(amount=100, memo="pay_AretqwwXerereE")
         statement_line = self._create_st_line(amount=100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
         statement_line._try_auto_reconcile_statement_lines()
         self.assertRecordValues(statement_line.line_ids, [
@@ -246,7 +246,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
 
     def test_reconciliation_with_unique_label_memo_match_and_negative_amounts(self):
         """Make sure the behaviour is the same if the statement line is encoded with negative amounts."""
-        payment = self._create_and_post_payment(amount=100, memo="INV/24-25/0001 - pay_AretqwwXerereE")
+        payment = self._create_and_post_payment(amount=100, memo="pay_AretqwwXerereE")
         statement_line = self._create_st_line(amount=-100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
         statement_line._try_auto_reconcile_statement_lines()
         self.assertRecordValues(statement_line.line_ids, [
@@ -256,7 +256,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
 
     def test_reconciliation_with_unique_label_memo_match_and_other_currency_on_payment(self):
         """Try to create a payment with a different currency to see if it match."""
-        payment = self._create_and_post_payment(amount=200, memo="INV/24-25/0001 - pay_AretqwwXerereE", currency_id=self.other_currency.id)
+        payment = self._create_and_post_payment(amount=200, memo="pay_AretqwwXerereE", currency_id=self.other_currency.id)
         statement_line = self._create_st_line(amount=100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
         statement_line._try_auto_reconcile_statement_lines()
         self.assertRecordValues(statement_line.line_ids, [
@@ -266,7 +266,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
 
     def test_reconciliation_with_unique_label_memo_match_and_other_currency_on_payment_and_st_line(self):
         """Create a payment with foreign currency on both payment and st_line."""
-        payment = self._create_and_post_payment(amount=200, memo="INV/24-25/0001 - pay_AretqwwXerereE", currency_id=self.other_currency.id)
+        payment = self._create_and_post_payment(amount=200, memo="pay_AretqwwXerereE", currency_id=self.other_currency.id)
         statement_line = self._create_st_line(amount=100, amount_currency=200, payment_ref="pay_AretqwwXerereE", update_create_date=False, foreign_currency_id=self.other_currency.id)
         statement_line._try_auto_reconcile_statement_lines()
         self.assertRecordValues(statement_line.line_ids, [
@@ -276,7 +276,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
 
     def test_multiple_reconcile_with_same_payment(self):
         """Create a payment, then create 2 st_lines matching the payment."""
-        payment = self._create_and_post_payment(amount=200, memo="INV/24-25/0001 - pay_AretqwwXerereE")
+        payment = self._create_and_post_payment(amount=200, memo="pay_AretqwwXerereE")
         statement_line_1 = self._create_st_line(amount=100, payment_ref="pay_AretqwwXerereE", update_create_date=False)
         statement_line_1._try_auto_reconcile_statement_lines()
         self.assertRecordValues(statement_line_1.line_ids, [

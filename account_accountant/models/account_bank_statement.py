@@ -287,16 +287,6 @@ class AccountBankStatementLine(models.Model):
             st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
             st_line.partner_id = mapped_partner_id
 
-        # get all reconciliable accounts that can be used in the bank reconciliation (invoice & payment matching)
-        # note that we:
-        #   * include reconciliable accounts that aren't of receivable/paybale type to manage the outstanding payment accounts
-        #   * exclude suspense accounts from bank journals because it wouldn't make sense as we use the suspense accounts to know
-        #     when an entry has to be processed. If we reconcile it from another way, it would still be considered as unprocessed
-        #     in the reconciliation widget.
-        account_ids = self.env['account.account'].search([('reconcile', '=', True), ('account_type', 'not in', ('asset_cash', 'liability_credit_card'))])
-        account_ids -= self.env['account.journal'].search([('type', 'in', ['bank', 'cash', 'credit'])]).suspense_account_id
-        account_ids = account_ids.ids
-
         # global flushing of tables that should not be updated between the different SQL queries
         self.env['account.account'].flush_model(['account_type', 'active'])
         self.env['account.move'].flush_model(['date', 'amount_total'])
@@ -310,6 +300,19 @@ class AccountBankStatementLine(models.Model):
             'move_id', 'partner_id', 'company_id', 'currency_id',
             'amount', 'foreign_currency_id', 'amount_currency', 'payment_ref'
         ])
+        self.env['account.payment'].flush_model(['move_id', 'journal_id', 'memo'])
+
+        # get all reconciliable accounts that can be used in the bank reconciliation (invoice & payment matching)
+        # note that we:
+        #   * include reconciliable accounts that aren't of receivable/payable type to manage the outstanding payment accounts
+        #   * exclude suspense accounts from bank journals because it wouldn't make sense as we use the suspense accounts to know
+        #     when an entry has to be processed. If we reconcile it from another way, it would still be considered as unprocessed
+        #     in the reconciliation widget.
+        #   * later: exclude the outstanding accounts from bank journals because we don't want an outstanding payment made in journal A
+        #     to be match with a transaction in journal B. The outstanding payments are treated separatelly prior to the matching
+        account_ids = self.env['account.account'].search([('reconcile', '=', True), ('account_type', 'not in', ('asset_cash', 'liability_credit_card'))])
+        account_ids -= self.env['account.journal'].search([('type', 'in', ['bank', 'cash', 'credit'])]).suspense_account_id
+        account_ids = account_ids.ids
 
         # First, try to match invoices and payments using the end to end ID.
         processed_st_line_ids = set()
@@ -342,7 +345,50 @@ class AccountBankStatementLine(models.Model):
             self.write({'cron_last_check': self.env.cr.now()})
             return
 
+        # Then match existing outstanding payments in odoo, on the same journal and with the exact same payment_ref
+        processed_st_line_ids = set()
+        outstanding_accounts = self.env['account.payment.method.line'].search([]).payment_account_id
+        if outstanding_accounts:
+            query = SQL("""
+                    SELECT st_line.id,
+                           ARRAY_AGG(payments.aml_id) aml_ids
+                      FROM account_bank_statement_line st_line
+              JOIN LATERAL (
+                            SELECT pay.id AS pay_id,
+                                   move.id AS move_id,
+                                   aml.id AS aml_id,
+                                   st_line.id AS st_line_id
+                              FROM account_payment pay
+                         LEFT JOIN account_move move ON (pay.move_id = move.id)
+                         LEFT JOIN account_move_line aml ON (aml.move_id = move.id)
+                             WHERE pay.journal_id = st_line.journal_id
+                               AND aml.move_id NOT IN %s
+                               AND aml.reconciled = false
+                               AND aml.account_id IN %s
+                               AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
+                               AND (aml.parent_state IN ('draft', 'posted'))
+                               AND st_line.id IN %s
+                               AND pay.memo = st_line.payment_ref
+                           ) payments ON TRUE
+                  GROUP BY st_line.id
+                    HAVING ARRAY_LENGTH(ARRAY_AGG(payments.aml_id), 1) = 1
+            """, tuple(st_move_ids), tuple(outstanding_accounts.ids), tuple(self.ids))
+            self.env.cr.execute(query)
+            for st_line_id, aml_id in self.env.cr.fetchall():
+                st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
+                st_line.set_line_bank_statement_line(aml_id)
+                if st_line.currency_id.is_zero(st_line.amount_residual):
+                    processed_st_line_ids.add(st_line.id)
+        remaining_st_line_ids = set(self.ids) - processed_st_line_ids
+
+        # early return if we already processed everything
+        if not remaining_st_line_ids:
+            self.write({'cron_last_check': fields.Datetime.now()})
+            return
+
         # Then try to match invoices and payments where we can't be wrong, using the statement lines payment_ref
+        # At this point, we're not trying to search for outstanding payments anymore
+        account_ids = list(set(account_ids) - set(outstanding_accounts.ids))
         query = SQL("""
                 SELECT st_line.id,
                        ARRAY_AGG(word_aml.id) aml_ids,
@@ -405,7 +451,7 @@ class AccountBankStatementLine(models.Model):
                 st_line.with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_id)
                 if st_line.currency_id.is_zero(st_line.amount_residual):
                     processed_st_line_ids.add(st_line.id)
-        remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
+        remaining_st_line_ids -= processed_st_line_ids
 
         # early return if we already processed everything
         if not remaining_st_line_ids:
@@ -448,7 +494,7 @@ class AccountBankStatementLine(models.Model):
             if st_line.currency_id.is_zero(st_line.amount_residual):
                 processed_st_line_ids.add(st_line.id)
 
-        remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
+        remaining_st_line_ids -= processed_st_line_ids
 
         # early return if we already processed everything
         if not remaining_st_line_ids:
@@ -456,7 +502,7 @@ class AccountBankStatementLine(models.Model):
             return
 
         # try to apply reco models on the remaining statement lines
-        remaining_st_lines = self.browse(remaining_st_line_ids).with_prefetch(self._prefetch_ids)
+        remaining_st_lines = self.browse(list(remaining_st_line_ids)).with_prefetch(self._prefetch_ids)
         reco_models._apply_reconcile_models(remaining_st_lines)
 
         self.write({'cron_last_check': self.env.cr.now()})
