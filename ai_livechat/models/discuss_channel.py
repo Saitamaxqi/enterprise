@@ -53,10 +53,6 @@ class DiscussChannel(models.Model):
         Store(bus_channel=self).add(self, "livechat_with_ai_agent").bus_send()
         return posted_messages
 
-    def _should_unlink_on_close(self):
-        should_unlink = super()._should_unlink_on_close()
-        return should_unlink or self.livechat_with_ai_agent and self.is_member
-
     def _get_allowed_channel_member_create_params(self):
         return super()._get_allowed_channel_member_create_params() + ["ai_agent_id"]
 

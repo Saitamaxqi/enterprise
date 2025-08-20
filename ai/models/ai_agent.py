@@ -490,13 +490,10 @@ class AIAgent(models.Model):
                 response[i] = html_sanitize(raw_html)
         return response
 
-    def generate_response(self, mail_message_id: int, discuss_channel_id: int | None = None):
+    def _generate_response_for_channel(self, mail_message, channel):
         self.ensure_one()
 
-        prompt = self._parse_user_message(mail_message_id)
-        channel = self._get_or_create_ai_chat(discuss_channel_id)
-        if not channel.exists():
-            raise UserError(_("The discussion channel does not exist or has been deleted."))
+        prompt = self._parse_user_message(mail_message)
         response = self.with_context(discuss_channel=channel)._generate_response(
             prompt=prompt,
             chat_history=self._retrieve_chat_history(channel),
@@ -505,11 +502,8 @@ class AIAgent(models.Model):
         for message in response or []:
             self._post_ai_response(channel, message)
 
-    def post_error_message(self, error_message: str, discuss_channel_id: int | None = None):
+    def _post_error_message(self, error_message: str, channel):
         self.ensure_one()
-        channel = self._get_or_create_ai_chat(discuss_channel_id)
-        if not channel.exists():
-            raise UserError(_("The discussion channel does not exist or has been deleted."))
         response = self._generate_response(
             prompt="Generate a message for the user stating that we are unable to process the request because of the following error: " + error_message,
             chat_history=self._retrieve_chat_history(channel),
@@ -604,7 +598,8 @@ class AIAgent(models.Model):
         chat_history = [
             {
                 'content': message.body,
-                'role': 'assistant' if message.author_id.agent_ids else 'user'
+                # sudo() => public users can access author_id (res.partner) to check whether it is an ai agent.
+                'role': 'assistant' if message.sudo().author_id.agent_ids else 'user',
             }
             for message in discuss_channel.message_ids[1 : no_messages + 1]
         ]
@@ -744,26 +739,20 @@ class AIAgent(models.Model):
 
         return Wrapper(lxml.html.tostring(root, encoding="unicode", method="html"))
 
-    def _get_or_create_ai_chat(self, channel_id=None, channel_name=None):
-        channel = self.env['discuss.channel'].search(self._get_ai_chat_channel_domain(channel_id))
+    def _get_or_create_ai_chat(self, channel_name=None):
+        channel = self._get_ai_chat_channel()
         if not channel:
             channel = self._create_ai_chat_channel(channel_name)
         return channel
 
-    def _get_ai_chat_channel_domain(self, channel_id=None):
-        search_domain = Domain([
+    def _get_ai_chat_channel(self):
+        return self.env['discuss.channel'].search([
             ('is_member', '=', True),
             ('channel_member_ids', 'any', [
                 ('partner_id', '=', self.partner_id.id)
             ]),
+            ('channel_type', '=', 'ai_chat'),
         ])
-        search_domain &= self._get_ai_channel_type_domain()
-        if channel_id:
-            search_domain &= Domain('id', '=', channel_id)
-        return search_domain
-
-    def _get_ai_channel_type_domain(self):
-        return Domain('channel_type', '=', 'ai_chat')
 
     def _create_ai_chat_channel(self, channel_name=None):
         guest = self.env["mail.guest"]._get_guest_from_context()

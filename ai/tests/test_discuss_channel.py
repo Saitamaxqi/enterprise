@@ -1,9 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import Command
-from odoo.tests import TransactionCase
+from odoo.tests import HttpCase, users
+
+from .common import AICommon
 
 
-class TestDiscussChannel(TransactionCase):
+class TestDiscussChannel(HttpCase, AICommon):
 
     def test_create_ai_chat(self):
         agent = self.env["ai.agent"].create({"name": "Odoo AI"})
@@ -21,16 +23,23 @@ class TestDiscussChannel(TransactionCase):
 
         self.assertEqual(channel, duplicate_channel, "ai_chat channel shouldn't be duplicated when created with the same agent.")
 
+    @users('user')
     def test_close_ai_chat_deletes_channel(self):
-        agent = self.env["ai.agent"].create({"name": "Odoo AI"})
+        # Sudo => creating an agent requires creating a 'res.partner' to be used for chat channels.
+        # This is only allowed for admins
+        agent = self.env["ai.agent"].sudo().create({"name": "Odoo AI"})
         channel = agent._get_or_create_ai_chat()
 
-        channel.close_ai_chat()
+        self.authenticate(self.test_user.login, self.test_user.login)
+        self.make_jsonrpc_request("/ai/close_ai_chat", {"channel_id": channel.id})
 
         self.assertFalse(channel.exists(), "Channel of type 'ai_chat' should be deleted when closed.")
 
+    @users('user')
     def test_close_ai_chat_only_deletes_channel_with_proper_types(self):
-        agent = self.env["ai.agent"].create({"name": "Odoo AI"})
+        # Sudo => creating an agent requires creating a 'res.partner' to be used for chat channels.
+        # This is only allowed for admins
+        agent = self.env["ai.agent"].sudo().create({"name": "Odoo AI"})
         ai_chat_channel = agent._get_or_create_ai_chat()
         regular_channel = self.env["discuss.channel"].create({
             "channel_member_ids": [
@@ -44,8 +53,9 @@ class TestDiscussChannel(TransactionCase):
             "name": "Non AI chat"
         })
 
-        ai_chat_channel.close_ai_chat()
-        regular_channel.close_ai_chat()
+        self.authenticate(self.test_user.login, self.test_user.login)
+        self.make_jsonrpc_request("/ai/close_ai_chat", {"channel_id": ai_chat_channel.id})
+        self.make_jsonrpc_request("/ai/close_ai_chat", {"channel_id": regular_channel.id})
 
         self.assertFalse(ai_chat_channel.exists(), "Channel of type 'ai_chat' should be deleted when closed.")
         self.assertTrue(regular_channel.exists(), "Only channels in ['ai_chat', 'ai_composer'] should be deleted on close.")

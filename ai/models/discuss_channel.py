@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import _, fields, models, api
+from odoo.fields import Domain
 from odoo.exceptions import AccessError
 
 from odoo.addons.mail.tools.discuss import Store
@@ -62,15 +63,5 @@ class DiscussChannel(models.Model):
 
         return {"ai_channel_id": channel.id, "data": Store().add(channel).get_result(), "prompts": [prompt.name for prompt in ai_composer.available_prompts]}
 
-    def _close_older_chat_channel(self, ai_partner):
-        older_channel = self.search(self._get_ai_chat_channel_domain(ai_partner))
-        if older_channel:
-            older_channel.sudo().unlink()
-
-    def close_ai_chat(self):
-        self.ensure_one()
-        if self._should_unlink_on_close():
-            self.sudo().unlink()
-
-    def _should_unlink_on_close(self):
-        return self.channel_type == "ai_chat" and self.is_member
+    def _get_ai_channel_type_domain(self):
+        return Domain('channel_type', '=', 'ai_chat')

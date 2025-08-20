@@ -13,7 +13,6 @@ class AIWebsiteLivechatController(http.Controller):
             return
 
         store = Store()
-        agent_partner = request.env['res.partner'].browse(ai_agent.partner_id.id)
         guest = request.env['mail.guest']
         if request.env.user._is_public():
             guest = guest.sudo()._get_or_create_guest(
@@ -25,7 +24,11 @@ class AIWebsiteLivechatController(http.Controller):
             request.update_context(guest=guest)
         if guest:
             store.add_global_values(guest_token=guest.sudo()._format_auth_cookie())
-        request.env['discuss.channel'].sudo()._close_older_chat_channel(agent_partner)
+        # The active chat channel with the AI Agent is removed and a new one is created to limit visitors to a single chat channel.
+        # Not returning the active chat channel and creating a new one instead is a design choice.
+        active_chat_channel = ai_agent._get_ai_chat_channel()
+        if active_chat_channel:
+            active_chat_channel.sudo().unlink()
         channel = ai_agent._create_ai_chat_channel()
         request.env["res.users"]._init_store_data(store)
         store.add(channel)
