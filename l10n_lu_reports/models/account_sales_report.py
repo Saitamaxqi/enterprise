@@ -24,14 +24,7 @@ class L10n_LuEcSalesReportHandler(models.AbstractModel):
         :return dict: The modified options dictionary
         """
         super()._init_core_custom_options(report, options, previous_options)
-        ec_operation_category = options.get('sales_report_taxes', {'goods': tuple(), 'triangular': tuple(), 'services': tuple()})
-
-        ec_operation_category['goods'] = \
-            tuple(self.env.ref('l10n_lu.account_tax_report_line_1b_1_intra_community_goods_pi_vat_tag')._get_matching_tags().ids)
-        ec_operation_category['triangular'] = \
-            tuple(self.env.ref('l10n_lu.account_tax_report_line_1b_6_a_subsequent_to_intra_community_tag')._get_matching_tags().ids)
-        ec_operation_category['services'] = \
-            tuple(self.env.ref('l10n_lu.account_tax_report_line_1b_6_b1_non_exempt_customer_vat_tag')._get_matching_tags().ids)
+        ec_operation_category = options.get('sales_report_taxes') or self._get_tax_tags_for_lux_sales_report()
 
         # Change the names of the taxes to specific ones that are dependant to the tax type
         ec_operation_category['operation_category'] = {
@@ -476,6 +469,13 @@ class L10n_LuEcSalesReportHandler(models.AbstractModel):
             correction_sums[k.replace('lines', 'sum')] = sum([sum(corrections[k][key].values()) for key in corrections[k]])
         corrections.update(correction_sums)
         return corrections
+
+    def _get_tax_tags_for_lux_sales_report(self):
+        return {
+            'goods': tuple(self.env.ref('l10n_lu.account_tax_report_line_1b_1_intra_community_goods_pi_vat_tag')._get_matching_tags().ids),
+            'triangular': tuple(self.env.ref('l10n_lu.account_tax_report_line_1b_6_a_subsequent_to_intra_community_tag')._get_matching_tags().ids),
+            'services': tuple(self.env.ref('l10n_lu.account_tax_report_line_1b_6_b1_non_exempt_customer_vat_tag')._get_matching_tags().ids),
+        }
 
 
 class L10n_LuStoredIntraReport(models.Model):

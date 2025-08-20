@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-21 10:36+0000\n"
-"PO-Revision-Date: 2025-05-21 10:36+0000\n"
+"POT-Creation-Date: 2025-09-03 14:14+0000\n"
+"PO-Revision-Date: 2025-09-03 14:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3105,3 +3105,128 @@ msgstr "der in Rechnung gestellten Mehrwertsteuer"
 #: model:account.report.line,name:l10n_lu_reports.l10n_lu_annual_tax_report_appendix_e_a1
 msgid "which of total under 1.a. is"
 msgstr "was von der Summe unter 1.a. ist"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "<span>Download your EC Sales List to submit.</span><br/>"
+msgstr "<span>Laden Sie Ihre EC-Verkaufsliste herunter, um sie einzureichen.</span><br/>"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "<span>Download your tax return to submit it.</span><br/>"
+msgstr "<span>Laden Sie Ihre Steuererklärung herunter, um sie einzureichen.</span><br/>"
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_account_chart_template
+msgid "Account Chart Template"
+msgstr "Kontenrahmenvorlage"
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_account_report
+msgid "Accounting Report"
+msgstr "Buchhaltungsbericht"
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_account_return
+msgid "Accounting Return"
+msgstr "Buchhaltungsrückgabe"
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_account_return_type
+msgid "Accounting Return Type"
+msgstr "Buchhaltungsrückgabeart"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.l10n_lu_stored_intra_report_view_tree
+msgid "Download"
+msgstr "Herunterladen"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Download XML"
+msgstr "XML herunterladen"
+
+#. module: l10n_lu_reports
+#: model:account.return.type,name:l10n_lu_reports.lu_ec_sales_list_return_type
+msgid "EC Sales List"
+msgstr "EC-Verkaufsliste"
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_l10n_lu_reports_ec_sales_list_submission_wizard
+msgid "EC Sales List Submission Wizard"
+msgstr "Assistent zur Einreichung der EC-Verkaufsliste"
+
+#. module: l10n_lu_reports
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__instructions
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__instructions
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Instructions"
+msgstr "Anweisungen"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Log in to"
+msgstr "Melden Sie sich bei"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Log in to the"
+msgstr "Melden Sie sich bei der"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "MyGuichet"
+msgstr "Mein Guichet"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Navigate to the eCDF section."
+msgstr "Navigieren Sie zum Abschnitt eCDF."
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Navigate to the recapitulative statement section."
+msgstr "Navigieren Sie zum Abschnitt der zusammenfassenden Erklärung."
+
+#. module: l10n_lu_reports
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__return_id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__return_id
+msgid "Return"
+msgstr "Rückkehr"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Submit the return."
+msgstr "Reichen Sie die Rückkehr ein."
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Submit the statement."
+msgstr "Reichen Sie die Erklärung ein."
+
+#. module: l10n_lu_reports
+#: model:account.return.type,name:l10n_lu_reports.lu_tax_return_type
+msgid "Tax"
+msgstr "Steuer"
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_l10n_lu_reports_tax_return_submission_wizard
+msgid "Tax Return Submission Wizard"
+msgstr "Assistent zur Einreichung der Steuererklärung"
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Upload your XML file."
+msgstr "Laden Sie Ihre XML-Datei hoch."
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Upload your tax return XML file."
+msgstr "Laden Sie Ihre Steuererklärungs-XML-Datei hoch."
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "eCDF platform"
+msgstr "eCDF-Plattform"

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.2alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.5a1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-26 09:19+0000\n"
-"PO-Revision-Date: 2024-02-26 09:19+0000\n"
+"POT-Creation-Date: 2025-09-03 14:14+0000\n"
+"PO-Revision-Date: 2025-09-03 14:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -44,8 +44,23 @@ msgid "Abridged"
 msgstr ""
 
 #. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
+
+#. module: l10n_lu_reports
 #: model:ir.model,name:l10n_lu_reports.model_account_report
 msgid "Accounting Report"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_account_return
+msgid "Accounting Return"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_account_return_type
+msgid "Accounting Return Type"
 msgstr ""
 
 #. module: l10n_lu_reports
@@ -71,8 +86,6 @@ msgid "Appendix to the Operational Expenditures"
 msgstr ""
 
 #. module: l10n_lu_reports
-#: model:ir.model,name:l10n_lu_reports.model_ir_attachment
-#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__attachment_id
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.l10n_lu_stored_intra_report_view_tree
 msgid "Attachment"
 msgstr ""
@@ -104,14 +117,13 @@ msgstr ""
 
 #. module: l10n_lu_reports
 #. odoo-python
-#: code:addons/l10n_lu_reports/models/account_financial_report.py:0
-msgid "Cannot export them."
+#: code:addons/l10n_lu_reports/models/account_sales_report.py:0
+msgid "Check from/to dates. XML must cover 1 full month or 1 full quarter."
 msgstr ""
 
 #. module: l10n_lu_reports
-#. odoo-python
-#: code:addons/l10n_lu_reports/models/account_sales_report.py:0
-msgid "Check from/to dates. XML must cover 1 full month or 1 full quarter."
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Check that it passes validation."
 msgstr ""
 
 #. module: l10n_lu_reports
@@ -150,7 +162,6 @@ msgstr ""
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/wizard/l10n_lu_generate_xml.py:0
-#: code:addons/l10n_lu_reports/wizard/l10n_lu_generate_xml.py:0
 msgid "Company: %s"
 msgstr ""
 
@@ -171,7 +182,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__create_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__create_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__create_uid
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__create_uid
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__create_uid
 msgid "Created by"
 msgstr ""
@@ -182,7 +195,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__create_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__create_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__create_date
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__create_date
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__create_date
 msgid "Created on"
 msgstr ""
@@ -205,20 +220,56 @@ msgid "Detail of expenses line 43 (411)"
 msgstr ""
 
 #. module: l10n_lu_reports
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_general_ledger_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_report__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_return__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_return_type__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_annual_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_appendix_a_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_appendix_opex_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_ec_sales_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_asset_report__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_res_partner__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.l10n_lu_stored_intra_report_view_tree
+msgid "Download"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Download XML"
 msgstr ""
 
 #. module: l10n_lu_reports
 #: model:ir.actions.act_window,name:l10n_lu_reports.action_l10n_lu_stored_intra_report
 #: model:ir.ui.menu,name:l10n_lu_reports.menu_action_l10n_lu_stored_intra_report
 msgid "EC Sales - Stored Reports"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model:account.return.type,name:l10n_lu_reports.lu_ec_sales_list_return_type
+msgid "EC Sales List"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_l10n_lu_reports_ec_sales_list_submission_wizard
+msgid "EC Sales List Submission Wizard"
 msgstr ""
 
 #. module: l10n_lu_reports
@@ -243,6 +294,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_financial_report.py:0
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
+#: code:addons/l10n_lu_reports/wizard/l10n_lu_ec_sales_list_submission_wizard.py:0
 msgid "Export"
 msgstr ""
 
@@ -323,19 +375,42 @@ msgid "Generate accounts report"
 msgstr ""
 
 #. module: l10n_lu_reports
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_chart_template__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_general_ledger_report_handler__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_report__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_return__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_account_return_type__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_annual_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_appendix_a_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_appendix_opex_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_ec_sales_report_handler__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_asset_report__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_report_handler__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__id
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_res_partner__id
 msgid "ID"
 msgstr ""
 
 #. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_accounts_report__import_notes_as_references
 msgid "Import Notes As References"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__instructions
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__instructions
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Instructions"
 msgstr ""
 
 #. module: l10n_lu_reports
@@ -360,7 +435,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__write_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__write_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__write_uid
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__write_uid
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -371,9 +448,21 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__write_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_vat_intra_report__write_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_xml__write_date
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_report_appendix_expenditures__write_date
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_stored_intra_report__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Log in to"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Log in to the"
 msgstr ""
 
 #. module: l10n_lu_reports
@@ -426,11 +515,26 @@ msgid "Monthly"
 msgstr ""
 
 #. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "MyGuichet"
+msgstr ""
+
+#. module: l10n_lu_reports
 #: model:ir.model.fields,help:l10n_lu_reports.field_res_partner__l10n_lu_agent_matr_number
 #: model:ir.model.fields,help:l10n_lu_reports.field_res_users__l10n_lu_agent_matr_number
 msgid ""
 "National ID number of the accounting firm (agent company) acting as the "
 "declarer in eCDF declarations"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Navigate to the eCDF section."
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Navigate to the recapitulative statement section."
 msgstr ""
 
 #. module: l10n_lu_reports
@@ -523,6 +627,12 @@ msgid "Reports"
 msgstr ""
 
 #. module: l10n_lu_reports
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_ec_sales_list_submission_wizard__return_id
+#: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_reports_tax_return_submission_wizard__return_id
+msgid "Return"
+msgstr ""
+
+#. module: l10n_lu_reports
 #: model:ir.model.fields,field_description:l10n_lu_reports.field_l10n_lu_generate_tax_report__simplified_declaration
 msgid "Simplified Declaration"
 msgstr ""
@@ -585,6 +695,16 @@ msgid "Store generated report"
 msgstr ""
 
 #. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Submit the return."
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Submit the statement."
+msgstr ""
+
+#. module: l10n_lu_reports
 #: model:ir.model.fields.selection,name:l10n_lu_reports.selection__l10n_lu_stored_intra_report__codes__lts
 msgid ""
 "Supply of goods (normal/in the context of triangular operations) and supply "
@@ -607,6 +727,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.saft_template_inherit_l10n_lu_saft
 #: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_information_inherit_l10n_lu_saft
 msgid "TVA-"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model:account.return.type,name:l10n_lu_reports.lu_tax_return_type
+msgid "Tax"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model:ir.model,name:l10n_lu_reports.model_l10n_lu_reports_tax_return_submission_wizard
+msgid "Tax Return Submission Wizard"
 msgstr ""
 
 #. module: l10n_lu_reports
@@ -755,6 +885,16 @@ msgid "Total to be carried forward to line 43"
 msgstr ""
 
 #. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "Upload your XML file."
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.tax_return_submission_wizard_form
+msgid "Upload your tax return XML file."
+msgstr ""
+
+#. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
 msgid "VAT"
@@ -780,11 +920,9 @@ msgstr ""
 #. module: l10n_lu_reports
 #. odoo-python
 #: code:addons/l10n_lu_reports/models/account_assets_report.py:0
-#: code:addons/l10n_lu_reports/models/account_assets_report.py:0
 #: code:addons/l10n_lu_reports/models/account_financial_report.py:0
 #: code:addons/l10n_lu_reports/models/account_general_ledger.py:0
 #: code:addons/l10n_lu_reports/models/account_sales_report.py:0
-#: code:addons/l10n_lu_reports/models/tax_report.py:0
 #: code:addons/l10n_lu_reports/models/tax_report.py:0
 msgid "XML"
 msgstr ""
@@ -814,6 +952,11 @@ msgstr ""
 msgid ""
 "eCDF Prefix `{0}` associated with `{1}` company is invalid.\n"
 "The expected format is ABCD12 (Six digits of numbers or capital letters)"
+msgstr ""
+
+#. module: l10n_lu_reports
+#: model_terms:ir.ui.view,arch_db:l10n_lu_reports.ec_sales_list_submission_wizard_form
+msgid "eCDF platform"
 msgstr ""
 
 #. module: l10n_lu_reports
