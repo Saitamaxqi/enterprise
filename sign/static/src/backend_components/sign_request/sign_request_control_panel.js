@@ -31,19 +31,22 @@ function useResendButtons() {
             const signerNames = status.querySelectorAll(
                 ".o_sign_signer_status.o_sign_signer_waiting"
             );
+            const sequencedSignatureMailSentOrderSet = component.signInfo.get("sequencedSignatureMail");
             Array.from(signerNames).forEach((signerNameEl) => {
                 signerNameEl.style.display = "flex";
                 signerNameEl.style.alignItems = "flex-end";
-                const requestItemStates = component.signInfo.get("requestItemStates") || {};
-                const stateSet = requestItemStates[signerNameEl.dataset.id];
-                const title = stateSet ? _t("Resend the invitation") : _t("Send the invitation");
-                const text = stateSet ? _t("Resend") : _t("Send");
-                const button = document.createElement("button");
-                button.title = title;
-                button.innerText = text;
-                button.className = "o_sign_resend_access_button btn btn-link ms-2 me-2";
-                signerNameEl.appendChild(button);
-                button.addEventListener("click", onClickResend);
+                if (!sequencedSignatureMailSentOrderSet){
+                    const requestItemStates = component.signInfo.get("requestItemStates") || {};
+                    const stateSet = requestItemStates[signerNameEl.dataset.id];
+                    const text = stateSet ? _t("Resend") : _t("Send");
+                    const title = stateSet ? _t("Resend the invitation") : _t("Send the invitation");
+                    const button = document.createElement("button");
+                    button.title = title;
+                    button.innerText = text;
+                    button.className = "o_sign_resend_access_button btn btn-link ms-2 me-2";
+                    signerNameEl.appendChild(button);
+                    button.addEventListener("click", onClickResend);
+                }
             });
         },
         () => [component.showResendButtons]

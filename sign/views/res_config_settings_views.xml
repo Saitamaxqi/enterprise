@@ -49,7 +49,15 @@
                             <field name="module_sign_emsigner"/>
                             <widget name="iap_buy_more_credits" service_name="emsigner_proxy" hide_service="1"/>
                         </setting>
-                        <setting id="company_sign_info" string="Cryptographic signature" help="Allow users to provide the files used in the cryptographic signature process." groups="base.group_system">
+                        <setting id="company_sign_info">
+                            <div>
+                                <span class="fw-bold">Cryptographic signature<i class="fa fa-building-o ms-1"/></span>
+                            </div>
+                            <div class="text-muted mb-2">
+                                <span groups="base.group_system">
+                                    Certify your documents using a provided .pfx or .p12 file.
+                                </span>
+                            </div>
                             <group>
                                 <field name="signing_certificate_id" options="{'no_quick_create': True}"/>
                             </group>

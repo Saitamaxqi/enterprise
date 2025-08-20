@@ -177,7 +177,7 @@ class SignTemplate(models.Model):
     def go_to_custom_template(self, sign_directly_without_mail=False):
         self.ensure_one()
         return {
-            'name': "Template \"%(name)s\"" % {'name': self.name},
+            'name': self.name,
             'type': 'ir.actions.client',
             'tag': 'sign.Template',
             'context': self.env.context,

@@ -43,6 +43,7 @@ export class SignRequest extends Component {
             needToSign: context.need_to_sign,
             todayFormattedDate: context.today_formatted_date,
             dateFormat: context.date_format,
+            sequencedSignatureMail: context.sequenced_signature_mail || (action.params && action.params.sequenced_signature_mail),
         });
 
         if (this.signInfo) {
@@ -51,6 +52,7 @@ export class SignRequest extends Component {
                 token: this.signInfo.get("signRequestToken"),
                 create_uid: this.signInfo.get("createUid"),
                 state: this.signInfo.get("signRequestState"),
+                sequenced_signature_mail: this.signInfo.get("sequencedSignatureMail"),
             });
         }
 

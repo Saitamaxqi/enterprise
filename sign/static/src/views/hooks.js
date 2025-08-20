@@ -72,7 +72,7 @@ export function useSignViewButtons() {
             action.doAction({
                 type: "ir.actions.client",
                 tag: "sign.Template",
-                name: _t("Template %s", template_name),
+                name: template_name,
                 params: {
                     sign_edit_call: latestRequestContext,
                     id: template_id,

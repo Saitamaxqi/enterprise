@@ -282,6 +282,7 @@ class SignRequest(models.Model):
     def go_to_document(self):
         self.ensure_one()
         request_items = self.request_item_ids.filtered(lambda r: not r.partner_id or (r.state == 'sent' and r.partner_id.id == self.env.user.partner_id.id))
+        sequenced_signature_mail = any(req.mail_sent_order > 1 for req in self.request_item_ids)
         return {
             'name': self.reference,
             'type': 'ir.actions.client',
@@ -293,6 +294,7 @@ class SignRequest(models.Model):
                 'create_uid': self.create_uid.id,
                 'state': self.state,
                 'request_item_states': {str(item.id): item.is_mail_sent for item in self.request_item_ids},
+                'sequenced_signature_mail': sequenced_signature_mail,
             },
         }
 

@@ -124,7 +124,7 @@
             <form create="false">
                 <header>
                     <div class="d-flex justify-content-between align-items-center gap-1">
-                        <button string="Preview" type="object" name="go_to_document" class="oe_highlight"/>
+                        <button string="Preview" type="object" name="go_to_document" class="oe_highlight" invisible="state == 'expired'"/>
                         <field name="completed_document_ids" widget="sign_request_documents_dropdown"/>
                         <button string="Cancel" type="object" invisible="state not in ('sent', 'signed')" name="cancel" confirm="This will keep all the already completed signature of this request and disable every sent access, are you sure?"/>
                     </div>
@@ -160,30 +160,29 @@
                         </group>
                     </group>
                     <notebook>
-                      <page string="Signers" name="signers">
-                        <field name="request_item_ids" context="{'default_sign_request_id': id}"/>
-                      </page>
-                      <page string="Contacts in copy" name="cc_contacts">
-                        <field name="cc_partner_ids">
-                            <list>
-                                <field name="name" string="Contacts in copy"/>
-                                <field name="email"/>
-                            </list>
-                        </field>
-                      </page>
-                      <page string="Activity Logs" name="activity_logs" groups="sign.group_sign_manager">
-                        <field name="sign_log_ids" readonly="1">
-                          <list>
-                            <field name="action"/>
-                            <field name="log_date"/>
-                            <field name="request_state" nolabel="1"/>
-                            <field name="partner_id" string="Contact"/>
-                            <field name="latitude" optional="hide"/>
-                            <field name="longitude" optional="hide"/>
-                            <field name="ip" string="IP Address"/>
-                          </list>
-                        </field>
-                      </page>
+                        <page string="Signers" name="signers">
+                            <field name="request_item_ids" context="{'default_sign_request_id': id}"/>
+                        </page>
+                        <page string="Contacts in copy" name="cc_contacts">
+                            <field name="cc_partner_ids">
+                                <list>
+                                    <field name="name" string="Contacts in copy"/>
+                                    <field name="email"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Activity Logs" name="activity_logs" groups="sign.group_sign_manager">
+                            <field name="sign_log_ids" readonly="1">
+                                <list>
+                                    <field name="action"/>
+                                    <field name="log_date"/>
+                                    <field name="partner_id" string="Contact"/>
+                                    <field name="latitude" optional="hide"/>
+                                    <field name="longitude" optional="hide"/>
+                                    <field name="ip" string="IP Address"/>
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
                 <chatter/>
@@ -295,7 +294,12 @@
                 <field name="state"/>
                 <field name="is_mail_sent" column_invisible="True"/>
                 <button name="send_signature_accesses" string="Send" type="object" icon="fa-square-o pe-2" invisible="not signer_email or state != 'sent' or is_mail_sent"/>
-                <button name="send_signature_accesses" string="Resend" type="object" icon="fa-check-square-o pe-2" invisible="not signer_email or state != 'sent' or not is_mail_sent"/>
+                <button
+                    name="send_signature_accesses"
+                    string="Resend"
+                    type="object"
+                    icon="fa-check-square-o pe-2"
+                    invisible="not signer_email or state != 'sent' or not is_mail_sent or parent.state == 'expired'"/>
             </list>
         </field>
     </record>
