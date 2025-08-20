@@ -91,14 +91,6 @@ export class PlanningGanttRenderer extends GanttRenderer {
         super.onPillClicked(...arguments);
     }
 
-    onCreate(rowId, startCol, stopCol, additionalContext = {}) {
-        additionalContext = Object.create(additionalContext);
-        if (startCol !== stopCol && this.model.metaData.scale.interval === "day") {
-            additionalContext.shifts_multi_day = true;
-        }
-        return super.onCreate(rowId, startCol, stopCol, additionalContext);
-    }
-
     computeDerivedParamsFromHover() {
         super.computeDerivedParamsFromHover(...arguments);
         delete this.splitToolHelperReactive.position;

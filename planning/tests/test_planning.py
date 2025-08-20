@@ -831,68 +831,6 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         self.assertEqual(gantt_unavailabilities[False], [], 'There should be no unavailability for open shifts.')
         self.assertNotEqual(gantt_unavailabilities[self.resource_bert.id], [], 'There should be unavailabilities for Bert.')
 
-    def test_multi_day_shift_creation(self):
-        self.env.user.tz = 'UTC'
-        template = self.env['planning.slot.template'].create({
-            'start_time': 11,
-            'end_time': 14,
-            'duration_days': 2,
-        })
-
-        PlanningSlot = self.env['planning.slot'].with_context(
-            shifts_multi_day=True,
-            default_start_datetime="2024-07-04 00:00:00",
-            default_end_datetime="2024-07-06 23:59:59"
-        )
-        slot = PlanningSlot.create({
-            'resource_id': self.resource_joseph.id,
-            'template_id': self.template.id,
-        })
-        slots = PlanningSlot.search([
-            ('resource_id', '=', self.resource_joseph.id),
-            ('start_datetime', '>', '2024-07-04 00:00:00'),
-            ('end_datetime', '<', '2024-07-06 23:59:59'),
-            ('id', '!=', slot.id),
-        ], order='start_datetime')
-        self.assertEqual(len(slot), 1)
-        self.assertEqual(len(slots), 2)
-        slot2, slot3 = slots
-        expected_datetime = datetime(2024, 7, 4, 11, 0, 0, 0)
-        self.assertEqual(slot.start_datetime, expected_datetime)
-        self.assertEqual(slot.end_datetime, expected_datetime + relativedelta(hour=14))
-
-        expected_datetime += relativedelta(days=1)
-        self.assertEqual(slot2.start_datetime, expected_datetime)
-        self.assertEqual(slot2.end_datetime, expected_datetime + relativedelta(hour=14))
-
-        expected_datetime += relativedelta(days=1)
-        self.assertEqual(slot3.start_datetime, expected_datetime)
-        self.assertEqual(slot3.end_datetime, expected_datetime + relativedelta(hour=14))
-
-        slot = PlanningSlot.create({
-            'resource_id': self.resource_bert.id,
-            'template_id': template.id,
-        })
-        slots = PlanningSlot.search([
-            ('resource_id', '=', self.resource_bert.id),
-            ('start_datetime', '>', '2024-07-04 00:00:00'),
-            ('end_datetime', '<', '2024-07-06 23:59:59'),
-            ('id', '!=', slot.id),
-        ], order='start_datetime')
-        self.assertFalse(len(slots), "Multi-days feature is not used when the duration days of the template is greater than 1 day.")
-
-        slots_created = PlanningSlot.create([
-            {'resource_id': self.resource_janice.id, 'template_id': template.id},
-            {'template_id': template.id},
-        ])
-        slots = PlanningSlot.search([
-            ('resource_id', '=', self.resource_janice.id),
-            ('start_datetime', '>', '2024-07-04 00:00:00'),
-            ('end_datetime', '<', '2024-07-06 23:59:59'),
-            ('id', 'not in', slots_created.ids),
-        ], order='start_datetime')
-        self.assertFalse(len(slots), "Multi-days feature is not used when the vals_list given to the create method contains more than 1 slot to create.")
-
     def test_batch_creation_from_calendar(self):
         """
         This test ensure that when planning slots are created from the "create multi" of the calendar view inconsistent slot

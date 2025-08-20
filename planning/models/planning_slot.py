@@ -106,7 +106,6 @@ class PlanningSlot(models.Model):
     template_creation = fields.Boolean("Save as Template", store=False, inverse='_inverse_template_creation')
     template_autocomplete_ids = fields.Many2many('planning.slot.template', store=False, compute='_compute_template_autocomplete_ids', export_string_translation=False)
     template_id = fields.Many2one('planning.slot.template', string='Shift Templates', compute='_compute_template_id', readonly=False, store=True)
-    template_duration_days = fields.Integer(related='template_id.duration_days')
     template_reset = fields.Boolean(export_string_translation=False)
     previous_template_id = fields.Many2one('planning.slot.template', export_string_translation=False)
     allow_template_creation = fields.Boolean(string='Allow Template Creation', compute='_compute_allow_template_creation', export_string_translation=False)
@@ -848,40 +847,7 @@ class PlanningSlot(models.Model):
                     vals['state'] = 'published'
             if not vals.get('company_id'):
                 vals['company_id'] = self.env.company.id
-        if len(vals_list) and self.env.context.get('shifts_multi_day'):
-            vals = vals_list[0]
-            resource = Resource.browse(vals.get('resource_id'))
-            user_tz = pytz.timezone(
-                self.env.user.tz
-                or resource.tz
-                or self.env.context.get('tz')
-                or self.env.user.company_id.resource_calendar_id.tz
-                or 'UTC'
-            )
-            template = (template_id := vals.get('template_id')) and self.env['planning.slot.template'].browse(template_id)
-            planned_date_start = fields.Datetime.to_datetime(self.env.context.get('default_start_datetime'))
-            planned_date_end = fields.Datetime.to_datetime(self.env.context.get('default_end_datetime'))
-            new_vals_list = []
-            if template and template.duration_days == 1 and planned_date_start and planned_date_end:
-                planned_date_start = pytz.utc.localize(planned_date_start).astimezone(user_tz)
-                planned_date_end = pytz.utc.localize(planned_date_end).astimezone(user_tz)
-                start_h = int(template.start_time)
-                start_m = round(modf(template.start_time)[0] * 60.0)
-                end_h = int(template.end_time)
-                end_m = round(modf(template.end_time)[0] * 60.0)
-                date = planned_date_start
-                while date < planned_date_end:
-                    new_vals = {
-                        **vals,
-                        'start_datetime': date.replace(hour=int(start_h), minute=int(start_m)).astimezone(pytz.utc).replace(tzinfo=None),
-                        'end_datetime': date.replace(hour=int(end_h), minute=int(end_m)).astimezone(pytz.utc).replace(tzinfo=None),
-                    }
-                    new_vals_list.append(new_vals)
-                    date += relativedelta(days=1)
-            shifts = super().create(new_vals_list or vals_list)[:1]
-        else:
-            shifts = super().create(vals_list)
-        return shifts
+        return super().create(vals_list)
 
     def create_batch_from_calendar(self, vals_list):
         if not len(vals_list):
