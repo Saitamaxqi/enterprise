@@ -63,7 +63,10 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
                         await this.orm.call("documents.document", "action_unarchive", [
                             mainDocument.resId,
                         ]);
-                        this.env.searchModel.toggleCategoryValue(1, mainDocument.data.folder_id[0]);
+                        this.env.searchModel.toggleCategoryValue(
+                            1,
+                            mainDocument.data.folder_id.id ?? false
+                        );
                     },
                     confirmLabel: _t("Restore"),
                 });

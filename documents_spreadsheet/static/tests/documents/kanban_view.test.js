@@ -547,3 +547,45 @@ test("Cannot download spreadsheets", async () => {
     await contains(`.o_kanban_record:contains('Spreadsheet')`).click({ ctrlKey: true });
     await waitFor(".o_control_panel_actions:contains('Download')");
 });
+
+test("Restoring trashed XLSX without folder should not set localStorage variable to undefined", async () => {
+    const spreadsheetId = 77;
+    const serverData = getTestServerData();
+    serverData.models["ir.attachment"] = { records: [{ id: 1 }] };
+    serverData.models["documents.document"].records.push({
+        id: spreadsheetId,
+        name: "Trashed XLSX File",
+        mimetype: XLSX_MIME_TYPES[0],
+        type: "binary",
+        active: false,
+        attachment_id: 1,
+    });
+
+    await makeDocumentsSpreadsheetMockEnv({
+        serverData,
+        mockRPC: async (route, args) => {
+            if (args.method === "action_unarchive") {
+                expect.step("spreadsheet_restored");
+                expect(args.model).toBe("documents.document");
+                expect(args.args).toEqual([spreadsheetId]);
+            }
+            return null;
+        },
+    });
+
+    await mountView({
+        type: "kanban",
+        resModel: "documents.document",
+        arch: basicDocumentKanbanArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+
+    await contains(".o_search_panel_label_title:contains('Trash')").click();
+    await contains(".o_kanban_record:contains('Trashed XLSX File') .oe_kanban_previewer").click();
+    await contains(".modal-content .btn.btn-primary:contains('Restore')").click();
+
+    expect.verifySteps(["spreadsheet_restored"]);
+
+    const lsValue = localStorage.getItem("searchpanel_documents_document");
+    expect(lsValue).not.toBe("undefined");
+});
