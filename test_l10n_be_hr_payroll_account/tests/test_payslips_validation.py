@@ -4998,8 +4998,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._validate_payslip(payslip_1, payslip_1_results)
         self._validate_payslip(payslip_2, payslip_2_results)
 
-        action_refund_payslip_2 = payslip_2.refund_sheet()
-        refund_payslip = self.env['hr.payslip'].browse(action_refund_payslip_2['domain'][0][2])
+        refund_payslip = payslip_2._action_refund_payslips()
 
         refund_payslip_results = {'BASIC': -2720.09, 'SALARY': -2720.09, 'ONSS': 355.52, 'EmpBonus.1': 0.0, 'ONSSTOTAL': -355.52, 'GROSSIP': -2364.57, 'IP.PART': 326.41, 'GROSS': -2038.16, 'P.P': 316.67, 'PPTOTAL': -316.67, 'M.ONSS': 20.27, 'MEAL_V_EMP': 17.44, 'PUB.TRANS': -34.0, 'CAR.PRIV': -53.54, 'REP.FEES': -279.31, 'REP.FEES.VOLATILE': -4.59, 'IP': -326.41, 'IP.DED': 24.48, 'NET': -2357.15, 'REMUNERATION': -2393.68, 'ONSSEMPLOYERBASIC': -680.84, 'ONSSEMPLOYERFFE': -1.9, 'ONSSEMPLOYERMFFE': -2.72, 'ONSSEMPLOYERCPAE': -6.26, 'ONSSEMPLOYERRESTREINT': -45.97, 'ONSSEMPLOYERUNEMP': -2.72, 'ONSSEMPLOYER': -740.41}
         self._validate_payslip(refund_payslip, refund_payslip_results)
@@ -5854,8 +5853,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertAlmostEqual(net_account_move_line.debit, 0.0, places=2)
         self.assertAlmostEqual(net_account_move_line.credit, 2203.54, places=2)
 
-        refund_action = payslip.refund_sheet()
-        refund = self.env['hr.payslip'].browse(refund_action['domain'][0][2])
+        refund = payslip._action_refund_payslips()
         payslip_results = {'BASIC': -2650.0, 'ATN.INT': -5.0, 'ATN.MOB': -4.0, 'SALARY': -2659.0, 'ONSS': 347.53, 'EmpBonus.1': -70.36, 'ONSSTOTAL': -277.17, 'ATN.CAR': -162.42, 'GROSSIP': -2544.26, 'IP.PART': 662.5, 'GROSS': -1881.76, 'P.P': 252.47, 'P.P.DED': -23.32, 'PPTOTAL': -229.15, 'ATN.CAR.2': 162.42, 'ATN.INT.2': 5.0, 'ATN.MOB.2': 4.0, 'M.ONSS': 15.39, 'MEAL_V_EMP': 25.07, 'REP.FEES': -150.0, 'IP': -662.5, 'IP.DED': 49.69, 'NET': -2203.54, 'REMUNERATION': -1987.5, 'ONSSEMPLOYERBASIC': -665.55, 'ONSSEMPLOYERFFE': -1.86, 'ONSSEMPLOYERMFFE': -2.66, 'ONSSEMPLOYERCPAE': -6.12, 'ONSSEMPLOYERRESTREINT': -44.94, 'ONSSEMPLOYERUNEMP': -2.66, 'ONSSEMPLOYER': -723.78, 'CO2FEE': -28.17}
         self._validate_payslip(refund, payslip_results)
 

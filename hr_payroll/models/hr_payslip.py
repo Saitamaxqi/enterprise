@@ -95,6 +95,7 @@ class HrPayslip(models.Model):
         readonly=False)
     paid = fields.Boolean(
         string='Made Payment Order? ', copy=False)
+    done_date = fields.Datetime(string="payslip confirmation Date")
     paid_date = fields.Date(string="Payment Date")
     note = fields.Text(string='Internal Note')
     version_id = fields.Many2one(
@@ -103,7 +104,6 @@ class HrPayslip(models.Model):
     credit_note = fields.Boolean(
         string='Credit Note',
         help="Indicates this payslip has a refund of another")
-    has_refund_slip = fields.Boolean(compute='_compute_has_refund_slip')
     payslip_run_id = fields.Many2one(
         'hr.payslip.run', string='Pay Run',
         copy=False, ondelete='cascade', tracking=True, index='btree_not_null',
@@ -117,6 +117,9 @@ class HrPayslip(models.Model):
     warning_message = fields.Char(compute='_compute_warning_message', store=True, readonly=True)
     is_wrong_duration = fields.Boolean(compute='_compute_is_wrong_duration', compute_sudo=True)
     is_regular = fields.Boolean(compute='_compute_is_regular')
+    is_wrong_version = fields.Boolean(compute='_compute_is_wrong_version', store=True)
+    has_wrong_data = fields.Boolean(compute='_compute_is_wrong_version', store=True)
+    keep_wrong_version = fields.Boolean(default=False)
     has_negative_net_to_report = fields.Boolean()
     negative_net_to_report_display = fields.Boolean(compute='_compute_negative_net_to_report_display')
     negative_net_to_report_message = fields.Char(compute='_compute_negative_net_to_report_display')
@@ -143,6 +146,12 @@ class HrPayslip(models.Model):
     payment_report_date = fields.Date(readonly=True)
     ytd_computation = fields.Boolean(related='struct_id.ytd_computation')
     employer_cost = fields.Monetary(compute='_compute_basic_net', store=True, string='Employer Cost')
+    is_refund_payslip = fields.Boolean(string="Is Refund payslip", default=False)
+    is_refunded = fields.Boolean(string="Is Refunded", default=False)
+    is_corrected = fields.Boolean(string="Is Corrected", default=False)
+    origin_payslip_id = fields.Many2one('hr.payslip', string='Origin Payslip', index='btree_not_null')
+    related_payslip_ids = fields.One2many('hr.payslip', 'origin_payslip_id', string="Related Payslips")
+    related_payslip_count = fields.Integer("Related payslip count", compute="_compute_related_payslip_count_count")
 
     def _get_salary_advance_balances(self):
         return defaultdict(float)
@@ -305,6 +314,11 @@ class HrPayslip(models.Model):
                 payslip.negative_net_to_report_amount = False
                 payslip.negative_net_to_report_message = False
 
+    @api.depends('related_payslip_ids')
+    def _compute_related_payslip_count_count(self):
+        for slip in self:
+            slip.related_payslip_count = len(slip.related_payslip_ids)
+
     def _get_negative_net_input_type(self):
         self.ensure_one()
         return self.env.ref('hr_payroll.input_deduction')
@@ -331,6 +345,13 @@ class HrPayslip(models.Model):
     def _compute_is_regular(self):
         for payslip in self:
             payslip.is_regular = payslip.struct_id.type_id.default_struct_id == payslip.struct_id
+
+    @api.depends('employee_id.current_version_id', 'version_id.last_modified_date', 'date_from')
+    def _compute_is_wrong_version(self):
+        for payslip in self.filtered(lambda slip: slip.state in ("done", "paid")):
+            payslip.is_wrong_version = payslip.employee_id and payslip.version_id \
+                                        and payslip.version_id != payslip.employee_id._get_version(date=payslip.date_from)
+            payslip.has_wrong_data = payslip.version_id.last_modified_date > payslip.done_date
 
     def _is_invalid(self):
         self.ensure_one()
@@ -392,30 +413,13 @@ class HrPayslip(models.Model):
     def _compute_is_superuser(self):
         self.is_superuser = self.env.user._is_superuser() and self.env.user.has_group('base.group_no_one')
 
-    def _compute_has_refund_slip(self):
-        # This field is only used to know whether we need a confirm on refund or not
-        # It doesn't have to work in batch and we try not to search if not necessary
-        for payslip in self:
-            if not payslip.credit_note and payslip.state in ('done', 'paid') and self.search_count([
-                ('employee_id', '=', payslip.employee_id.id),
-                ('date_from', '=', payslip.date_from),
-                ('date_to', '=', payslip.date_to),
-                ('version_id', '=', payslip.version_id.id),
-                ('struct_id', '=', payslip.struct_id.id),
-                ('credit_note', '=', True),
-                ('state', '!=', 'cancel'),
-                ]):
-                payslip.has_refund_slip = True
-            else:
-                payslip.has_refund_slip = False
-
     @api.constrains('version_id', 'date_from', 'date_to')
     def _check_version_dates(self):
         for slip in self:
             version = slip.version_id
             if not version or not slip.date_from:
                 continue
-            if not version._is_overlapping_period(slip.date_from, slip.date_to):
+            if not version._is_overlapping_period(slip.date_from, slip.date_to) and not slip.is_refund_payslip:
                 raise ValidationError(_("Employee must have a running contract for payslip duration"))
 
     @api.constrains('date_from', 'date_to')
@@ -502,7 +506,7 @@ class HrPayslip(models.Model):
                 template.send_mail(payslip.id, email_layout_xmlid='mail.mail_notification_light')
 
     def _filter_out_of_versions_payslips(self):
-        return self.filtered(lambda p: p.version_id and not p.version_id._is_overlapping_period(p.date_from, p.date_to))
+        return self.filtered(lambda p: p.version_id and not p.version_id._is_overlapping_period(p.date_from, p.date_to) and not p.is_refund_payslip)
 
     def action_payslip_done(self):
         invalid_payslips = self._filter_out_of_versions_payslips()
@@ -514,7 +518,10 @@ class HrPayslip(models.Model):
             raise ValidationError(_(
                 "The following payslips company differs from the batch's company:\n%s", "\n".join(mismatched_slips.mapped('name')))
             )
-        self.write({'state' : 'done'})
+        self.write({
+            'state': 'done',
+            'done_date': fields.Datetime.now(),
+        })
 
         line_values = self._get_line_values(['NET'])
 
@@ -590,45 +597,101 @@ class HrPayslip(models.Model):
             'domain': [('id', 'in', self.salary_attachment_ids.ids)],
         }
 
-    def refund_sheet(self):
-        copied_payslips = self.env['hr.payslip']
-        for payslip in self:
-            copied_payslip = payslip.copy({
-                'credit_note': True,
-                'name': _('Refund: %(payslip)s', payslip=payslip.name),
-                'edited': True,
-                'state': 'verify',
-            })
-            for wd in copied_payslip.worked_days_line_ids:
-                wd.number_of_hours = -wd.number_of_hours
-                wd.number_of_days = -wd.number_of_days
-                wd.amount = -wd.amount
-            for line in copied_payslip.line_ids:
-                line.amount = -line.amount
-                line.total = -line.total
-            copied_payslips |= copied_payslip
-            payslip.message_post(
-                body=_('This is a refunded payslip.\nFind the refund under this name: %(payslip)s', payslip=copied_payslip.name)
-            )
-        formview_ref = self.env.ref('hr_payroll.view_hr_payslip_form', False)
-        treeview_ref = self.env.ref('hr_payroll.view_hr_payslip_tree', False)
-        action = {
-                'name': ("Refund Payslip"),
-                'view_id': False,
+    def action_keep_wrong_version(self):
+        self.keep_wrong_version = True
+
+    def action_adjust_payslip(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._('Payslip Correction'),
+            'res_model': 'hr.payslip.correction.wizard',
+            'view_mode': 'form',
+            'view_id': 'hr_payslip_correction_wizard_form',
+            'views': [(False, 'form')],
+            'target': 'new',
+            'context': {
+                'default_employee_id': self.employee_id.id,
+                'default_payslip_id': self.id,
+            },
+        }
+
+    def action_open_related_payslips(self):
+        return {
+                'name': self.env._("Related Payslip"),
                 'res_model': 'hr.payslip',
                 'type': 'ir.actions.act_window',
                 'target': 'current',
-                'domain': [('id', 'in', copied_payslips.ids)],
-                'context': {}
+                'view_mode': 'list, form',
+                'views': [(False, 'list'), (False, 'form')],
+                'domain': [('id', 'in', self.related_payslip_ids.ids)],
+        }
+
+    def _get_payslips_action(self):
+        formview_ref = self.env.ref('hr_payroll.view_hr_payslip_form', False)
+        listview_ref = self.env.ref('hr_payroll.view_hr_payslip_tree', False)
+        return {
+                'type': 'ir.actions.act_window',
+                'name': self.env._("Refund Payslip"),
+                'res_model': 'hr.payslip',
+                'target': 'current',
+                'view_mode': 'list,form',
+                'views': [(listview_ref.id, 'list'), (formview_ref.id, 'form')],
+                'domain': [('id', 'in', self.ids)],
             }
-        if len(copied_payslips.ids) > 1:
-            action['view_mode'] = 'list,form'
-            action['views'] = [(treeview_ref and treeview_ref.id or False, 'list'), (formview_ref and formview_ref.id or False, 'form')]
-        else:
-            action['view_mode'] = 'form'
-            action['views'] = [(formview_ref and formview_ref.id or False, 'form')]
-            action['res_id'] = copied_payslips.ids[0]
-        return action
+
+    def _action_refund_payslips(self):
+        reverted_payslips = self.env['hr.payslip']
+        for payslip in self:
+            reverted_payslip = payslip.copy({
+                'credit_note': True,
+                'name': self.env._('Refund: %(payslip)s', payslip=payslip.name),
+                'edited': True,
+                'state': 'verify',
+                'origin_payslip_id': payslip.id,
+                'is_refund_payslip': True,
+            })
+            for wd in reverted_payslip.worked_days_line_ids:
+                wd.number_of_hours = -wd.number_of_hours
+                wd.number_of_days = -wd.number_of_days
+                wd.amount = -wd.amount
+            for line in reverted_payslip.line_ids:
+                line.amount = -line.amount
+                line.total = -line.total
+            reverted_payslips |= reverted_payslip
+            payslip.message_post(
+                body=self.env._('This is a refunded payslip.\nFind the refund under this name: %(payslip)s', payslip=reverted_payslip.name)
+            )
+            payslip.is_refunded = True
+        return reverted_payslips
+
+    def _action_correct_payslips(self):
+        corrected_payslips_values = []
+        for payslip in self:
+            corrected_name = self.env._('Correction: %(payslip)s', payslip=payslip.name)
+            corrected_payslips_values.append({
+                'name': corrected_name,
+                'origin_payslip_id': payslip.id,
+                'version_id': payslip.employee_id._get_version(date=payslip.date_from).id,
+                'date_from': payslip.date_from,
+                'date_to': payslip.date_to,
+            })
+            payslip.message_post(
+                body=self.env._('This is a corrected payslip.\nFind the correction under this name: %(payslip)s', payslip=corrected_name)
+            )
+            payslip.is_corrected = True
+        corrected_payslips = self.env['hr.payslip'].create(corrected_payslips_values)
+        corrected_payslips.compute_sheet()
+        return corrected_payslips
+
+    def refund_sheet(self):
+        reverted_payslips = self._action_refund_payslips()
+        return (self | reverted_payslips)._get_payslips_action()
+
+    def correct_sheet(self):
+        reverted_payslips = self._action_refund_payslips()
+        corrected_payslips = self._action_correct_payslips()
+        return (self | corrected_payslips | reverted_payslips)._get_payslips_action()
 
     @api.ondelete(at_uninstall=False)
     def _unlink_if_draft_or_cancel(self):

@@ -68,8 +68,9 @@
                 <button string="Confirm" name="action_payslip_done" type="object" invisible="state != 'verify'" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
                 <button string="Mark as paid" name="action_payslip_paid" type="object" class="oe_highlight" invisible="state != 'done'"/>
                 <button string="Create Payment Report" name="action_payslip_payment_report" type="object" invisible="state != 'done'"/>
-                <button string="Refund" name="refund_sheet" type='object' invisible="has_refund_slip or credit_note or state != 'paid'"/>
-                <button string="Refund" name="refund_sheet" type='object' invisible="not has_refund_slip or credit_note or state != 'paid'"
+                <button string="Revert" name="refund_sheet" type='object' invisible="is_refunded or credit_note or state != 'paid'"
+                    confirm="Are you sure you want to revert this payslip? This will create a negative of this payslip."/>
+                <button string="Revert" name="refund_sheet" type='object' invisible="not is_refunded or credit_note or state != 'paid'"
                     confirm="Another refund payslip with the same amount has been found. Do you want to create a new one?"/>
                 <button string="Set to Draft" name="action_payslip_draft" type="object" invisible="state != 'cancel'"/>
                 <button string="Unpaid" name="action_payslip_unpaid" type="object" invisible="state != 'paid'"/>
@@ -80,8 +81,24 @@
                 <button string="Export Payslip" name="action_export_payslip" type="object" invisible="not is_superuser"/>
                 <field name="state" widget="statusbar" statusbar_visible="draft,done,paid"/>
             </header>
+            <div class="alert alert-warning d-flex align-items-center" role="alert" 
+                invisible="(not has_wrong_data) or (is_refunded or is_corrected or keep_wrong_version or is_refund_payslip)">
+                The employee's data has been updated since this payslip was created.
+                <button type="object" class="btn btn-link ms-auto" name="action_adjust_payslip">Adjust payslip</button>
+                <button type="object" class="btn btn-link ms-2" name="action_keep_wrong_version">Keep it as is</button>
+            </div>
+            <div class="alert alert-warning d-flex align-items-center" role="alert" 
+                invisible="(not is_wrong_version) or (is_refunded or is_corrected or keep_wrong_version or is_refund_payslip)">
+                Employee's record is not the latest version for this payslip period.
+                <button type="object" class="btn btn-link ms-auto" name="action_adjust_payslip">Adjust payslip</button>
+                <button type="object" class="btn btn-link ms-2" name="action_keep_wrong_version">Keep it as is</button>
+            </div>
             <sheet>
                 <div class="oe_button_box" name="button_box">
+                    <button type="object" class="oe_stat_button" name="action_open_related_payslips" id="open_related_payslips"
+                        icon="fa-files-o" invisible="related_payslip_count == 0">
+                        <field name="related_payslip_count" widget="statinfo" string="Related Payslips"/>
+                    </button>
                     <button type="object" class="oe_stat_button" id="open_work_entries"
                         icon="fa-calendar" name="action_open_work_entries">
                         <div class="o_stat_info">
@@ -131,7 +148,6 @@
                     <field name="sum_worked_hours" invisible="1"/>
                     <field name="credit_note" invisible="1" readonly="state not in ['draft', 'verify']"/>
                     <field name="is_superuser" invisible="1"/>
-                    <field name="has_refund_slip" invisible="1"/>
                     <field name="use_worked_day_lines" invisible="1"/>
                     <field name="payment_report_filename" invisible="1"/>
                     <field name="payment_report" filename="payment_report_filename" invisible="not payment_report"/>
