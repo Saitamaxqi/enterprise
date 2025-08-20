@@ -179,8 +179,9 @@ class IrActionsServer(models.Model):
                             " (with error)" if error else "")
 
             if result is None and record:
-                # By adding this, prompt like "if cannot do anything, do ..." work better
-                result = f'Action "{ir_action_tool.name}"" executed for "{self._ai_truncate(record.name)}"'
+                # If the tool returned nothing, then we set the description of the
+                # tool as the result, so prompt like "if cannot do anything, do ..." work better
+                result = ir_action_tool._ai_get_action_description(record)
 
             if tool_calls_history is not None:
                 tool_calls_history.append({
@@ -204,6 +205,19 @@ class IrActionsServer(models.Model):
             )
             for ir_action_tool in self
         }
+
+    def _ai_get_action_description(self, record):
+        """Build the description used in the toast message shown when the action is done."""
+        self.ensure_one()
+
+        if self.state == 'next_activity':
+            user = (
+                self.activity_user_id if self.activity_user_type == 'specific'
+                else record[self.activity_user_field_name]
+            )
+            return _('Activity created for %(user)s.', user=user.display_name)
+
+        return _('Action "%(action)s" done.', action=self.name)
 
     def _run_action_ai_multi(self, eval_context=None):
         """Execute an action of type `ai`."""

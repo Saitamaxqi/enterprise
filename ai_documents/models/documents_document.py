@@ -85,17 +85,13 @@ class DocumentsDocument(models.Model):
         self.ensure_one()
         folder = self.browse(folder_id)
         if folder.type != "folder":
-            raise UserError(_("AI: Cannot move in a non-folder."))
+            raise UserError(_("Cannot move in a non-folder."))
 
         if not self.ai_sortable:
-            raise UserError(_("AI: This document cannot be auto-sorted."))
+            raise UserError(_("This document cannot be auto-sorted."))
 
         if folder == self.folder_id:
-            return _(
-                'AI: "%(document)s" has been auto-sorted to "%(folder)s"',
-                document=self._ai_truncate(self.name),
-                folder=self._ai_truncate(folder.name),
-            )
+            return _('Moved to "%(folder)s".', folder=self._ai_truncate(folder.name))
 
         _prompt, _fields, allowed_ids = parse_ai_prompt_values(
             self.env,
@@ -104,14 +100,10 @@ class DocumentsDocument(models.Model):
             False,
         )
         if folder.id not in allowed_ids:
-            raise UserError(_("AI: This folder isn't specified in the prompt and cannot be used as target."))
+            raise UserError(_("This folder isn't specified in the prompt and cannot be used as target."))
 
         self.folder_id = folder.id
-        return _(
-            'AI: "%(document)s" has been auto-sorted to "%(folder)s"',
-            document=self._ai_truncate(self.name),
-            folder=self._ai_truncate(folder.name),
-        )
+        return _('Moved to "%(folder)s".', folder=self._ai_truncate(folder.name))
 
     @api.model
     def _get_base_server_actions_domain(self):
@@ -269,7 +261,7 @@ class DocumentsDocument(models.Model):
         ir_actions_tools.use_in_ai = True
 
         action_values = {
-            "name": _("AI: Auto-sort documents in %s", self.name),
+            "name": _("Auto-sort documents in %s", self.name),
             "ai_autosort_folder_id": self.id,
             "ai_tool_ids": ir_actions_tools.ids or False,
             "model_id": self.env.ref("documents.model_documents_document").id,
@@ -295,7 +287,7 @@ class DocumentsDocument(models.Model):
             ir_action = self.env["ir.actions.server"].create(action_values)
 
         automation_values = {
-            "name": _("AI: Auto-sort documents in %s", self.name),
+            "name": _("Auto-sort documents in %s", self.name),
             "ai_autosort_folder_id": self.id,
             "filter_domain": repr([("folder_id", "=", self.id), ("ai_sortable", "=", True)]),
             "model_id": self.env.ref("documents.model_documents_document").id,

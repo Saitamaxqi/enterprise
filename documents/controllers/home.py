@@ -83,4 +83,6 @@ class Home(web_home.Home):
                 for key, value
                 in ShareRoute._documents_get_init_data(document_sudo, request.env.user).items()
             })
+            if 'documents_init_open_preview' in kw:
+                fragment['documents_init_open_preview'] = kw['documents_init_open_preview']
         return request.redirect(f'/web?{urlencode(query)}#{urlencode(fragment)}')

@@ -46,22 +46,29 @@ class IrActionsServer(models.Model):
                 self.env["bus.bus"]._sendone(
                     self.env.user.partner_id,
                     "ai_documents.auto_sort_notification",
-                    {"message": str(error), "type": "warning"},
+                    {
+                        "message": str(error),
+                        "type": "warning",
+                        "document_name": record.name,
+                        "document_access_url": record.access_url,
+                    },
                 )
+
         elif self.env.user.active:
             # Send the last tool result or name as toast notification
             # Or the main AI action if no tool was executed
-            message = (
-                tool_calls_history[-1]["result"]
-                if tool_calls_history and tool_calls_history[-1]["result"] else
-                _('Action "%(action)s" executed for "%(record)s"',
-                    action=self.name, record=self._ai_truncate(record.name))
-            )
+            tool_history = " ".join(t["result"] for t in tool_calls_history if t["result"])
+            message = tool_history or self._ai_get_action_description(record)
 
             self.env["bus.bus"]._sendone(
                 self.env.user.partner_id,
                 "ai_documents.auto_sort_notification",
-                {"message": message, "type": "success"},
+                {
+                    "message": message,
+                    "type": "success",
+                    "document_name": record.name,
+                    "document_access_url": record.access_url,
+                },
             )
         return ret, tool_calls_history
 

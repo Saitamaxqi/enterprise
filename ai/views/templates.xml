@@ -27,5 +27,8 @@
                 </li>
             </ul>
         </t>
+        <span t-else="">
+            No tool was executed.
+        </span>
     </template>
 </odoo>
