@@ -133,7 +133,9 @@ class HrLeave(models.Model):
                 ('state', '=', 'draft'),
                 ('date', '>=', Datetime.to_datetime(leave.date_from + relativedelta(day=1, months=1))),
                 ('date', '<=', datetime.combine(Datetime.to_datetime(leave.date_to + relativedelta(day=31, months=1)), datetime.max.time()))
-            ])
+            ],
+                order="date"
+            )
             if not next_month_work_entries:
                 raise UserError(_('The next month work entries are not generated yet or are validated already for time off %s', leave.display_name))
             if not leave_work_entries:
