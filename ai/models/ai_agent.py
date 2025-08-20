@@ -476,6 +476,9 @@ class AIAgent(models.Model):
         today_date = str(datetime.now(tz).strftime(DEFAULT_SERVER_DATETIME_FORMAT))
         system_content = self.system_prompt or "You are a RAG assistant."
         system_content += f"\n\nToday's date to be used: {today_date}"
+        if not self.env.user._is_public():
+            partner_vals, _ = self.env.user.partner_id._ai_read(['name', 'function', 'email', 'phone'], None)
+            system_content += f"\n\nUser info: {partner_vals} "
 
         if self.topic_ids:
             system_content += PREPROMPTS['tools']

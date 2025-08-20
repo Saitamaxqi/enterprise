@@ -45,8 +45,11 @@ class AIController(ThreadController):
     @add_guest_to_context
     def close_ai_chat(self, channel_id):
         channel = self._get_ai_channel_from_id(channel_id)
-        if channel and channel.is_member:
+        if channel and self._should_unlink_on_close(channel):
             channel.sudo().unlink()
+
+    def _should_unlink_on_close(self, channel):
+        return channel.is_member
 
     def _get_ai_channel_from_id(self, channel_id):
         channel = self.env['discuss.channel'].search([('id', '=', channel_id)])

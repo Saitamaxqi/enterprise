@@ -89,6 +89,7 @@
                     </div>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box"/>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title mb-4 d-flex align-items-center">
                         <field name="image_128" widget="image" class="oe_avatar me-3"

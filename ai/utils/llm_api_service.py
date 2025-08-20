@@ -521,7 +521,7 @@ class LLMApiService:
                 if allow_end_message and "__end_message" not in tool_parameter_schema["properties"]:
                     tool_parameter_schema["properties"]["__end_message"] = {
                         "type": "string",
-                        "description": "If you are not waiting a result, and you are done, write here what you did and why. If you will do action after this one, leave it empty.",
+                        "description": "If you are not waiting a result and you are done, write here your last message (it must follow the instructions). If you will do an action after this one, leave it empty.",
                     }
                 if "__end_message" in tool_parameter_schema["properties"] and "__end_message" not in tool_parameter_schema["required"]:
                     tool_parameter_schema["required"].append("__end_message")

@@ -8,10 +8,10 @@
     """,
     'depends': ['ai_app', 'im_livechat'],
     'data': [
+        'data/ai_agent_data.xml',
         'views/im_livechat_channel_rule_views.xml'
     ],
     'demo': [
-        'data/ai_agent_demo.xml',
         'data/im_livechat_channel_rule_demo.xml',
     ],
     'assets': {
