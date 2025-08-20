@@ -3,6 +3,7 @@ import { useService } from "@web/core/utils/hooks";
 import { formView } from "@web/views/form/form_view";
 import { _t } from "@web/core/l10n/translation";
 import { useSubEnv } from "@odoo/owl";
+import { PRINTER_MESSAGES } from "@iot/network_utils/iot_http_service";
 
 class IoTDeviceController extends formView.Controller {
     setup() {
@@ -68,17 +69,7 @@ class IoTDeviceController extends formView.Controller {
     }
 
     onPrinterEvent(event) {
-        const messages = {
-            ERROR_FAILED: _t("Failed to initiate print"),
-            ERROR_OFFLINE: _t("Printer is not ready"),
-            ERROR_TIMEOUT: _t("Printing timed out"),
-            ERROR_NO_PAPER: _t("Out of paper"),
-            ERROR_UNREACHABLE: _t("Printer is unreachable"),
-            ERROR_UNKNOWN: _t("Unknown printer error occurred"),
-            WARNING_LOW_PAPER: _t("Paper is low"),
-        };
-
-        const errorMessage = messages[event.message] ?? event.message;
+        const errorMessage = PRINTER_MESSAGES[event.message] ?? event.message;
 
         switch (event.status) {
             case "error":
