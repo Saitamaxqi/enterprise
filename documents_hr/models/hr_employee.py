@@ -23,10 +23,22 @@ class HrEmployee(models.Model):
         return self.company_id.documents_hr_settings and super()._check_create_documents()
 
     def _compute_document_count(self):
-        document_count_by_folder = dict(self.env['documents.document']._read_group(
-            [('folder_id', 'in', self.hr_employee_folder_id.ids), ('type', '!=', 'folder')], ['folder_id'], ['__count']))
-        for employee in self:
-            employee.document_count = document_count_by_folder.get(employee.hr_employee_folder_id, 0)
+        # FIX in 18.3, to remove when documents hr setting won't be optional anymore.
+        if not self.hr_employee_folder_id:
+            # Search everywhere if no employee folder configured.
+            # Method not optimized for batches since it is only used in the form view.
+            for employee in self:
+                if employee.work_contact_id:
+                    employee.document_count = self.env['documents.document'].search_count([
+                        ('partner_id', '=', self.work_contact_id.id)
+                    ])
+                else:
+                    employee.document_count = 0
+        else:
+            document_count_by_folder = dict(self.env['documents.document']._read_group(
+                [('folder_id', 'in', self.hr_employee_folder_id.ids), ('type', '!=', 'folder')], ['folder_id'], ['__count']))
+            for employee in self:
+                employee.document_count = document_count_by_folder.get(employee.hr_employee_folder_id, 0)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -47,6 +59,16 @@ class HrEmployee(models.Model):
         self.ensure_one()
         if not self.work_contact_id:
             raise ValidationError(_('You must have a contact linked to the employee in order to use Document\'s features.'))
+        action = self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference')
+        # If setting not activated, use the old filter -> Search everywhere
+        if not self.company_id.documents_hr_settings:
+            action['context'] = {
+                'default_partner_id': self.work_contact_id.id,
+                'searchpanel_default_folder_id': False,
+                'default_res_id': self.id,
+                'default_res_model': 'hr.employee',
+            }
+            return action
         if not self.hr_employee_folder_id:
             raise ValidationError(_('You must configure the HR Employee folder in document settings to use Document\'s features.'))
         if not self.env.user.has_groups('hr.group_hr_user'):
