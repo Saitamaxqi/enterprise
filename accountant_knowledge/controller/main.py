@@ -187,7 +187,7 @@ def get_back_cover_pdf():
 
 
 def compute_total_assets(audit_report):
-    balance_sheet_report = request.env.ref('account_reports.balance_sheet')
+    balance_sheet_report = request.env.ref('account_reports.balance_sheet').with_company(audit_report.company_id)
     balance_sheet_report_options = balance_sheet_report.get_options({
         'selected_variant_id': balance_sheet_report.id,
         'date': {
@@ -211,7 +211,7 @@ def compute_total_assets(audit_report):
 
 
 def compute_net_profit_and_total_revenue(audit_report):
-    profit_and_loss_report = request.env.ref('account_reports.profit_and_loss')
+    profit_and_loss_report = request.env.ref('account_reports.profit_and_loss').with_company(audit_report.company_id)
     profit_and_loss_report_options = profit_and_loss_report.get_options({
         'selected_variant_id': profit_and_loss_report.id,
         'date': {
