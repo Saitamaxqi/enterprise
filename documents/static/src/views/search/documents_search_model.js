@@ -284,7 +284,7 @@ export class DocumentsSearchModel extends SearchModel {
     get orderBy() {
         if (this.sections.get(1).activeValueId === "TRASH") {
             return [
-                { name: "write_date", asc: false },
+                { name: "create_date", asc: false },
                 { name: "is_folder", asc: false },
             ];
         }
@@ -297,7 +297,7 @@ export class DocumentsSearchModel extends SearchModel {
         }
         const orderBy = super.orderBy;
         if (!orderBy.length) {
-            orderBy.push({ name: "write_date", asc: false });
+            orderBy.push({ name: "create_date", asc: false });
         }
         return orderBy;
     }
