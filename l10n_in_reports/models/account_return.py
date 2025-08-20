@@ -1663,7 +1663,10 @@ class AccountReturn(models.Model):
                     if len(matched_bills) == 1:
                         remove_matched_bill_value(matching_dict, matching_keys, matched_bills)
                         exception = []
-                        if matched_bills.ref == bill_number or matched_bills.l10n_in_irn_number == bill_irn:
+                        is_irn_matched = matched_bills.l10n_in_irn_number == bill_irn
+                        if is_irn_matched and matched_bills.state == 'draft':
+                            exception.append(_("The IRN number is matching with GSTR-2B, but the bill is not validated yet."))
+                        elif matched_bills.ref == bill_number or is_irn_matched:
                             if 'bill_taxable_value' in gstr2b_bill and gstr2b_bill['bill_taxable_value'] != matched_bills.amount_untaxed:
                                 exception.append(_("Total Taxable amount as per GSTR-2B is %s", gstr2b_bill['bill_taxable_value']))
                             amount_total = matched_bills.amount_total
@@ -1826,9 +1829,12 @@ class AccountReturn(models.Model):
                 '&', ("invoice_date", ">=", self.date_from),
                 '&', ("invoice_date", "<=", self.date_to),
                 '&', ("company_id", "in", self.company_ids.ids or self.company_id.ids),
-                '&', ("state", "=", "posted"),
                 '&', ('line_ids.tax_ids', '!=', False),
-                     ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer'))
+                '|',
+                    '&', ("state", "=", "posted"),
+                        ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer')),
+                    '&', ("state", "in", ["draft", "cancel"]),
+                        ("l10n_in_irn_number", "!=", False),
             ]
             to_match_bills = AccountMove.search(domain)
             for late_bill in gstr2b_late_streamline_bills:
@@ -1840,10 +1846,13 @@ class AccountReturn(models.Model):
                     ("company_id", "in", self.company_ids.ids or self.company_id.ids),
                     ("move_type", "in", AccountMove.get_purchase_types()),
                     ('ref', '=', late_bill.get('bill_number')),
-                    ("state", "=", "posted"),
                     ('line_ids.tax_ids', '!=', False),
-                    ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer')),
                     ("l10n_in_gstr2b_reconciliation_status", "not in", ('matched', 'partially_matched', 'manually_matched')),
+                    '|',
+                        '&', ("state", "=", "posted"),
+                            ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer')),
+                        '&', ("state", "in", ["draft", "cancel"]),
+                            ("l10n_in_irn_number", "!=", False),
                 ])
             for bill in to_match_bills:
                 bill_type = 'bill'
@@ -2171,7 +2180,9 @@ class AccountReturn(models.Model):
                 created_move = self.env['account.move'].with_context(skip_is_manually_modified=True).create({
                     'journal_id': journal.id,
                     'move_type': move_type,
-                    'l10n_in_irn_number': irn_number
+                    'l10n_in_irn_number': irn_number,
+                    'invoice_date': bill.get('bill_date'),
+                    'ref': bill.get('bill_number')
                 })
 
                 if self.l10n_in_gstr_activate_einvoice_fetch == 'automatic':

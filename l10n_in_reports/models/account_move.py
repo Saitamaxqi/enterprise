@@ -282,6 +282,20 @@ class AccountMove(models.Model):
         item_list = content['ItemList']
         value_details = content['ValDtls']
         trans_details = content['TranDtls']
+        buyer_details = content['BuyerDtls']
+
+        if self.company_id.l10n_in_edi_production_env and buyer_details.get('Gstin'):
+            if buyer_details['Gstin'] != self.company_id.vat:
+                self.message_post(
+                    body=_(
+                        "Mismatch in GSTIN: The buyer's GSTIN in the document (%(buyer)s) does not match the company's registered GSTIN (%(company)s).\n"
+                        "Please verify that the document belongs to the current company.",
+                        buyer=buyer_details['Gstin'],
+                        company=self.company_id.vat,
+                    )
+                )
+                return False
+
         move_vals = {
             'l10n_in_irn_number': content.get('Irn'),
             'move_type': MOVE_TYPE_MAPPING.get(bill_details.get('Typ'), 'in_invoice'),

@@ -26,13 +26,13 @@
         "Em": "info@company.inexample.com"
     },
     "BuyerDtls": {
-        "Gstin": "24AACCT6304M1ZB",
-        "LglNm": "Registered Customer",
+        "Gstin": "24AAGCC7144L6ZE",
+        "LglNm": "Default Company",
         "Pos": "24",
         "Addr1": "201, Second Floor, IT Tower 4",
         "Addr2": "InfoCity Gate - 1, Infocity",
         "Loc": "Gandhinagar",
-        "Pin": 382007,
+        "Pin": 365220,
         "Stcd": "24"
     },
     "ItemList": [
