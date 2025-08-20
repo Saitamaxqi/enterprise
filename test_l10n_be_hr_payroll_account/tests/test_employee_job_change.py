@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
@@ -84,8 +83,8 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
             'sign_template_id': cls.template.id,
             'ip_wage_rate': 25,
             'internet': 0,
-            'date_version': datetime.date(2015, 1, 1),
-            'contract_date_start': datetime.date(2015, 1, 1),
+            'date_version': datetime.date(2020, 1, 1),
+            'contract_date_start': datetime.date(2020, 1, 1),
         })
         cls.env['res.users'].create({
             'create_employee_id': employee.id,

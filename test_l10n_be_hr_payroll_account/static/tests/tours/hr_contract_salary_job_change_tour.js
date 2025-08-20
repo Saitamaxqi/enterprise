@@ -1,6 +1,7 @@
 import { registry } from "@web/core/registry";
 import { inputFiles } from "@web/../tests/utils";
 import { redirect } from "@web/core/utils/urls";
+import { queryOne } from "@odoo/hoot-dom";
 
 registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
     url: "/odoo",
@@ -59,14 +60,24 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
         {
             trigger: ".o_form_saved",
         },
+        {
+            content: "Open compose email wizard",
+            trigger: "button[name='action_send_by_email']",
+            run: "click",
+        },
+        {
+            content: "Send Offer",
+            trigger: "button.o_mail_send",
+            run: "click",
+        },
         /*
          * Unlog and go to the salary configurator page logged in as the employee
          */
         {
             content: "Unlog",
-            trigger: ".o_field_HrContractSalaryCopyClipboardURL a.o_field_widget.o_form_uri",
-            run() {
-                const offer_link = this.anchor.href;
+            trigger: ".o-mail-Chatter .o-mail-Message:eq(0) a",
+            async run() {
+                const offer_link = queryOne(".o-mail-Chatter .o-mail-Message:eq(0) a").href;
                 // Retrieve the link without the origin to avoid
                 // mismatch between localhost:8069 and 127.0.0.1:8069
                 // when running the tour with chrome headless
@@ -91,13 +102,14 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             content: "Log as employee",
             trigger: "button[type='submit']",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Go on configurator",
             trigger: ".o_web_client",
             run: function () {
                 const url = localStorage.getItem("url");
-                window.location.href = url;
+                redirect(url);
             },
             expectUnloadPage: true,
         },
@@ -108,15 +120,49 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
         /*
          * We only modify the IP to check if the change is correctly made
          * according to the job change of the employee.
-         * Every required field should already be filled thanks to the employee's data.
          */
         {
             content: "Take IP",
             trigger: "input[name=ip_value_radio]:eq(1):not(:visible)",
             run: "click",
         },
-        // set personal info
-        // TODO BEDO: those field should already be filled as the employee already has those files
+         {
+            content: "sex",
+            trigger: "input[name=sex]:not(:visible)",
+            run: function () {
+                document.querySelector('input[value="female"]').checked = true;
+            },
+        },
+        {
+            content: "National Identification Number",
+            trigger: 'input[name="identification_id"]',
+            run: "edit 11.11.11-111.11",
+        },
+        {
+            content: "Nationality",
+            trigger: "select[name=country_id]:not(:visible)",
+            run: "selectByLabel Belgium",
+        },
+        {
+            content: "Street",
+            trigger: 'input[name="private_street"]',
+            run: "edit New Private Street",
+        },
+        {
+            content: "City",
+            trigger: 'input[name="private_city"]',
+            run: "edit Louvain-la-Neuve",
+        },
+        {
+            content: "Zip Code",
+            trigger: 'input[name="private_zip"]',
+            run: "edit 1348",
+        },
+        {
+            content: "Country",
+            trigger: "select[name=private_country_id]:not(:visible)",
+            run: "selectByLabel Belgium",
+        },
         {
             content: "Upload ID card copy (Both Sides)",
             trigger: 'input[name="id_card"]',
@@ -164,6 +210,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             content: "submit",
             trigger: "button#hr_cs_submit",
             run: "click",
+            expectUnloadPage: true,
         },
         {
             content: "Next 1",
