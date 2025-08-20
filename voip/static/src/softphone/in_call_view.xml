@@ -37,16 +37,16 @@
             <ActionButton name.translate="Contact" title.translate="View customer details" icon="props.call.partner_id ? 'oi-user' : 'oi-user-plus'" onClick.bind="onClickContact"/>
             <t class="o-voip-InCallView-xpathTarget"/>
         </div>
-        <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-2">
+        <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-2 mx-3 p-3">
             <span class="fs-2 fw-bold" t-esc="props.call.timerText"/>
-            <div class="d-flex gap-2">
-                <!-- <span class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill py-1 px-3 text-bg-info">
-                    <i class="oi oi-voice-record"/>
-                    <p class="mb-0 fw-bold">Recording</p>
+            <div class="o-voip-InCallView-statusWrapper d-flex gap-2 flex-wrap justify-content-center">
+                <!-- <span class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill border border-info px-2 bg-info bg-opacity-25 lh-lg">
+                    <i class="oi oi-record" aria-hidden="true"/>
+                    <span class="me-1 small">Recording</span>
                 </span> -->
-                <span t-if="userAgent.session?.isOnHold" class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill py-1 px-3 text-bg-warning">
-                    <i class="fa fa-pause"/>
-                    <p class="mb-0 fw-bold">On hold</p>
+                <span t-if="userAgent.session?.isOnHold" class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill border border-warning px-2 bg-warning bg-opacity-25 lh-lg">
+                    <i class="fa fa-pause" aria-hidden="true"/>
+                    <span class="me-1 small">On hold</span>
                 </span>
             </div>
         </div>
