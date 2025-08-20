@@ -1,4 +1,5 @@
 import {
+    click,
     contains,
     insertText,
     openDiscuss,
@@ -11,7 +12,6 @@ import { defineHrModels } from "@hr/../tests/hr_test_helpers";
 import { expectElementCount } from "@html_editor/../tests/_helpers/ui_expectations";
 
 import { describe, test } from "@odoo/hoot";
-import { press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 
 describe.current.tags("desktop");
@@ -26,7 +26,7 @@ test("Can use channel command /who", async () => {
     await start();
     await openDiscuss(channelId);
     await insertText(".o-mail-Composer-input", "/who");
-    await press("Enter");
+    await click(".o-mail-Composer button[title='Send']:enabled");
     await contains(".o_mail_notification", { text: "You are alone in this channel." });
 });
 
@@ -40,7 +40,7 @@ test("can handle command and disable mentions in AI composer", async () => {
     await start();
     await openDiscuss(channelId);
     await insertText(".o-mail-Composer-input", "/help");
-    await press("Enter");
+    await click(".o-mail-Composer button[title='Send']:enabled");
     await contains(".o-mail-Message");
     await insertText(".o-mail-Composer-input", "@");
     await animationFrame();
