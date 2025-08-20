@@ -1,5 +1,8 @@
 <templates id="template">
     <t t-name="appointment.GanttPopover" t-inherit="web_gantt.GanttPopover" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('popover-header')]" position="attributes">
+            <attribute name="t-attf-class" add="{{props.headerClass}}" separator=" "/>
+        </xpath>
         <!--enable moving icons over to the right (ms-auto)-->
         <xpath expr="//div[hasclass('popover-footer')]/div" position="attributes">
             <attribute name="class" add="w-100" separator=" "/>

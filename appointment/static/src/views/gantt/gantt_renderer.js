@@ -70,6 +70,7 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
             color = 8;  // blue
         }
         if (color) {
+            enrichedPill._color = color;
             enrichedPill.className += ` o_gantt_color_${color}`;
         }
         return enrichedPill;
@@ -169,6 +170,7 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
                     onClick: () => this.model.unlinkRecords([record.id]),
                 },
             ],
+            headerClass: `o_gantt_color_${pill._color}`,
             title: record.appointment_booker_id?.display_name || this.getDisplayName(pill),
         });
         return popoverProps;
