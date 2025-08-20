@@ -1045,7 +1045,7 @@ msgstr "Token para Infile WebService (proporcionado por Infile)"
 #. odoo-python
 #: code:addons/l10n_gt_edi/models/l10n_gt_edi_phrase.py:0
 msgid "Type %(type)s Code %(code)s"
-msgstr "Tipo %(tipo) s Código %(código) s"
+msgstr "Tipo %(type)s Código %(code)s"
 
 #. module: l10n_gt_edi
 #: model:ir.model.fields,help:l10n_gt_edi.field_account_journal__l10n_gt_edi_invoicing_type
