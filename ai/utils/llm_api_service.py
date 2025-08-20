@@ -277,8 +277,11 @@ class LLMApiService:
                 *inputs,
             ],
             "store": False,
-            "temperature": temperature,
         }
+        if llm_model not in ('gpt-5', 'gpt-5-mini'):
+            # temperature in not supported with openai reasoning models
+            body["temperature"] = temperature
+
         if schema:
             body["text"] = {
                 "format": {
