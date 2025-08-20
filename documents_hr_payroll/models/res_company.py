@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.fields import Domain
 
 
@@ -38,8 +38,9 @@ class ResCompany(models.Model):
     def _get_or_create_worker_payroll_folder(self):
         if not self.worker_payroll_folder_id:
             self.worker_payroll_folder_id = self.env['documents.document'].sudo().create({
-                'name': _("Workers Payroll"),
+                'name': self.env._("Payroll %s", self.name),
                 'type': 'folder',
                 'owner_id': False,
+                'folder_id': self.documents_hr_folder.id,
             }).id
         return self.worker_payroll_folder_id
