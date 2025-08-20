@@ -45,9 +45,10 @@ class SaleOrder(models.Model):
         task_id = self.env.context.get('fsm_task_id')
         if task_id:
             grouped_lines = defaultdict(lambda: self.env['sale.order.line'])
-            order_lines = self.order_line.filtered_domain([
-                ('section_line_id', '=', selected_section_id),
-            ])
+            selected_section_id = selected_section_id or False
+            order_lines = self.order_line.filtered(
+                lambda line: line.get_parent_section_line().id == selected_section_id,
+            )
             for line in order_lines:
                 if line.task_id.id == task_id and line.product_id.id in product_ids:
                     grouped_lines[line.product_id] |= line

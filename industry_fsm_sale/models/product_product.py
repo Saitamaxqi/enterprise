@@ -33,13 +33,13 @@ class ProductProduct(models.Model):
 
     def _inverse_fsm_quantity(self):
         task = self._get_contextual_fsm_task()
-        selected_section_id = self.env.context.get('selected_section_id', False)
+        selected_section_id = self.env.context.get('selected_section_id') or False
         if task:
-            sale_order_lines = task.sale_order_id.order_line.filtered_domain([
-                ('product_id', 'in', self.ids),
-                ('task_id', '=', task.id),
-                ('section_line_id', '=', selected_section_id),
-            ])
+            sale_order_lines = task.sale_order_id.order_line.filtered(
+                lambda l: l.product_id in self
+                and l.task_id == task
+                and l.get_parent_section_line().id == selected_section_id
+            )
             sale_lines_per_product = defaultdict(lambda: self.env['sale.order.line'])
             for line in sale_order_lines:
                 sale_lines_per_product[line.product_id.id] |= line

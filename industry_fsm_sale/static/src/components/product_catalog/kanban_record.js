@@ -42,18 +42,17 @@ export class FSMProductCatalogKanbanRecord extends ProductCatalogKanbanRecord {
                         ['product_id', '=', this.env.productId],
                         ['product_uom_qty', '>', 0],
                     ];
-                    if (this.env.orderId) {
-                      domain.push([
-                        'section_line_id',
-                        '=',
-                        this.env.searchModel.selectedSection.sectionId,
-                      ]);
-                    }
-                    const lines = await this.orm.searchRead(
+                    let lines = await this.orm.searchRead(
                         'sale.order.line',
                         domain,
-                        ['product_uom_qty'],
+                        ['product_uom_qty', 'parent_id'],
                     );
+                    if (this.env.orderId) {
+                        lines = lines.filter(
+                            (line) => this.env.searchModel.selectedSection.sectionId ?
+                                line.parent_id?.[0] == this.env.searchModel.selectedSection.sectionId : line.parent_id == false
+                        );
+                    }
                     const quantity = lines.reduce(
                         (total, line) => total + line.product_uom_qty, 0
                     );
@@ -66,4 +65,3 @@ export class FSMProductCatalogKanbanRecord extends ProductCatalogKanbanRecord {
         }
     }
 };
-

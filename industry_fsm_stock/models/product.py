@@ -110,12 +110,12 @@ class ProductProduct(models.Model):
         task_id = self.env.context.get('fsm_task_id')
         task = self.env['project.task'].browse(task_id)
         # project user with no sale rights should be able to change material quantities
-        sale_lines = task.sale_order_id.order_line.sudo().filtered_domain([
-            ('task_id', '=', task.id),
-            ('product_id', '=', self.id),
-            ('product_uom_qty', '>', 0),
-            ('section_line_id', '=', self.env.context.get('selected_section_id', False)),
-        ])
+        sale_lines = task.sale_order_id.order_line.sudo().filtered(
+            lambda line: line.task_id == task
+            and line.product_id == self
+            and line.product_uom_qty > 0
+            and line.get_parent_section_line().id == (self.env.context.get('selected_section_id') or False)
+        )
         tracking_line_ids = [(0, 0, {
             'lot_id': line.fsm_lot_id.id,
             'quantity': line.product_uom_qty - line.qty_delivered,
