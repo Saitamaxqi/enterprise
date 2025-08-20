@@ -47,7 +47,7 @@ registry.category("web_tour.tours").add("documents_tour", {
             run: "click",
         },
         {
-            trigger: ".o_kanban_record:contains('mail.png')",
+            trigger: ".o_kanban_record:contains('Acme_NDA.pdf')",
             content: markup(_t("Click on a card to <b>select the document</b>.")),
             tooltipPosition: "bottom",
             run: "click",
