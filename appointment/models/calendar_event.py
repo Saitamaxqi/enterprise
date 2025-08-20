@@ -253,6 +253,11 @@ class CalendarEvent(models.Model):
                 if event.appointment_type_id.id == appointment_type_id:
                     event.is_highlighted = True
 
+    def get_base_url(self):
+        if self.appointment_type_id:
+            return self.appointment_type_id.sudo().get_base_url()
+        return super().get_base_url()
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:

@@ -139,6 +139,68 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
         })
         self.assertFalse(appointment.is_published, "Modifying an appointment type category should not modify the publish state")
 
+    @users('admin')
+    def test_apt_videocall_location_multi_company_and_multi_website(self):
+        """Check video url matches the website of the appointment type."""
+        company_1 = self.env.company
+        company_2 = self.env['res.company'].create({
+            'country_id': self.env.ref('base.ca').id,
+            'currency_id': self.env.ref('base.CAD').id,
+            'email': 'company_2@test.example.com',
+            'name': 'Company 2',
+        })
+
+        website_1 = company_1.website_id
+        website_1.domain = 'http://localhost:8069'
+        # Ensure custom domains are taken into account for the videocall location
+        website_2 = self.env['website'].create({
+            'name': 'Website Company 2',
+            'company_id': company_2.id,
+            'domain': 'http://127.0.0.1:8069',
+        })
+
+        appointment_1, appointment_2 = self.env['appointment.type'].create([
+            {
+                'name': 'Apt Website 1',
+                'staff_user_ids': self.staff_user_bxls,
+                'event_videocall_source': 'discuss',
+                'website_id': website_1.id,
+            },
+            {
+                'name': 'Apt Website 2',
+                'staff_user_ids': self.staff_user_bxls,
+                'event_videocall_source': 'discuss',
+                'website_id': website_2.id,
+            },
+        ])
+
+        event_1, event_2 = self.env['calendar.event'].create([
+            {
+                'name': 'Event 1',
+                'start': datetime(2023, 11, 23, 8, 0),
+                'stop':  datetime(2023, 11, 23, 9, 0),
+                'appointment_type_id': appointment_1.id,
+            }, {
+                'name': 'Event 2',
+                'start': datetime(2023, 11, 23, 8, 0),
+                'stop':  datetime(2023, 11, 23, 9, 0),
+                'appointment_type_id': appointment_2.id,
+            },
+        ]).with_user(self.apt_user)
+
+        # Should not need to be able to read the appointment type to read the base url
+        (event_1 + event_2).invalidate_recordset()
+        (appointment_1 + appointment_2).invalidate_recordset()
+        self.assertEqual((event_1 + event_2).env.user, self.apt_user)
+        self.assertTrue((event_1 + event_2).has_access('read'))
+        self.assertFalse((appointment_1 + appointment_2).with_user(self.apt_user).has_access('read'))
+
+        self.assertIn("localhost:8069/", event_1.videocall_location)
+        self.assertIn("127.0.0.1:8069/", event_2.videocall_location)
+
+        self.assertIn("localhost:8069/", event_1.videocall_redirection)
+        self.assertIn("127.0.0.1:8069/", event_2.videocall_redirection)
+
     def test_find_customer_country_from_visitor(self):
         self.env.user.tz = "Europe/Brussels"
         belgium = self.env.ref('base.be')
