@@ -1,6 +1,10 @@
+
 from odoo import api, fields, models
+from odoo.tools.translate import LazyTranslate
 
 from odoo.addons.account_reports.models.account_return import LIMIT_CHECK_ENTRIES
+
+_lt = LazyTranslate(__name__)
 
 
 class AccountReturnType(models.Model):
@@ -59,10 +63,10 @@ class AccountReturn(models.Model):
             non_business_partners_count = len(non_business_partner_ids)
             checks.append({
                 'code': 'check_intrastat_only_b2b_customer',
-                'name': self.env._('Only business customers'),
-                'message': self.env._('Exclude sales made to private individuals from the listing.'),
+                'name': _lt('Only business customers'),
+                'message': _lt('Exclude sales made to private individuals from the listing.'),
                 'records_count': non_business_partners_count,
-                'records_name': self.env._('Partner') if non_business_partners_count == 1 else self.env._('Partners'),
+                'records_model': self.env['ir.model']._get('res.partner').id,
                 'action': non_business_partner_ids._get_records_action() if non_business_partner_ids else False,
                 'result': 'reviewed' if not non_business_partner_ids else 'anomaly',
             })
@@ -70,32 +74,32 @@ class AccountReturn(models.Model):
         if 'check_intrastat_only_intra_eu' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_intrastat_only_intra_eu',
-                'name': self.env._('Only intra-EU transactions'),
-                'message': self.env._('Exclude any domestic or extra-EU sales from the Intrastat report.'),
+                'name': _lt('Only intra-EU transactions'),
+                'message': _lt('Exclude any domestic or extra-EU sales from the Intrastat report.'),
                 'result': 'reviewed',
             })
 
         if 'check_intrastat_vat_exclusive' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_intrastat_vat_exclusive',
-                'name': self.env._('VAT exclusive'),
-                'message': self.env._('The value of goods should be VAT exclusive.'),
+                'name': _lt('VAT exclusive'),
+                'message': _lt('The value of goods should be VAT exclusive.'),
                 'result': 'reviewed',
             })
 
         if 'check_intrastat_only_goods' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_intrastat_only_goods',
-                'name': self.env._('Only goods included'),
-                'message': self.env._('Exclude services from the report.'),
+                'name': _lt('Only goods included'),
+                'message': _lt('Exclude services from the report.'),
                 'result': 'todo',
             })
 
         if 'check_intrastat_commodity_code' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_intrastat_commodity_code',
-                'name': self.env._('Commodity codes configuration'),
-                'message': self.env._(
+                'name': _lt('Commodity codes configuration'),
+                'message': _lt(
                     'Verify that each item has the appropriate code and description according to the CN (Combined Nomenclature) codes.'
                 ),
                 'result': 'todo',
@@ -104,16 +108,16 @@ class AccountReturn(models.Model):
         if 'check_intrastat_uom' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_intrastat_uom',
-                'name': self.env._('Unit of measure configuration'),
-                'message': self.env._('Verify that each good is assigned the right unit of measure.'),
+                'name': _lt('Unit of measure configuration'),
+                'message': _lt('Verify that each good is assigned the right unit of measure.'),
                 'result': 'todo',
             })
 
         if 'check_intrastat_threshold' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_intrastat_threshold',
-                'name': self.env._('Intrastat Thresholds'),
-                'message': self.env._(
+                'name': _lt('Intrastat Thresholds'),
+                'message': _lt(
                     'Intrastat thresholds may change annually. Verify that your transactions exceed the threshold for reporting.'
                 ),
                 'result': 'todo',

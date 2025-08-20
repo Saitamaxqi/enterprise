@@ -1,4 +1,7 @@
-from odoo import api, models, _
+from odoo import api, models
+from odoo.tools.translate import LazyTranslate
+
+_lt = LazyTranslate(__name__)
 
 
 class AccountReturnType(models.Model):
@@ -72,8 +75,8 @@ class AccountReturn(models.Model):
         if 'check_oss_currency' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_oss_currency',
-                'name': _("EUR Currency"),
-                'message': _("""
+                'name': _lt("EUR Currency"),
+                'message': _lt("""
                     OSS reports must be submitted in euros.
                 """),
                 'result': 'reviewed' if self.company_id.currency_id.name == 'EUR' else 'anomaly',
@@ -82,8 +85,8 @@ class AccountReturn(models.Model):
         if 'check_oss_only_intra_eu_transactions' not in check_codes_to_ignore:
             checks.append({
                 'code': 'check_oss_only_intra_eu_transactions',
-                'name': _("Only intra-EU transactions"),
-                'message': _("""
+                'name': _lt("Only intra-EU transactions"),
+                'message': _lt("""
                     Exclude any domestic or extra-EU sales from the OSS report.
                 """),
                 'result': 'reviewed',
@@ -116,12 +119,12 @@ class AccountReturn(models.Model):
 
             checks.append({
                 'code': 'check_oss_only_b2c_customer',
-                'name': _("Only B2C transactions"),
-                'message': _("""
+                'name': _lt("Only B2C transactions"),
+                'message': _lt("""
                     Only B2C transactions should be included in the OSS report.
                 """),
                 'records_count': business_partners_count,
-                'records_name': _("Partner") if business_partners_count == 1 else _("Partners"),
+                'records_model': self.env['ir.model']._get('res.partner').id,
                 'action': review_action if business_partner_ids else False,
                 'result': 'reviewed' if not business_partner_ids else 'anomaly',
             })

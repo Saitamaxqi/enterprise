@@ -3,6 +3,9 @@ from datetime import date
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.fields import Domain
+from odoo.tools.translate import LazyTranslate
+
+_lt = LazyTranslate(__name__)
 
 
 class AccountReturnType(models.Model):
@@ -188,8 +191,8 @@ class AccountReturn(models.Model):
             )
             checks.append({
                 'code': 'tax_report_code_13',
-                'name': _("No negative amount in VAT report"),
-                'message': _("The Belgian VAT report should only include positive values. A negative amount probably means a misconfiguration."),
+                'name': _lt("No negative amount in VAT report"),
+                'message': _lt("The Belgian VAT report should only include positive values. A negative amount probably means a misconfiguration."),
                 'result': 'reviewed' if success else 'anomaly'
             })
 
@@ -200,8 +203,8 @@ class AccountReturn(models.Model):
         if 'sales_threshold' not in check_codes_to_ignore:
             # The report always ensures that though SQL, so the test can never fail; we still add it to reassure the user
             checks.append({
-                'name': _("Sales above 250€"),
-                'message': _("Only include customers with total annual taxable sales exceeding 250€ (excluding VAT) or a credit note."),
+                'name': _lt("Sales above 250€"),
+                'message': _lt("Only include customers with total annual taxable sales exceeding 250€ (excluding VAT) or a credit note."),
                 'code': 'sales_threshold',
                 'result': 'reviewed',
             })
@@ -225,11 +228,11 @@ class AccountReturn(models.Model):
                 'views': [[False, 'list'], [False, 'form']],
             }
             check_vals = {
-                'name': _("No customer without country"),
-                'message': _("Review invoices having a customer with no country specified."),
+                'name': _lt("No customer without country"),
+                'message': _lt("Review invoices having a customer with no country specified."),
                 'code': 'customer_without_country',
                 'records_count': no_country_moves_count,
-                'records_name': _("Invoice") if no_country_moves_count == 1 else _("Invoices"),
+                'records_model': self.env['ir.model']._get('account.move').id,
                 'result': 'anomaly' if no_country_moves_count else 'reviewed',
                 'action': action if no_country_moves_count else False,
             }

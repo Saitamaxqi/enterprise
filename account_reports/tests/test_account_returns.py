@@ -6,6 +6,8 @@ from odoo import fields, Command
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.tests import tagged
 from odoo.exceptions import UserError
+from odoo.tools.misc import ReadonlyDict
+from odoo.tools.translate import CodeTranslations
 
 
 def patched_generate_all_returns(account_return_type, country_code, main_company, tax_unit=None):
@@ -1478,3 +1480,42 @@ class TestAccountReturn(TestAccountReportsCommon):
             'category': 'audit',
         }])
         wizard.action_create_manual_account_returns()
+
+    def test_translations_checks(self):
+        def patched_get_python_translations(self, credential, env):
+            return ReadonlyDict({
+                "Draft entries": "Écritures en brouillon",
+                "Review and post draft invoices and bills in the period, or change their accounting date.":
+                    "Vérifiez et validez les factures et factures fournisseurs en brouillon pour la période, "
+                    "ou modifiez leur date comptable.",
+            })
+
+        def _patch_get_python_translations():
+            return patch.object(CodeTranslations, 'get_python_translations', patched_get_python_translations)
+
+        with _patch_get_python_translations():
+            self.env['res.lang']._activate_lang('fr_FR')
+
+            january_return = self.env['account.return'].search([
+                ('type_id', '=', self.basic_return_type.id),
+                ('company_id', '=', self.env.company.id),
+                ('date_from', '=', '2024-01-01'),
+                ('date_to', '=', '2024-01-31'),
+            ])
+
+            january_return.refresh_checks()
+            checks = january_return.check_ids
+
+            draft_entries_check = checks.filtered(lambda c: c.code == 'check_draft_entries')
+
+            self.assertEqual(draft_entries_check.name, "Draft entries")
+            self.assertEqual(
+                draft_entries_check.message,
+                "Review and post draft invoices and bills in the period, or change their accounting date."
+            )
+
+            self.assertEqual(draft_entries_check.with_context({"lang": "fr_FR"}).name, "Écritures en brouillon")
+            self.assertEqual(
+                draft_entries_check.with_context({"lang": "fr_FR"}).message,
+                "Vérifiez et validez les factures et factures fournisseurs en brouillon pour la période, ou modifiez leur date comptable."
+            )

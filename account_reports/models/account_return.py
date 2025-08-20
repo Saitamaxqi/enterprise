@@ -11,8 +11,12 @@ from odoo.exceptions import AccessError, RedirectWarning, UserError, ValidationE
 from odoo.fields import Domain
 from odoo.tools import SQL
 from odoo.tools.misc import format_date
+from odoo.tools.translate import LazyTranslate, LazyGettext
 
 from .account_audit_account_status import STATUS_SELECTION
+
+_lt = LazyTranslate(__name__)
+
 
 PERIODS = [
     ('monthly', 'Monthly'),
@@ -411,7 +415,9 @@ class AccountReturnType(models.Model):
                 'manually_created': bool(self.env.context.get('manually_created')),
             })
 
-        return self.env['account.return'].sudo().create(create_vals_list)
+        account_returns = self.env['account.return'].sudo().create(create_vals_list)
+        account_returns._update_translated_name()
+        return account_returns
 
     def _try_create_return_for_period(self, date_in_period, main_company, tax_unit, allow_duplicates=False):
         period_start, period_end = self._get_period_boundaries(main_company, date_in_period)
@@ -429,7 +435,7 @@ class AccountReturnType(models.Model):
             existing_return.company_ids = expected_companies
 
         if not existing_return or allow_duplicates:
-            self.env['account.return'].create([{
+            account_return = self.env['account.return'].create([{
                 'name': self._get_return_name(main_company, period_start, period_end),
                 'date_from': period_start,
                 'date_to': period_end,
@@ -437,8 +443,9 @@ class AccountReturnType(models.Model):
                 'company_id': main_company.id,
                 'tax_unit_id': tax_unit.id if tax_unit else None,
             }])
+            account_return._update_translated_name()
 
-    def _get_return_name(self, main_company, period_from=None, period_to=None, minimal=False):
+    def _get_return_name(self, main_company, period_from=None, period_to=None, minimal=False, all_lang=False):
         main_company = main_company.sudo()
         period_suffix = self._get_period_name(main_company, period_from, period_to, minimal)
         country_code = ""
@@ -447,30 +454,44 @@ class AccountReturnType(models.Model):
                 country_code = f"({self.report_id.country_id.code})"
             else:
                 country_code = f"({main_company.account_fiscal_country_id.code})"
-        return _(
-            "%(return_type_name)s %(period_suffix)s %(country_code)s",
-            return_type_name=self.name,
-            country_code=country_code,
-            period_suffix=period_suffix
-        )
 
-    def _get_period_name(self, main_company, period_from=None, period_to=None, minimal=False):
+        if not all_lang:
+            return self.env._(
+                "%(return_type_name)s %(period_suffix)s %(country_code)s",
+                return_type_name=self.name,
+                period_suffix=period_suffix,
+                country_code=country_code,
+            )
+        else:
+            return_dict = {}
+            installed_langs = self.env['res.lang'].get_installed()
+            for lang_code, lang_name in installed_langs:
+                return_dict[lang_code] = self.with_context(lang=lang_code).env._(
+                    "%(return_type_name)s %(period_suffix)s %(country_code)s",
+                    return_type_name=self.with_context(lang=lang_code).name,
+                    period_suffix=period_suffix,
+                    country_code=country_code,
+                )
+
+            return return_dict
+
+    def _get_period_name(self, main_company, period_from=None, period_to=None, minimal=False, lang_code=None):
         periodicity = self._get_periodicity(main_company)
         start_day, start_month = self._get_start_date_elements(main_company)
         period_suffix = ""
         if period_from and period_to:
             if start_day != 1 or start_month != 1:
-                period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
+                period_suffix = f"{format_date(self.env, period_from, lang_code=lang_code)} - {format_date(self.env, period_to, lang_code=lang_code)}"
             elif periodicity == 'year':
                 period_suffix = f"{period_from.year}"
             elif periodicity == 'trimester':
                 date_format = 'qqq yyyy' if not minimal else 'qqq'
-                period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
+                period_suffix = format_date(self.env, period_from, date_format=date_format, lang_code=lang_code)
             elif periodicity == 'monthly':
                 date_format = 'LLLL yyyy' if not minimal else 'LLL'
-                period_suffix = f"{format_date(self.env, period_from, date_format=date_format)}"
+                period_suffix = format_date(self.env, period_from, date_format=date_format, lang_code=lang_code)
             else:
-                period_suffix = f"{format_date(self.env, period_from)} - {format_date(self.env, period_to)}"
+                period_suffix = f"{format_date(self.env, period_from, lang_code=lang_code)} - {format_date(self.env, period_to, lang_code=lang_code)}"
         return period_suffix
 
     def _get_periodicity(self, company):
@@ -551,7 +572,7 @@ class AccountReturn(models.Model):
     _check_company_domain = check_company_domain_account_return
 
     active = fields.Boolean(default=True)
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(string="Name", required=True, translate=True)
     date_from = fields.Date(string="Date From", required=True)
     date_to = fields.Date(string="Date To", required=True)
     type_id = fields.Many2one(comodel_name='account.return.type', string="Return Type", required=True)
@@ -652,6 +673,12 @@ class AccountReturn(models.Model):
     audit_balances_count = fields.Integer(string="Balances Count", compute="_compute_audit_balances_count")
     audit_balances_completed_count = fields.Integer(string="Completed Balances Count", compute="_compute_audit_balances_completed_count")
     skipped_check_cycles = fields.Char(string="Skipped Check Cycles")
+
+    def _update_translated_name(self):
+        for account_return in self:
+            translated_name_dict = account_return.type_id._get_return_name(account_return.company_id, account_return.date_from, account_return.date_to, minimal=False, all_lang=True)
+            for lang_code, translated_name in translated_name_dict.items():
+                account_return.with_context(lang=lang_code).name = translated_name
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -1802,7 +1829,8 @@ class AccountReturn(models.Model):
                     else:
                         to_create.append({**vals, 'state': record.state, 'return_id': record.id})
 
-        self.env['account.return.check'].with_user(SUPERUSER_ID).create(to_create)
+        if to_create:
+            self.env['account.return.check'].with_user(SUPERUSER_ID).create(to_create)
 
     def _should_run_checks(self):
         # To override in order to run checks in other custom-made states
@@ -1859,6 +1887,7 @@ class AccountReturn(models.Model):
                     self.activity_schedule(activity_type_id=template.activity_type.id, summary=template.name, note=template.description)
 
             if template.type == 'check' and template.model:
+                ir_model = self.env['ir.model']._get(template.model)
                 model = self.env[template.model]
                 domain = []
                 if template.domain:
@@ -1882,14 +1911,14 @@ class AccountReturn(models.Model):
                                 'type': 'ir.actions.act_window',
                                 'name': template.name,
                                 'view_mode': 'list',
-                                'res_model': template.model,
+                                'res_model': model._name,
                                 'domain': domain,
                                 'views': [[False, 'list'], [False, 'form']],
                             }
                     vals_dict.update({
                         'action': action,
                         'records_count': len(entries),
-                        'records_name': model._description,
+                        'records_model': ir_model.id,
                         'result': 'anomaly',
                     })
                 else:
@@ -1936,13 +1965,12 @@ class AccountReturn(models.Model):
             invalid_fields_count = sum(1 for field in required_fields if not field)
 
             checks.append({
-                'name': _("Company data"),
-                'message': _("""Missing company details (like VAT number or country) can cause errors in your report,
+                'name': _lt("Company data"),
+                'message': _lt("""Missing company details (like VAT number or country) can cause errors in your report,
 such as using the wrong VAT rate, wrongly exempting transactions.
                 """),
                 'code': 'check_company_data',
                 'records_count': invalid_fields_count,
-                'records_name': _("Missing"),
                 'action': review_action,
                 'result': 'anomaly' if invalid_fields_count else 'reviewed',
             })
@@ -1950,16 +1978,16 @@ such as using the wrong VAT rate, wrongly exempting transactions.
         if 'check_match_all_bank_entries' not in check_codes_to_ignore:
             checks.append(self._check_match_all_bank_entries(
                     code='check_match_all_bank_entries',
-                    name=_("Bank Matching"),
-                    message=_("Bank matching isn’t required for VAT returns but helps spot missing bills."),
+                    name=_lt("Bank Matching"),
+                    message=_lt("Bank matching isn’t required for VAT returns but helps spot missing bills."),
                 )
             )
 
         if 'check_draft_entries' not in check_codes_to_ignore:
             checks.append(self._check_draft_entries(
                     code='check_draft_entries',
-                    name=_("Draft entries"),
-                    message=_("Review and post draft invoices and bills in the period, or change their accounting date."),
+                    name=_lt("Draft entries"),
+                    message=_lt("Review and post draft invoices and bills in the period, or change their accounting date."),
                     exclude_entries=True,
                 )
             )
@@ -1985,11 +2013,11 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             }
 
             checks.append({
-                'name': _("Bill attachments"),
+                'name': _lt("Bill attachments"),
                 'code': 'check_bills_attachment',
-                'message': _("Each bill should have its own document attached as a proof in case of audit."),
+                'message': _lt("Each bill should have its own document attached as a proof in case of audit."),
                 'records_count': bills_without_attachments_count,
-                'records_name': _("Bill") if bills_without_attachments_count == 1 else _("Bills"),
+                'records_model': self.env['ir.model']._get('account.move').id,
                 'action': review_action if bills_without_attachments_count else None,
                 'result': 'anomaly' if bills_without_attachments_count else 'reviewed',
             })
@@ -2045,11 +2073,11 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             }
 
             checks.append({
-                'name': _("Taxes and countries matching"),
+                'name': _lt("Taxes and countries matching"),
                 'code': 'check_tax_countries',
-                'message': _("Ensure the taxes on invoices and bills match the customer’s country."),
+                'message': _lt("Ensure the taxes on invoices and bills match the customer’s country."),
                 'records_count': country_error_moves_count,
-                'records_name': _("Invoice") if country_error_moves_count == 1 else _("Invoices"),
+                'records_model': self.env['ir.model']._get('account.move').id,
                 'action': review_action if country_error_move_ids else None,
                 'result': 'anomaly' if country_error_move_ids else 'reviewed',
             })
@@ -2083,16 +2111,16 @@ such as using the wrong VAT rate, wrongly exempting transactions.
         if 'check_bank_reconcile' not in check_codes_to_ignore:
             checks.append(self._check_match_all_bank_entries(
                     code='check_bank_reconcile',
-                    name=_("Bank Reconciliation"),
-                    message=_("Reconcile all bank account transactions up to year-end."),
+                    name=_lt("Bank Reconciliation"),
+                    message=_lt("Reconcile all bank account transactions up to year-end."),
                 )
             )
 
         if 'check_draft_entries' not in check_codes_to_ignore:
             checks.append(self._check_draft_entries(
                     code='check_draft_entries',
-                    name=_("No draft entries"),
-                    message=_("Review and post draft invoices, bills and entries in the period, or change their accounting date."),
+                    name=_lt("No draft entries"),
+                    message=_lt("Review and post draft invoices, bills and entries in the period, or change their accounting date."),
                 )
             )
 
@@ -2100,8 +2128,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             receivable_report = self.env.ref('account_reports.aged_receivable_report')
             aml_ids = self.env['account.move.line'].browse(get_unknown_partner_aml_ids(receivable_report))
             checks.append({
-                'name': _("Aged receivables per partner"),
-                'message': _("Review receivables without a partner."),
+                'name': _lt("Aged receivables per partner"),
+                'message': _lt("Review receivables without a partner."),
                 'code': 'check_unkown_partner_receivables',
                 'action': aml_ids._get_records_action() if aml_ids else None,
                 'result': 'anomaly' if aml_ids else 'reviewed',
@@ -2116,8 +2144,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 action = self.env['ir.actions.actions']._for_xml_id("account_reports.action_account_report_ar")
                 action['params'] = {'ignore_session': True}
             checks.append({
-                'name': _("Overdue receivables"),
-                'message': _("Review overdue receivables aged over 60 days and assess the need for an allowance for doubtful accounts or expected credit loss provision, as per IFRS 9 guidelines."),
+                'name': _lt("Overdue receivables"),
+                'message': _lt("Review overdue receivables aged over 60 days and assess the need for an allowance for doubtful accounts or expected credit loss provision, as per IFRS 9 guidelines."),
                 'code': 'check_overdue_receivables',
                 'action': action,
                 'result': 'anomaly' if has_overdue_receivables else 'reviewed',
@@ -2125,8 +2153,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
         if 'check_total_receivables' not in check_codes_to_ignore:
             checks.append({
-                'name': _("Total Receivables"),
-                'message': _("Verify that the total aged receivables equals the customer account balance."),
+                'name': _lt("Total Receivables"),
+                'message': _lt("Verify that the total aged receivables equals the customer account balance."),
                 'code': 'check_total_receivables',
                 'result': 'reviewed',
             })
@@ -2135,8 +2163,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             payable_report = self.env.ref('account_reports.aged_payable_report')
             aml_ids = self.env['account.move.line'].browse(get_unknown_partner_aml_ids(payable_report))
             checks.append({
-                'name': _("Aged payables per partner"),
-                'message': _("Review payables without a partner."),
+                'name': _lt("Aged payables per partner"),
+                'message': _lt("Review payables without a partner."),
                 'code': 'check_unkown_partner_payables',
                 'action': aml_ids._get_records_action() if aml_ids else None,
                 'result': 'anomaly' if aml_ids else 'reviewed',
@@ -2151,8 +2179,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 action = self.env['ir.actions.actions']._for_xml_id("account_reports.action_account_report_ap")
                 action['params'] = {'ignore_session': True}
             checks.append({
-                'name': _("Overdue payables"),
-                'message': _("Review overdue payables aged over 60 days and assess the need for an allowance for uncertain liabilities."),
+                'name': _lt("Overdue payables"),
+                'message': _lt("Review overdue payables aged over 60 days and assess the need for an allowance for uncertain liabilities."),
                 'code': 'check_overdue_payables',
                 'action': action,
                 'result': 'anomaly' if has_overdue_payables else 'reviewed',
@@ -2160,8 +2188,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
         if 'check_total_payables' not in check_codes_to_ignore:
             checks.append({
-                'name': _("Total payables"),
-                'message': _("Verify that the total aged payables equals the vendor account balance."),
+                'name': _lt("Total payables"),
+                'message': _lt("Verify that the total aged payables equals the vendor account balance."),
                 'code': 'check_total_payables',
                 'result': 'reviewed',
             })
@@ -2176,18 +2204,18 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             deferred_entries_count = self.env['account.move'].sudo().search_count(domain, limit=LIMIT_CHECK_ENTRIES)
             if not deferred_entries_count:
                 checks.append({
-                    'name': _("Deferred Entries"),
-                    'message': _("Odoo manages your deferred entries automatically. No deferred entries were found for this period. Ensure your start and end dates are correctly set on your bills and invoices."),
+                    'name': _lt("Deferred Entries"),
+                    'message': _lt("Odoo manages your deferred entries automatically. No deferred entries were found for this period. Ensure your start and end dates are correctly set on your bills and invoices."),
                     'code': 'check_deferred_entries',
                     'records_count': deferred_entries_count,
-                    'records_name': _("Entry") if deferred_entries_count == 1 else _("Entries"),
+                    'records_model': self.env['ir.model']._get('account.move').id,
                     'result': 'todo',
                 })
 
         if 'manual_adjustments' not in check_codes_to_ignore:
             checks.append({
-                'name': _("Manual Adjustments"),
-                'message': _("Complete any necessary manual adjustments and internal checks."),
+                'name': _lt("Manual Adjustments"),
+                'message': _lt("Complete any necessary manual adjustments and internal checks."),
                 'code': 'manual_adjustments',
                 'result': 'todo',
             })
@@ -2198,8 +2226,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                 'ignore_session': True,
             }
             checks.append({
-                'name': _("Earnings Allocation"),
-                'message': _("After adjustements, transfer the undistributed Profits/Losses to an equity account."),
+                'name': _lt("Earnings Allocation"),
+                'message': _lt("After adjustements, transfer the undistributed Profits/Losses to an equity account."),
                 'code': 'earnings_allocation',
                 'action': action,
                 'result': 'todo',
@@ -2231,12 +2259,12 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
             invalid_vies_partners_count = len(invalid_vies_partners)
             checks.append({
-                'name': _("Valid VAT Numbers"),
+                'name': _lt("Valid VAT Numbers"),
                 'code': 'check_partner_vies',
-                'message': _("""All customer VAT numbers are valid under <a href="https://ec.europa.eu/taxation_customs/vies" target="_blank">VIES</a>."""),
+                'message': _lt("""All customer VAT numbers are valid under <a href="https://ec.europa.eu/taxation_customs/vies" target="_blank">VIES</a>."""),
                 'state': 'new',
                 'records_count': invalid_vies_partners_count,
-                'records_name': _("Partner") if invalid_vies_partners_count == 1 else _("Partners"),
+                'records_model': self.env['ir.model']._get('res.partner').id,
                 'action': (
                     invalid_vies_partners._get_records_action(name=self.env._("Valid VAT Numbers"))
                     if invalid_vies_partners_count
@@ -2264,8 +2292,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
             if 'goods_service_classification' not in check_codes_to_ignore:
                 checks.append({
-                    'name': _("Goods and services classification"),
-                    'message': _("Review the tax code and ensure each transaction is correctly classified as a supply of goods or services."),
+                    'name': _lt("Goods and services classification"),
+                    'message': _lt("Review the tax code and ensure each transaction is correctly classified as a supply of goods or services."),
                     'code': 'goods_service_classification',
                     'result': 'todo',
                     'action': {
@@ -2279,8 +2307,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
             if 'reverse_charge_mentioned' not in check_codes_to_ignore:
                 checks.append({
-                    'name': _("Reverse charge mention"),
-                    'message': _('Make sure the "Reverse Charge" mention appears on all invoices.'),
+                    'name': _lt("Reverse charge mention"),
+                    'message': _lt('Make sure the "Reverse Charge" mention appears on all invoices.'),
                     'code': 'reverse_charge_mentioned',
                     'result': 'todo',
                     'action': {
@@ -2312,8 +2340,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     }
 
                 checks.append({
-                    'name': _("Only intra-EU customers"),
-                    'message': _("Exclude any domestic or extra-EU sales from the EC Sales List."),
+                    'name': _lt("Only intra-EU customers"),
+                    'message': _lt("Exclude any domestic or extra-EU sales from the EC Sales List."),
                     'code': 'eu_cross_border',
                     'result': 'anomaly' if cross_border_failure else 'reviewed',
                     'action': cross_border_action,
@@ -2324,8 +2352,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     partner.id for partner, _partner_result in partner_results if not partner.is_company
                 )
                 checks.append({
-                    'name': _("Only business customers"),
-                    'message': _("Exclude any private customers."),
+                    'name': _lt("Only business customers"),
+                    'message': _lt("Exclude any private customers."),
                     'code': 'only_b2b',
                     'result': 'anomaly' if non_b2b_partners else 'reviewed',
                     'action': (
@@ -2339,8 +2367,8 @@ such as using the wrong VAT rate, wrongly exempting transactions.
                     partner.id for partner, _partner_result in partner_results if not partner.vat
                 )
                 checks.append({
-                    'name': _("VAT Numbers"),
-                    'message': _("All customers have a VAT number."),
+                    'name': _lt("VAT Numbers"),
+                    'message': _lt("All customers have a VAT number."),
                     'code': 'no_partners_without_vat',
                     'result': 'anomaly' if no_vat_partners else 'reviewed',
                     'action': (
@@ -2365,7 +2393,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
         review_action = {
             'type': 'ir.actions.act_window',
-            'name': name,
+            'name': str(name),  # If it is _lt, we need to stringify it because it cannot be json dumped
             'view_mode': 'list',
             'res_model': 'account.bank.statement.line',
             'domain': domain,
@@ -2377,7 +2405,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             'message': message,
             'code': code,
             'records_count': unreconciled_bank_entries_count,
-            'records_name': _("Transaction") if unreconciled_bank_entries_count == 1 else _("Transactions"),
+            'records_model': self.env['ir.model']._get('account.bank.statement.line').id,
             'action': review_action if unreconciled_bank_entries_count else None,
             'result': 'anomaly' if unreconciled_bank_entries_count else 'reviewed',
         }
@@ -2416,7 +2444,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
 
         review_action = {
             'type': 'ir.actions.act_window',
-            'name': name,
+            'name': str(name),  # If it is _lt, we need to stringify it because it cannot be json dumped
             'view_mode': 'list',
             'res_model': 'account.move',
             'domain': domain,
@@ -2428,7 +2456,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             'code': code,
             'message': message,
             'records_count': draft_entries_count,
-            'records_name': _("Entry") if draft_entries_count == 1 else _("Entries"),
+            'records_model': self.env['ir.model']._get('account.move').id,
             'action': review_action if draft_entries_count else None,
             'result': 'anomaly' if draft_entries_count else 'reviewed',
         }
@@ -2460,11 +2488,12 @@ class AccountReturnCheck(models.Model):
     )
 
     # Refreshed fields
-    name = fields.Char(string="Name", required=True)
-    message = fields.Text(string="Description")
+    name = fields.Char(string="Name", required=True, translate=True)
+    message = fields.Text(string="Description", translate=True)
     state = fields.Char(string="Return State To Check For", default='new', required=True)
     records_count = fields.Integer(readonly=True)
-    records_name = fields.Char()
+    records_name = fields.Char(compute='_compute_records_name')
+    records_model = fields.Many2one(string="Model", comodel_name='ir.model')
     action = fields.Json()
     result = fields.Selection(
         selection=STATUS_SELECTION,
@@ -2500,6 +2529,30 @@ class AccountReturnCheck(models.Model):
     )
 
     cycle = fields.Selection(related="template_id.cycle")
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        new_vals_list = [
+            {key: self.env._(value) if isinstance(value, LazyGettext) else value  # pylint: disable=E8502
+             for key, value in vals_dict.items()}
+            for vals_dict in vals_list
+        ]
+
+        records = super().create(new_vals_list)
+
+        # Left part is the check field name and right part is the template field name
+        translatable_fields = [('name', 'name'), ('message', 'description')]
+        all_langs = self.env['res.lang'].get_installed()
+        for vals_dict, record in zip(vals_list, records):
+            for lang_code, _lang_name in all_langs:
+                record = record.with_context(lang=lang_code)
+                for check_field, template_field in translatable_fields:
+                    if record.template_id:
+                        record[check_field] = record.template_id[template_field]
+                    elif (value := vals_dict.get(check_field)) and isinstance(value, LazyGettext):
+                        record[check_field] = value._translate(lang=lang_code)
+
+        return records
 
     def write(self, vals):
         for check in self:
@@ -2548,7 +2601,11 @@ class AccountReturnCheck(models.Model):
                 elif vals['result'] == 'supervised':
                     check.supervisor_id = user
 
-        result = super().write(vals)
+        cleaned_vals = {
+            key: self.env._(value) if isinstance(value, LazyGettext) else value  # pylint: disable=E8502
+            for key, value in vals.items()
+        }
+        result = super().write(cleaned_vals)
 
         for check in self:
             if 'type' in vals and check.type != vals['type']:
@@ -2563,6 +2620,12 @@ class AccountReturnCheck(models.Model):
                 check.refresh_result = not bool(check.attachment_ids)
 
         return result
+
+    @api.depends('records_model')
+    @api.depends_context('lang')
+    def _compute_records_name(self):
+        for check in self:
+            check.records_name = check.records_model.name if check.records_model else self.env._("Missing")
 
     @api.constrains('code')
     def _check_code(self):
@@ -2723,16 +2786,16 @@ class AccountReturnCheckTemplate(models.Model):
     activity_type = fields.Many2one(comodel_name='mail.activity.type', string="Activities")
 
     description = fields.Text(string="Description", translate=True)
-    model = fields.Selection(selection=lambda r: r._get_model_selection(), string="Model")
+    model = fields.Selection(
+        selection=[
+            ('account.move.line', "Journal Item"),
+            ('account.move', "Journal Entry"),
+            ('account.bank.statement.line', "Bank Statement Line"),
+            ('account.payment', "Payments"),
+        ],
+        string="Model",
+    )
     domain = fields.Char(string="Domain")
-
-    def _get_model_selection(self):
-        return [
-            ('account.move.line', self.env['account.move.line']._description),
-            ('account.move', self.env['account.move']._description),
-            ('account.bank.statement.line', self.env['account.bank.statement.line']._description),
-            ('account.payment', self.env['account.payment']._description),
-        ]
 
     def _get_default_check_action_from_model(self):
         if self.model == 'account.bank.statement.line':
