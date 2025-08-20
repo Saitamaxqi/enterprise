@@ -38,7 +38,6 @@ export class UserAgent extends Reactive {
         this.env = env;
         this.callService = services["voip.call"];
         this.multiTabService = services.multi_tab;
-        this.recordingService = services["voip.recording"];
         this.ringtoneService = services["voip.ringtone"];
         this.voip = services.voip;
         this.softphone = this.voip.softphone;
@@ -54,6 +53,7 @@ export class UserAgent extends Reactive {
         return call.state === "calling" && call.direction === "incoming";
     }
 
+    /** @returns {ReturnType<_t>|""} */
     get inCallStatusText() {
         if (this.session?.call.state !== "ongoing") {
             return ""; // not in call
@@ -647,7 +647,7 @@ export class UserAgent extends Reactive {
 }
 
 export const userAgentService = {
-    dependencies: ["multi_tab", "voip", "voip.call", "voip.recording", "voip.ringtone"],
+    dependencies: ["multi_tab", "voip", "voip.call", "voip.ringtone"],
     start(env, services) {
         return new UserAgent(env, services);
     },

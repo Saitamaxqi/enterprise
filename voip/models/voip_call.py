@@ -9,7 +9,7 @@ from odoo.addons.mail.tools.discuss import Store
 
 class VoipCall(models.Model):
     _name = "voip.call"
-    _inherit = ["mail.thread", "voip.country.code.mixin"]
+    _inherit = ["mail.thread.main.attachment", "voip.country.code.mixin"]
     _description = "Phone call"
 
     phone_number = fields.Char(required=True, readonly=True)

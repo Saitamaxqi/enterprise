@@ -1,4 +1,6 @@
-import { Component } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
+
+import { SessionRecorder } from "@voip/core/session_recorder";
 
 import { useCommand } from "@web/core/commands/command_hook";
 import { _t } from "@web/core/l10n/translation";
@@ -13,7 +15,17 @@ export class VoipSystrayItem extends Component {
         this.ringtoneService = useService("voip.ringtone");
         this.userAgent = useService("voip.user_agent");
         this.softphone = this.voip.softphone;
+        this.pendingUploads = useState(SessionRecorder.pendingUploads);
         useCommand(_t("Toggle Softphone"), () => this.toggleSoftphone(), { hotkey: "Alt+Shift+S" });
+    }
+
+    /** @returns {boolean} */
+    get hasOngoingCall() {
+        const call = this.userAgent.session?.call;
+        if (!call) {
+            return false;
+        }
+        return call.isInProgress && call.state === "ongoing";
     }
 
     /** @returns {string} */
@@ -33,15 +45,6 @@ export class VoipSystrayItem extends Component {
         return this.voip.missedCalls;
     }
 
-    /** @returns {boolean} */
-    get shouldDisplayInCallIndicator() {
-        const call = this.userAgent.session?.call;
-        if (!call) {
-            return false;
-        }
-        return call.isInProgress && call.state === "ongoing";
-    }
-
     /**
      * Translated text used as the title attribute of the systray item.
      *
@@ -56,13 +59,24 @@ export class VoipSystrayItem extends Component {
         if (this.userAgent.hasCallInvitation) {
             return "text-success";
         }
-        if (!this.shouldDisplayInCallIndicator) {
-            return "";
+        if (this.pendingUploads.size !== 0) {
+            return "rounded-pill px-2 bg-warning text-warning-emphasis";
         }
         if (this.userAgent.session?.isOnHold) {
             return "rounded-pill px-2 bg-warning-subtle text-warning-emphasis";
         }
-        return "rounded-pill px-2 bg-success-subtle text-success-emphasis";
+        if (this.hasOngoingCall) {
+            return "rounded-pill px-2 bg-success-subtle text-success-emphasis";
+        }
+        return "";
+    }
+
+    /** @returns {ReturnType<_t>} */
+    get systrayButtonText() {
+        if (SessionRecorder.pendingUploads.size !== 0) {
+            return _t("Processing…");
+        }
+        return this.userAgent.inCallStatusText;
     }
 
     /** @param {MouseEvent} ev */

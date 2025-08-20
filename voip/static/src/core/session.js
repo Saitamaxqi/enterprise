@@ -1,5 +1,7 @@
 /* global SIP */
 
+import { SessionRecorder } from "@voip/core/session_recorder";
+
 import { _t } from "@web/core/l10n/translation";
 
 export class Session {
@@ -11,6 +13,8 @@ export class Session {
     inviteState;
     /** @type {boolean} */
     isMute = false;
+    /** @type {SessionRecorder} */
+    recorder;
     /**
      * The HTMLAudioElement through which the remote audio (remote peer's voice)
      * will be played.
@@ -79,6 +83,25 @@ export class Session {
     }
 
     /**
+     * Starts recording the audio of the session.
+     * Once the recording stops, the file is automatically uploaded.
+     */
+    record() {
+        if (this.recorder) {
+            console.warn("Session.record() called on a session that already had a recorder.");
+            return;
+        }
+        if (!this.sipSession) {
+            return; // no session in demo mode
+        }
+        this.recorder = new SessionRecorder(this.sipSession);
+        this.recorder.start();
+        this.recorder.file.then((recording) =>
+            SessionRecorder.upload(`/voip/upload_recording/${this.call.id}`, recording)
+        );
+    }
+
+    /**
      * Explicitly resets the source and stops playback of the remote audio to
      * ensure that it can be garbage-collected.
      */
@@ -102,6 +125,9 @@ export class Session {
         this.sipSession.sessionDescriptionHandler.remoteMediaStream.onaddtrack = (
             mediaStreamTrackEvent
         ) => this._setUpRemoteAudio();
+        if (this.voip.recordingPolicy === "always") {
+            this.record();
+        }
     }
 
     /** @param {SIP.SessionState} newState */

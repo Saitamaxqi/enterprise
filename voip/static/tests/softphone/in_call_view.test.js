@@ -1,5 +1,7 @@
 import { describe, test } from "@odoo/hoot";
+
 import { click, contains, start, startServer, insertText } from "@mail/../tests/mail_test_helpers";
+
 import { setupVoipTests } from "@voip/../tests/voip_test_helpers";
 
 describe.current.tags("desktop");

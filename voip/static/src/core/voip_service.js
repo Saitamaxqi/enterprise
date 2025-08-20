@@ -29,6 +29,8 @@ export class Voip {
      * @type {string}
      */
     pbxAddress;
+    /** @type {"always"|"user"|"disabled"} */
+    recordingPolicy;
     /** @type {Softphone} */
     softphone;
     /**

@@ -25,6 +25,7 @@ export class ResUsers extends mailModels.ResUsers {
                     missedCalls: VoipCall._get_number_of_missed_calls(),
                     mode: provider.mode,
                     pbxAddress: provider.pbx_ip || "localhost",
+                    recordingPolicy: provider.recording_policy || "disabled",
                     webSocketUrl: provider.ws_server || "ws://localhost",
                 },
             });

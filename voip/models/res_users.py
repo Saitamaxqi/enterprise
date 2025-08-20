@@ -129,6 +129,7 @@ class ResUsers(models.Model):
             "mode": provider.mode or "demo",
             "missedCalls": self.env["voip.call"]._get_number_of_missed_calls(),
             "pbxAddress": provider.pbx_ip or "localhost",
+            "recordingPolicy": provider.recording_policy or "disabled",
             "webSocketUrl": provider.ws_server or "ws://localhost",
         }
 

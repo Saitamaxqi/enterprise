@@ -36,6 +36,7 @@ def _get_init_store_data_result(self):
                 "mode": "demo",
                 "missedCalls": 0,
                 "pbxAddress": "localhost",
+                "recordingPolicy": provider.recording_policy or "disabled",
                 "webSocketUrl": provider.ws_server or "ws://localhost",
                 "transcriptionPolicy": provider.transcription_policy or "disabled",
             },

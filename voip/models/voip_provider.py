@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class VoipProvider(models.Model):
@@ -28,3 +28,37 @@ class VoipProvider(models.Model):
         default="demo",
         required=True,
     )
+    recording_enabled = fields.Boolean(default=False, export_string_translation=False)
+    recording_policy_option = fields.Selection(
+        [
+            ("always", "Force recording of all calls. Users can't disable it."),
+            ("user", "Let users decide when to record."),
+        ],
+        default="always",
+        export_string_translation=False,
+    )
+    recording_policy = fields.Selection(
+        [
+            ("always", "Force for all users"),
+            ("user", "Let users decide"),
+            ("disabled", "Disabled"),
+        ],
+        compute="_compute_recording_policy",
+        inverse="_inverse_recording_policy",
+    )
+
+    @api.depends("recording_enabled", "recording_policy_option")
+    def _compute_recording_policy(self):
+        for provider in self:
+            if not provider.recording_enabled:
+                provider.recording_policy = "disabled"
+            else:
+                provider.recording_policy = provider.recording_policy_option
+
+    def _inverse_recording_policy(self):
+        for provider in self:
+            if provider.recording_policy == "disabled":
+                provider.recording_enabled = False
+            else:
+                provider.recording_enabled = True
+                provider.recording_policy_option = provider.recording_policy

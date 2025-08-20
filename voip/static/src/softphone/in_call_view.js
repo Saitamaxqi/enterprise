@@ -6,6 +6,7 @@ import { ContactInfo } from "@voip/softphone/contact_info";
 import { Keypad } from "@voip/softphone/keypad";
 import { TransferView } from "@voip/softphone/transfer_view";
 
+import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 
 export class InCallView extends Component {
@@ -15,7 +16,8 @@ export class InCallView extends Component {
 
     setup() {
         this.action = useService("action");
-        this.softphone = useService("voip").softphone;
+        this.voip = useService("voip");
+        this.softphone = this.voip.softphone;
         this.userAgent = useService("voip.user_agent");
         this.ui = useService("ui");
         useEffect(
@@ -44,6 +46,28 @@ export class InCallView extends Component {
     /** @returns {boolean} */
     get isMuted() {
         return this.userAgent.session?.isMute ?? false;
+    }
+
+    /** @returns {boolean} */
+    get isRecording() {
+        const recorder = this.userAgent.session?.recorder;
+        if (!recorder) {
+            return false;
+        }
+        return recorder.state === "recording";
+    }
+
+    /** @returns {ReturnType<_t>} */
+    get recordButtonName() {
+        return this.isRecording ? _t("Stop") : _t("Record");
+    }
+
+    /** @returns {ReturnType<_t>|""} */
+    get recordingIndicatorTitle() {
+        if (this.voip.recordingPolicy === "always") {
+            return _t("Enforced by admin");
+        }
+        return "";
     }
 
     onClickContact(ev) {
@@ -96,5 +120,24 @@ export class InCallView extends Component {
             return;
         }
         this.userAgent.transfer(input);
+    }
+
+    toggleRecording() {
+        if (this.voip.recordingPolicy !== "user") {
+            return;
+        }
+        const recorder = this.userAgent.session.recorder;
+        if (!recorder) {
+            this.userAgent.session.record();
+            return;
+        }
+        switch (recorder.state) {
+            case "paused":
+                recorder.resume();
+                break;
+            case "recording":
+                recorder.pause();
+                break;
+        }
     }
 }

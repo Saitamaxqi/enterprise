@@ -10,8 +10,9 @@
         </t>
         <div class="o-voip-InCallView-pad grid p-3" t-att-class="{ 'pt-0': activeView === 'transfer' }">
             <t t-if="activeView === 'default' and !isKeypadOpen">
-                <ActionButton name.translate="Transfer" icon="'oi-transfer'" inCallPad="true" extraClass="'g-col-6'" onClick.bind="onClickTransfer" disabled="props.call.state !== 'ongoing'"/>
-                <ActionButton name.translate="Hold" icon="'fa-pause'" type="'secondary'" inCallPad="true" extraClass="isOnHold ? 'g-col-6 active' : 'g-col-6'" disabled="props.call.state !== 'ongoing'" onClick.bind="onClickHold"/>
+                <ActionButton name.translate="Transfer" icon="'oi-transfer'" inCallPad="true" extraClass="'g-col-4'" onClick.bind="onClickTransfer" disabled="props.call.state !== 'ongoing'"/>
+                <ActionButton name.translate="Hold" icon="'fa-pause'" type="'secondary'" inCallPad="true" extraClass="isOnHold ? `g-col-4 active` : 'g-col-4'" disabled="props.call.state !== 'ongoing'" onClick.bind="onClickHold"/>
+                <ActionButton name="recordButtonName" icon="'oi-record'" type="'secondary'" inCallPad="true" extraClass="isRecording ? `g-col-4 active` : 'g-col-4'" disabled="props.call.state !== 'ongoing' or voip.recordingPolicy !== 'user'" onClick.bind="toggleRecording"/>
             </t>
             <t t-if="activeView === 'default'">
                 <ActionButton name.translate="Mute" icon="'fa-microphone-slash'" type="'secondary'" inCallPad="true" extraClass="isMuted ? 'g-col-4 active' : 'g-col-4'" onClick.bind="onClickMute"/>
@@ -40,10 +41,13 @@
         <div class="d-flex flex-column align-items-center justify-content-center flex-grow-1 gap-2 mx-3 p-3">
             <span class="fs-2 fw-bold" t-esc="props.call.timerText"/>
             <div class="o-voip-InCallView-statusWrapper d-flex gap-2 flex-wrap justify-content-center">
-                <!-- <span class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill border border-info px-2 bg-info bg-opacity-25 lh-lg">
+                <span class="o-voip-InCallView-recordingIndicator d-flex gap-2 align-items-center rounded-pill py-1 px-3 text-bg-info" t-att-title="recordingIndicatorTitle" t-if="isRecording">
                     <i class="oi oi-record" aria-hidden="true"/>
-                    <span class="me-1 small">Recording</span>
-                </span> -->
+                    <p class="mb-0 fw-bold">Recording</p>
+                    <t t-if="voip.recordingPolicy === 'always'">
+                        <i class="fa fa-lock" aria-hidden="true"/>
+                    </t>
+                </span>
                 <span t-if="userAgent.session?.isOnHold" class="o-voip-InCallStatus d-flex gap-2 align-items-center rounded-pill border border-warning px-2 bg-warning bg-opacity-25 lh-lg">
                     <i class="fa fa-pause" aria-hidden="true"/>
                     <span class="me-1 small">On hold</span>
