@@ -204,7 +204,7 @@ class CalendarEvent(models.Model):
                 continue
             if not event.access_token:
                 event.access_token = uuid.uuid4().hex
-            event.videocall_redirection = f"{self.get_base_url()}/calendar/videocall/{self.access_token}"
+            event.videocall_redirection = f"{event.get_base_url()}/calendar/videocall/{event.access_token}"
 
     @api.depends('appointment_type_id.event_videocall_source')
     def _compute_videocall_source(self):
