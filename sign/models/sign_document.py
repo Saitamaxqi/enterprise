@@ -188,6 +188,13 @@ class SignDocument(models.Model):
 that cover all your company needs:
 CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
             """)
+            elif it.type_id.item_type == "stamp":
+                value = self.env._("""
+                    My US Company
+                    1034 Wildwood Street
+                    44654 Millersburg Ohio United States
+                    +1 555-555-5556
+                """)
             elif it.type_id.item_type == "checkbox":
                 value = "on"
             elif it.type_id.item_type == "selection":
@@ -320,7 +327,7 @@ CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
                     posY = height * (1 - item.posY - item.height * 0.5) - p.wrap(width, height)[1] // 2
                     p.drawOn(can, posX, posY)
 
-                elif item.type_id.item_type == "textarea":
+                elif item.type_id.item_type in ["textarea", "stamp"]:
                     font_size = height * normalFontSize * 0.8
                     can.setFont(font, font_size)
                     lines = value.split('\n')
@@ -336,6 +343,22 @@ CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
                         line = reshape_text(line)
                         can.drawString(width * item.posX + x_shift, height * y, line)
                         y -= normalFontSize * 0.1
+
+                    # Draw a dark blue border around the stamp field for visual emphasis
+                    if item.type_id.item_type == "stamp":
+                        padding = 5
+                        itemW, itemH = item.width * width, item.height * height
+                        itemX, itemY = item.posX * width, (1 - item.posY) * height
+                        can.setLineWidth(1.2)  # thickness of border
+                        can.setStrokeColorRGB(0, 0, 139 / 255)  # darkblue border
+                        can.rect(
+                            itemX - padding,
+                            itemY - itemH - padding,
+                            itemW + (2 * padding),
+                            itemH + (2 * padding),
+                            stroke=1,
+                            fill=0
+                        )
 
                 elif item.type_id.item_type == "checkbox":
                     itemW, itemH = item.width * width, item.height * height

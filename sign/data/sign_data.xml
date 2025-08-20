@@ -148,6 +148,17 @@
         <field name="icon">fa-strikethrough</field>
     </record>
 
+    <record model="sign.item.type" id="sign_item_type_stamp">
+        <field name="name">Stamp</field>
+        <field name="placeholder">Company Name&#10;Company Address&#10;Company Phone</field>
+        <field name="item_type">stamp</field>
+        <field name="auto_field">stamp</field>
+        <field name="tip">Stamp it</field>
+        <field name="default_width" type="float">0.298</field>
+        <field name="default_height" type="float">0.092</field>
+        <field name="icon">fa-pencil-square-o</field>
+    </record>
+
     <!-- Item responsibles -->
     <record model="sign.item.role" id="sign_item_role_customer">
         <field name="name">Customer</field>

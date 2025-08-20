@@ -94,6 +94,10 @@ export class SignablePDFIframe extends PDFIframe {
             })
         }
 
+        if (autoValue && ["stamp"].includes(type) && this.props.isSignerHasCompany) {
+            this.fillStampSignItem(signItemElement, autoValue);
+        }
+
         if (autoValue && ["text", "textarea"].includes(type)) {
             signItemElement.addEventListener("focus", (e) => {
                 this.fillTextSignItem(e.currentTarget, autoValue);
@@ -190,6 +194,12 @@ export class SignablePDFIframe extends PDFIframe {
         if (signItemElement.value === "") {
             signItemElement.value = value;
             this.handleInput();
+        }
+    }
+
+    fillStampSignItem(signItemElement, value) {
+        if (signItemElement.value === "") {
+            signItemElement.value = value;
         }
     }
 

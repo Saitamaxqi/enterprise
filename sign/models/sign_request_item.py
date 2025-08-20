@@ -503,6 +503,9 @@ class SignRequestItem(models.Model):
         if item_type_sudo.model_id.model == 'res.partner':
             record = self.partner_id
         else:
+            if item_type_sudo.item_type == "stamp":
+                return self._get_stamp_value()
+
             linked_record = self.sign_request_id.reference_doc
             model = linked_record and self.env['ir.model']._get(linked_record._name)
             if not model or not model.is_mail_thread or linked_record._name != item_type_sudo.model_id.model:
@@ -514,3 +517,30 @@ class SignRequestItem(models.Model):
         except (KeyError, TypeError):
             auto_value = ""
         return auto_value
+
+    def _get_stamp_value(self):
+        """
+        Return the formatted stamp value (company name, address, phone) for the partner.
+
+        :returns: str Company name and phone separated by a newline, or an empty string if not found.
+        """
+        partner = self.with_context(show_address=1).partner_id
+        company_address = None
+
+        if partner:
+            if partner.parent_id:
+                # Partner has a parent → use parent company
+                company_address = partner.parent_id
+            elif partner.is_company:
+                # Partner is a standalone company → use itself (commercial partner)
+                company_address = partner.commercial_partner_id
+            elif partner.user_ids and partner.user_ids[0].company_id:
+                # Partner is an individual user → use their company partner
+                company_address = partner.user_ids[0].company_id.partner_id
+
+        if not company_address:
+            return ''
+
+        return self.env._(
+            "%(company_address)s\n%(phone)s", company_address=company_address.display_name, phone=company_address.phone or ""
+        )

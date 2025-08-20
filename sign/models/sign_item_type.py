@@ -20,6 +20,7 @@ class SignItemType(models.Model):
         ('radio', "Radio"),
         ('selection', "Selection"),
         ('strikethrough', "Strikethrough"),
+        ('stamp', "Stamp"),
     ], required=True, string='Type', default='text')
 
     tip = fields.Char(required=True, default="Fill in", help="Hint displayed in the signing hint", translate=True)
@@ -68,6 +69,7 @@ class SignItemType(models.Model):
             'radio': [0.02, 0.018],
             'selection': [0.18, 0.015],
             'strikethrough': [0.18, 0.015],
+            'stamp': [0.298, 0.092],
         }
 
         for record in self:

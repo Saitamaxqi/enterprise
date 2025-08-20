@@ -258,6 +258,7 @@ export class Document extends Component {
         this.redirectURLText = parentEl.querySelector(
             "#o_sign_input_optional_redirect_url_text"
         )?.value;
+        this.isSignerHasCompany = Boolean(parentEl.querySelector("#o_sign_input_is_signer_user")?.value);
         this.types = datasetFromElements(
             parentEl.querySelectorAll(".o_sign_field_type_input_info")
         );
@@ -552,6 +553,7 @@ export class Document extends Component {
             redirectURLText: this.redirectURLText,
             templateEditable: this.templateEditable,
             showThankYouDialog: this.showThankYouDialog,
+            isSignerHasCompany: this.isSignerHasCompany,
             openThankYouDialog: () => this.openThankYouDialog(),
             documentId: sign_document_id,
             updateDocumentsWithUnsignedItems: (documentId, hasUnsignedItems) =>

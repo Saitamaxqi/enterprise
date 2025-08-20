@@ -47,6 +47,7 @@ export class SignTemplateSidebarRoleItems extends Component {
         this.icon_type = {
             signature: "fa-pencil-square-o",
             initial: "fa-pencil-square-o",
+            stamp: "fa-pencil-square-o",
             text: "fa-font",
             textarea: "fa-bars",
             checkbox: "fa-check-square-o",

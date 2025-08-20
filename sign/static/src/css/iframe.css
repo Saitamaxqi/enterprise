@@ -12,6 +12,7 @@
     --btn-font-size: 0.875rem;
     --btn-line-height: 1.5;
     --border-radius: 0.25rem;
+    --bs-darkblue-rgb: 0, 0, 139; /* darkblue */
 }
 
 .btn {
@@ -476,10 +477,23 @@ select:focus {
     box-shadow: none;
 }
 
-.o_sign_sign_item.o_sign_sign_item_constant::placeholder {
+.o_sign_sign_item.o_sign_sign_item_constant::placeholder,
+.o_sign_sign_item.o_sign_item_stamp::placeholder {
     color: rgb(var(--bs-dark-rgb));
 } 
 
-.o_sign_sign_item.o_sign_sign_item_constant:hover {
+.o_sign_sign_item.o_sign_sign_item_constant:hover,
+.o_sign_sign_item.o_sign_item_stamp:hover {
     cursor: default;
 } 
+
+.o_sign_sign_item.o_sign_item_stamp {
+    background: none;
+    box-shadow: none;
+}
+
+.o_sign_sign_item.o_sign_stamp_field_border,
+.o_sign_sign_item.o_sign_item_stamp {
+    padding: 10px;
+    border: 3px solid rgb(var(--bs-darkblue-rgb));
+}

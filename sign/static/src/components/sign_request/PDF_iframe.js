@@ -223,8 +223,10 @@ export class PDFIframe {
             (isCurrentRole && signItem.name) ||
             (this.readonly && `${signItem.name}\n${signItem.responsible_name}`) ||
             "";
+        const isStampReadOnly = type === 'stamp' && ((!readonly && isCurrentRole && this.props.isSignerHasCompany) || (readonly && signItem.value));
+        const constant = signItem.constant ?? (type === "stamp" && this.props.isSignerHasCompany);
         return Object.assign(signItem, {
-            constant: signItem.constant ?? false,
+            constant: constant,
             readonly: signItem.readonly ?? readonly,
             editMode: signItem.editMode ?? false,
             required: Boolean(signItem.required),
@@ -232,6 +234,7 @@ export class PDFIframe {
             type,
             placeholder: placeholder,
             classes: `
+                ${isStampReadOnly ? "o_sign_item_stamp" : ""}
                 ${isCurrentRole ? "o_sign_sign_item_default" : ""}
                 ${signItem.constant ? "o_sign_sign_item_constant": ""}
                 ${signItem.required && isCurrentRole ? "o_sign_sign_item_required" : ""}
@@ -284,7 +287,7 @@ export class PDFIframe {
      * @param {SignItem}
      */
     updateSignItemFontSize({ el, data }) {
-        const largerTypes = ["signature", "initial", "textarea", "selection"];
+        const largerTypes = ["signature", "initial", "textarea", "selection", "stamp"];
         const size = largerTypes.includes(data.type)
             ? this.normalSize
             : parseFloat(el.clientHeight);
