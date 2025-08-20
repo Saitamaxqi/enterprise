@@ -78,6 +78,7 @@ class StockPicking(models.Model):
     l10n_cl_sii_send_file = fields.Many2one('ir.attachment', string='SII Send file', copy=False)
     l10n_cl_dte_file = fields.Many2one('ir.attachment', string='DTE file', copy=False)
     l10n_cl_sii_send_ident = fields.Text(string='SII Send Identification(Track ID)', copy=False, tracking=True)
+    l10n_cl_reference_ids = fields.One2many(comodel_name='l10n_cl.edi.reference', inverse_name='picking_id', string='Reference Records')
 
     _unique_document_number_in_company = models.Constraint(
         'UNIQUE(l10n_latam_document_number, company_id)',
@@ -104,6 +105,17 @@ class StockPicking(models.Model):
 
     def _get_next_document_number(self):
         return self.env['ir.sequence'].next_by_code('l10n_cl_edi_stock.stock_picking_caf_sequence')
+
+    def _create_backorder_picking(self):
+        # EXTENDS 'stock'
+        backorder = super()._create_backorder_picking()
+        purchase_order_doc_type_id = self.env.ref('l10n_cl.dc_odc')
+        purchase_references = self.l10n_cl_reference_ids.filtered(
+            lambda r: r.l10n_cl_reference_doc_type_id == purchase_order_doc_type_id,
+        )
+        if backorder.company_id.account_fiscal_country_id.code == 'CL' and backorder.company_id.l10n_cl_dte_service_provider and purchase_references:
+            backorder.l10n_cl_reference_ids = purchase_references.copy()
+        return backorder
 
     def create_delivery_guide(self):
         self.ensure_one()

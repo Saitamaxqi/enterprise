@@ -175,46 +175,6 @@ msgid "<span>%</span>"
 msgstr ""
 
 #. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>801</span>"
-msgstr ""
-
-#. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>Customer Purchase Order</span>"
-msgstr "<span>Orden de compra del cliente</span>"
-
-#. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>Date</span>"
-msgstr "<span>Fecha</span>"
-
-#. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>Doc Code</span>"
-msgstr "<span>Cod Documento</span>"
-
-#. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>Origin Ref</span>"
-msgstr "<span>Referencia de Origen</span>"
-
-#. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>Purchase Order</span>"
-msgstr "<span>Orden de compra</span>"
-
-#. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>Reason</span>"
-msgstr "<span>Motivo</span>"
-
-#. module: l10n_cl_edi_stock
-#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.stock_informations
-msgid "<span>Reference Doc Type</span>"
-msgstr "<span>Tipo Doc de Referencia</span>"
-
-#. module: l10n_cl_edi_stock
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.delivery_guide_document
 msgid "<strong>%</strong>"
 msgstr ""
@@ -266,7 +226,7 @@ msgstr "<strong>Precio Unitario</strong>"
 
 #. module: l10n_cl_edi_stock
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.delivery_guide_document
-msgid "<strong>UoM</strong>"
+msgid "<strong>Unit</strong>"
 msgstr "<strong>Un Med</strong>"
 
 #. module: l10n_cl_edi_stock
@@ -350,6 +310,23 @@ msgstr "Contacto"
 #: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.view_picking_edi_form
 msgid "Create Delivery Guide"
 msgstr "Crear Guía de Despacho"
+
+#. module: l10n_cl_edi_stock
+#: model:ir.model,name:l10n_cl_edi_stock.model_l10n_cl_account_invoice_reference
+msgid "Cross Reference Docs for Chilean Electronic Invoicing"
+msgstr ""
+"Documentos de Referencia Cruzada para facturación electrónica de Chile"
+
+#. module: l10n_cl_edi_stock
+#: model_terms:ir.ui.view,arch_db:l10n_cl_edi_stock.view_picking_edi_form
+msgid "Cross Reference Documents"
+msgstr "Referencias Cruzadas de Documentos"
+
+#. module: l10n_cl_edi_stock
+#. odoo-python
+#: code:addons/l10n_cl_edi_stock/models/sale_order.py:0
+msgid "Cross Reference To Purchase Order"
+msgstr "Referencia Cruzada a la Orden de Compra"
 
 #. module: l10n_cl_edi_stock
 #: model:mail.template,name:l10n_cl_edi_stock.l10n_cl_edi_email_template_picking
@@ -526,6 +503,11 @@ msgid "Not Sent"
 msgstr "No enviado"
 
 #. module: l10n_cl_edi_stock
+#: model:ir.model.fields,field_description:l10n_cl_edi_stock.field_l10n_cl_account_invoice_reference__picking_id
+msgid "Originating Delivery"
+msgstr "Entrega Origen"
+
+#. module: l10n_cl_edi_stock
 #. odoo-python
 #: code:addons/l10n_cl_edi_stock/models/stock_picking.py:0
 msgid "Partner DTE has been generated"
@@ -566,6 +548,11 @@ msgstr "Imprimir Guía de Despacho"
 #: model:ir.model.fields,field_description:l10n_cl_edi_stock.field_stock_picking__l10n_cl_delivery_guide_reason
 msgid "Reason of the Transfer"
 msgstr "Razón de la transferencia"
+
+#. module: l10n_cl_edi_stock
+#: model:ir.model.fields,field_description:l10n_cl_edi_stock.field_stock_picking__l10n_cl_reference_ids
+msgid "Reference Records"
+msgstr "Registros de Referencia"
 
 #. module: l10n_cl_edi_stock
 #: model:ir.model.fields.selection,name:l10n_cl_edi_stock.selection__stock_picking__l10n_cl_dte_status__rejected

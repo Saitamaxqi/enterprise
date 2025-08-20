@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <template id="template_references_table" name="References Table">
+        <table class="table table-sm o_main_table small" name="invoice_references">
+            <thead>
+                <tr>
+                    <th name="th_reference_origin" class="text-center"><span>Origin Ref</span></th>
+                    <th name="th_reference_doc_type" class="text-start"><span>Reference Doc Type</span></th>
+                    <th name="th_reference_code" class="text-center"><span>Doc Code</span></th>
+                    <th name="th_reference_reason" class="text-start"><span>Reason</span></th>
+                    <th name="th_reference_date" class="text-start"><span>Date</span></th>
+                </tr>
+            </thead>
+            <tbody class="invoice_tbody">
+                <t t-foreach="l10n_cl_reference_ids" t-as="refs">
+                    <tr>
+                        <td class="text-start" name="td_reference_origin"><span t-field="refs.origin_doc_number"/></td>
+                        <td class="text-start" name="td_reference_doc_type"><span t-field="refs.l10n_cl_reference_doc_type_id.code"/></td>
+                        <td class="text-start" name="td_reference_code"><span t-field="refs.reference_doc_code"/></td>
+                        <td class="text-start" name="td_reference_reason"><span t-field="refs.reason"/></td>
+                        <td class="text-start" name="td_reference_date"><span t-field="refs.date"/></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+
     <template id="custom_header" inherit_id="l10n_cl.custom_header">
         <span name="company_activity" position="replace">
             <span name="company_activity" class="fst-italic" t-field="o.company_id.l10n_cl_activity_description"/>
@@ -15,30 +40,10 @@
             <span t-out="o.partner_id.l10n_cl_activity_description or o.commercial_partner_id.l10n_cl_activity_description"/>
         </span>
         <xpath expr="//div[@id='references']" position="replace">
-        <t t-if="o.l10n_cl_reference_ids">
-            <table class="table table-sm o_main_table small" name="invoice_references">
-                <thead>
-                    <tr>
-                        <th name="th_reference_origin" class="text-center"><span>Origin Ref</span></th>
-                        <th name="th_reference_doc_type" class="text-start"><span>Reference Doc Type</span></th>
-                        <th name="th_reference_code" class="text-center"><span>Doc Code</span></th>
-                        <th name="th_reference_reason" class="text-start"><span>Reason</span></th>
-                        <th name="th_reference_date" class="text-start"><span>Date</span></th>
-                    </tr>
-                </thead>
-                <tbody class="invoice_tbody">
-                <t t-foreach="o.l10n_cl_reference_ids" t-as="refs">
-                    <tr>
-                        <td class="text-start" name="td_reference_origin"><span t-field="refs.origin_doc_number"/></td>
-                        <td class="text-start" name="td_reference_doc_type"><span t-field="refs.l10n_cl_reference_doc_type_id.code"/></td>
-                        <td class="text-start" name="td_reference_code"><span t-field="refs.reference_doc_code"/></td>
-                        <td class="text-start" name="td_reference_reason"><span t-field="refs.reason"/></td>
-                        <td class="text-start" name="td_reference_date"><span t-field="refs.date"/></td>
-                    </tr>
-                </t>
-                </tbody>
-            </table>
-        </t>
+            <t t-if="o.l10n_cl_reference_ids">
+                <t t-set="l10n_cl_reference_ids" t-value="o.l10n_cl_reference_ids"/>
+                <t t-call="l10n_cl_edi.template_references_table" />
+            </t>
         </xpath>
     </template>
 

@@ -102,47 +102,9 @@
             </div>
             <div id="references" class="row">
                 <div class="col-12">
-                    <t t-if="o.sale_id.client_order_ref">
-                        <table class="table o_main_table table-borderless small" name="invoice_references">
-                            <thead>
-                                <tr>
-                                    <th name="th_reference_origin" class="text-center">
-                                        <span>Origin Ref</span>
-                                    </th>
-                                    <th name="th_reference_doc_type" class="text-start">
-                                        <span>Reference Doc Type</span>
-                                    </th>
-                                    <th name="th_reference_code" class="text-center">
-                                        <span>Doc Code</span>
-                                    </th>
-                                    <th name="th_reference_reason" class="text-start">
-                                        <span>Reason</span>
-                                    </th>
-                                    <th name="th_reference_date" class="text-start">
-                                        <span>Date</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-start" name="td_reference_origin">
-                                        <span t-field="o.sale_id.client_order_ref"/>
-                                    </td>
-                                    <td class="text-start" name="td_reference_doc_type">
-                                        <span>Purchase Order</span>
-                                    </td>
-                                    <td class="text-start" name="td_reference_code">
-                                        <span>801</span>
-                                    </td>
-                                    <td class="text-start" name="td_reference_reason">
-                                        <span>Customer Purchase Order</span>
-                                    </td>
-                                    <td class="text-start" name="td_reference_date">
-                                        <span t-out="o.sale_id.date_order.date()" t-options="{'widget': 'date'}"/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <t t-if="o.l10n_cl_reference_ids">
+                        <t t-set="l10n_cl_reference_ids" t-value="o.l10n_cl_reference_ids"/>
+                        <t t-call="l10n_cl_edi.template_references_table" />
                     </t>
                 </div>
             </div>

@@ -5,7 +5,7 @@ from freezegun import freeze_time
 from lxml import etree
 from unittest.mock import patch
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests import tagged, Form
 from odoo.tools import misc
 from odoo.addons.l10n_cl_edi_stock.tests.common import TestL10nClEdiStockCommon
@@ -162,6 +162,89 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
         self.assertXmlTreeEqual(
             etree.fromstring(base64.b64decode(picking.l10n_cl_sii_send_file.with_context(bin_size=False).datas)),
             etree.fromstring(xml_expected_dte.encode())
+        )
+
+    @freeze_time('2019-10-24T20:00:00', tz_offset=3)
+    def test_l10n_cl_edi_delivery_with_references_from_sale_order(self):
+        """ Tests that references are copied over from sale orders to pickings
+        and are properly exported to DTE documents. Since this is performed in the
+        last order, we test it via pick_pack_ship."""
+        self.warehouse.delivery_steps = 'pick_pack_ship'
+
+        purchase_reference_doc_id = self.env.ref('l10n_cl.dc_odc')
+        reference_template = {
+            'origin_doc_number': 'PO00273',
+            'l10n_cl_reference_doc_type_id': purchase_reference_doc_id.id,
+            'reason': 'Cross Reference To Purchase Order',
+            'date': fields.Date.from_string('2019-10-24'),
+        }
+
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.chilean_partner_a.id,
+            'order_line': [
+                (0, 0, {
+                    'name': self.product_without_taxes_a.name,
+                    'product_id': self.product_without_taxes_a.id,
+                    'product_uom_qty': 5.0,
+                    'price_unit': self.product_without_taxes_a.list_price,
+                    'discount': 10.00,
+                    'tax_ids': [],
+                }),
+                (0, 0, {
+                    'name': self.product_without_taxes_b.name,
+                    'product_id': self.product_without_taxes_b.id,
+                    'product_uom_qty': 10.0,
+                    'price_unit': self.product_without_taxes_b.list_price,
+                    'tax_ids': [],
+                }),
+            ],
+            'client_order_ref': 'PO00273',
+        })
+        sale_order.action_confirm()
+
+        picking = sale_order.picking_ids[0]
+
+        self.assertRecordValues(picking.l10n_cl_reference_ids, [{
+            **reference_template,
+            'picking_id': picking.id,
+        }])
+
+        picking.action_assign()
+        picking.move_ids[0].write({'quantity': 5})
+        picking.move_ids[1].write({'quantity': 10})
+        picking.button_validate()
+        next_transfer = picking._get_next_transfers()
+
+        self.assertRecordValues(next_transfer.l10n_cl_reference_ids, [{
+            **reference_template,
+            'picking_id': next_transfer.id,
+        }])
+
+        next_transfer.button_validate()
+        final_delivery = next_transfer._get_next_transfers()
+
+        self.assertRecordValues(final_delivery.l10n_cl_reference_ids, [{
+            **reference_template,
+            'picking_id': final_delivery.id,
+        }])
+
+        final_delivery.button_validate()
+        final_delivery.create_delivery_guide()
+
+        self.assertEqual(final_delivery.l10n_cl_dte_status, False)
+        self.assertEqual(final_delivery.l10n_cl_draft_status, True)
+
+        final_delivery.l10n_latam_document_number = 100
+        final_delivery.l10n_cl_confirm_draft_delivery_guide()
+
+        self.assertEqual(final_delivery.l10n_latam_document_number, '100')
+        self.assertEqual(final_delivery.l10n_cl_dte_status, 'not_sent')
+
+        xml_expected_dte = misc.file_open('l10n_cl_edi_stock/tests/expected_dtes/delivery_guide_products_with_reference.xml').read()
+
+        self.assertXmlTreeEqual(
+            etree.fromstring(base64.b64decode(final_delivery.l10n_cl_sii_send_file.with_context(bin_size=False).datas)),
+            etree.fromstring(xml_expected_dte.encode()),
         )
 
     @freeze_time('2019-10-24T20:00:00', tz_offset=3)
