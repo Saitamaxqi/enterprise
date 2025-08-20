@@ -12,7 +12,7 @@ class TestAIMethods(TransactionCase):
         """Test that all AI rpc methods can be called without errors"""
         partner = self.env["res.partner"].create({"name": "Test AI Partner"})
         agent = self.env["ai.agent"].create({"name": "Test AI Agent", "partner_id": partner.id})
-        channel = self.env["discuss.channel"]._get_or_create_ai_chat(partner)
+        channel = agent._get_or_create_ai_chat()
 
         mock_generate_response.return_value = ["Mocked response"]
 

@@ -21,11 +21,12 @@ class AIWebsiteLivechatController(http.Controller):
                 country_code=request.geoip.country_code,
                 timezone=request.env["mail.guest"]._get_timezone_from_request(request),
             )
+            ai_agent = ai_agent.with_context(guest=guest)
             request.update_context(guest=guest)
         if guest:
             store.add_global_values(guest_token=guest.sudo()._format_auth_cookie())
         request.env['discuss.channel'].sudo()._close_older_chat_channel(agent_partner)
-        channel = request.env['discuss.channel'].sudo()._create_ai_chat(agent_partner)
+        channel = ai_agent._create_ai_chat_channel()
         request.env["res.users"]._init_store_data(store)
         store.add(channel)
         return {'channel_id': channel.id, 'store_data': store.get_result()}

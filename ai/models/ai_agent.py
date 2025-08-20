@@ -20,7 +20,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools import file_open, html_sanitize, SQL, is_html_empty, ormcache
 from odoo.http import request
 from odoo.tools.mail import html_to_inner_content
-from odoo.tools.misc import submap
+from odoo.tools.misc import mute_logger, submap
 
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.addons.ai.utils.url_scraping import URLScraper
@@ -494,7 +494,7 @@ class AIAgent(models.Model):
         self.ensure_one()
 
         prompt = self._parse_user_message(mail_message_id)
-        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id, discuss_channel_id)
+        channel = self._get_or_create_ai_chat(discuss_channel_id)
         if not channel.exists():
             raise UserError(_("The discussion channel does not exist or has been deleted."))
         response = self.with_context(discuss_channel=channel)._generate_response(
@@ -507,7 +507,7 @@ class AIAgent(models.Model):
 
     def post_error_message(self, error_message: str, discuss_channel_id: int | None = None):
         self.ensure_one()
-        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id, discuss_channel_id)
+        channel = self._get_or_create_ai_chat(discuss_channel_id)
         if not channel.exists():
             raise UserError(_("The discussion channel does not exist or has been deleted."))
         response = self._generate_response(
@@ -519,7 +519,7 @@ class AIAgent(models.Model):
 
     def open_agent_chat(self):
         self.ensure_one()
-        channel = self.env['discuss.channel']._get_or_create_ai_chat(self.partner_id)
+        channel = self._get_or_create_ai_chat()
         return {
             'type': 'ir.actions.client',
             'tag': 'agent_chat_action',
@@ -541,7 +541,7 @@ class AIAgent(models.Model):
     @api.model
     def action_ask_ai(self, user_prompt: str):
         ask_ai_agent = self.env.ref('ai.ai_agent_natural_language_search')
-        channel = self.env['discuss.channel']._get_or_create_ai_chat(ask_ai_agent.partner_id)
+        channel = ask_ai_agent._get_or_create_ai_chat()
         return {
             'type': 'ir.actions.client',
             'tag': 'agent_chat_action',
@@ -743,6 +743,47 @@ class AIAgent(models.Model):
             container.getparent().replace(container, lxml.html.fromstring(replacement_html_str))
 
         return Wrapper(lxml.html.tostring(root, encoding="unicode", method="html"))
+
+    def _get_or_create_ai_chat(self, channel_id=None, channel_name=None):
+        channel = self.env['discuss.channel'].search(self._get_ai_chat_channel_domain(channel_id))
+        if not channel:
+            channel = self._create_ai_chat_channel(channel_name)
+        return channel
+
+    def _get_ai_chat_channel_domain(self, channel_id=None):
+        search_domain = Domain([
+            ('is_member', '=', True),
+            ('channel_member_ids', 'any', [
+                ('partner_id', '=', self.partner_id.id)
+            ]),
+        ])
+        search_domain &= self._get_ai_channel_type_domain()
+        if channel_id:
+            search_domain &= Domain('id', '=', channel_id)
+        return search_domain
+
+    def _get_ai_channel_type_domain(self):
+        return Domain('channel_type', '=', 'ai_chat')
+
+    def _create_ai_chat_channel(self, channel_name=None):
+        guest = self.env["mail.guest"]._get_guest_from_context()
+        with mute_logger("odoo.sql_db"):
+            self.env.cr.execute(SQL(
+                "SELECT pg_advisory_xact_lock(%s, %s) NOWAIT;",
+                guest.id if self.env.user._is_public() else self.env.user.partner_id.id,
+                self.id
+            ))
+
+        channel = self.env['discuss.channel'].create({
+            "channel_member_ids": [
+                Command.create({"guest_id": guest.id} if self.env.user._is_public() else {"partner_id": self.env.user.partner_id.id}),
+                Command.create({"partner_id": self.partner_id.id}),
+            ],
+            "channel_type": "ai_chat",
+            # sudo() => visitor can set the name of the channel
+            "name": channel_name or self.partner_id.sudo().name,
+        })
+        return channel
 
     @api.model
     def _retrieve_agent_if_access_allowed(self, agent_partner_id):

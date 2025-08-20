@@ -18,7 +18,7 @@ class TestAIAgent(TransactionCase):
             "partner_id": partner.id
 
         })
-        ai_chat_channel = self.env["discuss.channel"]._get_or_create_ai_chat(partner)
+        ai_chat_channel = agent._get_or_create_ai_chat()
         regular_channel = self.env["discuss.channel"].create({
             "channel_member_ids": [
                 Command.create(
@@ -42,7 +42,7 @@ class TestAIAgent(TransactionCase):
             "name": "Test AI Agent",
             "llm_model": "gpt-4",
         })
-        channel = self.env["discuss.channel"]._get_or_create_ai_chat(agent.partner_id)
+        channel = agent._get_or_create_ai_chat()
 
         # First 2 messages to simulate first question and response
         channel.message_post(

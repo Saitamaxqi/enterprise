@@ -1,15 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-try:
-    from markdown2 import markdown
-except ImportError:
-    markdown = None
-
-from odoo import fields, models, api, Command, _
+from odoo import _, fields, models, api
 from odoo.exceptions import AccessError
-from odoo.tools import SQL
-from odoo.fields import Domain
 
-from odoo.tools.misc import mute_logger
 from odoo.addons.mail.tools.discuss import Store
 
 
@@ -55,24 +47,7 @@ class DiscussChannel(models.Model):
         original_record = self.env[record_model].browse(record_id)
 
         # create a new AI chat
-        channel = self.create(
-            {
-                "channel_member_ids": [
-                    Command.create(
-                        {
-                            "partner_id": self.env.user.partner_id.id,
-                        }
-                    ),
-                    Command.create(
-                        {
-                            "partner_id": ai_agent.partner_id.id,
-                        }
-                    ),
-                ],
-                "channel_type": "ai_chat",
-                "name": self.env._("AI: %(name)s", name=channel_title),
-            }
-        )
+        channel = ai_agent._create_ai_chat_channel(channel_name=self.env._("AI: %(name)s", name=channel_title))
 
         # Create the initial context for the AI - the default prompt from the composer
         model_context = [
@@ -86,48 +61,6 @@ class DiscussChannel(models.Model):
         channel.ai_env_context = model_context
 
         return {"ai_channel_id": channel.id, "data": Store().add(channel).get_result(), "prompts": [prompt.name for prompt in ai_composer.available_prompts]}
-
-    @api.model
-    def _get_or_create_ai_chat(self, partner, channel_id=None):
-        channel = self.search(self._get_ai_chat_channel_domain(partner, channel_id))
-        if not channel:
-            channel = self._create_ai_chat(partner)
-        return channel
-
-    def _get_ai_chat_channel_domain(self, ai_partner, channel_id=None):
-        search_domain = Domain([
-            ('is_member', '=', True),
-            ('channel_member_ids', 'any', [
-                ('partner_id', '=', ai_partner.id)
-            ]),
-        ])
-        search_domain &= self._get_ai_channel_type_domain()
-        if channel_id:
-            search_domain &= Domain('id', '=', channel_id)
-        return search_domain
-
-    def _get_ai_channel_type_domain(self):
-        return Domain('channel_type', '=', 'ai_chat')
-
-    def _create_ai_chat(self, partner):
-        guest = self.env["mail.guest"]._get_guest_from_context()
-        with mute_logger("odoo.sql_db"):
-            self.env.cr.execute(SQL(
-                "SELECT pg_advisory_xact_lock(%s, %s) NOWAIT;",
-                guest.id if self.env.user._is_public() else self.env.user.partner_id.id,
-                partner.id
-            ))
-
-        channel = self.create({
-            "channel_member_ids": [
-                Command.create({"guest_id": guest.id} if self.env.user._is_public() else {"partner_id": self.env.user.partner_id.id}),
-                Command.create({"partner_id": partner.id}),
-            ],
-            "channel_type": "ai_chat",
-            # sudo() => visitor can set the name of the channel
-            "name": partner.sudo().name,
-        })
-        return channel
 
     def _close_older_chat_channel(self, ai_partner):
         older_channel = self.search(self._get_ai_chat_channel_domain(ai_partner))
