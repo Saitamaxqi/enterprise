@@ -876,7 +876,7 @@ class TestReportEditorUIUnit(HttpCase):
                 <table class="table table-sm">
                     <tbody>
                         <tr class="border-bottom border-top-0 border-start-0 border-end-0 border-2 border-dark fw-bold">
-                            <td>First Column</td>
+                            <td>Activities</td>
                         </tr>
                         <tr t-foreach="doc.activity_ids" t-as="x2many_record">
                            <td>

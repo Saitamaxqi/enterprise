@@ -995,16 +995,12 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
             run: "click",
         },
         {
-            trigger: ".o-web-studio-report-dynamic-placeholder-popover input[name='label_value']",
-            run: "edit First Column",
-        },
-        {
             trigger: ".o-web-studio-report-dynamic-placeholder-popover button.btn-primary",
             run: "click",
         },
         {
             trigger:
-                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable table tr td:contains(First Column)",
+                ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable table tr td:contains(Activities)",
         },
         {
             trigger:
