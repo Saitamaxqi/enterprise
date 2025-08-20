@@ -255,7 +255,7 @@ class TestMrpAnalyticAccountHr(TestMrpAnalyticAccount):
             Test adding a user time to a work order with
             a user admin on mrp but no rights on accounting.
         """
-        user = new_test_user(self.env, 'temp_stock_manager', 'hr.group_hr_user,mrp.group_mrp_manager,project.group_project_user,hr_timesheet.group_hr_timesheet_approver')
+        user = new_test_user(self.env, 'temp_stock_manager', 'hr.group_hr_user,mrp.group_mrp_manager,project.group_project_user')
         self.env['hr.employee'].create({
             'user_id': user.id,
             'image_1920': False,
