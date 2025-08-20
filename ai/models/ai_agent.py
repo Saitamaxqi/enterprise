@@ -207,6 +207,34 @@ def clean_search_view_xml(search_view_arch):
     return etree.tostring(clean_tree, encoding="unicode", pretty_print=False)
 
 
+def validate_groupbys(model, groupbys):
+    if not groupbys:
+        return
+
+    model_fields = model.fields_get()
+    invalid_groupbys = []
+    for groupby in groupbys:
+        if len(groupby.split(".")) > 1 or not model_fields.get(groupby, {}).get('groupable'):
+            invalid_groupbys.append(groupby)
+
+    if invalid_groupbys:
+        raise ValueError(f"The following groupby values are not allowed: {invalid_groupbys}")
+
+
+def validate_search_terms(search_terms):
+    if not search_terms:
+        return
+
+    invalid_search_terms = []
+    for search_term in search_terms:
+        field, __ = search_term.split("=")
+        if len(field.split(".")) > 1:
+            invalid_search_terms.append(search_term)
+
+    if invalid_search_terms:
+        raise ValueError(f"Search terms with field chains are not allowed: {invalid_search_terms}")
+
+
 class AIAgent(models.Model):
     _name = 'ai.agent'
     _description = "AI Agent"
@@ -260,6 +288,11 @@ class AIAgent(models.Model):
         string="Sources",
     )
     sources_fully_processed = fields.Boolean(compute="_compute_sources_fully_processed", default=True)
+    is_natural_language_query_agent = fields.Boolean(
+        'Is Natural Language Query Agent',
+        compute='_compute_is_natural_language_query_agent',
+        search='_search_is_natural_language_query_agent'
+    )
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -353,10 +386,10 @@ class AIAgent(models.Model):
     def _generate_response_for_channel(self, mail_message, channel):
         self.ensure_one()
 
-        prompt = self._parse_user_message(mail_message)
+        prompt, session_info_context = self._parse_user_message(mail_message)
         response = self.with_context(discuss_channel=channel)._generate_response(
             prompt=prompt,
-            chat_history=self._retrieve_chat_history(channel),
+            chat_history=[{'content': session_info_context, 'role': 'user'}] + self._retrieve_chat_history(channel),
             extra_system_context=self._build_extra_system_context(channel),
         )
         for message in response or []:
@@ -365,9 +398,9 @@ class AIAgent(models.Model):
     def _post_error_message(self, error_message: str, channel):
         self.ensure_one()
         response = self._generate_response(
-            prompt="Generate a message for the user stating that we are unable to process the request because of the following error: " + error_message,
+            prompt=f"Error '{error_message}' occured. Generate a message for the user stating that we are unable to process the request but don't mention any technical details. Perhaps also tell them to try again later.",
             chat_history=self._retrieve_chat_history(channel),
-            extra_system_context="Do not mention any technical terms or error codes in the generated message but be precise because the generated message will be used as info for potential retries of the request.")
+            extra_system_context="Do not mention any technical terms, links, or error codes in the generated message.")
         for message in response or []:
             self._post_ai_response(channel, message)
 
@@ -394,7 +427,10 @@ class AIAgent(models.Model):
 
     @api.model
     def action_ask_ai(self, user_prompt: str):
-        ask_ai_agent = self.env.ref('ai.ai_agent_natural_language_search')
+        ask_ai_agent = self._get_potential_natural_language_query_agent()
+        if not ask_ai_agent:
+            raise UserError(_('No AI agent is configured with the Natural Language Query topic. Please contact your administrator.'))
+
         channel = ask_ai_agent._get_or_create_ai_chat()
         return {
             'type': 'ir.actions.client',
@@ -407,7 +443,38 @@ class AIAgent(models.Model):
 
     @api.model
     def get_ask_ai_agent(self):
-        return self.env.ref('ai.ai_agent_natural_language_search').read(['id', 'name'])[0]
+        agent = self._get_potential_natural_language_query_agent()
+        return agent.read(['id', 'name'])[0] if agent else None
+
+    @api.model
+    def _get_potential_natural_language_query_agent(self):
+        agents = self.search([('is_natural_language_query_agent', '=', True)])
+        if not agents:
+            return None
+
+        # prioritize the one that exclusively has the Natural Language Query topic
+        agents = sorted(agents, key=lambda a: len(a.topic_ids))
+        return agents[0]
+
+    def _compute_is_natural_language_query_agent(self):
+        natural_language_query_topic = self.env.ref('ai.ai_topic_natural_language_query', raise_if_not_found=False)
+        if not natural_language_query_topic:
+            self.is_natural_language_query_agent = False
+        else:
+            for agent in self:
+                agent.is_natural_language_query_agent = natural_language_query_topic.id in agent.topic_ids.ids
+
+    def _search_is_natural_language_query_agent(self, operator, value):
+        if operator not in ('=', '!='):
+            raise UserError(_("Invalid search operator."))
+        natural_language_query_topic = self.env.ref('ai.ai_topic_natural_language_query', raise_if_not_found=False)
+        if natural_language_query_topic:
+            if operator == '=' and value or operator == '!=' and not value:  # truthy
+                return [("topic_ids", "in", [natural_language_query_topic.id])]
+            elif operator == '=' and not value or operator == '!=' and value:  # falsy
+                return [("topic_ids", "not in", [natural_language_query_topic.id])]
+        else:
+            return [('id', '=', False)]
 
     def _post_ai_response(self, channel, message):
         formatted_message = message
@@ -633,22 +700,42 @@ class AIAgent(models.Model):
         })
         return channel
 
+    def _facets_to_xml(self, facets):
+        """Convert facets JSON array to simplified XML elements format with reduced nesting."""
+        if not facets:
+            return ""
+
+        xml_parts = []
+        for facet in facets:
+            facet_attrs = []
+
+            for key, value in facet.items():
+                if value:
+                    if key == "values" and isinstance(value, list):
+                        values_str = "|".join(str(v) for v in value)
+                        facet_attrs.append(f'{key}="{values_str}"')
+                    else:
+                        facet_attrs.append(f'{key}="{value}"')
+
+            if facet_attrs:
+                xml_parts.append(f'<facet {" ".join(facet_attrs)}/>')
+
+        return "\n    ".join(xml_parts)
+
     def _parse_user_message(self, mail_message):
         self.ensure_one()
-        agent_xml_id = self.get_external_id()[self.id]
-        if agent_xml_id == "ai.ai_agent_natural_language_search":
-            # Build context section
-            context_lines = ["<context>"]
-            # General session information
-            context_lines.append("  <session-info>")
+        session_info_context = ""
+        if self.is_natural_language_query_agent:
+            context_lines = []
+            context_lines.append("<session_info_context>")
             context_lines.append(
-                f'    <user id="{self.env.user.id}" name="{self.env.user.display_name}" model="res.users"/>'
+                f'  <user id="{self.env.user.id}" name="{self.env.user.display_name}" model="res.users"/>'
             )
             context_lines.append(
-                f'    <partner id="{self.env.user.partner_id.id}" name="{self.env.user.partner_id.name}" model="res.partner"/>'
+                f'  <partner id="{self.env.user.partner_id.id}" name="{self.env.user.partner_id.name}" model="res.partner"/>'
             )
             context_lines.append(
-                f'    <company id="{self.env.company.id}" name="{self.env.company.name}" model="res.company"/>'
+                f'  <company id="{self.env.company.id}" name="{self.env.company.name}" model="res.company"/>'
             )
 
             user_context = dict(self.env['res.users'].context_get())
@@ -656,18 +743,63 @@ class AIAgent(models.Model):
                 context_lines.append(
                     f'    <timezone value="{user_context["tz"]}"/>'
                 )
-            context_lines.append("  </session-info>")
-            context_lines.append("</context>")
 
-            # Build query section
-            raw_query = html_to_inner_content(mail_message.body)
-            query_lines = ["<query>", raw_query, "</query>"]
+            # Current view as a single element if present
+            if current_view_info := self.env.context.get("current_view_info"):
+                action_id = current_view_info.get("action_id")
+                action = self.env['ir.actions.actions'].browse(action_id)
+                current_action_name = None
+                if action.type == 'ir.actions.act_window':
+                    current_action = self.env['ir.actions.act_window'].browse(action_id)
+                elif action.type == 'ir.actions.server':
+                    current_action = self.env['ir.actions.server'].browse(action_id)
+                elif action.type == 'ir.actions.client':
+                    current_action = self.env['ir.actions.client'].browse(action_id)
+                if current_action:
+                    current_action_name = current_action.name
 
-            # Combine all sections
-            all_sections = context_lines + [""] + query_lines
-            final_prompt = "\n".join(all_sections)
-            return final_prompt
-        return html_to_inner_content(mail_message.body)
+                context_lines.append(
+                    f'  <current_view id="{current_view_info.get("view_id")}" '
+                    f'model="{current_view_info.get("model")}" '
+                    f'type="{current_view_info.get("view_type")}" '
+                    f'action_id="{action_id}" '
+                    f'action="{current_action_name}" '
+                    f'available_view_types="{current_view_info.get("available_view_types")}"/>'
+                )
+
+                facets = current_view_info.get("facets", [])
+                if facets:
+                    context_lines.append(f'  <active_search_facets>\n    {self._facets_to_xml(facets)}\n  </active_search_facets>')
+
+                search_view = self.env[current_action.res_model].get_view(current_action.search_view_id.id, 'search')
+                search_view_xml = clean_search_view_xml(search_view['arch']) if search_view else ""
+                if search_view_xml:
+                    context_lines.append(f"  {search_view_xml}")
+
+            context_lines.append("</session_info_context>")
+            session_info_context = "\n".join(context_lines) + "\n" + dedent("""
+                The above provides information about the current user and where in the app he is at.
+                <session_info_context> contains important information about the the user. partner element is the linked res.partner record to the user.
+                It may also contain info about the <current_view> that I'm in in the UI.
+                <active_search_facets>, if exists, contains the currently active facets in the shown search bar in the UI.
+                <search> is the specification of the search bar in the UI. It contains the blueprint of the things that can be done to it by the user. Information from it can be useful when calling terminating tool calls.
+                Knowing <current_view>, <active_search_facets>, and/or <search> provides you a rough idea of where the user is and what he's looking at.
+            """.strip())
+        return html_to_inner_content(mail_message.body), session_info_context
+
+    @api.model
+    def _parse_domain(self, model_name, domain_json_str: str | None):
+        if not domain_json_str or not domain_json_str.strip():
+            return None
+
+        try:
+            domain_array = json.loads(domain_json_str)
+            Domain(domain_array).optimize_full(self.env[model_name])
+            return domain_array
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON format for custom domain: {e}")
+        except ValueError as e:
+            raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
 
     def _build_extra_system_context(self, discuss_channel):
         """Build extra system context based on the agent's configuration."""
@@ -721,7 +853,7 @@ class AIAgent(models.Model):
         # by complete_name within each app to maintain proper hierarchy display
         action_menus.sort(key=lambda m: (m["app_menu"].sequence, m["menu"].complete_name))
 
-        csv_result = "id|app|complete_name|model|model_description|available_view_types|default_view_type\n"
+        csv_result = "id|action_id|app|complete_name|model|model_description|available_view_types|default_view_type\n"
 
         for menu_data in action_menus:
             menu = menu_data["menu"]
@@ -735,6 +867,7 @@ class AIAgent(models.Model):
 
             csv_result += (
                 f"{menu.id}|"
+                f"{action.id}|"
                 f"{menu_data['app_menu'].name}|"
                 f"{menu.complete_name}|"
                 f"{action.res_model}|"
@@ -750,13 +883,14 @@ class AIAgent(models.Model):
 
             Format: CSV with pipe (|) delimiter
             ```
-            id|app|complete_name|model|model_description|available_view_types|default_view_type
-            161|Accounting|Accounting/Customers/Invoices|account.move|Journal Entry|list,kanban,form,activity|list
-            456|Reporting|Reporting/Sales|sale.report|Sales Analysis|graph,pivot,list,form|graph
+            id|action_id|app|complete_name|model|model_description|available_view_types|default_view_type
+            161|986|Accounting|Accounting/Customers/Invoices|account.move|Journal Entry|list,kanban,form,activity|list
+            456|1053|Reporting|Reporting/Sales|sale.report|Sales Analysis|graph,pivot,list,form|graph
             ```
 
             Fields:
             - `id`: Menu identifier (use this for opening menus)
+            - `action_id`: Action identifier (use this for referencing actions)
             - `app`: Root application name (e.g., Sales, Accounting, Reporting)
             - `complete_name`: Full menu path with / separators
             - `model`: Technical model name (e.g., 'sale.order', 'product.product')
@@ -983,9 +1117,9 @@ class AIAgent(models.Model):
 
         # Add header
         if include_description:
-            results.append("field_name|display_name|type|sortable|description")
+            results.append("field_name|display_name|type|sortable|groupable|description")
         else:
-            results.append("field_name|display_name|type|sortable")
+            results.append("field_name|display_name|type|sortable|groupable")
 
         for field_name, field_info in model_fields.items():
             if not model._fields[field_name]._description_searchable:
@@ -993,14 +1127,15 @@ class AIAgent(models.Model):
             field_type = field_info.get('type', 'unknown')
             field_relation = field_info.get('relation', '')
             field_display_name = field_info.get('string', '')
-            sortable = str(field_info.get('sortable', True)).lower()
+            sortable = str(field_info.get('sortable', False)).lower()
+            groupable = str(field_info.get('groupable', False)).lower()
             if field_relation:
                 field_type += f"({field_relation})"
             if field_type == 'selection':
                 selection_items = field_info.get('selection', [])
                 field_type += f"({dict(selection_items)})"
-            # Format as CSV with pipe delimiter: field_name|display_name|type|sortable|description
-            field_str = f"{field_name}|{field_display_name}|{field_type}|{sortable}"
+            # Format as CSV with pipe delimiter: field_name|display_name|type|sortable|groupable|description
+            field_str = f"{field_name}|{field_display_name}|{field_type}|{sortable}|{groupable}"
             if include_description:
                 if description := field_info.get('help', ''):
                     # Replace any pipe characters in the description to avoid delimiter conflicts
@@ -1013,6 +1148,9 @@ class AIAgent(models.Model):
         return "\n".join(results)
 
     def _ai_tool_open_menu_list(self, menu_id, model_name, selected_filters, selected_groupbys, search, custom_domain=None):
+        validate_search_terms(search)
+        validate_groupbys(self.env[model_name], selected_groupbys)
+
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
         if not menu:
@@ -1029,29 +1167,22 @@ class AIAgent(models.Model):
         if "list" not in available_views:
             raise ValueError(f"List view is not available for the action associated with menu ID {menu_id}.")
 
-        # Validate custom domain if provided
-        domain_array = None
-        if custom_domain:
-            try:
-                domain_array = json.loads(custom_domain)
-                Domain(domain_array).optimize_full(self.env[model_name])
-            except json.JSONDecodeError as e:
-                raise ValueError(f"Invalid JSON format for custom domain: {e}")
-            except ValueError as e:
-                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
-
         bus_data = {
             "menuID": menu_id,
             "selectedFilters": selected_filters,
             "selectedGroupBys": selected_groupbys,
             "search": search,
         }
-        if domain_array is not None:
-            bus_data["customDomain"] = domain_array
+
+        if domain := self._parse_domain(model_name, custom_domain):
+            bus_data["customDomain"] = domain
 
         self.env.user._bus_send("AI_OPEN_MENU_LIST", bus_data)
 
     def _ai_tool_open_menu_kanban(self, menu_id, model_name, selected_filters, selected_groupbys, search, custom_domain=None):
+        validate_search_terms(search)
+        validate_groupbys(self.env[model_name], selected_groupbys)
+
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
         if not menu:
@@ -1068,29 +1199,22 @@ class AIAgent(models.Model):
         if "kanban" not in available_views:
             raise ValueError(f"Kanban view is not available for the action associated with menu ID {menu_id}.")
 
-        # Validate custom domain if provided
-        domain_array = None
-        if custom_domain:
-            try:
-                domain_array = json.loads(custom_domain)
-                Domain(domain_array).optimize_full(self.env[model_name])
-            except json.JSONDecodeError as e:
-                raise ValueError(f"Invalid JSON format for custom domain: {e}")
-            except ValueError as e:
-                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
-
         bus_data = {
             "menuID": menu_id,
             "selectedFilters": selected_filters,
             "selectedGroupBys": selected_groupbys,
             "search": search,
         }
-        if domain_array is not None:
-            bus_data["customDomain"] = domain_array
+        if domain := self._parse_domain(model_name, custom_domain):
+            bus_data["customDomain"] = domain
 
         self.env.user._bus_send("AI_OPEN_MENU_KANBAN", bus_data)
 
     def _ai_tool_open_menu_pivot(self, menu_id, model_name, selected_filters, row_groupbys, col_groupbys, measures, search, custom_domain=None):
+        validate_search_terms(search)
+        validate_groupbys(self.env[model_name], row_groupbys)
+        validate_groupbys(self.env[model_name], col_groupbys)
+
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
         if not menu:
@@ -1140,17 +1264,6 @@ class AIAgent(models.Model):
         if "pivot" not in available_views:
             raise ValueError(f"Pivot view is not available for the action associated with menu ID {menu_id}.")
 
-        # Validate custom domain if provided
-        domain_array = None
-        if custom_domain:
-            try:
-                domain_array = json.loads(custom_domain)
-                Domain(domain_array).optimize_full(self.env[model_name])
-            except json.JSONDecodeError as e:
-                raise ValueError(f"Invalid JSON format for custom domain: {e}")
-            except ValueError as e:
-                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
-
         bus_data = {
             "menuID": menu_id,
             "model": model_name,
@@ -1165,9 +1278,8 @@ class AIAgent(models.Model):
         if sorted_column:
             bus_data["sortedColumn"] = sorted_column
 
-        # Add custom domain if provided
-        if domain_array is not None:
-            bus_data["customDomain"] = domain_array
+        if domain := self._parse_domain(model_name, custom_domain):
+            bus_data["customDomain"] = domain
 
         self.env.user._bus_send("AI_OPEN_MENU_PIVOT", bus_data)
 
@@ -1177,6 +1289,9 @@ class AIAgent(models.Model):
         """
         Opens a graph view for the specified menu ID with the given parameters.
         """
+        validate_search_terms(search)
+        validate_groupbys(self.env[model_name], selected_groupbys)
+
         debug = request.session.debug if request else True
         menus = self.env["ir.ui.menu"].load_menus(debug=debug)
         menu = menus.get(menu_id)
@@ -1212,17 +1327,6 @@ class AIAgent(models.Model):
         if "graph" not in available_views:
             raise ValueError(f"Graph view is not available for the action associated with menu ID {menu_id}.")
 
-        # Validate custom domain if provided
-        domain_array = None
-        if custom_domain:
-            try:
-                domain_array = json.loads(custom_domain)
-                Domain(domain_array).optimize_full(self.env[model_name])
-            except json.JSONDecodeError as e:
-                raise ValueError(f"Invalid JSON format for custom domain: {e}")
-            except ValueError as e:
-                raise ValueError(f"Invalid custom domain for model '{model_name}': {e}")
-
         bus_data = {
             "menuID": menu_id,
             "selectedFilters": selected_filters,
@@ -1234,27 +1338,22 @@ class AIAgent(models.Model):
             "cumulated": cumulated,
             "search": search or [],
         }
-        if domain_array is not None:
-            bus_data["customDomain"] = domain_array
+        if domain := self._parse_domain(model_name, custom_domain):
+            bus_data["customDomain"] = domain
 
         self.env.user._bus_send("AI_OPEN_MENU_GRAPH", bus_data)
 
-    def _ai_tool_compute_report_measures(self, menu_id, model):
+    def _ai_tool_compute_report_measures(self, action_id, model):
         if model not in self.env:
             raise ValueError(f"Model '{model}' not found.")
 
-        menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
-        menu = menus.get(menu_id)
-        if not menu:
-            raise ValueError(f"Menu with ID {menu_id} not found.")
-
-        action = self.env["ir.actions.act_window"].browse(menu["action_id"])
+        action = self.env["ir.actions.act_window"].browse(action_id)
         if not action.exists():
-            raise ValueError(f"The action associated with menu ID {menu_id} does not exist.")
+            raise ValueError(f"The action associated with menu ID {action_id} does not exist.")
 
         action_dict = action._get_action_dict()
         if action_dict.get("res_model") != model:
-            raise ValueError(f"The model '{model}' does not match the model of the action associated with menu ID {menu_id}.")
+            raise ValueError(f"The model '{model}' does not match the model of the action associated with menu ID {action_id}.")
 
         # Get field definitions
         model_obj = self.env[model]
@@ -1366,3 +1465,29 @@ class AIAgent(models.Model):
             return result
         except json.JSONDecodeError as e:
             raise ValueError(f"Invalid JSON format for custom domain: {e}")
+
+    def _ai_tool_adjust_search(self, model_name, remove_facets=None, toggle_filters=None, toggle_groupbys=None, apply_searches=None, measures=None, mode=None, order=None, stacked=None, cumulated=None, custom_domain=None, switch_view_type=None):
+        validate_search_terms(apply_searches)
+        validate_groupbys(self.env[model_name], toggle_groupbys)
+
+        payload = {
+            "removeFacets": remove_facets or [],
+            "toggleFilters": toggle_filters or [],
+            "toggleGroupBys": toggle_groupbys or [],
+            "applySearches": apply_searches or [],
+            "measures": measures or [],
+            "mode": mode or None,
+            "order": order or "ASC",
+            "stacked": stacked or False,
+            "cumulated": cumulated or False,
+            "switchViewType": switch_view_type or False
+        }
+
+        available_view_types = self.env.context.get("current_view_info", {}).get("available_view_types", [])
+        if switch_view_type and switch_view_type not in available_view_types:
+            raise ValueError(f"Requested view type '{switch_view_type}' is not in the available_view_types: {available_view_types}")
+
+        if domain := self._parse_domain(model_name, custom_domain):
+            payload["customDomain"] = domain
+
+        self.env.user._bus_send("AI_ADJUST_SEARCH", payload)

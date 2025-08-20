@@ -510,10 +510,10 @@ class LLMApiService:
     ):
         """Wraps the `_request_llm` method to handle multiple calls and tool execution."""
         AI_MAX_SUCCESSIVE_CALLS = int(self.env["ir.config_parameter"].sudo()
-            .get_param("ai.max_successive_calls", "7"))
+            .get_param("ai.max_successive_calls", "20"))
 
         AI_MAX_TOOL_CALLS_PER_CALL = int(self.env["ir.config_parameter"].sudo()
-            .get_param("ai.max_tool_calls_per_call", "10"))
+            .get_param("ai.max_tool_calls_per_call", "20"))
 
         if tools:
             tools = copy.deepcopy(tools)

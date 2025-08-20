@@ -54,15 +54,16 @@
         <field name="ai_tool_description">
             **Tool Name: get_fields**
 
-            Lists ONLY searchable fields for a single model that can be used in domain filters.
+            Lists ONLY searchable fields for a single model that can be used in domain filters and grouping.
             Essential for building valid domains - if a field isn't listed here, it CANNOT be used.
 
             Returns format:
             ```
-            field_name|display_name|type|sortable|description
-            partner_id|Customer|many2one(res.partner)|true|Customer for this order
-            date_order|Order Date|datetime|true|Date when order was placed
-            order_line|Order Lines|one2many(sale.order.line)|false|Lines in this order
+            field_name|display_name|type|sortable|groupable|description
+            partner_id|Customer|many2one(res.partner)|true|true|Customer for this order
+            date_order|Order Date|datetime|true|true|Date when order was placed
+            order_line|Order Lines|one2many(sale.order.line)|false|false|Lines in this order
+            state|Status|selection|true|true|Order status
             ```
 
             Key points:
@@ -71,6 +72,7 @@
             - Only relationship fields can be used to traverse to other models
             - Literal fields such as char/text/float CANNOT be used for traversal
             - 'sortable' indicates if field can be used in order_by parameter
+            - 'groupable' indicates if field can be used for grouping when not available in search view
 
             💡 Performance tip: When exploring multiple models, call this tool multiple times in ONE message
             Example: Exploring sale.order, product.product, and res.partner? Make 3 parallel calls.
@@ -137,7 +139,7 @@
                 "selected_groupbys": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Field names from menu's available group_bys. Example: ['user_id', 'partner_id']. Empty array [] for no grouping."
+                    "description": "Field names for grouping. Priority: 1) Use group_by_field values from search view, 2) If needed field not in search view, use groupable fields from get_fields tool. Example: ['user_id', 'partner_id']. Empty array [] for no grouping."
                 },
                 "search": {
                     "type": "array",
@@ -146,7 +148,7 @@
                 },
                 "custom_domain": {
                     "type": "string",
-                    "description": "Optional custom domain as JSON string when search view elements are insufficient. Use Odoo RPN format. Example: \"[['lines.product_id.pos_categ_ids.name', 'ilike', 'drinks']]\""
+                    "description": "Optional custom domain as JSON string when search view elements are insufficient."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "selected_groupbys", "search"]
@@ -197,7 +199,7 @@
                 "selected_groupbys": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Field names from menu's group_bys (usually one for kanban columns). Empty array [] for ungrouped."
+                    "description": "Field names for grouping (usually one for kanban columns). Priority: 1) Use group_by_field values from search view, 2) If needed field not in search view, use groupable fields from get_fields tool. Empty array [] for ungrouped."
                 },
                 "search": {
                     "type": "array",
@@ -206,7 +208,7 @@
                 },
                 "custom_domain": {
                     "type": "string",
-                    "description": "Optional custom domain as JSON string when search view elements are insufficient. Use Odoo RPN format. Example: \"[['lines.product_id.pos_categ_ids.name', 'ilike', 'drinks']]\""
+                    "description": "Optional custom domain as JSON string when search view elements are insufficient."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "selected_groupbys", "search"]
@@ -265,12 +267,12 @@
                 "row_groupbys": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Row grouping fields. Examples: ['product_id'] for products, ['user_id'] for salespeople"
+                    "description": "Row grouping fields. Priority: 1) Use group_by_field values from search view, 2) If needed field not in search view, use groupable fields from get_fields tool. Examples: ['product_id'] for products, ['user_id'] for salespeople"
                 },
                 "col_groupbys": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Column grouping fields. Common: ['date:month'] for monthly, ['state'] for status, [] for no columns"
+                    "description": "Column grouping fields. Priority: 1) Use group_by_field values from search view, 2) If needed field not in search view, use groupable fields from get_fields tool. Common: ['date:month'] for monthly, ['state'] for status, [] for no columns"
                 },
                 "measures": {
                     "type": "array",
@@ -284,7 +286,7 @@
                 },
                 "custom_domain": {
                     "type": "string",
-                    "description": "Optional custom domain as JSON string when search view elements are insufficient. Use Odoo RPN format. Example: \"[['lines.product_id.pos_categ_ids.name', 'ilike', 'drinks']]\""
+                    "description": "Optional custom domain as JSON string when search view elements are insufficient."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "row_groupbys", "col_groupbys", "measures", "search"]
@@ -345,7 +347,7 @@
                 "selected_groupbys": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "description": "Field names from menu's available group_bys. Example: ['user_id', 'partner_id']. Empty array [] for no grouping."
+                    "description": "Field names for grouping. Priority: 1) Use group_by_field values from search view, 2) If needed field not in search view, use groupable fields from get_fields tool. Example: ['user_id', 'partner_id']. Empty array [] for no grouping."
                 },
                 "measure": {
                     "type": "string",
@@ -374,7 +376,7 @@
                 },
                 "custom_domain": {
                     "type": "string",
-                    "description": "Optional custom domain as JSON string when search view elements are insufficient. Use Odoo RPN format. Example: \"[['lines.product_id.pos_categ_ids.name', 'ilike', 'drinks']]\""
+                    "description": "Optional custom domain as JSON string when search view elements are insufficient."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "selected_groupbys", "measure", "mode", "order", "search"]
@@ -386,7 +388,7 @@
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
         <field name="code">
-            ai['result'] = record._ai_tool_compute_report_measures(menu_id, model_name)
+            ai['result'] = record._ai_tool_compute_report_measures(action_id, model_name)
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
@@ -415,16 +417,107 @@
         {
             "type": "object",
             "properties": {
-                "menu_id": {
+                "action_id": {
                     "type": "number",
-                    "description": "Menu ID - must support pivot or graph view"
+                    "description": "Action ID - the id of the action linked to a menu or available in the current view context."
                 },
                 "model_name": {
                     "type": "string",
-                    "description": "Model name - must match the menu's model"
+                    "description": "Model name - must match the action's model"
                 }
             },
-            "required": ["menu_id", "model_name"]
+            "required": ["action_id", "model_name"]
+        }
+        </field>
+    </record>
+    <record id="ir_actions_server_adjust_search" model="ir.actions.server">
+        <field name="name">AI: Adjust Search</field>
+        <field name="state">code</field>
+        <field name="use_in_ai" eval="True"/>
+        <field name="code">
+            ai['result'] = record._ai_tool_adjust_search(model_name, remove_facets, toggle_filters, toggle_groupbys, apply_searches, measures, mode, order, stacked, cumulated, custom_domain, switch_view_type)
+        </field>
+        <field name="model_id" ref="model_ai_agent"/>
+        <field name="ai_tool_description">
+            **Tool Name: adjust_search**
+
+            The user can continue on asking questions and if you think that the current search can just be adjusted without opening a different menu, you can use this tool.
+
+            Provided in the prompt's &lt;session_info_context&gt; is a current view info which contains the active search facets.
+            A facet can be a group of `OR`ed filters, a group of groupbys, or a group of `OR`ed search terms.
+
+            **Understanding the parameters**:
+            - `remove_facets` - Removing a facet removes the whole group of filters/groupbys/search terms. Removing a filter or a search facet reduces the constraints.
+            - `toggle_filters` - Toggling a filter will add/remove a filter from an active filter facet.
+            - `toggle_groupbys` - Toggling a groupby will add/remove a groupby from the active groupbys facet.
+            - `apply_searches` - Applying a search will `OR` the search term on an active search facet containing the same field. E.g., if there is a field facet of "name=John" and you provide search "name=Jane", the resulting search will be "name=John OR name=Jane".
+            - `measures` - Specifying measures will activate the selected measures in the current view if it's a pivot or a graph view.
+            - `mode` - Graph view only: This is the chart type. Choose from "line", "bar", or "pie" to change the chart type in the current graph view.
+            - `order` - Graph view only: Specifying the order will change the sorting of the results in the current graph view.
+            - `stacked` - Graph view only: Specifying stacked will change the stacking of the results in the current graph view.
+            - `cumulated` - Graph view only: Specifying cumulated will change the accumulation of the results in the current graph view.
+            - `custom_domain` - The search view elements may not be sufficient to express the needed domain. In that case, you can provide a custom domain as a JSON string.
+            - `switch_view_type` - Switching the view type will change the current view to the specified type. Select from the available view types in the current view info.
+        </field>
+        <field name="ai_tool_schema">
+        {
+            "type": "object",
+            "properties": {
+                "model_name": {
+                    "type": "string",
+                    "description": "The model linked to the current view."
+                },
+                "remove_facets": {
+                    "type": "array",
+                    "items": {"type": "number"},
+                    "description": "List of facet group IDs to be removed from the search view."
+                },
+                "toggle_filters": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Filter names from menu's available filters. See list from the searchable fields from the search view. Example: ['my_sale_orders', 'draft']. If a filter is already applied, it will be removed; otherwise, it will be added. Empty array [] for no filters. "
+                },
+                "toggle_groupbys": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Field names to add/remove from grouping. Priority: 1) Use group_by_field values from search view, 2) If needed field not in search view, use groupable fields from get_fields tool. Example: ['user_id', 'partner_id']. Empty array [] for no grouping changes."
+                },
+                "apply_searches": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "Array of field=text strings for searching multiple fields. Each string uses format 'field_name=search_text' where field_name is from menu's searchable_fields. Examples: ['partner_id=Azure', 'product_id=laptop'], ['name=SO-001'], or [] for no search."
+                },
+                "measures": {
+                    "type": "array",
+                    "items": {"type": "string"},
+                    "description": "List of measures to be activated. Can be multiple items in pivot view but only one item in graph view."
+                },
+                "mode": {
+                    "type": "string",
+                    "description": "For graph view: Chart type: 'bar' for comparisons, 'line' for trends, 'pie' for proportions"
+                },
+                "order": {
+                    "type": "string",
+                    "description": "For graph view: Sort direction: 'DESC' for highest first, 'ASC' for lowest first"
+                },
+                "stacked": {
+                    "type": "boolean",
+                    "description": "For graph view: Stack bars/areas on top of each other (default: false)"
+                },
+                "cumulated": {
+                    "type": "boolean",
+                    "description": "For graph view: Show cumulative values over time (default: false)"
+                },
+                "custom_domain": {
+                    "type": "string",
+                    "description": "Optional custom domain as JSON string when search view elements are insufficient."
+                },
+                "switch_view_type": {
+                    "type": "string",
+                    "description": "The view type to switch to. Must be one of the available view types. Empty string for no switch."
+                }
+            },
+            "required": ["model_name"]
         }
         </field>
     </record>

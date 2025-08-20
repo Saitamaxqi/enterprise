@@ -2,6 +2,7 @@ import { Thread } from "@mail/core/common/thread_model";
 import { patch } from "@web/core/utils/patch";
 import { rpc, RPCError } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
+import { getCurrentViewInfo } from "@ai/discuss/core/common/view_details";
 
 patch(Thread.prototype, {
     async post(body, postData = {}, extraData = {}) {
@@ -18,6 +19,7 @@ patch(Thread.prototype, {
                 await rpc("/ai/generate_response", {
                     mail_message_id: message.id,
                     channel_id: this.id,
+                    current_view_info: await getCurrentViewInfo(this.store.env.bus),
                 });
             } catch (error) {
                 if (error instanceof RPCError) {

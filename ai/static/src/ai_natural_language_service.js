@@ -1,8 +1,10 @@
 import { registry } from "@web/core/registry";
+import { _t } from "@web/core/l10n/translation";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
 export const aiNaturalLanguageService = {
-    dependencies: ["bus_service", "action", "menu"],
-    start(env, { bus_service, action: actionService, menu: menuService }) {
+    dependencies: ["bus_service", "action", "menu", "dialog"],
+    start(env, { bus_service, action: actionService, menu: menuService, dialog: dialogService }) {
         bus_service.subscribe(
             "AI_OPEN_MENU_LIST",
             async ({ menuID, selectedFilters, selectedGroupBys, search, customDomain }) => {
@@ -107,6 +109,59 @@ export const aiNaturalLanguageService = {
                     props: { ai: aiProps },
                     viewType: "graph",
                 });
+            }
+        );
+        bus_service.subscribe(
+            "AI_ADJUST_SEARCH",
+            async ({
+                removeFacets,
+                toggleFilters,
+                toggleGroupBys,
+                applySearches,
+                measures,
+                mode,
+                order,
+                stacked,
+                cumulated,
+                switchViewType,
+                customDomain,
+            }) => {
+                async function trySwitchView() {
+                    try {
+                        if (switchViewType) {
+                            await actionService.switchView(switchViewType);
+                        }
+                    } catch (error) {
+                        dialogService.add(AlertDialog, {
+                            body: _t(
+                                "Tried to switch to %s but the app is no longer in an action window.",
+                                switchViewType
+                            ),
+                            title: _t("Unable to switch view"),
+                            confirm: () => {},
+                            confirmLabel: _t("Close"),
+                        });
+                        return error;
+                    }
+                }
+                // switch view before applying the changes to the search bar because switching view
+                // will rerender the action container with the search bar. Any search bar changes from the
+                // previous action container won't be reflected if we don't wait for the new view.
+                const error = await trySwitchView();
+                if (!error) {
+                    env.bus.trigger("APPLY_AI_ADJUST_SEARCH", {
+                        removeFacets,
+                        toggleFilters,
+                        toggleGroupBys,
+                        applySearches,
+                        measures,
+                        mode,
+                        order,
+                        stacked,
+                        cumulated,
+                        customDomain,
+                    });
+                }
             }
         );
         bus_service.start();

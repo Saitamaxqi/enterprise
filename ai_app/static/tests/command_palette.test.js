@@ -1,5 +1,5 @@
 import { test } from "@odoo/hoot";
-import { makeMockServer } from "@web/../tests/web_test_helpers";
+import { makeMockServer, onRpc } from "@web/../tests/web_test_helpers";
 import {
     triggerHotkey,
     start,
@@ -22,6 +22,8 @@ test("can open chat with @agent in command palette", async () => {
         name: "Test agent",
         partner_id: partnerId,
     });
+
+    onRpc("ai.agent", "get_ask_ai_agent", () => ({ id: 1, name: "ASK AI" }));
 
     await start();
     triggerHotkey("control+k");

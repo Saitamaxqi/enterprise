@@ -172,11 +172,11 @@ class IrActionsServer(models.Model):
                 if batch_id := session["current_batch_id"]:
                     _logger.debug("[AI Tool - Batch #%d - %.2fs] Completed '%s'%s",
                             batch_id, duration, ir_action_tool.name,
-                            " (with error)" if error else "")
+                            f" (with error: {error})" if error else "")
                 else:
                     _logger.debug("[AI Tool - %.2fs] Completed '%s'%s",
                             duration, ir_action_tool.name,
-                            " (with error)" if error else "")
+                            f" (with error: {error})" if error else "")
 
             if result is None and record:
                 # If the tool returned nothing, then we set the description of the

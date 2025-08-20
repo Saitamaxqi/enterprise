@@ -27,7 +27,11 @@
         'web.assets_backend': [
             ('after', 'web/static/src/views/form/form_controller.js', 'ai/static/src/web/form_controller_patch.js'),
             'ai/static/src/**/*',
+            ('remove', 'ai/static/src/core/web/lazy/**'),
             ('remove', 'ai/static/src/worklets/**/*'),
+        ],
+        'web.assets_backend_lazy': [
+            'ai/static/src/core/web/lazy/**',
         ],
         'mail.assets_public': [
             'ai/static/src/discuss/core/common/**/*',

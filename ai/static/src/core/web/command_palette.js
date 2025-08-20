@@ -32,7 +32,9 @@ async function askAIProvide(env, options) {
             category: "app",
             Component: AskAICommand,
             props: {
-                imgUrl: imageUrl("ai.agent", agent.id, "image_128"),
+                imgUrl: agent
+                    ? imageUrl("ai.agent", agent.id, "image_128")
+                    : "/ai/static/description/icon.png",
             },
             name: _t("Ask AI"),
         },
