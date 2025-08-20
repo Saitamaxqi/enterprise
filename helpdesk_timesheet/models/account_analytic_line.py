@@ -94,7 +94,8 @@ class AccountAnalyticLine(models.Model):
     def write(self, vals):
         if vals.get("helpdesk_ticket_id"):
             ticket = self.env['helpdesk.ticket'].sudo().browse(vals["helpdesk_ticket_id"])
-            vals['account_id'] = ticket.analytic_account_id.id
+            if ticket.analytic_account_id:
+                vals['account_id'] = ticket.analytic_account_id.id
             if ticket.project_id:
                 vals['project_id'] = ticket.project_id.id
             if 'company_id' not in vals:
