@@ -66,7 +66,9 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
             document,
             "Only document linked to the activity should be linked to the task",
         )
-        activity._action_done(attachment_ids=[response_content["data"]["ir.attachment"][0]["id"]])
+        attachment_id = response_content["data"]["attachment_id"]
+        self.assertIn(attachment_id, [a["id"] for a in response_content["data"]["store_data"]["ir.attachment"]])
+        activity._action_done(attachment_ids=[attachment_id])
         # Ensure the document is not linked to the activity anymore after the action is done
         self.assertFalse(
             document.request_activity_id,

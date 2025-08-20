@@ -94,7 +94,7 @@ class WhatsAppWebhookCase(WhatsAppFullCase, MockIncomingWhatsApp):
                     'message_type': 'whatsapp_message'
                 }
             )
-            not_sent_message = self.env["mail.message"].browse(data["mail.message"][0]["id"])
+            not_sent_message = self.env["mail.message"].browse(data["store_data"]["mail.message"][0]["id"])
         self.assertWAMessage("error", fields_values={
             "failure_type": "blacklisted",
             "mail_message_id": not_sent_message,
@@ -131,7 +131,9 @@ class WhatsAppWebhookCase(WhatsAppFullCase, MockIncomingWhatsApp):
                     'message_type': 'whatsapp_message',
                 },
             )
-            sent_message = self.env["mail.message"].browse(data["mail.message"][0]["id"])
+            message_id = data["message_id"]
+            self.assertIn(message_id, [m["id"] for m in data["store_data"]["mail.message"]])
+            sent_message = self.env["mail.message"].browse(message_id)
         self.assertWAMessage("sent", fields_values={
             "failure_type": False,
             "mail_message_id": sent_message,
