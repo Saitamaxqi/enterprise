@@ -81,7 +81,7 @@ export class SelectAddDocumentCreateDialog extends SelectCreateDialog {
             const shareLinks = response
                 .map(({ display_name, access_url }) => `${display_name}: ${access_url}`)
                 .join("\n");
-            this.props.chatterParams.composer.text += `\n${shareLinks}`;
+            this.props.chatterParams.composer.composerText += `\n${shareLinks}`;
         }
         this.notification.add(_t("Link(s) pasted!"), { type: "success" });
         this.props.close();
@@ -108,8 +108,7 @@ export class SelectAddDocumentCreateDialog extends SelectCreateDialog {
             this.props.close();
             return;
         }
-        const thread =
-            this.props.chatterParams?.thread || this.addToThread(this.model, this.resId);
+        const thread = this.props.chatterParams?.thread || this.addToThread(this.model, this.resId);
         const composer = this.props.chatterParams?.composer || thread.composer;
         const attachmentStore = this.store["ir.attachment"];
 
