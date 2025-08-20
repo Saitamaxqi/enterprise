@@ -2124,6 +2124,35 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
             self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_21_pay')
 
+    def test_cfdi_rounding_22(self):
+        today = self.frozen_today
+        today_minus_1 = self.frozen_today - relativedelta(days=1)
+        usd = self.setup_other_currency('USD', rates=[
+            (today_minus_1, 0.049216958195),
+            (today, 0.053418803419),
+        ])
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                currency_id=usd.id,
+                date=today_minus_1,
+                invoice_date=today_minus_1,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 91,
+                        'quantity': 64,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_22_inv')
+
+            payment = self._create_payment(invoice, payment_date=today)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_22_pay')
+
     def test_partial_payment_1(self):
         date1 = self.frozen_today - relativedelta(days=2)
         date2 = self.frozen_today - relativedelta(days=1)

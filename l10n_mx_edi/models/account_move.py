@@ -1213,7 +1213,7 @@ class AccountMove(models.Model):
             def calculate_rate(invoice_amount, payment_amount):
                 if not payment_amount:
                     return 0.0
-                return abs(invoice_amount / payment_amount)
+                return float_round(abs(invoice_amount / payment_amount), 10)
 
             if invoice.currency_id == self.currency_id:
                 # Same currency.
@@ -1240,7 +1240,6 @@ class AccountMove(models.Model):
                 'objeto_imp': objeto_imp,
                 'id_documento': invoice.l10n_mx_edi_cfdi_uuid,
                 'equivalencia': computed_rate,
-                'inv_rate': computed_rate,
                 'num_parcialidad': invoice_values['number_of_payments'],
                 'imp_pagado': invoice_values['reconciled_amount'],
                 'imp_saldo_ant': invoice_values['amount_residual_before'],
@@ -1308,7 +1307,7 @@ class AccountMove(models.Model):
         local_traslados_values_map = defaultdict(lambda: {'base': 0.0, 'importe': 0.0})
         pay_rate = cfdi_values['tipo_cambio'] or 1.0
         for cfdi_inv_values in invoice_values_list:
-            inv_rate = cfdi_inv_values.pop('inv_rate', False) or 1.0
+            inv_rate = cfdi_inv_values['equivalencia'] or 1.0
             to_mxn_rate = pay_rate / inv_rate
             for result_dict, key in (
                 (withholding_values_map, 'retenciones_list'),
