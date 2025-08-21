@@ -1274,6 +1274,28 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': between_rule.id},
         ], reconciled_amls=False)
 
+    def test_create_multiple_reco_model_with_same_account(self):
+        account_a = self.env['account.account'].create({
+            'name': "Custom Account A",
+            'code': "010101",
+            'account_type': "asset_current",
+        })
+        st_line_1 = self._create_st_line(amount=100, payment_ref='This is a test')
+        st_line_2 = self._create_st_line(amount=100, payment_ref='This is a test')
+        st_line_3 = self._create_st_line(amount=1000, payment_ref='This is a test')
+        st_line_1.set_account_bank_statement_line(st_line_1.line_ids[-1].id, account_a.id)
+        st_line_2.set_account_bank_statement_line(st_line_2.line_ids[-1].id, account_a.id)
+        # Check that a reco model has been created with the right name
+        self.assertEqual(st_line_3.line_ids[-1].reconcile_model_id.name, "010101 Custom Account A")
+
+        st_line_4 = self._create_st_line(amount=100, payment_ref='Rent bla bla bla')
+        st_line_5 = self._create_st_line(amount=100, payment_ref='Rent bla bla bla')
+        st_line_6 = self._create_st_line(amount=100, payment_ref='Rent bla bla bla')
+        st_line_4.set_account_bank_statement_line(st_line_4.line_ids[-1].id, account_a.id)
+        st_line_5.set_account_bank_statement_line(st_line_5.line_ids[-1].id, account_a.id)
+        # Check that a reco model has been created with the right name
+        self.assertEqual(st_line_6.line_ids[-1].reconcile_model_id.name, "010101 Custom Account A (1)")
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes
