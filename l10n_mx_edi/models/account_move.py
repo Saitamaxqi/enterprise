@@ -474,7 +474,7 @@ class AccountMove(models.Model):
             self.env['l10n_mx_edi.document']._add_document_origin_cfdi_values(cfdi_values, move.l10n_mx_edi_cfdi_origin)
             relationado_data = cfdi_values['cfdi_relationado_data']
             if '01' in relationado_data or '03' in relationado_data:
-                origin_uuids.update(relationado_data.get('01', []) + relationado_data['03', []])
+                origin_uuids.update(relationado_data.get('01', []) + relationado_data.get('03', []))
         if origin_uuids:
             return self.env['account.move'].search([('l10n_mx_edi_cfdi_uuid', 'in', list(origin_uuids))])
         return self.env['account.move']

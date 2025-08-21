@@ -27,3 +27,10 @@ class TestCFDIAccountMove(TestMxEdiCommon):
             'content': invoice_with_cfdi.l10n_mx_edi_cfdi_attachment_id.raw,
         })
         self.assertFalse(invoice_without_cfdi._get_invoice_legal_documents('cfdi'))
+
+    def test_cfdi_origin(self):
+        """ Test that the l10n_mx_edi_cfdi_origin field can be set correctly. """
+        invoice = self._create_invoice(move_type='out_refund')
+        invoice.l10n_mx_edi_cfdi_origin = '01|E19C50D2-1292-5817-BDDE-2666967C7471'
+        invoice._l10n_mx_edi_get_refund_original_invoices()
+        self.assertEqual(invoice.l10n_mx_edi_cfdi_origin, '01|E19C50D2-1292-5817-BDDE-2666967C7471')
