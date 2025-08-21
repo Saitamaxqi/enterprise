@@ -372,7 +372,8 @@ class GoogleReserveController(Controller):
                 if not calendar_event.with_context(
                     ignore_event_ids=calendar_event.ids
                 ).appointment_type_id._check_appointment_is_valid_slot(
-                    staff_user=calendar_event.partner_id.user_ids[0] if calendar_event.partner_id.user_ids else False,
+                    staff_user=calendar_event.partner_id.user_ids[0]
+                        if not resources_booking and calendar_event.partner_id.user_ids else False,
                     resources=calendar_event.appointment_resource_ids,
                     asked_capacity=calendar_event.total_capacity_reserved,
                     timezone='UTC',
@@ -382,11 +383,11 @@ class GoogleReserveController(Controller):
                     if resources_booking and not modifying_party_size:
                         # the same resources are not available with the new dates
                         # -> force re-computing party size to try with new resources
-                        booking_info['slot'] = {
+                        booking_info['slot'].update({
                             'resources': {
                                 'party_size': calendar_event.total_capacity_reserved
                             }
-                        }
+                        })
                         modifying_party_size = True
                     elif not resources_booking:
                         # staff user is not available -> we currently do not support trying to find
