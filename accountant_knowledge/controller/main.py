@@ -19,14 +19,8 @@ _logger = logging.getLogger(__name__)
 
 
 def convert_html_to_pdf(html, footer_right=False):
-    content = request.env['ir.actions.report']._run_wkhtmltopdf(
-        [html],
-        footer_right=footer_right,
-        report_ref=request.env.ref(
-            'accountant_knowledge.audit_report_blank_canvas',
-            raise_if_not_found=False
-        )
-    )
+    Report = request.env['ir.actions.report'].with_context(page_format='audit_report')
+    content = Report._run_wkhtmltopdf([html], footer_right=footer_right)
     return PdfFileReader(BytesIO(content))
 
 
@@ -99,7 +93,8 @@ def get_account_reports_pdfs(root):
         all_account_report_options.append(embedded_props.get('options', {}))
 
     AccountReport = request.env['account.report'].with_context(
-        exclude_page_footer=True)
+        exclude_page_footer=True,
+        page_format='audit_report')
     all_account_reports = AccountReport.browse({
         account_report_options['report_id']
             for account_report_options in all_account_report_options

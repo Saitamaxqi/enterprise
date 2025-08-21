@@ -13,7 +13,6 @@
         'views/audit_report_views.xml',
         'views/knowledge_article_views.xml',
         'views/menuitems.xml',
-        'data/ir_actions_report_data.xml',
         'data/ir_attachment_data.xml',
         'data/knowledge_article_template_category_data.xml',
         'data/knowledge_article_template_data.xml',
