@@ -1889,6 +1889,76 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         ])
         self.assertEqual(self.package.quant_ids.available_quantity, 2)
 
+    def test_put_packs_in_existing_pack(self):
+        """ Check we can put multiple packs into another pack by scanning an existing package
+        and that we can do that multiple times with no conflict."""
+        group_package = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'group_ids': [Command.link(group_package.id)]})
+        self.picking_type_out.restrict_scan_source_location = 'no'
+        # Create two package types.
+        mini_box, maxi_box = self.env['stock.package.type'].create([
+            {'name': 'Mini-Box', 'sequence_code': 'MNB-'},
+            {'name': 'Maxi-Box', 'sequence_code': 'MXB-'},
+        ])
+        # Create some packages: 4 mini-boxes and 2 maxi-boxes.
+        package_create_vals = []
+        for amount, package_type in [(4, mini_box), (2, maxi_box)]:
+            package_create_vals += ([{
+                'package_type_id': package_type.id,
+            } for __ in range(amount)])
+        packages = self.env['stock.package'].create(package_create_vals)
+        # Add quantities in stock, already packed in mini boxes.
+        for pack in packages:
+            if pack.package_type_id == maxi_box:
+                continue
+            self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 4, package_id=pack)
+        # Create and confirm a delivery to process in the Barcode app.
+        out_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'product_id': self.product1.id,
+                'product_uom_qty': 16,
+            })],
+        })
+        out_picking.action_confirm()
+        url = self._get_client_action_url(out_picking.id)
+        self.start_tour(url, 'test_put_packs_in_existing_pack', login='admin')
+
+    def test_put_packs_in_new_pack(self):
+        """ Check we can put multiple packs into another pack by scanning a package type barcode
+        and that we can do that multiple times with no conflict.
+        Check we can do that for both receipt (scan product, then put in pack, then put packs in pack)
+        and for delivery (scan package then put packs in pack.)"""
+        group_package = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'group_ids': [Command.link(group_package.id)]})
+        self.picking_type_out.restrict_scan_source_location = 'no'
+        # Create two package types.
+        package_types = self.env['stock.package.type'].create([
+            {'name': 'Mini-Box', 'barcode': 'minibox', 'sequence_code': 'MNB-'},
+            {'name': 'Maxi-Box', 'barcode': 'maxibox', 'sequence_code': 'MXB-'},
+        ])
+        # Create 4 mini-boxes and add quantities in stock, already packed in mini boxes.
+        packages = self.env['stock.package'].create([
+            {'package_type_id': package_types[0].id} for __ in range(4)
+        ])
+        for pack in packages:
+            self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 4, package_id=pack)
+        # Create and confirm a delivery to process in the Barcode app.
+        out_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'product_id': self.product1.id,
+                'product_uom_qty': 16,
+            })],
+        })
+        out_picking.name = 'WH/OUT/TEST/001'
+        out_picking.action_confirm()
+        self.start_tour('/odoo/barcode', 'test_put_packs_in_new_pack', login='admin')
+
     def test_highlight_packs(self):
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_tracking_lot').id)]})
 

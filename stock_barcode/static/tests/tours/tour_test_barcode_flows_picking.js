@@ -4447,6 +4447,160 @@ registry.category("web_tour.tours").add("test_put_in_pack_new_lines", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_put_packs_in_existing_pack", {
+    steps: () => [
+        // Scan first two lines' package.
+        { trigger: ".o_barcode_line", run: "scan MNB-0000001" },
+        {
+            trigger: ".o_barcode_line:first-child.o_selected.o_line_completed",
+            run: "scan MNB-0000002",
+        },
+        // Scan an empty package to pack two previous scanned line together.
+        {
+            trigger: ".o_barcode_line:nth-child(2).o_selected.o_line_completed",
+            run: "scan MXB-0000001",
+        },
+        {
+            trigger: ".o_barcode_line:first-child:not(.o_selected.o_line_completed)",
+            run: "scan MNB-0000003",
+        },
+        {
+            trigger: ".o_barcode_line:first-child.o_selected.o_line_completed",
+            run: "scan MNB-0000004",
+        },
+        {
+            trigger: ".o_barcode_line:nth-child(2).o_selected.o_line_completed",
+            run: "scan MXB-0000002",
+        },
+        {
+            trigger: "[name='package']:contains('MXB-0000002')",
+            run: () => {
+                helper.assertLineResultPackage(0, "MXB-0000001 > MNB-0000001");
+                helper.assertLineResultPackage(1, "MXB-0000001 > MNB-0000002");
+                helper.assertLineResultPackage(2, "MXB-0000002 > MNB-0000003");
+                helper.assertLineResultPackage(3, "MXB-0000002 > MNB-0000004");
+            },
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("test_put_packs_in_new_pack", {
+    steps: () => [
+        // RECEIPT PART
+        // Create a new receipt.
+        { trigger: ".o_stock_barcode_main_menu", run: "scan WHIN" },
+        // Scan some products and put them into two different packs by scanning a package type.
+        { trigger: ".o_barcode_client_action", run: "scan product1" },
+        { trigger: ".o_barcode_line", run: "scan product2" },
+        { trigger: ".o_barcode_line", run: "scan minibox" },
+        {
+            trigger: ".o_barcode_line.o_selected .result-package",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineResultPackage(0, "MNB-0000005");
+                helper.assertLineProduct(1, "product2");
+                helper.assertLineResultPackage(1, "MNB-0000005");
+            },
+        },
+        { trigger: ".o_barcode_client_action", run: "scan product1" },
+        { trigger: ".o_barcode_line", run: "scan product2" },
+        { trigger: ".o_barcode_line:nth-child(4)", run: "scan minibox" },
+        {
+            trigger: ".o_barcode_line.o_selected .result-package",
+            run: () => {
+                helper.assertLinesCount(4);
+                helper.assertLineProduct(2, "product1");
+                helper.assertLineResultPackage(2, "MNB-0000006");
+                helper.assertLineProduct(3, "product2");
+                helper.assertLineResultPackage(3, "MNB-0000006");
+            },
+        },
+        // Scan another package type to pack created packages.
+        { trigger: ".o_barcode_client_action", run: "scan maxibox" },
+        {
+            trigger: ".o_barcode_line.o_selected .result-package:contains('MXB')",
+            run: () => {
+                helper.assertLinesCount(4);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineResultPackage(0, "MXB-0000001 > MNB-0000005");
+                helper.assertLineProduct(1, "product2");
+                helper.assertLineResultPackage(1, "MXB-0000001 > MNB-0000005");
+                helper.assertLineProduct(2, "product1");
+                helper.assertLineResultPackage(2, "MXB-0000001 > MNB-0000006");
+                helper.assertLineProduct(3, "product2");
+                helper.assertLineResultPackage(3, "MXB-0000001 > MNB-0000006");
+            },
+        },
+        // Repeat same process and check previously packed packages are still in their previous package.
+        { trigger: ".o_barcode_client_action", run: "scan product1" },
+        { trigger: ".o_barcode_line", run: "scan product2" },
+        { trigger: ".o_barcode_line:nth-child(6)", run: "scan minibox" },
+        { trigger: ".o_barcode_line.o_selected .result-package", run: "scan product1" },
+        { trigger: ".o_barcode_line", run: "scan product2" },
+        { trigger: ".o_barcode_line:nth-child(8)", run: "scan minibox" },
+        { trigger: ".o_barcode_line.o_selected .result-package", run: "scan maxibox" },
+        {
+            trigger: ".o_barcode_line.o_selected .result-package:contains('MXB')",
+            run: () => {
+                helper.assertLinesCount(8);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineResultPackage(0, "MXB-0000001 > MNB-0000005");
+                helper.assertLineProduct(1, "product2");
+                helper.assertLineResultPackage(1, "MXB-0000001 > MNB-0000005");
+                helper.assertLineProduct(2, "product1");
+                helper.assertLineResultPackage(2, "MXB-0000001 > MNB-0000006");
+                helper.assertLineProduct(3, "product2");
+                helper.assertLineResultPackage(3, "MXB-0000001 > MNB-0000006");
+                helper.assertLineProduct(4, "product1");
+                helper.assertLineResultPackage(4, "MXB-0000002 > MNB-0000007");
+                helper.assertLineProduct(5, "product2");
+                helper.assertLineResultPackage(5, "MXB-0000002 > MNB-0000007");
+                helper.assertLineProduct(6, "product1");
+                helper.assertLineResultPackage(6, "MXB-0000002 > MNB-0000008");
+                helper.assertLineProduct(7, "product2");
+                helper.assertLineResultPackage(7, "MXB-0000002 > MNB-0000008");
+            },
+        },
+        ...stepUtils.validateBarcodeOperation(),
+
+        // DELIVERY PART
+        { trigger: ".o_stock_barcode_main_menu", run: "scan WH/OUT/TEST/001" },
+        // Scan first two lines' package.
+        { trigger: ".o_barcode_line", run: "scan MNB-0000001" },
+        {
+            trigger: ".o_barcode_line:first-child.o_selected.o_line_completed",
+            run: "scan MNB-0000002",
+        },
+        // Scan a package type to pack two previous scanned line together in a new package of this type.
+        {
+            trigger: ".o_barcode_line:nth-child(2).o_selected.o_line_completed",
+            run: "scan maxibox",
+        },
+        {
+            trigger: ".o_barcode_line:first-child:not(.o_selected.o_line_completed)",
+            run: "scan MNB-0000003",
+        },
+        {
+            trigger: ".o_barcode_line:first-child.o_selected.o_line_completed",
+            run: "scan MNB-0000004",
+        },
+        {
+            trigger: ".o_barcode_line:nth-child(2).o_selected.o_line_completed",
+            run: "scan maxibox",
+        },
+        {
+            trigger: "[name='package']:contains('MXB-0000004')",
+            run: () => {
+                helper.assertLineResultPackage(0, "MXB-0000003 > MNB-0000001");
+                helper.assertLineResultPackage(1, "MXB-0000003 > MNB-0000002");
+                helper.assertLineResultPackage(2, "MXB-0000004 > MNB-0000003");
+                helper.assertLineResultPackage(3, "MXB-0000004 > MNB-0000004");
+            },
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_picking_owner_scan_package", {
     steps: () => [
         {
