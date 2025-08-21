@@ -30,22 +30,13 @@
                             <field name="subject" placeholder="Subject..."/>
                         </group>
                         <div>
-                            <field name="body" class="oe-bordered-editor" widget="html_mail" placeholder="Optional message"/>
+                            <field name="user_body" placeholder="Optional comment..." class="note-wizard" nolabel="1"/>
                         </div>
-                        <group>
-                            <group>
-                                <field name="attachment_ids" widget="many2many_binary"/>
-                                <field name="template_id" string="Load template"/>
-                            </group>
-                        </group>
                     </sheet>
 
                     <footer>
                         <button string="Send" name="action_send" type="object" class="btn-primary" data-hotkey="q"/>
                         <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
-                        <button icon="fa-lg fa-save" type="object"
-                                name="action_save_as_template" string="Save as new template"
-                                class="float-end btn-secondary" help="Save as a new template" data-hotkey="w"/>
                     </footer>
                 </form>
             </field>

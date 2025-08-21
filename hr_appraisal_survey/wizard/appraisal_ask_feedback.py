@@ -15,14 +15,6 @@ class AppraisalAskFeedback(models.TransientModel):
     _inherit = ['mail.composer.mixin']
     _description = "Ask Feedback for Appraisal"
 
-    @api.model
-    def default_get(self, fields):
-        result = super(AppraisalAskFeedback, self).default_get(fields)
-        appraisal = self.env['hr.appraisal'].browse(result.get('appraisal_id'))
-        if 'survey_template_id' in fields and appraisal and not result.get('survey_template_id'):
-            result['survey_template_id'] = appraisal.department_id.appraisal_survey_template_id.id or appraisal.company_id.appraisal_survey_template_id.id
-        return result
-
     def _default_appraisal_id(self):
         active_id = self.env.context.get('active_id', None)
         if active_id:
@@ -45,10 +37,13 @@ class AppraisalAskFeedback(models.TransientModel):
         'res.partner', string='Author', required=True,
         default=lambda self: self.env.user.partner_id.id,
     )
-    survey_template_id = fields.Many2one('survey.survey', required=True, domain="[('survey_type', '=', 'appraisal')]")
+    allowed_survey_template_ids = fields.Many2many('survey.survey', compute='_compute_allowed_survey_template_ids')
+    survey_template_id = fields.Many2one('survey.survey', required=True, compute='_compute_survey_template_id', store=True,
+                                         readonly=False, domain="[('id', 'in', allowed_survey_template_ids)]")
     employee_ids = fields.Many2many(
         'hr.employee', string="Recipients", required=True)
     deadline = fields.Date(string="Answer Deadline", required=True, compute='_compute_deadline', store=True, readonly=False)
+    user_body = fields.Html('User Contents')
 
     # Overrides of mail.composer.mixin
     @api.depends('survey_template_id')  # fake trigger otherwise not computed in new mode
@@ -73,6 +68,18 @@ class AppraisalAskFeedback(models.TransientModel):
             if len(langs) == 1:
                 wizard = wizard.with_context(lang=langs.pop())
             super(AppraisalAskFeedback, wizard)._compute_body()
+
+    @api.depends('appraisal_id')
+    def _compute_allowed_survey_template_ids(self):
+        all_appraisal_templates = self.env['survey.survey'].search([('survey_type', '=', 'appraisal')])
+        for wizard in self:
+            wizard.allowed_survey_template_ids = wizard.appraisal_id.appraisal_template_id.survey_template_ids or all_appraisal_templates
+
+    @api.depends('allowed_survey_template_ids')
+    def _compute_survey_template_id(self):
+        for wizard in self:
+            if not wizard.survey_template_id:
+                wizard.survey_template_id = wizard.allowed_survey_template_ids[:1]
 
     @api.depends('appraisal_id.date_close')
     def _compute_deadline(self):
@@ -142,6 +149,7 @@ class AppraisalAskFeedback(models.TransientModel):
             'logged_user': self.env.user.name,
             'employee': self.employee_id.name,
             'deadline': self.deadline,
+            'user_body': self.user_body,
         }
         body = self.with_context(**ctx)._render_field('body', answer.ids)[answer.id]
         mail_values = {

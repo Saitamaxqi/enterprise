@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
 
@@ -7,7 +7,6 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     appraisal_plan = fields.Boolean(related='company_id.appraisal_plan', readonly=False)
-    appraisal_template_id = fields.Many2one(related='company_id.appraisal_template_id', readonly=False, check_company=True)
     assessment_note_ids = fields.One2many(
         related='company_id.assessment_note_ids', string="Evaluation Scale", readonly=False)
 

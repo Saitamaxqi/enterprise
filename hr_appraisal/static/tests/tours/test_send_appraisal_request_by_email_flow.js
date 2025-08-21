@@ -14,6 +14,11 @@ registry.category("web_tour.tours").add("test_send_appraisal_request_by_email_fl
             run: "click",
         },
         {
+            trigger: "button[name='action_confirm']",
+            content: "Confirm the appraisal",
+            run: "click",
+        },
+        {
             trigger: "button[name='action_send_appraisal_request']",
             content: "Send the appraisal request by email",
             run: "click",

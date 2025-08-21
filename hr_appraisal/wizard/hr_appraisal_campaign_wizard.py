@@ -1,6 +1,6 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.fields import Domain
 
 
@@ -30,7 +30,8 @@ class HrAppraisalCampaignWizard(models.TransientModel):
         help="'Employee's Manager': Each appraisal will be conducted by the direct manager of the employee"
         "\n'Specific Person': All appraisals will be conducted by the specified employees")
     manager_ids = fields.Many2many("hr.employee", string="Managers", relation="managers")
-    appraisal_template_id = fields.Many2one('hr.appraisal.template', string="Appraisal Template", compute="_compute_appraisal_template", readonly=False, store=True, required=True)
+    appraisal_template_id = fields.Many2one('hr.appraisal.template', string="Appraisal Template", required=True,
+        domain=[('company_id', 'in', [company_id, False])])
     appraisal_date = fields.Date(default=fields.Date.today() + relativedelta(months=1), required=True)
     warning = fields.Char(compute="_compute_warning")
 
@@ -41,18 +42,6 @@ class HrAppraisalCampaignWizard(models.TransientModel):
             domain &= Domain([('id', 'child_of', user.employee_id.id)])
         return domain
 
-    @api.depends('mode', 'company_id', 'department_id')
-    def _compute_appraisal_template(self):
-        for appraisal_campaign in self:
-            if appraisal_campaign.mode == 'company' and appraisal_campaign.company_id:
-                appraisal_campaign.appraisal_template_id = appraisal_campaign.company_id.appraisal_template_id
-
-            elif appraisal_campaign.mode == 'department' and appraisal_campaign.department_id:
-                appraisal_campaign.appraisal_template_id = appraisal_campaign.department_id.custom_appraisal_template_id
-
-            if not appraisal_campaign.appraisal_template_id:
-                appraisal_campaign.appraisal_template_id = self.env.company.appraisal_template_id
-
     @api.depends('mode', 'manager', 'manager_ids', 'employee_ids', 'company_id', 'department_id', 'category_id', 'appraisal_date')
     def _compute_warning(self):
         warnings = []
@@ -61,23 +50,23 @@ class HrAppraisalCampaignWizard(models.TransientModel):
         if not employees:
 
             if self.mode == 'company' and self.company_id:
-                warnings.append(_("The company %(company_name)s doesn't have employees", company_name=self.company_id.name))
+                warnings.append(self.env._("The company %(company_name)s doesn't have employees", company_name=self.company_id.name))
 
             elif self.mode == 'department' and self.department_id:
-                warnings.append(_("The department %(department_name)s doesn't have employees", department_name=self.department_id.name))
+                warnings.append(self.env._("The department %(department_name)s doesn't have employees", department_name=self.department_id.name))
 
             elif self.mode == 'category' and self.category_id:
-                warnings.append(_("No employees have the tag %(category_name)s", category_name=self.category_id.name))
+                warnings.append(self.env._("No employees have the tag %(category_name)s", category_name=self.category_id.name))
 
         if self.manager == 'employee_manager':
             employees_without_managers = employees.filtered(lambda emp: not emp.parent_id or emp.parent_id == emp._origin)
             if employees_without_managers:
-                warning_message = _("Appraisals won't be created for the following employees because they don't have a manager: %(employees)s", employees=', '.join(employees_without_managers.mapped('name')))
+                warning_message = self.env._("Appraisals won't be created for the following employees because they don't have a manager: %(employees)s", employees=', '.join(employees_without_managers.mapped('name')))
                 warnings.append(warning_message)
 
         similar_appraisals = self._get_appraisals_with_same_date_and_managers(employees)
         if similar_appraisals:
-            warning_message = _("The following employees already have appraisals on %(appraisal_date)s: %(employees)s. The existing appraisals will be used instead of creating new ones.", appraisal_date=self.appraisal_date, employees=', '.join(similar_appraisals.mapped('employee_id.name')))
+            warning_message = self.env._("The following employees already have appraisals on %(appraisal_date)s: %(employees)s. The existing appraisals will be used instead of creating new ones.", appraisal_date=self.appraisal_date, employees=', '.join(similar_appraisals.mapped('employee_id.name')))
             warnings.append(warning_message)
 
         self.warning = '\n'.join(['- ' + warning for warning in warnings])
@@ -108,7 +97,7 @@ class HrAppraisalCampaignWizard(models.TransientModel):
 
     def _get_employees_from_mode(self):
         if self.mode == 'employee':
-            employees = self.employee_ids or self.env['hr.employee'].search([('company_id', 'in', self.env.companies)])
+            employees = self.employee_ids or self.env['hr.employee'].search([('company_id', 'in', self.env.companies.ids)])
         elif self.mode == 'company':
             employees = self.env['hr.employee'].search([('company_id', '=', self.company_id.id)])
         elif self.mode == 'category':

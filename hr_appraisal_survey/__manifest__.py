@@ -14,9 +14,9 @@ This module adds an integration with Survey to ask feedbacks to any employee, ba
     """,
     "data": [
         'wizard/appraisal_ask_feedback_views.xml',
+        'wizard/appraisal_select_survey_views.xml',
         'views/hr_appraisal_views.xml',
-        'views/hr_department_views.xml',
-        'views/res_config_settings_views.xml',
+        'views/hr_appraisal_template_views.xml',
         'views/survey_user_input_views.xml',
         'views/survey_survey_views.xml',
         'views/survey_templates_statistics.xml',
@@ -33,5 +33,4 @@ This module adds an integration with Survey to ask feedbacks to any employee, ba
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'auto_install': True,
-    'post_init_hook': '_setup_survey_template',
 }

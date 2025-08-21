@@ -29,7 +29,6 @@ class TestHrAppraisal(TransactionCase):
             name="Michael Hawkins",
             user_id=cls.user.id,
             create_date=date.today() - relativedelta(months=3),
-            last_appraisal_date=date.today() - relativedelta(months=3),
             company_id=cls.main_company.id,
         ))
 
@@ -37,7 +36,6 @@ class TestHrAppraisal(TransactionCase):
             user_id=cls.user.id,
             company_id=cls.other_company.id,
             create_date=date.today() - relativedelta(months=6, days=6),
-            last_appraisal_date=date.today() - relativedelta(months=6, days=6),
         ))
 
     def test_hr_appraisal(self):

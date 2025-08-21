@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <list create="0">
                 <header>
-                    <button string="All answers" name="action_open_all_survey_inputs" icon="fa-external-link" type="object"/>
+                    <button string="See results" name="action_open_appraisal_survey_results" class="btn-primary" type="object" display="always"/>
                     <button string="Resend all" name="action_ask_feedback" icon="fa-repeat" type="object"/>
                     <button string="Ask Feedback" name="%(hr_appraisal_survey.appraisal_ask_feedback_action)d" type="action" display="always"/>
                 </header>

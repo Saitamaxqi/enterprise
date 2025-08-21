@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from werkzeug.urls import url_encode
 
@@ -30,7 +30,8 @@ class SurveySurvey(models.Model):
         super()._compute_allowed_survey_types()
         if self.env.user.has_group('hr_appraisal.group_hr_appraisal_user') or \
                 self.env.user.has_group('survey.group_survey_user'):
-            self.allowed_survey_types = (self.allowed_survey_types or []) + ['appraisal']
+            for survey in self:
+                survey.allowed_survey_types = (survey.allowed_survey_types or []) + ['appraisal']
 
     @api.depends('survey_type', 'user_input_ids', 'user_input_ids.appraisal_id', 'user_input_ids.appraisal_id.manager_ids')
     def _compute_appraisal_manager_user_ids(self):
@@ -42,7 +43,7 @@ class SurveySurvey(models.Model):
     def action_open_all_survey_inputs(self):
         return {
             'type': 'ir.actions.act_url',
-            'name': _("Survey Feedback"),
+            'name': self.env._("Survey Feedback"),
             'target': 'self',
             'url': '/appraisal/%s/results/' % (self.id)
         }
@@ -81,7 +82,7 @@ class SurveyUser_Input(models.Model):
     def action_open_survey_inputs(self):
         self.ensure_one()
         return {
-            'name': _("Survey Feedback"),
+            'name': self.env._("Survey Feedback"),
             'type': 'ir.actions.act_url',
             'target': 'new',
             'url': '/survey/print/%s?%s' %
@@ -91,17 +92,36 @@ class SurveyUser_Input(models.Model):
     def action_open_all_survey_inputs(self):
         return {
             'type': 'ir.actions.act_url',
-            'name': _("Survey Feedback"),
+            'name': self.env._("Survey Feedback"),
             'target': 'new',
             'url': '/survey/results/%s?%s' %
                    (self.survey_id[0].id, url_encode({"appraisal_id": self.appraisal_id.id}))
         }
 
+    def action_open_appraisal_survey_results(self):
+        survey_input_ids = self or self.search([('appraisal_id', '=', self.env.context.get('active_id'))])
+        survey_count = len(survey_input_ids.survey_id)
+        if survey_count == 0:
+            raise ValidationError(self.env._("No surveys found for this appraisal."))
+        if survey_count == 1:
+            return survey_input_ids.action_open_all_survey_inputs()
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'appraisal.select.survey',
+            'target': 'new',
+            'name': self.env._('Choose Survey'),
+            'context': {
+                'default_survey_input_ids': survey_input_ids.ids,
+                'dialog_size': 'medium',
+            }
+        }
+
     def action_ask_feedback(self):
         if len(self.appraisal_id) > 1:
-            raise ValidationError(self.env._("You can't selected feedback linked to multiples appraisals."))
+            raise ValidationError(self.env._("You can't ask feedback for multiple appraisals at once."))
         if len(self.survey_id) > 1:
-            raise ValidationError(self.env._("You can't selected multiple feedback template."))
+            raise ValidationError(self.env._("You can't select multiple feedback templates."))
         appraisal_id = self.appraisal_id
         set_emails = set(self.partner_id.mapped('email'))
         if appraisal_id.employee_feedback_ids:
@@ -115,7 +135,7 @@ class SurveyUser_Input(models.Model):
             'view_mode': 'form',
             'res_model': 'appraisal.ask.feedback',
             'target': 'new',
-            'name': 'Ask Feedback',
+            'name': self.env._('Ask Feedback'),
             'context': {
                 'default_appraisal_id': appraisal_id.id,
                 'default_employee_ids': employee_ids,

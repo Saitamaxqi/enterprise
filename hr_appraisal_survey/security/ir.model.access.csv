@@ -1,5 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_appraisal_ask_feedback_user,appraisal.ask.feedback.user,model_appraisal_ask_feedback,base.group_user,1,1,1,0
+access_appraisal_select_survey_user,appraisal.select.survey.user,model_appraisal_select_survey,base.group_user,1,1,1,0
 access_survey_survey_user,survey.survey.user,model_survey_survey,base.group_user,1,0,0,0
 access_survey_user_input_user,survey.user_input.user,model_survey_user_input,base.group_user,1,0,0,0
 access_survey_user_input_appraisal_manager,survey.user_input.appraisal.manager,model_survey_user_input,hr_appraisal.group_hr_appraisal_manager,1,1,1,1

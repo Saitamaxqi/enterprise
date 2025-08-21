@@ -16,7 +16,7 @@
 
                 <xpath expr="//div[hasclass('o_kanban_manage_reports')]" position="inside">
                     <div role="menuitem">
-                        <a class="dropdown-item" name="%(action_appraisal_report_department)d" type="action">
+                        <a class="dropdown-item" name="%(open_view_hr_appraisal_graph_department)d" type="action">
                             Appraisals
                         </a>
                     </div>
@@ -32,10 +32,6 @@
         <field name="arch" type="xml">
             <xpath expr="/form" position="attributes">
                 <attribute name="class">o_appraisal_form</attribute>
-            </xpath>
-
-            <xpath expr="//field[@name='color']" position="after">
-                <field name="custom_appraisal_template_id"/>
             </xpath>
         </field>
     </record>

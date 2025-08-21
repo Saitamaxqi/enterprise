@@ -15,6 +15,9 @@
             <button name="action_archive" position="attributes">
                 <attribute name="invisible">True</attribute>
             </button>
+            <button name="action_result_survey" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </button>
             <xpath expr="//group[@name='scoring']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
@@ -33,6 +36,9 @@
             <xpath expr="//div[@name='certification']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
+            <xpath expr="//group[field[@name='lang_ids']]" position="attributes">
+                <attribute name="class">ps-md-0</attribute>
+            </xpath>
         </field>
     </record>
 
@@ -46,6 +52,9 @@
                 <attribute name="invisible">True</attribute>
             </button>
             <button name="action_start_session" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </button>
+            <button name="action_result_survey" position="attributes">
                 <attribute name="invisible">True</attribute>
             </button>
         </field>

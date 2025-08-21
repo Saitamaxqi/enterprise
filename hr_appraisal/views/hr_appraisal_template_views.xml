@@ -6,7 +6,7 @@
         <field name="arch" type="xml">
             <form string="Appraisal Template" class="o_appraisal_form">
                 <sheet>
-                    <label for="description" string="Description"/>
+                    <label for="description"/>
                     <div class="oe_title mw-100">
                         <h2>
                             <field name="description" placeholder="e.g. Annual Appraisal" required="True"/>
@@ -14,12 +14,13 @@
                     </div>
                     <group>
                         <group>
-                            <field name="company_id" groups="base.group_multi_company" placeholder="Visible to all"/>
+                            <field name="company_id" groups="base.group_multi_company" placeholder="Visible to all" options="{'no_create': True}"/>
+                            <field name="department_ids" widget="many2many_tags" placeholder="Visible to all" options="{'no_create': True, 'color_field': 'color'}"/>
                         </group>
                     </group>
                     <div class="o_appraisal_both_feedback d-flex flex-column flex-md-row flex-wrap align-items-stretch">
                         <div class="o_appraisal_feedback col-md-6 ps-0 pt-1">
-                            <label for="appraisal_employee_feedback_template" string="Employee Feedback"/>
+                            <label for="appraisal_employee_feedback_template" string="Employee Feedback" class="fs-2"/>
                             <div class="row mt-2">
                                 <div class="o_appraisal_input container border o_appraisal_height">
                                     <field name="appraisal_employee_feedback_template" class="o_appraisal_template"
@@ -28,8 +29,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="o_appraisal_feedback col-md-6 pe-0 pt-1">
-                            <label for="appraisal_manager_feedback_template" string="Manager Feedback"/>
+                        <div class="o_appraisal_feedback col-md-6 ps-3 pe-0 pt-1">
+                            <label for="appraisal_manager_feedback_template" string="Manager Feedback" class="fs-2"/>
                             <div class="row mt-2">
                                 <div class="o_appraisal_input position-relative o_appraisal_manager_feedback container border o_appraisal_height">
                                     <field name="appraisal_manager_feedback_template" class="o_appraisal_template"
@@ -49,7 +50,9 @@
         <field name="model">hr.appraisal.template</field>
         <field name="arch" type="xml">
             <list string="Appraisal Template">
+                <field name="sequence" widget="handle"/>
                 <field name="description"/>
+                <field name="department_ids" widget="many2many_tags" optional="show" options="{'color_field': 'color'}"/>
                 <field name="company_id" groups="base.group_multi_company"/>
             </list>
         </field>

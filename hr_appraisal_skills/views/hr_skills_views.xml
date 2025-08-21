@@ -6,12 +6,12 @@
         <field name="inherit_id" ref="hr_appraisal.view_hr_appraisal_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='appraisal']" position="after">
-                <page string="Skills" name="page_skills" invisible="state == '1_new'">
+                <page string="Skills" name="page_skills" invisible="state == '1_new' or (state == '2_pending' and uid == employee_user_id)">
                     <div class="o_hr_skills_group o_group_skills col-lg-12 ps-0 pe-0 position-relative w-100">
                         <field mode="list" nolabel="1" name="current_appraisal_skill_ids"
                                 widget="appraisal_skills_one2many"
                                 context="{'appraisal_state': state}"
-                                readonly="state != '2_pending' or ('uid' not in manager_user_ids and not is_manager)"
+                                readonly="state != '2_pending' or not is_manager"
                                 class="o_appraisal_skill o_field_appraisal_skills_one2many">
                             <list editable="bottom">
                                 <field name="skill_type_id" optional="hidden"/>

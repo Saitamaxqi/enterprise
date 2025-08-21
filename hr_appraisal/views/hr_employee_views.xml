@@ -36,24 +36,19 @@
                     invisible="not ongoing_appraisal_count or not active"/>
             </xpath>
             <button name="action_open_versions" position="before">
-                <field name="appraisal_count" invisible="1"/>
                 <field name="ongoing_appraisal_count" invisible="1"/>
-                <field name="last_appraisal_id" invisible="1"/>
-                <field name="last_appraisal_state" invisible="1"/>
-                <button name="action_open_last_appraisal"
+                <button name="action_open_employee_appraisals"
                     class="oe_stat_button"
                     icon="fa-star-half-o"
-                    invisible="not last_appraisal_id"
-                    type="object">
+                    invisible="not appraisal_count"
+                    type="object"
+                    groups="hr.group_hr_user"
+                >
                     <div class="o_field_widget o_stat_info">
-                        <span class="o_stat_text" invisible="last_appraisal_state == '3_done'">
-                            Ongoing
-                        </span>
-                        <span class="o_stat_text" invisible="last_appraisal_state != '3_done'">
-                            Latest
-                        </span>
-                        <span class="o_stat_text">
-                            Appraisal
+                        <span class="o_stat_text"> <field name="appraisal_count" class="me-1"/>Appraisals</span>
+                        <span class="o_stat_value" invisible="not last_ongoing_appraisal_date">
+                            <field name="last_ongoing_appraisal_date" invisible="is_last_appraisal_late"/>
+                            <field name="last_ongoing_appraisal_date" class="text-danger" invisible="not is_last_appraisal_late"/>
                         </span>
                     </div>
                 </button>

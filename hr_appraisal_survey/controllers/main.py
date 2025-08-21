@@ -99,3 +99,9 @@ class AppraisalSurvey(Survey):
             'requestors': requestors,
         }
         return request.render('survey.survey_page_statistics', template_values)
+
+    @http.route('/survey/results/<model("survey.survey"):survey>', type='http')
+    def survey_report(self, survey, **post):
+        if post.get('appraisal_id'):
+            post['finished'] = 'true'
+        return super().survey_report(survey, **post)

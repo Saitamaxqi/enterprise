@@ -5,51 +5,38 @@
             <div class="container">
                 <div class="o_nocontent_help">
                     <div class="oe_view_nocontent_create">
-                        <p class="o_view_nocontent_smiling_face fw-bold fst-italic py-2" t-if="employeeNumber > 1 || !hasAppraisalRight">
-                            No Appraisals found!<br/>
-                            <span class="fw-normal">Keep track of how your employees are doing...</span><br/>
-                            <div class="justify-content-center p-2">
-                                <a
-                                    class="btn btn-primary"
-                                    type="object"
-                                    t-on-click="() => this.loadAppraisalCampaignWizard()">
-                                        Schedule Appraisals
-                                </a>
-                            </div>
-                        </p>
-                        <div t-else="" class="py-2">
-                            <div class="py-2">
-                                To create an appraisal, you need at least 2 employees
-                            </div>
-                            <div class="row justify-content-center scenario-div">
-                                <a
-                                    class="btn card rounded flex-row align-items-center w-auto gap-3"
-                                    type="object"
-                                    t-on-click="() => this.loadCreateEmployee()">
-                                    <img src="/hr/static/description/icon.png" width="50"/>
-                                        Create a new employee
-                                </a>
-                            </div>
-                        </div>
-                        <t t-if="hasAppraisalRight and !state.hasDemoData">
-                            <div class="d-flex gap-3 align-items-center or-separator py-2">
-                                <hr class="flex-grow-1"/>
-                                or
-                                <hr class="flex-grow-1"/>
-                            </div>
-                            <div class="px-2 py-2">
-                                <div class="pb-2">
-                                    Try the backend and reporting:
-                                </div>
-                                <div class="row justify-content-center">
-                                    <a class="btn btn-secondary d-block col-3"
-                                    type="object"
-                                    t-on-click="() => this.loadAppraisalScenario()">
-                                        Load sample data
+                        <div t-if="employeeNumber > 1 || !hasAppraisalRight">
+                            <h2 class="o_view_nocontent_smiling_face">
+                                No Appraisals found!
+                            </h2>
+                            <div t-if="hasAppraisalRight">
+                                <div>Keep track of how your employees are doing...</div>
+                                <div class="justify-content-center py-2">
+                                    <a class="btn btn-primary col-3" type="object"
+                                        t-on-click="() => this.loadAppraisalCampaignWizard()">
+                                            Schedule Appraisals
                                     </a>
                                 </div>
                             </div>
-                        </t>
+                        </div>
+                        <div t-else="" class="py-2">
+                            <h2 class="o_view_nocontent_smiling_face py-2">
+                                No employees to assess yet!
+                            </h2>
+                            <div t-if="!state.hasDemoData">
+                                Would you like to test with sample data or create your own employees?
+                            </div>
+                            <div class="row justify-content-center gap-3 py-4">
+                                <a t-if="!state.hasDemoData"  class="btn btn-primary col-3" type="object"
+                                    t-on-click="() => this.loadAppraisalScenario()">
+                                        Load sample data
+                                </a>
+                                <a class="btn btn-secondary col-3" type="object"
+                                    t-on-click="() => this.loadCreateEmployee()">
+                                        New Employee
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

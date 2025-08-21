@@ -47,7 +47,7 @@
         display: block;
         box-sizing: border-box;
         flex: 1;
-        padding: 32px 16px;
+        padding: 16px 8px;
         max-width: 100%;
         * {
             box-sizing: border-box;
@@ -60,7 +60,8 @@
             margin: 0;
         }
         .o_appraisal_input {
-            padding: 0 16px;
+            padding-left: 16px;
+            padding-right: 0;
         }
         .o_appraisal_input, .o_appraisal_input > * {
             max-width: 100%;
@@ -118,4 +119,8 @@
 
 .o_appraisal_radio_button .o_radio_item .o_form_label {
     font-weight: normal;
+}
+
+.note-wizard .note-editable {
+    min-height: 10rem;
 }

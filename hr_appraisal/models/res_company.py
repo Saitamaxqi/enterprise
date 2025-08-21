@@ -1,26 +1,19 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 
 
 class ResCompany(models.Model):
     _inherit = "res.company"
-
-    def _get_default_appraisal_template(self):
-        return self.env.ref('hr_appraisal.hr_appraisal_default_template', raise_if_not_found=False)
 
     def _get_default_appraisal_confirm_mail_template(self):
         return self.env.ref('hr_appraisal.mail_template_appraisal_confirm', raise_if_not_found=False)
 
     appraisal_plan = fields.Boolean(string='Automatically Generate Appraisals', default=True)
     assessment_note_ids = fields.One2many('hr.appraisal.note', 'company_id')
-    appraisal_template_id = fields.Many2one(
-        'hr.appraisal.template', default=_get_default_appraisal_template,
-        string="Appraisal Template", check_company=True)
     appraisal_confirm_mail_template = fields.Many2one(
         'mail.template', domain="[('model', '=', 'hr.appraisal')]",
         default=_get_default_appraisal_confirm_mail_template)
@@ -36,10 +29,10 @@ class ResCompany(models.Model):
     @api.model
     def _get_default_assessment_note_ids(self):
         return [
-            (0, 0, {'name': _('Needs improvement'), 'sequence': '1'}),
-            (0, 0, {'name': _('Meets expectations'), 'sequence': '2'}),
-            (0, 0, {'name': _('Exceeds expectations'), 'sequence': '3'}),
-            (0, 0, {'name': _('Strongly Exceed Expectations'), 'sequence': '4'}),
+            (0, 0, {'name': self.env._('Needs improvement'), 'sequence': '1'}),
+            (0, 0, {'name': self.env._('Meets expectations'), 'sequence': '2'}),
+            (0, 0, {'name': self.env._('Exceeds expectations'), 'sequence': '3'}),
+            (0, 0, {'name': self.env._('Strongly Exceed Expectations'), 'sequence': '4'}),
         ]
 
     @api.model_create_multi
@@ -81,7 +74,6 @@ class ResCompany(models.Model):
             for appraisal in appraisals:
                 appraisal.employee_id.sudo().write({
                     'last_appraisal_id': appraisal.id,
-                    'last_appraisal_date': current_date,
                 })
             appraisals._generate_activities()
 

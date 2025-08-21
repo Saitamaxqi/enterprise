@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
 
-from odoo import _, api, Command, fields, models, tools
+from odoo import api, Command, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import html_sanitize, is_html_empty
+from odoo.tools import format_date, html_sanitize, is_html_empty
 
 _logger = logging.getLogger(__name__)
 
@@ -37,13 +36,13 @@ class RequestAppraisal(models.TransientModel):
         employee = appraisal.employee_id
         managers = appraisal.manager_ids
         if self.env.user.employee_id in managers:
-            template = self.env.ref('hr_appraisal.mail_template_appraisal_request', raise_if_not_found=False)
+            template = self.env.ref('hr_appraisal.mail_template_appraisal_reminder', raise_if_not_found=False)
             recipients = self._get_recipients(employee)
         elif employee.user_id == self.env.user:
             template = self.env.ref('hr_appraisal.mail_template_appraisal_request_from_employee', raise_if_not_found=False)
             recipients = self._get_recipients(managers)
         else:
-            template = self.env.ref('hr_appraisal.mail_template_appraisal_request', raise_if_not_found=False)
+            template = self.env.ref('hr_appraisal.mail_template_appraisal_reminder', raise_if_not_found=False)
             recipients = self._get_recipients(employee | managers)
         return template, recipients
 
@@ -79,7 +78,7 @@ class RequestAppraisal(models.TransientModel):
             appraisal = appraisal_request.appraisal_id
             expected_template, _recipients = appraisal_request._get_template_and_recipients(appraisal)
             if template != expected_template:
-                raise ValidationError(_(
+                raise ValidationError(self.env._(
                     'Appraisal for %(appraisal_title)s should be using template "%(template_name)s" instead of "%(wrong_template_name)s"',
                     appraisal_title=appraisal.display_name,
                     template_name=expected_template.display_name,
@@ -107,9 +106,12 @@ class RequestAppraisal(models.TransientModel):
                     'employee_to_name': ', '.join(wizard.recipient_ids.sorted('name').mapped('name')),
                     'author_name': wizard.author_id.name,
                     'author_mail': wizard.author_id.email,
+                    'date_close': format_date(self.env, wizard.appraisal_id.date_close),
                     'recipient_users': wizard.recipient_ids.mapped('user_ids'),
                     'url': "ctx['url']",
-                    'user_body': user_body
+                    'user_body': user_body,
+                    'author_signature': wizard.author_id.user_id.signature,
+                    'manager_names': ', '.join(wizard.appraisal_id.manager_ids.mapped('name')),
                 }
                 wizard.body = self.with_context(ctx).sudo()._render_template(
                     wizard.template_id.body_html,

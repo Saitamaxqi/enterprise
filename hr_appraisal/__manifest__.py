@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -8,7 +7,7 @@
     'sequence': 180,
     'summary': 'Assess your employees',
     'website': 'https://www.odoo.com/app/appraisals',
-    'depends': ['hr', 'calendar', 'web_gantt'],
+    'depends': ['calendar', 'hr_gantt'],
     'description': """
 Periodical Employees appraisal
 ==============================
@@ -34,7 +33,6 @@ Key Features
         'views/hr_appraisal_views.xml',
         'views/hr_appraisal_goal_views.xml',
         'views/hr_appraisal_note_views.xml',
-        'report/hr_appraisal_report_views.xml',
         'views/hr_department_views.xml',
         'views/res_config_settings_view.xml',
         'views/res_users_views.xml',

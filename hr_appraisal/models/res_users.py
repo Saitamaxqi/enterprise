@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, api
+from odoo import fields, models
 
 
 class ResUsers(models.Model):
@@ -9,7 +8,7 @@ class ResUsers(models.Model):
 
     next_appraisal_date = fields.Date(related='employee_id.next_appraisal_date')
     ongoing_appraisal_count = fields.Integer(related='employee_id.ongoing_appraisal_count')
-    last_appraisal_date = fields.Date(related='employee_id.last_appraisal_date')
+    last_appraisal_date = fields.Date(related='employee_id.last_appraisal_id.date_close')
     last_appraisal_id = fields.Many2one(related='employee_id.last_appraisal_id')
 
     def get_employee_autocomplete_ids(self):

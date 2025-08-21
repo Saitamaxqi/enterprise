@@ -3,7 +3,7 @@
 import datetime
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError, UserError
 
 
@@ -13,7 +13,8 @@ class HrEmployee(models.Model):
     next_appraisal_date = fields.Date(
         string='Next Appraisal Date', compute='_compute_next_appraisal_date', groups="hr.group_hr_user", readonly=False, store=True,
         help="The date of the next appraisal is computed by the appraisal plan's dates (first appraisal + periodicity).")
-    last_appraisal_date = fields.Date(string='Last Appraisal Date', help="The date of the last appraisal")
+    last_ongoing_appraisal_date = fields.Date(compute='_compute_last_ongoing_appraisal_date', groups="hr.group_hr_user")
+    is_last_appraisal_late = fields.Boolean(compute='_compute_last_ongoing_appraisal_date', groups="hr.group_hr_user")
     related_partner_id = fields.Many2one('res.partner', compute='_compute_related_partner', groups="hr.group_hr_user")
     ongoing_appraisal_count = fields.Integer(compute='_compute_ongoing_appraisal_count', store=True)
     appraisal_count = fields.Integer(compute='_compute_appraisal_count', store=True, groups="hr.group_hr_user")
@@ -60,7 +61,7 @@ class HrEmployee(models.Model):
         else:
             return {
                 'view_mode': 'list',
-                'name': _('New and Pending Appraisals'),
+                'name': self.env._('New and Pending Appraisals'),
                 'res_model': 'hr.appraisal',
                 "views": [[self.env.ref('hr_appraisal.view_hr_appraisal_tree').id, "list"], [False, "form"]],
                 'type': 'ir.actions.act_window',
@@ -79,7 +80,7 @@ class HrEmployee(models.Model):
     def _check_next_appraisal_date(self):
         today = fields.Date.today()
         if not self.env.context.get('install_mode') and any(employee.next_appraisal_date and employee.next_appraisal_date < today for employee in self):
-            raise ValidationError(_("You cannot set 'Next Appraisal Date' in the past."))
+            raise ValidationError(self.env._("You cannot set 'Next Appraisal Date' in the past."))
 
     def _compute_related_partner(self):
         for rec in self:
@@ -119,6 +120,17 @@ class HrEmployee(models.Model):
         for employee in employees_without_appraisal:
             employee.next_appraisal_date = dates[employee.id]
 
+    @api.depends('appraisal_ids.state', 'appraisal_ids.date_close')
+    def _compute_last_ongoing_appraisal_date(self):
+        for employee in self:
+            ongoing_appraisals = employee.appraisal_ids.filtered(lambda appraisal: appraisal.state in ['1_new', '2_pending'])
+            if ongoing_appraisals:
+                employee.last_ongoing_appraisal_date = max(ongoing_appraisals.mapped('date_close'))
+                employee.is_last_appraisal_late = employee.last_ongoing_appraisal_date < fields.Date.today()
+            else:
+                employee.last_ongoing_appraisal_date = False
+                employee.is_last_appraisal_late = False
+
     def _upcoming_appraisal_creation_date(self):
         today = fields.Date.today()
         dates = {}
@@ -128,7 +140,7 @@ class HrEmployee(models.Model):
                 starting_date = employee._get_appraisal_plan_starting_date() or today
             else:
                 months = employee.company_id.duration_first_appraisal if employee.appraisal_count == 1 else employee.company_id.duration_next_appraisal
-                starting_date = employee.last_appraisal_date
+                starting_date = employee.last_appraisal_id.date_close
 
             if starting_date:
                 # In case proposed next_appraisal_date is in the past, start counting from now
@@ -152,8 +164,21 @@ class HrEmployee(models.Model):
         })
         return action
 
+    def action_open_employee_appraisals(self):
+        self.ensure_one()
+        if self.appraisal_count == 1:
+            return {
+                'res_model': 'hr.appraisal',
+                'view_mode': 'form',
+                'type': 'ir.actions.act_window',
+                'target': 'current',
+                'res_id': self.appraisal_ids[0].id,
+            }
+        # Reuse the action in hr.appraisal to open the employee's previous appraisals
+        return self.appraisal_ids[:1].action_open_employee_appraisals()
+
     @api.ondelete(at_uninstall=False)
     def _unlink_expect_goal_manager(self):
         is_goal_manager = self.env['hr.appraisal.goal'].search_count([('manager_ids', 'in', self.ids)])
         if is_goal_manager:
-            raise UserError(_("You cannot delete an employee who is a goal's manager, archive it instead."))
+            raise UserError(self.env._("You cannot delete an employee who is a goal's manager, archive it instead."))

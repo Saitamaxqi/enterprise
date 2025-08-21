@@ -3,7 +3,7 @@
 
     <data noupdate="1">
         <record id="hr_appraisal_default_template" model="hr.appraisal.template">
-            <field name="description">Default Template</field>
+            <field name="description">Default</field>
             <field name="company_id" ref=""/>
             <field name="appraisal_employee_feedback_template" type="html">
                 <h2>

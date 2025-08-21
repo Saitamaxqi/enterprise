@@ -41,8 +41,8 @@
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
         </record>
 
-        <record id="note_good" model="hr.appraisal.note">
-            <field name="name">Good</field>
+        <record id="note_exceptional" model="hr.appraisal.note">
+            <field name="name">Truly Exceptional</field>
         </record>
         <record id="hr_appraisal_3" model="hr.appraisal">
             <field name="employee_id" ref="hr.employee_qdp"/>
@@ -53,7 +53,7 @@
             <field name="manager_feedback" type="html"><p>The employee is autonomous</p></field>
             <field name="employee_feedback_published" eval="True"/>
             <field name="employee_feedback" type="html"><p>I feel much more comfortable than last year</p></field>
-            <field name="assessment_note" ref="note_good"/>
+            <field name="assessment_note" ref="note_exceptional"/>
         </record>
         <function model="hr.appraisal" name="action_confirm" eval="[ref('hr_appraisal.hr_appraisal_3')]"/>
         <function model="hr.appraisal" name="action_done" eval="[ref('hr_appraisal.hr_appraisal_3')]"/>
@@ -63,7 +63,7 @@
             <field name="state">1_new</field>
             <field name="date_close" eval="(DateTime.now() + relativedelta(months=2)).strftime('%Y-%m-%d')"/>
             <field name="manager_ids" eval="[(4, ref('hr.employee_admin'))]"/>
-            <field name="assessment_note" ref="note_good"/>
+            <field name="assessment_note" ref="note_exceptional"/>
         </record>
         <function model="hr.appraisal" name="action_confirm" eval="[ref('hr_appraisal.hr_appraisal_4')]"/>
         <function model="hr.appraisal" name="action_done" eval="[ref('hr_appraisal.hr_appraisal_4')]"/>

@@ -15,7 +15,7 @@ class HrEmployeePublic(models.Model):
         [('1_new', 'To Confirm'),
          ('2_pending', 'Confirmed'),
          ('3_done', 'Done')], compute='_compute_last_appraisal_state')
-    last_appraisal_date = fields.Date(related='employee_id.last_appraisal_date')
+    last_appraisal_date = fields.Date(related='employee_id.last_appraisal_id.date_close')
 
     def _get_manager_only_fields(self):
         return super()._get_manager_only_fields() + ['next_appraisal_date']

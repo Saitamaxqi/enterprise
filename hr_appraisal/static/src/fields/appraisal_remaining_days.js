@@ -3,8 +3,6 @@ import { registry } from "@web/core/registry";
 import { RemainingDaysField } from "@web/views/fields/remaining_days/remaining_days_field";
 
 export class AppraisalRemainingDays extends RemainingDaysField {
-    static template = "hr_appraisal.RemainingDaysField";
-
     /** @override **/
     get diffDays() {
         const result = super.diffDays;

@@ -14,10 +14,12 @@
         <field name="arch" type="xml">
             <form string="Appraisal" class="o_appraisal_form">
             <header>
-                <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != '1_new' or 'uid' not in manager_user_ids and employee_user_id != uid and not is_manager" data-hotkey="q"/>
-                <button name="action_done" string="Mark as Done" type="object" class="oe_highlight" invisible="state != '2_pending' or 'uid' not in manager_user_ids and not is_manager" data-hotkey="v"/>
-                <button name="action_send_appraisal_request" string="Send by email" invisible="state != '1_new'" type="object" data-hotkey="g"/>
-                <button name="action_back" string="Reopen" type="object" invisible="state != '3_done' or 'uid' not in manager_user_ids and not is_manager" data-hotkey="w"/>
+                <button name="action_confirm" string="Confirm" type="object" class="oe_highlight" invisible="state != '1_new' or not is_manager or uid == employee_user_id" data-hotkey="q"/>
+                <button name="action_done" string="Mark as Done" type="object" class="oe_highlight" invisible="state != '2_pending' or not is_manager or uid == employee_user_id" data-hotkey="v"/>
+                <button name="action_calendar_event" string="Schedule Meeting" invisible="state != '2_pending' or not is_manager or uid == employee_user_id" type="object"/>
+                <button name="action_send_appraisal_request" string="Send by email" invisible="uid == employee_user_id and state != '1_new' or uid != employee_user_id and state != '2_pending'" type="object" data-hotkey="g"/>
+                <button name="action_back" string="Reset" type="object" invisible="state != '2_pending' or not is_manager or uid == employee_user_id" data-hotkey="w"/>
+                <button name="action_back" string="Reopen" type="object" invisible="state != '3_done' or not is_manager or uid == employee_user_id" data-hotkey="w"/>
                 <field name="state" widget="statusbar" statusbar_visible="1_new,2_pending,3_done" options="{'fold_field': 'fold'}"/>
             </header>
             <sheet>
@@ -44,17 +46,27 @@
                 <div class="alert alert-warning p-2" role="alert" invisible="not (duplicate_appraisal_id and state == '1_new')">
                     Another appraisal with the same people is already ongoing.
                 </div>
-                <div class="row justify-content-between position-relative w-100 m-0 mb-2">
-                    <div class="oe_title mw-100 ps-0 pe-2">
-                        <h1>
-                            <field name="employee_id"
-                                domain="[('id', 'in', employee_autocomplete_ids)]"
-                                readonly="state != '1_new'"
-                                placeholder="e.g. John Doe"
-                                widget="many2one_avatar_employee"
-                                class="w-100"/>
-                        </h1>
+                <div name="appraisal_info" class="alert alert-info alert-dismissible p-2" role="alert" invisible="state != '2_pending'">
+                    <div invisible="uid != employee_user_id">
+                        Fill in the employee's feedback section before <field name="date_close" readonly="1"/>. Then, share it with appraisers.
                     </div>
+                    <div invisible="uid == employee_user_id or not is_manager">
+                        Fill in the manager's feedback section before <field name="date_close" readonly="1"/>. Then, schedule a meeting to discuss it.
+                    </div>
+                    <div name="appraisal_ask_feedback_note">If you need, ask feedback to a selection of colleagues you work with.</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"/>
+                </div>
+
+                <div class="oe_title pb-3">
+                    <label for="employee_id" string="Employee to review" class="pb-2"/>
+                    <h1>
+                        <field name="employee_id"
+                               domain="[('id', 'in', employee_autocomplete_ids)]"
+                               readonly="state != '1_new'"
+                               placeholder="e.g. John Doe"
+                               widget="many2one_avatar_employee"
+                        />
+                    </h1>
                 </div>
                 <group>
                     <group>
@@ -62,21 +74,23 @@
                             widget="many2many_avatar_employee"
                             options="{'color_field': 'color'}"
                             required="1"
-                            readonly="state == '3_done' or (state == '2_pending' and 'uid' not in manager_user_ids and not is_manager)"/>
+                            string="Appraisers"
+                            readonly="state == '3_done' or (state == '2_pending' and not is_manager)"/>
                         <field name="date_close" readonly="state == '3_done'"/>
-                        <field name="previous_appraisal_date" invisible="previous_appraisal_date == False"/>
-                        <field name="next_appraisal_date" placeholder="Ongoing"/>
-                        <field name="appraisal_template_id" readonly="state != '1_new' or (uid not in manager_user_ids and not is_manager and employee_user_id != uid)" options="{'no_edit': True, 'no_create': True}"/>
+                        <field name="appraisal_template_id" string="Template"
+                               widget="selection_badge"
+                               readonly="state != '1_new' or (not is_manager and uid != employee_user_id)"
+                               invisible="state != '1_new' or uid == employee_user_id"
+                               options="{'no_edit': True, 'no_create': True}"/>
                     </group>
                     <group>
-                        <field name="job_id"/>
-                        <field name="department_id"/>
-                        <field name="employee_user_id" invisible="1"/>
-                        <field name="manager_user_ids" invisible="1"/>
-                        <field name="id" invisible="1"/>
-                        <field name="company_id" invisible="1"/>
-                        <field name="company_id" groups="base.group_multi_company" required="1"/>
-                        <field name="assessment_note" options="{'no_create': True, 'no_open': True}" invisible="state == '1_new' or employee_user_id == uid" readonly="state == '3_done' or (state == '2_pending' and 'uid' not in manager_user_ids and not is_manager)"/>
+                        <field name="job_id" invisible="not job_id or uid == employee_user_id" readonly="state != '1_new'"/>
+                        <field name="department_id" invisible="not department_id or uid == employee_user_id" readonly="state != '1_new'"/>
+                        <field name="company_id" groups="base.group_multi_company" required="1" invisible="uid == employee_user_id"/>
+                        <field name="assessment_note" options="{'no_create': True, 'no_open': True}"
+                               invisible="state == '1_new' or uid == employee_user_id"
+                               readonly="state == '3_done' or (state == '2_pending' and not is_manager)"/>
+                        <field name="next_appraisal_date" placeholder="On demand" invisible="not assessment_note or state != '3_done'"/>
                     </group>
                 </group>
                 <field name="appraisal_properties" columns="2"/>
@@ -87,15 +101,13 @@
                                 <div class="row">
                                     <div class="o_appraisal_feedback_title col-12 d-flex justify-content-between">
                                         <h3>Employee's Feedback</h3>
-                                        <div class="h-100" invisible="state == '3_done'">
-                                            <label for="employee_feedback_published" class="text-end" invisible="employee_feedback_published"
-                                                string="Not Visible to Manager"/>
-                                            <label for="employee_feedback_published" class="text-end" invisible="not employee_feedback_published or state == '1_new'"
-                                                string="Visible to Manager"/>
-                                            <label for="employee_feedback_published" class="text-end" invisible="not employee_feedback_published or state != '1_new'"
-                                                string="Visible &amp; Editable by Manager"/>
+                                        <div class="h-100" invisible="state != '2_pending'">
+                                            <strong class="text-info" invisible="employee_feedback_published">Private</strong>
+                                            <span invisible="not employee_feedback_published">Private</span>
                                             <field name="employee_feedback_published" nolabel="1" widget="boolean_toggle_confirm"
-                                                invisible="state == '1_new' and employee_user_id == uid" class="ms-2 me-0"/>
+                                                invisible="state == '1_new' and uid == employee_user_id" class="ms-2 me-0"/>
+                                            <span invisible="employee_feedback_published">Shared to Appraisers</span>
+                                            <strong class="text-success" invisible="not employee_feedback_published">Shared to Appraisers</strong>
                                         </div>
                                     </div>
                                     <div class="col-12 o_appraisal_input scrollable-section position-relative o_height">
@@ -103,8 +115,8 @@
                                             <div>Self Assessment will show here</div>
                                             <div>once published</div>
                                         </span>
-                                        <field name="accessible_employee_feedback" class="o_appraisal_template h-100 overflow-auto" nolabel="1" 
-                                            invisible="not employee_feedback_published and not can_see_employee_publish" 
+                                        <field name="accessible_employee_feedback" class="o_appraisal_template h-100 overflow-auto" nolabel="1"
+                                            invisible="not employee_feedback_published and not can_see_employee_publish"
                                             readonly="state not in ['1_new', '2_pending'] or not can_see_employee_publish"/>
                                         <field name="employee_feedback_template" class="o_appraisal_blur"
                                             invisible="employee_feedback_published or can_see_employee_publish"/>
@@ -115,12 +127,12 @@
                                 <div class="row">
                                     <div class="o_appraisal_feedback_title col-12 d-flex justify-content-between">
                                         <h3>Manager's Feedback</h3>
-                                        <div class="h-100" invisible="state == '3_done'">
-                                            <label for="manager_feedback_published" class="text-end" invisible="manager_feedback_published or not can_see_manager_publish"
-                                                string="Not Visible to Employee"/>
-                                            <label for="manager_feedback_published" class="text-end" invisible="not manager_feedback_published or not can_see_manager_publish"
-                                                string="Visible to Employee"/>
+                                        <div class="h-100" invisible="state != '2_pending' or not can_see_manager_publish">
+                                            <strong class="text-info" invisible="manager_feedback_published">Private</strong>
+                                            <span invisible="not manager_feedback_published">Private</span>
                                             <field name="manager_feedback_published" nolabel="1" widget="boolean_toggle" class="ms-2 me-0" invisible="not can_see_manager_publish"/>
+                                            <span invisible="manager_feedback_published">Shared to Employee</span>
+                                            <strong class="text-success" invisible="not manager_feedback_published">Shared to Employee</strong>
                                         </div>
                                     </div>
                                     <div class="col-12 o_appraisal_input scrollable-section position-relative o_height">
@@ -139,7 +151,7 @@
                         </div>
                     </page>
                     <page string="Private Note" name="private_note" invisible="employee_user_id == uid">
-                        <field name="note" readonly="state == '3_done' or ('uid' not in manager_user_ids and not is_manager)"
+                        <field name="note" readonly="state == '3_done' or not is_manager"
                                 placeholder="Private note (only accessible to people set as managers)"/>
                     </page>
                 </notebook>
@@ -200,7 +212,6 @@
                 <field name="department_id"/>
                 <field name="create_date" options="{'show_time': False}" optional="hide"/>
                 <field name="date_close" widget="appraisal_remaining_days"/>
-                <field name="previous_appraisal_date" optional="hide"/>
                 <field name="next_appraisal_date" optional="hide"/>
                 <field name="assessment_note" optional="hide"/>
                 <field name="state" widget="badge" readonly="1"
@@ -247,6 +258,9 @@
                 <separator/>
                 <filter string="Late" name="late_appraisals" domain="[('state', '!=', '3_done'), ('date_close', '&lt;', 'today')]"/>
                 <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <filter invisible="1" string="Last 365 days" name="created_last_365_days"
+                    domain="[('create_date', '&gt;=', 'today -1y')]"
+                    help="Show all records which has been created during the last 365 days"/>
                 <filter invisible="1" string="My Activities" name="filter_activities_my"
                     domain="[('activity_user_id', '=', uid)]"/>
                 <separator invisible="1"/>
@@ -260,7 +274,8 @@
                 <separator/>
                 <group>
                     <filter string='Employee' name="employee" icon="fa-user" domain="[]" context="{'group_by': 'employee_id'}"/>
-                    <filter string='Department' name="department_id" context="{'group_by': 'department_id'}"/>
+                    <filter string='Department' name="group_by_department_id" context="{'group_by': 'department_id'}"/>
+                    <filter string='Final Rating' name="group_by_assessment_note" context="{'group_by': 'assessment_note'}"/>
                     <filter name="groupby_state" context="{'group_by': 'state'}"/>
                     <filter string="Creation Date" name="groupby_create_date" context="{'group_by': 'create_date'}"/>
                     <filter name="groupby_date_close" context="{'group_by': 'date_close'}"/>
@@ -371,6 +386,30 @@
         </field>
     </record>
 
+    <record id="hr_appraisal_view_graph" model="ir.ui.view">
+            <field name="name">hr.appraisal.graph</field>
+            <field name="model">hr.appraisal</field>
+            <field name="arch" type="xml">
+            <graph string="Appraisals" sample="1">
+                <field name="employee_appraisal_count" invisible="1"/>  <!-- hide field from the measures-->
+                <field name="department_id"/>
+                <field name="assessment_note"/>
+             </graph>
+         </field>
+    </record>
+
+    <record id="hr_appraisal_view_pivot" model="ir.ui.view">
+            <field name="name">hr.appraisal.pivot</field>
+            <field name="model">hr.appraisal</field>
+            <field name="arch" type="xml">
+            <pivot string="Appraisals" sample="1">
+                <field name="employee_appraisal_count" invisible="1"/>  <!-- hide field from the measures-->
+                <field name="department_id" type="row"/>
+                <field name="date_close" interval="quarter" type="col"/>
+             </pivot>
+         </field>
+    </record>
+
     <record id="action_load_appraisal_demo_data" model="ir.actions.server">
         <field name="name">Load appraisal scenario</field>
         <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
@@ -382,7 +421,21 @@
         <field name="name">Appraisals</field>
         <field name="path">appraisals</field>
         <field name="res_model">hr.appraisal</field>
-        <field name="view_mode">kanban,list,gantt,calendar,form,activity</field>
+        <field name="view_mode">kanban,list,gantt,calendar,form,activity,graph,pivot</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_view_hr_appraisal_graph">
+        <field name="name">Appraisal Analysis</field>
+        <field name="res_model">hr.appraisal</field>
+        <field name="view_mode">graph</field>
+        <field name="context">{'search_default_created_last_365_days': 1, 'search_default_group_by_department_id':1,'search_default_group_by_assessment_note':1}</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_view_hr_appraisal_graph_department">
+        <field name="name">Department Appraisals</field>
+        <field name="res_model">hr.appraisal</field>
+        <field name="view_mode">graph</field>
+        <field name="context">{'search_default_department_id': active_id, 'search_default_group_by_assessment_note':1}</field>
     </record>
 
     <menuitem name="Appraisals"
@@ -391,27 +444,6 @@
         action="open_view_hr_appraisal_tree"
         sequence="1"
         groups="base.group_user"/>
-
-    <record model="ir.actions.act_window" id="open_view_hr_appraisal_tree2">
-        <field name="name">Appraisal</field>
-        <field name="res_model">hr.appraisal</field>
-        <field name="view_mode">kanban,list,form,activity</field>
-        <field name="context">{"search_default_employee_id": [active_id], "default_employee_id": active_id}</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="hr_appraisal_action">
-        <field name="name">Appraisal</field>
-        <field name="res_model">hr.appraisal</field>
-        <field name="view_mode">kanban,list,form,activity</field>
-        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
-    </record>
-
-    <record model="ir.actions.act_window" id="hr_appraisal_action_my">
-        <field name="name">My Appraisals</field>
-        <field name="res_model">hr.appraisal</field>
-        <field name="view_mode">kanban,list,form,activity</field>
-        <field name="context">{'search_default_my_appraisals': 1}</field>
-    </record>
 
     <record id="hr_appraisal_action_from_department" model="ir.actions.act_window">
             <field name="name">Appraisal to start</field>
@@ -424,4 +456,13 @@
             }</field>
             <field name="domain">[('state', 'in', ['1_new', '2_pending']), ('department_id', '=', active_id)]</field>
     </record>
+
+    <menuitem id="menu_hr_appraisal_report" parent="menu_hr_appraisal_root" sequence="20"
+        name="Reporting" groups="hr_appraisal.group_hr_appraisal_manager"/>
+
+    <menuitem id="menu_appraisal_analysis_report"
+        name="Appraisal Analysis"
+        action="open_view_hr_appraisal_graph"
+        parent="menu_hr_appraisal_report"
+        sequence="1"/>
 </odoo>

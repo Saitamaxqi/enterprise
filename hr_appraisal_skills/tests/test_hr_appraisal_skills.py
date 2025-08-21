@@ -20,16 +20,20 @@ class TestHrAppraisalSkills(TransactionCase):
                 "notification_type": "email",
             }
         )
-        cls.hr_employee = cls.env["hr.employee"].create(
+        cls.hr_employee, cls.hr_employee_2 = cls.env["hr.employee"].create([
             dict(
                 name="Michael Hawkins",
                 user_id=cls.user.id,
-            )
-        )
+            ),
+            dict(
+                name="Michel Jardin",
+            ),
+        ])
+        cls.hr_employee_2.parent_id = cls.hr_employee
 
         cls.appraisal = cls.env["hr.appraisal"].create(
             {
-                "employee_id": cls.hr_employee.id,
+                "employee_id": cls.hr_employee_2.id,
                 "state": "2_pending",
                 "date_close": date.today() + relativedelta(months=1),
             }

@@ -64,6 +64,7 @@ class TestHrAppraisal(TransactionCase):
             'duration_first_appraisal': cls.duration_first_appraisal,
             'duration_next_appraisal': cls.duration_next_appraisal,
         })
+        cls.appraisal_rating = cls.env['hr.appraisal.note'].create({'name': 'Exceeds expectations'})
 
     def test_hr_appraisal(self):
         with freeze_time(date.today() + relativedelta(months=6)):
@@ -79,6 +80,9 @@ class TestHrAppraisal(TransactionCase):
 
             # I check that state is "Appraisal Sent".
             self.assertEqual(appraisals.state, '2_pending', "appraisal should be 'Appraisal Sent' state")
+
+            # A final rating is needed before closing the appraisal
+            appraisals.assessment_note = self.appraisal_rating
             # I close this Apprisal
             appraisals.action_done()
             # I check that state of Appraisal is done.
@@ -93,7 +97,6 @@ class TestHrAppraisal(TransactionCase):
             Thus, next_appraisal_date should be empty.
         """
         self.hr_employee.create_date = date.today()
-        self.hr_employee.last_appraisal_date = date.today()
 
         months = self.hr_employee.company_id.duration_after_recruitment
         upcoming_appraisal_date = date.today() + relativedelta(months=months)
@@ -115,7 +118,6 @@ class TestHrAppraisal(TransactionCase):
         """
 
         self.hr_employee.create_date = date.today()
-        self.hr_employee.last_appraisal_date = date.today()
 
         month = self.hr_employee.company_id.duration_after_recruitment
 
@@ -135,7 +137,6 @@ class TestHrAppraisal(TransactionCase):
             check that appraisal is not set
         """
         self.hr_employee.create_date = date.today() - relativedelta(months=3)
-        self.hr_employee.last_appraisal_date = date.today() - relativedelta(months=3)
 
         self.env['res.company']._run_employee_appraisal_plans()
         appraisals = self.HrAppraisal.search([('employee_id', '=', self.hr_employee.id)])
@@ -160,7 +161,6 @@ class TestHrAppraisal(TransactionCase):
             Check that appraisal is not created
         """
         self.hr_employee.create_date = date.today() - relativedelta(months=self.duration_after_recruitment + 2, days=10)
-        self.hr_employee.last_appraisal_date = date.today() - relativedelta(months=2, days=10)
 
         self.env['res.company']._run_employee_appraisal_plans()
         appraisals = self.HrAppraisal.search([('employee_id', '=', self.hr_employee.id)])
@@ -173,7 +173,6 @@ class TestHrAppraisal(TransactionCase):
             time for a first real appraisal
         """
         self.hr_employee.create_date = date.today() - relativedelta(months=self.duration_after_recruitment + self.duration_first_appraisal, days=10)
-        self.hr_employee.last_appraisal_date = date.today() - relativedelta(months=self.duration_first_appraisal, days=10)
         # In order to make the second appraisal, cron checks that
         # there is alraedy one done appraisal for the employee
         self.HrAppraisal.create({
@@ -194,7 +193,6 @@ class TestHrAppraisal(TransactionCase):
             appraisal is not set
         """
         self.hr_employee.create_date = date.today() - relativedelta(months=self.duration_after_recruitment + self.duration_first_appraisal + 2, days=10)
-        self.hr_employee.last_appraisal_date = date.today() - relativedelta(months=2, days=10)
         # In order to make recurring appraisal, cron checks that
         # there are alraedy two done appraisals for the employee
         self.HrAppraisal.create({
@@ -218,7 +216,6 @@ class TestHrAppraisal(TransactionCase):
         """
 
         self.hr_employee.create_date = date.today() - relativedelta(months=self.duration_after_recruitment + self.duration_first_appraisal + self.duration_next_appraisal, days=10)
-        self.hr_employee.last_appraisal_date = date.today() - relativedelta(months=self.duration_next_appraisal, days=10)
 
         self.HrAppraisal.create({
             'employee_id': self.hr_employee.id,

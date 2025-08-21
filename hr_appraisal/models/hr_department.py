@@ -1,16 +1,15 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
 
-from odoo import api, fields, models, _
+from odoo import fields, models
 
 
 class HrDepartment(models.Model):
     _inherit = 'hr.department'
 
     appraisals_to_process_count = fields.Integer(compute='_compute_appraisals_to_process', string='Appraisals to Process')
-    custom_appraisal_template_id = fields.Many2one('hr.appraisal.template', string="Appraisal Templates", compute='_compute_appraisal_feedbacks', store=True, readonly=False, check_company=True)
+    appraisal_template_ids = fields.Many2many("hr.appraisal.template", 'hr_appraisal_template_hr_department_rel', 'hr_department_id', string="Appraisal Templates")
     appraisal_properties_definition = fields.PropertiesDefinition('Appraisal Properties')
 
     def _compute_appraisals_to_process(self):
@@ -20,13 +19,8 @@ class HrDepartment(models.Model):
         for department in self:
             department.appraisals_to_process_count = result.get(department.id, 0)
 
-    @api.depends('company_id')
-    def _compute_appraisal_feedbacks(self):
-        for department in self:
-            department.custom_appraisal_template_id = department.company_id.appraisal_template_id
-
     def action_open_appraisals(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("hr_appraisal.action_appraisal_report_all")
+        action = self.env["ir.actions.actions"]._for_xml_id("hr_appraisal.open_view_hr_appraisal_graph_department")
         action['context'] = {
             **ast.literal_eval(action['context']),
             'search_default_department_id': self.id,

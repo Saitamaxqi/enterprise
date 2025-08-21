@@ -7,18 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
                 <app data-string="Appraisal" string="Appraisal" name="hr_appraisal" groups="hr.group_hr_manager">
-                    <block title="Appraisal Templates">
-                        <setting string="Appraisal Template" company_dependent="1" help="Set default appraisal template">
-                            <div class="content-group mt8">
-                                <label for="appraisal_template_id" string="Default Template" class="col-4 col-lg-4 o_light_label"/>
-                                <field name="appraisal_template_id" class="oe_inline"/>
-                            </div>
-                       </setting>
-                    </block>
                     <block title="Appraisals Plans">
-                        <div class="alert alert-warning" role="alert" invisible="not appraisal_plan">
-                            When the Appraisals plan is saved, it will overwrite all Next Appraisal Dates for employees without ongoing appraisals.
-                        </div>
                         <div class="row">
                             <setting string="Appraisals Plans" company_dependent="1" help="Define the next appraisal date automatically based on Appraisal's History">
                                 <div class="content-group mt8">
