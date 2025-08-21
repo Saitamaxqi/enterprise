@@ -16,3 +16,14 @@
     width: 18px;
     height: 18px;
 }
+
+.o_ai_tool_summary {
+    .o_ai_tool_arguments {
+        display: none;
+    }
+    &:focus {
+        .o_ai_tool_arguments {
+            display: inline;
+        }
+    }
+}
