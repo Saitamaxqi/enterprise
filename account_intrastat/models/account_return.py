@@ -9,7 +9,7 @@ class AccountReturn(models.Model):
 
     def _get_state_field(self):
         # Extends account_reports
-        if (self.type_id.report_id.root_report_id or self.type_id.report_id) == self.env.ref('account_intrastat.intrastat_report'):
+        if self.env.ref('account_intrastat.intrastat_report') in {self.type_id.report_id.root_report_id, self.type_id.report_id}:
             return 'generic_state_review_submit'
         return super()._get_state_field()
 

@@ -880,7 +880,10 @@ class AccountReturn(models.Model):
         Returns the field name that is used to store the state of the return.
         """
         self.ensure_one()
-        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
+        if (
+            self.type_external_id == 'account_reports.annual_corporate_tax_return_type'
+            or self.env.ref('account_reports.generic_ec_sales_report') in {self.type_id.report_id.root_report_id, self.type_id.report_id}
+        ):
             return 'generic_state_review_submit'
         elif not self.type_external_id or self.return_type_category == 'audit':
             return 'generic_state_review'
