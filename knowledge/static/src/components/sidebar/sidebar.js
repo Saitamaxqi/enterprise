@@ -239,6 +239,7 @@ export class KnowledgeSidebar extends Component {
         onWillStart(async () => {
             this.isInternalUser = await user.hasGroup('base.group_user');
             this.isPortalUser = await user.hasGroup('base.group_portal');
+            this.canCreateArticle = await user.checkAccessRight('knowledge.article', 'create');
         });
 
         useRecordObserver(async (record) => {
