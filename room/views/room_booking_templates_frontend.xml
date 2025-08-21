@@ -14,7 +14,7 @@
             <t t-call-assets="room.assets_room_booking" t-js="false"/>
         </xpath>
         <xpath expr="//head/script[@id='web.layout.odooscript']" position="after">
-            <script t-nocache="Session information should always be up to date." type="text/javascript">
+            <script type="text/javascript">
                 odoo.__session_info__ = <t t-out="json.dumps(request.env['ir.http'].get_frontend_session_info())"/>;
                     if (!/(^|;\s)tz=/.test(document.cookie)) {
                     const userTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;

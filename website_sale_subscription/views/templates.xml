@@ -63,7 +63,6 @@
                 name="plan_id"
                 class="form-select plan_select"
                 required="1"
-                t-nocache="1"
             >
                 <option
                     t-foreach="combination_info['pricings']"
@@ -140,7 +139,6 @@
                     name="plan_id"
                     class="form-select w-auto plan_select"
                     required="1"
-                    t-nocache="1"
                 >
                     <option
                         t-foreach="combination_info['pricings']"
