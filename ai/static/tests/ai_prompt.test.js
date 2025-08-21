@@ -12,8 +12,9 @@ import {
 } from "@web/../tests/web_test_helpers";
 
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, queryOne } from "@odoo/hoot-dom";
+import { click, queryOne, press } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
+import { MainComponentsContainer } from "@web/core/main_components_container";
 
 class Dummy extends models.Model {
     _name = "dummy";
@@ -236,4 +237,29 @@ test("AI Prompt - Invalid records", async () => {
         },
     });
     expect(".o_ai_prompt").toHaveText("Hello Invalid Record");
+});
+
+test("does not call rpc on every keystroke", async () => {
+    class AI extends models.Model {
+        _name = "ai.agent";
+    }
+    defineModels([AI]);
+
+    onRpc("ai.agent", "get_ask_ai_agent", () => {
+        expect.step("get_ask_ai_agent");
+        return { id: 1, name: "ASK AI" };
+    });
+
+    await mountWithCleanup(MainComponentsContainer);
+
+    await press(["Control", "k"]);
+    await animationFrame();
+
+    await press("/");
+    await animationFrame();
+
+    await press("a");
+    await animationFrame();
+
+    expect.verifySteps(["get_ask_ai_agent"]);
 });

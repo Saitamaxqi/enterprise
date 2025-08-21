@@ -11,11 +11,7 @@ import { DefaultCommandItem } from "@web/core/commands/command_palette";
 const commandProviderRegistry = registry.category("command_provider");
 const commandCategoryRegistry = registry.category("command_categories");
 
-commandCategoryRegistry.add(
-    "AI_AGENTS",
-    { namespace: "@", name: _t("Agents") },
-    { sequence: 30 },
-);
+commandCategoryRegistry.add("AI_AGENTS", { namespace: "@", name: _t("Agents") }, { sequence: 30 });
 
 export class AICommand extends Component {
     static template = "ai.AICommand";
@@ -44,7 +40,7 @@ export class AICommandPalette {
         this.commands = [];
         this.options = options;
         this.cleanedTerm = cleanTerm(this.options.searchValue);
-        this.agents = []
+        this.agents = [];
     }
 
     async fetch() {
@@ -52,7 +48,7 @@ export class AICommandPalette {
             "ai.agent",
             [["is_system_agent", "=", false]],
             ["id", "name", "subtitle", "partner_id"],
-            {load: false}
+            { load: false }
         );
     }
 
@@ -62,7 +58,7 @@ export class AICommandPalette {
                 (agent) =>
                     (cleanTerm(agent.name).includes(this.cleanedTerm) ||
                         (agent.subtitle && cleanTerm(agent.subtitle).includes(this.cleanedTerm))) &&
-                    (!filtered || !filtered.has(agent)),
+                    (!filtered || !filtered.has(agent))
             )
             .slice(0, 5)
             .forEach((agent) => {
@@ -110,7 +106,7 @@ commandProviderRegistry.add("ask_ai", {
     async provide(env, options) {
         const orm = env.services.orm;
         const actions = env.services.action;
-        const agent = await orm.call("ai.agent", "get_ask_ai_agent", []);
+        const agent = await orm.cache().call("ai.agent", "get_ask_ai_agent", []);
         return [
             {
                 action: async () => {
