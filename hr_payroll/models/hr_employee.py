@@ -67,8 +67,6 @@ class HrEmployee(models.Model):
                 not self.env['res.partner.bank'].has_access('read')):
             return []
 
-        # [XBO] TODO: to check the query before we filtered to only get the employee with running contract.
-        # Maybe using current_version_id?
         self.env.cr.execute('''
             SELECT emp.id,
                    acc.acc_number,
@@ -76,8 +74,6 @@ class HrEmployee(models.Model):
               FROM hr_employee emp
          LEFT JOIN res_partner_bank acc
                 ON acc.id=emp.bank_account_id
-              JOIN hr_version ver
-                ON ver.employee_id=emp.id
              WHERE emp.company_id IN %s
                AND emp.active=TRUE
                AND emp.bank_account_id is not NULL
