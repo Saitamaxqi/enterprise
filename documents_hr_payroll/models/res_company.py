@@ -16,10 +16,10 @@ class ResCompany(models.Model):
         help="Folder used when an employee with no user exists in the company, "
              "to store their payroll documents in a centralized place.")
 
-    def _generate_employee_documents_folders(self):
+    def _generate_employee_documents_main_folders(self):
         """ Override from documents_hr module to add payslips related tags and permissions on the
         employee document folder of each company. """
-        folders = super()._generate_employee_documents_folders()
+        folders = super()._generate_employee_documents_main_folders()
         group_payroll_user = self.env.ref('hr_payroll.group_hr_payroll_user')
         payslip_tag = self.env.ref('documents_hr_payroll.documents_tag_payslips', raise_if_not_found=False)
         for company, folder in zip(self, folders):

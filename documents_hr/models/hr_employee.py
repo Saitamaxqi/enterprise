@@ -30,7 +30,7 @@ class HrEmployee(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         employees = super().create(vals_list)
-        employees._generate_employee_documents_subfolders()
+        employees._generate_employee_documents_folders()
         return employees
 
     def write(self, vals):
@@ -58,7 +58,7 @@ class HrEmployee(models.Model):
         }
         return action
 
-    def _generate_employee_documents_subfolders(self):
+    def _generate_employee_documents_folders(self, skip_subfolders=False):
         """ Employee document folder is meant to be used by HR only to store all the documents they need regarding the
          employee (E.g.: ID Card, Drive License, etc..). The employee does not have access to this folder,
          nor the documents inside it (by default at least) """
@@ -80,6 +80,45 @@ class HrEmployee(models.Model):
                 partners={partner.id: ('edit', False) for partner in
                           hr_users_per_company[employee.company_id].partner_id})
             employee.hr_employee_folder_id = folder.id
+        if not skip_subfolders:
+            employees._generate_employee_documents_subfolders()
+
+    def _generate_employee_documents_subfolders(self):
+        """ Generate subfolders under the employee folder, following what is specified on the company
+         -> res_config_settings.employee_subfolders
+         Removing a folder name from the setting should not delete the folder if it's not empty.
+         Existing folders should not be recreated.
+         Only newly added folder name should generate a new subfolder.
+         """
+        Documents = self.env['documents.document']
+        create_subfolders_vals = []
+        subfolders_to_delete = Documents
+
+        subfolders = Documents.search([('type', '=', 'folder'), ('folder_id', 'in', self.hr_employee_folder_id.ids)])
+        subfolders_by_employee_folder = subfolders.grouped('folder_id')
+        for company in self.company_id:
+            subfolder_names = company.employee_subfolders.split(',')
+            company_employees = self.filtered(lambda e: e.company_id == company)
+            for employee_folder in company_employees.hr_employee_folder_id:
+                # Add new folders added to the list
+                existing_subfolders = subfolders_by_employee_folder.get(employee_folder, Documents)
+                added_subfolder_names = list(set(subfolder_names) - set(existing_subfolders.mapped('name')))
+                for subfolder_name in added_subfolder_names:
+                    create_subfolders_vals.append({
+                        'name': subfolder_name,
+                        'type': 'folder',
+                        'folder_id': employee_folder.id,
+                        'company_id': company.id,
+                    })
+
+                # Delete removed folder from the list.
+                # -> Side effect : folders created manually that are still empty will be deleted.
+                removed_subfolders_names = list(set(existing_subfolders.mapped('name')) - set(subfolder_names))
+                subfolders_to_delete |= existing_subfolders.filtered(
+                    lambda f: f.name in removed_subfolders_names and not f.children_ids)
+        if create_subfolders_vals:
+            self.env["documents.document"].sudo().create(create_subfolders_vals)
+        subfolders_to_delete.unlink()
 
     def _get_employee_documents_token(self):
         self.ensure_one()
