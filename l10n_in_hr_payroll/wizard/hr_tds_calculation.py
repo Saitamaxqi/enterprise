@@ -19,7 +19,7 @@ class L10nInTdsComputationWizard(models.TransientModel):
             res['payslip_id'] = self.env['hr.payslip'].search([
                 ('version_id', '=', version_id.id),
                 ('employee_id', '=', version_id.employee_id.id),
-                ('date_from', '>=', version_id.date_start),
+                ('date_from', '>=', version_id.contract_date_start),
                 ('state', 'in', ['done', 'paid']),
             ], limit=1, order='date_from desc').id
         if not res.get('currency_id') and self.env.company.currency_id:

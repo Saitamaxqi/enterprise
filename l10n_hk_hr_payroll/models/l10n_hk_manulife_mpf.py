@@ -132,7 +132,7 @@ class L10n_HkManulifeMpf(models.Model):
                 'surcharge_percentage': line.surcharge_percentage,
                 'amount_surcharge': line.amount_surcharge,
                 'basic_salary': employee.version_id.wage,
-                'last_date_of_employment': employee.version_id.date_end.strftime('%m/%d/%Y') if employee.version_id.date_end and employee.version_id.date_end <= end_period else '',
+                'last_date_of_employment': employee.version_id.contract_date_end.strftime('%m/%d/%Y') if employee.version_id.contract_date_end and employee.version_id.contract_date_end <= end_period else '',
             }
             if not employee_data['member_acount'] and employee_data['hkid']:
                 employee_data['surname'] = ''

@@ -43,10 +43,10 @@
                                                     </div>
                                                     <div id="pay_period" class="fs-6">
                                                         <span>Pay Period : </span>
-                                                        <span t-if="o.date_from &lt; o.version_id.date_start" t-field="o.version_id.date_start"/>
+                                                        <span t-if="o.date_from &lt; o.version_id.contract_date_start" t-field="o.version_id.contract_date_start"/>
                                                         <span t-else="" t-field="o.date_from"/>
-                                                            to 
-                                                        <span t-if="o.version_id.date_end and o.date_to &gt; o.version_id.date_end" t-field="o.version_id.date_end"/>
+                                                            to
+                                                        <span t-if="o.version_id.contract_date_end and o.date_to &gt; o.version_id.contract_date_end" t-field="o.version_id.contract_date_end"/>
                                                         <span t-else="" t-field="o.date_to"/>
                                                     </div>
                                                 </th>

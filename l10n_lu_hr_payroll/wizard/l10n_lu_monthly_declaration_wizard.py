@@ -161,10 +161,10 @@ class L10nLuMonthlyDeclarationWizard(models.TransientModel):
 
             worked_hours = int(float_round(sum(regular_payslips.worked_days_line_ids.filtered(lambda w: w.is_paid and w.amount).mapped('number_of_hours')), 0))
 
-            contracts_start = payslips.version_id.mapped('date_start')
+            contracts_start = payslips.version_id.mapped('contract_date_start')
             period_start = max(min(contracts_start), self.date_start)
 
-            all_contracts_end = payslips.version_id.mapped('date_end')
+            all_contracts_end = payslips.version_id.mapped('contract_date_end')
             if all(d for d in all_contracts_end):
                 max_contract_end = max([d for d in all_contracts_end if d])
                 period_end = max_contract_end

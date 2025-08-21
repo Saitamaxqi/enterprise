@@ -66,8 +66,8 @@ class HrPayslip(models.Model):
             period_taxable_days = 0
             month_taxable_days = 0
             date_to = payslip.date_to
-            if payslip.version_id.date_end and payslip.version_id.date_end < date_to:
-                date_to = payslip.version_id.date_end
+            if payslip.version_id.contract_date_end and payslip.version_id.contract_date_end < date_to:
+                date_to = payslip.version_id.contract_date_end
             for d in rrule(DAILY, dtstart=start_month, until=end_month):
                 if d.weekday() != SUNDAY:
                     month_taxable_days += 1

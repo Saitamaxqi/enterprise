@@ -37,7 +37,7 @@ class HrPayslipInput(models.Model):
                 ("employee_id", "=", payslip.employee_id.id),
                 ("date_from", ">=", start_year),
                 ("holiday_status_id", "in", payslip.version_id.l10n_au_leave_loading_leave_types.ids),
-                ("date_from", "<=", payslip.version_id.date_end or payslip.date_to),
+                ("date_from", "<=", payslip.version_id.contract_date_end or payslip.date_to),
             ], ["number_of_days_display"])
             year_expected_leaves = sum(allocation['number_of_days_display'] for allocation in employee_allocations)
             leave_rate = payslip.version_id.l10n_au_leave_loading_rate

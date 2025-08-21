@@ -80,7 +80,7 @@ class HrPayslip(models.Model):
         """ Get the total GROSS accumulated before the current payslip"""
         return self._l10n_id_get_historical_categorical_total(['GROSS'])
 
-    @api.depends('date_from', 'date_to', 'version_id.date_start', 'version_id.date_end')
+    @api.depends('date_from', 'date_to', 'version_id.contract_date_start', 'version_id.contract_date_end')
     def _compute_l10n_id_include_pkp_ptkp(self):
         """ by default, if it's end of year/end of contract, set to True"""
         for slip in self:

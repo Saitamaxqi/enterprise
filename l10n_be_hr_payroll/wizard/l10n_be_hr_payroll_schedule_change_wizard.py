@@ -150,7 +150,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
         requires_new_contract = self.filtered(lambda w: (
             not w.date_start or
             not w.version_id or
-            w.date_start <= w.version_id.date_start
+            w.date_start <= w.version_id.contract_date_start
         ))
         requires_new_contract.write({'requires_new_contract': True})
         (self - requires_new_contract).write({'requires_new_contract': False})
@@ -205,7 +205,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
         # Set a closing date on the current contract
         previous_contract_date_end = self.version_id.contract_date_end
         contract_date_end = self.date_start
-        if self.date_start != self.version_id.date_start:
+        if self.date_start != self.version_id.contract_date_start:
             contract_date_end -= timedelta(days=1)
         self.with_context(close_contract=False).version_id.contract_date_end = contract_date_end
 

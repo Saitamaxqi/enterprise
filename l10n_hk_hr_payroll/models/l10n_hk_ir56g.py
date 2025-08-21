@@ -53,7 +53,7 @@ class L10n_HkIr56g(models.Model):
                 for code in line_codes}
 
             start_date = self.start_period if self.start_period > employee.contract_date_start else employee.contract_date_start
-            end_date = employee.version_id.date_end if employee.version_id.date_end else self.end_period
+            end_date = employee.version_id.contract_date_end or self.end_period
 
             rental_ids = employee.l10n_hk_rental_ids.filtered_domain([
                 ('state', 'in', ['open', 'close']),

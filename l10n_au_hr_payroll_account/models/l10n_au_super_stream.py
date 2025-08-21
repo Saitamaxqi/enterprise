@@ -323,7 +323,7 @@ class L10n_AuSuperStreamLine(models.Model):
     amount_total = fields.Monetary("Total Contribution", compute="_compute_amount_total", currency_field='currency_id')
 
     # Registration
-    employment_start_date = fields.Date(related="payslip_id.version_id.date_start", store=True, readonly=False)
+    employment_start_date = fields.Date(related="payslip_id.version_id.contract_date_start", store=True, readonly=False)
     annual_salary_for_benefits_amount = fields.Monetary()
     annual_salary_for_contributions_amount = fields.Monetary()
     annual_salary_for_contributions_effective_start_date = fields.Date()

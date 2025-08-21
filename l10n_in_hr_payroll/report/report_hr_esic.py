@@ -95,7 +95,7 @@ class HrESICReport(models.Model):
                 working_days,
                 gross_wage,
                 0,
-                employee.version_id.date_end.strftime('%d-%m-%Y') if employee.version_id.date_end else ''
+                employee.version_id.contract_date_end.strftime('%d-%m-%Y') if employee.version_id.contract_date_end else ''
             ))
         return result
 

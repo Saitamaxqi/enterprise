@@ -62,8 +62,8 @@ class HrPayslip(models.Model):
             coefficients = self._rule_parameter('l10n_mx_schedule_table')
             days_in_period = coefficients[self.version_id.schedule_pay or 'monthly']
 
-            start_date = max(self.date_from, self.version_id.date_start)
-            end_date = min(self.date_to, self.version_id.date_end) if self.version_id.date_end else self.date_to
+            start_date = max(self.date_from, self.version_id.contract_date_start)
+            end_date = min(self.date_to, self.version_id.contract_date_end) if self.version_id.contract_date_end else self.date_to
             in_contract_days = (end_date - start_date).days + 1
             actual_period_days = (self.date_to - self.date_from).days + 1
             salary_factor = in_contract_days / actual_period_days
