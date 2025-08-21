@@ -1882,6 +1882,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 '&', ("invoice_date", "<=", self.end_date),
                 '&', ("company_id", "in", self.company_ids.ids or self.company_id.ids),
                 '&', ("state", "=", "posted"),
+                '&', ('line_ids.tax_ids', '!=', False),
                      ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer'))
             ]
             to_match_bills = AccountMove.search(domain)
@@ -1895,8 +1896,9 @@ class L10n_InGstReturnPeriod(models.Model):
                     ("move_type", "in", AccountMove.get_purchase_types()),
                     ('ref', '=', late_bill.get('bill_number')),
                     ("state", "=", "posted"),
+                    ('line_ids.tax_ids', '!=', False),
                     ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer')),
-                    ("l10n_in_gstr2b_reconciliation_status", "not in", ('matched', 'partially_matched', 'manually_matched'))
+                    ("l10n_in_gstr2b_reconciliation_status", "not in", ('matched', 'partially_matched', 'manually_matched')),
                 ])
             for bill in to_match_bills:
                 bill_type = 'bill'

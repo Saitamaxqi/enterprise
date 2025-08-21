@@ -59,6 +59,15 @@ class TestReports(L10nInTestAccountReportsCommon):
 
         cls.bill_matched_with_irn = cls._init_inv(move_type='in_invoice', ref='INV/015', taxes=cls.comp_igst_18, partner=cls.partner_b, irn="897adg56rty78956hyug90bnhhijk453gftd99845672fdhhhshgfh4567fg56kk")
 
+        cls.bill_with_no_tax = cls._init_inv(
+            "in_invoice",
+            products=cls.product_a,
+            partner=cls.partner_b,
+            ref='BILL/NO_TAX',
+            post=False,
+        )
+        cls.bill_with_no_tax.line_ids.tax_ids.unlink()
+        cls.bill_with_no_tax.action_post()
         cls.report = cls.gstr_report = cls.env['l10n_in.gst.return.period'].create({
             'company_id': cls.default_company.id,
             'periodicity': 'monthly',
@@ -113,6 +122,14 @@ class TestReports(L10nInTestAccountReportsCommon):
         self.assertEqual(sez_bill.l10n_in_gst_treatment, "special_economic_zone")
         self.assertEqual(self.bill_with_conflict_pos.l10n_in_gstr2b_reconciliation_status, "partially_matched")
         self.assertEqual(self.bill_matched_with_irn.l10n_in_gstr2b_reconciliation_status, "matched")
+
+        self.assertRecordValues(
+            self.bill_with_no_tax,
+            [{
+                'l10n_in_gst_return_period_id': False,
+                'l10n_in_gstr2b_reconciliation_status': 'pending',  # Default value
+            }]
+        )
 
     def test_gstr2b_late_reconciliation(self):
         """
