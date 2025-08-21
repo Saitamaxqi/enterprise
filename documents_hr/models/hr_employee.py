@@ -23,7 +23,7 @@ class HrEmployee(models.Model):
 
     def _compute_document_count(self):
         document_count_by_folder = dict(self.env['documents.document']._read_group(
-            [('folder_id', 'in', self.hr_employee_folder_id.ids)], ['folder_id'], ['__count']))
+            [('folder_id', 'in', self.hr_employee_folder_id.ids), ('type', '!=', 'folder')], ['folder_id'], ['__count']))
         for employee in self:
             employee.document_count = document_count_by_folder.get(employee.hr_employee_folder_id, 0)
 
