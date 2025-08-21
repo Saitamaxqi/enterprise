@@ -106,6 +106,14 @@ export class BankRecStatementLine extends KanbanRecord {
         });
     }
 
+    get formattedFullDate() {
+        return this.recordData.date.toLocaleString({
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+        });
+    }
+
     get partner() {
         return this.recordData.partner_id;
     }

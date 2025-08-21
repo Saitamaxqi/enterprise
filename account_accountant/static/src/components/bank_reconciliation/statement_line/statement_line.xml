@@ -21,7 +21,9 @@
                     <div class="o_grid_container">
                         <div class="o_row">
                             <div class="d-flex gap-3">
-                                <t t-esc="formattedDate"/>
+                                <div t-att-data-tooltip="formattedFullDate">
+                                    <t t-esc="formattedDate"/>
+                                </div>
                                 <div t-on-click.stop="openChatter" t-if="!ui.isSmall" class="o_chatter_icon btn-link text-action" t-att-class="{'visible': activityNumber or hasAttachment}">
                                     <div t-if="activityNumber" class="activity-container">
                                         <i class="fa fa-lg fa-clock-o" role="img" aria-label="Activities"/>
