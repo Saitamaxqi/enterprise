@@ -5,9 +5,7 @@
     <section class="s_ai_livechat">
         <div class="container">
             <div class="s_ai_livechat_data d-none" contenteditable="false"></div>
-            <div class="x_wd">
-                <h1 class="display-3 mb-1">Need help?</h1>
-            </div>
+            <h2 class="display-3-fs mb-1">Need help?</h2>
             <div class="support_ai"></div>
         </div>
     </section>
