@@ -105,7 +105,7 @@ export default class BarcodePickingModel extends BarcodeModel {
     }
 
     getDisplayCompletePackageBtn(line) {
-        return !this.getQtyDone(line) && line.isPackageLine;
+        return line.isPackageLine;
     }
 
     getDisplayIncrementBtn(line) {
@@ -152,9 +152,11 @@ export default class BarcodePickingModel extends BarcodeModel {
     completePackage(virtualId) {
         this.actionMutex.exec(() => {
             const packageLine = this.packageLines.find((l) => l.virtual_id === virtualId);
+            const factor = packageLine.qty_done ? -1 : 1;
             for (const line of packageLine.lines) {
                 this.selectedLineVirtualId = line.virtual_id;
-                this._updateLineQty(line, { qty_done: line.reserved_uom_qty });
+                const lineQty = line.reserved_uom_qty || line.qty_done || line.packedQuantity;
+                this._updateLineQty(line, { qty_done: lineQty * factor });
                 this._markLineAsDirty(line);
             }
             this.trigger("update");
@@ -1920,6 +1922,7 @@ export default class BarcodePickingModel extends BarcodeModel {
                 } else {
                     // Creates a new line.
                     qty_used = remaining_qty;
+                    const isEntirePack = qty_used === quant.quantity;
                     const fieldsParams = this._convertDataToFieldsParams({
                         product,
                         quantity: qty_used,
@@ -1928,9 +1931,13 @@ export default class BarcodePickingModel extends BarcodeModel {
                         resultPackage: quant.package_id,
                         owner: quant.owner_id,
                         srcLocation: quant.location_id,
-                        isEntirePack: qty_used === quant.quantity,
+                        isEntirePack,
                     });
-                    await this._createNewLine({ fieldsParams });
+                    const newLine = await this._createNewLine({ fieldsParams });
+                    if (isEntirePack) {
+                        // Keep in memory what was the initial package line's quantity.
+                        newLine.packedQuantity = qty_used;
+                    }
                 }
                 remaining_qty -= qty_used;
             }

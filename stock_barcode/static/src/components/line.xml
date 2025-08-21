@@ -100,7 +100,7 @@
             <button t-if="displayCompletePackageButton" name="completePackageButton"
                     t-on-click="() => this.completePackage()"
                     t-att-disabled="!this.env.model.lineCanBeEdited(line)"
-                    class="o_line_button btn btn-light">
+                    t-attf-class="o_line_button btn btn-{{isComplete ? 'success' : 'light'}}">
                 <span class="fa f-lg fa-check"/>
             </button>
         </div>

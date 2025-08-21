@@ -22,7 +22,7 @@ export default class PackageLineComponent extends LineComponent {
         if (reservedQuantity > 0) {
             return doneQuantity / reservedQuantity;
         }
-        return doneQuantity >= 0 ? 1 : 0;
+        return doneQuantity > 0 ? 1 : 0;
     }
 
     select(ev) {
