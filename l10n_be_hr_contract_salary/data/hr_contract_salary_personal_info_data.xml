@@ -60,7 +60,6 @@
         <field name="name">Disabled</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.version'), ('name', '=', 'disabled')])"/>
         <field name="applies_on">version_personal</field>
-        <field name="position">left</field>
         <field name="display_type">checkbox</field>
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
@@ -74,7 +73,6 @@
         <field name="placeholder">Select a status</field>
         <field name="display_type">dropdown</field>
         <field name="dropdown_selection">specific</field>
-        <field name="position">left</field>
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="applies_on">version_personal</field>
@@ -120,7 +118,6 @@
         <field name="name">Disabled Spouse</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.version'), ('name', '=', 'disabled_spouse_bool')])"/>
         <field name="applies_on">version_personal</field>
-        <field name="position">left</field>
         <field name="display_type">checkbox</field>
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
@@ -135,7 +132,6 @@
         <field name="placeholder">Select a Situation</field>
         <field name="display_type">dropdown</field>
         <field name="dropdown_selection">specific</field>
-        <field name="position">left</field>
         <field name="impacts_net_salary" eval="True"/>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="applies_on">version_personal</field>
@@ -178,7 +174,6 @@
         <field name="name">Spouse Name and First Name</field>
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.version'), ('name', '=', 'spouse_complete_name')])"/>
         <field name="applies_on">version_personal</field>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_marital"/>
@@ -190,7 +185,6 @@
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.version'), ('name', '=', 'spouse_birthdate')])"/>
         <field name="applies_on">version_personal</field>
         <field name="display_type">date</field>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="parent_id" ref="hr_contract_salary_personal_info_marital"/>
@@ -203,7 +197,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">integer</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -216,7 +209,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">checkbox</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sequence">80</field>
@@ -228,7 +220,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">integer</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -242,7 +233,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">checkbox</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
         <field name="sequence">100</field>
@@ -255,7 +245,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">integer</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -270,7 +259,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">integer</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -285,7 +273,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">integer</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -300,7 +287,6 @@
         <field name="applies_on">version_personal</field>
         <field name="display_type">integer</field>
         <field name="impacts_net_salary" eval="True"/>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_family"/>
         <field name="placeholder">0</field>
         <field name="structure_type_id" ref="hr.structure_type_employee_cp200"/>
@@ -314,7 +300,6 @@
         <field name="res_field_id" model="ir.model.fields" eval="obj().search([('model', '=', 'hr.employee'), ('name', '=', 'lang')])"/>
         <field name="applies_on">employee</field>
         <field name="display_type">dropdown</field>
-        <field name="position">left</field>
         <field name="info_type_id" ref="hr_contract_salary.hr_contract_salary_personal_info_type_general"/>
         <field name="dropdown_selection">lang</field>
         <field name="is_required" eval="True"/>

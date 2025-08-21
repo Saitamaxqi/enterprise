@@ -33,10 +33,6 @@ class HrContractSalaryPersonalInfo(models.Model):
     ], default='text')
     info_type_id = fields.Many2one('hr.contract.salary.personal.info.type', required=True)
     is_required = fields.Boolean(default=True)
-    position = fields.Selection([
-        ('left', 'Main Panel'),
-        ('right', 'Side Panel'),
-    ], default='left')
     value_ids = fields.One2many('hr.contract.salary.personal.info.value', 'personal_info_id')
     applies_on = fields.Selection([
         ('version_personal', 'Version'),

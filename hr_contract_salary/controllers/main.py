@@ -302,7 +302,7 @@ class HrContractSalary(http.Controller):
     def _get_personal_infos_langs(self, version, personal_info):
         return request.env['res.lang'].search([])
 
-    def _get_personal_infos(self, version):
+    def _get_personal_infos(self, version, offer):
         initial_values = {}
         dropdown_options = {}
         targets = {
@@ -316,15 +316,10 @@ class HrContractSalary(http.Controller):
             '|',
             ('structure_type_id', '=', False),
             ('structure_type_id', '=', version.structure_type_id.id)]).sorted(lambda info: (info.info_type_id.sequence, info.sequence))
-        mapped_personal_infos = [
-            defaultdict(lambda: request.env['hr.contract.salary.personal.info']), # Main Panel
-            request.env['hr.contract.salary.personal.info'], # Side Panel
-        ]
+        mapped_personal_infos = defaultdict(lambda: request.env['hr.contract.salary.personal.info'])
+
         for personal_info in personal_infos:
-            if personal_info.position == 'left':
-                mapped_personal_infos[0][personal_info.info_type_id.name] |= personal_info
-            else:
-                mapped_personal_infos[1] |= personal_info
+            mapped_personal_infos[personal_info.info_type_id.name] |= personal_info
 
             target = targets[personal_info.applies_on]
 
@@ -361,6 +356,7 @@ class HrContractSalary(http.Controller):
                 elif personal_info.dropdown_selection == 'lang':
                     values = [(lang.code, lang.name) for lang in self._get_personal_infos_langs(version, personal_info)]
                 dropdown_options[personal_info.field] = values
+
         return mapped_personal_infos, dropdown_options, initial_values
 
     def _get_benefits(self, version_vals, offer):
@@ -441,7 +437,7 @@ class HrContractSalary(http.Controller):
         return mapped_benefits, mapped_dependent_benefits, mapped_mandatory_benefits, mapped_mandatory_benefits_names, benefit_types, dropdown_options, dropdown_group_options, initial_values
 
     def _get_salary_package_values(self, version, offer):
-        mapped_personal_infos, dropdown_options_1, initial_values_1 = self._get_personal_infos(version)
+        mapped_personal_infos, dropdown_options_1, initial_values_1 = self._get_personal_infos(version, offer)
         mapped_benefits, mapped_dependent_benefits, mandatory_benefits, mandatory_benefits_names, benefit_types, dropdown_options_2, dropdown_group_options, initial_values_2 = self._get_benefits_values(version, offer)
         all_initial_values = {**initial_values_1, **initial_values_2}
         all_initial_values = {key: round(value, 2) if isinstance(value, float) else value for key, value in all_initial_values.items()}
@@ -563,8 +559,8 @@ class HrContractSalary(http.Controller):
             elif field_name in bank_account_infos and personal_info.applies_on == 'bank_account':
                 bank_account_vals[field_name] = resolve_value(field_name, bank_account_infos)
 
-        work_contact_vals['name'] = employee_vals['name']
-        work_contact_vals['email'] = employee_vals['private_email']
+        work_contact_vals['name'] = employee_vals.get('name', '')
+        work_contact_vals['email'] = employee_vals.get('private_email', '')
 
         # Update personal info on the private address
         if employee.work_contact_id:
@@ -598,7 +594,7 @@ class HrContractSalary(http.Controller):
             employee_vals['address_id'] = job.address_id.id
 
         if not no_name_write:
-            employee_vals['name'] = employee_infos['name']
+            employee_vals['name'] = employee_infos.get('name', '')
         employee.write(employee_vals)
         version.with_context(tracking_disable=True).write(version_vals)
         if attachment_create_vals:

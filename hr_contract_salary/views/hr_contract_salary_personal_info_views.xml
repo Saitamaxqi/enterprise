@@ -43,7 +43,6 @@
                         </group>
                         <group>
                             <field name="structure_type_id"/>
-                        	<field name="position"/>
                             <field name="display_type" required="1"/>
                             <field name="dropdown_selection" invisible="display_type != 'dropdown'" required="display_type == 'dropdown'"/>
                             <field name="value_ids" invisible="display_type not in ['dropdown', 'radio'] or dropdown_selection != 'specific'">

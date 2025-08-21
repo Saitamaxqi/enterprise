@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from collections import defaultdict
+
 from odoo.addons.hr_contract_salary.controllers import main
 from odoo import http, _
 from odoo.exceptions import UserError
@@ -32,6 +34,24 @@ class HrContractSalary(main.HrContractSalary):
         if version_vals.get('wage_type') == 'hourly':
             new_version_vals['hourly_wage'] = version_vals.get('hourly_wage')
         return new_version_vals
+
+    def _get_personal_infos(self, version, offer):
+        if not offer.is_simulation_offer:
+            return super()._get_personal_infos(version, offer)
+
+        mapped_personal_infos, new_dropdown_options, new_initial_values = super()._get_personal_infos(version, offer)
+        new_mapped_personal_infos = defaultdict(lambda: request.env['hr.contract.salary.personal.info'])
+
+        for key, personal_infos in mapped_personal_infos.items():
+            for personal_info in personal_infos:
+                if personal_info.impacts_net_salary:
+                    new_mapped_personal_infos[key] |= personal_info
+                else:
+                    new_initial_values.pop(personal_info.field, None)
+                    new_initial_values.pop(personal_info.field + '_filename', None)
+                    new_dropdown_options.pop(personal_info.field, None)
+
+        return new_mapped_personal_infos, new_dropdown_options, new_initial_values
 
     def _get_payslip_line_values(self, payslip, codes):
         return payslip._get_line_values(codes)

@@ -33,7 +33,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_applicant_flow_tour"
         },
         {
             content: "Select Our Job",
-            trigger: 'table.o_list_table tbody td:contains("Developer")',
+            trigger: 'table.o_list_table tbody td:contains("Senior Developer BE")',
             run: "click",
         },
         {

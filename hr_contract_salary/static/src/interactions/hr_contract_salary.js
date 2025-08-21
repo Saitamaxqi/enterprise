@@ -144,7 +144,7 @@ export class SalaryPackage extends Interaction {
                 }
             }
         }
-        this.stateElements = this.el.querySelector("select[name='private_state_id']").querySelectorAll("option");
+        this.stateElements = this.el.querySelector("select[name='private_state_id']")?.querySelectorAll("option");
         this.onchangeCountry();
 
         // When user use back button, unfold previously unfolded items.

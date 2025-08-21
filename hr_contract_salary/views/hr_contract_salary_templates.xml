@@ -313,15 +313,15 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div t-att-class="'col-md-8' if need_personal_information else 'col-md-8 d-none'" name="personal_info">
+                    <div class="col-md-8" name="personal_info">
 
                         <!-- Main Panel -->
-                        <t t-foreach="mapped_personal_infos[0]" t-as="personal_info_type">
+                        <t t-foreach="mapped_personal_infos" t-as="personal_info_type">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h2 class="text-primary" t-if="personal_info_type"><t t-esc="personal_info_type"/></h2>
                                 </div>
-                                <t t-foreach="mapped_personal_infos[0][personal_info_type]" t-as="personal_info">
+                                <t t-foreach="mapped_personal_infos[personal_info_type]" t-as="personal_info">
                                     <t t-if="not personal_info.parent_id">
                                         <t t-set="hidden_children" t-value="False"/>
                                         <div t-att-class="'col-md-6' if personal_info.display_type != 'document' else 'col-md-12'" t-att-name="personal_info.field">
@@ -336,11 +336,11 @@
                                             <div t-att-name="'personal_info_child_group_' + personal_info.field" t-att-class="'card mb-2' + (' d-none' if hidden_children else '')">
                                                 <div class="card-body">
                                                     <t t-foreach="personal_info.child_ids" t-as="child_personal_info">
-                                                        <div>
-                                                        <t t-call="hr_contract_salary.salary_package_personal_information_input">
-                                                            <t t-set="personal_info" t-value="child_personal_info"/>
-                                                            <t t-set="hidden_children" t-value="hidden_children"/>
-                                                        </t>
+                                                        <div t-if="child_personal_info in mapped_personal_infos[personal_info_type]">
+                                                            <t t-call="hr_contract_salary.salary_package_personal_information_input">
+                                                                <t t-set="personal_info" t-value="child_personal_info"/>
+                                                                <t t-set="hidden_children" t-value="hidden_children"/>
+                                                            </t>
                                                         </div>
                                                     </t>
                                                 </div>
@@ -349,31 +349,6 @@
                                     </t>
                                 </t>
                             </div>
-                        </t>
-                    </div>
-
-                    <!-- Left Panel -->
-                    <div t-att-class="'col-lg-3' + (' offset-xl-1' if need_personal_information else '')" name="personal_info_withholding_taxes">
-                        <t t-foreach="mapped_personal_infos[1]" t-as="personal_info">
-                            <t t-if="not personal_info.parent_id">
-                                <t t-set="hidden_children" t-value="False"/>
-                                <div class="border-0 mb-3">
-                                    <t t-call="hr_contract_salary.salary_package_personal_information_input"/>
-                                </div>
-                            </t>
-                            <t t-if="personal_info.child_ids">
-                                <t t-set="hidden_children" t-value="personal_info._hide_children(version)"/>
-                                <div t-att-name="'personal_info_child_group_' + personal_info.field" t-att-class="'card mb-2' + (' d-none' if hidden_children else '')">
-                                    <div class="card-body">
-                                        <t t-foreach="personal_info.child_ids" t-as="child_personal_info">
-                                            <t t-call="hr_contract_salary.salary_package_personal_information_input">
-                                                <t t-set="personal_info" t-value="child_personal_info"/>
-                                                <t t-set="hidden_children" t-value="hidden_children"/>
-                                            </t>
-                                        </t>
-                                    </div>
-                                </div>
-                            </t>
                         </t>
                     </div>
                 </div>
