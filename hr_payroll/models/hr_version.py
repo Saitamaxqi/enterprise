@@ -394,8 +394,8 @@ class HrVersion(models.Model):
         res = super().write(vals)
         dependendant_fields = self._get_fields_that_recompute_payslip()
         if any(key in dependendant_fields for key in vals):
-            for version in self:
-                version._recompute_payslips(version.date_start, version.date_end or date.max)
+            for version_sudo in self.sudo():
+                version_sudo._recompute_payslips(version_sudo.date_start, version_sudo.date_end or date.max)
         if any(key in vals for key in ('state', 'date_start', 'resource_calendar_id', 'employee_id')):
             self._recompute_calendar_changed(self.employee_id)
         return res
