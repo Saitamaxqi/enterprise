@@ -100,8 +100,19 @@ class HrPayslip(models.Model):
     paid_date = fields.Date(string="Payment Date")
     note = fields.Text(string='Internal Note')
     version_id = fields.Many2one(
-        'hr.version', string='Employee Record', precompute=True, tracking=True,
-        compute='_compute_version_id', store=True, readonly=False, index=True)
+        'hr.version',
+        string='Employee Record',
+        precompute=True,
+        tracking=True,
+        compute='_compute_version_id',
+        store=True,
+        readonly=False,
+        index=True,
+        domain="""[
+            ('contract_date_start', '<=', date_end),
+            '|', ('contract_date_end', '=', False), ('contract_date_end', '>=', date_from)
+        ]""",
+    )
     credit_note = fields.Boolean(
         string='Credit Note',
         help="Indicates this payslip has a refund of another")
