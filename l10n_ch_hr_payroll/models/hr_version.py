@@ -483,7 +483,7 @@ class HrVersion(models.Model):
         action['domain'] = [('version_id', '=', self.id),
                             ('date_start', '!=', False)]
         action['context'] = {
-            'default_contract_id': self.id
+            'default_version_id': self.id,
         }
 
         return action
