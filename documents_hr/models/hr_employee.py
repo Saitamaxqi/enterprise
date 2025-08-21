@@ -97,7 +97,7 @@ class HrEmployee(models.Model):
         subfolders = Documents.search([('type', '=', 'folder'), ('folder_id', 'in', self.hr_employee_folder_id.ids)])
         subfolders_by_employee_folder = subfolders.grouped('folder_id')
         for company in self.company_id:
-            subfolder_names = company.employee_subfolders.split(',')
+            subfolder_names = [name for name in company.employee_subfolders.split(',') if name]
             company_employees = self.filtered(lambda e: e.company_id == company)
             for employee_folder in company_employees.hr_employee_folder_id:
                 # Add new folders added to the list

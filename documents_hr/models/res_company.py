@@ -7,9 +7,6 @@ from odoo.fields import Domain
 class ResCompany(models.Model):
     _inherit = "res.company"
 
-    def _get_default_employee_subfolders(self):
-        return ""
-
     documents_hr_settings = fields.Boolean(default=True)
     documents_hr_folder = fields.Many2one('documents.document', string="HR Folder", check_company=True,
                                           domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],
@@ -17,7 +14,7 @@ class ResCompany(models.Model):
     documents_employee_folder_id = fields.Many2one('documents.document', string="Employees Folder",
         domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)], check_company=True)
     employee_subfolders = fields.Char(
-        "Employees Subfolder", default=_get_default_employee_subfolders,
+        "Employees Subfolder",
         help='Comma separated list of folder names that need to be created under each employee folder.')
     documents_hr_contracts_tags = fields.Many2many('documents.tag', 'documents_hr_contracts_tags_table')
 
