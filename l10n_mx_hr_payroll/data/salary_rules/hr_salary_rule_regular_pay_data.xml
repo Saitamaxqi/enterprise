@@ -527,55 +527,9 @@ def find_rates(x, rates):
             return low, high, fix, rate
 
 gross = categories['GROSS']
-if gross:
-    isr_tables = payslip._rule_parameter('l10n_mx_isr_tables')
-
-    # Check if we need to do monthly or yearly adjustment
-    last_day_of_month = payslip.date_from + relativedelta(day=31)
-    end_of_month = payslip.date_from &lt;= last_day_of_month &lt;= payslip.date_to
-
-    first_day_of_year = payslip.date_from + relativedelta(day=1, month=1)
-    last_day_of_year = payslip.date_from + relativedelta(day=31, month=12)
-    end_of_year = (not version.l10n_mx_external_annual_declaration and
-                   payslip.date_from &lt;= last_day_of_year &lt;= payslip.date_to and
-                   (version.wage * 12) &lt;= payslip._rule_parameter('l10n_mx_salary_limit_annual_declaration') and
-                   employee._get_first_version_date() &lt;= first_day_of_year)
-
-    if end_of_year or end_of_month:
-        if end_of_year:
-            payslips = version.env['hr.payslip'].search([
-                ('employee_id', '=', version.employee_id.id),
-                ('state', 'in', ['validated', 'paid']),
-                ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
-                ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-                ('company_id', '=', version.company_id.id),
-            ])
-            period = 'yearly'
-        else:
-            payslips = version.env['hr.payslip'].search([
-                ('employee_id', '=', version.employee_id.id),
-                ('state', 'in', ['validated', 'paid']),
-                ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1)),
-                ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-                ('company_id', '=', version.company_id.id),
-            ])
-            period = 'monthly'
-        previous_gross = payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)['GROSS']['sum']['amount']
-        previous_ISR = payslips._get_line_values(['ISR'], vals_list=['amount'], compute_sum=True)['ISR']['sum']['amount']
-
-        overall_gross = previous_gross + gross
-        isr_table = isr_tables[period]
-
-        low, high, fix, rate = find_rates(overall_gross, isr_table)
-        amount = (overall_gross - low) * rate + fix
-        result = - (amount + previous_ISR)
-    else:
-        # without adjustment
-        isr_table = isr_tables[version.schedule_pay]
-        low, high, fix, rate = find_rates(gross, isr_table)
-        result = -((categories['GROSS'] - low) * rate + fix)
-else:
-    result = 0
+isr_table = payslip._rule_parameter('l10n_mx_isr_tables')[version.schedule_pay]
+low, high, fix, rate = find_rates(gross, isr_table)
+result = -((gross - low) * rate + fix)
         </field>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
         <field name="note">
@@ -587,6 +541,18 @@ https://www.dof.gob.mx/nota_detalle.php?codigo=5640505&amp;fecha=12/01/2022#gsc.
 
 [(Gross monthly salary - Lower limit) x Percentage to be applied over the excess of the lower limit] + Fixed rate
         </field>
+    </record>
+
+    <record id="l10n_mx_regular_pay_isr_adjustment" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">ISR Adjustment</field>
+        <field name="code">ISR_ADJUSTMENT</field>
+        <field name="sequence">111</field>
+        <field name="condition_select">input</field>
+        <field name="condition_other_input_id" ref="l10n_mx_hr_payroll.l10n_mx_input_isr_adjustment"/>
+        <field name="amount_select">input</field>
+        <field name="amount_other_input_id" ref="l10n_mx_hr_payroll.l10n_mx_input_isr_adjustment"/>
+        <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
     <!--   ISR Holiday Bonus (Income Tax)  -->
@@ -662,10 +628,10 @@ result = - result_rules['SAVINGS_FUND_EMPLOYER_ALW']['total']
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 
-    <record id="l10n_mx_employees_salary_subsidy_current_month" model="hr.salary.rule">
-        <field name="category_id" ref="l10n_mx_category_intermediary_computation"/>
-        <field name="name">Used Subsidy (Current Month)</field>
-        <field name="code">SUBSIDY_CURRENT_MONTH</field>
+    <record id="l10n_mx_regular_pay_subsidy" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="name">Used Subsidy</field>
+        <field name="code">SUBSIDY</field>
         <field name="sequence">118</field>
         <field name="condition_select">python</field>
         <field name="condition_python">
@@ -683,10 +649,28 @@ if version.schedule_pay == 'monthly':
 elif version.schedule_pay == 'bi-monthly':
     result = round(daily_subsidy * 30.4) * 2
 else:
-    last_day_of_month = payslip.date_from + relativedelta(day=31)
-    date_to_current_month = min(payslip.date_to, last_day_of_month)
-    days_current_month = (date_to_current_month - payslip.date_from).days + 1
-    result = daily_subsidy * days_current_month
+    days_in_period = (payslip.date_to - payslip.date_from).days + 1
+    result = daily_subsidy * days_in_period
+        </field>
+        <field name="struct_id" ref="l10n_mx_regular_pay"/>
+    </record>
+
+    <record id="l10n_mx_employees_salary_subsidy_current_month" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_mx_category_intermediary_computation"/>
+        <field name="name">Used Subsidy (Current Month)</field>
+        <field name="code">SUBSIDY_CURRENT_MONTH</field>
+        <field name="sequence">119</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = bool(result_rules['SUBSIDY']['total'])</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+if version.schedule_pay in ['monthly', 'bi-monthly']:
+    result = result_rules['SUBSIDY']['total']
+else:
+    last_day_of_current_month = payslip.date_from + relativedelta(day=31)
+    date_to_in_current_month = min(payslip.date_to, last_day_of_current_month)
+    days_current_month = (date_to_in_current_month - payslip.date_from).days + 1
+    result = result_rules['SUBSIDY']['total'] * days_current_month / days_in_period
         </field>
         <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
@@ -696,89 +680,14 @@ else:
         <field name="category_id" ref="l10n_mx_category_intermediary_computation"/>
         <field name="name">Used Subsidy (Next Month)</field>
         <field name="code">SUBSIDY_NEXT_MONTH</field>
-        <field name="sequence">118</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">
-limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
-last_day_of_month = payslip.date_from + relativedelta(day=31)
-split_two_months = payslip.date_from &lt;= last_day_of_month &lt; payslip.date_to
-result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy and split_two_months
-        </field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-daily_uma = payslip._rule_parameter('l10n_mx_uma')
-uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
-daily_subsidy = uma_percentage_for_subsidy * daily_uma
-
-if version.schedule_pay in ['monthly', 'bi-monthly']:
-    result = 0
-else:
-    first_day_of_month = payslip.date_to + relativedelta(day=1)
-    days_next_month = (payslip.date_to - first_day_of_month).days + 1
-    result = daily_subsidy * days_next_month
-        </field>
-        <field name="appears_on_payslip" eval="False"/>
-        <field name="struct_id" ref="l10n_mx_regular_pay"/>
-    </record>
-
-    <record id="l10n_mx_employees_salary_subsidy_adjustment" model="hr.salary.rule">
-        <field name="category_id" ref="l10n_mx_category_intermediary_computation"/>
-        <field name="name">Used Subsidy (Adjustment)</field>
-        <field name="code">SUBSIDY_ADJUSTMENT</field>
-        <field name="sequence">119</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">
-limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
-last_day_of_month = payslip.date_from + relativedelta(day=31)
-end_of_month = payslip.date_from &lt;= last_day_of_month &lt;= payslip.date_to
-result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy and end_of_month
-        </field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-daily_uma = payslip._rule_parameter('l10n_mx_uma')
-uma_percentage_for_subsidy = payslip._rule_parameter('l10n_mx_uma_percentage_for_subsidy')
-monthly_subsidy = round(uma_percentage_for_subsidy * daily_uma * 30.4)
-
-if version.schedule_pay in ['monthly', 'bi-monthly']:
-    result = 0
-else:
-    payslips = version.env['hr.payslip'].search([
-        ('employee_id', '=', version.employee_id.id),
-        ('state', 'in', ['validated', 'paid']),
-        ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1)),
-        ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-        ('company_id', '=', version.company_id.id),
-    ], order='date_from')
-    if payslips:
-        current_subsidy = result_rules['SUBSIDY_CURRENT_MONTH']['total']
-        for past_payslip in payslips:
-            lines = {line.code: line.total for line in past_payslip.line_ids}
-            if 'SUBSIDY_NEXT_MONTH' in lines:
-                current_subsidy += lines['SUBSIDY_NEXT_MONTH']
-            else:
-                current_subsidy += lines['SUBSIDY_CURRENT_MONTH']
-        result = monthly_subsidy - current_subsidy
-    else:
-        result = 0
-        </field>
-        <field name="appears_on_payslip" eval="False"/>
-        <field name="struct_id" ref="l10n_mx_regular_pay"/>
-    </record>
-
-    <record id="l10n_mx_regular_pay_subsidy" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.ALW"/>
-        <field name="name">Used Subsidy</field>
-        <field name="code">SUBSIDY</field>
         <field name="sequence">120</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">
-limit_salary_subsidy = payslip._rule_parameter('l10n_mx_daily_min_wage') * 30.4 * 1.2
-result = 0 &lt; categories['GROSS'] &lt;= limit_salary_subsidy
-        </field>
+        <field name="condition_python">result = bool(result_rules['SUBSIDY']['total'])</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = result_rules['SUBSIDY_CURRENT_MONTH']['total'] + result_rules['SUBSIDY_NEXT_MONTH']['total'] + result_rules['SUBSIDY_ADJUSTMENT']['total']
+result = result_rules['SUBSIDY']['total'] - result_rules['SUBSIDY_CURRENT_MONTH']['total']
         </field>
+        <field name="appears_on_payslip" eval="False"/>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
     </record>
 

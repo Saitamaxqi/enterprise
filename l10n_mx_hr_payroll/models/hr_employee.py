@@ -10,4 +10,3 @@ class HrEmployee(models.Model):
     l10n_mx_transport_amount = fields.Monetary(readonly=False, related="version_id.l10n_mx_transport_amount", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     l10n_mx_gasoline_amount = fields.Monetary(readonly=False, related="version_id.l10n_mx_gasoline_amount", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     l10n_mx_savings_fund = fields.Monetary(readonly=False, related="version_id.l10n_mx_savings_fund", inherited=True, groups="hr_payroll.group_hr_payroll_user")
-    l10n_mx_external_annual_declaration = fields.Boolean(readonly=False, related="version_id.l10n_mx_external_annual_declaration", inherited=True, groups="hr_payroll.group_hr_payroll_user")

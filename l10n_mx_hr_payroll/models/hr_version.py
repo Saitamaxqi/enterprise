@@ -21,10 +21,6 @@ class HrVersion(models.Model):
         'l10n.mx.hr.infonavit', 'version_id', string="MX: Infonavit", groups="hr.group_hr_user")
     l10n_mx_fonacot = fields.One2many(
         'l10n.mx.hr.fonacot', 'version_id', string="MX: Fonacot", groups="hr.group_hr_user")
-    l10n_mx_external_annual_declaration = fields.Boolean(
-        string="MX: External Annual Declaration", groups="hr_payroll.group_hr_payroll_user",
-        help="Activate this box if the employee will make the annual tax return on their own. "
-             "By activating it, the annual ISR adjustment will not be applied.")
 
     _check_christmas_bonus_percentage = models.Constraint(
          'CHECK (0 <= l10n_mx_holiday_bonus_rate AND l10n_mx_holiday_bonus_rate <= 100)',

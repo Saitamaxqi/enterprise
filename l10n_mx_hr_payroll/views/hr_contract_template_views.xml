@@ -12,7 +12,6 @@
                     <span>%</span>
                 </div>
                 <field name="l10n_mx_savings_fund" string="Savings Fund" class="o_hr_narrow_field" invisible="country_code != 'MX'"/>
-                <field name="l10n_mx_external_annual_declaration" string="External Annual Declaration" invisible="country_code != 'MX'"/>
             </group>
 
             <!--Vouchers-->

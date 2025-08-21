@@ -13,4 +13,11 @@
         <field name="country_id" ref="base.mx"/>
         <field name="struct_ids" eval="[(4, ref('l10n_mx_regular_pay'))]"/>
     </record>
+
+    <record id="l10n_mx_input_isr_adjustment" model="hr.payslip.input.type">
+        <field name="name">ISR Adjustment</field>
+        <field name="code">ISR_ADJUSTMENT</field>
+        <field name="country_id" ref="base.mx"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_mx_regular_pay'))]"/>
+    </record>
 </odoo>

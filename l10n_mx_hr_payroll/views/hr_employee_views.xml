@@ -13,7 +13,6 @@
                         <span>%</span>
                     </div>
                     <field name="l10n_mx_savings_fund" string="Savings Fund"/>
-                    <field name="l10n_mx_external_annual_declaration" string="External Annual Declaration"/>
                     <separator string="Vouchers"/>
                     <field name="l10n_mx_payment_period_vouchers" string="Payment Period"/>
                     <field name="l10n_mx_meal_voucher_amount" string="Meal Vouchers"/>
