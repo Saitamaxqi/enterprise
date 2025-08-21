@@ -3,7 +3,7 @@ from logging import getLogger
 
 from requests.exceptions import RequestException
 
-from odoo import api, fields, models
+from odoo import api, fields, models, modules
 from odoo.exceptions import UserError
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 
@@ -39,7 +39,8 @@ class VoipCall(models.Model):
         if not call:
             return
         call.transcription_status = "queued"
-        self.env.cr.commit()
+        if not modules.module.current_test:
+            self.env.cr.commit()
         domain = [
             ("res_model", "=", "voip.call"),
             ("res_id", "=", call.id),
