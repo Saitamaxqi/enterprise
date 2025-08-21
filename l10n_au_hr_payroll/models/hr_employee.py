@@ -13,22 +13,22 @@ class HrEmployee(models.Model):
         inverse="_inverse_l10n_au_abn",
         store=True,
         readonly=False,
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_au_previous_payroll_id = fields.Char(
         string="Previous Payroll ID",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_au_payroll_id = fields.Char(
         string="Payroll ID",
-        groups="hr.group_hr_user")
-    l10n_au_medicare_variation_form = fields.Binary(string="Medicare Variation Form", attachment=True, groups="hr.group_hr_user")
-    l10n_au_medicare_variation_form_filename = fields.Char(groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
+    l10n_au_medicare_variation_form = fields.Binary(string="Medicare Variation Form", attachment=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_au_medicare_variation_form_filename = fields.Char(groups="hr_payroll.group_hr_payroll_user")
     l10n_au_super_account_ids = fields.One2many(
         "l10n_au.super.account",
         "employee_id",
         string="Super Accounts",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
     )
-    super_account_warning = fields.Text(compute="_compute_proportion_warnings", groups="hr.group_hr_user")
+    super_account_warning = fields.Text(compute="_compute_proportion_warnings", groups="hr_payroll.group_hr_payroll_user")
     l10n_au_other_names = fields.Char("Other Given Names", groups="hr.group_hr_user")
 
     @api.depends("l10n_au_tfn", "l10n_au_income_stream_type")

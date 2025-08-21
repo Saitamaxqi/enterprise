@@ -1,8 +1,10 @@
-from odoo import models
+from odoo import fields, models
 
 
 class HrVersion(models.Model):
     _inherit = 'hr.version'
+
+    overtime_from_attendance = fields.Boolean(groups="hr_payroll.group_hr_payroll_user")
 
     def _preprocess_work_hours_data(self, work_data, date_from, date_to):
         """

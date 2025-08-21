@@ -9,43 +9,43 @@ class HrVersion(models.Model):
 
     l10n_us_old_w4 = fields.Boolean(
         string="Filled in 2019 or Before",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         help="Check only if W4 was filed before 2020.")
     l10n_us_w4_step_2 = fields.Boolean(
         string="Step 2(c): Multiple Jobs or Spouse Works",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         help="Check if Step 2 (c) in employee's W4 form is selected.")
     l10n_us_w4_step_3 = fields.Float(
         string="Step 3: Dependents Amount (USD)",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         help="The total amount in USD from Step 3 (Dependants and Other Credits) of the W4 form.")
     l10n_us_w4_step_4a = fields.Float(
         string="Step 4(a): Other Income",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         help="The total amount in USD from Step 4(a) (Other Income) of the W4 form.")
     l10n_us_w4_step_4b = fields.Float(
         string="Step 4(b): Deductions",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         help="The total amount in USD from Step 4(b) (Deductions) of the W4 form.")
     l10n_us_w4_step_4c = fields.Float(
         string="Step 4(c): Withholdings",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         help="For 2020 W4 Form:  The total amount in USD from Step 4(c) (Extra Withholdings).  For 2019 W4 Form:  line 6 (Additional amount to withheld).")
     l10n_us_w4_allowances_count = fields.Integer(
         string="Number of Claimed Regular Allowances",
         tracking=True,
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Total number of allowances claimed in employee's W4 form and State's withholdings certificate.")
     l10n_us_w4_withholding_deduction_allowances = fields.Integer(
         string="Withholding Allowances for estimated deductions",
         tracking=True,
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Number of additional withholding allowances from estimated deductions. Step 1(b) in DE 4 form (CA).")
     l10n_us_filing_status = fields.Selection(
         selection=[
@@ -57,7 +57,7 @@ class HrVersion(models.Model):
         string="Federal Tax Filing Status",
         default='single',
         tracking=True,
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Filing status used for Federal income tax calculation.")
     l10n_us_state_filing_status = fields.Selection(
         selection=[
@@ -77,34 +77,34 @@ class HrVersion(models.Model):
             ('co_status_3', 'CO: Head of Household')],
         string="State Tax Filing Status",
         tracking=True,
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Filing status used for State income tax calculation.")
     l10n_us_statutory_employee = fields.Boolean(
         string="Statutory Employee",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Employees that are exempt from income tax, but subject to FICA Taxes. If checked off it will appear in box 13 of the W2 Report.")
     l10n_us_retirement_plan = fields.Boolean(
         string="Retirement Plan",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="""Employee was an "active participant" in an employer-sponsor retirement plan. If checked off it will appear in box 13 of the W2 Report.""")
     l10n_us_third_party_sick_pay = fields.Boolean(
         string="Third-Party Sick Pay",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Employee received third-party sick pay benefits from a third party during the tax year. If checked off it will appear in box 13 of the W2 Report.")
 
     l10n_us_state_withholding_allowance = fields.Float(
         string="State Withholding Allowance",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Add the allowance the employee wants to deduct from their State's withholding (usually an annual amount) "
              "according to their State Withholding Certificate. If the employee didn't fill out a State Withholding "
              "Certificate, leave it blank")
     l10n_us_state_extra_withholding = fields.Float(
         string="State Extra Withholding",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         help="Extra amount the employee requests to be withheld per pay period according to their State Withholding "
              "Certificate. If the employee didn't fill out a State Withholding Certificate, leave it blank.")
     l10n_us_pre_retirement_amount = fields.Float(
-        string="Retirement Plans: 401(k)", groups="hr.group_hr_user",
+        string="Retirement Plans: 401(k)", groups="hr_payroll.group_hr_payroll_user",
         help="Pre-tax contributions to Retirement Plans: 401(k), could be either a percentage or a fixed amount per payslip.")
     l10n_us_pre_retirement_type = fields.Selection(
         selection=[
@@ -112,9 +112,9 @@ class HrVersion(models.Model):
             ('fixed', '$ / slip')],
         string="Retirement Plans: 401(k) Type",
         default='percent',
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_pre_retirement_matching_amount = fields.Float(
-        string="Retirement Plans: Matching Amount", groups="hr.group_hr_user",
+        string="Retirement Plans: Matching Amount", groups="hr_payroll.group_hr_payroll_user",
         help="Benefit Matching to Retirement Plans: Employer's 401(k) benefit matching, could be either a percentage or a fixed amount per payslip.")
     l10n_us_pre_retirement_matching_type = fields.Selection(
         selection=[
@@ -122,57 +122,57 @@ class HrVersion(models.Model):
             ('fixed', '$ / slip')],
         string="Retirement Plans: Matching Type",
         default='percent',
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_pre_retirement_matching_yearly_cap = fields.Float(
         string='Retirement Plans: Matching Yearly Cap',
         default=100,
         help="Maximum amount, as percentage (%), of the employee's salary that will be matched by the Employer as benefit.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_health_benefits_medical = fields.Monetary(
         string="Health Benefits: Medical",
         help="Pre-tax amount (USD) deducted for Medical health benefits.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_health_benefits_dental = fields.Monetary(
         string="Health Benefits: Dental",
         help="Pre-tax amount (USD) deducted for Dental health benefits.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_health_benefits_vision = fields.Monetary(
         string="Health Benefits: Vision",
         help="Pre-tax amount (USD) deducted for  Vision health benefits.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_health_benefits_fsa = fields.Monetary(
         string="Health Benefits: FSA",
         help="Pre-tax amount (USD) deducted for Flexible Spending Accounts (FSA).",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_health_benefits_fsadc = fields.Monetary(
         string="Health Benefits: FSA Dependent Care",
         help="Pre-tax amount (USD) deducted for Flexible Spending Accounts (FSA) for Dependent Care.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_health_benefits_hsa = fields.Monetary(
         string="Health Benefits: HSA",
         help="Pre-tax amount (USD) deducted for pre-tax Health Savings Account (HSA).",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_commuter_benefits = fields.Monetary(
         string="Commuter Benefits",
         help="Pre-tax amount (USD) deducted for Commuter benefits.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_post_roth_401k_amount = fields.Float(
         string="ROTH 401(k)",
         help="Post-tax contributions to Retirement plan: Roth 401(K), could be either a percentage or a fixed amount per payslip.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_post_roth_401k_type = fields.Selection(
         selection=[
             ('percent', '%'),
             ('fixed', '$ / slip')],
         string="ROTH 401(k) Type",
         default='percent',
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_us_employee_state_code = fields.Char(
         related='address_id.state_id.code',
-        readonly=True, groups="hr.group_hr_user")
+        readonly=True, groups="hr_payroll.group_hr_payroll_user")
     l10n_us_worker_compensation_id = fields.Many2one(
         'l10n.us.worker.compensation',
-        string="Worker Compensation", groups="hr.group_hr_user")
+        string="Worker Compensation", groups="hr_payroll.group_hr_payroll_user")
 
     _l10n_us_pre_retirement_amount_is_percentage = models.Constraint(
         "CHECK(l10n_us_pre_retirement_type IS NULL OR l10n_us_pre_retirement_type='fixed' OR (l10n_us_pre_retirement_type='percent' AND l10n_us_pre_retirement_amount >= 0 AND l10n_us_pre_retirement_amount <= 100))",
@@ -187,7 +187,7 @@ class HrVersion(models.Model):
     def _check_us_state_filling_status(self):
         for version in self:
             state_code = version.address_id.state_id.code
-            filing_status = version.l10n_us_state_filing_status
+            filing_status = version.sudo().l10n_us_state_filing_status
             if not state_code:
                 continue
             if state_code not in ['NY', 'CA', 'AL', 'CO'] and filing_status:

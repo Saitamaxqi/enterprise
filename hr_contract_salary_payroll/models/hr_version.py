@@ -1,12 +1,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models
+from odoo import fields, models
 
 from datetime import datetime, time
 
 
 class HrVersion(models.Model):
     _inherit = 'hr.version'
+
+    wage_with_holidays = fields.Monetary(groups="hr_payroll.group_hr_payroll_user")
+    wage_on_signature = fields.Monetary(groups="hr_payroll.group_hr_payroll_user")
+    final_yearly_costs = fields.Monetary(groups="hr_payroll.group_hr_payroll_user")
+    monthly_yearly_costs = fields.Monetary(groups="hr_payroll.group_hr_payroll_user")
 
     # DO NOT CALL THIS FUNCTION OUTSIDE OF A ROLLBACK SAVEPOINT
     def _generate_salary_simulation_payslip(self):

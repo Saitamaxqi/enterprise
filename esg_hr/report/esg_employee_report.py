@@ -134,7 +134,7 @@ class EsgEmployeeReport(models.Model):
         def get_wages(employees):
             wages = []
             for emp in employees:
-                if wage := emp.version_id._get_normalized_wage():
+                if wage := emp.version_id.sudo()._get_normalized_wage():
                     wages.append(wage)
             return wages
 

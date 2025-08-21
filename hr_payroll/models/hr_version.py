@@ -14,37 +14,53 @@ class HrVersion(models.Model):
 
     schedule_pay = fields.Selection(
         selection=lambda self: self.env['hr.payroll.structure.type']._get_selection_schedule_pay(),
-        compute='_compute_schedule_pay', store=True, readonly=False, groups="hr.group_hr_user", default='monthly', string='Pay Schedule')
+        compute='_compute_schedule_pay', store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user", default='monthly', string='Pay Schedule')
     show_schedule_pay = fields.Boolean(compute='_compute_show_schedule_pay', groups="hr.group_hr_user")
     resource_calendar_id = fields.Many2one(default=lambda self: self.env.company.resource_calendar_id,
         help='''Employee's working schedule.
         When left empty, the employee is considered to have a fully flexible schedule, allowing them to work without any time limit, anytime of the week.
         '''
     )
+    contract_date_start = fields.Date(groups="hr_payroll.group_hr_payroll_user")
+    contract_date_end = fields.Date(groups="hr_payroll.group_hr_payroll_user")
+    trial_date_end = fields.Date(groups="hr_payroll.group_hr_payroll_user")
+    date_start = fields.Date(groups="hr_payroll.group_hr_payroll_user")
+    date_end = fields.Date(groups="hr_payroll.group_hr_payroll_user")
+    wage = fields.Monetary(groups="hr_payroll.group_hr_payroll_user")
+    contract_wage = fields.Monetary(groups="hr_payroll.group_hr_payroll_user")
+    work_entry_source = fields.Selection(groups="hr_payroll.group_hr_payroll_user")
+    work_entry_source_calendar_invalid = fields.Boolean(groups="hr_payroll.group_hr_payroll_user")
+    is_current = fields.Boolean(groups="hr_payroll.group_hr_payroll_user")
+    is_past = fields.Boolean(groups="hr_payroll.group_hr_payroll_user")
+    is_future = fields.Boolean(groups="hr_payroll.group_hr_payroll_user")
+    is_in_contract = fields.Boolean(groups="hr_payroll.group_hr_payroll_user")
+    structure_type_id = fields.Many2one(groups="hr_payroll.group_hr_payroll_user")
+    contract_type_id = fields.Many2one(groups="hr_payroll.group_hr_payroll_user")
+
     hours_per_week = fields.Float(related='resource_calendar_id.hours_per_week', groups="hr.group_hr_user")
     full_time_required_hours = fields.Float(related='resource_calendar_id.full_time_required_hours', groups="hr.group_hr_user")
     is_fulltime = fields.Boolean(related='resource_calendar_id.is_fulltime', groups="hr.group_hr_user")
     wage_type = fields.Selection([
         ('monthly', 'Fixed Wage'),
         ('hourly', 'Hourly Wage')
-    ], compute='_compute_wage_type', store=True, readonly=False, groups="hr.group_hr_user")
-    hourly_wage = fields.Monetary('Hourly Wage', tracking=True, help="Employee's hourly gross wage.", groups="hr.group_hr_user")
+    ], compute='_compute_wage_type', store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
+    hourly_wage = fields.Monetary('Hourly Wage', tracking=True, help="Employee's hourly gross wage.", groups="hr_payroll.group_hr_payroll_user")
     payslips_count = fields.Integer("# Payslips", compute='_compute_payslips_count', groups="hr_payroll.group_hr_payroll_user")
     calendar_changed = fields.Boolean(help="Whether the previous or next contract has a different schedule or not", groups="hr.group_hr_user")
 
-    time_credit = fields.Boolean('Part Time', readonly=False, groups="hr.group_hr_user")
+    time_credit = fields.Boolean('Part Time', readonly=False, groups="hr_payroll.group_hr_payroll_user")
     work_time_rate = fields.Float(
         compute='_compute_work_time_rate', store=True, readonly=True,
-        string='Work time rate', help='Work time rate versus full time working schedule.', groups="hr.group_hr_user")
+        string='Work time rate', help='Work time rate versus full time working schedule.', groups="hr_payroll.group_hr_payroll_user")
     standard_calendar_id = fields.Many2one(
         'resource.calendar', default=lambda self: self.env.company.resource_calendar_id, readonly=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", groups="hr.group_hr_user")
     time_credit_type_id = fields.Many2one(
         'hr.work.entry.type', string='Part Time Work Entry Type',
         domain=[('is_leave', '=', True)],
-        help="The work entry type used when generating work entries to fit full time working schedule.", groups="hr.group_hr_user")
+        help="The work entry type used when generating work entries to fit full time working schedule.", groups="hr_payroll.group_hr_payroll_user")
     is_non_resident = fields.Boolean(string='Non-resident', help='If the employee is not a legal resident of the country where they are employed', groups="hr.group_hr_user")
-    disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr.group_hr_user", tracking=True)
+    disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr_payroll.group_hr_payroll_user", tracking=True)
 
     @api.depends('structure_type_id')
     def _compute_schedule_pay(self):
@@ -251,10 +267,10 @@ class HrVersion(models.Model):
 
     @api.model
     def _recompute_calendar_changed(self, employee_ids):
-        version_ids = self.search([('employee_id', 'in', employee_ids.ids)], order='contract_date_start asc')
-        if not version_ids:
+        versions_sudo = self.sudo().search([('employee_id', 'in', employee_ids.ids)], order='contract_date_start asc')
+        if not versions_sudo:
             return
-        version_ids._compute_calendar_changed()
+        versions_sudo._compute_calendar_changed()
 
     def action_open_payslips(self):
         # [XBO] TODO: to remove if we don't want to display the button in the list view of version

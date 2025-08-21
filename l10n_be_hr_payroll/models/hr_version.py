@@ -43,160 +43,157 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         tracking=True,
         groups="hr_payroll.group_hr_payroll_user")
 
-    transport_mode_car = fields.Boolean('Uses company car', groups="hr.group_hr_user")
-    transport_mode_private_car = fields.Boolean('Uses private car', groups="hr.group_hr_user")
-    transport_mode_train = fields.Boolean('Uses train transportation', groups="hr.group_hr_user")
-    transport_mode_public = fields.Boolean('Uses another public transportation', groups="hr.group_hr_user")
-    car_atn = fields.Monetary(string='Car BIK', help='Benefit in Kind (Company Car)', groups="hr.group_hr_user")
+    transport_mode_car = fields.Boolean('Uses company car', groups="hr_payroll.group_hr_payroll_user")
+    transport_mode_private_car = fields.Boolean('Uses private car', groups="hr_payroll.group_hr_payroll_user")
+    transport_mode_train = fields.Boolean('Uses train transportation', groups="hr_payroll.group_hr_payroll_user")
+    transport_mode_public = fields.Boolean('Uses another public transportation', groups="hr_payroll.group_hr_payroll_user")
+    car_atn = fields.Monetary(string='Car BIK', help='Benefit in Kind (Company Car)', groups="hr_payroll.group_hr_payroll_user")
     train_transport_employee_amount = fields.Monetary(
-        'Train transport paid by the employee (Monthly)', groups="hr.group_hr_user")
+        'Train transport paid by the employee (Monthly)', groups="hr_payroll.group_hr_payroll_user")
     public_transport_employee_amount = fields.Monetary(
-        'Public transport paid by the employee (Monthly)', groups="hr.group_hr_user")
+        'Public transport paid by the employee (Monthly)', groups="hr_payroll.group_hr_payroll_user")
     warrant_value_employee = fields.Monetary(
-        compute='_compute_commission_cost', string="Warrant monthly value for the employee", groups="hr.group_hr_user")
+        compute='_compute_commission_cost', string="Warrant monthly value for the employee", groups="hr_payroll.group_hr_payroll_user")
 
     meal_voucher_paid_by_employer = fields.Monetary(
-        compute='_compute_meal_voucher_info', string="Meal Voucher Paid by Employer", groups="hr.group_hr_user")
+        compute='_compute_meal_voucher_info', string="Meal Voucher Paid by Employer", groups="hr_payroll.group_hr_payroll_user")
     meal_voucher_paid_monthly_by_employer = fields.Monetary(
-        compute='_compute_meal_voucher_info', groups="hr.group_hr_user")
-    company_car_total_depreciated_cost = fields.Monetary(groups="hr.group_hr_user")
+        compute='_compute_meal_voucher_info', groups="hr_payroll.group_hr_payroll_user")
+    company_car_total_depreciated_cost = fields.Monetary(groups="hr_payroll.group_hr_payroll_user")
     private_car_reimbursed_amount = fields.Monetary(
-        compute='_compute_private_car_reimbursed_amount', groups="hr.group_hr_user")
-    # km_home_work = fields.Integer(related="employee_id.km_home_work", related_sudo=True, readonly=False)
-    # distance_home_work = fields.Integer(related="employee_id.distance_home_work", readonly=False)
-    # distance_home_work_unit = fields.Selection(related='employee_id.distance_home_work_unit', readonly=False)
+        compute='_compute_private_car_reimbursed_amount', groups="hr_payroll.group_hr_payroll_user")
     train_transport_reimbursed_amount = fields.Monetary(
-        string='Train Transport Reimbursed amount', groups="hr.group_hr_user",
+        string='Train Transport Reimbursed amount', groups="hr_payroll.group_hr_payroll_user",
         compute='_compute_train_transport_reimbursed_amount', readonly=False, store=True)
     public_transport_reimbursed_amount = fields.Monetary(
-        string='Public Transport Reimbursed amount', groups="hr.group_hr_user",
+        string='Public Transport Reimbursed amount', groups="hr_payroll.group_hr_payroll_user",
         compute='_compute_public_transport_reimbursed_amount', readonly=False, store=True)
     warrants_cost = fields.Monetary(
-        compute='_compute_commission_cost', string="Warrant monthly cost for the employer", groups="hr.group_hr_user")
-    yearly_commission = fields.Monetary(compute='_compute_commission_cost', groups="hr.group_hr_user")
-    yearly_commission_cost = fields.Monetary(compute='_compute_commission_cost', groups="hr.group_hr_user")
+        compute='_compute_commission_cost', string="Warrant monthly cost for the employer", groups="hr_payroll.group_hr_payroll_user")
+    yearly_commission = fields.Monetary(compute='_compute_commission_cost', groups="hr_payroll.group_hr_payroll_user")
+    yearly_commission_cost = fields.Monetary(compute='_compute_commission_cost', groups="hr_payroll.group_hr_payroll_user")
 
     # Advantages
     commission_on_target = fields.Monetary(
         string="Commission",
         tracking=True,
         help="Monthly gross amount that the employee receives if the target is reached.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     fuel_card = fields.Monetary(
         string="Fuel Card",
         tracking=True,
         help="Monthly amount the employee receives on his fuel card.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     internet = fields.Monetary(
         string="Internet Subscription",
         tracking=True,
         help="The employee's internet subcription will be paid up to this amount.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     representation_fees = fields.Monetary(
         string="Expense Fees",
         tracking=True,
         help="Monthly net amount the employee receives to cover his representation fees.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     mobile = fields.Monetary(
         string="Mobile Subscription",
         tracking=True,
         help="The employee's mobile subscription will be paid up to this amount.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     has_laptop = fields.Boolean(
         string="Laptop",
         tracking=True,
         help="A benefit in kind is paid when the employee uses its laptop at home.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     has_bicycle = fields.Boolean(string="Bicycle to work", default=False, groups="hr.group_hr_user",
         help="Use a bicycle as a transport mode to go to work")
     meal_voucher_amount = fields.Monetary(
         string="Meal Vouchers",
         tracking=True,
         help="Amount the employee receives in the form of meal vouchers per worked day.",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     meal_voucher_average_monthly_amount = fields.Monetary(
-        compute="_compute_meal_voucher_info", groups="hr.group_hr_user")
+        compute="_compute_meal_voucher_info", groups="hr_payroll.group_hr_payroll_user")
     eco_checks = fields.Monetary(
-        "Eco Vouchers", groups="hr.group_hr_user",
+        "Eco Vouchers", groups="hr_payroll.group_hr_payroll_user",
         help="Yearly amount the employee receives in the form of eco vouchers.")
-    ip = fields.Boolean('Intellectual Property', default=False, tracking=True, groups="hr.group_hr_user")
-    ip_wage_rate = fields.Float(string="IP percentage", help="Should be between 0 and 100 %", groups="hr.group_hr_user")
-    ip_value = fields.Float(compute='_compute_ip_value', groups="hr.group_hr_user")
-    no_onss = fields.Boolean(string="No ONSS", groups="hr.group_hr_user")
-    no_withholding_taxes = fields.Boolean(groups="hr.group_hr_user")
-    rd_percentage = fields.Integer("Time in R&D", groups="hr.group_hr_user")
+    ip = fields.Boolean('Intellectual Property', default=False, tracking=True, groups="hr_payroll.group_hr_payroll_user")
+    ip_wage_rate = fields.Float(string="IP percentage", help="Should be between 0 and 100 %", groups="hr_payroll.group_hr_payroll_user")
+    ip_value = fields.Float(compute='_compute_ip_value', groups="hr_payroll.group_hr_payroll_user")
+    no_onss = fields.Boolean(string="No ONSS", groups="hr_payroll.group_hr_payroll_user")
+    no_withholding_taxes = fields.Boolean(groups="hr_payroll.group_hr_payroll_user")
+    rd_percentage = fields.Integer("Time in R&D", groups="hr_payroll.group_hr_payroll_user")
     employee_age = fields.Integer('Age of Employee', compute='_compute_employee_age',
                                   compute_sudo=True, groups="hr.group_hr_user")
     l10n_be_impulsion_plan = fields.Selection([
         ('25yo', '< 25 years old'),
         ('12mo', '12 months +'),
-        ('55yo', '55+ years old')], string="Impulsion Plan", groups="hr.group_hr_user")
+        ('55yo', '55+ years old')], string="Impulsion Plan", groups="hr_payroll.group_hr_payroll_user")
     l10n_be_onss_restructuring = fields.Boolean(
-        string="ONSS Reduction for Restructuring", groups="hr.group_hr_user")
+        string="ONSS Reduction for Restructuring", groups="hr_payroll.group_hr_payroll_user")
 
-    has_hospital_insurance = fields.Boolean(string="Hospital Insurance", groups="hr.group_hr_user", tracking=True)
-    insured_relative_children = fields.Integer(string="# Insured Children < 19 y/o", groups="hr.group_hr_user", tracking=True)
-    insured_relative_adults = fields.Integer(string="# Insured Children >= 19 y/o", groups="hr.group_hr_user", tracking=True)
-    insured_relative_spouse = fields.Boolean(string="Insured Spouse", groups="hr.group_hr_user", tracking=True)
-    hospital_insurance_amount_per_child = fields.Float(string="Amount per Child", groups="hr.group_hr_user",
+    has_hospital_insurance = fields.Boolean(string="Hospital Insurance", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    insured_relative_children = fields.Integer(string="# Insured Children < 19 y/o", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    insured_relative_adults = fields.Integer(string="# Insured Children >= 19 y/o", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    insured_relative_spouse = fields.Boolean(string="Insured Spouse", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    hospital_insurance_amount_per_child = fields.Float(string="Amount per Child", groups="hr_payroll.group_hr_payroll_user",
         default=lambda self: float(self.env['ir.config_parameter'].sudo().get_param('hr_contract_salary.hospital_insurance_amount_child', default=7.2)))
-    hospital_insurance_amount_per_adult = fields.Float(string="Amount per Adult", groups="hr.group_hr_user",
+    hospital_insurance_amount_per_adult = fields.Float(string="Amount per Adult", groups="hr_payroll.group_hr_payroll_user",
         default=lambda self: float(self.env['ir.config_parameter'].sudo().get_param('hr_contract_salary.hospital_insurance_amount_adult', default=20.5)))
-    insurance_amount = fields.Float(compute='_compute_insurance_amount', string="Insurance Amount", groups="hr.group_hr_user", tracking=True)
-    insured_relative_adults_total = fields.Integer(compute='_compute_insured_relative_adults_total', groups="hr.group_hr_user")
+    insurance_amount = fields.Float(compute='_compute_insurance_amount', string="Insurance Amount", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    insured_relative_adults_total = fields.Integer(compute='_compute_insured_relative_adults_total', groups="hr_payroll.group_hr_payroll_user")
     l10n_be_hospital_insurance_notes = fields.Text(
-        string="Hospital Insurance: Additional Info", groups="hr.group_hr_user")
+        string="Hospital Insurance: Additional Info", groups="hr_payroll.group_hr_payroll_user")
 
     wage_with_holidays = fields.Monetary(
-        string="Wage With Sacrifices", groups="hr.group_hr_user",
+        string="Wage With Sacrifices", groups="hr_payroll.group_hr_payroll_user",
         help="Adapted salary, according to the sacrifices defined on the contract (Example: Extra-legal time off, a percentage of the salary invested in a group insurance, etc...)")
     # Group Insurance
     l10n_be_group_insurance_rate = fields.Float(
         string="Group Insurance Sacrifice Rate", tracking=True,
-        help="Should be between 0 and 100 %", groups="hr.group_hr_user")
+        help="Should be between 0 and 100 %", groups="hr_payroll.group_hr_payroll_user")
     l10n_be_group_insurance_amount = fields.Monetary(
-        compute='_compute_l10n_be_group_insurance_amount', store=True, groups="hr.group_hr_user")
+        compute='_compute_l10n_be_group_insurance_amount', store=True, groups="hr_payroll.group_hr_payroll_user")
     l10n_be_group_insurance_cost = fields.Monetary(
-        compute='_compute_l10n_be_group_insurance_amount', store=True, groups="hr.group_hr_user")
+        compute='_compute_l10n_be_group_insurance_amount', store=True, groups="hr_payroll.group_hr_payroll_user")
     # Ambulatory Insurance
     l10n_be_has_ambulatory_insurance = fields.Boolean(
         string="Ambulatory Insurance",
-        groups="hr.group_hr_user", tracking=True)
+        groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_be_ambulatory_insured_children = fields.Integer(
         string="Ambulatory: # Insured Children < 19 y/o",
-        groups="hr.group_hr_user", tracking=True)
+        groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_be_ambulatory_insured_adults = fields.Integer(
         string="Ambulatory: # Insured Children >= 19 y/o",
-        groups="hr.group_hr_user", tracking=True)
+        groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_be_ambulatory_insured_spouse = fields.Boolean(
         string="Ambulatory: Insured Spouse",
-        groups="hr.group_hr_user", tracking=True)
+        groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_be_ambulatory_amount_per_child = fields.Float(
-        string="Ambulatory: Amount per Child", groups="hr.group_hr_user",
+        string="Ambulatory: Amount per Child", groups="hr_payroll.group_hr_payroll_user",
         default=lambda self: float(self.env['ir.config_parameter'].sudo().get_param('hr_contract_salary.ambulatory_insurance_amount_child', default=7.2)))
     l10n_be_ambulatory_amount_per_adult = fields.Float(
-        string="Ambulatory: Amount per Adult", groups="hr.group_hr_user",
+        string="Ambulatory: Amount per Adult", groups="hr_payroll.group_hr_payroll_user",
         default=lambda self: float(self.env['ir.config_parameter'].sudo().get_param('hr_contract_salary.ambulatory_insurance_amount_adult', default=20.5)))
     l10n_be_ambulatory_insurance_amount = fields.Float(
         compute='_compute_ambulatory_insurance_amount', string="Ambulatory: Insurance Amount",
-        groups="hr.group_hr_user", compute_sudo=True, tracking=True)
+        groups="hr_payroll.group_hr_payroll_user", compute_sudo=True, tracking=True)
     l10n_be_ambulatory_insured_adults_total = fields.Integer(
         compute='_compute_ambulatory_insured_adults_total',
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_be_ambulatory_insurance_notes = fields.Text(
-        string="Ambulatory Insurance: Additional Info", groups="hr.group_hr_user")
+        string="Ambulatory Insurance: Additional Info", groups="hr_payroll.group_hr_payroll_user")
 
-    l10n_be_mobility_budget = fields.Boolean(string="Mobility Budget", groups="hr.group_hr_user")
+    l10n_be_mobility_budget = fields.Boolean(string="Mobility Budget", groups="hr_payroll.group_hr_payroll_user")
     l10n_be_mobility_budget_amount = fields.Monetary(
-        string="Mobility Budget Amount", groups="hr.group_hr_user"
+        string="Mobility Budget Amount", groups="hr_payroll.group_hr_payroll_user"
     )
     l10n_be_mobility_budget_amount_monthly = fields.Monetary(
         string="Mobility Budget Monthly Amount",
         compute="_compute_l10n_be_mobility_budget_amount_monthly",
-        groups="hr.group_hr_user"
+        groups="hr_payroll.group_hr_payroll_user"
     )
     l10n_be_wage_with_mobility_budget = fields.Monetary(
-        tracking=True, string="Wage with Mobility Budget", groups="hr.group_hr_user"
+        tracking=True, string="Wage with Mobility Budget", groups="hr_payroll.group_hr_payroll_user"
     )
 
     l10n_be_is_below_scale = fields.Boolean(
@@ -204,7 +201,7 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         search='_search_l10n_be_is_below_scale', compute_sudo=True, groups="hr.group_hr_user")
     l10n_be_is_below_scale_warning = fields.Char(
         compute='_compute_l10n_be_is_below_scale', compute_sudo=True, groups="hr.group_hr_user")
-    l10n_be_canteen_cost = fields.Monetary(string="Canteen Cost", groups="hr.group_hr_user")
+    l10n_be_canteen_cost = fields.Monetary(string="Canteen Cost", groups="hr_payroll.group_hr_payroll_user")
 
     _check_percentage_ip_rate = models.Constraint(
         'CHECK(ip_wage_rate >= 0 AND ip_wage_rate <= 100)',

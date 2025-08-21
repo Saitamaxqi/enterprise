@@ -61,12 +61,20 @@ class HrVersion(models.Model):
         tracking=True, compute="_compute_car_id", store=True, readonly=False,
         domain=lambda self: [('company_id', 'in', (False, self.env.company.id)), ('vehicle_type', '=', 'car')],
         groups='fleet.fleet_group_manager')
-    car_atn = fields.Float(compute='_compute_car_atn_and_costs', string='Car BIK', help='Benefit in Kind (Company Car)',
-                           store=True, compute_sudo=True, groups="hr.group_hr_user")
+    car_atn = fields.Float(
+        compute='_compute_car_atn_and_costs',
+        store=True,
+        compute_sudo=True,
+        groups="hr_payroll.group_hr_payroll_user",
+    )
     wishlist_car_total_depreciated_cost = fields.Float(
-        compute='_compute_car_atn_and_costs', store=True, compute_sudo=True, groups="hr.group_hr_user")
-    company_car_total_depreciated_cost = fields.Float(compute='_compute_car_atn_and_costs', store=True,
-                                                      compute_sudo=True, groups="hr.group_hr_user")
+        compute='_compute_car_atn_and_costs', store=True, compute_sudo=True, groups="hr_payroll.group_hr_payroll_user")
+    company_car_total_depreciated_cost = fields.Float(
+        compute='_compute_car_atn_and_costs',
+        store=True,
+        compute_sudo=True,
+        groups="hr_payroll.group_hr_payroll_user",
+    )
     available_cars_amount = fields.Integer(
         compute='_compute_available_cars_amount',
         string='Number of available cars',

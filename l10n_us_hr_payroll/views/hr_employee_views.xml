@@ -21,6 +21,20 @@
                     <field name="l10n_us_retirement_plan"/>
                     <field name="l10n_us_third_party_sick_pay"/>
                 </group>
+                <group name="state_filing" string="State Filing" invisible="country_code != 'US'">
+                    <field name="l10n_us_filing_status" string="Status"/>
+                    <field name="l10n_us_state_filing_status" string="Tax Status"/>
+                    <label for="l10n_us_state_withholding_allowance" string="Withholding Allowance"/>
+                    <div class="o_row">
+                        <field name="l10n_us_state_withholding_allowance" class="o_hr_narrow_field"/>
+                        <span>$</span>
+                    </div>
+                    <label for="l10n_us_state_extra_withholding" string="Extra Withholding"/>
+                    <div class="o_row">
+                        <field name="l10n_us_state_extra_withholding" class="o_hr_narrow_field"/>
+                        <span>$</span>
+                    </div>
+                </group>
                 <group name="l10n_us_pre_tax" string="Retirement Plans" invisible="country_code != 'US'">
                     <label for="l10n_us_pre_retirement_amount" string="401(k)"/>
                     <div class="o_row" name="l10n_us_pre_retirement_amount">
@@ -85,22 +99,6 @@
                     <div class="o_row" name="l10n_us_health_benefits_hsa">
                         <field name="l10n_us_health_benefits_hsa" class="o_hr_narrow_field"/>
                         <div>/ slip</div>
-                    </div>
-                </group>
-            </group>
-            <group name="citizenship" position="after">
-                <group name="state_filing" string="State Filing" invisible="country_code != 'US'">
-                    <field name="l10n_us_filing_status" string="Status"/>
-                    <field name="l10n_us_state_filing_status" string="Tax Status"/>
-                    <label for="l10n_us_state_withholding_allowance" string="Withholding Allowance"/>
-                    <div class="o_row">
-                        <field name="l10n_us_state_withholding_allowance" class="o_hr_narrow_field"/>
-                        <span>$</span>
-                    </div>
-                    <label for="l10n_us_state_extra_withholding" string="Extra Withholding"/>
-                    <div class="o_row">
-                        <field name="l10n_us_state_extra_withholding" class="o_hr_narrow_field"/>
-                        <span>$</span>
                     </div>
                 </group>
             </group>

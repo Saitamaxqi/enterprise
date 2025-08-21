@@ -19,11 +19,11 @@ class HrVersion(models.Model):
     sim_card = fields.Binary(related='employee_id.sim_card', groups="hr.group_hr_manager", readonly=False)
     internet_invoice_filename = fields.Char(groups="hr.group_hr_user")
     internet_invoice = fields.Binary(related="employee_id.internet_invoice", groups="hr.group_hr_manager", readonly=False)
-    double_holiday_wage = fields.Monetary(compute='_compute_double_holiday_wage', groups="hr.group_hr_user")
+    double_holiday_wage = fields.Monetary(compute='_compute_double_holiday_wage', groups="hr_payroll.group_hr_payroll_user")
     contract_type_id = fields.Many2one('hr.contract.type', "Contract Type",
                                        default=lambda self: self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_cdi',
                                                                          raise_if_not_found=False) if self.env.company.country_id.code == "BE" else self.env['hr.contract.type'])
-    l10n_be_bicyle_cost = fields.Float(compute='_compute_l10n_be_bicyle_cost', groups="hr.group_hr_user")
+    l10n_be_bicyle_cost = fields.Float(compute='_compute_l10n_be_bicyle_cost', groups="hr_payroll.group_hr_payroll_user")
 
     l10n_be_mobility_budget_amount = fields.Monetary(
         string="Mobility Budget Amount",

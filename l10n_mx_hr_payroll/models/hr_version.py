@@ -6,23 +6,23 @@ from odoo import fields, models
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
-    l10n_mx_holiday_bonus_rate = fields.Float(string="MX: Holiday Bonus Rate", groups="hr.group_hr_user")
+    l10n_mx_holiday_bonus_rate = fields.Float(string="MX: Holiday Bonus Rate", groups="hr_payroll.group_hr_payroll_user")
 
     l10n_mx_payment_period_vouchers = fields.Selection([
         ('last_day_of_month', 'Last Day of the Month'),
         ('in_period', 'In the period'),
-    ], default="last_day_of_month", required=True, groups="hr.group_hr_user")
-    l10n_mx_meal_voucher_amount = fields.Monetary(string="MX: Meal Vouchers", groups="hr.group_hr_user")
-    l10n_mx_transport_amount = fields.Monetary(string="MX: Transport Amount", groups="hr.group_hr_user")
-    l10n_mx_gasoline_amount = fields.Monetary(string="MX: Gasoline Amount", groups="hr.group_hr_user")
+    ], default="last_day_of_month", required=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_mx_meal_voucher_amount = fields.Monetary(string="MX: Meal Vouchers", groups="hr_payroll.group_hr_payroll_user")
+    l10n_mx_transport_amount = fields.Monetary(string="MX: Transport Amount", groups="hr_payroll.group_hr_payroll_user")
+    l10n_mx_gasoline_amount = fields.Monetary(string="MX: Gasoline Amount", groups="hr_payroll.group_hr_payroll_user")
 
-    l10n_mx_savings_fund = fields.Monetary(string="MX: Savings Fund", groups="hr.group_hr_user")
+    l10n_mx_savings_fund = fields.Monetary(string="MX: Savings Fund", groups="hr_payroll.group_hr_payroll_user")
     l10n_mx_infonavit = fields.One2many(
         'l10n.mx.hr.infonavit', 'version_id', string="MX: Infonavit", groups="hr.group_hr_user")
     l10n_mx_fonacot = fields.One2many(
         'l10n.mx.hr.fonacot', 'version_id', string="MX: Fonacot", groups="hr.group_hr_user")
     l10n_mx_external_annual_declaration = fields.Boolean(
-        string="MX: External Annual Declaration", groups="hr.group_hr_user",
+        string="MX: External Annual Declaration", groups="hr_payroll.group_hr_payroll_user",
         help="Activate this box if the employee will make the annual tax return on their own. "
              "By activating it, the annual ISR adjustment will not be applied.")
 

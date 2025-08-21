@@ -9,25 +9,25 @@ class HrVersion(models.Model):
 
     l10n_hk_internet = fields.Monetary(
         string="HK: Internet Subscription",
-        tracking=True, groups="hr.group_hr_user",
+        tracking=True, groups="hr_payroll.group_hr_payroll_user",
         help="A benefit in kind is paid for the employee's internet subcription.")
     l10n_hk_mpf_vc_option = fields.Selection(
         selection=[
             ("none", "Only Mandatory Contribution"),
             ("custom", "With Fixed %VC"),
             ("max", "Cap 5% VC")],
-        string="Volunteer Contribution Option", groups="hr.group_hr_user",
+        string="Volunteer Contribution Option", groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         copy=False)
     l10n_hk_mpf_vc_percentage = fields.Float(
         string="Volunteer Contribution %",
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         tracking=True,
         copy=False)
     l10n_hk_rental_id = fields.Many2one(
         'l10n_hk.rental',
         string='Current Rental',
-        groups="hr.group_hr_user",
+        groups="hr_payroll.group_hr_payroll_user",
         copy=False,
     )
 

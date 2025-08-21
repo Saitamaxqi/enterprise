@@ -9,7 +9,7 @@
             <xpath expr="//header" position="after">
                 <div
                     class="alert alert-warning mb-0" role="alert"
-                    invisible="not super_account_warning or country_code != 'AU'" groups="hr.group_hr_user">
+                    invisible="not super_account_warning or country_code != 'AU'" groups="hr_payroll.group_hr_payroll_user">
                     <field name="super_account_warning"/>
                 </div>
             </xpath>

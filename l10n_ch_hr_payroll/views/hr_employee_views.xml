@@ -302,7 +302,7 @@
                         </group>
                     </group>
                 </page>
-                <page string="Source-tax" invisible="not l10n_ch_has_withholding_tax or country_code != 'CH'" groups="hr.group_hr_user">
+                <page string="Source-tax" invisible="not l10n_ch_has_withholding_tax or country_code != 'CH'" groups="hr_payroll.group_hr_payroll_user">
                     <group>
                         <group string="Tax Scale">
                             <field name="l10n_ch_tax_scale_type" widget="radio"/>
