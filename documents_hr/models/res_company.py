@@ -8,9 +8,6 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     documents_hr_settings = fields.Boolean(default=True)
-    documents_hr_folder = fields.Many2one('documents.document', string="HR Folder", check_company=True,
-                                          domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],
-                                          compute='_compute_documents_hr_folder', store=True, readonly=False)
     documents_employee_folder_id = fields.Many2one('documents.document', string="Employees Folder",
         domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)], check_company=True)
     employee_subfolders = fields.Char(
@@ -18,14 +15,9 @@ class ResCompany(models.Model):
         help='Comma separated list of folder names that need to be created under each employee folder.')
     documents_hr_contracts_tags = fields.Many2many('documents.tag', 'documents_hr_contracts_tags_table')
 
-    @api.depends('documents_hr_settings')
-    def _compute_documents_hr_folder(self):
-        folder_id = self.env.ref('documents_hr.document_hr_folder', raise_if_not_found=False)
-        self._reset_default_documents_folder_id('documents_hr_settings', 'documents_hr_folder', folder_id)
-
     def _get_used_folder_ids_domain(self, folder_ids):
         return super()._get_used_folder_ids_domain(folder_ids) | (
-            Domain('documents_hr_folder', 'in', folder_ids) & Domain('documents_hr_settings', '=', True)
+            Domain('documents_employee_folder_id', 'in', folder_ids) & Domain('documents_hr_settings', '=', True)
         )
 
     @api.model_create_multi
@@ -56,9 +48,9 @@ class ResCompany(models.Model):
     def _generate_employee_documents_main_folders(self):
         for company in self:
             company.sudo().documents_employee_folder_id = self.env['documents.document'].sudo().create({
-                'name': company.env._('Employees'),
+                'name': company.env._('Employees - %s', company.name),
                 'type': 'folder',
-                'folder_id': company.documents_hr_folder.id,
+                'folder_id': False,
                 'company_id': company.id,
                 'is_access_via_link_hidden': True,
             })

@@ -14,7 +14,7 @@ class HrEmployee(models.Model):
     hr_employee_contract_folder_id = fields.Many2one('documents.document', string="HR Employee Contract Folder", groups="base.group_system,hr.group_hr_user")
 
     def _get_document_folder(self):
-        return self.company_id.documents_hr_folder if self.company_id.documents_hr_settings else False
+        return self.hr_employee_folder_id if self.company_id.documents_hr_settings else False
 
     def _get_document_partner(self):
         return self.work_contact_id

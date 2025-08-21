@@ -41,6 +41,6 @@ class ResCompany(models.Model):
                 'name': self.env._("Payroll %s", self.name),
                 'type': 'folder',
                 'owner_id': False,
-                'folder_id': self.documents_hr_folder.id,
+                'folder_id': self.documents_employee_folder_id.id,
             }).id
         return self.worker_payroll_folder_id

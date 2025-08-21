@@ -2614,7 +2614,6 @@
             obj().default_get(list(obj().fields_get())),
             **{
                 'documents_hr_settings': True,
-                'documents_hr_folder': obj().env.ref('documents_hr.document_hr_folder').id,
                 'documents_hr_payslips_tags': [(4, obj().env.ref('documents_hr_payroll.documents_tag_payslips').id)],
                 'documents_hr_contracts_tags': [(4, obj().env.ref('documents_hr.documents_hr_tag_contracts').id)],
                 'documents_recruitment_settings': True,
