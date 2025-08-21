@@ -142,7 +142,7 @@ export class SignTemplate extends Component {
         if (signer) {
             signer.name = roleName;
         }
-        this.state.documents.forEach(document => document.iframe.updateRoleName(roleId, roleName));
+        this.state.documents.forEach(document => document.iframe?.updateRoleName(roleId, roleName));
     }
 
     deleteRole(roleId) {
@@ -153,7 +153,7 @@ export class SignTemplate extends Component {
         //TODO: this save methods does n rpc requests, where n is the number of documents.
         //To bo optimized later.
         this.signStatus.save = async () => {
-            const saveDocuments = this.state.documents.filter(document => !document.deleted).map(document => document.iframe.saveChangesOnBackend());
+            const saveDocuments = this.state.documents.filter(document => !document.deleted).map(document => document.iframe?.saveChangesOnBackend());
             // Wait for all save operations to complete
             return Promise.all(saveDocuments);
         };
@@ -280,7 +280,7 @@ export class SignTemplate extends Component {
                     document.iframe.setRoleColor(signer.roleId, signer.colorId);
                 });
                 this.signStatus.save = async () => {
-                    const saveDocuments = this.state.documents.filter((document) => !document.deleted).map(document => document.iframe.saveChangesOnBackend());
+                    const saveDocuments = this.state.documents.filter((document) => !document.deleted).map(document => document.iframe?.saveChangesOnBackend());
                     // Wait for all save operations to complete
                     return Promise.all(saveDocuments);
                 };
