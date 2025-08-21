@@ -7,7 +7,8 @@ patch(threadActionsInternal, {
             id === "create-ticket" &&
             component.store.helpdesk_livechat_active &&
             component.thread?.channel_type === "livechat" &&
-            component.store.has_access_create_ticket
+            component.store.has_access_create_ticket &&
+            !component.isDiscussSidebarChannelActions
         ) {
             return true;
         }

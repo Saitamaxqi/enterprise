@@ -4,13 +4,18 @@ import { threadActionsInternal } from "@mail/core/common/thread_actions";
 patch(threadActionsInternal, {
     condition(component, id, action) {
         if (component.thread?.channel_type === "whatsapp") {
-            if (id === "create-lead" && component.store.has_access_create_lead) {
+            if (
+                id === "create-lead" &&
+                component.store.has_access_create_lead &&
+                !component.isDiscussSidebarChannelActions
+            ) {
                 return true;
             }
             if (
                 id === "create-ticket" &&
                 component.store.has_access_create_ticket &&
-                component.store.helpdesk_livechat_active
+                component.store.helpdesk_livechat_active &&
+                !component.isDiscussSidebarChannelActions
             ) {
                 return true;
             }

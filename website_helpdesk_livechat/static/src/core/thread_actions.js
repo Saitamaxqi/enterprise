@@ -16,7 +16,7 @@ registerThreadAction("create-ticket", {
         icon: "fa fa-life-ring",
     }),
     close: (component, action) => action.popover?.close(),
-    condition: (component) => false,
+    condition: (component) => false, // managed by threadActionsInternal patch
     panelOuterClass: "bg-100",
     icon: "fa fa-life-ring fa-fw",
     iconLarge: "fa-lg fa fa-life-ring fa-fw",

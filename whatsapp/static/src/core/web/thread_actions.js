@@ -6,7 +6,9 @@ import { useService } from "@web/core/utils/hooks";
 registerThreadAction("view-contact", {
     condition(component) {
         return (
-            component.thread?.channel_type === "whatsapp" && component.thread.whatsapp_partner_id
+            component.thread?.channel_type === "whatsapp" &&
+            component.thread.whatsapp_partner_id &&
+            !component.isDiscussSidebarChannelActions
         );
     },
     open(component) {
