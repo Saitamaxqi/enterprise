@@ -32,7 +32,6 @@ E-invoice implementation for Guatemala
         'demo/demo_gt.xml',
     ],
     'installable': True,
-    'auto_install': ['l10n_gt'],
     'license': 'LGPL-3',
     'post_init_hook': '_l10n_gt_edi_post_init',
 }

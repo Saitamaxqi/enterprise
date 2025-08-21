@@ -7,6 +7,7 @@ from zoneinfo import ZoneInfo
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools import cleanup_xml_node, html2plaintext
+from odoo.tools.sql import column_exists, create_column, table_exists
 
 from .utils import _l10n_gt_edi_send_to_sat
 
@@ -84,6 +85,34 @@ class AccountMove(models.Model):
         readonly=True,
     )
 
+    def _auto_init(self):
+        """
+        Create all compute-stored fields here to avoid MemoryError when initializing on large databases.
+        """
+        for column_name, column_type in (
+            ("l10n_gt_edi_doc_type", "varchar"),
+            ("l10n_gt_edi_state", "varchar"),
+            ("l10n_gt_edi_consignatory_partner", "int4"),
+            ("l10n_gt_edi_attachment_id", "int4"),
+        ):
+            if not column_exists(self.env.cr, 'account_move', column_name):
+                create_column(self.env.cr, 'account_move', column_name, column_type)
+
+        if not table_exists(self.env.cr, 'account_move_l10n_gt_edi_phrase_rel'):
+            self.env.cr.execute(
+                """
+                CREATE TABLE account_move_l10n_gt_edi_phrase_rel (
+                    account_move_id INTEGER NOT NULL,
+                    l10n_gt_edi_phrase_id INTEGER NOT NULL,
+                    PRIMARY KEY (account_move_id, l10n_gt_edi_phrase_id)
+                );
+                COMMENT ON TABLE account_move_l10n_gt_edi_phrase_rel IS 'RELATION BETWEEN account_move_id AND l10n_gt_edi_phrase_id';
+                CREATE INDEX ON account_move_l10n_gt_edi_phrase_rel (l10n_gt_edi_phrase_id, account_move_id);
+                """
+            )
+
+        return super()._auto_init()
+
     ################################################################################
     # Compute Methods
     ################################################################################
@@ -111,7 +140,7 @@ class AccountMove(models.Model):
                     move.l10n_gt_edi_attachment_id = document.attachment_id
                     break
 
-    @api.depends('country_code', 'move_type', 'debit_origin_id', 'company_id.l10n_gt_edi_vat_affiliation')
+    @api.depends('country_code', 'move_type', 'debit_origin_id')
     def _compute_l10n_gt_edi_available_doc_types(self):
         """
         Ensure that the GT Document Type only displays the suitable options based on the move type.
@@ -146,19 +175,22 @@ class AccountMove(models.Model):
             else:
                 move.l10n_gt_edi_doc_type = False
 
-    @api.depends('country_code', 'company_id.l10n_gt_edi_phrase_ids', 'commercial_partner_id.l10n_gt_edi_phrase_ids')
+    @api.depends('commercial_partner_id')
     def _compute_l10n_gt_edi_phrase_ids(self):
         for move in self:
-            if move.country_code == 'GT':
-                move.l10n_gt_edi_phrase_ids = (
-                    move.l10n_gt_edi_phrase_ids +
-                    move.company_id.l10n_gt_edi_phrase_ids +
-                    move.commercial_partner_id.l10n_gt_edi_phrase_ids
-                )
+            if move.country_code == 'GT' and move.commercial_partner_id:
+                if move.state == 'draft':
+                    move.l10n_gt_edi_phrase_ids = (
+                        move.l10n_gt_edi_phrase_ids +
+                        move.company_id.l10n_gt_edi_phrase_ids +
+                        move.commercial_partner_id.l10n_gt_edi_phrase_ids
+                    )
+                else:
+                    move.l10n_gt_edi_phrase_ids = move.l10n_gt_edi_phrase_ids
             else:
                 move.l10n_gt_edi_phrase_ids = False
 
-    @api.depends('country_code', 'commercial_partner_id.country_code')
+    @api.depends('country_code', 'commercial_partner_id')
     def _compute_l10n_gt_edi_show_consignatory_partner(self):
         for move in self:
             move.l10n_gt_edi_show_consignatory_partner = all((
@@ -166,7 +198,7 @@ class AccountMove(models.Model):
                 move.commercial_partner_id.country_code not in ('GT', False),
             ))
 
-    @api.depends('l10n_gt_edi_show_consignatory_partner', 'company_id.partner_id')
+    @api.depends('l10n_gt_edi_show_consignatory_partner')
     def _compute_l10n_gt_edi_consignatory_partner(self):
         for move in self:
             move.l10n_gt_edi_consignatory_partner = (
