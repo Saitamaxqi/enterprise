@@ -22,9 +22,15 @@ export const PRINTER_MESSAGES = {
  * in case the request fails: it will try to send the request using
  * HTTP POST method and then using the websocket.
  */
-export class IotAction {
+export class IotHttpService {
     longpollingFailedTimestamp = null;
     connectionStatus = "local"; // local, online, offline
+    connectionTypes = [
+        this._webRtc.bind(this),
+        this._longpolling.bind(this),
+        this._websocket.bind(this)
+    ];
+
     /**
      *
      * @param {import("@iot_base/network_utils/longpolling").IotLongpolling} longpolling Longpolling service
@@ -50,76 +56,64 @@ export class IotAction {
         return iotBoxData;
     }
 
-    /**
-     * Call for an action method on the IoT Box
-     * @param iotBoxId IoT Box record ID
-     * @param deviceIdentifier Identifier of the device connected to the IoT Box
-     * @param data Data to send
-     * @param {(message: Record<string, unknown>, deviceId: string) => void} onSuccess Callback to run when a message is received
-     * @param {(message: Record<string, unknown>, deviceId: string) => void} onFailure Callback to run when the request fails
-     * @returns {Promise<void>}
-     */
-    async action(
-        iotBoxId,
-        deviceIdentifier,
-        data,
-        onSuccess = () => {},
-        onFailure = (...args) => this.onFailure(...args),
-    ) {
+    _ensureLongpollingEnabled() {
+        if (
+            this.longpollingFailedTimestamp &&
+            Date.now() - this.longpollingFailedTimestamp < 20 * 60 * 1000
+        ) {
+            throw new Error("Longpolling is temporarily disabled due to a recent failure.");
+        }
+    }
+
+    async _webRtc({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure }) {
+        await this.webRtc.onMessage(identifier, deviceIdentifier, messageId, onSuccess, onFailure);
+        if (data) {
+            await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, messageId);
+        }
+        this.connectionStatus = "local";
+    }
+
+    async _longpolling({ ip, deviceIdentifier, data, messageId, onSuccess, onFailure }) {
+        this._ensureLongpollingEnabled();
+        try {
+            this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, messageId);
+            if (data) {
+                const response =
+                    await this.longpolling.sendMessage(ip, { device_identifier: deviceIdentifier, data }, messageId, true);
+                if (response?.result === false) {
+                    onFailure({status: "disconnected"}, deviceIdentifier, messageId);
+                }
+            }
+        } catch (e) {
+            this.longpollingFailedTimestamp = Date.now();
+            throw e;
+        }
+        this.connectionStatus = "local";
+    }
+
+    async _websocket({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure }) {
+        const onFailureWithTimeout = (...args) => {
+            onFailure(...args);
+            this.connectionStatus = "offline";
+        };
+        this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailureWithTimeout, "operation_confirmation", messageId);
+        if (data) {
+            await this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, messageId);
+        }
+        this.connectionStatus = "online";
+    }
+
+    async _attemptFallbacks({ iotBoxId, deviceIdentifier, onFailure }) {
         if (!["number", "string"].includes(typeof iotBoxId)) {
             iotBoxId = iotBoxId[0]; // iotBoxId is the ``Many2one`` field, we need the actual ID
         }
 
         const { ip, identifier } = await this.getIotBoxData(iotBoxId);
+        const params = { ip, identifier, ...arguments[0] };
 
-        // generate a unique request ID for this request (ensure the callback corresponds to the request)
-        const actionId = uuid();
-
-        // Define the connection types in the order of executions to try
-        const connectionTypes = [
-            async () => {
-                await this.webRtc.onMessage(identifier, deviceIdentifier, actionId, onSuccess, onFailure);
-                await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, actionId);
-                this.connectionStatus = "local";
-            },
-            async () => {
-                if (
-                    this.longpollingFailedTimestamp &&
-                    Date.now() - this.longpollingFailedTimestamp < 20 * 60 * 1000
-                ) {
-                    throw new Error("Longpolling is temporarily disabled due to a recent failure.");
-                }
-                try {
-                    this.longpolling.onMessage(ip, deviceIdentifier, onSuccess, onFailure, actionId);
-                    const response =
-                        await this.longpolling.sendMessage(ip, {
-                            device_identifier: deviceIdentifier,
-                            data
-                        }, actionId, true);
-                    if (response?.result === false) {
-                        onFailure({status: "disconnected"}, deviceIdentifier, actionId);
-                    }
-                } catch (e) {
-                    this.longpollingFailedTimestamp = Date.now();
-                    throw e;
-                }
-                this.connectionStatus = "local";
-            },
-            async () => {
-                const onFailureWithTimeout = (...args) => {
-                    onFailure(...args);
-                    this.connectionStatus = "offline";
-                };
-                this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailureWithTimeout, "operation_confirmation", actionId);
-                await this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, actionId);
-                this.connectionStatus = "online";
-            },
-        ];
-
-        // Try to send the request using the connection types
-        for (const connectionType of connectionTypes) {
+        for (const connectionType of this.connectionTypes) {
             try {
-                return await connectionType();
+                return await connectionType(params);
             } catch (e) {
                 console.debug("IoT Box action: attempted method failed, attempting another protocol.", e);
             }
@@ -128,6 +122,62 @@ export class IotAction {
         // If all the connection types failed, run the onFailure callback
         this.connectionStatus = "offline";
         onFailure({ status: "disconnected" }, deviceIdentifier);
+    }
+
+    /**
+     * Listen for events on the IoT Box
+     * @param iotBoxId IoT Box record ID
+     * @param deviceIdentifier Identifier of the device connected to the IoT Box
+     * @param {(message: Record<string, unknown>, deviceId: string) => void} onSuccess Callback to run when a message is received
+     * @param {(message: Record<string, unknown>, deviceId: string) => void} onFailure Callback to run when the request fails
+     * @param {string|null} messageId Unique identifier for the message (optional)
+     * @returns {Promise<void>}
+     */
+    async onMessage(
+        iotBoxId,
+        deviceIdentifier,
+        onSuccess = () => {},
+        onFailure = (...args) => this.onFailure(...args),
+        messageId = null,
+    ) {
+        // Attempt to listen for messages using the defined connection types
+        await this._attemptFallbacks({
+            iotBoxId,
+            deviceIdentifier,
+            messageId,
+            onSuccess,
+            onFailure,
+        });
+    }
+
+    /**
+     * Call for an action method on the IoT Box
+     * @param iotBoxId IoT Box record ID
+     * @param deviceIdentifier Identifier of the device connected to the IoT Box
+     * @param data Data to send
+     * @param {(message: Record<string, unknown>, deviceId: string) => void} onSuccess Callback to run when a message is received
+     * @param {(message: Record<string, unknown>, deviceId: string) => void} onFailure Callback to run when the request fails
+     * @param {string|null} messageId Unique identifier for the message (optional)
+     * @returns {Promise<void>}
+     */
+    async action(
+        iotBoxId,
+        deviceIdentifier,
+        data,
+        onSuccess = () => {},
+        onFailure = (...args) => this.onFailure(...args),
+        messageId = null,
+    ) {
+        messageId ??= uuid();
+
+        await this._attemptFallbacks({
+            iotBoxId,
+            deviceIdentifier,
+            data,
+            messageId,
+            onSuccess,
+            onFailure,
+        });
     }
 
     async testLongpollingAvailability(iotBoxIp) {
@@ -159,21 +209,22 @@ export const iotHttpService = {
             onMessage: iotWebsocket.onMessage.bind(iotWebsocket),
         };
 
-        const iotAction = new IotAction(
+        const iot = new IotHttpService(
             iot_longpolling,
             iotWebsocket,
             iotWebRtc,
             notification,
             orm
         );
-        const action = iotAction.action.bind(iotAction);
-        const refresh = iotAction.testLongpollingAvailability.bind(iotAction);
+        const action = iot.action.bind(iot);
+        const onMessage = iot.onMessage.bind(iot);
+        const refresh = iot.testLongpollingAvailability.bind(iot);
 
         // Expose only those functions to the environment
         // status is a getter to have a reactive value
         return {
-            post, action, longpolling, websocket, refresh, get status() {
-                return iotAction.connectionStatus;
+            post, action, longpolling, websocket, refresh, onMessage, get status() {
+                return iot.connectionStatus;
             }
         };
     },

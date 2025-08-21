@@ -1,9 +1,9 @@
 import { patch } from "@web/core/utils/patch";
-import { IotAction, iotHttpService } from "@iot/network_utils/iot_http_service";
+import { IotHttpService, iotHttpService } from "@iot/network_utils/iot_http_service";
 import { rpc } from "@web/core/network/rpc";
 import { browser } from "@web/core/browser/browser";
 
-patch(IotAction.prototype, {
+patch(IotHttpService.prototype, {
     async getIotBoxData(iotBoxId) {
         const access_token = new URLSearchParams(browser.location.search).get("access_token");
         const response = await rpc("/pos-self-order/get-iot-box-data/", {

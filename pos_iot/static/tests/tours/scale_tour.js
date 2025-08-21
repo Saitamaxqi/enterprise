@@ -6,14 +6,19 @@ import * as Chrome from "@point_of_sale/../tests/pos/tours/utils/chrome_util";
 import * as ProductScreen from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 
 class PosScaleDummy {
+    manual_measurement = false;
+    iotId = 1;
+    identifier = "scale_1";
+}
+
+class IotHttpServiceDummy {
     action() {}
-    removeListener() {}
-    addListener(callback) {
+    onMessage(_iotBoxId, _deviceIdentifier, onSuccess) {
         setTimeout(
             () =>
-                callback({
-                    status: "ok",
-                    value: 2.35,
+                onSuccess({
+                    status: { status: "connected" },
+                    result: 2.35,
                 }),
             1000
         );
@@ -30,15 +35,8 @@ registry.category("web_tour.tours").add("pos_iot_scale_tour", {
                 content: "mock the connected scale",
                 trigger: ".pos .pos-content",
                 run: function () {
-                    posmodel.hardwareProxy.connectionInfo = {
-                        status: "connected",
-                        drivers: {
-                            scale: {
-                                status: "connected",
-                            },
-                        },
-                    };
                     posmodel.hardwareProxy.deviceControllers.scale = new PosScaleDummy();
+                    posmodel.scale.iotHttpService = new IotHttpServiceDummy();
                 },
             },
             ProductScreen.clickDisplayedProduct("Whiteboard Pen"),

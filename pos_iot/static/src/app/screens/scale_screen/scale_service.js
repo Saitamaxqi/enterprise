@@ -1,7 +1,19 @@
-import { PosScaleService } from "@point_of_sale/app/screens/scale_screen/scale_service";
+import {
+    PosScaleService,
+    posScaleService,
+} from "@point_of_sale/app/screens/scale_screen/scale_service";
 import { patch } from "@web/core/utils/patch";
 
+patch(posScaleService, {
+    dependencies: [...posScaleService.dependencies, "iot_http"],
+});
+
 patch(PosScaleService.prototype, {
+    setup(env, { iot_http }) {
+        super.setup(...arguments);
+        this.iotHttpService = iot_http;
+    },
+
     get _scaleDevice() {
         return this.hardwareProxy.deviceControllers.scale;
     },
@@ -10,39 +22,30 @@ patch(PosScaleService.prototype, {
         return this._scaleDevice?.manual_measurement;
     },
 
-    reset() {
-        if (this.isMeasuring) {
-            this._scaleDevice?.removeListener();
-            this._scaleDevice?.action({ action: "stop_reading" });
-        }
-        super.reset(...arguments);
-    },
-
     async _getWeightFromScale() {
-        const weightPromise = new Promise((resolve, reject) => {
-            this._scaleDevice.addListener((data) => {
+        return new Promise((resolve, reject) => {
+            const { iotId, identifier } = this._scaleDevice;
+            const callback = (data) => {
                 try {
                     resolve(this._handleScaleMessage(data));
                 } catch (error) {
                     reject(error);
                 }
-                this._scaleDevice.removeListener();
-            });
+            };
+
+            this.iotHttpService.action(
+                iotId,
+                identifier,
+                { action: "read_once" },
+                callback,
+                () => {} // avoid timeout notification
+            );
         });
-        await this._scaleDevice.action({ action: "read_once" });
-        return weightPromise;
     },
 
-    _readWeightContinuously() {
-        try {
-            this._checkScaleIsConnected();
-        } catch (error) {
-            this.onError?.(error.message);
-            this.isMeasuring = false;
-            return;
-        }
-
-        this._scaleDevice.addListener((data) => {
+    async _readWeightContinuously() {
+        const { iotId, identifier } = this._scaleDevice;
+        const callback = (data) => {
             try {
                 this.weight = this._handleScaleMessage(data);
                 this._clearLastWeightIfValid();
@@ -50,19 +53,24 @@ patch(PosScaleService.prototype, {
             } catch (error) {
                 this.onError?.(error.message);
             }
-        });
-        // The IoT box only sends the weight when it changes, so we
-        // manually read to get the initial value.
-        this._scaleDevice.action({ action: "read_once" });
-        this._scaleDevice.action({ action: "start_reading" });
+            if (this.isMeasuring) {
+                this.iotHttpService.onMessage(iotId, identifier, callback, callback);
+            }
+        };
+        this.iotHttpService.onMessage(iotId, identifier, callback, () => {});
+        // there is not always an event waiting in the iot, so we trigger one
+        this.iotHttpService.action(iotId, identifier, { action: "read_once" }, callback, () => {});
     },
 
     _handleScaleMessage(data) {
         if (data.status.status === "error") {
             throw new Error(`Cannot weigh product - ${data.status.message_body}`);
-        } else {
-            return data.value || 0;
+        } else if (data.status.status === "connected") {
+            return data.result || 0;
         }
+        // else, do nothing to avoid data.status === "error"
+        // corresponding to timeout because weight did not change
+        return this.weight;
     },
 
     _checkScaleIsConnected() {},

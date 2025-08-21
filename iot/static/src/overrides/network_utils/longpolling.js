@@ -1,6 +1,5 @@
 import { patch } from "@web/core/utils/patch";
 import { IoTLongpolling } from "@iot_base/network_utils/longpolling";
-import { uniqueId } from "@web/core/utils/functions";
 import { uuid } from "@web/core/utils/strings";
 
 patch(IoTLongpolling.prototype, {
@@ -32,7 +31,6 @@ patch(IoTLongpolling.prototype, {
         onFailure = (_message, _deviceIdentifier, _messageId) => {},
         requestId = null
     ) {
-        requestId ??= uniqueId('listener-');
         const listenerCallback = (message) => {
             if (requestId && message.owner !== requestId) {
                 return;

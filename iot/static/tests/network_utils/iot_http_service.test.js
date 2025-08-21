@@ -8,7 +8,7 @@ import {
 import { uuid } from "@web/core/utils/strings";
 import { browser } from "@web/core/browser/browser";
 
-import { IotAction } from "@iot/network_utils/iot_http_service";
+import { IotHttpService } from "@iot/network_utils/iot_http_service";
 
 class IotChannel extends models.Model {
     get_iot_channel() {
@@ -27,8 +27,8 @@ class DummyOrm {
     }
 }
 
-describe("iot_action", () => {
-    let iotAction;
+describe("iot_http_service", () => {
+    let iotHttpService;
     let websocketMessages;
     let notification;
     let longpolling;
@@ -133,7 +133,7 @@ describe("iot_action", () => {
         onSuccess = () => { calledCallback = 'onSuccess' };
         onFailure = () => { calledCallback = 'onFailure' };
 
-        iotAction = new IotAction(
+        iotHttpService = new IotHttpService(
             longpolling,
             websocket,
             webRtc,
@@ -142,92 +142,94 @@ describe("iot_action", () => {
         );
     });
 
-    test("uses WebRTC first and succeeds", async () => {
-        await iotAction.action(1, "device-1", { foo: "bar" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onSuccess');
-        expect(iotAction.connectionStatus).toBe("local");
+    describe("action", () => {
+        test("uses WebRTC first and succeeds", async () => {
+            await iotHttpService.action(1, "device-1", { foo: "bar" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onSuccess');
+            expect(iotHttpService.connectionStatus).toBe("local");
+        });
+
+        test("fallback to longpolling when WebRTC fails", async () => {
+            webRtc.setThrow(true);
+            await iotHttpService.action(1, "device-2", { a: "b" }, onSuccess, onFailure);
+
+            expect(calledCallback).toBe('onSuccess');
+            expect(iotHttpService.connectionStatus).toBe("local");
+        });
+
+        test("fallback to websocket when both WebRTC and longpolling fail", async () => {
+            webRtc.setThrow(true);
+            longpolling.setThrow(true);
+
+            await iotHttpService.action(1, "device-3", { x: "y" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onSuccess');
+            expect(iotHttpService.connectionStatus).toBe("online");
+        });
+
+        test("all methods fail and onFailure is invoked with disconnected status", async () => {
+            webRtc.setThrow(true);
+            longpolling.setThrow(true);
+            websocket.setThrow(true);
+
+            await iotHttpService.action(1, "device-4", { something: "else" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onFailure');
+            expect(iotHttpService.connectionStatus).toBe("offline");
+        });
+
+        test("invalid iotBoxId (array unwraps Many2one)", async () => {
+            await iotHttpService.action([1], "device-array", { foo: "bar" }, onSuccess);
+            expect(calledCallback).toBe('onSuccess');
+        });
+
+        test("recent longpolling failure short-circuits longpolling path", async () => {
+            // simulate that longpolling just failed
+            iotHttpService.longpollingFailedTimestamp = Date.now();
+            webRtc.setThrow(true);
+            // longpolling should be skipped due to recent failure, so websocket is used
+            await iotHttpService.action(1, "device-5", { test: "val" }, onSuccess);
+            expect(calledCallback).toBe('onSuccess');
+            expect(iotHttpService.connectionStatus).toBe("online");
+        });
+
+        test("webrtc onMessage calls back onFailure", async () => {
+            webRtc.setFail(true); // make WebRTC onMessage report failure
+            await iotHttpService.action(1, "device-webrtc-fail", { foo: "bar" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onFailure');
+            expect(iotHttpService.connectionStatus).toBe("local"); // longpolling wins after webrtc onMessage failure
+        });
+
+        test("longpolling onMessage calls back onFailure", async () => {
+            webRtc.setThrow(true);
+            longpolling.setFail(true); // make longpolling onMessage report failure
+            await iotHttpService.action(1, "device-longpolling-fail", { foo: "bar" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onFailure');
+            expect(iotHttpService.connectionStatus).toBe("local"); // websocket wins after longpolling onMessage failure
+        });
+
+        test("websocket onMessage calls back onFailure", async () => {
+            webRtc.setThrow(true);
+            longpolling.setThrow(true);
+            websocket.setFail(true); // make websocket onMessage report failure
+            await iotHttpService.action(1, "device-websocket-fail", { foo: "bar" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onFailure');
+            expect(iotHttpService.connectionStatus).toBe("online"); // all methods failed
+        });
+
+        test('force longpolling when disabled temporarily due to previous failure', async () => {
+            webRtc.setThrow(true);
+            longpolling.setThrow(true)
+            await iotHttpService.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onSuccess');
+            expect(iotHttpService.connectionStatus).toBe('online');
+
+            await iotHttpService.testLongpollingAvailability('mockIp');
+            expect(iotHttpService.longpollingFailedTimestamp).toBe(null);
+            expect(iotHttpService.connectionStatus).toBe('local');
+
+            longpolling.setThrow(false); // don't force longpolling failure this time, we want to see if we pass through it
+            await iotHttpService.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onSuccess');
+            expect(iotHttpService.connectionStatus).toBe('local');
+        });
     });
-
-    test("fallback to longpolling when WebRTC fails", async () => {
-        webRtc.setThrow(true);
-        await iotAction.action(1, "device-2", { a: "b" }, onSuccess, onFailure);
-
-        expect(calledCallback).toBe('onSuccess');
-        expect(iotAction.connectionStatus).toBe("local");
-    });
-
-    test("fallback to websocket when both WebRTC and longpolling fail", async () => {
-        webRtc.setThrow(true);
-        longpolling.setThrow(true);
-
-        await iotAction.action(1, "device-3", { x: "y" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onSuccess');
-        expect(iotAction.connectionStatus).toBe("online");
-    });
-
-    test("all methods fail and onFailure is invoked with disconnected status", async () => {
-        webRtc.setThrow(true);
-        longpolling.setThrow(true);
-        websocket.setThrow(true);
-
-        await iotAction.action(1, "device-4", { something: "else" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onFailure');
-        expect(iotAction.connectionStatus).toBe("offline");
-    });
-
-    test("invalid iotBoxId (array unwraps Many2one)", async () => {
-        await iotAction.action([1], "device-array", { foo: "bar" }, onSuccess);
-        expect(calledCallback).toBe('onSuccess');
-    });
-
-    test("recent longpolling failure short-circuits longpolling path", async () => {
-        // simulate that longpolling just failed
-        iotAction.longpollingFailedTimestamp = Date.now();
-        webRtc.setThrow(true);
-        // longpolling should be skipped due to recent failure, so websocket is used
-        await iotAction.action(1, "device-5", { test: "val" }, onSuccess);
-        expect(calledCallback).toBe('onSuccess');
-        expect(iotAction.connectionStatus).toBe("online");
-    });
-
-    test("webrtc onMessage calls back onFailure", async () => {
-        webRtc.setFail(true); // make WebRTC onMessage report failure
-        await iotAction.action(1, "device-webrtc-fail", { foo: "bar" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onFailure');
-        expect(iotAction.connectionStatus).toBe("local"); // longpolling wins after webrtc onMessage failure
-    });
-
-    test("longpolling onMessage calls back onFailure", async () => {
-        webRtc.setThrow(true);
-        longpolling.setFail(true); // make longpolling onMessage report failure
-        await iotAction.action(1, "device-longpolling-fail", { foo: "bar" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onFailure');
-        expect(iotAction.connectionStatus).toBe("local"); // websocket wins after longpolling onMessage failure
-    });
-
-    test("websocket onMessage calls back onFailure", async () => {
-        webRtc.setThrow(true);
-        longpolling.setThrow(true);
-        websocket.setFail(true); // make websocket onMessage report failure
-        await iotAction.action(1, "device-websocket-fail", { foo: "bar" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onFailure');
-        expect(iotAction.connectionStatus).toBe("online"); // all methods failed
-    });
-
-    test('Force longpolling when disabled temporarily due to previous failure', async () => {
-        webRtc.setThrow(true);
-        longpolling.setThrow(true)
-        await iotAction.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onSuccess');
-        expect(iotAction.connectionStatus).toBe('online');
-
-        await iotAction.testLongpollingAvailability('mockIp');
-        expect(iotAction.longpollingFailedTimestamp).toBe(null);
-        expect(iotAction.connectionStatus).toBe('local');
-
-        longpolling.setThrow(false); // don't force longpolling failure this time, we want to see if we pass through it
-        await iotAction.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
-        expect(calledCallback).toBe('onSuccess');
-        expect(iotAction.connectionStatus).toBe('local');
-    })
 });
