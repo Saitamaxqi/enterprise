@@ -2,10 +2,11 @@
 
 from datetime import datetime, date
 
+from odoo import Command
 from odoo.tests import tagged, TransactionCase, HttpCase
 
 
-@tagged('-at_install', 'post_install')
+@tagged('-at_install', 'post_install', 'work_entry_overtime')
 class HrWorkEntryContractTest(HttpCase, TransactionCase):
 
     @classmethod
@@ -13,6 +14,16 @@ class HrWorkEntryContractTest(HttpCase, TransactionCase):
         super().setUpClass()
         cls.env.company.country_id = cls.env.ref('base.us')
         cls.env.company.resource_calendar_id.tz = "Europe/Brussels"
+
+        cls.ruleset = cls.env['hr.attendance.overtime.ruleset'].create({
+            'name': 'Ruleset schedule quantity',
+            'rule_ids': [Command.create({
+                    'name': 'Rule schedule quantity',
+                    'base_off': 'quantity',
+                    'expected_hours_from_contract': True,
+                    'quantity_period': 'day',
+                })],
+        })
         cls.employee = cls.env['hr.employee'].create({
             'name': 'Homelander',
             'tz': 'UTC',
@@ -21,16 +32,17 @@ class HrWorkEntryContractTest(HttpCase, TransactionCase):
             'date_version': date(2024, 1, 1),
             'contract_date_start': date(2024, 1, 1),
             'overtime_from_attendance': True,
+            'ruleset_id': cls.ruleset.id
         })
         cls.contract = cls.employee.version_id
+        cls.attendance_type = cls.env.ref('hr_work_entry.work_entry_type_attendance')
+        cls.overtime_type = cls.env.ref('hr_work_entry.work_entry_type_overtime')
         cls.slots = cls.env['planning.slot'].create({
             'resource_id': cls.contract.employee_id.resource_id.id,
             'start_datetime': datetime(2024, 7, 16, 8, 0, 0),
             'end_datetime': datetime(2024, 7, 16, 16, 0, 0),
             'state': 'published',
         })
-        cls.attendance_type = cls.env.ref('hr_work_entry.work_entry_type_attendance')
-        cls.overtime_type = cls.env.ref('hr_work_entry.work_entry_type_overtime')
 
     def test_overtime_work_entry_by_planning(self):
         self.env['hr.attendance'].create({

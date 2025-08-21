@@ -2,7 +2,8 @@
 
 from collections import defaultdict
 
-from pytz import timezone
+from dateutil.relativedelta import relativedelta
+from pytz import timezone, utc
 from datetime import timedelta
 
 from odoo import fields, models
@@ -19,11 +20,29 @@ class HrVersion(models.Model):
     overtime_from_attendance = fields.Boolean(
         "Extra hours", help="Add extra hours from attendances to the working entries", groups="hr.group_hr_manager")
 
-    def _get_more_vals_attendance_interval(self, interval):
-        result = super()._get_more_vals_attendance_interval(interval)
-        if interval[2]._name == 'hr.attendance':
-            result.append(('attendance_id', interval[2].id))
-        return result
+    def _get_overtime_intervals(self, start_dt, end_dt):
+        start_naive = start_dt.replace(tzinfo=None)
+        end_naive = end_dt.replace(tzinfo=None)
+
+        overtimes = self.env['hr.attendance.overtime.line'].search([
+            ('employee_id', 'in', self.employee_id.ids),
+            ('time_start', '<', end_naive),
+            ('time_stop', '>', start_naive),
+        ])
+
+        res = {}
+        for resource, overtimes in overtimes.grouped(
+            lambda ot: ot.employee_id.resource_id
+        ).items():
+            res[resource.id] = Intervals(
+                ((
+                    max(start_naive, ot.time_start).astimezone(utc),
+                    min(end_naive, ot.time_stop).astimezone(utc),
+                    ot,
+                ) for ot in overtimes),
+                keep_distinct=True,
+            )
+        return res
 
     def _get_attendance_intervals(self, start_dt, end_dt):
         ##################################
@@ -65,84 +84,30 @@ class HrVersion(models.Model):
         mapped_intervals.update(super()._get_attendance_intervals(
             start_dt, end_dt))
 
-        ##################################
-        #   CALENDAR BASED CONTRACTS     #
-        ##################################
-        calendar_based_contracts = self.filtered(lambda c: c.work_entry_source == 'calendar' and c.overtime_from_attendance)
-        if not calendar_based_contracts:
-            return mapped_intervals
+        overtime_intervals = {r: Intervals(keep_distinct=True) for r in mapped_intervals}
+        overtime_contracts = self.filtered(lambda c: c.work_entry_source == 'attendance' or c.overtime_from_attendance)
+        overtime_intervals.update(overtime_contracts._get_overtime_intervals(start_dt, end_dt))
 
-        public_leaves = self.env['resource.calendar.leaves'].search([
-            ('resource_id', '=', False),
-            '|', ('calendar_id', '=', False), ('calendar_id', 'in', self.resource_calendar_id.ids),
-            ('date_from', '<=', end_naive),
-            ('date_to', '>=', start_naive)
-        ])
+        work_entry_overtime_intervals = defaultdict(list)
+        for r, intervals in overtime_intervals.items():
+            for start, end, overtime in intervals:
+                if not (overtime.rule_ids.work_entry_type_id and overtime.status == 'approved'):
+                    continue
+                work_entry_overtime_intervals[r].extend([
+                    (start, end, overtime)
+                ])
 
-        attendances = self.env['hr.attendance'].sudo().search([
-            ('employee_id', 'in', calendar_based_contracts.employee_id.ids),
-            ('check_in', '<=', end_naive),
-            ('check_out', '>=', start_naive),  # We ignore attendances without check_out date
-            ('overtime_status', '=', 'approved'),
-        ])
-
-        resource_ids = attendances.employee_id.resource_id.ids
-        work_intervals_by_resources = {
-            resource_id: Intervals(list(intervals), keep_distinct=True) for resource_id, intervals in mapped_intervals.items()
+        result = {
+            r: (mapped_intervals[r] - overtime_intervals[r])
+            | Intervals(work_entry_overtime_intervals[r], keep_distinct=True)
+            for r in mapped_intervals
         }
-
-        lunch_intervals_by_resource = self._get_lunch_intervals(start_dt, end_dt)
-
-        for attendance in attendances:
-            resource = attendance.employee_id.resource_id
-            work_intervals = work_intervals_by_resources[resource.id]
-            tz = timezone(resource.tz)
-            check_in_tz = attendance.check_in.astimezone(tz)
-            check_out_tz = attendance.check_out.astimezone(tz)
-            attendance_intervals = Intervals([(check_in_tz, check_out_tz, attendance)], keep_distinct=True)
-
-            contract = attendance.employee_id._get_versions_with_contract_overlap_with_period(attendance.check_in.date(), attendance.check_out.date())
-            public_holiday = public_leaves.filtered(lambda pl:
-                (not pl.calendar_id or pl.calendar_id == contract.resource_calendar_id)
-                and pl.date_from <= attendance.check_out
-                and pl.date_to >= attendance.check_in)
-            if public_holiday:
-                # Remove public holiday intervals overlapping with overtime attendances
-                # This makes it so the attendance is still counted later at [1]
-                # when we remove the work_intervals from overtimes
-                holiday_start = public_holiday[0].date_from.astimezone(tz)
-                holiday_end = public_holiday[0].date_to.astimezone(tz)
-                new_work_intervals = []
-                for (start, end, calendar_attendance) in work_intervals:
-                    if start > holiday_end or end < holiday_start or check_in_tz > end or check_out_tz < start:
-                        new_work_intervals.append((start, end, calendar_attendance))
-                    elif start > check_in_tz and end < check_out_tz:
-                        continue
-                    elif start < check_out_tz and end > check_in_tz:
-                        if start < check_in_tz:
-                            new_work_intervals.append((start, check_in_tz, calendar_attendance))
-                        if end > check_out_tz:
-                            new_work_intervals.append((check_out_tz, end, calendar_attendance))
-                work_intervals = Intervals(new_work_intervals, keep_distinct=True)
-            lunch_intervals = lunch_intervals_by_resource.get(resource.id, Intervals([], keep_distinct=True))
-            overtime_intervals = attendance_intervals - work_intervals - lunch_intervals  # [1]
-            if self.company_id.overtime_company_threshold:
-                overtime_intervals = Intervals([
-                    (start, end, calendar_attendance)
-                    for (start, end, calendar_attendance) in overtime_intervals
-                    if (end - start).seconds / 60 > self.company_id.overtime_company_threshold
-                ], keep_distinct=True)
-            work_intervals_by_resources[resource.id] = work_intervals | overtime_intervals
-        return work_intervals_by_resources
+        return result
 
     def _get_interval_work_entry_type(self, interval):
         self.ensure_one()
-        if self.work_entry_source == 'attendance':  # The overtimes are only in the case of a contract based on the calendar
-            return super()._get_interval_work_entry_type(interval)
-        if 'work_entry_type_overtime_id' in interval[2] and interval[2].work_entry_type_overtime_id[:1]:
-            return interval[2].work_entry_type_overtime_id[:1]
         if isinstance(interval[2], self.env['hr.attendance'].__class__):
-            return self.env.ref('hr_work_entry.work_entry_type_overtime')
+            return self.env.ref('hr_work_entry.work_entry_type_attendance')
         return super()._get_interval_work_entry_type(interval)
 
     def _get_valid_leave_intervals(self, attendances, interval):
@@ -155,3 +120,66 @@ class HrVersion(models.Model):
             leave_interval = Intervals([interval], keep_distinct=True)
             return list(leave_interval - badge_attendances)
         return super()._get_valid_leave_intervals(attendances, interval)
+
+    def _get_real_attendance_work_entry_vals(self, intervals):
+        self.ensure_one()
+        non_attendance_intervals = [interval for interval in intervals if interval[2]._name not in ['hr.attendance', 'hr.attendance.overtime.line']]
+        attendance_intervals = [interval for interval in intervals if interval[2]._name in ['hr.attendance', 'hr.attendance.overtime.line']]
+        vals = super()._get_real_attendance_work_entry_vals(non_attendance_intervals)
+
+        employee = self.employee_id
+        for interval in attendance_intervals:
+            if interval[2]._name == 'hr.attendance':
+                work_entry_type = self._get_interval_work_entry_type(interval)
+                # All benefits generated here are using datetimes converted from the employee's timezone
+                vals += [dict([
+                          ('name', "%s: %s" % (work_entry_type.name, employee.name)),
+                          ('date_start', interval[0].astimezone(utc).replace(tzinfo=None)),
+                          ('date_stop', interval[1].astimezone(utc).replace(tzinfo=None)),
+                          ('work_entry_type_id', work_entry_type.id),
+                          ('employee_id', employee.id),
+                          ('version_id', self.id),
+                          ('company_id', self.company_id.id),
+                      ] + self._get_more_vals_attendance_interval(interval))]
+            elif interval[2]._name == 'hr.attendance.overtime.line':
+                overtime_mode = self.ruleset_id.rate_combination_mode
+                overtime_line_id = interval[2]
+                default_overtime_type = self.env.ref('hr_work_entry.work_entry_type_overtime')
+                triggered_rule_work_entry_types = overtime_line_id.rule_ids.mapped('work_entry_type_id') or default_overtime_type
+
+                # Take into account manually encoded duration
+                date_start = interval[0].astimezone(utc).replace(tzinfo=None)
+                date_stop = interval[0].astimezone(utc).replace(tzinfo=None) + relativedelta(hours=interval[2].manual_duration)
+                if overtime_mode == 'max' or len(triggered_rule_work_entry_types) == 1:
+                    work_entry_type = max(triggered_rule_work_entry_types, key=lambda w: w.amount_rate)
+                    # All benefits generated here are using datetimes converted from the employee's timezone
+                    vals += [dict([
+                              ('name', "%s: %s" % (work_entry_type.name, employee.name)),
+                              ('date_start', date_start),
+                              ('date_stop', date_stop),
+                              ('work_entry_type_id', work_entry_type.id),
+                              ('employee_id', employee.id),
+                              ('version_id', self.id),
+                              ('company_id', self.company_id.id),
+                          ] + self._get_more_vals_attendance_interval(interval))]
+                else:
+                    for triggered_rule in overtime_line_id.rule_ids:
+                        # All benefits generated here are using datetimes converted from the employee's timezone
+                        vals += [dict([
+                                  ('name', "%s: %s" % (triggered_rule.work_entry_type_id.name, employee.name)),
+                                  ('date_start', date_start),
+                                  ('date_stop', date_stop),
+                                  ('work_entry_type_id', triggered_rule.work_entry_type_id.id),
+                                  ('employee_id', employee.id),
+                                  ('version_id', self.id),
+                                  ('company_id', self.company_id.id),
+                              ] + self._get_more_vals_attendance_interval(interval))]
+        return vals
+
+    def _get_more_vals_attendance_interval(self, interval):
+        vals = super()._get_more_vals_attendance_interval(interval)
+        if interval[2]._name == 'hr.attendance':
+            vals.append(('attendance_id', interval[2].id))
+        if interval[2]._name == 'hr.attendance.overtime.line':
+            vals.append(('overtime_id', interval[2].id))
+        return vals

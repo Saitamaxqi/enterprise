@@ -63,9 +63,11 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         self.assertEqual(sunday.date, date(2022, 9, 18))
         self.assertEqual(sunday.duration, 12)
 
-        self.assertEqual(len(monday), 1)
-        self.assertEqual(monday.date, date(2022, 9, 19))
-        self.assertEqual(monday.duration, 11)
+        self.assertEqual(len(monday), 2)
+        self.assertEqual(monday[0].date, date(2022, 9, 19))
+        self.assertEqual(monday[0].duration, 8)
+        self.assertEqual(monday[1].date, date(2022, 9, 19))
+        self.assertEqual(monday[1].duration, 3)
 
         # set flexible hours on the employee contract
         self.contract.resource_calendar_id.flexible_hours = True
@@ -83,9 +85,11 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         self.contract.generate_work_entries(date(2022, 9, 20), date(2022, 9, 21))
         tuesday = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id),
                                                    ('date', '>=', flex_day)])
-        self.assertEqual(len(tuesday), 1)
-        self.assertEqual(tuesday.date, date(2022, 9, 20))
-        self.assertEqual(tuesday.duration, 12)
+        self.assertEqual(len(tuesday), 2)
+        self.assertEqual(tuesday[0].date, date(2022, 9, 20))
+        self.assertEqual(tuesday[0].duration, 8)
+        self.assertEqual(tuesday[1].date, date(2022, 9, 20))
+        self.assertEqual(tuesday[1].duration, 4)
 
     def test_timezones(self):
         """ Basic check that timezones do not cause weird behaviors:
@@ -166,7 +170,7 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
             },
         ])
         work_entries = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
-        self.assertEqual(len(work_entries), 4)
+        self.assertEqual(len(work_entries), 5)
 
     def test_unlink(self):
         # Tests that the work entry is archived when unlinking an attendance

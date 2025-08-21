@@ -22,6 +22,9 @@
             <xpath expr="//group[@name='check_out_group']" position="attributes">
                 <attribute name="invisible">True</attribute>
             </xpath>
+            <notebook position="attributes">
+                <attribute name="invisible">True</attribute>
+            </notebook>
             <form position="inside">
                 <footer>
                     <button

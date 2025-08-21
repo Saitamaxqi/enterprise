@@ -3,6 +3,7 @@
 from dateutil.relativedelta import relativedelta
 from odoo.fields import Date
 from odoo.tests import TransactionCase
+from odoo import Command
 
 
 class HrWorkEntryAttendanceCommon(TransactionCase):
@@ -38,3 +39,16 @@ class HrWorkEntryAttendanceCommon(TransactionCase):
             'contract_date_end': Date.today() + relativedelta(years=2),
             'wage': 5000.33,
         })
+
+        cls.ruleset = cls.env['hr.attendance.overtime.ruleset'].create({
+            'name': 'Ruleset schedule quantity',
+            'rule_ids': [Command.create({
+                    'name': 'Rule schedule quantity',
+                    'base_off': 'quantity',
+                    'expected_hours_from_contract': True,
+                    'quantity_period': 'day',
+                })],
+        })
+
+        cls.employee.ruleset_id = cls.ruleset
+        cls.richard_emp.ruleset_id = cls.ruleset

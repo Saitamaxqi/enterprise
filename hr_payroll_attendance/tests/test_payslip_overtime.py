@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.hr_work_entry_attendance.tests.common import HrWorkEntryAttendanceCommon
+from odoo import Command
 
 from datetime import datetime, date
 
@@ -27,20 +28,31 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
             'date_from': '2022-01-01',
             'date_to': '2022-01-31',
         })
+        cls.ruleset = cls.env['hr.attendance.overtime.ruleset'].create({
+            'name': 'Ruleset schedule quantity',
+            'rule_ids': [Command.create({
+                    'name': 'Rule schedule quantity',
+                    'base_off': 'quantity',
+                    'expected_hours_from_contract': True,
+                    'quantity_period': 'day',
+                })],
+        })
+
         cls.contract.structure_type_id = cls.struct_type
         cls.contract.hourly_wage = 100
         cls.contract.overtime_from_attendance = True
+        cls.contract.ruleset_id = cls.ruleset
         cls.company = cls.payslip.company_id
         
     def test_overtime_outside_period(self):
         # Right before the payslip period
-        self.env['hr.attendance.overtime'].create({
+        self.env['hr.attendance.overtime.line'].create({
             'employee_id': self.employee.id,
             'date': date(2021, 12, 31),
             'duration': 5,
         })
         # Right after the payslip period
-        self.env['hr.attendance.overtime'].create({
+        self.env['hr.attendance.overtime.line'].create({
             'employee_id': self.employee.id,
             'date': date(2022, 2, 1),
             'duration': 5,
@@ -100,15 +112,7 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
         self.assertFalse(self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME'))
 
         # Approve the overtime
-        attendance.update({
-            'overtime_status': 'approved',
-        })
+        attendance.action_approve_overtime()
+        self.payslip.version_id.generate_work_entries(self.payslip.date_from, self.payslip.date_to, force=True)
         self.payslip._compute_worked_days_line_ids()
         self.assertTrue(self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME'))
-
-        # refuse the overtime
-        attendance.update({
-            'overtime_status': 'refused',
-        })
-        self.payslip._compute_worked_days_line_ids()
-        self.assertFalse(self.payslip.worked_days_line_ids.filtered(lambda w: w.code == 'OVERTIME'))

@@ -21,8 +21,8 @@ class HrVersion(models.Model):
         work_entry_type_overtime = self.env.ref('hr_work_entry.work_entry_type_overtime', False)
         if not work_entry_type_overtime:
             return
-        overtimes = self.env['hr.attendance.overtime'].sudo().search(
-            [('employee_id', 'in', self.employee_id.ids), ('duration', '>', 0),
+        overtimes = self.env['hr.attendance.overtime.line'].sudo().search(
+            [('employee_id', 'in', self.employee_id.ids), ('manual_duration', '>', 0),
                 ('date', '>=', date_from), ('date', '<=', date_to)],
             order='date asc',
         )
