@@ -26,9 +26,14 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
-                isActive: ["auto"],
-            trigger: 'body:not(.modal-open) nav.o_main_navbar, button[name="action_generate_new_template"]',
-            run: "click",
+                isActive: ["auto", "body:not(.modal-open)"],
+                trigger: "nav.o_main_navbar",
+                run: "click",
+            },
+            {
+                isActive: ["auto", "body:is(.modal-open)"],
+                trigger: 'button[name="action_generate_new_template"]',
+                run: "click",
             },
             {
                 trigger: '.o_control_panel:not(:has(button[name="action_fsm_worksheet"]))',
@@ -66,6 +71,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             content: markup(_t('<b>Review and sign</b> the <b>task report</b> with your customer.')),
             tooltipPosition: 'bottom',
                 run: "click",
+                expectUnloadPage: true,
             },
             {
                 trigger: ".o_project_portal_sidebar",
@@ -92,6 +98,10 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 run: "click",
             },
             {
+                trigger: ".modal canvas.o_web_sign_signature",
+                run: "canvasNotEmpty",
+            },
+            {
                 trigger:
                     ".modal .o_portal_sign_submit:enabled:contains(sign report):has(i.fa-check)",
             content: markup(_t('Validate the <b>signature</b>.')),
@@ -110,6 +120,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
                 content: markup(_t('Go back to your Field Service <b>task</b>.')),
                 tooltipPosition: 'right',
                 run: "click",
+                expectUnloadPage: true,
             },
             {
                 trigger: 'button[name="action_send_report"]:enabled',
