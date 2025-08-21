@@ -283,13 +283,13 @@ Earnings are made of professional income, remuneration, unemployment allocations
     def write(self, vals):
         res = super().write(vals)
         if vals.get('current_version_id'):
-            self.current_version_id.filtered('contract_date_start')._trigger_l10n_be_next_activities()
+            self.current_version_id.sudo().filtered('contract_date_start')._trigger_l10n_be_next_activities()
         return res
 
     @api.model_create_multi
     def create(self, vals_list):
         employees = super().create(vals_list)
-        employees.current_version_id.filtered('contract_date_start')._trigger_l10n_be_next_activities()
+        employees.current_version_id.sudo().filtered('contract_date_start')._trigger_l10n_be_next_activities()
         return employees
 
     def action_employee_work_schedule_change_wizard(self):
