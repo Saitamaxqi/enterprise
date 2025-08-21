@@ -8,6 +8,7 @@ from . import account_journal_sepa_ct_at
 from . import account_journal_sepa_ct_de
 from . import account_journal_iso20022_ch
 from . import account_journal_iso20022_se
+from . import account_journal_iso20022_us
 from . import account_journal_dashboard
 from . import account_payment
 from . import account_payment_method

@@ -64,13 +64,13 @@ class AccountPayment(models.Model):
     @api.model
     def _get_method_codes_using_bank_account(self):
         res = super()._get_method_codes_using_bank_account()
-        res += ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch']
+        res += ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch', 'iso20022_us']
         return res
 
     @api.model
     def _get_method_codes_needing_bank_account(self):
         res = super()._get_method_codes_needing_bank_account()
-        res += ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch']
+        res += ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch', 'iso20022_us']
         return res
 
     @api.constrains('payment_method_line_id', 'journal_id')

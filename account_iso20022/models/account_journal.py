@@ -94,6 +94,8 @@ class AccountJournal(models.Model):
             res |= self.env.ref('account_iso20022.account_payment_method_iso20022_se')
         elif self._is_payment_method_available('iso20022_ch'):
             res |= self.env.ref('account_iso20022.account_payment_method_iso20022_ch')
+        elif self._is_payment_method_available('iso20022_us'):
+            res |= self.env.ref('account_iso20022.account_payment_method_iso20022_us')
         elif self._is_payment_method_available('iso20022'):
             res |= self.env.ref('account_iso20022.account_payment_method_iso20022')
 

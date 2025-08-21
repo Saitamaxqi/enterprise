@@ -244,3 +244,66 @@ class TestSwissIsoCreditTransfer(TestISO20022CommonCreditTransfer):
         xml_file_path = file_path('account_iso20022/tests/xml_files/pain.001.001.03.ch.02.xml')
         expected_tree = etree.parse(xml_file_path)
         self.assertXmlTreeEqual(sct_doc, expected_tree.getroot())
+
+
+@tagged('post_install', '-at_install')
+class TestAmericanISOCreditTransfer(TestISO20022CommonCreditTransfer):
+    @classmethod
+    def collect_company_accounting_data(cls, company):
+        res = super().collect_company_accounting_data(company)
+        company.update({
+            'iso20022_orgid_id': '0123456789',
+            'iso20022_initiating_party_name': 'US Company',
+            'iso20022_orgid_issr': 'USABA',
+        })
+        cls.american_bank = cls.env['res.bank'].create({
+            'name': 'Bank of America',
+            'bic': 'BOFAUS3NXXX',
+            'country': cls.env.ref('base.us').id,
+        })
+        res['default_journal_bank'].update({
+            'bank_acc_number': '7896541230',
+            'bank_id': cls.american_bank.id
+        })
+        res['default_journal_bank'].bank_account_id.update({
+            'clearing_number': '011900254',
+        })
+
+        return res
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
+        cls.payment_method = cls.env.ref('account_iso20022.account_payment_method_iso20022_us')
+        cls.company_data['default_journal_bank'].available_payment_method_ids |= cls.payment_method
+        cls.payment_method_line = cls.env['account.payment.method.line'].sudo().create([{
+            'name': cls.payment_method.name,
+            'payment_method_id': cls.payment_method.id,
+            'journal_id': cls.company_data['default_journal_bank'].id
+        }])
+
+        cls.env.ref('base.USD').active = True
+        cls.american_partner = cls.env['res.partner'].create({
+            'name': 'American Customer',
+            'street': 'American Street',
+            'country_id': cls.env.ref('base.us').id,
+        })
+        cls.american_partner_bank = cls.env['res.partner.bank'].create({
+            'acc_number': '9632587410',
+            'clearing_number': '322271627',
+            'partner_id': cls.american_partner.id,
+            'acc_type': 'bank',
+            'bank_name': 'Bank of America',
+            'bank_id': cls.american_bank.id,
+            'allow_out_payment': True,
+        })
+
+    @freeze_time('2024-03-04')
+    def test_us_ach_iso_xml(self):
+        batch = self.generate_iso20022_batch_payment(self.american_partner)
+        sct_doc = self.get_sct_doc_from_batch(batch)
+        xml_file_path = file_path('account_iso20022/tests/xml_files/pain.001.001.03.us.xml')
+        expected_tree = etree.parse(xml_file_path)
+
+        self.assertXmlTreeEqual(sct_doc, expected_tree.getroot())

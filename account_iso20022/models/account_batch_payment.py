@@ -19,7 +19,7 @@ class AccountBatchPayment(models.Model):
 
     def _get_methods_generating_files(self):
         rslt = super()._get_methods_generating_files()
-        rslt.extend(['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch'])
+        rslt.extend(['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch', 'iso20022_us'])
         return rslt
 
     def validate_batch(self):
@@ -69,7 +69,7 @@ class AccountBatchPayment(models.Model):
     def check_payments_for_errors(self):
         rslt = super().check_payments_for_errors()
 
-        if self.payment_method_code not in ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch']:
+        if self.payment_method_code not in ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch', 'iso20022_us']:
             return rslt
 
         no_bank_acc_payments = self.env['account.payment']
@@ -102,7 +102,7 @@ class AccountBatchPayment(models.Model):
         return "SCT-" if self.payment_method_code == 'sepa_ct' else "PAIN-"
 
     def _generate_export_file(self):
-        if self.payment_method_code in ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch']:
+        if self.payment_method_code in ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch', 'iso20022_us']:
             payments = self.payment_ids.sorted(key=lambda r: r.id)
             payment_dicts = self._generate_payment_template(payments)
             xml_doc = self.journal_id.create_iso20022_credit_transfer(

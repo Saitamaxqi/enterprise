@@ -36,6 +36,11 @@ class AccountPaymentMethod(models.Model):
             'type': ('bank',),
             'currency_ids': self.env.ref("base.CHF").ids,
         }
+        res['iso20022_us'] = {
+            'mode': 'multi',
+            'type': ('bank',),
+            'currency_ids': self.env.ref("base.USD").ids,
+        }
         return res
 
     def _get_payment_method_domain(self, code, with_currency=True, with_country=True):
