@@ -1311,6 +1311,26 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': payment_3.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
         ])
 
+    def test_ref_included_in_another(self):
+        _invoice_line_1 = self._create_invoice_line(600, self.partner_1, 'out_invoice', ref="INV/2025/08/10")
+        invoice_line_2 = self._create_invoice_line(600, self.partner_2, 'out_invoice', ref="INV/2025/08/101")
+        bank_line = self.env['account.bank.statement.line'].with_context(auto_statement_processing=True).create([
+            {
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'INV/2025/08/101',
+                'amount': 600,
+                'sequence': 1,
+            },
+        ])
+        # _invoice_line_1 and invoice_line_2 both found, but the ref of _invoice_line_1 isn't a complete word in
+        # payment_ref, so it should be rejected and only invoice_line_2 kept and reconciled since there's no
+        # ambiguity anymore
+        self._check_st_line_matching(bank_line, [
+            {'account_id': bank_line.journal_id.default_account_id.id, 'balance': 600.0, 'reconciled': False},
+            {'account_id': invoice_line_2.account_id.id, 'balance': -600.0, 'reconciled': True},
+        ], reconciled_amls=[invoice_line_2])
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes

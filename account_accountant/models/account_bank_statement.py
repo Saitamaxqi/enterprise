@@ -424,9 +424,26 @@ class AccountBankStatementLine(models.Model):
 
         st_lines_refs = {}
         to_process = {}
+
+        def is_properly_surrounded(text, substring):
+            """
+            Definition of what a valid matching word can be: any string, containing whitespaces or not, surrounded by
+            start/end of line, whitespace, or punctuation in ['.', ';', ',', '?', '!'].
+            """
+            # Escape substring for regex safety
+            sub_escaped = re.escape(substring)
+            # Allowed delimiters: start (^), end ($), whitespace (\s), or [. ; , ? !]
+            pattern = rf"(^|[\s\.;,?!]){sub_escaped}($|[\s\.;,?!])"
+            return re.search(pattern, text) is not None
+
         # make sure that a match on payment_ref can't be used to match several distinct aml, even if we are sure the same ref can't
         # be found twice because of the HAVING COUNT(*) = 1, we still need to exclude cases where one ref is included in another.
         for st_line_id, aml_id, aml_amount_residual, matching_word in self.env.cr.fetchall():
+            st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed
+            # ignore matching words that aren't complete words (not delimited per spaces or punctuation). Doing that in post
+            # process rather than in the query itself because the SQL regex operations can't use the index
+            if not is_properly_surrounded(st_line.payment_ref, matching_word):
+                continue
             to_process[st_line_id, matching_word] = [(aml_id, aml_amount_residual)]
             for word in st_lines_refs.get(st_line_id, []):
                 if word in matching_word or matching_word in word:
