@@ -36,7 +36,7 @@ class SignContract(Sign):
                 'owner_id': owner.id,
                 'datas': doc.file,
                 'name': f'{sign_request_sudo.display_name}/{doc.document_id.name}',
-                'folder_id': employee.hr_employee_folder_id.id,
+                'folder_id': employee.hr_employee_contract_folder_id.id,
                 'tag_ids': [(4, signature_request_tag.id)] if signature_request_tag else [],
                 'res_id': employee.id,
                 'res_model': 'hr.employee',  # Security Restriction to contract managers
@@ -59,7 +59,7 @@ class SignContract(Sign):
                 'owner_id': owner.id,
                 'datas': doc.file,
                 'name': f'{sign_request_sudo.display_name}/{doc.document_id.name}',
-                'folder_id': version.employee_id.hr_employee_folder_id.id,
+                'folder_id': version.employee_id.hr_employee_contract_folder_id.id,
                 'tag_ids': [(4, signature_request_tag.id)] if signature_request_tag else [],
                 'res_id': version.id,
                 'res_model': 'hr.version',  # Security Restriction to contract managers

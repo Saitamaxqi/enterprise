@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import ValidationError
 
 
@@ -14,7 +14,8 @@ class DocumentsDocument(models.Model):
     def _raise_if_used_folder(self):
         if folder_ids := self.filtered(lambda d: d.type == 'folder').ids:
             employees_folders_in_self = self.env['hr.employee'].sudo().search_count(
-                [('hr_employee_folder_id', 'child_of', folder_ids)], limit=1)
+                ['|', ('hr_employee_folder_id', 'child_of', folder_ids),
+                 ('hr_employee_contract_folder_id', 'child_of', folder_ids)], limit=1)
             if employees_folders_in_self:
-                raise ValidationError(_("Impossible to delete employee subfolders"))
+                raise ValidationError(self.env._("Impossible to delete employee folder or employee 'Contract' folder"))
         return super()._raise_if_used_folder()

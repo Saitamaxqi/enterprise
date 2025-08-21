@@ -11,6 +11,7 @@ class HrEmployee(models.Model):
 
     document_count = fields.Integer(compute='_compute_document_count', groups="hr.group_hr_user")
     hr_employee_folder_id = fields.Many2one('documents.document', string="HR Employee Folder", groups="base.group_system,hr.group_hr_user")
+    hr_employee_contract_folder_id = fields.Many2one('documents.document', string="HR Employee Contract Folder", groups="base.group_system,hr.group_hr_user")
 
     def _get_document_folder(self):
         return self.company_id.documents_hr_folder if self.company_id.documents_hr_settings else False
@@ -80,6 +81,14 @@ class HrEmployee(models.Model):
                 partners={partner.id: ('edit', False) for partner in
                           hr_users_per_company[employee.company_id].partner_id})
             employee.hr_employee_folder_id = folder.id
+            # create Contracts Subfolder
+            if not employee.hr_employee_contract_folder_id:
+                employee.hr_employee_contract_folder_id = self.env["documents.document"].sudo().create([{
+                    'name': self.env._("Contracts"),
+                    'type': 'folder',
+                    'folder_id': employee.hr_employee_folder_id.id,
+                    'company_id': employee.company_id.id,
+                }])
         if not skip_subfolders:
             employees._generate_employee_documents_subfolders()
 
@@ -94,20 +103,23 @@ class HrEmployee(models.Model):
         create_subfolders_vals = []
         subfolders_to_delete = Documents
 
-        subfolders = Documents.search([('type', '=', 'folder'), ('folder_id', 'in', self.hr_employee_folder_id.ids)])
+        subfolders = Documents.search([
+            ('type', '=', 'folder'),
+            ('folder_id', 'in', self.hr_employee_folder_id.ids),
+            ('id', 'not in', self.hr_employee_contract_folder_id.ids)])
         subfolders_by_employee_folder = subfolders.grouped('folder_id')
         for company in self.company_id:
             subfolder_names = [name for name in company.employee_subfolders.split(',') if name]
-            company_employees = self.filtered(lambda e: e.company_id == company)
-            for employee_folder in company_employees.hr_employee_folder_id:
+            company_employees = self.filtered(lambda e: e.company_id == company and e.hr_employee_folder_id)
+            for employee in company_employees:
                 # Add new folders added to the list
-                existing_subfolders = subfolders_by_employee_folder.get(employee_folder, Documents)
+                existing_subfolders = subfolders_by_employee_folder.get(employee.hr_employee_folder_id, Documents)
                 added_subfolder_names = list(set(subfolder_names) - set(existing_subfolders.mapped('name')))
                 for subfolder_name in added_subfolder_names:
                     create_subfolders_vals.append({
                         'name': subfolder_name,
                         'type': 'folder',
-                        'folder_id': employee_folder.id,
+                        'folder_id': employee.hr_employee_folder_id.id,
                         'company_id': company.id,
                     })
 
