@@ -402,7 +402,7 @@ class SignTemplate(models.Model):
                 'name': role.name,
                 'roleId': role.id,
                 'colorId': idx,
-                'assignTo': role.assign_to.avatar_128 or role.assign_to.avatar_1920,
+                'assignTo': role.assign_to.avatar_128 or role.assign_to.avatar_1920 or '',
             })
         return roles_info
 
