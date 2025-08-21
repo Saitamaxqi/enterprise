@@ -2229,3 +2229,35 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "groups": "base.group_no_one",
             "studio_groups": '[{"id": 7, "name": "Technical Features", "display_name": "Technical Features", "forbid": false}]'
         })
+
+    def test_add_existing_binary_with_filename(self):
+        self.env["ir.model.fields"].create({
+            "ttype": "binary",
+            "model": "res.partner",
+            "model_id": self.env["ir.model"]._get("res.partner").id,
+            "name": "x_test_binary",
+            "field_description": "Binary with filename",
+        })
+
+        self.env["ir.model.fields"].create({
+            "ttype": "char",
+            "model": "res.partner",
+            "model_id": self.env["ir.model"]._get("res.partner").id,
+            "name": "x_test_binary_filename",
+        })
+
+        self.testView.arch = '''
+            <form>
+                <group>
+                    <field name="name" />
+                </group>
+            </form>
+        '''
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_add_existing_binary_with_filename', login="admin")
+        studio_view = _get_studio_view(self.testView)
+        assertViewArchEqual(self, studio_view.arch, '''
+        <data>
+            <xpath expr="/form//field[@name='name']" position="after">
+                <field name="x_test_binary" filename="x_test_binary_filename"/>
+            </xpath>
+        </data>''')

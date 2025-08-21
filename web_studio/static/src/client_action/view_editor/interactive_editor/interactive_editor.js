@@ -320,6 +320,12 @@ export class InteractiveEditor extends Component {
             if (field.type === "monetary") {
                 this.setCurrencyInfos(newNode.attrs);
             }
+            if (
+                field.type === "binary" &&
+                this.viewEditorModel.fields[data.fieldName + "_filename"]
+            ) {
+                newNode.attrs["filename"] = data.fieldName + "_filename";
+            }
         }
         if (!newNode) {
             return;

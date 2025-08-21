@@ -2317,3 +2317,35 @@ registry.category("web_tour.tours").add("web_studio_test_apply_group_no_one", {
         }
     ]
 });
+
+registry.category("web_tour.tours").add("web_studio_test_add_existing_binary_with_filename", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_existing_fields_header",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar_search_input",
+            run: "edit x_test_binary",
+        },
+        {
+            trigger:
+                ".o_web_studio_existing_fields .o_web_studio_component:contains(Binary with filename)",
+            run: "drag_and_drop(.o_web_studio_form_view_editor .o_web_studio_hook:eq(1))",
+        },
+        {
+            trigger: ".o_form_renderer:has(.o_field_widget[name='x_test_binary'])",
+        },
+    ],
+});
