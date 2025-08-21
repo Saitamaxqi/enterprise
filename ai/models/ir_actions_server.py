@@ -28,8 +28,6 @@ class IrActionsServer(models.Model):
     ALLOWED_STATES_FOR_AI = {
         'code', 'next_activity', 'object_create', 'object_copy',
         'followers', 'remove_followers', 'webhook', 'mail_post',
-        # `documents_account`, hard-coded to not create a bridge module
-        'documents_account_record_create',
     }
 
     # AI Action
@@ -99,7 +97,7 @@ class IrActionsServer(models.Model):
         for action in self:
             action.ai_tool_is_candidate = (
                 action.state in self.ALLOWED_STATES_FOR_AI
-                or (action.state == 'object_write' and action.evaluation_type == 'value')
+                or (action.state == 'object_write' and action.evaluation_type in ('value', 'sequence'))
                 or (action.state == "multi" and all(c.ai_tool_is_candidate for c in action.child_ids))
             )
 

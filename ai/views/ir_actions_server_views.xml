@@ -54,9 +54,6 @@
                         To return a result to the AI agent, do <code>ai['result'] = ...</code>
                     </li>
                 </xpath>
-                <xpath expr="//field[@name='evaluation_type']" position="attributes">
-                    <attribute name="readonly">context.get('default_use_in_ai', False)</attribute>
-                </xpath>
                 <xpath expr="//button[@name='create_action']" position="attributes">
                     <attribute name="invisible" add="context.get('default_use_in_ai', False)" separator="or"/>
                 </xpath>
