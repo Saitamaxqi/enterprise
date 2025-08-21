@@ -8,11 +8,11 @@
         <xpath expr="//div[hasclass('o_gantt_pill_wrapper')]" position="attributes">
             <attribute name="t-attf-class" add="#{pill.record.state === 'validated' ? 'opacity-50' : '' }" />
         </xpath>
-        <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="attributes">
-            <attribute name="class" add="w-100 text-center" separator=" "/>
-        </xpath>
         <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="after">
             <span class="o-xsmaller text-muted text-truncate"><t t-esc="pill.subName"/></span>
+        </xpath>
+        <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="attributes">
+            <attribute name="class" remove="o_gantt_pill_title" add="w-100 text-center" separator=" "/>
         </xpath>
     </t>
 </templates>
