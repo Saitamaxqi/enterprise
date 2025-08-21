@@ -12,7 +12,7 @@ export class SendcloudFunctionalitiesField extends Component {
         this.actionService = useService("action");
         this.orm = useService("orm");
         this.resId = data.id;
-        this.sendcloudProductId = data.sendcloud_shipping_id[0];
+        this.sendcloudProductId = data.sendcloud_shipping_id.id;
         this.filterableFunc = useState({});
         this.currentFilters = {...data.sendcloud_product_functionalities};
         onWillStart(this._fetchFunctionalities);
