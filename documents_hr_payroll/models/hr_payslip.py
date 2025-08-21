@@ -73,7 +73,7 @@ class HrPayslip(models.Model):
         return super()._get_document_folder() if self.employee_id.user_id else self.company_id._get_or_create_worker_payroll_folder()
 
     def _check_create_documents(self):
-        return bool(self.employee_id.user_id) or self.company_id.documents_hr_settings
+        return self._get_document_partner().id and (bool(self.employee_id.user_id) or self.company_id.documents_hr_settings)
 
     def _get_email_template(self):
         return self.env.ref(
