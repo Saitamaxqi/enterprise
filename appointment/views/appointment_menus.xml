@@ -72,10 +72,5 @@
         action="appointment.resource_calendar_leaves_action_show_appointment_resources"
         groups="group_appointment_manager"
         name="Resource Leaves"/>
-    <menuitem
-        id="menu_appointment_type_custom"
-        parent="appointment.appointment_menu_config"
-        action="appointment_type_action_custom"
-        groups="group_appointment_user"/>
 
 </odoo>

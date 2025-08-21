@@ -937,6 +937,41 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         self.assertListEqual(available_resources_tuesday, (resource2 + resource3).ids)
         self.assertListEqual(available_resources_wednesday, (resource1 + resource2 + resource3).ids)
 
+        # Custom Appointment
+        appointment.slot_ids = False
+        appointment.update({
+            'category': 'custom',
+            'slot_ids': [
+                Command.create({
+                    'start_datetime': self.reference_monday,
+                    'end_datetime': self.reference_monday + timedelta(hours=1)
+                }),
+                Command.create({
+                    'start_datetime': self.reference_monday + timedelta(days=1),
+                    'end_datetime': self.reference_monday + timedelta(days=1, hours=1)
+                }),
+                Command.create({
+                    'start_datetime': self.reference_monday + timedelta(days=2),
+                    'end_datetime': self.reference_monday + timedelta(days=2, hours=1)
+                })
+            ],
+        })
+
+        appointment.slot_ids[0].restrict_to_resource_ids = resource1.ids
+        appointment.slot_ids[1].restrict_to_resource_ids = (resource2 + resource3).ids
+        with freeze_time(self.reference_now):
+            slots = appointment._get_appointment_slots('UTC')
+
+        monday_slots = self._filter_appointment_slots(slots, filter_weekdays=[0])
+        tuesday_slots = self._filter_appointment_slots(slots, filter_weekdays=[1])
+        wednesday_slots = self._filter_appointment_slots(slots, filter_weekdays=[2])
+        available_resources_monday = [resource['id'] for resource in monday_slots[0]['available_resources']]
+        available_resources_tuesday = [resource['id'] for resource in tuesday_slots[0]['available_resources']]
+        available_resources_wednesday = [resource['id'] for resource in wednesday_slots[0]['available_resources']]
+        self.assertListEqual(available_resources_monday, resource1.ids)
+        self.assertListEqual(available_resources_tuesday, (resource2 + resource3).ids)
+        self.assertListEqual(available_resources_wednesday, (resource1 + resource2 + resource3).ids)
+
     @users('apt_manager')
     def test_appointment_resources_assign_time_resource(self):
         """ Check that all resources are available with time_resource assign method. """

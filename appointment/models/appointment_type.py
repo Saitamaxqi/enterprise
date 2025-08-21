@@ -111,6 +111,10 @@ class AppointmentType(models.Model):
             - Punctual: regular slots limited between 2 datetimes. Accessible from the website\n
             - Specific Slots: the user will create and share to another user a custom appointment type with hand-picked time slots\n
             - Shared Calendar: the user will create and share to another user an appointment type covering all their time slots""")
+    category_slot_scheduling = fields.Selection(
+        [('weekly', 'Weekly'), ('flexible', 'Flexible')],
+         string="Schedule", readonly=False, compute="_compute_category_slot_scheduling"
+    )
     category_time_display = fields.Selection([
         ('recurring_fields', 'Available now'),
         ('punctual_fields', 'Within a date range')],
@@ -258,18 +262,43 @@ class AppointmentType(models.Model):
 
     @api.depends('start_datetime', 'end_datetime')
     def _compute_category(self):
-        for appointment_type in self:
+        for appointment_type in self.filtered(lambda apt: apt.category != 'custom'):
             appointment_type.category = 'punctual' if appointment_type.start_datetime or appointment_type.end_datetime else 'recurring'
             if not appointment_type.slot_ids:
                 appointment_type.slot_ids = appointment_type._get_default_slots(appointment_type.category)
 
     def _inverse_category(self):
         """ Generate the default slots for the anytime appointment types.
-        If the category is 'custom', no need to generate default slots. """
-        anytime_appointment_types = self.filtered_domain([('category', '=', 'anytime')])
-        anytime_appointment_types.slot_ids = False # Reset slots if existing
-        for appointment_type in anytime_appointment_types:
-            appointment_type.slot_ids = appointment_type._get_default_slots('anytime')
+        If the category is 'custom', remove irrelevant slots and set punctual fields to False. """
+        for appointment_type in self:
+            if appointment_type.category == 'anytime':
+                appointment_type.slot_ids = appointment_type._get_default_slots('anytime')
+            if appointment_type.category == 'custom':
+                appointment_type.slot_ids -= appointment_type.slot_ids.filtered(
+                    lambda slot: not (slot.start_datetime and slot.end_datetime)
+                )
+                appointment_type.update({
+                    'start_datetime': False,
+                    'end_datetime': False,
+                })
+
+    @api.depends('category')
+    def _compute_category_slot_scheduling(self):
+        for apt in self:
+            apt.category_slot_scheduling = 'flexible' if apt.category == 'custom' else 'weekly'
+
+    @api.onchange('category_slot_scheduling')
+    def _onchange_category_slot_scheduling(self):
+        for apt in self.filtered(lambda apt: apt.category != 'anytime'):
+            apt.category = (
+                'custom' if apt.category_slot_scheduling == 'flexible' else
+                'punctual' if apt.start_datetime or apt.end_datetime else
+                'recurring'
+            )
+            if apt.category != 'custom':
+                apt.slot_ids = apt._get_default_slots(apt.category)
+            else:
+                apt.slot_ids = False
 
     @api.depends('category')
     def _compute_category_time_display(self):
@@ -698,7 +727,10 @@ class AppointmentType(models.Model):
                     append_slot(day, slot)
         else:
             # Custom appointment type, we use "unique" slots here that have a defined start/end datetime
-            unique_slots = self.slot_ids.filtered(lambda slot: slot.slot_type == 'unique' and slot.end_datetime > reference_date)
+            # We compare it with ref_start (which is localized here, so we adapt slot start_datetime to compare)
+            unique_slots = self.slot_ids.filtered(
+                lambda slot: slot.slot_type == 'unique' and slot.start_datetime.astimezone(appt_tz) > ref_start
+            )
 
             for slot in unique_slots:
                 start = slot.start_datetime.astimezone(tz=None)
@@ -772,12 +804,10 @@ class AppointmentType(models.Model):
         unique_slots = self.slot_ids.filtered(lambda slot: slot.slot_type == 'unique')
 
         if self.category == 'custom' and unique_slots:
-            # Custom appointment type, the first day should depend on the first slot datetime
+            # Custom appointment type, the first day is the earliest slot start if in the future, else now
             start_first_slot = unique_slots[0].start_datetime
-            first_day_utc = start_first_slot if reference_date > start_first_slot else reference_date
-            first_day = requested_tz.fromutc(first_day_utc + relativedelta(hours=self.min_schedule_hours))
-            appointment_duration_days = (unique_slots[-1].end_datetime.date() - reference_date.date()).days
-            last_day = requested_tz.fromutc(reference_date + relativedelta(days=appointment_duration_days))
+            first_day = requested_tz.fromutc(start_first_slot if reference_date < start_first_slot else reference_date)
+            last_day = requested_tz.fromutc(max(unique_slots.mapped('end_datetime')))
         elif self.category == 'punctual':
             # Punctual appointment type, the first day is the start_datetime if it is in the future, else the first day is now
             first_day = requested_tz.fromutc(self.start_datetime if self.start_datetime > now else now)
@@ -836,7 +866,6 @@ class AppointmentType(models.Model):
         # as he should still be able to interact with the screen and select another capacity.
         if not total_nb_slots and asked_capacity == 1:
             return []
-        nb_slots_previous_months = 0
 
         # Compute calendar rendering and inject available slots
         today = requested_tz.fromutc(reference_date)
@@ -845,7 +874,6 @@ class AppointmentType(models.Model):
         month_dates_calendar = cal.Calendar(locale.first_week_day).monthdatescalendar
         months = []
         while (start.year, start.month) <= (last_day.year, last_day.month):
-            nb_slots_next_months = sum(slot_field_label in slot for slot in slots)
             has_availabilities = False
             dates = month_dates_calendar(start.year, start.month)
             for week_index, week in enumerate(dates):
@@ -903,7 +931,6 @@ class AppointmentType(models.Model):
                                     url_parameters.update(available_resource_ids=str(slots[0]['available_resource_ids'].ids))
                                 slot['url_parameters'] = url_encode(url_parameters)
                                 today_slots.append(slot)
-                                nb_slots_next_months -= 1
                             slots.pop(0)
                     today_slots = sorted(today_slots, key=lambda d: d['datetime'])
                     dates[week_index][day_index] = {
@@ -921,10 +948,7 @@ class AppointmentType(models.Model):
                 'month': format_datetime(start, 'MMMM Y', locale=get_lang(self.env).code),
                 'weeks': dates,
                 'has_availabilities': has_availabilities,
-                'nb_slots_previous_months': nb_slots_previous_months,
-                'nb_slots_next_months': nb_slots_next_months,
             })
-            nb_slots_previous_months = total_nb_slots - nb_slots_next_months
             start = start + relativedelta(months=1)
         return months
 
