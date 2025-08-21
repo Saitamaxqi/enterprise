@@ -520,6 +520,19 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
             message = self.env['mail.message'].search([('subject', 'like', "Pay me now !")])
             self.assertEqual(message.email_from, self.env.user.partner_id.email_formatted)
 
+        # we have to create a new overdue invoice to test the second case as the previous invoice
+        # will no longer trigger the followup
+        self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2016-01-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [Command.create({
+                'quantity': 1,
+                'price_unit': 600,
+                'tax_ids': [],
+            })]
+        }).action_post()
+
         # case 2: the email_from is hardcoded in the template
         with create_and_send_email(
             email_from="test@odoo.com",
