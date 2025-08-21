@@ -5,8 +5,7 @@ from odoo.exceptions import UserError
 
 INTERFACE_KEYS = [
     ("html_field_record", "Write in an HTML field"),
-    ("html_field_composer", "Write in a message"),
-    ("composer_ai_button", "Write a message"),
+    ("mail_composer", "Write an email"),
     ("html_field_text_select", "Rewrite content"),
     ("chatter_ai_button", "Get help on a record"),
     ("html_prompt_shortcut", "Convert a prompt in an email")

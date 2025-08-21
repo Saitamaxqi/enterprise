@@ -86,11 +86,11 @@ class Model(models.AbstractModel):
             context.append(f"You were called within an Odoo {self._name} record. Your answers should take the record's details into account. The following JSON contains all of the record's details: {front_end_info}")
 
         # If we don't have record info from the front-end and it's required, fetch the record information and pass it to the model's context
-        if caller_component in ["html_field_composer", "composer_ai_button"]:
+        if caller_component == "mail_composer":
             context.append(f"You were called within an Odoo {self._name} record. Your answers should take the record's details into account. The following JSON contains all of the records details: {self._ai_serialize_fields_data()}")
 
         # Add some additional details for some special cases and finish the context by the "first" message sent by the assistant
-        if caller_component in ["html_field_text_select"]:
+        if caller_component == "html_field_text_select":
             context.append(f"The text that you will be rewritting is the following: {text_selection}")
         else:
             context.append("ALWAYS FORMAT YOUR ANSWERS USING MARKDOWN, AVOID USING HTML. Don't use unecessary formatting like code blocks if not needed.")

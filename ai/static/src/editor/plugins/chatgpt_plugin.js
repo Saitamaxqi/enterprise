@@ -119,7 +119,7 @@ export class ChatGPTPlugin extends Plugin {
         const { resModel, resId, data, fields, id } = this.config.getRecordInfo();
         if (selection.isCollapsed) {
             if (resModel === "mail.compose.message") {
-                callerComp = "html_field_composer";
+                callerComp = "mail_composer";
                 recordModel = data.model;
                 recordId = Number(data.res_ids.slice(1, -1)); // resIds should look like so `[id]`, the slice and cast allows to extract the id
                 recordData = data;

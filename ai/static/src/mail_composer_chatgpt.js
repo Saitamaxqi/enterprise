@@ -34,7 +34,7 @@ export class MailComposerChatGPT extends Component {
 
     async onOpenChatGPTPromptDialogBtnClick() {
         await this.aiChatLauncher.launchAIChat({
-            callerComponentName: "composer_ai_button",
+            callerComponentName: "mail_composer",
             recordModel: this.props.record.data.model,
             recordId: Number(this.props.record.data.res_ids.slice(1, -1)),
             originalRecordData: this.props.record.data,

@@ -12,11 +12,7 @@
             <field name="sequence">20</field>
         </record>
 
-        <record id="ai_prompt_write_followup_composer_html" model="ai.prompt.button">
-            <field name="name">Write a followup answer</field>
-        </record>
-
-        <record id="ai_prompt_write_followup_composer_button" model="ai.prompt.button">
+        <record id="ai_prompt_write_followup_composer" model="ai.prompt.button">
             <field name="name">Write a followup answer</field>
         </record>
 
@@ -27,19 +23,10 @@
         <!-- Create the basic UI rules that exist by default and are not deletable -->
         <record id="ai_mail_composer" model="ai.composer">
             <field name="name">Mail/Note Composer</field>
-            <field name="interface_key">composer_ai_button</field>
+            <field name="interface_key">mail_composer</field>
             <field name="ai_agent" ref="ai.ai_default_agent"/>
             <field name="default_prompt">Your job is to help with drafting messages. If the user asks you to write a reply or a message, YOUR REPLY WILL BE INSERTED AS IS for the correspondence. Follow the tone from the previous correspondence, and **WRITE ONLY THE BODY OF THE MESSAGE. DO NOT ADD ADDITIONAL COMMENTARY, A SUBJECT LINE, OR A SIGNATURE.** Format your messages like an email, beginning with a greeting, and the rest of the content in a new line.</field>
-            <field name="available_prompts" eval="[(4, ref('ai.ai_prompt_write_followup_composer_button'))]"/>
-            <field name="is_system_default">True</field>
-        </record>
-
-        <record id="ai_html_composer" model="ai.composer">
-            <field name="name">HTML Field Inside of the Message Composer</field>
-            <field name="interface_key">html_field_composer</field>
-            <field name="ai_agent" ref="ai.ai_default_agent"/>
-            <field name="default_prompt">Your job is to help with drafting messages. If the user asks you to write anything, **YOUR REPLY WILL BE INSERTED AS IS** for the correspondence. Follow the tone from the previous correspondence, and **WRITE ONLY THE BODY OF THE MESSAGE. DO NOT ADD ADDITIONAL COMMENTARY, A SUBJECT LINE, OR A SIGNATURE.** Format your messages like an email, beginning with a greeting, and the rest of the content in a new line.</field>
-            <field name="available_prompts" eval="[(4, ref('ai.ai_prompt_write_followup_composer_html'))]"/>
+            <field name="available_prompts" eval="[(4, ref('ai.ai_prompt_write_followup_composer'))]"/>
             <field name="is_system_default">True</field>
         </record>
 
