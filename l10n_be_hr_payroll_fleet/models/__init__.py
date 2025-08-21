@@ -4,5 +4,6 @@
 from . import fleet
 from . import res_config_settings
 from . import hr_version
+from . import hr_employee
 from . import hr_dmfa
 from . import hr_payslip

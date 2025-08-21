@@ -1,11 +1,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from markupsafe import Markup
-from odoo import models, _
+from odoo import fields, models, _
 
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
+
+    wage_with_holidays = fields.Monetary(readonly=False, related="version_id.wage_with_holidays", inherited=True, groups="hr.group_hr_manager")
+    wage_on_signature = fields.Monetary(readonly=False, related="version_id.wage_on_signature", inherited=True, groups="hr.group_hr_manager")
+    final_yearly_costs = fields.Monetary(readonly=False, related="version_id.final_yearly_costs", inherited=True, groups="hr.group_hr_manager")
+    monthly_yearly_costs = fields.Monetary(related="version_id.monthly_yearly_costs", inherited=True, groups="hr.group_hr_manager")
 
     def action_show_contract_reviews(self):
         return {

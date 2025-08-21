@@ -86,6 +86,11 @@ class HrEmployee(models.Model):
     l10n_hk_autopay_mobn = fields.Char(string='Autopay Mobile Number', groups="hr.group_hr_user")
     l10n_hk_autopay_ref = fields.Char(string='Autopay Reference', groups="hr.group_hr_user")
 
+    l10n_hk_internet = fields.Monetary(readonly=False, related="version_id.l10n_hk_internet", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_hk_mpf_vc_option = fields.Selection(readonly=False, related="version_id.l10n_hk_mpf_vc_option", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_hk_mpf_vc_percentage = fields.Float(readonly=False, related="version_id.l10n_hk_mpf_vc_percentage", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_hk_rental_id = fields.Many2one(readonly=False, related="version_id.l10n_hk_rental_id", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+
     @api.constrains('l10n_hk_autopay_emal')
     def _check_l10n_hk_autopay_emal(self):
         for employee in self:

@@ -14,6 +14,13 @@ class HrEmployee(models.Model):
         string="Annual Leave Days Total",
         groups="hr.group_hr_user",
         compute="_compute_l10n_ae_annual_leave_days")
+    l10n_ae_housing_allowance = fields.Monetary(readonly=False, related="version_id.l10n_ae_housing_allowance", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_ae_transportation_allowance = fields.Monetary(readonly=False, related="version_id.l10n_ae_transportation_allowance", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_ae_other_allowances = fields.Monetary(readonly=False, related="version_id.l10n_ae_other_allowances", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_ae_is_dews_applied = fields.Boolean(readonly=False, related="version_id.l10n_ae_is_dews_applied", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_ae_number_of_leave_days = fields.Integer(readonly=False, related="version_id.l10n_ae_number_of_leave_days", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_ae_is_computed_based_on_daily_salary = fields.Boolean(readonly=False, related="version_id.l10n_ae_is_computed_based_on_daily_salary", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_ae_eos_daily_salary = fields.Float(readonly=False, related="version_id.l10n_ae_eos_daily_salary", inherited=True, groups="hr_payroll.group_hr_payroll_user")
 
     def _l10n_ae_get_worked_years(self):
         self.ensure_one()

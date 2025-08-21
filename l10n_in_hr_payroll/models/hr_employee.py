@@ -14,6 +14,17 @@ class HrEmployee(models.Model):
     l10n_in_esic_number = fields.Char(string='ESIC Number', groups="hr.group_hr_user", copy=False)
     l10n_in_relationship = fields.Char("Relationship", groups="hr.group_hr_user", tracking=True)
     l10n_in_lwf_account_number = fields.Char("LWF Account Number", groups="hr.group_hr_user", tracking=True)
+    l10n_in_tds = fields.Float(readonly=False, related="version_id.l10n_in_tds", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_driver_salay = fields.Boolean(readonly=False, related="version_id.l10n_in_driver_salay", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_medical_insurance = fields.Float(readonly=False, related="version_id.l10n_in_medical_insurance", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_provident_fund = fields.Boolean(readonly=False, related="version_id.l10n_in_provident_fund", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_voluntary_provident_fund = fields.Float(readonly=False, related="version_id.l10n_in_voluntary_provident_fund", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_house_rent_allowance_metro_nonmetro = fields.Float(readonly=False, related="version_id.l10n_in_house_rent_allowance_metro_nonmetro", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_supplementary_allowance = fields.Float(readonly=False, related="version_id.l10n_in_supplementary_allowance", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_gratuity = fields.Float(readonly=False, related="version_id.l10n_in_gratuity", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_esic_amount = fields.Float(readonly=False, related="version_id.l10n_in_esic_amount", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_leave_allowance = fields.Float(readonly=False, related="version_id.l10n_in_leave_allowance", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_residing_child_hostel = fields.Integer(readonly=False, related="version_id.l10n_in_residing_child_hostel", inherited=True, groups="hr_payroll.group_hr_payroll_user")
 
     _unique_l10n_in_uan = models.Constraint(
         'unique (l10n_in_uan)',

@@ -8,6 +8,7 @@ class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
     ytd_balance_ids = fields.One2many("l10n_au.payslip.ytd", "employee_id", string="YTD Balances", groups="hr_payroll.group_hr_payroll_user")
+    l10n_au_report_to_w3 = fields.Boolean(readonly=False, related="version_id.l10n_au_report_to_w3", inherited=True, groups="hr_payroll.group_hr_payroll_user")
 
     def _get_fiscal_year_data(self, date_start: date, date_end: date, finalised=False):
         self.ensure_one()

@@ -2,11 +2,17 @@
 
 import re
 
-from odoo import models
+from odoo import fields, models
 
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
+
+    l10n_be_dimona_in_declaration_number = fields.Char(readonly=False, related="version_id.l10n_be_dimona_in_declaration_number", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_be_dimona_last_declaration_number = fields.Char(readonly=False, related="version_id.l10n_be_dimona_last_declaration_number", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_be_dimona_declaration_state = fields.Selection(readonly=False, related="version_id.l10n_be_dimona_declaration_state", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_be_dimona_planned_hours = fields.Integer(readonly=False, related="version_id.l10n_be_dimona_planned_hours", inherited=True, groups="hr_payroll.group_hr_payroll_user")
+    l10n_be_is_student = fields.Boolean(readonly=False, related="version_id.l10n_be_is_student", inherited=True, groups="hr_payroll.group_hr_payroll_user")
 
     def action_check_dimona(self):
         self.ensure_one()
