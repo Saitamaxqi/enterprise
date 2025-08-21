@@ -5,6 +5,10 @@
     "version": "1.0",
     "category": "Hidden",
     "summary": "AI Documents Account",
+    "demo": [
+        "demo/ai_documents_sort.xml",
+        "demo/documents_tag.xml",
+    ],
     "description": "AI Documents Account",
     "depends": ["ai_documents", "documents_account"],
     "auto_install": True,

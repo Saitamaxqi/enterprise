@@ -105,6 +105,15 @@ class DocumentsDocument(models.Model):
         self.folder_id = folder.id
         return _('Moved to "%(folder)s".', folder=self._ai_truncate(folder.name))
 
+    def _ai_action_add_tags(self, tag_names):
+        self.ensure_one()
+        tags = self.env["documents.tag"].search([('name', 'in', tag_names)])
+        if not tags:
+            raise UserError(_("Tags not found: %s", tag_names))
+
+        self.tag_ids |= tags
+        return _("Tag(s) %s added", ", ".join(tags.mapped("name")))
+
     @api.model
     def _get_base_server_actions_domain(self):
         """Don't show tools that need arguments to be executed in documents or technical server actions."""
@@ -266,20 +275,19 @@ class DocumentsDocument(models.Model):
             "ai_tool_ids": ir_actions_tools.ids or False,
             "model_id": self.env.ref("documents.model_documents_document").id,
             "state": "ai",
-            "ai_action_prompt": Markup(_("""
+            "ai_action_prompt": Markup("""
                 <p>
-                    Here is a document called %(document_name)s and whose content is %(content)s and tags are %(tags)s.
-
-                    The mimetype of the document is %(mimetype)s
+                    %s
                 </p>
                 <br/>
-            """))
-            % {
-                "document_name": ai_field_insert("name", _("Name")),
-                "content": ai_field_insert("attachment_id", _("Document Content")),
-                "tags": ai_field_insert("tag_ids.name", _("Tags > Name")),
-                "mimetype": ai_field_insert("mimetype", _("Mimetype")),
-            },
+            """)
+            % _(
+                """Here is a document called %(document_name)s and whose content is %(content)s and tags are %(tags)s. The mimetype of the document is %(mimetype)s.""",
+                document_name=ai_field_insert("name", _("Name")),
+                content=ai_field_insert("attachment_id", _("Document Content")),
+                tags=ai_field_insert("tag_ids.name", _("Tags > Name")),
+                mimetype=ai_field_insert("mimetype", _("Mimetype")),
+            ),
         }
         if ir_action:
             ir_action.write(action_values)

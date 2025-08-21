@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from markupsafe import Markup
-
 from odoo import _, Command, api, fields, models
 from odoo.tools import is_html_empty
 
@@ -16,6 +14,7 @@ class AiDocumentsSort(models.TransientModel):
     def default_get(self, fields):
         values = super().default_get(fields)
 
+        tool_actions = self.env["ir.actions.server"]
         if "folder_id" in values and "ai_tool_ids" in fields:
             existing_ir_action = self.env["ir.actions.server"].search(
                 [("ai_autosort_folder_id", "=", values["folder_id"])],
@@ -30,6 +29,8 @@ class AiDocumentsSort(models.TransientModel):
             # By default, add all pinned action that can be used as AI tools
             folder = self.env["documents.document"].browse(values["folder_id"])
             tool_actions = self._get_folder_actions(folder)
+
+        if "ai_tool_ids" in fields:
             move_in_folder = self.env.ref(
                 "ai_documents.ir_actions_server_move_in_folder",
                 raise_if_not_found=False,
@@ -42,9 +43,10 @@ class AiDocumentsSort(models.TransientModel):
         if "ai_sort_prompt" not in fields or not finance_folder:
             return values
 
-        values["ai_sort_prompt"] = Markup(_("If the document is an invoice, send it to %(finance)s")) % {
-            "finance": self.env["documents.document"]._ai_folder_insert(finance_folder.id),
-        }
+        values["ai_sort_prompt"] = _(
+            "If the document is an invoice, send it to %s",
+            self.env["documents.document"]._ai_folder_insert(finance_folder.id),
+        )
 
         return values
 
