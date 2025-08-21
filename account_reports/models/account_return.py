@@ -1209,7 +1209,7 @@ class AccountReturn(models.Model):
 
     def _get_closing_report_options(self, date_to=None, tax_unit=None, report=None):
         report = self.type_id.report_id
-
+        start_day, start_month = self.type_id._get_start_date_elements(self.company_id)
         options = {
             'date': {
                 'date_to': fields.Date.to_string(self.date_to),
@@ -1219,6 +1219,12 @@ class AccountReturn(models.Model):
             'selected_variant_id': report.id,
             'sections_source_id': report.id,
             'tax_unit': 'company_only' if not self.tax_unit_id else self.tax_unit_id.id,
+            'return_periodicity': {
+                'periodicity': self.type_id._get_periodicity(self.company_id),
+                'months_per_period': self.type_id._get_periodicity_months_delay(self.company_id),
+                'start_day': start_day,
+                'start_month': start_month,
+            },
         }
 
         company_ids = self.company_ids.ids

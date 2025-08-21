@@ -821,6 +821,8 @@ class AccountReport(models.Model):
         options['date']['filter'] = options_filter
 
     def _init_options_return_periodicity(self, options, previous_options):
+        options['return_periodicity'] = previous_options.get('return_periodicity')
+
         if len(self.return_type_ids) == 1:
             main_company = self.env.company
             start_day, start_month = self.return_type_ids._get_start_date_elements(main_company)
