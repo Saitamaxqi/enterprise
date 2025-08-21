@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from collections import defaultdict
 from odoo import fields
 from odoo.http import request, route
-from odoo.tools.intervals import Intervals
 
 from odoo.addons.website_sale_renting.controllers.main import WebsiteSaleRenting
 
@@ -25,21 +25,26 @@ class WebsiteSalePlanningRenting(WebsiteSaleRenting):
                 ('resource_id', 'in', resources.ids),
                 ('start_datetime', '<=', max_date),
                 ('end_datetime', '>=', min_date),
-            ])  # In sudo mode to access to planning slots' fields from eCommerce.
-            intervals = Intervals([
-                (
-                    max(min_date, slot_sudo.start_datetime),
-                    min(max_date, slot_sudo.end_datetime),
-                    slot_sudo
-                )
-                for slot_sudo in slots_sudo
-            ])
+            ], order='start_datetime')  # In sudo mode to access to planning slots' fields from eCommerce.
+            rented_quantities = defaultdict(int)
+            for _resource, slots in slots_sudo.grouped('resource_id').items():
+                for slot in slots:
+                    rented_quantities[slot.start_datetime] += 1
+                    rented_quantities[slot.end_datetime] -= 1
+            key_dates = sorted(set(rented_quantities.keys()) | {min_date, max_date})
+
             availabilities = []
-            for start, end, shifts in intervals:
-                availabilities.append({
-                    'start': start,
-                    'end': end,
-                    'quantity_available': len(resources) - len(shifts.resource_id),
-                })
+            current_qty_available = len(resources)
+            for i in range(1, len(key_dates)):
+                start_dt = key_dates[i - 1]
+                if start_dt > max_date:
+                    break
+                current_qty_available -= rented_quantities[start_dt]
+                if start_dt >= min_date:
+                    availabilities.append({
+                        'start': start_dt,
+                        'end': key_dates[i],
+                        'quantity_available': current_qty_available,
+                    })
             result['renting_availabilities'] = availabilities
         return result
