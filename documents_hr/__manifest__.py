@@ -20,11 +20,6 @@ Easily access your documents from your employee profile.
         'views/hr_employee_public_views.xml',
         'views/res_users_views.xml',
     ],
-    'assets': {
-        'web.assets_backend': [
-            'documents_hr/static/src/components/**/*',
-        ],
-    },
     'installable': True,
     'auto_install': True,
     'author': 'Odoo S.A.',

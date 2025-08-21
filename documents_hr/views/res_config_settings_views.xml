@@ -39,7 +39,6 @@
                         <field name="documents_employee_folder_id" widget="documents_folder_many2one"
                         options="{'no_create': True, 'no_create_edit': True}"/>
                     </div>
-                    <widget name="hr_document_setting_permission_widget"/>
                     <div class="row mt16">
                         <div class="col-lg-3 d-flex align-items-center">
                             <label class="o_form_label" for="employee_subfolders" string="Employees Subfolders"/>
