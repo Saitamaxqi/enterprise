@@ -65,6 +65,7 @@
         'views/hr_payroll_menu.xml',
         'views/hr_work_entry_export_mixin_views.xml',
         'wizard/hr_payroll_payment_report_wizard.xml',
+        'wizard/hr_payslip_correction_wizard_views.xml',
     ],
     'demo': ['data/hr_payroll_demo.xml'],
     'assets': {
