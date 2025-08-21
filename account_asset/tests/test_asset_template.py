@@ -1,9 +1,15 @@
 import io
-from openpyxl import load_workbook
+import unittest
+
+try:
+    from openpyxl import load_workbook
+except ImportError:
+    load_workbook = None
 
 from odoo.tests import HttpCase
 
 
+@unittest.skipIf(load_workbook is None, "openpyxl not available")
 class TestAssetTemplate(HttpCase):
 
     def test_download_asset_template(self):
