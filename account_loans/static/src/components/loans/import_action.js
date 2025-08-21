@@ -16,11 +16,10 @@ export class AccountLoanImportAction extends ImportAction {
     setup() {
         super.setup();
 
-        this.action = useService("action");
+        this.orm = useService("orm");
 
         this.model = useState(new AccountLoanImportModel({
             env: this.env,
-            resModel: this.resModel,
             context: this.props.action.params.context || {},
             orm: this.orm,
         }));
@@ -33,12 +32,12 @@ export class AccountLoanImportAction extends ImportAction {
         });
     }
 
-    async exit() {
+    async openRecords(resIds) {
         if (this.model.resModel === "account.loan.line") {
             const action = await this.orm.call("account.loan", "action_file_uploaded", [this.model.context.default_loan_id]);
-            return this.action.doAction(action);
+            return this.actionService.doAction(action);
         }
-        super.exit();
+        super.openRecords(resIds);
     }
 }
 

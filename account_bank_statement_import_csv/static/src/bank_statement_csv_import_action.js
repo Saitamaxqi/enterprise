@@ -10,13 +10,11 @@ export class BankStatementImportAction extends ImportAction {
     setup() {
         super.setup();
 
-        this.action = useService("action");
+        this.orm = useService("orm");
 
         this.model = useBankStatementCSVImportModel({
             env: this.env,
-            resModel: this.resModel,
             context: this.props.action.params.context || {},
-            orm: this.orm,
         });
 
         this.env.config.setDisplayName(_t("Import Bank Statement")); // Displayed in the breadcrumbs
@@ -30,14 +28,14 @@ export class BankStatementImportAction extends ImportAction {
         });
     }
 
-    async exit(resIds) {
+    async openRecords(resIds) {
         if (this.model.statement_id) {
             const res = await this.orm.call(
                 "account.bank.statement",
                 "action_open_bank_reconcile_widget",
                 [this.model.statement_id]
             );
-            return this.action.doAction(res);
+            return this.actionService.doAction(res);
         }
         const statementLines = await this.orm.searchRead(
             "account.bank.statement.line",
@@ -52,7 +50,7 @@ export class BankStatementImportAction extends ImportAction {
                 x2ManyCommands.link(attachment)
             ),
         });
-        super.exit(resIds);
+        super.openRecords(resIds);
     }
 }
 

@@ -1,4 +1,5 @@
 import { useState } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
 import { BaseImportModel } from "@base_import/import_model";
 
 class AccountMoveLineImportModel extends BaseImportModel {
@@ -18,6 +19,7 @@ class AccountMoveLineImportModel extends BaseImportModel {
 /**
  * @returns {AccountMoveLineImportModel}
  */
-export function useAccountMoveLineImportModel({ env, resModel, context, orm }) {
-    return useState(new AccountMoveLineImportModel({ env, resModel, context, orm }));
+export function useAccountMoveLineImportModel({ env, context }) {
+    const orm = useService("orm");
+    return useState(new AccountMoveLineImportModel({ env, context, orm }));
 }
