@@ -6,7 +6,6 @@ import { Domain } from "@web/core/domain";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 
-import { onWillStart } from "@odoo/owl";
 
 export class DocumentsSearchModel extends SearchModel {
     setup(services) {
@@ -14,9 +13,6 @@ export class DocumentsSearchModel extends SearchModel {
         this.documentService = useService("document.document");
         this.orm = useService("orm");
         this.skipLoadClosePreview = false;
-        onWillStart(async () => {
-            this.deletionDelay = await this.orm.call("documents.document", "get_deletion_delay", [[]]);
-        });
         useSetupAction({
             beforeLeave: () => {
                 this._updateRouteState({ folder_id: undefined });

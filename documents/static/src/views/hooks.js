@@ -21,7 +21,10 @@ import {
  * Controller/View hooks
  */
 
-export function openDeleteConfirmationDialog(model, isPermanent) {
+export async function openDeleteConfirmationDialog(model, isPermanent) {
+    const deletionDelay = await model.orm
+        .cache({ type: "ram" })
+        .call("documents.document", "get_deletion_delay", [[]]);
     return new Promise((resolve, reject) => {
         const root = model.root;
         const dialogProps = {
@@ -32,7 +35,7 @@ export function openDeleteConfirmationDialog(model, isPermanent) {
                     : _t("Are you sure you want to permanently erase the document?")
                 : _t(
                       "Items moved to the trash will be deleted forever after %s days.",
-                      model.env.searchModel.deletionDelay
+                      deletionDelay
                   ),
             confirmLabel: isPermanent ? _t("Delete permanently") : _t("Move to trash"),
             cancelLabel: _t("Discard"),
