@@ -26,11 +26,14 @@
                     <span>/ hour</span>
                 </div>
             </label>
+            <page name="information" position="attributes">
+                <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
+            </page>
             <group name="salary_right" position="attributes">
                 <attribute name="invisible">wage_type == 'hourly'</attribute>
             </group>
             <group name="other" position="after">
-                <group name="part_time" string="Part time">
+                <group name="part_time" string="Part time" groups="hr_payroll.group_hr_payroll_user">
                     <label for="time_credit"/>
                     <div class="o_row">
                         <field name="time_credit"/>
