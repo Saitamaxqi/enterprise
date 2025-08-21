@@ -160,6 +160,18 @@ class ResPartner(models.Model):
             'context': {'search_default_late': True},
         }
 
+    def action_open_partner_followup_journal_items(self):
+        report = self.env.ref('account_reports.followup_report')
+        options = report.get_options({})
+        params = {
+            'line_id': report._get_generic_line_id('res.partner', self.id),
+        }
+        custom_handler = self.env[report.custom_handler_model_name]
+        return {
+            **custom_handler.open_journal_items(options, params),
+            'name': _("Journal Items"),
+        }
+
     def action_open_unreconciled_partner(self):
         action_values = self.env["ir.actions.actions"]._for_xml_id("account_accountant.action_move_line_posted_unreconciled")
         domain = ast.literal_eval(action_values['domain'])

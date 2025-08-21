@@ -509,6 +509,40 @@ class TestAccountFollowupReports(TestAccountFollowupCommon, MailCommon):
         self.assertIn(invoice.id, overdue_invoices.ids)
         self.assertEqual(parent_contact.followup_status, 'with_overdue_invoices')
 
+    def test_journal_items_action_domain_filters_partner_posted_entries(self):
+        """
+        The action [action_open_partner_followup_journal_items] should return journal items
+        belonging to the selected partner, only from posted moves, and limited
+        to payable/receivable accounts marked as trade (non_trade = False).
+        """
+        test_partner = self.env['res.partner'].create({
+            'name': 'Journal Items with Partner',
+            'is_company': True,
+            'customer_rank': 1,
+        })
+        invoice_date = fields.Date.today() - relativedelta(months=1)
+
+        # Create invoices
+        normal_invoice = self.create_invoice(fields.Date.today(), test_partner)
+        overdue_invoice = self.create_invoice(invoice_date, test_partner)
+
+        action = test_partner.action_open_partner_followup_journal_items()
+
+        # Validate context
+        ctx = action["context"]
+        self.assertEqual(ctx.get("search_default_partner_id"), [test_partner.id])
+        self.assertEqual(ctx.get("search_default_posted"), 1)
+
+        # Either receivable or payable should be set to 1
+        self.assertEqual(ctx.get("search_default_trade_receivable"), 1)
+        # Non-trade filters should be disabled
+        self.assertEqual(ctx.get("search_default_non_trade_receivable"), 0)
+        self.assertEqual(ctx.get("search_default_non_trade_payable", 0), 0)
+
+        # Validate domain and results
+        aml = self.env["account.move.line"].search(action["domain"])
+        self.assertEqual(aml.ids, normal_invoice.line_ids.ids + overdue_invoice.line_ids.ids)
+
     def test_followup_template_recipients_with_cron(self):
         """
         tests that when a mail_cc is defined on a template,

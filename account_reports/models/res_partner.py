@@ -23,6 +23,17 @@ class ResPartner(models.Model):
         }
         return action
 
+    def open_follow_up_report(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("account_reports.action_account_report_followup")
+        action['params'] = {
+            'options': {
+                'partner_ids': (self | self.commercial_partner_id).ids,
+                'unfold_all': len(self.ids) == 1,
+            },
+            'ignore_session': True,
+        }
+        return action
+
     def open_partner(self):
         return {
             'type': 'ir.actions.act_window',

@@ -16,6 +16,13 @@ class AccountFollowupCustomHandler(models.AbstractModel):
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)
 
+        options['buttons'].append({
+            'name': _('Send'),
+            'action': 'action_send_follow_up',
+            'sequence': 100,
+            'always_show': True,
+        })
+
         options['hide_initial_balance'] = True
         if len(options['partner_ids']) == 1:
             options['ignore_totals_below_sections'] = True
@@ -106,3 +113,18 @@ class AccountFollowupCustomHandler(models.AbstractModel):
 
     def _get_order_by_aml_values(self):
         return SQL('account_move_line.date_maturity, %(order_by)s', order_by=super()._get_order_by_aml_values())
+
+    def action_send_follow_up(self, options):
+        template = self.env.ref('account_reports.email_template_customer_follow_up_report', False)
+        partners = self.env['res.partner'].browse(options.get('partner_ids', []))
+        return {
+            'name': _("Send %s Follow Up Report", partners.name) if len(partners) == 1 else _("Send Follow Up Reports"),
+            'type': 'ir.actions.act_window',
+            'views': [[False, 'form']],
+            'res_model': 'account.report.send',
+            'target': 'new',
+            'context': {
+                'default_mail_template_id': template.id,
+                'default_report_options': options,
+            },
+        }

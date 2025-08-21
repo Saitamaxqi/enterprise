@@ -803,6 +803,14 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'columns': column_values,
         }
 
+    def _get_report_send_recipients(self, options):
+        partners = options.get('partner_ids', [])
+        if not partners:
+            report = self.env['account.report'].browse(options['report_id'])
+            self.env.cr.execute(self._get_query_sums(report, options))
+            partners = [row['groupby'] for row in self.env.cr.dictfetchall() if row['groupby']]
+        return self.env['res.partner'].browse(partners)
+
     def open_journal_items(self, options, params):
         params['view_ref'] = 'account.view_move_line_tree_grouped_partner'
         report = self.env['account.report'].browse(options['report_id'])

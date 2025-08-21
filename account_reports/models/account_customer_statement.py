@@ -19,14 +19,6 @@ class CustomerStatementCustomHandler(models.AbstractModel):
         options['custom_display_config']['components']['AccountReportLine'] = 'PartnerLedgerFollowupLine'
         options['custom_display_config']['templates']['AccountReportHeader'] = 'account_reports.PartnerLedgerFollowupHeader'
 
-    def _get_report_send_recipients(self, options):
-        partners = options.get('partner_ids', [])
-        if not partners:
-            report = self.env['account.report'].browse(options['report_id'])
-            self.env.cr.execute(self._get_query_sums(report, options))
-            partners = [row['groupby'] for row in self.env.cr.dictfetchall() if row['groupby']]
-        return self.env['res.partner'].browse(partners)
-
     def action_send_statements(self, options):
         template = self.env.ref('account_reports.email_template_customer_statement', False)
         partners = self.env['res.partner'].browse(options.get('partner_ids', []))
