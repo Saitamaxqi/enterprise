@@ -66,6 +66,10 @@ class L10n_PeTaxPle81ReportHandler(models.AbstractModel):
                     "percentage": "",
                     "tax_mbl": "",
                     "car_cp": "",
+                    "deduction": "",
+                    "refund_type": "",
+                    "payment_state": "",
+                    "inconsistencies": "",
                     "date_cdd": columns["detraction_date"].strftime("%d/%m/%Y") if columns["detraction_date"] else "",
                     "name_cdd": columns["detraction_number"] or "",
                     "final_pipe": "",  # this field is only to print a technical closing pipe
