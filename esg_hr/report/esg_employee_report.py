@@ -19,9 +19,9 @@ class EsgEmployeeReport(models.Model):
     is_full_time = fields.Boolean(readonly=True, groups="hr.group_hr_user")
     leadership_level = fields.Integer(readonly=True, groups="hr.group_hr_user")
     country_id = fields.Many2one("res.country", readonly=True)
-    wage = fields.Float("Wage", aggregator="avg", readonly=True, groups="hr.group_hr_user")
+    wage = fields.Float("Wage", aggregator="avg", readonly=True, groups="hr.group_hr_manager")
     job_id = fields.Many2one("hr.job", string="Job Position", readonly=True, groups="hr.group_hr_user")
-    contract_type_id = fields.Many2one("hr.contract.type", string="Contract Type", readonly=True, groups="hr.group_hr_user")
+    contract_type_id = fields.Many2one("hr.contract.type", string="Contract Type", readonly=True, groups="hr.group_hr_manager")
 
     def _select(self):
         return """

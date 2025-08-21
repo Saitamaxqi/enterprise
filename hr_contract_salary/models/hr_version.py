@@ -53,9 +53,9 @@ class HrVersion(models.Model):
     holidays = fields.Float(string='Extra Time Off', groups="hr.group_hr_user",
         help="Number of days of paid leaves the employee gets per year.")
     wage_with_holidays = fields.Monetary(compute='_compute_wage_with_holidays', inverse='_inverse_wage_with_holidays',
-        tracking=True, string="Wage with Holidays", groups="hr.group_hr_user")
+        tracking=True, string="Wage with Holidays", groups="hr.group_hr_manager")
     wage_on_signature = fields.Monetary(string="Wage on Signature", tracking=True, aggregator="avg",
-                                        groups="hr.group_hr_user")
+                                        groups="hr.group_hr_manager")
     salary_offer_ids = fields.One2many('hr.contract.salary.offer', 'employee_version_id', groups="hr.group_hr_user")
     originated_offer_id = fields.Many2one('hr.contract.salary.offer', help="The original offer",
                                           groups="hr.group_hr_user")
@@ -69,9 +69,9 @@ class HrVersion(models.Model):
         string="Yearly Cost",
         tracking=True,
         aggregator="avg",
-        groups="hr.group_hr_user")
+        groups="hr.group_hr_manager")
     monthly_yearly_costs = fields.Monetary(
-        compute='_compute_monthly_yearly_costs', string='Monthly Cost', readonly=True, groups="hr.group_hr_user")
+        compute='_compute_monthly_yearly_costs', string='Monthly Cost', readonly=True, groups="hr.group_hr_manager")
 
     @api.constrains('sign_template_signatories_ids')
     def _check_signatories_unicity(self):
