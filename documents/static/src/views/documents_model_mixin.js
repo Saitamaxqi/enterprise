@@ -3,7 +3,6 @@ import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_d
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-import { toggleArchive, openDeleteConfirmationDialog } from "@documents/views/hooks";
 import { getCommonEmbeddedActions } from "@documents/views/utils";
 
 
@@ -246,11 +245,28 @@ export const DocumentsModelMixin = (component) =>
             const records = !this.documentService.userIsInternal
                 ? this.targetRecords
                 : this.targetRecords.filter((r) => !r.data.active);
-            if (!(await openDeleteConfirmationDialog(this, true))) {
+            const confirmed = await new Promise((resolve) => {
+                const dialogProps = {
+                    title: _t("Delete permanently"),
+                    body:
+                        this.root.isDomainSelected || this.root.selection.length > 1
+                            ? _t(
+                                  "Are you sure you want to permanently erase the selected documents?"
+                              )
+                            : _t(
+                                  "Are you sure you want to permanently erase the selected document?"
+                              ),
+                    confirmLabel: _t("Delete permanently"),
+                    cancelLabel: _t("Discard"),
+                    confirm: async () => resolve(true),
+                    cancel: () => resolve(false),
+                };
+                this.dialogService.add(ConfirmationDialog, dialogProps);
+            });
+            if (!confirmed) {
                 return;
             }
             await this.root.deleteRecords(records);
-            await this.load();
             await this._notifyChange();
         }
 
@@ -260,7 +276,7 @@ export const DocumentsModelMixin = (component) =>
         async onArchive() {
             const records = this.targetRecords.filter((r) => r.data.active && !r.data.lock_uid);
             const recordIds = records.map((r) => r.data.id);
-            await toggleArchive(records[0].model, records[0].resModel, recordIds, true);
+            await this.documentService.moveToTrash(recordIds);
             await this._notifyChange();
         }
 
@@ -293,7 +309,7 @@ export const DocumentsModelMixin = (component) =>
         async onRestore() {
             const records = this.targetRecords.filter((r) => !r.data.active);
             const recordIds = records.map((r) => r.data.id);
-            await toggleArchive(records[0].model, records[0].resModel, recordIds, false);
+            await this.orm.call("documents.document", "action_unarchive", [recordIds]);
             await this.env.searchModel._reloadSearchModel(true);
         }
 

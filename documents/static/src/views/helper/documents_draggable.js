@@ -1,6 +1,4 @@
 import { markup } from "@odoo/owl";
-
-import { toggleArchive } from "@documents/views/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { DRAGGED_CLASS } from "@web/core/utils/draggable_hook_builder";
 import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";
@@ -213,12 +211,7 @@ export const useDraggableDocuments = makeDraggableHook({
         if (targetElement.dataset.valueId === "TRASH") {
             if (
                 this.draggedRecords.movableRecordIds.length &&
-                (await toggleArchive(
-                    model,
-                    model.root.resModel,
-                    this.draggedRecords.movableRecordIds,
-                    true
-                ))
+                (await model.documentService.moveToTrash(this.draggedRecords.movableRecordIds))
             ) {
                 model.notification.add(
                     _t(

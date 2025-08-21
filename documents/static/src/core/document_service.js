@@ -5,6 +5,7 @@ import { EventBus, markup, reactive } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
 import { download } from "@web/core/network/download";
 import { parseSearchQuery, router } from "@web/core/browser/router";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { serializeDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
@@ -20,6 +21,9 @@ const { DateTime } = luxon;
 // Small hack, memoize uses the first argument as cache key, but we need the orm which will not be the same.
 const loadMaxUploadSize = memoize((_null, orm) =>
     orm.call("documents.document", "get_document_max_upload_limit")
+);
+const getDeletionDelay = memoize((_null, orm) =>
+    orm.call("documents.document", "get_deletion_delay", [[]])
 );
 
 export class DocumentService {
@@ -284,6 +288,29 @@ export class DocumentService {
                 onClose,
             }
         );
+    }
+
+    async moveToTrash(documentIds) {
+        const deletionDelay = await getDeletionDelay(null, this.orm);
+        const confirmed = await new Promise((resolve) => {
+            const dialogProps = {
+                title: _t("Move to trash"),
+                body: _t(
+                    "Items moved to the trash will be deleted forever after %(deletion_delay)s days.",
+                    { deletion_delay: deletionDelay }
+                ),
+                confirmLabel: _t("Move to trash"),
+                cancelLabel: _t("Discard"),
+                confirm: async () => resolve(true),
+                cancel: () => resolve(false),
+            };
+            this.dialog.add(ConfirmationDialog, dialogProps);
+        });
+        if (!confirmed) {
+            return false;
+        }
+        await this.orm.call("documents.document", "action_archive", [documentIds]);
+        return true;
     }
 
     async goToServerActionsView() {

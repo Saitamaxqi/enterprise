@@ -1,4 +1,3 @@
-import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { PromoteStudioAutomationDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from "@web/core/user";
@@ -20,53 +19,6 @@ import {
 /**
  * Controller/View hooks
  */
-
-export async function openDeleteConfirmationDialog(model, isPermanent) {
-    const deletionDelay = await model.orm
-        .cache({ type: "ram" })
-        .call("documents.document", "get_deletion_delay", [[]]);
-    return new Promise((resolve, reject) => {
-        const root = model.root;
-        const dialogProps = {
-            title: isPermanent ? _t("Delete permanently") : _t("Move to trash"),
-            body: isPermanent
-                ? root.isDomainSelected || root.selection.length > 1
-                    ? _t("Are you sure you want to permanently erase the documents?")
-                    : _t("Are you sure you want to permanently erase the document?")
-                : _t(
-                      "Items moved to the trash will be deleted forever after %s days.",
-                      deletionDelay
-                  ),
-            confirmLabel: isPermanent ? _t("Delete permanently") : _t("Move to trash"),
-            cancelLabel: _t("Discard"),
-            confirm: async () => {
-                resolve(true);
-            },
-            cancel: () => {
-                resolve(false);
-            },
-        };
-        model.dialog.add(ConfirmationDialog, dialogProps);
-    });
-}
-
-export async function toggleArchive(model, resModel, resIds, doArchive) {
-    if (doArchive && !(await openDeleteConfirmationDialog(model, false))) {
-        return false;
-    }
-    const action = await model.orm.call(
-        resModel,
-        doArchive ? "action_archive" : "action_unarchive",
-        [resIds]
-    );
-    if (action && Object.keys(action).length !== 0) {
-        model.action.doAction(action);
-    }
-    if (doArchive) {
-        await model.env.documentsView.bus.trigger("documents-close-preview");
-    }
-    return true;
-}
 
 export function preSuperSetupFolder() {
     const component = useComponent();
