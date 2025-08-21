@@ -80,7 +80,6 @@
       },
       "merges": [],
       "cells": {
-        "B7": "[Top Opportunities](odoo://view/{\"viewType\":\"list\",\"action\":{\"domain\":\"[[\\\"type\\\", \\\"=\\\", \\\"opportunity\\\"]]\",\"context\":{\"group_by\":[]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
         "B8": "=_t(\"Opportunity\")",
         "B9": "=ODOO.LIST(1,1,\"name\")",
         "B10": "=ODOO.LIST(1,2,\"name\")",
@@ -92,10 +91,8 @@
         "B16": "=ODOO.LIST(1,8,\"name\")",
         "B17": "=ODOO.LIST(1,9,\"name\")",
         "B18": "=ODOO.LIST(1,10,\"name\")",
-        "B21": "[Pipeline Stages](odoo://view/{\"viewType\":\"graph\",\"action\":{\"domain\":[[\"type\",\"=\",\"opportunity\"]],\"context\":{\"group_by\":[\"stage_id\",\"team_id\"],\"graph_measure\":\"prorated_revenue\",\"graph_mode\":\"bar\",\"graph_groupbys\":[\"stage_id\",\"team_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
         "B22": "Stage",
         "B23": "=PIVOT(10,10,false,false,,false)",
-        "B35": "[Top Countries](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"country_id\",\"!=\",false]],\"context\":{\"group_by\":[\"country_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"country_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
         "B36": "=_t(\"Country\")",
         "B37": "=PIVOT.HEADER(5,\"#country_id\",1)",
         "B38": "=PIVOT.HEADER(5,\"#country_id\",2)",
@@ -232,7 +229,6 @@
         "F16": "=ODOO.LIST(1,8,\"country_id\")",
         "F17": "=ODOO.LIST(1,9,\"country_id\")",
         "F18": "=ODOO.LIST(1,10,\"country_id\")",
-        "F35": "[Top Sources](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"source_id\",\"!=\",false]],\"context\":{\"group_by\":[\"source_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"source_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
         "F36": "=_t(\"Source\")",
         "F37": "=PIVOT.HEADER(8,\"#source_id\",1)",
         "F38": "=PIVOT.HEADER(8,\"#source_id\",2)",
@@ -655,7 +651,7 @@
           "id": "371be81c-1fac",
           "col": 0,
           "row": 6,
-          "offset": { "x": 0, "y": 2 },
+          "offset": { "x": 0, "y": 9 },
           "width": 1021,
           "height": 345,
           "tag": "carousel",
@@ -670,12 +666,7 @@
                 ],
                 "legendPosition": "top",
                 "labelRange": "B8:B18",
-                "title": {
-                  "text": "Top Opportunities",
-                  "bold": true,
-                  "color": "#01666B",
-                  "fontSize": 21
-                },
+                "title": { "text": "", "bold": true, "color": "#01666B", "fontSize": 21 },
                 "aggregated": false,
                 "axesDesign": {
                   "y": {
@@ -684,12 +675,32 @@
                   "y1": {
                     "title": { "text": "Probability" }
                   }
-                }
+                },
+                "humanize": true
               }
             },
             "items": [
-              { "type": "chart", "chartId": "2a5063b0-4c4b", "title": "Graph" },
-              { "type": "carouselDataView", "title": "Top 10" }
+              {
+                "type": "chart",
+                "chartId": "2a5063b0-4c4b",
+                "title": "Graph",
+                "carouselTitle": {
+                  "text": "Top Opportunities",
+                  "fontSize": 21,
+                  "color": "#01666B",
+                  "bold": true
+                }
+              },
+              {
+                "type": "carouselDataView",
+                "title": "Top 10",
+                "carouselTitle": {
+                  "text": "Top Opportunities",
+                  "bold": true,
+                  "fontSize": 21,
+                  "color": "#01666B"
+                }
+              }
             ],
             "fieldMatching": {}
           }
@@ -697,20 +708,15 @@
         {
           "id": "d8fb9812-04f0",
           "col": 0,
-          "row": 19,
-          "offset": { "x": 0, "y": 22 },
+          "row": 20,
+          "offset": { "x": 0, "y": 9 },
           "width": 491,
           "height": 340,
           "tag": "carousel",
           "data": {
             "chartDefinitions": {
               "5adf5fa8-e0e4-4e13-a3ac-259d67389cfb": {
-                "title": {
-                  "text": "Pipeline Stages",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                },
+                "title": { "text": "", "bold": true, "fontSize": 21, "color": "#01666B" },
                 "background": "#FFFFFF",
                 "legendPosition": "top",
                 "metaData": {
@@ -744,12 +750,7 @@
                 }
               },
               "a53f3ad6-5a53": {
-                "title": {
-                  "text": "Pipeline Stages",
-                  "fontSize": 21,
-                  "color": "#01666B",
-                  "bold": true
-                },
+                "title": { "text": "", "fontSize": 21, "color": "#01666B", "bold": true },
                 "background": "#FFFFFF",
                 "legendPosition": "top",
                 "metaData": {
@@ -778,13 +779,37 @@
               }
             },
             "items": [
-              { "type": "chart", "chartId": "a53f3ad6-5a53" },
+              {
+                "type": "chart",
+                "chartId": "a53f3ad6-5a53",
+                "carouselTitle": {
+                  "text": "Pipeline Stages",
+                  "bold": true,
+                  "fontSize": 21,
+                  "color": "#01666B"
+                }
+              },
               {
                 "type": "chart",
                 "chartId": "5adf5fa8-e0e4-4e13-a3ac-259d67389cfb",
-                "title": "Bar"
+                "title": "Bar",
+                "carouselTitle": {
+                  "text": "Pipeline Stages",
+                  "bold": true,
+                  "fontSize": 21,
+                  "color": "#01666B"
+                }
               },
-              { "type": "carouselDataView", "title": "Top 10" }
+              {
+                "type": "carouselDataView",
+                "title": "Top 10",
+                "carouselTitle": {
+                  "text": "Pipeline Stages",
+                  "bold": true,
+                  "fontSize": 21,
+                  "color": "#01666B"
+                }
+              }
             ],
             "fieldMatching": {
               "5adf5fa8-e0e4-4e13-a3ac-259d67389cfb": {
@@ -814,19 +839,14 @@
           "id": "2e2fe2d8-ad50",
           "col": 0,
           "row": 34,
-          "offset": { "x": 0, "y": 0 },
+          "offset": { "x": 0, "y": 9 },
           "width": 491,
           "height": 353,
           "tag": "carousel",
           "data": {
             "chartDefinitions": {
               "af11f776-28fb": {
-                "title": {
-                  "text": "Revenues by country",
-                  "fontSize": 21,
-                  "color": "#01666B",
-                  "bold": true
-                },
+                "title": { "text": "", "fontSize": 21, "color": "#01666B", "bold": true },
                 "background": "#FFFFFF",
                 "legendPosition": "left",
                 "metaData": {
@@ -851,12 +871,7 @@
                 "colorScale": "blues"
               },
               "df10a4eb-48ac": {
-                "title": {
-                  "text": "Leads by country",
-                  "color": "#01666B",
-                  "fontSize": 21,
-                  "bold": true
-                },
+                "title": { "text": "", "color": "#01666B", "fontSize": 21, "bold": true },
                 "background": "#FFFFFF",
                 "legendPosition": "left",
                 "metaData": {
@@ -882,9 +897,38 @@
               }
             },
             "items": [
-              { "type": "chart", "chartId": "af11f776-28fb", "title": "Revenue" },
-              { "type": "chart", "chartId": "df10a4eb-48ac", "title": "Leads" },
-              { "type": "carouselDataView", "title": "Top 10" }
+              {
+                "type": "chart",
+                "chartId": "af11f776-28fb",
+                "title": "Revenue",
+                "carouselTitle": {
+                  "text": "Revenues by Country",
+                  "fontSize": 21,
+                  "bold": true,
+                  "color": "#01666B"
+                }
+              },
+              {
+                "type": "chart",
+                "chartId": "df10a4eb-48ac",
+                "title": "Leads",
+                "carouselTitle": {
+                  "text": "Leads by Country",
+                  "fontSize": 21,
+                  "color": "#01666B",
+                  "bold": true
+                }
+              },
+              {
+                "type": "carouselDataView",
+                "title": "Top 10",
+                "carouselTitle": {
+                  "text": "Top Countries",
+                  "bold": true,
+                  "fontSize": 21,
+                  "color": "#01666B"
+                }
+              }
             ],
             "fieldMatching": {
               "af11f776-28fb": {
@@ -914,19 +958,14 @@
           "id": "0f2fc6cd-0b55",
           "col": 4,
           "row": 34,
-          "offset": { "x": 35, "y": 0 },
+          "offset": { "x": 35, "y": 8 },
           "width": 490,
           "height": 353,
           "tag": "carousel",
           "data": {
             "chartDefinitions": {
               "6aeb5a7c-00a7": {
-                "title": {
-                  "text": "Revenues by source",
-                  "fontSize": 21,
-                  "color": "#01666B",
-                  "bold": true
-                },
+                "title": { "text": "", "fontSize": 21, "color": "#01666B", "bold": true },
                 "background": "#FFFFFF",
                 "legendPosition": "top",
                 "metaData": {
@@ -951,8 +990,27 @@
               }
             },
             "items": [
-              { "type": "chart", "chartId": "6aeb5a7c-00a7", "title": "Graph" },
-              { "type": "carouselDataView", "title": "Top 10" }
+              {
+                "type": "chart",
+                "chartId": "6aeb5a7c-00a7",
+                "title": "Graph",
+                "carouselTitle": {
+                  "text": "Revenues by source",
+                  "bold": true,
+                  "fontSize": 21,
+                  "color": "#01666B"
+                }
+              },
+              {
+                "type": "carouselDataView",
+                "title": "Top 10",
+                "carouselTitle": {
+                  "text": "Top Sources",
+                  "bold": true,
+                  "fontSize": 21,
+                  "color": "#01666B"
+                }
+              }
             ],
             "fieldMatching": {
               "6aeb5a7c-00a7": {
