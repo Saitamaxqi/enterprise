@@ -40,6 +40,48 @@ test("Can create a new spreadsheet from File menu", async function () {
     expect.verifySteps(["action_open_new_spreadsheet"]);
 });
 
+test("Can move a spreadsheet to trash from File menu", async function () {
+    const spreadsheetId = 42;
+    const serverData = getBasicServerData();
+    serverData.models["documents.document"].records = [
+        {
+            id: spreadsheetId,
+            name: "Trash Test Sheet",
+            spreadsheet_data: "{}",
+            active: true,
+        },
+    ];
+    serverData.actions = {
+        "documents.document_action": {
+            id: "documents.document_action",
+            name: "Documents",
+            type: "ir.actions.act_window",
+            res_model: "documents.document",
+            views: [[false, "list"]],
+        },
+    };
+
+    await createSpreadsheet({
+        spreadsheetId,
+        serverData,
+        mockRPC: async (route, { method, args }) => {
+            if (method === "get_deletion_delay") {
+                expect.step("deletion_delay_requested");
+                return 7;
+            }
+            if (method === "action_archive") {
+                expect.step("spreadsheet_archived");
+                expect(args[0]).toEqual([spreadsheetId]);
+            }
+        },
+    });
+
+    await contains(".o-topbar-menu[data-id=file]").click();
+    await contains(".o-menu-item[data-name=move_to_trash]").click();
+    await contains(".modal-content .btn.btn-primary").click();
+    expect.verifySteps(["deletion_delay_requested", "spreadsheet_archived"]);
+});
+
 test("Action action_download_spreadsheet is correctly fired with topbar menu", async function () {
     onRpc("/spreadsheet/xlsx", () => {});
     let actionParam;

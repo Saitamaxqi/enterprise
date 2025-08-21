@@ -33,6 +33,7 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
             saveAsTemplate: this.saveAsTemplate.bind(this),
             onShareSpreadsheet: this.shareSpreadsheet.bind(this),
             onFreezeAndShareSpreadsheet: this.freezeAndShareSpreadsheet.bind(this),
+            moveToTrash: this.moveToTrash.bind(this),
             isFrozenSpreadsheet: () => this.data.handler === "frozen_spreadsheet",
         });
     }
@@ -115,6 +116,19 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
         ]);
         this.documentService.openSharingDialog([record.id]);
     }
+
+    async moveToTrash() {
+        const wasArchived = await this.documentService.moveToTrash([this.resId]);
+        if (!wasArchived) {
+            return;
+        }
+        if (this.env.config.breadcrumbs.length > 1) {
+            await this.actionService.restore();
+        } else {
+            await this.actionService.doAction("documents.document_action");
+        }
+        this.notification.add(_t("Spreadsheet moved to trash"), { type: "success" });
+    }
 }
 
 registry.category("actions").add("action_open_spreadsheet", SpreadsheetAction, { force: true });
@@ -137,4 +151,12 @@ topbarMenuRegistry.add("document_freeze_share", {
         !env.isFrozenSpreadsheet() &&
         env.onFreezeAndShareSpreadsheet,
     execute: (env) => env.onFreezeAndShareSpreadsheet(),
+});
+
+topbarMenuRegistry.addChild("move_to_trash", ["file"], {
+    name: _t("Move to trash"),
+    sequence: 80,
+    isVisible: (env) => env.moveToTrash,
+    execute: (env) => env.moveToTrash(),
+    icon: "o-spreadsheet-Icon.TRASH_FILLED",
 });
