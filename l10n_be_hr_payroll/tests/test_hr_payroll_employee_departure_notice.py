@@ -1,5 +1,6 @@
 from odoo.tests import tagged
 from .common import TestPayrollCommon
+from freezegun import freeze_time
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -23,6 +24,7 @@ class TestHrPayrollEmployeeDepartureNotice(TestPayrollCommon):
             'departure_description': 'Fired',
         })
 
+    @freeze_time("2025-07-21")
     def test_notice_period_calculation_with_seniority_at_hiring(self):
         # Without using seniority at hiring
         wizard_no_seniority = self._create_wizard(use_seniority=False)
