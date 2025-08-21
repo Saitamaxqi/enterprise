@@ -1763,9 +1763,7 @@ class HrPayslip(models.Model):
         result = []
         today = fields.Date.today()
         HrVersion = self.env['hr.version']
-        new_versions = HrVersion.search([]).filtered(
-            lambda c: c.date_start >= today + relativedelta(months=-3, day=1))
-
+        new_versions = HrVersion.search([('contract_date_start', '>=', today + relativedelta(months=-3, day=1))])
         past_versions_grouped_by_employee_id = {
             employee.id
             for [employee] in HrVersion._read_group([
