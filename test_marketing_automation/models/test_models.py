@@ -60,6 +60,7 @@ class MarketingTestSms(models.Model):
     _order = 'id ASC'
 
     name = fields.Char()
+    active = fields.Boolean(default=True)
     email_from = fields.Char(compute='_compute_from_customer', readonly=False, store=True)
     phone = fields.Char(compute='_compute_from_customer', readonly=False, store=True)
     mobile = fields.Char(compute='_compute_from_customer', readonly=False, store=True)

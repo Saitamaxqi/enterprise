@@ -78,15 +78,17 @@ class MarketingAutomationCase(MassMailCase):
         traces_info = []
         for trace in traces:
             record = all_records.filtered(lambda r: r.id == trace.res_id)
+            record_info = ""
             if record:
-                traces_info.append(
-                    f'Trace: doc {trace.res_id} - activity {trace.activity_id.id} ({trace.activity_id.activity_type}) - status {trace.state} '
-                    f'(rec {record.id}, {record.display_name} - email_normalized {record.email_normalized})'
-                )
-            else:
-                traces_info.append(
-                    f'Trace: doc {trace.res_id} - activity {trace.activity_id.id} ({trace.activity_id.activity_type}) - status {trace.state} (no record info)'
-                )
+                record_info = f"ID.{record.id}, {record.display_name}: email {record.email_normalized}"
+                if "mobile" in record:
+                    record_info += f"- mobile {record.mobile}"
+                if "phone" in record:
+                    record_info += f"- phone {record.phone}"
+            traces_info.append(
+                f'Trace: doc {trace.res_id} - activity {trace.activity_id.id} ({trace.activity_id.activity_type}) - status {trace.state}'
+                f' - rec: {record_info})'
+            )
         debug_info = '\n'.join(traces_info)
 
         # check traces / records coherency through campaign
@@ -127,6 +129,9 @@ class MarketingAutomationCase(MassMailCase):
                 'trace_failure_reason', 'trace_failure_type',
                 'trace_status',  # mailing.trace status
                 'mail_values',
+                # sms (see sms modules)
+                'check_sms',
+                'trace_sms_number',
                 # whatsapp (see wa modules)
                 'wa_from_mock',
             }

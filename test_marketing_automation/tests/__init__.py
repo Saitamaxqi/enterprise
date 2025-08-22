@@ -7,6 +7,7 @@ from . import test_data_campaign
 from . import test_flow
 from . import test_mailing
 from . import test_ma_internals
+from . import test_marketing_automation_sms
 from . import test_performance
 from . import test_marketing_automation_test
 from . import test_utm

@@ -4,6 +4,7 @@
 from odoo.addons.mass_mailing_sms.tests.common import MassSMSCommon
 from odoo.addons.marketing_automation.tests.common import MarketingAutomationCase, MarketingAutomationCommon
 from odoo.addons.marketing_automation_whatsapp.tests.common import MarketingAutomationWACase
+from odoo.addons.sms_twilio.tests.common import MockSmsTwilioApi
 from odoo.addons.whatsapp.tests.common import WhatsAppCommon, MockIncomingWhatsApp
 
 
@@ -14,6 +15,7 @@ class TestMACommon(
     WhatsAppCommon,
     MassSMSCommon,
     MockIncomingWhatsApp,
+    MockSmsTwilioApi,
 ):
 
     @classmethod
@@ -45,9 +47,10 @@ class TestMACommon(
         self.assertSMSTraces(
             [
                 {
+                    'check_sms': participant_info.get('check_sms', True),
                     'content': participant_info.get('trace_content'),
                     'failure_type': participant_info.get('trace_failure_type', False),
-                    'number': record.phone_sanitized,  # TDE FIXME: make it generic
+                    'number': participant_info.get('trace_sms_number', record.phone_sanitized),  # TDE FIXME: make it generic
                     'partner': record.customer_id,  # TDE FIXME: make it generic
                     'record': record,
                     'trace_status': participant_info['trace_status'],
