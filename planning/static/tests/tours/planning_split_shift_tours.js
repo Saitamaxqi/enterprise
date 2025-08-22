@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { animationFrame, click, hover } from "@odoo/hoot-dom";
+import { animationFrame, click, hover, waitFor } from "@odoo/hoot-dom";
 
 async function splitPill(pillEl, index = 0) {
     if (pillEl.parentElement.dataset.pillId === "__pill__8") {
@@ -28,7 +28,19 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     trigger: '.o_gantt_renderer_controls .dropdown-toggle:contains("Week")',
     content: "The initial default range should be week",
 }, {
+    isActive: [
+        "body:has(.o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM))",
+    ],
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM)",
+    async run(helpers) {
+        await helpers.click();
+        await waitFor(`.o_popover`, { timeout: 2000 });
+        await helpers.click(`.o_popover button:contains(delete)`);
+        await waitFor(`.modal`, { timeout: 2000 });
+        await helpers.click(`.modal button:contains(delete)`);
+    }
+}, {
+    trigger: "body:not(:has(.o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM)))",
 }, {
     trigger: ".o_searchview_dropdown_toggler",
     content: "Open Filter",
@@ -49,8 +61,6 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     trigger: ".modal-footer > .btn-primary",
     content: "Add custom filter",
     run: "click",
-}, {
-    trigger: "body:not(:has(.o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM)))",
 }, {
     trigger: ".o_searchview_input",
     content: "Search planning shifts assigned to Aramis",
