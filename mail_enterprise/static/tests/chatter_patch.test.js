@@ -88,7 +88,7 @@ test("Message list is scrolled to new message after posting a message", async ()
     await scroll(".o_content", 0);
     await click("button", { text: "Log note" });
     await insertText(".o-mail-Composer-input", "New Message");
-    await click(".o-mail-Composer-send:not(:disabled)");
+    await click(".o-mail-Composer-send:enabled");
     await contains(".o-mail-Composer-input", { count: 0 });
     await contains(".o-mail-Message", { count: 61 });
     await contains(".o-mail-Message-content", { text: "New Message" });

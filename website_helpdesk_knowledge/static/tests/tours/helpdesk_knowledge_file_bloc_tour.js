@@ -37,7 +37,7 @@ registry.category("web_tour.tours").add('helpdesk_pick_file_as_attachment_from_k
     trigger: '[data-embedded="file"] .o_embedded_toolbar_button_text:contains("Attach")',
     run: 'click',
 }, { // check that the file is added to the attachments
-    trigger: '.o-mail-Chatter .o-mail-AttachmentCard:contains("Onboarding")',
+    trigger: '.o-mail-Chatter .o-mail-AttachmentContainer:not(.o-isUploading):contains("Onboarding")',
 }]});
 
 registry.category("web_tour.tours").add('helpdesk_pick_file_as_message_attachment_from_knowledge', {
@@ -57,8 +57,6 @@ registry.category("web_tour.tours").add('helpdesk_pick_file_as_message_attachmen
 { // click on the "Use as Attachment" button located in the toolbar of the file block
     trigger: '[data-embedded="file"] .o_embedded_toolbar_button_text:contains("Send")',
     run: 'click',
-}, { // wait for the file to be uploaded
-    trigger: '.o-mail-Composer .o-mail-AttachmentContainer i.fa-check',
 }, { // check that the file is added to the attachment of the message, and that the file finished being uploaded
-    trigger: '.o-mail-Chatter .o-mail-Composer .o-mail-AttachmentCard:contains("Onboarding"):not(.o-isUploading)',
+    trigger: '.o-mail-Chatter .o-mail-Composer .o-mail-AttachmentContainer:not(.o-isUploading):contains("Onboarding") i.fa-check',
 }]});

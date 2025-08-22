@@ -12,7 +12,7 @@ const addAnswerComment = (commentText) => [{
     }
 }, {
     // Send comment
-    trigger: '.o-mail-Composer-send:not([disabled=""])',
+    trigger: '.o-mail-Composer-send:enabled',
     run: "click",
 }, {
     trigger: `.o-mail-Thread :contains(${commentText})`,
@@ -69,7 +69,7 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
                 await insertText('.o-mail-Composer-input', 'My Knowledge Comment');
             }
         }, { // Send comment
-            trigger: '.o_knowledge_comments_popover .o-mail-Composer-send:not([disabled=""])',
+            trigger: '.o_knowledge_comments_popover .o-mail-Composer-send:enabled',
             run: "click",
         }, { // Wait for the comment to be fully created
             trigger: ".note-editable p.o_knowledge_tour_first_paragraph a:not([data-id='undefined']):not(:visible)",

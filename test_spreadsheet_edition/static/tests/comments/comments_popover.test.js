@@ -91,7 +91,7 @@ test("Send messages from the popover", async () => {
 
     await contains(".o-mail-Composer textarea", { visible: false }).edit("msg2");
     await animationFrame();
-    await contains(".o-mail-Composer button[name='send-message']").click();
+    await contains(".o-mail-Composer button[name='send-message']:enabled").click();
     expect(".o-mail-Message").toHaveCount(2);
 
     threadIds = model.getters.getCellThreads(model.getters.getActivePosition());
