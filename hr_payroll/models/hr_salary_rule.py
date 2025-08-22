@@ -5,6 +5,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
 
+from ast import literal_eval
+
 
 class HrSalaryRule(models.Model):
     _name = 'hr.salary.rule'
@@ -33,21 +35,16 @@ class HrSalaryRule(models.Model):
         help="Used to compute the employer cost of a payslip.")
     condition_select = fields.Selection([
         ('none', 'Always True'),
-        ('range', 'Range'),
         ('input', 'Other Input'),
-        ('python', 'Python Expression')
+        ('python', 'Python Expression'),
+        ('domain', 'Domain')
     ], string="Condition Based on", default='none', required=True)
-    condition_range = fields.Char(string='Range Based on', default='version.wage',
-        help='This will be used to compute the % fields values; in general it is on basic, '
-             'but you can also use categories code fields in lowercase as a variable names '
-             '(hra, ma, lta, etc.) and the variable basic.')
     condition_other_input_id = fields.Many2one('hr.payslip.input.type', domain=[('is_quantity', '=', False)])
     condition_python = fields.Text(string='Python Condition', required=True,
         default='''
 result = result_rules['NET']['total'] > categories['NET'] * 0.10''',
         help='Applied this rule for calculation if condition is true. You can specify condition like basic > 1000.')
-    condition_range_min = fields.Float(string='Minimum Range', help="The minimum amount, applied for this rule.")
-    condition_range_max = fields.Float(string='Maximum Range', help="The maximum amount, applied for this rule.")
+    condition_domain = fields.Char(string='Applicability Domain', help="Define the applicability rules for this rule.")
     amount_select = fields.Selection([
         ('percentage', 'Percentage (%)'),
         ('fix', 'Fixed Amount'),
@@ -124,14 +121,10 @@ result_rate = 10''')
         localdict['localdict'] = localdict
         if self.condition_select == 'none':
             return True
-        if self.condition_select == 'range':
-            try:
-                result = safe_eval(self.condition_range, localdict)
-                return self.condition_range_min <= result <= self.condition_range_max
-            except Exception as e:
-                self._raise_error(localdict, _("Wrong range condition defined for:"), e)
         if self.condition_select == 'input':
             return self.condition_other_input_id.code in localdict['inputs']
+        if self.condition_select == 'domain':
+            return localdict['payslip'].filtered_domain(literal_eval(self.condition_domain or '[]'))
         # python code
         try:
             safe_eval(self.condition_python, localdict, mode='exec')
