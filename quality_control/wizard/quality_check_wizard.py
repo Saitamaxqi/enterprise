@@ -84,8 +84,11 @@ class QualityCheckWizard(models.TransientModel):
     def do_fail(self):
         if self.potential_failure_location_ids:
             return self.show_failure_message()
-        if self.measure_on == 'move_line' and self.product_tracking != 'serial':
-            return self.show_failure_message()
+        if self.measure_on == 'move_line':
+            if self.product_tracking == 'serial':
+                self.qty_failed = self.qty_line
+            else:
+                return self.show_failure_message()
         if self.failure_message or self.warning_message:
             self.current_check_id.do_fail()
             return self.show_failure_message()

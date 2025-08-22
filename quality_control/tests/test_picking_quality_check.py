@@ -1408,3 +1408,29 @@ class TestQualityCheck(TestQualityCommon):
         self.assertTrue(action['views'][0][0])
         result = self.env['quality.point'].search(action['domain'])
         self.assertEqual(result, quality_point)
+
+    def test_fail_quality_check_per_qty_for_serial_product(self):
+        self.product.write({
+            'is_storable': True,
+            'tracking': 'serial',
+        })
+        self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'product_ids': self.product.ids,
+            'measure_on': 'move_line',
+            'test_type_id': self.ref('quality_control.test_type_passfail')
+        })
+        self.receipt.action_confirm()
+        # There are two check since the product are tracked (one per product)
+        self.assertEqual(len(self.receipt.check_ids), 2)
+
+        wizard = self.receipt.check_ids.action_open_quality_check_wizard()
+        quality_check = Form.from_action(self.env, wizard).save()
+        next_wizard = quality_check.do_fail()
+        next_quality_check = Form.from_action(self.env, next_wizard).save()
+        next_quality_check.do_fail()
+
+        self.assertRecordValues(self.receipt.check_ids, [
+            {'quality_state': 'fail', 'product_id': self.product.id, 'qty_failed': 1.0},
+            {'quality_state': 'fail', 'product_id': self.product.id, 'qty_failed': 1.0},
+        ])
