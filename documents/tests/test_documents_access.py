@@ -318,7 +318,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
             portal_user_2.partner_id.id: ('view', IN_ONE_DAY)
         }
         self.env.invalidate_all()
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(13):
             self.folder_a.action_update_access_rights(partners=partners)
         folder_a_as_portal.check_access('read')
         folder_a_as_portal_2.check_access('read')
@@ -332,20 +332,20 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         # Update expiration alone via parent
         IN_12_H = IN_ONE_DAY - datetime.timedelta(hours=12)
         self.env.invalidate_all()
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(8):
             self.folder_a.action_update_access_rights(partners={portal_user_2.partner_id: ('view', IN_12_H)})
         self.assertEqual(portal_2_a_a_access.expiration_date, IN_12_H)
 
         # Update role+expiration via parent
         self.env.invalidate_all()
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(8):
             self.folder_a.action_update_access_rights(partners={portal_user_2.partner_id: ('edit', IN_ONE_DAY)})
         self.assertEqual(portal_2_a_a_access.expiration_date, IN_ONE_DAY)
         self.assertEqual(portal_2_a_a_access.role, 'edit')
 
         # Update role alone via parent
         self.env.invalidate_all()
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(8):
             self.folder_a.action_update_access_rights(partners={portal_user_2.partner_id: ('view', None)})
         self.assertEqual(portal_2_a_a_access.expiration_date, IN_ONE_DAY)
         self.assertEqual(portal_2_a_a_access.role, 'view')
@@ -354,7 +354,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         partners = {self.portal_user.partner_id.id: (False, None)}
 
         self.env.invalidate_all()
-        with self.assertQueryCount(7):
+        with self.assertQueryCount(10):
             self.folder_a.action_update_access_rights(partners=partners)
             self.assertFalse(self.folder_a.access_ids.filtered(lambda a: a.partner_id == self.portal_user.partner_id))
         self._assert_raises_check_access_rule(folder_a_as_portal, 'read')
@@ -367,7 +367,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
 
         partners = {self.portal_user.partner_id.id: ('view', False)}
         self.env.invalidate_all()
-        with self.assertQueryCount(4):
+        with self.assertQueryCount(7):
             folder_a_a_p.action_update_access_rights(partners=partners)
 
         # Make portal and internal editors of parent folder, this should propagate down
@@ -376,7 +376,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
             for partner_id in (self.portal_user | self.internal_user).partner_id.ids
         }
         self.env.invalidate_all()
-        with self.assertQueryCount(4):
+        with self.assertQueryCount(8):
             self.folder_a.action_update_access_rights(partners=partners)
         folder_a_as_portal.check_access('write')
         folder_a_a_as_portal = self.folder_a_a.with_user(self.portal_user)
@@ -388,13 +388,13 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         # Remove portal 2 access
         portal_2_partner_id = portal_user_2.partner_id.id
         self.env.invalidate_all()
-        with self.assertQueryCount(4):
+        with self.assertQueryCount(7):
             self.folder_a.action_update_access_rights(partners={portal_2_partner_id: (False, False)})
         self._assert_raises_check_access_rule(folder_a_as_portal_2)
 
         # Add portal 2 access to 1st level child and remove from 2nd
         self.env.invalidate_all()
-        with self.assertQueryCount(4):
+        with self.assertQueryCount(7):
             self.folder_a_a.action_update_access_rights(partners={portal_2_partner_id: ('view', False)})
         folder_a_a_p.action_update_access_rights(partners={portal_user_2.partner_id.id: (False, None)})
         self.assertFalse(folder_a_a_p.access_ids.filtered(lambda a: a.partner_id == portal_user_2.partner_id))

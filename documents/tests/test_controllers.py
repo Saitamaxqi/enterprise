@@ -20,13 +20,13 @@ from odoo.tools.image import image_process
 
 from odoo.addons.base.tests.common import HttpCaseWithUserDemo
 from odoo.addons.documents.tests.test_documents_common import TEXT
-from odoo.addons.mail.tests.common import mail_new_test_user
+from odoo.addons.mail.tests.common import mail_new_test_user, MockEmail
 
 from odoo.addons.documents.controllers.documents import ShareRoute
 
 
 @tagged('post_install', '-at_install')
-class TestDocumentsControllers(HttpCaseWithUserDemo):
+class TestDocumentsControllers(HttpCaseWithUserDemo, MockEmail):
     def _assertPathEqual(self, first, second):
         self.assertEqual(parse_url(first).path, parse_url(second).path)
 
@@ -676,7 +676,12 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         self.assertEqual(self.public_request.access_via_link, 'view')
         self.assertEqual(self.public_request.owner_id, self.user_admin)
         self.assertEqual(self.public_request.raw, b"Hello")
-        self.assertEqual(self.public_request.message_ids.mapped('body'), [
+        tracking_message_ids = self.public_request.message_ids.filtered('tracking_value_ids')
+        self.assertTracking(tracking_message_ids, [
+            ('name', 'char', 'public-request.png', 'hello.txt'),
+        ], strict=True)
+        other_message_ids = self.public_request.message_ids - tracking_message_ids
+        self.assertEqual(other_message_ids.mapped('body'), [
             "<p>Document uploaded by Public user</p>",
             "<p>Document created</p>",
         ])
@@ -801,7 +806,12 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         self.assertEqual(self.internal_request.attachment_id.res_id, self.internal_request.id)
         self.assertEqual(self.internal_request.attachment_id.res_model, 'documents.document')
         self.assertEqual(self.internal_request.raw, b"Hello")
-        self.assertEqual(self.internal_request.message_ids.mapped('body'), [
+        tracking_message_ids = self.internal_request.message_ids.filtered('tracking_value_ids')
+        self.assertTracking(tracking_message_ids, [
+            ('name', 'char', 'internal-request.png', 'hello.txt'),
+        ], strict=True)
+        other_message_ids = self.internal_request.message_ids - tracking_message_ids
+        self.assertEqual(other_message_ids.mapped('body'), [
             "<p>Document uploaded by Marc Demo</p>",
             "<p>Document created</p>",
         ])
@@ -878,7 +888,12 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         self.assertEqual(self.internal_file.attachment_id.res_id, self.internal_file.id)
         self.assertEqual(self.internal_file.attachment_id.res_model, 'documents.document')
         self.assertEqual(self.internal_file.raw, b"Hello")
-        self.assertEqual(self.internal_file.message_ids.mapped('body'), [
+        tracking_message_ids = self.internal_file.message_ids.filtered('tracking_value_ids')
+        self.assertTracking(tracking_message_ids, [
+            ('name', 'char', 'internal-file.png', 'hello.txt'),
+        ], strict=True)
+        other_message_ids = self.internal_file.message_ids - tracking_message_ids
+        self.assertEqual(other_message_ids.mapped('body'), [
             "<p>Document uploaded by Public user</p>",
             "<p>Document created</p>",
         ])
