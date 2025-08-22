@@ -85,7 +85,7 @@ class PlanningSlot(models.Model):
             raise ValidationError(self.env._('No Rental Order is found.'))
         products = self.role_id.product_ids.filtered('rent_ok')
         for sol in order.order_line:
-            if sol.product_template_id in products and float_compare(sol.planning_hours_to_plan, 0) == 0:
+            if sol.product_template_id in products and float_compare(sol.planning_hours_to_plan, 0, precision_rounding=sol.product_uom_id.rounding) == 0:
                 self.sale_line_id = sol
                 break
         if not self.sale_line_id:
