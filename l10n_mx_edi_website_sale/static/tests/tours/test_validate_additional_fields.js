@@ -24,12 +24,12 @@ registry.category("web_tour.tours").add("test_validate_additional_fields", {
         },
         {
             content: "Check no need invoice",
-            trigger: `input[name="need_invoice"][value="0"]`,
+            trigger: 'input[name="need_invoice"][value="0"]',
             run: "click",
         },
         {
             content: "Click Next",
-            trigger: "a.a-submit:contains('Confirm')",
+            trigger: 'a[name="website_sale_main_button"]:contains("Confirm")',
             run: "click",
             expectUnloadPage: true,
         },

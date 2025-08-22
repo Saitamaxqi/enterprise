@@ -101,7 +101,6 @@
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                         <t t-call="website_sale.navigation_buttons">
                             <t t-set="_form_send_navigation" t-value="True"/>
-                            <t t-set="_cta_classes" t-value="'a-submit a-submit-disable a-submit-loading'"/>
                         </t>
                     </form>
             </section>

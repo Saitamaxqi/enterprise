@@ -6,7 +6,6 @@
         <t t-call="website_sale.checkout_layout">
             <t t-set="additional_title">Billing information</t>
             <t t-set="show_navigation_button" t-value="False"/>
-            <t t-set="_cta_classes" t-value="'a-submit a-submit-disable a-submit-loading'"/>
             <t t-set="oe_structure">
                 <!-- This is the drag-and-drop area for website building blocs at the end of each
                      checkout page. This is append at the of the page in `checkout_layout`. The
@@ -85,7 +84,6 @@
                         </div>
                         <t t-call="website_sale.navigation_buttons">
                             <t t-set="_form_send_navigation" t-value="True"/>
-                            <t t-set="_cta_classes" t-value="'a-submit a-submit-disable a-submit-loading'"/>
                         </t>
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                     </form>
