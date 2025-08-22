@@ -358,7 +358,7 @@
 
     <template id="salary_package_personal_information_input">
         <t t-if="personal_info.display_type != 'checkbox'">
-            <label class="col-form-label" t-att-for="personal_info.field"><t t-esc="personal_info.name"/></label>
+            <label class="col-form-label" t-att-for="personal_info.field"><t t-esc="personal_info.name"/><t t-if="personal_info.is_required"> *</t></label>
         </t>
         <t t-if="personal_info.helper"><span class="text-muted"><t t-esc="' ' + personal_info.helper"/></span></t>
         <t t-if="personal_info.display_type == 'text'">
