@@ -32,10 +32,3 @@ class StockMoveLine(models.Model):
         ok_lines = self.filtered(lambda sml: sml.move_id.raw_material_production_id)
         done_lines = self.filtered(lambda sml: sml.product_id == sml.move_id.production_id.product_id)
         return ok_lines | super(StockMoveLine, self - ok_lines - done_lines)._filter_move_lines_applicable_for_quality_check()
-
-    def _sorting_move_lines(self):
-        self.ensure_one()
-        fail_sort = self.check_state == 'fail'
-        # `check_ids` are sorted by their existence and then by their ID
-        check_ids_sort = self.check_ids and self.check_ids.id or 0
-        return (not fail_sort, not bool(check_ids_sort), check_ids_sort, self.id)

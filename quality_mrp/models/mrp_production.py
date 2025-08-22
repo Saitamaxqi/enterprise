@@ -3,7 +3,6 @@
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools import float_is_zero
 
 
 class MrpProduction(models.Model):
@@ -85,8 +84,6 @@ class MrpProduction(models.Model):
 
     def check_quality(self):
         self.ensure_one()
-        if float_is_zero(self.qty_producing, precision_rounding=self.product_uom_id.rounding):
-            raise UserError(_("You cannot perform a quality check if the quantity producing is zero. Please set the production quantity first."))
         checks = self.check_ids.filtered(lambda x: x.quality_state == 'none')
         if checks:
             return checks.action_open_quality_check_wizard()

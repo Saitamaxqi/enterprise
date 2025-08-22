@@ -163,13 +163,5 @@ msgstr ""
 #. module: quality_mrp
 #. odoo-python
 #: code:addons/quality_mrp/models/mrp_production.py:0
-msgid ""
-"You cannot perform a quality check if the quantity producing is zero. Please"
-" set the production quantity first."
-msgstr ""
-
-#. module: quality_mrp
-#. odoo-python
-#: code:addons/quality_mrp/models/mrp_production.py:0
 msgid "You still need to do the quality checks!"
 msgstr ""
