@@ -52,12 +52,15 @@ class MarketingActivity(models.Model):
         return trigger_types
 
     def _execute_sms(self, traces):
-        res_ids = [r for r in set(traces.mapped('res_id'))]
-        now = self.env.cr.now()
-
         # we only allow to continue if the user has sufficient rights, as a sudo() follows
         if not self.env.is_superuser() and not self.env.user.has_group('marketing_automation.group_marketing_automation_user'):
             raise AccessError(_('To use this feature you should be an administrator or belong to the marketing automation group.'))
+
+        def _uniquify_list(seq):
+            seen = set()
+            return [x for x in seq if x not in seen and not seen.add(x)]
+        res_ids = _uniquify_list(traces.mapped('res_id'))
+        now = self.env.cr.now()
 
         mailing = self.mass_mailing_id.sudo().with_context(default_marketing_activity_id=self.ids[0])
         try:
