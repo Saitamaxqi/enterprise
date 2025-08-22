@@ -9,6 +9,7 @@ from odoo import api, fields, models, tools, _
 from odoo.fields import Command, Domain
 from odoo.tools import html_sanitize, LazyTranslate
 from odoo.addons.web.controllers.utils import clean_action
+from odoo.exceptions import UserError
 
 _lt = LazyTranslate(__name__)
 
@@ -1038,3 +1039,9 @@ class HelpdeskTicket(models.Model):
                 if not team[field] and subtype in res:
                     res -= subtype
         return res
+
+    @api.constrains('company_id', 'partner_id')
+    def _check_partner_id_has_the_same_company(self):
+        for ticket in self:
+            if ticket.partner_id.company_id and ticket.partner_id.company_id != ticket.company_id:
+                raise UserError(_("The customer cannot belong to a different company than the ticket."))

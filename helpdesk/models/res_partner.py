@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, _
+from odoo.exceptions import UserError
 
 
 class ResPartner(models.Model):
@@ -48,3 +49,12 @@ class ResPartner(models.Model):
                 for view_id, view_type in action['views']
             ]
         return action
+
+    def write(self, vals):
+        if vals.get('company_id'):
+            tickets_other_company = self.env['helpdesk.ticket'].search_count([('partner_id', 'in', self.ids), ('company_id', '!=', vals['company_id'])], limit=1)
+            if tickets_other_company:
+                raise UserError(
+                    _("You cannot update the company of this partner because it would lead to inconsistency with some of its tickets.")
+                )
+        return super().write(vals)
