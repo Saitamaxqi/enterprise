@@ -41,6 +41,9 @@
         'security/ir.model.access.csv',
         'security/ir_rule.xml',
     ],
+    'demo': [
+        'demo/knowledge_article_demo.xml',
+    ],
     'installable': True,
     'application': True,
     'author': 'Odoo S.A.',
