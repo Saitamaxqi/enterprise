@@ -106,8 +106,6 @@ class PlanningSlot(models.Model):
                 ('project_id', 'in', self.project_id.ids),
                 ('employee_id', '!=', False),
                 ('start_datetime', '!=', False),
-                ('employee_id.resource_id.calendar_id', '!=', False),
-                ('employee_id.resource_id.calendar_id.flexible_hours', '=', False),
             ],
             groupby=['project_id'],
             aggregates=['id:recordset']

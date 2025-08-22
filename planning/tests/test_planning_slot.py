@@ -205,7 +205,7 @@ class TestPlanningContract(TestPlanningContractCommon):
             'end_datetime': datetime(2015, 12, 17, 12, 0, 0),
             'resource_id': self.resource_joseph.id,
         })
-        self.assertEqual(slot_outside.allocated_hours, 16, "The allocated hours should be 16h (8AM to 12PM) of the 16th of December for the fully flexible employee")
+        self.assertEqual(slot_outside.allocated_hours, 16.0, "The allocated hours should be 16h (8AM to 12PM) of the 16th of December for the fully flexible employee")
 
         # 2) Set a flexible contract for another employee
         self.employee_janice.version_id.write({
@@ -223,7 +223,7 @@ class TestPlanningContract(TestPlanningContractCommon):
             'end_datetime': datetime(2015, 12, 17, 8, 0, 0),
             'resource_id': self.resource_janice.id,
         })
-        self.assertEqual(slot_outside.allocated_hours, 6, "The allocated hours should be 6h (the max per day) for the flexible employee")
+        self.assertEqual(slot_outside.allocated_hours, 6.0, "The allocated hours should be 6h (the max per day) for the flexible employee")
 
     def test_allocated_hours_on_open_shift(self):
         slot = self.env['planning.slot'].create({

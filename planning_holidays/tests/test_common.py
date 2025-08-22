@@ -13,9 +13,16 @@ class TestCommon(TestCommonPlanning):
         cls.setUpDates()
 
         cls.env.user.tz = 'Europe/Brussels'
-        cls.calendar = cls.env['resource.calendar'].create({
+        cls.calendar, cls.flexible_calendar = cls.env['resource.calendar'].create([{
             'name': 'Calendar',
-        })
+        }, {
+            'name': 'Flex Calendar',
+            'tz': 'UTC',
+            'flexible_hours': True,
+            'hours_per_day': 8,
+            'full_time_required_hours': 40,
+            'attendance_ids': [],
+        }])
         cls.env.company.resource_calendar_id = cls.calendar
 
         # Leave type
@@ -34,3 +41,4 @@ class TestCommon(TestCommonPlanning):
             'date_to': time.strftime('%Y-12-31'),
         })
         cls.allocation_bert.action_approve()
+        cls.flex_role = cls.env['planning.role'].create({'name': 'flex role'})

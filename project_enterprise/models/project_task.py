@@ -2,16 +2,16 @@
 
 from pytz import utc, timezone
 from collections import defaultdict
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, time
 from dateutil.relativedelta import relativedelta
-from odoo.tools.date_utils import get_timedelta
+import pytz
 
 from odoo import api, fields, models
 from odoo.fields import Domain
 from odoo.exceptions import UserError
-from odoo.tools import _, format_list, topological_sort, Query
+from odoo.tools import _, format_list, topological_sort, get_lang, babel_locale_parse
 from odoo.tools.intervals import Intervals
-from odoo.tools.date_utils import sum_intervals
+from odoo.tools.date_utils import sum_intervals, get_timedelta, weeknumber, weekstart, weekend
 from odoo.tools.sql import SQL
 from odoo.addons.resource.models.utils import filter_domain_leaf
 
@@ -194,7 +194,7 @@ class ProjectTask(models.Model):
             }
         return res
 
-    @api.depends('planned_date_begin', 'date_deadline', 'user_ids')
+    @api.depends('planned_date_begin', 'date_deadline', 'user_ids', 'allocated_hours')
     def _compute_planning_overlap(self):
         overlap_mapping = self._get_planning_overlap_per_task()
         if not overlap_mapping:
@@ -209,17 +209,40 @@ class ProjectTask(models.Model):
                 absolute_max_end = max(absolute_max_end, utc.localize(task_mapping["max_date_deadline"]))
                 user_ids.add(user_id)
         users = self.env['res.users'].browse(list(user_ids))
-        users_work_intervals, dummy = users.sudo()._get_valid_work_intervals(absolute_min_start, absolute_max_end)
+
+        regular_users_ids = []
+        flexible_resources_ids = []
+        flex_user_resource = {}
+        flex_resource_user_id = {}
+        for user in users:
+            resource = user._get_project_task_resource()
+            if resource and resource._is_flexible():
+                flexible_resources_ids.append(resource.id)
+                flex_user_resource[user.id] = resource
+                flex_resource_user_id[resource.id] = user.id
+            else:
+                regular_users_ids.append(user.id)
+
+        users_work_intervals, _dummy = self.env['res.users'].browse(regular_users_ids).sudo()._get_valid_work_intervals(absolute_min_start, absolute_max_end)
+        flex_resources_work_intervals, flex_user_work_hours_per_day, flex_user_work_hours_per_week = self.env["resource.resource"].browse(flexible_resources_ids)._get_flexible_resource_valid_work_intervals(absolute_min_start, absolute_max_end)
+
+        for resource_id, intervals in flex_resources_work_intervals.items():
+            users_work_intervals[flex_resource_user_id[resource_id]] = intervals
+
         res = {}
         for task in self:
             overlap_messages = []
             for user_id, task_mapping in overlap_mapping.get(task.id, {}).items():
-                task_intervals = Intervals([
-                    (utc.localize(task_mapping['min_planned_date_begin']),
-                     utc.localize(task_mapping['max_date_deadline']),
-                     self.env['resource.calendar.attendance'])
-                ])
-                if task_mapping['sum_allocated_hours'] > sum_intervals((users_work_intervals[user_id] & task_intervals)):
+                task_intervals_start = utc.localize(task_mapping['min_planned_date_begin'])
+                task_intervals_end = utc.localize(task_mapping['max_date_deadline'])
+                task_intervals = Intervals([(task_intervals_start, task_intervals_end, self.env['resource.calendar.attendance'])])
+                work_intervals = users_work_intervals[user_id] & task_intervals
+                if resource := flex_user_resource.get(user_id):
+                    work_hours = resource._get_flexible_resource_work_hours(work_intervals, flex_user_work_hours_per_day[resource.id], flex_user_work_hours_per_week[resource.id])
+                else:
+                    work_hours = sum_intervals(work_intervals)
+
+                if task_mapping['sum_allocated_hours'] > work_hours:
                     overlap_messages.append(_(
                         '%(partner)s has %(amount)s tasks at the same time.',
                         partner=task_mapping["partner_name"],
@@ -707,6 +730,7 @@ class ProjectTask(models.Model):
 
         company = self.company_id if len(self.company_id) == 1 else self.env.company
         tz_info = self.env.context.get('tz') or 'UTC'
+        locale = babel_locale_parse(get_lang(self.env).code)
 
         user_to_assign = self.env['res.users']
 
@@ -729,7 +753,7 @@ class ProjectTask(models.Model):
         fetch_date_end = max_date_start.astimezone(timezone(tz_info))
         end_loop = date_start + relativedelta(day=31, month=12, years=1)  # end_loop will be the end of the next year.
 
-        valid_intervals_per_user = self._web_gantt_get_valid_intervals(date_start, fetch_date_end, users, [], True)
+        valid_intervals_per_user, flex_user_work_hours_per_day, flex_user_work_hours_per_week = self._web_gantt_get_valid_intervals(date_start, fetch_date_end, users, [], True)
         dependent_tasks_end_dates = self._fetch_last_date_end_from_dependent_task_for_all_tasks()
 
         first_possible_date_per_task = {
@@ -750,8 +774,6 @@ class ProjectTask(models.Model):
         sorted_tasks = topological_sort(self._get_dependencies_dict())
         for task in sorted_tasks:
             hours_to_plan = task._get_hours_to_plan()
-            if hours_to_plan <= 0:
-                hours_to_plan = delta_hours
 
             compute_date_start = compute_date_end = False
             first_possible_start_date = first_possible_date_per_task.get(task.id)
@@ -767,22 +789,61 @@ class ProjectTask(models.Model):
                     warnings['no_intervals'] = _("Some tasks weren't planned because the closest available starting date was too far ahead in the future")
                 continue
 
+            if hours_to_plan <= 0:
+                hours_to_plan = delta_hours
+
+            if user_ids:
+                hours_to_plan /= len(user_ids)
+
             while not compute_date_end or hours_to_plan > 0:
                 used_intervals = []
                 for start_date, end_date, _dummy in valid_intervals_per_user[user_ids]:
-                    if first_possible_start_date and end_date <= first_possible_start_date:
+                    if first_possible_start_date:
+                        if end_date <= first_possible_start_date:
+                            continue
+
+                        if first_possible_start_date > start_date:
+                            start_date = first_possible_start_date
+
+                    # for flexible resources, work intervals are divided (min time of the day, max time of the day)
+                    # a microsecond is lost in the total duration and the end of the interval
+                    # it's the only way to have many intervals, as if end date of a range = start date of the next range,
+                    # both will be merged in one range
+                    if end_date.time() == time.max:
+                        end_date += relativedelta(microseconds=1)
+
+                    day = start_date.date()
+                    year_and_week = weeknumber(locale, day)
+                    real_interval_duration = (end_date - start_date).total_seconds() / 3600
+                    interval_duration = real_interval_duration
+                    # start_date and end_date are the same day
+                    # we check duration doesn't exceed work hours for flexible resources
+                    for user_id in user_ids or ():
+                        if user_id in flex_user_work_hours_per_day:
+                            interval_duration = min(interval_duration, flex_user_work_hours_per_day[user_id].get(day, 0.0), flex_user_work_hours_per_week[user_id].get(year_and_week, 0.0))
+
+                    if interval_duration <= 0.0:
                         continue
 
-                    hours_to_plan -= (end_date - start_date).total_seconds() / 3600
+                    consumed_hours = interval_duration if hours_to_plan >= interval_duration else hours_to_plan
+                    for user_id in user_ids or ():
+                        if user_id in flex_user_work_hours_per_day:
+                            flex_user_work_hours_per_day[user_id][day] -= consumed_hours
+                            flex_user_work_hours_per_week[user_id][year_and_week] -= consumed_hours
+
+                    hours_to_plan -= consumed_hours
                     if not compute_date_start:
                         compute_date_start = start_date
 
-                    if hours_to_plan <= 0:
-                        compute_date_end = end_date + relativedelta(seconds=hours_to_plan * 3600)
-                        used_intervals.append((start_date, compute_date_end, task))
-                        break
+                    diff = real_interval_duration - consumed_hours
+                    if diff > 0:
+                        end_date -= relativedelta(hours=diff)
 
                     used_intervals.append((start_date, end_date, task))
+
+                    if hours_to_plan == 0.0:
+                        compute_date_end = end_date
+                        break
 
                 # Get more intervals if the fetched ones are not enough for scheduling
                 if compute_date_end and hours_to_plan <= 0:
@@ -790,7 +851,7 @@ class ProjectTask(models.Model):
 
                 if fetch_date_end < end_loop:
                     new_fetch_date_end = min(fetch_date_end + relativedelta(months=1), end_loop)
-                    valid_intervals_per_user = self._web_gantt_get_valid_intervals(fetch_date_end, new_fetch_date_end, users, [], True, valid_intervals_per_user)
+                    valid_intervals_per_user, flex_user_work_hours_per_day, flex_user_work_hours_per_week = self._web_gantt_get_valid_intervals(fetch_date_end, new_fetch_date_end, users, [], True, valid_intervals_per_user)
                     fetch_date_end = new_fetch_date_end
                 else:
                     if 'no_intervals' not in warnings:
@@ -938,7 +999,7 @@ class ProjectTask(models.Model):
 
         start_date = min(self.mapped(start_date_field_name))
         end_date = max(self.mapped(stop_date_field_name))
-        valid_intervals_per_user = self._web_gantt_get_valid_intervals(start_date, end_date, users, [], False)
+        valid_intervals_per_user, _dummy, _dummy = self._web_gantt_get_valid_intervals(start_date, end_date, users, [], False)
 
         duration_per_task = defaultdict(int)
         for task in self:
@@ -1050,18 +1111,76 @@ class ProjectTask(models.Model):
         :param remove_intervals_with_planned_tasks: Whether to remove intervals with already planned tasks.
         :return: A tuple containing:
 
-            - valid_intervals: A dictionary where keys are user IDs and values are lists of valid intervals.
-            - invalid_intervals: A dictionary where keys are user IDs and values are lists of invalid intervals.
+            - valid_intervals_per_user: A dictionary where keys are user IDs and values are lists of valid intervals.
+            - flex_user_work_hours_per_day: A dictionary where keys are flexible resources users IDs and values are dicts,
+            keys are days and values are number of available hours per day.
 
-        :rtype: tuple(dict[int, List[Interval]], dict[int, List[Interval]])
+        :rtype: tuple(dict[int, List[Interval]], dict[int, dict[date, float]])
         """
         if not self:
-            return {}
+            return {}, {}, {}
 
-        start_date, end_date = start_date.astimezone(utc), end_date.astimezone(utc)
-        users_work_intervals, calendar_work_intervals = users._get_valid_work_intervals(start_date, end_date)
+        flex_resource_user = {}
+        flex_resources_ids = set()
+        regular_resources_users_ids = set()
+        for user in users:
+            resource = user._get_project_task_resource()
+            if resource and resource._is_flexible():
+                flex_resource_user[resource.id] = user.id
+                flex_resources_ids.add(resource.id)
+            else:
+                regular_resources_users_ids.add(user.id)
+
+        regular_resources_users = self.env["res.users"].browse(regular_resources_users_ids)
+        original_start_date, original_end_date = start_date.astimezone(utc), end_date.astimezone(utc)
+        start_date, end_date = original_start_date, original_end_date
+
+        flex_resources = self.env["resource.resource"].browse(flex_resources_ids)
+        flex_resources_work_intervals, hours_per_day, hours_per_week = flex_resources._get_flexible_resource_valid_work_intervals(start_date, end_date)
+        users_work_intervals, calendar_work_intervals = regular_resources_users._get_valid_work_intervals(start_date, end_date)
+
+        locale = babel_locale_parse(get_lang(self.env).code)
+        if flex_resources:
+            start_date = weekstart(locale, start_date)
+            end_date = weekend(locale, end_date)
+
         unavailable_intervals = self._web_gantt_get_users_unavailable_intervals(users.ids, start_date, end_date, candidates_ids) if remove_intervals_with_planned_tasks else {}
-        baseInterval = Intervals([(start_date, end_date, self.env['resource.calendar.attendance'])])
+
+        flex_user_work_hours_per_day = {}
+        flex_user_work_hours_per_week = {}
+        for resource in flex_resources:
+            user_id = flex_resource_user[resource.id]
+            users_work_intervals[user_id] = flex_resources_work_intervals[resource.id]
+
+            if not resource._is_fully_flexible():
+                flex_user_work_hours_per_day[user_id] = hours_per_day[resource.id]
+                flex_user_work_hours_per_week[user_id] = hours_per_week[resource.id]
+
+            if user_id not in unavailable_intervals:
+                continue
+
+            unavailable_intervals_day_formatted = unavailable_intervals[user_id] & flex_resources_work_intervals[resource.id]
+            for interval in unavailable_intervals_day_formatted:
+                tasks = interval[2]
+                # start and end of intervals are on the same day thanks to flex_resources_work_intervals format
+                day = interval[0].date()
+
+                interval_allocated_hours = 0.0
+                for task in tasks:
+                    interval_as_Interval = Intervals([(interval[0].astimezone(pytz.utc).replace(tzinfo=None), interval[1].astimezone(pytz.utc).replace(tzinfo=None), set())])
+                    interval_task_intersection = interval_as_Interval & Intervals([(task.planned_date_begin, task.date_deadline, set())])
+                    interval_duration = sum_intervals(interval_task_intersection)
+                    task_total_duration = (task.date_deadline - task.planned_date_begin).total_seconds() / 3600
+                    rate = interval_duration / task_total_duration
+                    interval_allocated_hours = rate * task.allocated_hours if task.allocated_hours else interval_duration / 3600
+                    interval_allocated_hours_per_user = interval_allocated_hours / len(task.user_ids)
+                    if day in flex_user_work_hours_per_day[user_id]:
+                        flex_user_work_hours_per_day[user_id][day] -= interval_allocated_hours_per_user
+
+                    year_and_week = weeknumber(locale, day)
+                    flex_user_work_hours_per_week[user_id][year_and_week] -= interval_allocated_hours_per_user
+
+        baseInterval = Intervals([(original_start_date, original_end_date, self.env['resource.calendar.attendance'])])
         new_valid_intervals_per_user = {}
         invalid_intervals_per_user = {}
         for user_id, work_intervals in users_work_intervals.items():
@@ -1073,7 +1192,7 @@ class ProjectTask(models.Model):
         company_calendar_id = company_id.resource_calendar_id
         company_work_intervals = calendar_work_intervals.get(company_calendar_id.id)
         if not company_work_intervals:
-            new_valid_intervals_per_user[False] = company_calendar_id.sudo()._work_intervals_batch(start_date, end_date)[False]
+            new_valid_intervals_per_user[False] = company_calendar_id.sudo()._work_intervals_batch(original_start_date, original_end_date)[False]
         else:
             new_valid_intervals_per_user[False] = company_work_intervals
 
@@ -1101,7 +1220,7 @@ class ProjectTask(models.Model):
                 else:
                     valid_intervals_per_user[user_ids] = new_valid_intervals_per_user[user_ids]
 
-        return valid_intervals_per_user
+        return valid_intervals_per_user, flex_user_work_hours_per_day, flex_user_work_hours_per_week
 
     def _get_new_dates(self,
         valid_intervals_per_user,
@@ -1226,7 +1345,7 @@ class ProjectTask(models.Model):
 
         buffer_start_date = min(all_candidates.filtered(start_date_field_name).mapped(start_date_field_name)).astimezone(utc)
         buffer_end_date = max(all_candidates.filtered(stop_date_field_name).mapped(stop_date_field_name)).astimezone(utc)
-        return all_candidates._web_gantt_get_valid_intervals(buffer_start_date, buffer_end_date, users)
+        return all_candidates._web_gantt_get_valid_intervals(buffer_start_date, buffer_end_date, users)[0]
 
     def _web_gantt_move_candidates(self, start_date_field_name, stop_date_field_name, dependency_field_name, dependency_inverted_field_name, search_forward, candidates_ids, consume_buffer, vals):
         self.ensure_one()
@@ -1269,7 +1388,7 @@ class ProjectTask(models.Model):
                 result["errors"].append("past_error")
                 return result, {}
 
-        valid_intervals_per_user = candidates._web_gantt_get_valid_intervals(start_date, end_date, users, candidates.ids)
+        valid_intervals_per_user, _dummy, _dummy = candidates._web_gantt_get_valid_intervals(start_date, end_date, users, candidates.ids)
         initial_valid_intervals_per_user = dict(valid_intervals_per_user.items())
 
         move_in_conflicts_users = set()

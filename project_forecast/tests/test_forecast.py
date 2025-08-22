@@ -76,8 +76,7 @@ class TestForecastCreationAndEditing(TestCommonForecast):
             'end_datetime': datetime(2019, 6, 8, 23, 0, 0)  # 6/8/2019 is a sunday, so we have a full week
         }
         self.slot.write(values)
-
-        self.assertEqual(self.slot.allocated_hours, 8 * 6, 'allocated hours should be equal to the real period since the resource has a flexible hours.')
+        self.assertEqual(self.slot.allocated_hours, self.employee_bert.resource_id.calendar_id.hours_per_week, 'flexible resources have a week rate limit defined in the contract, 40 hours in this case')
 
     @freeze_time("2023-11-20")
     def test_shift_creation_from_project(self):

@@ -92,12 +92,12 @@ export class TaskGanttRenderer extends TaskGanttRendererCommon {
         return row.id in this.rowsWithAvatar;
     }
 
-    getNotificationOnSmartSchedule(warningString, old_vals_per_task_id) {
+    getNotificationOnSmartSchedule(notifText, old_vals_per_task_id, type) {
         this.closeNotificationFn?.();
         this.closeNotificationFn = this.notificationService.add(
-            markup`<i class="fa btn-link fa-check"></i><span class="ms-1">${warningString}</span>`,
+            markup`<i class="fa btn-link fa-check"></i><span class="ms-1">${notifText}</span>`,
             {
-                type: "success",
+                type: type,
                 sticky: true,
                 buttons: [
                     {
@@ -123,6 +123,13 @@ export class TaskGanttRenderer extends TaskGanttRendererCommon {
         if (res && Array.isArray(res)) {
             const warnings = Object.entries(res[0]);
             const old_vals_per_task_id = res[1];
+            const has_tasks_planned = Object.keys(old_vals_per_task_id).length > 0;
+            const has_warnings = warnings.length > 0
+
+            if (!has_warnings && !has_tasks_planned) {
+                return;
+            }
+
             for (const warning of warnings) {
                 this.notificationService.add(warning[1], {
                     title: _t("Warning"),
@@ -130,10 +137,17 @@ export class TaskGanttRenderer extends TaskGanttRendererCommon {
                     sticky: true,
                 });
             }
-            if (warnings.length === 0) {
+
+            if (has_tasks_planned) {
+                const notif_text = has_warnings ?
+                    _t("Some tasks have been successfully scheduled for the upcoming periods. Some warnings were generated. Please review them for details.") :
+                    _t("Tasks have been successfully scheduled for the upcoming periods.")
+                ;
+                const type = has_warnings ? "warning" : "success";
                 this.getNotificationOnSmartSchedule(
-                    _t("Tasks have been successfully scheduled for the upcoming periods."),
-                    old_vals_per_task_id
+                    notif_text,
+                    old_vals_per_task_id,
+                    type,
                 );
             }
         }

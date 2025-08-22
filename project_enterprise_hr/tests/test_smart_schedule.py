@@ -24,6 +24,7 @@ class TestSmartSchedule(TestSmartScheduleCommon):
             "depend_on_ids": [self.task_project_pigs_with_allocated_hours_user.id],
             "dependent_ids": [self.task_project_pigs_no_allocated_hours_user.id],
             "date_deadline": datetime(2023, 2, 2),
+            "allocated_hours": 10.0,  # allocated hours should be equal remaining hours when timesheet_grid installed to have some hours to plan ( for testing simplicity )
         })
 
         self.task_project_pigs_no_allocated_hours_user.write({
@@ -73,7 +74,7 @@ class TestSmartSchedule(TestSmartScheduleCommon):
         # user_projectmanager is off till 10
         # the first possible time for both of them is starting from 11
         self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.planned_date_begin, datetime(2023, 1, 11, 7))
-        self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.date_deadline, datetime(2023, 1, 12, 9 if self.is_module_timesheet_grid_installed else 11))
+        self.assertEqual(self.task_project_pigs_with_allocated_hours_manager.date_deadline, datetime(2023, 1, 11, 13), "10 hours to do / 2 users = 5 hours per user from 7h to 11h + 12h to 13h")
 
         # even that task_project_pigs_with_allocated_hours_manager was planned first as it has a deadline
         # smart scheduling is optimizing resources so
@@ -83,8 +84,8 @@ class TestSmartSchedule(TestSmartScheduleCommon):
 
         # should not be planned after the old deadline of its parent, as its parent will be planned again
         # if the new deadline is before the old one, no need to block the task and plan it ASAP
-        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.planned_date_begin, datetime(2023, 1, 12, 9 if self.is_module_timesheet_grid_installed else 12))
-        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.date_deadline, datetime(2023, 1, 13, 14 if self.is_module_timesheet_grid_installed else 16))
+        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.planned_date_begin, datetime(2023, 1, 11, 13))
+        self.assertEqual(self.task_project_pigs_no_allocated_hours_user.date_deadline, datetime(2023, 1, 13, 8), "12h to plan, 3 hours day 11, 8 hours day 12, 1 hour day 13")
 
 
 class ProjectEnterpriseHrTestSmartScheduleWithVersion(AutoShiftDatesHRCommon):

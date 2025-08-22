@@ -58,6 +58,22 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             'duration_days': 1,
         })
 
+        cls.calendar_40h_flex = cls.env['resource.calendar'].create({
+            'name': 'Flexible 40h/week',
+            'tz': 'UTC',
+            'full_time_required_hours': 40.0,
+            'hours_per_day': 8.0,
+            'flexible_hours': True,
+        })
+
+        cls.flex_role = cls.env['planning.role'].create({'name': 'flex role'})
+        cls.flex_employee = cls.env['hr.employee'].create({
+            'name': 'Night employee',
+            'resource_calendar_id': cls.calendar_40h_flex.id,
+            'default_planning_role_id': cls.flex_role.id,
+            'tz': 'UTC',
+        })
+
     def test_allocated_hours_defaults(self):
         self.assertEqual(self.slot.allocated_hours, 8, "It should follow the calendar of the resource to compute the allocated hours.")
         self.assertEqual(self.slot.allocated_percentage, 100, "It should have the default value")
@@ -512,15 +528,15 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             'start_datetime': datetime(2024, 2, 23, 6, 0, 0),
             'end_datetime': datetime(2024, 2, 29, 6, 0, 0),
         })
-        self.assertEqual(planning_slot_1.allocated_hours, 48.0)
+        self.assertEqual(planning_slot_1.allocated_hours, 54.0, "day 23, 24 and 25 belong to week 8 (8*3 = 24h) / day 26, 27, 28 (8*3 = 24h) and 29 (6 hours from 0h to 6h) belong to week 9")
 
         # the diff between start and end is 6 days and 8 hours, hence the diff should be approximated to 7 days
         planning_slot_2 = self.env['planning.slot'].create({
             'resource_id': employee.resource_id.id,
-            'start_datetime': datetime(2024, 2, 23, 8, 0, 0),
-            'end_datetime': datetime(2024, 2, 29, 16, 0, 0),
+            'start_datetime': datetime(2024, 2, 18, 8, 0, 0),
+            'end_datetime': datetime(2024, 2, 24, 16, 0, 0),
         })
-        self.assertEqual(planning_slot_2.allocated_hours, 56.0)
+        self.assertEqual(planning_slot_2.allocated_hours, 40.0, "all days belong to same week = 8, allocated_hours is limited to 40 hours which is the week limit")
 
     def test_auto_plan_employee_with_break_company_no_breaks(self):
         """ Test auto-planning an employee with break, while company calendar without breaks
@@ -652,12 +668,12 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             'end_datetime': datetime(2022, 1, 14, 10, 0),
             'state': 'published',
         })
-        self.assertEqual(slot.allocated_hours, 10.0, 'The allocated hours should be limited to 10.0')
+        self.assertEqual(slot.allocated_hours, 14.0, '4 hours available on day 13, 10 hours available on day 14, no daily limit excedded in both days')
         self.assertEqual(slot.allocated_percentage, 100, 'The allocated percentage should be 100%%')
 
         # Changing the allocated time percentage should be reflected in the allocated hours
         slot.allocated_percentage = 50
-        self.assertEqual(slot.allocated_hours, 5.0, 'The allocated hours should be 5.0 after changing the allocated percentage to 50%%')
+        self.assertEqual(slot.allocated_hours, 7.0, 'The allocated hours should be 5.0 after changing the allocated percentage to 50%%')
 
     def test_fully_flexible_contract_slot(self):
         """
@@ -690,69 +706,6 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         })
         self.assertEqual(slot.allocated_hours, 16.0, 'The allocated hours should be 16.0 for the open shift')
         self.assertEqual(slot.allocated_percentage, 100, 'The allocated percentage should be 100%%')
-
-    def test_auto_plan_should_ignore_resource_with_flexible_hours(self):
-        """
-            When auto-planning a shift, the system should ignore resources with flexible hours.
-
-            Test Case:
-            =========
-            1) Create a role `night_shift_role` to exclude all other resources.
-            2) Create two employees with flexible calendars, and planning role set to `night_shift_role`.
-            3) Create a night shift from 21:30 to 6:00 with 8 allocated hours, and auto-plan the shift.
-            4) Check the shift is not assigned to these employees with flexible hours.
-            5) Create a employee with night shifts calendar, and planning role set to `night_shift_role`.
-            6) The new employee should be assigned to the shift when we re-run the auto-plan.
-        """
-        # create role
-        night_shift_role = self.env['planning.role'].create({'name': 'flex_shift'})
-
-        # set the calendar for the employee as flexible, and set the role
-        self.employee_bert.resource_calendar_id = False
-        self.employee_joseph.resource_calendar_id = self.flex_40h_calendar
-
-        self.employee_bert.planning_role_ids = night_shift_role
-        self.employee_joseph.planning_role_ids = night_shift_role
-
-        # Create a shift from 21:30 to 6:00 with an allocated 8 hours
-        night_shift = self.env['planning.slot'].create({
-            'name': 'Night Shift',
-            'start_datetime': datetime(2024, 5, 10, 21, 30),
-            'end_datetime': datetime(2024, 5, 11, 6, 0),
-            'role_id': night_shift_role.id,
-        })
-        night_shift.allocated_hours = 8
-
-        # Execute auto-plan to assign the employee
-        night_shift.auto_plan_id()
-        self.assertFalse(night_shift.resource_id, 'The auto plan should not assign employees with flexible hours')
-
-        # Create a night shifts calendar with 8 hours per day
-        night_shifts_calendar = self.env['resource.calendar'].create({
-            'name': 'Night Shifts Calendar',
-            'tz': 'UTC',
-            'hours_per_day': 8.0,
-            'attendance_ids': [
-                (0, 0, {'name': 'Afternoon ' + str(day), 'dayofweek': str(day), 'hour_from': 21.5, 'hour_to': 24, 'day_period': 'afternoon'})
-                for day in range(7)
-            ] + [
-                (0, 0, {'name': 'Break ' + str(day), 'dayofweek': str(day), 'hour_from': 0, 'hour_to': 0.5, 'day_period': 'lunch'})
-                for day in range(7)
-            ] + [
-                (0, 0, {'name': 'morning ' + str(day), 'dayofweek': str(day), 'hour_from': 0.5, 'hour_to': 6, 'day_period': 'morning'})
-                for day in range(7)
-            ],
-        })
-        # Create an employee linked to this calendar
-        night_employee = self.env['hr.employee'].create({
-            'name': 'Night employee',
-            'resource_calendar_id': night_shifts_calendar.id,
-            'planning_role_ids': night_shift_role,
-        })
-
-        # this time it should select the night_employee who's calendar is not flexible
-        night_shift.auto_plan_id()
-        self.assertEqual(night_shift.resource_id, night_employee.resource_id, 'The auto plan should assign the shift to the night employee')
 
     @freeze_time('2021-01-01')
     def test_allocated_hours_when_template_is_during_a_break(self):
@@ -1083,3 +1036,243 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             self.template.read()
         self.assertEqual(self.template.end_time, 14)
         self.assertEqual(self.template.start_time, 11)
+
+    def test_auto_plan_flexible_employee_no_rate_no_hours_day_overload(self):
+        self.env.user.tz = 'UTC'
+        shift1, shift2 = self.env['planning.slot'].create([{
+            'name': 'Night Shift',
+            'start_datetime': datetime(2023, 7, 28, 8),
+            'end_datetime': datetime(2023, 7, 28, 16, 0),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 4,
+        }, {
+            'name': 'Night Shift',
+            'start_datetime': datetime(2023, 7, 28, 8),
+            'end_datetime': datetime(2023, 7, 28, 16, 0),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 3,
+        }])
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2023-07-26 22:00:00",
+            default_end_datetime="2023-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2023-08-01 22:00:00'], ['end_datetime', '>', '2023-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift1.id, shift2.id])
+        self.assertEqual(shift1.resource_id.employee_id, self.flex_employee)
+        self.assertEqual(shift2.resource_id.employee_id, self.flex_employee)
+
+        self.assertEqual(shift1.allocated_hours, 4.0, "should be the same original value")
+        self.assertEqual(shift1.allocated_percentage, 50.0, "4 allocated hours / 8 working hours")
+
+        self.assertEqual(shift2.allocated_hours, 3.0, "should be the same original value")
+        self.assertEqual(shift2.allocated_percentage, 37.5, "4 allocated hours / 8 working hours")
+
+        shift3, shift4 = self.env['planning.slot'].create([{
+            'name': 'Night Shift',
+            'start_datetime': datetime(2023, 7, 28, 8),
+            'end_datetime': datetime(2023, 7, 28, 16),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 1,
+        }, {
+            'name': 'Night Shift',
+            'start_datetime': datetime(2023, 7, 28, 8),
+            'end_datetime': datetime(2023, 7, 28, 16),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 2,
+        }])
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2023-07-26 22:00:00",
+            default_end_datetime="2023-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2023-08-01 22:00:00'], ['end_datetime', '>', '2023-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift3.id], "shift 4 cannot be planned as it will create an overload")
+        self.assertEqual(shift3.resource_id.employee_id, self.flex_employee, "allocated_hours = 4 + 3 + 1 = 8 hours / allocated_percentage = 50 + 12.5 + 37.5 = 100%")
+        self.assertFalse(shift4.resource_id.employee_id)
+
+        self.assertEqual(shift3.allocated_hours, 1.0, "should be the same original value")
+        self.assertEqual(shift3.allocated_percentage, 12.5, "1 allocated hour / 8 working hours")
+
+        shift5 = self.env['planning.slot'].create({
+            'name': 'Night Shift',
+            'start_datetime': datetime(2023, 7, 28, 6),
+            'end_datetime': datetime(2023, 7, 28, 8),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 2,
+        })
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2023-07-26 22:00:00",
+            default_end_datetime="2023-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2023-08-01 22:00:00'], ['end_datetime', '>', '2023-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [], "8 hours already consumed on day 28 from 8h to 16h")
+
+        self.employee_bert.write({
+            'resource_calendar_id': self.calendar_40h_flex.id,
+            'default_planning_role_id': self.flex_role.id,
+            'tz': 'UTC',
+        })
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2023-07-26 22:00:00",
+            default_end_datetime="2023-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2023-08-01 22:00:00'], ['end_datetime', '>', '2023-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift4.id, shift5.id])
+        self.assertEqual(shift4.resource_id.employee_id, self.employee_bert)
+        self.assertEqual(shift5.resource_id.employee_id, self.employee_bert)
+
+        self.assertEqual(shift4.allocated_hours, 2.0, "should be the same original value")
+        self.assertEqual(shift4.allocated_percentage, 25.0, "2 allocated hours / 8 working hours")
+
+        self.assertEqual(shift5.allocated_hours, 2.0, "should be the same original value")
+        self.assertEqual(shift5.allocated_percentage, 100.0, "2 allocated hour / 2 working hours")
+
+    def test_auto_plan_fully_flexible_employee_no_rate_no_hours_day_overload(self):
+        self.env.user.tz = 'UTC'
+        self.flex_employee.resource_calendar_id = False
+        shift1, shift2, shift3, shift4 = self.env['planning.slot'].create([{
+            'name': 'Shift 1',
+            'start_datetime': datetime(2023, 7, 28, 2),
+            'end_datetime': datetime(2023, 7, 28, 23),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 10.5,
+        }, {
+            'name': 'Shift 2',
+            'start_datetime': datetime(2023, 7, 28, 2),
+            'end_datetime': datetime(2023, 7, 28, 23),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 10.5,
+        }, {
+            'name': 'Shift 3',
+            'start_datetime': datetime(2023, 7, 28, 0),
+            'end_datetime': datetime(2023, 7, 28, 2),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 2,
+        }, {
+            'name': 'Shift 4',
+            'start_datetime': datetime(2023, 7, 28, 23),
+            'end_datetime': datetime(2023, 7, 29),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 1,
+        }])
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2023-07-26 22:00:00",
+            default_end_datetime="2023-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2023-08-01 22:00:00'], ['end_datetime', '>', '2023-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift1.id, shift2.id, shift3.id, shift4.id])
+        self.assertEqual(shift1.resource_id.employee_id, self.flex_employee)
+        self.assertEqual(shift2.resource_id.employee_id, self.flex_employee)
+        self.assertEqual(shift3.resource_id.employee_id, self.flex_employee)
+        self.assertEqual(shift4.resource_id.employee_id, self.flex_employee)
+
+        self.assertEqual(shift1.allocated_hours, 10.5, "should be the same original value")
+        self.assertEqual(shift1.allocated_percentage, 50.0, "10.5 allocated hours / 21 working hours from 2h to 23h")
+
+        self.assertEqual(shift2.allocated_hours, 10.5, "should be the same original value")
+        self.assertEqual(shift2.allocated_percentage, 50.0, "10.5 allocated hours / 21 working hours from 2h to 23h")
+
+        self.assertEqual(shift3.allocated_hours, 2.0, "should be the same original value")
+        self.assertEqual(shift3.allocated_percentage, 100.0, "2 allocated hours / 2 working hours from 0h to 2h")
+
+        self.assertEqual(shift4.allocated_hours, 1.0, "should be the same original value")
+        self.assertEqual(shift4.allocated_percentage, 100.0, "1 allocated hour / 1 working hours from 23h to 0h (next day)")
+
+        self.env['planning.slot'].create({
+            'name': 'Night Shift',
+            'start_datetime': datetime(2023, 7, 28, 8),
+            'end_datetime': datetime(2023, 7, 28, 16),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 1,
+        })
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2023-07-26 22:00:00",
+            default_end_datetime="2023-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2023-08-01 22:00:00'], ['end_datetime', '>', '2023-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [], "employee already busy for the 24 hours on day 28")
+
+    def test_auto_plan_flexible_employee_no_week_overload(self):
+        self.env.user.tz = 'UTC'
+
+        shift1, shift2, shift3, shift4, shift5 = self.env['planning.slot'].create([{
+            'name': 'Shift 1',
+            'start_datetime': datetime(2025, 7, 28, 8),
+            'end_datetime': datetime(2025, 7, 30, 16),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 12,
+        }, {
+            'name': 'Shift 2',
+            'start_datetime': datetime(2025, 7, 28, 8),
+            'end_datetime': datetime(2025, 7, 30, 16, 0),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 12,
+        }, {
+            'name': 'Shift 3',
+            'start_datetime': datetime(2025, 7, 31, 8),
+            'end_datetime': datetime(2025, 7, 31, 16),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 8,
+        }, {
+            'name': 'Shift 4',
+            'start_datetime': datetime(2025, 8, 1, 8),
+            'end_datetime': datetime(2025, 8, 1, 16),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 8,
+        }, {
+            'name': 'Shift 5',
+            'start_datetime': datetime(2025, 8, 2, 8),
+            'end_datetime': datetime(2025, 8, 2, 16, 0),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 8,
+        }])
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2025-07-26 22:00:00",
+            default_end_datetime="2025-08-04 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2025-08-04 22:00:00'], ['end_datetime', '>', '2025-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift1.id, shift2.id, shift3.id, shift4.id], "shift 5 cannot be planned as it will create an overload on the week")
+        self.assertEqual(shift1.resource_id.employee_id, self.flex_employee)
+        self.assertEqual(shift2.resource_id.employee_id, self.flex_employee)
+        self.assertEqual(shift3.resource_id.employee_id, self.flex_employee)
+        self.assertEqual(shift4.resource_id.employee_id, self.flex_employee)
+        self.assertFalse(shift5.resource_id.employee_id)
+
+        # assert _compute_allocated_hours works fine for flexible resources (triggered after setting the resource on the shift, then again when setting the allocated hours)
+        self.assertEqual(shift1.allocated_hours, 12.0, "should be the same original value")
+        self.assertEqual(shift1.allocated_percentage, 50.0, "12 allocated hours / 24 working hours from 8h day 28 to 16h day 30")
+
+        self.assertEqual(shift2.allocated_hours, 12.0, "should be the same original value")
+        self.assertEqual(shift2.allocated_percentage, 50.0, "12 allocated hours / 24 working hours from 8h day 28 to 16h day 30")
+
+        self.assertEqual(shift3.allocated_hours, 8.0, "should be the same original value")
+        self.assertEqual(shift3.allocated_percentage, 100.0, "8 allocated hours / 8 working hours from 8h to 16h day 31")
+
+        self.assertEqual(shift4.allocated_hours, 8.0, "should be the same original value")
+        self.assertEqual(shift4.allocated_percentage, 100.0, "8 allocated hours / 8 working hours from 8h to 16h day 01")
+
+    def test_auto_plan_fully_flexible_employee_no_hours_limit_per_week(self):
+        self.env.user.tz = 'UTC'
+        self.flex_employee.resource_calendar_id = False
+
+        shift = self.env['planning.slot'].create({
+            'name': 'Shift 1',
+            'start_datetime': datetime(2025, 7, 27),
+            'end_datetime': datetime(2025, 8, 2),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 120.0,
+        })
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2025-07-26 22:00:00",
+            default_end_datetime="2025-08-04 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2025-08-04 22:00:00'], ['end_datetime', '>', '2025-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift.id])
+        self.assertEqual(shift.resource_id.employee_id, self.flex_employee)

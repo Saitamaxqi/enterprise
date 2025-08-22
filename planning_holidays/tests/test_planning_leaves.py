@@ -322,15 +322,7 @@ class TestPlanningLeaves(TestCommon):
         The leave intervals should be set to 08:00:00 - 16:00:00
         if 2 half-day offs on the same day(am and pm).
         """
-        flexible_calendar = self.env['resource.calendar'].create({
-            'name': 'Flex Calendar',
-            'tz': 'UTC',
-            'flexible_hours': True,
-            'hours_per_day': 8,
-            'full_time_required_hours': 40,
-            'attendance_ids': [],
-        })
-        self.employee_bert.resource_calendar_id = flexible_calendar
+        self.employee_bert.resource_calendar_id = self.flexible_calendar
         self.leave_type.request_unit = 'half_day'
         leave_am, leave_pm = self.env['hr.leave'].sudo().create([
             {
@@ -357,7 +349,7 @@ class TestPlanningLeaves(TestCommon):
         leave_pm.sudo().action_approve()
         start_dt = datetime.datetime(2025, 4, 30, 0, 0, 0, tzinfo=utc)
         end_dt = datetime.datetime(2025, 4, 30, 23, 59, 59, 999999, tzinfo=utc)
-        intervals = flexible_calendar._leave_intervals_batch(start_dt, end_dt, [self.employee_bert.resource_id])
+        intervals = self.flexible_calendar._leave_intervals_batch(start_dt, end_dt, [self.employee_bert.resource_id])
         interval = next(iter(intervals[self.employee_bert.resource_id.id]))
         self.assertEqual(interval[0], datetime.datetime(2025, 4, 30, 8, 0, 0, tzinfo=utc), "The start of the interval should be 08:00:00")
         self.assertEqual(interval[1], datetime.datetime(2025, 4, 30, 16, 0, 0, tzinfo=utc), "The end of the interval should be 16:00:00")
@@ -488,3 +480,97 @@ class TestPlanningLeaves(TestCommon):
         self.assertEqual(slot_chris.resource_id, chris.resource_id)
         self.assertEqual(slot_chris.start_datetime.strftime('%Y-%m-%d %H:%M:%S'), '2025-04-01 08:00:00')
         self.assertEqual(slot_chris.end_datetime.strftime('%Y-%m-%d %H:%M:%S'), '2025-04-04 12:00:00')
+
+    def test_auto_plan_flexible_employee_with_holidays(self):
+        self.env.user.tz = 'UTC'
+        self.employee_bert.write({'resource_calendar_id': self.flexible_calendar.id, 'default_planning_role_id': self.flex_role.id})
+
+        # date:            --------- 28/07 ---------|--------- 29/07 ---------|--------- 30/07 ----------|
+        # schedule:        morning off |            |       |off(11->16)|     |            |afternoon off|
+        # hours to work:              4H            |            3H           |           4H             |
+
+        custom_leave, half_day_leave = self.env['hr.leave.type'].create([{
+            'name': 'Custom Leave',
+            'requires_allocation': False,
+            'request_unit': 'hour',
+        }, {
+            'name': 'Half day',
+            'requires_allocation': False,
+            'request_unit': 'half_day',
+        }])
+
+        self.env['hr.leave'].with_context(mail_create_nolog=True, mail_notrack=True).create([{
+            'name': 'Half 1',
+            'holiday_status_id': half_day_leave.id,
+            'employee_id': self.employee_bert.id,
+            'request_date_from': datetime.date(2025, 7, 28),
+            'request_date_to': datetime.date(2025, 7, 28),
+            'request_date_from_period': 'am',
+            'request_date_to_period': 'am',
+        }, {
+            'name': 'Custom',
+            'holiday_status_id': custom_leave.id,
+            'employee_id': self.employee_bert.id,
+            'request_date_from': datetime.date(2025, 7, 29),
+            'request_date_to': datetime.date(2025, 7, 29),
+            'request_hour_from': 11.0,
+            'request_hour_to': 16.0,
+        }, {
+            'name': 'Half 2',
+            'holiday_status_id': half_day_leave.id,
+            'employee_id': self.employee_bert.id,
+            'request_date_from': datetime.date(2025, 7, 30),
+            'request_date_to': datetime.date(2025, 7, 30),
+            'request_date_from_period': 'pm',
+            'request_date_to_period': 'pm',
+        }]).action_approve()
+
+        shift = self.env['planning.slot'].create({
+            'name': 'Night Shift',
+            'start_datetime': datetime.datetime(2025, 7, 28, 8),
+            'end_datetime': datetime.datetime(2025, 7, 30, 16),
+            'role_id': self.flex_role.id,
+        })
+        shift.allocated_hours = 5.5
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2025-07-26 22:00:00",
+            default_end_datetime="2025-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2025-08-01 22:00:00'], ['end_datetime', '>', '2025-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift.id])
+        self.assertEqual(shift.resource_id.employee_id, self.employee_bert)
+        self.assertEqual(shift.allocated_percentage, 50.0, "allocated_hours = 5.5 / hours to work = 11")
+
+        shift2 = self.env['planning.slot'].create({
+            'name': 'Night Shift',
+            'start_datetime': datetime.datetime(2025, 7, 28, 8),
+            'end_datetime': datetime.datetime(2025, 7, 30, 16, 0),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 5.5,
+        })
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2025-07-26 22:00:00",
+            default_end_datetime="2025-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2025-08-01 22:00:00'], ['end_datetime', '>', '2025-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [shift2.id])
+        self.assertEqual(shift2.resource_id.employee_id, self.employee_bert)
+        self.assertEqual(shift2.allocated_percentage, 50.0, "allocated_hours = 5.5 / hours to work 11")
+
+        shift3 = self.env['planning.slot'].create({
+            'name': 'Night Shift',
+            'start_datetime': datetime.datetime(2025, 7, 28, 8),
+            'end_datetime': datetime.datetime(2025, 7, 30, 16, 0),
+            'role_id': self.flex_role.id,
+            'allocated_hours': 1,
+        })
+
+        res = self.env["planning.slot"].with_context(
+            default_start_datetime="2025-07-26 22:00:00",
+            default_end_datetime="2025-08-01 22:00:00",
+        ).auto_plan_ids(['&', ['start_datetime', '<', '2025-08-01 22:00:00'], ['end_datetime', '>', '2025-07-26 22:00:00']])
+
+        self.assertEqual(res['open_shift_assigned'], [], "max hours already done 5.5 + 5.5 = 11")
+        self.assertFalse(shift3.resource_id.employee_id)

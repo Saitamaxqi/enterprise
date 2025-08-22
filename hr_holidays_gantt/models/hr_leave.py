@@ -35,8 +35,8 @@ class HrLeave(models.Model):
                  ('company_id', '=', False),
             '|', ('resource_id', 'in', employee_ids.mapped('resource_id').ids),
                  ('resource_id', '=', False),
-            ('date_from', '<=', date_to),
-            ('date_to', '>=', date_from),
+            ('date_from', '<', date_to),
+            ('date_to', '>', date_from),
         ], order='date_from')
 
         leaves = defaultdict(list)
