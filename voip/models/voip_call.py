@@ -45,8 +45,6 @@ class VoipCall(models.Model):
     user_id = fields.Many2one("res.users", "Responsible", default=lambda self: self.env.uid, index=True)
     country_id = fields.Many2one("res.country", compute="_compute_country_id", store=True)
     country_flag_url = fields.Char(related="country_id.image_url", string="Country Flag")
-    provider_id = fields.Many2one(related="user_id.voip_provider_id", string="Provider", readonly=True)
-    company_id = fields.Many2one(related="user_id.company_id", readonly=True)
     call_count = fields.Integer(compute="_compute_call_count", help="The total number of calls made to the same phone number.")
     image_1920 = fields.Binary(related="partner_id.image_1920")
     avatar_128 = fields.Binary(related="partner_id.avatar_128")

@@ -7,13 +7,11 @@
             <list string="Calls" create="false" default_order="create_date desc">
                 <field name="create_date" string="Date" widget="voip_simple_datetime"/>
                 <field name="partner_id" string="Contact"/>
-                <field name="company_id" optional="hide"/>
                 <field name="phone_number" widget="voip_flag_phone"/>
                 <field name="country_flag_url" column_invisible="True"/> <!-- Needed for voip_flag_phone widget -->
                 <field name="duration" widget="float_time" options="{'displaySeconds': True}" invisible="not (start_date and end_date)"/>
                 <field name="user_id" string="User" widget="many2one_avatar_user"/>
                 <field name="country_id" optional="hide"/>
-                <field name="provider_id" optional="hide"/>
                 <field name="state" string="Status" widget="voip_call_status_badge"/>
                 <field name="direction" column_invisible="True"/>
                 <field name="id" column_invisible="True"/>
@@ -121,8 +119,6 @@
                         </group>
                         <group>
                             <field name="user_id" string="User" widget="many2one_avatar_user" readonly="True"/>
-                            <field name="provider_id" readonly="True"/>
-                            <field name="company_id" readonly="True"/>
                         </group>
                     </group>
                 </sheet>
