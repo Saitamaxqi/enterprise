@@ -341,8 +341,8 @@ class SaleOrderLine(models.Model):
         today = fields.Date.today()
         start_date = self.order_id.start_date or today
         first_contract_date = self.order_id.first_contract_date or start_date
-
-        if self.order_id.subscription_state == '7_upsell':
+        is_upsell = self.order_id.subscription_state == '7_upsell'
+        if is_upsell:
             # We start at the beginning of the upsell as it's a part of recurrence
             new_period_start = max(start_date, first_contract_date)
             new_period_stop = self.order_id.next_invoice_date
@@ -352,16 +352,9 @@ class SaleOrderLine(models.Model):
             # Next invoice date is required and is equal to start_date at the creation of a subscription
             if self._is_postpaid_line():
                 # fallback on self.order_id.last_invoice_date to allow invoicing correctly the first period after an upsell.
-                new_period_start = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.last_invoice_date
-                theoretical_stop = new_period_start and new_period_start + self.order_id.plan_id.billing_period - relativedelta(days=1)
-                new_period_stop = min(date for date in [today, theoretical_stop, self.order_id.end_date] if date)
-
-                # new_period_start is undefined if the SO was never invoiced. In that case theoretical_stop is undefined too.
-                ratio = 1
-                if new_period_start and new_period_stop and new_period_stop != new_period_start:
-                    ratio = (today - new_period_start) / (new_period_stop - new_period_start)
-                ratio = 1 if not self.product_id.allow_prorated_price else ratio
-                return new_period_start, new_period_stop, ratio, None
+                new_period_start = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.last_invoice_date or start_date
+                theoretical_stop = new_period_start and new_period_start + self.order_id.plan_id.billing_period
+                new_period_stop = min(date for date in [theoretical_stop, self.order_id.end_date] if date)
             else:
                 new_period_start = self.order_id.next_invoice_date or max(start_date, first_contract_date)
                 new_period_stop = new_period_start + self.order_id.plan_id.billing_period
@@ -370,9 +363,11 @@ class SaleOrderLine(models.Model):
             # Never apply billing_first_day for weekly plan.
             return new_period_start, new_period_stop - relativedelta(days=1), 1, None
         elif self.order_id.plan_id.billing_period_unit == 'month':
-            next_date_1st = new_period_stop + relativedelta(day=1)
+            reference_date = new_period_stop if new_period_stop >= today else new_period_stop + relativedelta(months=1)
+            next_date_1st = reference_date + relativedelta(day=1)
         elif self.order_id.plan_id.billing_period_unit == 'year':
-            next_date_1st = new_period_stop + relativedelta(day=1, month=1)
+            reference_date = new_period_stop if new_period_stop >= today else new_period_stop + relativedelta(years=1)
+            next_date_1st = reference_date + relativedelta(day=1, month=1)
 
         number_of_days = (next_date_1st - new_period_start).days
         ratio = number_of_days / (new_period_stop - new_period_start).days
@@ -400,7 +395,6 @@ class SaleOrderLine(models.Model):
             duration = self.order_id.plan_id.billing_period_display
 
             new_period_start, new_period_stop, ratio, number_of_days = self._get_invoice_line_parameters()
-
             if ratio != 1:
                 duration = _('%s days', number_of_days)
                 res['price_unit'] = res['price_unit'] * ratio
@@ -466,7 +460,9 @@ class SaleOrderLine(models.Model):
             # We don't invoice line before their SO's next_invoice_date
             return self.order_id.next_invoice_date and self.order_id.next_invoice_date <= date_from and self.order_id.start_date and self.order_id.start_date <= date_from
         elif self._is_postpaid_line():
-            return True
+            # skip this line if start_date == nid. Itit only happens when we mix postpaid and prepaid lines.
+            # otherwise, the next invoice date is bumped at SO confirmation
+            return bool(self.order_id.start_date != self.order_id.next_invoice_date)
         else:
             # We don't invoice line past their SO's end_date
             return not self.order_id.end_date or (self.order_id.next_invoice_date and self.order_id.next_invoice_date < self.order_id.end_date)

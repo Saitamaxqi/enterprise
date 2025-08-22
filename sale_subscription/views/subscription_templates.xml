@@ -55,4 +55,20 @@
         </t>
     </template>
 
+    <template id="invoice_warning_message" name="Subscription Postpaid Warning">
+        <div t-if="rendering_values['order_count'] == 1">
+            You are about to invoice the subscription until the <t t-out="rendering_values['next_invoice_date']"/>.
+             Any new delivered quantity during this period for the following product(s) may never be invoiced:
+            <ul>
+                <li t-foreach="rendering_values['product_list']" t-as="product">
+                    <t t-out="product"/>
+                </li>
+            </ul>
+        </div>
+        <div t-if="rendering_values['order_count'] > 1">
+                You are about to invoice a subscription period in the future for product(s) with invoicing policy based on delivered quantity.
+                Any new delivered quantity during that period may never be invoiced.
+        </div>
+    </template>
+
 </odoo>

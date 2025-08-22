@@ -1072,3 +1072,32 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         # The subscription only has service product, no delivery needed to be created anyway,
         # no activity should have been created
         self.assertEqual(len(sub_service.activity_ids), 0)
+
+    def test_subscription_delivery_post_activity_if_already_invoiced(self):
+        """Post a mail.activity if delivery is made after already invoiced subscription period."""
+
+        with freeze_time('2025-08-26'):
+            # Create subscription with delivery-based product (postpaid)
+            subscription = self.env['sale.order'].create({
+                'is_subscription': True,
+                'partner_id': self.user_portal.partner_id.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [Command.create({
+                    'product_id': self.sub_product_delivery.id,
+                    'product_uom_qty': 1,
+                })]
+            })
+            # confirmation increment  next invoice date
+            subscription.action_confirm()
+            self.validate_picking_moves(subscription.picking_ids)
+            # create and post the invoice in the middle of the period, before the deferred_end_date
+            # It will save last_invoiced_date and trigger the activty
+            inv = subscription._create_invoices()
+            inv._post()
+        with freeze_time('2025-09-15'):
+            # validate the picking of the period to trigger the activity
+            self.validate_picking_moves(subscription.picking_ids)
+            self.assertTrue(subscription.invoice_ids)
+            # Assert activity is posted
+            activity = subscription.activity_ids
+            self.assertTrue(activity, "Expected mail activity was not created.")

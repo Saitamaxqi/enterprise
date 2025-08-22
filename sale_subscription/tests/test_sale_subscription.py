@@ -2866,5 +2866,5 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             sale_order.plan_id.billing_first_day = True
             sale_order.action_confirm()
             inv = sale_order._create_recurring_invoice()
-            self.assertEqual(inv.amount_untaxed, 14.19, "The invoiced amount should be 14.19 because the recurring service should be prorated and the non recurring one shouldn't.")
+            self.assertAlmostEqual(inv.amount_untaxed, 14.19, msg="The invoiced amount should be 14.19 because the recurring service should be prorated and the non recurring one shouldn't.")
             self.assertFalse(product_tmpl5.allow_prorated_price, "The product is not a subscription, so it should not be prorated.")

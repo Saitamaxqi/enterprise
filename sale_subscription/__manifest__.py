@@ -32,6 +32,7 @@ Features:
         'wizard/sale_subscription_close_reason_wizard_views.xml',
         'wizard/sale_subscription_change_customer_wizard_views.xml',
         'wizard/res_config_settings_views.xml',
+        'wizard/sale_make_invoice_advance_views.xml',
 
         'views/sale_subscription_plan_views.xml',
         'views/sale_order_views.xml',

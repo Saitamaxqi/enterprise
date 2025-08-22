@@ -739,8 +739,6 @@ class SaleOrder(models.Model):
         self.browse(to_open_ids).set_open()
         return res
 
-
-
     def _prepare_confirmation_values(self):
         """
         Override of the sale method. sale.order in self should have the same subscription_state in order to process
@@ -2240,6 +2238,30 @@ class SaleOrder(models.Model):
     def _is_subscription_postpaid(self):
         self.ensure_one()
         return any(sol._is_postpaid_line() for sol in self.order_line)
+
+    def _post_subscription_activity(self, record=None, summary="", explanation=""):
+        """
+        Posts a mail activity on the subscription sale order if:
+        - the order is a subscription,
+        - the last billing period has already been invoiced,
+        :param product: delivered product
+        :param record: record to link in activity
+        :param sale_order_line: sale_order_line
+        :param summary: Activity summary text
+        """
+        for so in self:
+            records_link = ", ".join([r._get_html_link() for r in record])
+            note = self.env._(
+                "%(explanation)s, but the billing period has already been invoiced. %(record)s",
+                explanation=explanation,
+                record=records_link,
+            )
+            so.activity_schedule(
+                'mail.mail_activity_data_todo',
+                summary=summary,
+                note=note,
+                user_id=so.user_id.id,
+            )
 
     # === CATALOG MIXIN === #
 
