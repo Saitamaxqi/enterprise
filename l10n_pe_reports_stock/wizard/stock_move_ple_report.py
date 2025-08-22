@@ -299,4 +299,4 @@ class L10n_PeStockPleWizard(models.TransientModel):
             ('location_dest_id.usage', 'in', ('supplier', 'customer', 'inventory', 'production')),
         ]
 
-        return self.env['stock.move'].sudo().search(domain, order="product_id.id, date")
+        return self.env['stock.move'].sudo().search(domain, order="product_id.id, date, id desc")
