@@ -1210,6 +1210,7 @@ class SaleOrder(models.Model):
             'user_id': subscription.user_id.id,
             'payment_term_id': subscription.payment_term_id.id,
             'company_id': subscription.company_id.id,
+            'journal_id': subscription.journal_id.id if subscription.journal_id else None,
             'sale_order_template_id': self.sale_order_template_id.id,
             'sale_order_option_ids': option_lines_data,
             'payment_token_id': False,
