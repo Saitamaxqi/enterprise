@@ -1,9 +1,8 @@
-import VariantMixin from "@website_sale/js/sale_variant_mixin";
-import { WebsiteSale } from '@website_sale/js/website_sale';
+import { patch } from '@web/core/utils/patch';
 import wSaleUtils from '@website_sale/js/website_sale_utils';
+import { WebsiteSale } from '@website_sale/interactions/website_sale';
 
-WebsiteSale.include({
-
+patch(WebsiteSale.prototype, {
     /**
      * Override of `_updateRootProduct` to add the subscription plan id to the rootProduct for
      * subscription products.
@@ -15,7 +14,7 @@ WebsiteSale.include({
      * @returns {void}
      */
     _updateRootProduct(form) {
-        this._super(...arguments);
+        super._updateRootProduct(...arguments);
         const selected_plan =
             form.querySelector('input[name="plan_id"]:checked')?.value
             ?? form.querySelector('#add_to_cart')?.dataset.subscriptionPlanId;
@@ -31,17 +30,16 @@ WebsiteSale.include({
 
     /**
      * @override
-     * @private
      * @param {MouseEvent} ev
      */
-    async _onClickAdd(ev) {
+    async onClickAdd(ev) {
         const form = wSaleUtils.getClosestProductForm(ev.currentTarget);
         const inputs = form.querySelectorAll('div.plan_select input[type="radio"]');
         inputs.forEach(input => {
             input.disabled = !input.checked;
         });
         this._handleAddSubscriptionProduct(form);
-        return this._super(...arguments);
+        return super.onClickAdd(...arguments);
     },
 
     _handleAddSubscriptionProduct(form) {
@@ -64,11 +62,10 @@ WebsiteSale.include({
     },
 
     /**
-     * Update the renting text when the combination change.
      * @override
      */
-    _onChangeCombination: function (){
-        this._super.apply(this, arguments);
-        VariantMixin._onChangeCombinationSubscription.apply(this, arguments);
+    _onChangeCombination(ev, parent, combination) {
+        super._onChangeCombination(...arguments);
+        this._onChangeCombinationSubscription(...arguments);
     },
 });

@@ -3,36 +3,40 @@ import {
     formatDate,
     formatDateTime,
     serializeDateTime,
-} from "@web/core/l10n/dates";
-import { rpc } from "@web/core/network/rpc";
-import { WebsiteSale } from '@website_sale/js/website_sale';
+} from '@web/core/l10n/dates';
+import { rpc } from '@web/core/network/rpc';
+import { patch } from '@web/core/utils/patch';
+import { redirect } from '@web/core/utils/urls';
+import { patchDynamicContent } from '@web/public/utils';
 import wSaleUtils from '@website_sale/js/website_sale_utils';
+import { WebsiteSale } from '@website_sale/interactions/website_sale';
 import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
-import '@website_sale_renting/js/variant_mixin';
 
-WebsiteSale.include(RentingMixin);
-WebsiteSale.include({
-    events: Object.assign(WebsiteSale.prototype.events, {
-        'renting_constraints_changed': '_onRentingConstraintsChanged',
-        'toggle_disable': '_onToggleDisable',
-        'change .js_main_product .o_website_sale_daterange_picker': 'onChangeVariant',
-        'daterangepicker_apply': '_onDatePickerApply',
-        'click .clear-daterange': '_onDatePickerClear',
-    }),
-
-    /**
-     * @override
-     */
-    async start() {
-        await this._super(...arguments);
-        this.$('[data-bs-toggle="tooltip"]').tooltip();
+patch(WebsiteSale.prototype, RentingMixin);
+patch(WebsiteSale.prototype, {
+    setup() {
+        super.setup();
+        patchDynamicContent(this.dynamicContent, {
+            _root: {
+                't-on-renting_constraints_changed': this.onRentingConstraintsChanged.bind(this),
+                't-on-toggle_disable': this.onToggleDisable.bind(this),
+                't-on-daterangepicker_apply': this.onDatePickerApply.bind(this),
+            },
+            '.js_main_product .o_website_sale_daterange_picker': {
+                't-on-change': this.onChangeVariant.bind(this),
+            },
+            '.clear-daterange': { 't-on-click': this.onDatePickerClear.bind(this) },
+        });
+        this.el.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+            const tooltip = window.Tooltip.getOrCreateInstance(el);
+            this.registerCleanup(() => tooltip.dispose());
+        });
     },
 
     async _checkNewDatesOnCart() {
-        const { start_date, end_date, values } = await rpc(
-            '/shop/cart/update_renting',
-            this._getSerializedRentingDates()
-        );
+        const { start_date, end_date, values } = await this.waitFor(rpc(
+            '/shop/cart/update_renting', this._getSerializedRentingDates()
+        ));
         wSaleUtils.updateCartNavBar(values);
         const format = this._isDurationWithHours() ? formatDateTime : formatDate;
         document.querySelector("input[name=renting_start_date]").value = format(deserializeDateTime(start_date, { tz: this.websiteTz }), { tz: this.websiteTz });
@@ -50,29 +54,24 @@ WebsiteSale.include({
      * @returns {void}
      */
     _updateRootProduct(form) {
-        this._super(...arguments);
+        super._updateRootProduct(...arguments);
         Object.assign(this.rootProduct, this._getSerializedRentingDates());
     },
 
-    // ------------------------------------------
-    // Handlers
-    // ------------------------------------------
     /**
      * During click, verify the renting periods and disable the datimepicker as soon as rental
      * product is added to cart.
-     *
-     * @private
      */
-    async _onClickAdd(ev) {
-        const $form = this.$(wSaleUtils.getClosestProductForm(ev.currentTarget));
-        if ($form.find('input[name="is_rental"]').val()) {
-            if (!this._verifyValidRentingPeriod($form)) {
+    async onClickAdd(ev) {
+        const form = wSaleUtils.getClosestProductForm(ev.currentTarget);
+        if (form.querySelector('input[name="is_rental"]')?.value) {
+            if (!this._verifyValidRentingPeriod(form)) {
                 ev.stopPropagation();
                 return Promise.resolve();
             }
         }
 
-        const quantity = await this._super(...arguments);
+        const quantity = await this.waitFor(super.onClickAdd(...arguments));
         const datepickerElements = document.querySelectorAll('.o_website_sale_daterange_picker_input');
         const clearBtnElements = document.querySelectorAll('.clear-daterange');
         const infoMessageElements = document.querySelectorAll('.o_rental_info_message');
@@ -96,7 +95,7 @@ WebsiteSale.include({
      *
      * @param {CustomEvent} event
      */
-    _onRentingConstraintsChanged(event) {
+    onRentingConstraintsChanged(event) {
         const info = event.detail;
         if (info.rentingUnavailabilityDays) {
             this.rentingUnavailabilityDays = info.rentingUnavailabilityDays;
@@ -111,43 +110,36 @@ WebsiteSale.include({
 
     /**
      * Handler to call the function which toggles the disabled class
-     * depending on the $parent element and the availability of the current combination.
+     * depending on the parent element and the availability of the current combination.
      *
      * @param {CustomEvent} event event
      */
-    _onToggleDisable(event) {
+    onToggleDisable(event) {
         const { parent, isCombinationAvailable } = event.detail;
-        this._toggleDisable($(parent), isCombinationAvailable);
+        this._toggleDisable(parent, isCombinationAvailable);
     },
-
-    // ------------------------------------------
-    // Utils
-    // ------------------------------------------
 
     /**
      * Verify that the dates given in the daterange picker are valid and display a message if not.
      *
-     * @param {JQuery} $parent
+     * @param {Element} parent
      * @private
      */
-    _verifyValidRentingPeriod($parent) {
+    _verifyValidRentingPeriod(parent) {
         const rentingDates = this._getRentingDates();
         if (!this._verifyValidInput(rentingDates, 'start_date') ||
             !this._verifyValidInput(rentingDates, 'end_date')) {
             return false;
         }
-        const $form = $(wSaleUtils.getClosestProductForm($parent[0]));
+        const form = wSaleUtils.getClosestProductForm(parent);
         const message = this._getInvalidMessage(
-            rentingDates.start_date, rentingDates.end_date,
-            this._getProductId($form)
+            rentingDates.start_date, rentingDates.end_date, this._getProductId(form)
         );
         if (message) {
             this.el.querySelector('span[name=renting_warning_message]').innerText = message;
-            this.el.querySelector('.o_renting_warning').classList.add('d-block');
-        } else {
-            this.el.querySelector('.o_renting_warning').classList.remove('d-block');
         }
-        this._toggleDisable($form, !message);
+        this.el.querySelector('.o_renting_warning').classList.toggle('d-block', !!message);
+        this._toggleDisable(form, !message);
         return !message;
     },
 
@@ -169,23 +161,22 @@ WebsiteSale.include({
      * Verify the Renting Period on combination change.
      *
      * @param {Event} ev
-     * @param {JQueryElement} $parent
+     * @param {Element} parent
      * @param {Object} combination
      * @returns
      */
-    _onChangeCombination(ev, $parent, combination) {
-        const result = this._super.apply(this, arguments);
+    _onChangeCombination(ev, parent, combination) {
+        super._onChangeCombination(...arguments);
         if (!!combination.is_rental) {
             // only verify the renting dates if product can be rented
-            this._verifyValidRentingPeriod($parent);
+            this._verifyValidRentingPeriod(parent);
         }
-        return result;
     },
 
     /**
      * @param {CustomEvent} event
      */
-    _onDatePickerApply(event) {
+    onDatePickerApply(event) {
         const { startDate, endDate } = event.detail;
         if (document.querySelector('.oe_cart')) {
             if (startDate && endDate) {
@@ -206,14 +197,13 @@ WebsiteSale.include({
             searchParams.set("start_date", serializeDateTime(start_date));
             searchParams.set("end_date", serializeDateTime(end_date));
         }
-        window.location = `/shop?${searchParams}`;
+        redirect(`/shop?${searchParams.toString()}`);
     },
 
-    _onDatePickerClear: function (ev) {
+    onDatePickerClear(ev) {
         const searchParams = new URLSearchParams(window.location.search);
         searchParams.delete('start_date');
         searchParams.delete('end_date');
-        const searchString = searchParams.toString();
-        window.location = `${window.location.pathname}` + searchString.length ? `?${searchParams.toString()}` : ``;
+        window.location.search = searchParams.toString();
     },
 });

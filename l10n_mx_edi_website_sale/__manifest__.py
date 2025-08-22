@@ -1,4 +1,4 @@
-# coding: utf-8
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Mexican Localization for eCommerce',
@@ -27,8 +27,8 @@ The extra tab only appears if:
     ],
     'assets': {
         'web.assets_frontend': [
+            'l10n_mx_edi_website_sale/static/src/interactions/**/*',
             'l10n_mx_edi_website_sale/static/src/js/invoicing_info.js',
-            'l10n_mx_edi_website_sale/static/src/js/website_sale.js',
         ],
         'web.assets_tests': [
             'l10n_mx_edi_website_sale/static/tests/tours/*.js',

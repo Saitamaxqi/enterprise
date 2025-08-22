@@ -1,9 +1,16 @@
-import { WebsiteSale } from '@website_sale/js/website_sale';
+import { patch } from '@web/core/utils/patch';
+import { patchDynamicContent } from '@web/public/utils';
+import { WebsiteSale } from '@website_sale/interactions/website_sale';
 
-WebsiteSale.include({
-    events: Object.assign({}, WebsiteSale.prototype.events, {
-        'change input[type="hidden"][name="product_id"]': "_onVariantChanged",
-    }),
+patch(WebsiteSale.prototype, {
+    setup() {
+        super.setup();
+        patchDynamicContent(this.dynamicContent, {
+            'input[type="hidden"][name="product_id"]': {
+                't-on-change': this.onVariantChanged.bind(this),
+            },
+        });
+    },
 
     /**
      * Override of `_updateRootProduct` to trigger a change_product_id event on the daterange
@@ -16,7 +23,7 @@ WebsiteSale.include({
      * @returns {void}
      */
     _updateRootProduct(form) {
-        this._super(...arguments);
+        super._updateRootProduct(...arguments);
         const dateRangeRenting = this.el.querySelector('.o_website_sale_daterange_picker');
         dateRangeRenting?.dispatchEvent(new CustomEvent(
             'change_product_id', { detail: { productId: this.rootProduct.productId }}
@@ -28,7 +35,7 @@ WebsiteSale.include({
      *
      * @override
      */
-    _onVariantChanged() {
+    onVariantChanged() {
         const productIdElement = this.el.querySelector('input[type="hidden"][name="product_id"]');
         const dateRangeRenting = this.el.querySelector('.o_website_sale_daterange_picker');
         if (dateRangeRenting && productIdElement) {
@@ -43,8 +50,8 @@ WebsiteSale.include({
      *
      * @override
      */
-    _onRentingConstraintsChanged(event) {
-        this._super.apply(this, arguments);
+    onRentingConstraintsChanged(event) {
+        super.onRentingConstraintsChanged(...arguments);
         const info = event.detail;
         if (info.rentingAvailabilities) {
             this.rentingAvailabilities = info.rentingAvailabilities;

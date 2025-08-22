@@ -262,13 +262,12 @@ export class DaterangePicker extends Interaction {
         } else {
             this.el.parentElement.querySelector('.o_renting_warning').classList.remove('d-block');
         }
-        document.querySelector('.oe_website_sale')?.dispatchEvent(new CustomEvent(
-            'toggle_disable',
-            { detail: {
-                parent: wSaleUtils.getClosestProductForm(this.el),
-                isCombinationAvailable: !message,
-            }},
-        ));
+        const form = wSaleUtils.getClosestProductForm(this.el);
+        if (form) {
+            document.querySelector('.oe_website_sale')?.dispatchEvent(new CustomEvent(
+                'toggle_disable', { detail: { parent: form, isCombinationAvailable: !message }}
+            ));
+        }
         this.el.dispatchEvent(new CustomEvent(
             'toggle_search_btn', { bubbles: true, detail: message }
         ));
@@ -289,11 +288,6 @@ export class DaterangePicker extends Interaction {
             this.productId = productInput && parseInt(productInput.value);
         }
         return this.productId;
-    }
-
-    _getParentElement() {
-        // May be null on checkout page
-        return wSaleUtils.getClosestProductForm(this.el);
     }
 
     /**

@@ -16,7 +16,6 @@ appropriate views and selling choices.
                 'website_sale_renting/static/src/js/renting_mixin.js',
                 'website_sale_stock_renting/static/src/js/renting_mixin.js'
             ),
-            'website_sale_stock_renting/static/src/js/*.js',
         ],
         'web.assets_tests': [
             'website_sale_stock_renting/static/tests/tours/**/*',

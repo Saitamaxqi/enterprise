@@ -1,4 +1,4 @@
-import VariantMixin from '@website_sale/js/sale_variant_mixin';
+import VariantMixin from '@website_sale/js/variant_mixin';
 import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
 
 VariantMixin._isDurationWithHours = RentingMixin._isDurationWithHours;
@@ -9,12 +9,12 @@ const oldGetOptionalCombinationInfoParam = VariantMixin._getOptionalCombinationI
 /**
  * Add the renting pickup and return dates to the optional combination info parameters.
  *
- * @param {$.Element} $product
+ * @param {Element} product
  */
-VariantMixin._getOptionalCombinationInfoParam = function ($product) {
+VariantMixin._getOptionalCombinationInfoParam = function (product) {
     const result = oldGetOptionalCombinationInfoParam.apply(this, arguments);
 
-    Object.assign(result, this._getSerializedRentingDates($product[0]));
+    Object.assign(result, this._getSerializedRentingDates(product));
 
     return result;
 };
@@ -25,34 +25,45 @@ const oldOnChangeCombination = VariantMixin._onChangeCombination;
  * Update the renting text when the combination change.
  *
  * @param {Event} ev
- * @param {$.Element} $parent
+ * @param {Element} parent
  * @param {object} combination
  */
-VariantMixin._onChangeCombination = function (ev, $parent, combination) {
-    const result = oldOnChangeCombination.apply(this, arguments);
+VariantMixin._onChangeCombination = function (ev, parent, combination) {
+    oldOnChangeCombination.apply(this, arguments);
     if (!combination.is_rental) {
-        return result;
+        return;
     }
-    const $unitListPrice = $parent.find(".o_rental_product_price del .oe_currency_value");
-    const $unitPrice = $parent.find(".o_rental_product_price strong .oe_currency_value");
-    const $price = $parent.find(".o_renting_price .oe_currency_value");
-    const $totalPrice = $parent.find(".o_renting_total_price .oe_currency_value");
-    const $rentingDetails = $parent.find(".o_renting_details");
-    const $duration = $rentingDetails.find(".o_renting_duration");
-    const $unit = $rentingDetails.find(".o_renting_unit");
-    $unitListPrice.text(this._priceToStr(combination.list_price));
-    $unitPrice.text(this._priceToStr(combination.price));
-    $price.text(this._priceToStr(combination.current_rental_price_per_unit));
-    $totalPrice.text(this._priceToStr(combination.current_rental_price));
-    $duration.text(combination.current_rental_duration);
-    $unit.text(combination.current_rental_unit);
+    const unitListPrice = parent.querySelector('.o_rental_product_price del .oe_currency_value');
+    const unitPrice = parent.querySelector('.o_rental_product_price strong .oe_currency_value');
+    const price = parent.querySelector('.o_renting_price .oe_currency_value');
+    const totalPrice = parent.querySelector('.o_renting_total_price .oe_currency_value');
+    const rentingDetails = parent.querySelector('.o_renting_details');
+    const duration = rentingDetails?.querySelector('.o_renting_duration');
+    const unit = rentingDetails?.querySelector('.o_renting_unit');
+    if (unitListPrice) {
+        unitListPrice.textContent = this._priceToStr(combination.list_price);
+    }
+    if (unitPrice) {
+        unitPrice.textContent = this._priceToStr(combination.price);
+    }
+    if (price) {
+        price.textContent = this._priceToStr(combination.current_rental_price_per_unit);
+    }
+    if (totalPrice) {
+        totalPrice.textContent = this._priceToStr(combination.current_rental_price);
+    }
+    if (duration) {
+        duration.textContent = combination.current_rental_duration;
+    }
+    if (unit) {
+        unit.textContent = combination.current_rental_unit;
+    }
 
     // Update pricing table
     const pricingTable = document.querySelector("#oe_wsale_rental_pricing_table tbody");
     if (pricingTable) {
         updatePricingTable(pricingTable, combination.pricing_table);
     }
-    return result;
 };
 
 
