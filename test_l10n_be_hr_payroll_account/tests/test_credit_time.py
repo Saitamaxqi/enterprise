@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import time
 import datetime
+
 from odoo.tools.float_utils import float_compare
 from odoo.tests import tagged
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -59,7 +59,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
         cls.car = cls.env['fleet.vehicle'].sudo().create({
             'model_id': cls.model_a3.id,
             'license_plate': '1-JFC-095',
-            'acquisition_date': time.strftime('%Y-01-01'),
+            'acquisition_date': '2020-01-01',
             'co2': 88,
             'driver_id': cls.env['res.partner'].create({'name': 'Roger'}).id,
             'car_value': 38000,
@@ -305,13 +305,13 @@ class TestCreditTime(AccountTestInvoicingCommon):
             'SALARY': 430.38,
             'ONSS': -56.25,
             'EmpBonus.1': 0.0,
-            'ATN.CAR': 175.02,
-            'GROSSIP': 549.15,
+            'ATN.CAR': 141.14,
+            'GROSSIP': 515.27,
             'IP.PART': -103.85,
-            'GROSS': 445.3,
+            'GROSS': 411.43,
             'P.P': 0.0,
             'P.P.DED': 0.0,
-            'ATN.CAR.2': -175.02,
+            'ATN.CAR.2': -141.14,
             'ATN.INT.2': -5.0,
             'ATN.MOB.2': -4.0,
             'ATN.LAP.2': -6.0,
