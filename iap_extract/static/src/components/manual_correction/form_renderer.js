@@ -279,7 +279,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
         const newFieldValue = await this.orm.call(
             this.recordModel,
             'set_user_selected_box',
-            [[this.dataMoveId], boxId],
+            [[this.recordId], boxId],
         )
 
         // Update the field's value
