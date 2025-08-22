@@ -6,7 +6,6 @@ from odoo import fields, models
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    next_appraisal_date = fields.Date(related='employee_id.next_appraisal_date')
     ongoing_appraisal_count = fields.Integer(related='employee_id.ongoing_appraisal_count')
     last_appraisal_date = fields.Date(related='employee_id.last_appraisal_id.date_close')
     last_appraisal_id = fields.Many2one(related='employee_id.last_appraisal_id')
@@ -28,7 +27,6 @@ class ResUsers(models.Model):
     @property
     def SELF_READABLE_FIELDS(self):
         return super().SELF_READABLE_FIELDS + [
-            'next_appraisal_date',
             'last_appraisal_date',
             'last_appraisal_id',
             'ongoing_appraisal_count',

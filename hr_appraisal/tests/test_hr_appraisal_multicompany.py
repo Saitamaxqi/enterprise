@@ -50,4 +50,7 @@ class TestHrAppraisal(TransactionCase):
         self.assertEqual(appraisal_count([('employee_id', '=', self.hr_employee2.id)]), 1)
 
         self.assertEqual(self.env['hr.appraisal'].search([('employee_id', '=', self.hr_employee2.id)]).company_id.id, self.other_company.id)
-        self.assertEqual(self.user.with_company(company=self.other_company.id).next_appraisal_date, self.hr_employee2.next_appraisal_date)
+        self.assertEqual(
+            self.user.with_company(company=self.other_company.id).employee_id.next_appraisal_date,
+            self.hr_employee2.next_appraisal_date
+        )
