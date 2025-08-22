@@ -114,7 +114,7 @@ class ProductProduct(models.Model):
             lambda line: line.task_id == task
             and line.product_id == self
             and line.product_uom_qty > 0
-            and line.get_parent_section_line().id == (self.env.context.get('selected_section_id') or False)
+            and line.get_parent_section_line().id == (self.env.context.get('section_id') or False)
         )
         tracking_line_ids = [(0, 0, {
             'lot_id': line.fsm_lot_id.id,

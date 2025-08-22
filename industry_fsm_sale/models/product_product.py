@@ -33,12 +33,12 @@ class ProductProduct(models.Model):
 
     def _inverse_fsm_quantity(self):
         task = self._get_contextual_fsm_task()
-        selected_section_id = self.env.context.get('selected_section_id') or False
+        section_id = self.env.context.get('section_id') or False
         if task:
             sale_order_lines = task.sale_order_id.order_line.filtered(
                 lambda l: l.product_id in self
                 and l.task_id == task
-                and l.get_parent_section_line().id == selected_section_id
+                and l.get_parent_section_line().id == section_id
             )
             sale_lines_per_product = defaultdict(lambda: self.env['sale.order.line'])
             for line in sale_order_lines:
@@ -71,10 +71,7 @@ class ProductProduct(models.Model):
                             break
                 elif diff_qty > 0:  # create new SOL
                     child_field = self.env.context.get('child_field', 'order_line')
-                    sequence = task.sale_order_id._get_new_line_sequence(
-                        child_field,
-                        selected_section_id,
-                    )
+                    sequence = task.sale_order_id._get_new_line_sequence(child_field, section_id)
 
                     vals = {
                         'order_id': task.sale_order_id.id,

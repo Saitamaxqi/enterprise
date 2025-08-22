@@ -106,12 +106,12 @@ class FsmStockTracking(models.TransientModel):
         if self.tracking_line_ids.filtered(lambda l: not l.lot_id):
             raise UserError(_('Each line needs a Lot/Serial Number'))
 
-        selected_section_id = self.env.context.get('selected_section_id') or False
+        section_id = self.env.context.get('section_id') or False
         sale_lines_remove = self.task_id.sale_order_id.order_line.sudo().filtered(
             lambda line: line.product_id == self.product_id
             and line.id not in self.tracking_line_ids.sale_order_line_id.ids
             and line.task_id == self.task_id
-            and line.get_parent_section_line().id == selected_section_id
+            and line.get_parent_section_line().id == section_id
         )
         # create the new sale_lines from the wizard
         move_line_qty_per_lot_id = defaultdict(int)
@@ -119,10 +119,7 @@ class FsmStockTracking(models.TransientModel):
         for line in new_lines:
             qty = line.quantity if self.tracking == 'lot' else 1
             child_field = self.env.context.get('child_field', 'order_line')
-            sequence = self.task_id.sale_order_id._get_new_line_sequence(
-                child_field,
-                selected_section_id,
-            )
+            sequence = self.task_id.sale_order_id._get_new_line_sequence(child_field, section_id)
             vals = {
                 'order_id': self.task_id.sale_order_id.id,
                 'product_id': self.product_id.id,

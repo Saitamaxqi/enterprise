@@ -22,7 +22,7 @@ export class FSMProductCatalogKanbanRecord extends ProductCatalogKanbanRecord {
             res_model: this.env.orderResModel,
             task_id: this.env.fsm_task_id,
             child_field: this.env.childField,
-            selected_section_id: this.env.searchModel.selectedSection.sectionId,
+            section_id: this.env.selectedSectionId,
         });
         if (price) {
             this.productCatalogData.price = parseFloat(price);

@@ -26,7 +26,7 @@ export class FSMProductCatalogKanbanModel extends RelationalModel {
                 ],
                 context: {
                     ...params.context,
-                    selected_section_id: selectedSection.sectionId,
+                    section_id: selectedSection.sectionId,
                 },
             };
         }
@@ -56,7 +56,7 @@ export class FSMProductCatalogKanbanModel extends RelationalModel {
                 task_id: params.context.fsm_task_id,
                 res_model: params.context.product_catalog_order_model,
                 child_field: params.context.child_field,
-                selected_section_id: this.env.searchModel.selectedSection.sectionId,
+                section_id: this.env.searchModel.selectedSection.sectionId,
             });
             for (const record of records) {
                 record.productCatalogData = saleOrderLinesInfo[record.id];

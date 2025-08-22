@@ -35,7 +35,7 @@ class CatalogControllerFSM(ProductCatalogController):
         request.update_context(
             child_field=kwargs.get('child_field'),
             fsm_task_id=task_id,
-            selected_section_id=kwargs.get('selected_section_id'),
+            section_id=kwargs.get('section_id'),
         )
         task = request.env['project.task'].browse(task_id)
         product = request.env['product.product'].browse(product_id)
