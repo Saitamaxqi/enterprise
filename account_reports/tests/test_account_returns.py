@@ -48,7 +48,7 @@ class TestAccountReturn(TestAccountReportsCommon):
 
     @classmethod
     def _patch_returns_generation(cls):
-        return patch.object(cls.registry('account.return.type'), '_generate_all_returns', patched_generate_all_returns)
+        return patch.object(cls.registry['account.return.type'], '_generate_all_returns', patched_generate_all_returns)
 
     def assert_return_dates_equal(self, returns, dates_list):
         self.assertEqual(len(returns), len(dates_list), "Return count mismatch")
