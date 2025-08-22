@@ -27,7 +27,7 @@ export class PlanningCalendarModel extends CalendarModel {
     }
 
     get hasMultiCreate() {
-        return super.hasMultiCreate && this.isManager && this.meta.scale === "month";
+        return super.hasMultiCreate && this.isManager;
     }
 
     get showMultiCreateTimeRange() {
