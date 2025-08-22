@@ -110,7 +110,7 @@ test("Can not add attachment after drag dropping an attachment", async () => {
     await contains(".o-mail-AttachmentContainer:not(.o-isUploading):contains(text.txt) .fa-check");
 });
 
-test.skip("Disabled composer should be enabled after message from whatsapp user", async () => {
+test("Disabled composer should be enabled after message from whatsapp user", async () => {
     const pyEnv = await startServer();
     const channelId = pyEnv["discuss.channel"].create({
         name: "WhatsApp 1",

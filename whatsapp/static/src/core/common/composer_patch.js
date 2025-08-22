@@ -56,17 +56,6 @@ patch(Composer.prototype, {
         }
         return super.placeholder;
     },
-    get showQuickAction() {
-        const inactiveActions = ["revive-whatsapp-conversation", "more-actions"];
-        if (
-            this.thread?.channel_type === "whatsapp" &&
-            !this.state.active &&
-            !inactiveActions.includes(this.action.id)
-        ) {
-            return false;
-        }
-        return super.showQuickAction;
-    },
 
     checkComposerDisabled() {
         if (this.thread && this.thread.channel_type === "whatsapp") {

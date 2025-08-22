@@ -26,4 +26,16 @@ patch(composerActionsInternal, {
         }
         return super.condition(component, id, action);
     },
+    disabledCondition(component, id, action) {
+        const inactiveActions = ["revive-whatsapp-conversation", "more-actions"];
+        if (
+            component.thread?.channel_type === "whatsapp" &&
+            component.state &&
+            !component.state.active &&
+            !inactiveActions.includes(id)
+        ) {
+            return true;
+        }
+        return super.disabledCondition(component, id, action);
+    },
 });
