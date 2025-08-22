@@ -33,6 +33,45 @@
                     </group>
                 </group>
             </xpath>
+            <xpath expr="//field[@name='input_line_ids']/list/field[@name='name']" position="after">
+                <field name="l10n_au_treatment" column_invisible="parent.country_code != 'AU'"/>
+            </xpath>
+            <field name="input_line_ids" position="after">
+                <separator string="Other Input Details" invisible="country_code != 'AU'"/>
+                <field name="l10n_au_other_input_details_ids" colspan="4" nolabel="1"
+                    readonly="state in ['cancel', 'done', 'paid']" invisible="country_code != 'AU'"
+                    options="{'no_create': True, 'no_open': True}" >
+                    <list create="0" delete="0" no_open="1" editable="top">
+                        <field name="name" class="text-muted"/>
+                        <field name="date" required="is_backpayment" invisible="not is_backpayment"/>
+                        <field name="city_id" options="{'no_create': True, 'no_edit': True}"
+                            invisible="code != 'ALW.DTA'" readonly="code != 'ALW.DTA'"/>
+                        <field name="country_id" options="{'no_create': True, 'no_edit': True}"
+                            invisible="code != 'ALW.OTA'" readonly="code != 'ALW.OTA'"/>
+                        <field name="quantity" invisible="not input_uom"/>
+                        <field name="input_uom" nolabel="1" invisible="not input_uom"/>
+                        <field name="rate" invisible="code != 'ALW.CPK'" optional="hide"/>
+                    </list>
+                    <form string="Input Details">
+                        <group>
+                            <field name="name" string="Description"/>
+                            <field name="payslip_id" />
+                        </group>
+                        <group>
+                            <label for="quantity" class="o_form_label"/>
+                            <div>
+                                <field name="quantity" nolabel="1" class="oe_inline" invisible="not input_uom"/>
+                                <field name="input_uom" nolabel="1" class="oe_inline" invisible="not input_uom"/>
+                            </div>
+                            <field name="city_id" options="{'no_create': True, 'no_edit': True}"
+                            required="code == 'ALW.DTA'" invisible="code != 'ALW.DTA'" readonly="code != 'ALW.DTA'"/>
+                            <field name="country_id" options="{'no_create': True, 'no_edit': True}"
+                                required="code == 'ALW.OTA'" invisible="code != 'ALW.OTA'" readonly="code != 'ALW.OTA'"/>
+                            <field name="rate" invisible="code != 'ALW.CPK'" optional="hide"/>
+                        </group>
+                    </form>
+                </field>
+            </field>
         </field>
     </record>
 

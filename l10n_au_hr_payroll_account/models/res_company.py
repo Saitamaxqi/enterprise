@@ -102,8 +102,7 @@ class ResCompany(models.Model):
                     "start_date": start_date,
                     "l10n_au_payslip_ytd_input_ids": [
                         (0, 0, {
-                            "res_id": self.env.ref("l10n_au_hr_payroll.input_salary_sacrifice_other"),
-                            "res_model": "hr.payslip.input.type",
+                            "name": "Salary Sacrifice: Other Benefits",
                         }), (0, 0, {
                             "name": "Salary Sacrificed Workplace Giving",
                         })
@@ -129,7 +128,7 @@ class ResCompany(models.Model):
                         for input_type in self.env["hr.payslip.input.type"].search(
                             [
                                 ("l10n_au_payment_type", "=", "allowance"),
-                                ("l10n_au_paygw_treatment", "=", "regular"),
+                                ("l10n_au_paygw_treatment", "in", ("regular", "special")),
                             ]
                         )
                     ],
@@ -154,7 +153,7 @@ class ResCompany(models.Model):
                         for input_type in self.env["hr.payslip.input.type"].search(
                             [
                                 ("l10n_au_payment_type", "=", "allowance"),
-                                ("l10n_au_paygw_treatment", "=", "no_paygw"),
+                                ("l10n_au_paygw_treatment", "in", ("no_paygw", "special")),
                             ]
                         )
                     ],
@@ -211,8 +210,7 @@ class ResCompany(models.Model):
                     "start_date": start_date,
                     "l10n_au_payslip_ytd_input_ids": [
                         (0, 0, {
-                            "res_id": self.env.ref("l10n_au_hr_payroll.input_salary_sacrifice_superannuation"),
-                            "res_model": "hr.payslip.input.type",
+                            "name": "Salary Sacrifice: Superannuation",
                         }),
                         (0, 0, {
                             "name": "Extra Negotiated Super (RESC)",

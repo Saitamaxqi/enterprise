@@ -70,23 +70,19 @@ result = -version.l10n_au_salary_sacrifice_other - version.l10n_au_workplace_giv
     <record id="l10n_au_allowance_structure_1" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
         <field name="name">Taxable Allowance Payments</field>
-        <field name="sequence">70</field>
+        <field name="sequence">69</field>
         <field name="code">ALW</field>
         <field name="condition_select">python</field>
         <field name="condition_python">result = payslip.input_line_ids.filtered(lambda x: x.input_type_id.l10n_au_payment_type == 'allowance')</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-allowances = payslip.input_line_ids.filtered(
+taxable_allowances = payslip.input_line_ids.filtered(
     lambda x: x.input_type_id.l10n_au_payment_type == "allowance"
-    and (
-        x.input_type_id.l10n_au_paygw_treatment == "regular"
-        or (
-            x.input_type_id.l10n_au_paygw_treatment == "excess"
-            and ytd_inputs[x.input_type_id.id]["amount"] &gt;= x.input_type_id.l10n_au_ato_rate_limit
-        )
-    )
+        and x.input_type_id.l10n_au_paygw_treatment == "regular"
 )
-result = sum(allowances.mapped('amount'))
+# special_tax_free_amount is used in ALW.TAXFREE so the sequence is important
+special_taxable_amount, special_tax_free_amount = payslip._l10n_au_compute_special_allowance_amounts()
+result = sum(taxable_allowances.mapped('amount')) + special_taxable_amount
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -102,15 +98,10 @@ result = sum(allowances.mapped('amount'))
         <field name="amount_python_compute">
 allowances = payslip.input_line_ids.filtered(
     lambda x: x.input_type_id.l10n_au_payment_type == "allowance"
-    and (
-        x.input_type_id.l10n_au_paygw_treatment == "no_paygw" # Fix excess
-        or (
-            x.input_type_id.l10n_au_paygw_treatment == "excess"
-            and ytd_inputs[x.input_type_id.id]["amount"] &lt; x.input_type_id.l10n_au_ato_rate_limit
-        )
-    )
+    and x.input_type_id.l10n_au_paygw_treatment == "no_paygw"
 )
-result = sum(allowances.mapped('amount'))
+# Depends on the ALW Rule for special_tax_free_amount
+result = sum(allowances.mapped('amount')) + special_tax_free_amount
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>

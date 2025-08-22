@@ -9,6 +9,7 @@
         "hr_payroll",
         "hr_work_entry_holidays",
         "hr_payroll_holidays",
+        "base_address_extended",
     ],
     'auto_install': ['hr_payroll'],
     "description": """
@@ -41,6 +42,8 @@ Australian Payroll Rules.
         "data/salary_rules/hr_salary_rule_regular_data.xml",
         "data/hr_work_entry_type_data.xml",
         "data/hr_payroll_dashboard_warning_data.xml",
+        "data/res_country_data.xml",
+        "data/res.city.csv"
     ],
     "assets": {
         "web.assets_backend": [

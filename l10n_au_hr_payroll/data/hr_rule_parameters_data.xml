@@ -1468,4 +1468,458 @@
         <field name="date_from" eval="datetime(2025, 1, 1).date()"/>
         <field name="parameter_value">534.23</field>
     </record>
+
+    <!-- Allowance Rates for Limits and Claimable amounts -->
+    <record id="rule_parameter_allowance_cpk" model="hr.rule.parameter">
+        <field name="name">Cents per Kilometer Allowance for Business Purposes</field>
+        <field name="code">l10n_au_allowance_cpk</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_allowance_cpk_2024" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_allowance_cpk"/>
+        <field name="date_from" eval="datetime(2024, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "limit": 5000,
+            "claimable": 0.88,
+        }</field>
+    </record>
+
+    <record id="rule_parameter_allowance_laundry" model="hr.rule.parameter">
+        <field name="name">Laundry Allowance for Approved Uniforms</field>
+        <field name="code">l10n_au_allowance_laundry</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_allowance_laundry_2024" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_allowance_laundry"/>
+        <field name="date_from" eval="datetime(2024, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "claimable": 150,
+        }</field>
+    </record>
+
+    <record id="rule_parameter_allowance_overtime_meal" model="hr.rule.parameter">
+        <field name="name">Overtime Meal Allowance</field>
+        <field name="code">l10n_au_allowance_overtime_meal</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_allowance_overtime_meal_2024" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_allowance_overtime_meal"/>
+        <field name="date_from" eval="datetime(2024, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "claimable": 37.65,
+        }</field>
+    </record>
+
+    <record id="rule_parameter_variable_allowance_salary_limits" model="hr.rule.parameter">
+        <field name="name">Variable Allowance Salary Limits</field>
+        <field name="code">l10n_au_variable_allowance_salary_limits</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_variable_allowance_salary_limits_2025" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_variable_allowance_salary_limits"/>
+        <field name="date_from" eval="datetime(2025, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "Level1": 148250,
+            "Level2": 263850,
+            "Level3": 263851,
+        }</field>
+    </record>
+
+    <!--  Reasonable amounts for domestic travel expenses - Daily Totals based on salary levels -->
+    <record id="rule_parameter_allowance_daily_totals" model="hr.rule.parameter">
+        <field name="name">Reasonable amounts for domestic travel expenses - Daily Totals</field>
+        <field name="code">l10n_au_allowance_daily_totals</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_allowance_daily_totals_2025" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_allowance_daily_totals"/>
+        <field name="date_from" eval="datetime(2025, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "Level1": {
+                "city_au_01": 323,
+                "city_au_17": 346,
+                "city_au_24": 343,
+                "city_au_39": 385,
+                "city_au_59": 341,
+                "city_au_76": 338,
+                "city_au_92": 345,
+                "city_au_108": 388,
+                # High-cost centres table_4 + l10n_au_variable_allowance_high_cost_centres
+                "other": 293.5
+            },
+            "Level2": {
+                "city_au_01": 412.35,
+                "city_au_17": 458.35,
+                "city_au_24": 447.35,
+                "city_au_39": 494.35,
+                "city_au_59": 436.35,
+                "city_au_76": 432.35,
+                "city_au_92": 446.35,
+                "city_au_108": 498.35,
+                # High-cost centres table_4 + l10n_au_variable_allowance_high_cost_centres
+                "other": 293.5
+            },
+            "Level3": {
+                "city_au_01": 431.2,
+                "city_au_17": 477.2,
+                "city_au_24": 466.2,
+                "city_au_39": 513.2,
+                "city_au_59": 455.2,
+                "city_au_76": 485.2,
+                "city_au_92": 485.2,
+                "city_au_108": 517.2,
+                # All other cities (207 or table_4 if &gt; 207) + l10n_au_variable_allowance_high_cost_centres
+            }
+        }</field>
+    </record>
+
+    <!-- Table 4 -->
+    <record id="rule_parameter_allowance_high_cost_centres" model="hr.rule.parameter">
+        <field name="name">Reasonable amounts for domestic travel expenses - high-cost country centres accommodation expenses</field>
+        <field name="code">l10n_au_variable_allowance_high_cost_centres</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_allowance_high_cost_centres_2025" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_allowance_high_cost_centres"/>
+        <field name="date_from" eval="datetime(2025, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "city_au_02": 193,
+            "city_au_65": 207,
+            "city_au_03": 207,
+            "city_au_66": 193,
+            "city_au_04": 206,
+            "city_au_67": 288,
+            "city_au_05": 159,
+            "city_au_68": 228,
+            "city_au_06": 166,
+            "city_au_69": 180,
+            "city_au_07": 207,
+            "city_au_70": 222,
+            "city_au_08": 176,
+            "city_au_71": 174,
+            "city_au_09": 187,
+            "city_au_72": 183,
+            "city_au_10": 207,
+            "city_au_73": 166,
+            "city_au_11": 207,
+            "city_au_74": 187,
+            "city_au_12": 168,
+            "city_au_75": 207,
+            "city_au_13": 170,
+            "city_au_77": 170,
+            "city_au_14": 164,
+            "city_au_78": 164,
+            "city_au_15": 184,
+            "city_au_79": 185,
+            "city_au_16": 180,
+            "city_au_80": 206,
+            "city_au_18": 162,
+            "city_au_81": 160,
+            "city_au_19": 255,
+            "city_au_82": 163,
+            "city_au_20": 178,
+            "city_au_83": 207,
+            "city_au_21": 184,
+            "city_au_84": 207,
+            "city_au_22": 178,
+            "city_au_85": 195,
+            "city_au_23": 175,
+            "city_au_86": 271,
+            "city_au_25": 174,
+            "city_au_87": 264,
+            "city_au_26": 162,
+            "city_au_88": 256,
+            "city_au_27": 156,
+            "city_au_89": 220,
+            "city_au_28": 168,
+            "city_au_90": 168,
+            "city_au_29": 207,
+            "city_au_91": 215,
+            "city_au_30": 218,
+            "city_au_93": 207,
+            "city_au_31": 207,
+            "city_au_94": 266,
+            "city_au_32": 331,
+            "city_au_95": 170,
+            "city_au_33": 207,
+            "city_au_96": 190,
+            "city_au_34": 207,
+            "city_au_97": 207,
+            "city_au_35": 207,
+            "city_au_98": 163,
+            "city_au_36": 207,
+            "city_au_99": 207,
+            "city_au_37": 201,
+            "city_au_100": 207,
+            "city_au_38": 199,
+            "city_au_101": 207,
+            "city_au_40": 192,
+            "city_au_102": 174,
+            "city_au_41": 162,
+            "city_au_103": 182,
+            "city_au_42": 170,
+            "city_au_104": 207,
+            "city_au_43": 207,
+            "city_au_105": 164,
+            "city_au_44": 179,
+            "city_au_106": 167,
+            "city_au_45": 180,
+            "city_au_107": 181,
+            "city_au_46": 235,
+            "city_au_109": 207,
+            "city_au_47": 175,
+            "city_au_110": 207,
+            "city_au_48": 190,
+            "city_au_111": 207,
+            "city_au_49": 171,
+            "city_au_112": 323,
+            "city_au_50": 225,
+            "city_au_113": 161,
+            "city_au_52": 165,
+            "city_au_114": 174,
+            "city_au_51": 161,
+            "city_au_115": 207,
+            "city_au_53": 172,
+            "city_au_116": 177,
+            "city_au_54": 160,
+            "city_au_117": 186,
+            "city_au_55": 180,
+            "city_au_118": 175,
+            "city_au_56": 204,
+            "city_au_119": 238,
+            "city_au_57": 170,
+            "city_au_120": 167,
+            "city_au_58": 175,
+            "city_au_121": 272,
+            "city_au_60": 345,
+            "city_au_122": 207,
+            "city_au_61": 166,
+            "city_au_123": 182,
+            "city_au_62": 207,
+            "city_au_124": 188,
+            "city_au_63": 207,
+            "city_au_125": 570,
+            "city_au_64": 216
+        }</field>
+    </record>
+
+    <!-- "{
+    Capital cities have fixed total daily rates by level. See "Reasonable amounts for domestic travel expenses - Daily Totals".
+    For high-cost and other country centres:
+    - Level 1: add accommodation from Table 4 to a fixed $165 (meals + incidentals).
+    - Level 2: add accommodation from Table 4 to a fixed $201.35 (meals + incidentals).
+    - Level 3: if accommodation from Table 4 is greater than $207, use it; otherwise use $207, then add to fixed $220.20 (meals + incidentals).",
+    "calculation_logic" for high cost cities Level 1 and Level 2 and Other Cities for Level 3: {
+        "Level1": "daily_total = Table_4_accommodation + 165",
+        "Level2": "daily_total = Table_4_accommodation + 201.35",
+        "Level3": "daily_total = (Table_4_accommodation if > 207 else 207) + 220.20"
+    },
+    }" -->
+    <!-- Additional variable cost for Salary levels -->
+    <record id="rule_parameter_variable_allowance_coef" model="hr.rule.parameter">
+        <field name="name">Variable Allowance Coefficients</field>
+        <field name="code">l10n_au_variable_allowance_coef</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_variable_allowance_coef_2025" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_variable_allowance_coef"/>
+        <field name="date_from" eval="datetime(2025, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "Level1": 165,
+            "Level2": 201.35,
+            "Level3": 220.20,
+        }</field>
+    </record>
+
+
+    <!-- Country Groups - Does not change frequently so the values do not require updates -->
+    <record id="rule_parameter_country_groups" model="hr.rule.parameter">
+        <field name="name">Country Groups</field>
+        <field name="code">l10n_au_country_groups</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_country_groups_2023" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_country_groups"/>
+        <field name="date_from" eval="datetime(2023, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "AL": 2,
+            "GE": 3,
+            "MK": 2,
+            "DZ": 3,
+            "DE": 5,
+            "NO": 6,
+            "AG": 6,
+            "GI": 4,
+            "OM": 6,
+            "AR": 3,
+            "GR": 4,
+            "PK": 2,
+            "AM": 3,
+            "GT": 4,
+            "PA": 4,
+            "AT": 5,
+            "GY": 4,
+            "PG": 4,
+            "AZ": 3,
+            "HK": 6,
+            "PY": 2,
+            "BS": 6,
+            "HU": 3,
+            "PE": 3,
+            "BH": 6,
+            "IS": 6,
+            "PH": 4,
+            "BD": 4,
+            "IN": 3,
+            "PL": 3,
+            "BB": 6,
+            "ID": 3,
+            "PT": 4,
+            "BY": 2,
+            "IR": 1,
+            "PR": 6,
+            "BE": 5,
+            "IQ": 4,
+            "QA": 6,
+            "BM": 6,
+            "IE": 6,
+            "RO": 3,
+            "BO": 3,
+            "IL": 6,
+            "RU": 4,
+            "BA": 2,
+            "IT": 5,
+            "RW": 2,
+            "BR": 3,
+            "JM": 4,
+            "LC": 5,
+            "BN": 3,
+            "JP": 5,
+            "VC": 3,
+            "BG": 3,
+            "JO": 6,
+            "WS": 4,
+            "BF": 3,
+            "KZ": 3,
+            "SA": 5,
+            "KH": 3,
+            "KE": 4,
+            "SN": 4,
+            "CM": 4,
+            "KR": 5,
+            "RS": 3,
+            "CA": 5,
+            "XK": 2,
+            "SL": 3,
+            "CL": 3,
+            "KW": 5,
+            "SG": 6,
+            "CN": 5,
+            "KG": 2,
+            "SK": 4,
+            "CO": 3,
+            "LA": 2,
+            "SI": 3,
+            "CK": 4,
+            "LV": 4,
+            "SB": 4,
+            "CR": 4,
+            "LB": 3,
+            "ZA": 2,
+            "CI": 5,
+            "LT": 4,
+            "ES": 4,
+            "HR": 3,
+            "LU": 5,
+            "LK": 4,
+            "CY": 4,
+            "MO": 5,
+            "SE": 5,
+            "CZ": 4,
+            "MY": 3,
+            "CH": 6,
+            "DK": 6,
+            "ML": 3,
+            "TW": 5,
+            "DO": 4,
+            "MT": 4,
+            "TZ": 2,
+            "TL": 3,
+            "MU": 4,
+            "TH": 4,
+            "EC": 4,
+            "MX": 4,
+            "TO": 3,
+            "EG": 2,
+            "MC": 6,
+            "TT": 6,
+            "SV": 4,
+            "MA": 3,
+            "TN": 2,
+            "ER": 3,
+            "MZ": 3,
+            "TR": 3,
+            "EE": 4,
+            "MM": 2,
+            "UG": 3,
+            "ET": 2,
+            "NA": 2,
+            "UA": 2,
+            "FJ": 3,
+            "NP": 2,
+            "AE": 6,
+            "FI": 6,
+            "NL": 5,
+            "GB": 5,
+            "FR": 5,
+            "NC": 5,
+            "US": 6,
+            "PF": 6,
+            "NZ": 4,
+            "UY": 3,
+            "GA": 5,
+            "NI": 3,
+            "VU": 4,
+            "GM": 2,
+            "NG": 4,
+            "VN": 3,
+        }</field>
+    </record>
+
+     <!-- {"salary_level": {"country_group": Amount}} -->
+    <record id="rule_parameter_allowance_country_groups_salary_tiers" model="hr.rule.parameter">
+        <field name="name">Totals for Country Groups Salary Tiers</field>
+        <field name="code">l10n_au_allowance_country_groups_salary_tiers</field>
+        <field name="country_id" ref="base.au"/>
+    </record>
+    <record id="rule_parameter_allowance_country_groups_salary_tiers_2025" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_allowance_country_groups_salary_tiers"/>
+        <field name="date_from" eval="datetime(2025, 7, 1).date()"/>
+        <field name="parameter_value">{
+            "Level1": {
+                "1": 100,
+                "2": 140,
+                "3": 185,
+                "4": 230,
+                "5": 275,
+                "6": 325
+            },
+            "Level2": {
+                "1": 120,
+                "2": 165,
+                "3": 215,
+                "4": 260,
+                "5": 340,
+                "6": 410
+            },
+            "Level3": {
+                "1": 150,
+                "2": 220,
+                "3": 275,
+                "4": 340,
+                "5": 425,
+                "6": 475
+            }
+        }</field>
+    </record>
 </odoo>

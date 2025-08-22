@@ -14,3 +14,4 @@ from . import l10n_au_super_account
 from . import l10n_au_super_fund
 from . import res_company
 from . import res_config_settings
+from . import l10n_au_hr_input_details

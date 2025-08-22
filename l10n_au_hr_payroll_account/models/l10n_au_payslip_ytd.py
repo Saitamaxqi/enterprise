@@ -181,6 +181,9 @@ class L10nAUPayslipYTDInput(models.Model):
     )
     ytd_amount = fields.Float(string="YTD Amount")
 
+    _unique_input = models.Constraint("unique(l10n_au_payslip_ytd_id, res_id, res_model, name)",
+                                      "An input can only be added once per YTD Rule record.")
+
     @api.depends("res_id")
     def _compute_name(self):
         for rec in self:

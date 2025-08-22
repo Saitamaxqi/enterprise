@@ -67,6 +67,11 @@ class HrPayslip(models.Model):
     l10n_au_salary_sacrifice_superannuation = fields.Float(compute="_compute_l10n_au_salary_sacrifice_superannuation", store=True, readonly=True)
     l10n_au_salary_sacrifice_other = fields.Float(compute="_compute_l10n_au_salary_sacrifice_other", store=True, readonly=True)
     payslip_ytd_totals = fields.Json(compute="_compute_payslip_ytd_totals")
+    l10n_au_other_input_details_ids = fields.One2many(
+        comodel_name="l10n_au.hr.input.details",
+        inverse_name="payslip_id",
+        string="Other Input Details"
+    )
 
     def _get_data_files_to_update(self):
         # Note: file order should be maintained
@@ -262,7 +267,6 @@ class HrPayslip(models.Model):
             [("payslip_id", "in", slips_to_read.ids)],
             ["payslip_id", "code", "amount", "l10n_au_payroll_code_description", "l10n_au_payroll_code", "l10n_au_payment_type"],
         )
-        lump_sum_e = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
 
         for payslip in au_slips.sorted(key=lambda x: x.date_from):
             year_slips = ytd_slips[payslip.id]
@@ -293,8 +297,6 @@ class HrPayslip(models.Model):
                         "payment_type": input_line.l10n_au_payment_type,
                         "payroll_code_description": input_line.l10n_au_payroll_code_description,
                     }
-                if input_line.input_type_id == lump_sum_e:
-                    totals[input_line.payslip_id.l10n_au_income_stream_type]["input_lines"][input_line.input_type_id.id]["financial_year"] = input_line.name
                 totals[input_line.payslip_id.l10n_au_income_stream_type]["input_lines"][input_line.input_type_id.id]["amount"] += input_line.amount
             payslip.payslip_ytd_totals = totals
 
@@ -312,17 +314,6 @@ class HrPayslip(models.Model):
     def _get_errors_by_slip(self):
         errors_by_slip = super()._get_errors_by_slip()
         draft_slips = self.filtered(lambda ps: ps.state == 'draft')
-
-        lump_sum_type = self.env.ref("l10n_au_hr_payroll.l10n_au_lumpsum_e")
-        invalid_lines = draft_slips.input_line_ids.filtered(lambda line: (
-            line.input_type_id == lump_sum_type
-            and not (line.name.isnumeric() and len(line.name) == 4)
-        ))
-        for slip in invalid_lines.payslip_id:
-            errors_by_slip[slip].append({
-                'message': _('Description of input Lump Sum E must be financial year'),
-                'level': 'danger',
-            })
 
         missing_birthday = draft_slips.filtered_domain([
             ('employee_id.birthday', '=', False),
@@ -390,6 +381,7 @@ class HrPayslip(models.Model):
         self.env.add_to_compute(self._fields['l10n_au_extra_compulsory_super'], self)
         self.env.add_to_compute(self._fields['l10n_au_salary_sacrifice_superannuation'], self)
         self.env.add_to_compute(self._fields['l10n_au_salary_sacrifice_other'], self)
+        self.l10n_au_other_input_details_ids._check_input_details()
         return super().compute_sheet()
 
     def action_refresh_from_work_entries(self):
@@ -1145,3 +1137,130 @@ class HrPayslip(models.Model):
         self.ensure_one()
         overtime_days = self.worked_days_line_ids.filtered(lambda d: d.work_entry_type_id.l10n_au_work_stp_code == 'T')
         return self.sum_worked_hours - sum(overtime_days.mapped("number_of_hours"))
+
+    def _l10n_au_compute_special_allowance_amounts(self, special_allowances=None):
+        """ Computes the total amounts allowances with l10n_au_paygw_treatment == "special"
+            Args:
+                special_allowances (recordset): Optional recordset of allowances to compute.
+                    If not provided, it will filter the input lines of the payslip.
+        """
+        self.ensure_one()
+        if special_allowances is None:
+            special_allowances = self.input_line_ids.filtered(
+                lambda x: x.l10n_au_payment_type == 'allowance' and x.input_type_id.l10n_au_paygw_treatment == "special"
+            )
+        taxable_amount, tax_free_amount = 0.0, 0.0
+        inputs_ytd = self._l10n_au_get_ytd_inputs()
+        for allowance in special_allowances:
+            allowance_ytd_amount = inputs_ytd[allowance.input_type_id.id]["amount"]
+            # Cents Per Kilometre Allowance
+            if allowance.code == "ALW.CPK":
+                if not allowance.l10n_au_input_details_id.quantity:
+                    raise UserError(_("Cents Per Kilometre Allowances require the Number of kilometres on the input details."))
+
+                # YTD number of kms
+                ytd_kms_details = dict(self.env["l10n_au.hr.input.details"]._read_group([
+                    ("payslip_id", "in", self._l10n_au_get_year_to_date_slips().ids),
+                    ("input_type_id", "=", allowance.input_type_id.id),
+                ], ["input_type_id"], ["quantity:sum"]))
+                ytd_kms = ytd_kms_details[allowance.input_type_id] if ytd_kms_details else 0
+
+                min_claimable_rate = self._rule_parameter("l10n_au_allowance_cpk")["claimable"]
+                km_limit = self._rule_parameter("l10n_au_allowance_cpk")["limit"]
+                current_rate = allowance.l10n_au_input_details_id.rate
+                if current_rate < min_claimable_rate:
+                    raise UserError(_(
+                        "Cents Per Kilometre Allowance amount must be greater than or equal to the minimum rate of %.2f for the current pay period.",
+                        min_claimable_rate
+                    ))
+                km_limit -= ytd_kms
+                # Over the limit, is charged as taxable
+                if km_limit < 0:
+                    taxable_amount += current_rate * allowance.l10n_au_input_details_id.quantity
+                else:
+                    # If the allowance exceeds the km limit, the excess is taxable
+                    tax_free_qty = min(allowance.l10n_au_input_details_id.quantity, km_limit)
+                    taxable_qty = max(0, allowance.l10n_au_input_details_id.quantity - km_limit)
+                    # If the rate for cpk is greater than the minimum claimable rate, the tax-free qty
+                    # is taxed for the additional rate.
+                    tax_free_amount += min(allowance.amount, min_claimable_rate) * tax_free_qty
+                    taxable_amount += max(0, current_rate - min_claimable_rate) * tax_free_qty
+                    # All of the taxable qty is taxed at the allowance rate
+                    taxable_amount += current_rate * taxable_qty
+
+            # Domestic Travel Allowance
+            elif allowance.code == "ALW.DTA":
+                city = allowance.l10n_au_input_details_id.city_id
+                if not city or not allowance.l10n_au_input_details_id.quantity:
+                    raise UserError(_("Domestic Travel Allowance requires a City and Number of days to be set."))
+
+                salary_level = self._get_salary_level()
+                city_code = city.get_external_id()[city.id].split(".")[-1]
+
+                common_rule = self._rule_parameter("l10n_au_allowance_daily_totals")[salary_level]
+                daily_rule = common_rule.get(city_code, 0)
+                # Use the flat claimable amount for common cities
+                if daily_rule:
+                    daily_claimable_amount = daily_rule
+                # If not found in common cities, check for cities with variable claimable amounts
+                else:
+                    # For Level 1 and Level 2, check for high cost centers
+                    if salary_level != "Level3":
+                        daily_rule = self._rule_parameter("l10n_au_variable_allowance_high_cost_centres").get(city_code, 0)
+                        if daily_rule:
+                            # High-cost centres table_4 amount + l10n_au_variable_allowance_high_cost_centres
+                            daily_claimable_amount = daily_rule + self._rule_parameter("l10n_au_variable_allowance_coef")[salary_level]
+                        else:
+                            # If also not found in high cost centers, it is other cities
+                            daily_claimable_amount = common_rule.get("other")
+                    # For Level 3, we use the variable amount for high cost centres and other cities
+                    else:
+                        daily_rule = self._rule_parameter("l10n_au_variable_allowance_high_cost_centres").get(city_code, 0)
+                        daily_claimable_amount = max(207, daily_rule) + self._rule_parameter("l10n_au_variable_allowance_coef")[salary_level]
+                total_claimable_amount = daily_claimable_amount * allowance.l10n_au_input_details_id.quantity
+                tax_free_amount += min(allowance.amount, total_claimable_amount)
+                taxable_amount += max(0, allowance.amount - total_claimable_amount)
+            # Overseas Travel Allowance
+            elif allowance.code == "ALW.OTA":
+                country = allowance.l10n_au_input_details_id.country_id
+                if not country or country.code == "AU" or not allowance.l10n_au_input_details_id.quantity:
+                    raise UserError(_("Overseas Travel Allowance requires an overseas Country and Number of days to be set."))
+                salary_level = self._get_salary_level()
+                # Get the country group for the overseas country
+                country_group = self._rule_parameter("l10n_au_country_groups").get(country.code, False)
+                if not country_group:
+                    raise UserError(_("%s is not a valid country for Overseas Travel Allowance.", country.name))
+                # Claimable amount is based on the salary level and country group
+                daily_claimable_amount = self._rule_parameter("l10n_au_allowance_country_groups_salary_tiers")[salary_level][str(country_group)]
+                total_claimable_amount = daily_claimable_amount * allowance.l10n_au_input_details_id.quantity
+                tax_free_amount += min(allowance.amount, total_claimable_amount)
+                taxable_amount += max(0, allowance.amount - total_claimable_amount)
+
+            # Overtime Meal Allowance and Laundry Allowance
+            elif allowance.code in ["ALW.OMA", "ALW.LA"]:
+                if allowance.code == "ALW.OMA":
+                    claimable_amount = self._rule_parameter("l10n_au_allowance_overtime_meal")["claimable"]
+                else:
+                    claimable_amount = self._rule_parameter("l10n_au_allowance_laundry")["claimable"]
+                allowance_ytd_amount = inputs_ytd[allowance.input_type_id.id]["amount"]
+                # If the allowance YTD amount is greater than the claimable amount, it is taxable
+                # Otherwise, upto the claimable amount is tax free, rest is tax-free
+                claimable_amount -= allowance_ytd_amount
+                if claimable_amount < 0:
+                    taxable_amount += allowance.amount
+                else:
+                    tax_free_amount += min(allowance.amount, claimable_amount)
+                    taxable_amount += max(0, allowance.amount - claimable_amount)
+            else:
+                raise UserError(_("The allowance '%s' is not supported for special PAYG treatment.", allowance.name))
+
+        return taxable_amount, tax_free_amount
+
+    def _get_salary_level(self):
+        self.ensure_one()
+        salary_level = self._rule_parameter("l10n_au_variable_allowance_salary_limits")
+        if self.employee_id.l10n_au_yearly_wage < salary_level["Level1"]:
+            return "Level1"
+        elif self.employee_id.l10n_au_yearly_wage < salary_level["Level2"]:
+            return "Level2"
+        return "Level3"

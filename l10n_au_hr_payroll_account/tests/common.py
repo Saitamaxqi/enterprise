@@ -158,6 +158,11 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
         cls.company.l10n_au_hr_super_responsible_id = cls.employee_1
         cls.company.l10n_au_stp_responsible_id = cls.employee_1
         cls.company.ytd_reset_month = "7"
+        cls.env['hr.rule.parameter.value'].create({
+            "rule_parameter_id": cls.env.ref("l10n_au_hr_payroll.rule_parameter_allowance_laundry").id,
+            "date_from": "2023-07-01",
+            "parameter_value": {"claimable": 150},
+        })
 
     def _register_payment(self, payslip_run):
         action = payslip_run.action_register_payment()
@@ -193,10 +198,10 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
         input_xml_ids = extra_input_xml_ids
         if not input_xml_ids:
             input_xml_ids = {
-                "l10n_au_hr_payroll.input_laundry_1": 100,
                 "l10n_au_hr_payroll.input_laundry_2": 100,
+                "l10n_au_hr_payroll.input_laundry_3": 100,
                 "l10n_au_hr_payroll.input_gross_director_fee": 100,
-                "l10n_au_hr_payroll.input_bonus_commissions_overtime_prior": 100,
+                "l10n_au_hr_payroll.input_bonus_commissions_overtime": 100,
                 "l10n_au_hr_payroll.input_fringe_benefits_amount": 2000,
             }
 

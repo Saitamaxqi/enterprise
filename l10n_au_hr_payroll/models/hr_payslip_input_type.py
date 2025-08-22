@@ -23,7 +23,6 @@ class HrPayslipInputType(models.Model):
         selection=[
             ("etp", "ETP"),
             ("allowance", "Allowance"),
-            ("lump_sum", "Lump Sum"),
             ("deduction", "Deduction"),
             ("leave", "Leave"),
             ("other", "Other"),
@@ -43,12 +42,37 @@ class HrPayslipInputType(models.Model):
     l10n_au_paygw_treatment = fields.Selection(
         [('regular', 'Regular'),
         ('no_paygw', 'No PAYG Withholding'),
-        ('excess', 'Excess Only'),
+        ('special', 'Taxed above ATO limit'),
         ],
         string="PAYGW Treatment",
     )
 
-    l10n_au_payroll_code = fields.Char(string="STP Code")
+    l10n_au_payroll_code = fields.Selection(
+        selection=[
+            ("LD", "LD"),
+            ("MD", "MD"),
+            ("AD", "AD"),
+            ("OD", "OD"),
+            ("RD", "RD"),
+            ("G", "G"),
+            ("T", "T"),
+            ("X", "X"),
+            ("Bonus and Commissions", "Bonus and Commissions"),
+            ("E", "E"),
+            ("R", "R"),
+            ("Overtime", "Overtime"),
+            ("W", "W"),
+            ("QN", "QN"),
+            ("Directors' fees", "Directors' fees"),
+            ("KN", "KN"),
+            ("C", "C"),
+            ("CD", "CD"),
+            ("O", "O"),
+            ("F", "F"),
+            ("Gross", "Gross"),
+        ],
+        string="STP Code",
+    )
     l10n_au_payroll_code_description = fields.Selection(
         selection=[
             ('G1', 'G1'),
@@ -60,5 +84,6 @@ class HrPayslipInputType(models.Model):
         ],
         string="Payroll Code Description",
     )
-
-    l10n_au_ato_rate_limit = fields.Float(string="ATO Rate Limit")
+    l10n_au_quantity = fields.Boolean(string="Quantity")
+    l10n_au_requires_details = fields.Boolean(string="Requires Details")
+    l10n_au_input_uom = fields.Selection([("days", "Day(s)"), ("kms", "Kilometer(s)")], string="Input UoM")

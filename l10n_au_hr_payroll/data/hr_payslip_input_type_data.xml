@@ -10,38 +10,8 @@
         <field name="l10n_au_payroll_code">O</field>
     </record>
 
-    <record id="l10n_au_lumpsum_e" model="hr.payslip.input.type">
-        <field name="name">Lump Sum E</field>
-        <field name="code">BACKPAY.INPUT</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="l10n_au_payment_type">lump_sum</field>
-        <field name="l10n_au_superannuation_treatment">ote</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
-        <field name="l10n_au_payroll_code">E</field>
-    </record>
-
-    <!-- Bonus/Commissions -->
-    <record id="input_bonus_commissions_prior" model="hr.payslip.input.type">
-        <field name="name">Bonus/Commissions (Prior Period)</field>
-        <field name="code">BACKPAY.INPUT</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="l10n_au_superannuation_treatment">ote</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
-        <field name="l10n_au_payment_type">other</field>
-        <field name="l10n_au_payroll_code">Bonus and Commissions</field>
-    </record>
-    <record id="input_bonus_commissions_overtime_prior" model="hr.payslip.input.type">
-        <field name="name">Bonus/Commissions in relation to Overtime (Prior Period)</field>
-        <field name="code">BACKPAY.INPUT</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="l10n_au_superannuation_treatment">salary</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
-        <field name="l10n_au_payment_type">other</field>
-        <field name="l10n_au_payroll_code">Overtime</field>
-    </record>
-
     <record id="input_bonus_commissions" model="hr.payslip.input.type">
-        <field name="name">Bonus/Commissions (For Payslip Period)</field>
+        <field name="name">Bonus/Commissions</field>
         <field name="code">EXTRA.INPUT</field>
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_superannuation_treatment">ote</field>
@@ -50,8 +20,8 @@
         <field name="l10n_au_payroll_code">Bonus and Commissions</field>
     </record>
 
-    <record id="input_bonus_commissions_overtime_prior" model="hr.payslip.input.type">
-        <field name="name">Bonus/Commissions In Relation to Overtime (For Payslip Period)</field>
+    <record id="input_bonus_commissions_overtime" model="hr.payslip.input.type">
+        <field name="name">Bonus/Commissions In Relation to Overtime</field>
         <field name="code">EXTRA.INPUT</field>
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_superannuation_treatment">salary</field>
@@ -72,7 +42,7 @@
 
     <record id="input_fees" model="hr.payslip.input.type">
         <field name="name">Union and professional association fees</field>
-        <field name="code">F</field>
+        <field name="code">DED.UPF</field>
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_payment_type">deduction</field>
         <field name="l10n_au_superannuation_treatment">not_salary</field>
@@ -249,42 +219,31 @@
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_superannuation_treatment">ote</field>
         <field name="l10n_au_payroll_code">W</field>
-        <field name="l10n_au_payment_type">lump_sum</field>
+        <field name="l10n_au_payment_type">other</field>
         <field name="l10n_au_paygw_treatment">no_paygw</field>
     </record>
 
-    <!-- Cents per Kilometer: Mileage for business purposes up to ATO measure -->
-    <record id="input_cents_per_kilometer_1" model="hr.payslip.input.type">
-        <field name="name">Cents per Kilometer: Mileage for business purposes up to ATO measure</field>
+    <!-- Cents per Kilometer: Mileage for business purposes -->
+    <record id="input_cents_per_kilometer_2" model="hr.payslip.input.type">
+        <field name="name">Cents per Kilometer: Mileage for business purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.FREE</field>
+        <field name="code">ALW.CPK</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
         <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
+        <field name="l10n_au_paygw_treatment">special</field>
         <field name="l10n_au_payroll_code">CD</field>
-    </record>
-
-    <!-- Cents per Kilometer: Mileage for business purposes in excess of ATO measure -->
-    <record id="input_cents_per_kilometer_2" model="hr.payslip.input.type">
-        <field name="name">Cents per Kilometer: Mileage for business purposes in excess of ATO measure</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
-        <field name="default_no_end_date" eval="True"/>
-        <field name="available_in_attachments" eval="True"/>
-        <field name="l10n_au_payment_type">allowance</field>
-        <field name="l10n_au_superannuation_treatment">ote</field>
-        <field name="l10n_au_paygw_treatment">regular</field>
-        <field name="l10n_au_ato_rate_limit">0</field>
-        <field name="l10n_au_payroll_code">CD</field>
+        <field name="l10n_au_quantity" eval="True"/>
+        <field name="l10n_au_input_uom">kms</field>
+        <field name="l10n_au_requires_details" eval="True"/>
     </record>
 
     <!-- Cents per Kilometer: Mileage for other vehicles -->
     <record id="input_cents_per_kilometer_3" model="hr.payslip.input.type">
         <field name="name">Cents per Kilometer: Mileage for other vehicles</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.CPK</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -298,7 +257,7 @@
     <record id="input_cents_per_kilometer_5" model="hr.payslip.input.type">
         <field name="name">Cents per Kilometer: Mileage for private purposes assessed not to be fully spent</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.CPK</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -312,7 +271,7 @@
     <record id="input_award_transport_1" model="hr.payslip.input.type">
         <field name="name">Award Transport: Transport for business purposes traced to historical award</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.FREE</field>
+        <field name="code">ALW.AT</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -325,7 +284,7 @@
     <record id="input_award_transport_2" model="hr.payslip.input.type">
         <field name="name">Award Transport: Transport for business purposes not traced to historical award</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.AT</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -339,7 +298,7 @@
     <record id="input_award_transport_3" model="hr.payslip.input.type">
         <field name="name">Award Transport: Transport for private purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.AT</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -349,38 +308,24 @@
         <field name="l10n_au_payroll_code_description">ND</field>
     </record>
 
-    <!-- Laundry: Allowance for approved uniforms up to ATO measure -->
-    <record id="input_laundry_1" model="hr.payslip.input.type">
-        <field name="name">Laundry: Allowance for approved uniforms up to ATO measure</field>
+    <!-- Laundry: Allowance for approved uniforms -->
+    <record id="input_laundry_2" model="hr.payslip.input.type">
+        <field name="name">Laundry: Allowance for approved uniforms</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.FREE</field>
+        <field name="code">ALW.LA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
         <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
         <field name="l10n_au_payroll_code">LD</field>
-    </record>
-
-    <!-- Laundry: Allowance for approved uniforms above ATO measure -->
-    <record id="input_laundry_2" model="hr.payslip.input.type">
-        <field name="name">Laundry: Allowance for approved uniforms above ATO measure</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
-        <field name="default_no_end_date" eval="True"/>
-        <field name="available_in_attachments" eval="True"/>
-        <field name="l10n_au_payment_type">allowance</field>
-        <field name="l10n_au_superannuation_treatment">ote</field>
-        <field name="l10n_au_paygw_treatment">regular</field>
-        <field name="l10n_au_ato_rate_limit">0</field>
-        <field name="l10n_au_payroll_code">LD</field>
+        <field name="l10n_au_paygw_treatment">special</field>
     </record>
 
     <!-- Laundry: Allowance for the exception for conventional clothing -->
     <record id="input_laundry_3" model="hr.payslip.input.type">
         <field name="name">Laundry: Allowance for the exception for conventional clothing</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.LA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -394,7 +339,7 @@
     <record id="input_laundry_4" model="hr.payslip.input.type">
         <field name="name">Laundry: Allowance for non-approved uniforms or private purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.LA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -408,7 +353,7 @@
     <record id="input_call_back" model="hr.payslip.input.type">
         <field name="name">Call Back: Called back to work overtime after leaving premises</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.CB</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -421,7 +366,7 @@
     <record id="input_on_call_1" model="hr.payslip.input.type">
         <field name="name">On Call: Pre-sacrificed amount for payments outside ordinary hours</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.OC</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -434,7 +379,7 @@
     <record id="input_on_call_2" model="hr.payslip.input.type">
         <field name="name">On Call: Pre-sacrificed amount for payments within ordinary hours</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.OC</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -443,23 +388,26 @@
         <field name="l10n_au_payroll_code">KN</field>
     </record>
 
-    <!-- Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for business purposes up to ATO measures -->
+    <!-- Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for business purposes -->
     <record id="input_domestic_travel_allowance_1" model="hr.payslip.input.type">
-        <field name="name">Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for business purposes up to ATO measures</field>
+        <field name="name">Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for business purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.FREE</field>
+        <field name="code">ALW.DTA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
         <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
+        <field name="l10n_au_payroll_code">RD</field>
+        <field name="l10n_au_paygw_treatment">special</field>
+        <field name="l10n_au_input_uom">days</field>
+        <field name="l10n_au_requires_details" eval="True"/>
     </record>
 
     <!-- Domestic Travel Allowance: For meals, accommodation and incidentals when not sleeping away for business purposes -->
     <record id="input_domestic_travel_allowance_2" model="hr.payslip.input.type">
         <field name="name">Domestic Travel Allowance: For meals, accommodation and incidentals when not sleeping away for business purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.DTA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -467,27 +415,13 @@
         <field name="l10n_au_paygw_treatment">regular</field>
         <field name="l10n_au_payroll_code">OD</field>
         <field name="l10n_au_payroll_code_description">ND</field>
-    </record>
-
-    <!-- Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for business purposes above ATO measures -->
-    <record id="input_domestic_travel_allowance_3" model="hr.payslip.input.type">
-        <field name="name">Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for business purposes above ATO measures</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
-        <field name="default_no_end_date" eval="True"/>
-        <field name="available_in_attachments" eval="True"/>
-        <field name="l10n_au_payment_type">allowance</field>
-        <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_paygw_treatment">regular</field>
-        <field name="l10n_au_ato_rate_limit">0</field>
-        <field name="l10n_au_payroll_code">RD</field>
     </record>
 
     <!-- Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for private purposes -->
     <record id="input_domestic_travel_allowance_4" model="hr.payslip.input.type">
         <field name="name">Domestic Travel Allowance: For meals, accommodation and incidentals when sleeping away for private purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.DTA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -497,38 +431,26 @@
         <field name="l10n_au_payroll_code_description">ND</field>
     </record>
 
-    <!-- Overseas Travel Allowance: For meals and incidentals for business purposes up to ATO measures -->
-    <record id="input_overseas_travel_allowance_1" model="hr.payslip.input.type">
-        <field name="name">Overseas Travel Allowance: For meals and incidentals for business purposes up to ATO measures</field>
+    <!-- Overseas Travel Allowance: For meals and incidentals for business purposes -->
+    <record id="input_overseas_travel_allowance_2" model="hr.payslip.input.type">
+        <field name="name">Overseas Travel Allowance: For meals and incidentals for business purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.FREE</field>
+        <field name="code">ALW.OTA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
         <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
-        <field name="l10n_au_payroll_code" eval="False"/>
-    </record>
-
-    <!-- Overseas Travel Allowance: For meals and incidentals for business purposes above ATO measures -->
-    <record id="input_overseas_travel_allowance_2" model="hr.payslip.input.type">
-        <field name="name">Overseas Travel Allowance: For meals and incidentals for business purposes above ATO measures</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
-        <field name="default_no_end_date" eval="True"/>
-        <field name="available_in_attachments" eval="True"/>
-        <field name="l10n_au_payment_type">allowance</field>
-        <field name="l10n_au_superannuation_treatment">ote</field>
-        <field name="l10n_au_paygw_treatment">regular</field>
-        <field name="l10n_au_ato_rate_limit">0</field>
+        <field name="l10n_au_paygw_treatment">special</field>
         <field name="l10n_au_payroll_code">RD</field>
+        <field name="l10n_au_input_uom">days</field>
+        <field name="l10n_au_requires_details" eval="True"/>
     </record>
 
     <!-- Overseas Travel Allowance: For meals and incidentals for private purposes -->
     <record id="input_overseas_travel_allowance_3" model="hr.payslip.input.type">
         <field name="name">Overseas Travel Allowance: For meals and incidentals for private purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.OTA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -542,7 +464,7 @@
     <record id="input_overseas_accommodation_allowance_1" model="hr.payslip.input.type">
         <field name="name">Overseas Accommodation Allowance: For business purposes</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.OAA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -556,7 +478,7 @@
     <record id="input_work_related_non_expense" model="hr.payslip.input.type">
         <field name="name">Work-Related Non-Expense: Allowance to compensate for specific work, activities, disabilities, skills or qualifications</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.WNE</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -569,7 +491,7 @@
     <record id="input_qualifications_expense" model="hr.payslip.input.type">
         <field name="name">Qualifications Expense: To cover the cost of qualifications, insurance, licenses and certifications</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.QE</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -582,7 +504,7 @@
     <record id="input_uniform_allowance" model="hr.payslip.input.type">
         <field name="name">Uniform Allowance: For purchase of approved uniforms</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.UA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -596,7 +518,7 @@
     <record id="input_car" model="hr.payslip.input.type">
         <field name="name">Car: Fixed rates paid to cover transport costs not covered by award transport</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.CAR</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -610,7 +532,7 @@
     <record id="input_home_office" model="hr.payslip.input.type">
         <field name="name">Home Office: Allowance to cover the cost of equipment or connection</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.HO</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -624,7 +546,7 @@
     <record id="input_fares" model="hr.payslip.input.type">
         <field name="name">Fares: Allowance to cover the cost of fares</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.FARE</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -638,7 +560,7 @@
     <record id="input_other_deductible" model="hr.payslip.input.type">
         <field name="name">Other Deductible: Deductible allowances not defined separately elsewhere</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.OTHER</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
@@ -649,42 +571,16 @@
     </record>
 
     <!-- Overtime Meal Allowance -->
-    <record id="input_overtime_meal_allowance_1" model="hr.payslip.input.type">
-        <field name="name">Overtime Meal Allowance: Overtime Up to ATO Measures</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.FREE</field>
-        <field name="default_no_end_date" eval="True"/>
-        <field name="available_in_attachments" eval="True"/>
-        <field name="l10n_au_payment_type">allowance</field>
-        <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
-    </record>
-
     <record id="input_overtime_meal_allowance_2" model="hr.payslip.input.type">
-        <field name="name">Overtime Meal Allowance: Overtime Over ATO Measures</field>
+        <field name="name">Overtime Meal Allowance: Overtime</field>
         <field name="country_id" ref="base.au"/>
-        <field name="code">ALW.TAXED</field>
+        <field name="code">ALW.OMA</field>
         <field name="default_no_end_date" eval="True"/>
         <field name="available_in_attachments" eval="True"/>
         <field name="l10n_au_payment_type">allowance</field>
         <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_paygw_treatment">regular</field>
         <field name="l10n_au_payroll_code">MD</field>
-    </record>
-
-    <!-- Living Away From Home Allowance -->
-    <record id="input_living_away_from_home_allowance" model="hr.payslip.input.type">
-        <field name="name">Living Away From Home Allowance</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">LAWFHA</field>
-        <field name="default_no_end_date" eval="True"/>
-        <field name="available_in_attachments" eval="True"/>
-        <field name="l10n_au_payment_type">allowance</field>
-        <field name="l10n_au_superannuation_treatment">ote</field>
-        <field name="l10n_au_paygw_treatment">no_paygw</field>
-        <field name="l10n_au_payroll_code">OD</field>
-        <field name="l10n_au_payroll_code_description">G1</field>
-        <field name="active" eval="False"/>
+        <field name="l10n_au_paygw_treatment">special</field>
     </record>
 
     <!-- Voluntary Reportable Employer Superannuation Contribution -->
@@ -718,33 +614,6 @@
         <field name="l10n_au_superannuation_treatment">ote</field>
         <field name="l10n_au_paygw_treatment">regular</field>
         <field name="l10n_au_payroll_code">C</field>
-    </record>
-
-    <!-- Voluntary Super Contribution -->
-    <record id="input_voluntary_super_contribution" model="hr.payslip.input.type">
-        <field name="name">Voluntary Super Contribution</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">VSC</field>
-        <field name="l10n_au_payment_type">other</field>
-        <field name="l10n_au_superannuation_treatment">not_salary</field>
-        <field name="l10n_au_payroll_code">R</field>
-        <field name="active" eval="False"/>
-    </record>
-
-    <!-- Salary Sacrifice: Superannuation -->
-    <record id="input_salary_sacrifice_superannuation" model="hr.payslip.input.type">
-        <field name="name">Salary Sacrifice: Superannuation</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">SS.S</field>
-        <field name="l10n_au_payment_type">other</field>
-        <field name="l10n_au_superannuation_treatment">not_salary</field>
-    </record>
-    <record id="input_salary_sacrifice_other" model="hr.payslip.input.type">
-        <field name="name">Salary Sacrifice: Other Benefits</field>
-        <field name="country_id" ref="base.au"/>
-        <field name="code">SS.O</field>
-        <field name="l10n_au_payment_type">other</field>
-        <field name="l10n_au_superannuation_treatment">not_salary</field>
     </record>
 
     <!-- Fringe Benefits Amount -->
