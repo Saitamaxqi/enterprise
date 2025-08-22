@@ -108,6 +108,26 @@ class TestHelpdeskFlow(HelpdeskCommon):
             ticket1.write({'stage_id': self.stage_done.id})
             self.assertEqual(ticket1.close_hours, 19, "Close time for ticket not correct")
 
+    def test_ticket_ref_ordering(self):
+        ticket_sequence = self.env['ir.sequence'].search([('code', '=', 'helpdesk.ticket')])
+        ticket_sequence.padding = 2
+        ticket_sequence.number_next_actual = 99
+        tickets = self.env['helpdesk.ticket'].create([
+            {
+                'name': 'test ticket_ref ordering',
+                'team_id': self.test_team.id,
+            },
+            {
+                'name': 'test ticket_ref ordering',
+                'team_id': self.test_team.id,
+            },
+        ])
+        self.assertTrue(tickets[0].ticket_ref > tickets[1].ticket_ref)  # '99' > '100'
+
+        ticket_search = tickets.search([('name', '=', 'test ticket_ref ordering')], order='ticket_ref ASC')
+        self.assertEqual(ticket_search[0], tickets[0], "Ticket created first appears first in order")
+        self.assertEqual(ticket_search[1], tickets[1])
+
     def test_ticket_partners(self):
         # we create a partner
         partner = self.env['res.partner'].create({

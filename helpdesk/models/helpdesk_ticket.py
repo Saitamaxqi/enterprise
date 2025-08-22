@@ -65,6 +65,13 @@ class HelpdeskTicket(models.Model):
 
         return stages.search(search_domain)
 
+    @api.model
+    def _search(self, domain, offset=0, limit=None, order=None, *, active_test=True, bypass_access=False):
+        """ Override _search to have a more intuitive result when ordering by `ticket_ref`, which is a Char field. """
+        if order and order.startswith('ticket_ref '):
+            order = order.replace('ticket_ref ', 'id ', 1)
+        return super()._search(domain, offset, limit, order, active_test=active_test, bypass_access=bypass_access)
+
     name = fields.Char(string='Subject', required=True, index=True, tracking=True)
     team_id = fields.Many2one('helpdesk.team', string='Helpdesk Team',
         default=lambda self: self._default_team_id(), index=True, tracking=True)
