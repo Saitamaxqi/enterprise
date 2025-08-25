@@ -261,6 +261,13 @@ class ProviderDHL(models.Model):
         rating_request['plannedShippingDateAndTime'] = planned_date.strftime('%Y-%m-%dT%H:%M:%S')
         rating_request['accounts'] = srm._get_billing_vals(account_number, "shipper")
         self._dhl_add_extra_data_to_request(rating_request, 'rate')
+        rating_request['productsAndServices'] = [{
+            'productCode': self.dhl_product_code,
+            'valueAddedServices': [],
+        }]
+        if self.supports_shipping_insurance and self.shipping_insurance:
+            rating_request['productsAndServices'][0]['valueAddedServices'].append(srm._get_insurance_vals(self.shipping_insurance, total_value, currency_id.name))
+
         response = srm._get_rates(rating_request)
 
         available_product_code = []
@@ -285,6 +292,17 @@ class ProviderDHL(models.Model):
             else:
                 quote_currency = self.env['res.currency'].search([('name', '=', shipping_currency)], limit=1)
                 price = quote_currency._convert(float(shipping_charge), order_currency, (order or picking).company_id, order.date_order if order else fields.Date.today())
+            if self.supports_shipping_insurance and self.shipping_insurance:
+                for product in products:
+                    services = []
+                    for price_breakdown in product['detailedPriceBreakdown']:
+                        services.extend([service['serviceCode'] for service in price_breakdown['breakdown'] if 'serviceCode' in service])
+                    if 'II' not in services:
+                        return {'success': False,
+                                'price': 0.0,
+                                'error_message': _("Shipment insurance is not available between the origin and destination. You should try with another DHL product, or select a delivery method with no insurance."),
+                                'warning_message': False}
+
             return {'success': True,
                     'price': price,
                     'error_message': False,
@@ -337,6 +355,8 @@ class ProviderDHL(models.Model):
                 'typeCode': 'label',
                 'templateName': self.dhl_label_template,
             }]
+            if self.supports_shipping_insurance and self.shipping_insurance:
+                shipment_request['valueAddedServices'] = [srm._get_insurance_vals(self.shipping_insurance, total_value, currency_name)]
             self._dhl_add_extra_data_to_request(shipment_request, 'ship')
             dhl_response = srm._send_shipment(shipment_request)
             tracking_number = dhl_response['shipmentTrackingNumber']

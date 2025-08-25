@@ -220,6 +220,13 @@ class DHLProvider:
             'description': package.get('name', '')
         } for package in packages]
 
+    def _get_insurance_vals(self, insurance_percentage, total_value, currency_name):
+        return {
+            'serviceCode': 'II',
+            'value': float_round(total_value * insurance_percentage / 100, precision_digits=3),
+            'currency': currency_name,
+        }
+
     def _send_shipment(self, shipment_request):
         url = 'shipments'
         res = self._send_request(url, method='POST', json=shipment_request)

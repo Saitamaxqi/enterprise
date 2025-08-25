@@ -124,6 +124,8 @@ class TestDeliveryDHL(TransactionCase):
 
     def test_01_dhl_basic_be_domestic_flow(self):
         SaleOrder = self.env['sale.order']
+        # insuring the whole delivery
+        self.delivery_carrier_dhl_be_dom.shipping_insurance = 100
 
         sol_vals = {
             'product_id': self.iPadMini.id,
