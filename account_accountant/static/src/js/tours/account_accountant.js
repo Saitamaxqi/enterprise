@@ -10,7 +10,7 @@
         newInvoice() {
             return [
                 {
-                    trigger: ".out_invoice_tree button[name=action_create_new]",
+                    trigger: "button[name=action_create_new]",
                     content: _t("Now, we'll create your first invoice (accountant)"),
                     run: "click",
                 }
