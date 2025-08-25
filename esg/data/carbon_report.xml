@@ -30,7 +30,7 @@
             </record>
             <record id="carbon_report_column_hfc_134a" model="account.report.column">
                 <field name="name">HFC-134a (t)</field>
-                <field name="expression_label">hfc_134a</field>
+                <field name="expression_label">CH2FCF3</field>
                 <field name="figure_type">float</field>
             </record>
             <record id="carbon_report_column_hfc_23" model="account.report.column">
@@ -40,7 +40,7 @@
             </record>
             <record id="carbon_report_column_hfc_152a" model="account.report.column">
                 <field name="name">HFC-152a (t)</field>
-                <field name="expression_label">hfc_152a</field>
+                <field name="expression_label">CH3CHF2</field>
                 <field name="figure_type">float</field>
             </record>
             <record id="carbon_report_column_cf4" model="account.report.column">
@@ -105,7 +105,7 @@
                         <field name="label">hfc_134a</field>
                         <field name="engine">custom</field>
                         <field name="formula">_report_custom_engine_carbon_report</field>
-                        <field name="subformula">hfc_134a</field>
+                        <field name="subformula">CH2FCF3</field>
                         <field name="auditable" eval="False"/>
                         <field name="green_on_positive" eval="False"/>
                     </record>
@@ -121,7 +121,7 @@
                         <field name="label">hfc_152a</field>
                         <field name="engine">custom</field>
                         <field name="formula">_report_custom_engine_carbon_report</field>
-                        <field name="subformula">hfc_152a</field>
+                        <field name="subformula">CH3CHF2</field>
                         <field name="auditable" eval="False"/>
                         <field name="green_on_positive" eval="False"/>
                     </record>

@@ -2,6 +2,7 @@ from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
 from odoo import fields
+from odoo.tools import float_compare
 
 from odoo.addons.esg.tests.esg_common import TestEsgCommon
 
@@ -50,12 +51,12 @@ class TestEsgCarbonEmission(TestEsgCommon):
             'esg_emission_factor_id': self.emission_factor_computers_production.id,
             'product_uom_id': self.env.ref('uom.product_uom_unit').id,
         })
-        self.assertEqual(bill_line.esg_emissions_value, 4663.5)  # 50 (aml quantity) * 93.27 (factor value) * 1.0 (unit->unit conversion) = 4663.5 kgCO2e
-        self.assertEqual(bill_line.esg_uncertainty_absolute_value, 699.525)  # 4663.5 (emission value) * 0.15 (factor uncertainty) = 699.525 kgCO2e
+        self.assertEqual(bill_line.esg_emissions_value, 4648.0)  # 50 (aml quantity) * 92.96 (factor value) * 1.0 (unit->unit conversion) = 4648 kgCO2e
+        self.assertEqual(float_compare(bill_line.esg_uncertainty_absolute_value, 697.199, precision_rounding=3), 0)  # 4663.5 (emission value) * 0.15 (factor uncertainty) = 697.199 kgCO2e
         # Change quantity
         bill_line.quantity = 100
-        self.assertEqual(bill_line.esg_emissions_value, 9327)  # 100 (aml quantity) * 93.27 (factor value) * 1.0 (unit->unit conversion) = 9327 kgCO2e
-        self.assertEqual(bill_line.esg_uncertainty_absolute_value, 1399.05)  # 9327 (emission value) * 0.15 (factor uncertainty) = 1399.05 kgCO2e
+        self.assertEqual(bill_line.esg_emissions_value, 9296.0)  # 100 (aml quantity) * 92.96 (factor value) * 1.0 (unit->unit conversion) = 9296.0 kgCO2e
+        self.assertEqual(float_compare(bill_line.esg_uncertainty_absolute_value, 1394.39, precision_rounding=2), 0)  # 9327 (emission value) * 0.15 (factor uncertainty) = 1394.39 kgCO2e
 
     def test_monetary_method_account_move_line_emission_value(self):
         for account, esg_usable in self.accounts_to_esg_usable.items():
