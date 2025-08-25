@@ -93,9 +93,15 @@ class DocumentsDocument(models.Model):
         if folder == self.folder_id:
             return _('Moved to "%(folder)s".', folder=self._ai_truncate(folder.name))
 
+        # In case the LLM first moved the document by side effect, it should be able
+        # to move to a different folder specified in the prompt
+        original_folder = self.folder_id
+        if (action := self.env.context.get('ai_executed_action')) and isinstance(action, models.BaseModel):
+            original_folder = action.ai_autosort_folder_id
+
         _prompt, _fields, allowed_ids = parse_ai_prompt_values(
             self.env,
-            self.folder_id.ai_sort_prompt,
+            original_folder.ai_sort_prompt,
             "documents.document",
             False,
         )

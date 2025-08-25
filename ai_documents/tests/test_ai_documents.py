@@ -189,6 +189,58 @@ class TestAiDocuments(TestAiDocumentsCommon):
         self.assertFalse(shortcut.ai_sortable)
         self.assertFalse(Doc.search([("id", "=", shortcut.id), ("ai_sortable", "=", True)]))
 
+        # Test the case where the LLM will execute a tool that will move the documents,
+        # with any tools, and then try to move it with the "AI Move Document" tool (the second
+        # folder won't have a prompt, and so it should take the folder linked to the action
+        # and not to the document).
+        llm_calls = 0
+
+        def _mocked_request_llm_move(
+            service, llm_model, system_prompts, user_prompts, tools=None,
+            files=None, schema=None, temperature=0.2, inputs=(), web_grounding=False,
+        ):
+            nonlocal llm_calls
+            llm_calls += 1
+            if llm_calls == 1:
+                return self._ai_tool_call(
+                    f"action_{ir_action_tool_first_move.id}",
+                    "call_abcdef",
+                    {},
+                )
+            if llm_calls == 2:
+                return self._ai_tool_call(
+                    f"action_{move_in_folder.id}",
+                    "call_789123",
+                    {'folder_id': self.target_folder.id},
+                )
+            return [], [], []
+
+        ir_action_tool_first_move = self.env["ir.actions.server"].create({
+            "model_id": self.env["ir.model"]._get_id("documents.document"),
+            "state": "code",
+            "name": "Move",
+            "code": "record.write({'folder_id': %i})" % self.other_folder.id,
+        })
+
+        sort_wizard = Form(self.env['ai_documents.sort'].with_context(default_folder_id=self.folder.id))
+        sort_wizard.ai_sort_prompt = f"Target folder prompt: move in {Doc._ai_folder_insert(self.target_folder.id)}"
+        sort_wizard.ai_tool_ids.add(self.ir_action_tool)
+        sort_wizard.ai_tool_ids.add(ir_action_tool_first_move)
+        sort_wizard.save().action_setup_folder()
+        self.env['base.automation']._unregister_hook()
+        self.env['base.automation']._register_hook()
+
+        with patch.object(LLMApiService, "_request_llm", _mocked_request_llm_move):
+            document = Doc.create({
+                "folder_id": self.folder.id,
+                "name": "test",
+                "type": "binary",
+                "datas": "VGVzdCBmaWxl",
+            })
+
+        self.assertEqual(llm_calls, 3)
+        self.assertEqual(document.folder_id, self.target_folder)
+
     def _ai_tool_call(self, name, call_id, arguments):
         # Simulate the response of `_request_llm` when the LLM ask to execute a tool
         return [], [(name, call_id, arguments)], [{"call_id": call_id, "name": name, "arguments": json.dumps(arguments)}]

@@ -322,7 +322,6 @@ class IrActionsServer(models.Model):
 
         self.ensure_one()
         record = record or self.env[self.model_id.model]
-        record = record.with_context(ai_documents_skip_autosort=True)
 
         eval_context = arguments.copy()
         eval_context |= self._get_eval_context(self)

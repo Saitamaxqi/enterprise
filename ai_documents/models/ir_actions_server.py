@@ -25,6 +25,8 @@ class IrActionsServer(models.Model):
         if not self.ai_autosort_folder_id or record._name != 'documents.document':
             return super()._ai_action_run(record)
 
+        record = record.with_context(ai_executed_action=self, ai_documents_skip_autosort=True)
+
         ret, tool_calls_history = [], []
         try:
             ret, tool_calls_history = super()._ai_action_run(record)
