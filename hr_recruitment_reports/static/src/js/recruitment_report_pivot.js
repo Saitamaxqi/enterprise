@@ -27,11 +27,7 @@ export class RecruitmentReportPivotRenderer extends PivotRenderer {
             return [view ? view[0] : false, viewType];
         });
 
-        const group = {
-            rowValues: cell.groupId[0],
-            colValues: cell.groupId[1],
-            originIndex: cell.originIndexes[0],
-        };
+        const group = { rowValues: cell.groupId[0], colValues: cell.groupId[1] };
 
         const domain = this.model.getGroupDomain(group);
         // Any measure that doesn't use a sum aggregator will never make sense
