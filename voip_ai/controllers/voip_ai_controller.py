@@ -1,4 +1,4 @@
-from werkzeug.exceptions import BadRequest, Forbidden, RequestEntityTooLarge
+from werkzeug.exceptions import BadRequest, Forbidden
 
 from odoo import http
 from odoo.http import Response, request
@@ -20,11 +20,10 @@ class VoipAiController(http.Controller):
         call.with_user(request.session.uid).check_access("read")
         # sudo: read perms checked ✅ - base.group_user can't write to voip.call
         call_sudo = call.sudo()
-        call_sudo.transcription_status = "pending"
         recording_raw = ufile.read()
         if len(recording_raw) > TRANSCRIPTION_MAX_FILE_SIZE:
             call_sudo.transcription_status = "too_big_to_process"
-            raise RequestEntityTooLarge()
+            return request.make_response("Recording too large", status=413, headers=[("Content-Type", "text/plain")])
         request.env["ir.attachment"].sudo().create(
             {
                 "name": "call_recording.ogg",
@@ -35,6 +34,6 @@ class VoipAiController(http.Controller):
                 "raw": recording_raw,
             }
         )
-        request.env.cr.commit()
+        call_sudo.transcription_status = "pending"
         request.env.ref("voip_ai.ir_cron_transcribe_recent_voip_call").sudo()._trigger()
         return Response(status=200)
