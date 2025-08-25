@@ -437,15 +437,21 @@ class AccountReturnType(models.Model):
         start_date = self.with_company(main_company)._get_start_date()
         return start_date.day, start_date.month
 
-    def _get_period_boundaries(self, company_id, date):
+    def _get_period_boundaries(self, company_id, date, override_period_months=None, override_start_date=None):
         """ Returns the boundaries of the period containing the provided date
         for this return type as a tuple (start, end).
 
         This function needs to stay consistent with the one inside Javascript in the filters for the tax report
         """
         self.ensure_one()
-        period_months = self._get_periodicity_months_delay(company_id)
-        start_day, start_month = self._get_start_date_elements(company_id)
+        period_months = override_period_months if override_period_months else self._get_periodicity_months_delay(company_id)
+
+        if override_start_date:
+            start_day = override_start_date.day
+            start_month = override_start_date.month
+        else:
+            start_day, start_month = self._get_start_date_elements(company_id)
+
         aligned_date = date + relativedelta(days=-(start_day - 1))  # we offset the date back from start_day amount of day - 1 so we can compute months periods aligned to the start and end of months
         year = aligned_date.year
         month_offset = aligned_date.month - start_month
