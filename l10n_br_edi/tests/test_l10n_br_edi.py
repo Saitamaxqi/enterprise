@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import json
 import re
 from contextlib import contextmanager
+from copy import deepcopy
 from unittest.mock import patch, DEFAULT
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -86,13 +86,6 @@ class TestL10nBREDICommon(TestAccountMoveSendCommon):
                 "invoice_date": "2023-10-05",
                 "currency_id": cls.env.ref("base.BRL").id,
                 "fiscal_position_id": cls.avatax_fp.id,
-                "l10n_br_edi_avatax_data": json.dumps(
-                    {
-                        "header": invoice_1_request["header"],
-                        "lines": invoice_1_request["lines"],
-                        "summary": invoice_1_request["summary"],
-                    }
-                ),
                 "invoice_line_ids": [
                     (
                         0,
@@ -107,13 +100,24 @@ class TestL10nBREDICommon(TestAccountMoveSendCommon):
                 ],
                 **extra_vals,
             })
-            move.is_tax_computed_externally = False  # FIXME hack to fix the fact the invoice was not posted before
-            move.action_post()
-            move.is_tax_computed_externally = True
+            cls._post_move_with_patched_response(move)
             return move
 
         cls.invoice = create_move({"move_type": "out_invoice"})
         cls.bill = create_move({"move_type": "in_invoice", "l10n_latam_document_number": "1"})
+
+    @classmethod
+    def _post_move_with_patched_response(cls, move):
+        request = deepcopy(invoice_1_request)
+        # Set the right lineCode on the mocked response for the tests that need it.
+        for line, aml in zip(request["lines"], move.invoice_line_ids):
+            line["lineCode"] = aml.id
+
+        with patch(
+            "odoo.addons.l10n_br_avatax.models.account_external_tax_mixin.AccountExternalTaxMixin._l10n_br_iap_request",
+            new=lambda *args, **kwargs: request,
+        ):
+            move.action_post()
 
     @contextmanager
     def with_patched_account_move(self, method_name, mocked_response=None):
@@ -315,6 +319,30 @@ class TestL10nBREDI(TestL10nBREDICommon):
             "Normal",
             "Goal should fall back on normal."
         )
+
+    def test_cfop_override(self):
+        """ Verify that CFOP is properly overridden when set in operation type. """
+        operation_type_6107 = self.env['l10n_br.operation.type'].create({
+            'name': 'Custom Operation 6107',
+            'technical_name': 'cfop_6107',
+            'l10n_br_cfop_code': '6107',
+        })
+        operation_type_6108 = self.env['l10n_br.operation.type'].create({
+            'name': 'Custom Operation 6108',
+            'technical_name': 'cfop_6108',
+            'l10n_br_cfop_code': '6108',
+        })
+
+        self.invoice.l10n_br_goods_operation_type_id = operation_type_6107
+        self.invoice.invoice_line_ids[1].l10n_br_goods_operation_type_id = operation_type_6108
+
+        # Repost the invoice to recalculate taxes and set the CFOPs.
+        self.invoice.button_draft()
+        self._post_move_with_patched_response(self.invoice)
+
+        payload = self.invoice._l10n_br_prepare_invoice_payload()
+        self.assertEqual(payload["lines"][0]["cfop"], 6107, "Should be the standard CFOP set on the invoice.")
+        self.assertEqual(payload["lines"][1]["cfop"], 6108, "Should be the overridden CFOP set on the operation type on the line.")
 
 
 @tagged("post_install_l10n", "post_install", "-at_install")

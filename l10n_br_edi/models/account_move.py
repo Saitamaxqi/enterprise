@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import contextlib
 import json
 import logging
 
@@ -126,13 +127,28 @@ class AccountMove(models.Model):
     def _l10n_br_call_avatax_taxes(self, company, document_data):
         # EXTENDS 'account.external.tax.mixin' to store the retrieved Avatax data.
         api_response = super()._l10n_br_call_avatax_taxes(company, document_data)
+
+        # Avalara doesn't respect the CFOP we send in tax calculation, they always return their own. So we choose not to send
+        # it in tax calculation at all (it shouldn't affect taxes). We use this tax calculation response to build the EDI
+        # request, and so let's fix it here before storing it. That way it won't need hacks to make l10n_br_cfop work on
+        # account.move.line.
+        lines = api_response.get("lines", [])
+        aml_ids = [line['lineCode'] for line in lines]
+        amls = self.env["account.move.line"].browse(aml_ids)
+        for line, aml in zip(lines, amls):
+            goods_operation_type = aml.l10n_br_goods_operation_type_id or self.l10n_br_goods_operation_type_id
+            if cfop := goods_operation_type.l10n_br_cfop_code:
+                with contextlib.suppress(ValueError):  # To be defensive, already checked with constrains.
+                    line["cfop"] = int(cfop)
+
         self.l10n_br_edi_avatax_data = json.dumps(
             {
                 "header": api_response.get("header"),
-                "lines": api_response.get("lines"),
+                "lines": lines,
                 "summary": api_response.get("summary"),
             }
         )
+
         return api_response
 
     @api.depends("l10n_br_last_edi_status")

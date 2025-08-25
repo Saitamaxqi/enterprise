@@ -213,6 +213,19 @@ msgid "Brazil: Country Code used in NF-e"
 msgstr "Brasil: Código do país usado na NF-e"
 
 #. module: l10n_br_edi
+#: model:ir.model.fields,help:l10n_br_edi.field_l10n_br_operation_type__l10n_br_cfop_code
+msgid ""
+"Brazil: Use this field to indicate a specific 'CFOP' for this operation. "
+"When this field is set, Avalara will use this CFOP number to issue the e-invoice. "
+"If this field is not set, Avalara will automatically provide the closest CFOP "
+"for the operation that is being used."
+msgstr ""
+"Brasil: Utilize este campo para indicar um 'CFOP' específico para esta operação. "
+"Quando este campo estiver definido, a Avalara utilizará este número de CFOP para emitir "
+"a nota fiscal eletrônica. Se este campo não estiver definido, a Avalara fornecerá "
+"automaticamente o CFOP mais indicado para a operação em questão."
+
+#. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_access_key
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_access_key
 msgid ""
@@ -314,6 +327,7 @@ msgstr ""
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_line__l10n_br_cfop
+#: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_operation_type__l10n_br_cfop_code
 msgid "CFOP"
 msgstr "CFOP"
 
@@ -423,6 +437,7 @@ msgstr "Cartão de débito"
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_send__display_name
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_cancel_range__display_name
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_invoice_update__display_name
+#: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_operation_type__display_name
 #: model:ir.model.fields,field_description:l10n_br_edi.field_payment_method__display_name
 #: model:ir.model.fields,field_description:l10n_br_edi.field_res_country__display_name
 msgid "Display Name"
@@ -573,6 +588,7 @@ msgstr "Vale-presente"
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_send__id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_cancel_range__id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_invoice_update__id
+#: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_operation_type__id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_payment_method__id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_res_country__id
 msgid "ID"
@@ -724,6 +740,11 @@ msgid "No Payment"
 msgstr "Nenhum pagamento"
 
 #. module: l10n_br_edi
+#: model:ir.model,name:l10n_br_edi.model_l10n_br_operation_type
+msgid "Operation Type"
+msgstr "Tipo de Operação"
+
+#. module: l10n_br_edi
 #. odoo-python
 #: code:addons/l10n_br_edi/models/account_move.py:0
 msgid "Other"
@@ -821,6 +842,12 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_edi.field_l10n_br_edi_invoice_update__is_service_invoice
 msgid "Technical field used to hide the \"reason\" field."
 msgstr "Campo técnico utilizado para ocultar o campo \"Motivo\"."
+
+#. module: l10n_br_edi
+#. odoo-python
+#: code:addons/l10n_br_edi/models/l10n_br_operation_type.py:0
+msgid "The CFOP code on %(operation_type)s must only contain digits (0-9)."
+msgstr "O código CFOP em %(operation_type)s deve conter apenas dígitos (0-9)."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_l10n_br_edi_cancel_range__document_type_id
