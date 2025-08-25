@@ -50,7 +50,6 @@ def _get_init_store_data_result(self):
             "external_device_number": False,
             "onsip_auth_username": False,
             "should_call_from_another_device": False,
-            "should_auto_reject_incoming_calls": False,
             "voip_provider_id": (provider.id, provider.name),
             "voip_secret": False,
             "voip_username": False,

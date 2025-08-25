@@ -20,7 +20,6 @@
                         <group string="Preferences" name="voip_preferences">
                             <field name="should_call_from_another_device" readonly="not voip_provider_id"/>
                             <field name="external_device_number" readonly="not voip_provider_id"/>
-                            <field name="should_auto_reject_incoming_calls" readonly="not voip_provider_id"/>
                             <field name="how_to_call_on_mobile" widget="radio" readonly="not voip_provider_id"/>
                         </group>
                     </group>
@@ -47,7 +46,6 @@
                         <group string="Preferences" name="voip_preferences">
                             <field name="should_call_from_another_device" readonly="not voip_provider_id"/>
                             <field name="external_device_number" readonly="not voip_provider_id"/>
-                            <field name="should_auto_reject_incoming_calls" readonly="not voip_provider_id"/>
                             <field name="how_to_call_on_mobile" widget="radio" readonly="not voip_provider_id"/>
                         </group>
                     </group>

@@ -27,11 +27,6 @@ class ResUsers(models.Model):
         inverse="_reflect_change_in_res_users_settings",
         groups="base.group_user",
     )
-    should_auto_reject_incoming_calls = fields.Boolean(
-        compute="_compute_should_auto_reject_incoming_calls",
-        inverse="_reflect_change_in_res_users_settings",
-        groups="base.group_user",
-    )
     should_call_from_another_device = fields.Boolean(
         compute="_compute_should_call_from_another_device",
         inverse="_reflect_change_in_res_users_settings",
@@ -72,11 +67,6 @@ class ResUsers(models.Model):
         for user in self:
             user.how_to_call_on_mobile = user.res_users_settings_id.how_to_call_on_mobile
 
-    @api.depends("res_users_settings_id.should_auto_reject_incoming_calls")
-    def _compute_should_auto_reject_incoming_calls(self):
-        for user in self:
-            user.should_auto_reject_incoming_calls = user.res_users_settings_id.should_auto_reject_incoming_calls
-
     @api.depends("res_users_settings_id.should_call_from_another_device")
     def _compute_should_call_from_another_device(self):
         for user in self:
@@ -106,7 +96,6 @@ class ResUsers(models.Model):
         return [
             "external_device_number",
             "how_to_call_on_mobile",
-            "should_auto_reject_incoming_calls",
             "should_call_from_another_device",
             "voip_secret",
             "voip_username",

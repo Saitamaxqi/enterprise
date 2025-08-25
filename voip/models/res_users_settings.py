@@ -28,11 +28,6 @@ class ResUsersSettings(models.Model):
         help="""If the "Call from another device" option is enabled, calls placed in Odoo will be transfered to this phone number.""",
     )
 
-    should_auto_reject_incoming_calls = fields.Boolean(
-        "Reject incoming calls",
-        help="If enabled, incoming calls will be automatically declined in Odoo.",
-    )
-
     # Mobile stuff
     how_to_call_on_mobile = fields.Selection(
         [("ask", "Always Ask"), ("voip", "Odoo Phone"), ("phone", "Phone's Default App")],

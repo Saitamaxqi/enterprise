@@ -506,10 +506,6 @@ export class UserAgent extends Reactive {
             inviteSession.reject({ statusCode: 486 /* Busy Here */ });
             return;
         }
-        if (this.voip.store.settings.should_auto_reject_incoming_calls) {
-            inviteSession.reject({ statusCode: 488 /* Not Acceptable Here */ });
-            return;
-        }
         const phoneNumber = inviteSession.remoteIdentity.uri.user;
         const call = await this.callService.create({
             direction: "incoming",
