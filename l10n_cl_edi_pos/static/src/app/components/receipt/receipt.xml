@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <br/>
-                <div class="d-flex flex-column align-items-center pos-receipt-order-data">
+                <div t-if= "order.company.l10n_cl_dte_resolution_date" class="d-flex flex-column align-items-center pos-receipt-order-data">
                     <img class="img-fluid w-100" t-attf-src="data:image/*;base64,{{order.account_move?.l10n_cl_sii_barcode_image}}"/>
                     <span>Timbre Electrónico SII</span>
                     <span>Resolución Nº: <t t-out="order.company.l10n_cl_dte_resolution_number"/></span>

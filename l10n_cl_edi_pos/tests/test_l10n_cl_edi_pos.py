@@ -32,3 +32,9 @@ class TestL10nClEdiPos(TestL10nClEdiCommon, TestPointOfSaleHttpCommon):
         self.init_invoice('out_invoice', partner=self.partner_sii, invoice_date='2024-03-01', amounts=[20], currency=self.env.ref('base.USD'), post=True)
         self.main_pos_config.open_ui()
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_settle_invoice_good_price_cl', login="accountman")
+
+    def test_cl_receipt_dte_info(self):
+        self.company.l10n_cl_dte_service_provider = False
+        self.company.l10n_cl_dte_resolution_date = False
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_cl_receipt_dte_info', login="accountman")
