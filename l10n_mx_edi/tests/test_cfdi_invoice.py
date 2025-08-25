@@ -2744,3 +2744,23 @@ class TestCFDIInvoice(TestMxEdiCommon):
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
                 self._assert_invoice_cfdi(invoice, 'test_cfdi_multi_uuid_inv')
+
+    def test_cfdi_to_public_credit_note_g02_usage(self):
+        with self.mx_external_setup(self.frozen_today):
+            credit_note = self._create_invoice(
+                move_type='out_refund',
+                l10n_mx_edi_cfdi_to_public=True,
+                l10n_mx_edi_usage='G02',
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 500.0,
+                    }),
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                credit_note._l10n_mx_edi_cfdi_invoice_try_send()
+
+            document = credit_note.l10n_mx_edi_invoice_document_ids.filtered(lambda x: x.state == 'invoice_sent')
+            cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(document.attachment_id.raw)
+            self.assertEqual(cfdi_infos['usage'], 'G02')

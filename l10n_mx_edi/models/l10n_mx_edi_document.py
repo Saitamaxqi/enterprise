@@ -734,11 +734,17 @@ class L10n_Mx_EdiDocument(models.Model):
                 'regimen_fiscal_receptor': '616',
             }
 
+            # Default UsoCFDI is S01 (no tax effects).
+            uso_cfdi = 'S01'
+            # Exception: credit notes (E) may use G02 under regime 616 or foreign regime.
+            if cfdi_values.get('tipo_de_comprobante') == 'E' and (usage == 'G02' or is_refund_gi):
+                uso_cfdi = 'G02'
+
             if customer_as_publico_en_general:
                 customer_values.update({
                     'rfc': 'XAXX010101000',
                     'nombre': "PUBLICO EN GENERAL",
-                    'uso_cfdi': 'G02' if is_refund_gi else 'S01',
+                    'uso_cfdi': uso_cfdi,
                 })
             else:
                 has_country = bool(customer.country_id)
@@ -751,7 +757,7 @@ class L10n_Mx_EdiDocument(models.Model):
                 customer_values.update({
                     'rfc': 'XEXX010101000' if is_foreign_customer else 'XAXX010101000',
                     'nombre': self._cfdi_sanitize_to_legal_name(invoice_customer.commercial_company_name or invoice_customer.name),
-                    'uso_cfdi': 'S01',
+                    'uso_cfdi': uso_cfdi,
                 })
         else:
             customer_values = {
