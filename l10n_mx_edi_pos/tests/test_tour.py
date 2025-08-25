@@ -348,6 +348,19 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
         self.main_pos_config.with_user(self.pos_user).open_ui()
         self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, "tour_invoice_to_general_public", login="pos_user")
 
+    def test_refund_with_discount(self):
+        """
+        Tests that when a refund is processed it's total amount does not exceed the original order total.
+        """
+        if self.env['ir.module.module']._get('pos_discount').state != 'installed':
+            self.skipTest("pos_discount needs to be installed")
+
+        self.main_pos_config.module_pos_discount = True
+        self.main_pos_config.discount_product_id = self.env.ref("pos_discount.product_product_consumable", raise_if_not_found=False)
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, 'test_refund_with_discount', login="pos_user")
+
 
 @tagged('post_install', '-at_install', 'post_install_l10n')
 class TestGenericMX(TestGenericLocalization):
