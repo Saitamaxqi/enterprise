@@ -612,16 +612,26 @@ class HrContractSalary(http.Controller):
             employee = existing_version.employee_id
         if not employee:
             company = self.env['res.company'].browse(version_vals.get('company_id'))
-            employee = request.env['hr.employee'].sudo().with_context(
-                tracking_disable=True,
-                salary_simulation=not no_write,
-            ).create({
+            employee_vals = {
                 'name': applicant.partner_name if applicant else 'Simulation Employee',
                 'active': False,
                 'company_id': company.id,
                 'lang': company.partner_id.lang,
                 'resource_calendar_id': version_vals.get('resource_calendar_id'),
-            })
+            }
+            if 'current_applicant_skill_ids' in offer.applicant_id:
+                employee_vals['employee_skill_ids'] = [
+                    Command.create({
+                        'skill_id': skill.skill_id.id,
+                        'skill_type_id': skill.skill_type_id.id,
+                        'skill_level_id': skill.skill_level_id.id
+                    })
+                    for skill in offer.applicant_id.current_applicant_skill_ids
+                ]
+            employee = request.env['hr.employee'].sudo().with_context(
+                tracking_disable=True,
+                salary_simulation=not no_write,
+            ).create(employee_vals)
 
         # get differences for personnal information
         if no_write:
