@@ -325,13 +325,18 @@ class HrContractSalaryOffer(models.Model):
             'domain': [('id', 'in', self.sign_template_signatories_ids.ids)],
         }
 
-    def action_view_contract(self):
+    def action_view_version(self):
         self.ensure_one()
-        version = self.env['hr.version'].search([('originated_offer_id', '=', self.id)], limit=1) or \
-                self.employee_version_id or \
-                self.env['hr.version'].search([("applicant_id", "=", self.applicant_id.id)], limit=1)
+        version = (
+            self.env['hr.version'].with_context(active_test=False).search([('originated_offer_id', '=', self.id)], limit=1)
+            or self.employee_version_id
+            or self.env['hr.version'].with_context(active_test=False).search([('applicant_id', '=', self.applicant_id.id)], limit=1)
+        )
+        if self.state == 'half_signed':
+            action = self.env.ref('hr_contract_salary.action_view_partially_signed_contract_statbutton')._get_action_dict()
+        else:
+            action = self.env.ref('hr_contract_salary.action_view_contract_statbutton')._get_action_dict()
 
-        action = self.env.ref('hr_contract_salary.action_view_contract_statbutton').sudo().read()[0]
         action['res_id'] = self.employee_id.id or self.applicant_id.employee_id.id or version.employee_id.id
         action['context'] = {'version_id': version.id}
         return action

@@ -93,4 +93,22 @@
             </separator>
         </field>
     </record>
+    <record id="hr_contract_salary_view_employee_form_readonly" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.contract_salary.readonly</field>
+        <field name="model">hr.employee</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="replace"/>
+            <xpath expr="//form/*[1]" position="before">
+                <div role="alert" class="alert alert-warning text-center">
+                    This is a partially-signed contract.
+                </div>
+            </xpath>
+            <xpath expr="//chatter" position="replace"/>
+            <xpath expr="//widget[@name='web_ribbon']" position="replace">
+                <widget name="web_ribbon" title="Draft" bg_color="text-bg-info" groups="hr.group_hr_user"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

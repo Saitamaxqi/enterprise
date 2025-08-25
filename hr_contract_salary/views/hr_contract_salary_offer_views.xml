@@ -86,6 +86,16 @@
                 <sheet>
                     <div name="button_box" class="oe_button_box">
                         <button
+                            name="action_view_version"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-book"
+                            invisible="state != 'half_signed'">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_text">Contract Details</span>
+                            </div>
+                        </button>
+                        <button
                             name="action_view_signature_request"
                             type="object"
                             data-hotkey="shift+g"
@@ -98,7 +108,7 @@
                         </button>
 
                         <button
-                            name="action_view_contract"
+                            name="action_view_version"
                             type="object"
                             data-hotkey="shift+g"
                             class="oe_stat_button"
@@ -231,6 +241,14 @@
         <field name="res_model">hr.employee</field>
         <field name="view_mode">form</field>
         <field name="view_id" ref="hr.view_employee_form"/>
+        <field name="target">current</field>
+    </record>
+
+    <record id="action_view_partially_signed_contract_statbutton" model="ir.actions.act_window">
+        <field name="name">Contract Details (Read Only) </field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="hr_contract_salary.hr_contract_salary_view_employee_form_readonly"/>
         <field name="target">current</field>
     </record>
 
