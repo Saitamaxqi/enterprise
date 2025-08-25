@@ -448,6 +448,7 @@ class StockBarcodeController(http.Controller):
             'stock.picking',
             'stock.lot',
             'stock.package',
+            'stock.package.type',
         ]
         return {model: request.env[model]._barcode_field for model in list_model if hasattr(request.env[model], '_barcode_field')}
 

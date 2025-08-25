@@ -67,3 +67,23 @@ class TestStockBarcodeController(HttpCase):
                     f"Expected product '{expected_display_name}' for company '{company.name}' "
                     f"(id: {company.id}), but got '{display_name}' instead."
                 )
+
+    def test_search_barcode_for_package_type(self):
+        self.authenticate('admin', 'admin')
+        payload = json.dumps({
+            'jsonrpc': '2.0',
+            'method': 'call',
+            'id': 0,
+            'params': {
+                "barcodes_by_model": {
+                    "stock.package.type": ["00000012345678"]
+                },
+                    "domains_by_model": {}
+            }
+        })
+        response = self.url_open(
+            '/stock_barcode/get_specific_barcode_data',
+            data=payload,
+            headers={'Content-Type': 'application/json'},
+        )
+        self.assertNotIn("AttributeError", response.text)
