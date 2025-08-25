@@ -9,6 +9,8 @@
         "views/voip_call_views.xml",
         "views/voip_provider_views.xml",
         "data/ir_cron.xml",
+        "data/ai_agent_prompts.xml",
+        "demo/voip_ai_demo.xml",
     ],
     "assets": {
         "web.assets_backend": [

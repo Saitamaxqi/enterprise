@@ -5,7 +5,6 @@ from requests.exceptions import RequestException
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 
 _logger = getLogger(__name__)
@@ -28,6 +27,7 @@ class VoipCall(models.Model):
         copy=False,
         index=True,
     )
+    summary = fields.Char(string="Summary", copy=False)
 
     @api.model
     def _cron_transcribe_recent_voip_call(self):
@@ -60,9 +60,20 @@ class VoipCall(models.Model):
 
         try:
             text = LLMApiService(self.env).get_transcription(recording.raw, "audio/ogg")
-            header = f"\n--- {fields.Datetime.now()} ---\n"
-            call.transcript = (call.transcript or "") + header + text
-            call.transcription_status = "done"
         except (RequestException, JSONDecodeError, UserError):
             _logger.exception("Call %s: transcription failed", call.id)
             call.transcription_status = "error"
+            return
+
+        call.transcript = (call.transcript or "") + text
+        call.transcription_status = "done"
+
+        # Generate one-liner summary
+        try:
+            ai_agent = self.env.ref('voip_ai.voip_call_summary_agent', raise_if_not_found=False)
+            if call.transcript:
+                summary_response = ai_agent.get_direct_response(prompt=call.transcript)
+                if summary_response:
+                    call.summary = summary_response[0]
+        except (RequestException, JSONDecodeError, UserError):
+            _logger.exception("Call %s: one-liner summary generation failed", call.id)
