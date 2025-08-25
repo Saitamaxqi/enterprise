@@ -49,7 +49,7 @@
                                 <td><span t-field="line.invoice_date" /></td>
                                 <td><span t-field="line.move_name" /></td>
                                 <td><span t-field="line.date_maturity" /></td>
-                                <td><span t-field="line.amount_residual_currency" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                <td><span t-field="line.amount_residual" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
                             </tr>
                         </t>
                     </tbody>
