@@ -167,7 +167,7 @@
                                     <record id="balance_pymes_line_12500_sub_balances" model="account.report.expression">
                                         <field name="label">sub_balances</field>
                                         <field name="engine">account_codes</field>
-                                        <field name="formula">5305 + 5315 + 5325 + 5335 + 5345 + 5355 + 5395 + 540 + 541 + 542 + 543 + 545 + 546 + 547 + 548 + 549 + 551 + 5525 + 5590 + 5593 + 565 + 566 + 5945 + 5955 + 597 + 598</field>
+                                        <field name="formula">5305 + 5315 + 5325 + 5335 + 5345 + 5355 + 5395 + 540 + 541 + 542 + 543 + 545 + 546 + 547 + 548 + 549 + 5590 + 5593 + 565 + 566 + 5945 + 5955 + 597 + 598</field>
                                     </record>
                                     <record id="balance_pymes_line_12500_sub_debits" model="account.report.expression">
                                         <field name="label">sub_debits</field>
