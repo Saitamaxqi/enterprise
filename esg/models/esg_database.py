@@ -61,9 +61,11 @@ class EsgDatabase(models.Model):
             result = self._action_import_efdb_from_ipcc()
         else:
             raise ValidationError(self.env._("Database file is missing"))
-        if 'type' in result and result['type'] == 'ir.actions.act_window':
+        if result is True:
             self.last_update = self.latest_version
-        return result
+        action_view_emission_factor = self.env['ir.actions.actions']._for_xml_id('esg.action_view_emission_factor')
+        action_view_emission_factor['domain'] = [('database_id', '=', self.id)]
+        return action_view_emission_factor
 
     def _external_api_call(self, request_url):
         ademe_api_url = 'https://data.ademe.fr/data-fair/api/v1/datasets/base-carboner'
@@ -615,9 +617,4 @@ class EsgDatabase(models.Model):
         if nb_skipped_records:
             _logger.warning("%s entries from IPCC Database were skipped because of missing information", nb_skipped_records)
         self.env['esg.emission.factor']._load_records(emission_factor_xmlid_list)
-        return {
-            'name': self.env._('Emission Factors'),
-            'type': 'ir.actions.act_window',
-            'res_model': 'esg.emission.factor',
-            'views': [(self.env.ref('esg.emission_factor_list_view').id, 'list')],
-        }
+        return True
