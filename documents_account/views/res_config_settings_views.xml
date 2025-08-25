@@ -13,17 +13,12 @@
                     <attribute name="invisible">0</attribute>
                 </xpath>
                 <xpath expr="//block[@id='files_centralization_section']" position="inside">
-                    <setting company_dependent="1" help="Centralize accounting files and documents">
-                        <field name="documents_account_settings"/>
-                        <div class="content-group" invisible="not documents_account_settings">
-                            <div class="row mt16">
-                                <label class="o_form_label col-lg-3" for="account_folder_id" string="Folder"/>
-                                <field name="account_folder_id" required="documents_account_settings" widget="documents_folder_many2one"
-                                    options="{'no_create': True, 'no_create_edit': True}"/>
-                            </div>
-                            <div class="row col-lg-4">
-                                <button type="action" name="%(documents_account.action_folder_settings_installer)d" string="Journals" icon="oi-arrow-right" class="btn-link"/>
-                            </div>
+                    <setting company_dependent="1" string="Accounting" help="Centralize accounting files and documents">
+                        <label class="o_form_label col-lg-3" for="account_folder_id" string="Folder"/>
+                        <field name="account_folder_id" required="True" widget="documents_folder_many2one"
+                            options="{'no_create': True, 'no_create_edit': True}"/>
+                        <div class="row col-lg-4">
+                            <button type="action" name="%(documents_account.action_folder_settings_installer)d" string="Journals" icon="oi-arrow-right" class="btn-link"/>
                         </div>
                     </setting>
                 </xpath>

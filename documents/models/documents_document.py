@@ -14,14 +14,14 @@ from urllib.parse import quote
 from werkzeug.urls import url_encode
 
 import odoo
-from odoo import _, api, Command, fields, models, SUPERUSER_ID
+from odoo import _, api, Command, fields, models, modules, SUPERUSER_ID
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.fields import Domain
 from odoo.tools import groupby, SQL
 from odoo.tools.image import image_process
 from odoo.tools.mimetypes import get_extension
 from odoo.tools.misc import clean_context
-from odoo.tools.pdf import PdfFileReader
+from odoo.tools.pdf import PdfFileReader, PdfReadError
 from odoo.addons.mail.tools import link_preview
 
 _logger = logging.getLogger(__name__)
@@ -1362,14 +1362,20 @@ class DocumentsDocument(models.Model):
         """
         if self.mimetype not in ('application/pdf', 'application/pdf;base64'):
             return None
-        stream = io.BytesIO(base64.b64decode(self.datas))
+        decoded = base64.b64decode(self.datas)
+        stream = io.BytesIO(decoded)
         try:
             return PdfFileReader(stream, strict=False).numPages > 1
         except AttributeError:
             raise  # If PyPDF's API changes and the `numPages` property isn't there anymore, not if its computation fails.
-        except Exception:  # noqa: BLE001
-            _logger.warning('Impossible to count pages in %r. It could be due to a malformed document or a '
-                            '(possibly known) issue within PyPDF2.', self.name, exc_info=True)
+        except Exception as e:  # noqa: BLE001
+            message = ('Impossible to count pages in %r. It could be due to a malformed document or a '
+                       '(possibly known) issue within PyPDF2.')
+            # Avoid warning in tests due to IrActionsReport._pre_render_qweb_pdf rendering pdf as html
+            if (modules.module.current_test and isinstance(e, PdfReadError) and b'<!DOCTYPE html>' in decoded):
+                _logger.info(message, self.name)
+                return False
+            _logger.warning(message, self.name, exc_info=True)
             return False
 
     @api.depends('favorited_ids')
@@ -1871,7 +1877,7 @@ class DocumentsDocument(models.Model):
         (users | folders.owner_id).fetch(['partner_id'])
         vals_list_to_update_linked_record = []
         for vals, old_vals in zip(vals_list, old_vals_list):
-            owner = self.env['res.users'].browse(vals.get('owner_id', self.env.user.id))
+            owner = self.env['res.users'].browse(vals.get('owner_id', self.env.user.active and self.env.user.id))
             if owner and not owner.active:
                 _logger.warning(
                     "Documents: Creating document(s) as %s" % (
