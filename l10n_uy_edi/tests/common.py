@@ -245,3 +245,19 @@ class TestUyEdi(AccountTestInvoicingCommon):
         })
         with patch(f"{self.utils_path}._create_pdf_vendor_bill", return_value=None):
             return self.env['account.move']._create_records_from_attachments(attachment)
+
+    def _configure_usd_company_currency(self):
+        USD = self.env.ref("base.USD")
+        UYU = self.env.ref("base.UYU")
+        self.company_uy.currency_id = USD
+        self.env["res.currency.rate"].search([('currency_id', '=', USD.id)]).unlink()
+        self.env["res.currency.rate"].search([('currency_id', '=', UYU.id)]).unlink()
+
+        rate_date = "2025-09-25"
+        self.env["res.currency.rate"].create([
+            {"name": rate_date, "company_id": self.company_uy.id, "currency_id": USD.id, "rate": 1.0},
+            {"name": rate_date, "company_id": self.company_uy.id, "currency_id": UYU.id, "rate": 1.0 / 0.02602066},
+        ])
+
+        self.assertEqual(self.company_uy.currency_id, USD)
+        self.assertEqual(self.company_uy.currency_id.rate, 1.0)

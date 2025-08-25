@@ -752,11 +752,12 @@ class AccountMove(models.Model):
 
     def _l10n_uy_edi_get_used_rate(self):
         self.ensure_one()
-        if self.amount_total == 0.0:
-            return self.currency_id._convert(
-                1.0, self.company_id.currency_id, self.company_id, self.date or fields.Date.today(), round=False)
-        # We need to use abs to avoid error on Credit Notes (amount_total_signed is negative)
-        return abs(self.amount_total_signed) / self.amount_total if self.amount_total else 0.0
+        UYU = self.env.ref("base.UYU")
+        res = 0.0
+        if self.currency_id != UYU:
+            res = self.currency_id._convert(
+                1.0, UYU, self.company_id, self.date or fields.Date.today(), round=False)
+        return res
 
     def _l10n_uy_edi_get_xml_content(self):
         """ Create the CFE xml structure and validate it
