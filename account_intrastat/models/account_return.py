@@ -53,7 +53,7 @@ class AccountReturn(models.Model):
                 for group_result in self.env['account.move.line'].sudo()._read_group(
                     domain=[
                         *options_domain,
-                        ('partner_id.is_company', '=', False),
+                        ('partner_id.vat', 'in', ('/', False)),
                     ],
                     groupby=['partner_id'],
                     limit=LIMIT_CHECK_ENTRIES,

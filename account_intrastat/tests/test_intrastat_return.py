@@ -87,27 +87,50 @@ class TestIntrastatReturn(TestAccountReportsCommon):
         )
 
         # make the check fail by adding a private individual
-        private_individual = self.env['res.partner'].create({
-            'name': 'Private Individual',
-            'is_company': False,
-            'country_id': self.env.ref('base.us').id,
-            'vat': 'US123456789',
-        })
+        private_individuals = self.env['res.partner'].create([
+            {
+                'name': 'Private Individual with VAT',
+                'is_company': False,
+                'country_id': self.env.ref('base.us').id,
+                'vat': 'US123456789',
+            },
+            {
+                'name': 'Private Individual without VAT',
+                'is_company': False,
+                'country_id': self.env.ref('base.us').id,
+                'vat': '/',
+            }
+        ])
 
-        invoice = self.env['account.move'].create({
-            'move_type': 'out_invoice',
-            'partner_id': private_individual.id,
-            'date': '2022-01-15',
-            'currency_id': self.env.company.currency_id.id,
-            'company_id': self.env.company.id,
-            'invoice_line_ids': [Command.create({
-                'name': 'Test Product',
-                'quantity': 1.0,
-                'price_unit': 100.0,
-                'product_uom_id': self.env.ref('uom.product_uom_unit').id,
-            })],
-        })
-        invoice.action_post()
+        invoices = self.env['account.move'].create([
+            {
+                'move_type': 'out_invoice',
+                'partner_id': private_individuals[0].id,
+                'date': '2022-01-15',
+                'currency_id': self.env.company.currency_id.id,
+                'company_id': self.env.company.id,
+                'invoice_line_ids': [Command.create({
+                    'name': 'Test Product',
+                    'quantity': 1.0,
+                    'price_unit': 100.0,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                })],
+            },
+            {
+                'move_type': 'out_invoice',
+                'partner_id': private_individuals[1].id,
+                'date': '2022-01-15',
+                'currency_id': self.env.company.currency_id.id,
+                'company_id': self.env.company.id,
+                'invoice_line_ids': [Command.create({
+                    'name': 'Test Product',
+                    'quantity': 1.0,
+                    'price_unit': 100.0,
+                    'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+                })],
+            },
+        ])
+        invoices.action_post()
 
         january_return.refresh_checks(force_bypassed=True)
 
@@ -116,4 +139,14 @@ class TestIntrastatReturn(TestAccountReportsCommon):
             only_b2b_customer_check.result,
             'failure',
             "The check for only B2B customers should fail as there is now a private individual in the January return",
+        )
+
+        self.assertEqual(only_b2b_customer_check.records_count, 1, "Only one partner must fail, as one has a VAT but the other not")
+
+        invoices[1].button_draft()
+        january_return.refresh_checks(force_bypassed=True)
+        self.assertEqual(
+            only_b2b_customer_check.result,
+            'success',
+            "The check should now succeed as we removed the failing partner move",
         )
