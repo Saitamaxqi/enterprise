@@ -1697,7 +1697,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 bill_date = gstr2b_bill.get('bill_date')
                 bill_number = gstr2b_bill.get('bill_number')
                 bill_vat = gstr2b_bill.get('vat')
-                bill_irn  = gstr2b_bill.get('irn')
+                matching_keys = bill_irn = gstr2b_bill.get('irn')
                 sanitized_ref = _remove_special_characters(bill_number)
                 matched_bills = False
                 # check the bill with IRN number first to reduce the unnecessary key generation
