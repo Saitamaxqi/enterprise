@@ -118,17 +118,17 @@ class AppointmentType(models.Model):
         help="What is selected first by the customer when booking an appointment.")
 
     category = fields.Selection([
-        ('recurring', 'Regular'),
-        ('punctual', 'Punctual'),
-        ('custom', 'Specific Slots'),
-        ('anytime', 'Shared Calendar')],
+        ('recurring', 'Weekly Schedule'),
+        ('punctual', 'Date-limited'),
+        ('custom', 'Flexible Schedule'),
+        ('anytime', 'Calendar Link')],
         string="Category", compute="_compute_category", inverse="_inverse_category", store="True",
         help="""Used to define this appointment type's category.\n
         Can be one of:\n
-            - Regular: the default category, weekly recurring slots. Accessible from the website\n
-            - Punctual: regular slots limited between 2 datetimes. Accessible from the website\n
-            - Specific Slots: the user will create and share to another user a custom appointment type with hand-picked time slots\n
-            - Shared Calendar: the user will create and share to another user an appointment type covering all their time slots""")
+            - Weekly Schedule: the default category, weekly recurring slots. Accessible from the website\n
+            - Date-limited: regular slots limited between 2 datetimes. Accessible from the website\n
+            - Flexible Schedule: the user will create and share to another user a custom appointment type with hand-picked time slots\n
+            - Calendar Link: the user will create and share to another user an appointment type covering all their time slots""")
     category_slot_scheduling = fields.Selection(
         [('weekly', 'Weekly'), ('flexible', 'Flexible')],
          string="Schedule", readonly=False, compute="_compute_category_slot_scheduling"
