@@ -6683,7 +6683,38 @@ class AccountReport(models.Model):
                 raise UserError(_("Field %s does not exist on account.move.line.", field_name))
 
     def action_open_returns(self, options):
-        return self.env['account.return'].action_open_tax_return_view(additional_return_domain=[('type_id', 'in', self.return_type_ids.ids)])
+
+        date_to = options['date']['date_to']
+        date_from = options['date'].get('date_from') or fields.Date.to_string(fields.Date.from_string(date_to) - relativedelta(months=3))
+
+        # If no return is found for the period and the return type, retry to generate them
+        types_with_records = sum(
+            (return_type for return_type, _return_count in self.env['account.return']._read_group(
+                domain=Domain([
+                    ('type_id', 'in', self.return_type_ids.ids),
+                    ('date_to', '>=', date_from),
+                    ('date_to', '<=', date_to),
+                    ('company_id', 'in', self.env.companies.ids),
+                ]),
+                groupby=['type_id'],
+                aggregates=['__count']
+            )),
+            self.env['account.return.type']
+        )
+
+        types_without_record = self.return_type_ids - types_with_records
+        if types_without_record:
+            root_companies = self.env['res.company'].sudo().search([
+                ('account_opening_date', '!=', False),
+                ('id', 'parent_of', self.env.companies.ids)
+            ])
+            self.env['account.return.type'].with_context(
+                only_refresh_conditional_types=True
+            )._generate_or_refresh_all_returns(root_companies)
+
+        return self.env['account.return'].action_open_tax_return_view(
+            additional_context={'filter_report_id': self.id, 'search_default_filter_report_id': True}
+        )
 
     # ============ Accounts Coverage Debugging Tool - START ================
     @api.depends('country_id', 'chart_template', 'root_report_id')

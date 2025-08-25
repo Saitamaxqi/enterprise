@@ -6,8 +6,8 @@
         <field name="state">code</field>
         <field name="code">model._cron_generate_or_refresh_all_returns()</field>
         <field name="interval_number">1</field>
-        <field name="interval_type">months</field>
-        <field name="nextcall" eval="(DateTime.now().replace(day=3)).strftime('%Y-%m-%d %H:%M:%S')" />
+        <field name="interval_type">days</field>
+        <field name="nextcall" eval="DateTime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
         <field name="active" eval="True"/>
     </record>
 </odoo>

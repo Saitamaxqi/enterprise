@@ -203,6 +203,9 @@ class AccountReturnType(models.Model):
         :param main_company: the main company for which we generate returns
         """
 
+        if self.env.context.get('only_refresh_conditional_types'):
+            return
+
         if main_company.sudo().account_fiscal_country_id.code == country_code:
             search_domain = Domain.AND([
                 Domain('auto_generate', '=', True),
@@ -652,6 +655,14 @@ class AccountReturn(models.Model):
         return result
 
     @api.model
+    def action_refresh_all_returns(self):
+        root_companies = self.env['res.company'].sudo().search([
+            ('account_opening_date', '!=', False),
+            ('id', 'parent_of', self.env.companies.ids)
+        ])
+        self.env['account.return.type']._generate_or_refresh_all_returns(root_companies)
+
+    @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
         return date_to + relativedelta(days=company.account_return_reminder_day)
 
@@ -870,8 +881,11 @@ class AccountReturn(models.Model):
         return dashboard_return_dicts
 
     @api.model
-    def action_open_tax_return_view(self, additional_return_domain=None):
+    def action_open_tax_return_view(self, additional_return_domain=None, additional_context=None):
         company = self.env.company
+
+        if not additional_context:
+            additional_context = {}
 
         # Fiscal year is automatically setup with default values as it is a required field
         if not company.account_opening_date:
@@ -901,6 +915,10 @@ class AccountReturn(models.Model):
 
         if additional_return_domain:
             return_action['domain'] = additional_return_domain
+        if additional_context:
+            context = ast.literal_eval(return_action['context'])
+            context.update(additional_context)
+            return_action['context'] = str(context)
         return return_action
 
     def action_open_audit_return(self):

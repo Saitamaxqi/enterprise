@@ -168,6 +168,8 @@
                     <filter name="groupby_date_to" string="Date" context="{'group_by': 'date_to:month'}"/>
                     <filter name="groupby_type_id" string="Return Type" context="{'group_by': 'type_id'}"/>
                     <separator/>
+                    <filter invisible="1" string="Return type" name="filter_report_id" domain="[('type_id.report_id.id', '=', context.get('filter_report_id'))]"/>
+                    <separator/>
                     <filter invisible="1" string="My Activities" name="filter_activities_my" domain="[('activity_user_id', '=', uid)]"/>
                     <separator invisible="1"/>
                     <filter invisible="1" string="Late Activities" name="activities_overdue" domain="[('my_activity_date_deadline', '&lt;', 'today')]" help="Show all records whose next activity date is past"/>

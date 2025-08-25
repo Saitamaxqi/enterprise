@@ -2,6 +2,7 @@ from dateutil.relativedelta import relativedelta
 from datetime import date
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 
 
 class AccountReturnType(models.Model):
@@ -17,29 +18,45 @@ class AccountReturnType(models.Model):
 
     @api.model
     def _generate_all_returns(self, country_code, main_company, tax_unit=None):
-        rslt = super()._generate_all_returns(country_code, main_company, tax_unit=tax_unit)
+        super()._generate_all_returns(country_code, main_company, tax_unit=tax_unit)
 
-        if country_code == 'BE':
+        if country_code != 'BE':
+            return
 
-            # BE Intracom return generation
-            ec_sales_return_type = self.env.ref('l10n_be_reports.be_ec_sales_list_return_type')
-            months_offset = ec_sales_return_type._get_periodicity_months_delay(main_company)
-            previous_period_start, previous_period_end = ec_sales_return_type._get_period_boundaries(main_company, fields.Date.context_today(self) - relativedelta(months=months_offset))
-            company_ids = self.env['account.return'].sudo()._get_company_ids(main_company, tax_unit, ec_sales_return_type.report_id)
-            ec_sales_list_tags_info = self.env['l10n_be.ec.sales.report.handler']._get_tax_tags_for_belgian_sales_report()
-            ec_sales_list_tag_ids = [*ec_sales_list_tags_info['goods'], *ec_sales_list_tags_info['triangular'], *ec_sales_list_tags_info['services']]
+        # BE Intracom return generation
+        ec_sales_return_type = self.env.ref('l10n_be_reports.be_ec_sales_list_return_type')
+        months_offset = ec_sales_return_type._get_periodicity_months_delay(main_company)
+        company_ids = self.env['account.return'].sudo()._get_company_ids(main_company, tax_unit, ec_sales_return_type.report_id)
 
-            need_ec_sales_list = bool(self.env['account.move.line'].search_count([
-                ('tax_tag_ids', 'in', ec_sales_list_tag_ids),
-                ('company_id', 'in', company_ids.ids),
-                ('date', '>=', previous_period_start),
-                ('date', '<=', previous_period_end),
-            ], limit=1))
+        tags_info = self.env['l10n_be.ec.sales.report.handler']._get_tax_tags_for_belgian_sales_report()
+        ec_sales_tag_ids = set(tags_info['goods'] + tags_info['triangular'] + tags_info['services'])
 
-            if need_ec_sales_list:
-                ec_sales_return_type._try_create_return_for_period(previous_period_start, main_company, tax_unit)
+        today = fields.Date.context_today(self)
 
-        return rslt
+        # Generate BE ec sales returns of the last 3 months and the next month if at least a move line exists in the corresponding period
+        periods = [today - relativedelta(months=months_offset * i) for i in range(-1, 4)]
+
+        # Map each period to whether it has move lines
+        periods_has_move_lines_map = {
+            period_bounds: bool(self.env['account.move.line'].search(
+                domain=Domain([
+                    ('tax_tag_ids', 'in', ec_sales_tag_ids),
+                    ('company_id', 'in', company_ids.ids),
+                    ('date', '>=', period_bounds[0]),
+                    ('date', '<=', period_bounds[1]),
+                    ('parent_state', '=', 'posted'),
+                ]),
+                limit=1,
+            ))
+            for period_bounds in (
+                ec_sales_return_type._get_period_boundaries(main_company, period)
+                for period in periods
+            )
+        }
+
+        for (start, end), has_lines in periods_has_move_lines_map.items():
+            if has_lines:
+                ec_sales_return_type._try_create_return_for_period(start, main_company, tax_unit)
 
 
 class AccountReturn(models.Model):
