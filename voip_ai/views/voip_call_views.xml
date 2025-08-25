@@ -4,8 +4,8 @@
         <field name="model">voip.call</field>
         <field name="inherit_id" ref="voip.voip_call_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='duration']" position="after">
-                <field name="transcription_status" widget="selection_badge" string="Transcription" readonly="1"/>
+            <xpath expr="//sheet" position="before">
+                <field name="transcription_status" class="d-block" widget="voip_ai_transcription_status_banner"/>
             </xpath>
         </field>
     </record>
@@ -15,7 +15,7 @@
         <field name="model">voip.call</field>
         <field name="inherit_id" ref="voip.voip_call_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='transcription_status']" position="after">
+            <xpath expr="//field[@name='duration']" position="after">
                 <field name="summary" string="Summary"/>
             </xpath>
         </field>
