@@ -17,6 +17,7 @@
                     <div class="btn-group">
                     <button class="btn btn-secondary fa fa-download o_cohort_download_button"
                             title="Download as Excel file"
+                            t-att-disabled="!model.hasData() or model.useSampleModel"
                             t-on-click="downloadExcel"></button>
                 </div>
             </div>

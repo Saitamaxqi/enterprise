@@ -366,8 +366,22 @@ test("cohort view with aggregator equals to sum should only visible in measures"
     expect(queryAllTexts(".dropdown-menu span")).toEqual(["Recurring Price", "Count"]);
 });
 
+test("export cohort button should be disabled when no data", async () => {
+    expect.assertions(1);
+
+    Subscription._records = [];
+
+    await mountView({
+        type: "cohort",
+        resModel: "subscription",
+        arch: '<cohort string="Subscription" date_start="start" date_stop="stop" />',
+    });
+
+    expect("button.o_cohort_download_button").toHaveAttribute("disabled");
+});
+
 test("export cohort", async () => {
-    expect.assertions(6);
+    expect.assertions(7);
 
     const downloadDef = new Deferred();
     patchWithCleanup(download, {
@@ -388,6 +402,8 @@ test("export cohort", async () => {
         resModel: "subscription",
         arch: '<cohort string="Subscription" date_start="start" date_stop="stop" />',
     });
+
+    expect("button.o_cohort_download_button").not.toHaveAttribute("disabled");
 
     await contains(".o_cohort_download_button").click();
     await downloadDef;
