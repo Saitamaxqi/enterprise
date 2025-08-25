@@ -49,7 +49,7 @@ export class GlobalFiltersSidePanel extends Component {
     }
 
     newSelection() {
-        this.env.openSidePanel("SELECTION_FILTERS_SIDE_PANEL");
+        this.env.replaceSidePanel("SELECTION_FILTERS_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL");
     }
 
     newDate() {
@@ -65,7 +65,7 @@ export class GlobalFiltersSidePanel extends Component {
     }
 
     newNumeric() {
-        this.env.openSidePanel("NUMERIC_FILTERS_SIDE_PANEL");
+        this.env.replaceSidePanel("NUMERIC_FILTERS_SIDE_PANEL", "GLOBAL_FILTERS_SIDE_PANEL");
     }
 
     /**
@@ -102,10 +102,18 @@ export class GlobalFiltersSidePanel extends Component {
                 );
                 break;
             case "selection":
-                this.env.openSidePanel("SELECTION_FILTERS_SIDE_PANEL", { id });
+                this.env.replaceSidePanel(
+                    "SELECTION_FILTERS_SIDE_PANEL",
+                    "GLOBAL_FILTERS_SIDE_PANEL",
+                    { id }
+                );
                 break;
             case "numeric":
-                this.env.openSidePanel("NUMERIC_FILTERS_SIDE_PANEL", { id });
+                this.env.replaceSidePanel(
+                    "NUMERIC_FILTERS_SIDE_PANEL",
+                    "GLOBAL_FILTERS_SIDE_PANEL",
+                    { id }
+                );
                 break;
         }
     }

@@ -120,16 +120,16 @@ test("Create a new boolean global filter", async function () {
 
 test("Create a new selection global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
-    env.openSidePanel = (name) => expect.step(name);
-    await openSidePanel(model, env);
+    env.replaceSidePanel = (name) => expect.step(name);
+    await replaceSidePanel(model, env);
     await clickCreateFilter("selection");
     expect.verifySteps(["SELECTION_FILTERS_SIDE_PANEL"]);
 });
 
 test("Create a new numeric global filter", async function () {
     const { model, env } = await createSpreadsheetWithPivot();
-    env.openSidePanel = (name) => expect.step(name);
-    await openSidePanel(model, env);
+    env.replaceSidePanel = (name) => expect.step(name);
+    await replaceSidePanel(model, env);
     await clickCreateFilter("numeric");
     expect.verifySteps(["NUMERIC_FILTERS_SIDE_PANEL"]);
 });

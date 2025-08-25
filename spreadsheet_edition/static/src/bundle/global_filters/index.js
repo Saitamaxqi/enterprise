@@ -43,6 +43,11 @@ sidePanelRegistry.add("TEXT_FILTER_SIDE_PANEL", {
 sidePanelRegistry.add("SELECTION_FILTERS_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: SelectionFilterEditorSidePanel,
+    computeState: (getters, props) => ({
+        isOpen: true,
+        props,
+        key: `SelectionFilterEditorSidePanel_${props.id}`,
+    }),
 });
 
 sidePanelRegistry.add("RELATION_FILTER_SIDE_PANEL", {
@@ -68,6 +73,11 @@ sidePanelRegistry.add("BOOLEAN_FILTERS_SIDE_PANEL", {
 sidePanelRegistry.add("NUMERIC_FILTERS_SIDE_PANEL", {
     title: _t("Filter properties"),
     Body: NumericFilterEditorSidePanel,
+    computeState: (getters, props) => ({
+        isOpen: true,
+        props,
+        key: `NumericFilterEditorSidePanel_${props.id}`,
+    }),
 });
 
 sidePanelRegistry.add("GLOBAL_FILTERS_SIDE_PANEL", {
