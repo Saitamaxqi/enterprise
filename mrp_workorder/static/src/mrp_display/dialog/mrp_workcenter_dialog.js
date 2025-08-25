@@ -1,3 +1,4 @@
+import { _t } from "@web/core/l10n/translation";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { useService } from "@web/core/utils/hooks";
 import { onWillStart, useState } from "@odoo/owl";
@@ -34,7 +35,7 @@ export class MrpWorkcenterDialog extends ConfirmationDialog {
     }
 
     get appName() {
-        return encodeURIComponent(this.menu.getCurrentApp().name);
+        return encodeURIComponent(this.menu.getCurrentApp()?.name || _t("Shop Floor"));
     }
 
     get active() {
