@@ -580,7 +580,7 @@ class AccountBankStatementLine(models.Model):
             'account_id': self.journal_id.suspense_account_id.id,
             'balance': -open_balance,
             'currency_id': currency.id,
-            'amount_currency': -open_amount_currency if is_same_currency else currency.with_company(self.company_id).round(-open_balance * currency.rate),
+            'amount_currency': -open_amount_currency if is_same_currency else currency.round(-open_balance * currency.with_company(self.company_id).rate),
         }
 
     def _get_partner_id(self, lines_to_add_partner_ids):
