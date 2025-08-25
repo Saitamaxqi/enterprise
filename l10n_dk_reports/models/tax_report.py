@@ -45,6 +45,8 @@ class DanishReportCustomHandler(models.AbstractModel):
         wizard = self.env['l10n_dk_reports.tax.report.calendar.wizard'].create({
             'report_id': options['report_id'],
             'company_id': self.env.company.id,
+            'date_from': options['date']['date_from'],
+            'date_to': options['date']['date_to'],
         })
         return wizard._get_records_action(
             name=_('Tax Report RSU Calendar'),

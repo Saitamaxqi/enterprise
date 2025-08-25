@@ -34,19 +34,25 @@ class DenmarkSalesReportTest(AccountSalesReportCommon):
         report = self.env.ref('l10n_dk_reports.denmark_ec_sales_report')
         options = report.get_options({'date': {'mode': 'range', 'filter': 'this_month'}})
 
+        # We need VAT number without country code, to do that, we're checking if both 2
+        # first characters are alpha, and we keep the rest without these 2 characters.
+        # We could use get_cc_module from stdnum, but it's a bit overkill in tests.
+        partner_a_vat = self.partner_a.vat[2:] if self.partner_a.vat[:2].isalpha() else self.partner_a.vat
+        partner_b_vat = self.partner_b.vat[2:] if self.partner_b.vat[:2].isalpha() else self.partner_b.vat
+
         self.assertLinesValues(
             report._get_lines(options),
             [   0,                      1,                                  2,                      3,                                      4,                                      5,                                      6],
             [
-                (self.partner_a.name,   self.partner_a.country_id.code,     self.partner_a.vat,     f'kr{NON_BREAKING_SPACE}6,000',      f'kr{NON_BREAKING_SPACE}7,000',      f'kr{NON_BREAKING_SPACE}0',          f'kr{NON_BREAKING_SPACE}13,000'),
-                (self.partner_b.name,   self.partner_b.country_id.code,     self.partner_b.vat,     f'kr{NON_BREAKING_SPACE}0',          f'kr{NON_BREAKING_SPACE}4,000',      f'kr{NON_BREAKING_SPACE}2,000',      f'kr{NON_BREAKING_SPACE}6,000'),
+                (self.partner_a.name,   self.partner_a.country_id.code,     partner_a_vat,          f'kr{NON_BREAKING_SPACE}6,000',      f'kr{NON_BREAKING_SPACE}7,000',      f'kr{NON_BREAKING_SPACE}0',          f'kr{NON_BREAKING_SPACE}13,000'),
+                (self.partner_b.name,   self.partner_b.country_id.code,     partner_b_vat,          f'kr{NON_BREAKING_SPACE}0',          f'kr{NON_BREAKING_SPACE}4,000',      f'kr{NON_BREAKING_SPACE}2,000',      f'kr{NON_BREAKING_SPACE}6,000'),
                 ('Total',               '',                                 '',                     f'kr{NON_BREAKING_SPACE}6,000',      f'kr{NON_BREAKING_SPACE}11,000',     f'kr{NON_BREAKING_SPACE}2,000',      f'kr{NON_BREAKING_SPACE}19,000'),
             ],
             options
         )
 
         correct_report = (
-            '0,58403288,LIST,,,,,,\r\n'
+            '0,58403288,LISTE,,,,,,\r\n'
             '2,0,2019-12-31,58403288,FR,23334175221,6000,0,7000\r\n'
             '2,1,2019-12-31,58403288,BE,0477472701,0,2000,4000\r\n'
             '10,2,19000,,,,,,\r\n'
@@ -54,4 +60,4 @@ class DenmarkSalesReportTest(AccountSalesReportCommon):
 
         gen_report = self.env[report.custom_handler_model_name].export_sales_report_to_csv(options)['file_content'].decode()
 
-        self.assertEqual(gen_report, correct_report, "Error creating KVR")
+        self.assertEqual(correct_report, gen_report, "Error creating KVR")

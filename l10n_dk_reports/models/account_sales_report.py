@@ -35,7 +35,7 @@ class L10n_DkEcSalesReportHandler(models.AbstractModel):
 
             for column_group_key in options['column_groups']:
                 partner_sum = results.get(column_group_key, {})
-                partner_values[column_group_key]['vat_number'] = partner_sum.get('full_vat_number', '')
+                partner_values[column_group_key]['vat_number'] = partner_sum.get('vat_number', '')
                 partner_values[column_group_key]['country_code'] = partner_sum.get('country_code', 'UNKNOWN')
                 partner_values[column_group_key]['goods'] = partner_sum.get('goods', 0.0)
                 partner_values[column_group_key]['services'] = partner_sum.get('services', 0.0)
@@ -90,19 +90,18 @@ class L10n_DkEcSalesReportHandler(models.AbstractModel):
         colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
         report = self.env['account.report'].browse(options['report_id'])
 
-        company = self.env.company
-        cvr_number = company.company_registry
+        cvr_number = self.env.company.company_registry
         if not cvr_number:
             raise RedirectWarning(
-                    _('No CVR number associated with your company.'),
-                    self.env.ref('base.action_res_company_form').id,
-                    _("Change the VAT number")
-                )
+                _("No CVR number associated with your company."),
+                self.env.ref('base.action_res_company_form').id,
+                _("Add CVR number")
+            )
 
         # First heading line:
-        # Always start with 0, then our CVR number, then the word LIST, rest is empty
+        # Always start with 0, then our CVR number, then the word LISTE, rest is empty
         csv_lines = [
-            [0, cvr_number, 'LIST', '', '', '', '', '', ''],
+            [0, cvr_number, 'LISTE', '', '', '', '', '', ''],
         ]
 
         # We don't need formatting since we just need raw data
@@ -143,7 +142,7 @@ class L10n_DkEcSalesReportHandler(models.AbstractModel):
                     date_formatted,
                     cvr_number,
                     country_code,
-                    customer_vat[2:],
+                    customer_vat,
                     round(line['columns'][colname_to_idx['goods']].get('no_format', 0)),
                     round(line['columns'][colname_to_idx['triangular']].get('no_format', 0)),
                     round(line['columns'][colname_to_idx['services']].get('no_format', 0)),
