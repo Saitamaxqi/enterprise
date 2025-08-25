@@ -510,8 +510,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_long_sick').id,
         })
 
-        cls.paid_time_off_type_2019 = cls.env['hr.leave.type'].create({
-            'name': "Paid Time Off 2019",
+        cls.paid_time_off_type = cls.env['hr.leave.type'].create({
+            'name': "Paid Time Off",
             'requires_allocation': True,
             'employee_requests': False,
             'allocation_validation_type': 'hr',
@@ -520,15 +520,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_legal_leave').id,
         })
 
-        cls.paid_time_off_type_2020 = cls.env['hr.leave.type'].create({
-            'name': "Paid Time Off 2020",
-            'requires_allocation': True,
-            'employee_requests': False,
-            'allocation_validation_type': 'hr',
-            'leave_validation_type': 'both',
-            'company_id': cls.env.company.id,
-            'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_legal_leave').id,
-        })
+        cls.env.company.l10n_be_legal_time_off_type = cls.paid_time_off_type
 
         cls.unpaid_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Unpaid',
@@ -595,7 +587,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.allocation_2019 = cls.env['hr.leave.allocation'].create({
             'name': 'Paid Time Off - 2019',
-            'holiday_status_id': cls.paid_time_off_type_2019.id,
+            'holiday_status_id': cls.paid_time_off_type.id,
             'number_of_days': 20,
             'employee_id': cls.employee.id,
             'date_from': datetime.date(2019, 1, 1),
@@ -604,7 +596,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.allocation_2020 = cls.env['hr.leave.allocation'].create({
             'name': 'Paid Time Off - 2020',
-            'holiday_status_id': cls.paid_time_off_type_2020.id,
+            'holiday_status_id': cls.paid_time_off_type.id,
             'number_of_days': 20,
             'employee_id': cls.employee.id,
             'date_from': datetime.date(2020, 1, 1),
@@ -626,7 +618,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.legal_leave_2019 = cls.env['hr.leave'].create({
             'name': 'Legal Time Off 2019',
-            'holiday_status_id': cls.paid_time_off_type_2019.id,
+            'holiday_status_id': cls.paid_time_off_type.id,
             'date_from': datetime.datetime(2019, 5, 6, 1, 0, 0),
             'date_to': datetime.datetime(2019, 5, 31, 23, 0, 0),
             'request_date_from': datetime.datetime(2019, 5, 6, 1, 0, 0),
@@ -637,7 +629,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
         cls.legal_leave_2020 = cls.env['hr.leave'].create({
             'name': 'Legal Time Off 2020',
-            'holiday_status_id': cls.paid_time_off_type_2020.id,
+            'holiday_status_id': cls.paid_time_off_type.id,
             'date_from': datetime.datetime(2020, 1, 13, 1, 0, 0),
             'date_to': datetime.datetime(2020, 1, 17, 23, 0, 0),
             'request_date_from': datetime.datetime(2020, 1, 13, 1, 0, 0),
@@ -3573,7 +3565,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(len(self.holiday_pay_2019.worked_days_line_ids), 0)
         self.assertEqual(len(self.holiday_pay_2019.input_line_ids), 6)
         self.assertEqual(len(self.holiday_pay_2019.line_ids), 27)
-        payslip_results = {'BASIC_PAY_SIMPLE': 2508.58, 'SIMPLE_PAY_DECEMBER': 0.0, 'PAY_SIMPLE': 2508.58, 'DOUBLE_BASIC': 2965.37, 'EUROPEAN': -1384.62, 'DHALREADYPAID': 0.0, 'DOUBLE_PAY_DECEMBER': 0.0, 'PAY DOUBLE': 1580.75, 'CDHBASIC': 202.24, 'CDHALREADYPAID': 0.0, 'COMP_DOUBLE_PAY_DECEMBER': 0.0, 'PAY DOUBLE COMPLEMENTARY': 202.24, 'BASIC': 4291.57, 'ONSS1': -327.87, 'ONSS2': -206.6, 'ONSSTOTAL': 534.48, 'GROSS': 3757.1, 'PROF_TAX': -1365.33, 'PPTOTAL': 1365.33, 'NET': 2391.77, 'ONSSEMPLOYERBASIC': 627.65, 'ONSSEMPLOYERFFE': 3.26, 'ONSSEMPLOYERMFFE': 2.51, 'ONSSEMPLOYERCPAE': 5.77, 'ONSSEMPLOYERRESTREINT': 42.39, 'ONSSEMPLOYERUNEMP': 2.51, 'ONSSEMPLOYER': 684.09}
+        payslip_results = {'BASIC_PAY_SIMPLE': 2508.58, 'SIMPLE_PAY_DECEMBER': 0.0, 'PAY_SIMPLE': 2508.58, 'DOUBLE_BASIC': 2965.37, 'EUROPEAN': -1384.62, 'DHALREADYPAID': 0.0, 'DOUBLE_PAY_DECEMBER': 0.0, 'PAY DOUBLE': 1580.75, 'CDHBASIC': 379.39, 'CDHALREADYPAID': 0.0, 'COMP_DOUBLE_PAY_DECEMBER': 0.0, 'PAY DOUBLE COMPLEMENTARY': 379.39, 'BASIC': 4468.72, 'ONSS1': -327.87, 'ONSS2': -206.6, 'ONSSTOTAL': 534.48, 'GROSS': 3934.25, 'PROF_TAX': -1429.71, 'PPTOTAL': 1429.71, 'NET': 2504.54, 'ONSSEMPLOYERBASIC': 627.65, 'ONSSEMPLOYERFFE': 3.26, 'ONSSEMPLOYERMFFE': 2.51, 'ONSSEMPLOYERCPAE': 5.77, 'ONSSEMPLOYERRESTREINT': 42.39, 'ONSSEMPLOYERUNEMP': 2.51, 'ONSSEMPLOYER': 684.09}
         self._validate_payslip(self.holiday_pay_2019, payslip_results)
 
     def test_work_incapacity_due_to_illness(self):
@@ -4233,7 +4225,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(len(termination_payslip.input_line_ids), 11)
         self.assertEqual(len(termination_payslip.line_ids), 27)
 
-        payslip_results = {'BASIC_PAY_SIMPLE': 2508.58, 'SIMPLE_PAY_DECEMBER': 20.0, 'PAY_SIMPLE': 2528.58, 'DOUBLE_BASIC': 2965.37, 'EUROPEAN': 0.0, 'DHALREADYPAID': -10.0, 'DOUBLE_PAY_DECEMBER': 20.0, 'PAY DOUBLE': 2975.37, 'CDHBASIC': 380.67, 'CDHALREADYPAID': -10.0, 'COMP_DOUBLE_PAY_DECEMBER': 20.0, 'PAY DOUBLE COMPLEMENTARY': 390.67, 'BASIC': 5894.62, 'ONSS1': -330.48, 'ONSS2': -388.88, 'ONSSTOTAL': 719.37, 'GROSS': 5175.26, 'PROF_TAX': -1619.86, 'PPTOTAL': 1619.86, 'NET': 3555.4, 'ONSSEMPLOYERBASIC': 632.65, 'ONSSEMPLOYERFFE': 3.29, 'ONSSEMPLOYERMFFE': 2.53, 'ONSSEMPLOYERCPAE': 5.82, 'ONSSEMPLOYERRESTREINT': 42.73, 'ONSSEMPLOYERUNEMP': 2.53, 'ONSSEMPLOYER': 689.54}
+        payslip_results = {'BASIC_PAY_SIMPLE': 2508.58, 'SIMPLE_PAY_DECEMBER': 20.0, 'PAY_SIMPLE': 2528.58, 'DOUBLE_BASIC': 2965.37, 'EUROPEAN': 0.0, 'DHALREADYPAID': -10.0, 'DOUBLE_PAY_DECEMBER': 20.0, 'PAY DOUBLE': 2975.37, 'CDHBASIC': 379.39, 'CDHALREADYPAID': -10.0, 'COMP_DOUBLE_PAY_DECEMBER': 20.0, 'PAY DOUBLE COMPLEMENTARY': 389.39, 'BASIC': 5893.34, 'ONSS1': -330.48, 'ONSS2': -388.88, 'ONSSTOTAL': 719.37, 'GROSS': 5173.98, 'PROF_TAX': -1619.45, 'PPTOTAL': 1619.45, 'NET': 3554.52, 'ONSSEMPLOYERBASIC': 632.65, 'ONSSEMPLOYERFFE': 3.29, 'ONSSEMPLOYERMFFE': 2.53, 'ONSSEMPLOYERCPAE': 5.82, 'ONSSEMPLOYERRESTREINT': 42.73, 'ONSSEMPLOYERUNEMP': 2.53, 'ONSSEMPLOYER': 689.54}
         self._validate_payslip(termination_payslip, payslip_results)
 
     def test_termination_holidays_pp_no_exoneration_no_reduction(self):

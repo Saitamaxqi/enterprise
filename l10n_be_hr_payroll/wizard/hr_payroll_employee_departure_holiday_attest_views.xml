@@ -5,112 +5,95 @@
         <field name="model">hr.payslip.employee.depature.holiday.attests</field>
         <field name="arch" type="xml">
             <form string="Employee Departure - Holiday Attests">
+                <field name="currency_id" invisible="1"/> <!-- For monetary fields -->
                 <group class="o_label_nowrap">
                     <group>
                         <field name="employee_id" widget="many2one_avatar_employee"/>
                     </group>
-                </group>
-                <div class="o_horizontal_separator mb-3 text-uppercase fw-bolder small">Payslip</div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm">
-                            Taking into account for remuneration:
-                            <ul>
-                                <li>Fixed and variable remuneration</li>
-                                <li>Overtime worked</li>
-                                <li>Benefits in kind and bonuses</li>
-                                <li>Remuneration of statutory holidays occurring within 30 days of the end date of the contract</li>
-                                <li>End-of-year bonus, 13th month or other similar amount</li>
-                                <li>Beneficiary holdings</li>
-                                <li>Various bonuses</li>
-                            </ul>
-                        </div>
-                        <div class="col-sm">
-                            We draw your attention to the fact that this information is based on the data in Odoo and / or that you
-                            have introduced in Odoo and that it is important that they be accompanied by a verification on your part
-                            according to the particularities related to contract of the worker or your company which Odoo would not
-                            know.
-                        </div>
-                    </div>
-                </div>
-                <group class="o_label_nowrap mb-4" string="Payslip current year">
-                    <field name="payslip_n_ids" nolabel="1" colspan="2">
-                        <list>
-                            <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
-                            <field name="date_from" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="date_to" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'verify']"/>
-                            <field name="basic_wage" sum="Total basic wage"/>
-                            <field name="gross_wage" sum="Total gross wage"/>
-                            <field name="net_wage" sum="Total net wage"/>
-                            <field name="state"/>
-                        </list>
-                    </field>
-                    <group>
-                        <field name="net_n"/>
+                    <group/>
+                    <group string="Payroll" colspan="2">
+                        <label for="net_n1"/>
+                        <span class="o_row">
+                            <field name="net_n1" class="o_hr_narrow_field"/>
+                            <widget name="payslips_internal_link" payslips_year="n1"/>
+                        </span>
+                        <label for="net_n"/>
+                        <span class="o_row">
+                            <field name="net_n" class="o_hr_narrow_field"/>
+                            <widget name="payslips_internal_link" payslips_year="n"/>
+                        </span>
                     </group>
-                </group>
-                <group class="o_label_nowrap" string="Payslip previous year">
-                    <field name="payslip_n1_ids" nolabel="1" colspan="2">
-                        <list>
-                            <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
-                            <field name="date_from" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="date_to" readonly="state in ['cancel', 'done', 'paid']"/>
-                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'verify']"/>
-                            <field name="basic_wage" sum="Total basic wage"/>
-                            <field name="gross_wage" sum="Total gross wage"/>
-                            <field name="net_wage" sum="Total net wage"/>
-                            <field name="state"/>
-                        </list>
-                    </field>
-                    <group>
-                        <field name="net_n1"/>
-                    </group>
-                </group>
-                <group class="o_label_nowrap" string="Allocation Time Off">
-                    <field name="time_off_allocation_n_ids" nolabel="1" colspan="2">
-                        <list>
-                            <field name="holiday_status_id" readonly="state in ['cancel', 'refuse', 'validate', 'validate1']"/>
-                            <field name="name"/>
-                            <field name="number_of_days" sum="Total allocated days"/>
-                            <field name="state"/>
-                        </list>
-                    </field>
-                    <group>
-                        <field name="time_off_allocated"/>
-                    </group>
-                </group>
-                <group class="o_label_nowrap" string="Time Off">
-                    <field name="time_off_n_ids" nolabel="1" colspan="2">
-                        <list>
-                            <field name="name"/>
-                            <field name="date_from" readonly="state in ['cancel', 'refuse', 'validate', 'validate1']"/>
-                            <field name="date_to" readonly="state in ['cancel', 'refuse', 'validate', 'validate1']"/>
-                            <field name="number_of_days" sum="Total time off days"/>
-                            <field name="state"/>
-                        </list>
-                    </field>
-                    <group>
-                        <field name="time_off_taken"/>
-                    </group>
-                </group>
-                <group string="Unpaid Time Off">
-                    <group>
-                        <field name="unpaid_time_off_n"/>
-                        <field name="unpaid_average_remunaration_n"/>
-                        <field name="fictitious_remuneration_n"/>
+                    <group string="Time Off" colspan="2">
+                        <field name="time_off_line_ids" nolabel="1" colspan="2">
+                            <list create="0" no_open="1" delete="0">
+                                <field name="year" options="{'enable_formatting': false}"/>
+                                <field name="leave_type_id"/>
+                                <field name="leave_allocation_count" string="Allocated"/>
+                                <field name="leave_count" string="Taken"/>
+                            </list>
+                        </field>
                     </group>
                     <group>
-                        <field name="unpaid_time_off_n1"/>
-                        <field name="unpaid_average_remunaration_n1"/>
-                        <field name="fictitious_remuneration_n1"/>
+                        <field name="fictitious_remuneration_n1" invisible="not fictitious_remuneration_n1 and not fictitious_remuneration_n"/>
+                        <field name="gross_reference_remuneration_n1" invisible="not fictitious_remuneration_n1 and not fictitious_remuneration_n"/>
+                    </group>
+                    <group>
+                        <field name="fictitious_remuneration_n" invisible="not fictitious_remuneration_n1 and not fictitious_remuneration_n"/>
+                        <field name="gross_reference_remuneration_n" invisible="not fictitious_remuneration_n1 and not fictitious_remuneration_n"/>
                     </group>
                 </group>
-
                 <footer>
                     <button name="compute_termination_holidays" string="Validate &amp; Compute holiday attests" type="object" class="oe_highlight" data-hotkey="q"/>
                     <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_payroll_employee_departure_holiday_attests_n_payslips" model="ir.ui.view">
+        <field name="name">view_hr_payroll_employee_departure_holiday_attests_n_payslips</field>
+        <field name="model">hr.payslip.employee.depature.holiday.attests</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="currency_id" invisible="1"/> <!-- For monetary fields -->
+                <group>
+                    <field name="payslip_n_ids" nolabel="1" colspan="2">
+                        <list create="0" delete="0">
+                            <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
+                            <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'hide_in_payrun': 1}" readonly="state in ['cancel', 'done', 'paid']"/>
+                            <field name="date_to" invisible="1" column_invisible="1" readonly="state in ['cancel', 'done', 'paid']"/>
+                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'verify']"/>
+                            <field name="basic_wage" sum="Total basic wage" optional="hide"/>
+                            <field name="gross_wage" string="Taxable Wage" sum="Total taxable wage" optional="hide"/>
+                            <field name="net_wage" sum="Total net wage" optional="hide"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'verify'" decoration-success="state == 'done'" decoration-primary="state == 'paid'"/>
+                        </list>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_payroll_employee_departure_holiday_attests_n1_payslips" model="ir.ui.view">
+        <field name="name">view_hr_payroll_employee_departure_holiday_attests_n1_payslips</field>
+        <field name="model">hr.payslip.employee.depature.holiday.attests</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="currency_id" invisible="1"/> <!-- For monetary fields -->
+                <group>
+                    <field name="payslip_n1_ids" nolabel="1" colspan="2">
+                        <list create="0" delete="0">
+                            <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
+                            <field name="date_from" string="Period" widget="daterange" options="{'end_date_field': 'date_to', 'hide_in_payrun': 1}" readonly="state in ['cancel', 'done', 'paid']"/>
+                            <field name="date_to" invisible="1" column_invisible="1" readonly="state in ['cancel', 'done', 'paid']"/>
+                            <field name="line_ids" column_invisible="True" readonly="state not in ['draft', 'verify']"/>
+                            <field name="basic_wage" sum="Total basic wage" optional="hide"/>
+                            <field name="gross_wage" string="Taxable Wage" sum="Total taxable wage" optional="hide"/>
+                            <field name="net_wage" sum="Total net wage" optional="hide"/>
+                            <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-warning="state == 'verify'" decoration-success="state == 'done'" decoration-primary="state == 'paid'"/>
+                        </list>
+                    </field>
+                </group>
             </form>
         </field>
     </record>

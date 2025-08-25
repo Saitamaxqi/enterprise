@@ -69,7 +69,7 @@ result= max(0, result_rules['DOUBLE_BASIC']['total'] + result_rules['EUROPEAN'][
         <field name="amount_python_compute">
 result_qty = 1
 result_rate = 0.87
-result = result_rules['PAY DOUBLE']['total'] / 0.068
+result = result_rules['DOUBLE_BASIC']['total'] / 0.068
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n_holidays"/>
     </record>
