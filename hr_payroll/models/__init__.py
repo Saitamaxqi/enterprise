@@ -6,7 +6,6 @@ from . import res_config_settings
 from . import hr_payroll_dashboard_warning
 from . import hr_payroll_structure
 from . import hr_payroll_structure_type
-from . import hr_payroll_master_report
 from . import hr_salary_rule
 from . import hr_salary_rule_category
 from . import hr_payslip

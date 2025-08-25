@@ -114,12 +114,6 @@
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
 
-    <record id="ir_rule_hr_payroll_master_report" model="ir.rule">
-        <field name="name">HR Payroll Master Report: Multi Company</field>
-        <field name="model_id" ref="model_hr_payroll_master_report"/>
-        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
-    </record>
-
     <record id="ir_rule_hr_payroll_dashboard_warning_multi_company" model="ir.rule">
         <field name="name">HR Payroll Dashboard Warning: Multi Company</field>
         <field name="model_id" ref="model_hr_payroll_dashboard_warning"/>
