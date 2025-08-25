@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="l10n_dk_reports_rsu_tax_report_calendar_wizard_form" model="ir.ui.view">
-        <field name="name">l10n_dk_rsu.tax.report.calendar.wizard.view.form</field>
-        <field name="model">l10n_dk_rsu.tax.report.calendar.wizard</field>
+        <field name="name">l10n_dk_reports.tax.report.calendar.wizard.view.form</field>
+        <field name="model">l10n_dk_reports.tax.report.calendar.wizard</field>
         <field name="arch" type="xml">
             <form string="Danish tax report - Calendar service">
                 <sheet>
@@ -21,8 +21,8 @@
     </record>
 
     <record id="l10n_dk_reports_rsu_tax_report_submit_draft_wizard_form" model="ir.ui.view">
-        <field name="name">l10n_dk_rsu.tax.report.submit.draft.wizard.view.form</field>
-        <field name="model">l10n_dk_rsu.tax.report.submit.draft.wizard</field>
+        <field name="name">l10n_dk_reports.tax.report.submit.draft.wizard.view.form</field>
+        <field name="model">l10n_dk_reports.tax.report.submit.draft.wizard</field>
         <field name="arch" type="xml">
             <form string="Danish tax report - Submit draft">
                 <sheet>
@@ -50,8 +50,8 @@
     </record>
 
     <record id="l10n_dk_reports_rsu_tax_report_receipt_wizard_form" model="ir.ui.view">
-        <field name="name">l10n_dk_rsu.tax.report.receipt.wizard.view.form</field>
-        <field name="model">l10n_dk_rsu.tax.report.receipt.wizard</field>
+        <field name="name">l10n_dk_reports.tax.report.receipt.wizard.view.form</field>
+        <field name="model">l10n_dk_reports.tax.report.receipt.wizard</field>
         <field name="arch" type="xml">
             <form string="Danish tax report - Receipt">
                 <sheet>

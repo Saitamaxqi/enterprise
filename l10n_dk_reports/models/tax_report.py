@@ -42,7 +42,7 @@ class DanishReportCustomHandler(models.AbstractModel):
 
     @api.model
     def action_send_tax_report_rsu(self, options):
-        wizard = self.env['l10n_dk_rsu.tax.report.calendar.wizard'].create({
+        wizard = self.env['l10n_dk_reports.tax.report.calendar.wizard'].create({
             'report_id': options['report_id'],
             'company_id': self.env.company.id,
         })

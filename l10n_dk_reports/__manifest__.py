@@ -25,6 +25,11 @@ Accounting reports for Denmark
         'data/saft_report.xml',
         'data/documents_file_data.xml',
         'views/account_journal_dashboard.xml',
+        'security/ir.model.access.csv',
+        'views/account_return_views.xml',
+        'data/tax_report.xml',
+        'views/template_rsu.xml',
+        'wizard/tax_report_wizard.xml',
     ],
     'auto_install': [
         'l10n_dk',

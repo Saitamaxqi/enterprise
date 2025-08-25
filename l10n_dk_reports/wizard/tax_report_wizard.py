@@ -30,7 +30,7 @@ class FrequencyCode(Enum):
 
 
 class L10nDkTaxReportRSUCalendarWizard(models.TransientModel):
-    _name = 'l10n_dk_rsu.tax.report.calendar.wizard'
+    _name = 'l10n_dk_reports.tax.report.calendar.wizard'
     _description = 'L10n DK Tax Report calendar service RSU'
 
     date_from = fields.Date(string="Period Starting Date")
@@ -51,7 +51,7 @@ class L10nDkTaxReportRSUCalendarWizard(models.TransientModel):
         self._check_call_company_calendar()
 
         # Creation - body of the request
-        body = self.env['ir.qweb']._render('l10n_dk_rsu.calendarService', {
+        body = self.env['ir.qweb']._render('l10n_dk_reports.calendarService', {
             'transaction_id': uuid4(),
             'transaction_time': fields.Datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
             'company_registry': self.company_id.company_registry,
@@ -102,7 +102,7 @@ class L10nDkTaxReportRSUCalendarWizard(models.TransientModel):
             fields.Date.to_date(response_info.get('deadline_date')),
         )
 
-        wizard_info = self.env['l10n_dk_rsu.tax.report.submit.draft.wizard'].create({
+        wizard_info = self.env['l10n_dk_reports.tax.report.submit.draft.wizard'].create({
             'frequency_code': response_info.get('frequency_code'),
             'start_date': response_info.get('start_date'),
             'deadline_date': response_info.get('deadline_date'),
@@ -180,7 +180,7 @@ class L10nDkTaxReportRSUCalendarWizard(models.TransientModel):
 
 
 class L10nDkTaxReportRSUSubmitDraftWizard(models.TransientModel):
-    _name = 'l10n_dk_rsu.tax.report.submit.draft.wizard'
+    _name = 'l10n_dk_reports.tax.report.submit.draft.wizard'
     _description = 'L10n DK Tax Report Submit Draft service RSU'
 
     frequency_code = fields.Selection(
@@ -219,7 +219,7 @@ class L10nDkTaxReportRSUSubmitDraftWizard(models.TransientModel):
         def get_line_value_from_xmlid(lines, xmlid):
             return self.env.company.currency_id.round(self.env['account.report']._get_line_from_xml_id(lines, xmlid)['columns'][0]['no_format'])
 
-        body = self.env['ir.qweb']._render('l10n_dk_rsu.submitDraftService', {
+        body = self.env['ir.qweb']._render('l10n_dk_reports.submitDraftService', {
             'transaction_id': uuid4(),
             'transaction_time': fields.Datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
             'company_registry': self.company_id.company_registry,
@@ -265,7 +265,7 @@ class L10nDkTaxReportRSUSubmitDraftWizard(models.TransientModel):
         if transaction_identifier is None:
             raise UserError(_("The information entered give an empty result"))
 
-        wizard_info = self.env['l10n_dk_rsu.tax.report.receipt.wizard'].create({
+        wizard_info = self.env['l10n_dk_reports.tax.report.receipt.wizard'].create({
             'transaction_identifier': transaction_identifier[-1].text,
             'link': find_xml_value('.//urn1:UrlIndicator', response_tree, namespaces=URN1_NAMESPACE),
             'company_id': self.company_id.id,
@@ -278,7 +278,7 @@ class L10nDkTaxReportRSUSubmitDraftWizard(models.TransientModel):
 
 
 class L10nDkTaxReportRSUReceiptWizard(models.TransientModel):
-    _name = 'l10n_dk_rsu.tax.report.receipt.wizard'
+    _name = 'l10n_dk_reports.tax.report.receipt.wizard'
     _description = 'L10n DK Tax Report receipt service RSU'
 
     link = fields.Char()
@@ -298,7 +298,7 @@ class L10nDkTaxReportRSUReceiptWizard(models.TransientModel):
         self.ensure_one()
 
         ReportHandler = self.env['l10n_dk.tax.report.handler']
-        body = self.env['ir.qweb']._render('l10n_dk_rsu.receiptService', {
+        body = self.env['ir.qweb']._render('l10n_dk_reports.receiptService', {
             'transaction_id': uuid4(),
             'transaction_time': fields.Datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
             'received_transaction_identifier': self.transaction_identifier,

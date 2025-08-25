@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="l10n_dk_rsu.calendarService" name="Calendar Service">
+    <template id="l10n_dk_reports.calendarService" name="Calendar Service">
         <ns4:VirksomhedKalenderHent_I xmlns="http://rep.oio.dk/skat.dk/basis/kontekst/xml/schemas/2006/09/01/"
                                       xmlns:ns2="http://rep.oio.dk/skat.dk/motor/class/virksomhed/xml/schemas/20080401/"
                                       xmlns:ns3="urn:oio:skat:nemvirksomhed:1.0.0"
@@ -20,7 +20,7 @@
         </ns4:VirksomhedKalenderHent_I>
     </template>
 
-    <template id="l10n_dk_rsu.submitDraftService" name="Submit Draft Service">
+    <template id="l10n_dk_reports.submitDraftService" name="Submit Draft Service">
         <ns3:ModtagMomsangivelseForeloebig_I xmlns="http://rep.oio.dk/skat.dk/basis/kontekst/xml/schemas/2006/09/01/"
                                              xmlns:ns2="http://rep.oio.dk/skat.dk/motor/class/virksomhed/xml/schemas/20080401/"
                                              xmlns:ns3="urn:oio:skat:nemvirksomhed:ws:1.0.0"
@@ -60,7 +60,7 @@
         </ns3:ModtagMomsangivelseForeloebig_I>
     </template>
 
-    <template id="l10n_dk_rsu.receiptService" name="Receipt Service">
+    <template id="l10n_dk_reports.receiptService" name="Receipt Service">
         <ns4:MomsangivelseKvitteringHent_I xmlns="http://rep.oio.dk/skat.dk/basis/kontekst/xml/schemas/2006/09/01/"
                                            xmlns:ns2="urn:oio:skat:nemvirksomhed:1.0.0"
                                            xmlns:ns3="http://rep.oio.dk/skat.dk/motor/class/virksomhed/xml/schemas/20080401/"

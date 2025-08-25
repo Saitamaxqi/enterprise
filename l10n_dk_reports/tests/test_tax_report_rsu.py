@@ -2,7 +2,7 @@ from datetime import datetime
 from odoo import fields
 from odoo.tests import tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
-from odoo.addons.l10n_dk_rsu.wizard.tax_report_wizard import FrequencyCode
+from odoo.addons.l10n_dk_reports.wizard.tax_report_wizard import FrequencyCode
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -13,7 +13,7 @@ class TestL10nDKTaxReportRSU(TestAccountReportsCommon):
         super().setUpClass()
 
     def test_calculate_settlement_period(self):
-        wizard = self.env['l10n_dk_rsu.tax.report.calendar.wizard'].new({})
+        wizard = self.env['l10n_dk_reports.tax.report.calendar.wizard'].new({})
         # test immediately
         res1, res2 = wizard._calculate_settlement_period(FrequencyCode.IMMEDIATELY_FREQUENCY_CODE, datetime(day=27, month=2, year=2023))
         self.assertEqual(res1, datetime(day=27, month=2, year=2023))
