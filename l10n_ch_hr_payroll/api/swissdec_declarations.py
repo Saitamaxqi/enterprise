@@ -893,14 +893,10 @@ class SwissdecDeclaration:
 
     def _get_contact_person(self, company_id):
         contact_person = dict()
-        if company_id.l10n_ch_contact_person_name:
+        if company_id.l10n_ch_contact_person_name and company_id.l10n_ch_contact_person_email and company_id.l10n_ch_contact_person_phone:
             contact_person["Name"] = company_id.l10n_ch_contact_person_name
-        if company_id.l10n_ch_contact_person_email:
             contact_person["EmailAddress"] = company_id.l10n_ch_contact_person_email
-        if company_id.l10n_ch_contact_person_phone:
             contact_person["PhoneNumber"] = company_id.l10n_ch_contact_person_phone
-
-        if contact_person:
             return {
                 "ContactPerson": contact_person
             }
