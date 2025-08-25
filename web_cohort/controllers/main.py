@@ -78,20 +78,7 @@ class WebCohort(http.Controller):
 
             return row
 
-        report_length = len(result['report']['rows'])
-        comparison_report = result.get('comparisonReport', False)
-        if comparison_report:
-            comparison_report_length = len(comparison_report['rows'])
-
-        if comparison_report:
-            if report_length:
-                row = write_data('report', row, 0)
-                if comparison_report_length:
-                    write_data('comparisonReport', row + 2, 0)
-            elif comparison_report_length:
-                write_data('comparisonReport', row, 0)
-        else:
-            row = write_data('report', row, 0)
+        row = write_data('report', row, 0)
 
         workbook.close()
         xlsx_data = output.getvalue()

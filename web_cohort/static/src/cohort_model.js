@@ -27,9 +27,7 @@ export class CohortModel extends Model {
         this.keepLast = new KeepLast();
         this.race = new Race();
         const _load = this._load.bind(this);
-        this._load = (...args) => {
-            return this.race.add(_load(...args));
-        };
+        this._load = (...args) => this.race.add(_load(...args));
 
         this.metaData = params;
         this.data = null;
@@ -47,8 +45,7 @@ export class CohortModel extends Model {
      */
     load(searchParams) {
         const { context, domain } = searchParams;
-        this.searchParams = { context };
-        this.searchParams.domains = [{ arrayRepr: domain, description: null }];
+        this.searchParams = { context, domain };
         const { cohort_interval, cohort_measure } = searchParams.context;
         this.metaData.interval = cohort_interval || this.metaData.interval;
 
@@ -70,7 +67,7 @@ export class CohortModel extends Model {
      * @override
      */
     hasData() {
-        return this.data.some((data) => data.rows.length > 0);
+        return this.data.rows.length > 0;
     }
 
     /**
@@ -93,12 +90,9 @@ export class CohortModel extends Model {
      */
     async _load(metaData) {
         this.data = await this.keepLast.add(this._fetchData(metaData));
-        for (const i in this.data) {
-            this.data[i].title = this.searchParams.domains[i].description;
-            this.data[i].rows.forEach((row) => {
-                row.columns = row.columns.filter((col) => col.percentage !== "");
-            });
-        }
+        this.data.rows.forEach((row) => {
+            row.columns = row.columns.filter((col) => col.percentage !== "");
+        });
     }
 
     /**
@@ -106,19 +100,16 @@ export class CohortModel extends Model {
      * @param {Object} metaData
      */
     async _fetchData(metaData) {
-        return Promise.all(
-            this.searchParams.domains.map(({ arrayRepr: domain }) => {
-                return this.orm.call(metaData.resModel, "get_cohort_data", [], {
-                    date_start: metaData.dateStart,
-                    date_stop: metaData.dateStop,
-                    measure: metaData.measure,
-                    interval: metaData.interval,
-                    domain: domain,
-                    mode: metaData.mode,
-                    timeline: metaData.timeline,
-                    context: this.searchParams.context,
-                });
-            })
-        );
+        const { context, domain } = this.searchParams;
+        return this.orm.call(metaData.resModel, "get_cohort_data", [], {
+            date_start: metaData.dateStart,
+            date_stop: metaData.dateStop,
+            measure: metaData.measure,
+            interval: metaData.interval,
+            domain,
+            mode: metaData.mode,
+            timeline: metaData.timeline,
+            context,
+        });
     }
 }

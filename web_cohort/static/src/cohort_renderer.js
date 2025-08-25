@@ -81,7 +81,6 @@ export class CohortRenderer extends Component {
             dateStopString,
             timeline,
         } = this.model.metaData;
-        const { domains } = this.model.searchParams;
         const data = {
             title: title,
             model: resModel,
@@ -90,10 +89,7 @@ export class CohortRenderer extends Component {
             date_start_string: dateStartString,
             date_stop_string: dateStopString,
             timeline: timeline,
-            rangeDescription: domains[0].description,
-            report: this.model.data[0],
-            comparisonRangeDescription: domains[1] && domains[1].description,
-            comparisonReport: this.model.data[1],
+            report: this.model.data,
         };
         this.env.services.ui.block();
         try {
