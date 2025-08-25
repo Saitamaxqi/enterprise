@@ -37,7 +37,7 @@ class CameraDriver(Driver):
             ["fswebcam", "-d", self.interface, "-r", "1920x1080", "-"], capture_output=True, check=False
         )
         if image.returncode == 0:
-            self.data['image'] = base64.b64encode(image.stdout)
+            self.data['image'] = base64.b64encode(image.stdout).decode()
             self.data['message'] = 'Image captured'
         else:
             _logger.error('Failed to capture image: %s', image.stderr.decode())

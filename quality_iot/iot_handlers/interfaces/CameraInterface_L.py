@@ -13,7 +13,7 @@ class CameraInterface(Interface):
         video_devices = {p.stat().st_rdev: p.name for p in Path('/dev').glob('video*')}
         for camera in CameraManager.singleton().cameras:
             properties = {key.name: value for key, value in camera.properties.items()}
-            identifier = f"camera-{properties['Location']}"
+            identifier = camera.id
 
             camera_devices[identifier] = {
                 'name': properties['Model'],
