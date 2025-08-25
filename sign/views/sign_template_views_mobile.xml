@@ -8,6 +8,7 @@
             <kanban>
                 <templates>
                     <div t-name="card">
+                        <field name="name" class="fw-bold"/>
                         <field name="create_date" class="fst-italic d-block"/>
                         <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                     </div>
