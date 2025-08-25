@@ -1427,6 +1427,7 @@ class SaleOrder(models.Model):
         currency = self.currency_id[:1]
         amount_total = sum(invoiceable_lines.mapped('price_total'))
         non_recurring_line = invoiceable_lines.filtered(lambda l: not l.recurring_invoice)
+        delivery_invoiceable_lines = invoiceable_lines.filtered(lambda l: l._is_postpaid_line() and l.qty_delivered)
         is_free, is_exception = False, False
         mrr = sum(self.mapped('recurring_monthly'))
         if currency.compare_amounts(mrr, 0) < 0 and non_recurring_line:
@@ -1434,10 +1435,10 @@ class SaleOrder(models.Model):
             # We don't know what to do
             is_free = True
             is_exception = True
-        elif currency.compare_amounts(amount_total, 0) < 1:
+        elif currency.compare_amounts(amount_total, 0) < 1 and not delivery_invoiceable_lines:
             # We can't create an invoice, it will be impossible to validate
             is_free = True
-        elif currency.compare_amounts(mrr, 0) < 1 and not non_recurring_line:
+        elif currency.compare_amounts(mrr, 0) < 1 and not non_recurring_line and not delivery_invoiceable_lines:
             # We have a recurring null/negative amount. It is not desired even if we have a non-recurring positive amount
             is_free = True
         return is_free, is_exception

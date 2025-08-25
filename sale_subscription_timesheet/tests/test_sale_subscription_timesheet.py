@@ -238,3 +238,49 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
         invoice = self.env['account.move'].browse(moves['res_id'])
 
         self.assertEqual(len(invoice.timesheet_ids), 2)
+
+    @freeze_time("2025-08-03")
+    def test_invoice_orders_if_delivery_qty(self):
+        """
+        Test invoicing order that has lines with delivery invoicing policy products
+        and has delivered quantity
+        """
+        subscription = self.env['sale.order'].create({
+            'name': 'CopyTestSubscriptionWithTimeSheet',
+            'is_subscription': True,
+            'plan_id': self.plan_month.id,
+            'note': "original subscription description",
+            'partner_id': self.user_portal.partner_id.id,
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_deliver_timesheet.id,
+                    'product_uom_qty': 0
+                }),
+            ],
+            'start_date': '2025-07-01',
+        })
+        subscription.action_confirm()
+        subscription.write({'next_invoice_date': '2025-08-01'})
+
+        task = self.env['project.task'].create({
+            'name': 'Test Task',
+            'project_id': self.project_global.id,
+            'sale_order_id': subscription.id,
+            'sale_line_id': subscription.order_line[0].id,
+        })
+        timesheet = self.env['account.analytic.line'].create([
+            {
+                'name': 'Test Include Line',
+                'date': '2025-07-15',
+                'project_id': task.project_id.id,
+                'task_id': task.id,
+                'unit_amount': 3,
+                'employee_id': self.employee_user.id,
+            },
+        ])
+
+        self.env['sale.order']._cron_recurring_create_invoice()
+
+        # An invoice should be created
+        self.assertTrue(subscription.invoice_ids)
+        self.assertEqual(subscription.invoice_ids.invoice_line_ids[0].quantity, timesheet.unit_amount)
