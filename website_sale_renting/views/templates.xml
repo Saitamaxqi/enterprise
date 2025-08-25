@@ -86,9 +86,6 @@
     </template>
 
     <template id="rental_product" inherit_id="website_sale.product" name="Select pickup Date and Return Date">
-        <xpath expr="//t[@t-set='combination_info']" position="attributes">
-            <attribute name="t-value">product.with_context(start_date=start_date, end_date=end_date)._get_combination_info()</attribute>
-        </xpath>
         <xpath expr="//div[@id='product_details']//t[@name='variant_info']" position="after">
             <div
                 t-if="combination_info.get('is_rental') and (not website.prevent_zero_price_sale or combination_info['current_rental_price'])"

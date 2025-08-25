@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from werkzeug import urls
-
 from odoo import fields
 from odoo.http import request, route
 
@@ -26,6 +24,15 @@ class WebsiteSaleRenting(WebsiteSale):
             end_date=kwargs.get('end_date'),
         )
         return result
+
+    @route()
+    def product(self, *args, start_date=None, end_date=None, **kwargs):
+        if start_date and end_date:
+            # if provided, forward dates to `_get_combination_info` call
+            start_date = fields.Datetime.to_datetime(start_date)
+            end_date = fields.Datetime.to_datetime(end_date)
+            request.update_context(start_date=start_date, end_date=end_date)
+        return super().product(*args, start_date=start_date, end_date=end_date, **kwargs)
 
     @route(
         '/rental/product/constraints',
@@ -70,16 +77,6 @@ class WebsiteSaleRenting(WebsiteSale):
         """
         return {}
 
-    def _prepare_product_values(self, product, category, start_date=None, end_date=None, **kwargs):
-        result = super()._prepare_product_values(
-            product, category, start_date=start_date, end_date=end_date, **kwargs
-        )
-        result.update(
-            start_date=fields.Datetime.to_datetime(start_date),
-            end_date=fields.Datetime.to_datetime(end_date),
-        )
-        return result
-
     def _get_additional_shop_values(self, values, start_date=None, end_date=None, **kwargs):
         vals = super()._get_additional_shop_values(
             values, start_date=start_date, end_date=end_date, **kwargs
@@ -87,10 +84,11 @@ class WebsiteSaleRenting(WebsiteSale):
         vals.update({'start_date': start_date, 'end_date': end_date})
         return vals
 
-    def _get_product_query_string(self, start_date=None, end_date=None, **kwargs):
-        query = urls.url_parse(
-            super()._get_product_query_string(start_date=start_date, end_date=end_date, **kwargs)
-        ).decode_query()
-        query['start_date'] = start_date
-        query['end_date'] = end_date
-        return urls.url_encode(query)
+    def _get_product_query_params(self, start_date=None, end_date=None, **kwargs):
+        res = super()._get_product_query_params(start_date=start_date, end_date=end_date, **kwargs)
+        if start_date is not None or end_date is not None:
+            res.update({
+                'start_date': start_date,
+                'end_date': end_date,
+            })
+        return res
