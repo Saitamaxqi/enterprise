@@ -40,6 +40,8 @@
                    pill_label="True"
                    scales="week,month"
                    default_range="month"
+                   total_row="1"
+                   progress_bar="employee_id"
                    precision="{'week': 'day:full', 'month': 'day:full'}"
                    multi_create_view="hr_work_entry_enterprise.hr_work_entry_view_gantt_multi_create_form"
                    plan="0"
@@ -63,6 +65,7 @@
                 <field name="color"/>
                 <field name="state"/>
                 <field name="employee_id"/>
+                <field name="duration"/>
                 <field name="name"/>
             </gantt>
         </field>

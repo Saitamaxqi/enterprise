@@ -1,10 +1,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
+from datetime import datetime
+from itertools import tee, chain
 
 import pytz
+from dateutil.relativedelta import relativedelta
+
 from odoo import api, models
 from odoo.fields import Domain
+from odoo.tools import float_round
 from odoo.tools.intervals import Intervals
 from odoo.tools.date_utils import localized
 
@@ -18,8 +23,10 @@ class HrWorkEntry(models.Model):
         We override get_gantt_data to allow the display of open-ended records,
         We also want to add in the gantt rows, the active emloyees that have a check in in the previous 60 days
         """
+        start_date = self.env.context.get('gantt_start_date') or start_date
+        stop_date = self.env.context.get('gantt_stop_date') or stop_date
         additional_domain = Domain(domain) & Domain(self.env.context.get('active_domain') or Domain.TRUE)
-        domain = additional_domain & Domain("date", "<=", stop_date) & Domain("date", ">", start_date)
+        domain = additional_domain & Domain("date", "<", stop_date) & Domain("date", ">=", start_date)
         gantt_data = super().get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
 
         if groupby and groupby[0] == 'employee_id':
@@ -143,3 +150,56 @@ class HrWorkEntry(models.Model):
             } for interval in unavailable_intervals_by_employees[employee_id]]
 
         return result
+
+    @api.model
+    def _gantt_progress_bar(self, field, res_ids, start, stop):
+        all_versions = self.env['hr.employee'].browse(res_ids)._get_all_versions_with_contract_overlap_with_period(start, stop)
+        intervals_to_search = defaultdict(lambda: self.env['hr.version'])
+        values = defaultdict(lambda: {'value': 0, 'max_value': 0})
+
+        # Max duration value fetch
+        all_version_normal, all_version_shifted = tee(all_versions.sorted("employee_id", "date_version"))
+        next(all_version_shifted, None)
+        all_version_shifted = chain(all_version_shifted, [None])
+        for current_version, next_version in zip(all_version_normal, all_version_shifted):
+            temp_start = start
+            temp_stop = stop
+            if next_version and next_version.employee_id == current_version.employee_id:
+                # If the employee has multiple versions
+                if current_version.date_version < next_version.date_version < start.date():
+                    continue
+                if next_version.date_version < stop.date():
+                    # limit the interval stop with the version validity
+                    temp_stop = datetime.combine(next_version.date_version, datetime.min.time(), pytz.utc)
+            if current_version.contract_date_end and current_version.contract_date_end < stop.date():
+                # limit the interval stop with the contract validity
+                temp_stop = datetime.combine(current_version.contract_date_end, datetime.min.time(), pytz.utc) + relativedelta(days=1)
+            if current_version.date_version >= start.date():
+                # limit the interval start with the version date if it's after the start date
+                temp_start = datetime.combine(current_version.date_version, datetime.min.time(), pytz.utc)
+            intervals_to_search[temp_start, temp_stop] |= current_version
+
+        # The same behavior as work entry generation (batch per intervals) due to issues with _get_attendance_intervals
+        # method makes a batch per all versions impossible for the whole date range
+        for interval, versions in intervals_to_search.items():
+            date_from, date_to = interval
+            for work_entry_value in self.env["hr.version"]._generate_work_entries_postprocess(versions._get_work_entries_values(date_from, date_to)):
+                if work_entry_value['date'] < stop.date():
+                    values[work_entry_value['employee_id']]['max_value'] += work_entry_value["duration"]
+
+        # Current durations
+        work_entries = self._read_group(
+            domain=[
+                (field, 'in', res_ids),
+                ["date", "<", stop],
+                ["date", ">=", start]
+            ],
+            groupby=[field],
+            aggregates=["duration:sum"]
+        )
+
+        for employee, duration in work_entries:
+            values[employee.id]['value'] = float_round(duration, precision_digits=2)
+            values[employee.id]['max_value'] = float_round(values[employee.id]['max_value'], precision_digits=2)
+
+        return values

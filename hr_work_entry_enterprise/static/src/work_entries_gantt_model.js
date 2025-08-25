@@ -95,8 +95,13 @@ export class WorkEntriesGanttModel extends GanttModel {
                 serializeDate(end),
             ]);
         }
+        additionalContext = {
+            ...(additionalContext || {}),
+            gantt_start_date: serializeDate(metaData.globalStart),
+            gantt_stop_date: serializeDate(metaData.globalStop),
+        };
         await Promise.all([
-            super._fetchData(...arguments),
+            super._fetchData(...arguments, additionalContext),
             this._fetchUserFavoritesWorkEntries(),
         ]);
     }

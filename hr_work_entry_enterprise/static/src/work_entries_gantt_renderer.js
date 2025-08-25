@@ -7,12 +7,14 @@ import { _t } from "@web/core/l10n/translation";
 import { formatFloatTime } from "@web/views/fields/formatters";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { WorkEntriesGanttPopover } from "./work_entries_gantt_popover";
+import { WorkEntriesGanttRowProgressBar } from "./work_entries_gantt_row_progress_bar";
 
 export class WorkEntriesGanttRenderer extends HrGanttRenderer {
     static pillTemplate = "hr_work_entry_enterprise.WorkEntriesGanttRenderer.Pill";
     static components = {
         ...HrGanttRenderer.components,
         Popover: WorkEntriesGanttPopover,
+        GanttRowProgressBar: WorkEntriesGanttRowProgressBar,
         MultiSelectionButtons: WorkEntriesMultiSelectionButtons,
     };
 
@@ -53,8 +55,8 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
     /**
      * @override
      */
-    getDurationStr(record) {
-        return formatFloatTime(record.duration, {
+    getDurationStr(duration) {
+        return formatFloatTime(duration, {
             noLeadingZeroHour: true,
         }).replace(/(:00|:)/g, "h");
     }
@@ -81,11 +83,33 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
     /**
      * @override
      */
+    addTo(pill, group) {
+        if (!pill.duration[group.col]) {
+            return false;
+        }
+        group.pills.push(pill);
+        group.aggregateValue += pill.duration[group.col];
+        return true;
+    }
+
+    /**
+     * @override
+     */
     enrichPill(pill) {
         const enrichedPill = super.enrichPill(pill);
-        enrichedPill.subName = this.getDurationStr(pill.record);
+        enrichedPill.subName = this.getDurationStr(pill.record.duration);
         enrichedPill.className += ` justify-content-center flex-column`;
-        return enrichedPill
+        enrichedPill.duration = {
+            [this.getFirstGridCol(pill)]: pill.record.duration,
+        };
+        return enrichedPill;
+    }
+
+    /**
+     * @override
+     */
+    getGroupPillDisplayName(pill) {
+        return this.getDurationStr(pill.aggregateValue);
     }
 
     /**
@@ -163,7 +187,7 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
         ];
         return {
             ...props,
-            title: record.work_entry_type_id.display_name + " - " + this.getDurationStr(record),
+            title: record.work_entry_type_id.display_name + " - " + this.getDurationStr(record.duration),
             buttons: record.state === "validated" ? null : props.buttons,
         };
     }
