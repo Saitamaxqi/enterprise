@@ -428,4 +428,113 @@
         }
         </field>
     </record>
+    <record id="ir_actions_server_search" model="ir.actions.server">
+        <field name="name">AI: Search</field>
+        <field name="state">code</field>
+        <field name="use_in_ai" eval="True"/>
+        <field name="code">
+            ai['result'] = record._ai_tool_search(model_name, domain, fields, offset, limit, order)
+        </field>
+        <field name="model_id" ref="model_ai_agent"/>
+        <field name="ai_tool_description">
+            **Tool Name: search**
+
+            Searches a particular model using a domain. The provided domain must be in valid JSON format.
+        </field>
+        <field name="ai_tool_schema">
+        {
+            "type": "object",
+            "properties": {
+                "model_name": {
+                    "type": "string",
+                    "description": "Technical model name (e.g., 'sale.order', 'product.product', 'res.partner')"
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "A search domain. Use an empty list to match all records. The domain must be a JSON parsable string."
+                },
+                "fields": {
+                    "type": "array",
+                    "description": "a collection of field names to fetch, or None for all accessible fields marked with prefetch=True",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "offset": {
+                    "type": "number",
+                    "description": "number of results to ignore (default: none)"
+                },
+                "limit": {
+                    "type": "number",
+                    "description": "optional max number of records to return (default: all)"
+                },
+                "order": {
+                    "type": "string",
+                    "description": "Optional 'order by' specification. This field should have the form `field_name DESC` (or ASC for ascending order)"
+                }
+            },
+            "required": ["model_name", "domain"]
+        }
+        </field>
+    </record>
+    <record id="ir_actions_server_read_group" model="ir.actions.server">
+        <field name="name">AI: Read group</field>
+        <field name="state">code</field>
+        <field name="use_in_ai" eval="True"/>
+        <field name="code">
+            ai['result'] = record._ai_tool_read_group(model_name, domain, groupby, aggregates, having, offset, limit, order)
+        </field>
+        <field name="model_id" ref="model_ai_agent"/>
+        <field name="ai_tool_description">
+            **Tool Name: Read group**
+
+            Searches a particular model using a domain. The provided domain must be in valid JSON format.
+        </field>
+        <field name="ai_tool_schema">
+        {
+            "type": "object",
+            "properties": {
+                "model_name": {
+                    "type": "string",
+                    "description": "Technical model name (e.g., 'sale.order', 'product.product', 'res.partner')"
+                },
+                "domain": {
+                    "type": "string",
+                    "description": "A search domain. Use an empty list to match all records. The domain MUST be a valid JSON string."
+                },
+                "groupby": {
+                    "type": "array",
+            "description": "list of groupby descriptions by which the records will be grouped. A groupby description is either a field (then it will be grouped by that field) or a string `'field:granularity'`. Right now, the only supported granularities are `'day'`, `'week'`, `'month'`, `'quarter'` or `'year'`, and they only make sense for date/datetime fields. Additionally integer date parts are also supported: `'year_number'`, `'quarter_number'`, `'month_number'`, `'iso_week_number'`, `'day_of_year'`, `'day_of_month'`, 'day_of_week', 'hour_number', 'minute_number' and 'second_number'.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "aggregates": {
+                    "type": "array",
+                    "description": "list of aggregates specification. Each element is `'field:agg'` (aggregate field with aggregation function `'agg'`). The possible aggregation functions are the ones provided by `PostgreSQL`, `'count_distinct'` with the expected meaning and `'recordset'` to act like `'array_agg'` converted into a recordset.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "having": {
+                    "type": "string",
+                    "description": "A domain where the valid 'fields' are the aggregates. The provided field names must exist in the aggregate elements. The having MUST be a valid JSON string. Example '[[\"amount_total:sum\", \"&gt;\", 1000]]"
+                },
+                "offset": {
+                    "type": "number",
+                    "description": "optional number of groups to skip"
+                },
+                "limit": {
+                    "type": "number",
+                    "description": "optional max number of groups to return"
+                },
+                "order": {
+                    "type": "string",
+                    "description": "optional 'order by' specification, for overriding the natural sort ordering of the groups. The order must be a valid PostgreSQL group by, it must use a valid `aggregate` or `groupby element. The provided fields must exist in the group by or aggregate elements."
+                }
+            },
+            "required": ["model_name", "domain"]
+        }
+        </field>
+    </record>
 </odoo>

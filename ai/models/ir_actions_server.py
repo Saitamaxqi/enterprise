@@ -66,6 +66,7 @@ class IrActionsServer(models.Model):
         readonly=False,
         compute="_compute_use_in_ai",
     )
+    ai_tool_allow_end_message = fields.Boolean("Allow End Message", help="This tool is automatically provided with `__end_message` param which when provided, the LLM processing loop is terminated.")
     ai_tool_is_candidate = fields.Boolean(compute="_compute_ai_tool_is_candidate")
     ai_tool_has_schema = fields.Boolean(compute="_compute_ai_tool_has_schema")
 
@@ -194,6 +195,7 @@ class IrActionsServer(models.Model):
         return {
             f"action_{ir_action_tool.id}": (
                 ir_action_tool.ai_tool_description or ir_action_tool.name,
+                ir_action_tool.ai_tool_allow_end_message,
                 partial(_exec_tool, ir_action_tool=ir_action_tool),
                 (
                     json.loads(ir_action_tool.ai_tool_schema)

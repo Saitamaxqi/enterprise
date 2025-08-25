@@ -3,6 +3,7 @@ import base64
 import logging
 import json
 import lxml.html
+import pytz
 
 from ast import literal_eval
 from collections import defaultdict
@@ -17,7 +18,7 @@ except ImportError:
 from odoo import _, api, Command, fields, models
 from odoo.fields import Domain
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import file_open, html_sanitize, SQL, is_html_empty, ormcache
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, file_open, html_sanitize, SQL, is_html_empty, ormcache
 from odoo.http import request
 from odoo.tools.mail import html_to_inner_content
 from odoo.tools.misc import mute_logger, submap
@@ -468,7 +469,11 @@ class AIAgent(models.Model):
 
     def _build_system_context(self, extra_system_context: str = ""):
         self.ensure_one()
-        today_date = fields.Date.context_today(self)
+
+        tz = None
+        if self.env.user.tz:
+            tz = pytz.timezone(self.env.user.tz)
+        today_date = str(datetime.now(tz).strftime(DEFAULT_SERVER_DATETIME_FORMAT))
         system_content = self.system_prompt or "You are a RAG assistant."
         system_content += f"\n\nToday's date to be used: {today_date}"
 
@@ -642,6 +647,12 @@ class AIAgent(models.Model):
             context_lines.append(
                 f'    <company id="{self.env.company.id}" name="{self.env.company.name}" model="res.company"/>'
             )
+
+            user_context = dict(self.env['res.users'].context_get())
+            if user_context.get("tz"):
+                context_lines.append(
+                    f'    <timezone value="{user_context["tz"]}"/>'
+                )
             context_lines.append("  </session-info>")
             context_lines.append("</context>")
 
@@ -659,9 +670,11 @@ class AIAgent(models.Model):
         """Build extra system context based on the agent's configuration."""
         self.ensure_one()
         extra_context = []
+        topic_xml_ids = self.topic_ids.get_external_id().values()
+        if any(topic in ["ai.ai_topic_natural_language_query", "ai.ai_topic_information_retrieval_query"] for topic in topic_xml_ids):
+            extra_context.append(self._get_available_models())
         if self.get_external_id()[self.id] == "ai.ai_agent_natural_language_search":
             extra_context.append(self._get_available_menus())
-            extra_context.append(self._get_available_models())
             extra_context.append(self._get_date_calculation_reference())
         elif env_context := discuss_channel.ai_env_context:  # if channel has ai related context (e.g. draft flow) pass it to the agent's extra context
             extra_context += env_context
@@ -765,7 +778,7 @@ class AIAgent(models.Model):
         """).strip()
 
     @ormcache('self.env.uid', 'self.env.company.id')
-    def _get_available_models(self):
+    def _get_available_models(self) -> str:
         """Get all models accessible to the current user as CSV data, excluding transient and abstract models."""
         # Get models the user has read access to
         allowed_models = self.env["ir.model.access"]._get_allowed_models(mode="read")
@@ -1331,3 +1344,22 @@ class AIAgent(models.Model):
             )
 
         return csv_result.strip()
+
+    def _ai_tool_search(self, model_name, domain="", fields: list[str] | None = None, offset: int = 0, limit: int | None = None, order: str | None = None):
+        try:
+            parsed_domain = json.loads(domain)
+            search_result = self.env[model_name].search_read(parsed_domain, fields, offset, limit, order)
+            return search_result
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON format for custom domain: {e}")
+
+    def _ai_tool_read_group(self, model_name, domain, groupby: list[str] = [], aggregates: list[str] = [], having: str = "[]", offset: int = 0, limit: int | None = None, order: str | None = None):
+        try:
+            parsed_domain = json.loads(domain)
+            parsed_having = ""
+            if having:
+                parsed_having = json.loads(having)
+            result = self.env[model_name]._read_group(parsed_domain, groupby, aggregates, parsed_having, offset, limit, order)
+            return result
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON format for custom domain: {e}")

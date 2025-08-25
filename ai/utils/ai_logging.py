@@ -105,7 +105,7 @@ def api_call_logging(messages, tools=None):
 
     if tools:
         tool_data = {}
-        for name, (desc, _, schema) in tools.items():
+        for name, (desc, __, __, schema) in tools.items():
             tool_data[name] = {"description": desc, "schema": schema}
         tokens_in += estimate_tokens(tool_data)
 

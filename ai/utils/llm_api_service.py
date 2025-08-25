@@ -299,7 +299,7 @@ class LLMApiService:
                 "type": "function",
                 "name": tool_name,
                 "strict": True,
-            } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()])
+            } for tool_name, (tool_description, __, __, tool_parameter_schema) in tools.items()])
             body["parallel_tool_calls"] = True
 
         if web_grounding:
@@ -419,7 +419,7 @@ class LLMApiService:
                     "description": tool_description,
                     "parameters": tool_parameter_schema,
                     "name": tool_name,
-                } for tool_name, (tool_description, _tool_call, tool_parameter_schema) in tools.items()]
+                } for tool_name, (tool_description, __, __, tool_parameter_schema) in tools.items()]
             }
         if web_grounding:
             body["tools"] = {'google_search': {}}
@@ -467,7 +467,7 @@ class LLMApiService:
 
     def request_llm(
         self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
-        tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
+        tools: dict[str, tuple[str, bool, Callable[[dict[str, Any]], Any], dict]] | None = None,
         files: list[dict] | None = None, schema: dict | None = None, temperature: float = 0.2,
         inputs: list[dict] | None = None, web_grounding: bool = False,
     ) -> list[str]:
@@ -504,7 +504,7 @@ class LLMApiService:
 
     def _request_llm_silent(
         self, llm_model: str, system_prompts: list[str], user_prompts: list[str],
-        tools: dict[str, tuple[str, Callable[[dict[str, Any]], Any], dict]] | None = None,
+        tools: dict[str, tuple[str, bool, Callable[[dict[str, Any]], Any], dict]] | None = None,
         files: list[dict] | None = None, schema: dict | None = None, temperature: float = 0.2,
         inputs: list[dict] | None = None, web_grounding: bool = False,
     ):
@@ -517,12 +517,13 @@ class LLMApiService:
 
         if tools:
             tools = copy.deepcopy(tools)
-            for _tool_description, _tool_call, tool_parameter_schema in tools.values():
-                tool_parameter_schema["properties"]["__end_message"] = {
-                    "type": "string",
-                    "description": "If you are not waiting a result, and you are done, write here what you did and why. If you will do action after this one, leave it empty.",
-                }
-                if "__end_message" not in tool_parameter_schema["required"]:
+            for __, allow_end_message, __, tool_parameter_schema in tools.values():
+                if allow_end_message and "__end_message" not in tool_parameter_schema["properties"]:
+                    tool_parameter_schema["properties"]["__end_message"] = {
+                        "type": "string",
+                        "description": "If you are not waiting a result, and you are done, write here what you did and why. If you will do action after this one, leave it empty.",
+                    }
+                if "__end_message" in tool_parameter_schema["properties"] and "__end_message" not in tool_parameter_schema["required"]:
                     tool_parameter_schema["required"].append("__end_message")
 
         inputs = inputs or []
@@ -565,17 +566,21 @@ class LLMApiService:
                     continue
 
                 # Ensure that all arguments are set in the dict, even the non-required ones
-                arguments = {n: None for n in tools[tool_name][2].get("properties", {})} | arguments
+                arguments = {n: None for n in tools[tool_name][3].get("properties", {})} | arguments
 
+                has_end_message = "__end_message" in arguments
                 end_message = arguments.pop("__end_message", None)
-                result, error = tools[tool_name][1](arguments=arguments)
+                result, error = tools[tool_name][2](arguments=arguments)
 
                 inputs.append(self._build_tool_call_response(call_id, result))
 
-                if end_message and error is None:
-                    all_responses.append(end_message)
+                if has_end_message and error is None:
                     done = True
-                    _logger.info("AI: action terminate early: %s", end_message)
+                    if end_response := end_message and end_message.strip():
+                        all_responses.append(end_response)
+                        _logger.info("AI: action terminate early: %s", end_response)
+                    else:
+                        _logger.info("AI: action terminate early with empty message")
 
             if session and len(limited_next_actions) > 1:  # Batch of tool calls
                 _logger.debug("[AI Tool Summary] Batch #%d completed, %d tool calls", session["current_batch_id"], len(limited_next_actions))

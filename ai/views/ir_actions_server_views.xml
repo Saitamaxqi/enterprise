@@ -18,6 +18,8 @@
                         </group>
                     </group>
                     <group>
+                        <field name="use_in_ai" invisible="not ai_tool_is_candidate"/>
+                        <field name="ai_tool_allow_end_message" invisible="not ai_tool_is_candidate"/>
                         <field name="ai_tool_schema"
                             placeholder="JSON schema for the parameters of the action (leave empty if no arguments are needed)"
                             invisible="not ai_tool_is_candidate or not use_in_ai or not ai_tool_has_schema"
