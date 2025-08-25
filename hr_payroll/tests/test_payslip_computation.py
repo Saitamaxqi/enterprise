@@ -5,6 +5,7 @@ from datetime import datetime, date, timedelta
 from dateutil.relativedelta import relativedelta
 from odoo.fields import Date
 from odoo.tests import Form, tagged
+from odoo.exceptions import UserError
 from odoo.addons.hr_payroll.tests.common import TestPayslipContractBase
 
 
@@ -576,3 +577,30 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip_form = Form(payslip)
         payslip_form.date_from = None
         self.assertFalse(payslip_form.warning_message)
+
+    def test_payslip_state_effect_on_work_entries(self):
+        richard_work_entry = self.env['hr.work.entry'].create({
+            'name': 'Extra',
+            'employee_id': self.richard_emp.id,
+            'version_id': self.contract_cdd.id,
+            'work_entry_type_id': self.work_entry_type.id,
+            'date': date(2016, 1, 1),
+            'duration': 1,
+        })
+        # Cannot edit validated work entries linked to a payslip
+        self.assertEqual(richard_work_entry.state, 'draft')
+        self.assertFalse(richard_work_entry.has_payslip, False)
+        self.richard_payslip.action_payslip_done()
+        self.assertEqual(richard_work_entry.state, 'validated')
+        self.assertEqual(richard_work_entry.has_payslip, True)
+        with self.assertRaises(UserError):
+            richard_work_entry.write({'state': 'draft'})
+        # Entry reset on payslip cancellation
+        self.richard_payslip.action_payslip_cancel()
+        self.assertEqual(richard_work_entry.state, 'draft')
+        # Edit is allowed for entries not linked to a payslip
+        self.assertEqual(richard_work_entry.has_payslip, False)
+        richard_work_entry.write({'state': 'validated'})
+        self.assertEqual(richard_work_entry.state, 'validated')
+        richard_work_entry.write({'state': 'draft'})
+        self.assertEqual(richard_work_entry.state, 'draft')

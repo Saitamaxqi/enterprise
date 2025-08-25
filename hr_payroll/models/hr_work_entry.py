@@ -4,17 +4,31 @@
 from collections import defaultdict
 from datetime import datetime, date, time
 import pytz
-
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
 class HrWorkEntry(models.Model):
     _inherit = 'hr.work.entry'
-
+    has_payslip = fields.Boolean(compute='_compute_has_payslip')
     is_credit_time = fields.Boolean(
         string='Credit time', readonly=True,
         help="This is a credit time work entry.")
+
+    @api.depends('state')
+    def _compute_has_payslip(self):
+        all_payslips = self.env['hr.payslip'].search([
+            ('employee_id', 'in', self.employee_id.ids),
+            ('state', 'in', ['done', 'paid']),
+            ('date_from', '<=', max(self.mapped('date'))),
+            ('date_to', '>=', min(self.mapped('date'))),
+        ])
+
+        for work_entry in self:
+            work_entry.has_payslip = any(
+                slip.employee_id == work_entry.employee_id
+                and slip.date_from <= work_entry.date <= slip.date_to
+                for slip in all_payslips)
 
     def _get_leaves_entries_outside_schedule(self):
         return super()._get_leaves_entries_outside_schedule().filtered(lambda w: not w.is_credit_time)
@@ -41,3 +55,14 @@ class HrWorkEntry(models.Model):
                     "\n\nMissing work entries are like the Bermuda Triangle for paychecks. Let's keep your colleague's earnings from vanishing into thin air!"
                     , employee_name=employee_name, time_intervals_str=time_intervals_str)
                 raise UserError(msg)
+
+    def action_set_to_draft(self):
+        return self.write({'state': 'draft'})
+
+    def write(self, vals):
+        if vals.get('state') == 'conflict' or ('active' in vals and vals['active'] is False):
+            return super().write(vals)
+        for work_entry in self:
+            if work_entry.state == 'validated' and work_entry.has_payslip:
+                raise UserError(_("This work entry cannot be modified because it is already associated with a generated payslip."))
+        return super().write(vals)

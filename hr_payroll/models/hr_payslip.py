@@ -11,6 +11,7 @@ from dateutil.relativedelta import relativedelta
 from functools import reduce
 
 from odoo import api, Command, fields, models, _
+from odoo.fields import Domain
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_round, date_utils, convert_file, format_amount
 from odoo.tools.float_utils import float_compare
@@ -449,18 +450,36 @@ class HrPayslip(models.Model):
                     slip._record_attachment_payment(attachments, salary_lines)
         return res
 
+    def action_draft_linked_entries(self):
+        work_entries = self.env['hr.work.entry'].search(
+                Domain('employee_id', '=', self.employee_id.ids)
+                & Domain('date', '>=', min(self.mapped('date_from')))
+                & Domain('date', '<=', max(self.mapped('date_to')))
+                & Domain('state', '=', 'validated')
+            )
+        linked_entries = self.env['hr.work.entry']
+        for regular_payslip in self:
+            payslip_start = regular_payslip.date_from
+            payslip_end = regular_payslip.date_to
+            linked_entries |= work_entries.filtered(
+                lambda entry: entry.employee_id == regular_payslip.employee_id and payslip_start <= entry.date <= payslip_end)
+        if linked_entries:
+            linked_entries.action_set_to_draft()
+
     def action_payslip_draft(self):
         self.env['ir.attachment'].sudo().search([
             ('res_model', '=', 'hr.payslip'),
             ('res_id', 'in', self.ids),
             ('res_field', '=', 'payment_report'),
         ]).unlink()
-        return self.write({
+        self.write({
             'payment_report': False,
             'payment_report_filename': False,
             'payment_report_date': False,
             'state': 'draft'
         })
+        self.action_draft_linked_entries()
+        return True
 
     def _get_pdf_reports(self):
         default_report = self.env.ref('hr_payroll.action_report_payslip')
@@ -551,6 +570,7 @@ class HrPayslip(models.Model):
         if not self.env.user._is_system() and self.filtered(lambda slip: slip.state == 'done'):
             raise UserError(_("Cannot cancel a payslip that is done."))
         self.write({'state': 'cancel'})
+        self.action_draft_linked_entries()
 
     def action_payslip_paid(self):
         if any(slip.state not in ['done', 'paid'] for slip in self):
@@ -700,6 +720,7 @@ class HrPayslip(models.Model):
                 "Oops! Only draft and cancelled payslips can be deleted without causing any chaos. We can't "
                 "take back our dedicated employees' hard-earned cash!"
             ))
+        self.action_draft_linked_entries()
 
     def compute_sheet(self):
         payslips = self.filtered(lambda slip: slip.state in ['draft', 'verify'])
