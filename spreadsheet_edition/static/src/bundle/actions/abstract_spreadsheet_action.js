@@ -311,6 +311,7 @@ export class AbstractSpreadsheetAction extends Component {
         const { name } = detail;
         if (name && name !== this.state.spreadsheetName) {
             this.state.spreadsheetName = name;
+            this.data.name = name;
             this.env.config.setDisplayName(this.state.spreadsheetName);
             if (this.data.writable_rec_name_field) {
                 await this.orm.write(this.resModel, [this.resId], {

@@ -273,3 +273,22 @@ test("Spreadsheet action is named in breadcrumb with the updated name", async fu
     expect(breadcrumb2).toBe("My awesome spreadsheet");
     expect(".o_breadcrumb .active span").toHaveText("Partner");
 });
+
+test("Spreadsheet action is named in breadcrumb with the correct name after go back ", async function () {
+    await createSpreadsheetFromPivotView();
+    await contains(".o_sp_name input").edit("My awesome spreadsheet");
+    await getService("action").doAction({
+        name: "Partner",
+        res_model: "partner",
+        type: "ir.actions.act_window",
+        views: [[false, "pivot"]],
+    });
+    await animationFrame();
+    const items = target.querySelectorAll(".breadcrumb-item");
+    const [breadcrumb1, breadcrumb2] = Array.from(items).map((item) => item.innerText);
+    expect(breadcrumb1).toBe("pivot view");
+    expect(breadcrumb2).toBe("My awesome spreadsheet");
+    expect(".o_breadcrumb .active span").toHaveText("Partner");
+    await contains(".breadcrumb-item:last").click();
+    expect(".o_sp_name input").toHaveValue("My awesome spreadsheet");
+});
