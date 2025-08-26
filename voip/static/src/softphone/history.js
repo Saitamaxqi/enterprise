@@ -86,12 +86,17 @@ export class History extends Component {
             case "missed":
                 return _t("Missed call");
             case "rejected":
-                return _t("Call rejected");
-            case "terminated":
-                return _t("Call ended (%(duration)s)", { duration: call.durationString });
+                return _t("Rejected call");
+            case "terminated": {
+                if (call.direction === "incoming") {
+                    return _t("Incoming call (%(duration)s)", { duration: call.durationString });
+                }
+                return _t("Outgoing call (%(duration)s)", { duration: call.durationString });
+            }
             case "calling":
+                return call.eq(pendingCall) ? _t("Trying to call") : _t("Ended unexpectedly");
             case "ongoing":
-                return call.id === pendingCall?.id ? _t("Ongoing") : _t("Ended unexpectedly");
+                return call.eq(pendingCall) ? _t("Ongoing") : _t("Ended unexpectedly");
             default:
                 return "✌︎☹︎☹︎☜︎💧︎ ✋︎💧︎ 😐︎✌︎🏱︎⚐︎❄︎";
         }
