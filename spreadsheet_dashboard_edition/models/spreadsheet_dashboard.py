@@ -7,7 +7,11 @@ class SpreadsheetDashboard(models.Model):
     _name = 'spreadsheet.dashboard'
     _inherit = ['spreadsheet.dashboard', 'spreadsheet.mixin']
 
-    is_from_data = fields.Boolean(compute='_compute_is_from_data', export_string_translation=False)
+    is_from_data = fields.Boolean(
+        compute='_compute_is_from_data',
+        compute_sudo=True,
+        export_string_translation=False,
+    )
 
     @api.depends('sample_dashboard_file_path')
     def _compute_is_from_data(self):

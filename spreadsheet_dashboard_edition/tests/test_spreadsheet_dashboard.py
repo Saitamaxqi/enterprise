@@ -1,3 +1,5 @@
+from odoo.tests import new_test_user
+
 from odoo.addons.spreadsheet_dashboard.tests.common import DashboardTestCommon
 from odoo.addons.spreadsheet_edition.tests.spreadsheet_test_case import SpreadsheetTestCase
 
@@ -19,3 +21,8 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase):
     def test_dont_have_external_id(self):
         dashboard = self.create_dashboard()
         self.assertFalse(dashboard.is_from_data)
+
+    def test_from_data_internal_user(self):
+        dashboard = self.create_dashboard()
+        user = new_test_user(self.env, login='raoul', groups='base.group_user')
+        self.assertFalse(dashboard.with_user(user).is_from_data)
