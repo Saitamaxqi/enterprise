@@ -204,7 +204,8 @@ class PosConfig(models.Model):
         for config in self:
             if config.module_pos_hr:
                 all_employee_ids = self.env['hr.employee'].search(self._employee_domain(self.env.uid))
-                emp_names = [emp.name for emp in all_employee_ids if not emp.sudo().insz_or_bis_number] + ([self.env.user.name] if not self.env.user.employee_id.insz_or_bis_number else [])
+                comp_user = self.env.user.with_company(self.company_id)
+                emp_names = [emp.name for emp in all_employee_ids if not emp.sudo().insz_or_bis_number] + ([comp_user.name] if not comp_user.employee_id.sudo().insz_or_bis_number else [])
 
                 if len(emp_names) > 0:
                     raise ValidationError(
