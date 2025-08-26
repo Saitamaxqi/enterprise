@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.tests.common import TransactionCase
+from odoo.tests import tagged
 
 
 class TestPayrollDependencies(TransactionCase):
@@ -16,3 +17,13 @@ class TestPayrollDependencies(TransactionCase):
             dependencies = module.upstream_dependencies(exclude_states=('uninstallable')).mapped('name')
             self.assertTrue(module.name[:18] in dependencies, "The payroll localization %s should depend on %s" % (module.name, module.name[:18]))
             self.assertTrue('account' in dependencies, "The payroll localization %s shouldn't depend on accounting" % module.name)
+
+
+@tagged('post_install', '-at_install')
+class TestSalaryRuleConfiguration(TransactionCase):
+
+    def test_hr_salary_rule_updatable(self):
+        all_rules = self.env['hr.salary.rule'].search([])
+        all_xmlids = self.env['ir.model.data'].search([('model', '=', "hr.salary.rule"), ('res_id', 'in', all_rules.ids)])
+        noupdate_xmlids = all_xmlids.filtered('noupdate')
+        self.assertFalse(noupdate_xmlids, "Following salary rules shouldn't be noupdate\n%s" % ('\n'.join(noupdate_xmlids.mapped('complete_name'))))
