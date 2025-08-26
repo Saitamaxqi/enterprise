@@ -206,8 +206,9 @@ class Data_MergeModel(models.Model):
                     sql_field = unaccent(SQL('lower(%s)', sql_field))
 
                 sql_group_by = SQL()
+                multi_company = self.env['res.company'].with_context(active_test=False).search_count([]) > 1
                 company_field = res_model._fields.get('company_id')
-                if company_field and not dm_model.mix_by_company:
+                if multi_company and company_field and not dm_model.mix_by_company:
                     sql_group_by = SQL(', %s', res_model._field_to_sql(table, 'company_id', query))
 
                 # Get all the rows matching the rule defined
