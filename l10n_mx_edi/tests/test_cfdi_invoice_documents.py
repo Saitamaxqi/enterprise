@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import timedelta
+
 from .common import TestMxEdiCommon
 from odoo import Command, fields
 from odoo.addons.mail.tools.discuss import Store
@@ -2084,3 +2086,31 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
         unsanitized_name = "Dinora Güntner Ñúñez Ávila"
         sanitized_name = self.env['l10n_mx_edi.document']._cfdi_sanitize_to_legal_name(unsanitized_name)
         self.assertEqual(sanitized_name, 'DINORA GÜNTNER ÑUÑEZ AVILA')
+
+    @freeze_time('2017-01-01')
+    def test_cron_update_sat_state_write_date(self):
+        """ Test that the sat_state is not updated on the record when it has not changed for the SAT when using the cron. """
+        # Patching `now` so we can easily check for changes on `write_date`
+        self.patch(self.env.cr, 'now', lambda: fields.Datetime.now() - timedelta(days=1))
+        invoice = self._create_invoice()  # Force PPD
+        with self.with_mocked_pac_sign_success():
+            invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+        self.env.company.l10n_mx_edi_pac_test_env = False
+
+        previous_write_date = invoice.l10n_mx_edi_invoice_document_ids.write_date
+        self.patch(self.env.cr, 'now', fields.Datetime.now)
+        with self.with_mocked_sat_call(lambda _x: 'valid'):
+            self.env['l10n_mx_edi.document']._fetch_and_update_sat_status()
+
+        self.assertEqual(invoice.l10n_mx_edi_invoice_document_ids.sat_state, 'valid')
+        self.assertNotEqual(invoice.l10n_mx_edi_invoice_document_ids.write_date, previous_write_date)
+
+        # Forcing the state to be able to reuse the same document
+        invoice.l10n_mx_edi_invoice_document_ids.sat_state = 'not_defined'
+        previous_write_date = invoice.l10n_mx_edi_invoice_document_ids.write_date
+        self.patch(self.env.cr, 'now', lambda: fields.Datetime.now() + timedelta(days=1))
+        with self.with_mocked_sat_call(lambda _x: 'not_defined'):
+            self.env['l10n_mx_edi.document']._fetch_and_update_sat_status()
+
+        self.assertEqual(invoice.l10n_mx_edi_invoice_document_ids.write_date, previous_write_date)

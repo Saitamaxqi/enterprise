@@ -8,7 +8,7 @@ import requests
 import string
 
 from collections import defaultdict
-from datetime import datetime, time
+from datetime import datetime, time, timedelta
 from json.decoder import JSONDecodeError
 from lxml import etree
 from odoo.tools.zeep import Client, Transport
@@ -2423,10 +2423,12 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             cfdi_infos['amount_total'],
             cfdi_infos['uuid'],
         )
-        self._update_document_sat_state(sat_results['value'], error=sat_results.get('error'))
 
-        if self._can_commit():
-            self.env.cr.commit()
+        if self.sat_state != sat_results['value']:
+            self._update_document_sat_state(sat_results['value'], error=sat_results.get('error'))
+
+            if self._can_commit():
+                self.env.cr.commit()
 
         return sat_results
 
@@ -2494,7 +2496,8 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         :param extra_domain:    An optional extra domain to be injected when searching for documents to update.
         """
         domain = self._get_update_sat_status_domain(extra_domain=extra_domain)
-        documents = self.search(domain, limit=batch_size + 1)
+        domain = Domain.AND([domain, [('write_date', '>=', fields.Date.today() - timedelta(days=60))]])
+        documents = self.search(domain, limit=batch_size + 1, order='write_date')
 
         for counter, document in enumerate(documents):
             if counter == batch_size:
