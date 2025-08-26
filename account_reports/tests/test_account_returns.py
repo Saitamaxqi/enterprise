@@ -27,15 +27,25 @@ class TestAccountReturn(TestAccountReportsCommon):
             'email': 'test@gmail.com',
         })
 
+        cls.basic_tax_report = cls.env['account.report'].create({
+            'root_report_id': cls.env.ref('account.generic_tax_report').id,
+            'name': "Account Returns Test Tax Report",
+        })
+
         cls.basic_return_type = cls.env['account.return.type'].create({
             'name': 'VAT Return (Generic)',
-            'report_id': cls.env.ref('account.generic_tax_report').id,
+            'report_id': cls.basic_tax_report.id,
             'default_deadline_start_date': '2024-01-01'
+        })
+
+        cls.basic_ec_sales_report = cls.env['account.report'].create({
+            'root_report_id': cls.env.ref('account_reports.generic_ec_sales_report').id,
+            'name': "Account Returns Test EC Sales Report",
         })
 
         cls.ec_sales_list_return_type = cls.env['account.return.type'].create({
             'name': 'EC Sales List',
-            'report_id': cls.env.ref('account_reports.generic_ec_sales_report').id,
+            'report_id': cls.basic_ec_sales_report.id,
             'default_deadline_start_date': '2024-01-01'
         })
 
@@ -105,6 +115,107 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         if missing_checks:
             self.fail(f"Missing checks in return: {', '.join(missing_checks)}")
+
+    def test_report_return_periodicity_option(self):
+        # 1. Check the 'return_type_id' keym should fallback to the one linked to the report if there is one
+        options = self.basic_tax_report.get_options(previous_options={
+            'return_periodicity': {
+                'periodicity': 'monthly',
+                'months_per_period': 1,
+                'start_day': 1,
+                'start_month': 1,
+                'report_id': self.basic_tax_report.id,
+            },
+        })
+        start_day, start_month = self.basic_return_type._get_start_date_elements(self.env.company)
+        self.assertDictEqual(
+            options['return_periodicity'],
+            {
+                'periodicity': self.basic_return_type._get_periodicity(self.env.company),
+                'months_per_period': self.basic_return_type._get_periodicity_months_delay(self.env.company),
+                'start_day': start_day,
+                'start_month': start_month,
+                'return_type_id': self.basic_return_type.id,
+                'report_id': self.basic_tax_report.id,
+            }
+        )
+
+        # 2. Valid override using the previous options
+        options = self.basic_tax_report.get_options(previous_options={
+            'return_periodicity': {
+                'periodicity': 'monthly',
+                'months_per_period': 1,
+                'start_day': 1,
+                'start_month': 1,
+                'return_type_id': self.basic_return_type.id,
+                'report_id': self.basic_tax_report.id,
+            },
+        })
+        self.assertDictEqual(
+            options['return_periodicity'],
+            {
+                'periodicity': 'monthly',
+                'months_per_period': 1,
+                'start_day': 1,
+                'start_month': 1,
+                'return_type_id': self.basic_return_type.id,
+                'report_id': self.basic_tax_report.id,
+            }
+        )
+
+        # 3. Check that it is variant safe and should fallback to the return_type linked to the report
+        options = self.basic_tax_report.get_options(previous_options={
+            'return_periodicity': {
+                'periodicity': 'monthly',
+                'months_per_period': 1,
+                'start_day': 1,
+                'start_month': 1,
+                'return_type_id': self.basic_return_type.id,
+                'report_id': self.basic_tax_report.id,
+            },
+        })
+        self.assertDictEqual(
+            options['return_periodicity'],
+            {
+                'periodicity': self.basic_return_type._get_periodicity(self.env.company),
+                'months_per_period': self.basic_return_type._get_periodicity_months_delay(self.env.company),
+                'start_day': start_day,
+                'start_month': start_month,
+                'return_type_id': self.basic_return_type.id,
+                'report_id': self.basic_tax_report.id,
+            }
+        )
+
+        # 4. Check the final fallback using a report that has no link to a return
+        basic_report_not_linked = self.env['account.report'].create({
+            'root_report_id': self.env.ref('account.generic_tax_report').id,
+            'name': "Account Returns Test Tax Report - Not Linked",
+        })
+        options = basic_report_not_linked.get_options(previous_options={
+            'return_periodicity': {
+                'periodicity': 'monthly',
+                'months_per_period': 1,
+                'start_day': 1,
+                'start_month': 1,
+                'return_type_id': self.basic_return_type.id,
+                'report_id': self.basic_tax_report.id,
+            },
+        })
+        self.assertFalse(options.get('return_periodicity'), "'return_periodicity' key should be absent as the report_id in the dict is different as the actual report generating the options.")
+
+        # 5. Check the default behaviour
+        options = self.basic_tax_report.get_options(previous_options={})
+        self.assertDictEqual(
+            options['return_periodicity'],
+            {
+                'periodicity': self.basic_return_type._get_periodicity(self.env.company),
+                'months_per_period': self.basic_return_type._get_periodicity_months_delay(self.env.company),
+                'start_day': start_day,
+                'start_month': start_month,
+                'return_type_id': self.basic_return_type.id,
+                'report_id': self.basic_tax_report.id,
+            }
+        )
 
     def test_return_generation_normal(self):
         existing_returns = self.env['account.return'].search([

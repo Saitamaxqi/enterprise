@@ -1262,6 +1262,8 @@ class AccountReturn(models.Model):
                 'months_per_period': self.type_id._get_periodicity_months_delay(self.company_id),
                 'start_day': start_day,
                 'start_month': start_month,
+                'return_type_id': self.type_id.id,
+                'report_id': self.id,
             },
         }
 

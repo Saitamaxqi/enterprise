@@ -636,7 +636,8 @@ class AccountReport(models.Model):
 
         if return_period or 'return_period' in period_type:
             month_per_period = options['return_periodicity']['months_per_period']
-            date_from, date_to = self.return_type_ids._get_period_boundaries(self.env.company, date_from + relativedelta(months=month_per_period * periods))
+            return_type = self.env['account.return.type'].browse(options['return_periodicity']['return_type_id'])
+            date_from, date_to = return_type._get_period_boundaries(self.env.company, date_from + relativedelta(months=month_per_period * periods))
             return self._get_dates_period(date_from, date_to, mode, period_type='return_period', options_return=options['return_periodicity'])
         if period_type in ('fiscalyear', 'today'):
             # Don't pass the period_type to _get_dates_period to be able to retrieve the account.fiscal.year record if
@@ -772,7 +773,8 @@ class AccountReport(models.Model):
                 else:
                     base_date = fields.Date.context_today(self)
 
-                date_from, date_to = self.return_type_ids._get_period_boundaries(self.env.company, base_date)
+                return_type = self.env['account.return.type'].browse(options['return_periodicity']['return_type_id'])
+                date_from, date_to = return_type._get_period_boundaries(self.env.company, base_date)
                 period_type = 'return_period'
 
         # When the return period matches a standard date filter, fallback to the standard. This way, we can avoid displaying the return period
@@ -821,9 +823,14 @@ class AccountReport(models.Model):
         options['date']['filter'] = options_filter
 
     def _init_options_return_periodicity(self, options, previous_options):
-        options['return_periodicity'] = previous_options.get('return_periodicity')
-
-        if len(self.return_type_ids) == 1:
+        if (previous_options.get('return_periodicity')
+            and previous_options['return_periodicity'].get('return_type_id')
+            and previous_options['return_periodicity'].get('report_id') in (False, self.id)):
+            options['return_periodicity'] = {
+                **previous_options['return_periodicity'],
+                'report_id': self.id,
+            }
+        elif len(self.return_type_ids) == 1:
             main_company = self.env.company
             start_day, start_month = self.return_type_ids._get_start_date_elements(main_company)
             options['return_periodicity'] = {
@@ -831,8 +838,9 @@ class AccountReport(models.Model):
                 'months_per_period': self.return_type_ids._get_periodicity_months_delay(main_company),
                 'start_day': start_day,
                 'start_month': start_month,
+                'return_type_id': self.return_type_ids.id,
+                'report_id': self.id,
             }
-
 
     def _init_options_comparison(self, options, previous_options):
         """ Initialize the 'comparison' options key.
