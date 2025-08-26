@@ -3,7 +3,7 @@ import { PosPrinter } from "@point_of_sale/../tests/unit/data/pos_printer.data";
 
 patch(PosPrinter.prototype, {
     _load_pos_data_fields() {
-        return [...super._load_pos_data_fields(), "device_identifier"];
+        return [...super._load_pos_data_fields(), "device_identifier", "device_id"];
     },
 });
 

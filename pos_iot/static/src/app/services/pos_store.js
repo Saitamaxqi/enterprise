@@ -35,6 +35,10 @@ patch(PosStore.prototype, {
             } else if (type === "scanner") {
                 deviceControllers.scanners ||= {};
                 deviceControllers.scanners[identifier] = deviceProxy;
+            } else if (type === "printer") {
+                if (this.config.iface_printer_id?.id === device.id) {
+                    deviceControllers.printer = deviceProxy;
+                }
             } else {
                 deviceControllers[type] = deviceProxy;
             }

@@ -8,14 +8,6 @@ test("pos_iot_common", async () => {
     const store = await setupPosEnv();
     const hardwareProxy = store.hardwareProxy;
     const iotBoxes = hardwareProxy.iotBoxes;
-    expect(store.config.useProxy).toBe(false);
-    store.config.update({
-        iot_device_ids: [2, 3, 4, 5],
-        iface_print_via_proxy: true,
-        iface_printer_id: 2,
-        iface_display_id: 3,
-        iface_scale_id: 5,
-    });
 
     // IOT box loaded correctly
     expect(iotBoxes.length).toBe(1);
@@ -39,9 +31,7 @@ test("pos_iot_common", async () => {
     expect(store.scale._scaleDevice).not.toBeEmpty();
 
     // printer
-    expect(store.unwatched.printers.length).toBe(2); // createPrinter() works properly
-    expect(hardwareProxy.printer).toBeEmpty(); // printer isn't connected
-    store.connectToProxy();
+    expect(store.unwatched.printers.length).toBe(2); // epos in point_of_sale test data + IoT in pos_iot test data
     expect(hardwareProxy.printer).not.toBeEmpty(); // printer should be connected
     const hardwareProxyPrinter = hardwareProxy.printer.device;
     expect(hardwareProxyPrinter.id).toInclude("listener");
