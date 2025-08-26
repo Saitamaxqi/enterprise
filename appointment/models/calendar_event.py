@@ -41,6 +41,13 @@ class CalendarEvent(models.Model):
                 appointment_types = self.env['appointment.type'].search([('staff_user_ids', 'in', user_id)])
             if appointment_types:
                 res['appointment_type_id'] = appointment_types[0].id
+        if resource_ids and 'total_capacity_reserved' in fields:
+            res.setdefault('total_capacity_reserved', sum(
+                resource.capacity for resource in self.env['appointment.resource'].browse(resource_ids)
+            ))
+        if (appointment_type_id := res.get('appointment_type_id')) and 'name' in fields:
+            appointment_type = self.env['appointment.type'].browse(appointment_type_id)
+            res.setdefault('name', appointment_type.name)
         if self.env.context.get('appointment_default_assign_user_attendees'):
             default_partner_ids = self.env.context.get('default_partner_ids', [])
             # If there is only one attendee -> set him as organizer of the calendar event

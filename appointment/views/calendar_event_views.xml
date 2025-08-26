@@ -337,8 +337,7 @@
         <field name="search_view_id" ref="appointment.calendar_event_view_search_booking"/>
         <field name="context">{'appointment_booking_gantt_domain': [('appointment_resource_ids', '!=', False)],
                                'appointment_default_assign_user_attendees': False,
-                               'default_partner_ids': [],
-                               'default_total_capacity_reserved': 1}</field>
+                               'default_partner_ids': []}</field>
         <field name="domain">['|', ('appointment_resource_ids.company_id', '=', False), ('appointment_resource_ids.company_id', 'in', allowed_company_ids)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

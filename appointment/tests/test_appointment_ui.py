@@ -216,7 +216,6 @@ class AppointmentUITest(AppointmentUICommon):
             'search_default_appointment_type_id': appointment_types[1].id,
             'default_mode': 'month',
             'default_partner_ids': [],
-            'default_total_capacity_reserved': 1,
             'default_start_date': now,
             'initial_date': datetime(2022, 3, 1),
         }]
