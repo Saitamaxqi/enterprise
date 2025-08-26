@@ -176,7 +176,6 @@ class SaleOrder(models.Model):
                 # so created before merge sale.subscription into sale.order upgrade.
                 # This is the so that created the sale.subscription records.
                 continue
-
             if not so.plan_id and (so.has_recurring_line and not so._subscription_is_one_time_sale()):
                 raise UserError(_('Please add a recurring plan on the subscription or remove the recurring product.'))
             if so.plan_id and not so.has_recurring_line:
@@ -547,10 +546,17 @@ class SaleOrder(models.Model):
         for order in self:
             order.display_late = order.subscription_state in SUBSCRIPTION_PROGRESS_STATE and order.next_invoice_date and order.next_invoice_date < today
 
-    # FIXME ARJ should it be adapted to one-time sale ?
     @api.depends('order_line', 'order_line.recurring_invoice')
     def _compute_has_recurring_line(self):
-        recurring_product_orders = self.order_line.filtered(lambda l: l.product_id.recurring_invoice).order_id
+        recurring_product_orders = self.env['sale.order']
+        one_time_order_ids = []
+        for so in self:
+            if so._subscription_is_one_time_sale():
+                one_time_order_ids.append(so.id)
+        for line in self.order_line:
+            if line.product_id.recurring_invoice and (line.order_id.plan_id or not line.order_id.id in one_time_order_ids):
+                # recurring order have plan_id. Unlike one-time sale
+                recurring_product_orders |= line.order_id
         recurring_product_orders.has_recurring_line = True
         (self - recurring_product_orders).has_recurring_line = False
 
@@ -793,7 +799,7 @@ class SaleOrder(models.Model):
         if len(self) == 1:
             # Raise error before other popup if used on one SO.
             has_recurring_line = self.order_line.filtered(lambda l: l.product_id.recurring_invoice)
-            if not self.plan_id and (self.has_recurring_line and not self._subscription_is_one_time_sale()):
+            if not self._subscription_is_one_time_sale() and self.has_recurring_line and not self.plan_id:
                 raise UserError(_('Please set a recurring plan on the subscription before sending the email.'))
             if self.plan_id and not has_recurring_line:
                 raise UserError(_('Please remove the recurring plan on the subscription before sending the email.'))
@@ -801,7 +807,7 @@ class SaleOrder(models.Model):
 
     def action_preview_sale_order(self):
         self.ensure_one()
-        if not self.plan_id and (self.has_recurring_line and not self._subscription_is_one_time_sale()):
+        if not self._subscription_is_one_time_sale() and self.has_recurring_line and not self.plan_id:
             raise UserError(self.env._('Please add a recurring plan on the subscription or remove the recurring product.'))
         if self.plan_id and not self.has_recurring_line:
             raise UserError(self.env._('Please add a recurring product in the subscription or remove the recurring plan.'))
@@ -2231,7 +2237,7 @@ class SaleOrder(models.Model):
         for line in self.order_line:
             if not line.recurring_invoice:
                 continue
-            value = bool(line.product_id.allow_one_time_sale)
+            value = bool(line.product_id.allow_one_time_sale and not line.order_id.plan_id)
             res.append(value)
         return all(res)
 
