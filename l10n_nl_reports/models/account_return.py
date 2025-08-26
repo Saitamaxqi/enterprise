@@ -46,7 +46,7 @@ class AccountReturn(models.Model):
             }
 
             vat_results_summary = [
-                ('total', self.env.ref('l10n_nl.tax_report_rub_btw_5g').id, 'balance'),
+                ('total', self.env.ref('l10n_nl.tax_report_rub_btw_5g').id, 'tax'),
             ]
 
             return self._vat_closing_entry_results_rounding(company, options, results, rounding_accounts, vat_results_summary)
