@@ -8,3 +8,9 @@ class ResUsersSettings(models.Model):
     _inherit = 'res.users.settings'
 
     homemenu_config = fields.Json(string="Home Menu Configuration", readonly=True)
+    color_scheme = fields.Selection(
+        [("system", "System"), ("light", "Light"), ("dark", "Dark")],
+        default="system",
+        required=True,
+        string="Color Scheme",
+    )

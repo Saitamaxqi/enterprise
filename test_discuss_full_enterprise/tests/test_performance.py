@@ -55,6 +55,7 @@ def _get_init_store_data_result(self):
             "voip_secret": False,
             "voip_username": False,
             "is_discuss_sidebar_category_whatsapp_open": True,
+            "color_scheme": "system",
         }
     )
     return res

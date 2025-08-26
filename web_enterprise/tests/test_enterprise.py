@@ -1,5 +1,6 @@
 from odoo import api, Command
 from odoo.tests.common import HttpCase, tagged
+from odoo.addons.base.tests.common import new_test_user
 
 
 class LoadMenusTests(HttpCase):
@@ -93,3 +94,18 @@ class TestWebEnterprise(HttpCase):
         if not invoice_action:
             return
         self.start_tour("/odoo/action-account.action_move_out_invoice_type", "web_enterprise.test_studio_list_upsell", login="admin")
+
+    def test_color_scheme_default(self):
+        bob = new_test_user(self.env, "bob", groups="base.group_user", email="bob@test.com")
+        self.authenticate(bob.login, bob.login)
+        response = self.url_open("/odoo")
+        self.assertEqual(response.cookies.get("color_scheme"), "light")
+
+    def test_color_scheme_dark(self):
+        bob = new_test_user(self.env, "bob", groups="base.group_user", email="bob@test.com")
+        bob.res_users_settings_id.write({
+            'color_scheme': 'dark',
+        })
+        self.authenticate(bob.login, bob.login)
+        response = self.url_open("/odoo")
+        self.assertEqual(response.cookies.get("color_scheme"), "dark")
