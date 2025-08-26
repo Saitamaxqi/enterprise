@@ -1987,3 +1987,16 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': st_line.journal_id.default_account_id.id, 'partner_id': self.partner_a.id, 'balance': 100.0, 'reconciled': False},
             {'account_id': self.account_revenue_1.id, 'partner_id': False, 'balance': -100.0, 'reconciled': False},
         ])
+
+    def test_reconciliation_without_payment_account(self):
+        """Test reconciliation when there is no payment account on the payment method."""
+        # make sure that no payment account is set on the payment method lines
+        self.company_data['default_journal_bank'].inbound_payment_method_line_ids.payment_account_id = False
+        self.company_data['default_journal_bank'].outbound_payment_method_line_ids.payment_account_id = False
+        self._create_and_post_payment(amount=100)
+        statement_line = self._create_st_line(amount=100, update_create_date=False)
+        statement_line._try_auto_reconcile_statement_lines()
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': self.company_data['default_journal_bank'].default_account_id.id, 'balance': 100.0, 'reconciled': False},
+            {'account_id': self.company_data['default_journal_bank'].suspense_account_id.id, 'balance': -100.0, 'reconciled': False},
+        ])
