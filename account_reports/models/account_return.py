@@ -385,6 +385,7 @@ class AccountReturnType(models.Model):
             }])
 
     def _get_return_name(self, main_company, period_from=None, period_to=None, minimal=False):
+        main_company = main_company.sudo()
         period_suffix = self._get_period_name(main_company, period_from, period_to, minimal)
         country_code = ""
         if self.report_id and self.report_id.country_id and main_company.account_fiscal_country_id != self.report_id.country_id:
@@ -743,7 +744,7 @@ class AccountReturn(models.Model):
     @api.depends('tax_unit_id', 'company_id')
     def _compute_amount_to_pay_currency_id(self):
         for record in self:
-            record.amount_to_pay_currency_id = record.tax_unit_id.main_company_id.currency_id or record.company_id.currency_id
+            record.amount_to_pay_currency_id = record.tax_unit_id.main_company_id.sudo().currency_id or record.company_id.sudo().currency_id
 
     @api.depends('check_ids')
     def _compute_check_count(self):
