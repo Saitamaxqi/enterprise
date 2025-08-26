@@ -31,13 +31,18 @@ class ResCompany(models.Model):
         And ensure that companies that was never configured get their employee subfolders. """
         subfolders_changed = vals.get('employee_subfolders')
         employees_without_subfolder = self.env['hr.employee']
+        employees_with_subfolders = self.env['hr.employee']
         if vals.get('documents_employee_folder_id'):
             employees = self.env['hr.employee'].sudo().search([('company_id', 'in', self.ids)])
             # Might be that companies was never configured and no subfolder exists for employees.
             employees_without_subfolder = employees.filtered(lambda e: not e.hr_employee_folder_id)
             employees_with_subfolders = employees - employees_without_subfolder
-            if employees_with_subfolders:
-                employees_with_subfolders.hr_employee_folder_id.folder_id = vals['documents_employee_folder_id']
+            employees_with_subfolders.hr_employee_folder_id.folder_id = vals['documents_employee_folder_id']
+            # done in two times otherwise the folder_id will propagate it's own access rights instead of the write values
+            employees_with_subfolders.hr_employee_folder_id.write({
+                'access_via_link': 'edit',
+                'access_internal': 'none',
+            })
         result = super().write(vals)
         if employees_without_subfolder:
             employees_without_subfolder._generate_employee_documents_folders(skip_subfolders=subfolders_changed)

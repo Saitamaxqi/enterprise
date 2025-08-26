@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import _, api, fields, models, tools
-from odoo.exceptions import ValidationError
+from odoo.exceptions import AccessError, ValidationError
 
 
 class HrEmployee(models.Model):
@@ -49,37 +49,28 @@ class HrEmployee(models.Model):
             raise ValidationError(_('You must have a contact linked to the employee in order to use Document\'s features.'))
         if not self.hr_employee_folder_id:
             raise ValidationError(_('You must configure the HR Employee folder in document settings to use Document\'s features.'))
-        action = self.env['ir.actions.actions']._for_xml_id('documents.document_action_preference')
-        # Documents created within that action will be 'assigned' to the employee
-        # Also makes sure that the views starts on the hr_holder
-        action['context'] = {
-            'searchpanel_default_user_folder_id': str(self.hr_employee_folder_id.id),
-            'default_res_id': self.id,
-            'default_res_model': 'hr.employee',
+        if not self.env.user.has_groups('hr.group_hr_user'):
+            raise AccessError(_('You cannot access the employee\'s folder.'))
+        return {
+            'type': 'ir.actions.act_url',
+            'url': self.hr_employee_folder_id.sudo().access_url,
         }
-        return action
 
     def _generate_employee_documents_folders(self, skip_subfolders=False):
         """ Employee document folder is meant to be used by HR only to store all the documents they need regarding the
          employee (E.g.: ID Card, Drive License, etc..). The employee does not have access to this folder,
          nor the documents inside it (by default at least) """
-        group_hr_user = self.env.ref('hr.group_hr_user')
         employees = self.filtered('company_id.documents_employee_folder_id')
         folders = self.env["documents.document"].sudo().create([{
             'name': employee.name,
             'type': 'folder',
             'folder_id': employee.company_id.documents_employee_folder_id.id,
             'company_id': employee.company_id.id,
+            'access_internal': 'none',
+            'access_via_link': 'edit',
+            'is_access_via_link_hidden': True
         } for employee in employees])
-        hr_users_per_company = {
-            company: group_hr_user.all_user_ids.filtered(lambda user: company in user.company_ids)
-            for company in self.company_id
-        }
         for employee, folder in zip(employees, folders):
-            folder.action_update_access_rights(
-                access_internal='none', access_via_link='none', is_access_via_link_hidden=True,
-                partners={partner.id: ('edit', False) for partner in
-                          hr_users_per_company[employee.company_id].partner_id})
             employee.hr_employee_folder_id = folder.id
             # create Contracts Subfolder
             if not employee.hr_employee_contract_folder_id:
@@ -109,7 +100,9 @@ class HrEmployee(models.Model):
             ('id', 'not in', self.hr_employee_contract_folder_id.ids)])
         subfolders_by_employee_folder = subfolders.grouped('folder_id')
         for company in self.company_id:
-            subfolder_names = [name for name in company.employee_subfolders.split(',') if name]
+            subfolder_names = [
+                name for name in company.employee_subfolders.split(',') if name
+            ] if company.employee_subfolders else []
             company_employees = self.filtered(lambda e: e.company_id == company and e.hr_employee_folder_id)
             for employee in company_employees:
                 # Add new folders added to the list
