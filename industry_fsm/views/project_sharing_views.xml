@@ -62,11 +62,20 @@
             <xpath expr="//label[@for='date_deadline'][2]" position="attributes">
                 <attribute name="invisible">is_fsm or not planned_date_begin</attribute>
             </xpath>
+            <xpath expr="//label[@for='repeat_interval']" position="attributes">
+                <attribute name="invisible">is_fsm or not recurring_task</attribute>
+            </xpath>
             <xpath expr="//field[@name='date_deadline']" position="attributes">
                 <attribute name="invisible">is_fsm</attribute>
             </xpath>
+            <xpath expr="//field[@name='recurring_task']" position="attributes">
+                <attribute name="invisible">is_fsm or (not active or parent_id)</attribute>
+            </xpath>
             <xpath expr="//label[@for='allocated_hours']" position="attributes">
                 <attribute name="invisible">not allow_timesheets or is_fsm</attribute>
+            </xpath>
+            <xpath expr="//div[@name='repeat_intervals']" position="attributes">
+                <attribute name="invisible">is_fsm or not recurring_task</attribute>
             </xpath>
             <xpath expr="//div[@id='allocated_hours_container']" position="attributes">
                 <attribute name="invisible">not allow_timesheets or is_fsm</attribute>
@@ -79,6 +88,22 @@
                     options="{'start_date_field': 'planned_date_begin', 'always_range': '1'}"
                     invisible="not is_fsm"
                     required="is_fsm and (date_deadline or planned_date_begin)"/>
+                <field
+                    name="recurring_task"
+                    invisible="not is_fsm or (not active or parent_id)"
+                    groups="project.group_project_recurring_tasks"
+                />
+                <label for="repeat_interval" groups="project.group_project_recurring_tasks" invisible="not (recurring_task and is_fsm)" />
+                <div invisible="not (recurring_task and is_fsm)" class="d-flex" groups="project.group_project_recurring_tasks" name="repeat_intervals">
+                    <field name="repeat_interval" required="recurring_task"
+                            class="me-2" style="max-width: 2rem !important;" />
+                    <field name="repeat_unit" required="recurring_task"
+                            class="me-2" style="max-width: 4rem !important;" />
+                    <field name="repeat_type" required="recurring_task"
+                            class="me-2" style="max-width: 15rem !important;" />
+                    <field name="repeat_until" invisible="repeat_type != 'until'" required="repeat_type == 'until'"
+                            class="me-2" />
+                </div>
                 <label for="allocated_hours" invisible="not (allow_timesheets and is_fsm)"/>
                 <div id="allocated_hours_container" class="text-nowrap" invisible="not (allow_timesheets and is_fsm)">
                     <field name="allocated_hours" class="oe_inline o_field_float_time o_task_planned_hours" widget="timesheet_uom_no_toggle"/>
