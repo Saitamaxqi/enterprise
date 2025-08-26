@@ -28,3 +28,6 @@ class SaleOrderLine(models.Model):
         """ Manually unlink in order to unlink answer inputs linked to calendar bookings. """
         self.calendar_booking_ids.unlink()
         return super().unlink()
+
+    def _is_reorder_allowed(self):
+        return not self.calendar_booking_ids and super()._is_reorder_allowed()
