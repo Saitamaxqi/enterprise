@@ -388,29 +388,34 @@ class AccountBankStatementLine(models.Model):
         outstanding_accounts = self.env['account.payment.method.line'].search([]).payment_account_id
         if outstanding_accounts:
             query = SQL("""
-                    SELECT st_line.id,
-                           ARRAY_AGG(payments.aml_id) aml_ids
-                      FROM account_bank_statement_line st_line
-              JOIN LATERAL (
-                            SELECT pay.id AS pay_id,
-                                   move.id AS move_id,
-                                   aml.id AS aml_id,
-                                   st_line.id AS st_line_id
-                              FROM account_payment pay
-                         LEFT JOIN account_move move ON (pay.move_id = move.id)
-                         LEFT JOIN account_move_line aml ON (aml.move_id = move.id)
-                             WHERE pay.journal_id = st_line.journal_id
-                               AND aml.move_id NOT IN %s
-                               AND aml.reconciled = false
-                               AND aml.account_id IN %s
-                               AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
-                               AND (aml.parent_state IN ('draft', 'posted'))
-                               AND st_line.id IN %s
-                               AND pay.memo = st_line.payment_ref
-                           ) payments ON TRUE
-                  GROUP BY st_line.id
-                    HAVING ARRAY_LENGTH(ARRAY_AGG(payments.aml_id), 1) = 1
-            """, tuple(st_move_ids), tuple(outstanding_accounts.ids), tuple(self.ids))
+                SELECT st_line.id,
+                       ARRAY_AGG(word_aml.id) aml_id
+                  FROM account_bank_statement_line st_line
+          JOIN LATERAL (
+                        SELECT DISTINCT ON (aml.id) aml.id, word, aml.ref
+                          FROM account_move_line aml
+                     LEFT JOIN account_move move ON (move.id = aml.move_id AND move.payment_reference != move.name),
+                       LATERAL regexp_split_to_table(
+                                  COALESCE(aml.ref, '') || ' - ' ||
+                                  COALESCE(aml.move_name, '') || ' - ' ||
+                                  COALESCE(move.payment_reference, ''), ' - '
+                               ) AS word
+                         WHERE (st_line.partner_id IS NULL OR st_line.partner_id = aml.partner_id)
+                           AND aml.journal_id = st_line.journal_id
+                           AND aml.move_id NOT IN %s
+                           AND aml.reconciled = false
+                           AND aml.account_id IN %s
+                           AND aml.company_id = st_line.company_id
+                           AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
+                           AND (aml.parent_state IN ('draft', 'posted'))
+                           AND st_line.id IN %s
+                           AND (
+                                length(word) > 8 AND st_line.payment_ref ILIKE '%%' || word || '%%'
+                               )
+                       ) word_aml ON TRUE
+              GROUP BY st_line.id
+                HAVING COUNT(*) = 1
+            """, tuple(st_move_ids), tuple(outstanding_accounts.ids), tuple(remaining_st_line_ids))
             self.env.cr.execute(query)
             for st_line_id, aml_id in self.env.cr.fetchall():
                 st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # guarantees batch prefetching if needed

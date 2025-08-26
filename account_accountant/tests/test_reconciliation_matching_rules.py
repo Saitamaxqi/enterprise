@@ -1340,20 +1340,12 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.suspense_account_id.id, 'balance': -100.0, 'reconciled': False},
         ])
 
-        self._create_and_post_payment(amount=100, memo="SO2025/127326425 - INV/2025/05/0656")
+        payment_2 = self._create_and_post_payment(amount=100, memo="SO2025/127326425 - INV/2025/05/0656")
         bank_stmt_line._try_auto_reconcile_statement_lines()
-        # no proposal, since the commmunication isn't exactly identical to the outstanding payment
+        # matching done, since a part of the commmunication (split on ' - ') of the outstanding payment can be found in the transaction
         self.assertRecordValues(bank_stmt_line.line_ids, [
             {'account_id': self.bank_journal.default_account_id.id, 'balance': 100.0, 'reconciled': False},
-            {'account_id': self.bank_journal.suspense_account_id.id, 'balance': -100.0, 'reconciled': False},
-        ])
-        # this time it is matched as the communication is exactly the same
-        payment_3 = self._create_and_post_payment(amount=100, memo="SO2025/127326425")
-        bank_stmt_line._try_auto_reconcile_statement_lines()
-        # this time it is matched as the communication is exactly the same
-        self.assertRecordValues(bank_stmt_line.line_ids, [
-            {'account_id': self.bank_journal.default_account_id.id, 'balance': 100.0, 'reconciled': False},
-            {'account_id': payment_3.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': payment_2.outstanding_account_id.id, 'balance': -100.0, 'reconciled': True},
         ])
 
     def test_ref_included_in_another(self):
