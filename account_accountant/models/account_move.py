@@ -479,6 +479,7 @@ class AccountMove(models.Model):
                     continue
 
                 payments_widget_vals['content'].append({
+                    'bank_label': line.name if line.journal_id.type == 'bank' else False,
                     'journal_name': line.ref or line.move_id.name,
                     'amount': amount,
                     'currency_id': move.currency_id.id,
