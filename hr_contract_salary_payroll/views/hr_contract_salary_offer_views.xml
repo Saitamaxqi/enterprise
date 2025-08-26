@@ -152,12 +152,17 @@
                     </div>
                 </div>
                 <footer>
-                    <button string="Configure Benefits" name="action_open_salary_configurator" type="object"
-                        class="btn-primary" invisible="id" disabled="1"/>
-                    <button string="Configure Benefits" name="action_open_salary_configurator" type="object"
-                        class="btn-primary" invisible="not id"/>
-                    <field name="url" string="Copy link" widget="CopyClipboardButton" disabled="not id"/>
-                    <button special="cancel" string="Close" type="object" class="btn-secondary"/>
+                    <div class="d-flex flex-column flex-sm-row gap-2 w-100">
+                        <div class="d-flex w-100 w-sm-auto gap-2">
+                            <button string="Configure Benefits" name="action_open_salary_configurator" type="object"
+                                class="btn-primary w-50 w-sm-auto" invisible="id" disabled="1"/>
+                            <button string="Configure Benefits" name="action_open_salary_configurator" type="object"
+                                class="btn-primary w-50 w-sm-auto" invisible="not id"/>
+                            <field name="url" string="Copy Link" widget="CopyClipboardButton" disabled="not id" 
+                                class="w-50 w-sm-auto" options="{'btn_class': 'primary w-100'}"/>
+                        </div>
+                        <button special="cancel" string="Close" type="object" class="btn-secondary w-100 w-sm-auto"/>
+                    </div>
                 </footer>
             </form>
         </field>
