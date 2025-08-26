@@ -1,6 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, models, fields, Command, _
+from odoo.addons.resource.models.utils import filter_domain_leaf
+from odoo.fields import Domain
 
 
 class PlanningSend(models.TransientModel):
@@ -28,7 +30,23 @@ class PlanningSend(models.TransientModel):
 
     def _get_slot_domain(self):
         self.ensure_one()
-        return [('start_datetime', '>=', self.start_datetime), ('end_datetime', '<=', self.end_datetime)]
+
+        # Our datetime conditions (these will override any from active_domain)
+        datetime_domain = [
+            ('start_datetime', '>=', self.start_datetime),
+            ('end_datetime', '<=', self.end_datetime)
+        ]
+
+        active_domain = self.env.context.get('active_domain', [])
+
+        if not active_domain:
+            return datetime_domain
+
+        # Remove conditions with 'start_datetime' or 'end_datetime' where the value is not False,
+        cleaned_active_domain = filter_domain_leaf(active_domain, lambda field: field not in ['start_datetime', 'end_datetime'])
+
+        # Combine domains: cleaned active_domain + our datetime
+        return Domain.AND([cleaned_active_domain, datetime_domain])
 
     @api.depends('start_datetime', 'end_datetime')
     def _compute_slots_data(self):

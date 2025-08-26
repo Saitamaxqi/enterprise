@@ -1370,3 +1370,61 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         )
 
         self.assertEqual(planning_hours_info_2nd_week[self.employee_bert.resource_id.id]['value'], 24)
+
+    def test_compute_slots_data(self):
+        """Test that planning.send wizard computes slot_ids and employee_ids correctly, including active_domain."""
+        # Create two employees
+        employee_a, employee_b = self.env['hr.employee'].create([
+            {'name': 'Employee A'},
+            {'name': 'Employee B'},
+        ])
+
+        # Create a planning role
+        role_dev, role_other = self.env['planning.role'].create([
+            {'name': 'Dev'},
+            {'name': 'Tester'},
+        ])
+
+        # Create slots: one in range (role = Tester), one out of range
+        slot_in_range = self.env['planning.slot'].create([
+            {
+                'start_datetime': datetime(2023, 11, 20, 9, 0),
+                'end_datetime': datetime(2023, 11, 20, 16, 0),
+                'employee_id': employee_a.id,
+                'resource_id': employee_a.resource_id.id,
+                'resource_type': 'user',
+                'role_id': role_other.id,
+            },
+            {
+                'start_datetime': datetime(2023, 11, 19, 9, 0),
+                'end_datetime': datetime(2023, 11, 19, 16, 0),
+                'employee_id': employee_b.id,
+                'resource_id': employee_b.resource_id.id,
+                'resource_type': 'user',
+                'role_id': role_dev.id,
+            },
+        ])
+        slot_in_range = slot_in_range[0]
+
+        # Create wizard with a time window that only includes slot_in_range
+        wizard = self.env['planning.send'].create({
+            'start_datetime': datetime(2023, 11, 20, 8, 0),
+            'end_datetime': datetime(2023, 11, 20, 17, 0),
+        })
+        wizard._compute_slots_data()
+
+        # Wizard should only include slot_in_range
+        self.assertIn(slot_in_range, wizard.slot_ids, "Wizard should include slots inside the range.")
+
+        # Employee_ids should match employee of slot_in_range
+        self.assertEqual(
+            wizard.employee_ids,
+            employee_a,
+        )
+
+        # Now test with active_domain filtering by role = Dev → should exclude slot_in_range
+        wizard_ctx = wizard.with_context(active_domain=[('role_id', '=', role_dev.id)])
+        wizard_ctx._compute_slots_data()
+        self.assertFalse(
+            wizard_ctx.slot_ids,
+        )
