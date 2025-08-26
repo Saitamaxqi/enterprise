@@ -30,12 +30,6 @@
                 </t>
             </SidePanelCollapsible>
         </t>
-        <div class="o-section o-sidePanelButtons">
-            <t t-call="spreadsheet_edition.FilterEditorButtons">
-                <t t-set="onDelete" t-value="this.props.id and onDelete.bind(this)" />
-                <t t-set="onSave" t-value="onSave.bind(this)" />
-                <t t-set="onCancel" t-value="onCancel.bind(this)" />
-            </t>
-        </div>
+        <GlobalFilterFooter t-props="footerProps"/>
     </div>
 </templates>

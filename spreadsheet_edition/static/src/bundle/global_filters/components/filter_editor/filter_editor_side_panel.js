@@ -4,6 +4,7 @@ import { stores, components } from "@odoo/o-spreadsheet";
 import { onWillStart, Component } from "@odoo/owl";
 import { FilterEditorStore } from "../../filter_editor_store";
 import { FilterEditorFieldMatching } from "./filter_editor_field_matching";
+import { GlobalFilterFooter } from "../global_filter_footer/global_filter_footer";
 
 const { Checkbox, Section, SidePanelCollapsible, TextInput } = components;
 const { useLocalStore } = stores;
@@ -30,6 +31,7 @@ export class AbstractFilterEditorSidePanel extends Component {
         Section,
         TextInput,
         FilterEditorFieldMatching,
+        GlobalFilterFooter,
     };
     static props = {
         id: { type: String, optional: true },
@@ -100,25 +102,29 @@ export class AbstractFilterEditorSidePanel extends Component {
         });
     }
 
-    onSave() {
-        const sourcePanel = `${this.constructor.name}_${this.props.id}`;
-        this.store.saveGlobalFilter(sourcePanel);
-    }
-
-    onCancel() {
-        this.env.replaceSidePanel(
-            "GLOBAL_FILTERS_SIDE_PANEL",
-            `${this.constructor.name}_${this.props.id}`
-        );
-    }
-
-    onDelete() {
-        if (this.props.id) {
-            this.env.model.dispatch("REMOVE_GLOBAL_FILTER", { id: this.props.id });
-        }
-        this.env.replaceSidePanel(
-            "GLOBAL_FILTERS_SIDE_PANEL",
-            `${this.constructor.name}_${this.props.id}`
-        );
+    get footerProps() {
+        return {
+            onClickSave: () => {
+                const sourcePanel = `${this.constructor.name}_${this.props.id}`;
+                this.store.saveGlobalFilter(sourcePanel);
+            },
+            onClickDelete: !this.props.id
+                ? undefined
+                : () => {
+                      if (this.props.id) {
+                          this.env.model.dispatch("REMOVE_GLOBAL_FILTER", { id: this.props.id });
+                      }
+                      this.env.replaceSidePanel(
+                          "GLOBAL_FILTERS_SIDE_PANEL",
+                          `${this.constructor.name}_${this.props.id}`
+                      );
+                  },
+            onClickCancel: () => {
+                this.env.replaceSidePanel(
+                    "GLOBAL_FILTERS_SIDE_PANEL",
+                    `${this.constructor.name}_${this.props.id}`
+                );
+            },
+        };
     }
 }

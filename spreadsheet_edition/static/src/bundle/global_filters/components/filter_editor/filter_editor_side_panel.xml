@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-    <t t-name="spreadsheet_edition.FilterEditorButtons">
-        <button t-if="onDelete" t-on-click="onDelete" class="o-button o_global_filter_delete o-button-danger">Remove</button>
-        <button t-on-click="onCancel" class="o-button o_global_filter_cancel">Cancel</button>
-        <button t-on-click="onSave" class="o-button primary o_global_filter_save">Save</button>
-    </t>
-
     <t t-name="spreadsheet_edition.FilterEditorFieldMatching">
         <div class="text-muted">
             Match this filter to a field for each data source
