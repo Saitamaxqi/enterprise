@@ -3,26 +3,14 @@
     'name': 'AI',
     'version': '1.0',
     'category': 'Hidden',
-    'summary': """
-        A powerful suite of AI tools and agents
-        integrated directly into your Odoo environment.""",
-    'description': """
-        * Create and manage AI agents for various business tasks
-        * Integrate with popular AI models and services
-        * Process documents and extract information automatically
-        * Enhance customer service with AI-powered responses
-        * Automate routine tasks with intelligent workflows
-    """,
-    'depends': ['mail', 'attachment_indexation'],
+    'summary': """Base module for AI features""",
+    'description': """AI-related features are accessible with limited configurability.""",
+    'depends': ['mail'],
     'data': [
         'data/ir_actions_server_data.xml',
         'data/ai_topic_data.xml',
         'security/ir.model.access.csv',
-        'views/ai_agent_views.xml',
-        'views/ai_topic_views.xml',
         'views/res_config_settings_views.xml',
-        'views/ai_composer_views.xml',
-        'views/ai_menus.xml',
         'views/ir_actions_server_views.xml',
         'views/mail_scheduled_message_views.xml',
         'views/mail_template_views.xml',
@@ -56,7 +44,7 @@
         ],
     },
     'pre_init_hook': "_pre_init_ai",
-    'application': True,
+    'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -32,4 +32,5 @@
             "ai_documents/static/src/views/activity/**",
         ],
     },
+    "auto_install": True,
 }

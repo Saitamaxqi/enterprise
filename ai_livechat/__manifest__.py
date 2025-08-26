@@ -6,7 +6,7 @@
     'summary': """
         Augment Livechat with AI Agents.
     """,
-    'depends': ['ai', 'im_livechat'],
+    'depends': ['ai_app', 'im_livechat'],
     'data': [
         'views/im_livechat_channel_rule_views.xml'
     ],
