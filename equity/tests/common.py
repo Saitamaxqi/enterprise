@@ -18,10 +18,12 @@ class TestEquityCommon(TransactionCase):
             'is_company': False,
         })
 
-        cls.share_class_ord = cls.env['equity.share.class'].create({'name': 'ORD'})
-        cls.share_class_seed = cls.env['equity.share.class'].create({'name': 'Seed'})
-        cls.share_class_a = cls.env['equity.share.class'].create({'name': 'Class A', 'share_votes': 2})
-        cls.share_class_b = cls.env['equity.share.class'].create({'name': 'Class B'})
+        cls.share_class_ord = cls.env['equity.security.class'].create({'name': 'ORD'})
+        cls.share_class_seed = cls.env['equity.security.class'].create({'name': 'Seed'})
+        cls.share_class_a = cls.env['equity.security.class'].create({'name': 'Class A', 'share_votes': 2})
+        cls.share_class_b = cls.env['equity.security.class'].create({'name': 'Class B'})
+        cls.option_class_1 = cls.env['equity.security.class'].create({'name': 'Option pool 1', 'class_type': 'options'})
+        cls.option_class_2 = cls.env['equity.security.class'].create({'name': 'Option pool 2', 'class_type': 'options'})
 
         cls.env['equity.valuation'].create([{
             'event': 'transaction',

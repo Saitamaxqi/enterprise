@@ -1,6 +1,9 @@
+from dateutil.relativedelta import relativedelta
+import json
 import uuid
 
-from odoo import fields, models
+from odoo import api, fields, models
+from odoo.tools.misc import format_date
 
 
 class ResPartner(models.Model):
@@ -16,6 +19,9 @@ class ResPartner(models.Model):
 
     equity_shareholders_count = fields.Integer(compute='_compute_shareholders_count')
     equity_authorized_rep_count = fields.Integer(compute='_compute_authorized_rep_count')
+
+    equity_last_valuation = fields.Monetary(compute='_compute_equity_last_valuation', currency_field='equity_currency_id')
+    equity_kanban_dashboard_graph = fields.Text(compute='_compute_equity_kanban_dashboard_graph')
 
     # Investee (Company) methods
     def _compute_transaction_count(self):
@@ -45,6 +51,36 @@ class ResPartner(models.Model):
         for partner in self:
             partner.equity_authorized_rep_count = auth_rep_dict.get(partner, 0)
 
+    def _compute_equity_last_valuation(self):
+        for partner in self:
+            last_valuation_id = self.env['equity.valuation'].search([('partner_id', '=', partner.id), ('date', '<=', fields.Date.today())], order='date DESC', limit=1)
+            partner.equity_last_valuation = 0 if not last_valuation_id else last_valuation_id.valuation
+
+    def _compute_equity_kanban_dashboard_graph(self):
+        for partner in self:
+            partner_valuations = self.env['equity.valuation'].search([('partner_id', '=', partner.id)], order='date ASC')
+            values = [
+                {
+                    'x': format_date(self.env, partner_valuations[0].date - relativedelta(days=1), date_format='d LLLL Y'),
+                    'y': 0,
+                },
+                *[
+                    {
+                        'x': format_date(self.env, partner_valuation.date, date_format='d LLLL Y'),
+                        'y': partner_valuation.valuation,
+                    } for partner_valuation in partner_valuations
+                ],
+            ] if partner_valuations else [{
+                'x': '',
+                'y': (2 ** i) - 1,
+            } for i in range(6)]
+            partner.equity_kanban_dashboard_graph = json.dumps([{
+                'values': values,
+                'title': '',
+                'key': self.env._("Valuation"),
+                'is_sample_data': not len(partner_valuations),
+            }])
+
     # cap table methods
     def _get_cap_table_data(self):
         self.ensure_one()
@@ -53,11 +89,25 @@ class ResPartner(models.Model):
             'equity_currency_id': self.equity_currency_id.id,
         }
 
+    @api.model
+    def open_equity_dashboard(self):
+        partners_with_transactions = self.search([('equity_transaction_ids', '!=', False)], limit=2)
+        if len(partners_with_transactions) <= 1:
+            return partners_with_transactions.action_open_cap_table()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._("Equity"),
+            'res_model': 'res.partner',
+            'view_mode': 'kanban',
+            'views': [(False, 'kanban')],
+            'view_id': self.env.ref('equity.equity_dashboard_res_partner').id,
+            'domain': [('equity_transaction_ids', '!=', False)],
+        }
+
     def action_open_cap_table(self):
-        self.ensure_one()
         return {
             **self.env['ir.actions.actions']._for_xml_id('equity.action_equity_cap_table'),
-            'display_name': self.env._("%(partner_name)s's Cap Table", partner_name=self.name),
+            'display_name': self.env._("Cap Table"),
             'context': {
                 'active_ids': self.ids,
             },

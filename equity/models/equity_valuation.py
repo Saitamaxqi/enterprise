@@ -24,9 +24,9 @@ class EquityValuation(models.Model):
     securities = fields.Float(string="# Securities", compute='_compute_securities')
     shares = fields.Float(string="# Shares", compute='_compute_securities')
     security_price = fields.Monetary(string="Price per Security", currency_field='equity_currency_id', compute='_compute_security_price')
-    share_price = fields.Monetary(
+    share_price = fields.Float(
         string="Price per Share",
-        currency_field='equity_currency_id',
+        digits=0,
         compute='_compute_share_price',
         inverse='_inverse_compute_share_price',
     )
@@ -41,8 +41,8 @@ class EquityValuation(models.Model):
             cap_table_entries = self.env['equity.cap.table'].with_context(current_date=valuation.date).search([
                 ('partner_id', '=', valuation.partner_id.id),
             ])
-            shares = sum(cap_table_entries.mapped('shares'))
-            options = sum(cap_table_entries.mapped('options'))
+            shares = sum(cap_table_entries.filtered(lambda cte: cte.securities_type == 'shares').mapped('securities'))
+            options = sum(cap_table_entries.filtered(lambda cte: cte.securities_type == 'options').mapped('securities'))
             valuation.securities = shares + options
             valuation.shares = shares
 

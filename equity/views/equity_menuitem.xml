@@ -15,10 +15,11 @@
         </menuitem>
         <menuitem id="menu_equity_reporting" name="Reporting" sequence="30">
             <menuitem id="menu_equity_reporting_cap_table" name="Cap Table" action="equity.action_equity_cap_table" sequence="10"/>
-            <menuitem id="menu_equity_reporting_valuation" name="Valuation" action="equity.action_equity_valuation_graph" sequence="20"/>
+            <menuitem id="menu_equity_reporting_cap_table_pivot" name="Cap Table Pivot" action="equity.action_equity_cap_table_pivot" sequence="20"/>
+            <menuitem id="menu_equity_reporting_valuation" name="Valuation" action="equity.action_equity_valuation_graph" sequence="30"/>
         </menuitem>
         <menuitem id="menu_equity_configuration" name="Configuration" sequence="40">
-            <menuitem id="menu_equity_configuration_share_classes" name="Share Classes" action="equity.action_equity_share_class" sequence="10"/>
+            <menuitem id="menu_equity_configuration_security_classes" name="Security Classes" action="equity.action_equity_security_class" sequence="10"/>
         </menuitem>
     </menuitem>
 </odoo>

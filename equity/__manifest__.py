@@ -3,6 +3,7 @@
     'version': '1.0',
     'sequence': 31,
     'category': 'Accounting/Accounting',
+    'summary': "Manage securities, transactions, and cap tables.",
     'author': 'Odoo S.A.',
     'depends': ['portal'],
     'data': [
@@ -11,7 +12,7 @@
         'security/ir.model.access.csv',
         'views/equity_authorized_rep_views.xml',
         'views/equity_reporting_views.xml',
-        'views/equity_share_class_views.xml',
+        'views/equity_security_class_views.xml',
         'views/equity_valuation_views.xml',
         'views/equity_transaction_views.xml',
         'views/mail_compose_message_views.xml',
@@ -20,7 +21,7 @@
         'views/equity_portal_templates.xml',
     ],
     'demo': [
-        'demo/demo_equity_share_class.xml',
+        'demo/demo_equity_security_class.xml',
         'demo/demo_equity_transaction.xml',
         'demo/demo_equity_valuation.xml',
     ],
@@ -31,14 +32,15 @@
             'equity/static/src/components/**/*.js',
             'equity/static/src/components/**/*.xml',
             'equity/static/src/components/**/*.scss',
+            'equity/static/src/scss/*.scss',
         ],
         'web.assets_frontend': [
             'equity/static/src/components/valuation_chart/*',
-            'equity/static/src/portal.scss',
+            'equity/static/src/scss/portal.scss',
             'web/static/src/views/fields/formatters.js',
         ],
         'web._assets_core': [
-            'equity/static/src/share_class_ids_dropdown_menu.scss',
+            'equity/static/src/scss/security_class_ids_dropdown_menu.scss',
         ],
     },
     'license': 'LGPL-3',

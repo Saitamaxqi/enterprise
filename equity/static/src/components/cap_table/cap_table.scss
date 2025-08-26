@@ -11,19 +11,19 @@
         cursor: pointer;
     }
 
-    .o_cap_table_partner_header {
-        --ListRenderer-thead-padding-y: 10px;
-        th {
-            background-color: #{$o-gray-300} !important;
-            padding-bottom: 10px;
-        }
-    }
-
     .o_cap_table_header {
-        --ListRenderer-thead-padding-y: 5px;
+        --ListRenderer-thead-padding-y: 0.5rem;
     }
 
     .o_group_header {
         font-weight: 500;
+    }
+    
+    // ------- Sample mode -------
+    .o_view_sample_data {
+        tbody {
+            @include o-sample-data-disabled;
+            border-color: rgba(0, 0, 0, 0.02);
+        }
     }
 }

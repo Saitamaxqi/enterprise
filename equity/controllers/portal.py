@@ -39,13 +39,10 @@ class PortalEquity(CustomerPortal):
 
     def _prepare_my_transactions_values(self, partner_id, access_token=None):
         def get_sign(holder_id, transaction):
-            sign = 1 if transaction.securities > 0 else -1
+            sign = -1 if transaction.transaction_type == 'cancellation' else 1
             if transaction.seller_id.sudo().id == holder_id:
                 sign = -1  # seller always loses shares
             return sign
-
-        def get_sign_str(sign):
-            return '+' if sign > 0 else ''
 
         EquityTransaction = request.env['equity.transaction'].sudo()
         holder_id = self._get_user_partner_id(access_token)
@@ -66,24 +63,22 @@ class PortalEquity(CustomerPortal):
 
         transactions_events = [
             {
+                'is_exercise': (is_exercise := transaction.transaction_type == 'exercise'),
+                'is_options_issuance': (is_options_issuance := transaction.transaction_type == 'issuance' and transaction.securities_type == 'options'),
                 'date': transaction.date,
-                'transaction_type': transaction.transaction_type,
-                'expiration_date': transaction.expiration_date if transaction.transaction_type == 'option' else '',
-                'expired': transaction.transaction_type == 'option' and transaction.expiration_date and transaction.expiration_date < today,
-                'event': request.env._("Options exercise") if transaction.transaction_type == 'share' and transaction.parent_transaction_id else transaction_type_dict.get(transaction.transaction_type),
-                'share_class': transaction.share_class_id.name,
-                'sign': (sign := get_sign(holder_id, transaction)),
-                'securities': (securities := abs(transaction.securities) * sign),
-                'formatted_securities': f"{get_sign_str(sign)}{securities}",
+                'expiration_date': transaction.expiration_date if is_options_issuance else '',
+                'event': transaction_type_dict.get(transaction.transaction_type),
+                'security_class': transaction.security_class_id.name + ('' if not is_exercise else f' → {transaction.destination_class_id.name}'),
+                'securities': (securities := transaction.securities * get_sign(holder_id, transaction)),
                 'security_price': transaction.security_price,
-                'transaction_price': securities * transaction.security_price if transaction.transaction_type != 'option' else '',
+                'transaction_price': securities * (1 if is_options_issuance else -1) * transaction.security_price,
             } for transaction in transactions
         ]
         transactions_events.append({
             'add_total_tooltip': True,
             'event': request.env._("Total"),
-            'formatted_securities': sum(event['securities'] for event in transactions_events if event['transaction_type'] != 'option'),
-            'transaction_price': sum(event['transaction_price'] for event in transactions_events if event['transaction_type'] != 'option'),
+            'securities': sum(event['securities'] for event in transactions_events if not event['is_exercise']),
+            'transaction_price': sum(event['transaction_price'] for event in transactions_events if not event['is_options_issuance']),
         })
 
         valuations = request.env['equity.valuation'].sudo().search([('partner_id', '=', partner_id), ('date', '<=', today)], order='date DESC')
@@ -91,8 +86,8 @@ class PortalEquity(CustomerPortal):
         def chart_data_function(past_date):
             cap_table_entries = request.env['equity.cap.table'].sudo().with_context(current_date=past_date).search([('partner_id', '=', partner_id)])
             holder_cap_table_entries = cap_table_entries.filtered(lambda cte: cte.holder_id.id == holder_id)
-            shares = sum(holder_cap_table_entries.mapped('shares'))
-            total_shares = sum(cap_table_entries.mapped('shares'))
+            shares = sum(holder_cap_table_entries.filtered(lambda cte: cte.securities_type == 'shares').mapped('securities'))
+            total_shares = sum(cap_table_entries.filtered(lambda cte: cte.securities_type == 'shares').mapped('securities'))
             past_valuations = valuations.filtered(lambda v: v.date <= past_date)
             valuation = past_valuations[0].valuation if past_valuations else 0
             return [
@@ -102,9 +97,9 @@ class PortalEquity(CustomerPortal):
 
         cap_table_entries = request.env['equity.cap.table'].sudo().search([('partner_id', '=', partner_id)])
         holder_cap_table_entries = cap_table_entries.filtered(lambda cte: cte.holder_id.id == holder_id)
-        shares = sum(holder_cap_table_entries.mapped('shares'))
+        shares = sum(holder_cap_table_entries.filtered(lambda cte: cte.securities_type == 'shares').mapped('securities'))
         votes = sum(holder_cap_table_entries.mapped('votes'))
-        total_shares = sum(cap_table_entries.mapped('shares'))
+        total_shares = sum(cap_table_entries.filtered(lambda cte: cte.securities_type == 'shares').mapped('securities'))
         total_votes = sum(cap_table_entries.mapped('votes'))
         reported_valuation = valuations[0].valuation if valuations else 0
 
@@ -143,15 +138,11 @@ class PortalEquity(CustomerPortal):
 
         domain = self._get_transactions_domain(holder_id)
         partners = EquityTransaction.search(domain).partner_id
-        securities_per_partner = request.env['equity.cap.table'].sudo()._read_group(
+        securities_per_partner = dict(request.env['equity.cap.table'].sudo()._read_group(
             domain=[('partner_id', 'in', partners.ids), ('holder_id', '=', holder_id)],
             groupby=['partner_id'],
-            aggregates=['shares:sum', 'options:sum'],
-        )
-        securities_per_partner = {
-            partner: shares + options
-            for partner, shares, options in securities_per_partner
-        }
+            aggregates=['securities:sum'],
+        ))
         values.update({
             'partners': [
                 {

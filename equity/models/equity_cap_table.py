@@ -1,4 +1,5 @@
 from collections import defaultdict
+from datetime import datetime
 
 from odoo import api, fields, models
 from odoo.fields import Domain
@@ -12,77 +13,75 @@ class EquityCapTable(models.Model):
 
     partner_id = fields.Many2one('res.partner')
     holder_id = fields.Many2one('res.partner')
-    share_class_id = fields.Many2one('equity.share.class')
+    security_class_id = fields.Many2one('equity.security.class')
 
-    shares = fields.Float()
-    options = fields.Float()
+    securities = fields.Float()
+    securities_type = fields.Selection(related='security_class_id.class_type')
     votes = fields.Float()
 
     ownership = fields.Float()
     voting_rights = fields.Float()
-    shares_dilution = fields.Float()
-    options_dilution = fields.Float()
-    shares_valuation = fields.Float()
-    options_valuation = fields.Float()
+    dividend_payout = fields.Float()
+    dilution = fields.Float()
+    valuation = fields.Float()
 
     @property
     def _table_query(self):
         self.env['equity.transaction'].flush_model()
-        current_date = self.env.context.get('current_date') or fields.Date.context_today(self)
+        current_date = self.env.context.get('current_date') or datetime.max.date()
+
         domain = Domain('date', '<=', current_date)
         if current_transaction_id := self.env.context.get('current_transaction_id'):
             domain &= Domain('id', '!=', current_transaction_id)
-        options_query = self.env['equity.transaction']._search(domain & Domain('transaction_type', '=', 'option'))
-        share_query = self.env['equity.transaction']._search(domain & Domain('transaction_type', '=', 'share'))
-        sale_query = self.env['equity.transaction']._search(domain & Domain('transaction_type', '=', 'sale'))
-        common_cols = [
-            'partner_id',
-            'share_class_id',
-        ]
+        transactions_query = self.env['equity.transaction']._search(domain)
+        exercise_transactions_query = self.env['equity.transaction']._search(domain & Domain('transaction_type', '=', 'exercise'))
+        transfer_transactions_query = self.env['equity.transaction']._search(domain & Domain('transaction_type', '=', 'transfer'))
         all_transactions = SQL(" UNION ALL ").join([
-            options_query.select(
-                *common_cols,
+            transactions_query.select(
+                'partner_id AS partner_id',
                 'subscriber_id AS holder_id',
-                '0 AS shares',
-                SQL('securities - CASE WHEN expiration_date <= %s THEN remaining_options ELSE 0 END AS options', current_date),
+                'security_class_id AS security_class_id',
+                """(CASE
+                        WHEN transaction_type IN ('issuance', 'transfer') THEN securities
+                        ELSE -securities
+                    END) AS securities"""
+                ,
             ),
-            share_query.select(
-                *common_cols,
+            exercise_transactions_query.select(
+                'partner_id AS partner_id',
                 'subscriber_id AS holder_id',
-                'securities AS shares',
-                'CASE WHEN parent_transaction_id IS NULL THEN 0 ELSE -securities END AS options',
+                'destination_class_id AS security_class_id',
+                'securities AS securities',
             ),
-            sale_query.select(
-                *common_cols,
-                'subscriber_id AS holder_id',
-                'securities AS shares',
-                '0 AS options',
-            ),
-            sale_query.select(
-                *common_cols,
+            transfer_transactions_query.select(
+                'partner_id AS partner_id',
                 'seller_id AS holder_id',
-                '-securities AS shares',
-                '0 AS options',
+                'security_class_id AS security_class_id',
+                '-securities AS securities',
             ),
         ])
         return SQL(
             """
-                WITH transactions AS (%(all_transactions)s)
-              SELECT CONCAT(partner_id, '-', holder_id, '-', share_class_id, '-', %(current_date)s) AS id,
+                WITH transactions AS (%(all_transactions)s),
+                     security_class AS (
+                        SELECT *,
+                               CASE WHEN class_type = 'shares' THEN 1 ELSE 0 END AS share_factor,
+                               CASE WHEN dividend_payout THEN 1 ELSE 0 END AS dp_factor
+                          FROM equity_security_class
+                     )
+              SELECT CONCAT(partner_id, '-', holder_id, '-', security_class_id, '-', %(current_date)s) AS id,
                      partner_id,
                      holder_id,
-                     share_class_id,
-                     SUM(shares) AS shares,
-                     SUM(options) AS options,
-                     SUM(shares * share_class.share_votes) AS votes,
-                     SUM(shares) / NULLIF(SUM(SUM(shares)) OVER by_partner, 0) AS ownership,
-                     SUM(shares * share_class.share_votes) / NULLIF(SUM(SUM(shares * share_class.share_votes)) OVER by_partner, 0) AS voting_rights,
-                     SUM(shares) / NULLIF(SUM(SUM(shares + options)) OVER by_partner, 0) AS shares_dilution,
-                     SUM(options) / NULLIF(SUM(SUM(shares + options)) OVER by_partner, 0) AS options_dilution,
-                     SUM(shares) / NULLIF((SUM(SUM(shares + options)) OVER by_partner), 0) * last_valuation.valuation AS shares_valuation,
-                     SUM(options) / NULLIF((SUM(SUM(shares + options)) OVER by_partner), 0) * last_valuation.valuation AS options_valuation
+                     security_class_id,
+                     SUM(securities) AS securities,
+                     SUM(securities * security_class.share_votes) AS votes,
+                     SUM(securities * security_class.share_factor) / NULLIF(SUM(SUM(securities * security_class.share_factor)) OVER by_partner, 0) AS ownership,
+                     SUM(securities * security_class.share_votes) / NULLIF(SUM(SUM(securities * security_class.share_votes)) OVER by_partner, 0) AS voting_rights,
+                     SUM(securities * security_class.dp_factor) / NULLIF(SUM(SUM(securities * security_class.dp_factor)) OVER by_partner, 0) AS dividend_payout,
+                     SUM(securities) / NULLIF(SUM(SUM(securities)) OVER by_partner, 0) AS dilution,
+                     SUM(securities) / NULLIF((SUM(SUM(securities)) OVER by_partner), 0) * last_valuation.valuation AS valuation
                 FROM transactions
-                JOIN equity_share_class share_class ON share_class.id = transactions.share_class_id
+                JOIN security_class ON security_class.id = transactions.security_class_id
    LEFT JOIN LATERAL (
                         SELECT valuation
                           FROM equity_valuation
@@ -91,7 +90,7 @@ class EquityCapTable(models.Model):
                       ORDER BY date DESC
                          LIMIT 1
                      ) last_valuation ON TRUE
-            GROUP BY partner_id, holder_id, share_class_id, last_valuation.valuation
+            GROUP BY partner_id, holder_id, security_class_id, last_valuation.valuation
               WINDOW by_partner AS (PARTITION BY partner_id)
             """,
             all_transactions=all_transactions,
@@ -99,27 +98,26 @@ class EquityCapTable(models.Model):
         )
 
     def _append_cap_table_entry(self, data, cap_table_entry):
-        share_class_id = cap_table_entry.share_class_id.id
-        data['classes'][share_class_id]['shares'] += cap_table_entry.shares
-        data['classes'][share_class_id]['options'] += cap_table_entry.options
+        security_class_id = cap_table_entry.security_class_id.id
+        data['classes'][security_class_id] += cap_table_entry.securities
 
         data['ownership'] += cap_table_entry.ownership
         data['voting_rights'] += cap_table_entry.voting_rights
-        data['dilution']['shares'] += cap_table_entry.shares_dilution
-        data['dilution']['options'] += cap_table_entry.options_dilution
-        data['valuation']['shares'] += cap_table_entry.shares_valuation
-        data['valuation']['options'] += cap_table_entry.options_valuation
+        data['dividend_payout'] += cap_table_entry.dividend_payout
+        data['dilution'] += cap_table_entry.dilution
+        data['valuation'] += cap_table_entry.valuation
         return data
 
     @api.model
     def get_cap_table_data(self, partner_ids):
         # {partner_id: {holder_id: {...}}}
         partner_holder_data = defaultdict(lambda: defaultdict(lambda: {
-            'classes': defaultdict(lambda: {'shares': 0, 'options': 0}),
+            'classes': defaultdict(int),
             'ownership': 0,
             'voting_rights': 0,
-            'dilution': {'shares': 0, 'options': 0},
-            'valuation': {'shares': 0, 'options': 0},
+            'dividend_payout': 0,
+            'dilution': 0,
+            'valuation': 0,
         }))
         partner_classes_ids = defaultdict(list)
         partner_data = {}
@@ -132,23 +130,23 @@ class EquityCapTable(models.Model):
         for cap_table_entry in self.search(domain):
             partner = cap_table_entry.partner_id
             holder = cap_table_entry.holder_id
-            share_class = cap_table_entry.share_class_id
+            security_class = cap_table_entry.security_class_id
 
             if partner.id not in partner_data:
                 partner_data[partner.id] = partner._get_cap_table_data()
             if holder and holder.id not in partner_data:
                 partner_data[holder.id] = holder._get_cap_table_data()
 
-            if share_class.id not in class_data:
-                class_data[share_class.id] = share_class._get_cap_table_data()
+            if security_class.id not in class_data:
+                class_data[security_class.id] = security_class._get_cap_table_data()
 
-            if share_class.id not in partner_classes_ids[partner.id]:
-                partner_classes_ids[partner.id].append(share_class.id)
+            if security_class.id not in partner_classes_ids[partner.id]:
+                partner_classes_ids[partner.id].append(security_class.id)
 
             self._append_cap_table_entry(partner_holder_data[partner.id][holder.id], cap_table_entry)
 
-        for partner_id, share_class_ids in partner_classes_ids.items():
-            partner_classes_ids[partner_id] = self.env['equity.share.class'].browse(share_class_ids).sorted().ids
+        for partner_id, security_class_ids in partner_classes_ids.items():
+            partner_classes_ids[partner_id] = self.env['equity.security.class'].browse(security_class_ids).sorted().ids
 
         return {
             'partner_holder_data': partner_holder_data,

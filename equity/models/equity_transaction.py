@@ -7,24 +7,19 @@ from odoo.exceptions import ValidationError
 class EquityTransaction(models.Model):
     _name = 'equity.transaction'
     _inherit = ['mail.thread']
-    _description = 'Equity Transaction'
+    _description = "Equity Transaction"
 
     transaction_type = fields.Selection(
         string="Transaction Type",
         selection=[
-            ('share', "Shares Issuance"),
-            ('option', "Options Issuance"),
-            ('sale', "Sale"),
+            ('issuance', "Issuance"),
+            ('transfer', "Transfer"),
+            ('exercise', "Option Exercise"),
+            ('cancellation', "Cancellation"),
         ],
-        default='share',
+        default='issuance',
         required=True,
     )
-    remaining_options = fields.Float(
-        compute='_compute_remaining_options', store=True,
-        help="Number of options not exercised",
-    )
-    parent_transaction_id = fields.Many2one('equity.transaction', index='btree_not_null')
-    child_transaction_ids = fields.One2many('equity.transaction', 'parent_transaction_id')
     partner_id = fields.Many2one(
         comodel_name='res.partner',
         string="Company",
@@ -45,20 +40,26 @@ class EquityTransaction(models.Model):
         string="# Securities",
         required=True,
         tracking=True,
-        help="Negative amount is a destruction.",
     )
-    share_class_id = fields.Many2one(comodel_name='equity.share.class', string="Class", required=True)
+    security_class_id = fields.Many2one(comodel_name='equity.security.class', string="Class", required=True)
+    securities_type = fields.Selection(related='security_class_id.class_type')
+    destination_class_id = fields.Many2one(comodel_name='equity.security.class', domain=[('class_type', '=', 'shares')])
     invalid_securities_error = fields.Text(compute='_compute_invalid_securities_error')
-    security_price = fields.Monetary(
+    security_price = fields.Float(
         string="Price per Security",
-        currency_field='equity_currency_id',
+        digits=0,
         compute='_compute_security_price', store=True, readonly=False,
         tracking=True,
     )
-    transfer_amount = fields.Monetary(string="Transfer Amount", currency_field='equity_currency_id', compute='_compute_transfer_amount')
+    transfer_amount = fields.Monetary(
+        string="Total",
+        currency_field='equity_currency_id',
+        compute='_compute_transfer_amount',
+        inverse='_inverse_compute_transfer_amount',
+    )
     notes = fields.Text()
 
-    seller_id = fields.Many2one(comodel_name='res.partner', string="Seller", tracking=True, compute='_compute_seller_id', store=True, readonly=False)
+    seller_id = fields.Many2one(comodel_name='res.partner', string="Seller", tracking=True)
     subscriber_id = fields.Many2one(
         comodel_name='res.partner',
         string="Subscriber",
@@ -67,88 +68,53 @@ class EquityTransaction(models.Model):
     )
     subscriber_id_placeholder = fields.Char(compute='_compute_subscriber_id_placeholder')
 
+    seller_name = fields.Char(compute='_compute_owners_names')
+    subscriber_name = fields.Char(compute='_compute_owners_names')
+
     attachment_ids = fields.One2many(comodel_name='ir.attachment', inverse_name='res_id', string="Attachments")
     attachment_number = fields.Integer(compute='_compute_attachment_number')
 
     @api.constrains('seller_id', 'subscriber_id')
-    def _check_seller_not_subscriber(self):
+    def _check_seller_and_subscriber(self):
         for record in self:
-            if record.seller_id and record.subscriber_id and record.seller_id.id == record.subscriber_id.id:
+            if record.transaction_type == 'transfer' and record.seller_id.id == record.subscriber_id.id:
                 raise ValidationError(self.env._("Seller and Buyer must be different."))
+            if record.securities_type == 'shares' and not record.subscriber_id:
+                raise ValidationError(self.env._("Shares transactions must have a subscriber"))
 
-    @api.constrains('partner_id', 'transaction_type', 'subscriber_id', 'seller_id', 'share_class_id', 'securities')
+    @api.constrains('partner_id', 'transaction_type', 'subscriber_id', 'seller_id', 'security_class_id', 'securities')
     def _check_invalid_securities_error(self):
         for record in self:
             if record.invalid_securities_error:
                 raise ValidationError(record.invalid_securities_error)
 
-    @api.constrains('transaction_type', 'expiration_date', 'date')
-    def _check_expiration_date(self):
-        for record in self.filtered(lambda t: t.transaction_type == 'option'):
-            if record.expiration_date < record.date:
-                raise ValidationError(self.env._("Expiration date must be after the transaction date"))
+    @api.constrains('security_class_id', 'transaction_type')
+    def _check_transaction_type(self):
+        for record in self:
+            if record.transaction_type == 'exercise':
+                if record.security_class_id.class_type != 'options':
+                    raise ValidationError(self.env._("Can only exercise options, please select an options class"))
+                if record.destination_class_id.class_type != 'shares':
+                    raise ValidationError(self.env._("Exercise transactions must have a destination 'Share' class"))
+            elif record.destination_class_id:
+                raise ValidationError(self.env._("Destination class can only be set in exercise transactions."))
 
-    @api.constrains('transaction_type', 'parent_transaction_id', 'date', 'partner_id', 'subscriber_id', 'share_class_id', 'security_price')
-    def _check_options_exercise_transaction(self):
-        for record in self.filtered(lambda t: t.parent_transaction_id):
-            parent = record.parent_transaction_id
-            if record.transaction_type != 'share':
-                raise ValidationError(self.env._("Cannot change type of exercise transaction"))
-            if record.date > parent.expiration_date:
-                raise ValidationError(self.env._("Cannot exercise options after their expiry date"))
-            if record.date < parent.date:
-                raise ValidationError(self.env._("Cannot exercise options before their issuance date"))
-            if record.partner_id != parent.partner_id:
-                raise ValidationError(self.env._("Exercised options must have the same Company as the original options"))
-            if record.subscriber_id != parent.subscriber_id:
-                raise ValidationError(self.env._("Exercised options must have the same Subscriber as the original options"))
-            if record.share_class_id != parent.share_class_id:
-                raise ValidationError(self.env._("Exercised options must have the same Share Class as the original options"))
-            if record.security_price != parent.security_price:
-                raise ValidationError(self.env._("Exercised options must have the same Security Price as the original options"))
-
-    @api.constrains('transaction_type', 'child_transaction_ids', 'expiration_date', 'partner_id', 'subscriber_id', 'share_class_id', 'security_price', 'securities')
-    def _check_options_issuance_transaction(self):
-        for record in self.filtered(lambda t: t.child_transaction_ids):
-            children = record.child_transaction_ids
-            if record.transaction_type != 'option':
-                raise ValidationError(self.env._("Cannot change transaction type because it has exercised options"))
-            if record.expiration_date < max(children.mapped('date')):
-                raise ValidationError(self.env._("Expiry date cannot precede exercise dates"))
-            if record.date > min(children.mapped('date')):
-                raise ValidationError(self.env._("Date cannot succeed exercise dates"))
-            if record.partner_id != children[0].partner_id:
-                raise ValidationError(self.env._("Options must have the same Company as exercised options"))
-            if record.subscriber_id != children[0].subscriber_id:
-                raise ValidationError(self.env._("Options must have the same Subscriber as exercised options"))
-            if record.share_class_id != children[0].share_class_id:
-                raise ValidationError(self.env._("Options must have the same Share Class as exercised options"))
-            if record.security_price != children[0].security_price:
-                raise ValidationError(self.env._("Options must have the same Security Price as exercised options"))
-            if record.securities < sum(children.mapped('securities')):
-                raise ValidationError(self.env._("More options have already been exercised"))
-
-    @api.depends('securities', 'transaction_type', 'child_transaction_ids.securities')
-    def _compute_remaining_options(self):
-        for transaction in self:
-            if transaction.transaction_type != 'option':
-                transaction.remaining_options = 0
-            else:
-                transaction.remaining_options = transaction.securities - sum(transaction.child_transaction_ids.mapped('securities'))
+            if record.transaction_type != 'transfer' and record.seller_id:
+                raise ValidationError(self.env._("Seller id can only be set in transfer transactions."))
 
     @api.depends('date')
     def _compute_expiration_date(self):
         for transaction in self.filtered(lambda t: t.date):
             transaction.expiration_date = transaction.date.replace(year=transaction.date.year + 3)
 
-    @api.depends('transaction_type', 'securities', 'expiration_date')
+    @api.depends('transaction_type', 'securities', 'expiration_date', 'security_class_id.class_type')
     def _compute_expiration_diff(self):
         def diff_text(diff_val, singular_diff_type, plural_diff_type):
             diff_type = plural_diff_type if diff_val != 1 else singular_diff_type
-            return f"({diff_val} {diff_type})"
+            return f"({diff_val} {diff_type} {self.env._('remaining')})"
 
         self.expiration_diff = False
-        for transaction in self.filtered(lambda t: t.transaction_type == 'option'):
+        for transaction in self.filtered(lambda t: t.transaction_type == 'issuance' and t.securities_type == 'options'):
             if transaction.securities <= 0:
                 transaction.expiration_diff = self.env._("(Non-positive options don't expire)")
                 continue
@@ -167,62 +133,80 @@ class EquityTransaction(models.Model):
             else:
                 transaction.expiration_diff = ""
 
-    @api.depends('partner_id', 'transaction_type', 'parent_transaction_id.remaining_options', 'subscriber_id', 'seller_id', 'share_class_id', 'securities')
+    @api.depends('transaction_type', 'securities_type', 'partner_id', 'subscriber_id', 'seller_id', 'security_class_id', 'securities')
     def _compute_invalid_securities_error(self):
         self.invalid_securities_error = False
-        for transaction in self.filtered(lambda t: t.partner_id and t.share_class_id):
-            if transaction.securities == 0:
-                transaction.invalid_securities_error = self.env._("Securities cannot be zero")
+        for transaction in self.filtered(lambda t: t.partner_id and t.security_class_id):
+            if transaction.securities <= 0:
+                transaction.invalid_securities_error = self.env._("Securities must be positive")
                 continue
 
-            cap_table_entries = self.env['equity.cap.table'].with_context(current_date=transaction.date).search([
+            if transaction.transaction_type == 'issuance':
+                continue
+
+            cap_table_entries = self.env['equity.cap.table'].with_context(current_transaction_id=transaction.id).search([
                 ('partner_id', '=', transaction.partner_id.id),
-                ('holder_id', 'in', (transaction.subscriber_id | transaction.seller_id).ids),
-                ('share_class_id', '=', transaction.share_class_id.id),
+                ('holder_id', 'in', (transaction.subscriber_id.id, transaction.seller_id.id)),
+                ('security_class_id', '=', transaction.security_class_id.id),
             ])
 
-            subscriber_shares = sum(cap_table_entries.filtered(lambda cte: cte.holder_id == transaction.subscriber_id).mapped('shares'))
-            seller_shares = sum(cap_table_entries.filtered(lambda cte: cte.holder_id == transaction.seller_id).mapped('shares'))
+            subscriber_securities = sum(cap_table_entries.filtered(lambda cte: cte.holder_id == transaction.subscriber_id).mapped('securities'))
+            seller_securities = sum(cap_table_entries.filtered(lambda cte: cte.holder_id == transaction.seller_id).mapped('securities'))
+
             if (
-                transaction.transaction_type == 'share'
-                and not transaction.parent_transaction_id
-                and transaction.securities < 0
-                and subscriber_shares < 0
+                transaction.transaction_type == 'cancellation' and
+                transaction.securities_type == 'shares' and
+                subscriber_securities - transaction.securities < 0
             ):
                 transaction.invalid_securities_error = self.env._(
-                    "Only %(subscriber_shares)s %(share_class_name)s shares available for destruction",
-                    subscriber_shares=subscriber_shares - transaction.securities,
-                    share_class_name=transaction.share_class_id.name,
+                    "Only %(subscriber_shares)s %(security_class_name)s shares available for cancellation",
+                    subscriber_shares=subscriber_securities,
+                    security_class_name=transaction.security_class_id.name,
                 )
-            elif transaction.transaction_type == 'share' and transaction.parent_transaction_id:
-                if transaction.securities < 0:
-                    transaction.invalid_securities_error = self.env._("Cannot exercise negative options")
-                elif transaction.parent_transaction_id.remaining_options < 0:
-                    remaining_options = transaction.parent_transaction_id.remaining_options + transaction.securities
-                    transaction.invalid_securities_error = self.env._(
-                        "Only %(remaining_options)s %(share_class_name)s options available for exercise",
-                        remaining_options=remaining_options,
-                        share_class_name=transaction.share_class_id.name,
-                    )
             elif (
-                transaction.transaction_type == 'option'
-                and transaction.securities < 0
+                transaction.transaction_type == 'cancellation' and
+                transaction.securities_type == 'options' and
+                subscriber_securities - transaction.securities < 0
             ):
-                transaction.invalid_securities_error = self.env._("Options issued can not be destroyed")
-            elif transaction.transaction_type == 'sale':
-                if transaction.securities < 0:
-                    transaction.invalid_securities_error = self.env._("Cannot sell negative shares")
-                elif seller_shares < 0:
-                    transaction.invalid_securities_error = self.env._(
-                        "Only %(seller_shares)s %(share_class_name)s shares available for sale",
-                        seller_shares=seller_shares + transaction.securities,
-                        share_class_name=transaction.share_class_id.name,
-                    )
+                transaction.invalid_securities_error = self.env._(
+                    "Only %(subscriber_options)s %(security_class_name)s options available for cancellation",
+                    subscriber_options=subscriber_securities,
+                    security_class_name=transaction.security_class_id.name,
+                )
+            elif (
+                transaction.transaction_type == 'exercise' and
+                subscriber_securities - transaction.securities < 0
+            ):
+                transaction.invalid_securities_error = self.env._(
+                    "Only %(subscriber_options)s %(security_class_name)s options available for exercise",
+                    subscriber_options=subscriber_securities,
+                    security_class_name=transaction.security_class_id.name,
+                )
+            elif (
+                transaction.transaction_type == 'transfer' and
+                transaction.securities_type == 'shares' and
+                seller_securities - transaction.securities < 0
+            ):
+                transaction.invalid_securities_error = self.env._(
+                    "Only %(seller_shares)s %(security_class_name)s shares available for transfer",
+                    seller_shares=seller_securities,
+                    security_class_name=transaction.security_class_id.name,
+                )
+            elif (
+                transaction.transaction_type == 'transfer' and
+                transaction.securities_type == 'options' and
+                seller_securities - transaction.securities < 0
+            ):
+                transaction.invalid_securities_error = self.env._(
+                    "Only %(seller_options)s %(security_class_name)s options available for transfer",
+                    seller_options=seller_securities,
+                    security_class_name=transaction.security_class_id.name,
+                )
 
-    @api.depends('date', 'partner_id', 'parent_transaction_id')
+    @api.depends('date', 'partner_id')
     def _compute_security_price(self):
         for transaction in self.filtered(lambda t: not bool(self._origin.id)):  # only set security price for newly created records
-            transaction.security_price = transaction.parent_transaction_id.security_price or self.search([
+            transaction.security_price = self.search([
                 ('partner_id', '=', transaction.partner_id.id),
                 ('date', '<', transaction.date),
             ], order='date DESC', limit=1).security_price
@@ -232,10 +216,24 @@ class EquityTransaction(models.Model):
         for transaction in self:
             transaction.transfer_amount = transaction.securities * transaction.security_price
 
-    @api.depends('transaction_type')
-    def _compute_seller_id(self):
-        for transaction in self.filtered(lambda t: t.transaction_type != 'sale'):
-            transaction.seller_id = False
+    @api.onchange('securities', 'transfer_amount')
+    def _inverse_compute_transfer_amount(self):
+        for transaction in self.filtered(lambda t: t.securities):
+            transaction.security_price = transaction.transfer_amount / transaction.securities
+
+    @api.onchange('transaction_type')
+    def _onchange_transaction_type(self):
+        for transaction in self:
+            if transaction.transaction_type != 'transfer':
+                transaction.seller_id = False
+            if transaction.transaction_type != 'exercise':
+                transaction.destination_class_id = False
+
+    @api.depends('seller_id.name', 'subscriber_id.name')
+    def _compute_owners_names(self):
+        for transaction in self:
+            transaction.seller_name = transaction.seller_id.name or self.env._("Option Pool")
+            transaction.subscriber_name = transaction.subscriber_id.name or self.env._("Option Pool")
 
     def _compute_attachment_number(self):
         transaction_attachment_counts = dict(self.env['ir.attachment']._read_group(
@@ -249,13 +247,13 @@ class EquityTransaction(models.Model):
         for transaction in self:
             transaction.attachment_number = transaction_attachment_counts.get(transaction.id, 0)
 
-    @api.depends('transaction_type')
+    @api.depends('security_class_id.class_type')
     def _compute_subscriber_id_placeholder(self):
         for transaction in self:
-            if transaction.transaction_type == 'option':
+            if transaction.securities_type == 'options':
                 transaction.subscriber_id_placeholder = self.env._("Option Pool")
             else:
-                transaction.subscriber_id_placeholder = self.env._("Unknown")
+                transaction.subscriber_id_placeholder = ""
 
     @api.depends('partner_id.display_name', 'transaction_type')
     def _compute_display_name(self):
@@ -265,12 +263,14 @@ class EquityTransaction(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        transactions = super().create(vals_list)
         self.env['equity.cap.table'].invalidate_model()
-        return super().create(vals_list)
+        return transactions
 
     def write(self, vals):
+        transactions = super().write(vals)
         self.env['equity.cap.table'].invalidate_model()
-        return super().write(vals)
+        return transactions
 
     def action_transaction_seller_send(self):
         return self.action_transaction_send(for_seller=True)
@@ -285,9 +285,3 @@ class EquityTransaction(models.Model):
         if not holder:
             raise ValidationError(self.env._("No %s was set!", holder_type))
         return holder.action_partner_send(linked_transaction=self)
-
-    def action_open_parent_transaction_form(self):
-        self.ensure_one()
-        if not self.parent_transaction_id:
-            raise ValidationError(self.env._("No related options issuance transaction was found"))
-        return self.parent_transaction_id._get_records_action()
