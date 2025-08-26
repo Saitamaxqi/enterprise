@@ -475,7 +475,7 @@ class AccountReturn(models.Model):
     type_id = fields.Many2one(comodel_name='account.return.type', string="Return Type", required=True)
 
     # IMPORTANT: To change the state of a return you should always use the field state as it will rewrite the value in the correct field implementation using 'get_state_field'
-    state = fields.Char(string="State", compute="_compute_state", inverse="_inverse_state")
+    state = fields.Char(string="State", compute="_compute_state", inverse="_inverse_state", store=True)
     next_state = fields.Char(string="Next State", compute="_compute_next_state")
     generic_state_tax_report = fields.Selection(
         string="Generic State",
