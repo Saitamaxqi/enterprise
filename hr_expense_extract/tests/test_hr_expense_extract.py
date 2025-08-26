@@ -171,6 +171,20 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
         self.assertEqual(self.expense.extract_state, 'waiting_validation')
 
+        # Test with an employee not linked to a user
+        self.env.user.group_ids += self.env.ref('hr.group_hr_user')
+        self.expense_employee.user_id = False
+        self.expense.employee_id = self.expense_employee.id
+        employee_without_user = self.expense
+
+        with self._mock_iap_extract(extract_response=self.parse_success_response()):
+            employee_without_user.message_post(attachment_ids=[self.attachment.id])
+
+        with self._mock_iap_extract(self.get_result_success_response()):
+            employee_without_user._check_ocr_status()
+
+        self.assertEqual(employee_without_user.extract_state, 'waiting_validation')
+
         expected_validation_params = {
             'version': OCR_VERSION,
             'values': {
