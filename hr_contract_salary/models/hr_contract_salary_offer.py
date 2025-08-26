@@ -95,14 +95,15 @@ class HrContractSalaryOffer(models.Model):
 
         # Offer for an employee
         if self.employee_id:
-            if self.contract_template_id:
-                if not self.contract_template_id.employee_id:
-                    self.contract_template_id.write({
+            contract_template = self.contract_template_id.with_context(tracking_disable=True)
+            if contract_template:
+                if not contract_template.employee_id:
+                    contract_template.write({
                         'employee_id': self.employee_id,
                         'date_version': fields.Date.today() + relativedelta(months=1),
                         'contract_date_start': False
                     })
-                return self.contract_template_id.with_context(tracking_disable=True)
+                return contract_template
             else:
                 return self.employee_version_id.with_context(tracking_disable=True)
 
@@ -121,7 +122,7 @@ class HrContractSalaryOffer(models.Model):
             'company_id': self.company_id.id,
         })
         if self.contract_template_id:
-            employee.version_id.write(
+            employee.version_id.with_context(tracking_disable=True).write(
                 self.env['hr.version'].get_values_from_contract_template(self.contract_template_id)
             )
             return employee.current_version_id.with_context(tracking_disable=True)
