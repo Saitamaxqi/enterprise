@@ -7,6 +7,7 @@ import logging
 import re
 import requests
 import tarfile
+import traceback
 from urllib.parse import urlparse
 
 from odoo import api, fields, models
@@ -179,6 +180,7 @@ class Website_GeneratorRequest(models.Model):
             self.env.cr.rollback()
             self.status = 'error_internal'
             logger.exception("Error building the website: %s", e)
+            data['error'] = traceback.format_exc()
 
             # Report KO to IAP (useful for spotting critical errors)
             logger.info("Website Generator: Reporting KO for request uuid: %s", self.uuid)
