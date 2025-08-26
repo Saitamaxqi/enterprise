@@ -83,6 +83,15 @@
             <group name="payroll_group" position="inside">
                 <group name="external_codes" string="External Codes" invisible="1"/>
             </group>
+            <group name="payroll_group" position="after">
+                <group colspan="4">
+                    <field name="structure_id" groups="hr_payroll.group_hr_payroll_user" invisible="1"/>
+                    <field name="payroll_properties" groups="hr_payroll.group_hr_payroll_user" nolabel="1" colspan="4" widget="properties"/>
+                    <button name="action_configure_employee_inputs" groups="hr_payroll.group_hr_payroll_user" context="{'structure_id': structure_id}" type="object" icon="fa-plus" string="Add Inputs"
+                            class="btn btn-secondary text-break m-0"/>
+                </group>
+            </group>
+
         </field>
     </record>
 

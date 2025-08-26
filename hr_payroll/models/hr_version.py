@@ -62,6 +62,9 @@ class HrVersion(models.Model):
     is_non_resident = fields.Boolean(string='Non-resident', help='If the employee is not a legal resident of the country where they are employed', groups="hr.group_hr_user")
     disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr_payroll.group_hr_payroll_user", tracking=True)
 
+    structure_id = fields.Many2one(related='structure_type_id.default_struct_id', groups="hr.group_hr_user")
+    payroll_properties = fields.Properties('Payroll Properties', definition='structure_id.version_properties_definition', copy=True, precompute=False, readonly=False, groups="hr_payroll.group_hr_payroll_user")
+
     @api.depends('structure_type_id')
     def _compute_schedule_pay(self):
         for version in self:
@@ -100,6 +103,27 @@ class HrVersion(models.Model):
         mapped_counts = {version.id: count for version, count in count_data}
         for version in self:
             version.payslips_count = mapped_counts.get(version.id, 0)
+
+    def _get_property_input_value(self, code):
+        self.ensure_one()
+        rule = self.env['hr.salary.rule'].search([('code', '=', code), ('struct_id', '=', self.structure_id.id)], limit=1)
+        if rule:
+            return dict(self.payroll_properties).get(str(rule.id), 0.00)
+        return 0.0
+
+    def _set_property_input_value(self, code, value):
+        self.ensure_one()
+        current_properties = dict(self.payroll_properties)
+        rule = self.env['hr.salary.rule'].search([('code', '=', code), ('struct_id', '=', self.structure_id.id)], limit=1)
+        if rule:
+            rule_name = str(rule.id)
+            if rule_name in current_properties:
+                current_properties.update({
+                    rule_name: value
+                })
+                self.write({
+                    'payroll_properties': current_properties
+                })
 
     def _get_salary_costs_factor(self):
         self.ensure_one()
@@ -399,6 +423,15 @@ class HrVersion(models.Model):
         if any(key in vals for key in ('state', 'date_start', 'resource_calendar_id', 'employee_id')):
             self._recompute_calendar_changed(self.employee_id)
         return res
+
+    def copy(self, default=None):
+        # todo: Remove this override once properties properly work with copy
+        new_version = super().copy(default)
+        if new_version.sudo().structure_id == self.sudo().structure_id:
+            new_version.write({
+                'payroll_properties': dict(self.payroll_properties)
+            })
+        return new_version
 
     def _recompute_work_entries(self, date_from, date_to):
         self.ensure_one()

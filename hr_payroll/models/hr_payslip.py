@@ -164,6 +164,7 @@ class HrPayslip(models.Model):
     origin_payslip_id = fields.Many2one('hr.payslip', string='Origin Payslip', index='btree_not_null')
     related_payslip_ids = fields.One2many('hr.payslip', 'origin_payslip_id', string="Related Payslips")
     related_payslip_count = fields.Integer("Related payslip count", compute="_compute_related_payslip_count_count")
+    payslip_properties = fields.Properties('Payroll Properties', definition='struct_id.payslip_properties_definition')
 
     def _get_salary_advance_balances(self):
         return defaultdict(float)
@@ -201,6 +202,29 @@ class HrPayslip(models.Model):
         self.ensure_one()
         schedule = self.version_id.schedule_pay or self.version_id.structure_type_id.default_schedule_pay
         return self._schedule_period_start(schedule, date.today())
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        payslips = super().create(vals_list)
+        payslips._compute_payslip_properties()
+        return payslips
+
+    def _compute_payslip_properties(self):
+        properties_definition_per_structure = defaultdict(list)
+        for struct in self.mapped('struct_id'):
+            properties_definition_per_structure[struct] = struct._get_common_payroll_properties()
+
+        for payslip in self:
+            payslip_properties = dict(payslip.payslip_properties) or {}
+            if payslip.state in ['paid', 'done']:
+                continue
+            version_properties = dict(payslip.version_id.payroll_properties)
+            payslip_properties.update({
+                key: version_properties[key] for key in properties_definition_per_structure[payslip.struct_id]
+            })
+            payslip.update({
+                'payslip_properties': payslip_properties
+            })
 
     @api.depends('version_id', 'struct_id')
     def _compute_date_from(self):
@@ -713,8 +737,7 @@ class HrPayslip(models.Model):
                 'date_to': payslip.date_to,
             })
             payslip.message_post(
-                body=self.env._('This is a corrected payslip.\nFind the correction under this name: %(payslip)s', payslip=corrected_name)
-            )
+                body=self.env._('This is a corrected payslip.\nFind the correction under this name: %(payslip)s', payslip=corrected_name))
             payslip.is_corrected = True
         corrected_payslips = self.env['hr.payslip'].create(corrected_payslips_values)
         corrected_payslips.compute_sheet()
@@ -761,6 +784,7 @@ class HrPayslip(models.Model):
         if any(p.state not in ['draft', 'verify'] for p in self):
             raise UserError(_('The payslips should be in Draft or Waiting state.'))
         payslips = self.filtered(lambda p: not p.edited)
+        payslips._compute_payslip_properties()
         payslips.mapped('worked_days_line_ids').unlink()
         payslips.mapped('line_ids').unlink()
         payslips._compute_worked_days_line_ids()
@@ -969,6 +993,10 @@ class HrPayslip(models.Model):
             if len(input_lines) > 1:
                 same_type_input_lines[code] = input_lines
 
+        employee_properties = dict(self.version_id.payroll_properties)
+        payslip_properties = dict(self.payslip_properties)
+        employee_properties.update(payslip_properties)
+
         localdict = {
             **self._get_base_local_dict(),
             **{
@@ -976,6 +1004,7 @@ class HrPayslip(models.Model):
                 'rules': DefaultDictPayroll(lambda: dict(total=0, amount=0, quantity=0)),
                 'payslip': self,
                 'worked_days': {line.code: line for line in self.worked_days_line_ids if line.code},
+                'property_inputs': {self.env['hr.salary.rule'].browse(int(rule_id)).id: float(value) for rule_id, value in employee_properties.items()},
                 'inputs': {line.code: line for line in self.input_line_ids if line.code},
                 'employee': self.employee_id,
                 'version': self.version_id,
@@ -2077,3 +2106,20 @@ class HrPayslip(models.Model):
         if 'employee_count' in sections:
             result['employee_count'] = self._get_dashboard_employee_count()
         return result
+
+    def action_configure_payslip_inputs(self):
+        self.ensure_one()
+        current_structure = self.env.context.get('structure_id')
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'list',
+            'view_id': self.env.ref("hr_payroll.hr_salary_rule_benefit_selector_list", False).id,
+            'res_model': 'hr.salary.rule',
+            'target': 'new',
+            'domain': [
+                ('struct_id', '=', current_structure),
+                ('condition_select', '=', 'property_input'),
+                ('input_usage_payslip', '=', True),
+                ('dependent_input_id', '=', False),
+            ]
+        }

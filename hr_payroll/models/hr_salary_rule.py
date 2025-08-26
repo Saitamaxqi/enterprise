@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from collections import defaultdict
+
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
@@ -14,7 +16,7 @@ class HrSalaryRule(models.Model):
     _description = 'Salary Rule'
 
     name = fields.Char(required=True, translate=True)
-    code = fields.Char(required=True,
+    code = fields.Char(required=True, index=True,
         help="The code of salary rules can be used as reference in computation of other rules. "
              "In that case, it is case sensitive.")
     struct_id = fields.Many2one('hr.payroll.structure', string="Salary Structure", required=True, index=True, ondelete='cascade')
@@ -35,6 +37,7 @@ class HrSalaryRule(models.Model):
         help="Used to compute the employer cost of a payslip.")
     condition_select = fields.Selection([
         ('none', 'Always True'),
+        ('property_input', 'Salary Input'),
         ('input', 'Other Input'),
         ('python', 'Python Expression'),
         ('domain', 'Domain')
@@ -69,6 +72,41 @@ result_rate = 10''')
     underline = fields.Boolean(string="Underline")
     italic = fields.Boolean(string="Italic")
 
+    input_usage_employee = fields.Boolean()
+    input_usage_payslip = fields.Boolean()
+    input_default_value = fields.Float("Default Value")
+    input_default_boolean = fields.Boolean("Selected by Default")
+    input_description = fields.Char()
+    input_section = fields.Many2one('hr.salary.rule.section', string="Section", default=lambda self: self.env.ref('hr_payroll.default_salary_rule_section', raise_if_not_found=False), domain="['|', ('struct_ids', 'in', struct_id), ('struct_ids', '=', False)]")
+    input_unit = fields.Selection(string="Unit", selection=[('monetary', 'Monetary'),
+                                                            ('quantity', 'Quantity'),
+                                                            ('percentage', 'Percentage'),
+                                                            ('boolean', 'Checkbox')],
+                                  default='monetary')
+    input_suffix = fields.Char()
+    dependent_input_id = fields.Many2one('hr.salary.rule', string='Dependent Salary Input', domain="[('id', '!=', id), ('struct_id', '=', struct_id), ('dependent_input_id', '=', False), ('condition_select', '=', 'property_input')]")
+    input_used_in_definition = fields.Boolean(compute='_compute_input_used_in_definition')
+
+    @api.model
+    def update_properties_definition_domain(self, salary_rule_ids, res_model):
+        grouped_rules = self.browse(salary_rule_ids).grouped('struct_id')
+        for struct, rules in grouped_rules.items():
+            struct._update_payroll_properties(rules, res_model)
+
+    def _compute_input_used_in_definition(self):
+        all_structures = self.grouped('struct_id')
+        definitions_inputs_by_structure = defaultdict(set)
+
+        for struct in all_structures:
+            definitions_inputs_by_structure[struct] = {
+                prop['name'] for prop in struct.payslip_properties_definition if not prop['name'].startswith('separator_')
+            } | {
+                prop['name'] for prop in struct.version_properties_definition if not prop['name'].startswith('separator_')
+            }
+
+        for rule in self:
+            rule.input_used_in_definition = rule.condition_select == 'property_input' and str(rule.id) in definitions_inputs_by_structure[rule.struct_id]
+
     def _raise_error(self, localdict, error_type, e):
         raise UserError(_("""%(error_type)s
 - Employee: %(employee)s
@@ -85,7 +123,6 @@ result_rate = 10''')
             error_message=e))
 
     def _compute_rule(self, localdict):
-
         """
         :param localdict: dictionary containing the current computation environment
         :return: returns a tuple (amount, qty, rate)
@@ -93,6 +130,12 @@ result_rate = 10''')
         """
         self.ensure_one()
         localdict['localdict'] = localdict
+
+        if self.condition_select == 'property_input':
+            if self.id not in localdict['property_inputs']:
+                return 0.0, 1.0, 100.0
+            return localdict['property_inputs'][self.id], 1.0, 100.0
+
         if self.amount_select == 'fix':
             try:
                 return self.amount_fix or 0.0, float(safe_eval(self.quantity, localdict)), 100.0
@@ -125,6 +168,8 @@ result_rate = 10''')
             return self.condition_other_input_id.code in localdict['inputs']
         if self.condition_select == 'domain':
             return localdict['payslip'].filtered_domain(literal_eval(self.condition_domain or '[]'))
+        if self.condition_select == 'property_input':
+            return self.id in localdict['property_inputs']
         # python code
         try:
             safe_eval(self.condition_python, localdict, mode='exec')

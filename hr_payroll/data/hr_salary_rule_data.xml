@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="0">
+
+        <record id="default_salary_rule_section" model="hr.salary.rule.section">
+            <field name="name">Inputs</field>
+        </record>
+
         <!--default salary rules -->
         <record id="default_basic_salary_rule" model="hr.salary.rule">
             <field name="category_id" ref="hr_payroll.BASIC"/>

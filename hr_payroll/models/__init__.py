@@ -25,3 +25,4 @@ from . import hr_payroll_employee_declaration
 from . import hr_payroll_declaration_mixin
 from . import hr_payroll_headcount
 from . import hr_work_entry_export_mixin
+from . import hr_salary_rule_section

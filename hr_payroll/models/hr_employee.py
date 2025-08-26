@@ -44,8 +44,10 @@ class HrEmployee(models.Model):
     is_past = fields.Boolean(related="version_id.is_past", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     is_future = fields.Boolean(related="version_id.is_future", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     is_in_contract = fields.Boolean(related="version_id.is_in_contract", inherited=True, groups="hr_payroll.group_hr_payroll_user")
-    structure_type_id = fields.Many2one(groups="hr_payroll.group_hr_payroll_user")
-    contract_type_id = fields.Many2one(groups="hr_payroll.group_hr_payroll_user")
+    structure_type_id = fields.Many2one(related="version_id.structure_type_id", inherited=True, store=True, groups="hr_payroll.group_hr_payroll_user")
+    contract_type_id = fields.Many2one(related="version_id.contract_type_id", inherited=True, store=True, groups="hr_payroll.group_hr_payroll_user")
+    structure_id = fields.Many2one(related="version_id.structure_id", inherited=True, groups="hr.group_hr_user")
+    payroll_properties = fields.Properties(readonly=False, related="version_id.payroll_properties", inherited=True, groups="hr_payroll.group_hr_payroll_user")
     monthly_running_attachments = fields.Monetary(
         compute='_compute_monthly_running_attachments',
         groups="hr_payroll.group_hr_payroll_user")
@@ -115,3 +117,20 @@ class HrEmployee(models.Model):
         if not employees_data:
             employees_data = self._get_account_holder_employees_data()
         return [employee['id'] for employee in employees_data if not employee['allow_out_payment']]
+
+    def action_configure_employee_inputs(self):
+        self.ensure_one()
+        current_structure = self.env.context.get('structure_id')
+        return {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'list',
+            'view_id': self.env.ref("hr_payroll.hr_salary_rule_benefit_selector_list", False).id,
+            'res_model': 'hr.salary.rule',
+            'target': 'new',
+            'domain': [
+                ('struct_id', '=', current_structure),
+                ('condition_select', '=', 'property_input'),
+                ('input_usage_employee', '=', True),
+                ('dependent_input_id', '=', False),
+            ]
+        }

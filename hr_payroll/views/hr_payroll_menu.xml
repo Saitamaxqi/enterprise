@@ -137,6 +137,14 @@
         sequence="30"/>
 
     <menuitem
+        id="menu_hr_salary_rule_section"
+        name="Salary Input Sections"
+        parent="menu_hr_salary_configuration"
+        action="action_hr_salary_rule_section"
+        groups="base.group_no_one"
+        sequence="32"/>
+
+    <menuitem
         id="menu_action_hr_salary_rule_parameter"
         action="hr_rule_parameter_action"
         name="Rule Parameters"
