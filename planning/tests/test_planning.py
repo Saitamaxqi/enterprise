@@ -1340,3 +1340,32 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             '05/23/2025',
             '05/24/2025'
         ], 'Week from 05/18/2025 to 05/24/2025'))
+
+    def test_gantt_progress_bar_split_when_flexible(self):
+        """
+        Test if a slot is shared between two weeks the progress bar
+        should be split between both weeks. Not showing the whole allocated
+        hours in both weeks.
+        """
+        self.employee_bert.resource_calendar_id = self.flex_40h_calendar.id
+
+        dt = datetime(2025, 8, 22, 0, 0)
+
+        self.slot.write({
+            'resource_id': self.employee_bert.resource_id.id,
+            'start_datetime': dt + relativedelta(hours=8),
+            'end_datetime': dt + relativedelta(days=4, hours=17),
+        })
+
+        planning_hours_info_1st_week = self.env['planning.slot']._gantt_progress_bar(
+            'resource_id', self.employee_bert.resource_id.ids, datetime(2025, 8, 16), datetime(2025, 8, 23, 23, 59)
+        )
+
+        self.assertEqual(self.slot.allocated_hours, 40.0)
+        self.assertEqual(planning_hours_info_1st_week[self.employee_bert.resource_id.id]['value'], 16)
+
+        planning_hours_info_2nd_week = self.env['planning.slot']._gantt_progress_bar(
+            'resource_id', self.employee_bert.resource_id.ids, datetime(2025, 8, 24), datetime(2025, 8, 30, 23, 59)
+        )
+
+        self.assertEqual(planning_hours_info_2nd_week[self.employee_bert.resource_id.id]['value'], 24)
