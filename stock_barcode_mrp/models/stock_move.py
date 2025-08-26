@@ -6,7 +6,7 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def _get_fields_stock_barcode(self):
-        return super()._get_fields_stock_barcode() + ['product_uom']
+        return super()._get_fields_stock_barcode() + ['product_uom', 'bom_line_id']
 
     def split_uncompleted_moves(self):
         production_moves = self.filtered(lambda m: m.picking_type_id.code == 'mrp_operation')

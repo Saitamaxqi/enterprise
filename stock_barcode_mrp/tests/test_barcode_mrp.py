@@ -130,3 +130,26 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(picking.id)
         self.start_tour(url, 'test_picking_product_with_kit_and_packaging', login='admin', timeout=180)
         self.assertEqual(picking.state, 'done')
+
+    def test_picking_product_with_kit_and_component(self):
+        """ A picking with a kit (comp A + comp B) and a separate move for a component(comp B) should not group the
+        two lines (the comp B line linked to the kit and the comp B line from the comp B move) in Barcode
+        """
+        grp_lot = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_internal.id,
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.stock_location.id,
+            'move_ids': [Command.create({
+                'product_id': product.id,
+                'product_uom_qty': 1.0,
+                'product_uom': self.kit_lot.uom_id.id,
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.stock_location.id,
+            }) for product in [self.kit_lot, self.component_lot]],
+        })
+        picking.action_confirm()
+        picking.move_ids.write({'quantity': 1})
+        url = self._get_client_action_url(picking.id)
+        self.start_tour(url, 'test_picking_product_with_kit_and_component', login='admin', timeout=180)

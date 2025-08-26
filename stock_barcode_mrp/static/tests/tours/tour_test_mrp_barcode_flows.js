@@ -1807,3 +1807,17 @@ registry.category("web_tour.tours").add("test_quant_selection_mrp", {
         ...stepUtils.validateBarcodeOperation(),
     ],
 });
+
+registry.category("web_tour.tours").add('test_picking_product_with_kit_and_component', {
+    steps: () => [
+        {
+            trigger: ".o_barcode_client_action",
+            run: () => {
+                helper.assertLinesCount(3);
+                helper.assertLineQty(0, "0/1");
+                helper.assertLineQty(1, "0/1");
+                helper.assertLineQty(2, "0/1");
+            }
+        },
+    ],
+});

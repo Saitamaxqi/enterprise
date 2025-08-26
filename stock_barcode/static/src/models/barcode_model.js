@@ -238,7 +238,7 @@ export default class BarcodeModel extends EventBus {
             if (conditionalGrouping && this.lineCannotBeGrouped(line)) {
                 continue;
             }
-            const key = groupKeyMethod(line);
+            const key = groupKeyMethod.call(this, line);
             if (!groupedLinesByKey[key]) {
                 groupedLinesByKey[key] = [];
             }
