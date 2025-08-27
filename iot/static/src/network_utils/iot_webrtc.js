@@ -33,8 +33,7 @@ export class IotWebRtc {
      * @returns {Promise<string>} The action ID
      */
     async sendMessage(iotIdentifier, message, actionId = null, messageType = "iot_action") {
-        const rtcConnection =
-            this.connections[iotIdentifier] ?? (await this.waitForConnection(iotIdentifier));
+        const rtcConnection = await this.waitForConnection(iotIdentifier);
 
         if (rtcConnection.connection.connectionState !== "connected") {
             throw new Error(
@@ -93,8 +92,7 @@ export class IotWebRtc {
         onSuccess = () => {},
         onFailure = () => {}
     ) {
-        const connection =
-            this.connections[iotIdentifier] ?? (await this.waitForConnection(iotIdentifier));
+        const connection = await this.waitForConnection(iotIdentifier);
 
         const messageCallback = (event) => {
             const message = JSON.parse(event.data);
@@ -104,7 +102,7 @@ export class IotWebRtc {
                     actionId === message.action_args?.session_id ||
                     actionId === message.owner)
             ) {
-                const callback = message.status === "success" ? onSuccess : onFailure;
+                const callback = message.status === "success" || message.status?.status === "connected" ? onSuccess : onFailure;
                 callback(message);
                 connection.channel.removeEventListener("message", messageCallback);
             }
@@ -118,6 +116,10 @@ export class IotWebRtc {
      */
     async waitForConnection(iotIdentifier) {
         const { connection, channel } = await this.openConnection(iotIdentifier);
+
+        if (!["new", "connecting"].includes(connection.connectionState)) {
+            return this.connections[iotIdentifier];
+        }
 
         const connectedPromise = new Promise((resolve, reject) => {
             const onConnectionChange = () => {
@@ -153,16 +155,21 @@ export class IotWebRtc {
      * @param {string} iotIdentifier
      */
     async openConnection(iotIdentifier) {
+        if (this.connections[iotIdentifier]) {
+            return this.connections[iotIdentifier];
+        }
+
         const peerConnection = new RTCPeerConnection();
         const dataChannel = peerConnection.createDataChannel("iot");
-        const offer = await peerConnection.createOffer();
-        peerConnection.setLocalDescription(offer);
 
         this.connections[iotIdentifier] = {
             id: uuid(),
             connection: peerConnection,
             channel: dataChannel,
         };
+
+        const offer = await peerConnection.createOffer();
+        peerConnection.setLocalDescription(offer);
 
         const onConnectionChange = () => {
             if (["failed", "closed", "disconnected"].includes(peerConnection.connectionState)) {

@@ -32,6 +32,13 @@ class MockRtcDataChannel extends EventTarget {
 }
 
 class MockRtcPeerConnection extends EventTarget {
+    static _instances = 0;
+
+    constructor() {
+        super();
+        MockRtcPeerConnection._instances += 1;
+    }
+
     get sctp() {
         return { maxMessageSize: 100 };
     }
@@ -68,11 +75,11 @@ describe("iot_webrtc", () => {
         const mockBusService = {
             addChannel: () => {},
             subscribe: (type, callback) => {
-                busCallbacks[callback] = (event) => callback(event.detail);
-                bus.addEventListener(type, busCallbacks[callback]);
+                busCallbacks.set(callback, (event) => callback(event.detail));
+                bus.addEventListener(type, busCallbacks.get(callback));
             },
-            unsubscribe: (type, callback) => bus.removeEventListener(type, busCallbacks[callback]),
-            trigger: bus.trigger.bind(bus),
+            unsubscribe: (type, callback) => bus.removeEventListener(type, busCallbacks.get(callback)),
+            trigger: bus.trigger.bind(bus)
         };
         const mockWebsocket = {
             iotChannel: "mockChannel",
@@ -80,6 +87,7 @@ describe("iot_webrtc", () => {
                 websocketMessages.push({ iotIdentifier, message, messageId, messageType });
             },
         };
+        MockRtcPeerConnection._instances = 0;
         return { webRtc: new IotWebRtc(mockBusService, mockWebsocket), bus };
     };
 
@@ -138,6 +146,30 @@ describe("iot_webrtc", () => {
             bus.trigger("webrtc_answer", { iot_box_identifier: "iot", answer: "mockAnswer" });
 
             expect(webRtc.connections["iot"].connection.remoteDescription).toBe("mockAnswer");
+        });
+
+        test("only opens the connection once", async () => {
+            const { webRtc } = setupWebRtc();
+
+            const openConnectionPromise1 = webRtc.openConnection("iot");
+            const openConnectionPromise2 = webRtc.openConnection("iot");
+            await Promise.all([openConnectionPromise1, openConnectionPromise2]);
+
+            expect(MockRtcPeerConnection._instances).toBe(1);
+        });
+
+        test("opens separate connections per IoT box", async () => {
+            const { webRtc, bus } = setupWebRtc();
+
+            const openConnectionPromise1 = webRtc.openConnection("iot");
+            const openConnectionPromise2 = webRtc.openConnection("iot2");
+            await Promise.all([openConnectionPromise1, openConnectionPromise2]);
+            bus.trigger("webrtc_answer", { iot_box_identifier: "iot", answer: "mockAnswer" });
+            bus.trigger("webrtc_answer", { iot_box_identifier: "iot2", answer: "mockAnswer2" });
+
+            expect(MockRtcPeerConnection._instances).toBe(2);
+            expect(webRtc.connections["iot"].connection.remoteDescription).toBe("mockAnswer");
+            expect(webRtc.connections["iot2"].connection.remoteDescription).toBe("mockAnswer2");
         });
     });
 
