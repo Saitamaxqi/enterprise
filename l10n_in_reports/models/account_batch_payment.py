@@ -1,6 +1,8 @@
 import csv
 import io
 
+from datetime import date, datetime
+
 from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError, UserError
 
@@ -17,7 +19,7 @@ class AccountBatchPayment(models.Model):
 
     def generate_pay_order(self):
         journal = self.journal_id
-        if not journal.enet_template_field_ids:
+        if not journal.bank_template_id:
             raise UserError(_("Please configure the bank template in the %s Journal to generate the csv file.", journal.name))
         attachment = self.env['ir.attachment'].create({
             'name': f"{self.name}_payorder.csv",
@@ -44,22 +46,25 @@ class AccountBatchPayment(models.Model):
         }
 
     def get_csv_data(self):
-        template_fields = self.journal_id.enet_template_field_ids.sorted('sequence')
-        header = template_fields.mapped('label')
-        field_paths = template_fields.mapped(lambda field: field.field_name or '')
+        header = [config.get('label', '') for config in self.journal_id.bank_template_id.bank_configuration]
         rows = [
-            self._get_value_from_field_path(payment_record, field_paths)
+            self._get_value_from_field_path(payment_record)
             for payment_record in self.payment_ids
         ]
+
         with io.StringIO() as csv_output:
             csv_writer = csv.writer(csv_output)
-            csv_writer.writerow(header)
+            if self.journal_id.bank_template_id.include_header:
+                csv_writer.writerow(header)
             csv_writer.writerows(rows)
             return csv_output.getvalue()
 
-    def _get_value_from_field_path(self, payment, fields_path):
+    def _get_value_from_field_path(self, payment):
         values = []
-        for field_path in fields_path:
+        bank_configuration = self.journal_id.bank_template_id.bank_configuration
+        for config in bank_configuration:
+            value = ''
+            field_path = config.get('field_name')
             if field_path:
                 field_value = payment
                 for part in field_path.split('.'):
@@ -68,9 +73,19 @@ class AccountBatchPayment(models.Model):
                     else:
                         field_value = ''
                         break
-                values.append(field_value or '')
-            else:
-                values.append('')
+                value = field_value or ''
+
+            # Map the values according to the bank configuration
+            mapping = config.get('mapping')
+            if mapping and value:
+                value = mapping.get(str(value), value)
+
+            # Format the date according to the format in the bank configuration
+            date_format = config.get('date_format')
+            if date_format and isinstance(value, (date, datetime)):
+                value = value.strftime(date_format)
+
+            values.append(value)
         return values
 
     @api.ondelete(at_uninstall=False)

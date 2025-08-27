@@ -8,7 +8,6 @@ from . import account_journal
 from . import account_payment
 from . import account_payment_method
 from . import enet_bank_template
-from . import enet_template
 from . import irn_exception
 from . import ir_attachment
 from . import l10n_in_report_handler

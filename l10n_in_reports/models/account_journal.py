@@ -1,4 +1,4 @@
-from odoo import api, Command, fields, models
+from odoo import api, fields, models
 
 
 class AccountJournal(models.Model):
@@ -8,7 +8,6 @@ class AccountJournal(models.Model):
 
     # enet_batch_payment related fields
     bank_template_id = fields.Many2one('enet.bank.template', string='Bank Template')
-    enet_template_field_ids = fields.One2many('enet.template', 'journal_id', compute='_compute_enet_template_field_ids', store=True)
     has_enet_payment_method = fields.Boolean(compute='_compute_has_enet_payment_method')
     l10n_in_enet_vendor_batch_payment_feature_enabled = fields.Boolean(related='company_id.l10n_in_enet_vendor_batch_payment_feature')
 
@@ -22,16 +21,6 @@ class AccountJournal(models.Model):
                 )
             else:
                 journal.has_enet_payment_method = False
-
-    @api.depends('bank_template_id')
-    def _compute_enet_template_field_ids(self):
-        for journal in self:
-            bank_template = journal.bank_template_id
-            if bank_template:
-                journal.enet_template_field_ids = [Command.clear()] + [
-                    Command.create({**field, 'journal_id': journal.id}) for field in bank_template.bank_configuration]
-            else:
-                journal.enet_template_field_ids = False
 
     def l10n_in_action_fetch_irn_data_for_account_journal(self):
         """ Fetch the GST return period for the current company and return the corresponding form view. """

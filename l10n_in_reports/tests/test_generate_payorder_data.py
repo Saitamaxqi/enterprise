@@ -1,5 +1,5 @@
 from odoo.addons.account.tests.test_account_payment import TestAccountPayment
-from odoo import Command, SUPERUSER_ID
+from odoo import SUPERUSER_ID
 from odoo.tests import tagged
 
 
@@ -18,31 +18,41 @@ class TestGeneratePayorderData(TestAccountPayment):
         )
         cls.enet_rtgs_line_bank_journal_1 = cls.bank_journal_1.outbound_payment_method_line_ids.filtered(lambda l: l.code == 'enet_rtgs')
 
-        # Bank Journal Configuration
-        cls.bank_journal_1.with_user(SUPERUSER_ID).write({
-            'enet_template_field_ids': [
-                Command.create({
-                    'field_name': 'payment_method_line_id.display_name',
+        cls.enet_bank_template = cls.env['enet.bank.template'].with_user(SUPERUSER_ID).create({
+            'name': 'Dummy Bank',
+            'include_header': True,
+            'bank_configuration': [
+                {
+                    'field_name': 'payment_method_line_id.code',
                     'label': 'Transaction Type',
-                }),
-                Command.create({
+                    'mapping': {'enet_rtgs': 'R'}
+                },
+                {
                     'field_name': 'partner_id.name',
                     'label': 'Beneficiary Name',
-                }),
-                Command.create({
+                },
+                {
                     'field_name': 'amount',
                     'label': 'Amount'
-                }),
-                Command.create({
+                },
+                {
+                    'field_name': 'date',
+                    'label': 'Chq/Trn Date',
+                    'date_format': '%d/%m/%Y'
+                },
+                {
                     'field_name': 'partner_bank_id.acc_number',
                     'label': 'Beneficiary Account Number'
-                }),
+                }
             ]
         })
+        # Bank Journal Configuration
+        cls.bank_journal_1.bank_template_id = cls.enet_bank_template
 
         # Payments
         cls.payment1 = cls.env['account.payment'].create({
             'amount': 100.0,
+            'date': '2025-08-26',
             'payment_type': 'outbound',
             'partner_type': 'supplier',
             'partner_id': cls.partner_a.id,
@@ -54,6 +64,7 @@ class TestGeneratePayorderData(TestAccountPayment):
 
         cls.payment2 = cls.env['account.payment'].create({
             'amount': 200.0,
+            'date': '2025-08-26',
             'payment_type': 'outbound',
             'partner_type': 'supplier',
             'partner_id': cls.partner_a.id,
@@ -66,6 +77,7 @@ class TestGeneratePayorderData(TestAccountPayment):
         # Batch Payment
         cls.batch_payment = cls.env['account.batch.payment'].create({
             'journal_id': cls.bank_journal_1.id,
+            'date': '2025-08-26',
             'payment_ids': [(4, payment.id, None) for payment in (cls.payment1 | cls.payment2)],
             'payment_method_id': cls.enet_rtgs_method_id,
             'batch_type': 'outbound',
@@ -77,14 +89,14 @@ class TestGeneratePayorderData(TestAccountPayment):
         data = self.batch_payment.get_csv_data().splitlines()
 
         header = (
-            'Transaction Type,Beneficiary Name,Amount,Beneficiary Account Number'
+            'Transaction Type,Beneficiary Name,Amount,Chq/Trn Date,Beneficiary Account Number'
         )
         self.assertEqual(data[0], header, "Didn't generate the expected header")
 
         expected_csv_lines = [(
-            'ENet RTGS (Bank),partner_a,100.0,0123456789'
+            'R,partner_a,100.0,26/08/2025,0123456789'
         ), (
-            'ENet RTGS (Bank),partner_a,200.0,0123456789'
+            'R,partner_a,200.0,26/08/2025,0123456789'
         )]
         self.assertEqual(data[1], expected_csv_lines[0], "Didn't generate the expected lines for Payment1")
         self.assertEqual(data[2], expected_csv_lines[1], "Didn't generate the expected lines for Payment2")
