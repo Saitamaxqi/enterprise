@@ -21,15 +21,11 @@
                     <h1 class="w-100"><field name="name"/></h1>
                     <group>
                         <field name="code"/>
-                        <field name="current_value" widget="code" options="{'mode': 'python'}"/>
-                        <field name="valid_since"/>
-                    </group>
-                    <notebook>
-                        <page string="Description" name="description">
-                            <field name="description" type="html"
+                        <field name="description" type="html"
                                 options="{'collaborative': true, 'resizable': false}"
                                 placeholder="Note a description of your parameter, when it's used, how is it computed, what's the source, ..."/>
-                        </page>
+                    </group>
+                    <notebook>
                         <page string="History" name="history">
                             <field name="parameter_version_ids" nolabel="1"
                                     context="{'default_rule_parameter_id': id}">

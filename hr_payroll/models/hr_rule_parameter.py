@@ -57,7 +57,6 @@ class HrRuleParameter(models.Model):
     description = fields.Html()
     country_id = fields.Many2one('res.country', string='Country', default=lambda self: self.env.company.country_id)
     parameter_version_ids = fields.One2many('hr.rule.parameter.value', 'rule_parameter_id', string='Versions')
-    current_value = fields.Text(compute='_compute_current_value')
     current_value_one_line = fields.Text(string='Current Value (short)', compute='_compute_current_value')
     valid_since = fields.Date(compute='_compute_current_value')
     salary_rule_ids = fields.One2many('hr.salary.rule', compute='_compute_salary_rule', string='Salary Rules')
@@ -89,7 +88,6 @@ class HrRuleParameter(models.Model):
     def _compute_current_value(self):
         for rule_parameter in self:
             if not rule_parameter.parameter_version_ids:
-                rule_parameter.current_value = False
                 rule_parameter.current_value_one_line = False
                 rule_parameter.valid_since = False
                 continue
@@ -99,7 +97,6 @@ class HrRuleParameter(models.Model):
             for value_id in rule_parameter.parameter_version_ids:
                 if value_id.date_from <= fields.Date.today():
                     parameter_value = value_id.parameter_value or ''
-                    rule_parameter.current_value = parameter_value
                     is_number = parameter_value.replace('-', '').replace('.', '').isnumeric()
                     rule_parameter.current_value_one_line = parameter_value if is_number else '(...)'
                     rule_parameter.valid_since = value_id.date_from
