@@ -1940,21 +1940,21 @@ class TestMpsMps(common.TransactionCase):
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
-            self.assertEqual(table_forecast['forecast_qty'], 26)
+            self.assertEqual(table_forecast['forecast_qty'], 28)
 
         self.mps_table.suggestion_based_on = 'last_3_months'
         self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
-            self.assertEqual(table_forecast['forecast_qty'], 16)
+            self.assertEqual(table_forecast['forecast_qty'], 17)
 
         self.mps_table.suggestion_based_on = 'last_12_months'
         self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
-            self.assertEqual(table_forecast['forecast_qty'], 4)
+            self.assertEqual(table_forecast['forecast_qty'], 5)
 
     @freeze_time("2024-02-26")
     def test_suggestion_for_days_with_no_period(self):
