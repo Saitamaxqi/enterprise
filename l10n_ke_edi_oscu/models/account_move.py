@@ -464,8 +464,24 @@ class AccountMove(models.Model):
         fields_list.append('l10n_ke_oscu_attachment_file')
         return fields_list
 
+    def _l10n_ke_register_products(self):
+        """ Register products with eTIMS before sending invoices or vendor bills. """
+        for move in self:
+            products_to_register = move.invoice_line_ids.product_id.filtered(
+                lambda p: p and not p.l10n_ke_item_code
+            )
+
+            for product in products_to_register:
+                error, _content = product._l10n_ke_oscu_save_item(company=move.company_id)
+                if error:
+                    _logger.warning(
+                        "Failed to register product '%s' (ID: %d) for invoice %s: [%s] %s",
+                        product.name, product.id, move.name, error.get('code', 'Unknown'), error.get('message', 'Unknown error')
+                    )
+
     def _l10n_ke_oscu_send_customer_invoice(self):
         self.env['res.company']._with_locked_records(self)
+        self._l10n_ke_register_products()
         company = self.company_id
 
         if self.l10n_ke_oscu_invoice_number:
@@ -520,6 +536,7 @@ class AccountMove(models.Model):
             if (blocking := [msg for msg in (move.l10n_ke_validation_message or {}).values() if msg.get('blocking')]):
                 raise UserError(_("Please resolve these issues first.\n %s",
                                   '\n'.join([f"- {msg['message']}" for msg in blocking])))
+            move._l10n_ke_register_products()
             company = move.company_id
 
             if move.l10n_ke_oscu_attachment_file:
