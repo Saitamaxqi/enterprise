@@ -47,7 +47,7 @@ class CalendarEvent(models.Model):
                 (self.env.ref("pos_appointment.calendar_event_view_tree_inherited_restaurant_appointment").id, 'list'),
                 (False, 'calendar'),
                 (False, 'pivot'),
-                (self.env.ref("pos_appointment.calendar_event_view_form_gantt_booking_inherited_pos_appointment").id, 'form'),
+                (self.env.ref("pos_appointment.calendar_event_view_form_gantt_booking").id, 'form'),
                 (self.env.ref("pos_appointment.calendar_event_view_graph_pos_appointment").id, 'graph'),
             ],
             'target': 'current',
@@ -71,7 +71,7 @@ class CalendarEvent(models.Model):
             'target': 'new',
             'type': 'ir.actions.act_window',
             'res_model': 'calendar.event',
-            'views': [(self.env.ref('pos_appointment.calendar_event_view_form_gantt_booking_inherited_pos_appointment').id, 'form')],
+            'views': [(self.env.ref('pos_appointment.calendar_event_view_form_gantt_booking').id, 'form')],
             'res_id': self.id,
         }
 
@@ -81,7 +81,7 @@ class CalendarEvent(models.Model):
             'target': 'new',
             'type': 'ir.actions.act_window',
             'res_model': 'calendar.event',
-            'views': [(self.env.ref('pos_appointment.calendar_event_view_form_gantt_booking_inherited_pos_appointment').id, 'form')],
+            'views': [(self.env.ref('pos_appointment.calendar_event_view_form_gantt_booking').id, 'form')],
             'context': {
                 'default_appointment_type_id': appointment_type_id,
                 'default_total_capacity_reserved': 2,
