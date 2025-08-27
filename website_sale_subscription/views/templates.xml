@@ -108,7 +108,7 @@
     </template>
 
     <template id="subscription_one_time_sale" name="Subscription One Time Sale">
-        <div class="border p-3 rounded mb-3 on_change_plan_table one-time-sale">
+        <div class="border p-3 rounded mb-3 on_change_plan_table one-time-sale text-start">
             <label class="form-check-label">
                 <input
                     type="radio"

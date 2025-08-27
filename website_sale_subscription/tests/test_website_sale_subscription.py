@@ -168,3 +168,35 @@ class TestWebsiteSaleSubscription(WebsiteSaleSubscriptionCommon):
         self.assertEqual(weekly['discounted_price'], 93)  # Weekly 93% discount vs one-time
         self.assertEqual(monthly['discounted_price'], 88)  # Monthly 88% discount vs one-time
         self.assertEqual(yearly['discounted_price'], 33)  # Yearly 33% discount vs one-time
+
+    def test_cart_add_one_time_then_recurring_not_allowed(self):
+        """
+        Test that a cart cannot mix one-time and subscription products.
+        Allows adding one-time, blocks adding subscription after it,
+        but works once the one-time product is removed.
+        """
+        one_time_product = self.one_time_sub_product
+        with MockRequest(self.env, website=self.website) as request:
+            so = request.website._create_cart()
+
+            # Add one-time product
+            so._cart_add(product_id=one_time_product.product_variant_ids.id, quantity=1)
+            so.plan_id = False
+
+            with self.assertRaises(UserError, msg="You can't add a subscription product to a sale order with a one-time product."):
+                Cart().add_to_cart(
+                    product_template_id=self.sub_product.id,
+                    product_id=self.sub_product.product_variant_id.id,
+                    quantity=1.0,
+                )
+
+            so._cart_update_line_quantity(
+                line_id=so.order_line.filtered(
+                    lambda sol: sol.product_id == one_time_product.product_variant_id
+                ).id,
+                quantity=0,
+            )
+            self.assertFalse(so.plan_id)
+
+            so._cart_add(product_id=self.sub_product.product_variant_ids.id, quantity=1)
+            self.assertEqual(so.plan_id, self.plan_week)

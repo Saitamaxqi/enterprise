@@ -31,6 +31,9 @@ class ProductTemplate(models.Model):
         if not self.recurring_invoice:
             return True
 
+        if request.cart._has_one_time_sale() and not self.allow_one_time_sale:
+            return False
+
         has_pricing = bool(
             self._get_recurring_pricing(
                 pricelist=request.pricelist,
