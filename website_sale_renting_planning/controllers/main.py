@@ -21,18 +21,18 @@ class WebsiteSalePlanningRenting(WebsiteSaleRenting):
         ):
             min_date = fields.Datetime.to_datetime(min_date)
             max_date = fields.Datetime.to_datetime(max_date)
-            slots = self.env['planning.slot'].search([
+            slots_sudo = self.env['planning.slot'].sudo().search([
                 ('resource_id', 'in', resources.ids),
                 ('start_datetime', '<=', max_date),
                 ('end_datetime', '>=', min_date),
-            ])
+            ])  # In sudo mode to access to planning slots' fields from eCommerce.
             intervals = Intervals([
                 (
-                    max(min_date, slot.start_datetime),
-                    min(max_date, slot.end_datetime),
-                    slot
+                    max(min_date, slot_sudo.start_datetime),
+                    min(max_date, slot_sudo.end_datetime),
+                    slot_sudo
                 )
-                for slot in slots
+                for slot_sudo in slots_sudo
             ])
             availabilities = []
             for start, end, shifts in intervals:
