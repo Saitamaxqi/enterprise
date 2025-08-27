@@ -50,6 +50,14 @@ beforeEach(() => {
     });
 });
 
+function assertHistorySteps(editor, contentBefore) {
+    const contentAfter = editor.getContent();
+    editor.shared.history.undo();
+    expect(editor.getContent()).toEqual(contentBefore);
+    editor.shared.history.redo();
+    expect(editor.getContent()).toEqual(contentAfter);
+}
+
 test("insert link with /Appointment", async () => {
     await mountView({
         type: "form",
@@ -60,6 +68,7 @@ test("insert link with /Appointment", async () => {
                 <field name="body" widget="html" style="height: 100px"/>
             </form>`,
     });
+    const contentBefore = htmlEditor.getContent();
     const paragraph = queryOne(".odoo-editor-editable p");
     setSelection({ anchorNode: paragraph, anchorOffset: 0 });
     await insertText(htmlEditor, "/Appointment");
@@ -70,6 +79,7 @@ test("insert link with /Appointment", async () => {
     expect(getContent(queryOne(".odoo-editor-editable"))).toBe(
         `<p>\ufeff<a href="${linkUrl}">\ufeffSchedule an Appointment\ufeff</a>[]\ufeff</p>`
     );
+    assertHistorySteps(htmlEditor, contentBefore);
 });
 
 test("Replace existing link with '/Appointment' link", async () => {
@@ -83,6 +93,7 @@ test("Replace existing link with '/Appointment' link", async () => {
             </form>`,
     });
 
+    const contentBefore = htmlEditor.getContent();
     const paragraph = queryOne(".odoo-editor-editable p");
     expect(paragraph.outerHTML).toBe(
         `<p>\ufeff<a href="http://odoo.com">\ufeffExisting link\ufeff</a>\ufeff</p>`
@@ -100,4 +111,5 @@ test("Replace existing link with '/Appointment' link", async () => {
     expect(getContent(queryOne(".odoo-editor-editable"))).toBe(
         `<p>\ufeff<a href="${linkUrl}">\ufeffSchedule an Appointment\ufeff</a>[]\ufeff</p>`
     );
+    assertHistorySteps(htmlEditor, contentBefore);
 });
