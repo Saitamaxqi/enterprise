@@ -114,7 +114,6 @@ class AppointmentGoogleReserveControllerTest(GoogleReserveCommon, common.HttpCas
             'name': "Booking 1",
             'start': datetime(2022, 2, 14, 15, 0, 0),
             'stop': datetime(2022, 2, 14, 16, 0, 0),
-            'total_capacity_reserved': 3,
             'booking_line_ids': [(0, 0, {
                 'appointment_resource_id': self.apt_type_resources_table_1.id,
                 'capacity_reserved': 3,
@@ -125,7 +124,6 @@ class AppointmentGoogleReserveControllerTest(GoogleReserveCommon, common.HttpCas
             'name': "Booking 2",
             'start': datetime(2022, 2, 14, 16, 0, 0),
             'stop': datetime(2022, 2, 14, 17, 0, 0),
-            'total_capacity_reserved': 5,
             'booking_line_ids': [(0, 0, {
                 'appointment_resource_id': self.apt_type_resources_table_1.id,
                 'capacity_reserved': 4,

@@ -238,6 +238,7 @@ class AppointmentGoogleReserveAPITest(GoogleReserveCommon):
             'appointment_type_id': self.apt_type_resource_google.id,
             'name': "New Meeting 1",
             'total_capacity_reserved': 4,
+            'resource_ids': self.apt_type_resources_table_1.ids,
             'start': datetime(2022, 2, 14, 10, 0, 0),
             'stop': datetime(2022, 2, 14, 14, 0, 0),
         })
@@ -280,6 +281,7 @@ class AppointmentGoogleReserveAPITest(GoogleReserveCommon):
 
         # 3. book for more people -> update Google to reflect calendar event changes
         calendar_event.write({
+            'resource_ids': [(4, self.apt_type_resources_table_2.id, 0)],
             'total_capacity_reserved': 6,
         })
         self.assertEqual(iap_jsonrpc.call_count, 6)
@@ -330,12 +332,14 @@ class AppointmentGoogleReserveAPITest(GoogleReserveCommon):
         [regular_event, google_event] = self.env['calendar.event'].create([{
             'appointment_type_id': self.apt_type_resource_google.id,
             'name': "New Meeting 2",
+            'resource_ids': self.apt_type_resources_table_1.ids,
             'total_capacity_reserved': 4,
             'start': datetime(2022, 2, 15, 10, 0, 0),
             'stop': datetime(2022, 2, 15, 14, 0, 0),
         }, {
             'appointment_type_id': self.apt_type_resource_google.id,
             'name': "New Meeting 3",
+            'resource_ids': self.apt_type_resources_table_1.ids,
             'total_capacity_reserved': 4,
             'start': datetime(2022, 2, 16, 10, 0, 0),
             'stop': datetime(2022, 2, 16, 14, 0, 0),

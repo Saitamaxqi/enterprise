@@ -7,7 +7,7 @@ from markupsafe import Markup
 
 from odoo import _, api, fields, models, tools, SUPERUSER_ID
 from odoo.addons.calendar.models.utils import interval_from_events
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Command, Domain
 from odoo.tools.intervals import Intervals, intervals_overlap, invert_intervals
 from odoo.tools.date_utils import localized
@@ -313,6 +313,12 @@ class CalendarEvent(models.Model):
                     })
                     capacity_to_reserve -= min(resource.capacity, capacity_to_reserve)
                     capacity_to_reserve = max(0, capacity_to_reserve)
+                if event.appointment_type_manage_capacity and capacity_to_reserve:
+                    raise UserError(_(
+                        "%(capacity)d seats are missing to be able to book the %(appointment_name)s: %(event_name)s (%(event_id)s)",
+                        capacity=capacity_to_reserve, appointment_name=event.appointment_type_id,
+                        event_name=event.name, event_id=repr(event.id),
+                    ))
             else:
                 booking_lines_to_delete |= event.booking_line_ids
         booking_lines_to_delete.unlink()
