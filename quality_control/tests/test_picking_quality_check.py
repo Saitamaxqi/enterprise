@@ -1337,7 +1337,7 @@ class TestQualityCheck(TestQualityCommon):
         Ensure that the 'do_multi_print' action is trigger after quality check wizard validation
         when the operation's auto_print_lot_labels is activate and Serial Number is set on the product
         """
-        self.env.user.group_ids = [Command.link(self.env.ref('stock.group_production_lot').id)]
+        self.env.user.group_ids |= self.env.ref('stock.group_production_lot')
         picking_type = self.env['stock.picking.type'].browse(self.picking_type_id)
         picking_type.auto_print_lot_labels = True
         self.product.write({
