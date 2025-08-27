@@ -61,7 +61,25 @@
                                 <field name="condition_other_input_id" invisible="condition_select != 'input'" required="condition_select == 'input'"/>
                             </group>
                             <group colspan="4">
-                                <field name="condition_python" invisible="condition_select != 'python'" required="condition_select == 'python'" widget="code" options="{'mode': 'python'}"/>
+                                <div class="w-100 d-flex flex-row gap-3" invisible="condition_select != 'python'" colspan="2">
+                                    <field name="condition_python" class="w-50" widget="code" options="{'mode': 'python'}" required="condition_select == 'python'" />
+                                    <div class="w-50 opacity-75 text-muted" colspan="2">
+                                        <span> Available variables: </span>
+                                        <ul>
+                                            <li><code>payslip</code>: hr.payslip object</li>
+                                            <li><code>employee</code>: hr.employee object</li>
+                                            <li><code>version</code>: hr.version object</li>
+                                            <li><code>result_rules</code>: dict containing the rules amounts, quantities, rates and totals (previously computed)</li>
+                                            <li><code>categories</code>: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).</li>
+                                            <li><code>worked_days</code>: dict containing the computed worked days</li>
+                                            <li><code>inputs</code>: dict containing the computed inputs.</li>
+                                        </ul>
+                                        <span>Output:</span>
+                                        <ul>
+                                            <li><code>result</code>: boolean True if the rule should be calculated, False otherwise</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </group>
                             <group string="Computation">
                                 <field name="amount_select"/>
@@ -72,7 +90,30 @@
                                 <field name="amount_percentage" invisible="amount_select != 'percentage'" required="amount_select == 'percentage'"/>
                             </group>
                             <group colspan="4">
-                                <field name="amount_python_compute" invisible="amount_select != 'code'" required="amount_select == 'code'" widget="code" options="{'mode': 'python'}"/>
+                                <div class="w-100 d-flex flex-row gap-3" invisible="amount_select != 'code'" colspan="2">
+                                    <field name="amount_python_compute" class="w-50" widget="code" options="{'mode': 'python'}" required="amount_select == 'code'" />
+                                    <div class="w-50 opacity-75 text-muted" colspan="2">
+                                        <span> Available variables: </span>
+                                        <ul>
+                                            <li><code>payslip</code>: hr.payslip object</li>
+                                            <li><code>employee</code>: hr.employee object</li>
+                                            <li><code>version</code>: hr.version object</li>
+                                            <li><code>result_rules</code>: dict containing the rules amounts, quantities, rates and totals (previously computed)</li>
+                                            <li><code>categories</code>: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).</li>
+                                            <li><code>worked_days</code>: dict containing the computed worked days</li>
+                                            <li><code>inputs</code>: dict containing the computed inputs.</li>
+                                        </ul>
+                                        <span>Output:</span>
+                                        <ul>
+                                            <li><code>result</code>: float, base amount of the rule</li>
+                                            <li><code>result_rate</code>: float, rate between -100.0 and 100.0, which defaults to 100.0 (%).</li>
+                                            <li><code>result_qty</code>: float, quantity, which defaults to 1.</li>
+                                            <li><code>result_name</code>: string, name of the line, which defaults to the name field of the salary rule (useful if the name depends or should depend on something computed in the rule).</li>
+                                            <li>The total returned by the salary rule is calculated as:</li>
+                                            <code>total = result * result_rate / 100 * result_qty</code>
+                                        </ul>
+                                    </div>
+                                </div>
                             </group>
                             <group string="Company Contribution">
                                 <field name="partner_id"/>
@@ -80,7 +121,7 @@
                         </group>
                     </page>
                     <page name="display" string="Display">
-                        <group name="options" string="Options">
+                        <group name="options">
                             <group>
                                 <field name="color" widget="color"/>
                                 <field name="title"/>
@@ -91,21 +132,7 @@
                                 <field name="italic"/>
                             </group>
                             <label for="note" string="Description" class="fw-bold text-900 opacity-100"/>
-                            <field name="note"/>
-                        </group>
-                        <group name="preview" string="Preview">
-                            <group>
-                                <div>
-                                    <field name="name" readonly="1" class="o_preview fs-4"/>
-                                    <field name="note" readonly="1" class="text-truncate o_preview fs-6" invisible="not note"/>
-                                </div>
-                            </group>
-                            <group>
-                                <field name="preview_currency_position" invisible="1"/>
-                                <field name="preview_currency_symbol" class="o_preview fs-4" nolabel="1" invisible="title or preview_currency_position == 'after'"/>
-                                <span class="o_preview fs-4" invisible="title">99.99</span>
-                                <field name="preview_currency_symbol" class="o_preview fs-4" nolabel="1" invisible="title or preview_currency_position == 'before'"/>
-                            </group>
+                            <field name="note" placeholder="Provide a description that will be printed on the payslip."/>
                         </group>
                     </page>
                 </notebook>
@@ -147,4 +174,5 @@
             </p>
         </field>
     </record>
+
 </odoo>

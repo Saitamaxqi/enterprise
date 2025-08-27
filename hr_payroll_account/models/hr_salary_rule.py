@@ -9,12 +9,14 @@ class HrSalaryRule(models.Model):
     _inherit = ['hr.salary.rule', "analytic.mixin"]
 
     account_debit = fields.Many2one(
-        'account.account', 'Debit Account', company_dependent=True, ondelete='restrict')
+        'account.account', 'Debit Account', company_dependent=True, ondelete='restrict',
+        help="Default account defined on the journal of the salary structure."
+    )
     account_credit = fields.Many2one(
         'account.account', 'Credit Account', company_dependent=True, ondelete='restrict')
     not_computed_in_net = fields.Boolean(
-        string="Not computed in net accountably", default=False,
-        help='This field allows you to delete the value of this rule in the "Net Salary" rule at the accounting level to explicitly display the value of this rule in the accounting. For example, if you want to display the value of your representation fees, you can check this field.')
+        string="Excluded from Net", default=False,
+        help='If checked, the result of this rule will not be taken into account in the Net salary rule in the journal entries. A specific debit/credit account should be set to consider it independently.')
     debit_tag_ids = fields.Many2many(
         string="Debit Tax Grids",
         comodel_name='account.account.tag',
@@ -30,7 +32,7 @@ class HrSalaryRule(models.Model):
             "They will be applied on the credit account line in the journal entry.",
     )
     split_move_lines = fields.Boolean(
-        string="Split account line based on name",
+        string="Split on names",
         help="Enable this option to split the accountig entries for this rule according to the payslip line name. It could be useful for deduction/reimbursement or salary attachments for instance.")
     employee_move_line = fields.Boolean(
         string="Set employee on account line",

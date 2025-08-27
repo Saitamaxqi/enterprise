@@ -9,9 +9,9 @@
                 <page string="Accounting" name="accounting">
                     <group>
                         <group>
-                            <field name="account_debit" />
-                            <field name="account_credit"/>
-                            <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting"/>
+                            <field name="account_debit" placeholder="None"/>
+                            <field name="account_credit" placeholder="None"/>
+                            <field name="analytic_distribution" widget="analytic_distribution" groups="analytic.group_analytic_accounting" placeholder="None"/>
                             <field name="split_move_lines"/>
                             <field name="not_computed_in_net"/>
                             <field name="employee_move_line" invisible="batch_payroll_move_lines"/>

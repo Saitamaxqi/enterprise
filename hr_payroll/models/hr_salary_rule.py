@@ -44,20 +44,6 @@ class HrSalaryRule(models.Model):
     condition_other_input_id = fields.Many2one('hr.payslip.input.type', domain=[('is_quantity', '=', False)])
     condition_python = fields.Text(string='Python Condition', required=True,
         default='''
-# Available variables:
-#----------------------
-# payslip: hr.payslip object
-# employee: hr.employee object
-# version: hr.version object
-# result_rules: dict containing the rules amounts, quantities, rates and totals (previously computed)
-# categories: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).
-# worked_days: dict containing the computed worked days
-# inputs: dict containing the computed inputs.
-
-# Output:
-#----------------------
-# result: boolean True if the rule should be calculated, False otherwise
-
 result = result_rules['NET']['total'] > categories['NET'] * 0.10''',
         help='Applied this rule for calculation if condition is true. You can specify condition like basic > 1000.')
     condition_range_min = fields.Float(string='Minimum Range', help="The minimum amount, applied for this rule.")
@@ -74,26 +60,6 @@ result = result_rules['NET']['total'] > categories['NET'] * 0.10''',
     amount_other_input_id = fields.Many2one('hr.payslip.input.type', domain=[('is_quantity', '=', False)])
     amount_python_compute = fields.Text(string='Python Code',
         default='''
-# Available variables:
-#----------------------
-# payslip: hr.payslip object
-# employee: hr.employee object
-# version: hr.version object
-# result_rules: dict containing the rules amounts, quantities, rates and totals (previously computed)
-# categories: dict containing the computed salary rule categories (sum of amount of all rules belonging to that category).
-# worked_days: dict containing the computed worked days
-# inputs: dict containing the computed inputs.
-
-# Output:
-#----------------------
-# result: float, base amount of the rule
-# result_rate: float, rate between -100.0 and 100.0, which defaults to 100.0 (%).
-# result_qty: float, quantity, which defaults to 1.
-# result_name: string, name of the line, which defaults to the name field of the salary rule.
-#              This is useful if the name depends should depend on something computed in the rule.
-# The total returned by the salary rule is calculated as:
-# total = result * result_rate / 100 * result_qty
-
 result = version.wage
 result_rate = 10''')
     amount_percentage_base = fields.Char(string='Percentage based on', help='result will be affected to a variable')
@@ -105,13 +71,6 @@ result_rate = 10''')
     bold = fields.Boolean(string="Bold")
     underline = fields.Boolean(string="Underline")
     italic = fields.Boolean(string="Italic")
-    preview_currency_symbol = fields.Char(compute='_compute_preview_currency')
-    preview_currency_position = fields.Selection([('after', 'After Amount'), ('before', 'Before Amount')], compute='_compute_preview_currency')
-
-    @api.depends_context('company')
-    def _compute_preview_currency(self):
-        self.preview_currency_symbol = self.env.company.currency_id.symbol
-        self.preview_currency_position = self.env.company.currency_id.position
 
     def _raise_error(self, localdict, error_type, e):
         raise UserError(_("""%(error_type)s
