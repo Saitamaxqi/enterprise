@@ -622,6 +622,35 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         self.assertEqual(wo.duration, 30.0)
         self.assertRecordValues(wo.time_ids, [{'duration': 30.0}, {'duration': 15.0}])
 
+    def test_workorder_timelog_for_assigned_employee(self):
+        """This test ensures that when a work order is assigned to an employee (not the current/logged-in user)
+        and is marked as done by the current user, the time log for workorder is correctly recorded
+        under the assigned employee instead of the current user.
+        """
+        # Create employees
+        assigned_employee, current_employee = self.env['hr.employee'].create([
+            {'name': 'Assigned Employee'},
+            {'name': 'Current User Employee', 'user_id': self.env.user.id},
+        ])
+
+        # Create and confirm a Manufacturing Order with workorders.
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.product_id = self.submarine_pod
+        mo_form.bom_id = self.bom_submarine
+        mo = mo_form.save()
+        mo.action_confirm()
+
+        workorder_1, workorder_2 = mo.workorder_ids[:2]
+        # Assign a different employee to the workorder_1 and keep workorder_2 unassigned.
+        workorder_1.employee_assigned_ids = assigned_employee
+        # mark the workorders as done.
+        mo.workorder_ids.action_mark_as_done()
+
+        # The time log should be assigned to the employee assigned in the workorder_1,
+        # and to the current user in workorder_2.
+        self.assertEqual(workorder_1.time_ids[0].employee_id, assigned_employee)
+        self.assertEqual(workorder_2.time_ids[0].employee_id, current_employee)
+
 
 @tagged("post_install", "-at_install")
 class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
