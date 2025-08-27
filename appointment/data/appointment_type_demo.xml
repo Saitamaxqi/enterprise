@@ -18,7 +18,8 @@
     </record>
 
     <record id="appointment_type_dental_care_question_1" model="appointment.question">
-        <field name="appointment_type_id" ref="appointment_type_dental_care"/>
+        <field name="appointment_type_ids" eval="[(6, 0, [ref('appointment_type_dental_care')])]"/>
+        <field name="is_reusable">False</field>
         <field name="name">Symptoms</field>
         <field name="sequence">10</field>
     </record>

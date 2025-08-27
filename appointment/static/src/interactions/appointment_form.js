@@ -48,11 +48,17 @@ export class AppointmentForm extends Interaction {
 
     start() {
         this.hasFormDefaultValues = this.getAttendeeFormData().some(([_, value]) => value !== "");
+        this.mainPhoneQuestion = this.el.querySelector('input[data-is-main-phone-question="True"]');
         if (!this.hasFormDefaultValues && localStorage.getItem("appointment.form.values")) {
             const attendeeData = JSON.parse(localStorage.getItem("appointment.form.values"));
             const formEl = this.el.querySelector("form.appointment_submit_form");
             for (const [name, value] of Object.entries(attendeeData)) {
-                const inputEl = formEl.querySelector(`input[name="${name}"]`);
+                if (name === 'phone' && !this.mainPhoneQuestion) {
+                    continue;
+                }
+                const inputEl = name === 'phone' ?
+                    this.mainPhoneQuestion :
+                    formEl.querySelector(`input[name="${name}"]`);
                 if (inputEl) {
                     inputEl.value = value;
                 }
@@ -62,7 +68,10 @@ export class AppointmentForm extends Interaction {
 
     getAttendeeFormData() {
         const formData = new FormData(this.el.querySelector("form.appointment_submit_form"));
-        return Array.from(formData).filter(([key]) => ["name", "phone", "email"].includes(key));
+        const formKeys = this.mainPhoneQuestion ?
+            [this.mainPhoneQuestion.name, "name", "email"] :
+            ["name", "email"];
+        return Array.from(formData).filter(([key]) => formKeys.includes(key));
     }
 
     /**
@@ -93,7 +102,12 @@ export class AppointmentForm extends Interaction {
             if (!this.hasFormDefaultValues) {
                 const attendeeData = this.getAttendeeFormData();
                 if (attendeeData.length) {
-                    localStorage.setItem("appointment.form.values", JSON.stringify(Object.fromEntries(attendeeData)));
+                    const attendeeDataObject = Object.fromEntries(attendeeData);
+                    if (this.mainPhoneQuestion){
+                        attendeeDataObject['phone'] = attendeeDataObject[this.mainPhoneQuestion.name];
+                        delete attendeeDataObject[this.mainPhoneQuestion.name];
+                    }
+                    localStorage.setItem("appointment.form.values", JSON.stringify(attendeeDataObject));
                 }
             }
             appointmentFormEl.submit();

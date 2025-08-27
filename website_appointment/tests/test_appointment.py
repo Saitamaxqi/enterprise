@@ -4,7 +4,7 @@
 from collections import Counter
 from datetime import datetime
 
-from odoo import http
+from odoo import Command, http
 from odoo.addons.appointment.tests.common import AppointmentCommon
 from odoo.addons.website_appointment.controllers.appointment import WebsiteAppointment
 from odoo.addons.website.tests.test_website_visitor import MockVisitor
@@ -196,6 +196,9 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
             {'access_token': '11111111111111111111111111111111'},
             {'access_token': '22222222222222222222222222222222'},
         ])
+        phone_question = self.apt_type_bxls_2days._get_main_phone_question()
+        self.assertTrue(phone_question)
+
         for with_csrf, visitor in zip([True, False], visitors):
             with self.subTest(with_csrf=with_csrf), self.mock_visitor_from_request(force_visitor=visitor):
                 self.authenticate(None, None)
@@ -203,7 +206,7 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
                     'duration_str': '1.0',
                     'email': 'visitor@test.example.com',
                     'name': 'Visitor',
-                    'phone': '+1 555-555-5555',
+                    f'question_{phone_question.id}': '+1 555-555-5555',
                     'staff_user_id': self.staff_user_bxls.id,
                 } | ({'csrf_token': http.Request.csrf_token(self)} if with_csrf else {})
 
@@ -221,3 +224,104 @@ class WebsiteAppointmentTest(AppointmentCommon, MockVisitor):
                 self.assertTrue(all(event.appointment_booker_id for event in events))
                 self.assertEqual(len(events.appointment_booker_id), 1 if with_csrf else 2)
                 events.unlink()
+
+    def test_appointment_no_phone_question(self):
+        self.apt_type_bxls_2days.question_ids = False
+        values = {
+            'datetime_str': '2022-02-14 10:00:00',
+            'duration_str': '1.0',
+            'email': 'no_phone_test_1@example.com',
+            'name': 'No Phone Test',
+            'staff_user_id': self.staff_user_bxls.id,
+        }
+        # New customer is created
+        self.authenticate(None, None)
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", values)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+        new_partner = self.env['res.partner'].search([('email', '=', values['email'])])
+        self.assertTrue(new_partner)
+        self.assertFalse(new_partner.phone)
+
+        # Logged partner is matched
+        self.authenticate('apt_manager', 'apt_manager')
+        values |= {
+            'csrf_token': http.Request.csrf_token(self),
+            'email': self.apt_manager.partner_id.email,
+            'datetime_str': '2022-02-14 11:00:00',
+        }
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", values)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+        self.assertListEqual(
+            self.apt_type_bxls_2days.meeting_ids[0].partner_ids.ids,
+            [self.apt_manager.partner_id.id, self.staff_user_bxls.partner_id.id])
+
+    def test_appointment_phone_questions(self):
+        """ Ensure that only the first question propagates the phone to the created partner
+        when creating a new partner, or to the logged user when they use their data and have
+        no phone. """
+        phone_question_1, noise_question, phone_question_2 = self.env['appointment.question'].create([{
+            'name': 'Phone Question 1',
+            'sequence': 10,
+            'question_type': 'phone',
+        }, {
+            'name': 'Noise Question',
+            'sequence': 15,
+            'question_type': 'char',
+        }, {
+            'name': 'Phone Question 2',
+            'sequence': 20,
+            'question_type': 'phone',
+            'question_required': True
+        }])
+        self.apt_type_bxls_2days.question_ids = [Command.set((phone_question_1 | phone_question_2).ids)]
+
+        values = {
+            'datetime_str': '2022-02-14 10:00:00',
+            'duration_str': '1.0',
+            'email': 'appointment_phone_test_1@example.com',
+            'name': 'Appointment Phone Test 1',
+            f'question_{noise_question.id}': 'noise',
+            f'question_{phone_question_2.id}': '012345678910',
+            'staff_user_id': self.staff_user_bxls.id,
+        }
+        # Only first phone question should propagate phone
+        self.authenticate(None, None)
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", values)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+        new_partner = self.env['res.partner'].search([('email', '=', values['email'])])
+        self.assertTrue(new_partner)
+        self.assertFalse(new_partner.phone)
+        new_partner.unlink()
+
+        # Propagate phone to created partner
+        values |= {
+            f'question_{phone_question_1.id}': '0123456789101112',
+            'datetime_str': '2022-02-14 11:00:00',
+        }
+        self.authenticate(None, None)
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", values)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+        new_partner = self.env['res.partner'].search([('email', '=', values['email'])])
+        self.assertTrue(new_partner)
+        self.assertEqual(new_partner.phone, '0123456789101112')
+
+        # Logged user without phone: propagate it
+        self.assertFalse(self.apt_manager.partner_id.phone)
+        self.authenticate('apt_manager', 'apt_manager')
+        values |= {
+            'csrf_token': http.Request.csrf_token(self),
+            'email': self.apt_manager.partner_id.email,
+            'datetime_str': '2022-02-14 12:00:00',
+        }
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", values)
+        self.assertEqual(res.status_code, 200, "Response should = OK")
+        self.assertEqual(self.apt_manager.partner_id.phone, '0123456789101112')
+
+        # Logged user with different / no phone given: new partner
+        values.pop(f'question_{phone_question_1.id}')
+        values['datetime_str'] = '2022-02-14 13:00:00'
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", values)
+        new_partner = self.env['res.partner'].search([('email', '=', self.apt_manager.partner_id.email)]) - self.apt_manager.partner_id
+        self.assertTrue(bool(new_partner))
+        self.assertFalse(new_partner.phone)
+        self.assertEqual(new_partner.email, self.apt_manager.partner_id.email)

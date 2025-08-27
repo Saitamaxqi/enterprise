@@ -39,7 +39,7 @@
     </record>
 
     <record id="appointment_type_restaurant_table_question_allergies" model="appointment.question">
-        <field name="appointment_type_id" ref="appointment_type_restaurant_table"/>
+        <field name="appointment_type_ids" eval="[(6, 0, [ref('appointment_type_restaurant_table')])]"/>
         <field name="name">Do you have any dietary preferences or restrictions ?</field>
         <field name="placeholder">e.g. Vegetarian, Lactose Intolerant, ...</field>
         <field name="question_type">text</field>

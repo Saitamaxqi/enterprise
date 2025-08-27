@@ -39,7 +39,7 @@ registry.category("web_tour.tours").add('appointment_hr_recruitment_tour', {
         trigger: 'input[name="email"]',
         run: 'edit ana@example.com',
     }, {
-        trigger: 'input[name="phone"]',
+        trigger: 'input[type="phone"]',
         run: 'edit 3141592',
     }, {
         trigger: '.o_appointment_form_confirm_btn',

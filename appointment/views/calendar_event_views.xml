@@ -41,7 +41,7 @@
                     <field name="appointment_answer_input_ids">
                         <list editable="bottom" create="false">
                             <field name="appointment_type_id" column_invisible="True"/>
-                            <field name="question_id" domain="[('appointment_type_id', '=', appointment_type_id)]" options="{'no_create': True}"/>
+                            <field name="question_id" readonly="1" options="{'no_create': True}"/>
                             <field name="question_type" string="Type"/>
                             <field name="value_answer_id"
                                 invisible="question_type not in ('radio','checkbox','select')"

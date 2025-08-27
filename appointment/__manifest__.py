@@ -13,6 +13,7 @@ Allow clients to Schedule Appointments through the Portal
     """,
     'depends': ['calendar', 'phone_validation', 'portal', 'resource', 'web_gantt'],
     'data': [
+        'data/appointment_question_data.xml',
         'data/calendar_data.xml',
         'data/mail_message_subtype_data.xml',
         'data/mail_template_data.xml',
@@ -24,6 +25,7 @@ Allow clients to Schedule Appointments through the Portal
         'views/calendar_alarm_views.xml',
         'views/calendar_event_views.xml',
         'views/appointment_answer_input_views.xml',
+        'views/appointment_answer_views.xml',
         'views/appointment_invite_views.xml',
         'views/appointment_question_views.xml',
         'views/appointment_resource_views.xml',
@@ -61,6 +63,7 @@ Allow clients to Schedule Appointments through the Portal
             'appointment/static/src/scss/appointment_type_views.scss',
             'appointment/static/src/scss/web_calendar.scss',
             'appointment/static/src/views/**/*',
+            'appointment/static/src/fields/**/*',
             ('remove', 'appointment/static/src/views/gantt/**'),
             'appointment/static/src/components/**/*',
             'appointment/static/src/js/appointment_insert_link_form_controller.js',

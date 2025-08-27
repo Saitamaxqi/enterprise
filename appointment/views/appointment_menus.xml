@@ -29,24 +29,35 @@
         action="calendar_event_action_all_users_appointments"
         name="Staff Bookings"/>
 
-    <!-- Appointment's type, report menu-->
+    <!-- Appointment's type, Shared Links -->
     <menuitem
         id="appointment_type_menu"
         parent="appointment.main_menu_appointments"
         action="appointment_type_action"
         sequence="10"/>
-
-    <menuitem
-        id="menu_schedule_report"
-        parent="appointment.main_menu_appointments"
-        name="Reporting"
-        action="calendar_event_action_appointment_reporting"
-        sequence="15"/>
     <menuitem
         id="menu_appointment_invite"
         parent="appointment.main_menu_appointments"
         action="appointment_invite_action"
         name="Shared Links"/>
+
+    <!-- Appointment's Reporting -->
+    <menuitem
+        id="menu_appointment_reporting"
+        parent="appointment.main_menu_appointments"
+        name="Reporting"
+        sequence="15"/>
+
+    <menuitem
+        id="menu_appointment_reporting_bookings"
+        parent="menu_appointment_reporting"
+        name="Bookings"
+        action="calendar_event_action_appointment_reporting"/>
+    <menuitem
+        id="menu_appointment_reporting_answers"
+        parent="menu_appointment_reporting"
+        name="Answers"
+        action="appointment_answer_input_action"/>
 
     <!-- Appointment's config menu-->
     <menuitem
@@ -54,6 +65,12 @@
         parent="appointment.main_menu_appointments"
         name="Configuration"
         sequence="20"
+        groups="group_appointment_user"/>
+    <menuitem
+        id="menu_appointment_questions"
+        parent="appointment.appointment_menu_config"
+        name="Questions"
+        action="appointment_question_action"
         groups="group_appointment_user"/>
     <menuitem
         id="menu_appointment_reminders"

@@ -42,6 +42,10 @@ class AppointmentType(models.Model):
     def _default_canceled_mail_template_id(self):
         return self.env['ir.model.data']._xmlid_to_res_id('appointment.appointment_canceled_mail_template')
 
+    @api.model
+    def _default_question_ids(self):
+        return self.env['appointment.question'].search([('is_default', '=', True), ('active', '=', True)]).ids
+
     # Global Settings
     sequence = fields.Integer('Sequence', default=10)
     name = fields.Char('Appointment Title', required=True, translate=True)
@@ -139,7 +143,11 @@ class AppointmentType(models.Model):
     min_schedule_hours = fields.Float('Schedule before (hours)', required=True, default=1.0)
     max_schedule_days = fields.Integer('Schedule not after (days)', required=True, default=15)
 
-    question_ids = fields.One2many('appointment.question', 'appointment_type_id', string='Questions', copy=True)
+    question_ids = fields.Many2many(
+        'appointment.question',
+        relation='appointment_type_appointment_question_rel',
+        string='Questions',
+        default=_default_question_ids)
     reminder_ids = fields.Many2many(
         'calendar.alarm', string="Reminders",
         default=lambda self: self.env['calendar.alarm'].search([('default_for_new_appointment_type', '=', True)]))
@@ -557,6 +565,10 @@ class AppointmentType(models.Model):
         if same_year and same_month:
             return 'month'
         return 'year'
+
+    def _get_main_phone_question(self):
+        self.ensure_one()
+        return next((q for q in self.question_ids if q.question_type == 'phone'), self.env['appointment.question'])
 
     def _get_placeholder_filename(self, field):
         return 'appointment/static/src/img/appointment_cover_0.jpg'

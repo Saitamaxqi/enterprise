@@ -45,7 +45,7 @@ registry.category("web_tour.tours").add('website_appointment_tour', {
         expectUnloadPage: true,
     }, {
         content: 'Fill tel field',
-        trigger: 'input[name="phone"]',
+        trigger: 'input[type="phone"]',
         run: "edit 0123456789",
     }, {
         content: 'Click on the add guest link',
