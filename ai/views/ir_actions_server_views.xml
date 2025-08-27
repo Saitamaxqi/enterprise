@@ -11,6 +11,7 @@
                     <group col="6">
                         <group>
                             <field name="use_in_ai" invisible="not ai_tool_is_candidate" readonly="context.get('default_use_in_ai', False)"/>
+                            <field name="ai_tool_allow_end_message" invisible="not ai_tool_is_candidate" readonly="context.get('default_use_in_ai', False)"/>
                         </group>
                         <group colspan="5">
                             <field name="ai_tool_description" nolabel="1"

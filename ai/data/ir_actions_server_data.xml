@@ -98,6 +98,7 @@
         <field name="name">AI: Open Menu List</field>
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
+        <field name="ai_tool_allow_end_message" eval="True"/>
         <field name="code">
             ai['result'] = record._ai_tool_open_menu_list(menu_id, model_name, selected_filters, selected_groupbys, search, custom_domain)
         </field>
@@ -149,6 +150,10 @@
                 "custom_domain": {
                     "type": "string",
                     "description": "Optional custom domain as JSON string when search view elements are insufficient."
+                },
+                "__end_message": {
+                    "type": "string",
+                    "description": "The message that will be shown to the user. Provide a short summary of how this tool call answers the user's request."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "selected_groupbys", "search"]
@@ -159,6 +164,7 @@
         <field name="name">AI: Open Menu Kanban</field>
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
+        <field name="ai_tool_allow_end_message" eval="True"/>
         <field name="code">
             ai['result'] = record._ai_tool_open_menu_kanban(menu_id, model_name, selected_filters, selected_groupbys, search, custom_domain)
         </field>
@@ -209,6 +215,10 @@
                 "custom_domain": {
                     "type": "string",
                     "description": "Optional custom domain as JSON string when search view elements are insufficient."
+                },
+                "__end_message": {
+                    "type": "string",
+                    "description": "The message that will be shown to the user. Provide a short summary of how this tool call answers the user's request."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "selected_groupbys", "search"]
@@ -219,6 +229,7 @@
         <field name="name">AI: Open Menu Pivot</field>
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
+        <field name="ai_tool_allow_end_message" eval="True"/>
         <field name="code">
             ai['result'] = record._ai_tool_open_menu_pivot(menu_id, model_name, selected_filters, row_groupbys, col_groupbys, measures, search, custom_domain)
         </field>
@@ -287,6 +298,10 @@
                 "custom_domain": {
                     "type": "string",
                     "description": "Optional custom domain as JSON string when search view elements are insufficient."
+                },
+                "__end_message": {
+                    "type": "string",
+                    "description": "The message that will be shown to the user. Provide a short summary of how this tool call answers the user's request."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "row_groupbys", "col_groupbys", "measures", "search"]
@@ -297,6 +312,7 @@
         <field name="name">AI: Open Menu Graph</field>
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
+        <field name="ai_tool_allow_end_message" eval="True"/>
         <field name="code">
             ai['result'] = record._ai_tool_open_menu_graph(
                 menu_id, model_name, selected_filters, selected_groupbys, measure,
@@ -377,6 +393,10 @@
                 "custom_domain": {
                     "type": "string",
                     "description": "Optional custom domain as JSON string when search view elements are insufficient."
+                },
+                "__end_message": {
+                    "type": "string",
+                    "description": "The message that will be shown to the user. Provide a short summary of how this tool call answers the user's request."
                 }
             },
             "required": ["menu_id", "model_name", "selected_filters", "selected_groupbys", "measure", "mode", "order", "search"]
@@ -434,6 +454,7 @@
         <field name="name">AI: Adjust Search</field>
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
+        <field name="ai_tool_allow_end_message" eval="True"/>
         <field name="code">
             ai['result'] = record._ai_tool_adjust_search(model_name, remove_facets, toggle_filters, toggle_groupbys, apply_searches, measures, mode, order, stacked, cumulated, custom_domain, switch_view_type)
         </field>
@@ -515,6 +536,10 @@
                 "switch_view_type": {
                     "type": "string",
                     "description": "The view type to switch to. Must be one of the available view types. Empty string for no switch."
+                },
+                "__end_message": {
+                    "type": "string",
+                    "description": "The message that will be shown to the user. Provide a short summary of what you wanted to adjust in the search view when calling this tool."
                 }
             },
             "required": ["model_name"]

@@ -4,6 +4,7 @@
         <field name="name">AI CRM: Create Lead</field>
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
+        <field name="ai_tool_allow_end_message" eval="True"/>
         <field name="code">ai['result'] = record._ai_create_lead(name, contact_name, description, email, phone, team_id, tag_ids, priority, country_id, state_id, city, zip_code, street, job_position)</field>
         <field name="model_id" ref="crm.model_crm_lead"/>
         <field name="ai_tool_description">## Tool: Create a Lead

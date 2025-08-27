@@ -4,6 +4,7 @@
         <field name="name">AI: Rename Document</field>
         <field name="state">code</field>
         <field name="use_in_ai" eval="True"/>
+        <field name="ai_tool_allow_end_message" eval="True"/>
         <field name="code">
 record.write({'name': new_name})
 ai['result'] = record.env._("The documents has been renamed to %s", new_name)
