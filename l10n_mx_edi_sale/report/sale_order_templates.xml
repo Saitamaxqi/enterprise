@@ -41,7 +41,7 @@
             </th>
         </th>
 
-        <td name="td_quantity" position="before">
+        <td name="td_product_quantity" position="before">
             <td class="text-end">
                 <span t-field="line.product_id.unspsc_code_id.code">01010101</span>
             </td>
@@ -53,7 +53,7 @@
                 <span>Unit code</span>
             </th>
         </th>
-        <td name="td_discount" position="after">
+        <td name="td_product_discount" position="after">
             <td class="text-end">
                 <span t-field="line.product_id.uom_id.unspsc_code_id.code">01010101</span>
             </td>

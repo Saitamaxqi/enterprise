@@ -225,7 +225,7 @@
                 <t t-elif="upsell_url">There is a <a t-att-href="upsell_url" class="alert-link">quotation</a> existing for this subscription, please confirm it or reject it.</t>
                 <t t-elif="renewal_url">There is a <a t-att-href="renewal_url" class="alert-link">renewal</a> quotation existing for this subscription, please confirm it or reject it.</t>
             </div>
-            <t t-if="sale_order.user_pause_start and sale_order.next_invoice_date &gt; datetime.date.today()">    
+            <t t-if="sale_order.user_pause_start and sale_order.next_invoice_date &gt; datetime.date.today()">
                 <div t-if="sale_order.user_pause_start &lt;= datetime.date.today()" class="alert alert-warning text-center">
                     Your subscription is paused until <span t-field="sale_order.next_invoice_date"/>
                 </div>
@@ -597,7 +597,7 @@
                 Total Quantity
             </th>
         </th>
-        <td id="quote_qty_td" position="after">
+        <td name="td_product_quantity" position="after">
             <td t-if="sale_order.subscription_state == '7_upsell'" class="text-end">
                 <span t-esc="line.upsell_total"/>
                 <span t-field="line.product_uom_id"/>
