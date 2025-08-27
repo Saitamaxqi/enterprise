@@ -58,6 +58,33 @@ describe.current.tags("desktop");
 const { topbarMenuRegistry, cellMenuRegistry } = spreadsheet.registries;
 const { toZone } = spreadsheet.helpers;
 
+test("insert list formulas", async () => {
+    const { model } = await createSpreadsheetFromListView({
+        linesNumber: 3,
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,list": `
+                        <list>
+                            <field name="foo"/>
+                            <field name="bar"/>
+                        </list>`,
+            },
+        },
+    });
+    expect(model.getters.getListDefinition("1").columns).toEqual(["foo", "bar"]);
+    expect(getCellFormula(model, "A1")).toBe('=ODOO.LIST.HEADER(1,"foo","Foo")');
+    expect(getCellFormula(model, "B1")).toBe('=ODOO.LIST.HEADER(1,"bar","Bar")');
+    expect(getCellFormula(model, "A2")).toBe('=ODOO.LIST(1,1,"foo")');
+    expect(getCellFormula(model, "A3")).toBe('=ODOO.LIST(1,2,"foo")');
+    expect(getCellFormula(model, "A4")).toBe('=ODOO.LIST(1,3,"foo")');
+    expect(getCellFormula(model, "A5")).toBe("");
+    expect(getCellFormula(model, "B2")).toBe('=ODOO.LIST(1,1,"bar")');
+    expect(getCellFormula(model, "B3")).toBe('=ODOO.LIST(1,2,"bar")');
+    expect(getCellFormula(model, "B4")).toBe('=ODOO.LIST(1,3,"bar")');
+    expect(getCellFormula(model, "B5")).toBe("");
+});
+
 test("List export with a invisible field", async () => {
     const { model } = await createSpreadsheetFromListView({
         serverData: {
@@ -346,7 +373,7 @@ test("Re-insert a list correctly ask for lines number", async function () {
     await doMenuAction(topbarMenuRegistry, ["data", "reinsert_list", "reinsert_list_1"], env);
     await animationFrame();
     await contains(".o_dialog .btn-primary").click(); // confirm
-    expect(getCellFormula(model, "Z26")).toBe('=ODOO.LIST.HEADER(1,"foo")', {
+    expect(getCellFormula(model, "Z26")).toBe('=ODOO.LIST.HEADER(1,"foo","Foo")', {
         message: "the list is re-inserted",
     });
 });
