@@ -1,11 +1,10 @@
-import { animationFrame } from "@odoo/hoot-dom";
 import { patch } from "@web/core/utils/patch";
 import { TourHelpers } from "@web_tour/js/tour_automatic/tour_helpers";
 
 patch(TourHelpers.prototype, {
     async scan(barcode) {
         odoo.__WOWL_DEBUG__.root.env.services.barcode.bus.trigger("barcode_scanned", { barcode });
-        await animationFrame();
+        await new Promise((resolve) => requestAnimationFrame(resolve));
     },
 
     /**
@@ -15,6 +14,6 @@ patch(TourHelpers.prototype, {
     async scanRFID(rfid) {
         const params = { data: rfid.split(",") };
         odoo.__WOWL_DEBUG__.root.env.services.mobile.bus.trigger("mobile_reader_scanned", params);
-        await animationFrame();
+        await new Promise((resolve) => requestAnimationFrame(resolve));
     },
 });

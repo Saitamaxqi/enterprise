@@ -1,6 +1,5 @@
 import { registry } from "@web/core/registry";
 import { inputFiles } from "@web/../tests/utils";
-import { queryOne } from "@odoo/hoot-dom";
 import { redirect } from "@web/core/utils/urls";
 
 registry.category("web_tour.tours").add("hr_contract_salary_tour", {
@@ -125,8 +124,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
         {
             content: "Unlog + Go on Configurator",
             trigger: ".o-mail-Chatter .o-mail-Message:eq(0) a",
-            async run() {
-                const offer_link = queryOne(".o-mail-Chatter .o-mail-Message:eq(0) a").href;
+            async run(helpers) {
+                const offer_link = helpers.anchor.href;
                 // Retrieve the link without the origin to avoid
                 // mismatch between localhost:8069 and 127.0.0.1:8069
                 // when running the tour with chrome headless
@@ -1113,8 +1112,8 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
         {
             content: "Go on configurator",
             trigger: ".o-mail-Chatter .o-mail-Message:eq(0) a",
-            run: function () {
-                const offer_link = queryOne(".o-mail-Chatter .o-mail-Message:eq(0) a").href;
+            run: function (helpers) {
+                const offer_link = helpers.anchor.href;
                 // Retrieve the link without the origin to avoid
                 // mismatch between localhost:8069 and 127.0.0.1:8069
                 // when running the tour with chrome headless

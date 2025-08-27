@@ -1,9 +1,5 @@
 import { AbstractMacro } from "@knowledge/macros/abstract_macro";
-import { click } from "@odoo/hoot-dom";
-import {
-    pasteElements,
-    replaceHtmlFieldContentWith
-} from "@knowledge/macros/utils";
+import { pasteElements, replaceHtmlFieldContentWith } from "@knowledge/macros/utils";
 
 /**
  * Macro that will open the Full Composer Form view dialog in the Form view
@@ -48,7 +44,7 @@ export class SendAsMessageMacro extends AbstractMacro {
                     );
                 },
                 async action(trigger) {
-                    await click(trigger);
+                    trigger.click();
                 },
             },
             {
@@ -107,7 +103,7 @@ export class UseAsDescriptionMacro extends AbstractMacro {
                     return null;
                 },
                 async action(trigger) {
-                    await click(trigger);
+                    trigger.click();
                 },
             },
             {

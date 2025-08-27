@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import { delay } from "@odoo/hoot-dom";
+import { delay } from "@web/core/utils/concurrency";
 
 registry.category("web_tour.tours").add('timesheet_record_time', {
     url: "/odoo",
