@@ -694,7 +694,9 @@
                 </div>
                 <div data-embedded-editable="content">
                     <h2>Subsidiaries and Equity Interests</h2>
-                    <p class="d-print-none">From the Equity app, print the Capital Table and insert it here</p>
+                    <p class="d-print-none alert alert-info pt16 pb16">
+                        From the Equity app, print the Capitalization Table and insert it <strong class="o-upload-link">here</strong>
+                    </p>
                 </div>
             </div>
             <div data-embedded="foldableSection" data-embedded-props='{"showContent": true}'>
@@ -1297,7 +1299,9 @@
         <field name="template_name">Supporting Documents</field>
         <field name="template_sequence">400</field>
         <field name="template_body" type="html">
-            <p class="d-print-none">Upload your files using the /file command.</p>
+            <p class="d-print-none alert alert-info pt16 pb16">
+                <strong class="o-upload-link">Upload files</strong> to include in the PDF report.
+            </p>
             <p><br/></p>
         </field>
     </record>
@@ -1309,7 +1313,9 @@
         <field name="template_name">Tax Package</field>
         <field name="template_sequence">500</field>
         <field name="template_body" type="html">
-            <p class="d-print-none">Include here any tax filing package or related documents provided by your local authorities.</p>
+            <p class="d-print-none alert alert-info pt16 pb16">
+                <strong class="o-upload-link">Upload files</strong> to include in the PDF report.
+            </p>
             <p><br/></p>
         </field>
     </record>
