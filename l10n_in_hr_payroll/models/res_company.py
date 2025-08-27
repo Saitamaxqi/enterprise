@@ -6,8 +6,6 @@ from odoo import fields, models
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    l10n_in_dearness_allowance = fields.Boolean(string='Dearness Allowance', default=True,
-        help='Check this box if your company provide Dearness Allowance to employee')
     l10n_in_epf_employer_id = fields.Char(string="EPF Employer ID",
         help="Region code: 2 uppercase letters (e.g., 'GJ' for Gujarat)\nOffice code: 3 uppercase letters\
         (e.g., 'AHM' for Ahmedabad)\nEstablishment code: 1 to 7 digits (e.g., '1234567')\nExtension code:\
@@ -17,7 +15,6 @@ class ResCompany(models.Model):
         Indian provisions of the Employee\'s State Insurance (ESI) Act.")
     l10n_in_pt_number = fields.Char(string="PT Number",
         help="The PTN digit number with the first two digits indicating the State.")
-    l10n_in_is_statutory_compliance = fields.Boolean(string="Statutory Compliance")
     l10n_in_provident_fund = fields.Boolean(string="Provident Fund",
         help="Check this box if the company is required to comply with the Indian provisions of the\
         Employee's Provident Fund (EPF) Act.")
