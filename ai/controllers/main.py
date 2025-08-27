@@ -24,13 +24,13 @@ class AIController(ThreadController):
     # auth=public to allow visitors to interact with ai agents through livechat
     @http.route(["/ai/generate_response"], type="jsonrpc", auth="public")
     @add_guest_to_context
-    def generate_response(self, mail_message_id, channel_id, current_view_info=None):
+    def generate_response(self, mail_message_id, channel_id, current_view_info=None, ai_session_identifier=None):
         channel = self._get_ai_channel_from_id(channel_id)
         if not channel:
             raise NotFound()
         message = self._get_message_with_access(mail_message_id)
         if message:
-            channel.sudo().ai_agent_id.with_context(current_view_info=current_view_info)._generate_response_for_channel(message, channel)
+            channel.sudo().ai_agent_id.with_context(current_view_info=current_view_info, ai_session_identifier=ai_session_identifier)._generate_response_for_channel(message, channel)
 
     # auth=public to allow visitors to interact with ai agents through livechat
     @http.route(["/ai/post_error_message"], type="jsonrpc", auth="public")

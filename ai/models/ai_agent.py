@@ -1177,6 +1177,9 @@ class AIAgent(models.Model):
             "search": search,
         }
 
+        if self.env.context.get("ai_session_identifier"):
+            bus_data["aiSessionIdentifier"] = self.env.context["ai_session_identifier"]
+
         if domain := self._parse_domain(model_name, custom_domain):
             bus_data["customDomain"] = domain
 
@@ -1208,6 +1211,10 @@ class AIAgent(models.Model):
             "selectedGroupBys": selected_groupbys,
             "search": search,
         }
+
+        if self.env.context.get("ai_session_identifier"):
+            bus_data["aiSessionIdentifier"] = self.env.context["ai_session_identifier"]
+
         if domain := self._parse_domain(model_name, custom_domain):
             bus_data["customDomain"] = domain
 
@@ -1277,6 +1284,9 @@ class AIAgent(models.Model):
             "search": search or [],
         }
 
+        if self.env.context.get("ai_session_identifier"):
+            bus_data["aiSessionIdentifier"] = self.env.context["ai_session_identifier"]
+
         # Add sorting information if available
         if sorted_column:
             bus_data["sortedColumn"] = sorted_column
@@ -1341,6 +1351,10 @@ class AIAgent(models.Model):
             "cumulated": cumulated,
             "search": search or [],
         }
+
+        if self.env.context.get("ai_session_identifier"):
+            bus_data["aiSessionIdentifier"] = self.env.context["ai_session_identifier"]
+
         if domain := self._parse_domain(model_name, custom_domain):
             bus_data["customDomain"] = domain
 
@@ -1489,6 +1503,9 @@ class AIAgent(models.Model):
         available_view_types = self.env.context.get("current_view_info", {}).get("available_view_types", [])
         if switch_view_type and switch_view_type not in available_view_types:
             raise ValueError(f"Requested view type '{switch_view_type}' is not in the available_view_types: {available_view_types}")
+
+        if self.env.context.get("ai_session_identifier"):
+            payload["aiSessionIdentifier"] = self.env.context["ai_session_identifier"]
 
         if domain := self._parse_domain(model_name, custom_domain):
             payload["customDomain"] = domain

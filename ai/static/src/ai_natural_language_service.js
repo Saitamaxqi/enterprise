@@ -1,13 +1,24 @@
 import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { session } from "@web/session";
 
 export const aiNaturalLanguageService = {
     dependencies: ["bus_service", "action", "menu", "dialog"],
     start(env, { bus_service, action: actionService, menu: menuService, dialog: dialogService }) {
         bus_service.subscribe(
             "AI_OPEN_MENU_LIST",
-            async ({ menuID, selectedFilters, selectedGroupBys, search, customDomain }) => {
+            async ({
+                menuID,
+                selectedFilters,
+                selectedGroupBys,
+                search,
+                customDomain,
+                aiSessionIdentifier,
+            }) => {
+                if (aiSessionIdentifier !== session.ai_session_identifier) {
+                    return;
+                }
                 const menu = await menuService.getMenu(menuID);
                 if (!menu.actionID) {
                     return;
@@ -24,7 +35,17 @@ export const aiNaturalLanguageService = {
         );
         bus_service.subscribe(
             "AI_OPEN_MENU_KANBAN",
-            async ({ menuID, selectedFilters, selectedGroupBys, search, customDomain }) => {
+            async ({
+                menuID,
+                selectedFilters,
+                selectedGroupBys,
+                search,
+                customDomain,
+                aiSessionIdentifier,
+            }) => {
+                if (aiSessionIdentifier !== session.ai_session_identifier) {
+                    return;
+                }
                 const menu = await menuService.getMenu(menuID);
                 if (!menu.actionID) {
                     return;
@@ -50,7 +71,11 @@ export const aiNaturalLanguageService = {
                 search,
                 sortedColumn,
                 customDomain,
+                aiSessionIdentifier,
             }) => {
+                if (aiSessionIdentifier !== session.ai_session_identifier) {
+                    return;
+                }
                 const menu = await menuService.getMenu(menuID);
                 if (!menu.actionID) {
                     return;
@@ -87,7 +112,11 @@ export const aiNaturalLanguageService = {
                 cumulated,
                 search,
                 customDomain,
+                aiSessionIdentifier,
             }) => {
+                if (aiSessionIdentifier !== session.ai_session_identifier) {
+                    return;
+                }
                 const menu = await menuService.getMenu(menuID);
                 if (!menu.actionID) {
                     return;

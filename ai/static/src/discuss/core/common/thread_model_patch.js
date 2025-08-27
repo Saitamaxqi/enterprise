@@ -3,6 +3,7 @@ import { patch } from "@web/core/utils/patch";
 import { rpc, RPCError } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 import { getCurrentViewInfo } from "@ai/discuss/core/common/view_details";
+import { session } from "@web/session";
 
 patch(Thread.prototype, {
     async post(body, postData = {}, extraData = {}) {
@@ -20,6 +21,7 @@ patch(Thread.prototype, {
                     mail_message_id: message.id,
                     channel_id: this.id,
                     current_view_info: await getCurrentViewInfo(this.store.env.bus),
+                    ai_session_identifier: session.ai_session_identifier,
                 });
             } catch (error) {
                 if (error instanceof RPCError) {
