@@ -27,15 +27,15 @@ class TransactionCaseDocumentsHr(TransactionCaseDocuments):
             'email': "hr_user_test@yourcompany.com",
             'group_ids': [(6, 0, [cls.env.ref('hr.group_hr_user').id])]
         }])
-        cls.hr_folder = cls.env['documents.document'].create({
+        cls.hr_employee_folder = cls.env['documents.document'].create({
             'name': 'hr_folder',
             'type': 'folder',
-            'access_internal': 'view',
+            'access_internal': 'none',
         })
-        cls.hr_folder.action_update_access_rights(partners={cls.hr_manager.partner_id: ('edit', False)})
+        cls.hr_employee_folder.action_update_access_rights(partners={cls.hr_manager.partner_id: ('edit', False)})
         company = cls.env.user.company_id
         company.documents_hr_settings = True
-        company.documents_hr_folder = cls.hr_folder.id
+        company.documents_employee_folder_id = cls.hr_employee_folder.id
         cls.employees_folder = company.documents_employee_folder_id
 
     def create_hr_related_document(self, related_record, folder, n=2):
@@ -85,7 +85,7 @@ class TransactionCaseDocumentsHr(TransactionCaseDocuments):
 
         We add this method in common to check various model of HR (employee, contract, payslips, ...).
         """
-        folder = folder or self.hr_folder
+        folder = folder or self.hr_employee_folder
         folder_manager = folder_manager or self.hr_manager
 
         self.assertTrue(folder.access_ids)

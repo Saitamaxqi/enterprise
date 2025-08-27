@@ -41,6 +41,8 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
             'company_id': new_company.id
         })
         self.assertTrue(new_company_employee.hr_employee_folder_id)
+        self.assertEqual(new_company_employee.hr_employee_folder_id.access_via_link, 'edit')
+        self.assertEqual(new_company_employee.hr_employee_folder_id.access_internal, 'none')
         self.assertEqual(new_company_employee.hr_employee_folder_id.folder_id, new_company.documents_employee_folder_id)
         # Test unconfigured companies: employees should not have a subfolder
         doc_employee_folder_id = new_company.documents_employee_folder_id.id
@@ -61,8 +63,14 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
             'type': 'folder'
         })
         self.env.company.documents_employee_folder_id = new_folder.id
+        self.assertEqual(self.env.company.documents_employee_folder_id.access_via_link, 'none')
+        self.assertEqual(self.env.company.documents_employee_folder_id.access_internal, 'none')
+        self.assertEqual(new_company_employee.hr_employee_folder_id.access_via_link, 'edit')
+        self.assertEqual(new_company_employee.hr_employee_folder_id.access_internal, 'none')
         self.assertEqual(self.employee.hr_employee_folder_id.folder_id.id, new_folder.id,
                          "Changing HR Employee folder target should be propagated to each employee subfolders.")
+        self.assertEqual(self.employee.hr_employee_folder_id.access_via_link, 'edit')
+        self.assertEqual(self.employee.hr_employee_folder_id.access_internal, 'none')
 
         # Check access - only used for HR users - even employee should not have access to their "own" subfolder
         with self.assertRaises(AccessError):
@@ -71,10 +79,20 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
             self.employee.hr_employee_folder_id.with_user(self.employee.user_id).read(['name'])
         with self.assertRaises(AccessError):
             self.employee.hr_employee_folder_id.with_user(self.employee.user_id).write({'name': "Test"})
-        self.employee.hr_employee_folder_id.with_user(self.hr_user).read(['name'])
+        # Hr manager have access because added as edit member
         self.employee.hr_employee_folder_id.with_user(self.hr_manager).read(['name'])
-        self.employee.hr_employee_folder_id.with_user(self.hr_user).write({'name': "Test"})
         self.employee.hr_employee_folder_id.with_user(self.hr_manager).write({'name': "Test2"})
+        self.employee.hr_employee_folder_id.access_ids = False
+        # Hr user and HR manager should be able to view and edit but only using the access token
+        # see @test_open_document_from_hr test method - If access to smart button and action, access to the records.
+        with self.assertRaises(AccessError):
+            self.employee.hr_employee_folder_id.with_user(self.hr_manager).read(['name'])
+        with self.assertRaises(AccessError):
+            self.employee.hr_employee_folder_id.with_user(self.hr_user).read(['name'])
+        with self.assertRaises(AccessError):
+            self.employee.hr_employee_folder_id.with_user(self.hr_manager).write({'name': "Test2"})
+        with self.assertRaises(AccessError):
+            self.employee.hr_employee_folder_id.with_user(self.hr_user).write({'name': "Test"})
 
     def test_bridge_hr_settings_on_write(self):
         """
@@ -104,7 +122,7 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         """
         document = self.env['documents.document'].create({
             'name': 'Doc',
-            'folder_id': self.hr_folder.id,
+            'folder_id': self.employee.hr_employee_folder_id.id,
             'res_model': self.employee._name,
             'res_id': self.employee.id,
         })
@@ -131,7 +149,7 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         """Test that uploaded hr.employee documents are not shared with the employee."""
         self.authenticate(self.hr_manager.login, self.hr_manager.login)
         with RecordCapturer(self.env['documents.document'], []) as capture:
-            res = self.url_open(f'/documents/upload/{self.hr_folder.access_token}',
+            res = self.url_open(f'/documents/upload/{self.employee.hr_employee_folder_id.access_token}',
                 data={
                     'csrf_token': http.Request.csrf_token(self),
                     'res_id': self.employee.id,
@@ -151,15 +169,12 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
                          "The HR manager has access to the uploaded document")
 
     def test_open_document_from_hr(self):
-        """ Test that opening the document app from an employee (hr app) is opening it in the right context. """
-        action = self.employee.action_open_documents()
-        context = action['context']
-        self.assertTrue('searchpanel_default_user_folder_id' in context)
-        self.assertEqual(context['searchpanel_default_user_folder_id'], str(self.employee.hr_employee_folder_id.id))
-        self.assertEqual(context['default_res_model'], 'hr.employee')
-        self.assertEqual(context['default_res_id'], self.employee.id)
-        self.assertFalse('default_partner_id' in context)
-        self.assertFalse('domain' in action)
+        """ Test that opening the document app from an employee (hr app) is opening only for hr users. """
+        with self.assertRaises(AccessError):
+            self.employee.with_user(self.doc_user_2).action_open_documents()
+        action = self.employee.with_user(self.hr_user).action_open_documents()
+        self.assertEqual(action['type'], 'ir.actions.act_url')
+        self.assertEqual(action['url'].split('/')[-1], self.employee.hr_employee_folder_id.access_token)
 
     def test_raise_if_used_folder(self):
         """It shouldn't be possible to archive/delete a folder used by a company (see _unlink_except_company_folders)"""
@@ -167,32 +182,35 @@ class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
         root = self.env['documents.document'].create({'name': 'root', 'type': 'folder', 'access_internal': 'edit'})
         folder_parent = self.env['documents.document'].create(
             {'name': 'parent', 'type': 'folder', 'folder_id': root.id})
-        folder_hr_company2 = self.env['documents.document'].create({
-            'name': 'hr company 2', 'type': 'folder', 'folder_id': folder_parent.id})
-        company_b.documents_hr_folder = folder_hr_company2
+        folder_hr_employees2 = self.env['documents.document'].create({
+            'name': 'Employees -  company 2', 'type': 'folder', 'folder_id': folder_parent.id, 'access_internal': 'none'})
+        company_b.documents_employee_folder_id = folder_hr_employees2
         company_b.documents_hr_settings = False
 
         self.assertEqual(folder_parent.with_user(self.doc_user).user_permission, 'edit')
-        self.assertEqual(folder_hr_company2.with_user(self.doc_user).user_permission, 'edit')
+        self.assertEqual(folder_hr_employees2.with_user(self.doc_user).user_permission, 'none')
         # It should be possible to archive an unused 'HR' folder"
-        folder_hr_company2.with_user(self.doc_user).action_archive()
-        folder_hr_company2.with_user(self.doc_user).action_unarchive()
+        with self.assertRaises(UserError,
+                               msg="It should not be possible for non admin to archive the 'HR Employee' folder"):
+            folder_hr_employees2.with_user(self.doc_user).action_archive()
+        folder_hr_employees2.action_archive()
+        folder_hr_employees2.action_unarchive()
         company_b.documents_hr_settings = True
 
         with self.assertRaises(UserError,
-                               msg="It should not be possible to archive an used 'HR' folder"):
-            folder_hr_company2.with_user(self.doc_user).action_archive()
+                               msg="It should not be possible to archive an used 'HR Employee' folder"):
+            folder_hr_employees2.action_archive()
         with self.assertRaises(UserError,
                                msg="It should not be possible to archive an ancestor of the used 'HR' folder"):
-            folder_parent.with_user(self.doc_user).action_archive()
+            folder_parent.action_archive()
         with self.assertRaises(UserError,
-                               msg="It should not be possible to unlink a 'HR' folder"):
-            folder_hr_company2.with_user(self.doc_user).unlink()
+                               msg="It should not be possible to unlink a 'HR Employee' folder"):
+            folder_hr_employees2.unlink()
         with self.assertRaises(UserError,
                                msg="It should not be possible to delete an ancestor of the 'HR' folder"):
-            folder_parent.with_user(self.doc_user).unlink()
+            folder_parent.unlink()
         self.assertTrue(folder_parent.exists())
-        self.assertTrue(folder_hr_company2.exists())
+        self.assertTrue(folder_hr_employees2.exists())
 
         with self.assertRaises(UserError,
                                msg="It should not be possible to delete an employee subfolder of the 'HR' Employee folder"):
