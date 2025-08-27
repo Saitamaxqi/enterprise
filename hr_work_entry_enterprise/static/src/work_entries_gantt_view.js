@@ -12,6 +12,7 @@ export const workEntriesGanttView = {
     Renderer: WorkEntriesGanttRenderer,
     Model: WorkEntriesGanttModel,
     buttonTemplate: "hr_work_entry_enterprise.WorkEntriesGanttView.Buttons",
+    searchMenuTypes: ["filter", "favorite"],
 };
 
 viewRegistry.add("work_entries_gantt", workEntriesGanttView);

@@ -3,11 +3,8 @@ import { GanttModel } from "@web_gantt/gantt_model";
 import { serializeDate } from "@web/core/l10n/dates";
 
 export class WorkEntriesGanttModel extends GanttModel {
-    /**
-     * @override
-     */
-    setup() {
-        super.setup(...arguments);
+    _getGroupedBy() {
+        return ["employee_id"];
     }
 
     getRange() {
