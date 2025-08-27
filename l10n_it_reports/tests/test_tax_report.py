@@ -79,7 +79,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
 
     def test_tax_report_carryover_vp14_debit_valid(self):
         """
-        Test to have a value in line vp14 debit between 0 and 25.82.
+        Test to have a value in line vp14 debit between 0 and 100.00.
         In this case, we should put that value in line vp7.
         """
         self._test_line_report_carryover(
@@ -99,12 +99,12 @@ class TestItalianTaxReport(TestAccountReportsCommon):
 
     def test_tax_report_carryover_vp14_debit_invalid(self):
         """
-        Test to have a value in line vp14 debit > 25.82.
+        Test to have a value in line vp14 debit > 100.00.
         In this case, we should never put that value in line vp7.
         """
         self._test_line_report_carryover(
             '2015-05-10',
-            1000,
+            10000,
             self.tax_4v,
             self._generate_options(
                 self.report,
@@ -139,7 +139,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
             20.0)
         self._test_line_report_carryover(
             '2015-06-10',
-            500,
+            5000,
             self.tax_4v,
             self._generate_options(
                 self.report,

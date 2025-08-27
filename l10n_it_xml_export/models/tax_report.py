@@ -3,8 +3,7 @@ from lxml import etree
 from markupsafe import Markup
 
 from odoo import _, fields, models
-from odoo.exceptions import UserError
-from odoo.tools import file_open, xml_utils
+from odoo.tools import date_utils, file_open
 
 class ItalianReportCustomHandler(models.AbstractModel):
     _name = 'l10n_it.monthly.tax.report.handler'
@@ -35,7 +34,8 @@ class ItalianReportCustomHandler(models.AbstractModel):
         }
 
     def export_tax_report_to_xml(self, options):
-        xml_content = self.env["ir.qweb"]._render("l10n_it_xml_export.tax_report_export_template", self._get_xml_export_data(options))
+        xml_export_data = self._get_xml_export_data(options)
+        xml_content = self.env["ir.qweb"]._render("l10n_it_xml_export.tax_report_export_template", xml_export_data)
         xml_content = Markup("""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>""") + xml_content
         xml_content = xml_content.encode()
 
@@ -59,7 +59,7 @@ class ItalianReportCustomHandler(models.AbstractModel):
                 )
 
         return {
-            "file_name": self.env["account.report"].browse(options["report_id"]).get_default_report_filename(options, 'xml'),
+            "file_name": f"IT{xml_export_data['taxpayer_code']}_LI_{xml_export_data['identificativo']}.xml",
             "file_content": xml_content,
             "file_type": "xml",
         }
@@ -68,32 +68,75 @@ class ItalianReportCustomHandler(models.AbstractModel):
         options_date_to = fields.Date.from_string(options["date"]["date_to"])
         report = self.env["account.report"].browse(options["report_id"])
         company = report._get_sender_company_for_export(options)
-        report_lines = report._get_lines(options)
-        colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
-        report_line2amount = {
-            line['columns'][colname_to_idx['balance']]['report_line_id']: (
-                "{:.2f}".format(
-                    float(line['columns'][colname_to_idx['balance']]['no_format'])
-                ).replace(".", ",")
-                if line['columns'][colname_to_idx['balance']]['no_format'] else
-                False
-            )
-            for line in report_lines
-        }
-        report_lines_data = {}
-        for report_line in self.env['account.report.line'].browse(report_line2amount.keys()):
-            report_lines_data[report_line.code] = report_line2amount[report_line.id]
+        quarter_months = list(date_utils.date_range(*date_utils.get_quarter(options_date_to)))
+        quarterly = self.env.company.account_return_periodicity == 'trimester'
+        balance_col_idx = next((idx for idx, col in enumerate(options.get('columns', [])) if col.get('expression_label') == 'balance'), None)
+        report_lines_data_per_month = {date.month: {} for date in quarter_months}
+        for date in quarter_months:
+            date_from = date
+            date_to = date_utils.end_of(date, 'month')
+            at_date_options = report.get_options({
+                'selected_variant_id': report.id,
+                'date': {
+                    'date_from': date_from,
+                    'date_to': date_to,
+                    'mode': 'range',
+                    'filter': 'custom',
+                },
+            })
+            at_date_report_lines = report._get_lines(at_date_options)
+            at_date_report_line2amount = {
+                line['columns'][balance_col_idx]['report_line_id']: (
+                    f"{float(line['columns'][balance_col_idx]['no_format']):.2f}".replace(".", ",")
+                    if line['columns'][balance_col_idx]['no_format'] else False
+                )
+                for line in at_date_report_lines
+            }
+            month_lines = self.env['account.report.line'].browse(at_date_report_line2amount.keys())
+            month_lines.fetch(['id', 'code'])
+            for report_line in month_lines:
+                # VP6a and VP6b values must be absolute values.
+                if report_line.code in ['VP6a', 'VP6b'] and at_date_report_line2amount.get(report_line.id) and at_date_report_line2amount[report_line.id].startswith('-'):
+                    report_lines_data_per_month[date.month][report_line.code] = at_date_report_line2amount[report_line.id][1:]
+                else:
+                    report_lines_data_per_month[date.month][report_line.code] = at_date_report_line2amount[report_line.id]
 
-        # VP6a and VP6b values must be absolute values.
-        for code in ["VP6a", "VP6b"]:
-            if report_lines_data[code] and report_lines_data[code][0] == "-":
-                report_lines_data[code] = report_lines_data[code][1:]
+        if quarterly:
+            def to_float(val):
+                if not val:
+                    return 0.0
+                try:
+                    return float(val.replace(',', '.'))
+                except (AttributeError, ValueError):
+                    return 0.0
+
+            keys = report_lines_data_per_month[quarter_months[0].month].keys()
+            quarterly_totals = {
+                key: sum(to_float(report_lines_data_per_month[date.month].get(key)) for date in quarter_months)
+                for key in keys
+            }
+            report_lines_data_per_month = {
+                0: {
+                    key: f"{total:.2f}".replace('.', ',') if total != 0 else False
+                    for key, total in quarterly_totals.items()
+                }
+            }
+
+        identificativo = self.env['ir.sequence'].next_by_code('l10n_it_xml_export.identificativo')
+        if not identificativo:
+            self.env['ir.sequence'].create({
+                'name': "IT Periodic VAT XML Export Identificativo",
+                'code': "l10n_it_xml_export.identificativo",
+                'padding': 5,
+            })
+            identificativo = self.env['ir.sequence'].next_by_code('l10n_it_xml_export.identificativo')
 
         return {
             "supply_code": "IVP18",
             "declarant_fiscal_code": options["declarant_fiscal_code"],
             "declarant_role_code": options["declarant_role_code"],
             "id_sistema": options["id_sistema"],
+            "identificativo": identificativo,
             "taxpayer_code": company.l10n_it_codice_fiscale,
             "tax_year": options_date_to.year,
             "vat_number": "".join([char for char in report.get_vat_for_export(options) if char.isdigit()]),
@@ -104,24 +147,28 @@ class ItalianReportCustomHandler(models.AbstractModel):
             "submission_commitment": options["intermediary_code"] and int(options["submission_commitment"]),
             "commitment_date": options["intermediary_code"] and fields.Date.from_string(options["commitment_date"]).strftime("%d%m%Y"),
             "intermediary_signature": options["intermediary_code"] and 1,
-            "month": options_date_to.month,
             "subcontracting": options["subcontracting"] and 1,
             "exceptional_events": options["exceptional_events"] and 1,
             "extraordinary_operations": options["extraordinary_operations"] and 1,
-            "total_active_operations": report_lines_data["VP2"],
-            "total_passive_operations": report_lines_data["VP3"],
-            "vat_payable": report_lines_data["VP4"],
-            "vat_deducted": report_lines_data["VP5"],
-            "vat_due": report_lines_data["VP6a"],
-            "vat_credit": report_lines_data["VP6b"],
-            "previous_debt": report_lines_data["VP7"],
-            "previous_period_credit": report_lines_data["VP8"],
-            "previous_year_credit": report_lines_data["VP9"],
-            "eu_self_payments": report_lines_data["VP10"],
-            "tax_credits": report_lines_data["VP11"],
-            "due_interests": report_lines_data["VP12"],
-            "method": int(options["method"]),
-            "advance_payment": report_lines_data["VP13"],
-            "amount_to_be_paid": report_lines_data["VP14a"],
-            "amount_in_credit": report_lines_data["VP14b"],
+            "quarter": date_utils.get_quarter_number(options_date_to) if quarterly else 0,
+            "monthly_data": {
+                month: {
+                    "total_active_operations": month_vals["VP2"],
+                    "total_passive_operations": month_vals["VP3"],
+                    "vat_payable": month_vals["VP4"],
+                    "vat_deducted": month_vals["VP5"],
+                    "vat_due": month_vals["VP6a"],
+                    "vat_credit": month_vals["VP6b"],
+                    "previous_debt": month_vals["VP7"],
+                    "previous_period_credit": month_vals["VP8"],
+                    "previous_year_credit": month_vals["VP9"],
+                    "eu_self_payments": month_vals["VP10"],
+                    "tax_credits": month_vals["VP11"],
+                    "due_interests": month_vals["VP12"],
+                    "method": int(options["method"]),
+                    "advance_payment": month_vals["VP13"],
+                    "amount_to_be_paid": month_vals["VP14a"],
+                    "amount_in_credit": month_vals["VP14b"],
+                } for month, month_vals in report_lines_data_per_month.items()
+            }
         }

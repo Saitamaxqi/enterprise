@@ -113,12 +113,24 @@ msgstr "Verificare se l'azienda opera in subappalto."
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__exceptional_events
 msgid "Check this if the declaration is affected by exceptional events."
-msgstr "Selezionare questa opzione se la dichiarazione è influenzata da eventi eccezionali."
+msgstr ""
+"Selezionare questa opzione se la dichiarazione è influenzata da eventi "
+"eccezionali."
+
+#. module: l10n_it_xml_export
+#: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__show_method
+msgid "Check this if you want to show the method field."
+msgstr "Seleziona questa opzione se desideri visualizzare il campo del metodo."
 
 #. module: l10n_it_xml_export
 #: model_terms:ir.ui.view,arch_db:l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view
 msgid "Close"
 msgstr "Chiudere"
+
+#. module: l10n_it_xml_export
+#: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__company_code
+msgid "Codice Fiscale of the company."
+msgstr "Codice fiscale della società."
 
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__declarant_fiscal_code
@@ -138,6 +150,11 @@ msgstr ""
 #: model:ir.model,name:l10n_it_xml_export.model_res_company
 msgid "Companies"
 msgstr "Aziende"
+
+#. module: l10n_it_xml_export
+#: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__company_code
+msgid "Company Code"
+msgstr "Codice aziendale"
 
 #. module: l10n_it_xml_export
 #: model_terms:ir.ui.view,arch_db:l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view
@@ -170,13 +187,6 @@ msgid "Declarant Role Code"
 msgstr "Codice Carica Dichiarante"
 
 #. module: l10n_it_xml_export
-#. odoo-python
-#: code:addons/l10n_it_xml_export/wizard/monthly_tax_report_xml_export.py:0
-#, python-format
-msgid "Declarant tax code must be 16 characters long."
-msgstr "Il codice fiscale del dichiarante deve essere di 16 caratteri."
-
-#. module: l10n_it_xml_export
 #: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
@@ -185,13 +195,6 @@ msgstr "Nome visualizzato"
 #: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__exceptional_events
 msgid "Exceptional Events"
 msgstr "Eventi Eccezionali"
-
-#. module: l10n_it_xml_export
-#. odoo-python
-#: code:addons/l10n_it_xml_export/wizard/monthly_tax_report_xml_export.py:0
-#, python-format
-msgid "Exceptional Events can only take a value from 1 to 9."
-msgstr "Gli Eventi eccezionali possono assumere un valore compreso tra 1 e 9."
 
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__extraordinary_operations
@@ -211,11 +214,11 @@ msgstr "ID"
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__submission_commitment
 msgid ""
-"If an intermediary is involved, this field precises whether the declaration "
-"was done by the taxpayer or that intermediary."
+"If a representative is involved, this field precises whether the declaration"
+" was done by the taxpayer or the representative."
 msgstr ""
-"Se è coinvolto un intermediario, questo campo specifica se la dichiarazione "
-"è stata fatta dal contribuente o da tale intermediario."
+"Se è coinvolto un rappresentante, questo campo precisa se la dichiarazione è "
+"stata effettuata dal contribuente o dal rappresentante."
 
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__method
@@ -223,8 +226,8 @@ msgid ""
 "Indicates which advance payment calculation method was used. The value of "
 "the advance payment can be found in the VP13 line of the report."
 msgstr ""
-"Indica il metodo di calcolo dell'anticipo utilizzato. Il valore dell'anticipo "
-"è riportato nella riga VP13 del rapporto."
+"Indica il metodo di calcolo dell'anticipo utilizzato. Il valore "
+"dell'anticipo è riportato nella riga VP13 del rapporto."
 
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__intermediary_code
@@ -239,7 +242,8 @@ msgstr "Gestore personalizzato del rapporto fiscale mensile italiano"
 #. module: l10n_it_xml_export
 #: model:ir.model,name:l10n_it_xml_export.model_l10n_it_xml_export_monthly_tax_report_xml_export_wizard
 msgid "Italian Monthly Tax Report XML Export Wizard"
-msgstr "Procedura di esportazione guidata XML del rapporto fiscale mensile italiano"
+msgstr ""
+"Procedura di esportazione guidata XML del rapporto fiscale mensile italiano"
 
 #. module: l10n_it_xml_export
 #: model:ir.model,name:l10n_it_xml_export.model_account_move
@@ -263,20 +267,18 @@ msgstr "Metodo"
 
 #. module: l10n_it_xml_export
 #: model_terms:ir.ui.view,arch_db:l10n_it_xml_export.tax_report_export_template
-msgid "Odoo"
-msgstr "Odoo"
+msgid "ODOO S.A."
+msgstr "ODOO S.A."
 
 #. module: l10n_it_xml_export
-#: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__parent_vat_number
+#: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__parent_company_id
+msgid "Parent Company"
+msgstr "Società madre"
+
+#. module: l10n_it_xml_export
+#: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__parent_company_vat_number
 msgid "Parent VAT Number"
 msgstr "Partita IVA Controllante"
-
-#. module: l10n_it_xml_export
-#. odoo-python
-#: code:addons/l10n_it_xml_export/wizard/monthly_tax_report_xml_export.py:0
-#, python-format
-msgid "Parent VAT number must be 11 characters long."
-msgstr "Il numero di partita IVA del genitore deve essere di 11 caratteri."
 
 #. module: l10n_it_xml_export
 #. odoo-python
@@ -286,14 +288,9 @@ msgid "Post a tax report entry"
 msgstr "Pubblicare una voce di rapporto fiscale"
 
 #. module: l10n_it_xml_export
-#: model:ir.model.fields.selection,name:l10n_it_xml_export.selection__l10n_it_xml_export_monthly_tax_report_xml_export_wizard__submission_commitment__2
-msgid "Prepared by the sender"
-msgstr "Preparato dal mittente"
-
-#. module: l10n_it_xml_export
-#: model:ir.model.fields.selection,name:l10n_it_xml_export.selection__l10n_it_xml_export_monthly_tax_report_xml_export_wizard__submission_commitment__1
-msgid "Prepared by the taxpayer"
-msgstr "Preparato dal contribuente"
+#: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__submission_commitment
+msgid "Prepared by"
+msgstr "Preparato da"
 
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__declarant_role_code
@@ -301,14 +298,25 @@ msgid "Role code of the declarant"
 msgstr "Codice ruolo del dichiarante"
 
 #. module: l10n_it_xml_export
+#: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__show_method
+msgid "Show Method"
+msgstr "Mostra metodo"
+
+#. module: l10n_it_xml_export
+#. odoo-python
+#: code:addons/l10n_it_xml_export/models/tax_report.py:0
+#, python-format
+msgid ""
+"Some values will not pass the authority's validation, please check them "
+"before submitting your file: %s"
+msgstr ""
+"Alcuni valori non supereranno la convalida dell'autorità, ti preghiamo di "
+"controllarli prima di inviare il tuo file: %s"
+
+#. module: l10n_it_xml_export
 #: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__subcontracting
 msgid "Subcontracting"
 msgstr "Subfornitura"
-
-#. module: l10n_it_xml_export
-#: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__submission_commitment
-msgid "Submission Commitment"
-msgstr "Impegno Presentazione"
 
 #. module: l10n_it_xml_export
 #: model:ir.model.fields,field_description:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__id_sistema
@@ -326,7 +334,7 @@ msgid "Unique identifier of the system that generated the file."
 msgstr "Identificatore univoco del sistema che ha generato il file."
 
 #. module: l10n_it_xml_export
-#: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__parent_vat_number
+#: model:ir.model.fields,help:l10n_it_xml_export.field_l10n_it_xml_export_monthly_tax_report_xml_export_wizard__parent_company_vat_number
 msgid "VAT number of the parent company."
 msgstr "Numero di partita IVA della società madre."
 
@@ -346,11 +354,56 @@ msgid "XML Export Options"
 msgstr "Opzioni di esportazione XML"
 
 #. module: l10n_it_xml_export
+#. odoo-python
+#: code:addons/l10n_it_xml_export/models/tax_report.py:0
+#, python-format
+msgid "XML Validation Error"
+msgstr "Errore di convalida XML"
+
+#. module: l10n_it_xml_export
+#. odoo-python
+#: code:addons/l10n_it_xml_export/models/account_move.py:0
+#, python-format
+msgid ""
+"You cannot post the tax closing of %(month)s without posting the previous "
+"month tax closing first."
+msgstr ""
+"Non è possibile registrare la chiusura fiscale di %(month)s senza aver prima "
+"registrato la chiusura fiscale del mese precedente."
+
+#. module: l10n_it_xml_export
+#. odoo-python
+#: code:addons/l10n_it_xml_export/models/account_move.py:0
+#, python-format
+msgid ""
+"You cannot post the tax closing of that month because older months have "
+"taxes to report but no tax closing posted. Oldest month is %(month)s"
+msgstr ""
+"Non è possibile registrare la chiusura fiscale di quel mese perché i mesi "
+"precedenti hanno imposte da dichiarare ma nessuna chiusura fiscale "
+"registrata. Il mese più vecchio è %(month)s."
+
+#. module: l10n_it_xml_export
 #: model_terms:ir.ui.view,arch_db:l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view
-msgid "e.g. 1234567890123456"
-msgstr "Ad esempio, 1234567890123456"
+msgid "e.g. 12345678901"
+msgstr "ad esempio 12345678901"
+
+#. module: l10n_it_xml_export
+#: model_terms:ir.ui.view,arch_db:l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view
+msgid "e.g. 12345678901 or ABCDEF12G34H567I"
+msgstr "Ad esempio: 12345678901 o ABCDEF12G34H567I"
 
 #. module: l10n_it_xml_export
 #: model_terms:ir.ui.view,arch_db:l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view
 msgid "e.g. ABCDEF12G34H567I"
 msgstr "ad esempio ABCDEF12G34H567I"
+
+#. module: l10n_it_xml_export
+#: model:ir.model.fields.selection,name:l10n_it_xml_export.selection__l10n_it_xml_export_monthly_tax_report_xml_export_wizard__submission_commitment__2
+msgid "the Representative"
+msgstr "il Rappresentante"
+
+#. module: l10n_it_xml_export
+#: model:ir.model.fields.selection,name:l10n_it_xml_export.selection__l10n_it_xml_export_monthly_tax_report_xml_export_wizard__submission_commitment__1
+msgid "the Taxpayer"
+msgstr "il Contribuente"
