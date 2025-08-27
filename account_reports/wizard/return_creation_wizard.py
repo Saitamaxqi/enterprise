@@ -68,7 +68,7 @@ class AccountReturnCreationWizard(models.TransientModel):
     def _compute_available_return_type(self):
         return_type_by_country_and_category = self.env['account.return.type']._read_group(
             domain=[],
-            groupby=['report_country_id', 'category'],
+            groupby=['country_id', 'category'],
             aggregates=['id:recordset'],
         )
         country_return_type_map = defaultdict(

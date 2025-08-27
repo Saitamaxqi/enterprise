@@ -8,6 +8,7 @@ from datetime import date
 from dateutil.relativedelta import relativedelta
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
+from odoo.fields import Domain
 from odoo.tools import SQL
 from odoo.tools.misc import format_date
 
@@ -67,10 +68,9 @@ class AccountReturnType(models.Model):
     )
     report_id = fields.Many2one(string="Report", comodel_name='account.report', index='btree', tracking=True)
     report_country_id = fields.Many2one(string="Report Country", related='report_id.country_id')
-    # country_id allows creating automatically the return for the country of the report and isn't mandatory as
-    # some returns may need to be generated regardless of the country of the company or for multiples such as Europe.
-    # and some returns may need to add conditions for it to be generated such as a minimum amount of tax to be paid.
-    country_id = fields.Many2one(comodel_name='res.country', string="Country", tracking=True)
+
+    auto_generate = fields.Boolean(string="Auto Generated", default=True)
+    country_id = fields.Many2one(comodel_name='res.country', string="Country", tracking=True, store=True, compute="_compute_country_id")
     payment_partner_bank_id = fields.Many2one(comodel_name='res.partner.bank', string="Payment Partner Bank", tracking=True)
     payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id', tracking=True)
 
@@ -88,6 +88,17 @@ class AccountReturnType(models.Model):
         company_dependent=True,
     )
     default_deadline_start_date = fields.Date(string="Default Start Date")
+
+    @api.depends('report_id.country_id')
+    def _compute_country_id(self):
+        for return_type in self:
+            return_type.country_id = return_type.report_country_id if not return_type.country_id and return_type.report_country_id else return_type.country_id
+
+    @api.constrains('country_id')
+    def _constrains_country_id(self):
+        for return_type in self:
+            if return_type.report_country_id and return_type.report_country_id != return_type.country_id:
+                raise ValueError(_("The return type country must be the same as the report country"))
 
     def _can_return_exist(self, company, tax_unit=False):
         """ Returns whether a return can exist for this type with the provided company and tax units. This is used to know which returns need
@@ -172,10 +183,23 @@ class AccountReturnType(models.Model):
         :param country_code: the country code for which we want to generate returns. It can be fpos country_code or main_company country_code
         :param main_company: the main company for which we generate returns
         """
-        self.env.ref('account_reports.annual_corporate_tax_return_type')._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
-        country_id = self.env['res.country'].sudo().search([('code', '=', country_code)], limit=1)
-        for report_type in self.env['account.return.type'].sudo().search([('country_id', '=', country_id.id)]):
+        if main_company.sudo().account_fiscal_country_id.code == country_code:
+            search_domain = Domain.AND([
+                Domain('auto_generate', '=', True),
+                Domain.OR([
+                    Domain('country_id', '=', False),
+                    Domain('country_id.code', '=', country_code),
+                ])
+            ])
+        else:
+            # For foreign vat we want to search strictly on country as the others without country should already be generated
+            search_domain = Domain.AND([
+                Domain('country_id.code', '=', country_code),
+                Domain('auto_generate', '=', True)
+            ])
+
+        for report_type in self.env['account.return.type'].sudo().search(search_domain):
             report_type._try_create_returns_for_fiscal_year(main_company, tax_unit=tax_unit)
 
     @api.onchange('category')

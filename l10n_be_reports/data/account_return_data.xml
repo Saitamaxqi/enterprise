@@ -34,6 +34,8 @@
         <record id="be_ec_sales_list_return_type" model="account.return.type">
             <field name="name">EC Sales List</field>
             <field name="report_id" ref="l10n_be_reports.belgian_ec_sales_report"/>
+            <field name="country_id" ref="base.be"/>
+            <field name="auto_generate" eval="False"/>
         </record>
 
         <!-- ISOC Prepayment-->

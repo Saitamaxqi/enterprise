@@ -13,6 +13,7 @@
             <field name="category">audit</field>
             <field name="deadline_periodicity">year</field>
             <field name="default_deadline_periodicity">year</field>
+            <field name="auto_generate" eval="False"/>
         </record>
     </data>
 </odoo>

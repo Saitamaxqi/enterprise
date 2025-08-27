@@ -72,6 +72,7 @@
             <field name="name">Return Types</field>
             <field name="res_model">account.return.type</field>
             <field name="view_id" ref="account_reports.account_return_type_list_view"/>
+            <field name="context">{'default_auto_generate': False }</field>
         </record>
     </data>
 </odoo>
