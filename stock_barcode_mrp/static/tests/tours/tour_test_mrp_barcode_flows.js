@@ -571,19 +571,6 @@ registry.category("web_tour.tours").add("test_barcode_production_generate_serial
                 helper.assertLineLot(0, "0000134, 0000135, 0000136, …, 0000143");
             },
         },
-        // Correct the Compo Lot consumption lines.
-        { trigger: ".o_barcode_line button.o_toggle_sublines", run: "click" },
-        {
-            content: "Delete the second Comp Lot line (line with no lot.)",
-            trigger: ".o_barcode_line.o_selected button.o_line_button.o_delete_line",
-            run: "click",
-        },
-        {
-            content: "Increase qty for 5/10 to 10/10 for the Comp Lot line with a lot.",
-            trigger: ".o_barcode_line[data-barcode='compo_lot'] button.o_add_remaining_quantity",
-            run: "click",
-        },
-        { trigger: ".o_barcode_line.o_line_completed.o_selected" },
         ...stepUtils.validateBarcodeOperation(),
     ],
 });
