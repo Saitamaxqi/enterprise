@@ -143,6 +143,12 @@ msgid "CodaBox Connection Wizard"
 msgstr "CodaBox verbindingsassistent"
 
 #. module: l10n_be_codabox
+#: model:ir.model.fields,field_description:l10n_be_codabox.field_res_company__l10n_be_codabox_iap_token
+#: model:ir.model.fields,field_description:l10n_be_codabox.field_res_config_settings__l10n_be_codabox_iap_token
+msgid "Codabox IAP Access Token"
+msgstr "Codabox-IAP-toegangstoken"
+
+#. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__l10n_be_codabox_is_connected
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_validation_wizard__l10n_be_codabox_is_connected
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_res_company__l10n_be_codabox_is_connected
@@ -296,12 +302,6 @@ msgstr "Fout"
 #: model_terms:ir.ui.view,arch_db:l10n_be_codabox.account_journal_dashboard_inherit_l10n_be_codabox
 msgid "Fetch from CodaBox"
 msgstr "Ophalen van CodaBox"
-
-#. module: l10n_be_codabox
-#: model:ir.model.fields,field_description:l10n_be_codabox.field_res_company__l10n_be_codabox_iap_token
-#: model:ir.model.fields,field_description:l10n_be_codabox.field_res_config_settings__l10n_be_codabox_iap_token
-msgid "IAP Access Token"
-msgstr "IAP-toegangstoken"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_change_password_wizard__id
