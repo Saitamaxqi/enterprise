@@ -4,7 +4,7 @@ from odoo import _, models, fields
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    closing_return_id = fields.Many2one(comodel_name='account.return', index='btree_not_null')
+    closing_return_id = fields.Many2one(comodel_name='account.return', index='btree_not_null', copy=False)
 
     def action_open_tax_return(self):
         return {
