@@ -37,7 +37,7 @@
                         </div>
                 </button>
             </button>
-            <xpath expr="//div[@name='contract_type']" position="after">
+            <xpath expr="//field[@name='structure_type_id']" position="after">
                 <field name="registration_number" string="Reference" groups="base.group_no_one"/>
             </xpath>
             <xpath expr="//page[@name='personal_information']//group[@name='hr_birth_group']" position="inside">
