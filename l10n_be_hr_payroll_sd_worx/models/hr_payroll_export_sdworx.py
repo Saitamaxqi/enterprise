@@ -3,7 +3,6 @@
 from datetime import date
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
 from odoo.tools.misc import format_date
 
 
@@ -39,11 +38,6 @@ class L10nBeHrPayrollExportSdworx(models.Model):
             - Employer 1111111, Employee 3333333, Date 24/06/2025, Attendance type code 0001, Duration 1.25h (1h 15m)
         """
         sdworx_code = work_entry_collection.work_entries[0].work_entry_type_id.sdworx_code
-        if not sdworx_code:
-            raise UserError(self.env._(
-                'The work entry type %(we)s does not have an SD Worx code',
-                we=work_entry_collection.work_entries[0].work_entry_type_id.name
-            ))
         time_str = f'{int(work_entry_collection.duration / 36):04d}'
         line = "%(company)s%(employee)sK%(date)s%(leave)s%(time)s" % {
             'company': self.company_id.sdworx_code,
@@ -56,13 +50,6 @@ class L10nBeHrPayrollExportSdworx(models.Model):
 
     def _generate_export_file(self):
         self.ensure_one()
-        names = [
-            employee.name for employee in self.eligible_employee_line_ids.employee_id
-            if not employee.sdworx_code]
-        if names:
-            raise UserError(self.env._(
-                'The following employees do not have an SD Worx code:\n%(names)s',
-                names='\n'.join(names)))
         lines = []
         for employee_line in self.eligible_employee_line_ids:
             we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
@@ -89,3 +76,10 @@ class L10nBeHrPayrollExportSdworxEmployee(models.Model):
     _inherit = ['hr.work.entry.export.employee.mixin']
 
     export_id = fields.Many2one('l10n.be.hr.payroll.export.sdworx')
+
+    def _relations_to_check(self):
+        return super()._relations_to_check() + [
+            (self.env._('companies'), 'export_id.company_id.sdworx_code'),
+            (self.env._('employees'), 'employee_id.sdworx_code'),
+            (self.env._('work entry types'), 'work_entry_ids.work_entry_type_id.sdworx_code'),
+        ]
