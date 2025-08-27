@@ -18,7 +18,6 @@
         'account_accountant',
         'hr_payroll_account_iso20022',
         'documents_hr_payroll',
-        'documents_hr_recruitment',
         'documents_hr',
         'hr_skills',
     ],
