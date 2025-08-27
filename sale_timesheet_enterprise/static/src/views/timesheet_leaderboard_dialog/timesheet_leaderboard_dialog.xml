@@ -60,10 +60,10 @@
                                 </t>
                             </t>
                         </div>
-                        <div t-attf-class="o_leaderboard_modal_table {{ state.current_employee.index &gt; 9 ? 'o_table_height_extra' : '' }} px-1" t-if="state.leaderboard.length > 2">
+                        <div t-attf-class="o_leaderboard_modal_table {{state.current_employee and state.current_employee.index &gt; 9 ? 'o_table_height_extra' : '' }} px-1" t-if="state.leaderboard.length > 2">
                             <table class="table table-borderless table-striped table-sm mb-0 overflow-auto">
                                 <tbody class="align-middle o_table_height_extra">
-                                    <tr t-foreach="state.leaderboard.slice(3, displayLimit)" t-as="employee" t-key="employee_index" t-attf-class="{{ employee.id === state.current_employee.id ? 'fw-bolder' : '' }}">
+                                    <tr t-foreach="state.leaderboard.slice(3, displayLimit)" t-as="employee" t-key="employee_index" t-attf-class="{{state.current_employee and employee.id === state.current_employee.id ? 'fw-bolder' : '' }}">
                                         <Many2OneAvatarRankField
                                             size="'small'"
                                             rank="employee_index + 4"
@@ -75,7 +75,7 @@
                                             <t t-else="" t-esc="getTotalTimeText(state.leaderboard[employee_index + 3])"/>
                                         </td>
                                     </tr>
-                                    <t t-if="state.current_employee.index &gt; 9 and !this.state.showAll">
+                                    <t t-if="state.current_employee and state.current_employee.index &gt; 9 and !this.state.showAll">
                                         <tr>
                                             <td colspan="4" class="text-start text-muted">
                                                 <span class="ps-1">···</span>
