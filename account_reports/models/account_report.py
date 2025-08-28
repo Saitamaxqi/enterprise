@@ -1663,6 +1663,8 @@ class AccountReport(models.Model):
                                        and len(options['column_groups']) == 1 \
                                        and len(self.line_ids) > 0 # No debug column on fully dynamic reports by default (they can customize this)
 
+        options['show_last_annotations'] = previous_options.get('show_last_annotations')
+
         selected_budgets = [budget for budget in options.get('budgets', []) if budget['selected']]
 
         # Show an additional column summing all the horizontal groups if there is no comparison or budget, and only one level of horizontal group
@@ -1919,10 +1921,13 @@ class AccountReport(models.Model):
             options['report_id'] = options.get('selected_section_id') or options.get('selected_variant_id') or self.id
 
     ####################################################
-    # OPTIONS: EXPORT MODE
+    # OPTIONS: EXPORT
     ####################################################
     def _init_options_export_mode(self, options, previous_options):
         options['export_mode'] = previous_options.get('export_mode')
+
+    def _init_options_export(self, options, previous_options):
+        options['report_title'] = previous_options.get('report_title')
 
     ####################################################
     # OPTIONS: HORIZONTAL SPLIT
@@ -4473,6 +4478,8 @@ class AccountReport(models.Model):
     def get_default_report_filename(self, options, extension):
         """The default to be used for the file when downloading pdf,xlsx,..."""
         self.ensure_one()
+        if title := options.get('report_title'):
+            return title
         if 'sections_source_id' not in options:
             return _('report.%(file_extension)s', file_extension=extension)
 
@@ -5337,6 +5344,13 @@ class AccountReport(models.Model):
                     'id': aml_id_to_account_move_id[aml_id],
                 }
 
+    def _get_last_comments_by_line(self, options, lines):
+        annotations_by_line = self.get_annotations(options, lines)
+        for line, annotations in annotations_by_line.items():
+            last_annotation = max(annotations, key=lambda annotation: annotation['create_date'], default={})
+            annotations_by_line[line] = markupsafe.Markup('<br/>').join(html2plaintext(last_annotation['body']).split("\n"))
+        return annotations_by_line
+
     def get_report_information(self, options):
         """
         return a dictionary of information that will be consumed by the AccountReport component.
@@ -5971,7 +5985,7 @@ class AccountReport(models.Model):
 
         render_values = {
             'report': self,
-            'report_title': self.name,
+            'report_title': options.get('report_title') or self.name,
             'options': options,
             'table_start': markupsafe.Markup('<tbody>'),
             'table_end': markupsafe.Markup('''
@@ -5994,7 +6008,14 @@ class AccountReport(models.Model):
         render_values['lines'] = lines
 
         # Manage annotations.
-        render_values['annotations'] = self._build_annotations_list_for_pdf_export(options['date'], lines, report_info['annotations'])
+        render_values['show_last_annotations'] = options.get('show_last_annotations')
+        render_values['status_selection'] = dict(self.env['account.audit.account.status']._fields['status']._description_selection(self.env))
+        if options.get('show_last_annotations'):
+            last_annotations = self._get_last_comments_by_line(options, lines)
+            for line in lines:
+                line['last_comment'] = last_annotations.get(line['id'])
+        else:
+            render_values['annotations'] = self._build_annotations_list_for_pdf_export(options['date'], lines, report_info['annotations'])
 
         options['css_custom_class'] = options['custom_display_config'].get('css_custom_class', '')
 

@@ -30,6 +30,8 @@
 
         > :not(caption) > * > * { padding: 0.5rem 0.75rem } //!\\ Override of bootstrap, keep selector
 
+        .largest_column { width: 100%; }
+
         // Override bootstrap in the account reports
         thead, tbody, tfoot, tr, td, th { border-style: none }
 
@@ -44,7 +46,6 @@
         *****************/
         > thead {
             white-space: nowrap;
-            tr > th:first-child { width:100% }
 
             > tr:not(:last-child) th:not(:first-child) {
                 background-color: #e7e9ed;
@@ -97,6 +98,41 @@
             .o_cell_td > .o_line_cell_value_number {
                 display: block;
                 text-align: right;
+            }
+
+            .o_cell_td > .o_last_comment {
+                display: inline-block;
+                text-align: left;
+                white-space: pre-wrap;
+                word-break: break-word;
+            }
+
+            .o_status_badge {
+                display: inline-block;
+                padding: 4px 8px;
+                margin-left: 8px;
+                border-radius: 800px;
+                font-size: 10px;
+                font-weight: 500;
+                color: white;
+                min-width: 16px;
+                text-align: center;
+                white-space: nowrap;
+            }
+
+            .o_status_badge_todo {
+                background-color: $o-gray-300;
+                color: black;
+            }
+
+            .o_status_badge_reviewed {
+                background-color: $o-info;
+            }
+            .o_status_badge_supervised {
+                background-color: $o-success;
+            }
+            .o_status_badge_anomaly {
+                background-color: $o-danger;
             }
         }
     }

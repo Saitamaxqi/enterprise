@@ -1,6 +1,7 @@
 import ast
 import base64
 import datetime
+import json
 import uuid
 from collections import defaultdict
 from markupsafe import Markup
@@ -1416,6 +1417,31 @@ class AccountReturn(models.Model):
         self.is_completed = False
         if self.return_type_category == 'audit':
             self.audit_status = 'ongoing'
+
+    def action_export_working_files(self):
+        report = self.env.ref('account_reports.trial_balance_report').with_company(self.company_id.id)
+        options = report.get_options({
+            'selected_variant_id': report.id,
+            'date': {
+                'date_from': self.date_from,
+                'date_to': self.date_to,
+                'mode': 'range',
+                'filter': 'custom',
+            },
+            'show_account': True,
+            'show_currency': True,
+            'show_last_annotations': True,
+            'unfold_all': True,
+            'report_title': self.name.strip(),
+        })
+        return {
+            'type': 'ir_actions_account_report_download',
+            'data': {
+                'model': self.env.context.get('model'),
+                'options': json.dumps(options),
+                'file_generator': 'export_to_pdf',
+            },
+        }
 
     def action_view_entry(self):
         self.ensure_one()

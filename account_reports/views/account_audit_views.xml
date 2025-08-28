@@ -53,6 +53,7 @@
                         <a class="dropdown-item" type="object" name="action_mark_uncompleted" string="Reset" invisible="not is_completed"/>
                         <a class="dropdown-item" type="object" name="action_archive" string="Archive" invisible="state != 'new' or is_completed or not active"/>
                         <a class="dropdown-item" type="object" name="action_unarchive" string="Unarchive" invisible="active"/>
+                        <a class="dropdown-item" type="object" name="action_export_working_files" string="Export"/>
                         <a invisible="state != 'new'" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
                     </t>
                 </kanban>
