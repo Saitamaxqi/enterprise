@@ -121,13 +121,15 @@ export class EmbeddedArticleIndexComponent extends Component {
             onLoadArticle: () => {},
             /** @param {integer} templateId */
             onLoadTemplate: async (templateId) => {
-                const [articleId] = await this.orm.call(
+                const articleIds = await this.orm.call(
                     "knowledge.article",
                     "load_suggested_template",
                     [record.resId, templateId]
                 );
-                await this.loadArticleIndex();
-                await this.env.openArticle(articleId);
+                if (articleIds?.length) {
+                    await this.loadArticleIndex();
+                    await this.env.openArticle(articleIds[0]);
+                }
             },
             onDeleteArticle: () => {},
             /** @param {integer} templateId */

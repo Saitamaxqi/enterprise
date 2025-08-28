@@ -58,21 +58,14 @@ class TestKnowledgeArticleTemplate(HttpCase):
                         'displayName': 'Article Items',
                         'viewType': 'list',
                         'context': {
-                            'active_id': ref('knowledge.knowledge_article_template_test'),
-                            'default_parent_id': ref('knowledge.knowledge_article_template_test'),
+                            'active_id': ref('knowledge.knowledge_article_child_template_1'),
+                            'default_parent_id': ref('knowledge.knowledge_article_child_template_1'),
                             'default_is_article_item': True
                         }
                     }
                 }"/>
             """),
             "template_category_id": cls.personal_category.id,
-        })
-
-        cls.env["ir.model.data"].create({
-            "module": "knowledge",
-            "name": "knowledge_article_template_test",
-            "model": "knowledge.article",
-            "res_id": cls.child_template_1.id
         })
 
         cls.child_template_1_stage_new = Stage.create({
@@ -129,6 +122,31 @@ class TestKnowledgeArticleTemplate(HttpCase):
             "template_name": "Child 2",
             "template_body": Markup("<p>Voluptate autem officia</p>"),
             "template_category_id": cls.personal_category.id,
+        })
+        cls.child_template_2_1 = Article.create({
+            "parent_id": cls.child_template_2.id,
+            "is_template": True,
+            "template_child_default_create": False,
+            "template_name": "Child 2.1",
+            "template_body": Markup("""
+                <p><a class="o_knowledge_article_link"
+                    data-res_id="ref('knowledge.knowledge_article_child_template_2')">Link</a></p>
+            """),
+            "template_category_id": cls.personal_category.id,
+        })
+
+        # Create the XML ids:
+        cls.env["ir.model.data"].create({
+            "module": "knowledge",
+            "name": "knowledge_article_child_template_1",
+            "model": "knowledge.article",
+            "res_id": cls.child_template_1.id
+        })
+        cls.env["ir.model.data"].create({
+            "module": "knowledge",
+            "name": "knowledge_article_child_template_2",
+            "model": "knowledge.article",
+            "res_id": cls.child_template_2.id
         })
 
     def test_apply_template(self):
@@ -225,6 +243,84 @@ class TestKnowledgeArticleTemplate(HttpCase):
         self.assertFalse(child_article_1_4.is_template)
         self.assertEqual(child_article_1_4.stage_id, child_article_1_stage_ongoing)
 
+    def test_get_suggested_templates(self):
+        """ Check that `get_suggested_templates` only returns sub-templates that
+            are missing under the article. """
+        article = self.env['knowledge.article'].create({'name': 'My Article'})
+        self.assertFalse(article.origin_template_id)
+
+        # Initially, `get_suggested_templates` should not suggest any templates
+        # for the article, as no templates have been loaded on it.
+
+        suggested_templates = article.get_suggested_templates()
+        self.assertFalse(suggested_templates)
+
+        article.apply_template(self.template.id)
+        self.assertEqual(article.origin_template_id, self.template)
+
+        # After applying a template, `get_suggested_templates` should suggest
+        # the missing sub-templates.
+
+        suggested_templates = article.get_suggested_templates()
+        self.assertEqual(suggested_templates, [{
+            'id': self.child_template_2_1.id,
+            'icon': self.child_template_2_1.icon,
+            'template_name': self.child_template_2_1.template_name,
+            'template_category_id': [
+                self.child_template_2_1.template_category_id.id,
+                self.child_template_2_1.template_category_id.display_name],
+            'template_category_sequence': self.child_template_2_1.template_category_sequence,
+            'template_sequence': 0,
+        }])
+
+        # Delete an article to check if its origin template is suggested again:
+        self.env['knowledge.article'].search([
+            ('origin_template_id', '=', self.child_template_1_2.id)]).unlink()
+
+        suggested_templates = article.get_suggested_templates()
+        self.assertEqual(suggested_templates, [{
+            'id': self.child_template_1_2.id,
+            'icon': self.child_template_1_2.icon,
+            'template_name': self.child_template_1_2.template_name,
+            'template_category_id': [
+                self.child_template_1_2.template_category_id.id,
+                self.child_template_1_2.template_category_id.display_name],
+            'template_category_sequence': self.child_template_1_2.template_category_sequence,
+            'template_sequence': 0,
+        }, {
+            'id': self.child_template_2_1.id,
+            'icon': self.child_template_2_1.icon,
+            'template_name': self.child_template_2_1.template_name,
+            'template_category_id': [
+                self.child_template_2_1.template_category_id.id,
+                self.child_template_2_1.template_category_id.display_name],
+            'template_category_sequence': self.child_template_2_1.template_category_sequence,
+            'template_sequence': 1,
+        }])
+
+    def test_load_suggested_templates(self):
+        """ Check that `load_suggested_templates` loads the additional template,
+            links it correctly, and resolves its references. """
+        article = self.env['knowledge.article'].create({'name': 'My Article'})
+        article.apply_template(self.template.id)
+
+        suggested_templates = article.get_suggested_templates()
+        self.assertEqual(len(suggested_templates), 1)
+
+        # Load the suggested template:
+        article_created_from_template = article.load_suggested_template(suggested_templates[0].get('id'))
+        self.assertEqual(article_created_from_template.name, self.child_template_2_1.template_name)
+        self.assertEqual(article_created_from_template.icon, self.child_template_2_1.icon)
+        parent_article = self.env['knowledge.article'].search([
+            ('origin_template_id', '=', self.child_template_2.id)])
+        self.assertEqual(article_created_from_template.parent_id, parent_article)
+
+        # Check that the references in the article body are resolved and point to the right article:
+        fragment = html.fragment_fromstring(article_created_from_template.body, create_parent="div")
+        links = list(fragment.xpath('//*[contains(@class, "o_knowledge_article_link")]'))
+        self.assertEqual(len(links), 1)
+        self.assertEqual(links[0].get("data-res_id"), str(parent_article.id))
+
     def test_template_category_inheritance(self):
         """ Check that the category of the child templates remain always
             consistent with the root template. """
@@ -268,7 +364,8 @@ class TestKnowledgeArticleTemplate(HttpCase):
         self.assertEqual(self.template.child_ids, self.child_template_1 + self.child_template_2)
         self.assertEqual(self.child_template_1.child_ids, \
             self.child_template_1_1 + self.child_template_1_2 + self.child_template_1_3 + self.child_template_1_4)
-        self.assertFalse(self.child_template_2.child_ids)
+        self.assertEqual(self.child_template_2.child_ids, self.child_template_2_1)
+        self.assertFalse(self.child_template_2_1.child_ids)
         # Check 'parent_id' field:
         self.assertFalse(self.template.parent_id)
         self.assertEqual(self.child_template_1.parent_id, self.template)
@@ -277,3 +374,4 @@ class TestKnowledgeArticleTemplate(HttpCase):
         self.assertEqual(self.child_template_1_3.parent_id, self.child_template_1)
         self.assertEqual(self.child_template_1_4.parent_id, self.child_template_1)
         self.assertEqual(self.child_template_2.parent_id, self.template)
+        self.assertEqual(self.child_template_2_1.parent_id, self.child_template_2)

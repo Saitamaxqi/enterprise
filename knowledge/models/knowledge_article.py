@@ -1711,51 +1711,142 @@ class KnowledgeArticle(models.Model):
         return sorted_articles
 
     def get_suggested_templates(self):
+        """ Retrieves the template used to create the current article and returns
+            all sub-templates that have not yet been loaded under the article.
+            The method is primarily used to fetch the annexes. """
         self.ensure_one()
         if not self.origin_template_id:
             return []
-        domain = [
-            ('is_template', '=', True),
-            ('parent_id', '=', self.origin_template_id.id),
-            ('id', 'not in', self.child_ids.mapped('origin_template_id.id')),
-        ]
-        return self.search_read(domain, fields=[
-            'id',
-            'icon',
-            'template_name',
-            'template_category_id',
-            'template_category_sequence',
-            'template_sequence'
+
+        all_articles_created_from_template = self.search([
+            ('is_template', '=', False),
+            ('parent_id', 'child_of', self.id),
+            ('origin_template_id', '!=', False),
         ])
+
+        suggested_templates = []
+        stack = [self.origin_template_id]
+
+        while stack:
+            template = stack.pop()
+            if template not in all_articles_created_from_template.origin_template_id:
+                suggested_templates.append({
+                    'id': template.id,
+                    'icon': template.icon,
+                    'template_name': template.template_name,
+                    'template_category_id': [
+                        template.template_category_id.id,
+                        template.template_category_id.display_name],
+                    'template_category_sequence': template.template_category_sequence,
+                    'template_sequence': len(suggested_templates),
+                })
+            stack += list(template.child_ids.sorted(
+                lambda template: template.template_sequence, reverse=True))
+
+        return suggested_templates
 
     def load_suggested_template(self, template_id):
         """
-        :param integer template_id: Template to load under the current article
+        Loads the specified template under the current article.
+        Unlike the other methods, it partially loads the template structure:
+        - Parent templates are loaded if they have not already been loaded.
+        - Child templates of the specified template are not loaded.
+        The article created from the template is then placed in the article
+        hierarchy following the template hierarchy.
+        The method is primarily used to load an annexe under the article.
+        :param int template_id: ID of the template to load
         """
-        template = self.browse(template_id)
-        sibling_articles = self.search([
-            ('parent_id', '=', self.id),
-            ('origin_template_id.parent_id', '=', template.parent_id)
-        ])
-        article = self.create({
-            'body': template._render_template(),
-            'cover_image_id': template.cover_image_id.id,
-            'origin_template_id': template.id,
-            'full_width': template.full_width,
-            'icon': template.icon,
-            'name': template.template_name,
-            'parent_id': self.id,
-        })
-        if sibling_articles:
-            articles_with_higher_template_sequence = sorted([
-                sibling_article for sibling_article in sibling_articles
-                    if sibling_article.origin_template_id.template_sequence > template.template_sequence],
-                key=lambda sibling_article: sibling_article.origin_template_id.template_sequence)
-            if articles_with_higher_template_sequence:
-                article.move_to(
-                    parent_id=article.parent_id.id,
-                    before_article_id=articles_with_higher_template_sequence[0].id)
-        return article
+        self.ensure_one()
+        if not template_id or not self.origin_template_id:
+            return
+        template = self.search([
+            ('id', '=', template_id),
+            ('is_template', '=', True),
+            ('parent_id', 'child_of', self.origin_template_id.id)])
+        if not template:
+            return
+
+        parent_article = self
+        templates_to_load = []
+        template_to_article_pairs = []
+
+        # Step 1: Fetch the templates to be loaded (i.e: the specified template
+        # and any unloaded parent templates) and determine the parent article
+        # under which the new articles will be attached.
+
+        all_articles_created_from_template = self.search([
+            ('is_template', '=', False),
+            ('parent_id', 'child_of', self.root_article_id.id),
+            ('origin_template_id', '!=', False)])
+
+        while template:
+            article_created_from_template = all_articles_created_from_template.filtered(
+                lambda article: article.origin_template_id.id == template.id)
+            if article_created_from_template:
+                parent_article = article_created_from_template[0]
+                break
+            templates_to_load.append(template)
+            template = template.parent_id
+
+        # Step 2: Generate the articles from the templates and move them to their
+        # designated destination.
+
+        for template in reversed(templates_to_load):
+            sibling_articles = self.search([
+                ('is_template', '=', False),
+                ('parent_id', '=', parent_article.id),
+                ('origin_template_id.parent_id', '=', template.parent_id.id)
+            ])
+            article = self.env['knowledge.article'].create({
+                'parent_id': parent_article.id,
+                'origin_template_id': template.id,
+            })
+            if sibling_articles:
+                articles_with_higher_template_sequence = sorted([
+                    sibling_article for sibling_article in sibling_articles
+                        if sibling_article.origin_template_id.template_sequence > template.template_sequence],
+                    key=lambda sibling_article: sibling_article.origin_template_id.template_sequence)
+                if articles_with_higher_template_sequence:
+                    article.move_to(
+                        parent_id=parent_article.id,
+                        before_article_id=articles_with_higher_template_sequence[0].id)
+            template_to_article_pairs.append((template, article))
+            all_articles_created_from_template |= article
+            parent_article = article
+
+        # Step 3: Create a method to resolve the references stored in the article body.
+
+        template_xml_id_to_article_id_mapping = {}
+        all_ir_model_data = self.env['ir.model.data'].sudo().search([
+            ('model', '=', 'knowledge.article'),
+            ('res_id', 'in', all_articles_created_from_template.mapped('origin_template_id.id'))])
+
+        for article in all_articles_created_from_template:
+            ir_model_data = all_ir_model_data.filtered(
+                lambda ir_model_data: ir_model_data.res_id == article.origin_template_id.id)
+            if ir_model_data:
+                template_xml_id = ir_model_data.complete_name
+                template_xml_id_to_article_id_mapping[template_xml_id] = article.id
+
+        def ref(xml_id):
+            return template_xml_id_to_article_id_mapping[xml_id] \
+                if xml_id in template_xml_id_to_article_id_mapping \
+                    else self.env.ref(xml_id).id
+
+        # Step 4: Copy the template values to their corresponding articles.
+
+        for template, article in template_to_article_pairs:
+            article.write({
+                'article_properties': template.article_properties or {},
+                'article_properties_definition': template.article_properties_definition,
+                'body': template._render_template(ref),
+                'cover_image_id': template.cover_image_id.id,
+                'full_width': template.full_width,
+                'icon': template.icon,
+                'name': template.template_name,
+            })
+
+        return parent_article
 
     # ------------------------------------------------------------
     # PERMISSIONS / MEMBERS MANAGEMENT
