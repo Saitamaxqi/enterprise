@@ -145,7 +145,7 @@
                         <!-- slot_info_right group is used in another module -->
                         <group name="slot_info_right">
                             <label for="start_datetime"/>
-                            <div class="d-inline-flex">
+                            <div class="d-flex">
                                 <field name="start_datetime" string="Date" widget="daterange" options="{'end_date_field': 'end_datetime'}" />
                                 <field name="end_datetime" invisible="1" />
                                 <field name="repeat" nolabel="1" style="width: fit-content;font-size:10px;"

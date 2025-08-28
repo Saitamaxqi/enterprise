@@ -9,10 +9,10 @@
                 <group>
                     <field name="slot_ids" invisible="1"/>
                     <label for="start_datetime" string="Period"/>
-                    <div class="d-flex flex-column flex-sm-row">
+                    <div class="o_row">
                         <field name="start_datetime" class="oe_inline" widget="daterange" options="{'end_date_field': 'end_datetime'}" />
                         <field name="end_datetime" invisible="1" />
-                        <span><field name="include_unassigned"/>Include Open Shifts</span>
+                        <div><field name="include_unassigned"/>Include Open Shifts</div>
                     </div>
                 </group>
                 <group>
