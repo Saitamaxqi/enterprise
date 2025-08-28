@@ -9,7 +9,8 @@ class HrVersion(models.Model):
     l10n_ae_housing_allowance = fields.Monetary(string="Housing Allowance", groups="hr_payroll.group_hr_payroll_user")
     l10n_ae_transportation_allowance = fields.Monetary(string="Transportation Allowance", groups="hr_payroll.group_hr_payroll_user")
     l10n_ae_other_allowances = fields.Monetary(string="Other Allowances", groups="hr_payroll.group_hr_payroll_user")
-    l10n_ae_total_salary = fields.Monetary(string="Total Salary", compute="_compute_total_salary", help="Used in salary rules and on printouts")
+    l10n_ae_total_salary = fields.Monetary(string="Total Salary", groups="hr_payroll.group_hr_payroll_user",
+                                           compute="_compute_total_salary", help="Used in salary rules and on printouts")
     l10n_ae_is_dews_applied = fields.Boolean(string="Is DEWS Applied", groups="hr_payroll.group_hr_payroll_user",
                                              help="Daman Investments End of Service Programme")
     l10n_ae_number_of_leave_days = fields.Integer(string="Number of Leave Days", default=30, groups="hr_payroll.group_hr_payroll_user",
