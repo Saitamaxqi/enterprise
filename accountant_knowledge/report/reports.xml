@@ -12,7 +12,7 @@
                 <div class="o-cover">
                     <div style="height: 350px"/>
                     <h1 t-out="audit_report.title"/>
-                    <h2>Fiscal period from <t t-out="audit_report.start_date"/> to <t t-out="audit_report.end_date"/></h2>
+                    <h2>Fiscal period from <t t-out="format_date(audit_report.start_date)"/> to <t t-out="format_date(audit_report.end_date)"/></h2>
                     <div style="height: 35px"/>
                     <hr/>
                     <div style="height: 35px"/>

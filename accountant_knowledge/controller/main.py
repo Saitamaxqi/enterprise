@@ -8,10 +8,10 @@ from lxml import html
 from markupsafe import Markup
 from urllib.parse import parse_qs, urlparse
 
-from odoo import http
+from odoo import http, tools
 from odoo.fields import Domain
 from odoo.http import content_disposition, request
-from odoo.tools import html_sanitize
+from odoo.tools import format_amount, format_date, format_datetime, format_duration, format_time, html_sanitize
 from odoo.tools.image import image_data_uri
 from odoo.tools.pdf import PdfFileReader, PdfFileWriter, PdfReadError
 
@@ -160,6 +160,12 @@ def get_front_cover_pdf(article):
     front_cover_html = request.env['ir.qweb']._render('accountant_knowledge.audit_report_front_cover', {
         'audit_report': article.inherited_audit_report_id,
         'base_url': base_url,
+        'format_addr': tools.formataddr,
+        'format_amount': lambda amount, currency, lang_code=None, trailing_zeroes=True: tools.format_amount(request.env, amount, currency, lang_code, trailing_zeroes),
+        'format_date': lambda value, lang_code=None, date_format=False: format_date(request.env, value, lang_code, date_format),
+        'format_datetime': lambda value, tz=False, dt_format='medium', lang_code=None: format_datetime(request.env, value, tz, dt_format, lang_code),
+        'format_duration': format_duration,
+        'format_time': lambda value, tz=False, time_format='medium', lang_code=None: format_time(request.env, value, tz, time_format, lang_code),
         'image_data_uri': image_data_uri,
     })
     front_cover_pdf = convert_html_to_pdf(front_cover_html, [])
@@ -181,7 +187,7 @@ def get_back_cover_pdf():
 
 
 def compute_total_assets(audit_report):
-    balance_sheet_report = request.env.ref('account_reports.balance_sheet')
+    balance_sheet_report = request.env.ref('account_reports.balance_sheet').with_company(audit_report.company_id)
     balance_sheet_report_options = balance_sheet_report.get_options({
         'selected_variant_id': balance_sheet_report.id,
         'date': {
@@ -190,6 +196,7 @@ def compute_total_assets(audit_report):
             'mode': 'range',
             'filter': 'custom',
         },
+        'rounding_unit': 'decimals',
     })
     balance_sheet_report._init_currency_table(balance_sheet_report_options)
     all_expressions = next(iter(
@@ -204,7 +211,7 @@ def compute_total_assets(audit_report):
 
 
 def compute_net_profit_and_total_revenue(audit_report):
-    profit_and_loss_report = request.env.ref('account_reports.profit_and_loss')
+    profit_and_loss_report = request.env.ref('account_reports.profit_and_loss').with_company(audit_report.company_id)
     profit_and_loss_report_options = profit_and_loss_report.get_options({
         'selected_variant_id': profit_and_loss_report.id,
         'date': {
@@ -213,6 +220,7 @@ def compute_net_profit_and_total_revenue(audit_report):
             'mode': 'range',
             'filter': 'custom',
         },
+        'rounding_unit': 'decimals',
     })
     profit_and_loss_report._init_currency_table(profit_and_loss_report_options)
     all_expressions = next(iter(
@@ -242,12 +250,12 @@ def get_template_variables(article):
     audit_report = article.inherited_audit_report_id
     results = compute_net_profit_and_total_revenue(audit_report)
     return {
-        "{{ start of period }}": str(audit_report.start_date),
-        "{{ end of period }}": str(audit_report.end_date),
+        "{{ start of period }}": format_date(request.env, audit_report.start_date),
+        "{{ end of period }}": format_date(request.env, audit_report.end_date),
         "{{ company name }}": audit_report.company_id.name,
-        "{{ total balance sheet }}": str(compute_total_assets(audit_report)),
-        "{{ revenue }}": str(results.get('total_revenue')),
-        "{{ net accounting result }}": str(results.get('net_profit'))
+        "{{ total balance sheet }}": format_amount(request.env, compute_total_assets(audit_report), audit_report.company_id.currency_id),
+        "{{ revenue }}": format_amount(request.env, results.get('total_revenue', 0), audit_report.company_id.currency_id),
+        "{{ net accounting result }}": format_amount(request.env, results.get('net_profit', 0), audit_report.company_id.currency_id)
     }
 
 
