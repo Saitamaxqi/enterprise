@@ -1,9 +1,14 @@
 /* global posmodel */
 
 import { AttendeeCalendarController } from "@calendar/views/attendee_calendar/attendee_calendar_controller";
-import { patch } from "@web/core/utils/patch";
+import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 
-patch(AttendeeCalendarController.prototype, {
+export class POSAttendeeCalendarController extends AttendeeCalendarController {
+    static components = {
+        ...AttendeeCalendarController.components,
+        QuickCreateFormView: FormViewDialog,
+    };
+
     async onClickAddButton() {
         if (this.props.context.from_pos_booking) {
             const action = await this.orm.call(
@@ -18,5 +23,5 @@ patch(AttendeeCalendarController.prototype, {
             });
         }
         return super.onClickAddButton(...arguments);
-    },
-});
+    }
+}

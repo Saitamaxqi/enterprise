@@ -49,45 +49,61 @@
             </form>
         </field>
     </record>
-    <record id="calendar_event_view_gantt_booking_resource_inherited_pos_appointment" model="ir.ui.view">
-        <field name="name">calendar.event.view.gantt.booking.user.inherited.pos.appointment</field>
+    <record id="calendar_event_view_gantt_booking_resource" model="ir.ui.view">
+        <field name="name">calendar.event.view.gantt.booking.resource.pos.appointment</field>
         <field name="model">calendar.event</field>
         <field name="mode">primary</field>
         <field name="inherit_id" ref="appointment.calendar_event_view_gantt_booking_resource"/>
         <field name="arch" type="xml">
             <xpath expr="//gantt" position="attributes">
                 <attribute name="form_view_id">%(pos_appointment.calendar_event_view_form_gantt_booking)d</attribute>
+                <attribute name="js_class">pos_appointment_booking_gantt</attribute>
+                <attribute name="kanban_view_id"/>
             </xpath>
-            <xpath expr="//field[@name='partner_ids']" position="after">
+            <xpath expr="//gantt" position="inside">
+                <field name="description"/>
                 <field name="duration"/>
                 <field name="waiting_list_capacity"/>
                 <field name="resource_ids"/>
                 <field name="phone_number"/>
-            </xpath>
-            <xpath expr="//templates/div[@t-name='gantt-popover']" position="replace">
-                <div t-name="gantt-popover">
-                    <ul class="ps-1 mb-0 list-unstyled">
-                        <strong t-if="appointment_type_id">Booking Details</strong>
-                        <strong t-else="">Event Details</strong>
-                        <li t-if="phone_number">
-                            <strong>Phone: </strong> <t t-out="phone_number"/>
-                        </li>
-                        <li t-if="appointment_type_manage_capacity"><strong><t t-out="appointment_type_id[1]"/></strong> for: <t t-out="waiting_list_capacity"/></li>
-                        <li><strong>Start Date: </strong> <t t-out="start.toFormat('f')"/></li>
-                        <t t-set="hours" t-value="Math.floor(duration)"/>
-                        <t t-set="minutes" t-value="Math.floor((duration - hours) * 60)"/>
-                        <li><strong>Duration: </strong> <t t-out="hours"/>:<t t-out='(minutes+"").padStart(2, "0")'/> hours </li>
-                        <li t-if="!isHtmlEmpty(description)">
-                            <br/>
-                            <t t-out="description"/>
-                        </li>
-                    </ul>
-                </div>
+
+                <templates>
+                    <div t-name="gantt-popover">
+                        <ul class="ps-1 mb-0 list-unstyled">
+                            <strong t-if="appointment_type_id">Booking Details</strong>
+                            <strong t-else="">Event Details</strong>
+                            <li t-if="phone_number">
+                                <strong>Phone: </strong> <t t-out="phone_number"/>
+                            </li>
+                            <li t-if="appointment_type_manage_capacity"><strong><t t-out="appointment_type_id[1]"/></strong> for: <t t-out="waiting_list_capacity"/></li>
+                            <li><strong>Start Date: </strong> <t t-out="start.toFormat('f')"/></li>
+                            <t t-set="hours" t-value="Math.floor(duration)"/>
+                            <t t-set="minutes" t-value="Math.floor((duration - hours) * 60)"/>
+                            <li><strong>Duration: </strong> <t t-out="hours"/>:<t t-out='(minutes+"").padStart(2, "0")'/> hours </li>
+                            <li t-if="!isHtmlEmpty(description)">
+                                <br/>
+                                <t t-out="description"/>
+                            </li>
+                        </ul>
+                    </div>
+                </templates>
             </xpath>
         </field>
     </record>
-    <record id="calendar_event_view_tree_inherited_restaurant_appointment" model="ir.ui.view">
-        <field name="name">calendar.event.view.tree.inherited.restaurant.appointment</field>
+    <record id="calendar_event_view_calendar" model="ir.ui.view">
+        <field name="name">calendar.event.view.calendar.pos.appointment</field>
+        <field name="model">calendar.event</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="appointment.calendar_event_view_calendar"/>
+        <field name="arch" type="xml">
+            <xpath expr="/calendar" position="attributes">
+                <attribute name="quick_create_view_id">%(pos_appointment.calendar_event_view_form_gantt_booking)d</attribute>
+                <attribute name="js_class">pos_appointment_attendee_calendar</attribute>
+            </xpath>
+        </field>
+    </record>
+    <record id="calendar_event_view_tree" model="ir.ui.view">
+        <field name="name">calendar.event.view.tree.pos.appointment</field>
         <field name="model">calendar.event</field>
         <field name="mode">primary</field>
         <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
@@ -97,8 +113,8 @@
             </xpath>
         </field>
     </record>
-    <record id="calendar_event_view_kanban_pos_restaurant_appointment" model="ir.ui.view">
-    <field name="name">calendar.event.view.kanban.pos.restaurant.appointment</field>
+    <record id="calendar_event_view_kanban" model="ir.ui.view">
+    <field name="name">calendar.event.view.kanban.pos.appointment</field>
     <field name="model">calendar.event</field>
     <field name="arch" type="xml">
         <kanban default_group_by="appointment_status" js_class="pos_kanban">

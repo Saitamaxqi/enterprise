@@ -1,17 +1,25 @@
 import { AppointmentBookingGanttRenderer } from "@appointment/views/gantt/gantt_renderer";
-import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
+import { isHtmlEmpty } from "@web/core/utils/html";
+import { GanttRenderer } from "@web_gantt/gantt_renderer";
+
 const { DateTime } = luxon;
 
-patch(AppointmentBookingGanttRenderer, {
-    pillTemplate: "pos_gantt.GanttRenderer.Pill",
-    rowHeaderTemplate: "pos_gantt.GanttRenderer.RowHeader",
-});
+export class POSAppointmentBookingGanttRenderer extends AppointmentBookingGanttRenderer {
+    static pillTemplate = "pos_gantt.GanttRenderer.Pill";
+    static rowHeaderTemplate = "pos_gantt.GanttRenderer.RowHeader";
+    static components = {
+        ...AppointmentBookingGanttRenderer.components,
+        Popover: GanttRenderer.components.Popover,
+    };
 
-patch(AppointmentBookingGanttRenderer.prototype, {
-    getPopoverButtons(record) {
+    async getPopoverProps(pill) {
+        const props = await super.getPopoverProps(...arguments);
+        const { record } = pill;
         const now = DateTime.now();
-        return [
+        delete props.headerClass;
+        props.context.isHtmlEmpty = isHtmlEmpty;
+        props.buttons = [
             {
                 class: "btn btn-sm btn-primary",
                 onClick: () => this.props.openDialog({ resId: record.id }),
@@ -72,5 +80,6 @@ patch(AppointmentBookingGanttRenderer.prototype, {
                 text: _t("No Show"),
             },
         ];
-    },
-});
+        return props;
+    }
+}
