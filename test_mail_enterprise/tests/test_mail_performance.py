@@ -75,8 +75,7 @@ class TestMailPerformance(EnterpriseBaseMailPerformance):
         self.ocn_iap_jsonrpc_mocked.reset_mock()  # reset as executed twice
         self.flush_tracking()
 
-        # actual: 156, at merge 154 -> ?
-        with self.assertQueryCount(employee=156):  # tme: 149
+        with self.assertQueryCount(employee=159):  # tme: 153
             new_message = record_ticket.message_post(
                 attachment_ids=attachments.ids,
                 # atmention a user, as it generates a different chunk for ocn

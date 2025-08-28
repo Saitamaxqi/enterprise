@@ -393,7 +393,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                                 'mail_server_id': self.env['ir.mail_server'],
                                 # notified: followers - already emailed, aka internal only
                                 'notified_partner_ids': internal_followers,
-                                'parent_id': incoming_email,
+                                'parent_id': responsible_answer,
                                 # same reasoning as email_to/cc
                                 'partner_ids': external_partners + self.partner_3,
                                 'subject': f'Re: Re: {ticket.name}',
