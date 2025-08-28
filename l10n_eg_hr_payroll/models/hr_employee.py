@@ -19,5 +19,9 @@ class Employee(models.Model):
         result = {}
         allocation_data = self.company_id.l10n_eg_annual_leave_type_id.get_allocation_data(self)
         for employee in self:
-            result[employee.id] = allocation_data[employee][0][1]['remaining_leaves']
+            employee_data = allocation_data.get(employee, [])
+            if employee_data:
+                result[employee.id] = employee_data[0][1]['remaining_leaves']
+            else:
+                result[employee.id] = 0
         return result
