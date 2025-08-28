@@ -74,7 +74,7 @@
             <list string="Eligible Employees" type="object" action="action_open_work_entries" editable="top">
                 <field name="export_id" column_invisible="1"/>
                 <field name="employee_id" widget="many2one_avatar_employee"/>
-                <field name="version_ids" string="contracts" widget="many2many_tags"/>
+                <field name="version_ids" string="Contracts" widget="many2many_tags"/>
             </list>
         </field>
     </record>
