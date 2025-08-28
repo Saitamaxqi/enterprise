@@ -200,7 +200,7 @@ class L10n_HkIrd(models.AbstractModel):
             'Surname': employee.l10n_hk_surname,
             'GivenName': employee.l10n_hk_given_name,
             'NameInChinese': employee.l10n_hk_name_in_chinese,
-            'Sex': 'M' if employee.gender == 'male' else 'F',
+            'Sex': 'M' if employee.sex == 'male' else 'F',
             'PpNum': '',
             'RES_ADDR_LINE1': employee.private_street,
             'RES_ADDR_LINE2': employee.private_street2,

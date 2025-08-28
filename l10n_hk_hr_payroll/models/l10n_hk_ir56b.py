@@ -8,6 +8,7 @@ from collections import defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+from odoo.fields import Command
 from odoo.tools import format_date
 
 etree = html.etree
@@ -57,13 +58,15 @@ class L10n_HkIr56b(models.Model):
             valid_employees = all_payslips.employee_id.filtered(lambda e: e.is_in_contract)
 
             line_item_values = []
+            # Due to the usage of Many2oneReference, we cannot rely on Command.Clear to unlink the values.
+            sheet.line_ids.unlink()
             for employee in valid_employees:
-                line_item_values.append((0, 0, {
+                line_item_values.append(Command.create({
                     'employee_id': employee.id,
                     'res_model': 'l10n_hk.ir56b',
                     'res_id': sheet.id,
                 }))
-            sheet.update({'line_ids': [(5, 0, 0)] + line_item_values})
+            sheet.line_ids = line_item_values
 
         return super().action_generate_declarations()
 

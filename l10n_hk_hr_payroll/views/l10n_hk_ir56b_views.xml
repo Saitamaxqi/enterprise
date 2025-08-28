@@ -9,6 +9,14 @@
             <form position="attributes">
                 <attribute name="string">IR56B Sheet</attribute>
             </form>
+            <header position="inside">
+                <button
+                    string="Create XML"
+                    name="action_generate_xml"
+                    type="object"
+                    class="btn-primary"
+                    invisible="not lines_count"/>
+            </header>
             <button name="action_generate_declarations" class="btn-primary" position="attributes">
                 <attribute name="options">{'reload_on_button': true}</attribute>
             </button>
