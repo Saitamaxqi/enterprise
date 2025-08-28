@@ -5,7 +5,7 @@
         <field name="model_id" ref="voip.model_voip_call"/>
         <field name="domain_force">
             ["|",
-                ("user_id.employee_ids", "any", [("parent_id.user_id", "=", user.id)]),
+                ("user_id.employee_ids", "any", [("parent_id", "child_of", user.employee_id.id)]),
                 ("user_id.department_id.manager_id.user_id", "=", user.id)
             ]
         </field>
