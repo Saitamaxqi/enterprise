@@ -74,6 +74,8 @@ class HelpdeskTicketToLead(models.TransientModel):
         for convert in self:
             user = convert.ticket_id.user_id
             convert.user_id = user if user and user in convert.team_id.member_ids else False
+            if not convert.user_id and self.team_id and not self.env['crm.lead']._is_rule_based_assignment_activated():
+                self.user_id = self.team_id.user_id
 
     def action_convert_to_lead(self):
         self.ensure_one()

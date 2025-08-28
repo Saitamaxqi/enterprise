@@ -18,7 +18,7 @@
                     <group string="Sales Team">
                         <field name="ticket_id" invisible="1"/>
                         <field name="team_id"/>
-                        <field name="user_id"/>
+                        <field name="user_id" widget="many2one_avatar_leader_user" teamField="team_id"/>
                     </group>
                 </sheet>
                 <footer>
