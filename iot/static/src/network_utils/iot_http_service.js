@@ -193,10 +193,10 @@ export class IotHttpService {
 
 
 export const iotHttpService = {
-    dependencies: ["notification", "orm", "bus_service", "iot_longpolling"],
+    dependencies: ["notification", "orm", "bus_service", "iot_longpolling", "lazy_session"],
 
-    start(env, { notification, orm, bus_service, iot_longpolling }) {
-        const iotWebsocket = new IotWebsocket({ bus_service, orm });
+    start(env, { notification, orm, bus_service, iot_longpolling, lazy_session }) {
+        const iotWebsocket = new IotWebsocket({ bus_service, orm, lazy_session });
         const iotWebRtc = new IotWebRtc(bus_service, iotWebsocket);
 
         const longpolling = {

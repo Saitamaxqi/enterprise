@@ -10,10 +10,16 @@ export class IotWebsocket {
         this.setup(...arguments);
     }
 
-    async setup({ bus_service, orm }) {
+    async setup({ bus_service, orm, lazy_session }) {
         this.busService = bus_service;
         this.orm = orm;
-        this.iotChannel = await this.orm.call("iot.channel", "get_iot_channel", [0]);
+        if (lazy_session) {
+            lazy_session.getValue("iot_channel", (iotChannel) => {
+                this.iotChannel = iotChannel;
+            });
+        } else {
+            this.iotChannel = await this.orm.call("iot.channel", "get_iot_channel", [0]);
+        }
     }
 
     /**

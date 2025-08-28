@@ -22,6 +22,7 @@
             'iot/static/src/overrides/network_utils/*',
             'iot/static/src/network_utils/*',
             'pos_iot/static/src/app/utils/printer/iot_printer.js',
+            'pos_iot/static/src/overrides/network_utils/iot_http_service.js',
             'point_of_sale/static/src/app/services/hardware_proxy_service.js',
             'pos_self_order_iot/static/src/overrides/models/*',
             'pos_self_order_iot/static/src/overrides/network_utils/*',
