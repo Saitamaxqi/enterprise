@@ -217,6 +217,42 @@ class TestAccountReturn(TestAccountReportsCommon):
             }
         )
 
+    def test_report_return_periodicity_option_multi_returns(self):
+        report = self.env['account.report'].create({
+            'root_report_id': self.env.ref('account.generic_tax_report').id,
+            'name': "Reportt",
+        })
+
+        return_types = self.env['account.return.type'].create([
+            {
+                'name': 'Return Type 1',
+                'report_id': report.id,
+                'deadline_start_date': '2024-01-01',
+                'deadline_periodicity': 'monthly',
+            },
+            {
+                'name': 'Return Type 2',
+                'report_id': report.id,
+                'deadline_start_date': '2024-01-01',
+                'deadline_periodicity': '2_months',
+            },
+        ])
+
+        monthly_return = return_types[0]._try_create_returns_for_fiscal_year(self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-01-31'))
+        monthly_return_options = monthly_return._get_closing_report_options()
+        self.assertEqual(monthly_return_options['date']['date_from'], '2024-01-01')
+        self.assertEqual(monthly_return_options['date']['date_to'], '2024-01-31')
+
+        bimonthly_return = return_types[1]._try_create_returns_for_fiscal_year(self.env.company, False, forced_date_from=fields.Date.from_string('2024-01-01'), forced_date_to=fields.Date.from_string('2024-02-29'))
+        bimonthly_return_options = bimonthly_return._get_closing_report_options()
+        self.assertEqual(bimonthly_return_options['date']['date_from'], '2024-01-01')
+        self.assertEqual(bimonthly_return_options['date']['date_to'], '2024-02-29')
+
+        monthly_return_june = return_types[0]._try_create_returns_for_fiscal_year(self.env.company, False, forced_date_from=fields.Date.from_string('2024-06-01'), forced_date_to=fields.Date.from_string('2024-06-30'))
+        monthly_return_june_options = monthly_return_june._get_closing_report_options()
+        self.assertEqual(monthly_return_june_options['date']['date_from'], '2024-06-01')
+        self.assertEqual(monthly_return_june_options['date']['date_to'], '2024-06-30')
+
     def test_return_generation_normal(self):
         existing_returns = self.env['account.return'].search([
             ('type_id', '=', self.basic_return_type.id),

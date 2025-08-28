@@ -1269,7 +1269,7 @@ class AccountReturn(models.Model):
             'params': {'options': options, 'ignore_session': True},
         }
 
-    def _get_closing_report_options(self, date_to=None, tax_unit=None, report=None):
+    def _get_closing_report_options(self):
         report = self.type_id.report_id
         start_day, start_month = self.type_id._get_start_date_elements(self.company_id)
         options = {
@@ -1287,7 +1287,7 @@ class AccountReturn(models.Model):
                 'start_day': start_day,
                 'start_month': start_month,
                 'return_type_id': self.type_id.id,
-                'report_id': self.id,
+                'report_id': report.id,
             },
         }
 
