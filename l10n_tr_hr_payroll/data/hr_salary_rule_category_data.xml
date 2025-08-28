@@ -54,4 +54,16 @@
         <field name="code">NTGCALC</field>
         <field name="country_id" ref="base.tr"/>
     </record>
+
+    <record id="l10n_tr_category_other_deductions" model="hr.salary.rule.category">
+        <field name="name">Other Deductions</field>
+        <field name="code">OTHERDED</field>
+        <field name="country_id" ref="base.tr"/>
+    </record>
+
+    <record id="l10n_tr_category_other_allowance" model="hr.salary.rule.category">
+        <field name="name">Other Allowance</field>
+        <field name="code">OTHERALW</field>
+        <field name="country_id" ref="base.tr"/>
+    </record>
 </odoo>

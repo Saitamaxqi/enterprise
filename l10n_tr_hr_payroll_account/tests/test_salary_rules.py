@@ -2,6 +2,7 @@
 
 from datetime import date
 
+from odoo.fields import Command
 from odoo.tests.common import tagged
 from odoo.addons.hr_payroll_account.tests.common import TestPayslipValidationCommon
 
@@ -41,6 +42,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "BTNET": -3824.68,
             "STAX": -227.68,
             "NETTAX": -4052.36,
+            "EXPNET": 38447.64,
             "NET": 38447.64,
         }
         self._validate_payslip(payslip, payslip_results)
@@ -64,6 +66,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "BTNET": -3824.68,
             "STAX": -227.68,
             "NETTAX": -4052.36,
+            "EXPNET": 38447.64,
             "NET": 38447.64,
         }
         self._validate_payslip(payslip_second_month, payslip_second_month_results)
@@ -87,6 +90,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "BTNET": -4699.68,
             "STAX": -227.68,
             "NETTAX": -4927.36,
+            "EXPNET": 37572.64,
             "NET": 37572.64,
         }
 
@@ -115,6 +119,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "BTNET": -4974.97,
             "STAX": -296.16,
             "NETTAX": -5271.13,
+            "EXPNET": 50000.00,
             "NET": 50000.00,
         }
         self._validate_payslip(payslip, payslip_results)
@@ -139,6 +144,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "BTNET": -4974.97,
             "STAX": -296.16,
             "NETTAX": -5271.13,
+            "EXPNET": 50000.00,
             "NET": 50000.00,
         }
         self._validate_payslip(payslip_second_month, payslip_second_month_results)
@@ -163,6 +169,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             "BTNET": -5464.40,
             "STAX": -300.57,
             "NETTAX": -5764.97,
+            "EXPNET": 50000.00,
             "NET": 50000.00,
         }
 
@@ -170,3 +177,47 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip_third_month.compute_sheet()
         payslip_third_month_results = payslip_second_month_results
         self._validate_payslip(payslip_third_month, payslip_third_month_results)
+
+    def test_ntg_payslip_deduction(self):
+        self.contract.l10n_tr_is_net_to_gross = True
+        input_lines = [
+            Command.create({
+                'name': 'Manual Deduction',
+                'input_type_id': self.env.ref('l10n_tr_hr_payroll.input_manual_deduction').id,
+                'amount': 100,
+            }),
+            Command.create({
+                'name': 'Manual Additions',
+                'input_type_id': self.env.ref('l10n_tr_hr_payroll.input_manual_addition').id,
+                'amount': 200,
+            }),
+            Command.create({
+                'name': 'Manual Additions 2',
+                'input_type_id': self.env.ref('l10n_tr_hr_payroll.input_manual_addition').id,
+                'amount': 95,
+            }),
+        ]
+        payslip = self._generate_payslip(date(2025, 1, 1), date(2025, 1, 31), input_line_ids=input_lines)
+        payslip_results = {
+            "YTDGROSS": 0.0,
+            "ACTD": 0.00,
+            "GFNET": 65024.86,
+            "BASIC": 65024.86,
+            "SSIEDED": -9103.48,
+            "SSIDED": -650.25,
+            "SSICDED": 10078.85,
+            "SSIUCDED": 1300.50,
+            "GROSS": 55271.13,
+            "CURTAXABLE": 55271.13,
+            "TAXB": 55271.13,
+            "TOTTB": 8290.67,
+            "BTAXNET": 8290.67,
+            "BTNET": -4974.97,
+            "STAX": -296.16,
+            "NETTAX": -5271.13,
+            "EXPNET": 50000.00,
+            "MANADD": 295.00,
+            "MANDED": 100.00,
+            "NET": 50195.00,
+        }
+        self._validate_payslip(payslip, payslip_results)

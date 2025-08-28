@@ -47,7 +47,8 @@ class HrPayslip(models.Model):
     def _l10n_tr_calculate_net_guess_accuracy(self, guess, target):
         self.ensure_one()
         self.l10n_tr_current_month_gross = guess
-        return float_round(self._get_payslip_lines()[-1]['amount'], precision_rounding=self.currency_id.rounding) - target
+        expected_ntg = next((line for line in self._get_payslip_lines() if line.get('code') == 'EXPNET'), {'amount': 0.0})
+        return float_round(expected_ntg['amount'], precision_rounding=self.currency_id.rounding) - target
 
     def _estimate_l10n_tr_gross_from_net(self, target, max_iterations=50, tolerance=0.001):
         """
@@ -76,8 +77,11 @@ class HrPayslip(models.Model):
 
     @api.depends('version_id')
     def _compute_l10n_tr_current_month_gross(self):
-        for payslip in self.filtered(lambda p: p.country_code == 'TR' and p.version_id.l10n_tr_is_net_to_gross):
-            payslip.l10n_tr_current_month_gross = payslip._estimate_l10n_tr_gross_from_net(payslip.version_id.wage)
+        for payslip in self:
+            if payslip.country_code == 'TR' and payslip.version_id.l10n_tr_is_net_to_gross:
+                payslip.l10n_tr_current_month_gross = payslip._estimate_l10n_tr_gross_from_net(payslip.version_id.wage)
+            else:
+                payslip.l10n_tr_current_month_gross = 0
 
     def _l10n_tr_get_tax(self, taxable_amount):
         self.ensure_one()

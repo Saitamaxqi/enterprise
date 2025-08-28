@@ -301,16 +301,54 @@ result = categories['STAXD'] + result_rules['BTNET']['total']
             <field name="struct_id" ref="l10n_tr_hr_payroll.hr_payroll_structure_tr_employee_salary"/>
         </record>
 
-        <record id="l10n_tr_hr_payroll_structure_tr_employee_salary_net_salary" model="hr.salary.rule">
+        <record id="l10n_tr_hr_payroll_structure_tr_employee_salary_expected_net_salary" model="hr.salary.rule">
             <field name="category_id" ref="hr_payroll.NET"/>
-            <field name="name">Net Salary</field>
+            <field name="name">Expected Net Salary</field>
             <field name="sequence">200</field>
-            <field name="code">NET</field>
+            <field name="code">EXPNET</field>
             <field name="appears_on_employee_cost_dashboard" eval="True"/>
             <field name="condition_select">none</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
 result = categories['BASIC'] + categories['ALW'] + categories['DED']
+            </field>
+            <field name="struct_id" ref="hr_payroll_structure_tr_employee_salary"/>
+        </record>
+
+        <record id="l10n_tr_hr_payroll_structure_tr_employee_salary_manual_deduction" model="hr.salary.rule">
+            <field name="category_id" ref="l10n_tr_category_other_deductions"/>
+            <field name="name">Manual Deductions</field>
+            <field name="sequence">210</field>
+            <field name="code">MANDED</field>
+            <field name="condition_select">input</field>
+            <field name="condition_other_input_id" ref="l10n_tr_hr_payroll.input_manual_deduction"/>
+            <field name="amount_select">input</field>
+            <field name="amount_other_input_id" ref="l10n_tr_hr_payroll.input_manual_deduction" />
+            <field name="struct_id" ref="hr_payroll_structure_tr_employee_salary"/>
+        </record>
+
+        <record id="l10n_tr_hr_payroll_structure_tr_employee_salary_manual_addition" model="hr.salary.rule">
+            <field name="category_id" ref="l10n_tr_category_other_allowance"/>
+            <field name="name">Manual Additions</field>
+            <field name="sequence">220</field>
+            <field name="code">MANADD</field>
+            <field name="condition_select">input</field>
+            <field name="condition_other_input_id" ref="l10n_tr_hr_payroll.input_manual_addition"/>
+            <field name="amount_select">input</field>
+            <field name="amount_other_input_id" ref="l10n_tr_hr_payroll.input_manual_addition" />
+            <field name="struct_id" ref="hr_payroll_structure_tr_employee_salary"/>
+        </record>
+
+        <record id="l10n_tr_hr_payroll_structure_tr_employee_salary_net_salary" model="hr.salary.rule">
+            <field name="category_id" ref="hr_payroll.NET"/>
+            <field name="name">Actual Net Salary</field>
+            <field name="sequence">300</field>
+            <field name="code">NET</field>
+            <field name="appears_on_employee_cost_dashboard" eval="True"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">
+result = EXPNET - categories['OTHERDED'] + categories['OTHERALW']
             </field>
             <field name="struct_id" ref="hr_payroll_structure_tr_employee_salary"/>
         </record>

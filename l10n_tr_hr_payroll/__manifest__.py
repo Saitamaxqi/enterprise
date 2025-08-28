@@ -17,6 +17,7 @@ Türkiye Payroll and Tax Rules
         'data/hr_salary_rule_category_data.xml',
         'data/hr_payroll_structure_type_data.xml',
         'data/hr_payroll_structure_data.xml',
+        'data/hr_payslip_input_type_data.xml',
         'data/hr_salary_rule_data.xml',
         'views/hr_employee_views.xml',
         'report/report_hr_employee_employment_certificate.xml',
