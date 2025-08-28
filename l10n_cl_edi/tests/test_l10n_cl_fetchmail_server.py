@@ -136,6 +136,44 @@ class TestClFetchmailServer(TestL10nClEdiCommon):
         self.assertEqual(message.preview, 'E-invoice already exist: 1')
 
     @patch('odoo.fields.Date.context_today', return_value=fields.Date.from_string('2019-11-23'))
+    def test_create_invoice_33_from_attachment_with_exempt_lines(self, context_today):
+        """DTE with lines exempted of taxes"""
+        att_name = 'incoming_invoice_33_with_exempt_lines.xml'
+        from_address = 'incoming_dte@test.com'
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        move = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
+
+        self.assertEqual(move.name, 'FAC 000001')
+        self.assertEqual(len(move.invoice_line_ids), 4)
+        self.assertEqual(move.currency_id.name, 'CLP')
+        self.assertEqual(move.amount_total, 351340)
+        self.assertEqual(move.amount_tax, 56104)
+
+        line1 = move.invoice_line_ids[0]
+        self.assertEqual(line1.price_unit, 2391)
+        self.assertEqual(line1.price_subtotal, 2391 * 26)
+
+        line2 = move.invoice_line_ids[1]
+        self.assertEqual(line2.price_unit, 2914)
+        self.assertEqual(line2.price_subtotal, 2914 * 80)
+
+        line3 = move.invoice_line_ids[2]
+        self.assertEqual(line3.quantity, 1)
+        self.assertEqual(line3.price_unit, -150)
+        self.assertEqual(line3.price_subtotal, -150)
+        self.assertEqual(line3.discount, 0)
+
+        line4 = move.invoice_line_ids[3]
+        self.assertEqual(line4.quantity, 1)
+        self.assertEqual(line4.price_unit, 100)
+        self.assertEqual(line4.price_subtotal, 100)
+        self.assertEqual(line4.discount, 0)
+
+    @patch('odoo.fields.Date.context_today', return_value=fields.Date.from_string('2019-11-23'))
     def test_create_invoice_33_from_attachment_with_discounts(self, context_today):
         """DTE with discounts """
         att_name = 'incoming_invoice_33_with_discount.xml'

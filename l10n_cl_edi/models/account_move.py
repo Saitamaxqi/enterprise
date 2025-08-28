@@ -1160,6 +1160,9 @@ services reception has been received as well.
             # The amount present in "MontoItem" contains
             # the value with discount or surcharge applied, so we don't need to calculate it, just dividing this amount
             # by the quantity we get the price unit we should use in Odoo.
+            if dte_line.findtext('.//ns0:IndExe', namespaces=XML_NAMESPACES) == '6':
+                # If the exempt code is '6' the amount is negative
+                price_unit = -price_unit
             line_vals = {
                 'product_id': product.id,
                 'name': product.name if product else dte_line.findtext('.//ns0:NmbItem', namespaces=XML_NAMESPACES),
