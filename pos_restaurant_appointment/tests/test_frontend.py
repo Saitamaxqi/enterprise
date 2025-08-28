@@ -5,6 +5,7 @@ import odoo.tests
 from odoo.addons.pos_restaurant.tests.test_frontend import TestFrontend
 from odoo import fields
 from dateutil.relativedelta import relativedelta
+from freezegun import freeze_time
 
 
 
@@ -71,5 +72,6 @@ class TestUi(TestFrontend):
 
         self.start_pos_tour('RestaurantAppointmentTour', login="pos_admin")
 
+    @freeze_time('2025-08-27 12:18:56')
     def test_appointment_kanban_view(self):
         self.start_pos_tour("test_appointment_kanban_view", login="pos_admin")

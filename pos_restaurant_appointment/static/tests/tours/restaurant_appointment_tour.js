@@ -59,6 +59,7 @@ registry.category("web_tour.tours").add("test_appointment_kanban_view", {
     steps: () =>
         [
             Chrome.startPoS(),
+            Chrome.freezeDateTime(1756297136578),
             Dialog.confirm("Open Register"),
             {
                 trigger: ".pos-leftheader button:contains('Booking')",
