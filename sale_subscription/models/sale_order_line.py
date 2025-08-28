@@ -458,7 +458,6 @@ class SaleOrderLine(models.Model):
     def _reset_subscription_quantity_post_invoice(self):
         """ Update the Delivered quantity value of recurring line according to the periods
         """
-        # arj todo: reset only timesheet things. So reset nothing in standard but override in sale-subscription_timesheet (to be recreated...)
         return
 
     def _get_recurring_invoiceable_condition(self, automatic_invoice, date_from):
