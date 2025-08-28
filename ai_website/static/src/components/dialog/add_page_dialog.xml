@@ -22,7 +22,7 @@
             <Switch extraClasses="'offset-md-3 col-md-9 text-start'" label.translate="Add to menu" value="state.addMenu" onChange="(value) => this.onChangeAddMenu(value)"/>
             <div t-if="!!state.sectionsArch" class="offset-md-3 col-md-9">
                 <label class="o_switch d-inline-flex align-items-center text-start">
-                    <input type="checkbox" t-att-checked="state.generateText" t-on-change="(ev) => this.onChangeGenerateText(ev.target.checked)" />
+                    <input type="checkbox" t-att-checked="state.generateText" t-on-change="(ev) => this.onChangeGenerateText(ev.target.checked)" class="visually-hidden" />
                     <span class="switch-slider"/>
                     <img src="/ai/static/description/icon.png" style="height: 20px; width: 20px;" class="ms-2" alt="AI"/>
                     <span class="ms-2">Generate text</span>
