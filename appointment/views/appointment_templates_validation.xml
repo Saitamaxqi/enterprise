@@ -169,7 +169,7 @@
                                     </div>
                                     <form t-if="appointment_type.allow_guests and not is_cancelled">
                                         <input type="hidden" id="access_token" t-att-value="event.access_token"/>
-                                        <button type="button" class="o_appointment_guest_addition_open btn btn-link"><i class="fa fa-plus me-1"/>Add Guests</button>
+                                        <button type="button" class="o_appointment_guest_addition_open btn btn-link"><i class="oi oi-plus me-1"/>Add Guests</button>
                                         <textarea type="email" class="s_website_form_input form-control d-none mt-2" id="o_appointment_input_guest_emails" name="attendee_email" placeholder="e.g. john.doe@email.com&#13;&#10;e.g. jane.doe@example.com&#13;&#10;..." rows="5"/>
                                         <div class="o_appointment_validation_error alert alert-danger d-none my-2">
                                             <i class="fa fa-warning me-1"/>
