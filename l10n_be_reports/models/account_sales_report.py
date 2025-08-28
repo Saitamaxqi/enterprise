@@ -3,6 +3,7 @@
 import time
 
 from markupsafe import Markup
+from stdnum.be.vat import compact
 
 from odoo import _, fields, models
 from odoo.exceptions import UserError
@@ -119,10 +120,9 @@ class L10n_BeEcSalesReportHandler(models.AbstractModel):
         # Generate xml
         post_code = street = city = country = data_clientinfo = ''
         company_vat = company_vat.replace(' ', '').upper()
-        issued_by = company_vat[:2]
 
         seq_declarantnum = self.env['ir.sequence'].next_by_code('declarantnum')
-        dnum = company_vat[2:] + seq_declarantnum[-4:]
+        dnum = compact(company_vat) + seq_declarantnum[-4:]
         ads = None
         addr = company.partner_id.address_get(['invoice'])
         phone = email = city = post_code = street = country = company_country = ''
@@ -147,7 +147,7 @@ class L10n_BeEcSalesReportHandler(models.AbstractModel):
             if ads.street2:
                 street += ' ' + ads.street2
 
-            company_country = ads.country_id.code if ads.country_id else company_vat[:2]
+            company_country = ads.country_id.code if ads.country_id else 'BE'
 
         options['no_format'] = True
         lines = report._get_lines(options)
@@ -190,7 +190,7 @@ class L10n_BeEcSalesReportHandler(models.AbstractModel):
         xml_data.update({
             'company_name': company.name,
             'company_vat': company_vat,
-            'vatnum': company_vat[2:],
+            'vatnum': compact(company_vat),
             'sender_date': str(time.strftime('%Y-%m-%d')),
             'street': street,
             'city': city,
@@ -202,7 +202,7 @@ class L10n_BeEcSalesReportHandler(models.AbstractModel):
             'month': month,
             'quarter': quarter,
             'comments': '',
-            'issued_by': issued_by,
+            'issued_by': 'BE',
             'dnum': dnum,
             'representative_node': _get_xml_export_representative_node(report),
         })

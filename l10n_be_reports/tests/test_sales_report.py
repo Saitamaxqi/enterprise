@@ -139,3 +139,42 @@ class BelgiumSalesReportTest(AccountSalesReportCommon):
         month_node = xml_tree.find('.//ns2:Period/ns2:Month', namespaces)
         self.assertIsNotNone(month_node, "The <ns2:Month> element was not found in the <ns2:Period> section.")
         self.assertEqual(month_node.text, '6', "The <ns2:Month> element does not have the expected value.")
+
+    @freeze_time('2019-12-31')
+    def test_ec_sales_report_without_country_code(self):
+        self.company.vat = '0477472701'
+
+        l_tax = self.env['account.chart.template'].ref('attn_VAT-OUT-00-EU-L')
+        self._create_invoices([
+            (self.partner_a, l_tax, 300),
+        ])
+        options = self.report.get_options({'date': {'mode': 'range', 'filter': 'this_month'}})
+        expected_xml = '''
+            <ns2:IntraConsignment xmlns="http://www.minfin.fgov.be/InputCommon" xmlns:ns2="http://www.minfin.fgov.be/IntraConsignment" IntraListingsNbr="1">
+                <ns2:IntraListing SequenceNumber="1" ClientsNbr="1" DeclarantReference="___ignore___" AmountSum="300.00">
+                    <ns2:Declarant>
+                        <VATNumber>0477472701</VATNumber>
+                        <Name>company_1_data</Name>
+                        <Street></Street>
+                        <PostCode></PostCode>
+                        <City></City>
+                        <CountryCode>BE</CountryCode>
+                        <EmailAddress>jsmith@mail.com</EmailAddress>
+                        <Phone>+32475123456</Phone>
+                    </ns2:Declarant>
+                    <ns2:Period>
+                        <ns2:Month>12</ns2:Month>
+                        <ns2:Year>2019</ns2:Year>
+                    </ns2:Period>
+                    <ns2:IntraClient SequenceNumber="1">
+                        <ns2:CompanyVATNumber issuedBy="FR">23334175221</ns2:CompanyVATNumber>
+                        <ns2:Code>L</ns2:Code>
+                        <ns2:Amount>300.00</ns2:Amount>
+                    </ns2:IntraClient>
+                </ns2:IntraListing>
+            </ns2:IntraConsignment>
+        '''
+        self.assertXmlTreeEqual(
+            self.get_xml_tree_from_string(self.env[self.report.custom_handler_model_name].export_to_xml_sales_report(options)['file_content']),
+            self.get_xml_tree_from_string(expected_xml)
+        )
