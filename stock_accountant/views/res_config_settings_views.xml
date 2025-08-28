@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@id='default_accounts']" position="after">
                 <block title="Inventory Valuation" id="stock_valuation">
-                    <setting string="Inventory Accounting" help="Global accounts, valuation and cost method for the company" id="default_stock_valuation_accounts">
+                    <setting string="Inventory Accounting" help="Default accounts, valuation and cost method for the company. These option can be overridden on each product category" id="default_stock_valuation_accounts">
                         <div name="default_accounts" class="content-group">
                             <div class="row mt8">
                                 <label for="valuation_method" class="col-lg-5 o_light_label"/>
