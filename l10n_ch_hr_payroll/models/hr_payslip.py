@@ -577,7 +577,6 @@ class HrPayslip(models.Model):
         payslips._compute_l10n_ch_is_correction()
         payslips._compute_l10n_ch_is_code()
         payslips._compute_l10n_ch_is_model()
-        payslips._compute_l10n_ch_occupation()
 
         self.env.flush_all()
         today = fields.Date.today()
