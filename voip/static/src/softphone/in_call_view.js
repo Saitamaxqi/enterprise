@@ -67,7 +67,7 @@ export class InCallView extends Component {
     }
 
     onClickHold() {
-        this.userAgent.setHold(!this.isOnHold);
+        this.userAgent.session.isOnHold = !this.isOnHold;
     }
 
     onClickKeypad() {

@@ -1,6 +1,7 @@
 /* global SIP */
 
 import { Registerer } from "@voip/core/registerer";
+import { Session } from "@voip/core/session";
 import { cleanPhoneNumber } from "@voip/utils/utils";
 
 import { loadBundle } from "@web/core/assets";
@@ -8,16 +9,6 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { Reactive } from "@web/core/utils/reactive";
 import { session } from "@web/session";
-
-/**
- * @typedef Session
- * @property {"trying"|"ringing"|"ok"} [inviteState]
- * @property {boolean} isMute
- * @property {boolean} isOnHold
- * @property {import("@voip/core/call_model").Call} call
- * @property {SIP.Session} [sipSession]
- * @property {string} [transferTarget]
- */
 
 export class UserAgent extends Reactive {
     attemptingToReconnect = false;
@@ -37,11 +28,8 @@ export class UserAgent extends Reactive {
      * @type {HTMLAudioElement}
      */
     remoteAudio = new window.Audio();
-    /**
-     * @type {Session}
-     */
+    /** @type {Session} */
     session;
-    transferTarget;
     voip;
     __sipJsUserAgent;
 
@@ -213,7 +201,6 @@ export class UserAgent extends Reactive {
         this.ringtoneService.stopPlaying();
         clearTimeout(this.demoTimeout);
         if (this.session.sipSession) {
-            this._cleanUpRemoteAudio();
             switch (this.session.sipSession.state) {
                 case SIP.SessionState.Establishing:
                     this.session.sipSession.cancel();
@@ -305,7 +292,6 @@ export class UserAgent extends Reactive {
         try {
             const inviter = new SIP.Inviter(this.__sipJsUserAgent, calleeUri);
             inviter.delegate = this.sessionDelegate;
-            inviter.stateChange.addListener((state) => this._onSessionStateChange(state));
             this.session.sipSession = inviter;
             this.session.sipSession.invite({
                 requestDelegate: {
@@ -340,12 +326,7 @@ export class UserAgent extends Reactive {
         }
         const call = await this.callService.create(data);
         this.softphone.show();
-        this.session = {
-            inviteState: "trying",
-            isMute: false,
-            isOnHold: false,
-            call,
-        };
+        this.session = new Session(call);
         this.ringtoneService.ringback.play();
         if (this.voip.mode === "prod") {
             this.invite(call.phone_number);
@@ -418,11 +399,6 @@ export class UserAgent extends Reactive {
         );
     }
 
-    _cleanUpRemoteAudio() {
-        this.remoteAudio.srcObject = null;
-        this.remoteAudio.pause();
-    }
-
     /**
      * Determines if the SDP contains the attributes required by DTLS.
      *
@@ -469,7 +445,6 @@ export class UserAgent extends Reactive {
             return;
         }
         await this.callService.end(this.session.call);
-        this._cleanUpRemoteAudio();
     }
 
     /** @param {DOMException} error */
@@ -536,42 +511,11 @@ export class UserAgent extends Reactive {
         inviteSession.incomingInviteRequest.delegate = {
             onCancel: (message) => this._onIncomingInvitationCanceled(message),
         };
-        inviteSession.stateChange.addListener((state) => this._onSessionStateChange(state));
-        this.session = {
-            call,
-            isMute: false,
-            isOnHold: false,
-            sipSession: inviteSession,
-        };
+        this.session = new Session(call, inviteSession);
         this.softphone.show();
         if (await this.shouldPlayIncomingCallRingtone()) {
             this.ringtoneService.incoming.play();
         }
-    }
-
-    async setHold(newState) {
-        // Save the session in the closure, just in case. Subsequent operations
-        // are asynchronous. You never know what might happen, the state of
-        // 'this' might have changed in the meantime, and this.session might
-        // refer to a completely different session.
-        const session = this.session;
-        if (this.session.sipSession) {
-            try {
-                await this.session.sipSession.invite({
-                    requestDelegate: {
-                        onAccept() {
-                            session.isOnHold = newState;
-                        },
-                    },
-                    sessionDescriptionHandlerOptions: { hold: newState },
-                });
-            } catch (error) {
-                console.error(error);
-                this.voip.triggerError(_t("Failed to put the call on hold/unhold."));
-                return;
-            }
-        }
-        session.isOnHold = newState;
     }
 
     setMute() {
@@ -680,41 +624,7 @@ export class UserAgent extends Reactive {
      */
     async _onReferAccepted(response) {
         this.session.sipSession.bye();
-        this._cleanUpRemoteAudio();
         await this.callService.end(this.session.call);
-    }
-
-    /**
-     * Triggered when the state of the session changes to Established.
-     * Only triggered by actual RTC sessions (production mode).
-     *
-     * @param {Session} session
-     */
-    _onSessionEstablished(session) {
-        this._setUpRemoteAudio();
-        session.sipSession.sessionDescriptionHandler.remoteMediaStream.onaddtrack = (
-            mediaStreamTrackEvent
-        ) => this._setUpRemoteAudio();
-    }
-
-    /** @param {SIP.SessionState} newState */
-    _onSessionStateChange(newState) {
-        switch (newState) {
-            case SIP.SessionState.Initial:
-                break;
-            case SIP.SessionState.Establishing:
-                break;
-            case SIP.SessionState.Established:
-                this._onSessionEstablished(this.session);
-                break;
-            case SIP.SessionState.Terminating:
-                break;
-            case SIP.SessionState.Terminated: {
-                break;
-            }
-            default:
-                throw new Error(`Unknown session state: "${newState}".`);
-        }
     }
 
     /**
@@ -733,19 +643,6 @@ export class UserAgent extends Reactive {
             )
         );
         this.attemptReconnection();
-    }
-
-    _setUpRemoteAudio() {
-        const remoteStream = new MediaStream();
-        for (const receiver of this.session.sipSession.sessionDescriptionHandler.peerConnection.getReceivers()) {
-            if (receiver.track) {
-                remoteStream.addTrack(receiver.track);
-                // According to the SIP.js documentation, this is needed by Safari to work.
-                this.remoteAudio.load();
-            }
-        }
-        this.remoteAudio.srcObject = remoteStream;
-        this.remoteAudio.play();
     }
 }
 
