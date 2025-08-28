@@ -3,7 +3,6 @@
 
 {
     'name': 'French Intrastat Declaration',
-    'countries': ['fr'],
     'category': 'Accounting/Localizations/Reporting',
     'description': """
 Generates Intrastat XML report (DEBWEB2) for declaration based on invoices for France.
