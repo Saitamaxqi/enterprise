@@ -34,4 +34,3 @@ from . import account_return
 from . import mail_activity
 from . import mail_tracking_value
 from . import account_audit_account_status
-from . import chart_template

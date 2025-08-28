@@ -781,8 +781,6 @@ class TestAccountReturn(TestAccountReportsCommon):
             'name': "Audit",
         }])
 
-        audit_return_type.with_company(self.env.company).deadline_periodicity = 'year'
-
         # 2. Create check templates
         mail_activity_type = self.env.ref('mail.mail_activity_data_email')
         templates = self.env['account.return.check.template'].create([
@@ -893,7 +891,6 @@ class TestAccountReturn(TestAccountReportsCommon):
             'default_deadline_start_date': '2024-01-01',
             'name': "Audit",
         }])
-        return_type.with_company(self.env.company).deadline_periodicity = 'year'
 
         template = self.env['account.return.check.template'].create([
             {   # Upload File
@@ -970,7 +967,6 @@ class TestAccountReturn(TestAccountReportsCommon):
             'default_deadline_start_date': '2024-01-01',
             'name': "Audit",
         }])
-        return_type.with_company(self.env.company).deadline_periodicity = 'year'
 
         template = self.env['account.return.check.template'].create([
             {   # Upload File
@@ -1051,8 +1047,6 @@ class TestAccountReturn(TestAccountReportsCommon):
             'default_deadline_start_date': '2024-01-01',
             'name': "Audit",
         }])
-
-        audit_return_type.with_company(self.env.company).deadline_periodicity = 'monthly'
 
         audits = self.env['account.return']
         audits |= audit_return_type.with_context(

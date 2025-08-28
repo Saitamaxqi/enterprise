@@ -88,6 +88,15 @@ class ResCompany(models.Model):
     def create(self, vals_list):
         companies = super().create(vals_list)
         companies._initiate_account_onboardings()
+
+        # Set default values on every return types for this new company
+        return_types = self.env['account.return.type'].sudo().search([
+            '|',
+            ('deadline_periodicity', '=', False),
+            ('deadline_start_date', '=', False),
+        ])
+        return_types._set_default_values(companies)
+
         self.env['account.return.type']._generate_or_refresh_all_returns(companies.root_id)
         return companies
 

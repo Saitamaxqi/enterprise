@@ -88,6 +88,21 @@ class AccountReturnType(models.Model):
     )
     default_deadline_start_date = fields.Date(string="Default Start Date")
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        return_types = super().create(vals_list)
+
+        all_companies = self.env['res.company'].sudo().search([])
+        return_types.sudo()._set_default_values(all_companies)
+
+        return return_types
+
+    def _set_default_values(self, companies):
+        for company in companies:
+            for return_type in self.with_company(company):
+                return_type.deadline_periodicity = return_type.deadline_periodicity or return_type.default_deadline_periodicity
+                return_type.deadline_start_date = return_type.deadline_start_date or return_type.default_deadline_start_date
+
     @api.depends('report_id.country_id')
     def _compute_country_id(self):
         for return_type in self:
