@@ -12,6 +12,7 @@ from odoo import Command, http
 from odoo.addons.appointment.tests.common import AppointmentCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.tests import common, tagged, users
+from odoo.tools import float_compare
 from odoo.tools.misc import mute_logger
 
 
@@ -33,6 +34,16 @@ class AppointmentUICommon(AppointmentCommon, common.HttpCase):
             tz='Europe/Brussels'  # UTC + 1 (at least in February)
         )
         cls.portal_user = cls._create_portal_user()
+
+    def _fetch_appointment_page_info_from_invite(self, invite):
+        page = self.url_open(invite.book_url)
+        arch = html.fromstring(page.text)
+
+        [slots_form] = arch.xpath("//form[@id='slots_form']")
+        [selected_user_option] = slots_form.xpath("//*[@id='selectStaffUser']/*[@selected]")
+        [slots_calendar] = arch.xpath("//*[@id='calendar']")
+
+        return slots_form, selected_user_option, slots_calendar
 
 @tagged('appointment_ui', '-at_install', 'post_install')
 class AppointmentUITest(AppointmentUICommon):
@@ -60,7 +71,7 @@ class AppointmentUITest(AppointmentUICommon):
             data=json.dumps({
                 'params': {
                     'context': {
-                        'default_assign_method': 'time_resource',
+                        'default_is_auto_assign': True,
                     },
                 }
             }),
@@ -71,7 +82,7 @@ class AppointmentUITest(AppointmentUICommon):
 
         appointment_type = self.env['appointment.type'].browse(result['appointment_type_id'])
         # All default context fields should be ignored because of clean_context()
-        self.assertEqual(appointment_type.assign_method, 'resource_time')
+        self.assertFalse(appointment_type.is_auto_assign)
 
     @users('apt_manager')
     def test_route_apt_type_create_custom(self):
@@ -132,7 +143,7 @@ class AppointmentUITest(AppointmentUICommon):
                 'params': {
                     'slots': unique_slots,
                     'context': {
-                        'default_assign_method': 'time_resource',
+                        'default_is_auto_assign': True,
                     },
                 }
             }),
@@ -143,7 +154,7 @@ class AppointmentUITest(AppointmentUICommon):
 
         appointment_type = self.env['appointment.type'].browse(result['appointment_type_id'])
         # The default context fields should be ignored as the fields are not whitelisted
-        self.assertEqual(appointment_type.assign_method, 'resource_time')
+        self.assertFalse(appointment_type.is_auto_assign)
 
     def test_share_appointment_type(self):
         self._create_invite_test_data()
@@ -299,12 +310,12 @@ class AppointmentUITest(AppointmentUICommon):
             "capacity": 4,
             "name": "Resource",
         }])
-        self.apt_type_resource.sudo().write({
-            "appointment_manual_confirmation": True,
-            "manual_confirmation_percentage": 0.5,  # Set Manual Confirmation at 50%
-        })
+
         phone_question = self.apt_type_resource._get_main_phone_question()
         self.assertTrue(phone_question)
+        self.assertTrue(self.apt_type_resource.auto_confirm)
+        self.apt_type_resource.sudo().manual_confirmation_percentage = 0.5  # Set Manual Confirmation at 50%
+
         appointment_data = {
             "asked_capacity": 4,
             "available_resource_ids": [resource.id],
@@ -390,7 +401,7 @@ class AppointmentUITest(AppointmentUICommon):
     @users('apt_manager')
     def test_appointment_staff_user_manual_confirmation(self):
         """ Check that appointment and attendee status are correctly
-        set based on the appointment_manual_confirmation field"""
+        set based on the auto_confirm and manual_confirmation_percentage fields"""
         self.authenticate(self.env.user.login, self.env.user.login)
         phone_question = self.apt_type_resource._get_main_phone_question()
         self.assertTrue(phone_question)
@@ -403,97 +414,39 @@ class AppointmentUITest(AppointmentUICommon):
             f'question_{phone_question.id}': '2025550999',
             'staff_user_id': self.staff_user_bxls.id,
         }
-        self.assertFalse(self.apt_type_bxls_2days.appointment_manual_confirmation)
+        self.apt_type_bxls_2days.max_bookings = 3
+        self.assertTrue(self.apt_type_bxls_2days.auto_confirm)
+        self.assertEqual(float_compare(self.apt_type_bxls_2days.manual_confirmation_percentage, 1.0, 3), 0)
+        self.assertTrue(self.apt_type_bxls_2days.is_always_confirm)
+
         res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
         self.assertEqual(res.status_code, 200, "Response should be OK")
-        self.assertEqual(len(self.apt_type_bxls_2days.meeting_ids), 1)
-        self.assertEqual(self.apt_type_bxls_2days.meeting_ids[0].appointment_status, "booked")
-        self.assertTrue(all(attendee.state == 'accepted' for attendee in self.apt_type_bxls_2days.meeting_ids.attendee_ids))
+        first_meeting = self.apt_type_bxls_2days.meeting_ids
+        self.assertEqual(len(first_meeting), 1)
+        self.assertEqual(first_meeting.appointment_status, "booked")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in first_meeting.attendee_ids))
 
-        self.apt_type_bxls_2days.appointment_manual_confirmation = True
-        event_values['datetime_str'] = '2022-02-14 12:00:00'
+        self.apt_type_bxls_2days.manual_confirmation_percentage = 0.5
+        self.assertFalse(self.apt_type_bxls_2days.is_always_confirm)
         res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
         self.assertEqual(res.status_code, 200, "Response should be OK")
-        self.assertEqual(len(self.apt_type_bxls_2days.meeting_ids), 2)
-        self.assertEqual(self.apt_type_bxls_2days.meeting_ids[0].appointment_status, "request")
-        self.assertTrue(all(attendee.state == 'accepted' for attendee in self.apt_type_bxls_2days.meeting_ids.attendee_ids))
+        second_meeting = self.apt_type_bxls_2days.meeting_ids - first_meeting
+        self.assertEqual(len(second_meeting), 1)
+        self.assertEqual(second_meeting.appointment_status, "request")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in second_meeting.attendee_ids))
 
-    @freeze_time('2022-02-14T7:00:00')
-    def test_get_appointment_type_page_view(self):
-        """ Test if the appointment_type_page always shows available slots if there are some. """
-        now = self.reference_monday
-        user_admin = self.env.ref('base.user_admin')
-        slot_time = now.replace(hour=9, minute=0, second=0, microsecond=0) + timedelta(days=1)
-
-        staff_users = self.std_user | user_admin
-        appointment_type = self.env['appointment.type'].create([{
-            'name': 'Type Test Appointment View',
-            'schedule_based_on': 'users',
-            'staff_user_ids': staff_users.ids,
-            'min_schedule_hours': 1.0,
-            'max_schedule_days': 5,
-            'slot_ids': [(0, 0, {
-                'weekday': str(slot_time.isoweekday()),
-                'start_hour': slot_time.hour,
-                'end_hour': slot_time.hour + 1,
-            })],
-            'avatars_display': 'hide',
-            'assign_method': 'resource_time',
-        }])
-
-        invite = self.env['appointment.invite'].create({
-            'appointment_type_ids': appointment_type.ids,
+        # Despite 100% manual_confirmation_percentage, should be 'request' as auto_confirm is False
+        self.apt_type_bxls_2days.write({
+            'auto_confirm': False,
+            'manual_confirmation_percentage': 1.0
         })
-
-        def render_appointment_page():
-            page = self.url_open(invite.book_url)
-            arch = html.fromstring(page.text)
-
-            [slots_form] = arch.xpath("//form[@id='slots_form']")
-            [selected_user_option] = slots_form.xpath("//*[@id='selectStaffUser']/*[@selected]")
-            [slots_calendar] = arch.xpath("//*[@id='calendar']")
-
-            return slots_form, selected_user_option, slots_calendar
-
-        slots_form, selected_user_option, slots_calendar = render_appointment_page()
-        self.assertIn(
-            int(selected_user_option.attrib['value']),
-            staff_users.ids,
-            f"Selected user must be one of {staff_users.ids}"
-        )
-        self.assertFalse(
-            'd-none' in slots_form.getparent().attrib['class'],
-            "Staff user selector should be visible")
-        self.assertTrue(
-            slots_calendar.getchildren(),
-            "Slots calendar should be visible")
-
-        # create an event to make the first staff user busy and remove its available slots
-        selected_staff_user = self.env['res.users'].browse(int(selected_user_option.attrib['value']))
-        remaining_staff_user = staff_users - selected_staff_user
-        self._create_meetings(selected_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
-
-        slots_form, selected_user_option, slots_calendar = render_appointment_page()
-        self.assertEqual(
-            int(selected_user_option.attrib['value']),
-            remaining_staff_user.id,
-            f"Selected user should be user with ID: {remaining_staff_user.id}")
-        self.assertFalse(
-            'd-none' in slots_form.getparent().attrib['class'],
-            "Staff user selector should be visible")
-        self.assertTrue(
-            slots_calendar.getchildren(),
-            "Slots calendar should be visible")
-
-        # create another event to make both staff user busy and remove all slots
-        self._create_meetings(remaining_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
-        slots_form, _, slots_calendar = render_appointment_page()
-        self.assertTrue(
-            'd-none' in slots_form.getparent().attrib['class'],
-            "Staff user selector should not be visible")
-        self.assertFalse(
-            slots_calendar.getchildren(),
-            "Slots calendar should not be visible")
+        self.assertFalse(self.apt_type_bxls_2days.is_always_confirm)
+        res = self.url_open(f"/appointment/{self.apt_type_bxls_2days.id}/submit", event_values)
+        self.assertEqual(res.status_code, 200, "Response should be OK")
+        third_meeting = self.apt_type_bxls_2days.meeting_ids - (first_meeting | second_meeting)
+        self.assertEqual(len(third_meeting), 1)
+        self.assertEqual(third_meeting.appointment_status, "request")
+        self.assertTrue(all(attendee.state == 'accepted' for attendee in third_meeting.attendee_ids))
 
 @tagged('appointment_ui', '-at_install', 'post_install')
 class CalendarTest(AppointmentUICommon):
@@ -588,3 +541,75 @@ class CalendarTest(AppointmentUICommon):
         res = self.url_open(cancel_meeting_url, data=cancel_meeting_data)
         self.assertEqual(res.status_code, 200)
         self.assertFalse(event.active)
+
+
+@tagged('appointment_ui')
+class AppointmentUIAtInstallTest(AppointmentUICommon):
+
+    @freeze_time('2022-02-14T7:00:00')
+    def test_get_appointment_type_page_view(self):
+        """ Test if the appointment_type_page always shows available slots if there are some. """
+        now = self.reference_monday
+        user_admin = self.env.ref('base.user_admin')
+        slot_time = now.replace(hour=9, minute=0, second=0, microsecond=0) + timedelta(days=1)
+
+        staff_users = self.std_user | user_admin
+        appointment_type = self.env['appointment.type'].create([{
+            'name': 'Type Test Appointment View',
+            'schedule_based_on': 'users',
+            'staff_user_ids': staff_users.ids,
+            'min_schedule_hours': 1.0,
+            'max_schedule_days': 5,
+            'slot_ids': [(0, 0, {
+                'weekday': str(slot_time.isoweekday()),
+                'start_hour': slot_time.hour,
+                'end_hour': slot_time.hour + 1,
+            })],
+            'show_avatars': False,
+            'is_auto_assign': False,
+            'is_date_first': False,
+        }])
+
+        invite = self.env['appointment.invite'].create({
+            'appointment_type_ids': appointment_type.ids,
+        })
+
+        slots_form, selected_user_option, slots_calendar = self._fetch_appointment_page_info_from_invite(invite)
+        self.assertIn(
+            int(selected_user_option.attrib['value']),
+            staff_users.ids,
+            f"Selected user must be one of {staff_users.ids}"
+        )
+        self.assertFalse(
+            'd-none' in slots_form.getparent().attrib['class'],
+            "Staff user selector should be visible")
+        self.assertTrue(
+            slots_calendar.getchildren(),
+            "Slots calendar should be visible")
+
+        # create an event to make the first staff user busy and remove its available slots
+        selected_staff_user = self.env['res.users'].browse(int(selected_user_option.attrib['value']))
+        remaining_staff_user = staff_users - selected_staff_user
+        self._create_meetings(selected_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
+
+        slots_form, selected_user_option, slots_calendar = self._fetch_appointment_page_info_from_invite(invite)
+        self.assertEqual(
+            int(selected_user_option.attrib['value']),
+            remaining_staff_user.id,
+            f"Selected user should be user with ID: {remaining_staff_user.id}")
+        self.assertFalse(
+            'd-none' in slots_form.getparent().attrib['class'],
+            "Staff user selector should be visible")
+        self.assertTrue(
+            slots_calendar.getchildren(),
+            "Slots calendar should be visible")
+
+        # create another event to make both staff user busy and remove all slots
+        self._create_meetings(remaining_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
+        slots_form, _, slots_calendar = self._fetch_appointment_page_info_from_invite(invite)
+        self.assertTrue(
+            'd-none' in slots_form.getparent().attrib['class'],
+            "Staff user selector should not be visible")
+        self.assertFalse(
+            slots_calendar.getchildren(),
+            "Slots calendar should not be visible")

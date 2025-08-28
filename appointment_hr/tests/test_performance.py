@@ -88,8 +88,8 @@ class AppointmenHrPerformanceCase(AppointmentHrCommon, AppointmentPerformanceCas
         cls.test_apt_type = cls.env['appointment.type'].create({
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
             'category': 'recurring',
+            'is_auto_assign': True,
             'is_published': True, # To give read access without having to be in the staff users
             'max_schedule_days': 60,
             'min_cancellation_hours': 1,
@@ -250,8 +250,8 @@ class AppointmentPerformanceTest(AppointmenHrPerformanceCase):
         apt_type_custom_bxls = self.env['appointment.type'].sudo().create({
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
             'category': 'custom',
+            'is_auto_assign': True,
             'location_id': self.test_appointment_location.id,
             'name': 'Bxls Appt Type',
             'min_cancellation_hours': 1,
@@ -315,8 +315,8 @@ class AppointmentPerformanceTest(AppointmenHrPerformanceCase):
         apt_type_custom_bxls = self.env['appointment.type'].sudo().create({
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
             'category': 'custom',
+            'is_auto_assign': True,
             'location_id': self.test_appointment_location.id,
             'name': 'Bxls Appt Type',
             'min_cancellation_hours': 1,

@@ -100,8 +100,8 @@ class WebsiteAppointment(AppointmentController):
         # been made before in order to avoid loops. Finally, in order to choose, one needs at least 2 possible users/resources.
         skip_resource_selection = kwargs.get('skip_resource_selection') or \
             not appointment_type.active or \
-            appointment_type.assign_method != 'resource_time' or \
-            appointment_type.avatars_display != 'show'
+            appointment_type.is_auto_assign or \
+            appointment_type.is_date_first
         operator_selection = not skip_resource_selection and \
             appointment_type.schedule_based_on == 'users' and \
             not page_values['user_selected'] and \
@@ -129,7 +129,8 @@ class WebsiteAppointment(AppointmentController):
         else:
             resource_or_user_selected = values['user_selected'] if appointment_type.schedule_based_on == 'users' else values['resource_selected']
             values['hide_select_dropdown'] = values['hide_select_dropdown'] or (
-                appointment_type.avatars_display == 'show' and resource_or_user_selected and appointment_type.assign_method != 'time_resource')
+                resource_or_user_selected
+                and not (appointment_type.is_date_first and not appointment_type.is_auto_assign))
         return values
 
     # Tools / Data preparation

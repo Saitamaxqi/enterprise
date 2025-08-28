@@ -84,16 +84,16 @@
                                     <t t-out="event.duration" t-options="{'widget': 'duration', 'unit': 'hour', 'round': 'minute'}"/>
                                 </div>
                             </div>
-                            <div t-if="not based_on_users and (appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show') and
+                            <div t-if="not based_on_users and (not appointment_type.is_auto_assign or appointment_type.show_avatars) and
                                 (appointment_type.manage_capacity or
-                                    (len(resources) == 1 and appointment_type.avatars_display == 'hide' and is_html_empty(resources[0].description))
+                                    (len(resources) == 1 and not appointment_type.show_avatars and is_html_empty(resources[0].description))
                                 )" class="row mb-4">
                                 <div class="col-3">
                                     <span class="text-muted">Resources</span>
                                 </div>
                                 <div class="col-9 col-lg-6">
                                     <div t-foreach="event.appointment_resource_ids" t-as="resource" class="d-flex flex-nowrap gap-2 align-items-center mb-1">
-                                        <div t-if="appointment_type.avatars_display == 'show'"
+                                        <div t-if="appointment_type.show_avatars"
                                             class="o_appointment_avatar_container o_appointment_avatar_multi_resource ratio ratio-1x1">
                                             <div t-attf-style="background-image: url('/appointment/#{appointment_type.id}/resource_avatar?resource_id=#{resource.id}');"
                                                 class="o_appointment_avatar_background rounded-circle"/>
@@ -204,7 +204,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-4 px-md-4">
-                            <t t-if="appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show'"
+                            <t t-if="not appointment_type.is_auto_assign or appointment_type.show_avatars"
                                 t-call="appointment.appointment_validated_card"/>
                         </div>
                     </div>
@@ -216,7 +216,7 @@
     <template id="appointment_validated_card" name="Appointment Validated: User / Resource Card">
         <div t-if="staff_user and based_on_users">
             <article class="card o_appointment_user_short_card card border-0" itemscope="itemscope" itemtype="http://schema.org/Employee">
-                <header t-if="appointment_type.avatars_display == 'show'" class="bg-secondary rounded o_appointment_avatar_container ratio ratio-4x3">
+                <header t-if="appointment_type.show_avatars" class="bg-secondary rounded o_appointment_avatar_container ratio ratio-4x3">
                     <div t-attf-style="background-image: url('/appointment/#{appointment_type.id}/avatar?user_id=#{staff_user.id}');"
                             class="o_appointment_avatar_background rounded"/>
                 </header>
@@ -239,10 +239,10 @@
             </article>
         </div>
         <div t-elif="not appointment_type.manage_capacity and
-            len(resources) == 1 and (appointment_type.avatars_display == 'show' or not is_html_empty(resources[0].description))">
+            len(resources) == 1 and (appointment_type.show_avatars or not is_html_empty(resources[0].description))">
             <t t-set="resource" t-value="resources[0]"/>
             <article class="card o_appointment_user_short_card card border-0" itemscope="itemscope">
-                <header t-if="appointment_type.avatars_display == 'show'" class="bg-secondary rounded o_appointment_avatar_container ratio ratio-4x3">
+                <header t-if="appointment_type.show_avatars" class="bg-secondary rounded o_appointment_avatar_container ratio ratio-4x3">
                     <div t-attf-style="background-image: url('/appointment/#{appointment_type.id}/resource_avatar?resource_id=#{resource.id}');"
                             class="o_appointment_avatar_background rounded"/>
                 </header>

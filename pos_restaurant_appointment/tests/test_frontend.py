@@ -18,10 +18,9 @@ class TestUi(TestFrontend):
         cls.env.user.group_ids += cls.quick_ref('appointment.group_appointment_manager')
 
         cls.appointment_type = cls.env['appointment.type'].create({
-            'appointment_manual_confirmation': True,
             'appointment_tz': 'US/Eastern',
-            'assign_method': 'time_auto_assign',
             'event_videocall_source': False,
+            'is_auto_assign': True,
             'name': 'Table Booking Test',
             'manage_capacity': True,
             'manual_confirmation_percentage': 0.8,

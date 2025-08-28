@@ -232,7 +232,6 @@ export class appointmentSlotSelect extends Interaction {
         const slotDate = ev.currentTarget.dataset.slotDate;
         const slots = JSON.parse(ev.currentTarget.dataset.availableSlots);
         const scheduleBasedOn = this.el.querySelector("input[name='schedule_based_on']").value;
-        const resourceAssignMethod = this.el.querySelector("input[name='assign_method']").value;
         const selectAppointmentResourceEl = this.el.querySelector(
             "select[id='selectAppointmentResource']"
         );
@@ -261,7 +260,6 @@ export class appointmentSlotSelect extends Interaction {
         this.slotsListEl.replaceChildren();
         this.renderAt("appointment.slots_list", {
             commonUrlParams: commonUrlParams,
-            resourceAssignMethod: resourceAssignMethod,
             scheduleBasedOn: scheduleBasedOn,
             slotDate: DateTime.fromISO(slotDate).toFormat("cccc dd MMMM yyyy"),
             slots: slots,
@@ -285,12 +283,13 @@ export class appointmentSlotSelect extends Interaction {
             ?.classList.remove("o_slot_hours_selected", "active");
         ev.currentTarget.classList.add("o_slot_hours_selected", "active");
 
-        // If not in 'time_resource' we directly go to the url for the slot
-        // In the case we are in 'time_resource', we don't want to open the link as we want to select a resource
+        // If not in 'manual + date first' we directly go to the url for the slot
+        // In the case we are in 'manual + date first', we don't want to open the link as we want to select a resource
         // before confirming the slot.
-        const assignMethod = this.el.querySelector("input[name='assign_method']").value;
+        const isAutoAssign = this.el.querySelector("input[name='is_auto_assign']").value;
+        const isDateFirst = this.el.querySelector("input[name='is_date_first']").value;
         const scheduleBasedOn = this.el.querySelector("input[name='schedule_based_on']").value;
-        if (assignMethod !== "time_resource") {
+        if (isAutoAssign || !isDateFirst) {
             const appointmentTypeID = this.el.querySelector(
                 "input[name='appointment_type_id']"
             ).value;
@@ -346,14 +345,15 @@ export class appointmentSlotSelect extends Interaction {
         const url = new URL(
             `/appointment/${encodeURIComponent(appointmentTypeID)}/info?${urlParameters}`,
             location.origin);
-        const assignMethod = this.el.querySelector("input[name='assign_method']").value;
+        const isAutoAssign = this.el.querySelector("input[name='is_auto_assign']").value;
+        const isDateFirst = this.el.querySelector("input[name='is_date_first']").value;
         if (scheduleBasedOn === "resources") {
             const resourceCapacity =
                 parseInt(this.el.querySelector("select[name='resourceCapacity']")?.value) || 1;
             const resourceSelected = this.el.querySelector(".o_resources_list").selectedOptions[0];
             let resourceIds = JSON.parse(url.searchParams.get("available_resource_ids"));
             if (
-                assignMethod === "time_resource" &&
+                isDateFirst && !isAutoAssign &&
                 parseInt(resourceSelected.dataset.resourceCapacity) >= resourceCapacity
             ) {
                 resourceIds = [resourceId];

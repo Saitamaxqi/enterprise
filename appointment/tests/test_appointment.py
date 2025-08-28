@@ -542,7 +542,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'Pacific/Auckland',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'category': 'recurring',
             'location_id': self.staff_user_nz.partner_id.id,
             'name': 'New Zealand Appointment',
@@ -680,7 +680,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         apt_type = self.env['appointment.type'].create({
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'category': 'punctual',
             'location_id': self.staff_user_bxls.partner_id.id,
             'name': 'Punctual Appt Type',
@@ -971,7 +971,8 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         }]
         apt_type = self.env['appointment.type'].create({
             'category': 'custom',
-            'assign_method': 'time_resource',
+            'is_auto_assign': False,
+            'is_date_first': True,
             'min_schedule_hours': 1,
             'name': 'Custom with unique slots',
             'slot_ids': [(5, 0)] + [
@@ -1067,7 +1068,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         )
         apt_type_UTC = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'category': 'recurring',
             'max_schedule_days': 5,  # Only consider the first three slots
             'name': 'Private Guitar Lesson',
@@ -1484,7 +1485,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
             'appointment_tz': 'Pacific/Auckland',
             'appointment_duration': 21,
             'slot_creation_interval': 21,
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'category': 'recurring',
             'location_id': self.staff_user_nz.partner_id.id,
             'name': 'New Zealand Appointment',
@@ -1669,8 +1670,9 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         apt_type_manage_capacity_other = self.env['appointment.type'].create([{
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_resource',
             'category': 'recurring',
+            'is_auto_assign': False,
+            'is_date_first': True,
             'location_id': self.staff_user_bxls.partner_id.id,
             'name': 'Bxls Appt Type with capacity (Other)',
             'max_schedule_days': 15,

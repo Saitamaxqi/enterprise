@@ -11,7 +11,7 @@ from odoo.tools import groupby
 class AppointmentType(models.Model):
     _inherit = "appointment.type"
 
-    work_hours_activated = fields.Boolean('Limit to Work Hours')
+    work_hours_activated = fields.Boolean('Employee Schedule')
 
     def _get_default_range_slots(self, category):
         '''

@@ -19,7 +19,8 @@
         <field name="appointment_tz">Europe/Brussels</field>
         <field name="max_schedule_days">45</field>
         <field name="schedule_based_on">resources</field>
-        <field name="assign_method">time_auto_assign</field>
+        <field name="is_auto_assign" eval="True"/>
+        <field name="is_date_first" eval="True"/>
         <field name="manage_capacity" eval="True"/>
         <field name="google_reserve_enable" eval="False"/>
         <field name="event_videocall_source" eval="False"/>

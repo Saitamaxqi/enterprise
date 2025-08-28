@@ -71,7 +71,8 @@ class AppointmentGoogleReserveAPITest(GoogleReserveCommon):
         # 1. create an appointment.type: needs to be registered on IAP
         apt_type_resource_google = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
+            'is_date_first': True,
             'location_id': self.test_location.id,
             'min_schedule_hours': 1.0,
             'max_schedule_days': 5,

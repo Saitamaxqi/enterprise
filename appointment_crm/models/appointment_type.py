@@ -9,7 +9,7 @@ from odoo import api, fields, models
 class AppointmentType(models.Model):
     _inherit = "appointment.type"
 
-    lead_create = fields.Boolean(string="Create Opportunities",
+    lead_create = fields.Boolean(string="Create Opportunity",
         help="For each scheduled appointment, create a new opportunity and assign it to the responsible user.")
     lead_ids = fields.Many2many('crm.lead', string="Leads/Opportunity", compute="_compute_lead_ids", groups="sales_team.group_sale_salesman")
     lead_count = fields.Integer('Leads Count', compute="_compute_lead_ids", groups="sales_team.group_sale_salesman")
@@ -56,7 +56,7 @@ class AppointmentType(models.Model):
             asked_capacity, booking_line_values, duration,
             appointment_invite, guests, name, customer, staff_user, start, stop
         )
-        if self.assign_method == 'time_auto_assign' and self.lead_create and staff_user and customer != staff_user.partner_id:
+        if self.is_auto_assign and self.lead_create and staff_user and customer != staff_user.partner_id:
             active_lead = self.env['crm.lead'].sudo().search([
                 ('user_id', '=', staff_user.id),
                 ('stage_id.is_won', '=', False),

@@ -8,13 +8,13 @@ class AppointmentType(models.Model):
     def get_appointment_type_templates_data(self):
         return super().get_appointment_type_templates_data() | {
             'paid_consultation': {
-                'description': _("Make sure customers pay before they can take a slot in your calendar"),
+                'description': _("Let customers book a paid slot in your calendar with you"),
                 'icon': '/appointment_account_payment/static/src/img/rfq.svg',
                 'template_key': 'paid_consultation',
                 'title': _("Paid Consultation"),
             },
             'paid_seats': {
-                'description': _("Make customers pay a fee per person when booking your resources"),
+                'description': _("Let customers book a fee per person for activities such as a theater, etc."),
                 'icon': '/appointment_account_payment/static/src/img/chair.svg',
                 'template_key': 'paid_seats',
                 'title': _("Paid Seats"),
@@ -35,8 +35,8 @@ class AppointmentType(models.Model):
             'allow_guests': True,
             'appointment_duration': 0.5,
             'slot_creation_interval': 0.5,
-            'assign_method': 'time_auto_assign',
-            'avatars_display': 'hide',
+            'is_auto_assign': True,
+            'show_avatars': False,
             'event_videocall_source': False,
             'has_payment_step': True,
             'location_id': self.env.company.partner_id.id,
@@ -48,7 +48,8 @@ class AppointmentType(models.Model):
     def _prepare_paid_seats_template_values(self):
         return {
             'appointment_duration': 1.0,
-            'assign_method': 'time_resource',
+            'is_auto_assign': False,
+            'is_date_first': True,
             'event_videocall_source': False,
             'has_payment_step': True,
             'location_id': self.env.company.partner_id.id,

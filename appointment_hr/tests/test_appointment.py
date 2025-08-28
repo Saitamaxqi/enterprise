@@ -25,7 +25,7 @@ class AppointmentHrTest(AppointmentHrCommon):
         appointments = self.env['appointment.type'].create([{
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'category': 'recurring',
             'name': f'Appointment Test {apt_no}',
             'min_cancellation_hours': 1,

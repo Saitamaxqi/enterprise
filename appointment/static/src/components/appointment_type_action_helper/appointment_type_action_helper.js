@@ -10,7 +10,7 @@ export class AppointmentTypeActionHelper extends Component {
         this.action = useService('action');
 
         onWillStart(async () => {
-            this.appointmentTypeTemplateData = await this.orm.call(
+            this.appointmentTypeTemplatesData = await this.orm.call(
                 'appointment.type',
                 'get_appointment_type_templates_data',
                 []
@@ -18,11 +18,11 @@ export class AppointmentTypeActionHelper extends Component {
         });
     }
 
-    async onTemplateClick(templateInfo) {
+    async onTemplateClick(templateData) {
         const action = await this.orm.call(
             'appointment.type',
             'action_setup_appointment_type_template',
-            [templateInfo.template_key],
+            [templateData.template_key],
         );
         this.action.doAction(action);
     }

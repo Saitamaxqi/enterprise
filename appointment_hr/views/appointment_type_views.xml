@@ -5,8 +5,14 @@
         <field name="model">appointment.type</field>
         <field name="inherit_id" ref="appointment.appointment_type_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='reminder_ids']" position="before">
-                <field name="work_hours_activated" invisible="schedule_based_on == 'resources' or category == 'custom'"/>
+            <xpath expr="//group[@name='options_right_details']" position="inside">
+                <label for="work_hours_activated" invisible="schedule_based_on == 'resources' or category == 'custom'"/>
+                <div class="d-flex" invisible="schedule_based_on == 'resources' or category == 'custom'">
+                    <field name="work_hours_activated"/>
+                    <div invisible="not work_hours_activated">
+                        <span>enforced</span>
+                    </div>
+                </div>
             </xpath>
         </field>
     </record>

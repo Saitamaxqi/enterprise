@@ -34,6 +34,9 @@ class AppointmentType(models.Model):
                 result['name'] = _("%s - Let's meet", self.env.user.name)
             if 'staff_user_ids' in fields and not result.get('staff_user_ids'):
                 result['staff_user_ids'] = [Command.set(self.env.user.ids)]
+        if 'event_videocall_source' in fields and not result.get('event_videocall_source'):
+            if not result.get('location_id'):
+                result['event_videocall_source'] = self._get_default_event_videocall_source()
         return result
 
     def _default_booked_mail_template_id(self):
@@ -46,6 +49,9 @@ class AppointmentType(models.Model):
     def _default_question_ids(self):
         return self.env['appointment.question'].search([('is_default', '=', True), ('active', '=', True)]).ids
 
+    def _get_default_event_videocall_source(self):
+        return 'discuss'
+
     # Global Settings
     sequence = fields.Integer('Sequence', default=10)
     name = fields.Char('Appointment Title', required=True, translate=True)
@@ -56,22 +62,27 @@ class AppointmentType(models.Model):
     appointment_duration_formatted = fields.Char(
         'Appointment Duration Formatted ', compute='_compute_appointment_duration_formatted', readonly=True,
         help='Appointment Duration formatted in words')
-    appointment_manual_confirmation = fields.Boolean("Manual Confirmation",
-        help="""Do not automatically accept meetings created from the appointment.
-            The appointment is still considered as reserved for the slots availability.""")
     appointment_tz = fields.Selection(
         _tz_get, string='Timezone', required=True, default=lambda self: self.env.user.tz or 'UTC',
         help="Timezone where appointment take place")
+    auto_confirm = fields.Boolean("Auto Confirm", default=True,
+        help="""Automatically confirm appointments at creation, up to the given percentage of the total capacity reserved.
+            If unchecked, the appointments will be created as requests and will need manual confirmation.
+            Requested appointments are still considered as reserved for the slots availability""")
+    # Technical field. True when bookings will always be confirmed
+    # e.g. 1.0 manual_confirmation_percentage and auto_confirm True
+    is_always_confirm = fields.Boolean(compute="_compute_is_always_confirm")
     image_1920 = fields.Image("Background Image")  # image.mixin override
     location_id = fields.Many2one('res.partner', string='Location')
     location = fields.Char(
         'Location formatted', compute='_compute_location', compute_sudo=True,
         help='Location formatted for one line uses')
-    event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Videoconference Link", default="discuss",
+    event_videocall_source = fields.Selection([('discuss', 'Odoo Discuss')], string="Video Link",
         help="Defines the type of video call link that will be used for the generated events. Keep it empty to prevent generating meeting url.")
-    allow_guests = fields.Boolean(string='Allow Guests', help="Let attendees invite guests when registering a meeting.")
-    manual_confirmation_percentage = fields.Float("Capacity Percentage",
-        help="""Activate manual confirmation only if the user/resource total capacity reserved exceeds this percentage.""")
+    allow_guests = fields.Boolean(string='Allow invitations', help="Let attendees invite guests when registering a meeting.")
+    manual_confirmation_percentage = fields.Float("Capacity Percentage", default=1.0,
+        help="""Bookings will not be automatically confirmed once the total
+        reserved user/resource capacity exceeds this percentage of total capacity.""")
     manage_capacity = fields.Boolean("Manage Capacities",
         help="""Manage the maximum amount of people a user/resource can handle (e.g. Table for 6 persons, ...)""")
     max_bookings = fields.Integer("Total Bookings", compute="_compute_max_bookings", default=1, store=True, readonly=False,
@@ -92,36 +103,39 @@ class AppointmentType(models.Model):
         default=_default_canceled_mail_template_id,
         help="If set an email will be sent to the customer when the appointment is cancelled.")
 
-    # Assign Configuration
-    assign_method = fields.Selection([
-        ('resource_time', 'Pick User/Resource then Time'),
-        ('time_resource', 'Select Time then User/Resource'),
-        ('time_auto_assign', 'Select Time then auto-assign')],
-        string="Assignment Method", default="resource_time", required=True,
-        help="How users and resources will be assigned to meetings customers book on your website.")
-    avatars_display = fields.Selection(
-        [('hide', 'No Picture'), ('show', 'Show Pictures')],
-        string='Front-End Display', compute='_compute_avatars_display', readonly=False, store=True,
-        help="""Display the Users'/Resources' picture on the Website.""")
+    # Assignment flow
+    assignment_method = fields.Selection([
+        ('auto', 'Automatically'),
+        ('manual', 'By visitor')],
+        string="Assignment", compute="_compute_assignment_method", readonly=False,
+        help="How users and resources will be assigned to the meetings that customers book on your website.")
+    is_auto_assign = fields.Boolean('Assign automatically')
+    is_date_first = fields.Boolean('Select date and time first')
+    select_first = fields.Selection([
+        ('date', 'Date'),
+        ('user_resource', 'User / Resource')],
+        string="Starts with", compute="_compute_select_first", readonly=False,
+        help="What is selected first by the customer when booking an appointment.")
+
     category = fields.Selection([
-        ('recurring', 'Regular'),
-        ('punctual', 'Punctual'),
-        ('custom', 'Specific Slots'),
-        ('anytime', 'Shared Calendar')],
+        ('recurring', 'Weekly Schedule'),
+        ('punctual', 'Date-limited'),
+        ('custom', 'Flexible Schedule'),
+        ('anytime', 'Calendar Link')],
         string="Category", compute="_compute_category", inverse="_inverse_category", store="True",
         help="""Used to define this appointment type's category.\n
         Can be one of:\n
-            - Regular: the default category, weekly recurring slots. Accessible from the website\n
-            - Punctual: regular slots limited between 2 datetimes. Accessible from the website\n
-            - Specific Slots: the user will create and share to another user a custom appointment type with hand-picked time slots\n
-            - Shared Calendar: the user will create and share to another user an appointment type covering all their time slots""")
+            - Weekly Schedule: the default category, weekly recurring slots. Accessible from the website\n
+            - Date-limited: regular slots limited between 2 datetimes. Accessible from the website\n
+            - Flexible Schedule: the user will create and share to another user a custom appointment type with hand-picked time slots\n
+            - Calendar Link: the user will create and share to another user an appointment type covering all their time slots""")
     category_slot_scheduling = fields.Selection(
         [('weekly', 'Weekly'), ('flexible', 'Flexible')],
          string="Schedule", readonly=False, compute="_compute_category_slot_scheduling"
     )
     category_time_display = fields.Selection([
-        ('recurring_fields', 'Available now'),
-        ('punctual_fields', 'Within a date range')],
+        ('recurring_fields', 'Within the next'),
+        ('punctual_fields', 'On specific dates')],
         string="Displayed category time fields", compute="_compute_category_time_display", readonly=False)
     country_ids = fields.Many2many(
         'res.country', 'appointment_type_country_rel', string='Allowed Countries',
@@ -137,6 +151,9 @@ class AppointmentType(models.Model):
     # Display Settings
     hide_duration = fields.Boolean('Hide Duration')
     hide_timezone = fields.Boolean('Hide Time Zone')
+    show_avatars = fields.Boolean('Display pictures',
+        compute='_compute_show_avatars', readonly=False, store=True,
+        help="""Display user or resource images across the entire booking flow.""")
 
     # Scheduling Configuration
     min_cancellation_hours = fields.Float('Cancel Before (hours)', required=True, default=1.0)
@@ -153,10 +170,10 @@ class AppointmentType(models.Model):
         default=lambda self: self.env['calendar.alarm'].search([('default_for_new_appointment_type', '=', True)]))
     schedule_based_on = fields.Selection([
         ('users', 'Users'),
-        ('resources', 'Resources (e.g. Tables, Courts, Rooms, ...)')],
+        ('resources', 'Resources')],
         string="Book", default="users", required=True)
     slot_ids = fields.One2many('appointment.slot', 'appointment_type_id', 'Availabilities', copy=True)
-    slot_creation_interval = fields.Float('Create a slot every', default=1.0,
+    slot_creation_interval = fields.Float('Create slot every', default=1.0,
         help="Starting from the beginning of the time slot, Odoo will create a new slot at regular intervals based on the time specified here.")
 
     # Staff Users Management
@@ -259,14 +276,21 @@ class AppointmentType(models.Model):
         for appointment_type in self:
             appointment_type.appointment_invite_count = mapped_data.get(appointment_type.id, 0)
 
+    @api.depends('is_auto_assign')
+    def _compute_assignment_method(self):
+        for appointment in self:
+            appointment.assignment_method = 'auto' if appointment.is_auto_assign else 'manual'
+
+    @api.onchange('assignment_method')
+    def _onchange_assignment_method(self):
+        for appointment in self:
+            appointment.is_auto_assign = appointment.assignment_method == 'auto'
+
     @api.depends('category')
-    def _compute_avatars_display(self):
+    def _compute_show_avatars(self):
         """ By default, enable avatars for custom appointment types and hide them for recurring and punctual category ones."""
         for record in self:
-            if record.category not in ['punctual', 'recurring']:
-                record.avatars_display = 'show'
-            elif not record.avatars_display:
-                record.avatars_display = 'hide'
+            record.show_avatars = record.category not in ['punctual', 'recurring']
 
     @api.depends('start_datetime', 'end_datetime')
     def _compute_category(self):
@@ -333,6 +357,14 @@ class AppointmentType(models.Model):
             else:
                 record.location = record.location_id.name or ''
 
+    @api.depends('auto_confirm', 'manual_confirmation_percentage')
+    def _compute_is_always_confirm(self):
+        for appointment_type in self:
+            appointment_type.is_always_confirm = (
+                appointment_type.auto_confirm and
+                float_compare(appointment_type.manual_confirmation_percentage, 1.0, 3) == 0
+            )
+
     @api.depends('schedule_based_on')
     def _compute_resource_ids(self):
         for appointment_type in self.filtered(lambda appt: appt.schedule_based_on == 'users'):
@@ -346,6 +378,16 @@ class AppointmentType(models.Model):
                 appointment_type.schedule_based_on == 'users' and
                 appointment_type.env.user in self.staff_user_ids
             )
+
+    @api.depends('is_date_first')
+    def _compute_select_first(self):
+        for appointment in self:
+            appointment.select_first = 'date' if appointment.is_date_first else 'user_resource'
+
+    @api.onchange('select_first')
+    def _onchange_select_first(self):
+        for appointment in self:
+            appointment.is_date_first = appointment.select_first == 'date'
 
     @api.depends('schedule_based_on')
     def _compute_staff_user_ids(self):
@@ -507,6 +549,17 @@ class AppointmentType(models.Model):
             'target': 'self',
         }
 
+    def get_kanban_record_share_btn_url(self):
+        self.ensure_one()
+        existing_invitation = self.env['appointment.invite']._find_identical_config(self.ids, 'all_assigned_resources')
+        if existing_invitation:
+            return existing_invitation.book_url
+
+        return self.env['appointment.invite'].create([{
+            'appointment_type_ids': self.ids,
+            'resources_choice': 'all_assigned_resources'
+        }]).book_url
+
     # --------------------------------------
     # View Utils
     # --------------------------------------
@@ -613,26 +666,36 @@ class AppointmentType(models.Model):
         }
 
     def _get_default_appointment_status(self, start_dt, stop_dt, capacity_reserved):
-        """ Get the status of the appointment based on users/resources and the manual confirmation option.
+        """ Get the status of the appointment based on users/resources and the auto confirm option.
         :param datetime start_dt: start datetime of appointment (in naive UTC)
         :param datetime stop_dt: stop datetime of appointment (in naive UTC)
         :param int capacity_reserved: capacity reserved by the customer for the appointment
         """
         self.ensure_one()
         default_state = 'booked'
-        if self.appointment_manual_confirmation and self.manage_capacity:
-            bookings_data = self.env['appointment.booking.line'].sudo()._read_group([
-                ('appointment_type_id', '=', self.id),
-                ('event_start', '<', stop_dt),
-                ('event_stop', '>', start_dt)
-            ], [], ['capacity_used:sum'])
-            capacity_already_used = bookings_data[0][0]
-            total_capacity_used = capacity_already_used + capacity_reserved
-            total_capacity = self.resource_total_capacity if self.schedule_based_on == 'resources' else self.user_capacity
-            if float_compare(total_capacity_used / total_capacity, self.manual_confirmation_percentage, 2) > 0:
+        if not self.is_always_confirm:
+            if not self.auto_confirm:
                 default_state = 'request'
-        elif self.appointment_manual_confirmation:
-            default_state = 'request'
+            else:
+                bookings_data = self.env['appointment.booking.line'].sudo()._read_group([
+                    ('appointment_type_id', '=', self.id),
+                    ('event_start', '<', stop_dt),
+                    ('event_stop', '>', start_dt)
+                ], [], ['capacity_used:sum'])
+                capacity_already_used = bookings_data[0][0]
+
+                if self.manage_capacity:
+                    total_capacity = (
+                        self.resource_total_capacity if self.schedule_based_on == 'resources' else
+                        len(self.staff_user_ids) * self.user_capacity)
+                else:
+                    total_capacity = (
+                        len(self.resource_ids) * self.max_bookings if self.schedule_based_on == 'resources' else
+                        len(self.staff_user_ids) * self.max_bookings)
+
+                total_capacity_used = capacity_already_used + capacity_reserved
+                if float_compare(total_capacity_used / total_capacity, self.manual_confirmation_percentage, 2) > 0:
+                    default_state = 'request'
         return default_state
 
     def _slots_generate(self, first_day, last_day, timezone, reference_date=None):
@@ -860,7 +923,7 @@ class AppointmentType(models.Model):
                 valid_users,
                 asked_capacity,
             )
-            slot_field_label = 'available_staff_users' if self.assign_method == 'time_resource' else 'staff_user_id'
+            slot_field_label = 'available_staff_users' if not self.is_auto_assign and self.is_date_first else 'staff_user_id'
         else:
             self._slots_fill_resources_availability(
                 slots,
@@ -911,7 +974,7 @@ class AppointmentType(models.Model):
                                         'capacity': resource.capacity,
                                     } for resource in slots[0]['available_resource_ids']] if self.schedule_based_on == 'resources' else False,
                                 }
-                                if self.schedule_based_on == 'users' and self.assign_method == 'time_resource':
+                                if self.schedule_based_on == 'users' and not self.is_auto_assign and self.is_date_first:
                                     slot.update({'available_staff_users': [{
                                         'id': staff.id,
                                         'name': staff.name,
@@ -937,7 +1000,7 @@ class AppointmentType(models.Model):
                                     'date_time': slot_start_dt_tz,
                                     'duration': slot_duration,
                                 }
-                                if self.schedule_based_on == 'users' and self.assign_method != 'time_resource':
+                                if self.schedule_based_on == 'users' and not (self.is_date_first and not self.is_auto_assign):
                                     url_parameters.update(staff_user_id=str(slots[0]['staff_user_id'].id))
                                 elif self.schedule_based_on == 'resources':
                                     url_parameters.update(available_resource_ids=str(slots[0]['available_resource_ids'].ids))
@@ -986,9 +1049,15 @@ class AppointmentType(models.Model):
         elif slots and self_sudo.schedule_based_on == 'resources' and (not resources or all(r in self_sudo.resource_ids for r in resources)):
             self_sudo._slots_fill_resources_availability(slots, start_dt, end_dt, filter_resources=resources, asked_capacity=asked_capacity)
         for slot in slots:
-            if staff_user and self.assign_method != 'time_resource' and slot.get("staff_user_id", False) != staff_user:
+            if (staff_user and
+                not (self.is_date_first and not self.is_auto_assign)
+                and slot.get("staff_user_id", False) != staff_user
+            ):
                 continue
-            if staff_user and self.assign_method == 'time_resource' and staff_user not in slot.get("available_staff_users", self.env['res.users']):
+            if (staff_user and
+                self.is_date_first and not self.is_auto_assign and
+                staff_user not in slot.get("available_staff_users", self.env['res.users'])
+            ):
                 continue
             if resources and any(resource not in slot.get("available_resource_ids", []) for resource in resources):
                 continue
@@ -1094,7 +1163,7 @@ class AppointmentType(models.Model):
         )
 
         for slot in slots:
-            if self.assign_method == 'time_resource' or self.env.context.get('slots_check_all_users', False):
+            if (self.is_date_first and not self.is_auto_assign) or self.env.context.get('slots_check_all_users', False):
                 available_staff_users = available_users_tz.filtered(
                     lambda staff_user: self._slot_availability_is_user_available(
                         slot,
@@ -1113,7 +1182,7 @@ class AppointmentType(models.Model):
                     )),
                     False)
             if available_staff_users:
-                if self.assign_method == 'time_resource' or self.env.context.get('slots_check_all_users', False):
+                if (self.is_date_first and not self.is_auto_assign) or self.env.context.get('slots_check_all_users', False):
                     slot['available_staff_users'] = available_staff_users
                 else:
                     slot['staff_user_id'] = available_staff_users
@@ -1495,12 +1564,12 @@ class AppointmentType(models.Model):
         if not available_resources:
             return self.env['appointment.resource']
         if not self.manage_capacity:
-            return available_resources[0] if self.assign_method != 'time_resource' else available_resources
+            return available_resources[0] if not (self.is_date_first and not self.is_auto_assign) else available_resources
 
         perfect_matches = available_resources.filtered(
             lambda resource: resource.capacity == asked_capacity and capacity_info[resource]['remaining_capacity'] == asked_capacity)
         if perfect_matches:
-            return available_resources if self.assign_method == 'time_resource' else perfect_matches[0]
+            return available_resources if self.is_date_first and not self.is_auto_assign else perfect_matches[0]
 
         first_resource_selected = available_resources[0]
         first_resource_selected_capacity_info = capacity_info.get(first_resource_selected)
@@ -1521,7 +1590,7 @@ class AppointmentType(models.Model):
             resources_combination_selected = resources_combinations_exact_capacity[0] if resources_combinations_exact_capacity else resource_possible_combinations[0]
             return available_resources.filtered(lambda resource: resource.id in resources_combination_selected[0])
 
-        if self.assign_method == 'time_resource':
+        if self.is_date_first and not self.is_auto_assign:
             return available_resources
 
         return first_resource_selected

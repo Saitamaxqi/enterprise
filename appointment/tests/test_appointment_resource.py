@@ -285,7 +285,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         """ Slots generation and availability of appointment type with resources """
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Test',
@@ -569,7 +569,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         """ Simple use case of appointment type with combinable resources """
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Test',
@@ -647,7 +647,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             self.assertEqual(len(resource_slots), len(table1_c2_c4_slots))
 
     @users('apt_manager')
-    def test_appointment_resources_combinable_with_time_resource(self):
+    def test_appointment_resources_combinable_with_manual_date_first(self):
         """ Check that the last resource available is correctly computed with linked resources """
         table_c2, table_c3 = self.env["appointment.resource"].create([{
             'appointment_type_ids': self.apt_type_resource.ids,
@@ -661,7 +661,10 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             'sequence': 2,
         }])
         table_c2.linked_resource_ids = table_c3
-        self.apt_type_resource.assign_method = 'time_resource'
+        self.apt_type_resource.write({
+            'is_auto_assign': False,
+            'is_date_first': True,
+        })
 
         start = datetime(2022, 2, 14, 15, 0, 0)
         end = start + timedelta(hours=1)
@@ -879,7 +882,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         """" Simple use case with shareable resources """
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
-            'assign_method': 'time_auto_assign',
+            'is_auto_assign': True,
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Test',
@@ -913,7 +916,8 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         """" Check that resources restricted on slots are taken into account """
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
-            'assign_method': 'time_resource',  # easier to check all resources available for each slot
+            'is_auto_assign': False,
+            'is_date_first': True,  # easier to check all resources available for each slot
             'min_schedule_hours': 1.0,
             'max_schedule_days': 5,
             'name': 'Test',
@@ -992,9 +996,12 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         self.assertListEqual(available_resources_wednesday, (resource1 + resource2 + resource3).ids)
 
     @users('apt_manager')
-    def test_appointment_resources_assign_time_resource(self):
-        """ Check that all resources are available with time_resource assign method. """
-        self.apt_type_resource.assign_method = 'time_resource'
+    def test_appointment_resources_assign_manual_date_first(self):
+        """ Check that all resources are available with 'manual' assignment and 'date' selected first """
+        self.apt_type_resource.write({
+            'is_auto_assign': False,
+            'is_date_first': True,
+        })
 
         nordic, scandinavian, snow = self.env["appointment.resource"].create([{
             'appointment_type_ids': self.apt_type_resource.ids,
@@ -1026,7 +1033,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         self.assertListEqual(available_resources_c1, (nordic + scandinavian + snow).ids,
             "All resources should be available with asked_capacity=1")
         self.assertListEqual(available_resources_c4, (nordic + scandinavian + snow).ids,
-            "All resources should be available, the perfect matches are ignored with time_resource assign method")
+            "All resources should be available, the perfect matches are ignored with manual assignment and date first")
         self.assertListEqual(available_resources_c5, (scandinavian + snow).ids)
 
     @users('apt_manager')

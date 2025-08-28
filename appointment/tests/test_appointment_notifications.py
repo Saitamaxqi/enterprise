@@ -113,7 +113,7 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
     def test_request_meeting_message_for_manual_confirmation(self):
         """ Make sure appointments send a custom mail on request to all relevant contacts """
         apt_type = self.apt_type_bxls_2days
-        apt_type.appointment_manual_confirmation = True
+        apt_type.auto_confirm = False
         apt_type.schedule_based_on = 'users'
         phone_question = apt_type._get_main_phone_question()
         self.assertTrue(phone_question)

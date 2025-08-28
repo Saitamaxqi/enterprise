@@ -12,7 +12,7 @@ class TestAppointmentCrmCommon(TestCrmCommon):
             "name": "Test Appointment",
             "appointment_duration": 1,
             "appointment_tz": "Europe/Brussels",
-            "assign_method": "time_auto_assign",
+            "is_auto_assign": True,
             "max_schedule_days": 15,
             "min_cancellation_hours": 1,
             "min_schedule_hours": 1,
@@ -45,7 +45,8 @@ class TestAppointmentCrmCommon(TestCrmCommon):
             name="Resource Time Appointment",
             lead_create=True,
             staff_user_ids=cls.user_sales_leads,
-            assign_method="resource_time",
+            is_auto_assign=False,
+            is_date_first=False,
             is_published=True
         )
 

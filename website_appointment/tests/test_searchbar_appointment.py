@@ -10,7 +10,7 @@ class TestSearchbarAppointments(HttpCase):
     def test_search_within_appointments(self):
         self.env["appointment.type"].create({
             "appointment_tz": "UTC",
-            "assign_method": "time_auto_assign",
+            "is_auto_assign": True,
             "min_schedule_hours": 1.0,
             "max_schedule_days": 8,
             "min_cancellation_hours": 2,

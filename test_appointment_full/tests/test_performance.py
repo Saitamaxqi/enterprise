@@ -25,8 +25,8 @@ class OnelineWAppointmentPerformance(AppointmentUIPerformanceCase, AppointmenHrP
         cls.test_apt_type_resource = cls.env['appointment.type'].create({
             'appointment_tz': 'Europe/Brussels',
             'appointment_duration': 1,
-            'assign_method': 'time_auto_assign',
             'category': 'recurring',
+            'is_auto_assign': True,
             'is_published': True,
             'max_schedule_days': 60,
             'min_cancellation_hours': 1,

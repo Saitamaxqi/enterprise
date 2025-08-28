@@ -43,7 +43,7 @@ class AppointmentCrmUITest(AppointmentCommon, common.HttpCase):
                 'params': {
                     'slots': unique_slots,
                     'context': {
-                        'default_assign_method': 'time_resource',
+                        'default_is_auto_assign': True,
                         'default_applicant_id': applicant.id,
                     },
                 }
@@ -54,7 +54,7 @@ class AppointmentCrmUITest(AppointmentCommon, common.HttpCase):
         self.assertTrue(result.get('appointment_type_id'), 'The request returns the id of the custom appointment type')
 
         appointment_type = self.env['appointment.type'].browse(result['appointment_type_id'])
-        # The default_assign_method should be ignored as the field is not whitelisted
-        self.assertEqual(appointment_type.assign_method, 'resource_time')
+        # The default_is_auto_assign should be ignored as the field is not whitelisted
+        self.assertFalse(appointment_type.is_auto_assign)
         # The default_opportunity_id should be propagated as the field is whitelisted
         appointment_invite = self.env['appointment.invite'].search([('appointment_type_ids', 'in', appointment_type.ids)])

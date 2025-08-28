@@ -5,7 +5,7 @@
         <record id="appointment_booked_mail_template" model="mail.template">
             <field name="name">Appointment: Appointment Booked</field>
             <field name="model_id" ref="calendar.model_calendar_event"/>
-            <field name="subject">{{ 'Appointment Requested: ' if object.appointment_type_id.appointment_manual_confirmation and object.appointment_status == 'request' else 'Appointment Booked: ' }}{{ object.appointment_type_id.name }}</field>
+            <field name="subject">{{ 'Appointment Requested: ' if not object.appointment_type_id.is_always_confirm and object.appointment_status == 'request' else 'Appointment Booked: ' }}{{ object.appointment_type_id.name }}</field>
             <field name="email_from">{{ (user.email_formatted or object.user_id.email_formatted) }}</field>
             <field name="use_default_to" eval="True"/>
             <field name="description">Sent to followers of an appointment type when a meeting is booked</field>
@@ -16,7 +16,7 @@
     <t t-set="mail_tz" t-value="object._get_mail_tz() or ctx.get('mail_tz')" />
     <t t-set="attendee_description" t-value="object._get_attendee_description()"/>
     <p>
-    <t t-if="object.appointment_type_id.appointment_manual_confirmation and object.appointment_status == 'request'">
+    <t t-if="not object.appointment_type_id.is_always_confirm and object.appointment_status == 'request'">
         Appointment requested for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t>
     </t>
     <t t-else="">
@@ -80,7 +80,7 @@
                     <li t-if="object.appointment_type_id.manage_capacity">
                         For: <t t-out="object.total_capacity_reserved"/> people
                     </li>
-                    <li t-if="object.appointment_type_id.assign_method != 'time_auto_assign' and object.appointment_resource_ids">
+                    <li t-if="not object.appointment_type_id.is_auto_assign and object.appointment_resource_ids">
                         Resources
                         <ul>
                             <li t-foreach="object.appointment_resource_ids" t-as="resource">
@@ -224,7 +224,7 @@
         Hello <t t-out="object.common_name or ''">Wood Corner</t>,<br/><br/>
 
         <t t-if="target_customer">
-            <t t-if="object.event_id.appointment_type_id.appointment_manual_confirmation">
+            <t t-if="not object.event_id.appointment_type_id.is_always_confirm">
                 <t t-if="object.event_id.appointment_status == 'booked'">
                     We're happy to let you know your booking <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong><t t-if="object.event_id.appointment_type_id.category not in ['custom', 'anytime'] and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been confirmed.<br/>
                 </t>
@@ -325,7 +325,7 @@
                 <li t-if="object.event_id.appointment_type_id.manage_capacity">
                     For: <t t-out="object.event_id.total_capacity_reserved"/> people
                 </li>
-                <li t-if="object.event_id.appointment_type_id.assign_method != 'time_auto_assign' and object.event_id.appointment_resource_ids">
+                <li t-if="not object.event_id.appointment_type_id.is_auto_assign and object.event_id.appointment_resource_ids">
                     Resources
                     <ul>
                         <li t-foreach="object.event_id.appointment_resource_ids" t-as="resource">
