@@ -71,11 +71,10 @@ class MrpProductionSchedule(models.Model):
     suggestion_based_on = fields.Selection(
         [('actual_demand', 'Actual Demand'),
          ('last_year', 'Previous Year'),
-         ('last_30_days', 'Last 30 Days'),
-         ('last_3_months', 'Last 3 Months'),
-         ('last_12_months', 'Last 12 Months'),
-        ]
-        , required=True, default='last_year', string='Based on', readonly=False)
+         ('30_days', 'Last 30 Days'),
+         ('three_months', 'Last 3 Months'),
+         ('one_year', 'Last 12 Months')],
+        required=True, default='last_year', string='Based on', readonly=False)
     suggestion_based_on_readonly = fields.Char(compute='_compute_suggestion_fields')
     suggestion_percent_factor = fields.Integer(default=100, required=True)
     suggestion_quantity = fields.Float(compute='_compute_suggestion_fields', digits='Product Unit')
@@ -141,7 +140,7 @@ class MrpProductionSchedule(models.Model):
                     year=start_chosen_date.year,
                     )
 
-        if self.suggestion_period or self.suggestion_based_on in ['last_30_days', 'last_3_months', 'last_12_months']:
+        if self.suggestion_period or self.suggestion_based_on in ['30_days', 'three_months', 'one_year']:
             suggestion_quantities = self._get_suggestion_quantities(period_scale=period_scale)
             suggestion_qty_before_scale = suggestion_quantities[period_index]
 
@@ -223,30 +222,22 @@ class MrpProductionSchedule(models.Model):
         Return a list of quantities, each is a suggestion demand representing a ratio between
         the length of the period of the selected type and the length of the demand period.
         """
-        if self.suggestion_based_on == 'last_30_days':
-            based_on_days = 30
-        elif self.suggestion_based_on == 'last_3_months':
-            based_on_days = 90
-        else:
-            based_on_days = 365
-
         if period_scale == 'year':
-            multiplier_days = 365
+            multiplier_monthly_demand = 12
         elif period_scale == 'month':
-            multiplier_days = 30
+            multiplier_monthly_demand = 1
         elif period_scale == 'week':
-            multiplier_days = 7
+            multiplier_monthly_demand = 7 / (365.25 / 12)  # 7 days / (365.25 days/yr / 12 mth/yr) = 0.23 months
         else:
-            multiplier_days = 1
+            multiplier_monthly_demand = 1 / (365.25 / 12)
 
         context = {
-            'monthly_demand_start_date': fields.Datetime.now().date() - relativedelta(days=based_on_days),
-            'monthly_demand_limit_date': fields.Datetime.now().date(),
+            'suggest_based_on': self.suggestion_based_on,
             'warehouse_id': self.warehouse_id.id,
         }
 
         product = self.product_id.with_context(context)
-        qty = product.monthly_demand * (multiplier_days / based_on_days)
+        qty = product.monthly_demand * multiplier_monthly_demand
         return ([qty] * self.company_id['manufacturing_period_to_display_%s' % period_scale])
 
     def apply_forecast_quantity_suggestion(self):
