@@ -454,7 +454,7 @@ class HrVersion(models.Model):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Salary Attachment'),
+            'name': _('Salary Adjustment'),
             'res_model': 'hr.salary.attachment',
             'view_mode': 'form',
             'target': 'new',

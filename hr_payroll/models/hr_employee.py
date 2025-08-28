@@ -16,10 +16,10 @@ class HrEmployee(models.Model):
     registration_number = fields.Char('Employee Reference', groups="hr.group_hr_user", copy=False)
     salary_attachment_ids = fields.Many2many(
         'hr.salary.attachment',
-        string='Salary Attachments',
+        string='Salary Adjustments',
         groups="hr_payroll.group_hr_payroll_user")
     salary_attachment_count = fields.Integer(
-        compute='_compute_salary_attachment_count', string="Salary Attachment Count",
+        compute='_compute_salary_attachment_count', string="Salary Adjustment Count",
         groups="hr_payroll.group_hr_payroll_user")
     mobile_invoice = fields.Binary(string="Mobile Subscription Invoice", groups="hr.group_hr_manager")
     sim_card = fields.Binary(string="SIM Card Copy", groups="hr.group_hr_manager")

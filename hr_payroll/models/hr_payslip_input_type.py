@@ -35,4 +35,4 @@ class HrPayslipInputType(models.Model):
     @api.constrains('active')
     def _check_salary_attachment_type_active(self):
         if self.env['hr.salary.attachment'].search_count([('other_input_type_id', 'in', self.ids), ('state', 'not in', ('close', 'cancel'))], limit=1):
-            raise UserError(self.env._("You cannot archive an input type if there exists a running salary attachment of this type."))
+            raise UserError(self.env._("You cannot archive an input type if there exists a running salary adjustment of this type."))

@@ -384,7 +384,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         self.assertTrue(lines.filtered(lambda r: r.code == 'ATTACH_SALARY'), 'There should be a salary line for car accident.')
         payslip.action_payslip_done()
         payslip.action_payslip_paid()
-        self.assertEqual(car_accident.state, 'close', 'The salary attachment should be completed.')
+        self.assertEqual(car_accident.state, 'close', 'The salary adjustment should be completed.')
 
     def test_payslip_with_multiple_input_same_type(self):
         payslip = self.env['hr.payslip'].create({

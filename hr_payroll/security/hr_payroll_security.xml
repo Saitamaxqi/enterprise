@@ -91,7 +91,7 @@
     </record>
 
     <record id="ir_rule_hr_salary_attachment_multi_company" model="ir.rule">
-        <field name="name">HR Salary Attachment: Multi Company</field>
+        <field name="name">HR Salary Adjustment: Multi Company</field>
         <field name="model_id" ref="model_hr_salary_attachment"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>

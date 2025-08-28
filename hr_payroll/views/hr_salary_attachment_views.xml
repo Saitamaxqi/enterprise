@@ -3,24 +3,46 @@
     <record id="hr_salary_attachment_view_tree" model="ir.ui.view">
         <field name="name">hr.salary.attachment.list</field>
         <field name="model">hr.salary.attachment</field>
+        <field name="priority">10</field>
         <field name="arch" type="xml">
-            <list string="Salary Attachments" multi_edit="1">
-                <field name="currency_id" column_invisible="True"/>
+            <list string="Salary Adjustments" multi_edit="1">
                 <field name="employee_ids" widget="many2many_avatar_employee" readonly="has_done_payslip"/>
+                <field name="date_start" readonly="has_done_payslip"/>
                 <field name="description" readonly="has_done_payslip"/>
                 <field name="other_input_type_id" options="{'no_open': True, 'no_create_edit': True, 'no_create': True}" readonly="has_done_payslip"/>
-                <field name="monthly_amount" sum="Monthly Amount" widget="monetary"/>
-                <field name="total_amount" optional="hide" widget="monetary"/>
-                <field name="remaining_amount" optional="hide" widget="monetary"/>
+                <field name="monthly_amount_display" string="Amount"/>
+                <field name="total_amount_display" string="Until"/>
+                <field name="state" nolabel="1" widget="badge" decoration-success="state == 'open'" decoration-muted="state == 'close'" invisible="state == 'open' and employee_count &gt; 1"/>
                 <field name="paid_amount" optional="hide" widget="monetary" readonly="has_done_payslip"/>
-                <field name="is_refund" optional="hide"/>
-                <field name="occurrences" optional="hide"/>
-                <field name="date_start" readonly="has_done_payslip"/>
-                <field name="employee_count" column_invisible="True"/>
-                <field name="state" widget="badge" decoration-success="state == 'open'" decoration-info="state == 'close'" decoration-danger="state == 'cancel'" invisible="state == 'open' and employee_count &gt; 1"/>
-                <field name="has_done_payslip" column_invisible="1"/>
-                <button string="Related Payslips" type="object" name="action_open_payslips" invisible="payslip_count == 0"/>
+                <field name="date_end" optional="hide"/>
+                <field name="remaining_amount" optional="hide" widget="monetary"/>
             </list>
+        </field>
+    </record>
+
+    <record id="hr_salary_attachment_employee_view_list" model="ir.ui.view">
+        <field name="name">hr.salary.attachment.list</field>
+        <field name="model">hr.salary.attachment</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_tree"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="default_order">state desc</attribute>
+                <attribute name="decoration-muted">state == 'close'</attribute>
+            </list>
+            <list position="inside">
+                <control>
+                    <button string="Add a salary adjustment" name="action_open_employee_salary_attachment" class="btn-link" type="object" context='{"new": 1}'/>
+                </control>
+                <button class="btn btn-link" string="Restart" icon="fa-play" type="object" name="action_open" invisible="state == 'open' or employee_count &gt; 1"/>
+                <button class="btn btn-link" string="Stop" icon="fa-stop" type="object" name="action_close" invisible="state == 'close' or employee_count &gt; 1"/>
+                <button class="btn btn-link" string="Split" icon="fa-scissors" type="object" name="action_split" invisible="employee_count &lt;= 1"/>
+            </list>
+            <field name="date_start" position="before">
+                <field name="other_input_type_id" position="move"/>
+            </field>
+            <field name="employee_ids" position="replace">
+            </field>
         </field>
     </record>
 
@@ -28,7 +50,7 @@
         <field name="name">hr.salary.attachment.pivot</field>
         <field name="model">hr.salary.attachment</field>
         <field name="arch" type="xml">
-            <pivot string="Salary Attachments">
+            <pivot string="Salary Adjustments">
                 <field name="employee_ids" type="row"/>
                 <field name="other_input_type_id" type="col"/>
                 <field name="paid_amount"/>
@@ -42,17 +64,16 @@
     <record id="hr_salary_attachment_view_form" model="ir.ui.view">
         <field name="name">hr.salary.attachment.form</field>
         <field name="model">hr.salary.attachment</field>
+        <field name="priority">10</field>
         <field name="arch" type="xml">
-            <form string="Salary Attachment">
+            <form string="Salary Adjustment">
                 <header>
-                    <button name="action_done" type="object" string="Mark as Completed"
-                        invisible="state not in ['open', 'cancel'] or employee_count &gt; 1"/>
-                    <button name="action_done" type="object" string="Create Individual Attachments"
+                    <button name="action_close" type="object" string="Mark as Completed"
+                        invisible="state != 'open' or employee_count &gt; 1"/>
+                    <button name="action_split" type="object" string="Create Individual Attachments"
                         class="oe_highlight" invisible="state != 'open' or employee_count &lt;= 1"/>
                     <button name="action_open" type="object" string="Running"
-                        invisible="state not in ['close', 'cancel'] or employee_count &gt; 1"/>
-                    <button name="action_cancel" type="object" string="Cancel"
-                        invisible="state not in ('open', 'close')"/>
+                        invisible="state != 'close' or employee_count &gt; 1"/>
                     <field name="state" widget="statusbar"
                         invisible="employee_count &gt; 1"/>
                 </header>
@@ -67,38 +88,46 @@
                             <field name="payslip_count" widget="statinfo" string="Payslips" />
                         </button>
                     </div>
+                    <!-- invisible fields to compute fields visibility in the form view -->
                     <field name="company_id" invisible="1"/>
                     <field name="currency_id" invisible="1"/>
                     <field name="has_total_amount" invisible="1"/>
                     <field name="attachment_name" invisible="1"/>
                     <field name="employee_count" invisible="1"/>
                     <field name="has_done_payslip" invisible="1"/>
+                    <field name="is_quantity" invisible="1"/>
                     <group>
-                        <group>
-                            <field name="employee_ids" widget="many2many_avatar_employee" readonly="has_done_payslip"/>
-                            <field name="description" readonly="has_done_payslip"/>
-                            <field name="other_input_type_id" readonly="has_done_payslip" context="{'default_available_in_attachments': True}"/>
-                            <field name="date_start" readonly="has_done_payslip"/>
-                            <field name="date_estimated_end" invisible="not date_estimated_end"/>
-                            <field name="date_end" invisible="not date_end or state == 'open'" readonly="has_done_payslip"/>
-                            <field name="attachment" filename="attachment_name"/>
-                        </group>
-                        <group>
-                            <field name="is_quantity" invisible="1"/>
-                            <field name="no_end_date"/>
-                            <field name="monthly_amount" invisible="not is_quantity" widget="float"/>
-                            <field name="monthly_amount" invisible="is_quantity"/>
-                            <field name="total_amount" invisible="not is_quantity or not has_total_amount" required="has_total_amount" widget="float"/>
-                            <field name="total_amount" invisible="is_quantity or not has_total_amount" required="has_total_amount"/>
-                            <field name="paid_amount" invisible="not is_quantity or paid_amount == 0" widget="float"/>
-                            <field name="paid_amount" invisible="is_quantity or paid_amount == 0"/>
+                        <field name="employee_ids" widget="many2many_avatar_employee" readonly="has_done_payslip" invisible="context.get('default_employee_ids')"/>
+                        <field name="other_input_type_id" readonly="has_done_payslip" context="{'default_available_in_attachments': True}"/>
+                        <label for="monthly_amount"/>
+                        <span class="d-flex">
+                            <span style="width: 150px">
+                                <span invisible="not is_refund" class="me-1">-</span>
+                                <field class="o_hr_narrow_field" name="monthly_amount" invisible="not is_quantity" widget="float"/>
+                                <field class="o_hr_narrow_field" name="monthly_amount" invisible="is_quantity"/>
+                            </span>
+                            <label for="is_refund" class="me-4"/>
                             <field name="is_refund" readonly="has_done_payslip"/>
-                            <label for="occurrences" invisible="not occurrences"/>
-                            <div class="o_row" invisible="not occurrences">
-                                <field name="occurrences"/>
-                                <span>Payslips</span>
-                            </div>
-                        </group>
+                        </span>
+                        <field name="duration_type" widget="radio" options="{'horizontal': True}"/>
+                        <span/>
+                        <span>
+                            from
+                            <field name="date_start" style="width: 10ch;" readonly="has_done_payslip"/>
+                            <span invisible="not duration_type == 'limited'">
+                                until
+                                <field name="total_amount" class="o_hr_narrow_field" invisible="not is_quantity or not has_total_amount" required="has_total_amount" widget="float"/>
+                                <field name="total_amount" class="o_hr_narrow_field" invisible="is_quantity or not has_total_amount" required="has_total_amount"/>
+                                <span invisible="is_quantity">paid</span>
+                            </span>
+                        </span>
+                        <span invisible="(not date_estimated_end and not date_end and state == 'open') or duration_type != 'limited'"/>
+                        <span class="text-muted" invisible="not date_estimated_end and (not date_end or state == 'open') or duration_type != 'limited'">
+                            end in <field name="remaining_time" class="w-auto"/> :
+                            <field name="date_estimated_end" style="width: 10ch;" invisible="not date_estimated_end"/>
+                            <field name="date_end" style="width: 10ch;" invisible="not date_end or state == 'open'" readonly="has_done_payslip"/>
+                        </span>
+                        <field name="description" readonly="has_done_payslip" placeholder="Optional reason, or reference"/>
                     </group>
                 </sheet>
                 <chatter/>
@@ -106,11 +135,41 @@
         </field>
     </record>
 
+    <record id="hr_salary_attachment_employee_view_form" model="ir.ui.view">
+        <field name="name">hr.salary.attachment.form</field>
+        <field name="model">hr.salary.attachment</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_attachment_view_form"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <header position="replace">
+                <field name="state" widget="statusbar" class="w-100"
+                    invisible="not id or employee_count &gt; 1"/>
+            </header>
+            <div role="alert" position="after">
+                <div role="alert" class="alert alert-info d-flex align-items-center justify-content-center" invisible="employee_count &lt;= 1">
+                    Multiple employees are attached to this salary adjustment.<button class="btn-link p-0" type="object" name="action_split">Split it in individual adjustment</button>
+                </div>
+            </div>
+            <chatter position="after">
+                <footer>
+                    <button string="Save" special="save" data-hotkey="q" class="btn-primary"/>
+                    <button string="Discard" special="cancel" data-hotkey="x" class="btn-secondary"/>
+                    <button name="action_open" type="object" string="Restart" close="0"
+                        invisible="state != 'close'"/>
+                    <button name="action_close" type="object" string="Stop" close="0"
+                        invisible="state != 'open' or not id or employee_count &gt; 1"/>
+                    <button name="action_unlink" type="object" string="Remove" class="btn-danger ms-auto me-0" invisible="state != 'close' or employee_count &lt;= 1 or not id"/>
+                    <button name="action_unlink" type="object" string="Delete" class="btn-danger ms-auto me-0" invisible="state != 'close' or employee_count &gt; 1 or not id"/>
+                </footer>
+            </chatter>
+        </field>
+    </record>
+
     <record id="hr_salary_attachment_view_search" model="ir.ui.view">
         <field name="name">hr.salary.attachment.search</field>
         <field name="model">hr.salary.attachment</field>
         <field name="arch" type="xml">
-            <search string="Search Salary Attachment">
+            <search string="Search Salary Adjustment">
                 <field name="employee_ids"/>
                 <field name="description"/>
                 <field name="other_input_type_id"/>
@@ -121,37 +180,39 @@
                                  ('date_start', '&lt;=', ('today'))
                     ]"/>
                 <filter string="Refunds" name="search_is_refund" domain="[('is_refund', '=', True)]"/>
+                <filter string="One Shots" name="search_one_shot" domain="[('duration_type', '=', 'one')]"/>
                 <filter string="Employee" name="employee_id_group" context="{'group_by': 'employee_ids'}"/>
                 <filter string="Type" name="other_input_type_id" context="{'group_by': 'other_input_type_id'}"/>
                 <filter string="Status" name="state" context="{'group_by': 'state'}"/>
+                <filter string="Duration" name="duration_type" context="{'group_by': 'duration_type'}"/>
             </search>
         </field>
     </record>
 
     <record id="action_hr_salary_attachment_new" model="ir.actions.act_window">
-        <field name="name">Salary Attachment</field>
+        <field name="name">Salary Adjustment</field>
         <field name="res_model">hr.salary.attachment</field>
         <field name="view_mode">form</field>
     </record>
 
     <record id="hr_salary_attachment_action" model="ir.actions.act_window">
-        <field name="name">Salary Attachment</field>
+        <field name="name">Salary Adjustment</field>
         <field name="res_model">hr.salary.attachment</field>
         <field name="view_mode">list,form,pivot</field>
         <field name="help" type="html">
               <p class="o_view_nocontent_smiling_face">
-                No Salary Attachment ?
+                No Salary Adjustment ?
               </p><p>
-                A Salary Attachment is a recurring amount of money defined on the
+                A Salary Adjustment is a recurring amount of money defined on the
                 employee and used in every payslip on an amount of time.<br/>
                 Ex. Money recovery, Child support, Assessment of salary, ...<br/><br/>
-                <a name="hr_payroll.action_hr_salary_attachment_new" type="action" class="btn btn-secondary">Create a Salary Attachment</a>
+                <a name="hr_payroll.action_hr_salary_attachment_new" type="action" class="btn btn-secondary">Create a Salary Adjustment</a>
               </p>
         </field>
     </record>
 
     <record id="hr_salary_attachment_action_view_employee" model="ir.actions.act_window">
-        <field name="name">Salary Attachment</field>
+        <field name="name">Salary Adjustment</field>
         <field name="res_model">hr.salary.attachment</field>
         <field name="view_mode">list,form,pivot</field>
         <field name="context">{"search_default_employee_ids": [active_id]}</field>

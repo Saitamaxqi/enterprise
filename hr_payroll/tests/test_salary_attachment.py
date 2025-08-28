@@ -53,6 +53,7 @@ class TestSalaryAttachment(TestPayslipBase):
             'employee_ids': [self.toto.id],
             'description': 'Monthly amount',
             'other_input_type_id': self.child_support_type.id,
+            'duration_type': 'unlimited',
             'date_start': date(self.current_year, 1, 1),
             'monthly_amount': 500,
         })

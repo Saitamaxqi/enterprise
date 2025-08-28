@@ -625,7 +625,7 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
                     ],
                 },
                 'salary_attachment': {
-                    'header': _('Salary Attachment'),
+                    'header': _('Salary Adjustment'),
                     'values': [
                         report_data['salary_attachment'],
                         report_data['salary_attachment'],

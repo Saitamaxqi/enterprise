@@ -33,7 +33,7 @@ class HrSalaryRule(models.Model):
     )
     split_move_lines = fields.Boolean(
         string="Split on names",
-        help="Enable this option to split the accountig entries for this rule according to the payslip line name. It could be useful for deduction/reimbursement or salary attachments for instance.")
+        help="Enable this option to split the accountig entries for this rule according to the payslip line name. It could be useful for deduction/reimbursement or salary adjustments for instance.")
     employee_move_line = fields.Boolean(
         string="Set employee on account line",
         help="Enable this option to set the employee on the journal items of the payslips.")

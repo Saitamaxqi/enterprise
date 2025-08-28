@@ -157,12 +157,12 @@ class HrPayslip(models.Model):
     salary_attachment_ids = fields.Many2many(
         'hr.salary.attachment',
         relation='hr_payslip_hr_salary_attachment_rel',
-        string='Salary Attachments',
+        string='Salary Adjustments',
         compute='_compute_salary_attachment_ids',
         store=True,
         readonly=False,
     )
-    salary_attachment_count = fields.Integer('Salary Attachment count', compute='_compute_salary_attachment_count')
+    salary_attachment_count = fields.Integer('Salary Adjustment count', compute='_compute_salary_attachment_count')
     use_worked_day_lines = fields.Boolean(related="struct_id.use_worked_day_lines")
     payment_report = fields.Binary(
         string='Payment Report',
@@ -312,7 +312,7 @@ class HrPayslip(models.Model):
                 # Only take deduction types present in structure
                 for input_type_id, attachments in valid_attachments.grouped("other_input_type_id").items():
                     amount = attachments._get_active_amount()
-                    name = ', '.join(attachments.mapped('description'))
+                    name = ', '.join(description for description in attachments.mapped('description') if description)
                     input_line_vals.append(Command.create({
                         'name': name,
                         'amount': amount if not slip.credit_note else -amount,
@@ -662,7 +662,7 @@ class HrPayslip(models.Model):
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Salary Attachments'),
+            'name': _('Salary Adjustments'),
             'res_model': 'hr.salary.attachment',
             'view_mode': 'list,form',
             'domain': [('id', 'in', self.salary_attachment_ids.ids)],

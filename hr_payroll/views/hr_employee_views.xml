@@ -22,14 +22,6 @@
                             <span class="o_stat_value">New</span>
                         </div>
                 </button>
-                <button class="oe_stat_button" string="Salary Attachments" name="action_open_salary_attachments"
-                        groups="hr_payroll.group_hr_payroll_user"
-                        type="object" icon="fa-book">
-                        <div class="o_stat_info">
-                            <span class="o_stat_text">Salary Attachments</span>
-                            <span class="o_stat_value"><field name="monthly_running_attachments"/></span>
-                        </div>
-                </button>
             </button>
             <xpath expr="//field[@name='structure_type_id']" position="after">
                 <field name="registration_number" string="Reference" groups="base.group_no_one"/>
@@ -91,7 +83,18 @@
                             class="btn btn-secondary text-break m-0"/>
                 </group>
             </group>
+            <page name="payroll_information" position="after">
+                <page name="salary_attachment" string="Salary Adjustments">
 
+                    <field name="salary_attachment_ids" widget="salary_attachment_2many"
+                           context="{
+                                'default_employee_ids': [id],
+                                'form_view_ref': 'hr_payroll.hr_salary_attachment_employee_view_form',
+                                'list_view_ref': 'hr_payroll.hr_salary_attachment_employee_view_list',
+                            }"
+                    />
+                </page>
+            </page>
         </field>
     </record>
 

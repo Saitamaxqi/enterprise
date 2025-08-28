@@ -117,7 +117,7 @@
                     </button>
                     <button type="object" class="oe_stat_button" name="action_open_salary_attachments" id="open_salary_attachments"
                         icon="fa-files-o" invisible="salary_attachment_count == 0">
-                        <field name="salary_attachment_count" widget="statinfo" string="Salary Attachments"/>
+                        <field name="salary_attachment_count" widget="statinfo" string="Salary Adjustments"/>
                     </button>
                 </div>
                 <div class="row justify-content-between position-relative w-100 m-0">
@@ -208,7 +208,7 @@
                                 <field name="payslip_id" required="0" column_invisible="True"/>
                                 <field name="_allowed_input_type_ids" column_invisible="True"/>
                                 <field name="input_type_id"/>
-                                <field name="name"/>
+                                <field name="name" string="Note"/>
                                 <field name="amount" widget="float_without_trailing_zeros"/>
                                 <field name="version_id" column_invisible="True"/>
                                 <field name="sequence" column_invisible="True"/>

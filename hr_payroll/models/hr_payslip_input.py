@@ -18,7 +18,7 @@ class HrPayslipInput(models.Model):
     _allowed_input_type_ids = fields.Many2many('hr.payslip.input.type', related='payslip_id.struct_id.input_line_type_ids')
     code = fields.Char(related='input_type_id.code', required=True, help="The code that can be used in the salary rules")
     amount = fields.Float(
-        string="Count",
+        string="Amount",
         digits='Payroll Rate',
         help="It is used in computation. E.g. a rule for salesmen having 1%% commission of basic salary per product can defined in expression like: result = inputs['SALEURO'].amount * version.wage * 0.01.")
     version_id = fields.Many2one(
