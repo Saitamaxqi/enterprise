@@ -245,13 +245,13 @@ export class MainComponent extends Component {
 
     async suggestForecastedDemand(data, productionScheduleId) {
         const action = await this.orm.call(
-            "mrp.production.schedule",
+            "mrp.mps.forecast.suggestion",
             "action_open_suggest_forecasted_form_view",
-            [productionScheduleId],
+            [[], productionScheduleId],
             {
                 context: {
-                    manufacturingPeriods: this.manufacturingPeriods,
                     period_scale: this.currentPeriodType,
+                    periods: this.manufacturingPeriods,
                 }
             }
         );

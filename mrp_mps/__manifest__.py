@@ -33,7 +33,8 @@ procure.
         'views/product_product_views.xml',
         'views/product_template_views.xml',
         'views/res_config_settings_views.xml',
-        'wizard/mrp_mps_forecast_details_views.xml'
+        'wizard/mrp_mps_forecast_details_views.xml',
+        'wizard/mrp_mps_forecast_suggestion_views.xml'
     ],
     'demo': [
         'data/mps_demo.xml',

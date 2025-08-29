@@ -1508,10 +1508,13 @@ class TestMpsMps(common.TransactionCase):
         )
 
         self.env.company.manufacturing_period_to_display_year = 5
-        # choose to suggest only for first period/year (index=0).
+        # choose to suggest only for first period/year (index=1).
         # when choosing a certain period for suggestion, only last year moves are considered
-        self.mps_table.suggestion_period = '0'
-        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+            'period': 1
+        })
+        table_suggestion_wizard.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
         for i in range(self.env.company.manufacturing_period_to_display_year):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1521,9 +1524,9 @@ class TestMpsMps(common.TransactionCase):
                 # since we are choosing a certain period (first year), other periods = 0
                 self.assertEqual(table_forecast['forecast_qty'], 0)
 
-        # choose to suggest only for second period/year (index=1)
-        self.mps_table.suggestion_period = '1'
-        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        # choose to suggest only for second period/year (index=2)
+        table_suggestion_wizard.period = 2
+        table_suggestion_wizard.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
         for i in range(self.env.company.manufacturing_period_to_display_year):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1573,10 +1576,13 @@ class TestMpsMps(common.TransactionCase):
         )
 
         self.env.company.manufacturing_period_to_display_month = 25
-        # choose to suggest only for first period/month (index=0)
+        # choose to suggest only for first period/month (index=1)
         # when choosing a certain period for suggestion, only last year moves are considered
-        self.mps_table.suggestion_period = '0'
-        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+            'period': 1
+        })
+        table_suggestion_wizard.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
         for i in range(self.env.company.manufacturing_period_to_display_month):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1585,9 +1591,9 @@ class TestMpsMps(common.TransactionCase):
             else:
                 self.assertEqual(table_forecast['forecast_qty'], 0)
 
-        # choose to suggest only for third period/month (index=2)
-        self.mps_table.suggestion_period = '2'
-        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        # choose to suggest only for third period/month (index=3)
+        table_suggestion_wizard.period = 3
+        table_suggestion_wizard.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
         for i in range(self.env.company.manufacturing_period_to_display_month):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1637,10 +1643,13 @@ class TestMpsMps(common.TransactionCase):
         )
 
         self.env.company.manufacturing_period_to_display_week = 105
-        # choose the first period/week for suggestion (index=0)
+        # choose the first period/week for suggestion (index=1)
         # when choosing a certain period for suggestion, only last year moves are considered
-        self.mps_table.suggestion_period = '0'
-        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+            'period': 1
+        })
+        table_suggestion_wizard.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1649,9 +1658,9 @@ class TestMpsMps(common.TransactionCase):
             else:
                 self.assertEqual(table_forecast['forecast_qty'], 0)
 
-        # choose the third period/week for suggestion (index=2)
-        self.mps_table.suggestion_period = '2'
-        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        # choose the third period/week for suggestion (index=3)
+        table_suggestion_wizard.period = 3
+        table_suggestion_wizard.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1699,11 +1708,14 @@ class TestMpsMps(common.TransactionCase):
             [(self.table, 10)], date, to_validate=False
         )
 
-        self.env.company.manufacturing_period_to_display_day = 731
-        # choose the first period/day for suggestion (index=0)
+        self.env.company.manufacturing_period_to_display_day = 365
+        # choose the first period/day for suggestion (index=1)
         # when choosing a certain period for suggestion, only last year moves are considered
-        self.mps_table.suggestion_period = '0'
-        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+            'period': 1
+        })
+        table_suggestion_wizard.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
         for i in range(self.env.company.manufacturing_period_to_display_day):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1712,9 +1724,9 @@ class TestMpsMps(common.TransactionCase):
             else:
                 self.assertEqual(table_forecast['forecast_qty'], 0)
 
-        # choose the third period/day for suggestion (index=2)
-        self.mps_table.suggestion_period = '2'
-        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        # choose the third period/day for suggestion (index=3)
+        table_suggestion_wizard.period = 3
+        table_suggestion_wizard.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
         for i in range(self.env.company.manufacturing_period_to_display_day):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1776,8 +1788,11 @@ class TestMpsMps(common.TransactionCase):
         self.env.company.manufacturing_period_to_display_year = 5
         # we choose suggestion to be based on 'last year', so every period's suggestion
         # is taken from same period but previous year. (i.e. 2026 based on 2025 and so on)
-        self.mps_table.suggestion_based_on = 'last_year'
-        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+        })
+        table_suggestion_wizard.based_on = 'last_year'
+        table_suggestion_wizard.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
         for i in range(self.env.company.manufacturing_period_to_display_year):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1790,8 +1805,8 @@ class TestMpsMps(common.TransactionCase):
 
         # choose suggestion to be based on Actual Demand, every period's suggestion is
         # based on the present moves in that period, nothing in the past.
-        self.mps_table.suggestion_based_on = 'actual_demand'
-        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'actual_demand'
+        table_suggestion_wizard.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
         for i in range(self.env.company.manufacturing_period_to_display_year):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1805,22 +1820,22 @@ class TestMpsMps(common.TransactionCase):
         # from today and takes a ratio out of it depending on the period (year, month, week or day).
         # for example if last 30 day suggestion is 60 but my current period type is days,
         # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
-        self.mps_table.suggestion_based_on = '30_days'
-        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = '30_days'
+        table_suggestion_wizard.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
         for i in range(self.env.company.manufacturing_period_to_display_year):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 1200)
 
-        self.mps_table.suggestion_based_on = 'three_months'
-        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'three_months'
+        table_suggestion_wizard.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
         for i in range(self.env.company.manufacturing_period_to_display_year):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 760)
 
-        self.mps_table.suggestion_based_on = 'one_year'
-        self.mps_table.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'one_year'
+        table_suggestion_wizard.with_context({'period_scale': 'year'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='year')[0]
         for i in range(self.env.company.manufacturing_period_to_display_year):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1875,8 +1890,11 @@ class TestMpsMps(common.TransactionCase):
         self.env.company.manufacturing_period_to_display_month = 25
         # we choose suggestion to be based on 'last year', so every period's suggestion
         # is taken from same period but previous year. (May 2026 based on May 2025 and so on)
-        self.mps_table.suggestion_based_on = 'last_year'
-        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+        })
+        table_suggestion_wizard.based_on = 'last_year'
+        table_suggestion_wizard.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
         for i in range(self.env.company.manufacturing_period_to_display_month):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1895,8 +1913,8 @@ class TestMpsMps(common.TransactionCase):
 
         # choose suggestion to be based on Actual Demand, every period's suggestion is
         # based on the present moves in that period, nothing in the past.
-        self.mps_table.suggestion_based_on = 'actual_demand'
-        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'actual_demand'
+        table_suggestion_wizard.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
         for i in range(self.env.company.manufacturing_period_to_display_month):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1910,22 +1928,22 @@ class TestMpsMps(common.TransactionCase):
         # from today and takes a ratio out of it depending on the period (year, month, week or day).
         # for example if last 30 day suggestion is 60 but my current period type is days,
         # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
-        self.mps_table.suggestion_based_on = '30_days'
-        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = '30_days'
+        table_suggestion_wizard.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
         for i in range(self.env.company.manufacturing_period_to_display_month):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 100)
 
-        self.mps_table.suggestion_based_on = 'three_months'
-        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'three_months'
+        table_suggestion_wizard.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
         for i in range(self.env.company.manufacturing_period_to_display_month):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 64)
 
-        self.mps_table.suggestion_based_on = 'one_year'
-        self.mps_table.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'one_year'
+        table_suggestion_wizard.with_context({'period_scale': 'month'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='month')[0]
         for i in range(self.env.company.manufacturing_period_to_display_month):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1976,8 +1994,11 @@ class TestMpsMps(common.TransactionCase):
         self.env.company.manufacturing_period_to_display_week = 105
         # we choose suggestion to be based on 'last year', so every period's suggestion
         # is taken from same period but previous year. (week 4, 2026 based on week 4, 2025 and so on)
-        self.mps_table.suggestion_based_on = 'last_year'
-        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+        })
+        table_suggestion_wizard.based_on = 'last_year'
+        table_suggestion_wizard.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
@@ -1994,8 +2015,8 @@ class TestMpsMps(common.TransactionCase):
 
         # choose suggestion to be based on Actual Demand, every period's suggestion is
         # based on the present moves in that period, nothing in the past.
-        self.mps_table.suggestion_based_on = 'actual_demand'
-        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'actual_demand'
+        table_suggestion_wizard.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
@@ -2009,22 +2030,22 @@ class TestMpsMps(common.TransactionCase):
         # from today and takes a ratio out of it depending on the period (year, month, week or day).
         # for example if last 30 day suggestion is 60 but my current period type is days,
         # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
-        self.mps_table.suggestion_based_on = '30_days'
-        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = '30_days'
+        table_suggestion_wizard.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 28)
 
-        self.mps_table.suggestion_based_on = 'three_months'
-        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'three_months'
+        table_suggestion_wizard.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 17)
 
-        self.mps_table.suggestion_based_on = 'one_year'
-        self.mps_table.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'one_year'
+        table_suggestion_wizard.with_context({'period_scale': 'week'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='week')[0]
         for i in range(self.env.company.manufacturing_period_to_display_week):
             table_forecast = mps_table['forecast_ids'][i]
@@ -2073,8 +2094,11 @@ class TestMpsMps(common.TransactionCase):
         self.env.company.manufacturing_period_to_display_day = 365
         # we choose suggestion to be based on 'last year', so every period's suggestion
         # is taken from same period but previous year. (May 4, 2026 based on May 4, 2025 and so on)
-        self.mps_table.suggestion_based_on = 'last_year'
-        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard = self.env['mrp.mps.forecast.suggestion'].create({
+            'mrp_mps_id': self.mps_table.id,
+        })
+        table_suggestion_wizard.based_on = 'last_year'
+        table_suggestion_wizard.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
         for i in range(self.env.company.manufacturing_period_to_display_day):
             table_forecast = mps_table['forecast_ids'][i]
@@ -2091,8 +2115,8 @@ class TestMpsMps(common.TransactionCase):
 
         # choose suggestion to be based on Actual Demand, every period's suggestion is
         # based on the present moves in that period, nothing in the past.
-        self.mps_table.suggestion_based_on = 'actual_demand'
-        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'actual_demand'
+        table_suggestion_wizard.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
         for i in range(self.env.company.manufacturing_period_to_display_day):
             table_forecast = mps_table['forecast_ids'][i]
@@ -2106,22 +2130,22 @@ class TestMpsMps(common.TransactionCase):
         # from today and takes a ratio out of it depending on the period (year, month, week or day).
         # for example if last 30 day suggestion is 60 but my current period type is days,
         # I sould suggest (1/30 of that amount so suggestion for each period(day) = 1/30 * 60)
-        self.mps_table.suggestion_based_on = '30_days'
-        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = '30_days'
+        table_suggestion_wizard.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
         for i in range(self.env.company.manufacturing_period_to_display_day):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 4)
 
-        self.mps_table.suggestion_based_on = 'three_months'
-        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'three_months'
+        table_suggestion_wizard.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
         for i in range(self.env.company.manufacturing_period_to_display_day):
             table_forecast = mps_table['forecast_ids'][i]
             self.assertEqual(table_forecast['forecast_qty'], 3)
 
-        self.mps_table.suggestion_based_on = 'one_year'
-        self.mps_table.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
+        table_suggestion_wizard.based_on = 'one_year'
+        table_suggestion_wizard.with_context({'period_scale': 'day'}).apply_forecast_quantity_suggestion()
         mps_table = self.mps_table.get_production_schedule_view_state(period_scale='day')[0]
         for i in range(self.env.company.manufacturing_period_to_display_day):
             table_forecast = mps_table['forecast_ids'][i]

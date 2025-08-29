@@ -16,14 +16,6 @@
         <field name="view_id" ref="mrp_mps_production_schedule_form_view"/>
     </record>
 
-    <record id="action_mrp_mps_suggest_forecast_view" model="ir.actions.act_window">
-        <field name="name">Suggest Forecasted Demand</field>
-        <field name="res_model">mrp.production.schedule</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-        <field name="view_id" ref="mrp_mps_production_schedule_suggest_forecasted_view"/>
-    </record>
-
     <menuitem id="mrp_mps_menu_planning"
         name="MPS"
         sequence="3"
