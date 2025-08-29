@@ -9,17 +9,17 @@ import { SignTemplateSidebarRoleItems } from "@sign/backend_components/sign_temp
 
 export function getEmsignerRole() {
     return {
-        async hasEmsignerRole(props){
+        async getEmsignerRoleValues(props){
             const roleIds = props.signers.map(signer => signer.roleId);
             return {
-                role: await this.orm.searchCount(
+                emSignerRole: await this.orm.searchCount(
                     "sign.item.role",
                     [
                         ["id", "in", roleIds],
                         ["auth_method", "=", "emsigner"]
                     ],
                 ),
-                document: props.documents.filter(doc => !doc.deleted).length > 1 }
+                hasDocument: props.documents.filter(doc => !doc.deleted).length > 1 }
         },
     }
 }
@@ -33,8 +33,8 @@ patch(SignTemplate.prototype, {
 
     async updateDocuments() {
         await super.updateDocuments();
-        const hasEmsignerRole = await this.hasEmsignerRole(this.state);
-        await this._checkEmsignerUserWarning((hasEmsignerRole.document && hasEmsignerRole.role > 0) || hasEmsignerRole.role > 1);
+        const emsignerRoleValues = await this.getEmsignerRoleValues(this.state);
+        await this._checkEmsignerUserWarning((emsignerRoleValues.hasDocument && emsignerRoleValues.emSignerRole > 0) || emsignerRoleValues.emSignerRole > 1);
     },
 
     async _checkEmsignerUserWarning(showEmsignerWarning = false) {
@@ -89,9 +89,9 @@ patch(SignTemplateSidebarRoleItems.prototype, {
         Object.assign(this, functions);
 
         if (this.props.propsForEmsigner.signers.length > 0) {
-            this.hasEmsignerRole(this.props.propsForEmsigner)
+            this.getEmsignerRoleValues(this.props.propsForEmsigner)
             .then((result) => {
-                this.props.displayAddDocumentButton(result.role > 0);
+                this.props.displayAddDocumentButton(result.emSignerRole > 0);
             })
         };
     },
@@ -105,15 +105,16 @@ patch(SignTemplateSidebarRoleItems.prototype, {
             onRecordSaved: async ({ data }) => {
                 this.state.roleName = data.name;
                 await this.updateRoleNameAndAvatar(data);
-                const hasEmsignerRole = await this.hasEmsignerRole(this.props.propsForEmsigner);
-                if (hasEmsignerRole.role > 1 || hasEmsignerRole.document) {
+                const emsignerRoleValues = await this.getEmsignerRoleValues(this.props.propsForEmsigner);
+                // Show warning if the role is emsigner and there are multiple signers or documents
+                if ((emsignerRoleValues.hasDocument && emsignerRoleValues.emSignerRole > 0) || emsignerRoleValues.emSignerRole > 1) {
                     this.dialog.add(ConfirmationDialog, {
                         title: _t("Warning"),
                         body: _t("Aadhaar Sign works only with a single signer and document. Adding more will switch to the standard eSignature."),
                         confirmLabel: _t("Ok"),
                     });
                 }
-                this.props.displayAddDocumentButton(hasEmsignerRole.role > 0);
+                this.props.displayAddDocumentButton(emsignerRoleValues.emSignerRole > 0);
             },
         });
     }
