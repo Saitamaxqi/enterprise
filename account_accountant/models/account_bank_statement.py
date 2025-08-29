@@ -138,6 +138,10 @@ class AccountBankStatementLine(models.Model):
         :param limit_time: Maximum time allowed to run in seconds. 0 if the Cron is allowed to run without time limit.
         :param company_id: Limits the processing to statement lines related to a single company.
         """
+        if limit_time and not batch_size:
+            _logger.warning("_cron_try_auto_reconcile_statement_lines called with "
+                            "limit_time=%r but batch_size=%r won't limit anything", limit_time, batch_size)
+
         def compute_st_lines_to_reconcile(company_id=None):
             # Find the bank statement lines that are not reconciled and try to reconcile them automatically.
             # The ones that are never be processed by the CRON before are processed first.

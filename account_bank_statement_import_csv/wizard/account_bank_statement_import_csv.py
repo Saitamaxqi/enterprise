@@ -143,7 +143,7 @@ class Base_ImportImport(models.TransientModel):
                     # Manual fallback applied for non-POSIX systems where this key is disabled (set to None).
                     cron_limit_time = tools.config['limit_time_real_cron'] or -1
                     limit_time = cron_limit_time if 0 < cron_limit_time < 180 else 180
-                    statement.line_ids._cron_try_auto_reconcile_statement_lines(limit_time=limit_time)
+                    statement.line_ids._cron_try_auto_reconcile_statement_lines(batch_size=100, limit_time=limit_time)
 
             with contextlib.suppress(psycopg2.InternalError):
                 savepoint.close(rollback=dryrun)

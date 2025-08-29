@@ -91,7 +91,7 @@ class AccountJournal(models.Model):
             # Manual fallback applied for non-POSIX systems where this key is disabled (set to None).
             cron_limit_time = tools.config['limit_time_real_cron'] or -1
             limit_time = cron_limit_time if 0 < cron_limit_time < 180 else 180
-            line_to_reconcile._cron_try_auto_reconcile_statement_lines(limit_time=limit_time)
+            line_to_reconcile._cron_try_auto_reconcile_statement_lines(batch_size=100, limit_time=limit_time)
 
         result = self.env['account.bank.statement.line']._action_open_bank_reconciliation_widget(
             extra_domain=[('statement_id', 'in', statements.ids)],
