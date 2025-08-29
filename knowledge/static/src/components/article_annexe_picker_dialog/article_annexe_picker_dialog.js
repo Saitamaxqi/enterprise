@@ -6,4 +6,12 @@ export class ArticleAnnexePickerDialog extends ArticleTemplatePickerDialog {
         ...ArticleTemplatePickerDialog.components,
         NoContentHelper: ArticleAnnexePickerNoContentHelper,
     };
+
+    /**
+     * @param {Object} template
+     * @returns {boolean}
+     */
+    canDeleteTemplate(template) {
+        return false;
+    }
 }

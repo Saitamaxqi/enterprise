@@ -109,6 +109,14 @@ export class ArticleTemplatePickerDialog extends Component {
     }
 
     /**
+     * @param {Object} template
+     * @returns {boolean}
+     */
+    canDeleteTemplate(template) {
+        return user.isAdmin;
+    }
+
+    /**
      * @param {integer} articleId
      */
     async onDeleteArticle(articleId) {

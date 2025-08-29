@@ -49,7 +49,7 @@
                                     </span>
                                     <div class="flex-grow-1 text-truncate px-1" t-out="template.template_name"/>
                                     <div class="o_article_template_delete p-1"
-                                        t-if="user.isAdmin"
+                                        t-if="this.canDeleteTemplate(template)"
                                         t-on-click.stop="() => this.onDeleteTemplate(template.id)">
                                         <i class="fa fa-fw fa-trash" title="Delete Template"/>
                                     </div>
