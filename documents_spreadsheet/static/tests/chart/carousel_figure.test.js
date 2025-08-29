@@ -24,7 +24,7 @@ test("Can add an odoo chart to a carousel figure", async () => {
     expect(model.getters.getFigures(sheetId)).toHaveLength(1);
     expect(model.getters.getFigures(sheetId)[0].tag).toBe("carousel");
     expect(model.getters.getCarousel("carouselId").items).toEqual([
-        { type: "chart", chartId: chartId, carouselTitle: { text: "PartnerGraph" } },
+        { type: "chart", chartId: chartId },
     ]);
     expect(model.getters.getChartDefinition(chartId)).toMatchObject({ type: "odoo_bar" });
 });
