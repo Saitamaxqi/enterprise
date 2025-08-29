@@ -42,7 +42,10 @@ export class ArticleIndexList extends Component {
 
     /** @param {integer} articleId */
     async deleteArticle(articleId) {
-        await this.orm.unlink("knowledge.article", [articleId]);
-        await this.env.reloadArticleIndex();
+        try {
+            await this.orm.call("knowledge.article", "action_send_to_trash", [articleId]);
+        } finally {
+            await this.env.reloadArticleIndex();
+        }
     }
 }
