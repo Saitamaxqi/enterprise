@@ -46,7 +46,7 @@ registerMessageAction("log-note-direct", {
     name: _t("Log as Note"),
     onSelected: (component) =>
         component.props.thread.aiSpecialActions.logNote(component.props.message.body),
-    sequence: 30,
+    sequence: 25,
 });
 
 patch(messageActionsInternal, {
