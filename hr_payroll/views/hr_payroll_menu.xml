@@ -3,7 +3,11 @@
     <record id="hr_work_entry_enterprise.menu_hr_payroll_root" model="ir.ui.menu">
         <field name="group_ids" eval="[Command.link(ref('hr_payroll.group_hr_payroll_user'))]"/>
     </record>
-
+    <record id="action_open_employees" model="ir.actions.act_url">
+        <field name="name">Employees</field>
+        <field name="target">self</field>
+        <field name="url">/odoo/payroll/employees</field>
+    </record>
     <menuitem
         id="menu_hr_payroll_dashboard_root"
         name="Dashboard"
@@ -44,7 +48,7 @@
     <menuitem
         id="hr_menu_employees"
         name="Employees"
-        action="hr.open_view_employee_list_my"
+        action="action_open_employees"
         parent="menu_hr_payroll_employees"
         groups="hr_payroll.group_hr_payroll_user"
         sequence="10"/>
