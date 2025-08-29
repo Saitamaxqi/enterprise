@@ -11,7 +11,7 @@ patch(ChatWindow.prototype, {
     },
     async _onClose() {
         const thread = this.thread;
-        if (thread?.channel_type === "ai_chat") {
+        if (thread?.ai_agent_id) {
             await rpc(
                 "/ai/close_ai_chat", {channel_id: thread.id}
             );

@@ -34,7 +34,7 @@ class TestAIMethods(HttpCase, AICommon):
             "/ai/generate_response",
             {
                 "mail_message_id": mail_message.id,
-                "agent_partner_id": agent.partner_id.id,
+
                 "channel_id": channel.id
             }
         )
@@ -46,7 +46,6 @@ class TestAIMethods(HttpCase, AICommon):
             "/ai/post_error_message",
             {
                 "error_message": "error",
-                "agent_partner_id": agent.partner_id.id,
                 "channel_id": channel.id
             }
         )

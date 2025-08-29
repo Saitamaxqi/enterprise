@@ -1,9 +1,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import _, fields, models, api
-from odoo.fields import Domain
 from odoo.exceptions import AccessError
+from odoo.fields import Domain
 
 from odoo.addons.mail.tools.discuss import Store
+
+
+def is_ai_chat_channel(channel):
+    """Predicate to filter channels for which the channel type is 'ai_chat'.
+
+    :returns: Whether the channel is an ai_chat channel.
+    :rtype: bool
+    """
+    return channel.channel_type == "ai_chat"
 
 
 class DiscussChannel(models.Model):
@@ -20,6 +29,15 @@ class DiscussChannel(models.Model):
         ondelete={"ai_chat": "cascade"},
     )
     ai_env_context = fields.Json("Context for AI agent")
+    # Having ai_agent_id written by users can compromise the security of channels. For example, adding ai_agent_id
+    # to a channel will make it garbage collected, a channel member can unlink an ai agent from the channel, etc.
+    # Thus, the field has group fields.NO_ACCESS so that the field can only be written in controlled flows.
+    ai_agent_id = fields.Many2one("ai.agent", index="btree_not_null", groups=fields.NO_ACCESS)
+
+    _ai_channel_type_check = models.Constraint(
+        "CHECK(ai_agent_id IS NULL or channel_type = 'ai_chat' or channel_type = 'livechat')",
+        'AI Agent can only be set for ai_chat or livechat channels.',
+    )
 
     @api.model
     def create_ai_draft_channel(
@@ -63,5 +81,19 @@ class DiscussChannel(models.Model):
 
         return {"ai_channel_id": channel.id, "data": Store().add(channel).get_result(), "prompts": [prompt.name for prompt in ai_composer.available_prompts]}
 
-    def _get_ai_channel_type_domain(self):
-        return Domain('channel_type', '=', 'ai_chat')
+    @api.autovacuum
+    def _remove_ai_chat_channels(self):
+        # sudo() => ai_agent_id has group fields.NO_ACCESS and the method is only called from cron jobs.
+        self.sudo().search(
+            Domain("ai_agent_id", "!=", False)
+            & Domain('channel_type', '=', 'ai_chat')
+            & Domain('last_interest_dt', '<', '-1d')
+        ).unlink()
+
+    def _to_store_defaults(self, target):
+        return super()._to_store_defaults(target) + [Store.One("ai_agent_id", predicate=is_ai_chat_channel, sudo=True)]
+
+    def _sync_field_names(self):
+        field_names = super()._sync_field_names()
+        field_names[None].append(Store.One("ai_agent_id", predicate=is_ai_chat_channel, sudo=True))
+        return field_names

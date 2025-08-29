@@ -11,7 +11,6 @@ export class SupportAIComponent extends Component {
     static template = "ai_website_livechat.SupportAIComponent";
     static props = {
         agentId: { type: Number },
-        agentPartnerId: { type: Number },
         livechatChannelId: { type: Number, optional: true },
         chatStyle: { type: String, optional: true },
         promptPlaceholder: {type: String, optional: true },
@@ -127,7 +126,7 @@ export class SupportAIComponent extends Component {
         if(this.state.messages.length){
             this.unfreezeInput(); // Otherwise, Ask A Human and Close buttons are disabled.
         }
-        if(this.thread && this.props.chatStyle === "fullscreen" && !this.chattingWithHuman){
+        if(this.thread && this.props.chatStyle === "fullscreen" && this.thread.ai_agent_id){
             this.hideChatWindow();
         }
     }
@@ -140,7 +139,7 @@ export class SupportAIComponent extends Component {
     }
 
     processResponse(message){
-        if(this.props.chatStyle === "fullscreen" && !this.chattingWithHuman){
+        if(this.props.chatStyle === "fullscreen" && this.thread.ai_agent_id){
             let messageData = {
                 author: "assistant",
                 text: message.body,
@@ -208,13 +207,14 @@ export class SupportAIComponent extends Component {
     }
 
     async submitPrompt(ev) {
-        if(!this.props.agentId && !this.chattingWithHuman){
+        if(!this.props.agentId){
             this.notificationService.add(_t("Oops, there is no Agent linked to this block!"));
             return;
         }
-        if(!this.chattingWithHuman){
-            this.freezeInput();
+        if(this.thread && !this.thread.ai_agent_id){
+            return;
         }
+        this.freezeInput();
         if(ev){
             ev.preventDefault();
         }
@@ -230,7 +230,7 @@ export class SupportAIComponent extends Component {
         if(this.props.chatStyle === "popup"){
             this.thread.openChatWindow({ focus:true })
         }
-        if(this.props.chatStyle === "fullscreen" && !this.chattingWithHuman ){
+        if(this.props.chatStyle === "fullscreen"){
             this.state.messages.push({ author: "user", text: await prettifyMessageContent(prompt) });
             this.state.messages.push({ author: "assistant", id: "assistant_thinking" });
         }
@@ -260,7 +260,7 @@ export class SupportAIComponent extends Component {
             this.thread = await this.livechatService._createThread({ options: livechatThreadOptions })
         }
         else{
-            let channel_params = { ai_agent_partner_id: this.props.agentPartnerId }
+            let channel_params = { ai_agent_id: this.props.agentId }
             const { channel_id, store_data } = await rpc("/ai_website_livechat/create_chat_channel", channel_params);
             this.store.insert(store_data);
             this.thread = this.store.Thread.get({ id: channel_id, model: "discuss.channel" });
@@ -269,7 +269,7 @@ export class SupportAIComponent extends Component {
 
     async askHuman(ev) {
         await this.createThread()
-        if (!this.isThreadActive || this.chattingWithHuman){
+        if (!this.isThreadActive || !this.thread.ai_agent_id){
             return;
         }
         const result = await rpc("/ai_livechat/forward_operator", {
@@ -317,10 +317,6 @@ export class SupportAIComponent extends Component {
     formatContent(content) {
         const result = DOMPurify.sanitize(content);
         return markup(result);
-    }
-
-    get chattingWithHuman(){
-        return this.thread?.channel_type === 'livechat' && !this.thread?.livechat_with_ai_agent
     }
 
     get isThreadActive(){

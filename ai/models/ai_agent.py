@@ -748,15 +748,20 @@ class AIAgent(models.Model):
         return channel
 
     def _get_ai_chat_channel(self):
-        return self.env['discuss.channel'].search([
+        channels = self.env['discuss.channel'].search(Domain([
             ('is_member', '=', True),
-            ('channel_member_ids', 'any', [
-                ('partner_id', '=', self.partner_id.id)
-            ]),
             ('channel_type', '=', 'ai_chat'),
-        ])
+        ]))
+        return channels.filtered(lambda channel: channel.sudo().ai_agent_id == self)
 
     def _create_ai_chat_channel(self, channel_name=None):
+        # The method is called in three safe scenarios:
+        # - Testing: An admin is creating a channel (from the test button in the AI app) to test an AI agent's configuration.
+        # - Internal Features: An internal user is creating a channel for features like `ai_composer`.
+        # - Public Access: A public/portal user is creating a channel (through livechat for example).
+        #   The access to the agent is verified by the `_is_user_access_allowed` method.
+        # In all cases, the channel is created between the AI agent and the current user, so using sudo() for channel creation is safe.
+
         guest = self.env["mail.guest"]._get_guest_from_context()
         with mute_logger("odoo.sql_db"):
             self.env.cr.execute(SQL(
@@ -765,24 +770,17 @@ class AIAgent(models.Model):
                 self.id
             ))
 
-        channel = self.env['discuss.channel'].create({
+        channel = self.env['discuss.channel'].sudo().create({
+            "ai_agent_id": self.id,
             "channel_member_ids": [
                 Command.create({"guest_id": guest.id} if self.env.user._is_public() else {"partner_id": self.env.user.partner_id.id}),
                 Command.create({"partner_id": self.partner_id.id}),
             ],
             "channel_type": "ai_chat",
             # sudo() => visitor can set the name of the channel
-            "name": channel_name or self.partner_id.sudo().name,
+            "name": channel_name if channel_name else self.partner_id.sudo().name,
         })
         return channel
-
-    @api.model
-    def _retrieve_agent_if_access_allowed(self, agent_partner_id):
-        if self.env.user._is_public():
-            return self.env['ai.agent']
-
-        agent = self.env['ai.agent'].search([("partner_id", "=", agent_partner_id)])
-        return agent
 
     def _parse_user_message(self, mail_message):
         self.ensure_one()
@@ -826,6 +824,10 @@ class AIAgent(models.Model):
             extra_context += env_context
 
         return "\n".join(extra_context) if extra_context else ""
+
+    def _is_user_access_allowed(self):
+        self.ensure_one()
+        return self.env.user._is_internal()
 
     @ormcache('self.env.uid', 'self.env.company.id')
     def _get_available_menus(self):

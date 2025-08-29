@@ -1,6 +1,6 @@
 from textwrap import dedent
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 PREPROMPTS = {
     'livechat': dedent("""
@@ -30,25 +30,9 @@ class AIAgent(models.Model):
         comodel_name='im_livechat.channel.rule',
         inverse_name='ai_agent_id',
     )
-    public_user_access_allowed = fields.Boolean(compute='_compute_public_user_access_allowed', store=True)
 
-    @api.depends('livechat_channel_rule_ids')
-    def _compute_public_user_access_allowed(self):
-        for ai_agent in self:
-            ai_agent.public_user_access_allowed = bool(ai_agent.livechat_channel_rule_ids)
-
-    @api.model
-    def _retrieve_agent_if_access_allowed(self, agent_partner_id):
-        if not self.env.user._is_public():
-            return super()._retrieve_agent_if_access_allowed(agent_partner_id)
-
-        # Sudo => If public_user_access_allowed, then the agent can be access publicly (by livechat visitors for example).
-        if agent := self.env['ai.agent'].sudo().search([
-            ("partner_id", "=", agent_partner_id),
-            ("public_user_access_allowed", "=", True)
-        ]):
-            return agent
-        return self.env['ai.agent']
+    def _is_user_access_allowed(self):
+        return super()._is_user_access_allowed() or self.livechat_channel_rule_ids
 
     def _build_system_context(self, extra_system_context: str = ""):
         messages = super()._build_system_context(extra_system_context)

@@ -8,8 +8,10 @@ class AIWebsiteLivechatController(http.Controller):
 
     @http.route('/ai_website_livechat/create_chat_channel', methods=["POST"], type="jsonrpc", auth='public')
     @add_guest_to_context
-    def create_chat_channel_with_ai_agent(self, ai_agent_partner_id):
-        if not (ai_agent := request.env['ai.agent']._retrieve_agent_if_access_allowed(ai_agent_partner_id)):
+    def create_chat_channel_with_ai_agent(self, ai_agent_id):
+        # Sudo => access is managed through _is_user_access_allowed.
+        ai_agent = self.env['ai.agent'].sudo().search([('id', '=', ai_agent_id)])
+        if not ai_agent and not ai_agent._is_user_access_allowed():
             return
 
         store = Store()

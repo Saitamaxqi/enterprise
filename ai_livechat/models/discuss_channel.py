@@ -1,5 +1,5 @@
-from odoo import api, fields, models
-from odoo.fields import Domain
+from odoo import models
+
 from odoo.addons.mail.tools.discuss import Store
 from odoo.addons.im_livechat.models.discuss_channel import is_livechat_channel
 
@@ -7,31 +7,11 @@ from odoo.addons.im_livechat.models.discuss_channel import is_livechat_channel
 class DiscussChannel(models.Model):
     _inherit = "discuss.channel"
 
-    # compute_sudo => livechat channels can be accessed by visitors
-    livechat_with_ai_agent = fields.Boolean(compute="_compute_livechat_with_ai_agent", compute_sudo=True, store=True)
-
-    @api.depends('livechat_bot_partner_ids', 'channel_member_ids.partner_id')
-    def _compute_livechat_with_ai_agent(self):
-        old_values = {channel: channel.livechat_with_ai_agent for channel in self}
-        # livechat_bot_partner_ids, maintains a historical record of all partner_id values for bots that were members of this channel.
-        # Even if A bot is removed from the channel, its partner_id is present in livechat_bot_partner_ids.
-        current_bot_member_partner_ids = self.livechat_bot_partner_ids & self.channel_member_ids.partner_id
-        ai_agent_partner_ids = self.env["ai.agent"].search([("partner_id", "in", current_bot_member_partner_ids.ids)]).partner_id
-        for channel in self:
-            channel_bot_partner_ids = channel.livechat_bot_partner_ids & channel.channel_member_ids.partner_id
-            channel.livechat_with_ai_agent = bool(ai_agent_partner_ids & channel_bot_partner_ids)
-            if channel.livechat_with_ai_agent != old_values[channel]:
-                Store(bus_channel=channel).add(channel, "livechat_with_ai_agent").bus_send()
-
-    def _get_ai_channel_type_domain(self):
-        domain = super()._get_ai_channel_type_domain()
-        return domain | Domain([('channel_type', '=', 'livechat'), ('livechat_with_ai_agent', '=', True)])
-
     def _forward_scripted_chatbot(self, chatbot_script_id):
         # sudo - discuss.channel: let the AI Agent proceed to the forward step (change channel operator, add scripted chatbot
         # as member, remove AI Agent from channel and finally rename channel).
         channel_sudo = self.sudo()
-        ai_agent_partner_id = channel_sudo.livechat_bot_partner_ids
+        ai_agent_partner_id = channel_sudo.sudo().ai_agent_id.partner_id
 
         # add the scripted chatbot to the channel and post a "chatbot invited to the channel" notification
         channel_sudo._add_new_members_to_channel(
@@ -43,26 +23,26 @@ class DiscussChannel(models.Model):
         channel_sudo._action_unfollow(partner=ai_agent_partner_id, post_leave_message=False)
 
         # finally, rename the channel to include the scripted chatbot's name
-        channel_sudo._update_channel_info(
+        channel_sudo._update_forwarded_channel_data(
             livechat_failure="no_failure",
             livechat_operator_id=chatbot_script_id.operator_partner_id,
             operator_name=chatbot_script_id.title
         )
         posted_messages = chatbot_script_id.with_context(lang=chatbot_script_id._get_chatbot_language())._post_welcome_steps(self)
         self.channel_pin(pinned=True)
-        Store(bus_channel=self).add(self, "livechat_with_ai_agent").bus_send()
         return posted_messages
+
+    def _update_forwarded_channel_data(self, **kwargs):
+        super()._update_forwarded_channel_data(**kwargs)
+        self.sudo().ai_agent_id = False
 
     def _get_allowed_channel_member_create_params(self):
         return super()._get_allowed_channel_member_create_params() + ["ai_agent_id"]
 
-    def _store_livechat_operator_id_fields(self):
-        return super()._store_livechat_operator_id_fields() + ["im_status"]
-
     def _to_store_defaults(self, target):
-        return super()._to_store_defaults(target) + [Store.Attr("livechat_with_ai_agent", predicate=is_livechat_channel)]
+        return super()._to_store_defaults(target) + [Store.One("ai_agent_id", predicate=is_livechat_channel, sudo=True)]
 
     def _sync_field_names(self):
         field_names = super()._sync_field_names()
-        field_names[None].append(Store.Attr("livechat_with_ai_agent", predicate=is_livechat_channel))
+        field_names[None].append(Store.One("ai_agent_id", predicate=is_livechat_channel, sudo=True))
         return field_names

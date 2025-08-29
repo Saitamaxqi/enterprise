@@ -2,6 +2,23 @@ import { Plugin } from "@html_editor/plugin";
 import { registry } from "@web/core/registry";
 import { BuilderAction } from "@html_builder/core/builder_action";
 
+
+async function update_website_snippet_agent ({ ormService, newAgentId=null, oldAgentId=null }) {
+    let agent_ids = {}
+    if(newAgentId){
+        agent_ids.new_agent_id = parseInt(newAgentId);
+    }
+    if(oldAgentId){
+        agent_ids.old_agent_id = parseInt(oldAgentId);
+    }
+    await ormService.call(
+        "ai.agent",
+        "update_website_snippet_agent",
+        [],
+        agent_ids,
+    );
+}
+
 class AILivechatOptionPlugin extends Plugin {
     static id = "aiLivechatOption";
     static dependencies = ["cachedModel"];
@@ -22,7 +39,17 @@ class AILivechatOptionPlugin extends Plugin {
             SetFallbackButtonTextAction,
             SetFallbackButtonURLAction,
         },
+        on_will_remove_handlers: this.onWillRemove.bind(this),
     };
+
+    async onWillRemove(toRemoveEl) {
+        if (toRemoveEl.matches(".s_ai_livechat")) {
+            const aiAgentId = toRemoveEl.dataset.agentId;
+            if (aiAgentId){
+                await update_website_snippet_agent({ ormService: this.services.orm, oldAgentId: aiAgentId });
+            }
+        }
+    }
 }
 
 export class SetAIAgentAction extends BuilderAction {
@@ -37,53 +64,21 @@ export class SetAIAgentAction extends BuilderAction {
         return JSON.stringify({ id: parseInt(agentId) });
     }
 
-    async load ({ value }) {
-        if (!value) {
-            return;
-        }
-        value = JSON.parse(value);
-        return this.dependencies.cachedModel.ormSearchRead(
-            "ai.agent",
-            [["id", "=", parseInt(value.id)]],
-            ['partner_id']
-        );
-    }
-
-    async apply ({ editingElement, value, loadResult }) {
+    async apply ({ editingElement, value }) {
         const id = value ? JSON.parse(value).id : "";
         const oldAgentId = editingElement.dataset.agentId;
         editingElement.dataset.agentId = id;
         const livechatDataEl = editingElement.querySelector(".s_ai_livechat_data");
         livechatDataEl.setAttribute('agentId', id);
-        if (loadResult) {
-            livechatDataEl.setAttribute('agentPartnerId', loadResult[0]['partner_id'][0]);
-        }
-        this.use_agent_on_snippet({ newAgentId: id, oldAgentId: oldAgentId })
+        await update_website_snippet_agent({ ormService: this.services.orm, newAgentId: id, oldAgentId: oldAgentId })
     }
 
-    clean({ editingElement }) {
+    async clean({ editingElement }) {
         const oldAgentId = editingElement.dataset.agentId;
         editingElement.dataset.agentId = "";
         const livechatDataEl = editingElement.querySelector(".s_ai_livechat_data");
         livechatDataEl.removeAttribute('agentId');
-        livechatDataEl.removeAttribute('agentPartnerId');
-        this.use_agent_on_snippet({ oldAgentId: oldAgentId })
-    }
-
-    async use_agent_on_snippet({ newAgentId=null, oldAgentId=null }){
-        let agent_ids = {}
-        if(newAgentId){
-            agent_ids.new_agent_id = parseInt(newAgentId);
-        }
-        if(oldAgentId){
-            agent_ids.old_agent_id = parseInt(oldAgentId);
-        }
-        await this.services.orm.call(
-            "ai.agent",
-            "use_on_website_snippet",
-            [],
-            agent_ids,
-        );
+        await update_website_snippet_agent({ ormService: this.services.orm, oldAgentId: oldAgentId })
     }
 }
 

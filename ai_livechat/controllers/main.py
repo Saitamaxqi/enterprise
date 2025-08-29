@@ -5,9 +5,10 @@ from odoo import _, http
 from odoo.http import request
 from odoo.addons.mail.tools.discuss import add_guest_to_context
 from odoo.addons.mail.tools.discuss import Store
+from odoo.addons.im_livechat.controllers.main import LivechatController
 
 
-class AILivechatController(http.Controller):
+class AILivechatController(LivechatController):
 
     @http.route('/ai_livechat/forward_operator', methods=["POST"], type="jsonrpc", auth='public')
     @add_guest_to_context
@@ -29,7 +30,8 @@ class AILivechatController(http.Controller):
             return {'success': True, 'store_data': Store().add(channel).get_result()}
 
         channel.sudo()._forward_human_operator()
-        if channel.livechat_with_ai_agent:
+        # forwarding failed given that the ai agent is still a member of the channel.
+        if channel.sudo().ai_agent_id:
             return {
                 'success': False,
                 'notification': _("There is no human agent available at the moment. Please try again later."),
@@ -40,3 +42,12 @@ class AILivechatController(http.Controller):
             'notification': _("The conversation has been forwarded successfully."),
             "notification_type": "success"
         }
+
+    def _process_extra_channel_params(self, **kwargs):
+        non_persisted_channel_params, persisted_channel_params = super()._process_extra_channel_params(**kwargs)
+        # sudo() => access is managed through _is_user_access_allowed.
+        ai_agent = self.env['ai.agent'].sudo().search([('id', '=', kwargs.get('ai_agent_id'))])
+        if ai_agent and ai_agent._is_user_access_allowed():
+            non_persisted_channel_params['ai_agent_id'] = ai_agent.id
+            persisted_channel_params['ai_agent_id'] = ai_agent.id
+        return non_persisted_channel_params, persisted_channel_params

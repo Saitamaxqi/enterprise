@@ -8,14 +8,14 @@ from odoo.addons.im_livechat.tools.misc import force_guest_env
 class CorsLivechatController(AIController):
 
     @route(["/ai/cors/generate_response"], type="jsonrpc", auth="public", cors="*")
-    def cors_generate_response(self, guest_token, mail_message_id, agent_partner_id, channel_id):
+    def cors_generate_response(self, guest_token, mail_message_id, channel_id):
         force_guest_env(guest_token)
-        self.generate_response(mail_message_id, agent_partner_id, channel_id)
+        self.generate_response(mail_message_id, channel_id)
 
     @route(["/ai/cors/post_error_message"], type="jsonrpc", auth="public", cors="*")
-    def cors_post_error_message(self, guest_token, error_message, agent_partner_id, channel_id):
+    def cors_post_error_message(self, guest_token, error_message, channel_id):
         force_guest_env(guest_token)
-        self.post_error_message(error_message, agent_partner_id, channel_id)
+        self.post_error_message(error_message, channel_id)
 
     @route("/ai/cors/close_ai_chat", type="jsonrpc", auth="public", cors="*")
     def cors_close_ai_chat(self, guest_token, channel_id):

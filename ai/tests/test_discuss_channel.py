@@ -15,6 +15,7 @@ class TestDiscussChannel(HttpCase, AICommon):
         self.assertTrue(channel.is_member, "Current user should be member of the created channel")
         self.assertEqual("ai_chat", channel.channel_type, "AI channel should be of 'ai_chat' type")
         self.assertEqual(agent.partner_id.name, channel.name, "Channel should be named after the agent's name")
+        self.assertEqual(agent, channel.sudo().ai_agent_id, "ai_agent_id should be set on the newly created ai_chat channel")
 
     def test_create_ai_chat_retrieves_existing_channel(self):
         agent = self.env["ai.agent"].create({"name": "Odoo AI"})

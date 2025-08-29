@@ -15,7 +15,6 @@ export class AILivechat extends Interaction {
                     {
                         'chatStyle': el.getAttribute('chatStyle') ? el.getAttribute('chatStyle') : 'fullscreen',
                         'agentId': parseInt(el.getAttribute('agentId')),
-                        'agentPartnerId': parseInt(el.getAttribute('agentPartnerId')),
                         'livechatChannelId': parseInt(el.getAttribute('livechatChannelId')),
                         'promptPlaceholder': el.getAttribute('promptPlaceholder') ? el.getAttribute('promptPlaceholder') : _t('Ask AI'),
                         'fallbackButtonText': el.getAttribute('fallbackButtonText') ? el.getAttribute('fallbackButtonText') : _t('Contact Us'),

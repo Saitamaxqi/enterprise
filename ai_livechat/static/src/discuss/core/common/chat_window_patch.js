@@ -6,7 +6,7 @@ import { patch } from "@web/core/utils/patch";
 patch(ChatWindow.prototype, {
     get showForwardOperatorButton() {
         const thread = this.props.chatWindow.thread;
-        return Boolean(this.store.livechat_rule?.ai_agent_id) && thread.isTransient || thread.livechat_with_ai_agent;
+        return thread.channel_type === 'livechat' && thread.ai_agent_id;
     },
 
     async forwardOperator(ev) {
