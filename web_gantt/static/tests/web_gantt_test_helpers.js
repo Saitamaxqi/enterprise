@@ -472,7 +472,7 @@ function getCellPositionOffset(cell, part) {
  * @param {HTMLElement} cell
  * @param {CellHelperOptions} [options]
  */
-async function hoverCell(cell, options) {
+export async function hoverCell(cell, options) {
     const part = options?.part ?? 1;
     await hover(cell, { position: getCellPositionOffset(cell, part), relative: true });
     await animationFrame();

@@ -4,7 +4,9 @@ import { animationFrame, disableAnimations, mockDate, mockTimeZone } from "@odoo
 
 import { contains, defineParams, onRpc } from "@web/../tests/web_test_helpers";
 import { Tasks, defineGanttModels } from "./gantt_mock_models";
-import { getCell, getGridContent, mountGanttView } from "./web_gantt_test_helpers";
+import { getCell, getGridContent, hoverCell, mountGanttView } from "./web_gantt_test_helpers";
+
+import { Domain } from "@web/core/domain";
 
 describe.current.tags("desktop");
 
@@ -52,6 +54,15 @@ async function multiCreateClickAddButton() {
 
 async function multiCreatePopoverClickAddButton() {
     await click(".o_multi_create_popover .popover-footer .btn:contains(Add)");
+    await animationFrame();
+}
+
+async function selectBlock({ sourceCell, targetCell }) {
+    await hoverCell(sourceCell);
+    const { drop, moveTo } = await contains(sourceCell).drag();
+    await moveTo(targetCell);
+    await animationFrame();
+    await drop();
     await animationFrame();
 }
 
@@ -247,4 +258,29 @@ test("multi_create: render and basic creation/deletion", async () => {
             ],
         },
     ]);
+});
+
+test(`multi_create: no button "Delete" if no record selected`, async () => {
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full'}"
+                multi_create_view="multi_create_form"
+            />
+        `,
+        domain: Domain.FALSE.toList(),
+    });
+    const { rows } = getGridContent();
+    expect(rows).toEqual([{}]);
+
+    await selectBlock({
+        sourceCell: getCell("17", "December 2018"),
+        targetCell: getCell("18", "December 2018"),
+    });
+    expect(".o_selection_box").toHaveText("0\nselected");
+    expect(".o_multi_selection_buttons .btn:contains(Add)").toHaveCount(1);
+    expect(".o_multi_selection_buttons .btn .fa-trash").toHaveCount(0);
 });
