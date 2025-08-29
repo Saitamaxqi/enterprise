@@ -55,7 +55,7 @@ class AccountDebitNote(models.TransientModel):
         # The only motivation to comment it is to prevent the test to fail.
         # self.copy_lines = True if self.l10n_cl_edi_reference_doc_code == '1' else False
         default_values = super(AccountDebitNote, self)._prepare_default_values(move)
-        if move.company_id.account_fiscal_country_id.code != "CL" or not move.journal_id.l10n_latam_use_documents:
+        if move.company_id.account_fiscal_country_id.code != "CL" or not move.l10n_latam_use_documents:
             return default_values
         reverse_move_latam_doc_type = self._l10n_cl_get_reverse_doc_type(move)
         default_values['invoice_origin'] = '%s %s' % (move.l10n_latam_document_type_id.doc_code_prefix,

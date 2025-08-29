@@ -91,7 +91,7 @@ class AccountMove(models.Model):
         for move in self:
             move.l10n_uy_edi_is_needed = (
                 move.country_code == "UY"
-                and move.journal_id.l10n_latam_use_documents
+                and move.l10n_latam_use_documents
                 and move.journal_id.l10n_uy_edi_type == "electronic"
                 and move.is_sale_document()
                 and (not move.l10n_uy_edi_cfe_state or move.l10n_uy_edi_cfe_state == "error")

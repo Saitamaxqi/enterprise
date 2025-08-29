@@ -128,7 +128,7 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
 
         options['forced_domain'] = [
              *options.get('forced_domain', []),
-             ('journal_id.l10n_latam_use_documents', '!=', False),
+             ('l10n_latam_use_documents', '!=', False),
          ]
 
         tax_types = self._vat_book_get_selected_tax_types(options)
@@ -277,7 +277,7 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
         company_ids = self.env.company.ids
         selected_journal_types = self._vat_book_get_selected_tax_types(options)
         domain = [('journal_id.type', 'in', selected_journal_types),
-                  ('journal_id.l10n_latam_use_documents', '=', True), ('company_id', 'in', company_ids)]
+                  ('l10n_latam_use_documents', '=', True), ('company_id', 'in', company_ids)]
         state = options.get('all_entries') and 'all' or 'posted'
         if state and state.lower() != 'all':
             domain += [('state', '=', state)]

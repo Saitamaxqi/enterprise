@@ -913,7 +913,7 @@ class AccountMove(models.Model):
         return res
 
     def _is_argentina_electronic_invoice(self):
-        return bool(self.journal_id.l10n_latam_use_documents and self.env.company.account_fiscal_country_id.code == "AR" and self.journal_id.l10n_ar_afip_ws)
+        return bool(self.l10n_latam_use_documents and self.env.company.account_fiscal_country_id.code == "AR" and self.journal_id.l10n_ar_afip_ws)
 
     def _get_last_sequence_from_afip(self):
         """ This method is called to return the highest number for electronic invoices, it will try to connect to AFIP

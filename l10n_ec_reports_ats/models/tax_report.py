@@ -549,7 +549,7 @@ class AccountTaxReportHandler(models.AbstractModel):
                 'latam_document_type_code': invoice.l10n_latam_document_type_id.code,
                 'entity_point': invoice.journal_id.l10n_ec_entity,
                 'l10n_latam_document_number': invoice.l10n_latam_document_number,
-                'journal_entity': invoice.journal_id.l10n_latam_use_documents and invoice.journal_id.active,
+                'journal_entity': invoice.l10n_latam_use_documents and invoice.journal_id.active,
                 'tipoComprobante': self._get_l10n_latam_ats_document_code(invoice),
                 'tipoEmision': emission_type,
                 'baseNoGraIva': base_amounts['exempt_vat'] + base_amounts['not_charged_vat'],
