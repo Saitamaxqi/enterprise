@@ -174,7 +174,7 @@
     <record id="action_open_appraisal_campaign_wizard" model="ir.actions.server">
         <field name="name">Launch Campaign</field>
         <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
-        <field name="group_ids" eval="[(4, ref('hr_appraisal.group_hr_appraisal_user'))]"/>
+        <field name="group_ids" eval="[(4, ref('base.group_user'))]"/>
         <field name="binding_view_types">list</field>
         <field name="state">code</field>
         <field name="code">
@@ -192,7 +192,7 @@
                             class="btn btn-secondary"
                             string="Launch Campaign"
                             type="action"
-                            groups="hr_appraisal.group_hr_appraisal_user"
+                            groups="base.group_user"
                             display="always"/>
                 </header>
                 <field name="active" column_invisible="True"/>
@@ -289,7 +289,7 @@
                             class="btn btn-secondary"
                             string="Launch Campaign"
                             type="action"
-                            groups="hr_appraisal.group_hr_appraisal_user"
+                            groups="base.group_user"
                             display="always"/>
                 </header>
                 <templates>

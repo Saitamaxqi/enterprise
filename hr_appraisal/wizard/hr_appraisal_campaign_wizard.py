@@ -1,6 +1,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
+from odoo.fields import Domain
 
 
 class HrAppraisalCampaignWizard(models.TransientModel):
@@ -18,7 +19,7 @@ class HrAppraisalCampaignWizard(models.TransientModel):
         "\n- By Company: all employees of the specified company"
         "\n- By Department: all employees of the specified department"
         "\n- By Employee Tag: all employees of the specific employee group category")
-    employee_ids = fields.Many2many("hr.employee", string="Employees", relation="employees")
+    employee_ids = fields.Many2many("hr.employee", string="Employees", relation="employees", domain=lambda self: self._employees_domain())
     department_id = fields.Many2one("hr.department", string="Department")
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     category_id = fields.Many2one('hr.employee.category', string='Employee Tag')
@@ -32,6 +33,13 @@ class HrAppraisalCampaignWizard(models.TransientModel):
     appraisal_template_id = fields.Many2one('hr.appraisal.template', string="Appraisal Template", compute="_compute_appraisal_template", readonly=False, store=True, required=True)
     appraisal_date = fields.Date(default=fields.Date.today() + relativedelta(months=1), required=True)
     warning = fields.Char(compute="_compute_warning")
+
+    def _employees_domain(self):
+        user = self.env.user
+        domain = Domain([('company_id', 'in', self.env.companies.ids)])
+        if not user.has_group('hr_appraisal.group_hr_appraisal_user'):
+            domain &= Domain([('id', 'child_of', user.employee_id.id)])
+        return domain
 
     @api.depends('mode', 'company_id', 'department_id')
     def _compute_appraisal_template(self):
@@ -83,11 +91,11 @@ class HrAppraisalCampaignWizard(models.TransientModel):
             else:
                 managers = employee.parent_id if employee.parent_id != employee else False
 
-            similar_appraisals |= employee.mapped('appraisal_ids').filtered(lambda a:
+            similar_appraisals |= employee.sudo().mapped('appraisal_ids').filtered(lambda a:
                 a.date_close == self.appraisal_date and
                 managers and
                 set(managers.ids).issubset(a.manager_ids.ids)
-            )
+            ).sudo(False)
         return similar_appraisals
 
     def action_generate_appraisals(self):

@@ -21,6 +21,31 @@
     </record>
 
     <data noupdate="1">
+    <record id="hr_appraisal_campaign_responsible" model="ir.rule">
+        <field name="name">Appraisal Campaign wizard Responsible</field>
+        <field name="model_id" ref="model_hr_appraisal_campaign_wizard"/>
+        <field name="domain_force">[
+            ('employee_ids', 'child_of', user.employee_ids.ids)
+        ]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <record id="hr_appraisal_campaign_wizard_manager" model="ir.rule">
+        <field name="name">Admin: access appraisals campaign</field>
+        <field name="model_id" ref="model_hr_appraisal_campaign_wizard"/>
+        <field name="domain_force">[
+            (1, '=', 1)
+        ]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="groups" eval="[(4, ref('hr_appraisal.group_hr_appraisal_user'))]"/>
+    </record>
 
     <record id="hr_appraisal_all_rule" model="ir.rule">
         <field name="name">All Appraisal</field>
