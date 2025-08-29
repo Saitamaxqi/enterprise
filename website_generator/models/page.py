@@ -14,7 +14,8 @@ class WebsitePage(models.Model):
 
     def _construct_homepage(self, homepage_data):
         self._construct_page(homepage_data)
-        self._create_footer(homepage_data)
+        # Temporarily disabled due to missing integration with website options for dynamically generated footers
+        # self._create_footer(homepage_data)
         self._create_header(homepage_data)
         self._apply_website_themes(homepage_data)
         self._apply_user_values(homepage_data)
