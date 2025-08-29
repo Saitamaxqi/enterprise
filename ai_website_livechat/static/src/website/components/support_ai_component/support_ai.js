@@ -261,9 +261,15 @@ export class SupportAIComponent extends Component {
         }
         else{
             let channel_params = { ai_agent_id: this.props.agentId }
-            const { channel_id, store_data } = await rpc("/ai_website_livechat/create_chat_channel", channel_params);
-            this.store.insert(store_data);
-            this.thread = this.store.Thread.get({ id: channel_id, model: "discuss.channel" });
+            const result = await rpc("/ai_website_livechat/create_chat_channel", channel_params);
+            if (!result) {
+                return;
+            }
+            this.store.insert(result["store_data"]);
+            this.thread = this.store.Thread.get({ id: result["channel_id"], model: "discuss.channel" });
+        }
+        if (!this.thread.ai_agent_id) {
+            this.thread = undefined;
         }
     }
 

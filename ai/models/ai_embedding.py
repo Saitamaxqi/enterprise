@@ -75,7 +75,7 @@ class AIEmbedding(models.Model):
         """
         Autovacuum: Cleanup embedding chunks not associated with any agent's attachments.
         """
-        all_agents = self.env['ai.agent'].search([])
+        all_agents = self.env['ai.agent'].with_context(active_test=False).search([])
         used_attachment_ids = all_agents.attachment_ids + all_agents.url_attachment_ids
         if used_attachment_ids:
             unused_chunks = self.search([
