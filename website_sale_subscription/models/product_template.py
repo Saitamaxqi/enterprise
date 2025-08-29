@@ -139,7 +139,7 @@ class ProductTemplate(models.Model):
         requested_plan_id = requested_plan and requested_plan.isdigit() and int(requested_plan)
         requested_plan_id = requested_plan_id or request.cart.plan_id.id
         if requested_plan_id:
-            chosen_pricing = pricings.filtered(lambda pricing: pricing.plan_id.id == requested_plan_id)
+            chosen_pricing = pricings.filtered(lambda pricing: pricing.plan_id.id == requested_plan_id) or pricings[0]
         else:
             chosen_pricing = pricings[0]
 
