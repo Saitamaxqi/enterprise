@@ -238,7 +238,10 @@ patch(PosStore.prototype, {
         if (order.delivery_provider_id) {
             orderData = {
                 ...orderData,
-                delivery_provider_id: order.delivery_provider_id,
+                delivery_provider_id: {
+                    id: order.delivery_provider_id.id,
+                    name: order.delivery_provider_id.name,
+                },
                 order_otp: JSON.parse(order.delivery_json)?.order?.details?.ext_platforms?.[0].id,
                 prep_time: order.prep_time,
             };
