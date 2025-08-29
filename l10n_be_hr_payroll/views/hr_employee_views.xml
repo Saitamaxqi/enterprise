@@ -201,7 +201,7 @@
             </group>
             <xpath expr="//sheet" position="before">
                 <div role="alert" class="alert alert-danger text-center" invisible="not l10n_be_is_below_scale or country_code != 'BE'" groups="hr.group_hr_user">
-                    <field name="l10n_be_is_below_scale_warning"/>
+                    <field name="l10n_be_is_below_scale_warning" readonly="True"/>
                     <field name="l10n_be_is_below_scale" invisible="1"/>
                 </div>
             </xpath>
