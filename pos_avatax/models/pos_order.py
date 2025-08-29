@@ -15,7 +15,7 @@ class PosOrder(models.Model):
     def _get_line_data_for_external_taxes(self):
         """ account.external.tax.mixin override. """
         res = []
-        for line in self._get_lines_eligible_for_external_taxes():
+        for line in self.lines:
             # Clear all taxes (e.g. default customer tax). Not every line will be sent to the external tax
             # calculation service, those lines would keep their default taxes otherwise.
             line.tax_ids = False
