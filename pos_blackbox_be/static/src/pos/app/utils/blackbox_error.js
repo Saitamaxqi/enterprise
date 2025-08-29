@@ -26,7 +26,10 @@ export class BlackboxError extends Error {
         this.name = "BLACKBOX_ERROR";
         this.type = "blackbox";
         this.code = code;
-        this.message = message || errors[code.toString().substring(0, 3)];
+        this.message =
+            message ||
+            (code && errors[code.toString().substring(0, 3)]) ||
+            "Unknown blackbox error";
         this.retry = retry;
     }
 }
