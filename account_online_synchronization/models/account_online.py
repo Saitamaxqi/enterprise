@@ -170,9 +170,9 @@ class AccountOnlineAccount(models.Model):
         # Update connection status and get consent expiration date and create an activity on related journal
         self.account_online_link_id._update_connection_status()
 
-        # Set last_sync date (date of latest statement or accounting lock date or False)
+        # Set last_sync date (date of latest statement or one day after accounting lock date or False)
         lock_date = self.env.company._get_user_fiscal_lock_date(journal)
-        last_sync = lock_date if lock_date and lock_date > datetime.date.min else None
+        last_sync = lock_date + relativedelta(days=1) if lock_date and lock_date > datetime.date.min else None
         bnk_stmt_line = self.env['account.bank.statement.line'].search([('journal_id', 'in', self.journal_ids.ids)], order="date desc", limit=1)
         if bnk_stmt_line:
             last_sync = bnk_stmt_line.date
