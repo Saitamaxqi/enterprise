@@ -162,7 +162,7 @@ class HrEmployee(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id('hr_appraisal.action_hr_appraisal_goal')
         action.update({
             'domain': [('employee_ids', '=', self.id), ('child_ids', '=', False)],
-            'context': {'default_employee_id': self.id},
+            'context': {'default_employee_ids': self.ids},
         })
         return action
 

@@ -532,7 +532,7 @@ class HrAppraisal(models.Model):
             ],
             'target': 'current',
             'domain': [('employee_ids', '=', self.employee_id.id), ('child_ids', '=', False)],
-            'context': {'default_employee_id': self.employee_id.id},
+            'context': {'default_employee_ids': self.employee_id.ids},
         }
 
     def action_send_appraisal_request(self):
