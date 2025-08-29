@@ -207,6 +207,11 @@ test("multi_create: render and basic creation/deletion", async () => {
 
     await click(".o_multi_selection_buttons .btn .fa-trash");
     await animationFrame();
+    expect(".o_dialog .modal-body").toHaveText(
+        "Are you sure you want to delete the 5 selected records?"
+    );
+    await contains(".o_dialog footer button:contains(Ok)").click();
+    await animationFrame();
 
     gridContent = getGridContent();
     expect(gridContent.rows).toEqual([
