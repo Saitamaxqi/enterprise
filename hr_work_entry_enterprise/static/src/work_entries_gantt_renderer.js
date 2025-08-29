@@ -312,7 +312,7 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
         return this.model.multiReplaceRecords(
             multiCreateData,
             cellsInfo,
-            records.filter((r) => r.state !== "validated").map((r) => r.id)
+            records.filter((r) => r.state !== "validated")
         );
     }
 
