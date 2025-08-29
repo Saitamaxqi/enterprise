@@ -133,26 +133,6 @@ export class SpreadsheetAction extends AbstractSpreadsheetAction {
 
 registry.category("actions").add("action_open_spreadsheet", SpreadsheetAction, { force: true });
 
-topbarMenuRegistry.add("document_share", {
-    name: _t("Share"),
-    sequence: 99,
-
-    isVisible: (env) => env.isSmall && env.onShareSpreadsheet,
-    execute: (env) => env.onShareSpreadsheet(),
-});
-
-topbarMenuRegistry.add("document_freeze_share", {
-    name: _t("Freeze and share"),
-    sequence: 100,
-
-    isVisible: (env) =>
-        env.isSmall &&
-        env.isFrozenSpreadsheet &&
-        !env.isFrozenSpreadsheet() &&
-        env.onFreezeAndShareSpreadsheet,
-    execute: (env) => env.onFreezeAndShareSpreadsheet(),
-});
-
 topbarMenuRegistry.addChild("move_to_trash", ["file"], {
     name: _t("Move to trash"),
     sequence: 80,
