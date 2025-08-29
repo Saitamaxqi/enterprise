@@ -4,10 +4,9 @@ export class WorkEntriesMultiSelectionButtons extends WorkEntryCalendarMultiSele
     /**
      * @override
      */
-    createFakeMultiCreateData(workEntryType) {
-        const multiCreateData = super.createFakeMultiCreateData(workEntryType);
-        delete multiCreateData.record.data.employee_id;
-        delete multiCreateData.record.fields.employee_id;
-        return multiCreateData;
+    makeValues(workEntryTypeId) {
+        const values = super.makeValues(workEntryTypeId);
+        delete values.employee_id;
+        return values;
     }
 }

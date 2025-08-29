@@ -1,13 +1,12 @@
-import { formatFloatTime } from "@web/views/fields/formatters";
-import { WorkEntriesGanttPopover } from "./work_entries_gantt_popover";
 import { HrGanttRenderer } from "@hr_gantt/hr_gantt_renderer";
-import { _t } from "@web/core/l10n/translation";
 import { WorkEntriesMultiSelectionButtons } from "@hr_work_entry_enterprise/work_entries_multi_selection_buttons";
-import { onWillRender, onWillStart } from "@odoo/owl";
-import { user } from "@web/core/user";
+import { onWillStart } from "@odoo/owl";
 import { Domain } from "@web/core/domain";
+import { serializeDate } from "@web/core/l10n/dates";
+import { _t } from "@web/core/l10n/translation";
+import { formatFloatTime } from "@web/views/fields/formatters";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
-const { DateTime } = luxon;
+import { WorkEntriesGanttPopover } from "./work_entries_gantt_popover";
 
 export class WorkEntriesGanttRenderer extends HrGanttRenderer {
     static pillTemplate = "hr_work_entry_enterprise.WorkEntriesGanttRenderer.Pill";
@@ -24,9 +23,9 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
             const contracts = await this.orm.formattedReadGroup(
                 "hr.version",
                 Domain.and([
-                    [["contract_date_start", "<", globalStop.toISODate()]],
+                    [["contract_date_start", "<", serializeDate(globalStop)]],
                     Domain.or([
-                        [["contract_date_end", ">", globalStart.toISODate()]],
+                        [["contract_date_end", ">", serializeDate(globalStart)]],
                         [["contract_date_end", "=", false]],
                     ]),
                 ]).toList(),
@@ -42,52 +41,22 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
                 this.contractsByEmployee.get(employeeId).push(contract);
             }
         });
-        onWillRender(async () => {
-            const userFavoritesWorkEntriesIds = await this.orm.formattedReadGroup(
-                "hr.work.entry",
-                [
-                    ["create_uid", "=", user.userId],
-                    ["create_date", ">", DateTime.local().minus({ months: 3 }).toISODate()],
-                ],
-                ["work_entry_type_id", "create_date:day"],
-                [],
-                {
-                    order: "create_date:day desc",
-                    limit: 6,
-                }
-            );
-            this.userFavoritesWorkEntries = await this.orm.read(
-                "hr.work.entry.type",
-                userFavoritesWorkEntriesIds.map((r) => r.work_entry_type_id[0]),
-                ["display_name", "display_code", "color"]
-            );
-            this.userFavoritesWorkEntries = this.userFavoritesWorkEntries.sort((a, b) =>
-                a.display_code
-                    ? a.display_code.localeCompare(b.display_code)
-                    : a.display_name.localeCompare(b.display_name)
-            );
-        });
     }
 
     /**
      * @override
      */
     getRowTypeHeight(type) {
-        return {
-            t0: 24,
-            t1: 45,
-            t2: 10,
-        }[type];
+        return { t0: 24, t1: 45, t2: 10 }[type];
     }
 
     /**
      * @override
      */
     getDurationStr(record) {
-        const durationStr = formatFloatTime(record.duration, {
+        return formatFloatTime(record.duration, {
             noLeadingZeroHour: true,
         }).replace(/(:00|:)/g, "h");
-        return `${durationStr}`;
     }
 
     /**
@@ -97,35 +66,26 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
         const { computePillDisplayName, scale } = this.model.metaData;
         const { id: scaleId } = scale;
         const { record } = pill;
-
         if (!computePillDisplayName) {
             return record.display_name;
         }
-
-        /** @type {string[]} */
-        const labels = [];
         if (scaleId === "month") {
-            labels.push(record.display_code);
-        } else if (scaleId === "week") {
-            labels.push(record.work_entry_type_id.display_name);
+            return record.display_code || "";
         }
-
-        /** @type {string[]} */
-        const labelElements = [labels.join(" - ")];
-
-        return labelElements.filter((el) => !!el).join(" ");
+        if (scaleId === "week") {
+            return record.work_entry_type_id.display_name || "";
+        }
+        return "";
     }
 
     /**
      * @override
      */
     enrichPill(pill) {
-        pill = super.enrichPill(pill);
-        return {
-            ...pill,
-            subName: this.getDurationStr(pill.record),
-            className: pill.className + " justify-content-center flex-column",
-        };
+        const enrichedPill = super.enrichPill(pill);
+        enrichedPill.subName = this.getDurationStr(pill.record);
+        enrichedPill.className += ` justify-content-center flex-column`;
+        return enrichedPill
     }
 
     /**
@@ -222,109 +182,77 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
         };
     }
 
-    getSelectedRecords({ startCol, endCol, startRow, endRow }) {
-        const records = [];
-        for (const pill of Object.values(this.pills)) {
-            const row = this.rowByIds[pill.rowId];
-            if (
-                row.isGroup ||
-                this.getFirstGridCol(pill) >= endCol ||
-                this.getLastGridCol(pill) <= startCol ||
-                this.getFirstGridRow(pill) >= endRow ||
-                this.getLastGridRow(pill) <= startRow
-            ) {
-                continue;
+    getSelectedRecords(selectedCells, predicate) {
+        const records = new Set();
+        for (const selectedCell of selectedCells) {
+            const recordsInSelectedCell = this.mappingCellToRecords[selectedCell];
+            for (const record of recordsInSelectedCell || []) {
+                if (predicate(record)) {
+                    records.add(record);
+                }
             }
-            records.push(pill.record);
         }
-        return records;
+        return [...records];
     }
 
     getCellsInfoInContract(cellsInfo) {
         return cellsInfo.filter((c) => {
             const { employee_id } = JSON.parse(c.rowId)[0];
-            const startISO = c.start.toISODate();
+            const start = serializeDate(c.start);
             const contracts = this.contractsByEmployee.get(employee_id[0]);
-            if (!contracts) {
-                return false;
-            }
-            return contracts.some(
+            return (contracts || []).some(
                 (c) =>
-                    c["contract_date_start:day"][0] <= startISO &&
-                    (startISO <= c["contract_date_end:day"][0] || !c["contract_date_end:day"][0])
+                    c["contract_date_start:day"][0] <= start &&
+                    (start <= c["contract_date_end:day"][0] || !c["contract_date_end:day"][0])
             );
         });
     }
 
-    getCellsInfoWithoutValidatedWorkEntry(cellsInfo, records) {
-        return cellsInfo.filter(
-            (c) =>
-                !records
-                    .filter((r) => r.state === "validated")
-                    .map((r) => `${r.employee_id.id}|${r.date.toISODate()}`)
-                    .includes(`${JSON.parse(c.rowId)[0].employee_id[0]}|${c.start.toISODate()}`)
-        );
+    getCellsInfoWithoutValidatedWorkEntry(selectedCells) {
+        const cellsWithoutValidatedWorkEntry = [];
+        for (const selectedCell of selectedCells) {
+            const recordsInSelectedCell = this.mappingCellToRecords[selectedCell];
+            if ((recordsInSelectedCell || []).some((r) => r.state === "validated")) {
+                continue;
+            }
+            cellsWithoutValidatedWorkEntry.push(selectedCell);
+        }
+        return this.getCellsInfo(cellsWithoutValidatedWorkEntry);
     }
 
     /**
      * @override
      */
-    updateMultiSelection({ startCol, endCol, startRow, endRow }) {
+    updateMultiSelection() {
         super.updateMultiSelection(...arguments);
-        this.multiSelectionButtonsReactive.userFavoritesWorkEntries = this.userFavoritesWorkEntries;
-        this.multiSelectionButtonsReactive.selection = this.getSelectedRecords(this.blockBounds);
-        this.multiSelectionButtonsReactive.onQuickReplace = (multiCreateData) => {
-            this.onMultiReplace(multiCreateData, this.blockBounds);
+        this.multiSelectionButtonsReactive.userFavoritesWorkEntries = this.model.userFavoritesWorkEntries;
+        this.multiSelectionButtonsReactive.onQuickReplace = (values) => {
+            this.onMultiReplace(values, this.selectedCells);
         };
         this.multiSelectionButtonsReactive.onQuickReset = () => {
-            this.onResetWorkEntries(this.blockBounds);
+            this.onResetWorkEntries(this.selectedCells);
         };
     }
 
     /**
      * @override
      */
-    onMultiCreate(multiCreateData, { startCol, endCol, startRow, endRow }) {
-        const cellsInfo = this.getCellsInfoInContract(
-            this.getCellsInfo({ startCol, endCol, startRow, endRow })
-        );
+    onMultiCreate(multiCreateData, selectedCells) {
+        const cellsInfo = this.getCellsInfoInContract(this.getCellsInfo(selectedCells));
         return this.model.multiCreateRecords(multiCreateData, cellsInfo);
     }
 
-    /**
-     * @override
-     */
-    onMultiDelete({ startCol, endCol, startRow, endRow }) {
-        const records = this.getSelectedRecords({ startCol, endCol, startRow, endRow });
-        return this.model.unlinkRecords(
-            records.filter((r) => r.state !== "validated").map((r) => r.id)
-        );
-    }
-
-    onMultiReplace(multiCreateData, { startCol, endCol, startRow, endRow }) {
-        const records = this.getSelectedRecords({ startCol, endCol, startRow, endRow });
+    onMultiReplace(values, selectedCells) {
         const cellsInfo = this.getCellsInfoInContract(
-            this.getCellsInfoWithoutValidatedWorkEntry(
-                this.getCellsInfo({ startCol, endCol, startRow, endRow }),
-                records
-            )
+            this.getCellsInfoWithoutValidatedWorkEntry(selectedCells)
         );
-        return this.model.multiReplaceRecords(
-            multiCreateData,
-            cellsInfo,
-            records.filter((r) => r.state !== "validated")
-        );
+        const records = this.getSelectedRecords(selectedCells, (r) => r.state !== "validated");
+        return this.model.multiReplaceRecords(values, cellsInfo, records);
     }
 
-    onResetWorkEntries({ startCol, endCol, startRow, endRow }) {
-        const records = this.getSelectedRecords({ startCol, endCol, startRow, endRow });
-        const cellsInfo = this.getCellsInfoWithoutValidatedWorkEntry(
-            this.getCellsInfo({ startCol, endCol, startRow, endRow }),
-            records
-        );
-        this.model.resetWorkEntries(
-            cellsInfo,
-            records.filter((r) => r.state !== "validated").map((r) => r.id)
-        );
+    onResetWorkEntries(selectedCells) {
+        const cellsInfo = this.getCellsInfoWithoutValidatedWorkEntry(selectedCells);
+        const recordIds = this.getSelectedRecordIds(selectedCells, (r) => r.state !== "validated");
+        this.model.resetWorkEntries(cellsInfo, recordIds);
     }
 }

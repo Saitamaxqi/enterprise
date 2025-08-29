@@ -565,40 +565,77 @@ export class GanttRenderer extends Component {
         this.cellContainerRef.el.append(this.cellGhost);
     }
 
+    drawCellGhosts(selectedCells) {
+        this.removeCellGhosts();
+        const rows = [];
+        const columns = [];
+        for (const selectedCell of selectedCells) {
+            const clone = this.cellGhost.cloneNode();
+            const { startRow, endRow, startCol, endCol } = this.getBlock(selectedCell);
+            const row = [startRow, endRow];
+            const column = [startCol, endCol];
+            clone.style = this.getGridPosition({ row, column });
+            this.cellContainerRef.el.append(clone);
+            rows.push(...row);
+            columns.push(...column);
+        }
+        this.addStickyCoordinates(rows, columns);
+    }
+
+    removeCellGhosts() {
+        for (const ghost of this.gridRef.el.querySelectorAll(".o_cell_ghost")) {
+            ghost.remove();
+        }
+        this.removeStickyCoordinates();
+    }
+
     removeCellGhost() {
         this.cellGhost.remove();
         this.removeStickyCoordinates();
     }
 
-    updateMultiSelection({ startCol, endCol, startRow, endRow }) {
-        this.multiSelectionButtonsReactive.visible = true;
-        this.blockBounds = { startCol, endCol, startRow, endRow };
+    getAllCells(cells, action) {
+        switch (action) {
+            case "add":
+                return this.selectedCells.union(cells);
+            case "toggle":
+                return this.selectedCells.symmetricDifference(cells);
+            case "replace":
+                return cells;
+        }
+    }
+
+    updateMultiSelection({ startCol, endCol, startRow, endRow }, action) {
+        const cells = this.getCellsInBlock({ startCol, endCol, startRow, endRow });
+        this.selectedCells = this.getAllCells(cells, action);
+        this.multiSelectionButtonsReactive.visible = Boolean(this.selectedCells.size);
         this.multiSelectionButtonsReactive.nbSelected = this.getSelectedRecordIds(
-            this.blockBounds
+            this.selectedCells
         ).length;
     }
 
     cleanMultiSelection() {
+        this.selectedCells = new Set();
         this.multiSelectionButtonsReactive.visible = false;
-        this.blockBounds = null;
-        this.removeCellGhost();
+        this.multiSelectionButtonsReactive.nbSelected = 0;
+        this.removeCellGhosts();
     }
 
     prepareSelectionFeature() {
         const scale = () => this.model.metaData.scale;
         const getDatetime = (col) => this.getSubColumnFromColNumber(col).start;
 
-        this.blockBounds = null;
+        this.selectedCells = new Set();
         this.cellGhost = document.createElement("div");
-        this.cellGhost.classList.add("o_gantt_cell", "o_drag_hover", "pe-none");
+        this.cellGhost.classList.add("o_gantt_cell", "o_drag_hover", "o_cell_ghost", "pe-none");
         this.multiSelectionButtonsReactive = useMultiSelectionButtons({
             onCancel: this.cleanMultiSelection.bind(this),
             onAdd: (multiCreateData) => {
-                this.onMultiCreate(multiCreateData, this.blockBounds);
+                this.onMultiCreate(multiCreateData, this.selectedCells);
                 this.cleanMultiSelection();
             },
             onDelete: () => {
-                this.onMultiDelete(this.blockBounds);
+                this.onMultiDelete(this.selectedCells);
                 this.cleanMultiSelection();
             },
             nbSelected: 0,
@@ -609,11 +646,15 @@ export class GanttRenderer extends Component {
             context: this.model.searchParams.context,
         });
 
+        let action = null;
         const update = ({ startCol, endCol, startRow, endRow }) => {
-            this.appendCellGhost({ startCol, endCol, startRow, endRow });
             if (this.model.hasMultiCreate) {
+                const cells = this.getCellsInBlock({ startCol, endCol, startRow, endRow });
+                const selectedCells = this.getAllCells(cells, action);
+                this.drawCellGhosts(selectedCells);
                 return;
             }
+            this.appendCellGhost({ startCol, endCol, startRow, endRow });
             const startDate = getDatetime(startCol);
             const stopDate = getDatetime(endCol);
             this.updateBadges(
@@ -641,16 +682,20 @@ export class GanttRenderer extends Component {
             hasMultiCreate: () => this.model.hasMultiCreate,
             rtl,
             scale,
-            onDragStart: update,
+            onDragStart: ({ startCol, endCol, startRow, endRow }) => {
+                action = this.ctrlPressed ? "add" : "replace";
+                update({ startCol, endCol, startRow, endRow });
+            },
             onDrag: update,
             onDrop: ({ rowId, startCol, endCol, startRow, endRow }) => {
                 if (this.model.hasMultiCreate) {
-                    this.updateMultiSelection({ startCol, endCol, startRow, endRow });
+                    this.updateMultiSelection({ startCol, endCol, startRow, endRow }, action);
                 } else {
                     this.removeCellGhost();
                     this.clearBadges();
                     this.onCreate(rowId, startCol, endCol - 1);
                 }
+                action = null;
             },
         });
 
@@ -1181,6 +1226,8 @@ export class GanttRenderer extends Component {
             /** @type {Record<PillId, ConnectorId>} */
             this.mappingPillToConnectors = {};
         }
+
+        this.mappingCellToRecords = {};
 
         const { displayUnavailability, globalStart, globalStop, scale, startDate, stopDate } =
             this.model.metaData;
@@ -1900,13 +1947,18 @@ export class GanttRenderer extends Component {
         return subColumn;
     }
 
+    getColumnIndexFromColNumber(col) {
+        const { cellPart } = this.model.metaData.scale;
+        const delta = (col - 1) % cellPart;
+        return (col - 1 - delta) / cellPart;
+    }
+
     getColumnFromColNumber(col) {
         let column = this.mappingColToColumn.get(col);
         if (!column) {
             const { globalStart, scale } = this.model.metaData;
-            const { interval, cellPart } = scale;
-            const delta = (col - 1) % cellPart;
-            const columnIndex = (col - 1 - delta) / cellPart;
+            const { interval } = scale;
+            const columnIndex = this.getColumnIndexFromColNumber(col);
             const start = globalStart.plus({ [interval]: columnIndex });
             const stop = start.endOf(interval);
             column = { start, stop };
@@ -2228,11 +2280,7 @@ export class GanttRenderer extends Component {
      * @returns {number}
      */
     getRowTypeHeight(type) {
-        return {
-            t0: 24,
-            t1: 25,
-            t2: 10,
-        }[type];
+        return { t0: 24, t1: 25, t2: 10 }[type];
     }
 
     getRowTitleStyle(row) {
@@ -2515,6 +2563,10 @@ export class GanttRenderer extends Component {
             this.pushGridRows(gridRowTypes);
         }
 
+        const subRowsCount = Object.values(gridRowTypes).reduce((acc, val) => acc + val, 0);
+        const gridRow = [this.currentGridRow, this.currentGridRow + subRowsCount];
+        const subKey = `${gridRow[0]}_${gridRow[1]}`;
+
         for (const rowPill of rowPills) {
             rowPill.id = `__pill__${this.nextPillId++}`;
             const pillFirstRow = this.currentGridRow + rowPill.level;
@@ -2537,6 +2589,16 @@ export class GanttRenderer extends Component {
                     }
                     this.mappingRowToPillsByRecord[id][record.id] = rowPill;
                 }
+                if (this.model.hasMultiCreate) {
+                    const [firstRow, lastRow] = rowPill.grid.column;
+                    for (let col = firstRow; col < lastRow; col++) {
+                        const key = `${subKey}_${col}_${col + 1}`;
+                        if (!this.mappingCellToRecords[key]) {
+                            this.mappingCellToRecords[key] = [];
+                        }
+                        this.mappingCellToRecords[key].push(rowPill.record);
+                    }
+                }
             }
             rowPill.rowId = id;
             this.pills[rowPill.id] = rowPill;
@@ -2544,7 +2606,6 @@ export class GanttRenderer extends Component {
 
         this.rowPills[id] = rowPills; // all row pills
 
-        const subRowsCount = Object.values(gridRowTypes).reduce((acc, val) => acc + val, 0);
         /** @type {Row} */
         const processedRow = {
             cellColors: {},
@@ -2556,9 +2617,7 @@ export class GanttRenderer extends Component {
             name,
             progressBar,
             resId,
-            grid: {
-                row: [this.currentGridRow, this.currentGridRow + subRowsCount],
-            },
+            grid: { row: gridRow },
         };
         if (displayUnavailability && !isGroup) {
             processedRow.unavailabilities = this.getRowUnavailabilities(
@@ -2938,6 +2997,7 @@ export class GanttRenderer extends Component {
         const { startIndex, stopIndex } = this.foldableColumnsMapping[column.index];
         this.offHoursState.foldedColumns.fill(fold ? 1 : 0, startIndex, stopIndex + 1);
         this.computeFoldedGrid();
+        this.cleanMultiSelection();
     }
 
     toggleCollapsableColumnHeaderHighlighting(collapsableColumnHeader) {
@@ -2988,30 +3048,61 @@ export class GanttRenderer extends Component {
     // Handlers
     //-------------------------------------------------------------------------
 
-    getSelectedRecordIds({ startCol, endCol, startRow, endRow }) {
-        const ids = [];
-        for (const pill of Object.values(this.pills)) {
-            const row = this.rowByIds[pill.rowId];
-            if (
-                row.isGroup ||
-                this.getFirstGridCol(pill) >= endCol ||
-                this.getLastGridCol(pill) <= startCol ||
-                this.getFirstGridRow(pill) >= endRow ||
-                this.getLastGridRow(pill) <= startRow
-            ) {
-                continue;
+    getSelectedRecordIds(selectedCells, predicate = () => true) {
+        const ids = new Set();
+        for (const selectedCell of selectedCells) {
+            const recordsInSelectedCell = this.mappingCellToRecords[selectedCell];
+            for (const record of recordsInSelectedCell || []) {
+                if (predicate(record)) {
+                    ids.add(record.id);
+                }
             }
-            ids.push(pill.record.id);
         }
-        return ids;
+        return [...ids];
     }
 
-    onMultiDelete({ startCol, endCol, startRow, endRow }) {
-        const ids = this.getSelectedRecordIds({ startCol, endCol, startRow, endRow });
+    onMultiDelete(selectedCells) {
+        const ids = this.getSelectedRecordIds(selectedCells);
         return this.model.unlinkRecords(ids);
     }
 
-    getCellsInfo({ startCol, endCol, startRow, endRow }) {
+    getCellsInBlock(block) {
+        const { startCol, endCol, startRow, endRow } = block;
+        const gridRowByFirstRow = {};
+        for (const row of this.rows) {
+            const gridRow = row.grid.row;
+            const [first] = gridRow;
+            if (first >= endRow) {
+                break;
+            }
+            if (startRow <= first) {
+                gridRowByFirstRow[first] = gridRow;
+            }
+        }
+        const notFoldedCols = new Set();
+        for (let col = startCol; col < endCol; col++) {
+            const columnIndex = this.getColumnIndexFromColNumber(col);
+            const isFolded = Boolean(this.offHoursState.foldedColumns?.[columnIndex]);
+            if (!isFolded) {
+                notFoldedCols.add(col);
+            }
+        }
+        const cells = new Set();
+        for (const gridRow of Object.values(gridRowByFirstRow)) {
+            const subKey = `${gridRow[0]}_${gridRow[1]}`;
+            for (const col of notFoldedCols) {
+                cells.add(`${subKey}_${col}_${col + 1}`);
+            }
+        }
+        return cells;
+    }
+
+    getBlock(selectedCell) {
+        const [startRow, endRow, startCol, endCol] = selectedCell.split("_");
+        return { startCol: +startCol, endCol: +endCol, startRow: +startRow, endRow: +endRow };
+    }
+
+    getCellsInfo(selectedCells) {
         const cellsInfo = [];
         const rowIdsByFirstRow = {};
         for (const row of this.rows) {
@@ -3020,33 +3111,41 @@ export class GanttRenderer extends Component {
                 rowIdsByFirstRow[first] = row.id;
             }
         }
-        for (let col = startCol; col < endCol; col++) {
-            let { start, stop } = this.getSubColumnFromColNumber(col);
-            ({ start, stop } = this.normalizeTimeRange(start, stop));
-            for (let row = startRow; row < endRow; row++) {
-                const rowId = rowIdsByFirstRow[row];
-                if (!rowId) {
-                    continue;
-                }
-                cellsInfo.push({ rowId, start, stop });
+        const colsInfo = {};
+        for (const selectedCell of selectedCells) {
+            const { startRow, startCol } = this.getBlock(selectedCell);
+            const rowId = rowIdsByFirstRow[startRow];
+            if (!rowId) {
+                continue;
             }
+            if (!colsInfo[startCol]) {
+                let { start, stop } = this.getSubColumnFromColNumber(startCol);
+                ({ start, stop } = this.normalizeTimeRange(start, stop));
+                colsInfo[startCol] = { start, stop };
+            }
+            const { start, stop } = colsInfo[startCol];
+            cellsInfo.push({ rowId, start, stop });
         }
         return cellsInfo;
     }
 
-    onMultiCreate(multiCreateData, { startCol, endCol, startRow, endRow }) {
-        const cellsInfo = this.getCellsInfo({ startCol, endCol, startRow, endRow });
+    onMultiCreate(multiCreateData, selectedCells) {
+        const cellsInfo = this.getCellsInfo(selectedCells);
         return this.model.multiCreateRecords(multiCreateData, cellsInfo);
     }
 
     onCellClicked(rowId, column, row) {
         const startCol = column.grid.column[0];
         if (this.model.hasMultiCreate) {
+            if (column.isFolded) {
+                return;
+            }
             const endCol = startCol + this.model.metaData.scale.cellPart;
             const [startRow, endRow] = row;
-            const cellBounds = { startCol, endCol, startRow, endRow };
-            this.appendCellGhost(cellBounds);
-            this.updateMultiSelection(cellBounds);
+            const block = { startCol, endCol, startRow, endRow };
+            const action = this.ctrlPressed ? "toggle" : "replace";
+            this.updateMultiSelection(block, action);
+            this.drawCellGhosts(this.selectedCells);
             return;
         }
         if (!this.preventClick) {
@@ -3235,6 +3334,7 @@ export class GanttRenderer extends Component {
             this.prevDragAction =
                 this.interaction.dragAction === "copy" ? "reschedule" : this.interaction.dragAction;
             this.interaction.dragAction = "copy";
+            this.ctrlPressed = true;
         }
     }
 
@@ -3244,6 +3344,7 @@ export class GanttRenderer extends Component {
     onWindowKeyUp(ev) {
         if (ev.key === "Control") {
             this.interaction.dragAction = this.prevDragAction || "reschedule";
+            this.ctrlPressed = false;
         }
     }
 }

@@ -1,6 +1,9 @@
+import { serializeDate } from "@web/core/l10n/dates";
+import { user } from "@web/core/user";
 import { localStartOf } from "@web_gantt/gantt_helpers";
 import { GanttModel } from "@web_gantt/gantt_model";
-import { serializeDate } from "@web/core/l10n/dates";
+
+const { DateTime } = luxon;
 
 export class WorkEntriesGanttModel extends GanttModel {
     _getGroupedBy() {
@@ -19,25 +22,24 @@ export class WorkEntriesGanttModel extends GanttModel {
     }
 
     async resetWorkEntries(cellsInfo, recordIds) {
-        const cellsFormattedData = new Set();
-        for (const { start, stop, rowId } of cellsInfo) {
-            const schedule = this.getSchedule({ start, stop, rowId });
-            cellsFormattedData.add({ date: schedule.date, employee_id: schedule.employee_id });
+        const cellsFormattedData = [];
+        for (const { start, rowId } of cellsInfo) {
+            const schedule = this.getSchedule({ start, rowId });
+            cellsFormattedData.push({ date: schedule.date, employee_id: schedule.employee_id });
         }
         await this.orm.call("hr.work.entry.regeneration.wizard", "regenerate_work_entries", [
             [],
-            [...cellsFormattedData],
+            cellsFormattedData,
             recordIds,
         ]);
         await this.fetchData();
     }
 
-    async multiReplaceRecords(multiCreateData, cellsInfo, records) {
+    async multiReplaceRecords(values, cellsInfo, records) {
         if (!cellsInfo.length) {
             return;
         }
         const new_records = [];
-        const values = await multiCreateData.record.getChanges();
         const quickreplace = (values.duration < 0);
         const newly_generated_entries = [];
         for (const { start, stop, rowId } of cellsInfo) {
@@ -93,6 +95,39 @@ export class WorkEntriesGanttModel extends GanttModel {
                 serializeDate(end),
             ]);
         }
-        await super._fetchData(...arguments);
+        await Promise.all([
+            super._fetchData(...arguments),
+            this._fetchUserFavoritesWorkEntries(),
+        ]);
+    }
+
+    async _fetchUserFavoritesWorkEntries() {
+        const userFavoritesWorkEntriesIds = await this.orm.formattedReadGroup(
+            "hr.work.entry",
+            [
+                ["create_uid", "=", user.userId],
+                ["create_date", ">", serializeDate(DateTime.local().minus({ months: 3 }))],
+            ],
+            ["work_entry_type_id", "create_date:day"],
+            [],
+            {
+                order: "create_date:day desc",
+                limit: 6,
+            }
+        );
+        if (userFavoritesWorkEntriesIds.length) {
+            this.userFavoritesWorkEntries = await this.orm.read(
+                "hr.work.entry.type",
+                userFavoritesWorkEntriesIds.map((r) => r.work_entry_type_id[0]),
+                ["display_name", "display_code", "color"]
+            );
+            this.userFavoritesWorkEntries = this.userFavoritesWorkEntries.sort((a, b) =>
+                a.display_code
+                    ? a.display_code.localeCompare(b.display_code)
+                    : a.display_name.localeCompare(b.display_name)
+            );
+        } else {
+            this.userFavoritesWorkEntries = [];
+        }
     }
 }
