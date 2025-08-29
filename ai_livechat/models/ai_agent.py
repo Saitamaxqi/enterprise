@@ -9,16 +9,6 @@ PREPROMPTS = {
           User: "How do I reset my password?"
           Your Response: "To reset your password, navigate to the login page and click 'Forgot Password'. Follow the prompts to receive a reset link via email."
         - Give short concise answers.
-        - When generating responses that include references, follow these strict rules:
-          Only include URLs as references.
-          Do not include or mention PDF attachments or local file names (e.g., first_document.pdf, internal_notes.pdf) in the list of references or anywhere in the response.
-          If both a web URL and a PDF attachment contain relevant content, cite only the web URL.
-          For example, given:
-            first_document.pdf (local or attached file)
-            https://www.odoo.com/help (web URL)
-            You must reference only https://www.odoo.com/help.
-
-          Maintain a clean and minimal reference section that includes only valid, publicly accessible URLs.
     """).strip(),
 }
 

@@ -6,8 +6,6 @@ import { after } from "@html_builder/utils/option_sequence";
 import { WEBSITE_BACKGROUND_OPTIONS } from "@website/builder/option_sequence";
 import { AILivechatOption } from "./ai_livechat_option";
 
-
-
 async function update_website_snippet_agent ({ ormService, newAgentId=null, oldAgentId=null }) {
     let agent_ids = {}
     if(newAgentId){
@@ -26,7 +24,6 @@ async function update_website_snippet_agent ({ ormService, newAgentId=null, oldA
 
 class AILivechatOptionPlugin extends Plugin {
     static id = "aiLivechatOption";
-    static dependencies = ["cachedModel"];
 
     resources = {
         so_content_addition_selector: [".s_ai_livechat"],
@@ -46,8 +43,22 @@ class AILivechatOptionPlugin extends Plugin {
             SetFallbackButtonTextAction,
             SetFallbackButtonURLAction,
         },
+        on_snippet_dropped_handlers: this.onSnippetDropped.bind(this),
         on_will_remove_handlers: this.onWillRemove.bind(this),
     };
+
+    async onSnippetDropped({ snippetEl }) {
+        if (snippetEl.matches('.s_ai_livechat')) {
+            const aiAgentId = await this.services.orm.search(
+                "ai.agent",
+                ["|", ["livechat_channel_rule_ids", "!=", false], ["used_on_website_snippet", "=", true]],
+                { limit: 1 }
+            );
+            if(aiAgentId){;
+                snippetEl.dataset.agentId = aiAgentId;
+            }
+        }
+    }
 
     async onWillRemove(toRemoveEl) {
         if (toRemoveEl.matches(".s_ai_livechat")) {
@@ -61,7 +72,6 @@ class AILivechatOptionPlugin extends Plugin {
 
 export class SetAIAgentAction extends BuilderAction {
     static id = "setAIAgent";
-    static dependencies = ["cachedModel"];
 
     getValue ({ editingElement }) {
         const agentId = editingElement.dataset.agentId;
@@ -73,18 +83,17 @@ export class SetAIAgentAction extends BuilderAction {
 
     async apply ({ editingElement, value }) {
         const id = value ? JSON.parse(value).id : "";
-        const oldAgentId = editingElement.dataset.agentId;
         editingElement.dataset.agentId = id;
-        const livechatDataEl = editingElement.querySelector(".s_ai_livechat_data");
-        livechatDataEl.setAttribute('agentId', id);
-        await update_website_snippet_agent({ ormService: this.services.orm, newAgentId: id, oldAgentId: oldAgentId })
+        await update_website_snippet_agent({
+            ormService: this.services.orm,
+            newAgentId: id,
+            oldAgentId: editingElement.dataset.agentId
+        })
     }
 
     async clean({ editingElement }) {
         const oldAgentId = editingElement.dataset.agentId;
         editingElement.dataset.agentId = "";
-        const livechatDataEl = editingElement.querySelector(".s_ai_livechat_data");
-        livechatDataEl.removeAttribute('agentId');
         await update_website_snippet_agent({ ormService: this.services.orm, oldAgentId: oldAgentId })
     }
 }

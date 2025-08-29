@@ -159,7 +159,8 @@ class AIAgentSource(models.Model):
         Compute user access by delegating to the underlying source.
         Overriden in ai_documents and ai_knowledge.
         """
-        self.filtered(lambda s: s.type in ('url', 'binary')).user_has_access = True
+        self.filtered(lambda s: s.type == 'binary').user_has_access = self.env.user._is_internal()
+        self.filtered(lambda s: s.type == 'url').user_has_access = True
 
     def _get_source_embeddings_status(self, embedding_model):
         """
