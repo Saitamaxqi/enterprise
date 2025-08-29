@@ -29,6 +29,7 @@ class EsgDatabase(models.Model):
     latest_version = fields.Date()
     color = fields.Integer(compute='_compute_kanban_display')
     kanban_text = fields.Char(compute='_compute_kanban_display')
+    can_be_downloaded = fields.Boolean(compute='_compute_can_be_downloaded')
 
     @api.depends('latest_version', 'last_update')
     def _compute_kanban_display(self):
@@ -43,6 +44,15 @@ class EsgDatabase(models.Model):
                 db.color = 7
             else:
                 db.color = 2
+
+    def _compute_can_be_downloaded(self):
+        ademe_db = self.env.ref('esg.esg_database_ademe')
+        ipcc_db = self.env.ref('esg.esg_database_ipcc')
+        for database in self:
+            if database in (ademe_db, ipcc_db):
+                database.can_be_downloaded = True
+            else:
+                database.can_be_downloaded = False
 
     @api.ondelete(at_uninstall=False)
     def _prevent_database_deletion(self):

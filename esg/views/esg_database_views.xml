@@ -17,9 +17,9 @@
                             </div>
                             <div>
                                 <button name="action_load_data" string="Update" class="btn btn-primary mt-2"
-                                    type="object" invisible="not latest_version or not last_update"/>
+                                    type="object" invisible="not latest_version or not last_update or not can_be_downloaded"/>
                                 <button name="action_load_data" string="Download" class="btn btn-secondary mt-2"
-                                    type="object" invisible="last_update"/>
+                                    type="object" invisible="last_update or not can_be_downloaded"/>
                             </div>
                         </main>
                         <aside class="o_kanban_aside_full o_kanban_aside_full_right">
@@ -38,9 +38,9 @@
             <form>
                 <header>
                     <button name="action_load_data" string="Update" class="btn btn-primary mt-2"
-                        type="object" invisible="not latest_version and not last_update"/>
+                        type="object" invisible="not latest_version and not last_update or not can_be_downloaded"/>
                     <button name="action_load_data" string="Download" class="btn btn-secondary mt-2"
-                        type="object" invisible="not last_update"/>
+                        type="object" invisible="not last_update or not can_be_downloaded"/>
                 </header>
                 <sheet>
                     <field name="image" widget="image" class="float-end oe_avatar m-0"/>
