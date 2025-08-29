@@ -67,10 +67,9 @@ class AccountReturnType(models.Model):
         tracking=True,
     )
     report_id = fields.Many2one(string="Report", comodel_name='account.report', index='btree', tracking=True)
-    report_country_id = fields.Many2one(string="Report Country", related='report_id.country_id')
 
-    auto_generate = fields.Boolean(string="Auto Generated", default=True)
-    country_id = fields.Many2one(comodel_name='res.country', string="Country", tracking=True, store=True, compute="_compute_country_id")
+    auto_generate = fields.Boolean(string="Auto Generated", compute='_compute_auto_generate', copy=False, readonly=False, store=True)
+    country_id = fields.Many2one(comodel_name='res.country', string="Country", tracking=True, store=True, compute="_compute_country_id", readonly=False)
     payment_partner_bank_id = fields.Many2one(comodel_name='res.partner.bank', string="Payment Partner Bank", tracking=True)
     payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id', tracking=True)
 
@@ -92,13 +91,18 @@ class AccountReturnType(models.Model):
     @api.depends('report_id.country_id')
     def _compute_country_id(self):
         for return_type in self:
-            return_type.country_id = return_type.report_country_id if not return_type.country_id and return_type.report_country_id else return_type.country_id
+            return_type.country_id = return_type.report_id.country_id if not return_type.country_id and return_type.report_id.country_id else return_type.country_id
 
     @api.constrains('country_id')
     def _constrains_country_id(self):
         for return_type in self:
-            if return_type.report_country_id and return_type.report_country_id != return_type.country_id:
+            if return_type.report_id.country_id and return_type.report_id.country_id != return_type.country_id:
                 raise ValueError(_("The return type country must be the same as the report country"))
+
+    @api.depends('category')
+    def _compute_auto_generate(self):
+        for return_type in self:
+            return_type.auto_generate = return_type.category == 'account_return'
 
     def _can_return_exist(self, company, tax_unit=False):
         """ Returns whether a return can exist for this type with the provided company and tax units. This is used to know which returns need
@@ -455,8 +459,8 @@ class AccountReturnType(models.Model):
             return super()._compute_display_name()
 
         for return_type in self:
-            if has_foreign_fiscal_pos and return_type.report_country_id:
-                return_type.display_name = f'{return_type.name} ({return_type.report_country_id.code})'
+            if has_foreign_fiscal_pos and return_type.country_id:
+                return_type.display_name = f'{return_type.name} ({return_type.country_id.code})'
             else:
                 return_type.display_name = return_type.name
 
