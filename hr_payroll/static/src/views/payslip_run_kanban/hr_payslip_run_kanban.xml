@@ -32,10 +32,8 @@
     </t>
 
     <t t-name="hr_payroll.PayrunKanbanRecordMenu">
-        <t t-name="web.KanbanRecordMenu">
-            <div t-if="showMenu" class="w-auto ms-auto">
-                <t t-call="{{ this.templates[this.constructor.KANBAN_MENU_ATTRIBUTE] }}" t-call-context="renderingContext"/>
-            </div>
-        </t>
+        <div t-if="showMenu" class="w-auto ms-auto">
+            <t t-call="{{ this.templates[this.constructor.KANBAN_MENU_ATTRIBUTE] }}" t-call-context="renderingContext"/>
+        </div>
     </t>
 </templates>
