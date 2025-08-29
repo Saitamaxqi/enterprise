@@ -148,7 +148,7 @@
         "D127": "=PIVOT.VALUE(12,\"qty_ordered:sum\",\"#product_id\",8)",
         "D128": "=PIVOT.VALUE(12,\"qty_ordered:sum\",\"#product_id\",9)",
         "D129": "=PIVOT.VALUE(12,\"qty_ordered:sum\",\"#product_id\",10)",
-        "E106": "=_t(\"Order date\")",
+        "E106": "=ODOO.LIST.HEADER(1, \"date_order\", _t(\"Order date\"))",
         "E107": "=if(A107<>\"\",edate(ODOO.LIST(1,row()-94,\"date_order\"),0),\"\")",
         "E108": "=if(A108<>\"\",edate(ODOO.LIST(1,row()-94,\"date_order\"),0),\"\")",
         "E109": "=if(A109<>\"\",edate(ODOO.LIST(1,row()-94,\"date_order\"),0),\"\")",

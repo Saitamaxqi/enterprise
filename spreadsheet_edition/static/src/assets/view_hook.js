@@ -15,7 +15,10 @@ export function useInsertInSpreadsheet(env, getExportableFields) {
         const columns = getExportableFields();
         return columns
             .filter((col) => !["binary", "json"].includes(fields[col.name].type))
-            .map((col) => ({ name: col.name, type: fields[col.name].type }));
+            .map((col) => {
+                const field = fields[col.name];
+                return { name: col.name, type: field.type, string: field.string };
+            });
     };
 
     const _getListForSpreadsheet = async (name) => {
