@@ -21,7 +21,7 @@ from odoo.tools import groupby, SQL
 from odoo.tools.image import image_process
 from odoo.tools.mimetypes import get_extension
 from odoo.tools.misc import clean_context
-from odoo.tools.pdf import PdfFileReader, PdfReadError
+from odoo.tools.pdf import PdfFileReader
 
 from odoo.addons.mail.tools import link_preview
 
@@ -1481,18 +1481,20 @@ class DocumentsDocument(models.Model):
         if self.mimetype not in ('application/pdf', 'application/pdf;base64'):
             return None
         decoded = base64.b64decode(self.datas)
+        # Avoid warning in tests due to IrActionsReport._pre_render_qweb_pdf rendering pdf as html
+        # It is done before even reading the PDF as PdfFileReader emit warning in that case
+        if modules.module.current_test and b'<!DOCTYPE html>' in decoded[:32]:
+            _logger.info("Skip _get_is_multipage of %r: html content detected in pdf document while in testing mode",
+                         self.name)
+            return False
         stream = io.BytesIO(decoded)
         try:
             return PdfFileReader(stream, strict=False).numPages > 1
         except AttributeError:
             raise  # If PyPDF's API changes and the `numPages` property isn't there anymore, not if its computation fails.
-        except Exception as e:  # noqa: BLE001
+        except Exception:  # noqa: BLE001
             message = ('Impossible to count pages in %r. It could be due to a malformed document or a '
                        '(possibly known) issue within PyPDF2.')
-            # Avoid warning in tests due to IrActionsReport._pre_render_qweb_pdf rendering pdf as html
-            if (modules.module.current_test and isinstance(e, PdfReadError) and b'<!DOCTYPE html>' in decoded):
-                _logger.info(message, self.name)
-                return False
             _logger.warning(message, self.name, exc_info=True)
             return False
 
