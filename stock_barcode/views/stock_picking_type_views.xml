@@ -24,7 +24,7 @@
                             <div class="badge rounded-pill bg-secondary float-end align-self-center p-1 px-2 fs-6"
                                  t-attf-class="{{ record.count_picking_ready.value == 0 ? 'text-muted' : 'fw-bold' }}"
                                  name="get_action_picking_tree_ready_kanban" type="object">
-                                <span name="pickings_count"><field name="count_picking_ready"/></span> 
+                                <span name="pickings_count"><field name="count_picking_ready"/></span>
                             </div>
                         </div>
                     </t>
@@ -57,6 +57,7 @@
                 <page name="barcode_app" string="Barcode App" invisible="not is_barcode_picking_type">
                     <group>
                         <field name="show_reserved_sns" groups="stock.group_production_lot"/>
+                        <field name="show_entire_packs" groups="stock.group_tracking_lot"/>
                     </group>
                     <group>
                         <group name="restrict_scan_settings" string="Mandatory Scan">
