@@ -35,7 +35,7 @@ class HrPayslip(models.Model):
 
         payslip_without_documents = self.filtered(lambda p: not p.document_access_url)
         for payslip in (self - payslip_without_documents):
-            template = self._get_email_template()
+            template = payslip._get_email_template()
             template.send_mail(payslip.id, email_layout_xmlid='mail.mail_notification_light')
             payslip.message_post(body=_('The payslip has been re-sent to the employee.'))
 
