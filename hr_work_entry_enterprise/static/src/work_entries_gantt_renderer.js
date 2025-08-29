@@ -6,6 +6,7 @@ import { WorkEntriesMultiSelectionButtons } from "@hr_work_entry_enterprise/work
 import { onWillRender, onWillStart } from "@odoo/owl";
 import { user } from "@web/core/user";
 import { Domain } from "@web/core/domain";
+import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 const { DateTime } = luxon;
 
 export class WorkEntriesGanttRenderer extends HrGanttRenderer {
@@ -144,14 +145,41 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
                           class: "btn btn-sm btn-secondary",
                           onClick: () => {
                               this.model.mutex.exec(async () => {
-                                  const split_work_entry_id = await this.orm.call(
-                                      "hr.work.entry",
-                                      "action_split",
-                                      [props.resId]
+                                  this.dialogService.add(
+                                      FormViewDialog,
+                                      {
+                                          title: _t("Split Work Entry"),
+                                          resModel: "hr.work.entry",
+                                          onRecordSave: async (record) => {
+                                              await this.orm.call("hr.work.entry", "action_split", [
+                                                  props.resId,
+                                                  {
+                                                      duration: record.data.duration,
+                                                      work_entry_type_id:
+                                                          record.data.work_entry_type_id.id,
+                                                      name: record.data.name,
+                                                  },
+                                              ]);
+                                              return true;
+                                          },
+                                          context: {
+                                              form_view_ref:
+                                                  "hr_work_entry.hr_work_entry_calendar_gantt_view_form",
+                                              default_duration: props.context.duration / 2,
+                                              default_name: props.context.name,
+                                              default_work_entry_type_id:
+                                                  props.context.work_entry_type_id,
+                                              default_employee_id: props.context.employee_id,
+                                              default_date: props.context.date,
+                                          },
+                                          canExpand: false,
+                                      },
+                                      {
+                                          onClose: () => {
+                                              this.model.fetchData();
+                                          },
+                                      }
                                   );
-                                  if (split_work_entry_id) {
-                                      this.props.openDialog({ resId: split_work_entry_id });
-                                  }
                               });
                           },
                       },
