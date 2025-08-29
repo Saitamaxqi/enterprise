@@ -909,3 +909,49 @@ registry.category("web_tour.tours").add("test_shop_floor_access", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_shop_floor_unsynced_bom", {
+    steps: () => [
+        ...stepUtils.openWorkcentersSelector(),
+        ...stepUtils.addWorkcenterToDisplay("WorkCenter"),
+        ...stepUtils.confirmWorkcentersSelection(),
+        ...stepUtils.clickOnWorkcenterButton("WorkCenter"),
+        {
+            content: "Find the COMP1 line",
+            trigger: '.o_mrp_record_line:contains("COMP1")',
+        },
+        {
+            content: "Mark the WorkOrder as Done",
+            trigger: 'button.btn-secondary:contains("Mark as Done")',
+            run: "click",
+        },
+        {
+            content: "Check if the COMP2 line appeared",
+            trigger: '.o_mrp_record_line:contains("COMP2")',
+        },
+        {
+            content: "Register the production (automatically set it as 5/5 Units produced)",
+            trigger: ".o_mrp_record_line:contains('Register Production')",
+            run: "click",
+        },
+        {
+            content: "Handle MrpRegisterProductionDialog",
+            trigger: ".btn-primary:contains('Validate')",
+            run: "click",
+        },
+        {
+            content: "Close the production order",
+            trigger: 'button.btn-secondary:contains("Close Production")',
+            run: "click",
+        },
+        {
+            content: "Confirm consumption warning",
+            trigger: 'button.btn-primary:contains("Confirm")',
+            run: "click",
+        },
+        {
+            content: "Check that there are no open work orders",
+            trigger: ".o_nocontent_help",
+        },
+    ],
+});

@@ -743,3 +743,71 @@ class TestShopFloor(HttpCase):
         self.assertFalse(first_check.next_check_id)
         self.assertEqual(wo.current_quality_check_id, first_check)
         self.assertFalse(wo.allow_producing_quantity_change)
+
+    def test_shop_floor_unsynced_bom(self):
+        """ Check that when a component that has been removed from a BoM with
+            a not done MO, it still shows the component in the shop floor for
+            that MO.
+        """
+        demo = self.env['product.product'].create({'name': 'DEMO'})
+        comp1, comp2 = self.env['product.product'].create([{
+            'name': name,
+            'is_storable': True
+        } for name in ['COMP1', 'COMP2']])
+        work_center = self.env['mrp.workcenter'].create({"name": "WorkCenter", "time_start": 11})
+        bom = self.env['mrp.bom'].create({
+            'product_id': demo.id,
+            'product_tmpl_id': demo.product_tmpl_id.id,
+            'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+            'product_qty': 1.0,
+            'type': 'normal',
+            'operation_ids': [
+                Command.create({'name': 'OP1', 'workcenter_id': work_center.id, 'time_cycle': 12, 'sequence': 1}),
+                Command.create({'name': 'OP2', 'workcenter_id': work_center.id, 'time_cycle': 18, 'sequence': 2})
+            ]
+        })
+        # Create a step to register production.
+        self.env['quality.point'].create([{
+            'picking_type_ids': [Command.link(self.warehouse.manu_type_id.id)],
+            'product_ids': [Command.link(demo.id)],
+            'operation_id': bom.operation_ids[1].id,
+            'title': 'Register Production',
+            'test_type_id': self.test_type_register_production.id,
+        }])
+        self.env['mrp.bom.line'].create([
+            {
+                'product_id': comp.id,
+                'product_qty': qty,
+                'bom_id': bom.id,
+                'operation_id': operation.id,
+            } for comp, qty, operation in zip([comp1, comp2], [1.0, 2.0], bom.operation_ids)
+        ])
+        self.env['stock.quant'].create([
+            {
+                'location_id': self.warehouse.lot_stock_id.id,
+                'product_id': comp.id,
+                'inventory_quantity': 20,
+            } for comp in [comp1, comp2]
+        ]).action_apply_inventory()
+
+        mo = self.env['mrp.production'].create({
+            'product_id': demo.id,
+            'product_qty': 1,
+            'bom_id': bom.id,
+        })
+        mo.action_confirm()
+        mo.action_assign()
+        mo.button_plan()
+        # Remove one component from the BoM, so that the MO and BoM are unsynced
+        bom.bom_line_ids[0].unlink()
+
+        self.start_tour("/odoo/shop-floor", "test_shop_floor_unsynced_bom", login='admin')
+
+        self.assertEqual(mo.qty_producing, 1)
+        for move in mo.move_raw_ids:
+            if move.product_id.id == comp1.id:
+                self.assertEqual(move.quantity, 1)
+                self.assertTrue(move.picked)
+            if move.product_id.id == comp2.id:
+                self.assertEqual(move.quantity, 2)
+                self.assertTrue(move.picked)
