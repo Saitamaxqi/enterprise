@@ -23,7 +23,7 @@ class AccountAnalyticLine(models.Model):
         should_log_note = False
         if self.task_id.is_fsm and self.timer_start:
             should_log_note = True
-        minutes_spent = super().action_timer_stop()
+        minutes_spent = super().action_timer_stop(try_to_match)
         if should_log_note:
             time = fields.Datetime.context_timestamp(self, fields.Datetime.now())
             self.task_id.message_post(
