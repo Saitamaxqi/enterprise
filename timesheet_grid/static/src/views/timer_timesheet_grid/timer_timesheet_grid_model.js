@@ -208,14 +208,16 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
         if (value) {
             const column = this.columnsArray.find((col) => col.isToday);
             if (column) {
-                if (this.data.timer.row) {
+                if (this.data.timer?.row) {
                     const newValue = this.data.timer.row.cells[column.id].value + value;
                     this.data.timer.row.updateCell(column, newValue, this.data);
-                    this.data.timer.row.timerRunning = false;
                 } else {
                     await this.reload(this.searchParams);
                 }
             }
+        }
+        if (this.data.timer?.row) {
+            this.data.timer.row.timerRunning = false;
         }
         delete this.data.timer;
     }
