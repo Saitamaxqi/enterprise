@@ -180,14 +180,19 @@ export class IotHttpService {
         });
     }
 
-    async testLongpollingAvailability(iotBoxIp) {
-        try {
-            await browser.fetch(formatEndpoint(iotBoxIp, '/iot_drivers/ping'));
-            this.longpollingFailedTimestamp = null;
-            this.connectionStatus = "local";
-        } catch {
-            this.longpollingFailedTimestamp = Date.now();
+    async toggleMode(iotBoxIp) {
+        if (this.connectionStatus !== "local") {
+            try {
+                await browser.fetch(formatEndpoint(iotBoxIp, '/iot_drivers/ping'));
+                this.longpollingFailedTimestamp = null;
+                this.connectionStatus = "local";
+            } catch {
+                console.debug("IoT Box is unreachable via local network, can't toggle to local mode.");
+            }
+            return
         }
+        this.longpollingFailedTimestamp = Date.now();
+        this.connectionStatus = "online";
     }
 }
 
@@ -218,12 +223,12 @@ export const iotHttpService = {
         );
         const action = iot.action.bind(iot);
         const onMessage = iot.onMessage.bind(iot);
-        const refresh = iot.testLongpollingAvailability.bind(iot);
+        const toggleMode = iot.toggleMode.bind(iot);
 
         // Expose only those functions to the environment
         // status is a getter to have a reactive value
         return {
-            post, action, longpolling, websocket, refresh, onMessage, get status() {
+            post, action, longpolling, websocket, toggleMode, onMessage, get status() {
                 return iot.connectionStatus;
             }
         };

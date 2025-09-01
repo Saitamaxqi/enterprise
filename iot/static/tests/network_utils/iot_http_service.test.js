@@ -215,14 +215,14 @@ describe("iot_http_service", () => {
             expect(iotHttpService.connectionStatus).toBe("online"); // all methods failed
         });
 
-        test('force longpolling when disabled temporarily due to previous failure', async () => {
+        test('force switch between longpolling/websocket', async () => {
             webRtc.setThrow(true);
             longpolling.setThrow(true)
             await iotHttpService.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
             expect(calledCallback).toBe('onSuccess');
             expect(iotHttpService.connectionStatus).toBe('online');
 
-            await iotHttpService.testLongpollingAvailability('mockIp');
+            await iotHttpService.toggleMode('mockIp');
             expect(iotHttpService.longpollingFailedTimestamp).toBe(null);
             expect(iotHttpService.connectionStatus).toBe('local');
 
@@ -230,6 +230,11 @@ describe("iot_http_service", () => {
             await iotHttpService.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
             expect(calledCallback).toBe('onSuccess');
             expect(iotHttpService.connectionStatus).toBe('local');
+
+            await iotHttpService.toggleMode('mockIp'); // switch back to websocket
+            await iotHttpService.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
+            expect(calledCallback).toBe('onSuccess');
+            expect(iotHttpService.connectionStatus).toBe('online');
         });
     });
 });

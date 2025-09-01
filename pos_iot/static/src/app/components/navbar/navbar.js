@@ -6,9 +6,9 @@ patch(Navbar.prototype, {
         super.setup(...arguments);
         this.connectionStatus();
     },
-    async checkLongpolling() {
+    async toggleIotConnection() {
         for (const iotBox of this.pos.hardwareProxy.iotBoxes) {
-            await this.pos.iotHttp.refresh(iotBox.ip);
+            await this.pos.iotHttp.toggleMode(iotBox.ip);
         }
         this.connectionStatus();
     },
