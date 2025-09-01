@@ -17,7 +17,7 @@
       </cartaporte31:Ubicaciones>
       <cartaporte31:Mercancias NumTotalMercancias="1" PesoBrutoTotal="10.000" UnidadPeso="KGM">
         <cartaporte31:Mercancia BienesTransp="12352120" Cantidad="10.000000" ClaveUnidad="KGM" Descripcion="product_mx" PesoEnKg="10.000" MaterialPeligroso="Sí" CveMaterialPeligroso="1052" Embalaje="1H1" DescripEmbalaje="Bidones (Tambores) de Plástico de tapa no desmontable">
-          <cartaporte31:CantidadTransporta Cantidad="10.000000" IDOrigen="___ignore___" IDDestino="DE000005"/>
+          <cartaporte31:CantidadTransporta Cantidad="10.000000" IDOrigen="___ignore___" IDDestino="DE000002"/>
         </cartaporte31:Mercancia>
         <cartaporte31:Autotransporte NumPermisoSCT="DEMOPERMIT" PermSCT="TPAF10">
           <cartaporte31:IdentificacionVehicular AnioModeloVM="2023" ConfigVehicular="T3S1" PlacaVM="ABC123" PesoBrutoVehicular="0.01"/>

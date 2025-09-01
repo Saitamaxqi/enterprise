@@ -53,7 +53,7 @@ class SaleOrderLine(models.Model):
             return
         lines_to_check = self.filtered(lambda l: l.is_rental and l.reserved_lot_ids and l.product_template_id.tracking == 'serial')
 
-        partner_location_id = self.env.ref('stock.stock_location_locations_partner')
+        partner_location_ids = self.env['stock.location'].search([('usage', 'in', ['customer', 'supplier'])])
 
         for line in lines_to_check:
             company_id = line.order_id.company_id.id
@@ -65,7 +65,7 @@ class SaleOrderLine(models.Model):
             leaving_move_lines_groups = self.env['stock.move.line']._read_group(
                 Domain.AND([domain, [
                             ('location_usage', '=', 'internal'),
-                            ('location_dest_id', 'child_of', partner_location_id.id),
+                            ('location_dest_id', 'child_of', partner_location_ids.ids),
                         ]]),
                 groupby=['lot_id'],
                 aggregates=['id:recordset'],
@@ -73,7 +73,7 @@ class SaleOrderLine(models.Model):
             leaving_move_by_lot = {g[0].id: g[1] for g in leaving_move_lines_groups}
             incoming_move_lines_groups = self.env['stock.move.line']._read_group(
                 Domain.AND([domain, [
-                            ('location_id', 'child_of', partner_location_id.id),
+                            ('location_id', 'child_of', partner_location_ids.ids),
                             ('location_dest_usage', '=', 'internal'),
                         ]]),
                 groupby=['lot_id'],
@@ -87,7 +87,7 @@ class SaleOrderLine(models.Model):
                 in_stock = bool(sum(
                     lot.quant_ids.filtered(
                         lambda q: q.location_id.usage in ['internal', 'transit']
-                            and q.location_id not in partner_location_id.child_internal_location_ids
+                            and q.location_id not in partner_location_ids.child_internal_location_ids
                             and q.company_id.id == company_id).mapped('quantity')
                     ))
                 if in_stock:
