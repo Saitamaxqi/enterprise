@@ -217,7 +217,7 @@ class TestDocumentsDocumentFolder(TransactionCase):
 
         # Moving folders in COMPANY
         for company_folder in self.company_folders:
-            self.assertTrue(company_folder.is_company_root_folder)
+            self.assertTrue(company_folder._is_company_root_folder())
             self.assertTrue(company_folder.with_user(self.document_manager).user_permission == 'edit')
             self.assertTrue(company_folder.with_user(self.internal_user).user_permission == 'view')
 

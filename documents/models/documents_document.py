@@ -143,9 +143,6 @@ class DocumentsDocument(models.Model):
                                     help="Delay after permanent deletion of the document in the trash (days)")
     company_id = fields.Many2one('res.company', string='Company', store=True, readonly=False, index=True)
 
-    is_company_root_folder = fields.Boolean("Pinned to Company roots", compute='_compute_is_company_root_folder',
-                                            search='_search_is_company_root_folder')
-
     # Activity
     create_activity_option = fields.Boolean(string='Create a new activity', compute='_compute_create_activity_option',
                                             store=True, readonly=False)
@@ -327,19 +324,9 @@ class DocumentsDocument(models.Model):
         if self.filtered(lambda d: d.res_model == 'documents.document'):
             raise ValidationError(_('A document can not be linked to itself or another document.'))
 
-    @api.depends('folder_id', 'owner_id', 'type')
-    def _compute_is_company_root_folder(self):
-        for document in self:
-            document.is_company_root_folder = (
-                document.type == 'folder'
-                and not document.folder_id
-                and not document.owner_id
-            )
-
-    def _search_is_company_root_folder(self, operator, value):
-        if operator != 'in':
-            return NotImplemented
-        return [('type', '=', 'folder'), ('folder_id', '=', False), ('owner_id', '=', False)]
+    def _is_company_root_folder(self):
+        self.ensure_one()
+        return self.type == 'folder' and not self.folder_id and not self.owner_id
 
     @api.depends_context('uid')
     @api.depends('folder_id', 'folder_id.user_permission', 'owner_id', 'active')
@@ -1827,7 +1814,7 @@ class DocumentsDocument(models.Model):
                     children_default.update(owner_id=default['owner_id'])
                 old_folder.children_ids.with_context(documents_copy_skip_rename=True).copy(children_default)
                 new_documents[documents_order[old_folder.id]] = new_folder
-                if is_manager and old_folder.is_company_root_folder and not owner_id_in_default:
+                if is_manager and old_folder._is_company_root_folder() and not owner_id_in_default:
                     new_folder.owner_id = old_folder.owner_id
 
         if not skip_documents and (documents_sudo := (self - shortcuts - folders).sudo()):
@@ -2082,7 +2069,7 @@ class DocumentsDocument(models.Model):
         if not is_manager:
             if any(d.alias_name for d in documents):
                 raise AccessError(_('Only Documents Managers can set aliases.'))
-            if any(d.is_company_root_folder for d in documents):
+            if any(d._is_company_root_folder() for d in documents):
                 raise AccessError(_('Only Documents Managers can create in company folder.'))
 
         for document, attachment in zip(documents, attachments):
@@ -2206,7 +2193,7 @@ class DocumentsDocument(models.Model):
         self._clean_vals_for_user_folder_id(vals)
 
         is_manager = self.env.is_admin() or self.env.user.has_group('documents.group_documents_manager')
-        pinned_folders_start = self.filtered('is_company_root_folder')
+        pinned_folders_start = self.filtered(lambda d: d._is_company_root_folder())
 
         previous_owner_access_to_keep = {}
         documents_per_initial_active = {}
@@ -2349,7 +2336,7 @@ class DocumentsDocument(models.Model):
                                    documents=', '.join(children.mapped('display_name')))
                         )
 
-        if not is_manager and self.filtered('is_company_root_folder') != pinned_folders_start:
+        if not is_manager and self.filtered(lambda d: d._is_company_root_folder()) != pinned_folders_start:
             raise AccessError(_("Only Documents Managers can create in company folder."))
 
         for document, attachment_was_present in zip(self, attachments_was_present):

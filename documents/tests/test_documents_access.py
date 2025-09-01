@@ -650,7 +650,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         # Managers can unpin by moving to another root folder
         self.folder_b.owner_id = False
         self.folder_a.with_user(self.document_manager).folder_id = self.folder_b
-        self.assertFalse(self.folder_a.is_company_root_folder)
+        self.assertFalse(self.folder_a._is_company_root_folder())
         # Or moving to their own drive
         self.folder_a.with_user(self.document_manager).folder_id = False
         self.folder_a.with_user(self.document_manager).owner_id = self.document_manager
@@ -664,7 +664,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
             'owner_id': False,
             'type': 'folder',
         })
-        self.assertTrue(folder.is_company_root_folder)
+        self.assertTrue(folder._is_company_root_folder())
 
         with self.assertRaises(AccessError):
             self.env['documents.document'].with_user(self.internal_user).create({
@@ -1267,13 +1267,13 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         # If a manager copies a root folder, do not change the owner
         self.folder_b.folder_id = False
         self.assertEqual(self.folder_b.owner_id, self.doc_user)
-        self.assertFalse(self.folder_b.is_company_root_folder)
+        self.assertFalse(self.folder_b._is_company_root_folder())
         copied_folder = self.folder_b.with_user(self.document_manager).copy()
         self.assertFalse(copied_folder.folder_id)
         self.assertEqual(copied_folder.owner_id, self.document_manager)
 
         self.folder_b.owner_id = False
-        self.assertTrue(self.folder_b.is_company_root_folder)
+        self.assertTrue(self.folder_b._is_company_root_folder())
         copied_folder = self.folder_b.with_user(self.document_manager).copy()
         self.assertFalse(copied_folder.folder_id)
         self.assertFalse(copied_folder.owner_id)
