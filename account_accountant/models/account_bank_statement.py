@@ -308,7 +308,7 @@ class AccountBankStatementLine(models.Model):
 
         # get all reconciliable accounts that can be used in the bank reconciliation (invoice & payment matching)
         # note that we:
-        #   * include reconciliable accounts that aren't of receivable/payable type to manage the outstanding payment accounts
+        #   * include reconciliable accounts that aren't of receivable/payable type
         #   * exclude suspense accounts from bank journals because it wouldn't make sense as we use the suspense accounts to know
         #     when an entry has to be processed. If we reconcile it from another way, it would still be considered as unprocessed
         #     in the reconciliation widget.
@@ -410,7 +410,7 @@ class AccountBankStatementLine(models.Model):
                            AND (aml.parent_state IN ('draft', 'posted'))
                            AND st_line.id IN %s
                            AND (
-                                length(word) > 8 AND st_line.payment_ref ILIKE '%%' || word || '%%'
+                                length(word) > 5 AND st_line.payment_ref ILIKE '%%' || word || '%%'
                                )
                        ) word_aml ON TRUE
               GROUP BY st_line.id
@@ -457,7 +457,7 @@ class AccountBankStatementLine(models.Model):
                            AND (aml.parent_state IN ('draft', 'posted'))
                            AND st_line.id IN %s
                            AND (
-                                length(word) > 8 AND st_line.payment_ref ILIKE '%%' || word || '%%'
+                                length(word) > 5 AND st_line.payment_ref ILIKE '%%' || word || '%%'
                                )
                        ) word_aml ON TRUE
               GROUP BY st_line.id, matching_word
