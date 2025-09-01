@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import pytz
 
 from odoo.addons.mail.tests.common import mail_new_test_user
-from odoo.tests import users
+from odoo.tests import Form, users
 from odoo.tools.intervals import Intervals
 from .common import AppointmentCommon
 
@@ -83,6 +83,7 @@ class AppointmentGanttTestCommon(AppointmentCommon):
             'schedule_based_on': 'resources',
             'manage_capacity': True,
         }])
+        cls.user_apt_types = cls.apt_types[:2]
         cls.resource_apt_types = cls.apt_types[2]
 
         cls.gantt_context = {'appointment_booking_gantt_show_all_resources': True}
@@ -165,6 +166,54 @@ class AppointmentGanttTest(AppointmentGanttTestCommon):
 
         self.assertEqual(len(unavailabilities.get(self.user_john.partner_id.id, [])), 1, "Busy events should be counted as unavailability.")
         self.assertEqual(len(unavailabilities.get(self.user_bob.partner_id.id, [])), 0, "Free events should not be counted as unavailability.")
+
+    @users('apt_manager')
+    def test_gantt_default_calendar_event_values(self):
+        """Make sure all of the defaults are sensible with respect to the appointment type used."""
+        quick_create_form = self.env.ref('appointment.calendar_event_view_form_gantt_booking')
+        base_context = self.gantt_context | {'booking_gantt_create_record': True}
+        user_appointment_type = self.user_apt_types[0]
+        resource_appointment_type = self.resource_apt_types[0]
+        for appointment_type, write_values, expected_capacity_reserved in [
+            (user_appointment_type, {'manage_capacity': False, 'user_capacity': 1}, 1),
+            (user_appointment_type, {'manage_capacity': False, 'user_capacity': 5}, 1),
+            (user_appointment_type, {'manage_capacity': True, 'user_capacity': 5}, 5),
+            (resource_appointment_type, {'manage_capacity': False}, 3)  # sum of resource capacities
+            (resource_appointment_type, {'manage_capacity': True}, 3)  # sum of resource capacities
+        ]:
+            with self.subTest(appointment=appointment_type.name, write_values=write_values):
+                appointment_type.write(write_values)
+                appointment_context = base_context | {
+                    'default_appointment_type_id': appointment_type.id,
+                }
+                if appointment_type.schedule_based_on == 'users':
+                    appointment_context |= {'default_user_id': user_appointment_type.staff_user_ids[0].id}
+                else:
+                    appointment_context |= {'default_resource_ids': resource_appointment_type.resource_ids.ids}
+                expected_default_dict = {
+                    'appointment_type_id': appointment_type.id,
+                    'name': appointment_type.name,
+                    'total_capacity_reserved': expected_capacity_reserved,
+                }
+                CalendarEvent = self.env['calendar.event'].with_context(appointment_context)
+                # check defaultget
+                self.assertDictEqual(
+                    {
+                        field_name: value for field_name, value
+                        in CalendarEvent.default_get(list(expected_default_dict.keys()) + ['user_id', 'resource_ids']).items()
+                        if field_name in expected_default_dict
+                    },
+                    expected_default_dict
+                )
+                # check created values match up when created via the gantt view
+                event = Form(CalendarEvent, quick_create_form).save()
+                event.invalidate_recordset(['total_capacity_reserved', 'user_id', 'resource_ids'])
+                self.assertDictEqual(event.read(['name', 'total_capacity_reserved'])[0], {
+                    'id': event.id,
+                    'name': appointment_type.name,
+                    'total_capacity_reserved': expected_capacity_reserved
+                })
+                event.unlink()
 
     def test_gantt_empty_groups(self):
         """Check that the data sent to gantt includes the right groups in the context of appointments."""

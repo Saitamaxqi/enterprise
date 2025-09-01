@@ -24,6 +24,7 @@
                 <field name="resource_ids" options="{'no_create': True}"
                     invisible="not appointment_type_id or appointment_type_schedule_based_on != 'resources'"
                     domain="[('appointment_type_ids', 'in', appointment_type_id)]" widget="many2many_tags"/>
+                <field name="total_capacity_reserved" string="Booked Capacity" invisible="not appointment_type_manage_capacity"/>
                 <field name="appointment_type_schedule_based_on" invisible="1"/>
                 <field name="appointment_type_manage_capacity" invisible="1"/>
             </field>
@@ -184,7 +185,6 @@
                     <i class="fa fa-user-plus text-600" title="Reserved Capacity"/>
                     <field name="total_capacity_reserved" widget="integer"
                         options="{'type': 'number', 'min': 1}" class="mb-0 o_appointment_form_gantt_capacity_field"
-                        readonly="appointment_type_schedule_based_on != 'resources'"
                     />
                     people
                 </div>

@@ -31,23 +31,34 @@ class CalendarEvent(models.Model):
         if res.get('stop') and isinstance(res['stop'], datetime) and res['stop'].second != 0:
             res['stop'] = datetime.min + round((res['stop'] - datetime.min) / timedelta(minutes=1)) * timedelta(minutes=1)
         user_id = res.get('user_id')
-        resource_ids = self.env.context.get('default_resource_ids', [])
+        appointment_resource_ids = self.env['calendar.event']._fields['resource_ids'].convert_to_cache(res.get('resource_ids', []), self.env['calendar.event'])
+        appointment_resources = self.env['appointment.resource'].browse(appointment_resource_ids)
         # get a relevant appointment type for ease of use when coming from a view that groups by resource
         if not res.get('appointment_type_id') and 'appointment_type_id' in fields:
             appointment_types = False
-            if resource_ids:
-                appointment_types = self.env['appointment.resource'].browse(resource_ids).appointment_type_ids
+            if appointment_resources:
+                appointment_types = appointment_resources.appointment_type_ids
             elif user_id:
                 appointment_types = self.env['appointment.type'].search([('staff_user_ids', 'in', user_id)])
             if appointment_types:
                 res['appointment_type_id'] = appointment_types[0].id
-        if resource_ids and 'total_capacity_reserved' in fields:
-            res.setdefault('total_capacity_reserved', sum(
-                resource.capacity for resource in self.env['appointment.resource'].browse(resource_ids)
-            ))
-        if (appointment_type_id := res.get('appointment_type_id')) and 'name' in fields:
+
+        if (appointment_type_id := res.get('appointment_type_id')):
             appointment_type = self.env['appointment.type'].browse(appointment_type_id)
-            res.setdefault('name', appointment_type.name)
+            if 'name' in fields:
+                res.setdefault('name', appointment_type.name)
+            # set the maximum capacity if managing capacities
+            if 'total_capacity_reserved' in fields:
+                if appointment_type.schedule_based_on == 'resources' and appointment_resources:
+                    res.setdefault('total_capacity_reserved', sum(
+                        resource.capacity for resource in appointment_resources
+                    ))
+                elif appointment_type.schedule_based_on == 'users':
+                    res.setdefault(
+                        'total_capacity_reserved',
+                        (appointment_type.manage_capacity and appointment_type.user_capacity) or 1
+                    )
+
         if self.env.context.get('appointment_default_assign_user_attendees'):
             default_partner_ids = self.env.context.get('default_partner_ids', [])
             # If there is only one attendee -> set him as organizer of the calendar event
@@ -296,8 +307,8 @@ class CalendarEvent(models.Model):
         booking_lines = []
         booking_lines_to_delete = self.env['appointment.booking.line']
         for event in self:
-            resources = event.resource_ids
-            if resources:
+            if event.appointment_type_schedule_based_on == 'resources':
+                resources = event.resource_ids
                 if event.appointment_type_manage_capacity and event.total_capacity_reserved:
                     capacity_to_reserve = event.total_capacity_reserved
                 else:
@@ -319,8 +330,23 @@ class CalendarEvent(models.Model):
                         capacity=capacity_to_reserve, appointment_name=event.appointment_type_id,
                         event_name=event.name, event_id=repr(event.id),
                     ))
-            else:
-                booking_lines_to_delete |= event.booking_line_ids
+            elif event.appointment_type_schedule_based_on == 'users':
+                max_user_capacity = (event.appointment_type_manage_capacity and event.appointment_type_id.user_capacity) or 1
+                if event.appointment_type_manage_capacity and event.total_capacity_reserved:
+                    capacity_to_reserve = event.total_capacity_reserved
+                else:
+                    capacity_to_reserve = max_user_capacity
+                if event.appointment_type_manage_capacity and max_user_capacity < capacity_to_reserve:
+                    raise UserError(_(
+                        "%(capacity)d seats are missing to be able to book the %(appointment_name)s: %(event_name)s (%(event_id)s)",
+                        capacity=capacity_to_reserve - event.appointment_type_id.user_capacity,
+                        appointment_name=event.appointment_type_id, event_name=event.display_name, event_id=repr(event.id)
+                    ))
+                booking_lines_to_delete += event.booking_line_ids
+                booking_lines.append({
+                    'calendar_event_id': event.id,
+                    'capacity_reserved': capacity_to_reserve,
+                })
         booking_lines_to_delete.unlink()
         self.env['appointment.booking.line'].sudo().create(booking_lines)
 
