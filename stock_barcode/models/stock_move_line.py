@@ -83,12 +83,14 @@ class StockMoveLine(models.Model):
 
         for line in self:
             if not line.result_package_id:
-                # TODO QUWO: Check if outermost_result_package_id would be the same so we can batch it
-                line.action_put_in_pack(package_id=line.outermost_result_package_id.id)
+                if line.outermost_result_package_id:
+                    # A package was set as outermost while the line itself isn't packed yet -> Pack the line
+                    line.action_put_in_pack(package_id=line.outermost_result_package_id.id)
                 continue
             package = fetch_before_outermost(line.result_package_id)
             package.package_dest_id = False
             if line.outermost_result_package_id:
+                # A package was set as outermost while the line itself is already in a pack -> Pack the pack
                 package.action_put_in_pack(package_id=line.outermost_result_package_id.id)
 
     def _inverse_qty_done(self):

@@ -26,7 +26,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Then creates a fourth move by scanning product1 (from shelf1 to shelf3).
         Counts the number of picking's write.
         """
-        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
+        self.env.user.write({'group_ids': [
+            Command.link(self.env.ref('stock.group_stock_multi_locations').id),
+            Command.link(self.env.ref('stock.group_tracking_lot').id),
+        ]})
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 2.0)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 2.0)
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
@@ -82,10 +85,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         self.assertEqual(self.call_count, 2)
         self.assertRecordValues(internal_picking.move_line_ids, [
-            {"product_id": self.product1.id, "quantity": 2, "location_id": self.shelf1.id, "location_dest_id": self.shelf2.id, "picked": True},
-            {"product_id": self.product2.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf3.id, "picked": True},
-            {"product_id": self.product2.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf2.id, "picked": True},
-            {"product_id": self.product1.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf3.id, "picked": True},
+            {"product_id": self.product1.id, "quantity": 2, "location_id": self.shelf1.id, "location_dest_id": self.shelf2.id, "picked": True, "result_package_id": False},
+            {"product_id": self.product2.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf3.id, "picked": True, "result_package_id": False},
+            {"product_id": self.product2.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf2.id, "picked": True, "result_package_id": False},
+            {"product_id": self.product1.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf3.id, "picked": True, "result_package_id": False},
         ])
 
     def test_picking_scan_package_confirmation(self):
