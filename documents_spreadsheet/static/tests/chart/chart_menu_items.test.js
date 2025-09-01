@@ -1,19 +1,12 @@
 import { createSpreadsheetFromGraphView } from "@documents_spreadsheet/../tests/helpers/chart_helpers";
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { doMenuAction } from "@spreadsheet/../tests/helpers/ui";
-import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
-import { patchWithCleanup } from "@web/../tests/web_test_helpers";
-import { GraphRenderer } from "@web/views/graph/graph_renderer";
 const { topbarMenuRegistry } = spreadsheet.registries;
 
 defineDocumentSpreadsheetModels();
 describe.current.tags("desktop");
-
-beforeEach(() => {
-    patchWithCleanup(GraphRenderer.prototype, patchGraphSpreadsheet());
-});
 
 test("Verify presence of chart in top menu bar in a spreadsheet with a chart", async function () {
     const { model, env } = await createSpreadsheetFromGraphView();

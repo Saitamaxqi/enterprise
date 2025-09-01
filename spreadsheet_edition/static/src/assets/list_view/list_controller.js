@@ -3,7 +3,7 @@ import { ListController } from "@web/views/list/list_controller";
 import { _t } from "@web/core/l10n/translation";
 import { useInsertInSpreadsheet } from "../view_hook";
 
-export const patchListControllerExportSelection = {
+patch(ListController.prototype, {
     setup() {
         super.setup();
         this.insertInSpreadsheet = useInsertInSpreadsheet(this.env, () =>
@@ -33,9 +33,4 @@ export const patchListControllerExportSelection = {
         };
         return menuItems;
     },
-};
-
-export const unpatchListControllerExportSelection = patch(
-    ListController.prototype,
-    patchListControllerExportSelection
-);
+});

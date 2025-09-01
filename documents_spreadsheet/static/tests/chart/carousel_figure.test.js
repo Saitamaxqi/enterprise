@@ -1,18 +1,12 @@
 import { createSpreadsheetFromGraphView } from "@documents_spreadsheet/../tests/helpers/chart_helpers";
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
-import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
+import { describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { createCarousel } from "@spreadsheet/../tests/helpers/commands";
-import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
-import { contains, patchWithCleanup } from "@web/../tests/web_test_helpers";
-import { GraphRenderer } from "@web/views/graph/graph_renderer";
+import { contains } from "@web/../tests/web_test_helpers";
 
 defineDocumentSpreadsheetModels();
 describe.current.tags("desktop");
-
-beforeEach(() => {
-    patchWithCleanup(GraphRenderer.prototype, patchGraphSpreadsheet());
-});
 
 test("Can add an odoo chart to a carousel figure", async () => {
     const { model } = await createSpreadsheetFromGraphView();

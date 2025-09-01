@@ -7,9 +7,8 @@ import {
     getBasicServerData,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { getSpreadsheetActionModel } from "@spreadsheet_edition/../tests/helpers/webclient_helpers";
-import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
 import {
     contains,
     defineActions,
@@ -17,15 +16,10 @@ import {
     toggleMenu,
     toggleMenuItem,
 } from "@web/../tests/web_test_helpers";
-import { GraphRenderer } from "@web/views/graph/graph_renderer";
 import { user } from "@web/core/user";
 
 defineDocumentSpreadsheetModels();
 describe.current.tags("desktop");
-
-beforeEach(() => {
-    patchWithCleanup(GraphRenderer.prototype, patchGraphSpreadsheet());
-});
 
 test("simple chart insertion", async () => {
     const { model } = await createSpreadsheetFromGraphView();

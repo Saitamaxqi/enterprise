@@ -4,11 +4,10 @@ import {
 } from "@documents_spreadsheet/../tests/helpers/chart_helpers";
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
-import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
+import { describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { registries } from "@odoo/o-spreadsheet";
 import { createBasicChart } from "@spreadsheet/../tests/helpers/commands";
-import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
 import * as dsHelpers from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
 import {
     contains,
@@ -17,7 +16,6 @@ import {
     patchWithCleanup,
     fields,
 } from "@web/../tests/web_test_helpers";
-import { GraphRenderer } from "@web/views/graph/graph_renderer";
 import { LoadableDataSource } from "@spreadsheet/data_sources/data_source";
 import { Partner } from "@spreadsheet/../tests/helpers/data";
 
@@ -30,10 +28,6 @@ async function changeChartType(type) {
     await contains(".o-type-selector").click();
     await contains(`.o-chart-type-item[data-id="${type}"]`).click();
 }
-
-beforeEach(() => {
-    patchWithCleanup(GraphRenderer.prototype, patchGraphSpreadsheet());
-});
 
 test("Open a chart panel", async () => {
     const { model, env } = await createSpreadsheetFromGraphView();
