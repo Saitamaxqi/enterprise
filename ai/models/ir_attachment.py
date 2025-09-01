@@ -130,14 +130,16 @@ class IrAttachment(models.Model):
         return text.strip()
 
     @staticmethod
-    def _chunk_text(text, chunk_size=1500, margin=200, min_chunk_size=500):
+    def _chunk_text(text, chunk_size=1500, margin=200, min_chunk_size=1000, max_chunk_size=5000):
         """
-        Split text into chunks based on character count with a margin to avoid abrupt cuts.
+        Split text into chunks based on character count with a hard maximum limit.
+        The hard max limit is 5000 characters so that the chunks have enough context for the LLM to understand in case of large chunks.
 
         :param str text: The input text to chunk.
         :param int chunk_size: Target chunk size in characters.
         :param int margin: Allow flexibility in chunk sizes within chunk_size ± margin.
         :param int min_chunk_size: Minimum size a chunk should have before finalizing.
+        :param int max_chunk_size: Hard maximum size limit that cannot be exceeded.
         :return: List of text chunks
         :rtype: list[str]
         """
@@ -148,6 +150,28 @@ class IrAttachment(models.Model):
         current_chunk = []
         current_length = 0
 
+        def _add_chunk_enforcing_max_size(chunk_content):
+            """Add a chunk, splitting it if it exceeds max_chunk_size."""
+            if len(chunk_content) <= max_chunk_size:
+                chunks.append(chunk_content)
+            else:
+                # Force split oversized chunks by words
+                words = chunk_content.split()
+                temp_chunk = []
+                temp_length = 0
+                for word in words:
+                    word_length = len(word) + 1
+                    if temp_length + word_length > max_chunk_size:
+                        if temp_chunk:
+                            chunks.append(" ".join(temp_chunk))
+                        temp_chunk = [word]
+                        temp_length = len(word)
+                    else:
+                        temp_chunk.append(word)
+                        temp_length += word_length
+                if temp_chunk:
+                    chunks.append(" ".join(temp_chunk))
+
         for para in paragraphs:
             para = para.strip()
             if not para:
@@ -156,19 +180,25 @@ class IrAttachment(models.Model):
             para_length = len(para)
 
             # If current chunk is too small, try to merge with the next one
-            if current_chunk and (current_length + para_length <= chunk_size + margin):
+            if current_chunk and (current_length + para_length + 1 <= chunk_size + margin):
                 current_chunk.append(para)
-                current_length += para_length + 1  # Account for spaces
+                current_length += para_length + 1
                 continue
 
             # If the current chunk is large enough, store it
             if current_length >= chunk_size - margin:
-                chunks.append(" ".join(current_chunk))
+                _add_chunk_enforcing_max_size(" ".join(current_chunk))
                 current_chunk = [para]  # Start a new chunk
                 current_length = para_length
             else:
                 # If chunk is too small but para itself is too big, split it
                 if para_length > chunk_size:
+                    # First, store current chunk if it exists
+                    if current_chunk:
+                        _add_chunk_enforcing_max_size(" ".join(current_chunk))
+                        current_chunk = []
+                        current_length = 0
+                    # Split the large paragraph by sentences
                     sentences = re.split(r'(?<=[.!?])\s+', para)
                     temp_chunk = []
                     temp_length = 0
@@ -176,9 +206,9 @@ class IrAttachment(models.Model):
                     for sentence in sentences:
                         sent_length = len(sentence)
 
-                        if temp_length + sent_length > chunk_size:
+                        if temp_length + sent_length + 1 > chunk_size:
                             if temp_chunk:
-                                chunks.append(" ".join(temp_chunk))
+                                _add_chunk_enforcing_max_size(" ".join(temp_chunk))
                             temp_chunk = [sentence]
                             temp_length = sent_length
                         else:
@@ -186,17 +216,23 @@ class IrAttachment(models.Model):
                             temp_length += sent_length + 1
 
                     if temp_chunk:
-                        chunks.append(" ".join(temp_chunk))
+                        _add_chunk_enforcing_max_size(" ".join(temp_chunk))
                 else:
                     current_chunk.append(para)
                     current_length += para_length + 1
 
-        # Merge last chunk if it's too small
+        # Handle the last chunk
         if current_chunk:
-            if chunks and len(" ".join(current_chunk)) < min_chunk_size:
-                chunks[-1] += " " + " ".join(current_chunk)  # Merge with previous chunk
+            last_chunk_content = " ".join(current_chunk)
+            if chunks and len(last_chunk_content) < min_chunk_size:
+                # Try to merge with the previous chunk, but respect max_chunk_size
+                if len(chunks[-1]) + len(last_chunk_content) + 1 <= max_chunk_size:
+                    chunks[-1] += " " + last_chunk_content
+                else:
+                    # Can't merge, add as separate chunk
+                    _add_chunk_enforcing_max_size(last_chunk_content)
             else:
-                chunks.append(" ".join(current_chunk))
+                _add_chunk_enforcing_max_size(last_chunk_content)
 
         return chunks
 
