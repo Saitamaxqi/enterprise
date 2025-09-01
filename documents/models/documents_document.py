@@ -413,13 +413,27 @@ class DocumentsDocument(models.Model):
           * Override context-provided values if `user_folder_id` is defined
           * Handle constraints on moving only on `folder_id` and `owner_id` instead
             of duplicating them for `user_folder_id`
+          * Centralize logic about vals vs context defaults
+
+        Note that passing any values for `folder_id` and `owner_id` in vals or context
+        will discard default_user_folder_id.
+
         :param dict vals: Values for record
         :raises UserError: on invalid new `user_folder_id` or conflict with `folder_id`
            or `owner_id` in `vals`
         """
         user_folder_id = vals.get('user_folder_id')
         if not user_folder_id:
-            return
+            if (
+                (default_user_folder_id := self.env.context.get('default_user_folder_id'))
+                and 'folder_id' not in vals
+                and 'owner_id' not in vals
+                and 'default_folder_id' not in self.env.context
+                and 'default_owner_id' not in self.env.context
+            ):
+                user_folder_id = default_user_folder_id
+            else:
+                return
 
         if user_folder_id == "COMPANY":
             new_vals = {'owner_id': False, 'folder_id': False}

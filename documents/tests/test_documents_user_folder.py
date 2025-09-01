@@ -64,8 +64,37 @@ class TestDocumentsUserFolder(TransactionCaseDocuments):
             with self.subTest(user=user.name):
                 self.assertListEqual(actual, expected)
 
+    @users('dtdm')
+    def test_create_with_default_user_folder_id(self):
+        context = {'default_user_folder_id': 'COMPANY'}
+        no_folder = self.env['documents.document']
+        no_user = self.env['res.users']
+        cases = [
+            (
+                {'name': 'Company root, no vals'},
+                {'folder_id': no_folder, 'owner_id': no_user}
+            ), (
+                {'name': 'In folder A > A from folder_id in vals', 'folder_id': self.folder_a_a.id},
+                {'folder_id': self.folder_a_a, 'owner_id': self.document_manager, 'user_folder_id': str(self.folder_a_a.id)}
+            ), (
+                {'name': 'In folder A from user_folder_id in vals', 'user_folder_id': str(self.folder_a.id)},
+                {'folder_id': self.folder_a, 'owner_id': self.document_manager, 'user_folder_id': str(self.folder_a.id)}
+            ), (
+                {'name': 'In My Drive from user_folder_id in vals', 'user_folder_id': 'MY'},
+                {'folder_id': no_folder, 'owner_id': self.document_manager, 'user_folder_id': 'MY'}
+            ), (
+                {'name': 'In My Drive from owner_id in vals', 'owner_id': self.document_manager.id},
+                {'folder_id': no_folder, 'owner_id': self.document_manager, 'user_folder_id': 'MY'}
+            )
+        ]
+        for vals, expected in cases:
+            with self.subTest(vals=vals):
+                doc = self.env['documents.document'].with_context(context).create(vals)
+                for key, value in expected.items():
+                    self.assertEqual(doc[key], value)
+
     @users('internal_user')
-    def test_write_user_folder_id(self):
+    def test_create_write_user_folder_id(self):
         defaults, company, my, folder_a_b, folder_a_b_2 = self.env['documents.document'].with_context(
             default_folder_id=self.folder_a_a.id,
             default_owner_id=self.doc_user.id,
