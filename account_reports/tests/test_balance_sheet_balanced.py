@@ -197,6 +197,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_kz_reports.l10n_kz_bl_assets',
         'liability_line_ref': 'l10n_kz_reports.l10n_kz_bl_equity_liabilities',
     },
+    'l10n_lk_reports.l10n_lk_bs': {
+        'asset_line_ref': 'l10n_lk_reports.l10n_lk_bs_lk_sfp_a',
+        'liability_line_ref': 'l10n_lk_reports.l10n_lk_bs_lk_sfp_eql',
+    },
     'l10n_lt_reports.account_financial_report_balancesheet_lt': {
         'asset_line_ref': 'l10n_lt_reports.account_financial_html_report_line_bs_lt_debit',
         'liability_line_ref': 'l10n_lt_reports.account_financial_html_report_line_bs_lt_credit',

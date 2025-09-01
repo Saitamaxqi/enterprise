@@ -1,0 +1,242 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* l10n_lk_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-11-06 02:13+0000\n"
+"PO-Revision-Date: 2025-11-06 02:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_ae
+msgid "Administration expenses"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_a
+msgid "Assets"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.column,name:l10n_lk_reports.l10n_lk_bs_balance
+#: model:account.report.column,name:l10n_lk_reports.l10n_lk_pnl_balance
+msgid "Balance"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report,name:l10n_lk_reports.l10n_lk_bs
+msgid "Balance Sheet"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_bo
+msgid "Bank overdrafts"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_cce
+msgid "Cash and cash equivalents"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_cor
+msgid "Cost of Revenue"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_curr_year_ret_earnings
+msgid "Current Year Retained Earnings"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_curr_year_earnings
+msgid "Current Year Unallocated Earnings"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ca
+msgid "Current assets"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_cl
+msgid "Current liabilities"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_dta
+msgid "Deferred tax assets"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_eq
+msgid "Equity"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_eql
+msgid "Equity and liabilities"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_fvr
+msgid "Fair value through other comprehensive income reserve"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_fc
+msgid "Finance Costs"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_gp
+msgid "Gross Profit"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_it
+msgid "Income tax expense"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ia
+msgid "Intangible assets"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_inv
+msgid "Inventories"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ifd
+msgid "Investment in fixed deposits"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_nep
+msgid "Net profit for the year"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_nca
+msgid "Non-current assets"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ncl
+msgid "Non-current liabilities"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_oa
+msgid "Other Assets"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_oi
+msgid "Other Income"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ol
+msgid "Other Liabilities"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_oci
+msgid "Other comprehensive income"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_pe
+msgid "Prepaid Expenses"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_prev_year_ret_earnings
+msgid "Previous Years Retained Earnings"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_prev_year_earnings
+msgid "Previous Years Unallocated Earnings"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report,name:l10n_lk_reports.l10n_lk_pnl
+msgid "Profit and Loss"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_pbt
+msgid "Profit before taxation"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_pfo
+msgid "Profit from operations"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ppe
+msgid "Property, plant and equipment"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ret
+msgid "Retained Earnings"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_rbo
+msgid "Retirement benefit obligation"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_rev
+msgid "Revenue"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_sc
+msgid "Stated capital"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_pnl_lk_sci_tci
+msgid "Total comprehensive income for the year"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_top
+msgid "Trade and other payables"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_tor
+msgid "Trade and other receivables"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.report.line,name:l10n_lk_reports.l10n_lk_bs_lk_sfp_ue
+msgid "Unallocated Earnings"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.return.type,name:l10n_lk_reports.lk_vat_return_type
+msgid "VAT"
+msgstr ""
+
+#. module: l10n_lk_reports
+#: model:account.return.type,name:l10n_lk_reports.lk_wht_return_type
+msgid "WHT/AIT"
+msgstr ""
