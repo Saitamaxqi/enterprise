@@ -1,14 +1,16 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
-
+from odoo import api, Command, fields, models
 from odoo.tools import convert
 
 
 class HrAppraisal(models.Model):
     _inherit = 'hr.appraisal'
 
-    appraisal_skill_ids = fields.One2many('hr.appraisal.skill', 'appraisal_id', string="Skills", domain=['|', ('skill_type_id.active', '=', True), ('appraisal_id.state', '=', '3_done')])
+    target_job_id = fields.Many2one('hr.job')
+    appraisal_skill_ids = fields.One2many('hr.appraisal.skill', 'appraisal_id', string="Skills",
+        domain=['|', ('skill_type_id.active', '=', True), ('appraisal_id.state', '=', '3_done')],
+        compute="_compute_appraisal_skill_ids", store=True, readonly=False)
     current_appraisal_skill_ids = fields.One2many('hr.appraisal.skill', 'appraisal_id', compute='_compute_current_appraisal_skill_ids', readonly=False)
 
     @api.depends('appraisal_skill_ids')
@@ -18,6 +20,34 @@ class HrAppraisal(models.Model):
                 lambda appraisal_skill: appraisal_skill.is_certification or
                     not appraisal_skill.valid_to or appraisal_skill.valid_to >= fields.Date.today()
             )
+
+    @api.depends('target_job_id')
+    def _compute_appraisal_skill_ids(self):
+        for appraisal in self:
+            values = [
+                Command.unlink(appraisal_skill.id)
+                for appraisal_skill in appraisal.appraisal_skill_ids.filtered(
+                    lambda skill: not skill.skill_level_id
+                )
+            ]
+            target_job_current_skills = appraisal.target_job_id.current_job_skill_ids
+            current_skills = appraisal.appraisal_skill_ids.filtered(
+                lambda appraisal_skill: (appraisal_skill.is_certification or
+                    not appraisal_skill.valid_to or appraisal_skill.valid_to >= fields.Date.today())
+                    and appraisal_skill.skill_level_id
+            )
+            new_skills_ids = (target_job_current_skills.skill_id - current_skills.skill_id).ids
+            if new_skills_ids:
+                values += [Command.create({
+                    'skill_id': job_skill.skill_id.id,
+                    'skill_type_id': job_skill.skill_type_id.id,
+                    'skill_level_id': False,
+                    'valid_from': fields.Date.today(),
+                    'valid_to': False,
+                    'appraisal_id': appraisal._origin.id,  # need to understand why .id was a newId
+                }) for job_skill in target_job_current_skills.filtered(lambda skill: skill.skill_id.id in new_skills_ids)]
+            if values:
+                appraisal.write({'appraisal_skill_ids': values})
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -40,7 +70,8 @@ class HrAppraisal(models.Model):
         if 'state' in vals and (vals['state'] == '3_done'):
             for appraisal in self:
                 employee_skills = appraisal.employee_id.current_employee_skill_ids
-                appraisal_skills = appraisal.current_appraisal_skill_ids
+                # Remove skills created by target without any changes
+                appraisal_skills = appraisal.current_appraisal_skill_ids.filtered('skill_level_id')
                 updated_skills = []
                 deleted_skills_name = []
                 added_skills = []
