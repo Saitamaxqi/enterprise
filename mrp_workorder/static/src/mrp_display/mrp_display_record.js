@@ -51,7 +51,10 @@ export class MrpDisplayRecord extends Component {
         this.record = this.props.record.data;
         this.props.record.component = this;
 
-        this.quantityToProduce = this.record.product_qty || this.props.production.data.product_qty;
+        this.quantityToProduce =
+            this.record.qty_remaining ||
+            this.record.product_qty ||
+            this.props.production.data.product_qty;
         this.displayUOM = this.props.groups.uom;
 
         onWillUpdateProps((nextProps) => {

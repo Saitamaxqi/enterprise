@@ -541,19 +541,29 @@ registry.category("web_tour.tours").add("test_generate_serials_in_shopfloor", {
     ],
 });
 
-registry.category("web_tour.tours").add("test_canceled_wo", {
+registry.category("web_tour.tours").add("test_partial_backorder_with_multiple_operations", {
     steps: () => [
         // Make sure workcenter is available.
         ...stepUtils.openWorkcentersSelector(),
         ...stepUtils.addWorkcenterToDisplay("Assembly Line"),
         ...stepUtils.confirmWorkcentersSelection(),
         {
-            content: "Check MO",
+            content: "Select workcenter",
             trigger: 'button.btn-light:contains("Assembly Line")',
-            run: () => {
-                const mo = helper.getRecord();
-                helper.assertProductionWorkorderCount(mo, 1);
-            },
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK-002)) .o_quantity:contains(3 Units)",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK-002)) button:contains(Mark as Done)",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_mrp_display_record:has(.card-title:contains(MOBACK-002)) .o_quantity:contains(5 Units)",
         },
     ],
 });

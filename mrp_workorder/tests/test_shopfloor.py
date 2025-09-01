@@ -446,7 +446,18 @@ class TestShopFloor(HttpCase):
         self.assertEqual(mo.move_byproduct_ids.lot_ids.name, "00001")
 
     @users('test_without_hr_right')
-    def test_canceled_wo(self):
+    def test_partial_backorder_with_multiple_operations(self):
+        """
+        Create an MO for 10 units and 3 operations: op1, op2, op3. Process:
+        - 10 units in op1
+        - 7 units in op2
+        - 5 units in op3
+        Validate the MO for these 5 units and create a backorder. Check that each operation of the
+        backorder displays the appropriate remaining quantity in the backend and in the shopfloor:
+        - op1 shall be cancelled
+        - op2 shall be processed for 3 units
+        - op3 shall be processed for 5 units
+        """
         finished = self.env['product.product'].create({
             'name': 'finish',
             'is_storable': True,
@@ -460,32 +471,28 @@ class TestShopFloor(HttpCase):
             'operation_ids': [
                 Command.create({'name': 'op1', 'workcenter_id': workcenter.id}),
                 Command.create({'name': 'op2', 'workcenter_id': workcenter.id}),
+                Command.create({'name': 'op3', 'workcenter_id': workcenter.id}),
             ],
         })
 
         # Cancel previous MOs and create a new one
         self.env['mrp.production'].search([]).action_cancel()
         mo = self.env['mrp.production'].create({
+            'name': 'MOBACK',
             'product_id': finished.id,
-            'product_qty': 2,
+            'product_qty': 10,
             'bom_id': bom.id,
         })
         mo.action_confirm()
         mo.action_assign()
         mo.button_plan()
 
-        # wo_1 completely finished
-        mo_form = Form(mo)
-        mo_form.qty_producing = 2
-        mo = mo_form.save()
-        mo.workorder_ids[0].button_start()
-        mo.workorder_ids[0].button_finish()
-
-        # wo_2 partially finished
-        mo_form.qty_producing = 1
-        mo = mo_form.save()
-        mo.workorder_ids[1].button_start()
-        mo.workorder_ids[1].button_finish()
+        # wo_1 completely finished, wo_2 and wo_3 partially finished
+        for wo, qty in zip(mo.workorder_ids, (10, 7, 5)):
+            wo.button_start()
+            with Form(mo) as fmo:
+                fmo.qty_producing = qty
+            wo.button_finish()
 
         # Create a backorder
         action = mo.button_mark_done()
@@ -498,7 +505,7 @@ class TestShopFloor(HttpCase):
         self.assertEqual(mo_backorder.workorder_ids[0].state, 'cancel')
         self.assertEqual(mo_backorder.workorder_ids[1].state, 'ready')
 
-        self.start_tour("odoo/shop-floor", "test_canceled_wo", login='test_without_hr_right')
+        self.start_tour("odoo/shop-floor", "test_partial_backorder_with_multiple_operations", login='test_without_hr_right')
 
     @users('test_without_hr_right')
     def test_change_qty_produced(self):
