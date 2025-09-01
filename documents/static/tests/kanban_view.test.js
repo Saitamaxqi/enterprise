@@ -342,6 +342,7 @@ test("Drag and Drop - Check access rights confirmation popup when moving from ka
 test("Drag and Drop - Check access rights confirmation popup when moving from search panel", async function () {
     onRpc("action_move_folder", ({ args }) => {
         expect.step(`action_move_folder_${args[0][0]}_${args[1]}`);
+        expect(typeof args[1]).toBe("string");
     });
     const documents = [
         [2, "Internal Viewer - Link None - Discoverable", "view", "none", false],

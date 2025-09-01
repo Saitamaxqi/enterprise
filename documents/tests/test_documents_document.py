@@ -779,7 +779,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
                 })
 
     def test_document_shortcut_to_my_drive(self):
-        shortcut_1 = self.document_txt.action_create_shortcut(location_user_folder_id=self.folder_b.id)
+        shortcut_1 = self.document_txt.action_create_shortcut(location_user_folder_id=str(self.folder_b.id))
         shortcut_2 = shortcut_1.with_user(self.internal_user).action_create_shortcut(location_user_folder_id='MY')
         self.assertEqual(shortcut_2.folder_id.id, False)
         self.assertEqual(shortcut_2.with_user(self.internal_user).user_folder_id, 'MY')

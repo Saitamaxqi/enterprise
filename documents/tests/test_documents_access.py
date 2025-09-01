@@ -488,7 +488,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         self.document_gif.folder_id = shortcut.id
         self.assertEqual(self.document_gif.folder_id, self.folder_b)
 
-        doc_shortcut = self.document_gif.action_create_shortcut(shortcut.id)
+        doc_shortcut = self.document_gif.action_create_shortcut(str(shortcut.id))
         self.assertEqual(doc_shortcut.folder_id, self.folder_b)
 
         # making a shortcut of a shortcut use the target instead
@@ -893,7 +893,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         self._assert_raises_check_access_rule(self.document_txt.with_user(self.portal_user), 'read')
 
         # Create a shortcut to document_txt in folder_a
-        shortcut = self.document_txt.action_create_shortcut(location_user_folder_id=self.folder_a.id)
+        shortcut = self.document_txt.action_create_shortcut(location_user_folder_id=str(self.folder_a.id))
 
         self._assert_raises_check_access_rule(shortcut.with_user(self.portal_user), 'read',
                                               "Shortcut shouldn't be visible as source is inaccessible")
@@ -959,7 +959,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
 
         # Access via access_internal
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_user_folder_id=self.folder_a.id
+            location_user_folder_id=str(self.folder_a.id)
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.action_update_access_rights(access_internal='none')
@@ -972,7 +972,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         self.document_txt.action_update_access_rights(
             partners={self.internal_user.partner_id: ('view', False)})
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_user_folder_id=self.folder_a.id
+            location_user_folder_id=str(self.folder_a.id)
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.action_update_access_rights(partners={self.internal_user.partner_id: (False, False)})
@@ -983,7 +983,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         # Access via ownership
         self.document_txt.owner_id = self.internal_user
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_user_folder_id=self.folder_a.id
+            location_user_folder_id=str(self.folder_a.id)
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.owner_id = self.document_manager
@@ -995,7 +995,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         Doc_as_internal = self.env['documents.document'].with_user(self.internal_user)
         # Check in SUDO to remove the added `user_permission` domain from the access rules
         Doc_as_internal_sudo = Doc_as_internal.sudo()
-        shortcut = self.document_txt.action_create_shortcut(location_user_folder_id=self.folder_a.id)
+        shortcut = self.document_txt.action_create_shortcut(location_user_folder_id=str(self.folder_a.id))
 
         # Check edit access on the shortcut when we can only read the target
         self.document_txt.action_update_access_rights(access_internal='view', access_via_link='none')
@@ -1053,7 +1053,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
             'last_access_date': fields.Datetime.now(),
         }])
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
-            location_user_folder_id=self.folder_a.id)
+            location_user_folder_id=str(self.folder_a.id))
         self.assertEqual(self.document_txt.with_user(self.internal_user).user_permission, 'view')
         self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'edit')
         self.assertTrue(Doc_as_internal_sudo.search([('id', '=', shortcut.id), ('user_permission', '=', 'edit')]))

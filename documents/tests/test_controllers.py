@@ -189,7 +189,7 @@ class TestDocumentsControllers(HttpCaseWithUserDemo, MockEmail):
             'folder_id': cls.public_folder.id,
             'url': f'{cls.base_url()}/web/health',
         })
-        cls.internal_shortcut = cls.internal_file.action_create_shortcut(cls.public_folder.id)
+        cls.internal_shortcut = cls.internal_file.action_create_shortcut(str(cls.public_folder.id))
         cls.missing_file = Doc.new()
 
         # Make so the demo and portal users already visited all
@@ -384,8 +384,8 @@ class TestDocumentsControllers(HttpCaseWithUserDemo, MockEmail):
             self.assertEqual(reszip.read('public-file-textual.txt'), TEXT)
 
         # check that the name are all unique
-        self.public_file.action_create_shortcut(self.internal_folder.id)
-        self.public_folder.action_create_shortcut(self.internal_folder.id)
+        self.public_file.action_create_shortcut(str(self.internal_folder.id))
+        self.public_folder.action_create_shortcut(str(self.internal_folder.id))
         self.env['documents.document'].create([{
             'name': 'test.tar.gz',
             'folder_id': self.internal_folder.id,

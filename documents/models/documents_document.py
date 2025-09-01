@@ -864,7 +864,7 @@ class DocumentsDocument(models.Model):
         parent is 'COMPANY' or 'MY'. If no before_folder is given, place it as
         last child of its parent (last root if no parent is given)
 
-        :param str|int target: user_folder_id of the new parent folder
+        :param str target: user_folder_id of the new parent folder
         :param int|bool before_folder_id: id of the folder before which to move
         """
         self.ensure_one()
@@ -929,7 +929,7 @@ class DocumentsDocument(models.Model):
     def action_create_shortcut(self, location_user_folder_id=None):
         """Create a shortcut to self in a specific user_folder or as a sibling.
 
-        :param int | str | None location_user_folder_id: Optional: where to create the shortcut.
+        :param  str | None location_user_folder_id: Optional: where to create the shortcut.
         """
         if not self.ids:
             return self.browse()

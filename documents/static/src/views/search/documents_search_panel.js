@@ -149,7 +149,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                         "documents.document",
                         "action_create_shortcut",
                         [draggingFolderId],
-                        { location_user_folder_id: parentFolderId }
+                        { location_user_folder_id: parentFolderId.toString() }
                     );
                     return this.env.searchModel._reloadSearchModel(true);
                 }
@@ -170,7 +170,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                         confirm: async () => {
                             await this.orm.call("documents.document", "action_move_folder", [
                                 [draggingFolderId],
-                                parentFolderId || false,
+                                parentFolderId.toString() || false,
                                 beforeFolderId,
                             ]);
                             await this.env.searchModel._reloadSearchModel(true);
@@ -181,7 +181,7 @@ export class DocumentsSearchPanel extends SearchPanel {
                 }
                 await this.orm.call("documents.document", "action_move_folder", [
                     [draggingFolderId],
-                    parentFolderId ? parentFolderId : false,
+                    parentFolderId ? parentFolderId.toString() : false,
                     beforeFolderId,
                 ]);
                 await this.env.searchModel._reloadSearchModel(true);
