@@ -164,6 +164,7 @@ class IrActionsServer(models.Model):
                 # so we can do prompt like "Do ... if it failed, to ..."
                 error = e
                 result = f"An error occurred while executing {ir_action_tool.name}: {error}"
+                _logger.exception(result)
 
             duration = time.perf_counter() - start_time
             if session := get_ai_logging_session():
