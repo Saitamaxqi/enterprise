@@ -53,7 +53,7 @@ class L10n_EeTaxReportHandler(models.AbstractModel):
         elif date_to >= fields.Date.from_string("2025-07-01"):
             return "KMD6"
         return "KMD4"
-    
+
     def export_to_xml(self, options):
         """ Create export of the Normal period filling of the VAT return forms KMD
         and KMD INF. Requires the sender company's company registry number to be set.
@@ -375,7 +375,18 @@ class L10n_EeKmdInfReportHandler(models.AbstractModel):
             # In part A, the invoice total without VAT and the taxable supply presented in the fields 1, 1^1,
             # 2 and 2^1 of Form KMD (VAT report) are displayed. We exclude partners whose Tax ID is / and exclude
             # foreigners who have a Tax ID not starting by EE.
-            xmlids = ['tax_report_line_1_tag', 'tax_report_line_1_24_tag', 'tax_report_line_1_1_tag', 'tax_report_line_1_2_tag', 'tax_report_line_2_tag', 'tax_report_line_2_1_tag', 'tax_report_line_2_2_tag']
+            xmlids = [
+                'tax_report_line_1_tag_sale',
+                'tax_report_line_1_tag_purchase',
+                'tax_report_line_1_1_tag_sale',
+                'tax_report_line_1_1_tag_purchase',
+                'tax_report_line_1_24_tag_sale',
+                'tax_report_line_1_24_tag_purchase',
+                'tax_report_line_1_2_tag',
+                'tax_report_line_2_tag',
+                'tax_report_line_2_1_tag',
+                'tax_report_line_2_2_tag',
+            ]
 
             sql_query = SQL("""
                 WITH multiple_tax_moves AS (
