@@ -416,7 +416,8 @@ class AccountAgedPayableReportHandler(models.AbstractModel):
 
     def _custom_unfold_all_batch_data_generator(self, report, options, lines_to_expand_by_function):
         # We only optimize the unfold all if the groupby value of the report has not been customized. Else, we'll just run the full computation
-        if self.env.ref('account_reports.aged_payable_line').groupby.replace(' ', '') == 'partner_id,id':
+        aged_payable_line = self.env.ref('account_reports.aged_payable_line')
+        if aged_payable_line._get_groupby(options).replace(' ', '') == aged_payable_line.groupby.replace(' ', ''):
             return self._common_custom_unfold_all_batch_data_generator('liability_payable', report, options, lines_to_expand_by_function)
         return {}
 
@@ -441,7 +442,8 @@ class AccountAgedReceivableReportHandler(models.AbstractModel):
 
     def _custom_unfold_all_batch_data_generator(self, report, options, lines_to_expand_by_function):
         # We only optimize the unfold all if the groupby value of the report has not been customized. Else, we'll just run the full computation
-        if self.env.ref('account_reports.aged_receivable_line').groupby.replace(' ', '') == 'partner_id,id':
+        aged_receivable_line = self.env.ref('account_reports.aged_receivable_line')
+        if aged_receivable_line._get_groupby(options).replace(' ', '') == aged_receivable_line.groupby.replace(' ', ''):
             return self._common_custom_unfold_all_batch_data_generator('asset_receivable', report, options, lines_to_expand_by_function)
         return {}
 

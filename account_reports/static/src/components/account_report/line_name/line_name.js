@@ -3,6 +3,8 @@ import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { useService } from "@web/core/utils/hooks";
 import { Component, useState, useRef, useEffect } from "@odoo/owl";
 
+import { parseLineId } from "@account_reports/js/util";
+
 import { RelationalModel } from "@web/model/relational_model/relational_model";
 
 import { AccountReturnSelectionBadge } from "../../account_return/widgets/account_return_selection_badge";
@@ -96,6 +98,10 @@ export class AccountReportLineName extends Component {
             supervised: 'success',
             anomaly: 'danger',
         }
+    }
+
+    get modelName() {
+        return parseLineId(this.props.line.id).at(-1)[1];
     }
 
     //------------------------------------------------------------------------------------------------------------------

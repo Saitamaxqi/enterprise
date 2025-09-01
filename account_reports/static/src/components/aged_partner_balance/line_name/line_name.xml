@@ -8,7 +8,7 @@
         </xpath>
 
         <xpath expr="//t[@data-id='line_buttons']" position="inside">
-            <t t-if="props.line.unfoldable">
+            <t t-if="props.line.unfoldable and modelName === 'res.partner'">
                 <button
                     class="btn btn_action"
                     t-on-click="(ev) => controller.reportAction(ev, 'caret_option_open_record_form', { line_id: props.line.id })"
