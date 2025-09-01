@@ -136,7 +136,7 @@
         <field name="arch" type="xml">
             <form create="false" js_class="iot_device_form">
                 <header>
-                    <button name="test_printer" string="Test" class="btn btn-primary" invisible="type != 'printer'"/>
+                    <button name="test_device" string="Test" class="btn btn-primary" invisible="type not in ['printer', 'fiscal_data_module']"/>
                     <field name="connected_status" widget="statusbar"/>
                 </header>
                 <sheet>

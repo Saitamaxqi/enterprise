@@ -51,6 +51,8 @@ errors = {
     '209': "Fiscal Data Module real time clock corrupt.",
     '210': "Vat Signing Card not compatible with Fiscal Data Module.",
     '299': "Unspecified error.",
+    '300': "Fiscal Data Module responded with invalid response. Check cable and power supply. Restart if necessary.",
+    '301': "Fiscal Data Module did not respond. Check cable and power supply. Restart if necessary.",
 }
 
 
@@ -74,6 +76,7 @@ class BlackBoxDriver(SerialDriver):
             'registerReceiptWeb': self._request_registerReceiptWeb,  # 'H' from server (websocket) so requires an answer
             'registerReceipt': self._request_registerReceipt,  # 'H'
             'registerPIN': self._request_registerPIN,  # 'P'
+            'status': self._request_status,  # 'S'
         })
 
     @classmethod
@@ -103,6 +106,19 @@ class BlackBoxDriver(SerialDriver):
                 _logger.exception('Error while probing %s with protocol %s', device, protocol.name)
             time.sleep(3)
         return False
+
+    def _request_status(self, data):
+        """
+        Sends a status request to the blackbox and stores the result status in self.data['message']
+        """
+        packet = self._wrap_low_level_message_around(f'S{str(self.sequence_number % 100).zfill(2)}0')
+        self.sequence_number += 1
+        blackbox_response = self._send_to_blackbox(packet, self._connection)
+        parsed_response = self._parse_blackbox_response(blackbox_response) if blackbox_response else {}
+        if not parsed_response:
+            self.data['message'] = self.data['result']['error']['errorCode']
+        else:
+            self.data['message'] = parsed_response.get('error', {}).get('errorCode', '301')
 
     @classmethod
     def _wrap_low_level_message_around(cls, high_level_message):
@@ -192,20 +208,20 @@ class BlackBoxDriver(SerialDriver):
     def _request_registerReceipt(self, data):
         if data['high_level_message'].get('clock'):
             packet = self._wrap_low_level_message_around(self._wrap_high_level_message_around('I', data['high_level_message']))
-            blackbox_response = self._send_to_blackbox(packet, 59, self._connection)
+            blackbox_response = self._send_to_blackbox(packet, self._connection)
 
         packet = self._wrap_low_level_message_around(self._wrap_high_level_message_around('H', data['high_level_message']))
-        blackbox_response = self._send_to_blackbox(packet, 109, self._connection)
+        blackbox_response = self._send_to_blackbox(packet, self._connection)
         if blackbox_response:
             self.data['result'] = self._parse_blackbox_response(blackbox_response)
 
     def _request_registerPIN(self, data):
         packet = self._wrap_low_level_message_around("P040%s" % data['high_level_message'])
-        blackbox_response = self._send_to_blackbox(packet, 35, self._connection)
+        blackbox_response = self._send_to_blackbox(packet, self._connection)
         if blackbox_response:
             self.data['result'] = self._parse_blackbox_response(blackbox_response)
 
-    def _send_to_blackbox(self, packet, response_size, connection):
+    def _send_to_blackbox(self, packet, connection):
         """Sends a message to and wait for a response from the blackbox.
 
         :param bytearray packet: the message to be sent to the blackbox
@@ -216,41 +232,30 @@ class BlackBoxDriver(SerialDriver):
         """
         connection.reset_output_buffer()
         connection.reset_input_buffer()
-
-        connection.write(packet)
-        buffer = connection.read_until(ETX)
-        bcc = connection.read(1)
-
-        if len(buffer) and buffer[0:1] == ACK:
-            response = buffer[2:-1].decode()  # remove ACK, STX and ETX
-            if buffer[1:2] == STX and buffer[-1:] == ETX and self._lrc(response) == ord(bcc):
-                connection.write(ACK)
-                return response
-            _logger.error("received ACK but not a valid response, sending NACK... (response: %s)", buffer)
-            connection.write(NACK)
-            # no ACK or not a valid response
-            self.data['result'] = {
-                'error': {
-                    'errorCode': '300',
-                    'errorMessage': (
-                        f'Fiscal Data Module responded with invalid response. Buffer: {buffer}. Please check the '
-                        f'cable connection and the power supply, then retry.'
-                    ),
-                }
+        error_code = '301'
+        try:
+            connection.write(packet)
+            buffer = connection.read_until(ETX)
+            if len(buffer) and buffer[0:1] == ACK:
+                response = buffer[2:-1].decode()  # remove ACK, STX and ETX
+                if buffer[1:2] == STX and buffer[-1:] == ETX and self._lrc(response) == ord(connection.read(1)):
+                    connection.write(ACK)
+                    return response
+                _logger.error("received ACK but not a valid response, sending NACK... (response: %s)", buffer)
+                connection.write(NACK)
+                # no ACK or not a valid response
+                error_code = '300'
+            elif not len(buffer):
+                # When the blackbox is off or poorly connected its adaptor is still detected but always replies with empty bytestrings b''
+                _logger.error("Blackbox did not respond, check the cable connection and the power supply.")
+        except serial.SerialException:
+            _logger.warning("Error while sending to blackbox with protocol %s", self._protocol.name)
+        self.data['result'] = {
+            'error': {
+                'errorCode': error_code,
+                'errorMessage': errors[error_code],
             }
-        elif not len(buffer):
-            # When the blackbox is off or poorly connected its adaptor is still detected but always replies with empty bytestrings b''
-            _logger.error("Blackbox did not respond, check the cable connection and the power supply.")
-            self.data['result'] = {
-                'error': {
-                    'errorCode': '301',
-                    'errorMessage': (
-                        'Fiscal Data Module did not respond to your request. This usually means it has disconnected. '
-                        'Please check its cable connection and its power supply. Make sure it has steady green '
-                        'light on.'
-                    ),
-                }
-            }
+        }
         return None
 
     def _wrap_high_level_message_around(self, request_type, data):

@@ -1,24 +1,4 @@
-const errors = {
-    "000": "No error",
-    "001": "PIN accepted.",
-    101: "Fiscal Data Module memory 90% full.",
-    102: "Already handled request.",
-    103: "No record.",
-    199: "Unspecified warning.",
-    201: "No Vat Signing Card or Vat Signing Card broken.",
-    202: "Please initialize the Vat Signing Card with PIN.",
-    203: "Vat Signing Card blocked.",
-    204: "Invalid PIN.",
-    205: "Fiscal Data Module memory full.",
-    206: "Unknown identifier.",
-    207: "Invalid data in message.",
-    208: "Fiscal Data Module not operational.",
-    209: "Fiscal Data Module real time clock corrupt.",
-    210: "Vat Signing Card not compatible with Fiscal Data Module.",
-    299: "Unspecified error.",
-    300: "Invalid response from blackbox.",
-    301: "Connection error with blackbox.",
-};
+import { FDM_MESSAGES } from "@iot/network_utils/iot_http_service";
 
 export class BlackboxError extends Error {
     constructor(code = "disconnected", message = null, retry = undefined) {
@@ -27,9 +7,7 @@ export class BlackboxError extends Error {
         this.type = "blackbox";
         this.code = code;
         this.message =
-            message ||
-            (code && errors[code.toString().substring(0, 3)]) ||
-            "Unknown blackbox error";
+            FDM_MESSAGES[code?.toString()?.substring(0, 3)] || message || "Unknown blackbox error";
         this.retry = retry;
     }
 }

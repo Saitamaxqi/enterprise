@@ -3,7 +3,7 @@ import { useService } from "@web/core/utils/hooks";
 import { formView } from "@web/views/form/form_view";
 import { _t } from "@web/core/l10n/translation";
 import { useSubEnv } from "@odoo/owl";
-import { PRINTER_MESSAGES } from "@iot/network_utils/iot_http_service";
+import { PRINTER_MESSAGES, FDM_MESSAGES } from "@iot/network_utils/iot_http_service";
 import { printReport } from "@iot/iot_report_action";
 
 class IoTDeviceController extends formView.Controller {
@@ -70,9 +70,18 @@ class IoTDeviceController extends formView.Controller {
         return this.iotHttpService.action(iot_id.id, identifier, { action: "update_url", url: display_url });
     }
 
-    onPrinterEvent(event) {
-        const errorMessage = PRINTER_MESSAGES[event.message] ?? event.message;
-
+    onDeviceEvent(event, type) {
+        const errorMessages = type === "printer" ? PRINTER_MESSAGES : FDM_MESSAGES;
+        // Parse blackbonse response
+        if (type == "fiscal_data_module") {
+            const errorCode = event.message ? event.message.substring(0, 3) : event.result?.error?.errorCode;
+            if (FDM_MESSAGES[errorCode] && !["000", "102"].includes(errorCode)) {
+                event.message = errorCode
+                event.status = "error";
+            }
+        }
+        const errorMessage = errorMessages[event.message] ?? event.message;
+        const defaultMessage = type === "printer" ? _t("Test page printed") : _t('Fiscal Data Module is connected and operational');
         switch (event.status) {
             case "error":
                 this.notificationService.add(errorMessage, { type: "danger" });
@@ -81,19 +90,19 @@ class IoTDeviceController extends formView.Controller {
                 this.notificationService.add(errorMessage, { type: "warning" });
                 return;
             case "disconnected":
-                this.notificationService.add(_t("Printer is disconnected"), { type: "danger" });
+                this.notificationService.add(_t("Device is disconnected"), { type: "danger" });
                 return;
             default:
-                this.notificationService.add(_t("Test page printed"), { type: "info" });
+                this.notificationService.add(defaultMessage, { type: "info" });
                 return;
         }
     }
 
     async onClickButtonTest(params) {
-        if (params.clickParams.name === "test_printer") {
-            const { iot_id, identifier, subtype } = this.model.root.data;
+        if (params.clickParams.name === "test_device") {
+            const { iot_id, identifier, type, subtype } = this.model.root.data;
 
-            if (subtype === "office_printer") {
+            if (type === "printer" && subtype === "office_printer") {
                 // We print a "real" pdf report: the external report sample
                 const reportId = (await this.orm.searchRead(
                     "ir.actions.report",
@@ -109,8 +118,8 @@ class IoTDeviceController extends formView.Controller {
                 iot_id.id,
                 identifier,
                 { action: "status" },
-                (event) => this.onPrinterEvent(event),
-                (event) => this.onPrinterEvent(event),
+                (event) => this.onDeviceEvent(event, type),
+                (event) => this.onDeviceEvent(event, type),
             );
         }
     }
