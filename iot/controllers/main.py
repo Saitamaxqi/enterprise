@@ -212,6 +212,16 @@ class IoTController(http.Controller):
 
                 data_device = devices[device_identifier]
                 if data_device['type'] in available_types and data_device['connection'] in available_connections:
+                    # Special case to handle serial port change for blackbox
+                    if data_device['type'] == 'fiscal_data_module' and 'BODO001' in data_device['name']:
+                        existing_blackbox = connected_iot_devices.search([
+                            ('iot_id', '=', box.id), ('name', 'like', 'BODO001'), ('type', '=', 'fiscal_data_module')
+                        ], limit=1)
+                        if existing_blackbox:
+                            existing_blackbox.write({'identifier': device_identifier})
+                            connected_iot_devices |= existing_blackbox
+                            continue
+
                     device = connected_iot_devices.search([
                         ('iot_id', '=', box.id), ('identifier', '=', device_identifier)
                     ])
