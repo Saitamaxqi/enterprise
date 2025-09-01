@@ -12,7 +12,7 @@ class HrJob(models.Model):
         ('B', 'Category B'),
         ('C', 'Category C'),
         ('D', 'Category D'),
-    ], default='C', help="""Category A - Executive functions:
+    ], default='C', groups="hr_payroll.group_hr_payroll_user", help="""Category A - Executive functions:
 Included in this class are functions characterized by performing a limited number of simple and repetitive tasks. For example: the worker exclusively responsible for typing.
 
 Category B - Support functions.

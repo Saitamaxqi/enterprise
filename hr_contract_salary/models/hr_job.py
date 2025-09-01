@@ -9,6 +9,7 @@ class HrJob(models.Model):
     _inherit = 'hr.job'
 
     contract_template_id = fields.Many2one('hr.version', domain="[('company_id', '=', company_id), ('employee_id', '=', False)]", string="Contract Template",
+        groups="hr.group_hr_user",
         help="Default contract used to generate an offer. If empty, benefits will be taken from current contract of the employee/nothing for an applicant.")
 
     @api.constrains('contract_template_id', 'company_id')

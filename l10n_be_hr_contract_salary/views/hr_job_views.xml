@@ -14,7 +14,7 @@
                             <field name="l10n_be_contract_ip"/>
                             <field name="l10n_be_contract_withholding_taxes_exemption"/>
                         </group>
-                        <group col="2">
+                        <group col="2" groups="hr_payroll.group_hr_payroll_user">
                             <field name="l10n_be_custom_representation_fees"/>
                             <separator string="Representation Fees" invisible="not l10n_be_custom_representation_fees"/>
                             <field name="l10n_be_custom_representation_fees_homeworking" invisible="not l10n_be_custom_representation_fees"/>
@@ -50,8 +50,9 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='department_id']" position="after">
-                <field name="l10n_be_contract_ip" optional="hide"/>
-                <field name="l10n_be_contract_withholding_taxes_exemption" optional="hide"/>
+                <field name="l10n_be_contract_ip" optional="hide" groups="hr_payroll.group_hr_payroll_user"/>
+                <field name="l10n_be_contract_withholding_taxes_exemption" optional="hide"
+                    groups="hr_payroll.group_hr_payroll_user"/>
             </xpath>
             <xpath expr="//list" position="attributes">
                 <attribute name="multi_edit">1</attribute>

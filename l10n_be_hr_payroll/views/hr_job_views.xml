@@ -9,7 +9,7 @@
                 <attribute name="invisible">0</attribute>
             </page>
             <field name="description" position="before">
-                <group invisible="not display_l10n_be_scale">
+                <group invisible="not display_l10n_be_scale" groups="hr_payroll.group_hr_payroll_user">
                     <field name="display_l10n_be_scale" invisible="1"/>
                     <field name="l10n_be_scale_category" string="CP200 Category"/>
                 </group>

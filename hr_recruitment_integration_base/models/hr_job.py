@@ -8,12 +8,12 @@ class HrJob(models.Model):
     _inherit = 'hr.job'
 
     job_post_count = fields.Integer(
-        compute='_compute_job_post_count', string='Number of Job Posts')
-    job_post_ids = fields.One2many('hr.job.post', 'job_id', string='Job Posts')
+        compute='_compute_job_post_count', string='Number of Job Posts', groups="hr_recruitment.group_hr_recruitment_user")
+    job_post_ids = fields.One2many('hr.job.post', 'job_id', string='Job Posts', groups="hr_recruitment.group_hr_recruitment_user")
     currency_id = fields.Many2one(
-        'res.currency', related='company_id.currency_id', readonly=True)
-    salary_min = fields.Monetary('Minimum Salary', currency_field='currency_id')
-    salary_max = fields.Monetary('Maximum Salary', currency_field='currency_id')
+        'res.currency', related='company_id.currency_id', readonly=True, groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")
+    salary_min = fields.Monetary('Minimum Salary', currency_field='currency_id', groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")
+    salary_max = fields.Monetary('Maximum Salary', currency_field='currency_id', groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")
     payment_interval = fields.Selection([
         ('hourly', 'Hour'),
         ('daily', 'Day'),
@@ -21,10 +21,10 @@ class HrJob(models.Model):
         ('biweekly', 'Bi-Week'),
         ('monthly', 'Month'),
         ('yearly', 'Year'),
-    ], string='Salary Time Unit', default='monthly', required=True)
-    schedule_id = fields.Many2one('resource.calendar', string='Working Schedule')
-    date_from = fields.Date(help="Is set, update applicants availability once hired for that specific mission.")
-    date_to = fields.Date()
+    ], string='Salary Time Unit', default='monthly', required=True, groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")
+    schedule_id = fields.Many2one('resource.calendar', string='Working Schedule', groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")
+    date_from = fields.Date(help="Is set, update applicants availability once hired for that specific mission.", groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")
+    date_to = fields.Date(groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")
 
     @api.depends('job_post_ids')
     def _compute_job_post_count(self):

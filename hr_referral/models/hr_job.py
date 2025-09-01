@@ -6,7 +6,8 @@ from odoo import fields, models, _
 class HrJob(models.Model):
     _inherit = "hr.job"
 
-    job_open_date = fields.Date('Job Start Recruitment Date', default=fields.Date.today())
+    job_open_date = fields.Date('Job Start Recruitment Date', default=fields.Date.today(),
+        groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user")  # never use ?
     utm_campaign_id = fields.Many2one('utm.campaign', 'Campaign', ondelete='restrict')
     max_points = fields.Integer(compute='_compute_max_points')
     direct_clicks = fields.Integer(compute='_compute_clicks')
@@ -107,7 +108,7 @@ class HrJob(models.Model):
 
         return referral_links_by_user
 
-    def set_recruit(self):
+    def set_recruit(self):  # never use ??
         self.write({'job_open_date': fields.Date.today()})
         return super().set_recruit()
 

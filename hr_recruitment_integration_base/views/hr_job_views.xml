@@ -11,6 +11,7 @@
                     icon="fa-newspaper-o"
                     name="action_open_hr_job_post"
                     type="object"
+                    groups="hr_recruitment.group_hr_recruitment_user"
                     invisible="job_post_count == 0">
                     <field
                         name="job_post_count"
@@ -20,23 +21,24 @@
                 </button>
             </div>
             <header position="inside">
-                <button name="action_post_job" string="Post on Job Boards" type="object" class="btn-secondary"/>
+                <button name="action_post_job" string="Post on Job Boards" type="object" class="btn-secondary"
+                    groups="hr_recruitment.group_hr_recruitment_user"/>
             </header>
             <field name="expected_degree" position="after">
-                <label for="salary_min" string="Salary Range"/>
-                <div>
+                <label for="salary_min" string="Salary Range"
+                    groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user"/>
+                <div groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user">
                     <field name="salary_min" class="oe_inline"/> -
                     <field name="salary_max" class="oe_inline"/> per
                     <field name="payment_interval" class="oe_inline"/>
                 </div>
             </field>
             <field name="contract_type_id" position="after">
-                <field name="schedule_id"/>
+                <field name="schedule_id" groups="hr.group_hr_user,hr_recruitment.group_hr_recruitment_user"/>
             </field>
-
-
             <xpath expr="//page[@name='trackers_page']" position="after">
-                <page string="Job Boards" name="job_boards">
+                <page string="Job Boards" name="job_boards"
+                    groups="hr_recruitment.group_hr_recruitment_user">
                     <field name="job_post_ids">
                         <list string="Posts">
                             <field name="platform_id" widget="many2one_avatar"/>
@@ -63,6 +65,7 @@
                 <div role="menuitem" name="open_job_posts">
                     <a
                         role="button"
+                        groups="hr_recruitment.group_hr_recruitment_user"
                         name="%(action_open_hr_job_post)d"
                         context="{'search_default_job_id': id}"
                         type="action">
@@ -73,7 +76,10 @@
 
             <xpath expr="//div[@name='menu_new_applications']" position="after">
                 <div role="menuitem" name="post_job_on_job_board">
-                    <a name="action_post_job" type="object">Job Board Posts</a>
+                    <a name="action_post_job" type="object"
+                        groups="hr_recruitment.group_hr_recruitment_user">
+                        Job Board Posts
+                    </a>
                 </div>
             </xpath>
         </field>
