@@ -12,8 +12,9 @@ class AccountBatchPayment(models.Model):
 
     iso20022_batch_booking = fields.Boolean(
         string="SCT Batch Booking",
-        default=True,
-        help="Request batch booking from the bank for the related bank statements.")
+        default=False,
+        help="Ask the bank to group the bank transactions corresponding to these payments into a single transaction.",
+    )
 
     payment_method_is_iso20022 = fields.Boolean(related='payment_method_id.is_iso20022')
 

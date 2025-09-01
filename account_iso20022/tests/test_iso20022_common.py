@@ -47,6 +47,7 @@ class TestISO20022CommonCreditTransfer(AccountTestInvoicingCommon):
             'payment_ids': [(4, payment.id, None) for payment in (payment_1 | payment_2)],
             'payment_method_id': self.payment_method.id,
             'batch_type': 'outbound',
+            'iso20022_batch_booking': True,
         })
         wizard_action = batch.validate_batch()
         self.assertIsNone(wizard_action)

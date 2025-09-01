@@ -23,7 +23,11 @@ class AccountBatchPayment(models.Model):
     )
     sdd_min_required_collection_date = fields.Date(compute='_compute_sdd_min_required_collection_date', export_string_translation=False)
     sdd_first_time_payment_ids = fields.One2many('account.payment', compute='_compute_sdd_first_time_payment_ids', export_string_translation=False)
-    sdd_batch_booking = fields.Boolean(string="SDD Batch Booking", default=True, help="Request batch booking from the bank for the related bank statements.")
+    sdd_batch_booking = fields.Boolean(
+        string="SDD Batch Booking",
+        default=False,
+        help="Ask the bank to group the bank transactions corresponding to these payments into a single transaction.",
+    )
     sdd_scheme = fields.Selection(string="SDD Scheme", selection=[('CORE', 'CORE'), ('B2B', 'B2B')],
     help='The B2B scheme is an optional scheme,\noffered exclusively to business payers.\nSome banks/businesses might not accept B2B SDD.',
     compute='_compute_sdd_scheme', store=True, readonly=False)
