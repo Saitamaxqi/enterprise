@@ -122,3 +122,36 @@ class TestQuality(TransactionCase):
         with Form(mo) as mo_form:
             mo_form.qty_producing = 7.0
         self.assertEqual(mo.workorder_ids.current_quality_check_id._get_print_qty(), 7)
+
+    def test_copy_quality_check(self):
+        """Test that a copied quality check is correctly added into the chain.
+
+            Scenario:
+                - Given a chain of quality checks A -> B -> C.
+                - When B is copied.
+                - Then the resulting chain should be A -> B -> B' -> C,
+                ensuring the copied quality check is inserted directly after its original quality check.
+        """
+        quality_point = self.env['quality.point'].create({
+            'product_ids': [(4, self.product_1.id)],
+        })
+        quality_alert_team = self.env['quality.alert.team'].create({
+            'name': 'Quality Team',
+        })
+        check_vals = {
+            'product_id': self.product_1.id,
+            'point_id': quality_point.id,
+            'team_id': quality_alert_team.id,
+        }
+        quality_checks = self.env['quality.check'].create([check_vals, check_vals, check_vals])
+
+        # Create a chain of Quality checks 0 -> 1 -> 2
+        quality_checks[1]._insert_in_chain('after', quality_checks[0])
+        quality_checks[2]._insert_in_chain('after', quality_checks[1])
+
+        new_check = quality_checks[1].copy()
+
+        # chain of Quality checks should be 0 -> 1 -> Copy of 1 -> 2
+        self.assertEqual(quality_checks[1].next_check_id, new_check)
+        self.assertEqual(new_check.previous_check_id, quality_checks[1])
+        self.assertEqual(new_check.next_check_id, quality_checks[2])

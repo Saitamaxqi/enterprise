@@ -863,7 +863,7 @@ class MrpWorkorder(models.Model):
         self.production_id.set_qty_producing()
 
         # Find first uncompleted step of type register production (if it exists) in the chain
-        current_check = self.check_ids.filtered(lambda c: not c.previous_check_id)
+        current_check = self.check_ids.filtered(lambda c: not c.previous_check_id)[:1]
         while current_check and current_check.next_check_id and (current_check.test_type != 'register_production' or current_check.quality_state != 'none'):
             current_check = current_check.next_check_id
 

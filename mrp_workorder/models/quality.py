@@ -255,6 +255,16 @@ class QualityCheck(models.Model):
             else:
                 check.result = check._get_check_result()
 
+    def copy(self, default=None):
+        default = dict(default or {})
+        new_checks = super().copy(default)
+
+        for old_check, new_check in zip(self, new_checks):
+            # only insert into chain if the quality check is linked with another quality check
+            if old_check.previous_check_id or old_check.next_check_id:
+                new_check._insert_in_chain('after', old_check)
+        return new_checks
+
     def _get_check_result(self):
         if self.test_type in ('register_consumed_materials', 'register_byproducts'):
             if len(self.lot_ids) == 1:

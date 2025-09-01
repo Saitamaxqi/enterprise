@@ -686,3 +686,60 @@ class TestShopFloor(HttpCase):
         })
         self.env['mrp.workcenter'].create({'name': 'Workcenter1'})
         self.start_tour('/odoo', 'test_shop_floor_access', login='test_without_hr_right')
+
+    def test_set_qty_producing(self):
+        user_admin = self.env.ref('base.user_admin')
+        user_admin.email = "admin@example.com"
+        component, final_product = self.env['product.product'].create([{
+            'name': 'component',
+            'is_storable': True,
+        }, {
+            'name': 'final product',
+            'is_storable': True,
+            'tracking': 'serial',
+        }])
+        workcenter = self.env['mrp.workcenter'].create({
+            'name': 'Assembly Line',
+        })
+        bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': final_product.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'operation_ids': [
+                Command.create({'name': 'Operation1', 'workcenter_id': workcenter.id}),
+            ],
+            'bom_line_ids': [
+                Command.create({'product_id': component.id, 'product_qty': 1}),
+            ]
+        })
+        self.env['quality.point'].create([{
+                'picking_type_ids': [Command.link(self.warehouse.manu_type_id.id)],
+                'product_ids': [Command.link(final_product.id)],
+                'title': 'Register Production',
+                'test_type_id': self.test_type_register_production.id,
+        }])
+        mo = self.env['mrp.production'].create({
+            'product_id': final_product.id,
+            'product_qty': 1,
+            'bom_id': bom.id,
+        })
+
+        mo.action_confirm()
+        wo = mo.workorder_ids[0]
+        Form.from_action(self.env, wo.action_add_step())\
+            .save() \
+            .with_user(user_admin) \
+            .add_check_in_chain()
+        wo.set_qty_producing()
+
+        first_check = wo.check_ids[0]
+        last_check = wo.check_ids[1]
+        new_check = last_check.copy()
+        wo.set_qty_producing()
+
+        self.assertEqual(last_check.next_check_id, new_check)
+        self.assertEqual(new_check.previous_check_id, last_check)
+        self.assertEqual(new_check.next_check_id, first_check)
+        self.assertEqual(first_check.previous_check_id, new_check)
+        self.assertFalse(first_check.next_check_id)
+        self.assertEqual(wo.current_quality_check_id, first_check)
+        self.assertFalse(wo.allow_producing_quantity_change)
