@@ -10,5 +10,4 @@ from . import enet_bank_template
 from . import enet_template
 from . import irn_exception
 from . import ir_attachment
-from . import template_in
 from . import l10n_in_report_handler

@@ -10,7 +10,6 @@ Accounting reports for India
         'l10n_in',
         'account_reports',
         'accountant',
-        'sign',
         'account_batch_payment',
         'barcodes',
         'account_invoice_extract',
@@ -37,7 +36,6 @@ Accounting reports for India
         'demo/demo_company.xml',
     ],
     'installable': True,
-    'post_init_hook': '_l10n_in_reports_post_init',
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
