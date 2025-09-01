@@ -64,7 +64,7 @@ export class DataMergeListController extends DataCleaningCommonListController {
         if (!this.model.root.selection.length) {
             records = this.model.root.records;
         }
-        return records.filter(record => record.data.group_id[0] === groupId);
+        return records.filter(record => record.data.group_id.id === groupId);
     }
 
     /**
