@@ -8,23 +8,22 @@ import { usePopover } from "@web/core/popover/popover_hook";
 
 registerThreadAction("create-ticket", {
     actionPanelComponent: LivechatCommandDialog,
-    actionPanelComponentProps: (component, action) => ({
+    actionPanelComponentProps: ({ action }) => ({
         close: () => action.close(),
         commandName: "ticket",
         placeholderText: _t("e.g. Product arrived damaged"),
         title: _t("Create Ticket"),
         icon: "fa fa-life-ring",
     }),
-    close: (component, action) => action.popover?.close(),
-    condition: (component) => false, // managed by threadActionsInternal patch
+    close: ({ action }) => action.popover?.close(),
+    condition: false, // managed by ThreadAction patch
     panelOuterClass: "bg-100",
     icon: "fa fa-life-ring fa-fw",
-    iconLarge: "fa-lg fa fa-life-ring fa-fw",
     name: _t("Create Ticket"),
     sequence: 15,
     sequenceGroup: 25,
-    setup(component) {
-        if (!component.env.inChatWindow) {
+    setup({ owner }) {
+        if (!owner.env.inChatWindow) {
             this.popover = usePopover(LivechatCommandDialog, {
                 onClose: () => this.close(),
                 popoverClass: this.panelOuterClass,
@@ -32,10 +31,10 @@ registerThreadAction("create-ticket", {
         }
     },
     toggle: true,
-    open(component, action) {
-        action.popover?.open(component.root.el.querySelector(`[name="${action.id}"]`), {
-            thread: component.thread,
-            ...action.actionPanelComponentProps,
+    open({ owner, thread }) {
+        this.popover?.open(owner.root.el.querySelector(`[name="${this.id}"]`), {
+            thread,
+            ...this.actionPanelComponentProps,
         });
     },
 });

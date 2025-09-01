@@ -1,17 +1,17 @@
 import { patch } from "@web/core/utils/patch";
-import { threadActionsInternal } from "@mail/core/common/thread_actions";
+import { ThreadAction } from "@mail/core/common/thread_actions";
 
-patch(threadActionsInternal, {
-    condition(component, id, action) {
+patch(ThreadAction.prototype, {
+    _condition({ action, owner, store, thread }) {
         if (
-            id === "create-ticket" &&
-            component.store.helpdesk_livechat_active &&
-            component.thread?.channel_type === "livechat" &&
-            component.store.has_access_create_ticket &&
-            !component.isDiscussSidebarChannelActions
+            action.id === "create-ticket" &&
+            store.helpdesk_livechat_active &&
+            thread?.channel_type === "livechat" &&
+            store.has_access_create_ticket &&
+            !owner.isDiscussSidebarChannelActions
         ) {
             return true;
         }
-        return super.condition(component, id, action);
+        return super._condition(...arguments);
     },
 });

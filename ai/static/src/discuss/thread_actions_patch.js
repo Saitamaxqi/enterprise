@@ -1,14 +1,12 @@
 import { patch } from "@web/core/utils/patch";
-import { threadActionsInternal } from "@mail/core/common/thread_actions";
+import { ThreadAction } from "@mail/core/common/thread_actions";
 
-patch(threadActionsInternal, {
-    condition(component, id, action) {
+patch(ThreadAction.prototype, {
+    _condition({ action, thread }) {
         const requiredActions = ["close", "fold-chat-window", "expand-discuss"];
-        if (
-            component.thread?.channel_type === "ai_chat" && !requiredActions.includes(id)
-        ) {
+        if (thread?.channel_type === "ai_chat" && !requiredActions.includes(action.id)) {
             return false;
         }
-        return super.condition(component, id, action);
+        return super._condition(...arguments);
     },
 });

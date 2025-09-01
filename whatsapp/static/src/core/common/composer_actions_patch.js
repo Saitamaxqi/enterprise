@@ -1,41 +1,37 @@
-import {
-    composerActionsInternal,
-    registerComposerAction,
-} from "@mail/core/common/composer_actions";
+import { ComposerAction, registerComposerAction } from "@mail/core/common/composer_actions";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 
 registerComposerAction("revive-whatsapp-conversation", {
-    condition: (component) =>
-        component.props.composer.thread?.channel_type === "whatsapp" && !component.state.active,
+    condition: ({ composer, owner }) =>
+        composer.thread?.channel_type === "whatsapp" && !owner.state.active,
     icon: "fa fa-whatsapp",
-    iconLarge: "fa fa-lg fa-whatsapp",
     name: _t("Revive WhatsApp Conversation"),
-    onSelected: (component) => component.onclickWhatsAppChat(),
+    onSelected: ({ owner }) => owner.onclickWhatsAppChat(),
     sequenceQuick: 10,
 });
 
-patch(composerActionsInternal, {
-    condition(component, id, action) {
+patch(ComposerAction.prototype, {
+    _condition({ composer, owner }) {
         if (
-            ["upload-files", "voice-start"].includes(id) &&
-            component.thread?.channel_type === "whatsapp" &&
-            (component.props.composer.attachments.length > 0 || component.voiceRecorder?.recording)
+            ["upload-files", "voice-start"].includes(this.id) &&
+            composer.targetThread?.channel_type === "whatsapp" &&
+            (composer.attachments.length > 0 || owner.voiceRecorder?.recording)
         ) {
             return false;
         }
-        return super.condition(component, id, action);
+        return super._condition(...arguments);
     },
-    disabledCondition(component, id, action) {
+    _disabledCondition({ composer, owner }) {
         const inactiveActions = ["revive-whatsapp-conversation", "more-actions"];
         if (
-            component.thread?.channel_type === "whatsapp" &&
-            component.state &&
-            !component.state.active &&
-            !inactiveActions.includes(id)
+            composer.targetThread?.channel_type === "whatsapp" &&
+            owner.state &&
+            !owner.state.active &&
+            !inactiveActions.includes(this.id)
         ) {
             return true;
         }
-        return super.disabledCondition(component, id, action);
+        return super._disabledCondition(...arguments);
     },
 });

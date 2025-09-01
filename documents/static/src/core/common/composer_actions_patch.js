@@ -6,9 +6,9 @@ import { SelectAddDocumentCreateDialog } from "@documents/views/view_dialogs/sel
 registerComposerAction("add-documents", {
     icon: { template: "documents.DocumentsIcon" },
     name: _t("Add from Documents"),
-    onSelected: (component) => {
-        const thread = component.props.composer?.message?.thread || component.thread;
-        component.env.services.dialog.add(SelectAddDocumentCreateDialog, {
+    onSelected: ({ composer, store }) => {
+        const thread = composer?.message?.thread || composer.targetThread;
+        store.env.services.dialog.add(SelectAddDocumentCreateDialog, {
             resModel: "documents.document",
             title: _t("Search: Documents"),
             noCreate: true,
@@ -23,7 +23,7 @@ registerComposerAction("add-documents", {
             },
             chatterParams: {
                 thread,
-                composer: component.props.composer,
+                composer,
             },
         });
     },
