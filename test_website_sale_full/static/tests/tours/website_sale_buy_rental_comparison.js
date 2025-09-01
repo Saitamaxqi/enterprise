@@ -16,16 +16,12 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_comparison", {
             run: "hover && click .o_add_compare",
         },
         {
-            trigger: 'button[name="product_comparison_button"]',
-            run: "click",
-        },
-        {
-            content: "check popover is now open and compare button contains two products",
-            trigger: 'button[name="product_comparison_button"] .badge:contains(2)',
+            content: "check the compare button contains two products",
+            trigger: '.o_wsale_comparison_bottom_bar .badge:contains(2)',
         },
         {
             content: "click on compare button",
-            trigger: 'a[name="product_comparison_popover_button"]',
+            trigger: 'a:contains("Compare")',
             run: "click",
             expectUnloadPage: true,
         },
