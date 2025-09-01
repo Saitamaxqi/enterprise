@@ -17,29 +17,23 @@ patch(PlanningGanttRenderer.prototype, {
      * @param {Row} row - Row Object
      */
     _resourceHasWorkingPeriods(column, row) {
-        const { workingPeriods } = row;
-        const { interval } = this.model.metaData.scale;
-        const { start, stop } = column;
-        if (workingPeriods?.length) {
-            return workingPeriods.some(
-                (workingPeriod) =>
-                    workingPeriod.start.startOf(interval) <= start.startOf(interval) &&
-                    (!workingPeriod.end ||
-                        workingPeriod.end.startOf(interval) >= stop.startOf(interval))
+        const { workingPeriods } = this.model.data;
+        if (!workingPeriods) {
+            return true;
+        }
+        const resourceId = Object.assign({}, ...JSON.parse(row.id)).resource_id[0];
+        const periods = workingPeriods[resourceId];
+        if (periods?.length) {
+            const { interval } = this.model.metaData.scale;
+            const left = column.start.startOf(interval);
+            const right = column.stop.startOf(interval);
+            return periods.some(
+                ({ start, end }) =>
+                    start.startOf(interval) <=  left &&
+                    (!end ||
+                        end.startOf(interval) >= right)
             );
         }
-        return workingPeriods === undefined;
-    },
-
-    /**
-     * @override
-     */
-    processRow(row) {
-        const { workingPeriods } = row;
-        const result = super.processRow(...arguments);
-        if (workingPeriods && result.rows[0]) {
-            result.rows[0].workingPeriods = workingPeriods;
-        }
-        return result;
+        return periods === undefined;
     },
 });

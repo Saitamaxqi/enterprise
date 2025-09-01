@@ -1,5 +1,5 @@
 import { Domain } from "@web/core/domain";
-import { defineModels, fields, getKwArgs, models } from "@web/../tests/web_test_helpers";
+import { defineModels, fields, models } from "@web/../tests/web_test_helpers";
 import { hrModels } from "@hr/../tests/hr_test_helpers";
 
 export class PlanningSlot extends models.Model {
@@ -44,38 +44,33 @@ export class PlanningSlot extends models.Model {
 
     template_id = fields.Many2one({ relation: "planning.slot.template" });
 
-    gantt_resource_employees_working_periods(rows) {
-        const kwargs = getKwArgs(arguments, "rows");
-        const { context } = kwargs
-        const start_time = context.default_start_datetime;
-        const end_time = context.default_end_datetime;
-        const workingPeriodsPerEmployeeId = {};
-        const employeeIds = new Set();
-        for (const row of rows) {
-            if ("rows" in row) {
-                row["rows"] = this.gantt_resource_employees_working_periods(row.rows, kwargs);
-                continue;
+    _gantt_resource_employees_working_periods(groups, start_time, end_time) {
+        const resourceIds = new Set();
+        for (const group of groups) {
+            const resId = group.resource_id ? group.resource_id[0] : false;
+            if (resId) {
+                resourceIds.add(resId)
             }
-            const [resource_id] = JSON.parse(row.id)[0].resource_id || [false];
-            if (!resource_id) {
-                continue;
-            }
-            const [resource] = this.env["resource.resource"].browse([resource_id]);
-            if (!resource.employee_id) {
-                continue;
-            }
-            row.working_periods = new Array();
-            const employeeId = resource.employee_id[0] || false;
-            if (employeeId) {
-                employeeIds.add(employeeId);
-            }
-            workingPeriodsPerEmployeeId[employeeId] = row;
         }
+
+        const employeeIds = new Set();
+        const employee_id_to_ressource_id = {}
+        const working_periods = {}
+        for (const resource of this.env["resource.resource"].browse([...resourceIds])) {
+            if (!resource.employee_id) {
+                continue
+            }
+            const resource_id = resource.id
+            const employee_id = resource.employee_id[0]
+            employeeIds.add(employee_id)
+            employee_id_to_ressource_id[employee_id] = resource_id
+            working_periods[resource_id] = []
+        }
+
         if (employeeIds.size) {
-            const employeeIdsList = [...employeeIds];
             const hr_contract_read_group = this.env["hr.version"].formatted_read_group(
                 new Domain([
-                    ["employee_id", "in", employeeIdsList],
+                    ["employee_id", "in", [...employeeIds]],
                 ]).toList(),
                 ["employee_id", "contract_date_start:day", "contract_date_end:day"],
                 [],
@@ -84,21 +79,25 @@ export class PlanningSlot extends models.Model {
                 "",
             );
             hr_contract_read_group.forEach((contract) => {
-                workingPeriodsPerEmployeeId[contract.employee_id[0]]["working_periods"].push({
+                const employee_id = contract.employee_id[0];
+                const resource_id = employee_id_to_ressource_id[employee_id];
+                working_periods[resource_id].push({
                     start: contract["contract_date_start:day"][1],
                     end: contract["contract_date_end:day"][1],
                 });
             });
             employeeIds
                 .difference(new Set(hr_contract_read_group.map((a) => a.employee_id[0])))
-                .forEach((employee) => {
-                    workingPeriodsPerEmployeeId[employee]["working_periods"].push({
+                .forEach((employee_id) => {
+                    const resource_id = employee_id_to_ressource_id[employee_id]
+                    working_periods[resource_id].push({
                         start: start_time,
                         end: end_time,
                     });
                 });
         }
-        return workingPeriodsPerEmployeeId;
+
+        return working_periods;
     }
 }
 

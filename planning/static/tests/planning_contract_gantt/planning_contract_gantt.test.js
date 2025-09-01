@@ -89,7 +89,8 @@ onRpc("gantt_resource_work_interval", () => [
     { false: 0, [resourceId]: 0 },
     { false: 0, [resourceId]: 9 },
 ]);
-onRpc("get_gantt_data", ({ parent }) => {
+
+onRpc("get_gantt_data", function getGanttData({ parent, kwargs }) {
     const result = parent();
     result.unavailabilities = {
         resource_id: {
@@ -103,6 +104,9 @@ onRpc("get_gantt_data", ({ parent }) => {
             ],
         },
     };
+    if (kwargs.groupby.includes("resource_id")) {
+        result.working_periods = this.env["planning.slot"]._gantt_resource_employees_working_periods(result.groups, kwargs.start_date, kwargs.stop_date)
+    }
     return result;
 });
 

@@ -1,5 +1,4 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import json
 import uuid
 from collections import defaultdict
 from copy import deepcopy
@@ -1482,7 +1481,10 @@ class PlanningSlot(models.Model):
 
     @api.model
     def get_gantt_data(self, domain, groupby, read_specification, limit=None, offset=0, unavailability_fields=None, progress_bar_fields=None, start_date=None, stop_date=None, scale=None):
-        return super(PlanningSlot, self.with_context(scale=scale)).get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
+        result = super(PlanningSlot, self.with_context(scale=scale)).get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
+        if "resource_id" in groupby:
+            result["working_periods"] = self._gantt_resource_employees_working_periods(result["groups"], start_date, stop_date)
+        return result
 
     @api.model
     def _gantt_unavailability(self, field, res_ids, start, stop, scale):
@@ -2677,27 +2679,28 @@ class PlanningSlot(models.Model):
         return True
 
     @api.model
-    def gantt_resource_employees_working_periods(self, rows):
+    def _gantt_resource_employees_working_periods(self, groups, start_date, stop_date):
         if not self.env.user.has_group('planning.group_planning_manager'):
-            return rows
-        start_time = fields.Datetime.to_datetime(self.env.context.get('default_start_datetime'))
-        end_time = fields.Datetime.to_datetime(self.env.context.get('default_end_datetime'))
-        row_per_employee_id = {}
-        for row in rows:
-            if ("rows" in row):
-                row["rows"] = self.gantt_resource_employees_working_periods(row["rows"])
-                continue
-            resource_dict = next((item["resource_id"] for item in json.loads(row["id"]) if "resource_id" in item), None)
-            if not resource_dict:
-                continue
-            resource = self.env["resource.resource"].browse(resource_dict[0])
+            return {}
+
+        resource_ids = {group["resource_id"][0] for group in groups if group["resource_id"]}
+
+        employee_ids = set()
+        employee_id_to_ressource_id = {}
+        working_periods = {}
+        for resource in self.env["resource.resource"].browse(resource_ids):
             if not resource.employee_id:
                 continue
-            row['working_periods'] = []
-            row_per_employee_id[resource.employee_id.id] = row
-        if row_per_employee_id:
-            # TODO: weird stuff
-            employees_sudo = self.env["hr.employee"].browse(row_per_employee_id.keys()).sudo()
+            resource_id = resource.id
+            employee_id = resource.employee_id.id
+            employee_ids.add(employee_id)
+            employee_id_to_ressource_id[employee_id] = resource_id
+            working_periods[resource_id] = []
+
+        if employee_ids:
+            start, stop = fields.Datetime.from_string(start_date), fields.Datetime.from_string(stop_date)
+
+            employees_sudo = self.env["hr.employee"].sudo().browse(employee_ids)
             employees_with_contract = dict(
                 self.env["hr.version"].sudo()._read_group(
                     domain=[
@@ -2707,25 +2710,25 @@ class PlanningSlot(models.Model):
                     aggregates=["__count"],
                 )
             )
-            contracts = employees_sudo._get_versions_with_contract_overlap_with_period(start_time.date(), end_time.date())
+            contracts = employees_sudo._get_versions_with_contract_overlap_with_period(start.date(), stop.date())
             employees_with_contract_in_current_scale = []
             for contract in contracts:
-                employee = contract.employee_id.id
+                employee_id = contract.employee_id.id
                 end_datetime = contract.date_end and contract.date_end + relativedelta(hour=23, minute=59, second=59)
                 if end_datetime:
                     user_tz = pytz.timezone(self.env.user.tz or self.env.context.get('tz') or 'UTC')
                     end_datetime = user_tz.localize(end_datetime).astimezone(pytz.utc).replace(tzinfo=None)
                     end_datetime = fields.Datetime.to_string(end_datetime)
-                employees_with_contract_in_current_scale.append(employee)
-                row_per_employee_id[employee]["working_periods"].append({
+                employees_with_contract_in_current_scale.append(employee_id)
+                working_periods[employee_id_to_ressource_id[employee_id]].append({
                     "start": fields.Datetime.to_string(contract.date_start),
                     "end": end_datetime,
                 })
             for employee in employees_sudo - self.env["hr.employee"].browse(employees_with_contract_in_current_scale):
                 if employees_with_contract.get(employee):
                     continue
-                row_per_employee_id[employee.id]["working_periods"].append({
-                    "start": self.env.context.get("default_start_datetime"),
-                    "end": self.env.context.get("default_end_datetime"),
+                working_periods[employee_id_to_ressource_id[employee.id]].append({
+                    "start": start_date,
+                    "end": stop_date,
                 })
-        return rows
+        return working_periods

@@ -1,6 +1,4 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details
-import json
-
 from odoo import fields
 
 from .common import TestPlanningContractCommon
@@ -45,42 +43,38 @@ class TestPlanningGanttResourceEmployeeWorkingPeriods(TestPlanningContractCommon
         })
 
     def gantt_resource_employees_working_periods(self, context_dates, resource):
-        PlanningSlot = self.env["planning.slot"].with_context(context_dates)
-
-        gantt_row_id = [{
+        groups = [{
             "resource_id": [
                 resource.id,
                 resource.name,
             ],
         }]
 
-        return PlanningSlot.gantt_resource_employees_working_periods([
-           {"id": json.dumps(gantt_row_id)},
-        ])
+        return self.env["planning.slot"]._gantt_resource_employees_working_periods(groups, context_dates["default_start_datetime"], context_dates["default_end_datetime"])
 
     def test_with_future_contract(self):
         """ Check the working period is only inside the contract created for the resource
 
             Create a contract in draft but ready in a certain period.
         """
-        gantt_rows = self.gantt_resource_employees_working_periods(self.context_dates_inside_contracts, self.resource_joseph)
-        working_periods = gantt_rows[0]['working_periods']
-        self.assertEqual(len(working_periods), 1)
+        working_periods = self.gantt_resource_employees_working_periods(self.context_dates_inside_contracts, self.resource_joseph)
+        working_periods_for_resource = working_periods[self.resource_joseph.id]
+        self.assertEqual(len(working_periods_for_resource), 1)
         self.assertDictEqual(
-            working_periods[0],
+            working_periods_for_resource[0],
             {'start': self.contract_start_date, 'end': self.contract_end_date},
             "The working period for that resource should be the contract period only."
         )
 
-        gantt_rows = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
-        working_periods = gantt_rows[0]['working_periods']
-        self.assertFalse(working_periods, "No working period should be found since the contract period is before the period displayed in the gantt view.")
+        working_periods = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
+        working_periods_for_resource = working_periods[self.resource_joseph.id]
+        self.assertFalse(working_periods_for_resource, "No working period should be found since the contract period is before the period displayed in the gantt view.")
 
         self.employee_joseph.version_id.contract_date_end = False
-        gantt_rows = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
-        working_periods = gantt_rows[0]['working_periods']
+        working_periods = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
+        working_periods_for_resource = working_periods[self.resource_joseph.id]
         self.assertDictEqual(
-            working_periods[0],
+            working_periods_for_resource[0],
             {'start': self.contract_start_date, 'end': False},
             "The working period for that resource should be the whole gantt periods displayed since it is inside the contract period."
         )
@@ -90,30 +84,30 @@ class TestPlanningGanttResourceEmployeeWorkingPeriods(TestPlanningContractCommon
 
             Create a running contract
         """
-        gantt_rows = self.gantt_resource_employees_working_periods(self.context_dates_inside_contracts, self.resource_joseph)
-        working_periods = gantt_rows[0]['working_periods']
-        self.assertEqual(len(working_periods), 1)
+        working_periods = self.gantt_resource_employees_working_periods(self.context_dates_inside_contracts, self.resource_joseph)
+        working_periods_for_resource = working_periods[self.resource_joseph.id]
+        self.assertEqual(len(working_periods_for_resource), 1)
         self.assertDictEqual(
-            working_periods[0],
+            working_periods_for_resource[0],
             {'start': self.contract_start_date, 'end': self.contract_end_date},
             "The working period for that resource should be the contract period only."
         )
 
-        gantt_rows = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
-        working_periods = gantt_rows[0]['working_periods']
-        self.assertFalse(working_periods, "No working period should be found since the period displayed in the gantt view is after the contract period.")
+        working_periods = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
+        working_periods_for_resource = working_periods[self.resource_joseph.id]
+        self.assertFalse(working_periods_for_resource, "No working period should be found since the period displayed in the gantt view is after the contract period.")
 
         self.assertEqual(
-            gantt_rows[0]["working_periods"],
+            working_periods_for_resource,
             [],
             "The resource working_periods should be empty with a contract in open state outside contract period in context date",
         )
 
         self.employee_joseph.version_id.contract_date_end = False
-        gantt_rows = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
-        working_periods = gantt_rows[0]['working_periods']
+        working_periods = self.gantt_resource_employees_working_periods(self.context_dates_outside_contract, self.resource_joseph)
+        working_periods_for_resource = working_periods[self.resource_joseph.id]
         self.assertDictEqual(
-            working_periods[0],
+            working_periods_for_resource[0],
             {'start': self.contract_start_date, 'end': False},
             "The working period for that resource should be the whole gantt periods displayed since it is inside the contract period."
         )

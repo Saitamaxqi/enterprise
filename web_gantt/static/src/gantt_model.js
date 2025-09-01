@@ -670,22 +670,23 @@ export class GanttModel extends Model {
             }
         }
 
-        const { length, groups, records, progress_bars, unavailabilities } =
-            await this.keepLast.add(
-                this.orm.call(resModel, "get_gantt_data", [], {
-                    domain,
-                    groupby: groupedBy,
-                    read_specification: specification,
-                    scale: scale.unit,
-                    start_date: serializeDateTime(globalStart),
-                    stop_date: serializeDateTime(globalStop),
-                    unavailability_fields: this._getUnavailabilityFields(metaData),
-                    progress_bar_fields: this._getProgressBarFields(metaData),
-                    context,
-                    limit: pagerLimit,
-                    offset: pagerOffset,
-                })
-            );
+        const ganttData = await this.keepLast.add(
+            this.orm.call(resModel, "get_gantt_data", [], {
+                domain,
+                groupby: groupedBy,
+                read_specification: specification,
+                scale: scale.unit,
+                start_date: serializeDateTime(globalStart),
+                stop_date: serializeDateTime(globalStop),
+                unavailability_fields: this._getUnavailabilityFields(metaData),
+                progress_bar_fields: this._getProgressBarFields(metaData),
+                context,
+                limit: pagerLimit,
+                offset: pagerOffset,
+            })
+        );
+
+        const { length, groups, records, progress_bars, unavailabilities } = ganttData;
 
         groups.forEach((g) => (g.fromServer = true));
 
@@ -700,7 +701,7 @@ export class GanttModel extends Model {
         data.unavailabilities = this._processUnavailabilities(unavailabilities);
         data.progressBars = this._processProgressBars(progress_bars);
 
-        await this.keepLast.add(this._fetchDataPostProcess(metaData, data));
+        this._processGanttData(metaData, data, ganttData);
 
         if (JSON.stringify(this.metaData.groupedBy) !== JSON.stringify(groupedBy)) {
             this.closedRows.clear();
@@ -714,8 +715,9 @@ export class GanttModel extends Model {
      * @protected
      * @param {MetaData} metaData
      * @param {Data} data
+     * @param {Object} ganttData
      */
-    async _fetchDataPostProcess(metaData, data) {}
+    _processGanttData(metaData, data, ganttData) {}
 
     /**
      * Remove date in groupedBy field
