@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    prisma_code = fields.Char("Prisma code", groups="hr.group_hr_user", copy=False)
+    prisma_code = fields.Char("Prisma code", groups="hr_payroll.group_hr_payroll_user", copy=False)
 
     @api.constrains('prisma_code')
     def _check_prisma_code(self):
