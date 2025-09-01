@@ -316,28 +316,62 @@ class AccountBankStatementLine(models.Model):
 
         # First, try to match invoices and payments using the end to end ID.
         processed_st_line_ids = set()
-        st_lines_with_end_to_end_uuid = 'end_to_end_uuid' in self._fields and self.filtered('end_to_end_uuid')
-        if st_lines_with_end_to_end_uuid:
+        st_lines_with_end_to_end_uuid_ids = 'end_to_end_uuid' in self._fields and self.filtered('end_to_end_uuid').ids
+        if st_lines_with_end_to_end_uuid_ids:
             self.env.cr.execute(SQL("""
-               SELECT st_line.id AS st_line_id,
-                      ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS aml_ids
-                 FROM account_bank_statement_line st_line
-                 JOIN account_payment payment ON st_line.end_to_end_uuid = payment.end_to_end_uuid
-                 JOIN account_move_line aml ON payment.move_id = aml.move_id
-                WHERE aml.move_id NOT IN %s
-                  AND aml.company_id = st_line.company_id
-                  AND aml.reconciled = false
-                  AND aml.account_id IN %s
-                  AND ((st_line.amount > 0 and aml.balance > 0) OR (st_line.amount < 0 and aml.balance < 0))
-                  AND aml.parent_state in ('draft', 'posted')
-                  AND st_line.id IN %s
-             GROUP BY st_line.id
-            """, tuple(st_move_ids), tuple(account_ids), tuple(st_lines_with_end_to_end_uuid.ids)))
+                 -- Query to get either payment amls either invoice/bill amls related to payments which have
+                 -- the same end to end uuid of bank statement lines.
+                    SELECT st_line.id AS st_line_id,
+                           ARRAY_AGG(aml.id ORDER BY aml.id ASC) AS aml_ids
+                      FROM account_bank_statement_line st_line
+                      JOIN account_payment payment ON st_line.end_to_end_uuid = payment.end_to_end_uuid
+                      JOIN account_move_line aml ON (
+                              payment.move_id = aml.move_id
+                           OR aml.move_id IN (
+                              SELECT move_payment_rel.invoice_id
+                                FROM account_move__account_payment move_payment_rel
+                               WHERE move_payment_rel.payment_id = payment.id
+                           )
+                      )
+                     WHERE aml.move_id NOT IN %(st_move_ids)s
+                       AND aml.company_id = st_line.company_id
+                       AND aml.reconciled = false
+                       AND aml.account_id IN %(account_ids)s
+                       AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
+                       AND aml.parent_state in ('draft', 'posted')
+                       AND st_line.id IN %(st_line_ids)s
+                  GROUP BY st_line.id
+            """, st_move_ids=tuple(st_move_ids), account_ids=tuple(account_ids), st_line_ids=tuple(st_lines_with_end_to_end_uuid_ids)))
 
             for st_line_id, aml_ids in self.env.cr.fetchall():
                 st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)  # Guarantees batch prefetching if needed.
                 st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID).set_line_bank_statement_line(aml_ids)
                 processed_st_line_ids.add(st_line_id)
+
+            # In case we still have statement lines with end to end uuid and no match, we try to match with single payment
+            if st_lines_with_end_to_end_uuid_ids := set(st_lines_with_end_to_end_uuid_ids) - processed_st_line_ids:
+                # Get payments without invoices/bills or entries which are matching a bank statement lines
+                self.env.cr.execute(SQL("""
+                    SELECT st_line.id as st_line_id,
+                           payment.id as payment_id
+                      FROM account_bank_statement_line st_line
+                      JOIN account_payment payment ON st_line.end_to_end_uuid = payment.end_to_end_uuid
+                     WHERE st_line.id IN %(st_line_ids)s
+                       AND payment.state IN %(payment_state)s
+                       AND payment.company_id = st_line.company_id
+                       AND (
+                             (st_line.amount > 0 AND payment.payment_type = 'inbound')
+                           OR (st_line.amount < 0 AND payment.payment_type = 'outbound')
+                       )
+                """, st_line_ids=tuple(st_lines_with_end_to_end_uuid_ids), payment_state=('draft', *self.env['account.batch.payment']._valid_payment_states())))
+                for st_line_id, payment_id in self.env.cr.fetchall():
+                    # Guarantees batch prefetching if needed.
+                    st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)
+                    payment = self.env['account.payment'].browse(payment_id)
+                    amls_to_create = payment.with_company(st_line.company_id)._get_amls_for_payment_without_move()
+                    st_line.with_company(st_line.company_id)._reconcile_payments(payment, amls_to_create)
+                    processed_st_line_ids.add(st_line_id)
+
         remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
 
         # early return if we already processed everything
@@ -1364,6 +1398,21 @@ class AccountBankStatementLine(models.Model):
         if not line:
             return {}
         return self.env['account.tax']._prepare_tax_line_for_taxes_computation(line)
+
+    def _reconcile_payments(self, payments, amls_to_create, reconciled_lines=None):
+        self.ensure_one()
+        has_exchange_diff = False
+        if reconciled_lines:
+            for reconciled_line, aml_to_create in zip(reconciled_lines, amls_to_create):
+                exchange_diff_balance = self._lines_get_account_balance_exchange_diff(reconciled_line.currency_id, reconciled_line.amount_residual, reconciled_line.amount_residual_currency)
+                has_exchange_diff = has_exchange_diff or not reconciled_line.currency_id.is_zero(exchange_diff_balance)
+                new_balance = -(reconciled_line.amount_residual + exchange_diff_balance)
+
+                aml_to_create['balance'] = new_balance
+
+        self.with_context(no_exchange_difference_no_recursive=not has_exchange_diff)._add_move_line_to_statement_line_move(amls_to_create)
+        if payments_to_validate := payments.filtered(lambda p: not p.move_id and p.state in self.env['account.batch.payment']._valid_payment_states()):
+            payments_to_validate.action_validate()
 
     def create_document_from_attachment(self, attachment_ids):
         """ Create the invoices from files.

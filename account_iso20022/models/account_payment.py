@@ -105,7 +105,7 @@ class AccountPayment(models.Model):
     @api.depends('payment_method_id')
     def _compute_end_to_end_uuid(self):
         for payment in self:
-            if not payment.end_to_end_uuid and payment.payment_method_id.code in {'iso20022', 'sepa_ct'}:
+            if not payment.end_to_end_uuid and payment.payment_method_id.code in {'iso20022', 'iso20022_se', 'iso20022_ch', 'iso20022_us', 'sepa_ct'}:
                 payment.end_to_end_uuid = uuid4().hex
 
     @api.depends('payment_method_id')

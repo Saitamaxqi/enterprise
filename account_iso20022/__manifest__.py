@@ -16,6 +16,7 @@ Generate XML payment orders as recommended by the SEPA and ISO20022 norms.
         'views/account_payment_views.xml',
         'views/res_company_views.xml',
         'views/res_partner_views.xml',
+        'views/account_bank_statement_line_views.xml',
     ],
     'post_init_hook': 'init_initiating_party_names',
     'author': 'Odoo S.A.',
