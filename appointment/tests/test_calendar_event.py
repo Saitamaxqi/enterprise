@@ -9,8 +9,8 @@ class AppointmentCalendarEventTest(AppointmentCommon):
         """Ensure the inverse appropriately assigns bookings such that the input reserved capacity is preserved.
 
         If the resources cannot hold the requested capacity, an error should be raised.
-        In the case of appointments where capacity is not managed, the capacity should match the total capacity
-        for the selected resources.
+        In the case of appointments where capacity is not managed, the capacity should be 1 per resource selected
+        regardless of their capacity.
         """
         user_appointment = self.apt_type_manage_capacity_users
         user_appointment.staff_user_ids += self.env.user
@@ -28,8 +28,8 @@ class AppointmentCalendarEventTest(AppointmentCommon):
             (user_appointment, {'manage_capacity': True, 'user_capacity': 5}, {}, 4, 4),
             (user_appointment, {'manage_capacity': True, 'user_capacity': 5}, {}, 5, 5),
             (user_appointment, {'manage_capacity': True, 'user_capacity': 5}, {}, 6, None),
-            (resource_appointment, {'manage_capacity': False}, {'resource_ids': resource_appointment.resource_ids}, 8, 9),
-            (resource_appointment, {'manage_capacity': False}, {'resource_ids': resource_appointment.resource_ids}, 10, 9),
+            (resource_appointment, {'manage_capacity': False}, {'resource_ids': resource_appointment.resource_ids}, 2, 3),
+            (resource_appointment, {'manage_capacity': False}, {'resource_ids': resource_appointment.resource_ids}, 5, 3),
             (resource_appointment, {'manage_capacity': True}, {'resource_ids': resource_appointment.resource_ids}, 8, 8),
             (resource_appointment, {'manage_capacity': True}, {'resource_ids': resource_appointment.resource_ids}, 10, None),
         ]

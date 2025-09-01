@@ -52,7 +52,7 @@ class CalendarEvent(models.Model):
                 if appointment_type.schedule_based_on == 'resources' and appointment_resources:
                     res.setdefault('total_capacity_reserved', sum(
                         resource.capacity for resource in appointment_resources
-                    ))
+                    ) if appointment_type.manage_capacity else len(appointment_resources))
                 elif appointment_type.schedule_based_on == 'users':
                     res.setdefault(
                         'total_capacity_reserved',
@@ -311,18 +311,21 @@ class CalendarEvent(models.Model):
                 resources = event.resource_ids
                 if event.appointment_type_manage_capacity and event.total_capacity_reserved:
                     capacity_to_reserve = event.total_capacity_reserved
-                else:
+                elif event.appointment_type_manage_capacity:
                     capacity_to_reserve = sum(event.booking_line_ids.mapped('capacity_reserved')) or sum(resources.mapped('capacity'))
+                else:
+                    capacity_to_reserve = len(event.resource_ids)
                 booking_lines_to_delete |= event.booking_line_ids
                 for resource in resources.sorted("shareable"):
                     if event.appointment_type_manage_capacity and capacity_to_reserve <= 0:
                         break
+                    resource_capacity_used = min(resource.capacity, capacity_to_reserve) if event.appointment_type_manage_capacity else 1
                     booking_lines.append({
                         'appointment_resource_id': resource.id,
                         'calendar_event_id': event.id,
-                        'capacity_reserved': min(resource.capacity, capacity_to_reserve),
+                        'capacity_reserved': resource_capacity_used,
                     })
-                    capacity_to_reserve -= min(resource.capacity, capacity_to_reserve)
+                    capacity_to_reserve -= resource_capacity_used
                     capacity_to_reserve = max(0, capacity_to_reserve)
                 if event.appointment_type_manage_capacity and capacity_to_reserve:
                     raise UserError(_(

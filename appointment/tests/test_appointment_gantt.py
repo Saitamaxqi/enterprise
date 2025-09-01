@@ -178,8 +178,8 @@ class AppointmentGanttTest(AppointmentGanttTestCommon):
             (user_appointment_type, {'manage_capacity': False, 'user_capacity': 1}, 1),
             (user_appointment_type, {'manage_capacity': False, 'user_capacity': 5}, 1),
             (user_appointment_type, {'manage_capacity': True, 'user_capacity': 5}, 5),
-            (resource_appointment_type, {'manage_capacity': False}, 3)  # sum of resource capacities
-            (resource_appointment_type, {'manage_capacity': True}, 3)  # sum of resource capacities
+            (resource_appointment_type, {'manage_capacity': False}, 2),  # 1 per resource
+            (resource_appointment_type, {'manage_capacity': True}, 3),  # sum of capacities
         ]:
             with self.subTest(appointment=appointment_type.name, write_values=write_values):
                 appointment_type.write(write_values)
