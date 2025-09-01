@@ -66,7 +66,7 @@ class AccountBatchPayment(models.Model):
                 minimum_offset = SDD_MIN_PRENOT_PERIOD
 
             batch.sdd_required_collection_date = fields.Date.context_today(batch) + timedelta(
-                max(minimum_offset, *mandates.mapped('pre_notification_period'))
+                max([minimum_offset, *mandates.mapped('pre_notification_period')])
             )
 
     @api.depends('payment_ids')
