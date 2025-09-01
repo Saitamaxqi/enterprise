@@ -4,6 +4,9 @@
         <xpath expr="//t[contains(@t-elif, 'waitingCard')]/div[hasclass('electronic_status')]" position="replace">
             <div class="electronic_status">
                 <t t-if="line.payment_method_id.use_payment_terminal === 'tyro'" t-out="line.tyro_status"/>
+                <t t-elif="this.props.isRefundOrder">
+                    Refund in process
+                </t>
                 <t t-else="">Waiting for card</t>
             </div>
         </xpath>
