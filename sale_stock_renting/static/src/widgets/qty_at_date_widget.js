@@ -5,18 +5,20 @@ import {
 } from "@sale_stock/widgets/qty_at_date_widget";
 import { formatDateTime } from "@web/core/l10n/dates";
 import { localization } from "@web/core/l10n/localization";
+import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 
 patch(QtyAtDatePopover.prototype, {
+    setup() {
+        super.setup();
+        this.orm = useService('orm');
+    },
+
     async openRentalGanttView() {
-        const action = await this.actionService.loadAction("sale_renting.action_rental_order_schedule", this.props.context);
-        action.domain = [['product_id', '=', this.props.record.data.product_id[0]]];
-        this.actionService.doAction(action, {
-            additionalContext: {
-                active_model: 'sale.rental.schedule',
-                restrict_renting_products: true,
-            },
-        });
+        const action = await this.orm.call(
+            'product.product', 'action_view_rentals', [this.props.record.data.product_id.id]
+        );
+        this.actionService.doAction(action);
     },
 });
 

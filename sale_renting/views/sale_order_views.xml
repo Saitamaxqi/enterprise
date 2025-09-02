@@ -349,4 +349,16 @@
         <field name="act_window_id" ref="rental_order_today_return_action"/>
     </record>
 
+    <record id="action_create_rental_order" model="ir.actions.act_window">
+        <field name="name">Create Rental Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="rental_order_primary_form_view"/>
+        <field name="context">
+            {
+                'in_rental_app': 1,
+            }
+        </field>
+    </record>
+
 </odoo>

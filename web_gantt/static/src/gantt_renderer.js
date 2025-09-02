@@ -1369,7 +1369,7 @@ export class GanttRenderer extends Component {
         let copyResId;
         let fallbackSchedule;
         if (isCopyMode) {
-            copyResId = await this.model.copy(record.id, schedule, this.openPlanDialogCallback);
+            copyResId = await this.model.copy(record.id, schedule, this.openPlanDialogCallback.bind(this));
         } else {
             const fallbackParams = {
                 ...this.getUndoAfterDragRecordData(record),
@@ -1383,7 +1383,7 @@ export class GanttRenderer extends Component {
                     this.rescheduleAccordingToDependencyCallback.bind(this)
                 );
             } else {
-                await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);
+                await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback.bind(this));
             }
         }
 
@@ -2696,7 +2696,7 @@ export class GanttRenderer extends Component {
         const fallbackParams = this.getUndoAfterDragRecordData(record);
         const fallbackSchedule = this.model.getSchedule(fallbackParams);
 
-        await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);
+        await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback.bind(this));
         this.displayUndoNotificationAfterDrag(
             record.id,
             this.interaction.dragAction,

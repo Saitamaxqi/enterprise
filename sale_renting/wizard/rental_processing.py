@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
 
 from odoo import _, api, fields, models
@@ -18,7 +19,20 @@ class RentalOrderWizard(models.TransientModel):
             ('return', 'Return'),
         ],
     )
-    is_late = fields.Boolean(related='order_id.is_late')
+    is_late = fields.Boolean(compute='_compute_is_late')
+
+    @api.depends(
+        'order_id.is_late', 'order_id.next_action_date', 'order_id.company_id.min_extra_hour'
+    )
+    def _compute_is_late(self):
+        """Include the minimum time buffer allowed before an extra cost is added to the order."""
+        now = fields.Datetime.now()
+        for wizard in self:
+            min_extra_hours = relativedelta(hours=wizard.order_id.company_id.min_extra_hour)
+            wizard.is_late = (
+                wizard.order_id.is_late
+                and wizard.order_id.next_action_date + min_extra_hours < now
+            )
 
     @api.onchange('order_id')
     def _get_wizard_lines(self):

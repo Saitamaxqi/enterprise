@@ -310,80 +310,6 @@ class TestRentalWizard(TestRentalCommon):
 
         self.assertEqual(sol.qty_returned, len(sol.returned_lot_ids), "The quantity returned should not exceed the number of returned lots")
 
-    def test_schedule_report(self):
-        """Verify sql scheduling view consistency.
-
-        One sale.order.line with 3 different lots (reserved/pickedup/returned)
-        is represented by 3 sale.rental.schedule to allow grouping reservation information
-        by stock.lot .
-
-        Note that a lot can be pickedup (sol.pickedup_lot_ids) even if not reserved (sol.reserved_lot_ids).
-        """
-        self.order_line_id2.reserved_lot_ids = self.lot_id1
-        # Avoid magic setting pickedup lots as reserved when full quantity has been pickedup
-        self.order_line_id2.product_uom_qty = 2.0
-
-        # Lot pickedup but not reserved.
-        self.order_line_id2.pickedup_lot_ids = self.lot_id2
-
-        self.assertEqual(
-            self.env["sale.rental.schedule"].search_count([('lot_id', '=', self.lot_id2.id)]),
-            1,
-        )
-        scheduling_recs = self.env["sale.rental.schedule"].search([
-            ('order_line_id', '=', self.order_line_id2.id),
-        ])
-        self.assertEqual(
-            len(scheduling_recs),
-            2, # 1 reserved, 1 pickedup
-        )
-        self.assertEqual(
-            scheduling_recs.mapped('report_line_status'),
-            ["reserved", "pickedup"],
-        )
-
-        # More generic behavior:
-        # 2 reserved, 2 pickedup, 1 returned
-        self.order_line_id2.returned_lot_ids = self.lot_id2
-        self.order_line_id2.pickedup_lot_ids += self.lot_id1
-        self.env.invalidate_all()
-        scheduling_recs = self.env["sale.rental.schedule"].search([
-            ('order_line_id', '=', self.order_line_id2.id)
-        ])
-        self.assertEqual(
-            len(scheduling_recs),
-            2,
-        )
-        self.assertEqual(
-            scheduling_recs.lot_id,
-            self.lot_id1 + self.lot_id2,
-        )
-        self.assertEqual(
-            scheduling_recs.mapped('report_line_status'),
-            ["pickedup", "returned"],
-        )
-
-    def test_lot_accuracy_in_schedule(self):
-        """ Schedule should only display lots that are associated with rental order lines """
-        self.env.user.group_ids = [Command.link(self.env.ref('sale_stock_renting.group_rental_stock_picking').id)]
-        self.env['res.company'].create_missing_rental_location()
-        if self.env['ir.module.module'].search([('name', '=', 'purchase_stock'), ('state', '=', 'installed')], limit=1):
-            self.env.user._get_default_warehouse_id().buy_to_resupply = False
-        # enable rental picking group
-        self.env['res.config.settings'].create({'group_rental_stock_picking': True}).execute()
-
-        rental_schedule = self.env['sale.rental.schedule']
-        so = self.lots_rental_order
-        self.order_line_id2.product_uom_qty = 1.0
-        so.order_line = [(6, 0, self.order_line_id2.id)]
-        so.action_confirm()
-
-        # Rental schedule should have 1 out of the 3 total lots for `self.tracked_product_id`
-        self.assertEqual(
-            rental_schedule.search_count([('product_id', '=', self.tracked_product_id.id)]),
-            1
-        )
-
     @freeze_time('2025-01-01 09:10:15')
     def test_rental_forecast_with_rental_transfers(self):
         """
@@ -884,20 +810,17 @@ class TestRentalPicking(TestRentalCommon):
                          [rental_order_1.rental_start_date.date(), rental_order_1.rental_return_date.date()])
         self.assertEqual(rental_order_1.picking_ids.move_ids.mapped('product_uom_qty'), [3.0, 3.0])
 
-        outgoing_picking = rental_order_1.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing')
-        incoming_picking = rental_order_1.picking_ids.filtered(lambda p: p.picking_type_code == 'incoming')
-
-        outgoing_picking.move_ids.quantity = 2
+        outgoing_picking.move_ids.quantity = 2  # Partial pickup
         Form.from_action(self.env, outgoing_picking.button_validate()).save().process()
         self.assertEqual(rental_order_1.order_line.qty_delivered, 2)
-        self.assertEqual(rental_order_1.rental_status, 'pickup')
+        self.assertEqual(rental_order_1.rental_status, 'return')
         self.assertEqual(len(rental_order_1.picking_ids), 3)
         self.assertEqual(incoming_picking.move_ids.quantity, 2)
 
-        incoming_picking.move_ids.quantity = 1
+        incoming_picking.move_ids.quantity = 1  # Partial return
         Form.from_action(self.env, incoming_picking.button_validate()).save().process()
         self.assertEqual(rental_order_1.order_line.qty_returned, 1)
-        self.assertEqual(rental_order_1.rental_status, 'pickup')
+        self.assertEqual(rental_order_1.rental_status, 'return')
         self.assertEqual(len(rental_order_1.picking_ids), 4)
 
         outgoing_picking_2 = rental_order_1.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing' and p.state == 'assigned')
@@ -907,29 +830,30 @@ class TestRentalPicking(TestRentalCommon):
         self.assertEqual(outgoing_picking_2.move_ids.quantity, 1)
         self.assertEqual(incoming_picking_2.move_ids.quantity, 1)
 
-        rental_order_1.order_line.write({'product_uom_qty': 5})
+        rental_order_1.order_line.write({'product_uom_qty': 5})  # Increase asked quantity
         self.assertEqual(outgoing_picking_2.move_ids.product_uom_qty, 3)
         self.assertEqual(incoming_picking_2.move_ids.product_uom_qty, 4)
 
-        outgoing_picking_2.move_ids.quantity = 1
+        outgoing_picking_2.move_ids.quantity = 1  # Still partial picking
         Form.from_action(self.env, outgoing_picking_2.button_validate()).save().process()
         self.assertEqual(rental_order_1.order_line.qty_delivered, 3)
-        self.assertEqual(rental_order_1.rental_status, 'pickup')
+        self.assertEqual(rental_order_1.rental_status, 'return')
         self.assertEqual(len(rental_order_1.picking_ids), 5)
         self.assertEqual(incoming_picking_2.move_ids.quantity, 2)
 
+        # Decrease asked quantity but still partial picking
         rental_order_1.order_line.write({'product_uom_qty': 4})
         outgoing_picking_3 = rental_order_1.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing' and p.state == 'assigned')
         self.assertEqual(outgoing_picking_3.scheduled_date.date(), rental_order_1.rental_start_date.date())
         self.assertEqual(outgoing_picking_3.move_ids.product_uom_qty, 1)
         self.assertEqual(incoming_picking_2.move_ids.product_uom_qty, 3)
 
-        outgoing_picking_3.button_validate()
+        outgoing_picking_3.button_validate()  # Fully picked
         self.assertEqual(incoming_picking_2.move_ids.quantity, 3)
         self.assertEqual(rental_order_1.order_line.qty_delivered, 4)
         self.assertEqual(rental_order_1.rental_status, 'return')
 
-        incoming_picking_2.button_validate()
+        incoming_picking_2.button_validate()  # Fully returned
         self.assertEqual(rental_order_1.order_line.qty_returned, 4)
         self.assertEqual(rental_order_1.rental_status, 'returned')
 

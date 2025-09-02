@@ -16,10 +16,11 @@ class ProductProduct(models.Model):
                 product.show_forecasted_qty_status_button = False
 
     @api.depends('type', 'rent_ok', 'qty_available', 'qty_in_rent')
-    @api.depends_context('sale_stock_renting_show_total_qty', 'allowed_company_ids')
+    @api.depends_context('in_rental_schedule', 'allowed_company_ids')
     def _compute_display_name(self):
+        """Override to include the quantity in stock in the rental schedule view."""
         super()._compute_display_name()
-        if self.env.context.get('sale_stock_renting_show_total_qty'):
+        if self.env.context.get('in_rental_schedule'):
             storable_rental_products = self.filtered(
                 lambda product: product.rent_ok and product.is_storable
             )
@@ -155,6 +156,13 @@ class ProductProduct(models.Model):
         ).mapped('unavailable_lot_ids')
 
     def action_view_rentals(self):
+        """Override of `sale_renting` to change the default groupby of the
+        `sale_renting.action_rental_order_schedule` action when openning it for a product tracked by
+        SN."""
         result = super().action_view_rentals()
-        result['context'].update({'sale_stock_renting_show_total_qty': 1})
+        any_tracked_by_sn = any(t == 'serial' for t in self.mapped('tracking'))
+        result['context'].update(
+            search_default_groupby_product=not any_tracked_by_sn,
+            search_default_groupby_reserved_lot=any_tracked_by_sn,
+        )
         return result

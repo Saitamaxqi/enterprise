@@ -13,13 +13,34 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     tracking = fields.Selection(related='product_id.tracking', depends=['product_id'])
-
-    reserved_lot_ids = fields.Many2many('stock.lot', 'rental_reserved_lot_rel', domain="[('product_id','=',product_id)]", copy=False)
-    pickedup_lot_ids = fields.Many2many('stock.lot', 'rental_pickedup_lot_rel', domain="[('product_id','=',product_id)]", copy=False)
-    returned_lot_ids = fields.Many2many('stock.lot', 'rental_returned_lot_rel', domain="[('product_id','=',product_id)]", copy=False)
-
-    unavailable_lot_ids = fields.Many2many('stock.lot', 'unreturned_reserved_serial', compute='_compute_unavailable_lots', store=False)
+    reserved_lot_ids = fields.Many2many(
+        'stock.lot',
+        'rental_reserved_lot_rel',
+        string="Reserved Lots",
+        domain="[('product_id', '=', product_id)]",
+        copy=False,
+        group_expand='_read_group_expand_reserved_lot_ids',
+    )
     available_reserved_lots = fields.Boolean(compute='_compute_available_reserved_lots')
+
+    pickedup_lot_ids = fields.Many2many(
+        'stock.lot',
+        'rental_pickedup_lot_rel',
+        domain="[('product_id', '=', product_id)]",
+        copy=False,
+    )
+    returned_lot_ids = fields.Many2many(
+        'stock.lot',
+        'rental_returned_lot_rel',
+        domain="[('product_id', '=', product_id)]",
+        copy=False,
+    )
+    unavailable_lot_ids = fields.Many2many(
+        'stock.lot',
+        'unreturned_reserved_serial',
+        compute='_compute_unavailable_lots',
+        store=False,
+    )
 
     @api.depends('reserved_lot_ids', 'reservation_begin', 'return_date')
     def _compute_available_reserved_lots(self):
@@ -155,6 +176,11 @@ class SaleOrderLine(models.Model):
         rental_lines = self.filtered('is_rental')
         super(SaleOrderLine, self - rental_lines)._compute_qty_delivered_method()
         rental_lines.qty_delivered_method = 'manual'
+
+    def _read_group_expand_reserved_lot_ids(self, lots, domain):
+        domain = Domain.AND([domain, Domain('product_id.tracking', '!=', 'none')])
+        products = self.env['sale.order.line'].search_fetch(domain, ['product_id']).product_id
+        return lots + self.env['stock.lot']._get_available_lots(products)
 
     def write(self, vals):
         """Move product quantities on pickup/return in case of rental orders.
@@ -342,6 +368,110 @@ class SaleOrderLine(models.Model):
                 # TODO ? ml.move_id.product_uom_qty -= decrease of qty
 
         return qty <= 0.0
+
+    def web_gantt_write(self, vals):
+        """Override of `sale_renting` to handle stock-specific constraints during schedule updates.
+
+        This method checks for stock/lot overbooking issues and sends an action if not enough
+        lots are reserved for the requested product quantity.
+
+        :param dict vals: Values to update on the sale order line.
+        :return: A dictionary containing notifications and/or actions, if applicable. Format: {
+            'notifications': list[{'type': str, 'message': str, 'code': str}],
+            'actions': list[dict]  # Action dictionaries
+        }
+        :rtype: dict
+        """
+        result = super().web_gantt_write(vals)
+
+        order_lines = self.order_id.order_line
+        storable_products = order_lines.product_id.filtered('is_storable')
+        if not storable_products:
+            return result
+
+        # Check for stock quantity consistency, and warn in case there is not enough stock.
+        stock_quants = dict(self.env['stock.quant']._read_group(
+            Domain([
+                ('product_id', 'in', storable_products.ids),
+                ('location_id.usage', '=', 'internal'),
+            ]),
+            groupby=['product_id'],
+            aggregates=['quantity:sum'],
+        ))
+        reserved_quants = dict(self.env['sale.order.line']._read_group(
+            Domain([
+                ('product_id', 'in', storable_products.ids),
+                ('is_rental', '=', True),
+                ('state', '=', 'sale'),
+                # Filter the SOLs that intersect with the current SOL
+                ('start_date', '<=', self.return_date),
+                ('return_date', '>=', self.start_date),
+            ]),
+            groupby=['product_id'],
+            aggregates=['product_uom_qty:sum'],
+        ))
+        for product in stock_quants.keys() | reserved_quants.keys():
+            if stock_quants.get(product, 0) < reserved_quants.get(product, 0):
+                result['notifications'].append({
+                    'type': 'warning',
+                    'message': self.env._(
+                        "Not enough %(product)s in stock.\n"
+                        "%(reserved_qty)s reserved but only %(stock_qty)s in stock.",
+                        product=product.display_name,
+                        reserved_qty=reserved_quants.get(product, 0),
+                        stock_qty=stock_quants.get(product, 0),
+                    ),
+                    'code': 'stock_inconsistency',
+                })
+
+        if not self._are_rental_pickings_enabled():
+            return result
+
+        # Check for lot consistency, and warn if lots are reserved on multiple SOLs at the same time
+        order_reserved_lots = order_lines.reserved_lot_ids
+        lots_reserved_in_different_order = self.env['sale.order.line'].search_fetch(
+            Domain([
+                ('reserved_lot_ids', 'in', order_reserved_lots.ids),
+                ('id', 'not in', order_lines.ids),
+                ('is_rental', '=', True),
+                # Filter the SOLs that intersect with the current SOL
+                ('start_date', '<=', self.return_date),
+                ('return_date', '>=', self.start_date),
+            ]),
+            ['reserved_lot_ids'],
+        ).reserved_lot_ids & order_reserved_lots
+        if lots_reserved_in_different_order:
+            result['notifications'].append({
+                'type': 'warning',
+                'message': self.env._(
+                    "%(lots)s %(are)s reserved on multiple order lines",
+                    lots=", ".join(lots_reserved_in_different_order.mapped('display_name')),
+                    are='are' if len(lots_reserved_in_different_order) > 1 else 'is',
+                ),
+                'code': 'lot_overbooking',
+            })
+
+        # Add action to allocate more lots if their is not enough reserved for the quantity asked
+        if vals.get('reserved_lot_ids') and self.product_uom_qty > len(self.reserved_lot_ids):
+            view = self.env.ref('sale_stock_renting.sale_order_line_form_lot_allocation')
+            result['notifications'].append({
+                'type': 'warning',
+                'message': self.env._(
+                    "The number of reserved lots is less than the quantity required for this order"
+                    " line. Please allocate additional lots."
+                ),
+                'code': 'insufficient_reserved_lots',
+            })
+            result['actions'].append({
+                'name': self.env._("Lot Allocation"),
+                'type': 'ir.actions.act_window',
+                'res_model': 'sale.order.line',
+                'views': [(view.id, 'form')],
+                'res_id': self.id,
+                'target': 'new',
+            })
+
+        return result
 
     @api.constrains('product_id')
     def _stock_consistency(self):

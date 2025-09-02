@@ -2,7 +2,7 @@
 
 from math import ceil
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import format_amount
 
@@ -40,7 +40,7 @@ class ProductTemplate(models.Model):
         (self - rental_products).display_price = ""
         for product in (rental_products - rental_priced_products):
             # No rental pricing defined, fallback on list price
-            product.display_price = _(
+            product.display_price = self.env._(
                 "%(amount)s (fixed)",
                 amount=format_amount(self.env, product.list_price, product.currency_id),
             )
@@ -65,7 +65,7 @@ class ProductTemplate(models.Model):
                 )
             ):
                 raise ValidationError(
-                    _("A rental combo product can only contain rental products.")
+                    self.env._("A rental combo product can only contain rental products.")
                 )
 
     @api.model
@@ -73,19 +73,9 @@ class ProductTemplate(models.Model):
         return ['rent_ok'] + super()._get_incompatible_types()
 
     def action_view_rentals(self):
-        """Access Gantt view of rentals (sale.rental.schedule), filtered on variants of the current template."""
-        return {
-            "type": "ir.actions.act_window",
-            "name": _("Scheduled Rentals"),
-            "res_model": "sale.rental.schedule",
-            "views": [[False, "gantt"]],
-            'domain': [('product_id', 'in', self.mapped('product_variant_ids').ids)],
-            'context': {
-                'search_default_Rentals':1,
-                'group_by':[],
-                'restrict_renting_products': True,
-            }
-        }
+        """Access Schedule view of rental order lines, filtered on variants of the current
+        templates."""
+        return self.product_variant_ids.action_view_rentals()
 
     @api.depends('rent_ok')
     @api.depends_context('show_rental_tag')
@@ -95,7 +85,7 @@ class ProductTemplate(models.Model):
             return
         for template in self:
             if template.rent_ok:
-                template.display_name = _("%s (Rental)", template.display_name)
+                template.display_name = self.env._("%s (Rental)", template.display_name)
 
     def _get_best_pricing_rule(self, product=False, start_date=False, end_date=False, **kwargs):
         """ Return the best pricing rule for the given duration.
@@ -221,7 +211,7 @@ class ProductTemplate(models.Model):
                 duration, label = pricing.recurrence_id._get_converted_duration_and_label(
                     rental_duration
                 )
-                data['price_info'] = _(
+                data['price_info'] = self.env._(
                     "%(duration)s %(unit)s",
                     duration=ceil(duration),
                     unit=label,

@@ -77,6 +77,16 @@ class StockMove(models.Model):
                     if move.sale_line_id.order_id.is_late:
                         move.sale_line_id._generate_delay_line(current_qty_returned)
                     move.sale_line_id.qty_returned += current_qty_returned
+                if move.picked and move.sale_line_id.tracking == 'serial':
+                    # Synchronize the reserved lots with the picked lots.
+                    # Ensure reserved lots include all picked lots and any extra reserved lots.
+                    sol = move.sale_line_id
+                    qty_to_keep_reserved = max(
+                        int(sol.product_uom_qty), len(move.lot_ids), len(sol.reserved_lot_ids)
+                    )
+                    sol.reserved_lot_ids = (
+                        move.lot_ids | sol.reserved_lot_ids
+                    )[:qty_to_keep_reserved]
         return res
 
     def _compute_location_dest_id(self):

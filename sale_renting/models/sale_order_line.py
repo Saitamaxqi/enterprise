@@ -1,20 +1,22 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from dateutil.relativedelta import relativedelta
 from pytz import UTC, timezone
 
 from odoo import _, api, fields, models
-from odoo.fields import Command
-from odoo.tools import (
-    babel_locale_parse,
-    format_datetime,
-    format_time,
-    get_lang,
-    posix_to_ldml,
-)
+from odoo.exceptions import UserError
+from odoo.fields import Command, Domain
+from odoo.tools import format_datetime, format_time
+from odoo.tools.sql import SQL
 
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
+
+    _rental_stock_coherence = models.Constraint(
+        'CHECK(NOT is_rental OR qty_returned <= qty_delivered)',
+        "You cannot return more than what has been picked up.",
+    )
 
     order_is_rental = fields.Boolean(related='order_id.is_rental_order', depends=['order_id'])
 
@@ -22,17 +24,50 @@ class SaleOrderLine(models.Model):
     is_rental = fields.Boolean(compute='_compute_is_rental', store=True, precompute=True, readonly=False, copy=True)
 
     qty_returned = fields.Float("Returned", default=0.0, copy=False)
-    start_date = fields.Datetime(related='order_id.rental_start_date')
-    return_date = fields.Datetime(related='order_id.rental_return_date')
+    start_date = fields.Datetime(related='order_id.rental_start_date', readonly=False)
+    return_date = fields.Datetime(related='order_id.rental_return_date', readonly=False)
     reservation_begin = fields.Datetime(
         string="Pickup date - padding time", compute='_compute_reservation_begin', store=True)
 
     is_product_rentable = fields.Boolean(related='product_id.rent_ok', depends=['product_id'])
 
+    # Technical computed fields for UX purposes (hide/make fields readonly, ...)
+    is_late = fields.Boolean(related='order_id.is_late')
+    team_id = fields.Many2one(related='order_id.team_id')
+    country_id = fields.Many2one(related='order_id.partner_id.country_id')
+    rental_status = fields.Selection(
+        selection=[
+            ('pickup', "Booked"),
+            ('return', "Picked-Up"),
+            ('returned', "Returned"),
+        ],
+        compute='_compute_rental_status',
+        search='_search_rental_status',
+    )
+    rental_color = fields.Integer(compute='_compute_rental_color')
+    categ_id = fields.Many2one(related='product_id.categ_id')
+
     def _domain_product_id(self):
         super_part = ','.join(str(leaf) for leaf in super()._domain_product_id())
         rent_part = "'&', ('rent_ok', '=', True), ('rent_ok', '=', order_is_rental)"
         return f"['|', {rent_part}, {super_part}]"
+
+    @api.depends('order_partner_id.name', 'order_id.name', 'product_id.name')
+    @api.depends_context('sale_renting_short_display_name')
+    def _compute_display_name(self):
+        if not self.env.context.get('sale_renting_short_display_name'):
+            return super()._compute_display_name()
+        for sol in self:
+            descriptions = []
+            group_by = self.env.context.get('group_by', [])
+
+            if 'partner_id' not in group_by:
+                descriptions.append(sol.order_partner_id.name)
+            if 'product_id' not in group_by:
+                descriptions.append(sol.product_id.name)
+            descriptions.append(sol.order_id.name)
+
+            sol.display_name = ", ".join(descriptions)
 
     @api.depends('order_id.rental_start_date')
     def _compute_reservation_begin(self):
@@ -82,10 +117,101 @@ class SaleOrderLine(models.Model):
         super(SaleOrderLine, self - rental_lines)._compute_pricelist_item_id()
         rental_lines.pricelist_item_id = False
 
-    _rental_stock_coherence = models.Constraint(
-        'CHECK(NOT is_rental OR qty_returned <= qty_delivered)',
-        "You cannot return more than what has been picked up.",
-    )
+    @api.depends('product_uom_qty', 'qty_delivered', 'qty_returned')
+    def _compute_rental_status(self):
+        self.rental_status = False
+        for sol in self.filtered('order_is_rental'):
+            if sol.qty_delivered < sol.product_uom_qty:
+                sol.rental_status = 'pickup'
+            elif sol.qty_returned == sol.qty_delivered and sol.qty_delivered == sol.product_uom_qty:
+                sol.rental_status = 'returned'
+            else:
+                sol.rental_status = 'return'
+
+    @api.depends('order_is_rental', 'state', 'rental_status', 'is_late')
+    def _compute_rental_color(self):
+        self.rental_color = 0
+        for sol in self.filtered('order_is_rental'):
+            if sol.state in ('draft', 'sent'):
+                sol.rental_color = 5  # purple
+                continue
+            match sol.rental_status:
+                case 'pickup':
+                    sol.rental_color = 3 if sol.is_late else 4  # yellow if late else blue
+                case 'return':
+                    sol.rental_color = 6 if sol.is_late else 2  # red if late else orange
+                case 'returned':
+                    sol.rental_color = 7  # green
+
+    def _search_rental_status(self, operator, values):
+        if operator != 'in':
+            return NotImplemented
+
+        # Uses custom SQL to compare fields between each other.
+        return (
+            (Domain('order_is_rental', '=', False) if False in values else Domain.FALSE)
+            | (
+                Domain([('order_is_rental', '=', True)])
+                & Domain.custom(to_sql=lambda model, alias, query: SQL(
+                    """
+                    CASE
+                        WHEN %(qty_delivered)s < %(product_uom_qty)s THEN 'pickup'
+                        WHEN (
+                            %(qty_returned)s = %(qty_delivered)s
+                            AND %(qty_delivered)s = %(product_uom_qty)s
+                        ) THEN 'returned'
+                        ELSE 'return'
+                    END IN %(values)s
+                    """,
+                    product_uom_qty=model._field_to_sql(alias, 'product_uom_qty', query),
+                    qty_delivered=model._field_to_sql(alias, 'qty_delivered', query),
+                    qty_returned=model._field_to_sql(alias, 'qty_returned', query),
+                    values=tuple(values),
+                ))
+            )
+        )
+
+    def web_gantt_write(self, vals):
+        """Updates the sale order line with the provided values and performs necessary validations.
+
+        This method also recalculates rental prices if the duration of the rental changes.
+
+        :param dict vals: Dictionary of values to update on the sale order line.
+        :raises UserError: If the order is already picked up and the start date is being updated.
+        :raises UserError: If the order is already returned and the end date is being updated.
+        :raises UserError: If the write operation fails.
+        :return: A dictionary containing notifications and/or actions, if applicable. Format: {
+            'notifications': list[{'type': str, 'message': str, 'code': str}],
+            'actions': list[dict]  # Action dictionaries
+        }
+        :rtype: dict
+        """
+        self.ensure_one()
+        result = {'notifications': [], 'actions': []}
+
+        if self.order_id.rental_status in ('return', 'returned') and 'start_date' in vals:
+            raise UserError(self.env._("The order is already picked-up."))
+        if self.order_id.rental_status == 'returned' and 'return_date' in vals:
+            raise UserError(self.env._("The order is already returned."))
+
+        updating_duration = 'start_date' in vals or 'return_date' in vals
+        old_duration = self.return_date - self.start_date if updating_duration else None
+
+        if not self.write(vals):
+            raise UserError(self.env._("An error occured. Please try again."))
+
+        if updating_duration:
+            new_duration = self.return_date - self.start_date
+            if old_duration != new_duration:
+                self.order_id.order_line.filtered('is_rental')._compute_name()
+                self.order_id.action_update_rental_prices()
+                result['notifications'].append({
+                    'type': 'success',
+                    'message': self.env._("The rental prices have been updated."),
+                    'code': 'rental_price_update',
+                })
+
+        return result
 
     def _get_sale_order_line_multiline_description_sale(self):
         """Add Rental information to the SaleOrderLine name."""
@@ -127,7 +253,11 @@ class SaleOrderLine(models.Model):
         self.ensure_one()
 
         self = self.with_company(self.company_id)
-        duration = fields.Datetime.now() - self.return_date
+        duration = (
+            fields.Datetime.now()
+            - self.return_date
+            - relativedelta(hours=self.company_id.min_extra_hour)
+        )
 
         delay_price = self.product_id._compute_delay_price(duration)
         if delay_price <= 0.0:

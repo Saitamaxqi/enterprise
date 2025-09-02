@@ -1,8 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from math import ceil
-
 from dateutil.relativedelta import relativedelta
+from math import ceil
 
 from odoo import _, api, fields, models
 from odoo.fields import Domain
@@ -26,6 +25,68 @@ class SaleOrder(models.Model):
         'CHECK(rental_start_date < rental_return_date)',
         "The rental start date must be before the rental return date if any.",
     )
+
+    @api.model
+    def default_get(self, fields):
+        """Override to map relevant default `sale.order.line` fields to `sale.order` fields.
+
+        Mainly used to create a new rental order from the rental schedule view, as it works on
+        `sale.order.line` records.
+
+        :param Sequence[str] fields: Fields without values.
+        :return: A dictionary mapping the default field values.
+        :rtype: dict[str, Any]
+        """
+        defaults = super().default_get(fields)
+
+        if self.env.context.get('convert_default_order_line_values'):
+            missing_fields = set(fields) - defaults.keys()
+
+            SO_TO_SOL_FIELDS_MAPPING = [
+                ('partner_id', 'order_partner_id'),
+                ('rental_start_date', 'start_date'),
+                ('rental_return_date', 'return_date'),
+            ]
+            for so_fname, sol_fname in SO_TO_SOL_FIELDS_MAPPING:
+                if so_fname in missing_fields and (
+                    default_value := self.env.context.get(f'default_{sol_fname}')
+                ):
+                    defaults[so_fname] = default_value
+
+            if 'order_line' in missing_fields:
+                defaults['order_line'] = [self._build_default_order_line_values()]
+
+            # Convert added default values to the right format (see also `BaseModel.default_get`)
+            for fname in defaults.keys() & missing_fields:
+                field = self._fields[fname]
+                value = field.convert_to_cache(defaults[fname], self, validate=False)
+                defaults[fname] = field.convert_to_write(value, self)
+
+        return defaults
+
+    def _build_default_order_line_values(self):
+        """Generate default values for `sale.order.line` based on context keys prefixed with
+        'default_'."""
+        # Extract field names from context keys that start with 'default_'
+        default_field_names = (
+            key.replace('default_', '', 1)  # Remove the 'default_' prefix
+            for key in self.env.context
+            if key.startswith('default_')
+        )
+        # Filter field names to include only those that exist in `sale.order.line` fields
+        sol_field_names = (
+            field_name
+            for field_name in default_field_names
+            if field_name in self.env['sale.order.line']._fields
+        )
+
+        return {
+            'product_uom_qty': 1.0,
+            **{
+                field_name: self.env.context[f'default_{field_name}']
+                for field_name in sol_field_names
+            },
+        }
 
     #=== FIELDS ===#
 
@@ -64,8 +125,10 @@ class SaleOrder(models.Model):
 
     is_late = fields.Boolean(
         string="Is overdue",
-        help="The products haven't been picked-up or returned in time",
+        help="The products haven't been picked-up or returned in time."
+             " This excludes any grace period before late fees apply.",
         compute='_compute_is_late',
+        search='_search_is_late',
     )
 
     #=== COMPUTE METHODS ===#
@@ -107,12 +170,13 @@ class SaleOrder(models.Model):
                 order.rental_status = False
             elif order.state != 'sale':
                 order.rental_status = order.state
-            elif order.has_pickable_lines:
-                order.rental_status = 'pickup'
-                order.next_action_date = order.rental_start_date
+            # As soon as an item is picked, the order status turns to "Pickedup"
             elif order.has_returnable_lines:
                 order.rental_status = 'return'
                 order.next_action_date = order.rental_return_date
+            elif order.has_pickable_lines:
+                order.rental_status = 'pickup'
+                order.next_action_date = order.rental_start_date
             else:
                 order.rental_status = 'returned'
 
@@ -143,18 +207,59 @@ class SaleOrder(models.Model):
     def _compute_is_late(self):
         now = fields.Datetime.now()
         for order in self:
-            tolerance_delay = relativedelta(hours=order.company_id.min_extra_hour)
             order.is_late = (
                 order.is_rental_order
                 and order.rental_status in ['pickup', 'return']  # has_pickable_lines or has_returnable_lines
                 and order.next_action_date
-                and order.next_action_date + tolerance_delay < now
+                and order.next_action_date < now
             )
+
+    # === SEARCH METHODS === #
+
+    def _search_is_late(self, operator, value):
+        if operator != 'in' and True not in value:
+            return NotImplemented
+
+        return Domain([
+            ('is_rental_order', '=', True),
+            ('rental_status', 'in', ('pickup', 'return')),
+            ('next_action_date', '!=', False),
+            ('next_action_date', '<', 'now'),
+        ])
 
     #=== ONCHANGE METHODS ===#
 
+    @api.onchange('pricelist_id')
+    def _onchange_pricelist_id_show_update_prices(self):
+        """Override of `sale` to not show the "Update Prices" button when creating a new order from
+        the rental schedule."""
+        if (
+            self.env.context.get('in_rental_schedule')
+            and self.env.context.get('sale_onchange_first_call')
+        ):
+            return
+        return super()._onchange_pricelist_id_show_update_prices()
+
+    @api.onchange('company_id')
+    def _onchange_company_id_warning(self):
+        """Override of `sale` to not show the "Update Prices" button when creating a new order from
+        the rental schedule."""
+        if (
+            self.env.context.get('in_rental_schedule')
+            and self.env.context.get('sale_onchange_first_call')
+        ):
+            return
+        return super()._onchange_company_id_warning()
+
     @api.onchange('rental_start_date', 'rental_return_date')
     def _onchange_duration_show_update_duration(self):
+        # Hide the "Update Rental Prices" button when creating a new order from the rental schedule.
+        if (
+            self.env.context.get('in_rental_schedule')
+            and self.env.context.get('sale_onchange_first_call')
+        ):
+            return
+
         self.show_update_duration = any(line.is_rental for line in self.order_line)
 
     @api.onchange('is_rental_order')

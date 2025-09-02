@@ -1,6 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, api, fields, models
+import ast
+
+from odoo import api, fields, models
+from odoo.fields import Domain
 
 
 class ProductProduct(models.Model):
@@ -16,7 +19,7 @@ class ProductProduct(models.Model):
             return
         for product in self:
             if product.rent_ok:
-                product.display_name = _("%s (Rental)", product.display_name)
+                product.display_name = self.env._("%s (Rental)", product.display_name)
 
     def _get_qty_in_rent_domain(self):
         return [
@@ -56,16 +59,14 @@ class ProductProduct(models.Model):
         return self.product_tmpl_id._get_best_pricing_rule(product=self, **kwargs)
 
     def action_view_rentals(self):
-        """Access Gantt view of rentals (sale.rental.schedule), filtered on variants of the current template."""
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "sale.rental.schedule",
-            "name": _("Scheduled Rentals"),
-            "views": [[False, "gantt"]],
-            'domain': [('product_id', 'in', self.ids)],
-            'context': {
-                'search_default_Rentals':1,
-                'group_by':[],
-                'restrict_renting_products': True,
-            }
-        }
+        """Access Schedule view of rental order lines, filtered on the current variants"""
+
+        action = self.env['ir.actions.actions']._for_xml_id('sale_renting.action_rental_order_schedule')
+        domain = Domain(ast.literal_eval(action.get('domain', 'True')))
+        context: dict = ast.literal_eval(action.get('context', '{}'))
+
+        domain &= Domain('product_id', 'in', self.ids)
+        context['default_product_id'] = self.ids[0]
+
+        action.update(domain=domain, context=context)
+        return action
