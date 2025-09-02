@@ -32,7 +32,7 @@ class ProductTemplate(models.Model):
     # Delays pricing
 
     extra_hourly = fields.Float("Hourly Fine", help="Fine per hour late", company_dependent=True)
-    extra_daily = fields.Float("Dayly Fine", help="Fine per day late", company_dependent=True)
+    extra_daily = fields.Float("Daily Fine", help="Fine per day late", company_dependent=True)
 
     def _compute_display_price(self):
         rental_products = self.filtered('rent_ok')
