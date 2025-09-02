@@ -71,7 +71,10 @@ class AccountAccount(models.Model):
                         SUM(COALESCE(account_move_line.%(field_name)s)) as %(field_name)s,
                         account_move_line.account_id
                     FROM account_move_line
-                    WHERE account_move_line.date >= %(date_from)s AND account_move_line.date <= %(date_to)s AND account_move_line.company_id = ANY(%(company_ids)s)
+                    WHERE account_move_line.date >= %(date_from)s
+                      AND account_move_line.date <= %(date_to)s
+                      AND account_move_line.company_id = ANY(%(company_ids)s)
+                      AND account_move_line.parent_state = 'posted'
                     GROUP BY account_move_line.account_id
                 ) aml
                 WHERE aml.%(field_name)s %(operator)s %(value)s
@@ -290,7 +293,7 @@ class AccountAccount(models.Model):
                         SUM(COALESCE(aml.balance, 0.0)) as balance,
                         aml.account_id as account_id
                     FROM account_move_line aml
-                    WHERE aml.date >= %s AND aml.date <= %s AND aml.company_id = ANY(%s) AND parent_state = 'posted'
+                    WHERE aml.date >= %s AND aml.date <= %s AND aml.company_id = ANY(%s) AND aml.parent_state = 'posted'
                     GROUP BY aml.account_id)
                     """,
                     date_from, date_to, company_ids
