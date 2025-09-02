@@ -623,7 +623,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2608000090
-msgid "Others"
+msgid "Others (Zinc)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -658,7 +658,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2613900000
-msgid "Others"
+msgid "Others (Molybdenum)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -673,7 +673,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2615900000
-msgid "Others"
+msgid "Others (Niobium, Tantalum, Vanadium)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -688,7 +688,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2616909000
-msgid "Others"
+msgid "Others (Precious metal)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -698,7 +698,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2617900000
-msgid "Others"
+msgid "Others (Mineral)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -718,7 +718,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620190000
-msgid "Others"
+msgid "Others (Metal residues)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -728,7 +728,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620290000
-msgid "Others"
+msgid "Others (Metal-containing sludges)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -755,7 +755,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2620990000
-msgid "Others"
+msgid "Others (Toxic residues: As, Hg, Tl, etc.)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock
@@ -765,7 +765,7 @@ msgstr ""
 
 #. module: l10n_pe_edi_stock
 #: model:ir.model.fields.selection,name:l10n_pe_edi_stock.selection__product_template__l10n_pe_edi_tariff_fraction__2621900000
-msgid "Others"
+msgid "Others (Ashes and residues)"
 msgstr ""
 
 #. module: l10n_pe_edi_stock

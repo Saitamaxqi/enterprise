@@ -1072,6 +1072,16 @@ msgid "Plomo"
 msgstr "Plomo"
 
 #. module: l10n_pe_edi
+#: model:ir.model.fields.selection,name:l10n_pe_edi.selection__product_template__l10n_pe_withhold_code__044
+msgid "Servicio de beneficio de minerales metálicos gravado con el IGV"
+msgstr ""
+
+#. module: l10n_pe_edi
+#: model:ir.model.fields.selection,name:l10n_pe_edi.selection__product_template__l10n_pe_withhold_code__045
+msgid "Minerales de oro y sus concentrados gravados con el IGV"
+msgstr ""
+
+#. module: l10n_pe_edi
 #: model:ir.model,name:l10n_pe_edi.model_product_template
 msgid "Product"
 msgstr "Producto"
