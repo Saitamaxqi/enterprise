@@ -2,6 +2,7 @@ import {registry} from "@web/core/registry";
 import {
     Component,
     useState,
+    onMounted,
     onWillStart,
     onWillUnmount,
 } from "@odoo/owl";
@@ -22,20 +23,16 @@ class WebsiteGenerator extends Component {
         this.state = useState({
             error: "",
         });
+        onWillStart(() => this._checkRequestStatus());
         // Every 10 seconds, we ask the server to call IAP to see if the
         // scraping result is ready.
         // If it is ready, the server will process the IAP file and generate the
         // website. Once it's done, a later call of this `setInterval` loop will
         // notice it (success or error status) and act accordingly.
-        onWillStart(async () => {
-            await this._checkRequestStatus();
-            this.interval = setInterval(async () => {
-                this._checkRequestStatus();
-            }, 10000);
+        onMounted(() => {
+            this.interval = setInterval(() => this._checkRequestStatus(), 10000);
         });
-        onWillUnmount(() => {
-            clearInterval(this.interval);
-        });
+        onWillUnmount(() => clearInterval(this.interval));
 
         useBus(this.website.bus, "HIDE-WEBSITE-LOADER", () => {
             if (!this.state.error) {
