@@ -162,8 +162,11 @@ class UPSRequest:
         if order:
             if not order.order_line:
                 return _("Please provide at least one item to ship.")
-            for line in order.order_line.filtered(lambda line: not line.product_id.weight and not line.is_delivery and line.product_id.type not in ['service', 'digital', False]):
-                return _('The estimated price cannot be computed because the weight of your product %s is missing.', line.product_id.display_name)
+            if error_lines := order.order_line._get_invalid_delivery_weight_lines():
+                return _(
+                    "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n %s",
+                    ", ".join(error_lines.product_id.mapped('name')),
+                )
         if picking:
             for ml in picking.move_line_ids.filtered(lambda ml: not ml.result_package_id and not ml.product_id.weight):
                 return _("The delivery cannot be done because the weight of your product %s is missing.", ml.product_id.display_name)
