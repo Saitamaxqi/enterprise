@@ -684,9 +684,9 @@ class DMFAOccupation(DMFANode):
                     lines_to_deduct_by_code[1, None] += line
         # La valeur zéro pour la remuneration est autorisée uniquement pour le solde du budget
         # mobilité (code rémunération 029).
-        return DMFARemuneration.init_multi([(
+        return DMFARemuneration.init_multi(sorted([(
             lines, code, frequency, lines_to_deduct_by_code[code, frequency]
-        ) for (code, frequency), lines in lines_by_code.items() if sum(lines.mapped('total')) or code == 29])
+        ) for (code, frequency), lines in lines_by_code.items() if sum(lines.mapped('total')) or code == 29], key=lambda t: (t[1], t[2])))
 
     def _prepare_occupation_informations(self):
         infos_to_declare = []
