@@ -264,13 +264,17 @@ class SignSendRequest(models.TransientModel):
             return request.go_to_document()
         if not self.reference_doc:
             return self.env['ir.actions.actions']._for_xml_id('sign.sign_request_action')
+
+        # redirect to the record linked to reference_doc
+        next_action = request.get_close_values().get('action')
+
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',
             'params': {
                 'type': 'success',
                 'message': self.env._("Request sent successfully"),
-                'next': {'type': 'ir.actions.client', 'tag': 'soft_reload'},
+                'next': next_action or {'type': 'ir.actions.client', 'tag': 'soft_reload'},
             },
         }
 
