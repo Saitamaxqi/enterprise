@@ -230,10 +230,6 @@ export class SignablePDFIframe extends PDFIframe {
         this.dialogOpen = true;
         // If we already have an image, we propagate it to populate the "draw" tab
         const signatureImage = signatureItem?.dataset?.signature;
-        const signMode = type.auto_value ? "draw" : "auto"
-        if (signMode == "draw" && signatureImage) {
-            signature.signatureImage = signatureImage;
-        }
         this.closeFn = this.dialog.add(
             SignNameAndSignatureDialog,
             {
