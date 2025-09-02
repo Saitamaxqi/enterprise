@@ -29,6 +29,7 @@ App to upload and manage your documents.
         # folder has to exist
         'data/mail_alias_data.xml',
         'data/ir_config_parameter_data.xml',
+        'data/ir_cron_data.xml',
         'data/documents_tour.xml',
         'views/res_config_settings_views.xml',
         'views/res_partner_views.xml',

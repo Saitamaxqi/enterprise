@@ -8,4 +8,8 @@
         <field name="key">documents.deletion_delay</field>
         <field name="value">30</field>
     </record>
+    <record id="ir_config_tracking_batch_size" model="ir.config_parameter">
+        <field name="key">documents.tracking_batch_size</field>
+        <field name="value">500</field>
+    </record>
 </data></odoo>

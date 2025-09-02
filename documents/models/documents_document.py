@@ -69,7 +69,8 @@ class DocumentsDocument(models.Model):
     previous_attachment_ids = fields.Many2many('ir.attachment', string="History")
 
     # Document
-    name = fields.Char('Name', copy=True, store=True, compute='_compute_name_and_preview', readonly=False, translate=True)
+    name = fields.Char('Name', copy=True, store=True, compute='_compute_name_and_preview', readonly=False,
+                       translate=True, tracking=True)
     active = fields.Boolean(default=True, string="Active")
     thumbnail = fields.Binary(
         readonly=False, store=True, attachment=True, compute='_compute_thumbnail', recursive=True)
@@ -1061,15 +1062,18 @@ class DocumentsDocument(models.Model):
                 "Incorrect values. Use one of the following for the following fields: %(hints)s.)", hints=hints
             ))
 
-        self._action_update_access(access_internal, access_via_link, is_access_via_link_hidden,
-                                   no_propagation=no_propagation)
+        changes_by_document_dict = self._action_update_access(
+            access_internal, access_via_link, is_access_via_link_hidden, no_propagation=no_propagation)
         if partners:
             partners = {
                 self.env['res.partner'].browse(int(partner)) if isinstance(partner, str | int) else partner:
                 (role, fields.Datetime.to_datetime(exp) if exp and isinstance(exp, str) else exp)
                 for partner, (role, exp) in (partners or {}).items()
             }
-            self._action_update_members(partners, no_propagation=no_propagation)
+            created_or_updated_access, removed_access = self._action_update_members(partners, no_propagation=no_propagation)
+            self._update_changes_by_document_dict(created_or_updated_access, removed_access, changes_by_document_dict)
+
+        self.env['documents.access.tracking']._create_access_tracking(changes_by_document_dict)
 
         return self.mapped('user_permission')
 
@@ -1085,6 +1089,7 @@ class DocumentsDocument(models.Model):
         :param bool no_propagation: whether to propagate access update to sub-folders
         """
         self.flush_model()
+        changes_by_document_dict = defaultdict(dict)
         for field, value in (
             ('access_internal', access_internal),
             ('access_via_link', access_via_link),
@@ -1113,21 +1118,21 @@ class DocumentsDocument(models.Model):
                 WITH RECURSIVE candidates AS (%(candidates)s),
                 -- explore the folders
                 documents_to_update AS (
-                    SELECT id
+                    SELECT id, %(field)s
                       FROM candidates
                      WHERE id = ANY(%(root_ids)s)
                      UNION
-                    SELECT child.id
+                    SELECT child.id, child.%(field)s
                       FROM candidates AS child
                       JOIN documents_to_update AS parent
                         ON child.folder_id = parent.id
                 ),
                 documents_and_shortcuts AS (
-                    SELECT id FROM documents_to_update
+                    SELECT id, %(field)s FROM documents_to_update
                      UNION
                 -- document.shortcut_ids
                 -- update in "SUDO" to keep them synchronized
-                    SELECT shortcut.id
+                    SELECT shortcut.id, shortcut.%(field)s
                       FROM documents_document AS shortcut
                       JOIN documents_to_update
                         ON documents_to_update.id = shortcut.shortcut_document_id
@@ -1137,7 +1142,11 @@ class DocumentsDocument(models.Model):
                       FROM documents_and_shortcuts AS doc
                         -- document | document.children_ids | document.shortcut_ids
                      WHERE documents_document.id = doc.id
+                 RETURNING doc.id, doc.%(field)s
             """, field=SQL(field), value=value, root_ids=self.ids, candidates=candidates))
+
+            for id, old_value in self.env.cr.fetchall():
+                changes_by_document_dict[id][field] = old_value
 
         self.invalidate_model([
             'access_internal',
@@ -1145,6 +1154,8 @@ class DocumentsDocument(models.Model):
             'is_access_via_link_hidden',
             'user_permission',
         ])
+
+        return changes_by_document_dict
 
     def _action_update_members(self, partners, no_propagation=False):
         """Update the members access on all files bellow the current folder.
@@ -1174,6 +1185,7 @@ class DocumentsDocument(models.Model):
 
         documents = self.with_context(active_test=False)._search(to_update_domain).select()
 
+        created_or_updated_access = []
         for (role, expiration_date), partners in values_to_update.items():
             if role not in ('edit', 'view'):
                 raise UserError(_("Invalid role."))  # The public method would have returned a more insightful message
@@ -1197,23 +1209,35 @@ class DocumentsDocument(models.Model):
                           FROM documents_document AS shortcut
                           JOIN documents AS document
                             ON document.id = shortcut.shortcut_document_id
+                    ),
+                    existing AS (
+                        SELECT document_id, partner_id, role, expiration_date
+                          FROM documents_access
+                          JOIN documents_and_shortcuts
+                            ON document_id = documents_and_shortcuts.id
+                           AND partner_id = any(%(partner_ids)s)
+                    ),
+                    updated_or_created AS (
+                        INSERT INTO documents_access (
+                                document_id,
+                                partner_id,
+                                role,
+                                expiration_date
+                        ) (
+                            SELECT DISTINCT ON (doc.id, partner_id) doc.id,
+                                   partner_id,
+                                   %(role)s,
+                                   %(expiration_date)s
+                              FROM documents_and_shortcuts AS doc
+                      JOIN LATERAL UNNEST(%(partner_ids)s) AS partner_id ON TRUE
+                        )
+                       ON CONFLICT (document_id, partner_id) DO UPDATE SET %(update_fields)s
+                         RETURNING document_id, partner_id, role, expiration_date
                     )
-                    INSERT INTO documents_access (
-                            document_id,
-                            partner_id,
-                            role,
-                            expiration_date
-                    ) (
-                        SELECT DISTINCT ON (doc.id, partner_id) doc.id,
-                               partner_id,
-                               %(role)s,
-                               %(expiration_date)s
-                          FROM documents_and_shortcuts AS doc
-                  JOIN LATERAL UNNEST(%(partner_ids)s) AS partner_id
-                               ON 1=1
-                    )
-                    ON CONFLICT (document_id, partner_id) DO UPDATE SET
-                        %(update_fields)s
+                    SELECT 'existing' as action, * FROM existing
+                    UNION ALL
+                    SELECT 'upsert' as action, * FROM updated_or_created
+                    ORDER BY action ASC
                 """,
                 documents=documents,
                 partner_ids=partners.ids,
@@ -1221,6 +1245,9 @@ class DocumentsDocument(models.Model):
                 role=role,
                 update_fields=update_fields,
             ))
+            created_or_updated_access += self.env.cr.fetchall()
+
+        removed_access = []
         if partners_to_remove:
             self.env.cr.execute(SQL("""
                 WITH documents AS (%(documents)s),
@@ -1237,13 +1264,45 @@ class DocumentsDocument(models.Model):
                       USING docs_and_shortcuts AS doc
                       WHERE access.document_id = doc.id
                         AND access.partner_id = ANY(%(partner_ids)s)
+                  RETURNING access.document_id, access.partner_id
             """, documents=documents, partner_ids=partners_to_remove.ids))
+            removed_access = self.env.cr.fetchall()
 
         self.env['documents.document'].invalidate_model([
             'access_ids',
             'user_permission',
         ])
         self.env['documents.access'].invalidate_model()
+
+        return created_or_updated_access, removed_access
+
+    @api.model
+    def _update_changes_by_document_dict(
+        self, created_or_updated_access, removed_access, changes_by_document_dict):
+        old_values = defaultdict(dict)
+        for action, doc, partner, role, exp in created_or_updated_access:
+            exp = fields.Date.to_string(exp) or 'None'
+            partner_dict = (changes_by_document_dict.setdefault(doc, {})
+                            .setdefault('members', {'added': {}, 'updated': {}, 'removed': []}))
+            if action == 'upsert':
+                if old := old_values[doc].get(partner):
+                    partner_dict['updated'][partner] = {
+                        'role': (old['role'], role),
+                        'expiration_date': (old['expiration_date'], exp),
+                    }
+                else:
+                    partner_dict['added'][partner] = {
+                        'role': role,
+                        'expiration_date': exp,
+                    }
+            elif action == 'existing':
+                old_values[doc][partner] = {
+                    'role': role,
+                    'expiration_date': exp,
+                }
+        for doc, partner in removed_access:
+            (changes_by_document_dict.setdefault(doc, {})
+            .setdefault('members', {'added': {}, 'updated': {}, 'removed': []})['removed'].append(partner))
 
     def _update_company(self, company_id):
         """Apply company to documents and children, without stopping (see _action_update_members).
@@ -2150,6 +2209,7 @@ class DocumentsDocument(models.Model):
         pinned_folders_start = self.filtered('is_company_root_folder')
 
         previous_owner_access_to_keep = {}
+        documents_per_initial_active = {}
 
         if (owner_id := vals.get('owner_id')) is not None:
             if not is_manager and any(d.owner_id != self.env.user for d in self):
@@ -2159,7 +2219,8 @@ class DocumentsDocument(models.Model):
             documents_changing_owner = self.filtered(lambda d: d.owner_id and d.owner_id.id != owner_id)
             previous_owner_access_to_keep.update(documents_changing_owner.grouped('owner_id'))
 
-        new_parent_folder, documents_to_move = self.browse(), self.browse()
+        new_parent_folder = self.browse()
+        documents_to_move, documents_to_move_per_initial_folder = self.browse(), self.browse()
 
         if folder_id := vals.get('folder_id'):
             new_parent_folder = self.browse(folder_id)
@@ -2187,11 +2248,14 @@ class DocumentsDocument(models.Model):
                     or doc.folder_id and not doc.folder_id.active and (not to_active or doc.folder_id not in self)
                 ):
                     raise UserError(_("It is not possible to move archived documents."))
+            documents_to_move_per_initial_folder = documents_to_move.grouped('folder_id')
 
-        if vals.get('active') is False:
-            if self.env.user.share:
-                raise UserError(_("You are not allowed to (un)archive documents."))
-            self.check_access('unlink')  # As archived gc leads to unlink after `deletion_delay` days.
+        if to_active := vals.get('active') is not None:
+            if to_active is False:
+                if self.env.user.share:
+                    raise UserError(_("You are not allowed to (un)archive documents."))
+                self.check_access('unlink')  # As archived gc leads to unlink after `deletion_delay` days.
+            documents_per_initial_active = self.grouped('active')
 
         attachment_id = vals.get('attachment_id')
         if attachment_id:
@@ -2266,10 +2330,24 @@ class DocumentsDocument(models.Model):
             self.attachment_id.check_access('read')
 
         if (new_active := vals.get('active')) is not None:
-            if not new_active and self.sudo().search([('id', 'child_of', self.ids), ('active', '=', True)]):
-                raise UserError(_('Operation not supported. Please use "Move to Trash" / `action_archive` instead.'))
-            if new_active and self.sudo().search([('id', 'parent_of', self.ids), ('active', '=', False)]):
-                raise UserError(_('Operation not supported. Please use "Restore" / `action_unarchive` instead.'))
+            if not new_active:
+                if self.sudo().search([('id', 'child_of', self.ids), ('active', '=', True)]):
+                    raise UserError(_('Operation not supported. Please use "Move to Trash" / `action_archive` instead.'))
+                if archived_documents := documents_per_initial_active.get(True):  # Log moved to trash instead of "archived"
+                    for folder, children in archived_documents.filtered('folder_id').grouped('folder_id').items():
+                        folder.sudo(self.env.user in children.owner_id).message_post(
+                            body=_('The following documents have been sent to trash: %(documents)s.',
+                                   documents=', '.join(children.mapped('display_name')))
+                        )
+            elif new_active:
+                if self.sudo().search([('id', 'parent_of', self.ids), ('active', '=', False)]):
+                    raise UserError(_('Operation not supported. Please use "Restore" / `action_unarchive` instead.'))
+                if restored_documents := documents_per_initial_active.get(False):  # Log restored instead of "unarchived"
+                    for folder, children in restored_documents.filtered('folder_id').grouped('folder_id').items():
+                        folder.sudo(self.env.user in children.owner_id).message_post(
+                            body=_('The following documents have been restored from the trash: %(documents)s.',
+                                   documents=', '.join(children.mapped('display_name')))
+                        )
 
         if not is_manager and self.filtered('is_company_root_folder') != pinned_folders_start:
             raise AccessError(_("Only Documents Managers can create in company folder."))
@@ -2299,6 +2377,18 @@ class DocumentsDocument(models.Model):
             # Propagate folder company unless passed as well (already done)
             if 'company_id' not in vals:
                 documents_to_sync._update_company(new_parent_folder.company_id.id)
+
+        if new_parent_folder and documents_to_move:
+            for folder, documents in documents_to_move.grouped('folder_id').items():
+                folder.message_post_with_source(
+                    source_ref='documents.folder_notification_move_in',
+                    render_values={"documents": documents},
+                )
+            for folder, documents in documents_to_move_per_initial_folder.items():
+                folder.message_post_with_source(
+                    source_ref='documents.folder_notification_move_out',
+                    render_values={"documents": documents},
+                )
 
         return write_result
 
