@@ -47,6 +47,45 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'number_of_hours': number_of_hours,
         })
 
+    def _test_eos_calculation(self, start_date, departure_date, payslip_start, payslip_end,
+                            expected_eos, has_unpaid_leave=False, wage=15000.0):
+        """Helper method to test end of service salary rule calculations."""
+        employee = self.env['hr.employee'].create({
+            'name': 'Test Employee',
+            'structure_type_id': self.env.ref('l10n_ae_hr_payroll.uae_employee_payroll_structure_type').id,
+            'country_id': self.env.ref('base.ae').id,
+            'wage': wage,
+            'date_version': start_date,
+            'contract_date_start': start_date,
+        })
+
+        if has_unpaid_leave:
+            unpaid_leave = self.env['hr.leave'].create({
+                'name': 'Unpaid Leave',
+                'employee_id': employee.id,
+                'holiday_status_id': self.env.ref('hr_holidays.leave_type_unpaid').id,
+                'request_date_from': date(2025, 8, 4),
+                'request_date_to': date(2025, 8, 8),
+            })
+            unpaid_leave.action_approve()
+            employee.version_id.generate_work_entries(payslip_start, payslip_end)
+
+        departure_notice = self.env['hr.departure.wizard'].create({
+            'employee_ids': [Command.link(employee.id)],
+            'departure_date': departure_date,
+            'departure_description': 'foo',
+        })
+        departure_notice.with_context(employee_termination=True).action_register_departure()
+
+        payslip = self._generate_payslip(payslip_start, payslip_end, employee_id=employee.id, version_id=employee.version_id.id)
+        payslip.compute_sheet()
+
+        self.assertEqual(
+            payslip._get_line_values(['EOS'])['EOS'][payslip.id]['total'],
+            expected_eos,
+            "End of Service calculation is incorrect"
+        )
+
     def test_payslip_1(self):
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
         payslip_results = {'BASIC': 40000.0, 'HOUALLOW': 400.0, 'TRAALLOW': 220.0, 'OTALLOW': 100.0, 'EOSP': 3333.33, 'ALP': 3393.33, 'GROSS': 40720.0, 'SICC': 5090.0, 'SIEC': -2036.0, 'DEWS': -3332.0, 'NET': 35352.0}
@@ -163,83 +202,129 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(amount_rec, 0)
 
     def test_end_of_service_salary_rule_1(self):
-        """
-        Test the end of service salary rule calculation.
-        The rule should consider the full 30 days compensation after completing the 6th year, not the 5th.
-        """
-        employee_1 = self.env['hr.employee'].create({
-            'name': 'Test Employee 1',
-            'contract_date_start': date(2014, 6, 4),
-            'date_version': date(2014, 6, 4),
-            'wage': 15_000.0,
-        })
+        """Case: Employee worked 2 years, 8 months, and 15 days
+        Expected: Calculate EOS for 2 years, 8 months and 15 days
+        (2 years * 12 month / year) + 8 months = 32 months
+        because the total is less than 6 years, ratio = 21 / 30
+        (15_000 $/year) * ratio * (1/12 year/month) = 875 $/month
+        (15_000 $/year) * ratio * (1/365 year/day) ~ 28.77 $/day
 
-        departure_notice_1 = self.env['hr.departure.wizard'].create({
-            'employee_ids': [Command.link(employee_1.id)],
-            'departure_date': date(2017, 2, 19),
-            'departure_description': 'foo',
-            'set_date_end': True,
-        })
-        departure_notice_1.with_context(employee_termination=True).action_register_departure()
-
-        payslip_1 = self._generate_payslip(
-            date(2017, 2, 1),
-            date(2017, 2, 28),
-            employee_id=employee_1.id,
-            version_id=employee_1.version_id.id,
+        total = 32 months * 875 $/month = 28_000 $
+                15 days * 28.77 $/day ~ 432 $       +
+              = 28_432 $
+        """
+        self._test_eos_calculation(
+            start_date=date(2014, 6, 4),
+            departure_date=date(2017, 2, 19),
+            payslip_start=date(2017, 2, 1),
+            payslip_end=date(2017, 2, 28),
+            expected_eos=28_432.0
         )
-
-        self.assertEqual(payslip_1._get_line_values(['EOS'])['EOS'][payslip_1.id]['total'], 28_432.0, "End of Service calculation is incorrect")
 
     def test_end_of_service_salary_rule_2(self):
-        employee_2 = self.env['hr.employee'].create({
-            'name': 'Test Employee 2',
-            'contract_date_start': date(2019, 7, 22),
-            'date_version': date(2019, 7, 22),
-            'wage': 15_000.0,
-        })
+        """Case: Employee worked 5 years, 5 months, and 17 days
+        Expected: Calculate EOS for 5 years, 5 months and 17 days
+        (5 years * 12 month / year) + 5 months = 65 months
+        because the total is less than 6 years, ratio = 21 / 30
+        (15_000 $/year) * ratio * (1/12 year/month) = 875 $/month
+        (15_000 $/year) * ratio * (1/365 year/day) ~ 28.77 $/day
 
-        departure_notice_2 = self.env['hr.departure.wizard'].create({
-            'employee_ids': [Command.link(employee_2.id)],
-            'departure_date': date(2025, 1, 8),
-            'departure_description': 'foo',
-            'set_date_end': True,
-        })
-        departure_notice_2.with_context(employee_termination=True).action_register_departure()
-
-        payslip_2 = self._generate_payslip(
-            date(2025, 1, 1),
-            date(2025, 1, 31),
-            employee_id=employee_2.id,
-            version_id=employee_2.version_id.id,
+        total = 65 months * 875 $/month = 56_875 $
+                17 days * 28.77 $/day ~ 490 $       +
+              = 57_365 $
+        """
+        self._test_eos_calculation(
+            start_date=date(2019, 7, 22),
+            departure_date=date(2025, 1, 8),
+            payslip_start=date(2025, 1, 1),
+            payslip_end=date(2025, 1, 31),
+            expected_eos=57_365.0
         )
-
-        self.assertEqual(payslip_2._get_line_values(['EOS'])['EOS'][payslip_2.id]['total'], 57_365.0, "End of Service calculation is incorrect")
 
     def test_end_of_service_salary_rule_3(self):
-        employee_3 = self.env['hr.employee'].create({
-            'name': 'Test Employee 3',
-            'contract_date_start': date(2018, 7, 22),
-            'date_version': date(2018, 7, 22),
-            'wage': 15_000.0,
-        })
+        """Case: Employee worked 6 years, 5 months, and 17 days
+        Expected: Calculate EOS for 6 years, 5 months and 17 days
+        (6 years * 12 month / year) + 5 months = 77 months
+        because the total is greater than 6 years, ratio = 1
+        (15_000 $/year) * ratio * (1/12 year/month) = 1250 $/month
+        (15_000 $/year) * ratio * (1/365 year/day) ~ 41.1 $/day
 
-        departure_notice_3 = self.env['hr.departure.wizard'].create({
-            'employee_ids': [Command.link(employee_3.id)],
-            'departure_date': date(2025, 1, 8),
-            'departure_description': 'foo',
-            'set_date_end': True,
-        })
-        departure_notice_3.with_context(employee_termination=True).action_register_departure()
-
-        payslip_3 = self._generate_payslip(
-            date(2025, 1, 1),
-            date(2025, 1, 31),
-            employee_id=employee_3.id,
-            version_id=employee_3.version_id.id,
+        total = 60 months * 1250 * (21/30) $/month = 52_500 $
+                17 months * 1250 $/month = 21_250 $
+                17 days * 41.1 $/day ~ 699 $       +
+              = 74_449 $
+        """
+        self._test_eos_calculation(
+            start_date=date(2018, 7, 22),
+            departure_date=date(2025, 1, 8),
+            payslip_start=date(2025, 1, 1),
+            payslip_end=date(2025, 1, 31),
+            expected_eos=74_449.0
         )
 
-        self.assertEqual(payslip_3._get_line_values(['EOS'])['EOS'][payslip_3.id]['total'], 74_449.0, "End of Service calculation is incorrect")
+    def test_end_of_service_salary_rule_4(self):
+        """Case: Employee worked 2 years, 8 months, and 15 days with 5 unpaid days
+        Expected: Calculate EOS for 2 years, 8 months and 10 days
+        (2 years * 12 month / year) + 8 months = 32 months
+        because the total is less than 6 years, ratio = 21 / 30
+        (15_000 $/year) * ratio * (1/12 year/month) = 875 $/month
+        (15_000 $/year) * ratio * (1/365 year/day) ~ 28.77 $/day
+
+        total = 32 months * 875 $/month = 28000 $
+                10 days * 28.77 $/day ~ 288 $       +
+              = 28_288 $
+        """
+        self._test_eos_calculation(
+            start_date=date(2022, 12, 16),
+            departure_date=date(2025, 8, 31),
+            payslip_start=date(2025, 8, 1),
+            payslip_end=date(2025, 8, 31),
+            expected_eos=28_288.0,
+            has_unpaid_leave=True
+        )
+
+    def test_end_of_service_salary_rule_5(self):
+        """Case: Employee worked 6 years and 3 days with 5 unpaid days
+        Expected: Calculate EOS for 5 years, 11 months and 29 days
+        (5 years * 12 month / year) + 11 months = 71 months
+        because the total is less than 6 years, ratio = 21 / 30
+        (15_000 $/year) * ratio * (1/12 year/month) = 875 $/month
+        (15_000 $/year) * ratio * (1/365 year/day) ~ 28.77 $/day
+
+        total = 71 months * 875 $/month = 62_125 $
+                29 days * 28.77 $/day ~ 835 $       +
+              = 62_960 $
+        """
+        self._test_eos_calculation(
+            start_date=date(2019, 8, 28),
+            departure_date=date(2025, 8, 31),
+            payslip_start=date(2025, 8, 1),
+            payslip_end=date(2025, 8, 31),
+            expected_eos=62_960.0,
+            has_unpaid_leave=True
+        )
+
+    def test_end_of_service_salary_rule_6(self):
+        """Case: Employee worked 7 years and 3 days with 5 unpaid days
+        Expected: Calculate EOS for 6 years, 11 months and 29 days
+        (6 years * 12 month / year) + 11 months = 83 months
+        because the total is greater than 6 years, ratio = 1
+        (15_000 $/year) * ratio * (1/12 year/month) = 1250 $/month
+        (15_000 $/year) * ratio * (1/365 year/day) ~ 41.1 $/day
+
+        total = 60 months * 1250 * (21/30) $/month = 52_500 $
+                23 months * 1250 $/month = 28_750 $
+                29 days * 41.1 $/day ~ 1192 $       +
+              = 82_442 $
+        """
+        self._test_eos_calculation(
+            start_date=date(2018, 8, 28),
+            departure_date=date(2025, 8, 31),
+            payslip_start=date(2025, 8, 1),
+            payslip_end=date(2025, 8, 31),
+            expected_eos=82_442.0,
+            has_unpaid_leave=True
+        )
 
     def test_payslip_attendance_1(self):
         if self.env['ir.module.module']._get('hr_payroll_attendance').state != 'installed':

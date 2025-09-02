@@ -75,6 +75,12 @@
                 <span t-if="eos" t-out="round(o.employee_id._l10n_ae_get_worked_years(), 2)"/>
                 <span t-else="" t-field="o.employee_id.version_id.hours_per_week" />
             </div>
+            <div>
+                <strong t-if="eos" class="me-2">
+                    <span>Unpaid Days:</span>
+                </strong>
+                <span t-if="eos" t-out="round(o.employee_id.l10n_ae_total_unpaid_days, 2)" />
+            </div>
         </div>
 
         <td id="worked_days_amount" position="attributes">

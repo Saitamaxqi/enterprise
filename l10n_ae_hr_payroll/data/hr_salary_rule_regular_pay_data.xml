@@ -227,9 +227,7 @@ result = version.l10n_ae_other_allowances if version.work_entry_source == 'calen
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
 result = 0
-start_date = employee._get_first_version_date()
-end_date = version.contract_date_end
-diff = relativedelta(end_date, start_date)
+years, months, days = employee._l10n_ae_get_worked_duration()
 
 salary = 0
 if version.l10n_ae_is_computed_based_on_daily_salary:
@@ -237,21 +235,23 @@ if version.l10n_ae_is_computed_based_on_daily_salary:
 else:
     salary = version.wage
 
-total_months = diff.years * 12 + diff.months
-intermediate_date = start_date + relativedelta(months=total_months)
-days_beyond_months = (end_date - intermediate_date).days
+total_months = years * 12 + months
 
-compensation_day_21 = (salary / 30) * (21 / 365)
-compensation_month_21 = (salary / 30) * (21 / 12)
-compensation_day_30 = salary / 365
-compensation_month_30 = salary / 12
+# compensation for time less than 5 years
+sub5_ratio = (21 / 30)
+compensation_sub5_day = (salary * sub5_ratio) / 365
+compensation_sub5_month = (salary * sub5_ratio) / 12
+
+# compensation for time more than 5 years
+compensation_after5_day = salary / 365
+compensation_after5_month = salary / 12
 
 if total_months &lt; 12:
     result = 0
 elif total_months &lt; (6 * 12):
-    result = ceil(compensation_month_21 * total_months) + ceil(compensation_day_21 * days_beyond_months)
+    result = ceil(compensation_sub5_month * total_months) + ceil(compensation_sub5_day * days)
 else:
-    result = ceil(compensation_month_21 * 60) + ceil(compensation_month_30 * (total_months - 60)) + ceil(compensation_day_30 * days_beyond_months)
+    result = ceil(compensation_sub5_month * 60) + ceil(compensation_after5_month * (total_months - 60)) + ceil(compensation_after5_day * days)
             </field>
             <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
         </record>
@@ -266,7 +266,13 @@ else:
             <field name="condition_python">result = employee.active</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
-start = employee.contract_date_start
+eos_daily_wage = payslip._l10n_ae_get_eos_daily_salary()
+empty_worked_day = payslip.env['hr.payslip.worked_days']
+unpaid_worked_days = 0
+for code in ('LEAVE90', 'SICKLEAVE0', 'OUT'):
+    unpaid_worked_days += worked_days.get(code, empty_worked_day).number_of_days * eos_daily_wage
+
+start = employee._get_first_version_date()
 end = payslip.date_to
 if employee.departure_date:
     if payslip.date_from &lt;= employee.departure_date &lt;= payslip.date_to:
@@ -279,7 +285,7 @@ elif years &gt; 5 :
     provision_month = version.wage / 12
 
 if version.work_entry_source == 'calendar':
-    result = provision_month
+    result = provision_month - unpaid_worked_days
 elif payslip.l10n_ae_total_paid_hours:
     provision_per_worked_day = provision_month / payslip.l10n_ae_total_paid_hours
     result = provision_per_worked_day * payslip.l10n_ae_hours_worked

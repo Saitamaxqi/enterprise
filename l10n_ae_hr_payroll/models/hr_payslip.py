@@ -1,8 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+import calendar
 from collections import defaultdict
+from dateutil.relativedelta import relativedelta
 from itertools import chain
-
 from odoo import Command, api, fields, models
 
 
@@ -74,6 +74,19 @@ class HrPayslip(models.Model):
                 record.l10n_ae_basic_salary = record.version_id.wage
             else:
                 record.l10n_ae_basic_salary = record.l10n_ae_hours_worked * (record.version_id.wage / record.sum_worked_hours) if record.sum_worked_hours > 0 else 0
+
+    def _l10n_ae_get_eos_daily_salary(self):
+        years = relativedelta(self.date_to, self.employee_id._get_first_version_date()).years
+        ratio = 21 / 30 if years <= 5 else 1
+        days_in_month = calendar.monthrange(self.date_from.year, self.date_from.month)[1] or 30
+
+        salary = 0
+        if self.version_id.l10n_ae_is_computed_based_on_daily_salary:
+            salary = self.version_id.l10n_ae_eos_daily_salary
+        else:
+            salary = (self.version_id.wage / 12) / days_in_month
+
+        return salary * ratio
 
     @api.model
     def _l10n_ae_get_wps_formatted_amount(self, val):
