@@ -1114,6 +1114,13 @@ class AccountReturn(models.Model):
                 # Create the tax closing move
                 self._generate_tax_closing_entries(options)
 
+                # Reset any tax lock date exceptions
+                self.env['account.lock_exception'].search([
+                    ('company_id', 'in', self.company_ids.ids),
+                    ('state', '=', 'active'),
+                    ('lock_date_field', '=', 'tax_lock_date'),
+                ]).sudo().action_revoke()
+
                 # Create default expressions for next period if necessary
                 main_company = self.tax_unit_id.main_company_id or self.company_id
                 if (report.country_id and report.country_id == main_company.account_fiscal_country_id and
