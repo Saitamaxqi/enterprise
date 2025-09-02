@@ -1023,7 +1023,8 @@ class DocumentsDocument(models.Model):
         as they are kept synchronized.
 
         Modifications to internal users and link access are propagated down to
-         children until the new value is already present.
+         children until the new value is already present. Note that changes to
+         the discoverability(`is_access_via_link_hidden`) are never propagated.
         For partners, all changes are applied to all children regardless of the
         existing rights structure.
 
@@ -1082,6 +1083,7 @@ class DocumentsDocument(models.Model):
                               no_propagation=False):
         """Update the access on self and children.
 
+
         Stop the propagation when the value is already the right one.
 
         :param str | None access_internal: change the `access_internal` if not None
@@ -1099,13 +1101,16 @@ class DocumentsDocument(models.Model):
             if value is None:
                 continue
 
+            # never propagate discoverability
+            skip_propagation = no_propagation or field == 'is_access_via_link_hidden'
+
             # records that we might need to update
             candidates_domain = Domain([
                 (field, '!=', value),
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
-                ('id', 'in' if no_propagation else 'child_of', self.ids),
+                ('id', 'in' if skip_propagation else 'child_of', self.ids),
             ])
             candidates_domain &= self._get_access_update_domain()
             candidates_query = self.with_context(active_test=False)._search(candidates_domain)

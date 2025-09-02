@@ -373,7 +373,10 @@ class TestDocumentsSharing(TransactionCaseDocuments, MockEmail):
         self.assertEqual({(a.partner_id, a.role, a.expiration_date) for a in docs_to_check.access_ids.filtered('role')},
                          {(portal_partner_2, 'edit', expiration_date if is_single_doc else False)})
         self.assertEqual(set(docs_to_check.mapped('access_via_link')), {'view'})
-        self.assertEqual(set(docs_to_check.mapped('is_access_via_link_hidden')), {False})
+        # No propagation for is_access_via_link_hidden
+        self.assertEqual(set(documents.mapped('is_access_via_link_hidden')), {False})
+        if doc_child:
+            self.assertEqual(set(doc_child.mapped('is_access_via_link_hidden')), {True})
 
     @users("dtdm")
     def test_update_access_rights_expiration_date(self):

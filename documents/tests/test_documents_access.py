@@ -426,9 +426,13 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
             lambda a: (a.role, a.expiration_date)), [('view', False)])
         self.assertEqual(self.document_gif.access_ids.filtered(lambda a: a.partner_id == doc_partner).mapped(
             lambda a: (a.role, a.expiration_date)), [('view', False)])
-        self.assertEqual(set((self.folder_b + self.document_gif).mapped(
-            lambda d: (d.access_internal, d.access_via_link, d.is_access_via_link_hidden))), {('view', 'view', True)})
+        self.assertEqual(self.folder_b.mapped(
+            lambda d: (d.access_internal, d.access_via_link, d.is_access_via_link_hidden)),
+            [('view', 'view', True)])
+        self.assertEqual(self.document_gif.mapped(lambda d: (d.access_internal, d.access_via_link)), [('view', 'view')])
+        self.assertFalse(self.document_gif.is_access_via_link_hidden, "`is_access_via_link_hidden` should not propagate")
         IN_ONE_DAY = fields.Datetime.now() + datetime.timedelta(days=1)
+        self.document_txt.is_access_via_link_hidden = True
 
         self.folder_b.action_update_access_rights(
             access_internal='edit', access_via_link='edit', is_access_via_link_hidden=False,
@@ -440,6 +444,8 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
             lambda a: (a.role, a.expiration_date)), [('edit', IN_ONE_DAY)])
 
         self.assertEqual(self.document_gif.mapped(
+            lambda d: (d.access_internal, d.access_via_link, d.is_access_via_link_hidden)), [('view', 'view', False)])
+        self.assertEqual(self.document_txt.mapped(
             lambda d: (d.access_internal, d.access_via_link, d.is_access_via_link_hidden)), [('view', 'view', True)])
         self.assertEqual(self.document_gif.access_ids.filtered(lambda a: a.partner_id == doc_partner).mapped(
             lambda a: (a.role, a.expiration_date)), [('view', False)])
@@ -1640,7 +1646,6 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
             self.assertTracking(message, [
                 ('access_internal', 'char', 'Viewer', 'Editor'),
                 ('access_via_link', 'char', 'None', 'Viewer'),
-                ('is_access_via_link_hidden', 'boolean', False, True),
             ], strict=True)
             self.assertIn('Portal user has gained access as\nEditor', html2plaintext(message.body))
 
@@ -1650,7 +1655,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         for message in folder_a_d_latest_message_ids:
             self.assertTracking(message, [
                 ('access_via_link', 'char', 'None', 'Viewer'),
-                ('is_access_via_link_hidden', 'boolean', False, True),
+                # 'is_access_via_link_hidden' is not propagated
             ], strict=True)
             self.assertIn('Portal user rights changed from\nViewer\nto\nEditor', html2plaintext(message.body))
 
