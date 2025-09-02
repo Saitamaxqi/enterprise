@@ -206,3 +206,9 @@ class ResCompany(models.Model):
             "type": "ir.actions.act_window",
             "target": "new",
         }
+
+    # --------------------------------
+    # Audit Logging Mixin methods
+    # --------------------------------
+    def _get_audit_logging_fields(self):
+        return ["name", "vat", "l10n_au_hr_super_responsible_id", "l10n_au_stp_responsible_id", "l10n_au_bms_id"]
