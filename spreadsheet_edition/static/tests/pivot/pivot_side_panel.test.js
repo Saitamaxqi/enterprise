@@ -392,6 +392,47 @@ test("add row dimension on a related model", async function () {
     expect(".pivot-dimension:first .o-fw-bold").toHaveText("Product > Active");
 });
 
+test("Cannot follow relation of a non store field", async function () {
+    Partner._fields.product_id = fields.Many2one({
+        string: "Product",
+        relation: "product",
+        store: false,
+    });
+    const { model, env, pivotId } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+            <pivot>
+                <field name="probability" type="measure"/>
+            </pivot>
+        `,
+    });
+    await openSidePanel(model, env, pivotId);
+    await contains(".add-dimension.o-button:eq(1)").click();
+    expect(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='product_id'] .o_model_field_selector_popover_item_relation"
+    ).toHaveCount(0);
+});
+
+test("Cannot follow relation of a m2m field", async function () {
+    Partner._fields.product_ids = fields.Many2many({
+        relation: "product",
+        store: true,
+        searchable: true,
+        string: "Product",
+    });
+    const { model, env, pivotId } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+            <pivot>
+                <field name="probability" type="measure"/>
+            </pivot>
+        `,
+    });
+    await openSidePanel(model, env, pivotId);
+    await contains(".add-dimension.o-button:eq(1)").click();
+    expect(
+        ".o_popover_field_selector .o_model_field_selector_popover_item[data-name='product_ids'] .o_model_field_selector_popover_item_relation"
+    ).toHaveCount(0);
+});
+
 test("select dimensions with arrow keys", async function () {
     const { model, env, pivotId } = await createSpreadsheetWithPivot({
         arch: /*xml*/ `

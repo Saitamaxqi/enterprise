@@ -9,7 +9,7 @@ const { PivotLayoutConfigurator } = components;
  */
 export class PivotModelFieldSelectorPopover extends ModelFieldSelectorPopover {
     canFollowRelationFor(fieldDef) {
-        if (fieldDef.type === "many2many") {
+        if (fieldDef.type === "many2many" || !fieldDef.store) {
             return false;
         }
         return super.canFollowRelationFor(fieldDef);
