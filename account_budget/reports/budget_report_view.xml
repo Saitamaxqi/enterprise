@@ -41,7 +41,7 @@
                         <filter string="Type" name="line_type" context="{'group_by':'line_type'}"/>
                         <filter string="Budget" name="group_by_budget_analytic_id" context="{'group_by':'budget_analytic_id'}"/>
                         <separator/>
-                        <filter string="Account" name="account_id" context="{'group_by':'account_id'}"/>
+                        <filter name="account_id" context="{'group_by':'account_id'}"/>
                         <separator/>
                         <filter string="User" name="user_id" context="{'group_by':'user_id'}"/>
                     </group>
