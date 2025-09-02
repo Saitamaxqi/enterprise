@@ -31,6 +31,15 @@
         </field>
     </record>
 
+    <record id="action_spreadsheet_dashboard_edit" model="ir.actions.server">
+        <field name="name">Edit</field>
+        <field name="model_id" ref="spreadsheet_dashboard.model_spreadsheet_dashboard"/>
+        <field name="binding_model_id" ref="spreadsheet_dashboard.model_spreadsheet_dashboard"/>
+        <field name="binding_view_types">form</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_edit_dashboard()</field>
+    </record>
+
     <record id="spreadsheet_dashboard_kanban_view_inherit" model="ir.ui.view">
         <field name="name">spreadsheet.dashboard.kanban.inherit</field>
         <field name="model">spreadsheet.dashboard</field>
