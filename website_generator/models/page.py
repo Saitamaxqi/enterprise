@@ -121,7 +121,7 @@ class WebsitePage(models.Model):
     def _apply_website_themes(self, homepage_data):
         user_color_palette = homepage_data.get('user_color_palette', {})
         if user_color_palette:
-            self.env['web_editor.assets'].make_scss_customization(
+            self.env['website.assets'].make_scss_customization(
                 '/website/static/src/scss/options/colors/user_color_palette.scss',
                 user_color_palette,
             )
@@ -133,7 +133,7 @@ class WebsitePage(models.Model):
             user_values.update({'footer-template': f"'imported-footer-{self.website_id.id}'"})
 
         if user_values:
-            self.env['web_editor.assets'].make_scss_customization(
+            self.env['website.assets'].make_scss_customization(
                 '/website/static/src/scss/options/user_values.scss',
                 user_values,
             )
