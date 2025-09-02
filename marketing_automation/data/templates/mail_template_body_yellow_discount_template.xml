@@ -20,7 +20,7 @@
                         <section class="s_header_text_social o_mail_block_header_text_social o_mail_snippet_general pt16 pb16" data-snippet="s_mail_block_header_text_social" data-name="Left Text">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-lg-4 pt16 pb16">
+                                    <div class="col-md-4 pt16 pb16">
                                         <h1>
                                             <a target="_blank" t-att-href="db_host">
                                                 <span style="color: rgb(255, 187, 0) !important; font-size: 32px" class="fa fa-1x fa-sun-o"></span>
@@ -30,7 +30,7 @@
                                             </span>
                                         </h1>
                                     </div>
-                                    <div class="col-lg-8 o_mail_header_social" style="text-align:right;">
+                                    <div class="col-md-8 o_mail_header_social" style="text-align:right;">
                                         <a href="/view">
                                             <span style="font-weight: bolder;">View online</span>&#160;
                                             <span class="fa fa-external-link"></span>
@@ -67,7 +67,7 @@
                             </table>
                             <br/>
                             <p style="text-align:center;">
-                                <a role="button" class="btn btn-primary btn-lg" t-att-href="company_website">Visit the website</a>
+                                <a role="button" class="btn btn-primary btn-md" t-att-href="company_website">Visit the website</a>
                             </p>
                         </section>
                         <section class="s_hr pt16 pb16" data-snippet="s_hr" data-name="Separator">
@@ -76,18 +76,18 @@
                         <section class="s_features o_mail_snippet_general" data-snippet="s_features" data-name="Features">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-lg-4 pt16 pb16" style="text-align:center;">
+                                    <div class="col-md-4 pt16 pb16" style="text-align:center;">
                                         <img alt="Customer Service" src="/mass_mailing_themes/static/src/img/theme_promotion/s_default_image_product_1.jpg" class="img-fluid o_we_custom_image mx-auto d-block" style="width: 100px;"/>
                                         <h3>24/7 
                                             <br/>Customer Service  
                                         </h3>
                                     </div>
-                                    <div class="col-lg-4 pt16 pb16" style="text-align:center;">
+                                    <div class="col-md-4 pt16 pb16" style="text-align:center;">
                                         <img alt="Free Delivery" src="/mass_mailing_themes/static/src/img/theme_promotion/s_default_image_product_2.jpg" class="img-fluid o_we_custom_image mx-auto d-block" style="width: 100px;"/>
                                         <h3 style="text-align:center;">Free delivery*</h3>
                                         <p style="text-align:center;">*For orders over $39.</p>
                                     </div>
-                                    <div class="col-lg-4 pt16 pb16" style="text-align:center;">
+                                    <div class="col-md-4 pt16 pb16" style="text-align:center;">
                                         <img alt="Easy Returns" src="/mass_mailing_themes/static/src/img/theme_promotion/s_default_image_product_3.jpg" class="img-fluid o_we_custom_image mx-auto d-block" style="width: 100px;"/>
                                         <h3 style="text-align:center;">Easy Returns</h3>
                                     </div>
@@ -97,7 +97,7 @@
                         <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_left o_mail_snippet_general pt16 pb16" data-snippet="s_mail_block_footer_social_left" data-name="Footer Left" style="background-color: rgb(255, 187, 0) !important;">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-md-6">
                                         <p>
                                             <span style="font-weight: bolder;">
                                                 <font style="background-color: rgb(255, 255, 255); color: rgb(255, 187, 0);">SOLAR</font>
@@ -109,7 +109,7 @@
                                         </a>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-md-6">
                                         <div class="pb16" style="text-align: right;">
                                             <a aria-label="Facebook" title="Facebook" href="https://www.facebook.com/Odoo">
                                                 <span class="fa fa-facebook rounded bg-black" style="color: rgb(255, 187, 0) !important;"></span>
