@@ -162,7 +162,7 @@
 
                                             <t t-foreach="lines" t-as="line">
                                                 <tr>
-                                                    <td><span t-field="line.qty_done"/></td>
+                                                    <td><span t-field="line.quantity"/></td>
                                                     <td><span t-field="line.product_id.partner_ref" t-options="{'widget': 'text'}"/></td>
                                                     <td><span t-esc="line.product_id.barcode or line.product_id.default_code or ''"/></td>
                                                     <td><span t-esc="line.product_id.l10n_ec_auxiliary_code or ''"/></td>

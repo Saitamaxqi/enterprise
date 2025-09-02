@@ -351,7 +351,7 @@ class StockPicking(models.Model):
                 'main_code': line.product_id.barcode or line.product_id.default_code or 'N/A',
                 'l10n_ec_auxiliary_code': line.product_id.l10n_ec_auxiliary_code or '',
                 'product_partner_ref': line.product_id.with_context(lang=self.partner_id.lang).partner_ref,
-                'qty_done': line.qty_done,
+                'qty_done': line.quantity,
                 'lot_id': line.lot_id,
             } for line in self.move_line_ids],
             'note': self.note.striptags().replace('\n', ' ')[:300] if self.note else None,
