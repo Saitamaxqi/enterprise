@@ -60,14 +60,6 @@ class AccountBankStatement(models.Model):
 
         self.env.ref('account_accountant.auto_reconcile_bank_statement_line')._trigger()
 
-    def _get_fields_with_boxes(self):
-        return ['balance_start', 'balance_end']
-
-    def set_user_selected_box(self, id):
-        self.ensure_one()
-        word = self._set_user_selected_box(id)
-        return word.word_text
-
     def _message_set_main_attachment_id(self, attachments, force=False, filter_xml=True):
         res = super()._message_set_main_attachment_id(attachments, force=force, filter_xml=filter_xml)
         self._autosend_for_digitization()

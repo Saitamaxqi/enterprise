@@ -19,8 +19,5 @@
         'web.assets_backend': [
             'account_invoice_extract/static/src/js/*.js',
         ],
-        'web.assets_unit_tests': [
-            'account_invoice_extract/static/src/tests/**/*',
-        ],
     }
 }

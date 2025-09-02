@@ -1032,32 +1032,3 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccou
         ]).ensure_one()
         author_name = message.author_id.complete_name
         self.assertEqual(author_name, 'OdooBot')
-
-    def test_user_selected_box_with_multiple_matches(self):
-        invoice = self.env['account.move'].create({
-            'move_type': 'in_invoice',
-            'extract_state': 'waiting_validation',
-            'extract_document_uuid': 'test_token',
-            'ref': 'FA316865',
-        })
-        self.env['iap.extracted.words'].create([
-            {
-                'res_model': 'account.move',
-                'res_id': invoice.id,
-                'field': 'invoice_id',
-                'word_text': 'FA316865',
-                'user_selected': True,
-                'ocr_selected': False,
-            },
-            {
-                'res_model': 'account.move',
-                'res_id': invoice.id,
-                'field': 'invoice_id',
-                'word_text': 'INVALID123',
-                'user_selected': True,
-                'ocr_selected': False,
-            }
-        ])
-        self.assertEqual(invoice._get_validation('invoice_id')['content'], invoice.ref)
-        self.assertIn('box', invoice._get_validation('invoice_id'))
-        self.assertEqual(invoice._get_validation('invoice_id')['box'][0], invoice.ref)

@@ -1,4 +1,4 @@
-from odoo import models, fields, Command
+from odoo import models, fields
 
 
 class IAPExtractedWords(models.Model):
@@ -28,7 +28,10 @@ class ExtractMixinWithWords(models.AbstractModel):
     _description = 'Base class to extract data from documents with OCRed words saved'
 
     extract_attachment_id = fields.Many2one('ir.attachment', readonly=True, ondelete='set null', copy=False, index='btree_not_null')
-    extracted_word_ids = fields.One2many('iap.extracted.words', 'res_id', string="Extracted Words")
+    extracted_word_ids = fields.One2many('iap.extracted.words', 'res_id', string="Old Extracted Words")
+    extracted_words = fields.Json()
+    extracted_numbers = fields.Json()
+    extracted_dates = fields.Json()
 
     def _upload_to_extract_success_callback(self):
         super()._upload_to_extract_success_callback()
@@ -38,75 +41,45 @@ class ExtractMixinWithWords(models.AbstractModel):
 
     def _on_ocr_results(self, ocr_results):
         super()._on_ocr_results(ocr_results)
-        self._update_extracted_word_ids(ocr_results)
-
-    def _get_field_extracted_word_ids(self):
-        if "extracted_word_ids" in self:
-            return self["extracted_word_ids"]
-        raise NotImplementedError()
-
-    def _get_fields_with_boxes(self):
-        """ Return the fields that have boxes. This method is meant to be overridden """
-        return []
-
-    def _update_extracted_word_ids(self, ocr_results):
-        if self._get_field_extracted_word_ids():  # We don't want to recreate the boxes when the user clicks on "Reload AI data"
-            return
-
-        fields_with_boxes = self._get_fields_with_boxes()
-        for field in filter(ocr_results.get, fields_with_boxes):
-            value = ocr_results[field]
-            selected_value = value.get('selected_value')
-            data = []
-
-            # We need to make sure that only one candidate is selected.
-            # Once this flag is set, the next candidates can't be set as selected.
-            ocr_chosen_candidate_found = False
-            for candidate in value.get('candidates', []):
-                ocr_chosen = selected_value == candidate and not ocr_chosen_candidate_found
-                if ocr_chosen:
-                    ocr_chosen_candidate_found = True
-                data.append(Command.create({
-                    "res_model": self._name,
-                    "res_id": self.id,
-                    "field": field,
-                    "ocr_selected": ocr_chosen,
-                    "user_selected": ocr_chosen,
-                    "word_text": candidate['content'],
-                    "word_page": candidate['page'],
-                    "word_box_midX": candidate['coords'][0],
-                    "word_box_midY": candidate['coords'][1],
-                    "word_box_width": candidate['coords'][2],
-                    "word_box_height": candidate['coords'][3],
-                    "word_box_angle": candidate['coords'][4],
-                }))
-            self.write({'extracted_word_ids': data})
+        self.extracted_words = ocr_results.get('words', {})
+        self.extracted_numbers = ocr_results.get('numbers', {})
+        self.extracted_dates = ocr_results.get('dates', {})
 
     def get_boxes(self):
-        return [{
-            "id": data.id,
-            "feature": data.field,
-            "text": data.word_text,
-            "ocr_selected": data.ocr_selected,
-            "user_selected": data.user_selected,
-            "page": data.word_page,
-            "box_midX": data.word_box_midX,
-            "box_midY": data.word_box_midY,
-            "box_width": data.word_box_width,
-            "box_height": data.word_box_height,
-            "box_angle": data.word_box_angle
-        } for data in self._get_field_extracted_word_ids()]
+        i = 0
+        return {
+            box_type: {
+                page_number: [
+                    {
+                        'id': (i := i + 1),
+                        'text': box['content'],
+                        'page': page_number,
+                        'minX': box['coords'][0] - box['coords'][2] / 2,
+                        'midX': box['coords'][0],
+                        'maxX': box['coords'][0] + box['coords'][2] / 2,
+                        'minY': box['coords'][1] - box['coords'][3] / 2,
+                        'midY': box['coords'][1],
+                        'maxY': box['coords'][1] + box['coords'][3] / 2,
+                        'width': box['coords'][2],
+                        'height': box['coords'][3],
+                        'angle': box['coords'][4],
+                    } for box in boxes]
+                for page_number, boxes in data.items()
+            }
+            for box_type, data in (
+                ('word', self.extracted_words or {}),
+                ('number', self.extracted_numbers or {}),
+                ('date', self.extracted_dates or {}),
+            )
+        }
 
-    def _set_user_selected_box(self, id):
-        """Set the selected box for a feature. The id of the box indicates the concerned feature.
-        The method returns the text that can be set in the view (possibly different of the text in the file)"""
+    def get_currency_from_text(self, text):
         self.ensure_one()
-        word = self._get_field_extracted_word_ids().browse(int(id))
-        to_unselect = self._get_field_extracted_word_ids().search([
-            (self._fields['extracted_word_ids'].inverse_name, "=", self.id),
-            ("field", "=", word.field),
-            ("user_selected", "=", True),
-        ])
-        to_unselect.user_selected = False
-        word.user_selected = True
-        return word
+        if not text:
+            return None
+
+        currencies = self.env['res.currency'].search([])
+        for curr in currencies:
+            if text.lower() in (curr.currency_unit_label.lower(), curr.name.lower(), curr.symbol):
+                return curr.id
+        return None

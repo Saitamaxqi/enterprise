@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 
 export class Box extends Component {
     static template = "iap_extract.Box";
@@ -12,7 +12,7 @@ export class Box extends Component {
      * @override
      */
     setup() {
-        this.state = this.props.box;
+        this.state = useState(this.props.box);
     }
 
     //--------------------------------------------------------------------------
@@ -21,13 +21,13 @@ export class Box extends Component {
 
     get style() {
         const style = [
-            `left: calc(${this.state.box_midX} * ${this.props.pageWidth})`,
-            `top: calc(${this.state.box_midY} * ${this.props.pageHeight})`,
-            `width: calc(${this.state.box_width} * ${this.props.pageWidth})`,
-            `height: calc(${this.state.box_height} * ${this.props.pageHeight})`,
-            `transform: translate(-50%, -50%) rotate(${this.state.box_angle}deg)`,
-            `-ms-transform: translate(-50%, -50%) rotate(${this.state.box_angle}deg)`,
-            `-webkit-transform: translate(-50%, -50%) rotate(${this.state.box_angle}deg)`,
+            `left: calc(${this.state.midX} * ${this.props.pageWidth})`,
+            `top: calc(${this.state.midY} * ${this.props.pageHeight})`,
+            `width: calc(${this.state.width} * ${this.props.pageWidth})`,
+            `height: calc(${this.state.height} * ${this.props.pageHeight})`,
+            `transform: translate(-50%, -50%) rotate(${this.state.angle}deg)`,
+            `-ms-transform: translate(-50%, -50%) rotate(${this.state.angle}deg)`,
+            `-webkit-transform: translate(-50%, -50%) rotate(${this.state.angle}deg)`,
         ].join('; ');
         return style;
     }

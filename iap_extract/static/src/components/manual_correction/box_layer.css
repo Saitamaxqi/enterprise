@@ -17,6 +17,8 @@
     cursor: pointer;
     border-radius: 2px;
     border: 2px solid rgba(100,100,255,0.3);
+    background-color: transparent;
+    transition: background-color 0.5s ease-out;
     -webkit-transform-origin: center center;
     -moz-transform-origin: center center;
     -o-transform-origin: center center;
@@ -24,22 +26,14 @@
     transform-origin: center center;
   }
 
-  .o_extract_mixin_box_layer > .o_extract_mixin_box[data-field-name=VAT_Number] {
-    border: 2px solid rgba(100,100,255,0.6);
-  }
-
-  .o_extract_mixin_box_layer > .o_extract_mixin_box.ocr_chosen:not(.selected) {
-    border: 2px solid rgba(100,100,255,0.6);
-    background-color: rgba(255,100,0,0.6);
-  }
-
-  .o_extract_mixin_box_layer > .o_extract_mixin_box.selected {
-    border: 2px solid rgba(100,100,255,0.6);
-    background-color: rgba(100,255,100,0.7);
-  }
-
-  .o_extract_mixin_box_layer > .o_extract_mixin_box:hover {
+  .o_extract_mixin_box_layer:not(.is-selecting) > .o_extract_mixin_box:hover,
+  .o_extract_mixin_box_layer > .o_extract_mixin_box.highlighted  {
     border: 2px solid rgba(0,0,255,0.8) !important;
+  }
+
+  .o_extract_mixin_box_layer > .o_extract_mixin_box.fadeout  {
+    transition: none;
+    background-color: rgba(100,200,255,0.8);
   }
 
   .o_extract_mixin_box_layer .highlight {
@@ -68,3 +62,10 @@
 
   .o_extract_mixin_box_layer ::selection { background: rgb(0,0,255); }
   .o_extract_mixin_box_layer ::-moz-selection { background: rgb(0,0,255); }
+
+  .o_extract_selection_box {
+    position: fixed;
+    border: 1px solid #007bff;
+    background-color: rgba(0, 123, 255, 0.2);
+    pointer-events: none;
+  }

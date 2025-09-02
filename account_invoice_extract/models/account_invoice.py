@@ -220,34 +220,13 @@ class AccountMove(models.Model):
                 text_to_send['lines'] = lines
         else:
             return None
-
-        if 'content' in text_to_send:
-            if user_selected_box := self.env['iap.extracted.words'].search([
-                ('res_model', '=', self._name),
-                ('res_id', '=', self.id),
-                ('field', '=', field),
-                ('user_selected', '=', True),
-                ('ocr_selected', '=', False),
-                ('word_text', '=', text_to_send['content']),
-            ]):
-                text_to_send['box'] = [
-                    user_selected_box.word_text,
-                    user_selected_box.word_page,
-                    user_selected_box.word_box_midX,
-                    user_selected_box.word_box_midY,
-                    user_selected_box.word_box_width,
-                    user_selected_box.word_box_height,
-                    user_selected_box.word_box_angle,
-                ]
         return text_to_send
 
     @api.model
     def _cron_validate(self):
         validated = super()._cron_validate()
-        # We don't need word or prefill data anymore, we can delete them
-        validated.mapped('extracted_word_ids').unlink()
-        for record in validated:
-            record.extract_prefill_data = None
+        # We don't need prefill data anymore, we can delete them
+        validated.extract_prefill_data = False
         return validated
 
     def _post(self, soft=True):
@@ -257,45 +236,42 @@ class AccountMove(models.Model):
         self.with_context(skip_is_manually_modified=True)._validate_ocr()
         return posted
 
-    def get_partner_create_data(self, context_data):
+    @api.model
+    def _could_be_vat_number(self, text):
+        # Very naive, if at least half of the characters are digits, consider it could be a VAT number
+        n_digits = sum(c.isdigit() for c in text)
+        return 6 <= n_digits <= 15 and (n_digits / len(text)) >= 0.3
+
+    def get_partner_create_data(self, text):
         default_values = self.extract_prefill_data
-        if values := self._fetch_autocomplete_values(context_data.get('default_vat') or default_values.get('vat')):
+        if self._could_be_vat_number(text):
+            default_values['vat'] = text
+        else:
+            default_values['name'] = text
+
+        if values := self._fetch_autocomplete_values(default_values.get('vat')):
             default_values |= values
         return {f'default_{k}': v for k, v in default_values.items()}
 
-    def set_user_selected_box(self, id):
-        """Set the selected box for a feature. The id of the box indicates the concerned feature.
-        The method returns the text that can be set in the view (possibly different of the text in the file)"""
+    def get_partner_from_text(self, text):
         self.ensure_one()
-        word = self._set_user_selected_box(id)
-        if word.field == "currency":
-            text = word.word_text
-            currency = None
-            currencies = self.env["res.currency"].search([])
-            for curr in currencies:
-                if text == curr.currency_unit_label:
-                    currency = curr
-                if text == curr.name or text == curr.symbol:
-                    currency = curr
-            if currency:
-                return currency.id
-            return self.currency_id.id
-        if word.field == "VAT_Number":
-            partner_vat = False
-            if word.word_text != "":
-                partner_vat = self._find_partner_id_with_vat(word.word_text)
+        if not text:
+            return None
+
+        if self._could_be_vat_number(text):
+            partner_vat = self._find_partner_id_with_vat(text)
             if partner_vat:
                 return partner_vat.id
-            else:
-                vat = word.word_text
-                partner = self._create_supplier_from_vat(vat)
-                if partner and self.is_purchase_document():
-                    self.partner_id = partner
-                return [partner.id, self.partner_bank_id.id] if partner else False
 
-        if word.field == "supplier":
-            return self._find_partner_id_with_name(word.word_text)
-        return word.word_text
+            partner = self._create_supplier_from_vat(text)
+            if partner:
+                self.partner_id = partner
+                return partner.id
+
+        partner = self._find_partner_id_with_name(text)
+        if partner:
+            return partner
+        return None
 
     def _find_partner_from_previous_extracts(self):
         """
@@ -693,9 +669,6 @@ class AccountMove(models.Model):
 
         self._save_form(ocr_results)
         self._autopost_bill()
-
-    def _get_fields_with_boxes(self):
-        return ['supplier', 'date', 'due_date', 'invoice_id', 'currency', 'VAT_Number', 'total']
 
     def _save_form(self, ocr_results):
         # Avoid marking is_manually_modified as True when posting an invoice

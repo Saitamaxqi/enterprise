@@ -14,8 +14,8 @@
                         <div class="oe_button_box" name="button_box">
                             <button name="action_open_bank_reconcile_widget" type="object"
                                 class="oe_stat_button" invisible="not line_ids">
-                            <field name="line_ids" widget="statinfo" />
-                        </button>
+                                <field name="line_ids" string="Reconcile" widget="statinfo" />
+                            </button>
                         </div>
                         <group>
                             <field name="create_date" invisible="1"/>
@@ -23,11 +23,29 @@
                             <field name="is_complete" invisible="1"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="journal_id" invisible="1"/>
-                            <field name="name" required="1" />
-                            <field name="balance_start"/>
-                            <field name="balance_end_real"/>
-                            <field name="attachment_ids" widget="many2many_binary"/>
+                            <group>
+                                <field name="name" required="1" />
+                                <field name="date"/>
+                            </group>
+                            <group>
+                                <field name="balance_start"/>
+                                <field name="balance_end_real"/>
+                            </group>
                         </group>
+                        <notebook>
+                            <page string="Statement Lines">
+                                <field name="line_ids">
+                                    <list editable="bottom">
+                                        <field name="date"/>
+                                        <field name="payment_ref"/>
+                                        <field name="account_number" optional="hide"/>
+                                        <field name="foreign_currency_id" optional="hide"/>
+                                        <field name="amount_currency" optional="hide"/>
+                                        <field name="amount"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                     <div class="o_attachment_preview"/>
                     <chatter/>
