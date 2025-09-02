@@ -18,6 +18,7 @@ class TestProjectTemplates(TransactionCase):
                 (0, 0, {"name": "Thursday Morning", "dayofweek": "3", "hour_from": 9, "hour_to": 12}),
                 (0, 0, {"name": "Thursday Evening", "dayofweek": "3", "hour_from": 13, "hour_to": 17}),
             ],
+            "tz": "UTC",
         })
         cls.env.company.resource_calendar_id = cls.irregular_calendar.id
 
