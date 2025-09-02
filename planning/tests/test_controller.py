@@ -126,7 +126,7 @@ class TestControllersRoute(HttpCase, TestCommonPlanning):
         self.assertEqual(ics_request.status_code, 200, "ICS export should return HTTP 200 OK")
         decoded_content = ics_request.content.decode('utf-8')
 
-        self.assertIn("DTSTART:20230602T100000Z", decoded_content, "The starting date of the shift should be in the ics file")
-        self.assertIn("DTEND:20230602T190000Z", decoded_content, "The ending date of the shift should be in the ics file")
+        self.assertIn("DTSTART:20230602T080000Z", decoded_content, "The starting date of the shift should be in the ics file")
+        self.assertIn("DTEND:20230602T170000Z", decoded_content, "The ending date of the shift should be in the ics file")
         self.assertIn("SUMMARY:role", decoded_content, "The summary of the ics file should contain the name of the employee and it's default role")
         self.assertIn("Role: role a", decoded_content, "The description of the ics file should contain the role of the employee")

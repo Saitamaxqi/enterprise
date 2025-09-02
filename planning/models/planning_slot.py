@@ -1123,9 +1123,8 @@ class PlanningSlot(models.Model):
 
     def _get_ics_file(self, calendar, employee_tz):
         def ics_datetime(idate):
-            return idate and idate.astimezone(
-                pytz.timezone(slot._get_tz())
-            ).replace(tzinfo=pytz.timezone(employee_tz))
+            tz_info = employee_tz or self.env.user.tz or 'UTC'
+            return idate and idate.astimezone(pytz.timezone(tz_info))
 
         for slot in self:
             event = calendar.add('vevent')
