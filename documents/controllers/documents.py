@@ -736,3 +736,17 @@ class DocumentsAttachmentController(AttachmentController):
             if document:
                 request.update_context(no_document=True)
         return super().mail_attachment_upload(*args, **kw)
+
+    @http.route(
+        "/documents/content/pdf_first_page/<access_token>",
+        methods=["GET"],
+        type="http",
+        auth="public",
+        readonly=True,
+    )
+    def document_attachment_pdf_first_page(self, access_token=None):
+        """Returns the first page of a pdf."""
+        document_sudo = ShareRoute._from_access_token(access_token, skip_log=True)
+        if not document_sudo.attachment_id:
+            raise request.not_found()
+        return self._get_pdf_first_page_response(document_sudo.attachment_id)
