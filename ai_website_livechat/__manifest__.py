@@ -20,7 +20,7 @@
         'website.assets_edit_frontend': [
             'ai_website_livechat/static/src/website/interactions/edit/**/*',
         ],
-        'html_builder.assets': [
+        'website.website_builder_assets': [
             'ai_website_livechat/static/src/website/plugins/**/*',
         ],
     },

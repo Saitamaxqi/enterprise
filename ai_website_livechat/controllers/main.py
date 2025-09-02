@@ -11,7 +11,7 @@ class AIWebsiteLivechatController(http.Controller):
     def create_chat_channel_with_ai_agent(self, ai_agent_id):
         # Sudo => access is managed through _is_user_access_allowed.
         ai_agent = self.env['ai.agent'].sudo().search([('id', '=', ai_agent_id)])
-        if not ai_agent and not ai_agent._is_user_access_allowed():
+        if not ai_agent or not ai_agent._is_user_access_allowed():
             return
 
         store = Store()

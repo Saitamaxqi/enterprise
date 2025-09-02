@@ -52,7 +52,11 @@ export class AILivechatComponent extends Component {
             () => [this.state.prompt]
         );
         useEffect(
-            () => this.promptInputRef.el.focus(),
+            () => {
+                if (this.props.chatStyle === 'fullscreen'){
+                    this.promptInputRef.el.focus();
+                }
+            },
             () => [this.state.assistantThinking]
         );
         useEffect(
