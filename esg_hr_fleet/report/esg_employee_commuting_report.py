@@ -20,7 +20,9 @@ class EsgEmployeeCommutingReport(models.Model):
         self.env.cr.execute("""
             CREATE OR REPLACE VIEW esg_employee_commuting_report AS (
                 SELECT
-                    ROW_NUMBER() OVER () AS id,
+                    ROW_NUMBER() OVER (
+                        ORDER BY log.vehicle_id, log.driver_id, month_start
+                    ) AS id,
                     log.vehicle_id,
                     log.driver_id,
                     v.company_id,
