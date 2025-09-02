@@ -18,9 +18,9 @@ from odoo.tools.pdf import PdfFileReader, PdfFileWriter, PdfReadError
 _logger = logging.getLogger(__name__)
 
 
-def convert_html_to_pdf(html, footer_right=False):
+def convert_html_to_pdf(html, footer=False):
     Report = request.env['ir.actions.report'].with_context(page_format='audit_report')
-    content = Report._run_wkhtmltopdf([html], footer_right=footer_right)
+    content = Report._run_wkhtmltopdf([html], footer=footer)
     return PdfFileReader(BytesIO(content))
 
 
@@ -49,7 +49,7 @@ def get_toc_pdf(headings, offset=0):
             'base_url': base_url,
             'headings': headings,
             'offset': offset})
-    return convert_html_to_pdf(toc_html, [])
+    return convert_html_to_pdf(toc_html)
 
 
 def get_attached_pdfs(root):
@@ -163,7 +163,7 @@ def get_front_cover_pdf(article):
         'format_time': lambda value, tz=False, time_format='medium', lang_code=None: format_time(request.env, value, tz, time_format, lang_code),
         'image_data_uri': image_data_uri,
     })
-    front_cover_pdf = convert_html_to_pdf(front_cover_html, [])
+    front_cover_pdf = convert_html_to_pdf(front_cover_html)
 
     writer = PdfFileWriter()
     for k in range(front_cover_pdf.getNumPages()):
@@ -441,10 +441,9 @@ class KnowledgeAuditReportController(http.Controller):
         empty_pdf_for_page_numbers = convert_html_to_pdf(
             request.env['ir.qweb']._render(
                 'accountant_knowledge.audit_report_empty_document',
-                {'number_of_pages': number_of_pages}
-            ),
-            footer_right='[page]/[toPage]'
-        )
+                {'number_of_pages': number_of_pages}),
+            footer=request.env['ir.qweb']._render(
+                'accountant_knowledge.audit_report_footer'))
 
         for k in range(number_of_pages):
             page = writer.getPage(k + front_cover_pdf.getNumPages())
