@@ -1934,6 +1934,7 @@ export default class BarcodePickingModel extends BarcodeModel {
 
         // For each quants, creates or increments a barcode line.
         for (const quant of quants) {
+            const quantUoM = this.cache.getRecord("uom.uom", quant.product_uom_id);
             const product = this.cache.getRecord("product.product", quant.product_id);
             const quantPackage = this.cache.getRecord("stock.package", quant.package_id);
             const searchLineParams = Object.assign({}, barcodeData, { product, quantPackage });
@@ -1943,13 +1944,12 @@ export default class BarcodePickingModel extends BarcodeModel {
                 const currentLine = this._findLine(searchLineParams);
                 if (currentLine) {
                     // Updates an existing line.
-                    const qty_needed = Math.max(
-                        currentLine.reserved_uom_qty - currentLine.qty_done,
-                        0
-                    );
-                    qty_used = qty_needed ? Math.min(qty_needed, remaining_qty) : remaining_qty;
+                    const uomFactor = quantUoM.factor / currentLine.product_uom_id.factor;
+                    const lineQtyDiff = currentLine.reserved_uom_qty - currentLine.qty_done;
+                    const qtyNeeded = Math.max(lineQtyDiff, 0) / uomFactor;
+                    qty_used = qtyNeeded ? Math.min(qtyNeeded, remaining_qty) : remaining_qty;
                     const fieldsParams = this._convertDataToFieldsParams({
-                        quantity: qty_used,
+                        quantity: qty_used * uomFactor,
                         lotName: barcodeData.lotName,
                         lot: barcodeData.lot,
                         package: quant.package_id,

@@ -3583,6 +3583,48 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         }).action_confirm()
         self.start_tour('/odoo/barcode', 'test_validate_uncomplete_return', login='admin')
 
+    def test_scan_package_with_different_uom(self):
+        """ Ensure that when the user scans a package, if the line uses another
+        UoM, the quantity is correctly converted."""
+        self.env.user.write({'group_ids': [
+            Command.link(self.ref('stock.group_tracking_lot')),
+            Command.link(self.ref('uom.group_uom')),
+        ]})
+        # Create a delivery for product1 (demand of 10,000 g, stock packaged as 10 kg)
+        # and product2 (demand of 8 kg, stock packaged as 10,000 g).
+        uom_kg = self.env.ref('uom.product_uom_kgm')
+        uom_g = self.env.ref('uom.product_uom_gram')
+        self.product1.uom_id = uom_kg
+        self.product2.uom_id = uom_g
+        package1, package2 = self.env['stock.package'].create([
+            {'name': 'package001'},
+            {'name': 'package002'},
+        ])
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package1)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 10000, package_id=package2)
+        picking = self.env['stock.picking'].create({
+            'name': 'test picking',
+            'picking_type_id': self.picking_type_out.id,
+            'location_id': self.picking_type_out.default_location_src_id.id,
+            'location_dest_id': self.picking_type_out.default_location_dest_id.id,
+            'move_ids': [
+                Command.create({
+                    'product_id': product.id,
+                    'product_uom': uom.id,
+                    'product_uom_qty': qty,
+                    'location_id': self.picking_type_out.default_location_src_id.id,
+                    'location_dest_id': self.picking_type_out.default_location_dest_id.id,
+                }) for (product, qty, uom) in [
+                    (self.product1, 10000, uom_g),
+                    (self.product2, 8, uom_kg),
+                ]
+            ],
+        })
+        picking.action_confirm()
+        picking.action_assign()
+        url = self._get_client_action_url(picking.id)
+        self.start_tour(url, 'test_scan_package_with_different_uom', login='admin')
+
     def test_scan_packaging_on_picking_with_mixed_uom(self):
         """
         Create receipts for a product with Unit uom and that can be packed in pack of 6.

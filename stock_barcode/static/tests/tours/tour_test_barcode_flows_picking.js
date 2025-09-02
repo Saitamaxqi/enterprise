@@ -6275,6 +6275,38 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_scan_package_with_different_uom", {
+    steps: () => [
+        { trigger: ".o_barcode_client_action", run: "scan LOC-01-00-00" },
+        {
+            trigger: ".o_barcode_client_action",
+            run: function () {
+                helper.assertLinesCount(2);
+                helper.assertLineQty(0, "0/10000 g");
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(1, "0/8 kg");
+                helper.assertLineProduct(1, "product2");
+            },
+        },
+        // Scan 10 kg for product1.
+        { trigger: ".o_barcode_client_action", run: "scan package001" },
+        // Scan 10,000 g for product2 -> Should create a new line for the remaining 2,000 g.
+        { trigger: ".o_barcode_line.o_line_completed", run: "scan package002" },
+        {
+            trigger: ".o_validate_page.btn-primary",
+            run: function () {
+                helper.assertLinesCount(3);
+                helper.assertLineQty(0, "10000/10000 g");
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(1, "8/8 kg");
+                helper.assertLineProduct(1, "product2");
+                helper.assertLineQty(2, "2000 g");
+                helper.assertLineProduct(2, "product2");
+            },
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_scan_packaging_on_picking_with_mixed_uom", {
     steps: () => [
         // receipt 1: 2 pack of 6
