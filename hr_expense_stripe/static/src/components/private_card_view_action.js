@@ -30,6 +30,7 @@ class PrivateCardViewDialog extends Component {
         this.cvcPlaceholder = useRef("cvcPlaceholder");
         this.numberCopyPlaceholder = useRef("numberCopyPlaceholder");
         this.cvcCopyPlaceholder = useRef("cvcCopyPlaceholder");
+        this.pinPlaceholder = useRef("pinPlaceholder");
 
         this.state = useState({
             ephemeralKey: undefined,
@@ -40,6 +41,7 @@ class PrivateCardViewDialog extends Component {
                 name: _t("Cardholder Name"),
                 number: "**** **** **** 1234",
                 type: _t("Virtual"),
+                card_type: "virtual",
                 exp: "12/29",
                 cvc: "***"
             }
@@ -90,6 +92,7 @@ class PrivateCardViewDialog extends Component {
             this.state.card.exp = result.expiration;
             this.state.card.number = result.card_number_public;
             this.state.card.type = result.card_type === "virtual" ? _t("Virtual") : _t("Physical");
+            this.state.card.card_type = result.card_type;
         }
         catch (error) {
             this.close();
@@ -139,6 +142,28 @@ class PrivateCardViewDialog extends Component {
         // Small Fix as sometimes when we click on the numbers it calls focus which is not available for issuing elements
         cardCvcElement.focus = () => {};
         cardCvcElement.mount(this.cvcPlaceholder.el);
+
+        if (this.state.card.card_type === "physical") {
+            let cardPinElement = elements.create(
+                "issuingCardPinDisplay",
+                {
+                    issuingCard: this.stripe_id,
+                    nonce: this.state.nonce,
+                    ephemeralKeySecret: this.state.ephemeralKey,
+                    style: {
+                        base: {
+                            color: '#000',
+                            fontWeight: 400,
+                            fontSize: '14px',
+                            alignSelf: 'center'
+                        },
+                    }
+                }
+            );
+            // Small Fix as sometimes when we click on the numbers it calls focus which is not available for issuing elements
+            cardPinElement.focus = () => {};
+            cardPinElement.mount(this.pinPlaceholder.el);
+        }
 
         //Copy buttons
         let cardNumberCopyElement = elements.create(

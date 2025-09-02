@@ -1,8 +1,10 @@
+import datetime
 import logging
 from collections import defaultdict
 
 from odoo import _, _lt, api, fields, models
 from odoo.exceptions import ValidationError, UserError
+from odoo.tools import format_date
 
 from odoo.addons.hr_expense_stripe.utils import STRIPE_CURRENCY_MINOR_UNITS, make_request_stripe_proxy
 
@@ -14,6 +16,15 @@ _lt(
     "The phone number associated with your Odoo Expense card(s) has been updated. "
     "If it was not requested by you, please contact your administrator."
 )
+
+
+# Maybe better to have the direct URLs that Stripe gives us, but in test mode we don't have any tracking URL
+CARRIER_URLS = {
+    'dhl': r'https://www.dhl.com/',
+    'fedex': r'https://www.fedex.com/',
+    'royal_mail': r'https://www.royalmail.com/',
+    'usps': r'https://tools.usps.com/',
+}
 
 
 # https://docs.stripe.com/api/issuing/cards
@@ -32,6 +43,12 @@ class HrExpenseStripeCard(models.Model):
         string="Company",
         default=lambda self: self.env.company,
         required=True,
+    )
+    company_partner_id = fields.Many2one(
+        comodel_name='res.partner',
+        string="Company Partner",
+        related='company_id.partner_id',
+        readonly=True,
     )
     employee_id = fields.Many2one(
         comodel_name='hr.employee',
@@ -55,11 +72,23 @@ class HrExpenseStripeCard(models.Model):
         index=True,
     )
     currency_id = fields.Many2one(related='company_id.stripe_currency_id')
+    delivery_address_id = fields.Many2one(
+        comodel_name='res.partner',
+        string="Delivery Address",
+        help="The address where the card will be delivered.",
+        tracking=True,
+        domain="""[
+            '|', ('employee', '=', True),
+            '|', ('id', '=', company_partner_id),
+            '&', ('parent_id.employee', '=', 'True'), ('type', '=', 'delivery'),
+        ]""",
+    )
 
     state = fields.Selection(  # Stripe states
         string="Status",
         selection=[
             ('draft', "Draft"),
+            ('pending', "Pending"),
             ('inactive', "Inactive"),
             ('active', "Active"),
             ('canceled', "Blocked"),
@@ -72,7 +101,7 @@ class HrExpenseStripeCard(models.Model):
     card_type = fields.Selection(  # Stripe types
         string="Type",
         selection=[
-            ('physical', "Physical"),  # Not implemented yet
+            ('physical', "Physical"),
             ('virtual', "Virtual"),
         ],
         default='virtual',
@@ -84,6 +113,28 @@ class HrExpenseStripeCard(models.Model):
     card_name = fields.Char(string="Card Name", help="The name displayed on the card", copy=False, readonly=True)
     expiration = fields.Char(string="Expiration Date", size=5, copy=False, readonly=True)
     card_number_public = fields.Char(string="Card Number", compute='_compute_card_number')
+
+    # Post Creation Physical Card Data
+    shipping_status = fields.Selection(
+        string="Shipping Status",
+        selection=[
+            ('canceled', "Canceled"),
+            ('delivered', "Delivered"),
+            ('failure', "Failure"),
+            ('pending', "Pending"),
+            ('returned', "Returned"),
+            ('shipped', "Shipped"),
+            ('submitted', "Submitted"),
+        ],
+        readonly=True,
+        copy=False,
+        tracking=True,
+    )
+    tracking_url = fields.Char(string="Tracking URL", copy=False, readonly=True)
+    tracking_number = fields.Char(string="Tracking Number", copy=False, readonly=True)
+    shipping_estimated_delivery = fields.Datetime(string="Estimated Delivery", copy=False, readonly=True)
+    ordered_by = fields.Many2one(comodel_name='res.users', string="Ordered By", copy=False, readonly=True)
+    is_delivered = fields.Boolean(string="Terms and Conditions acceptance", default=False, copy=False, readonly=True, tracking=True)
 
     # Block card flow
     cancellation_reason = fields.Selection(
@@ -174,10 +225,36 @@ class HrExpenseStripeCard(models.Model):
             if not card.employee_id.user_id:
                 raise ValidationError(self.env._("The employee must have a user to be able to access safely their card."))
 
+    @api.constrains('ordered_by')
+    def _check_ordered_by(self):
+        for card in self:
+            if card.card_type == 'physical' and not card.ordered_by and card.state != 'draft':
+                raise ValidationError(self.env._("The card must be ordered by a user."))
+
+    @api.constrains('is_delivered')
+    def _check_is_delivered(self):
+        for card in self:
+            if card.card_type == 'physical' and not card.is_delivered and card.state not in {'draft', 'pending'}:
+                raise ValidationError(self.env._("The card must have a delivery date if it is marked as delivered."))
+
+    @api.constrains('delivery_address_id')
+    def _check_delivery_address_id(self):
+        if self.card_type == 'physical' and self.state != 'draft':
+            delivery_address = self.delivery_address_id
+            if not delivery_address:
+                raise ValidationError(self.env._("The delivery address must be set before activating the card."))
+
+            if not all([delivery_address.street, delivery_address.city, delivery_address.zip, delivery_address.country_id]):
+                raise ValidationError(self.env._("The delivery address must have a street, city, zip code and country set."))
+
+            if 'EU' not in (delivery_address.country_id.country_group_codes or []):
+                raise ValidationError(self.env._("The delivery address must be in the European Union."))
+
     @api.depends('last_4')
     def _compute_card_number(self):
         for card in self:
-            card.card_number_public = f"**** **** **** {card.last_4 or '****'}"
+            last4 = card.last_4 if card.last_4 and card.state != 'pending' else '****'
+            card.card_number_public = f"**** **** **** {last4}"
 
     @api.depends('employee_id')
     def _compute_name(self):
@@ -211,6 +288,13 @@ class HrExpenseStripeCard(models.Model):
                 or card.spending_policy_transaction_amount > stripe_limit
             )
 
+    def _track_subtype(self, init_values):
+        self.ensure_one()
+        if self.is_delivered and init_values.get('state') == 'pending':
+            card_received_subtype = self.env.ref('hr_expense_stripe.mt_stripe_card_received', raise_if_not_found=False)
+            return card_received_subtype or super()._track_subtype(init_values)
+        return super()._track_subtype(init_values)
+
     def _create_or_update_card(self, state='inactive', cancellation_reason=None):
         self.ensure_one()
         payload = {'account': self.company_id.sudo().stripe_id, 'status': state}
@@ -228,10 +312,21 @@ class HrExpenseStripeCard(models.Model):
                 'currency': currency_name or False,
                 'cardholder': self.employee_id.private_stripe_id,
             })
+        if self.card_type == 'physical' and self.shipping_status in (False, 'pending') and self.state in ('draft', 'pending'):
+            payload.update({
+                "shipping[name]": self.delivery_address_id.name or self.employee_id.name,
+                "shipping[address][line1]": self.delivery_address_id.street,
+                "shipping[address][line2]": self.delivery_address_id.street2,
+                "shipping[address][city]": self.delivery_address_id.city,
+                "shipping[address][state]": self.delivery_address_id.state_id.name,
+                "shipping[address][postal_code]": self.delivery_address_id.zip,
+                "shipping[address][country]": self.delivery_address_id.country_id.code,
+            })
         payload = {key: value for key, value in payload.items() if value is not False}  # Else Stripe consider it a value
         response = make_request_stripe_proxy(self.company_id.sudo(), route, route_params, payload, method='POST')
 
-        self._update_from_stripe(response)
+        if not self.env.context.get('skip_local_update'):
+            self._update_from_stripe(response)
         if not self.payment_method_line_id:
             payment_method = self.env['account.payment.method'].search([('code', '=', 'stripe_issuing')], limit=1)
             if not payment_method:
@@ -254,10 +349,18 @@ class HrExpenseStripeCard(models.Model):
         if self.stripe_id and self.stripe_id != stripe_object['id']:
             raise UserError(_("Failed to update card from Stripe. You are trying to update the wrong card."))
         new_vals = {}
+        emails_to_send = []
         if not self.stripe_id:
             new_vals['stripe_id'] = stripe_object['id']
         if self.state != stripe_object['status']:
-            new_vals['state'] = stripe_object['status']
+            # When a physical card is ordered and hasn't been delivered we want to set the state to pending.
+            if not self.is_delivered and self.card_type == 'physical' and self.state == 'draft' and stripe_object['status'] == 'inactive':
+                new_vals['state'] = 'pending'
+                emails_to_send.append('ordered')
+            # If the card is virtual or if the card is updated to another state than from inactive, we want to exit the pending state.
+            # It's possible through the stripe dashboard but shouldn't happen through Odoo.
+            elif self.card_type == 'virtual' or self.state != 'pending' or stripe_object['status'] != 'inactive':
+                new_vals['state'] = stripe_object['status']
         if not self.cancellation_reason:
             new_vals['cancellation_reason'] = stripe_object['cancellation_reason']
         if not self.last_4:
@@ -266,7 +369,56 @@ class HrExpenseStripeCard(models.Model):
             exp_month = stripe_object['exp_month']
             exp_year = stripe_object['exp_year'] % 100
             new_vals['expiration'] = f'{exp_month:02}/{exp_year:02}'
+        if stripe_object['shipping']['status'] != self.shipping_status:
+            new_vals['shipping_status'] = stripe_object['shipping']['status']
+            if new_vals['shipping_status'] in ('canceled', 'failure', 'returned'):
+                emails_to_send.append('canceled')
+            elif new_vals['shipping_status'] == 'shipped':
+                emails_to_send.append('shipped')
+        if not self.tracking_url:
+            new_vals['tracking_url'] = stripe_object['shipping']['tracking_url']
+        if not self.tracking_number:
+            new_vals['tracking_number'] = stripe_object['shipping']['tracking_number']
+        shipping_eta = datetime.datetime.fromtimestamp(stripe_object['shipping']['eta'])
+        if stripe_object['shipping']['eta'] and shipping_eta != self.shipping_estimated_delivery:
+            new_vals['shipping_estimated_delivery'] = shipping_eta
+
         self.write(new_vals)
+        for email_type in emails_to_send:
+            self._send_delivery_emails(email_type=email_type)
+
+    def _send_delivery_emails(self, email_type='ordered'):
+        """
+        Send the mails to the cardholder('s manager) of a physical card to notify them of the card status
+        :param str email_type: ordered | shipped, type of the mail to send
+        """
+        self.ensure_one()
+        if email_type not in {'canceled', 'ordered', 'shipped'}:
+            raise UserError(self.env._("Invalid email type, must be 'canceled', 'ordered' or 'shipped'."))
+        template_ref = f'hr_expense_stripe.email_template_hr_expense_stripe_card_{email_type}'
+
+        template_context = {
+            'shipping_estimated_delivery': format_date(
+                self.env,
+                self.shipping_estimated_delivery,
+                self.env.user.tz or self.ordered_by.tz,
+            ),
+        }
+        delivery_address = self.delivery_address_id
+        if delivery_address and (delivery_address.is_company or delivery_address.parent_id.is_company or delivery_address.company_name):
+            # If we're delivering to a company building
+            email_to = self.ordered_by.email_formatted
+            email_cc = None
+            template_context['recipient_name'] = self.ordered_by.name
+        else:
+            email_to = self.employee_id.work_email
+            email_cc = self.ordered_by.email_formatted
+            template_context['recipient_name'] = self.employee_id.name
+
+        template = self.env.ref(template_ref, raise_if_not_found=False)
+        if template and email_to:
+            can_sudo = self.employee_id in self.env.user.employee_ids or self.env.su
+            template.sudo(can_sudo).with_context(**template_context).send_mail(self.id, email_values={'email_to': email_to, 'email_cc': email_cc})
 
     def _can_pay_amount(self, amount, mcc, country):
         """ Check if the card employee is still valid, and apply spending policy rules
@@ -364,13 +516,56 @@ class HrExpenseStripeCard(models.Model):
         """ Activates the ability to pay with the card on Stripe and on the record """
         self.ensure_one()
 
-        if not self.env.user.has_group('hr_expense.group_hr_expense_manager'):
+        if (
+            not self.env.user.has_group('hr_expense.group_hr_expense_manager')
+            and (self.state != 'pending' or self.sudo().employee_id.user_id == self.env.user)  # The employee can activate their own card when they receive it
+        ):
             raise UserError(_("Operation only allowed for expense administrators."))
 
         if not self.stripe_id and not self.employee_id.private_stripe_id:
             return self.with_context({'stripe_card_action_activate': True}).action_open_cardholder_wizard()
 
-        return self._create_or_update_card(state='active')
+        state = 'active'
+        if self.card_type == 'physical' and self.state == 'draft':
+            delivery_address = self.delivery_address_id
+            if not delivery_address:
+                raise ValidationError(self.env._("The delivery address must be set before activating the card."))
+
+            if not all([delivery_address.street, delivery_address.city, delivery_address.zip, delivery_address.country_id]):
+                raise ValidationError(self.env._("The delivery address must have a street, city, zip code and country set."))
+
+            if 'EU' not in (delivery_address.country_id.country_group_codes or []):
+                raise ValidationError(self.env._("The delivery address must be in the European Union."))
+
+            state = 'inactive'
+            self.ordered_by = self.env.user
+
+        if self.state == 'pending':
+            response = make_request_stripe_proxy(
+                self.company_id.sudo(),
+                'cardholders/{cardholder_id}',
+                route_params={'cardholder_id': self.employee_id.sudo().private_stripe_id},
+                payload={'account': self.company_id.sudo().stripe_id},
+                method='GET',
+            )
+            ctx = {'default_card_id': self.id}
+            phone_number = response.get('phone_number')
+            if phone_number:
+                ctx['default_phone_number'] = phone_number
+                ctx['default_original_phone_number'] = phone_number
+            billing_country_code = response.get('billing', {}).get('address', {}).get('country')
+            if billing_country_code:
+                ctx['default_billing_country_code'] = billing_country_code
+            return {
+                'type': 'ir.actions.act_window',
+                'name': self.env._("Card Activation"),
+                'view_mode': 'form',
+                'res_model': 'hr.expense.stripe.card.receive.wizard',
+                'target': 'new',
+                'context': ctx,
+            }
+
+        return self._create_or_update_card(state=state)
 
     def action_block_card(self):
         """ Hard block the card on Stripe and on the record, this is not reversible !!"""
@@ -513,9 +708,16 @@ class HrExpenseStripeCard(models.Model):
         }
 
     def write(self, vals):
-        if vals.get('state') == 'draft' and any(state != 'draft' for state in self.mapped('state')):
-            raise UserError(self.env._("You can't set the card state back to draft."))
+        if self.filtered(lambda card: card.state != 'draft'):
+            if vals.get('state') == 'draft':
+                raise UserError(self.env._("You can't set the card state back to draft."))
+            if 'card_type' in vals:
+                raise UserError(self.env._("You can't change the card type once the card has been created."))
+            if 'delivery_address_id' in vals and self.shipping_status != 'pending':
+                raise UserError(self.env._("You can't change the delivery address once the card has been shipped."))
         res = super().write(vals)
         if any(self.filtered(lambda card: card.state != 'draft' or card.stripe_id)) and vals.get('employee_id'):
             raise UserError(self.env._("You can't change the employee of an active card. Please create a new card instead."))
+        if 'delivery_address_id' in vals and self.shipping_status == 'pending':
+            self._create_or_update_card(self.state if self.state != 'pending' else 'inactive')
         return res

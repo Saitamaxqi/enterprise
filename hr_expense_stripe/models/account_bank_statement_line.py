@@ -92,15 +92,11 @@ class AccountBankStatementLine(models.Model):
         if self.currency_id.compare_amounts(self.amount, amount) != 0:
             update_vals['amount'] = amount
 
-        if self.foreign_currency_id != merchant_currency and merchant_currency != journal_currency:
-            update_vals['foreign_currency_id'] = merchant_currency.id
-            update_vals['amount_currency'] = amount_currency
-
-        elif merchant_currency.compare_amounts(self.amount_currency, amount_currency) != 0:
-            update_vals['amount_currency'] = amount_currency
-
-        if self.currency_id.compare_amounts(self.amount, amount) != 0:
-            update_vals['amount'] = amount
+        if merchant_currency != journal_currency:
+            if self.foreign_currency_id != merchant_currency:
+                update_vals['foreign_currency_id'] = merchant_currency.id
+            if merchant_currency.compare_amounts(self.amount_currency, amount_currency) != 0:
+                update_vals['amount_currency'] = amount_currency
 
         if update_vals:
             self.write(update_vals)

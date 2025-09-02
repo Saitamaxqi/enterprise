@@ -8,7 +8,10 @@
                 <form string="Expenses Stripe Card">
                     <header>
                         <button name="action_activate_card" string="Activate" type="object" class="btn btn-primary"
-                                groups="hr_expense.group_hr_expense_manager" invisible="state not in ('draft', 'inactive')"/>
+                                groups="hr_expense.group_hr_expense_manager"
+                                invisible="state in ('active', 'canceled') or (state == 'draft' and card_type == 'physical')"/>
+                        <button name="action_activate_card" string="Order" type="object" class="btn btn-primary"
+                                groups="hr_expense.group_hr_expense_manager" invisible="state != 'draft' or card_type == 'virtual'"/>
                         <button name="action_block_card" string="Block" type="object" class="btn btn-primary"
                                 groups="hr_expense.group_hr_expense_manager" invisible="state != 'active'"/>
                         <button name="action_pause_card" string="Pause" type="object" class="btn btn-secondary"
@@ -17,12 +20,7 @@
                                 groups="base.group_user,!hr_expense.group_hr_expense_manager">
                         </button>
                         <!-- Statusbar -->
-                        <field name="state" widget="statusbar" statusbar_visible="draft,inactive,active"
-                               invisible="state != 'draft'"/>
-                        <field name="state" widget="statusbar" statusbar_visible="inactive,active"
-                               invisible="state in ('draft', 'canceled')"/>
-                        <field name="state" widget="statusbar" statusbar_visible="inactive,active,canceled"
-                               invisible="state != 'canceled'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="inactive,active"/>
                     </header>
                     <sheet>
                         <div name="button_box" class="oe_button_box">
@@ -58,7 +56,9 @@
                                 </div>
                             </group>
                             <group>
-                                <field name="card_type" readonly="True"/>
+                                <field name="card_type" required="True" widget="radio" options="{'horizontal': true}" readonly="state != 'draft'"/>
+                                <field name="delivery_address_id" invisible="card_type == 'virtual'" options="{'no_create': True}"
+                                       readonly="is_delivered or state in ('active', 'inactive', 'cancelled') or shipping_status in ('shipped', 'delivered')"/>
                                 <field name="company_id" groups="base.group_multi_company" readonly="stripe_id or has_employee"/>
                                 <field name="journal_id" readonly="True"/>
                             </group>
@@ -108,7 +108,7 @@
                                 <group>
                                     <field name="card_number_public" placeholder="**** **** **** ****"/>
                                     <field name="expiration"/>
-                                    <div colspan="2" invisible="card_type != 'virtual'">
+                                    <div colspan="2">
                                         <a name="action_open_card_private_view" type="object" icon="fa-eye" invisible="user_id != uid"
                                            string="View Details" role="button" class="btn-link"/>
                                     </div>
@@ -135,7 +135,7 @@
                     <field name="employee_id" groups="hr.group_hr_user"
                            context="{'default_company_id': company_id}" widget="many2one_avatar_employee"
                            options="{'relation': 'hr.employee'}"/>
-                    <field name="last_4"/>
+                    <field name="last_4" invisible="state == 'pending'"/>
                     <field name="card_type"/>
                     <field name="spending_policy_interval_amount" optional="show" widget="monetary"/>
                     <field name="spending_policy_interval" optional="show"/>
@@ -164,6 +164,7 @@
                                 <div class="d-flex flex-row h-1">
                                     <field name="card_type" class="d-inline-flex stripe_card_text_sm align-items-end"/>
                                     <widget name="web_ribbon" title="Draft" bg_color="text-bg-info" invisible="state != 'draft'"/>
+                                    <widget name="web_ribbon" title="Pending" bg_color="text-bg-info" invisible="state != 'pending'"/>
                                     <widget name="web_ribbon" title="Paused" bg_color="text-bg-warning" invisible="state != 'inactive'"/>
                                     <widget name="web_ribbon" title="Blocked" bg_color="text-bg-danger" invisible="state != 'canceled'"/>
                                 </div>
@@ -175,11 +176,10 @@
                                         <div class="d-flex flex-column justify-content-between" style="width: 70%;">
                                             <div class="d-flex justify-content-between">
                                                 <span class="card_number w-100 d-flex justify-content-between stripe_card_text">
-                                                    <field name="card_number_public" invisible="state == 'draft' or card_type != 'virtual'"/>
-                                                    <span invisible="state == 'draft' or card_type == 'virtual'">Physical card</span>
+                                                    <field name="card_number_public" invisible="state == 'draft'"/>
                                                 </span>
                                                 <a name="action_open_card_private_view" title="Reveal" type="object"
-                                                   invisible="state == 'draft' or card_type != 'virtual' or user_id != uid">
+                                                   invisible="state in ('draft', 'pending') or user_id != uid">
                                                     <i class="fa fa-eye stripe_card_text_lg card_icon"/>
                                                 </a>
                                             </div>
@@ -189,7 +189,7 @@
                                                         <field name="expiration"/>
                                                     </span>
                                                     <span class="card_cvc w-50 text-end stripe_card_text_sm"
-                                                          invisible="state == 'draft' or card_type != 'virtual'">
+                                                          invisible="state in ('draft', 'pending')">
                                                         ****
                                                     </span>
                                                 </div>

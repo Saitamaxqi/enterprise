@@ -549,6 +549,7 @@ def _validate_route(route):
         'funding_instructions',
         'send_verification_code',
         'test_helpers/authorizations',
+        'test_helpers/issuing/cards',
         'test_helpers/fund_balance',
         'test_helpers/transactions/create_force_capture',
         'topups',
@@ -562,7 +563,8 @@ def _validate_route(route):
         rf'(?:{simple_routes_pattern})/'  # base route part
         r'[a-z]{2,5}(?:_[a-z]{2,4})?_'  # Prefix part (e.g. 'sk_test_', 'ich_', etc.)
         r'[a-zA-Z0-9]{16,24}'  # Stripe ID part (alphanumeric characters)
-        r'(?:/capture)?$'  # Optional capture part (e.g. in the case of test authorizations)
+        r'(?:/capture'  # Optional capture part (e.g. in the case of test authorizations)
+        r'|/shipping/(?:submit|ship|deliver|return|fail))?$'  # Optional shipping part (e.g. in the case of test shippings)
     )
     if pattern.fullmatch(route):
         return None

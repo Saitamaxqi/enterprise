@@ -15,6 +15,7 @@
 
         'wizard/hr_expense_stripe_topup_wizard.xml',
         'wizard/hr_expense_stripe_test_purchase_wizard.xml',
+        'wizard/hr_expense_stripe_test_shipping_wizard.xml',
 
         'security/ir.model.access.csv',
     ],

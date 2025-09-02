@@ -158,7 +158,14 @@ class StripeIssuingController(Controller):
         if not existing_card:
             raise ValidationError(env._("A card that doesn't exist on the database was used"))
 
-        existing_card._update_from_stripe(card_object)
+        if (
+            card_object['shipping']['status'] in {'canceled', 'failure', 'returned'}
+            and event['data']["previous_attributes"].get("shipping", {}).get("status")
+        ):
+            existing_card.with_context(skip_local_update=True)._create_or_update_card(state='canceled')
+        else:
+            existing_card._update_from_stripe(card_object)
+
         return {'message': 'Card updated'}
 
     @api.model
@@ -166,9 +173,9 @@ class StripeIssuingController(Controller):
         tr_object = event['data']['object']
         authorization_id = tr_object['authorization']
         if authorization_id:
-            existing_expenses = self.env['hr.expense'].search([('stripe_authorization_id', '=', authorization_id)])
+            existing_expenses = env['hr.expense'].search([('stripe_authorization_id', '=', authorization_id)])
         else:
-            existing_expenses = self.env['hr.expense']
+            existing_expenses = env['hr.expense']
 
         expense_authorization_id = existing_expenses.stripe_authorization_id
         expense_transaction_ids = {tr_id for tr_id in existing_expenses.mapped('stripe_transaction_id') if tr_id}
@@ -184,14 +191,14 @@ class StripeIssuingController(Controller):
                     if s_id
                 )
             existing_expenses.split_expense_origin_id = split_id
-            existing_expenses = self.env['hr.expense']  # If double transaction is detected, create a new existing_expenses
+            existing_expenses = env['hr.expense']  # If double transaction is detected, create a new existing_expenses
 
         if tr_object['type'] == 'capture' and not existing_expenses:
             env['hr.expense']._create_from_stripe_transaction(tr_object, split_id=split_id)
         elif tr_object['type'] == 'refund' and existing_expenses:
             existing_expenses._stripe_cancel_expense_or_reverse_move(tr_object)
         if event['type'] == 'issuing_transaction.created':
-            existing_statement_line = self.env['account.bank.statement.line'].search([('stripe_id', '=', tr_object['id'])])
+            existing_statement_line = env['account.bank.statement.line'].search([('stripe_id', '=', tr_object['id'])])
             if existing_statement_line:
                 # if the event is sent twice
                 existing_statement_line._update_from_stripe_transaction(tr_object)

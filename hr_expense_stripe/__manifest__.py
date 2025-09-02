@@ -16,6 +16,7 @@
         'data/config_parameter.xml',
         'data/product.mcc.stripe.tag.csv',
         'data/ir_cron.xml',
+        'data/mail_template_data.xml',
         'data/mail_activity_type_data.xml',
         'data/mail_message_subtype.xml',
 
@@ -28,6 +29,7 @@
         'views/res_config_settings.xml',
 
         'wizard/hr_expense_stripe_cardholder_wizard.xml',
+        'wizard/hr_expense_stripe_card_receive_wizard.xml',
         'wizard/hr_expense_stripe_card_block_wizard.xml',
         'wizard/hr_expense_stripe_topup_wizard.xml',
 
