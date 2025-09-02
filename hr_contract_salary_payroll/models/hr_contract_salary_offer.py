@@ -65,10 +65,10 @@ class HrContractSalaryOffer(models.Model):
             if self.simulation_employee_id:
                 version = self.simulation_employee_id.version_id.with_context(version.env.context)
             version_vals.update({
-                'resource_calendar_id': self.resource_calendar_id.id or self._get_default_resource_calendar_id().id,
                 'structure_type_id': self.structure_id.type_id.id,
             })
         version_vals.update({
+            'resource_calendar_id': version.resource_calendar_id.id or self.resource_calendar_id.id or self._get_default_resource_calendar_id().id,
             version._get_contract_wage_field(): self.monthly_wage,
             'wage_with_holidays': self.monthly_wage,
         })
