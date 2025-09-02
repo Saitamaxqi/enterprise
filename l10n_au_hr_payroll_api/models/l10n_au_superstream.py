@@ -315,7 +315,7 @@ Source Cancelled - Employer has requested for the direct debit to be stopped. If
                                 "dest_payment_ref": ref
                             })
                     if transaction_messages:
-                        record.message_post(body=Markup("<br/>".join(transaction_messages)))
+                        record.message_post(body=Markup("<br/>").join(transaction_messages))
                     if record.payment_status == "PAYMENT_CANCELLED":
                         record.activity_unlink(["l10n_au_hr_payroll_account.l10n_au_activity_resubmit_super"])
                         record.activity_schedule(

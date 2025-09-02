@@ -7,6 +7,7 @@
     'depends': [
         'l10n_au_hr_payroll_account',
         'account_edi_proxy_client',
+        'auth_timeout',
     ],
     'description': """
 Single Touch Payroll and Super Stream through Superchoice API
@@ -42,4 +43,5 @@ requirements for payroll data handling.
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
+    'post_init_hook': '_post_init_auth_l10n_au_hr_payroll',
 }
