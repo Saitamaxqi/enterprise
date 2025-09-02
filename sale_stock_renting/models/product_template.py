@@ -9,7 +9,7 @@ class ProductTemplate(models.Model):
 
     # Padding Time
 
-    preparation_time = fields.Float(string="Security Time", company_dependent=True,
+    preparation_time = fields.Float(string="Reserve product", company_dependent=True,
                                     help="Temporarily make this product unavailable before pickup.")
 
     @api.constrains('rent_ok', 'tracking')

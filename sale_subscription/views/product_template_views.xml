@@ -6,7 +6,7 @@
         <field name="mode">extension</field>
         <field name="inherit_id" ref="product.product_template_search_view"/>
         <field name="arch" type="xml">
-            <filter name="filter_to_purchase" position="after">
+            <filter name="filter_to_sell" position="after">
                 <filter name="filter_recurring" string="Subscriptions"
                         domain="[('recurring_invoice', '=', True)]"/>
             </filter>
@@ -22,12 +22,12 @@
                 <attribute name="invisible">not sale_ok and not recurring_invoice</attribute>
                 <attribute name="class">page_sales</attribute>
             </page>
-            <div name="options" position="inside">
+            <span name="sale_option" position="after">
                 <span class="d-inline-flex">
                     <field name="recurring_invoice"/>
                     <label for="recurring_invoice" string="Subscriptions"/>
                 </span>
-            </div>
+            </span>
         </field>
     </record>
 

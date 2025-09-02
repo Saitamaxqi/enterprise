@@ -6,7 +6,7 @@ import requests
 from requests.exceptions import ConnectionError as RequestConnectionError, Timeout as RequestTimeout
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, RedirectWarning
 from odoo.addons.product_barcodelookup.tools import barcode_lookup_service
 
 _logger = logging.getLogger(__name__)
@@ -38,9 +38,9 @@ class ProductFetchImageWizard(models.TransientModel):
 
     def _check_api_key_set(self):
         if not barcode_lookup_service.get_barcode_lookup_key(self):
-            raise UserError(_(
-                "The API Key for Barcode Lookup must be set in the General Settings."
-            ))
+            action = self.env.ref('base.res_config_setting_act_window')
+            msg = _("The API Key for Barcode Lookup must be set in the General Settings.")
+            raise RedirectWarning(msg, action.id, _("Go to Settings"))
 
     @api.model
     def default_get(self, fields):
