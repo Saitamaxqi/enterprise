@@ -20,6 +20,7 @@ from . import ir_http
 # inherit
 from . import ir_actions_server
 from . import ir_embedded_actions
+from . import kpi_provider
 from . import mail_activity
 from . import mail_activity_type
 from . import res_partner

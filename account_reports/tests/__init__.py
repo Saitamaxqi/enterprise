@@ -34,3 +34,4 @@ from . import test_report_sections
 from . import test_budget
 from . import test_currency_table
 from . import test_followup_report
+from . import test_kpi_provider

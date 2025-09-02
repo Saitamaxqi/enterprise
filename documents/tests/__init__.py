@@ -14,6 +14,7 @@ from . import test_documents_request
 from . import test_documents_sharing
 from . import test_documents_tag
 from . import test_documents_user_folder
+from . import test_kpi_provider
 from . import test_mail_activity
 from . import test_mail_gateway
 from . import test_tools
