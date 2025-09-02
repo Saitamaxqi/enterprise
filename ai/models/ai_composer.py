@@ -8,7 +8,8 @@ INTERFACE_KEYS = [
     ("mail_composer", "Write an email"),
     ("html_field_text_select", "Rewrite content"),
     ("chatter_ai_button", "Get help on a record"),
-    ("html_prompt_shortcut", "Convert a prompt in an email")
+    ("html_prompt_shortcut", "Convert a prompt in an email"),
+    ("systray_ai_button", "Ask AI for help"),
 ]
 
 

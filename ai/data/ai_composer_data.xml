@@ -19,7 +19,15 @@
         <record id="ai_prompt_rewrite_text" model="ai.prompt.button">
             <field name="name">Rewrite selected text</field>
         </record>
-        
+
+        <record id="ai_prompt_find_information_systray" model="ai.prompt.button">
+            <field name="name">Help me find something</field>
+        </record>
+
+        <record id="ai_prompt_build_report_systray" model="ai.prompt.button">
+            <field name="name">Help me build a report</field>
+        </record>
+
         <!-- Create the basic UI rules that exist by default and are not deletable -->
         <record id="ai_mail_composer" model="ai.composer">
             <field name="name">Mail/Note Composer</field>
@@ -104,6 +112,14 @@ You are an Email Prompt Transformer. You'll get a single instruction or rough pr
   **Output:**
   `Have a wonderful weekend, and feel free to reach out with any questions.`
             </field>
+            <field name="is_system_default">True</field>
+        </record>
+
+        <record id="ai_systray_action" model="ai.composer">
+            <field name="name">Ask AI</field>
+            <field name="interface_key">systray_ai_button</field>
+            <field name="ai_agent" ref="ai.ai_agent_natural_language_search"/>
+            <field name="available_prompts" eval="[(4, ref('ai.ai_prompt_find_information_systray')), (4, ref('ai.ai_prompt_build_report_systray'))]"/>
             <field name="is_system_default">True</field>
         </record>
 

@@ -25,7 +25,6 @@
     ],
     'assets': {
         'web.assets_backend': [
-            ('after', 'web/static/src/views/form/form_controller.xml', 'ai/static/src/web/form_controller.xml'),
             ('after', 'web/static/src/views/form/form_controller.js', 'ai/static/src/web/form_controller_patch.js'),
             'ai/static/src/**/*',
             ('remove', 'ai/static/src/worklets/**/*'),

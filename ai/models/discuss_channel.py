@@ -43,12 +43,13 @@ class DiscussChannel(models.Model):
     def create_ai_draft_channel(
         self,
         caller_component,
-        channel_title,
+        channel_title=None,
         record_model=None,
         record_id=None,
         front_end_info=None,
         text_selection=None,
     ):
+        ai_composer = None
         if record_model:  # if we call the AI within a specific model, we search for composer configs that might include that model and we take the last one
             ai_composer = self.env['ai.composer'].sudo().search([
                 ('interface_key', '=', caller_component),
@@ -63,19 +64,21 @@ class DiscussChannel(models.Model):
         if not ai_agent:
             raise AccessError(_("AI not reachable, AI Agent not found."))
 
-        original_record = self.env[record_model].browse(record_id)
-
+        channel_name = self.env._("AI: %(name)s", name=channel_title) if channel_title else ai_agent.name
         # create a new AI chat
-        channel = ai_agent._create_ai_chat_channel(channel_name=self.env._("AI: %(name)s", name=channel_title))
-
+        channel = ai_agent._create_ai_chat_channel(channel_name=channel_name)
         # Create the initial context for the AI - the default prompt from the composer
         model_context = [
             ai_composer.default_prompt,
         ]
-        # Add extra info that are relevant to the where we call the AI from (record info, chatter info, pre-prompts, etc.)
-        model_context += original_record._ai_initialise_context(
-            caller_component, text_selection, front_end_info
-        )
+
+        if record_model:
+            original_record = self.env[record_model].browse(record_id)
+            # Add extra info that are relevant to the where we call the AI from (record info, chatter info, pre-prompts, etc.)
+            model_context += original_record._ai_initialise_context(
+                caller_component, text_selection, front_end_info
+            )
+
         # Finally pass the complete "save" the context to the channel
         channel.ai_env_context = model_context
 
