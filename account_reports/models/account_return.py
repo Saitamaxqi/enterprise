@@ -65,11 +65,26 @@ class AccountReturnType(models.Model):
         tracking=True,
     )
     report_id = fields.Many2one(string="Report", comodel_name='account.report', index='btree', tracking=True)
+    is_tax_return_type = fields.Boolean(string="Is a Tax Return Return Type", compute="_compute_report_return_type")
+    is_ec_sales_list_return_type = fields.Boolean(string="Is an EC Sales List Return Type", compute="_compute_report_return_type")
 
     auto_generate = fields.Boolean(string="Auto Generated", compute='_compute_auto_generate', copy=False, readonly=False, store=True)
     country_id = fields.Many2one(comodel_name='res.country', string="Country", tracking=True, store=True, compute="_compute_country_id", readonly=False)
     payment_partner_bank_id = fields.Many2one(comodel_name='res.partner.bank', string="Payment Partner Bank", tracking=True)
     payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id', tracking=True)
+    states_workflow = fields.Selection(
+        selection=[
+            ('generic_state_review', 'Review'),
+            ('generic_state_review_submit', 'Review, Submit'),
+            ('generic_state_tax_report', 'Review, Submit, Pay'),
+            ('generic_state_only_pay', 'Pay'),
+        ],
+        string="States",
+        help="Determines the workflow of the return.",
+        compute="_compute_states_workflow",
+        readonly=False,
+        store=True,
+    )
 
     deadline_periodicity = fields.Selection(
         selection=PERIODS,
@@ -85,6 +100,14 @@ class AccountReturnType(models.Model):
         company_dependent=True,
     )
     default_deadline_start_date = fields.Date(string="Default Start Date")
+    deadline_days_delay = fields.Integer(
+        string="Deadline",
+        help="By default, Odoo applies its own deadline for returns (shown as 0). Entering a value here will override it and be used as the new deadline.",
+        tracking=True,
+        company_dependent=True,
+        inverse="_inverse_deadline_days_delay",
+    )
+    default_deadline_days_delay = fields.Integer(string="Default Deadline")
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -100,6 +123,16 @@ class AccountReturnType(models.Model):
             for return_type in self.with_company(company):
                 return_type.deadline_periodicity = return_type.deadline_periodicity or return_type.default_deadline_periodicity
                 return_type.deadline_start_date = return_type.deadline_start_date or return_type.default_deadline_start_date
+                return_type.deadline_days_delay = return_type.deadline_days_delay or return_type.default_deadline_days_delay
+
+    @api.depends('report_id')
+    def _compute_report_return_type(self):
+        tax_report = self.env.ref('account.generic_tax_report')
+        generic_ec_sales_report = self.env.ref('account_reports.generic_ec_sales_report')
+        for record in self:
+            report = record.report_id
+            record.is_tax_return_type = report and tax_report in (report, report.root_report_id)
+            record.is_ec_sales_list_return_type = report and generic_ec_sales_report in (report, report.root_report_id)
 
     @api.depends('report_id.country_id')
     def _compute_country_id(self):
@@ -116,6 +149,26 @@ class AccountReturnType(models.Model):
     def _compute_auto_generate(self):
         for return_type in self:
             return_type.auto_generate = return_type.category == 'account_return'
+
+    @api.depends('report_id', 'category')
+    def _compute_states_workflow(self):
+        for return_type in self:
+            if return_type.is_ec_sales_list_return_type:
+                return_type.states_workflow = 'generic_state_review_submit'
+            elif return_type.category == 'audit':
+                return_type.states_workflow = 'generic_state_review'
+            elif return_type.is_tax_return_type:
+                return_type.states_workflow = 'generic_state_tax_report'
+            else:
+                return_type.states_workflow = 'generic_state_review'
+
+    def _inverse_deadline_days_delay(self):
+        # When the deadline_days_delay is changed we need to recompute all the deadlines of the linked returns
+        # but only those that are not yet completed
+        self.env['account.return'].search([
+            ('type_id', 'in', self.ids),
+            ('is_completed', '=', False),
+        ])._compute_deadline()
 
     def _can_return_exist(self, company, tax_unit=False):
         """ Returns whether a return can exist for this type with the provided company and tax units. This is used to know which returns need
@@ -566,13 +619,10 @@ class AccountReturn(models.Model):
     manually_created = fields.Boolean(string="Manually Created")
 
     # Tax return fields
-    is_tax_return = fields.Boolean(string="Is Tax Return", compute="_compute_is_tax_return")
     total_amount_to_pay = fields.Monetary(currency_field='amount_to_pay_currency_id')
     period_amount_to_pay = fields.Monetary(currency_field='amount_to_pay_currency_id')
     amount_to_pay_currency_id = fields.Many2one(comodel_name='res.currency', compute='_compute_amount_to_pay_currency_id')
     show_amount_to_pay = fields.Boolean(compute='_compute_show_amount_to_pay')
-
-    is_ec_sales_list_return = fields.Boolean(string="Is an EC Sales List", compute="_compute_is_ec_sales_list_return")
 
     # view helper fields
     days_to_deadline = fields.Integer(compute='_compute_days_to_deadline')
@@ -643,7 +693,7 @@ class AccountReturn(models.Model):
     def write(self, vals):
         result = super().write(vals)
         for record in self:
-            if record._get_state_field() in vals:
+            if record.type_id.states_workflow in vals:
                 if record.date_from <= fields.Date.end_of(fields.Date.context_today(record), "month"):
                     record.refresh_checks()
 
@@ -662,9 +712,10 @@ class AccountReturn(models.Model):
 
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
-        return date_to + relativedelta(days=company.account_return_reminder_day)
+        delay = company.account_return_reminder_day if not return_type.deadline_days_delay else return_type.deadline_days_delay
+        return date_to + relativedelta(days=delay)
 
-    @api.depends('date_to', 'company_id.account_return_reminder_day', 'type_external_id')
+    @api.depends('date_to', 'company_id.account_return_reminder_day', 'type_id')
     def _compute_deadline(self):
         for account_return in self:
             account_return.date_deadline = account_return._evaluate_deadline(
@@ -703,34 +754,20 @@ class AccountReturn(models.Model):
         for account_return in self:
             account_return.is_main_company_active = account_return.company_id in self.env.companies
 
-    @api.depends('type_id')
-    def _compute_is_tax_return(self):
-        generic_tax_report = self.env.ref('account.generic_tax_report')
-        for record in self:
-            report = record.type_id.report_id
-            record.is_tax_return = record.type_id.report_id and (report.root_report_id == generic_tax_report or report == generic_tax_report)
-
-    @api.depends('type_id')
-    def _compute_is_ec_sales_list_return(self):
-        generic_ec_sales_report = self.env.ref('account_reports.generic_ec_sales_report')
-        for record in self:
-            report = record.type_id.report_id
-            record.is_ec_sales_list_return = record.type_id.report_id and (report.root_report_id == generic_ec_sales_report or report == generic_ec_sales_report)
-
-    @api.depends('is_tax_return', 'closing_move_ids')
+    @api.depends('type_id.is_tax_return_type', 'closing_move_ids')
     def _compute_show_amount_to_pay(self):
         for record in self:
-            record.show_amount_to_pay = record.is_tax_return and record.closing_move_ids
+            record.show_amount_to_pay = record.type_id.is_tax_return_type and record.closing_move_ids
 
     @api.depends('type_id')
     def _compute_state(self):
         for record in self:
-            record.state = record[record._get_state_field()]
+            record.state = record[record.type_id.states_workflow]
 
     @api.depends('state')
     def _compute_next_state(self):
         for record in self:
-            state_keys = [s[0] for s in record._fields[record._get_state_field()].selection]
+            state_keys = [s[0] for s in record._fields[record.type_id.states_workflow].selection]
             next_state_index = state_keys.index(record.state) + 1
             if next_state_index < len(state_keys):
                 record.next_state = state_keys[next_state_index]
@@ -739,7 +776,7 @@ class AccountReturn(models.Model):
 
     def _inverse_state(self):
         for record in self:
-            record[record._get_state_field()] = record.state
+            record[record.type_id.states_workflow] = record.state
 
     @api.depends('type_id', 'state')
     def _compute_visible_states(self):
@@ -747,7 +784,7 @@ class AccountReturn(models.Model):
             current_state = record.state
             visible_states = []
             active = True
-            for state, label in self._fields[record._get_state_field()].selection:
+            for state, label in self._fields[record.type_id.states_workflow].selection:
                 if state == current_state:
                     active = False
 
@@ -973,20 +1010,6 @@ class AccountReturn(models.Model):
     ####  State Actions
     ####################################################################################################
 
-    def _get_state_field(self):
-        """
-        Returns the field name that is used to store the state of the return.
-        """
-        self.ensure_one()
-        if (
-            self.type_external_id == 'account_reports.annual_corporate_tax_return_type'
-            or self.is_ec_sales_list_return
-        ):
-            return 'generic_state_review_submit'
-        elif not self.type_external_id or self.return_type_category == 'audit':
-            return 'generic_state_review'
-        return 'generic_state_tax_report'
-
     def action_validate(self, bypass_failing_tests=False):
         """
         Validating return consists of:
@@ -1040,7 +1063,7 @@ class AccountReturn(models.Model):
         if report := self.type_id.report_id:
             options = {**self._get_closing_report_options(), **(options_to_inject or {})}
 
-            if self.is_tax_return:
+            if self.type_id.is_tax_return_type:
                 # Create the tax closing move
                 self._generate_tax_closing_entries(options)
 
@@ -1064,7 +1087,7 @@ class AccountReturn(models.Model):
 
         self.state = 'reviewed'
 
-        if self.is_tax_return:
+        if self.type_id.is_tax_return_type:
             return {
                     'type': 'ir.actions.client',
                     'tag': 'display_notification',
@@ -1140,7 +1163,7 @@ class AccountReturn(models.Model):
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
             return self._mark_completed()
 
-        if self.is_tax_return:
+        if self.type_id.is_tax_return_type:
             return self.action_pay()
 
     def action_pay(self):
@@ -1179,7 +1202,7 @@ class AccountReturn(models.Model):
 
     def action_reset_tax_return_common(self):
         self.ensure_one()
-        if not self.is_tax_return:
+        if not self.type_id.is_tax_return_type:
             return True
 
         if not self.env.user.has_group('account.group_account_manager'):
@@ -1880,9 +1903,9 @@ class AccountReturn(models.Model):
         if report_country.code in europe_country_group.mapped('country_ids.code'):
             checks += self._check_suite_eu_vat_report(check_codes_to_ignore)
 
-        if self.is_tax_return:
+        if self.type_id.is_tax_return_type:
             checks += self._check_suite_common_vat_report(check_codes_to_ignore)
-        elif self.is_ec_sales_list_return:
+        elif self.type_id.is_ec_sales_list_return_type:
             checks += self._check_suite_common_ec_sales_list(check_codes_to_ignore)
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
             checks += self._check_suite_annual_closing(check_codes_to_ignore)

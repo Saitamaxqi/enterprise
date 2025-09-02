@@ -9,7 +9,7 @@ class AccountReturn(models.Model):
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
         # Extends account_reports
-        if return_type_external_id == 'l10n_dk_reports.dk_tax_return_type':
+        if return_type_external_id == 'l10n_dk_reports.dk_tax_return_type' and not return_type.deadline_days_delay:
             periodicity = return_type._get_periodicity(company)
             if periodicity == 'trimester':
                 return date_to + relativedelta(months=+3, day=1)
@@ -19,16 +19,7 @@ class AccountReturn(models.Model):
             else:
                 return date_to + relativedelta(days=25)
 
-        if return_type_external_id == 'l10n_dk_reports.dk_ec_sales_list_return_type':
-            return date_to + relativedelta(days=25)
-
         return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
-
-    def _get_state_field(self):
-        # EXTENDS account_reports
-        if self.type_external_id in {'l10n_dk_reports.vat_return_type', 'l10n_dk_reports.dk_ec_sales_list_return_type'}:
-            return 'generic_state_review_submit'
-        return super()._get_state_field()
 
     def action_submit(self):
         # Extends account_reports

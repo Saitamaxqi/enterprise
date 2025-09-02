@@ -18,10 +18,16 @@
                             <group>
                                 <field name="deadline_periodicity"/>
                                 <field name="deadline_start_date"/>
-                                <field name="report_id"/>
+                                <label for="deadline_days_delay" class="o_form_label"/>
+                                <span class="d-flex align-items-left">
+                                    <field name="deadline_days_delay" class="o_form_field" style="width: 15%"/>
+                                    <p style="width: 85%">days after tax period</p>
+                                </span>
+                                <field name="states_workflow" invisible="category == 'audit'"/>
                             </group>
                             <group>
                                 <field name="country_id" string="Country" invisible="category == 'audit'"/>
+                                <field name="report_id"/>
                                 <field name="payment_partner_id" readonly="0" invisible="category == 'audit'"/>
                                 <field name="payment_partner_bank_id" invisible="category == 'audit'"/>
                             </group>

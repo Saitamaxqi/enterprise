@@ -7,7 +7,6 @@
             <field name="arch" type="xml">
                 <kanban js_class="account_return_kanban" on_create="account_reports.action_create_account_return" options="{'allowed_categories': ['account_return']}">
                     <field name="state"/>
-                    <field name="is_tax_return"/>
                     <field name="check_ids"/>
                     <field name="is_completed"/>
                     <field name="type_external_id"/>
@@ -114,8 +113,8 @@
                                             <a invisible="context.get('in_checks_view') or not (manually_created and state == 'new')" class="dropdown-item" type="object" name="action_delete" string="Delete"/>
 
                                             <!-- Reset should be last-->
-                                            <a invisible="state == 'new' and not is_completed or not is_tax_return" class="dropdown-item" type="object" name="action_reset_tax_return_common" string="Reset"/>
-                                            <a invisible="state == 'new' and not is_completed or not is_ec_sales_list_return" class="dropdown-item" type="object" name="action_reset_2_states" string="Reset"/>
+                                            <a invisible="state == 'new' and not is_completed or not type_id.is_tax_return_type" class="dropdown-item" type="object" name="action_reset_tax_return_common" string="Reset"/>
+                                            <a invisible="state == 'new' and not is_completed or not type_id.is_ec_sales_list_return_type" class="dropdown-item" type="object" name="action_reset_2_states" string="Reset"/>
                                             <a invisible="state == 'new' and not is_completed or return_type_category != 'audit'" class="dropdown-item" type="object" name="action_reset_custom_return" string="Reset"/>
                                             <a invisible="state == 'new' and not is_completed or type_external_id != 'account_reports.annual_corporate_tax_return_type'" class="dropdown-item" type="object" name="action_reset_annual_closing" string="Reset"/>
                                         </div>

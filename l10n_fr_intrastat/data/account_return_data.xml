@@ -8,6 +8,7 @@
             <field name="default_deadline_periodicity">monthly</field>
             <field name="country_id" ref="base.fr"/>
             <field name="auto_generate" eval="False"/>
+            <field name="default_deadline_days_delay">10</field>
         </record>
         <record id="l10n_fr_intrastat_services_return_type" model="account.return.type">
             <field name="name">Intrastat (Services)</field>
@@ -16,6 +17,7 @@
             <field name="default_deadline_periodicity">monthly</field>
             <field name="country_id" ref="base.fr"/>
             <field name="auto_generate" eval="False"/>
+            <field name="default_deadline_days_delay">10</field>
         </record>
     </data>
 </odoo>

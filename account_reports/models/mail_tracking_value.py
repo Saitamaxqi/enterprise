@@ -15,7 +15,7 @@ class MailTrackingValue(models.Model):
 
         formatted_map = {f['id']: f for f in formatted_list}
         return_map = {
-            rec.id: rec._get_state_field() for rec in self.env['account.return'].browse(self.mapped('mail_message_id.res_id'))
+            rec.id: rec.type_id.states_workflow for rec in self.env['account.return'].browse(self.mapped('mail_message_id.res_id'))
         }
         fields_string = self.env['ir.model.fields'].get_field_string('account.return')
 

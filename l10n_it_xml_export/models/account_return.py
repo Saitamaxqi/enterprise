@@ -29,7 +29,7 @@ class AccountReturn(models.Model):
         current_state = record.state
         visible_states = []
         active = True
-        state_field = record._get_state_field()
+        state_field = record.type_id.states_workflow
 
         for state, label in record._fields[state_field].selection:
             if (

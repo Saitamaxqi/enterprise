@@ -1,23 +1,8 @@
-from dateutil.relativedelta import relativedelta
-
-from odoo import _, api, models
+from odoo import _, models
 
 
 class AccountReturn(models.Model):
     _inherit = 'account.return'
-
-    @api.model
-    def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
-        if return_type_external_id == 'l10n_fr_reports.vat_return_type':
-            return date_to + relativedelta(days=19)
-
-        return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
-
-    def _get_state_field(self):
-        # EXTENDS account_reports
-        if self.type_external_id == 'l10n_fr_reports.vat_return_type':
-            return 'generic_state_review_submit'
-        return super()._get_state_field()
 
     def _postprocess_vat_closing_entry_results(self, company, options, results):
         # OVERRIDE

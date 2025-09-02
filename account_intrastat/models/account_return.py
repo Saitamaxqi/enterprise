@@ -3,28 +3,35 @@ from odoo import api, fields, models
 from odoo.addons.account_reports.models.account_return import LIMIT_CHECK_ENTRIES
 
 
+class AccountReturnType(models.Model):
+    _inherit = 'account.return.type'
+
+    is_intrastat_return_type = fields.Boolean(string="Is an Intrastat Return Type", compute="_compute_is_intrastat_return_type")
+
+    @api.depends('report_id')
+    def _compute_is_intrastat_return_type(self):
+        generic_intrastat_report = self.env.ref('account_intrastat.intrastat_report')
+        generic_service_intrastat_report = self.env.ref('account_intrastat.intrastat_report_services')
+        for record in self:
+            report = record.report_id
+            record.is_intrastat_return_type = (report and (
+                generic_intrastat_report in (report, report.root_report_id) or
+                generic_service_intrastat_report in (report, report.root_report_id)
+            ))
+
+    def _compute_states_workflow(self):
+        super()._compute_states_workflow()
+        for return_type in self:
+            if return_type.is_intrastat_return_type:
+                return_type.states_workflow = 'generic_state_review_submit'
+
+
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
-    is_intrastat_return = fields.Boolean(string="Is an Intrastat Return", compute="_compute_is_intrastat_return")
-
-    @api.depends('type_id')
-    def _compute_is_intrastat_return(self):
-        generic_intrastat_report = self.env.ref('account_intrastat.intrastat_report')
-        for record in self:
-            report = record.type_id.report_id
-            record.is_intrastat_return = record.type_id.report_id and (
-                        report.root_report_id == generic_intrastat_report or report == generic_intrastat_report)
-
-    def _get_state_field(self):
-        # Extends account_reports
-        if self.is_intrastat_return:
-            return 'generic_state_review_submit'
-        return super()._get_state_field()
-
     def _run_checks(self, check_codes_to_ignore):
         checks = super()._run_checks(check_codes_to_ignore)
-        if self.is_intrastat_return:
+        if self.type_id.is_intrastat_return_type:
             checks += self._check_suite_common_intrastat_goods(check_codes_to_ignore)
         return checks
 

@@ -62,17 +62,13 @@ class AccountReturnType(models.Model):
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
-    def _get_state_field(self):
-        if self.type_external_id in ['l10n_be_reports.be_vat_listing_return_type', 'l10n_be_reports.be_ec_sales_list_return_type']:
-            return 'generic_state_review_submit'
-        elif self.type_external_id == 'l10n_be_reports.be_isoc_prepayment_return_type':
-            return 'generic_state_only_pay'
-        return super()._get_state_field()
-
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
         months_per_period = return_type._get_periodicity_months_delay(company)
-        if return_type_external_id in ('l10n_be_reports.be_vat_return_type', 'l10n_be_reports.be_ec_sales_list_return_type') and months_per_period in (1, 3):
+        if return_type.deadline_days_delay:
+            pass
+
+        elif return_type_external_id in ('l10n_be_reports.be_vat_return_type', 'l10n_be_reports.be_ec_sales_list_return_type') and months_per_period in (1, 3):
             # https://finances.belgium.be/fr/entreprises/tva/calendrier-tva#q1
             return date_to + relativedelta(days=20 if months_per_period == 1 else 25)
 
@@ -85,8 +81,7 @@ class AccountReturn(models.Model):
         elif return_type_external_id == 'account_reports.annual_corporate_tax_return_type' and company.account_fiscal_country_id.code == 'BE':
             return date_to + relativedelta(months=7)
 
-        else:
-            return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
+        return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)
 
     def _get_pay_wizard(self):
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
@@ -114,7 +109,7 @@ class AccountReturn(models.Model):
                 ('type_id', '=', self.type_id.id),
                 ('date_to', '<', self.date_from),
                 ('company_id', '=', self.company_id.id),
-                (self._get_state_field(), '=', 'paid'),
+                (self.type_id.states_workflow, '=', 'paid'),
             ], order="date_to desc", limit=1)
 
             create_vals = {

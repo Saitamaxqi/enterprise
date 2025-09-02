@@ -27,6 +27,7 @@
             <field name="report_id" ref="l10n_be_reports.l10n_be_partner_vat_listing"/>
             <field name="country_id" ref="base.be" />
             <field name="default_deadline_periodicity">year</field>
+            <field name="states_workflow">generic_state_review_submit</field>
         </record>
 
         <!-- EC sales list -->
@@ -58,6 +59,7 @@
             <field name="default_deadline_periodicity">trimester</field>
             <field name="country_id" ref="base.be" />
             <field name="payment_partner_bank_id" ref="l10n_be_reports.centre_de_perception_current_account"/>
+            <field name="states_workflow">generic_state_only_pay</field>
         </record>
 
         <!-- Audit (BE) -->
