@@ -45,6 +45,7 @@ class HrEmployee(models.Model):
             'context': {
                 'active_model': 'hr.version',
                 'default_employee_version_id': self.version_id.id,
+                'default_employee_id': self.id,
                 **offer_values
             }
         }
