@@ -4,8 +4,8 @@
         <function model="account.chart.template" name="try_loading"
             context="{'bypass_payment_method_ids_forbidden_change': True}">
             <value eval="[]"/>
-            <value>generic_coa</value>
-            <value model="res.company" eval="obj().env.ref('base.main_company')"/>
+            <value>us</value>
+            <value model="res.company" eval="obj().env.ref('l10n_us.demo_company_us')"/>
             <value name="install_demo" eval="True"/>
         </function>
     </data>

@@ -7,12 +7,12 @@
 Export payments as NACHA files for use in the United States.
     """,
     "version": "1.0",
-    "depends": ["account_batch_payment", "l10n_us"],
+    "depends": ["account_batch_payment", "l10n_us_account"],
     "data": [
         "data/l10n_us_payment_nacha.xml",
         "views/account_journal_views.xml",
     ],
-    "auto_install": ["l10n_us"],
+    "auto_install": ["l10n_us_account"],
     "author": "Odoo S.A.",
     "license": "OEEL-1",
 }

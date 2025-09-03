@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Keep the main company in Ohio to avoid the _check_us_state_filling_status() constraint. -->
     <record id="base.main_company" model="res.company">
-        <field name="name">My US Company</field>
+        <field name="state_id" ref="base.state_us_30"/>
+    </record>
+
+    <record id="l10n_us.demo_company_us" model="res.company">
         <field name="currency_id" ref="base.USD"/>
         <field name="street">1034 Wildwood Street</field>
         <field name="zip">44654</field>
@@ -12,16 +16,16 @@
     </record>
 
     <record id="base.user_admin" model="res.users">
-        <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+        <field name="company_ids" eval="[(4, ref('l10n_us.demo_company_us'))]"/>
     </record>
 
     <record id="base.user_demo" model="res.users">
-        <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
+        <field name="company_ids" eval="[(4, ref('l10n_us.demo_company_us'))]"/>
     </record>
 
     <record id="us_hr_department_rd" model="hr.department">
         <field name="name">R&amp;D US</field>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
     </record>
 
     <record id="res_partner_troy" model="res.partner">
@@ -32,7 +36,7 @@
         <field name="state_id" ref="base.state_us_5"/>
         <field name="country_id" ref="base.us"/>
         <field name="phone">999-424-4557</field>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
         <field name="image_1920" type="base64" file="l10n_us_hr_payroll/static/img/hr_employee_troy.jpg"/>
     </record>
     <record id="res_partner_troy" model="res.partner">
@@ -47,7 +51,7 @@
         <field name="state_id" ref="base.state_us_25"/>
         <field name="country_id" ref="base.us"/>
         <field name="phone">999-401-1716</field>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
     </record>
     <record id="res_partner_maggie" model="res.partner">
         <field name="email" model="res.partner" eval="'demo.' + obj(ref('l10n_us_hr_payroll.res_partner_maggie')).name.split(' ')[-1].lower() + '@example.com'"/>
@@ -61,7 +65,7 @@
         <field name="zip">94507</field>
         <field name="state_id" ref="base.state_us_5"/>
         <field name="country_id" ref="base.us"/>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
     </record>
 
     <record id="user_maggie" model="res.users">
@@ -69,8 +73,8 @@
         <!-- firstname.lastname@example.com -->
         <field name="login" model="res.partner" eval="obj(ref('l10n_us_hr_payroll.res_partner_maggie')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="signature" model="res.partner" eval="obj(ref('l10n_us_hr_payroll.res_partner_maggie')).name.split(' ')[0][0] + '. ' + obj(ref('l10n_us_hr_payroll.res_partner_maggie')).name.split(' ')[-1]"/>
-        <field name="company_ids" eval="[(4, ref('base.main_company'))]"/>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_ids" eval="[(4, ref('l10n_us.demo_company_us'))]"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
         <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="l10n_us_hr_payroll/static/img/hr_employe_maggie.jpg"/>
     </record>
@@ -108,7 +112,7 @@
         <field name="allow_out_payment" eval="True"/>
         <field name="bank_id" ref="l10n_us_hr_payroll.us_res_bank_chase"/>
         <field name="partner_id" ref="l10n_us_hr_payroll.res_partner_troy"/>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
         <field name="currency_id" ref="base.USD"/>
     </record>
 
@@ -117,7 +121,7 @@
         <field name="allow_out_payment" eval="True"/>
         <field name="bank_id" ref="l10n_us_hr_payroll.us_res_bank_bofa"/>
         <field name="partner_id" ref="l10n_us_hr_payroll.res_partner_maggie"/>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
         <field name="currency_id" ref="base.USD"/>
     </record>
 
@@ -163,7 +167,7 @@
         <field name="hr_responsible_id" ref="base.user_demo"/>
         <field name="date_version" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
         <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.main_company').id)], limit=1)"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('l10n_us.demo_company_us').id)], limit=1)"/>
         <field name="bank_account_id" ref="l10n_us_hr_payroll.res_partner_bank_account_troy"/>
     </record>
 
@@ -175,7 +179,7 @@
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_us_hr_payroll.res_partner_maggie')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="parent_id" ref="l10n_us_hr_payroll.hr_employee_troy"/>
         <field name="user_id" ref="l10n_us_hr_payroll.user_maggie"/>
-        <field name="company_id" ref="base.main_company"/>
+        <field name="company_id" ref="l10n_us.demo_company_us"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
         <field name="tz">America/Los_Angeles</field>
         <field name="private_street" model="res.partner" eval="obj(ref('l10n_us_hr_payroll.res_partner_maggie')).street"/>
@@ -212,7 +216,7 @@
         <field name="date_version" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
         <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
         <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.main_company').id)], limit=1)"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('l10n_us.demo_company_us').id)], limit=1)"/>
         <field name="bank_account_id" ref="l10n_us_hr_payroll.res_partner_bank_account_maggie"/>
     </record>
 

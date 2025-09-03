@@ -18,6 +18,8 @@ class TestHrEmployee(TransactionCase):
                 'country_id': self.env.ref('base.be').id
             }
         ])
+        self.env.user.company_ids |= self.company_us
+        self.env.user.company_id = self.company_us  # hr.version retrieves this partner in _get_default_address_id()
 
     def test_company_context(self):
         # This test is testing a hr_employee/hr_version feature, but must be in l10n_us as we need the ssnid constraint.

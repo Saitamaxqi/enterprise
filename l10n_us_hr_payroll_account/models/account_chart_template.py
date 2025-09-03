@@ -9,14 +9,14 @@ from odoo import models
 class AccountChartTemplate(models.AbstractModel):
     _inherit = "account.chart.template"
 
-    def _configure_payroll_account_generic_coa(self, companies):
+    def _configure_payroll_account_us(self, companies):
         account_codes = [
-            '6300',  # Salary Expenses
+            '6110',  # Salary Expenses
             '2300',  # Salaries Payable,
             '2301',  # Employee Payroll Taxes
             '2302',  # Employer Payroll Taxes
         ]
-        default_account = '6300'
+        default_account = '6110'
         rules_mapping = defaultdict(dict)
 
         # ================================================ #
@@ -27,7 +27,7 @@ class AccountChartTemplate(models.AbstractModel):
             ('struct_id', '=', self.env.ref('l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary').id),
             ('code', '=', 'GROSS')
         ])
-        rules_mapping[gross_rule]['debit'] = '6300'
+        rules_mapping[gross_rule]['debit'] = '6110'
 
         fit_rule = self.env.ref('l10n_us_hr_payroll.l10n_us_employee_salary_federal_income_tax')
         rules_mapping[fit_rule]['debit'] = '2301'
@@ -57,27 +57,27 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[ny_pfl_rule]['debit'] = '2301'
 
         ny_reimployment_rule = self.env.ref('l10n_us_hr_payroll.l10n_us_employee_salary_ny_reimployment_tax')
-        rules_mapping[ny_reimployment_rule]['debit'] = '6300'
+        rules_mapping[ny_reimployment_rule]['debit'] = '6110'
         rules_mapping[ny_reimployment_rule]['credit'] = '2302'
 
         company_sst_rule = self.env.ref('l10n_us_hr_payroll.l10n_us_employee_salary_company_social_security')
-        rules_mapping[company_sst_rule]['debit'] = '6300'
+        rules_mapping[company_sst_rule]['debit'] = '6110'
         rules_mapping[company_sst_rule]['credit'] = '2302'
 
         company_medicare_rule = self.env.ref('l10n_us_hr_payroll.l10n_us_employee_salary_company_medicare')
-        rules_mapping[company_medicare_rule]['debit'] = '6300'
+        rules_mapping[company_medicare_rule]['debit'] = '6110'
         rules_mapping[company_medicare_rule]['credit'] = '2302'
 
         company_futa_rule = self.env.ref('l10n_us_hr_payroll.l10n_us_employee_salary_company_futa')
-        rules_mapping[company_futa_rule]['debit'] = '6300'
+        rules_mapping[company_futa_rule]['debit'] = '6110'
         rules_mapping[company_futa_rule]['credit'] = '2302'
 
         company_ca_sui_rule = self.env.ref('l10n_us_hr_payroll.l10n_us_employee_salary_company_sui')
-        rules_mapping[company_ca_sui_rule]['debit'] = '6300'
+        rules_mapping[company_ca_sui_rule]['debit'] = '6110'
         rules_mapping[company_ca_sui_rule]['credit'] = '2302'
 
         company_ca_sui_rule = self.env.ref('l10n_us_hr_payroll.l10n_us_employee_salary_company_ca_ett')
-        rules_mapping[company_ca_sui_rule]['debit'] = '6300'
+        rules_mapping[company_ca_sui_rule]['debit'] = '6110'
         rules_mapping[company_ca_sui_rule]['credit'] = '2302'
 
         net_rule = self.env['hr.salary.rule'].search([
@@ -92,3 +92,8 @@ class AccountChartTemplate(models.AbstractModel):
             account_codes=account_codes,
             rules_mapping=rules_mapping,
             default_account=default_account)
+
+    def _configure_payroll_account_generic_coa(self, companies):
+        # Accounting configuration for the generic COA has always pulled in US-specific configuration. Continue
+        # the same behavior now that we have a US-specific COA.
+        self._configure_payroll_account_us(companies)

@@ -19,6 +19,7 @@ class TestTaxForms(CommonTestPayslips):
             'l10n_us_business_structure': 'c_corp',
         })
         cls.env.user.company_ids |= cls.us_company
+        cls.env.user.company_id = cls.us_company
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.us_company.ids))
 
         cls.env['res.partner.bank'].create({

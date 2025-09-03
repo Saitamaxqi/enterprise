@@ -14,7 +14,7 @@ def _generate_payslips(env):
     if employee_maggie := env.ref('l10n_us_hr_payroll.hr_employee_maggie', raise_if_not_found=False):
         if not env['hr.payslip'].sudo().search_count([('employee_id.name', '=', 'Maggie Davidson (mda)')]):
             _logger.info('Generating payslips')
-            cids = env.ref('base.main_company').ids
+            cids = env.ref('l10n_us.demo_company_us').ids
             payslip_runs = env['hr.payslip.run']
             payslis_values = []
             for i in range(1, 13):
@@ -26,7 +26,7 @@ def _generate_payslips(env):
                     'name': date_start.strftime('%B %Y'),
                     'date_start': date_start,
                     'date_end': date_end,
-                    'company_id': env.ref('base.main_company').id,
+                    'company_id': env.ref('l10n_us.demo_company_us').id,
                     'structure_id': env.ref('l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary').id,
                 })
             payslip_runs = env['hr.payslip.run'].create(payslis_values)
