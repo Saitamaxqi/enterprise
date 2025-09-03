@@ -58,6 +58,7 @@ class CalendarEvent(models.Model):
     def _default_access_token(self):
         return str(uuid.uuid4())
 
+    name = fields.Char(compute='_compute_name', store=True, readonly=False)
     access_token = fields.Char('Access Token', default=_default_access_token, readonly=True)
     alarm_ids = fields.Many2many(compute='_compute_alarm_ids', store=True, readonly=False)
     appointment_answer_input_ids = fields.One2many('appointment.answer.input', 'calendar_event_id', string="Appointment Answers")
@@ -128,6 +129,15 @@ class CalendarEvent(models.Model):
                 event.appointment_status = False
             elif not event.appointment_status:
                 event.appointment_status = 'booked'
+
+    @api.depends('partner_ids')
+    def _compute_name(self):
+        for event in self.filtered(lambda e: e.appointment_type_id and not e.name):
+            non_staff_attendees = event.partner_ids.filtered(
+                lambda p: p._origin.id not in event.appointment_type_id.staff_user_ids.partner_id.ids
+            )
+            if len(non_staff_attendees) == 1:
+                event.name = non_staff_attendees.name + " - " + event.appointment_type_id.name
 
     @api.depends('booking_line_ids', 'booking_line_ids.appointment_resource_id')
     def _compute_resource_ids(self):
