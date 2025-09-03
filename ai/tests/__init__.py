@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from . import common
+from . import test_ai_access
 from . import test_ai_agent
 from . import test_ai_logging
 from . import test_ai_methods
