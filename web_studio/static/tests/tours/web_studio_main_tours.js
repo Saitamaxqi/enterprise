@@ -282,10 +282,7 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // verify that the field name has changed (post-fixed by _1)
-            trigger: '.o_web_studio_sidebar input[name="technical_name"]',
-            run(helper) {
-                assertEqual(this.anchor.value, "coucou_1");
-            },
+            trigger: '.o_web_studio_sidebar input[name="technical_name"]:value(coucou_1)',
             // the rename operation (/web_studio/rename_field + /web_studio/edit_view)
             // takes a while and sometimes reaches the default 10s timeout
             timeout: 20000,
