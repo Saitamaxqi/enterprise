@@ -616,7 +616,8 @@ class HrPayslip(models.Model):
         self.filtered(lambda slip: slip.state == 'draft').action_payslip_done()
 
     def action_payslip_cancel(self):
-        if not self.env.user._is_system() and self.filtered(lambda slip: slip.state == 'validated'):
+        if not self.env.user.has_group('hr_payroll.group_hr_payroll_manager') \
+            and self.filtered(lambda slip: slip.state == 'validated'):
             raise UserError(_("Cannot cancel a payslip that is validated."))
         self.write({'state': 'cancel'})
         self.action_draft_linked_entries()

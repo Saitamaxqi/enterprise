@@ -19,6 +19,7 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_manager')
         cls.env['account.chart.template'].try_loading('generic_coa', company=cls.company_us, install_demo=False)
 
         cls.work_contact = cls.env['res.partner'].create({'name': 'A work contact'})

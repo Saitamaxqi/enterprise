@@ -16,6 +16,7 @@ class TestPayslipComputation(TestPayslipContractBase):
     def setUpClass(cls):
         super(TestPayslipComputation, cls).setUpClass()
 
+        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_manager')
         cls.richard_payslip = cls.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': cls.richard_emp.id,

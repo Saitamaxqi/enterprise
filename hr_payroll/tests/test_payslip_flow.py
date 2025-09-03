@@ -2,11 +2,12 @@
 
 import datetime
 
+from dateutil.relativedelta import relativedelta
 from odoo import Command
 from odoo.addons.hr_payroll.tests.common import TestPayslipBase
+from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.exceptions import UserError
 from odoo.tests import Form
-from dateutil.relativedelta import relativedelta
 
 
 class TestPayslipFlow(TestPayslipBase):
@@ -397,3 +398,18 @@ class TestPayslipFlow(TestPayslipBase):
         payslip_form.employee_id = employee
         payslip_form.save()
         self.assertTrue(payslip_form)
+
+    def test_04_cancel_a_done_payslip_with_payroll_admin(self):
+        """Cancel a validated payslip using a new user with Payroll Admin access."""
+        test_user = mail_new_test_user(
+            self.env, name="Test user", login="test_user",
+            groups="hr_payroll.group_hr_payroll_manager"
+        )
+        richard_payslip = self.env['hr.payslip'].create({
+            'name': 'Payslip of Richard',
+            'employee_id': self.richard_emp.id,
+        })
+        richard_payslip.action_payslip_done()
+        self.assertEqual(richard_payslip.state, 'validated')
+        richard_payslip.with_user(test_user).action_payslip_cancel()
+        self.assertEqual(richard_payslip.state, 'cancel')
