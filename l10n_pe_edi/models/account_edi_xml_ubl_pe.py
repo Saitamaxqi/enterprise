@@ -151,8 +151,8 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                 prepaid_amounts.extend({
                     'cbc:ID': {'_text': prepayment_sequence},
                     'cbc:PaidAmount': {
-                        '_text': self.format_float(prepayment_move.amount_total, prepayment_move.company_currency_id.decimal_places),
-                        'currencyID': prepayment_move.company_currency_id.name
+                        '_text': self.format_float(prepayment_move.amount_total, prepayment_move.currency_id.decimal_places),
+                        'currencyID': prepayment_move.currency_id.name,
                     },
                 } for prepayment_move in prepayment_moves)
                 prepayment_sequence += 1

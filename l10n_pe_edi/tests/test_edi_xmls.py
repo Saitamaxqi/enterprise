@@ -391,3 +391,60 @@ class TestEdiXmls(TestPeEdiCommon):
         with file_open('l10n_pe_edi/tests/test_files/invoice_final_downpayment.xml', 'rb') as expected_file:
             expected_etree = self.get_xml_tree_from_string(expected_file.read())
         self.assertXmlTreeEqual(current_etree, expected_etree)
+
+    def test_invoice_down_payment_foreign_currency(self):
+        """ Invoice with a downpayment on a sale order. Note the downpayment invoice is not different
+        than any other invoice which is why we only look at the final invoice XML to make sure all the
+        right data is there. """
+
+        if self.env["ir.module.module"]._get('sale').state != 'installed':
+            self.skipTest("Sale module is not installed")
+
+        pricelist = self.env['product.pricelist'].create({
+            'name': 'Test Pricelist',
+            'currency_id': self.other_currency.id,
+        })
+
+        with freeze_time(self.frozen_today):
+            sale_order = self.env['sale.order'].create({
+                'partner_id': self.partner_a.id,
+                'pricelist_id': pricelist.id,
+                'order_line': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'product_uom_id': self.env.ref('uom.product_uom_kgm').id,
+                        'price_unit': 2000.0,
+                        'product_uom_qty': 5,
+                        'tax_ids': [(6, 0, self.tax_18.ids)],
+                    }),
+                ],
+            })
+            sale_order.action_confirm()
+
+            context = {
+                'active_model': 'sale.order',
+                'active_ids': [sale_order.id],
+                'active_id': sale_order.id,
+                'default_journal_id': self.company_data['default_journal_sale'].id,
+            }
+            downpayment = self.env['sale.advance.payment.inv'].with_context(context).create({
+                'advance_payment_method': 'fixed',
+                'fixed_amount': 115,
+            })._create_invoices(sale_order)
+
+            final = self.env['sale.advance.payment.inv'].with_context(context).create({})._create_invoices(sale_order)
+
+            with patch('odoo.addons.l10n_pe_edi.models.account_edi_format.AccountEdiFormat._l10n_pe_edi_post_invoice_web_service',
+                   new=mocked_l10n_pe_edi_post_invoice_web_service):
+                downpayment.action_post()
+                final.action_post()
+
+                generated_files = self._process_documents_web_services(final, {'pe_ubl_2_1'})
+                self.assertTrue(generated_files)
+
+        zip_edi_str = generated_files[0]
+        edi_xml = self.edi_format._l10n_pe_edi_unzip_edi_document(zip_edi_str)
+        current_etree = self.get_xml_tree_from_string(edi_xml)
+        with file_open('l10n_pe_edi/tests/test_files/invoice_final_downpayment_foreign_currency.xml', 'rb') as expected_file:
+            expected_etree = self.get_xml_tree_from_string(expected_file.read())
+        self.assertXmlTreeEqual(current_etree, expected_etree)
