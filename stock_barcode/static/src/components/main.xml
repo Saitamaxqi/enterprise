@@ -60,14 +60,14 @@
                         <span class="o_scan_message" t-attf-class="o_{{info.class}}" t-out="info.message"/>
                     </div>
                 </div>
-                <div t-if="env.model.resModel == 'stock.picking' &amp;&amp; env.model.record.picking_warning_text"
-                     class="alert text-bg-900 text-center fw-bold" role="alert" style="white-space: pre-wrap;">
-                    <t t-esc="env.model.record.picking_warning_text"/>
-                </div>
             </t>
         </header>
         <div t-if="state.view === 'barcodeLines' &amp;&amp; env.model.canBeProcessed"
              class="o_barcode_lines list-group flex-grow-1 text-bg-200">
+            <div t-if="env.model.resModel == 'stock.picking' &amp;&amp; env.model.record.picking_warning_text"
+                 class="alert alert-info mb-1 mt-1 text-center fw-bold" role="alert" style="white-space: pre-wrap;">
+                <t t-esc="env.model.record.picking_warning_text"/>
+            </div>
             <t t-foreach="env.model.groupedLinesByLocation" t-as="group" t-key="group.location.id">
                 <t t-set="currentLocation" t-value="env.model.location &amp;&amp; env.model.location.id == group.location.id"/>
                 <div class="o_barcode_location_group" t-att-class="currentLocation ? 'o_current_location' : ''">
