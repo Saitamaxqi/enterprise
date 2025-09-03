@@ -682,8 +682,8 @@ class AccountMove(models.Model):
         # NomItem is a mandatory field, so if there is no product_id, we use
         # the description of the line (aml.name).
         if not aml.product_id:
-            nom_item = aml and aml.name[:80] or '-'
-            description = aml and aml.name[80:] or ''
+            nom_item = aml.name and aml.name[:80] or '-'
+            description = aml.name and aml.name[80:] or ''
         else:
             # If the product is defined, we use its name as the item name
             # and the line name as the description.
