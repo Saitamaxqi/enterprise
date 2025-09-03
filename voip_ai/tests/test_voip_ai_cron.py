@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from unittest.mock import patch, ANY
 from requests.exceptions import RequestException
 
@@ -159,7 +159,7 @@ class TestVoipAiCron(TransactionCase):
         call1 = self.call
 
         # Make call2 older so call1 is processed first (stable side-effect order).
-        with freeze_all_time(datetime.now() - timedelta(seconds=1)):
+        with freeze_all_time(call1.create_date - timedelta(seconds=1)):
             call2 = self.env["voip.call"].create({
                 "phone_number": "+1987654321",
                 "user_id": self.user.id,
