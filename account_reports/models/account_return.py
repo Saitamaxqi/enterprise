@@ -248,8 +248,8 @@ class AccountReturnType(models.Model):
 
         has_forced_dates = self.env.context.get('forced_date_from') and self.env.context.get('forced_date_to')
         if has_forced_dates:
-            date_from = self.env.context['forced_date_from']
-            date_to = self.env.context['forced_date_to']
+            date_from = fields.Date.from_string(self.env.context['forced_date_from'])
+            date_to = fields.Date.from_string(self.env.context['forced_date_to'])
         else:
             fy_dates_dict = main_company.compute_fiscalyear_dates(today)
             date_from = fy_dates_dict['date_from']

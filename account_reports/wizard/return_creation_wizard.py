@@ -173,8 +173,8 @@ class AccountReturnCreationWizard(models.TransientModel):
             raise UserError(self.env._("You are trying to create returns for a company you don't have access to, please select it in the company selector"))
 
         returns_created = self.return_type_id.with_context(
-            forced_date_from=self.date_from,
-            forced_date_to=self.date_to,
+            forced_date_from=fields.Date.to_string(self.date_from),
+            forced_date_to=fields.Date.to_string(self.date_to),
             manually_created=True
         )._try_create_returns_for_fiscal_year(company, tax_unit, allow_duplicates=self.category == 'audit')
         returns_created.skipped_check_cycles = ','.join(
