@@ -205,6 +205,6 @@
             <field name="context">{'open_account_return_on_save': True}</field>
         </record>
 
-        <menuitem id="menu_action_account_return" parent="account.account_closing_menu" action="action_server_open_view_account_return" name="Tax Returns" sequence="100"/>
+        <menuitem id="menu_action_account_return" parent="account.account_closing_menu" action="action_server_open_view_account_return" name="Tax Returns" sequence="67"/>
     </data>
 </odoo>

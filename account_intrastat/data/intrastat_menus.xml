@@ -1,7 +1,7 @@
 <odoo>
     <!-- Intrastat Report -->
     <record id="action_account_report_intrastat" model="ir.actions.client">
-        <field name="name">Intrastat Report</field>
+        <field name="name">Intrastat</field>
         <field name="path">intrastat</field>
         <field name="tag">account_report</field>
         <field name="context" eval="{'report_id': ref('account_intrastat.intrastat_report')}"/>
@@ -9,7 +9,8 @@
 
     <menuitem id="menu_action_account_report_intrastat"
               action="action_account_report_intrastat"
-              parent="account_reports.account_reports_audit_menu"
+              parent="account.account_reports_taxes_and_fiscal_menu"
+              sequence="30"
               groups="account.group_account_readonly"/>
 
     <!-- display ec sales list report menu item -->

@@ -10,7 +10,7 @@
         id="account_reports_es_statements_menu"
         name="Spain"
         parent="account.menu_finance_reports"
-        sequence="6"
+        sequence="7"
         groups="account.group_account_readonly"/>
 
     <menuitem

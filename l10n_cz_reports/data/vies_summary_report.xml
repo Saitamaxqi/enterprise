@@ -90,7 +90,7 @@
         id="account_reports_cz_statements_menu"
         name="Czech Republic"
         parent="account.menu_finance_reports"
-        sequence="5"
+        sequence="6"
         groups="account.group_account_readonly"/>
 
     <menuitem

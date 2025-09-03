@@ -322,8 +322,8 @@
 
         <menuitem
             id="menu_action_loans_analysis"
-            name="Loans"
-            sequence="10"
+            name="Loans Analysis"
+            sequence="30"
             action="action_view_account_loans_analysis"
             parent="account_reports.account_audit_inventory_entries_menu"
             groups="account.group_account_readonly"

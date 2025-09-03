@@ -3,9 +3,9 @@
         <menuitem
             id="menu_action_audit_inventory_fleet"
             name="Fleet"
-            sequence="15"
+            sequence="65"
             action="fleet.fleet_vehicle_action"
-            parent="account_reports.account_audit_inventory_entries_menu"
+            parent="accountant.account_assets_liabilities_menu"
             groups="account.group_account_readonly"
         />
     </data>

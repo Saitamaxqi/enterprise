@@ -2,7 +2,7 @@
 <odoo>
     <menuitem
         id="menu_action_accountant_audit_report"
-        name="Audit Reports"
+        name="Annual Report"
         action="action_audit_report"
         parent="account_reports.account_audit_working_file_menu"/>
 </odoo>
