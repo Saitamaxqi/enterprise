@@ -1130,56 +1130,54 @@ class L10n_Mx_EdiDocument(models.Model):
         # Make sure the total of the CFDI is exactly equal to the total of the document.
         # We put the difference in the discount as mush as possible.
         # As a last resort, we create a new fake line to make the difference.
-        if not global_invoice:
+        def grouping_function_total_amounts(base_line, tax_data):
+            return True
 
-            def grouping_function_total_amounts(base_line, tax_data):
-                return True
+        base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_total_amounts)
+        values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
+        expected_total = sum(values['total_excluded_currency'] + values['tax_amount_currency'] for values in values_per_grouping_key.values())
+        if compare_results := currency.compare_amounts(expected_total, cfdi_values['total']):
+            delta = expected_total - cfdi_values['total']
 
-            base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_total_amounts)
-            values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
-            expected_total = sum(values['total_excluded_currency'] + values['tax_amount_currency'] for values in values_per_grouping_key.values())
-            if compare_results := currency.compare_amounts(expected_total, cfdi_values['total']):
-                delta = expected_total - cfdi_values['total']
-
-                if compare_results < 0.0:
-                    sorted_base_line_cfdi_values_list = sorted(
-                        base_line_cfdi_values_list,
-                        key=lambda base_line_cfdi_values: (
-                            not bool(base_line_cfdi_values['descuento']),
-                            base_line_cfdi_values['descuento'] - base_line_cfdi_values['importe'],
-                        )
+            if compare_results < 0.0:
+                sorted_base_line_cfdi_values_list = sorted(
+                    base_line_cfdi_values_list,
+                    key=lambda base_line_cfdi_values: (
+                        not bool(base_line_cfdi_values['descuento']),
+                        base_line_cfdi_values['descuento'] - base_line_cfdi_values['importe'],
                     )
-                else:
-                    sorted_base_line_cfdi_values_list = sorted(
-                        base_line_cfdi_values_list,
-                        key=lambda base_line_cfdi_values: -base_line_cfdi_values['descuento'],
-                    )
+                )
+            else:
+                sorted_base_line_cfdi_values_list = sorted(
+                    base_line_cfdi_values_list,
+                    key=lambda base_line_cfdi_values: -base_line_cfdi_values['descuento'],
+                )
 
-                biggest_base_line_cfdi_values = sorted_base_line_cfdi_values_list[0]
-                if 0.0 <= biggest_base_line_cfdi_values['descuento'] - delta <= biggest_base_line_cfdi_values['importe']:
-                    # Add it as a discount.
-                    biggest_base_line_cfdi_values['descuento'] -= delta
-                    cfdi_values['descuento'] -= delta
-                    cfdi_values['total'] += delta
-                else:
-                    # New line.
-                    base_line_cfdi_values = {
-                        'document_name': None,
-                        'no_identificacion': "Redondeado",
-                        'cuenta_predial': None,
-                        'cantidad': 1,
-                        'unidad': "UNITS",
-                        'descuento': 0.0,
-                        'importe': delta,
-                        'valor_unitario': delta,
-                        'clave_prod_serv': '84111506',
-                        'clave_unidad': 'ACT',
-                        'description': "Redondeado",
-                        'objeto_imp': '01',
-                        'traslados_list': [],
-                        'retenciones_list': [],
-                    }
-                    base_line_cfdi_values_list.append(base_line_cfdi_values)
+            biggest_base_line_cfdi_values = sorted_base_line_cfdi_values_list[0]
+            if 0.0 <= biggest_base_line_cfdi_values['descuento'] - delta <= biggest_base_line_cfdi_values['importe']:
+                # Add it as a discount.
+                biggest_base_line_cfdi_values['descuento'] -= delta
+                cfdi_values['descuento'] -= delta
+                cfdi_values['total'] += delta
+            else:
+                # New line.
+                base_line_cfdi_values = {
+                    'document_name': None,
+                    'no_identificacion': "Redondeado",
+                    'cuenta_predial': None,
+                    'cantidad': 1,
+                    'unidad': "UNITS",
+                    'descuento': 0.0,
+                    'importe': delta,
+                    'valor_unitario': delta,
+                    'clave_prod_serv': '84111506',
+                    'clave_unidad': 'ACT',
+                    'description': "Redondeado",
+                    'objeto_imp': '01',
+                    'traslados_list': [],
+                    'retenciones_list': [],
+                }
+                base_line_cfdi_values_list.append(base_line_cfdi_values)
 
         # Cleanup attributes for Exento taxes/descuento.
         if currency.is_zero(cfdi_values['descuento']):
@@ -1403,7 +1401,7 @@ class L10n_Mx_EdiDocument(models.Model):
             new_concepto = conceptos_map[key]
             new_concepto['no_identificacion'] = key['document_name']
             new_concepto['objeto_imp'] = concepto['objeto_imp']
-            new_concepto['importe'] += (concepto['importe'] or 0.0) - (concepto['descuento'] or 0.0)
+            new_concepto['importe'] += (concepto['importe'] or 0.0) - currency.round(concepto['descuento'] or 0.0)
 
             # Aggregate Taxes.
             for tax_result_dict, list_key in (
