@@ -231,7 +231,7 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         ]
 
         for data in datas:
-            self.init_invoice('in_invoice', invoice_date='2023-03-01', post=False, amounts=[4000], journal=journal, invoice_date_due=data['invoice_date_due'], release_to_pay=data.get('release_to_pay'))
+            self.init_invoice('in_invoice', invoice_date='2023-03-01', post=False, amounts=[4000], invoice_date_due=data['invoice_date_due'], release_to_pay=data.get('release_to_pay'))
 
         dashboard_data = journal._get_journal_dashboard_data_batched()[journal.id]
         # Expected behavior is to have six amls waiting for payment for a total amount of 4440$
