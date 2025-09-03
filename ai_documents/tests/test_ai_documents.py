@@ -63,7 +63,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
             self.assertIn("Document Name", "".join(user_prompts))
 
             self.assertEqual(len(tools or ()), 2)
-            self.assertEqual(tool_names[0], f"action_{move_in_folder.id}")
+            self.assertEqual(tool_names[0], "ir_actions_server_move_in_folder")
             self.assertEqual(tools[tool_names[0]][0], move_in_folder.ai_tool_description)
             self.assertEqual(tool_names[1], f"action_{self.ir_action_tool.id}")
             self.assertEqual(tools[tool_names[1]][0], self.ir_action_tool.name)
@@ -84,7 +84,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
                 self.assertEqual(inputs[1].get('output'), "action return value")
                 self.assertEqual(inputs[1].get('type'), "function_call_output")
                 return self._ai_tool_call(
-                    f"action_{move_in_folder.id}",
+                    "ir_actions_server_move_in_folder",
                     "call_789123",
                     {'folder_id': llm_target_folder.id},
                 )
@@ -128,7 +128,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
             if llm_calls % 2 == 1:
                 target = self.folder if "Target folder prompt" in str(user_prompts) else self.target_folder
                 return self._ai_tool_call(
-                    f"action_{move_in_folder.id}",
+                    "ir_actions_server_move_in_folder",
                     "call_789123",
                     {'folder_id': target.id},
                 )
@@ -209,7 +209,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
                 )
             if llm_calls == 2:
                 return self._ai_tool_call(
-                    f"action_{move_in_folder.id}",
+                    "ir_actions_server_move_in_folder",
                     "call_789123",
                     {'folder_id': self.target_folder.id},
                 )

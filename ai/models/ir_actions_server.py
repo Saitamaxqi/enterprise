@@ -193,8 +193,15 @@ class IrActionsServer(models.Model):
 
             return result, error
 
+        xml_ids = self.get_external_id()
+
+        def get_tool_name(id):
+            if xml_id := xml_ids.get(id):
+                return xml_id.split(".")[1]
+            return f"action_{id}"
+
         return {
-            f"action_{ir_action_tool.id}": (
+            get_tool_name(ir_action_tool.id): (
                 ir_action_tool.ai_tool_description or ir_action_tool.name,
                 ir_action_tool.ai_tool_allow_end_message,
                 partial(_exec_tool, ir_action_tool=ir_action_tool),

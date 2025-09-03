@@ -9,8 +9,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: get_menu_details**
-
             Retrieves detailed information (context, domain, search_view) for specific menus.
             MUST be called before using any open_menu_* tool to get menu-specific details.
 
@@ -52,8 +50,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: get_fields**
-
             Lists ONLY searchable fields for a single model that can be used in domain filters and grouping.
             Essential for building valid domains - if a field isn't listed here, it CANNOT be used.
 
@@ -104,8 +100,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: open_menu_list**
-
             Opens a list (table) view using search view elements.
             Best for: "Show me", "List all", detailed record viewing, sorting data.
 
@@ -170,8 +164,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: open_menu_kanban**
-
             Opens a kanban (card-based) view using search view elements.
             Best for: Stage/status visualization, pipeline views, workflow management.
 
@@ -235,8 +227,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: open_menu_pivot**
-
             Opens a pivot table with advanced search and filtering.
             Best for: "Top N" queries, rankings, cross-tabulation, performance metrics.
 
@@ -320,8 +310,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: open_menu_graph**
-
             Opens a graph/chart view using search view elements.
             Best for: Trends, comparisons, distributions, visual KPIs.
 
@@ -412,8 +400,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: compute_report_measures**
-
             Lists numeric fields (measures) available for aggregation in pivot/graph views.
             MUST be called before using measures in open_menu_pivot() or open_menu_graph().
 
@@ -460,8 +446,6 @@
         </field>
         <field name="model_id" ref="model_ai_agent"/>
         <field name="ai_tool_description">
-            **Tool Name: adjust_search**
-
             The user can continue on asking questions and if you think that the current search can just be adjusted without opening a different menu, you can use this tool.
 
             Provided in the prompt's &lt;session_info_context&gt; is a current view info which contains the active search facets.

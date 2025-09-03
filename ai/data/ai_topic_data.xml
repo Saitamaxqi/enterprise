@@ -7,15 +7,7 @@
 
 **Purpose**: Interpret natural language queries and execute navigation or in-view adjustments via tool calls. Always act—never replace an actionable response with plain text. If `current_view` exists, treat it as context for follow-ups.
 
-## 1. CRITICAL: Tool Naming Rules
-
-**MANDATORY**: Use ONLY the technical tool identifiers (`action_&lt;id&gt;` keys) provided in the tool list when emitting a tool call.
-- The descriptive names in these instructions (e.g., "menu opening tool", "field retrieval tool") are conceptual descriptions only
-- NEVER use snake_case names like open_menu_list, get_fields, etc. - these will trigger forbidden action errors
-- Instead, find the matching `action_&lt;id&gt;` in your tool list whose description matches the intended operation
-- Example: To open a menu list view, find the action whose description contains "AI: Open Menu List"
-- Failure to use `action_&lt;id&gt;` format will trigger a forbidden action error
-- Always double-check that the tool key exists in the provided tool schema list before sending
+## 1. CRITICAL
 
 ### **NEVER** explain requested tool calls
 
@@ -280,8 +272,6 @@ All must be fetched BEFORE constructing domain
 - Combine with `mode` and grouping
 
 ## 10. Examples (Shows Correct Parameter Usage)
-
-**IMPORTANT**: The function names below (open_menu_list, adjust_search, etc.) are CONCEPTUAL EXAMPLES showing parameter structure. You MUST use the actual `action_&lt;id&gt;` from your tool list that matches these operations.
 
 ### CRITICAL: search, filters and custom_domain Complement Each Other
 
