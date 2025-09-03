@@ -68,16 +68,28 @@
                         data-hotkey="shift+e"
                         string="Send By Email"
                         class="oe_highlight"
-                        invisible="not id or state in ['refused', 'expired', 'cancelled']"/>
+                        invisible="not id or state in ['refused', 'expired', 'cancelled'] or not sign_template_id"/>
+                    <button
+                        data-hotkey="shift+e"
+                        string="Send By Email"
+                        class="oe_highlight disabled"
+                        invisible="not id or state in ['refused', 'expired', 'cancelled'] or sign_template_id"/>
                     <button
                         name="action_jump_to_offer"
                         type="object"
                         data-hotkey="shift+g"
                         string="Salary Configurator"
                         class="btn btn-secondary"
-                        invisible="not id or state in ['refused', 'expired', 'cancelled']"/>
+                        invisible="not id or state in ['refused', 'expired', 'cancelled'] or not sign_template_id"/>
+                    <button
+                        data-hotkey="shift+g"
+                        string="Salary Configurator"
+                        class="btn btn-secondary disabled"
+                        invisible="not id or state in ['refused', 'expired', 'cancelled'] or sign_template_id"/>
                     <field name="url" class="btn btn-addr ps-0" string="Copy link" widget="CopyClipboardButton"
-                        options="{'btn_class': 'btn btn-secondary'}" invisible="not id"/>
+                        options="{'btn_class': 'btn btn-secondary'}" invisible="not id or not sign_template_id"/>
+                    <field name="url" class="btn btn-addr ps-0 disabled" string="Copy link" widget="CopyClipboardButton"
+                        options="{'btn_class': 'btn btn-secondary'}" invisible="not id or sign_template_id"/>
                     <field name="state" widget="statusbar" invisible="not is_half_sign_state_required"
                         statusbar_visible="open,half_signed,full_signed" readonly="1"/>
                     <field name="state" widget="statusbar" invisible="is_half_sign_state_required"
@@ -123,6 +135,9 @@
                     <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger" invisible="state != 'cancelled'"/>
                     <div class="alert alert-info text-center" role="status" invisible="state != 'full_signed'">
                         This offer has been fully signed and can no longer be edited. However, you can still make changes to the Signed Contract if needed.
+                    </div>
+                    <div role="alert" class="alert alert-danger" invisible="sign_template_id">
+                        Please define a signature template on the contract before generating the offer.
                     </div>
                     <div class="oe_title pe-0">
                         <label for="display_name"/>

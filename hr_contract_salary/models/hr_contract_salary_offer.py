@@ -128,7 +128,7 @@ class HrContractSalaryOffer(models.Model):
             return employee.current_version_id.with_context(tracking_disable=True)
         return employee.current_version_id.with_context(tracking_disable=True)
 
-    @api.depends('contract_template_id')
+    @api.depends('contract_template_id.sign_template_id')
     def _compute_sign_template_id(self):
         for offer in self:
             if offer.contract_template_id:
