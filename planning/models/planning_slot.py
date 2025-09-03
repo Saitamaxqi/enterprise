@@ -2736,6 +2736,7 @@ class PlanningSlot(models.Model):
                 self.env["hr.version"].sudo()._read_group(
                     domain=[
                         ("employee_id", "in", employees_sudo.ids),
+                        ('contract_date_start', '!=', False),
                     ],
                     groupby=["employee_id"],
                     aggregates=["__count"],
@@ -2745,14 +2746,14 @@ class PlanningSlot(models.Model):
             employees_with_contract_in_current_scale = []
             for contract in contracts:
                 employee_id = contract.employee_id.id
-                end_datetime = contract.date_end and contract.date_end + relativedelta(hour=23, minute=59, second=59)
+                end_datetime = contract.contract_date_end and contract.contract_date_end + relativedelta(hour=23, minute=59, second=59)
                 if end_datetime:
                     user_tz = pytz.timezone(self.env.user.tz or self.env.context.get('tz') or 'UTC')
                     end_datetime = user_tz.localize(end_datetime).astimezone(pytz.utc).replace(tzinfo=None)
                     end_datetime = fields.Datetime.to_string(end_datetime)
                 employees_with_contract_in_current_scale.append(employee_id)
                 working_periods[employee_id_to_ressource_id[employee_id]].append({
-                    "start": fields.Datetime.to_string(contract.date_start),
+                    "start": fields.Datetime.to_string(contract.contract_date_start),
                     "end": end_datetime,
                 })
             for employee in employees_sudo - self.env["hr.employee"].browse(employees_with_contract_in_current_scale):
