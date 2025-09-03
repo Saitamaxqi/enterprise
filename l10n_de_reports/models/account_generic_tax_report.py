@@ -93,7 +93,7 @@ class L10n_DeTaxReportHandler(models.AbstractModel):
                                  "76", "77", "81", "84", "86", "87", "89", "91", "93", "90", "94", "95"):
                     elem.text = float_repr(int(line_value), 0)
                 else:
-                    elem.text = float_repr(line_value, 2).replace('.', ',')
+                    elem.text = float_repr(line_value, 2)
 
         return {
             'file_name': report.get_default_report_filename(options, 'xml'),

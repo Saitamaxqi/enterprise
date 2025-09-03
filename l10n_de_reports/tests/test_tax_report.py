@@ -83,7 +83,7 @@ class GermanTaxReportTest(AccountSalesReportCommon):
                     <Steuernummer>4151081508156</Steuernummer>
                     <Kz81>150</Kz81>
                     <Kz89>75</Kz89>
-                    <Kz61>14,25</Kz61>
+                    <Kz61>14.25</Kz61>
                 </Umsatzsteuervoranmeldung>
             </Steuerfall>
         </Anmeldungssteuern>
