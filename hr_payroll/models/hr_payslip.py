@@ -819,7 +819,8 @@ class HrPayslip(models.Model):
 
     def _get_worked_day_lines_hours_per_day(self):
         self.ensure_one()
-        return self.version_id.resource_calendar_id.hours_per_day
+        calendar = self.version_id.resource_calendar_id or self.employee_id.resource_calendar_id or self.company_id.resource_calendar_id
+        return calendar.hours_per_day
 
     def _get_worked_day_lines_hours_per_week(self):
         self.ensure_one()
@@ -828,7 +829,7 @@ class HrPayslip(models.Model):
 
     def _get_out_of_contract_calendar(self):
         self.ensure_one()
-        return self.version_id.resource_calendar_id
+        return self.version_id.resource_calendar_id or self.employee_id.resource_calendar_id or self.company_id.resource_calendar_id
 
     def _get_worked_day_lines_values(self, domain=None):
         self.ensure_one()
@@ -862,39 +863,37 @@ class HrPayslip(models.Model):
         :returns: a list of dict containing the worked days values that should be applied for the given payslip
         """
         res = []
-        # fill only if the version as a working schedule linked
         self.ensure_one()
         version = self.version_id
-        if version.resource_calendar_id:
-            res = self._get_worked_day_lines_values(domain=domain)
-            if not check_out_of_version:
-                return res
+        res = self._get_worked_day_lines_values(domain=domain)
+        if not check_out_of_version:
+            return res
 
-            # If the version doesn't cover the whole month, create
-            # worked_days lines to adapt the wage accordingly
-            out_days, out_hours = 0, 0
-            reference_calendar = self._get_out_of_contract_calendar()
-            if self.date_from < version.date_start:
-                start = fields.Datetime.to_datetime(self.date_from)
-                stop = fields.Datetime.to_datetime(version.date_start) + relativedelta(days=-1, hour=23, minute=59)
-                out_time = reference_calendar.get_work_duration_data(start, stop, compute_leaves=False, domain=['|', ('work_entry_type_id', '=', False), ('work_entry_type_id.is_leave', '=', False)])
-                out_days += out_time['days']
-                out_hours += out_time['hours']
-            if version.date_end and version.date_end < self.date_to:
-                start = fields.Datetime.to_datetime(version.date_end) + relativedelta(days=1)
-                stop = fields.Datetime.to_datetime(self.date_to) + relativedelta(hour=23, minute=59)
-                out_time = reference_calendar.get_work_duration_data(start, stop, compute_leaves=False, domain=['|', ('work_entry_type_id', '=', False), ('work_entry_type_id.is_leave', '=', False)])
-                out_days += out_time['days']
-                out_hours += out_time['hours']
+        # If the version doesn't cover the whole month, create
+        # worked_days lines to adapt the wage accordingly
+        out_days, out_hours = 0, 0
+        reference_calendar = self._get_out_of_contract_calendar()
+        if self.date_from < version.date_start:
+            start = fields.Datetime.to_datetime(self.date_from)
+            stop = fields.Datetime.to_datetime(version.date_start) + relativedelta(days=-1, hour=23, minute=59)
+            out_time = reference_calendar.get_work_duration_data(start, stop, compute_leaves=False, domain=['|', ('work_entry_type_id', '=', False), ('work_entry_type_id.is_leave', '=', False)])
+            out_days += out_time['days']
+            out_hours += out_time['hours']
+        if version.date_end and version.date_end < self.date_to:
+            start = fields.Datetime.to_datetime(version.date_end) + relativedelta(days=1)
+            stop = fields.Datetime.to_datetime(self.date_to) + relativedelta(hour=23, minute=59)
+            out_time = reference_calendar.get_work_duration_data(start, stop, compute_leaves=False, domain=['|', ('work_entry_type_id', '=', False), ('work_entry_type_id.is_leave', '=', False)])
+            out_days += out_time['days']
+            out_hours += out_time['hours']
 
-            work_entry_type = self.env.ref('hr_work_entry.hr_work_entry_type_out_of_contract', raise_if_not_found=False)
-            if work_entry_type and (out_days or out_hours):
-                res.append({
-                    'sequence': work_entry_type.sequence,
-                    'work_entry_type_id': work_entry_type.id,
-                    'number_of_days': out_days,
-                    'number_of_hours': out_hours,
-                })
+        work_entry_type = self.env.ref('hr_work_entry.hr_work_entry_type_out_of_contract', raise_if_not_found=False)
+        if work_entry_type and (out_days or out_hours):
+            res.append({
+                'sequence': work_entry_type.sequence,
+                'work_entry_type_id': work_entry_type.id,
+                'number_of_days': out_days,
+                'number_of_hours': out_hours,
+            })
         return res
 
     @property

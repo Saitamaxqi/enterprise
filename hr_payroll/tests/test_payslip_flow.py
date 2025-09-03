@@ -472,6 +472,97 @@ class TestPayslipFlow(TestPayslipBase):
             payslip_form.save()
         self.assertTrue(payslip_form)
 
+    def test_05_fully_flexible_contracts_payslip(self):
+        """ Test payslip generation for fully flexible contracts (no working schedule) with attendance-based work entries """
+
+        if not self.env["ir.module.module"].search([("name", "=", "hr_work_entry_attendance"), ("state", "=", "installed")]):
+            self.skipTest("Module 'hr_work_entry_attendance' is not installed!")
+
+        attendance_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_attendance')
+
+        # Case 1: contract with no calendar
+        date_from = datetime.date.today()
+        date_to = date_from + relativedelta(months=1)
+
+        employee_with_calendar = self.env['hr.employee'].create({
+            'name': 'employee 1',
+            'resource_calendar_id': self.env.ref('resource.resource_calendar_std').id,
+            'work_entry_source': 'attendance',
+            'wage': 5000,
+            'structure_type_id': self.structure_type.id,
+            'date_version': date_from - relativedelta(months=2),
+            'contract_date_start': date_from - relativedelta(months=2),
+        })
+
+        flexible_contract_1 = employee_with_calendar.version_id
+        flexible_contract_1.resource_calendar_id = False
+
+        for day in range(7):
+            work_date = date_from + relativedelta(days=day)
+            if work_date.weekday() < 5:
+                self.env['hr.work.entry'].create({
+                    'name': f'attendance {day + 1}',
+                    'employee_id': employee_with_calendar.id,
+                    'version_id': flexible_contract_1.id,
+                    'work_entry_type_id': attendance_work_entry_type.id,
+                    'date': work_date,
+                    'duration': 8,
+                })
+
+        payslip_1 = self.env['hr.payslip'].create({
+            'name': "payslip of employee 1",
+            'employee_id': employee_with_calendar.id,
+            'date_from': date_from,
+            'date_to': date_to,
+        })
+
+        payslip_1.compute_sheet()
+
+        self.assertTrue(payslip_1.worked_days_line_ids, 'worked days should be generated for fully flexible contract')
+        attendance_line_1 = payslip_1.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id == attendance_work_entry_type)
+        self.assertTrue(attendance_line_1, 'attendance worked days should be present')
+        self.assertEqual(attendance_line_1.number_of_days, 5, 'payslip should record 5 worked days')
+        self.assertEqual(attendance_line_1.number_of_hours, 40, 'payslip should record 40 hours')
+
+        # Case 2: employee with no calendar, contract with no calendar (full flexibility in both)
+        employee_no_calendar = self.env['hr.employee'].create({
+            'name': 'employee 2',
+            'resource_calendar_id': False,
+            'work_entry_source': 'attendance',
+            'wage': 6000,
+            'structure_type_id': self.structure_type.id,
+            'date_version': date_from - relativedelta(months=2),
+            'contract_date_start': date_from - relativedelta(months=2),
+        })
+
+        flexible_contract_2 = employee_no_calendar.version_id
+
+        for day in range(7):
+            work_date = date_from + relativedelta(days=day + 10)
+            if work_date.weekday() < 5:
+                self.env['hr.work.entry'].create({
+                    'name': f'Attendance {day + 1}',
+                    'employee_id': employee_no_calendar.id,
+                    'version_id': flexible_contract_2.id,
+                    'work_entry_type_id': attendance_work_entry_type.id,
+                    'date': work_date,
+                    'duration': 8,
+                })
+
+        payslip_2 = self.env['hr.payslip'].create({
+            'name': 'payslip 2',
+            'employee_id': employee_no_calendar.id,
+            'date_from': date_from,
+            'date_to': date_to,
+        })
+
+        payslip_2.compute_sheet()
+
+        self.assertTrue(payslip_2.worked_days_line_ids, 'worked days should be generated for fully flexible contract')
+        attendance_line_2 = payslip_2.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id == attendance_work_entry_type)
+        self.assertTrue(attendance_line_2, 'attendance worked days should be present')
+        self.assertGreater(attendance_line_2.number_of_hours, 0, 'payslip record attendance hours')
+
     def test_06_pay_run_payslip_name(self):
         """
         This test checks that the name of the payslip contains the name and the period for which the pay run is
