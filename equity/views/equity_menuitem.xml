@@ -11,7 +11,7 @@
         <menuitem id="menu_equity_ownership" name="Ownership" sequence="20">
             <menuitem id="menu_equity_ownership_transactions" name="Transactions" action="equity.action_equity_transaction" sequence="10"/>
             <menuitem id="menu_equity_ownership_valuations" name="Valuations" action="equity.action_equity_valuation" sequence="20"/>
-            <menuitem id="menu_equity_ownership_authorized_reps" name="Authorized Reps" action="equity.action_equity_authorized_rep" sequence="30"/>
+            <menuitem id="menu_equity_ownership_ubos" name="UBO" action="equity.action_equity_ubo" sequence="30"/>
         </menuitem>
         <menuitem id="menu_equity_reporting" name="Reporting" sequence="30">
             <menuitem id="menu_equity_reporting_cap_table" name="Cap Table" action="equity.action_equity_cap_table" sequence="10"/>
