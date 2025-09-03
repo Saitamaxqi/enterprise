@@ -213,11 +213,6 @@ class HrVersion(models.Model):
         action.update({'domain': [('version_id', '=', self.id)]})
         return action
 
-    def _index_contracts(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_hr_payroll_index")
-        action['context'] = repr(self.env.context)
-        return action
-
     def _get_work_hours_domain(self, date_from, date_to, domain=None):
         return Domain.AND([
             domain or Domain.TRUE,
@@ -308,6 +303,9 @@ class HrVersion(models.Model):
         return nearly_expired_versions_without_new_versions
 
     def write(self, vals):
+        if self:
+            # Force to track wage in employee form if any changes is found after version write
+            self.employee_id._track_prepare({version.sudo()._get_contract_wage_field() for version in self})
         res = super().write(vals)
         dependendant_fields = self._get_fields_that_recompute_payslip()
         if any(key in dependendant_fields for key in vals):

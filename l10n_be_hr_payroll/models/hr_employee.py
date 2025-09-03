@@ -302,11 +302,6 @@ Earnings are made of professional income, remuneration, unemployment allocations
         action['context'] = {'default_version_id': self.current_version_id.id}
         return action
 
-    def _index_employee_contracts(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_hr_payroll_index")
-        action['context'] = {'default_version_ids': self.mapped('current_version_id.id')}
-        return action
-
     def action_open_attest_wizard(self):
         self.ensure_one()
 

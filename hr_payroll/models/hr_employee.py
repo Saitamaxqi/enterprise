@@ -88,6 +88,17 @@ class HrEmployee(models.Model):
                        'context': {'default_employee_ids': self.ids}})
         return action
 
+    def _index_employee_contracts(self, multi_employees=False):
+        action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_hr_payroll_index")
+        if not multi_employees:
+            action['context'] = ({
+                'default_version_ids': self.version_id.ids,
+                'active_employee_id': self.id,
+            })
+        else:
+            action['context'] = {'default_employee_ids': self.ids}
+        return action
+
     @api.model
     def _get_account_holder_employees_data(self):
         # as acc_type isn't stored we can not use a domain to retrieve the employees

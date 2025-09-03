@@ -40,11 +40,6 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_version_list_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//list" position="inside">
-                <header>
-                    <button name="%(hr_payroll.action_hr_payroll_index)d" type="action" string="Index Contracts" groups="hr.group_hr_manager"/>
-                </header>
-            </xpath>
             <xpath expr="//field[@name='structure_type_id']" position="after">
                 <field name="payslips_count" optional="hidden"/>
             </xpath>
