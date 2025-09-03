@@ -5,10 +5,7 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { toggleArchive, openDeleteConfirmationDialog } from "@documents/views/hooks";
 import { getCommonEmbeddedActions } from "@documents/views/utils";
-import { serializeDate } from "@web/core/l10n/dates";
-import { download } from "@web/core/network/download";
 
-const { DateTime } = luxon;
 
 export const DocumentsModelMixin = (component) =>
     class extends component {
@@ -387,35 +384,6 @@ export const DocumentsModelMixin = (component) =>
          * Download the selected documents.
          */
         async onDownload() {
-            const documents = this.targetRecords.filter((rec) => !rec.isRequest());
-            if (!documents.length) {
-                return;
-            }
-
-            const linkDocuments = documents.filter((el) => el.data.type === "url");
-            const noLinkDocuments = documents.filter((el) => el.data.type !== "url");
-            // Manage link documents
-            if (documents.length === 1 && linkDocuments.length) {
-                // Redirect to the link
-                let url = linkDocuments[0].data.url;
-                url = /^(https?|ftp):\/\//.test(url) ? url : `http://${url}`;
-                window.open(url, "_blank");
-            } else if (noLinkDocuments.length) {
-                // Download all documents which are not links
-                if (noLinkDocuments.length === 1) {
-                    await download({
-                        data: {},
-                        url: `/documents/content/${noLinkDocuments[0].data.access_token}`,
-                    });
-                } else {
-                    await download({
-                        data: {
-                            file_ids: noLinkDocuments.map((rec) => rec.data.id),
-                            zip_name: `documents-${serializeDate(DateTime.now())}.zip`,
-                        },
-                        url: "/documents/zip",
-                    });
-                }
-            }
+            this.documentService.downloadDocuments(this.targetRecords);
         }
     };

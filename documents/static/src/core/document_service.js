@@ -3,7 +3,9 @@ import { Document } from "./document_model";
 import { DocumentsManageVersions } from "@documents/components/documents_manage_versions_panel/documents_manage_versions_panel";
 import { EventBus, markup, reactive } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
+import { download } from "@web/core/network/download";
 import { parseSearchQuery, router } from "@web/core/browser/router";
+import { serializeDate } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { rpc } from "@web/core/network/rpc";
@@ -12,6 +14,8 @@ import { debounce } from "@web/core/utils/timing";
 import { session } from "@web/session";
 import { formatFloat } from "@web/views/fields/formatters";
 import { memoize } from "@web/core/utils/functions";
+
+const { DateTime } = luxon;
 
 // Small hack, memoize uses the first argument as cache key, but we need the orm which will not be the same.
 const loadMaxUploadSize = memoize((_null, orm) =>
@@ -148,6 +152,39 @@ export class DocumentService {
 
     canDownload(document) {
         return document && typeof document.id === "number";
+    }
+
+    async downloadDocuments(documents) {
+        documents = documents.filter((rec) => !rec.isRequest());
+        if (!documents.length) {
+            return;
+        }
+
+        const linkDocuments = documents.filter((el) => el.data.type === "url");
+        const noLinkDocuments = documents.filter((el) => el.data.type !== "url");
+        // Manage link documents
+        if (documents.length === 1 && linkDocuments.length) {
+            // Redirect to the link
+            let url = linkDocuments[0].data.url;
+            url = /^(https?|ftp):\/\//.test(url) ? url : `http://${url}`;
+            window.open(url, "_blank");
+        } else if (noLinkDocuments.length) {
+            // Download all documents which are not links
+            if (noLinkDocuments.length === 1) {
+                await download({
+                    data: {},
+                    url: `/documents/content/${noLinkDocuments[0].data.access_token}`,
+                });
+            } else {
+                await download({
+                    data: {
+                        file_ids: noLinkDocuments.map((rec) => rec.data.id),
+                        zip_name: `documents-${serializeDate(DateTime.now())}.zip`,
+                    },
+                    url: "/documents/zip",
+                });
+            }
+        }
     }
 
     isEditable(document) {
