@@ -30,7 +30,9 @@
             <h5 class="mt-3">
                 Relation
             </h5>
-            <RecordSelector t-props="relationSelectorProps"/>
+            <div t-att-class="{'o_field_invalid': state.showMissingRelationWarning}">
+                <RecordSelector t-props="relationSelectorProps"/>
+            </div>
         </t>
         <div t-if="!['char', 'text', 'html'].includes(state.fieldType)" class="alert alert-info mt-3">
             <t t-out="selectedField.label"/> fields won't update automatically - Click the

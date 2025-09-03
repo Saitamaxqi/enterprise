@@ -32,6 +32,7 @@ export class AiFieldConfigurationDialog extends Component {
             relationId: false,
             relationName: false,
             selection: [],
+            showMissingRelationWarning: false,
         });
     }
 
@@ -132,6 +133,9 @@ export class AiFieldConfigurationDialog extends Component {
             update: async (resId) => {
                 this.state.relationId = resId;
                 this.state.relationName = resId && (await this.getRelationName(resId));
+                if (resId) {
+                    this.state.showMissingRelationWarning = false;
+                }
             },
         };
     }
@@ -153,6 +157,10 @@ export class AiFieldConfigurationDialog extends Component {
     }
 
     async onConfirm() {
+        if (["m2o", "m2m"].includes(this.state.fieldType) && !this.state.relationId) {
+            this.state.showMissingRelationWarning = true;
+            return;
+        }
         const newNode = {
             field_description: {
                 field_description: this.selectedField.description,

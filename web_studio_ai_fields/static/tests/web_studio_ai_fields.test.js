@@ -310,7 +310,7 @@ test("insert relational ai field", async () => {
     expect(".o_web_studio_ai_field_configuration_dialog h5:contains('Relation')").toHaveCount(0);
     await contains(".o_web_studio_ai_field_select_menu_toggler").click();
     await contains(".o_web_studio_ai_field_select_menu_item.o_web_studio_field_many2one").click();
-    await contains("h5:contains('Relation') + .o_record_selector input").click();
+    await contains("h5:contains('Relation') + div .o_record_selector input").click();
     await waitFor(".o-autocomplete--dropdown-menu");
     // should only show models that are not abstract/transient.
     expect(".o-autocomplete .o-autocomplete--dropdown-item").toHaveCount(1);
