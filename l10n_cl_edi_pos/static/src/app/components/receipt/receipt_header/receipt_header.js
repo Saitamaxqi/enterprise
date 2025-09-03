@@ -8,6 +8,6 @@ patch(ReceiptHeader.prototype, {
         ];
     },
     get isChileanCompany() {
-        return this.order.company_id.country_id?.code === "CL";
+        return this.order.company_id?.country_id?.code === "CL";
     },
 });
