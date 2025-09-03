@@ -11,7 +11,7 @@ from odoo.exceptions import ValidationError
 from odoo.fields import Command, Domain
 from odoo.tools.intervals import Intervals, intervals_overlap, invert_intervals
 from odoo.tools.date_utils import localized
-from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize, is_html_empty, plaintext2html
+from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize
 
 _logger = logging.getLogger(__name__)
 
@@ -490,7 +490,7 @@ class CalendarEvent(models.Model):
         link_html = Markup("<span>%s <a href=%s>%s</a></span>") % (_("Need to reschedule?"), url, _("Click here"))
 
         return Markup("").join([
-            self._get_attendee_description(),
+            self.description,
             Markup('<br>'),
             confirmation_html,
             link_html,
@@ -499,42 +499,6 @@ class CalendarEvent(models.Model):
     @api.model
     def _get_activity_excluded_models(self):
         return super()._get_activity_excluded_models() + ['appointment.type']
-
-    def _get_attendee_description(self):
-        """:return (html): Sanitized HTML description of attendees and their responses to the questions"""
-        include_phone_partners = self.attendee_ids.filtered(lambda attendee: attendee.partner_id in (self.appointment_booker_id + self.partner_id))
-        attendee_descriptions = [
-            Markup('<span>%s</span>') % ' - '.join(
-                attendee[field] for field in ('common_name', 'email', 'phone') if attendee[field] and (field != 'phone' or (attendee & include_phone_partners))
-            )
-            for attendee in self.attendee_ids
-        ]
-
-        questions = []
-        answers = []
-        for question, answer in self.appointment_answer_input_ids.sorted('id').grouped('question_id').items():
-            questions.append(question.name)
-            answers.append(Markup(', ').join((plaintext2html(ans.value_text_box) if question.question_type == 'text'
-                                              else ans.value_text_box or ans.value_answer_id.name)
-                                             for ans in answer))
-        question_descriptions = [
-            Markup('<span>%s: %s</span>') % (question, answer)
-            for question, answer in zip(questions, answers)
-        ]
-        if not attendee_descriptions and not question_descriptions:
-            return ''
-
-        if attendee_descriptions:
-            attendee_descriptions.insert(0, Markup('<span>{}</span>').format(_("Contact Details")))
-        if question_descriptions:
-            question_descriptions.insert(0, Markup('<span>{}</span>').format(_("Questions")))
-        complete_description = (
-            Markup('<br/>').join([
-                Markup('<div>%s</div>') % Markup('<br/>').join(paragraph)
-                for paragraph in (attendee_descriptions, question_descriptions) if paragraph
-            ])
-        )
-        return html_sanitize(complete_description) if not is_html_empty(complete_description) else ''
 
     def _get_customer_summary(self):
         # Summary should make sense for the person who booked the meeting

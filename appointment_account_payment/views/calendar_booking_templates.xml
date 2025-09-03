@@ -98,6 +98,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div t-if="not is_html_empty(booking.description)" class="row mb-4">
+                            <div class="col-3">
+                                <label class="text-muted">Details</label>
+                            </div>
+                            <div class="col-9 col-lg-6">
+                                <div t-field="booking.description"/>
+                            </div>
+                        </div>
                         <div t-if="appointment_type" t-out="appointment_type.message_confirmation" class="mt-4"/>
                     </div>
                     <div class="col-12 col-md-4 px-md-4">

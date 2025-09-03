@@ -3,6 +3,7 @@
 import json
 import pytz
 
+from markupsafe import Markup
 from pytz.exceptions import UnknownTimeZoneError
 from werkzeug.exceptions import BadRequest
 
@@ -18,7 +19,7 @@ from odoo.exceptions import UserError
 from odoo.fields import Command, Domain
 from odoo.http import request, route
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as dtf, email_normalize
-from odoo.tools.mail import is_html_empty
+from odoo.tools.mail import is_html_empty, plaintext2html
 from odoo.tools.misc import babel_locale_parse, get_lang
 from odoo.tools.translate import LazyTranslate
 from odoo.addons.base.models.ir_qweb import keep_query
@@ -754,20 +755,40 @@ class AppointmentController(http.Controller):
 
         # The answer inputs will be created in _prepare_calendar_event_values from the values in answer_input_values
         answer_input_values = []
+        question_description = ''
+        question_description_bits = []
         for question in appointment_type.question_ids.filtered(lambda question: question.id in partner_inputs):
+            answer_value = False
             if question.question_type == 'checkbox':
                 if answer_ids := partner_inputs[question.id]:
                     answer_input_values.extend(
                         dict(question_id=question.id, value_answer_id=answer_id) for answer_id in answer_ids
                     )
+                    answer_value = ", ".join(
+                        question.answer_ids.filtered(lambda answer: answer.id in partner_inputs[question.id]).mapped("name")
+                    )
             elif question.question_type in ['select', 'radio']:
                 answer_input_values.append(
                     dict(question_id=question.id, value_answer_id=int(partner_inputs[question.id]))
                 )
+                answer_value = question.answer_ids.filtered(lambda answer: answer.id == int(partner_inputs[question.id])).name
             elif question.question_type in ['char', 'text', 'phone']:
+                answer = partner_inputs[question.id]
                 answer_input_values.append(
-                    dict(question_id=question.id, value_text_box=partner_inputs[question.id])
+                    dict(question_id=question.id, value_text_box=answer)
                 )
+                answer_value = Markup('<br/>') + plaintext2html(answer, with_paragraph=False) \
+                    if question.question_type == 'text' else answer
+            if answer_value:
+                question_description_bits.append(
+                    Markup('<span>%s - %s</span>') % (question.name, answer_value)
+                )
+
+        if question_description_bits:
+            question_description = Markup('<br/>').join([
+                Markup('<br/><strong>%s</strong>') % _("Questions & Answers"),
+                Markup('<br/>').join(question_description_bits),
+            ])
 
         # avoid doing anything based on visitor if csrf isn't checked to avoid leaking last-login info
         customer = self._get_customer_partner() if csrf_token else self.env['res.partner']
@@ -798,6 +819,10 @@ class AppointmentController(http.Controller):
                 'email': email,
                 'lang': request.lang.code,
             })
+
+        description = Markup('<br/>').join(request.env['calendar.event']._prepare_partner_contact_details_html(_("Contact Details"), customer))
+        if question_description:
+            description += Markup('<br/>') + question_description
 
         for vals in answer_input_values:
             vals |= {
@@ -832,7 +857,7 @@ class AppointmentController(http.Controller):
             appointment_invite = request.env['appointment.invite']
 
         return self._handle_appointment_form_submission(
-            appointment_type, date_start, date_end, duration, allday, answer_input_values, name,
+            appointment_type, date_start, date_end, description, duration, allday, answer_input_values, name,
             customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values,
             self._get_extra_calendar_event_params(**kwargs),
         )
@@ -842,7 +867,7 @@ class AppointmentController(http.Controller):
 
     def _handle_appointment_form_submission(
         self, appointment_type,
-        date_start, date_end, duration, allday,  # appointment boundaries
+        date_start, date_end, description, duration, allday,  # appointment boundaries
         answer_input_values, name, customer, appointment_invite, guests=None,  # customer info
         staff_user=None, asked_capacity=1, booking_line_values=None,  # appointment staff / resources
         extra_calendar_event_params=None,  # misc params for use in bridges
@@ -858,10 +883,10 @@ class AppointmentController(http.Controller):
             mail_create_nolog=True,
             mail_create_nosubscribe=True,
             allowed_company_ids=self._get_allowed_companies(staff_user or appointment_type.create_uid).ids,
-        ).sudo().create({
+        ).sudo().with_context(skip_contact_description=True).create({
             'appointment_answer_input_ids': [Command.create(vals) for vals in answer_input_values],
             **appointment_type._prepare_calendar_event_values(
-                asked_capacity, booking_line_values, duration, allday,
+                asked_capacity, booking_line_values, description, duration, allday,
                 appointment_invite, guests, name, customer, staff_user, date_start, date_end
             ),
             **(extra_calendar_event_params or {}),

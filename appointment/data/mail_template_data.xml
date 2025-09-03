@@ -14,7 +14,6 @@
     <t t-set="colors" t-value="{'needsAction': 'grey', 'accepted': 'green', 'tentative': '#FFFF00', 'declined': 'red'}" />
     <t t-set="recurrent" t-value="object.recurrence_id and not ctx.get('calendar_template_ignore_recurrence')" />
     <t t-set="mail_tz" t-value="object._get_mail_tz() or ctx.get('mail_tz')" />
-    <t t-set="attendee_description" t-value="object._get_attendee_description()"/>
     <p>
     <t t-if="not object.appointment_type_id.is_always_confirm and object.appointment_status == 'request'">
         Appointment requested for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t>
@@ -98,8 +97,8 @@
                 </ul>
             </td>
     </tr></table>
-    <div t-if="attendee_description" style="color:#000000;">
-        Description of the event:<div t-out="attendee_description"/>
+    <div t-if="not is_html_empty(object.description)" style="color:#000000;">
+        Description of the event:<div t-out="object.description"/>
     </div>
     <t t-set="upcoming_appointments"
         t-value="(object.appointment_booker_id.upcoming_appointment_ids - object).sorted('start')"/>
@@ -134,7 +133,6 @@
     <t t-set="colors" t-value="{'needsAction': 'grey', 'accepted': 'green', 'tentative': '#FFFF00', 'declined': 'red'}"/>
     <t t-set="recurrent" t-value="object.recurrence_id and not ctx.get('calendar_template_ignore_recurrence')"/>
     <t t-set="mail_tz" t-value="object._get_mail_tz() or ctx.get('mail_tz')" />
-    <t t-set="attendee_description" t-value="object._get_attendee_description()"/>
     <p>
     The appointment for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t> <t t-if="object.appointment_type_id.category not in ['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t> has been canceled.
     </p>
@@ -193,8 +191,8 @@
                 </del>
             </td>
     </tr></table>
-    <del t-if="attendee_description">
-        <div style="color:#000000;">Description of the event:<div t-out="attendee_description"/></div>
+    <del t-if="not is_html_empty(object.description)">
+        <div style="color:#000000;">Description of the event:<div t-out="object.description"/></div>
     </del>
 </div>
             </field>
@@ -217,7 +215,6 @@
     <t t-set="target_responsible" t-value="object.partner_id == object.event_id.partner_id"/>
     <t t-set="target_customer" t-value="object.partner_id == customer"/>
     <t t-set="recurrent" t-value="object.recurrence_id and not ctx.get('calendar_template_ignore_recurrence')"/>
-    <t t-set="attendee_description" t-value="object.event_id._get_attendee_description()"/>
     <t t-set="extra_message" t-value="object.event_id.appointment_type_id.message_confirmation"/>
 
     <p>
@@ -343,9 +340,9 @@
             </ul>
         </td>
     </tr></table>
-    <div t-if="attendee_description" style="color:#000000;">
+    <div t-if="not is_html_empty(object.event_id.description)" style="color:#000000;">
         Description of the event:
-        <div t-out="attendee_description">Internal meeting for discussion for new pricing for product and services.</div>
+        <div t-out="object.event_id.description">Internal meeting for discussion for new pricing for product and services.</div>
     </div>
     <t t-set="upcoming_appointments"
         t-value="(object.event_id.appointment_booker_id.upcoming_appointment_ids - object.event_id).sorted('start')"/>

@@ -2,6 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { user } from "@web/core/user";
 import { GanttRenderer } from "@web_gantt/gantt_renderer";
+import { isHtmlEmpty } from "@web/core/utils/html";
 import { patch } from "@web/core/utils/patch";
 const { DateTime } = luxon;
 import { onWillStart } from "@odoo/owl";
@@ -152,34 +153,14 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
     async getPopoverProps(pill) {
         const popoverProps = await super.getPopoverProps(...arguments);
         const { record } = pill;
-        const partner_ids = record.partner_ids || [];
-        let contact_partner_id = false;
-        if (record.partner_ids) {
-            contact_partner_id = record.partner_id
-            ? partner_ids.find(partner_id => partner_id != record.partner_id[0])
-            : partner_ids.length ? partner_ids[0] : false;
-        }
-        const popoverValues = contact_partner_id
-            ? await this.orm.read(
-                'res.partner',
-                [contact_partner_id], ['name', 'email', 'phone']
-            )
-            : [{
-                id: false,
-                name: '',
-                email: '',
-                phone: '',
-            }];
         Object.assign(popoverProps, {
             buttons: this.getPopoverButtons(record),
             context: {
                 ...popoverProps.context,
                 can_edit: this.model.metaData.canEdit,
-                gantt_pill_contact_email: popoverValues[0].email,
-                gantt_pill_contact_name: popoverValues[0].name,
-                gantt_pill_contact_phone: popoverValues[0].phone,
+                isHtmlEmpty: isHtmlEmpty,
             },
-            title: popoverValues[0].name || this.getDisplayName(pill),
+            title: record.appointment_booker_id?.display_name || this.getDisplayName(pill),
         });
         return popoverProps;
     }

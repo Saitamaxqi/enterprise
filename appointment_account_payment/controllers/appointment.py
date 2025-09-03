@@ -61,7 +61,7 @@ class AppointmentAccountPayment(AppointmentController):
 
     def _handle_appointment_form_submission(
         self, appointment_type,
-        date_start, date_end, duration, allday,
+        date_start, date_end, description, duration, allday,
         answer_input_values, name, customer, appointment_invite, guests=None,
         staff_user=None, asked_capacity=1, booking_line_values=None,
         extra_calendar_event_params={},
@@ -79,8 +79,9 @@ class AppointmentAccountPayment(AppointmentController):
                 'appointment_answer_input_ids': [Command.create(vals) for vals in answer_input_values],
                 'appointment_invite_id': appointment_invite.id,
                 'appointment_type_id': appointment_type.id,
-                'booking_line_ids': [Command.create(vals) for vals in booking_line_values],
                 'asked_capacity': asked_capacity,
+                'booking_line_ids': [Command.create(vals) for vals in booking_line_values],
+                'description': description,
                 'guest_ids': [Command.link(pid) for pid in guests.ids] if guests else [],
                 'name': name,
                 'partner_id': customer.id,
@@ -92,7 +93,7 @@ class AppointmentAccountPayment(AppointmentController):
             return self._redirect_to_payment(calendar_booking)
 
         return super()._handle_appointment_form_submission(
-            appointment_type, date_start, date_end, duration, allday, answer_input_values, name,
+            appointment_type, date_start, date_end, description, duration, allday, answer_input_values, name,
             customer, appointment_invite, guests, staff_user, asked_capacity, booking_line_values,
             extra_calendar_event_params,
         )

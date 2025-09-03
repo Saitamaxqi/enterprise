@@ -47,13 +47,13 @@ class AppointmentType(models.Model):
         return whitelist_fields
 
     def _prepare_calendar_event_values(
-            self, asked_capacity, booking_line_values, duration, allday,
+            self, asked_capacity, booking_line_values, description, duration, allday,
             appointment_invite, guests, name, customer, staff_user, start, stop
     ):
         """ Add values of the customer's last ongoing lead linked to the staff member, if the appointment type has
         a random staff user selection. This avoids duplicate leads. """
         values = super()._prepare_calendar_event_values(
-            asked_capacity, booking_line_values, duration, allday,
+            asked_capacity, booking_line_values, description, duration, allday,
             appointment_invite, guests, name, customer, staff_user, start, stop
         )
         if self.is_auto_assign and self.lead_create and staff_user and customer != staff_user.partner_id:

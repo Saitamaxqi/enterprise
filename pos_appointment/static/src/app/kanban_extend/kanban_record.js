@@ -1,4 +1,5 @@
 import { Component } from "@odoo/owl";
+import { isHtmlEmpty } from "@web/core/utils/html";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { _t } from "@web/core/l10n/translation";
@@ -6,6 +7,11 @@ import { _t } from "@web/core/l10n/translation";
 export class PosAppointmentKanbanPopover extends Component {
     static props = { "*": { optional: true } };
     static template = "pos_restaurant_appointment.PosAppointmentKanbanPopover";
+
+    setup() {
+        super.setup(...arguments);
+        this.isHtmlEmpty = isHtmlEmpty;
+    }
 
     async loadData() {
         const root = this.props.record.model.root;

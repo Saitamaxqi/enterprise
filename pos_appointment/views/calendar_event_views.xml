@@ -32,7 +32,7 @@
                     <field name="appointment_status" widget="statusbar" invisible="not appointment_type_id" required="appointment_type_id" style="float:right;"/>
                 </div>
             </xpath>
-            <xpath expr='//field[@name="description"]' position="after">
+            <xpath expr='//field[@name="resource_ids"]' position="after">
                 <field name="answers"/>
             </xpath>
             <xpath expr="//group/div/label[@for='total_capacity_reserved']" position="attributes">
@@ -81,16 +81,8 @@
             <xpath expr="//templates/div[@t-name='gantt-popover']" position="replace">
                 <div t-name="gantt-popover">
                     <ul class="ps-1 mb-0 list-unstyled">
-                        <!--X_js field values are set directly in the renderer-->
-                        <t t-if="gantt_pill_contact_phone || gantt_pill_contact_email || gantt_pill_contact_name">
-                            <strong>Contact Information</strong>
-                            <li t-if="gantt_pill_contact_name"><strong>Name: </strong><t t-out="gantt_pill_contact_name"/></li>
-                            <li t-if="gantt_pill_contact_phone"><strong>Phone: </strong><t t-out="gantt_pill_contact_phone"/></li>
-                            <li t-if="gantt_pill_contact_email"><strong>Email: </strong><t t-out="gantt_pill_contact_email"/></li>
-                            <br/>
-                            <strong t-if="appointment_type_id">Booking Details</strong>
-                            <strong t-else="">Event Details</strong>
-                        </t>
+                        <strong t-if="appointment_type_id">Booking Details</strong>
+                        <strong t-else="">Event Details</strong>
                         <li t-if="phone_number">
                             <strong>Phone: </strong> <t t-out="phone_number"/>
                         </li>
@@ -99,6 +91,10 @@
                         <t t-set="hours" t-value="Math.floor(duration)"/>
                         <t t-set="minutes" t-value="Math.floor((duration - hours) * 60)"/>
                         <li><strong>Duration: </strong> <t t-out="hours"/>:<t t-out='(minutes+"").padStart(2, "0")'/> hours </li>
+                        <li t-if="!isHtmlEmpty(description)">
+                            <br/>
+                            <t t-out="description"/>
+                        </li>
                     </ul>
                 </div>
             </xpath>
@@ -121,6 +117,7 @@
     <field name="arch" type="xml">
         <kanban default_group_by="appointment_status" js_class="pos_kanban">
             <field name="name" />
+            <field name="description" />
             <field name="duration" />
             <field name="appointment_type_id" />
             <field name="appointment_status" />
