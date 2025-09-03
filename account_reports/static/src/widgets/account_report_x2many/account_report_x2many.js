@@ -255,14 +255,19 @@ export class AccountReportListRenderer extends ListRenderer {
         const nextRecordParentId = this.props.list.records[recordIndex + 1]?.data.parent_id.id
 
         // We check if the next line is a children of the current one
-        if (nextRecordParentId === currentRecordId)
-            return this.dialog.add(ConfirmationDialog, {
-                body: _t("This line and all its children will be deleted. Are you sure you want to proceed?"),
-                confirmLabel: "Delete",
-                confirm: () => { this.deleteRecord(recordIndex) },
-                cancel: () => {},
+        if (nextRecordParentId === currentRecordId) {
+            return new Promise((resolve) => {
+                this.dialog.add(ConfirmationDialog, {
+                    body: _t("This line and all its children will be deleted. Are you sure you want to proceed?"),
+                    confirmLabel: "Delete",
+                    confirm: () => {
+                        this.deleteRecord(recordIndex);
+                        resolve();
+                    },
+                    cancel: resolve,
+                });
             });
-
+        }
         this.deleteRecord(recordIndex);
     }
 
