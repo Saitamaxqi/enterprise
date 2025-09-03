@@ -37,8 +37,9 @@ class AIController(ThreadController):
     @add_guest_to_context
     def post_error_message(self, error_message, channel_id):
         channel = self._get_ai_channel_from_id(channel_id)
+        # The channel could have been deleted (the ai chat channel has been closed) so do nothing instead of throwing an error.
         if not channel:
-            raise NotFound()
+            return
         channel.sudo().ai_agent_id._post_error_message(error_message, channel)
 
     @http.route('/ai/close_ai_chat', methods=["POST"], type="jsonrpc", auth='public')
