@@ -4,6 +4,7 @@ import html
 import io
 import json
 import logging
+from psycopg2.errors import SerializationFailure
 import re
 import requests
 import tarfile
@@ -172,7 +173,8 @@ class Website_GeneratorRequest(models.Model):
             logger.info("Website Generator: Reporting OK for request uuid: %s", self.uuid)
             url = url_join(ws_endpoint, f'/website_scraper/{self.version}/report_ok')
             self._report_to_iap(url, data)
-
+        except SerializationFailure:
+            raise
         except Exception as e:
             # Defensive programming: if necessary info is missing, stop and warn IAP
             # (should not happen, but just in case of a future changes in the WS server)
