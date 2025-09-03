@@ -571,6 +571,8 @@ class AccountReturn(models.Model):
     amount_to_pay_currency_id = fields.Many2one(comodel_name='res.currency', compute='_compute_amount_to_pay_currency_id')
     show_amount_to_pay = fields.Boolean(compute='_compute_show_amount_to_pay')
 
+    is_ec_sales_list_return = fields.Boolean(string="Is an EC Sales List", compute="_compute_is_ec_sales_list_return")
+
     # view helper fields
     days_to_deadline = fields.Integer(compute='_compute_days_to_deadline')
     is_report_set = fields.Boolean(compute='_compute_is_report_set')
@@ -698,6 +700,13 @@ class AccountReturn(models.Model):
         for record in self:
             report = record.type_id.report_id
             record.is_tax_return = record.type_id.report_id and (report.root_report_id == generic_tax_report or report == generic_tax_report)
+
+    @api.depends('type_id')
+    def _compute_is_ec_sales_list_return(self):
+        generic_ec_sales_report = self.env.ref('account_reports.generic_ec_sales_report')
+        for record in self:
+            report = record.type_id.report_id
+            record.is_ec_sales_list_return = record.type_id.report_id and (report.root_report_id == generic_ec_sales_report or report == generic_ec_sales_report)
 
     @api.depends('is_tax_return', 'closing_move_ids')
     def _compute_show_amount_to_pay(self):
@@ -950,7 +959,7 @@ class AccountReturn(models.Model):
         self.ensure_one()
         if (
             self.type_external_id == 'account_reports.annual_corporate_tax_return_type'
-            or self.env.ref('account_reports.generic_ec_sales_report') in {self.type_id.report_id.root_report_id, self.type_id.report_id}
+            or self.is_ec_sales_list_return
         ):
             return 'generic_state_review_submit'
         elif not self.type_external_id or self.return_type_category == 'audit':
@@ -1249,6 +1258,24 @@ class AccountReturn(models.Model):
 
         if not self.env.user.has_group('account.group_account_manager'):
             raise UserError(_("Only an Accounting Administrator can reset an annual closing"))
+
+        if self.state == 'submitted':
+            self._reset_checks_for_states([self.state, 'reviewed'])
+            self.state = 'reviewed'
+            self.date_submission = False
+
+        if self.state == 'reviewed':
+            self._reset_checks_for_states([self.state, 'new'])
+            self.state = 'new'
+
+        self._mark_uncompleted()
+        return True
+
+    def action_reset_ec_sales_return_common(self):
+        self.ensure_one()
+
+        if not self.env.user.has_group('account.group_account_manager'):
+            raise UserError(_("Only an Accounting Administrator can reset an EC Sales List"))
 
         if self.state == 'submitted':
             self._reset_checks_for_states([self.state, 'reviewed'])
@@ -1836,7 +1863,7 @@ class AccountReturn(models.Model):
 
         if self.is_tax_return:
             checks += self._check_suite_common_vat_report(check_codes_to_ignore)
-        elif (self.type_id.report_id.root_report_id or self.type_id.report_id) == self.env.ref('account_reports.generic_ec_sales_report'):
+        elif self.is_ec_sales_list_return:
             checks += self._check_suite_common_ec_sales_list(check_codes_to_ignore)
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
             checks += self._check_suite_annual_closing(check_codes_to_ignore)

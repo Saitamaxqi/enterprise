@@ -17,7 +17,6 @@ Accounting reports for Croatia
         'data/profit_loss.xml',
         'security/ir.model.access.csv',
         'views/account_report_ec_sales_list_report.xml',
-        'views/account_return_views.xml',
         'wizard/ec_sales_list_submission_wizard.xml',
     ],
     'installable': True,
