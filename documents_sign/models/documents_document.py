@@ -55,7 +55,11 @@ class DocumentsDocument(models.Model):
         return template.go_to_custom_template(sign_directly_without_mail=True)
 
     def _get_gc_clear_bin_domain(self):
-        return Domain.AND([super()._get_gc_clear_bin_domain(), [("res_model", "!=", "sign.request")]])
+        return Domain.AND([
+            super()._get_gc_clear_bin_domain(),
+            [("res_model", "!=", "sign.request")],
+            [("res_model", "!=", "sign.document")],
+        ])
 
     @api.model
     def _data_embed_sign_create_sign_template_direct(self):
