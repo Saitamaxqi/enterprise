@@ -9,6 +9,7 @@ import logging
 import pathlib
 import pprint
 import textwrap
+import werkzeug
 import zipfile
 
 from werkzeug.exceptions import NotFound
@@ -53,7 +54,9 @@ class IoTController(http.Controller):
         # Check if identifier is of one of the IoT Boxes
         box = self._search_box(identifier)
         if not box or (auto == 'True' and not box.drivers_auto_update):
-            return ''
+            raise werkzeug.exceptions.Unauthorized(
+                description="No IoT box found with identifier '%s' or auto update disabled on the box." % identifier
+            )
 
         # '_L.py' files for Linux and '_W.py' for Windows
         incompatible_filename = "_L.py" if box.version[0] == 'W' else "_W.py"
