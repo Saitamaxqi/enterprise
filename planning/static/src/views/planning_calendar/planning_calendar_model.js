@@ -131,7 +131,8 @@ export class PlanningCalendarModel extends CalendarModel {
      */
     async multiCreateRecords(multiCreateData, dates) {
         if (!dates.length) {
-            return this.load();
+            await this.load();
+            return [];
         }
         const values = await multiCreateData.record.getChanges();
         if (values.template_id) {
@@ -150,8 +151,12 @@ export class PlanningCalendarModel extends CalendarModel {
                     }
                 }
             }
-            await this.orm.call(this.meta.resModel, "create_batch_from_calendar", [[], records]);
-            return this.load();
+            if (records.length) {
+                const createdRecords = await this.orm.call(this.meta.resModel, "create_batch_from_calendar", [[], records]);
+                await this.load();
+                return createdRecords
+            }
+            return [];
         }
     }
 

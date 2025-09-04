@@ -464,7 +464,6 @@ test("check creation of records with multiple filters selected", async () => {
 });
 
 test("check creation of records while no filter is selected", async () => {
-
     onRpc("get_calendar_filters", () => {
         return [
             {"id": 1, "resource_id": false, "checked": false, "resource_type": false},
@@ -476,10 +475,7 @@ test("check creation of records while no filter is selected", async () => {
         return [];
     });
     onRpc("create_batch_from_calendar", ({ args: [[], records] }) => {
-        if (!records.length){
-            expect.step("empty record");
-        }
-        return [];
+        expect.step("create_batch_from_calendar");
     });
 
     await mountWithCleanup(WebClient);
@@ -490,7 +486,7 @@ test("check creation of records while no filter is selected", async () => {
 
     await createRecordsInBatch();
 
-    expect.verifySteps(["empty record"]);
+    expect.verifySteps([]);
 });
 
 test("planning calendar view: print", async () => {
