@@ -5,25 +5,29 @@ export class WebsiteSaleSubscriptionChangeProductPrice extends Interaction {
     static selector = ".on_change_plan_table";
     dynamicContent = {
         ".plan_select": { "t-on-change": this._onPlanChange },
+        "#allow_one_time_sale": { "t-on-change": this._onBuyOnceSelected },
     };
 
     async _onPlanChange(e) {
         e.preventDefault();
-        const selectedOption = e.target.selectedOptions[0];
-        const { product, tablePrice: price, discountedPrice } = selectedOption.dataset;
+        const buyOnceRadio = document.getElementById("allow_one_time_sale");
+        const deliveryRadio = document.getElementById("regular_delivery");
 
-        document.querySelector("#product_price").innerText = price;
-        if (product) {
-            const discountInfoElems = document.querySelectorAll(".discount_info");
-            const discountPriceElem = document.querySelector("#discount_price");
-
-            if (discountedPrice) {
-                discountPriceElem.innerText = discountedPrice;
-                discountInfoElems.forEach(elem => elem.classList.remove("d-none"));
-            } else {
-                discountInfoElems.forEach(elem => elem.classList.add("d-none"));
-            }
+        if (buyOnceRadio && deliveryRadio) {
+            buyOnceRadio.checked = false;
+            deliveryRadio.checked = true;
         }
+    }
+
+    async _onBuyOnceSelected(e) {
+        const deliveryRadio = document.getElementById("regular_delivery");
+        if (deliveryRadio) {
+            deliveryRadio.checked = false;
+        }
+
+        document.querySelectorAll(".plan_select").forEach(radio => {
+            radio.checked = false;
+        });
     }
 }
 

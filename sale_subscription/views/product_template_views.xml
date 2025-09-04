@@ -62,8 +62,8 @@
                             <field name="product_tmpl_id" column_invisible="True"/>
                         </list>
                     </field>
-                    <group>
-                        <field name="allow_one_time_sale" invisible="not recurring_invoice or type != 'consu'"/>
+                    <group string="Options">
+                        <field name="allow_one_time_sale" invisible="not recurring_invoice"/>
                         <field name="allow_prorated_price" invisible="not recurring_invoice or type == 'consu' or invoice_policy == 'delivery'"/>
                     </group>
                 </page>

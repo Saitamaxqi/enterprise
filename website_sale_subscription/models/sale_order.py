@@ -19,10 +19,7 @@ class SaleOrder(models.Model):
                 )
                 if pricing:
                     self.plan_id = pricing.plan_id
-                elif not (
-                    product.allow_one_time_sale
-                    and product.type == 'consu'
-                ):
+                elif not product.allow_one_time_sale:
                     raise UserError(_("No suitable subscription pricing found for this product."))
 
         return super()._cart_add(product_id, *args, plan_id=plan_id, **kwargs)

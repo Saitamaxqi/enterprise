@@ -52,7 +52,6 @@ class ProductTemplate(models.Model):
 
         return has_pricing or (
             self.allow_one_time_sale
-            and self.type == 'consu'
             and not request.cart.plan_id
         )
 
@@ -122,10 +121,15 @@ class ProductTemplate(models.Model):
             'month': _('month'),
             'week': _('week'),
         }
-        minimum_period = min(
-            pricings.sudo().plan_id.mapped('billing_period_unit'),
-            key=lambda x: 1 / to_year[x],
-        )
+
+        # Find the plan with the shortest billing period to use as base for comparison
+        base_plan = min(pricings.sudo().plan_id, key=lambda x: 1 / to_year[x.billing_period_unit])
+        minimum_period = base_plan.billing_period_unit
+
+        # Compute base period price and max price for discount calculation
+        base_plan_pricings = pricings.filtered(lambda pr: pr.plan_id == base_plan)
+        base_period_price = min(base_plan_pricings.mapped('fixed_price'), default=0.0)
+        max_price = max(pricings.mapped('fixed_price'), default=0.0)
 
         currency = website.currency_id
         requested_plan = request and request.params.get('plan_id')
@@ -164,25 +168,36 @@ class ProductTemplate(models.Model):
                 * to_year[pricing_plan_sudo.billing_period_unit]
                 / to_year[minimum_period]
             )
+
+            if product_or_template.type == 'consu':
+                # For consumable products, use billing period (e.g., "3 month") instead of plan name
+                value = pricing.plan_id.billing_period_value
+                table_name = f"{value if value != 1 else ''} {pricing.plan_id.billing_period_unit}".strip()
+            else:
+                # For non-consumable products, use plan name with non-breaking spaces
+                table_name = pricing.plan_id.name.replace(" ", "\u00A0")
+
             pricing_data = {
                 'plan_id': pricing_plan_sudo.id,
                 'price': f"{pricing.plan_id.name}: {price_format}",
                 'price_value': price,
                 'table_price': price_format,
-                'table_name': pricing.plan_id.name.replace(' ', ' '),
+                'table_name': table_name,
                 'to_minimum_billing_period': f'{format_amount(self.env, amount=price_in_minimum_period, currency=currency)}'
                                              f' / {translation_mapping.get(minimum_period, minimum_period)}',
                 'can_be_added': request.cart.plan_id.id in (pricing_plan_sudo.id, False),
             }
 
-            # discount calculation for one time purchase
-            discount = 0.0
-            if product_or_template.type == 'consu':
-                if price > 0 and sales_price > 0 and sales_price >= price:
-                    discount = ((sales_price - price) * 100) / sales_price
-                    pricing_data['discounted_price'] = floor(discount)  # Round down to the nearest integer
-                else:
-                    pricing_data['discounted_price'] = 0.0
+            # Calculate discount percentage
+            if product_or_template.allow_one_time_sale and 0 < price <= sales_price:  # One-time sale: compare against sale price
+                discount = ((sales_price - price) * 100) / sales_price
+            elif (product_or_template.type == 'consu' and 0 < price <= max_price):  # Consumables: compare against max price
+                discount = ((max_price - price) * 100) / max_price
+            elif 0 < price_in_minimum_period <= base_period_price:  # Non-consumables: compare against base period price
+                discount = ((base_period_price - price_in_minimum_period) * 100) / base_period_price
+            else:
+                discount = 0.0
+            pricing_data['discounted_price'] = floor(discount) if discount > 0 else 0.0
 
             return pricing_data
 

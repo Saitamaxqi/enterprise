@@ -1,39 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
-    <div t-name="website_sale_subscription.SubscriptionPricingTable" id="oe_wsale_subscription_pricing_table">
-        <table class="o_not_editable table">
-            <tbody t-if="combination_info.pricings and combination_info.pricings.length > 1">
-                <t t-if="combination_info.allow_one_time_sale">
-                    <tr>
-                        <td>
-                            One-Time
-                        </td>
-                        <td class="text-muted">
-                            <span class="me-1" t-out="combination_info.currency_symbol"/>
-                            <span t-out="combination_info.list_price.toFixed(2)"/>
-                        </td>
-                    </tr>
-                </t>
-                <t t-foreach="combination_info.pricings" t-as="pricing" t-key="pricing.table_name">
-                    <tr class="position-relative">
-                        <td t-esc="pricing.table_name"/>
-                        <td class="text-muted" t-esc="pricing.table_price"/>
-                        <t t-value="pricing['discounted_price']" t-set="discounted_percentage"/>
-                        <t t-if="combination_info['product_type'] == 'consu' and combination_info['allow_one_time_sale']">
-                            <t t-if="discounted_percentage > 0">
-                                <td class="badge position-absolute top-50 end-0 translate-middle-y py-1 px-2 text-bg-primary">
-                                    <t t-out="discounted_percentage"/>%
-                                </td>
-                            </t>
-                        </t>
-                        <t t-else="">
-                            <td class="text-muted" t-esc="pricing.to_minimum_billing_period"/>
-                        </t>
-                    </tr>
-                </t>
-            </tbody>
-        </table>
-    </div>
     <div t-name="website_sale_subscription.SubscriptionPricingSelect">
         <select t-if="combination_info.pricings and combination_info.subscription_pricing_select" name="plan_id" class="form-select plan_select fs-5" required="1">
             <t t-foreach="combination_info.pricings" t-as="pricing" t-key="pricing.plan_id">

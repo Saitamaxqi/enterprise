@@ -121,3 +121,50 @@ class TestWebsiteSaleSubscription(WebsiteSaleSubscriptionCommon):
             self.assertTrue(so.order_line)
             self.assertEqual(so.order_line.product_id, one_time_product.product_variant_ids)
             self.assertEqual(so.plan_id, self.plan_month)
+
+    def test_subscription_plan_discount_percentage(self):
+        """Test discount percentage calculation"""
+        # Case 1: Service subscription product
+        product = self.env['product.template'].create({
+            'name': 'Discounted Subscription', 'recurring_invoice': True, 'type': 'service',
+        })
+        self.env['product.pricelist.item'].create([
+            {'plan_id': self.plan_week.id, 'fixed_price': 100.0, 'product_tmpl_id': product.id},
+            {'plan_id': self.plan_month.id, 'fixed_price': 180.0, 'product_tmpl_id': product.id},
+            {'plan_id': self.plan_year.id, 'fixed_price': 1000.0, 'product_tmpl_id': product.id},
+        ])
+
+        with MockRequest(self.env, website=self.website):
+            pricings = product._get_combination_info().get('pricings', [])
+
+        weekly = next(p for p in pricings if p['plan_id'] == self.plan_week.id)
+        monthly = next(p for p in pricings if p['plan_id'] == self.plan_month.id)
+        yearly = next(p for p in pricings if p['plan_id'] == self.plan_year.id)
+        self.assertEqual(weekly['discounted_price'], 0.0)  # Weekly plan no discount
+        self.assertEqual(monthly['discounted_price'], 58)  # Monthly 10% discount
+        self.assertEqual(yearly['discounted_price'], 80.0)  # Yearly 80% discount
+
+        # Case 2: Consumable subscription product
+        product.type = 'consu'
+        with MockRequest(self.env, website=self.website):
+            pricings = product._get_combination_info().get('pricings', [])
+
+        weekly = next(p for p in pricings if p['plan_id'] == self.plan_week.id)
+        monthly = next(p for p in pricings if p['plan_id'] == self.plan_month.id)
+        yearly = next(p for p in pricings if p['plan_id'] == self.plan_year.id)
+        self.assertEqual(weekly['discounted_price'], 90.0)  # Weekly 90% cheaper than yearly
+        self.assertEqual(monthly['discounted_price'], 82.0)  # Monthly 82% cheaper than yearly
+        self.assertEqual(yearly['discounted_price'], 0.0)  # Yearly is base price
+
+        # Case 3: One-time purchase + subscription
+        product.list_price = 1500  # One-time price
+        product.allow_one_time_sale = True
+        with MockRequest(self.env, website=self.website):
+            pricings = product._get_combination_info().get('pricings', [])
+
+        weekly = next(p for p in pricings if p['plan_id'] == self.plan_week.id)
+        monthly = next(p for p in pricings if p['plan_id'] == self.plan_month.id)
+        yearly = next(p for p in pricings if p['plan_id'] == self.plan_year.id)
+        self.assertEqual(weekly['discounted_price'], 93)  # Weekly 93% discount vs one-time
+        self.assertEqual(monthly['discounted_price'], 88)  # Monthly 88% discount vs one-time
+        self.assertEqual(yearly['discounted_price'], 33)  # Yearly 33% discount vs one-time

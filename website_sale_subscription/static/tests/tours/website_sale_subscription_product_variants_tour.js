@@ -28,8 +28,8 @@ registry.category("web_tour.tours").add("sale_subscription_add_to_cart", {
         },
         {
             content: "Trigger another plan",
-            trigger: ".product_price .plan_select",
-            run: `selectByLabel Yearly: $ 100.00`,
+            trigger: ".product_price label:has(span:contains('Yearly'))",
+            run: "click",
         },
         {
             content: "Trigger a variant",

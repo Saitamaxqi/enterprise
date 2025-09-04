@@ -17,7 +17,7 @@ WebsiteSale.include({
     _updateRootProduct(form) {
         this._super(...arguments);
         const selected_plan =
-            form.querySelector('.product_price .plan_select')?.value
+            form.querySelector('input[name="plan_id"]:checked')?.value
             ?? form.querySelector('#add_to_cart')?.dataset.subscriptionPlanId;
         if (selected_plan) {
             const allow_one_time_sale = form.querySelector('.allow_one_time_sale')?.checked;
@@ -36,12 +36,10 @@ WebsiteSale.include({
      */
     async _onClickAdd(ev) {
         const form = wSaleUtils.getClosestProductForm(ev.currentTarget);
-        const planSelects = form.querySelectorAll('.plan_select');
-        for (const select of planSelects) {
-            for (const option of select.options) {
-                option.disabled = !option.selected;
-            }
-        }
+        const inputs = form.querySelectorAll('div.plan_select input[type="radio"]');
+        inputs.forEach(input => {
+            input.disabled = !input.checked;
+        });
         this._handleAddSubscriptionProduct(form);
         return this._super(...arguments);
     },

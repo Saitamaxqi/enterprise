@@ -127,11 +127,6 @@ class ProductTemplate(models.Model):
                     _("A subscription combo product can only contain subscription products.")
                 )
 
-    def write(self, vals):
-        if vals.get('type') and vals['type'] != 'consu' and self.allow_one_time_sale:
-            vals.update({'allow_one_time_sale': False})
-        return super().write(vals)
-
     def copy(self, default=None):
         copied_tmpls = super().copy(default)
         for template, template_copy in zip(self, copied_tmpls, strict=True):

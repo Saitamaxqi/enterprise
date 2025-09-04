@@ -1,5 +1,4 @@
 import VariantMixin from "@website_sale/js/sale_variant_mixin";
-import { renderToElement } from "@web/core/utils/render";
 
 
 /**
@@ -16,7 +15,6 @@ VariantMixin._onChangeCombinationSubscription = function (ev, $parent, combinati
     const parent = $parent.get(0);
     const unit = parent.querySelector(".o_subscription_unit");
     const price = parent.querySelector(".o_subscription_price") || parent.querySelector(".product_price h5");
-    const pricingTable = document.querySelector("#oe_wsale_subscription_pricing_table");
     const addToCartButton = document.querySelector('#add_to_cart');
 
     if(combination.allow_one_time_sale){
@@ -34,21 +32,6 @@ VariantMixin._onChangeCombinationSubscription = function (ev, $parent, combinati
     }
     if (price) {
         price.textContent = combination.subscription_default_pricing_price;
-    }
-    if (pricingTable) {
-        pricingTable.replaceWith(
-            renderToElement("website_sale_subscription.SubscriptionPricingTable", {
-                combination_info: combination,
-            })
-        );
-    } else {
-        // we dont find the element in the dom which means there was no pricings in the previous combination so there is no `table` elements to replace then we append one.
-        const nodeToAppend = document.querySelector("#product_details form");
-        nodeToAppend.after(
-            renderToElement("website_sale_subscription.SubscriptionPricingTable", {
-                combination_info: combination,
-            })
-        );
     }
 };
 
