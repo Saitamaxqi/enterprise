@@ -5,8 +5,6 @@ import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ask } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { uuidv4 } from "@point_of_sale/utils";
-import { TaxError } from "@l10n_de_pos_cert/app/utils/errors";
-import { roundCurrency } from "@point_of_sale/app/models/utils/currency";
 
 const RATE_ID_MAPPING = {
     1: "NORMAL",
@@ -61,20 +59,6 @@ patch(PosStore.prototype, {
             this.initVatRates(data["dsfinvk_url"] + "/api/v0");
         }
         return super.afterProcessServerData(...arguments);
-    },
-    async addLineToCurrentOrder(vals, opt = {}, configure = true) {
-        if (this.isCountryGermanyAndFiskaly()) {
-            const productTmpl = vals.product_tmpl_id;
-            for (const tax of productTmpl.taxes_id) {
-                if (!(tax.amount in this.vatRateMapping)) {
-                    throw new TaxError(productTmpl);
-                }
-            }
-            if (!productTmpl.taxes_id.length && productTmpl.type !== "combo") {
-                throw new TaxError(productTmpl);
-            }
-        }
-        return await super.addLineToCurrentOrder(vals, opt, configure);
     },
     _authenticate() {
         const data = {
@@ -138,36 +122,44 @@ patch(PosStore.prototype, {
             });
     },
     _createAmountPerVatRateArray(order) {
-        // TODO: That part is completely wrong in round_globally. Rewrite using the '_aggregate_base_line_tax_details'
-        // and '_aggregate_base_lines_aggregated_values'.
-        const rateIds = {
-            NORMAL: [],
-            REDUCED_1: [],
-            SPECIAL_RATE_1: [],
-            SPECIAL_RATE_2: [],
-            NULL: [],
+        const vatRateMap = {
+            "VAT 0%": "NULL",
+            "VAT 7%": "REDUCED_1",
+            "VAT 19%": "NORMAL",
+            "VAT 10,7%": "SPECIAL_RATE_1",
+            "VAT 5,5%": "SPECIAL_RATE_2",
         };
-        order.getTaxDetails().forEach((detail) => {
-            rateIds[this.vatRateMapping[detail.tax_percentage]].push(detail.id);
+
+        const orderSign = order.taxTotals.order_sign;
+        const expectedBase = order.taxTotals.base_amount;
+        let baseAmountSum = 0;
+        const result = order.taxTotals.subtotals[0].tax_groups.map((group) => {
+            const amount = parseFloat((group.tax_amount + group.base_amount) * orderSign);
+            baseAmountSum += group.base_amount;
+            return {
+                vat_rate: vatRateMap[group.group_name] || "NULL",
+                amount: amount.toFixed(5),
+            };
         });
-        const amountPerVatRate = {
-            NORMAL: 0,
-            REDUCED_1: 0,
-            SPECIAL_RATE_1: 0,
-            SPECIAL_RATE_2: 0,
-            NULL: 0,
-        };
-        for (var rate in rateIds) {
-            rateIds[rate].forEach((id) => {
-                amountPerVatRate[rate] += order.getTotalForTaxes(id);
-            });
+
+        // Adjustments (e.g., gift cards, tips) may lack tax info, default it to 0% to avoid mismatches.
+        const difference = parseFloat(
+            (expectedBase + order.requiredSettlementAmount() - baseAmountSum) * orderSign
+        );
+        if (difference) {
+            const existingNullEntry = result.find((item) => item.vat_rate === "NULL");
+            if (existingNullEntry) {
+                existingNullEntry.amount = this.currency.round(
+                    parseFloat(existingNullEntry.amount) + difference
+                );
+            } else {
+                result.push({
+                    vat_rate: "NULL",
+                    amount: `${this.currency.round(difference)}`,
+                });
+            }
         }
-        return Object.keys(amountPerVatRate)
-            .filter((rate) => !!amountPerVatRate[rate])
-            .map((rate) => ({
-                vat_rate: rate,
-                amount: roundCurrency(amountPerVatRate[rate], this.currency).toFixed(2),
-            }));
+        return result;
     },
     async finishShortTransaction(order) {
         if (!this.getApiToken()) {
@@ -347,7 +339,7 @@ patch(PosStore.prototype, {
      * - Failure to send to Odoo => the order is already sent to Fiskaly, we store them locally with the TSS info
      */
     async syncAllOrders(options = {}) {
-        if (!this.isCountryGermanyAndFiskaly()) {
+        if (!this.isCountryGermanyAndFiskaly() || this.data.network.offline) {
             return super.syncAllOrders(options);
         }
 
@@ -465,23 +457,6 @@ patch(PosStore.prototype, {
         const body = _t(
             "It seems that your Fiskaly API key and/or secret are incorrect. Update them in your company settings."
         );
-        this.dialog.add(AlertDialog, { title, body });
-    },
-    async _showTaxError() {
-        const rates = Object.keys(this.vatRateMapping);
-        const title = _t("Tax error");
-        let body;
-        if (rates.length) {
-            const ratesText = [rates.slice(0, -1).join(", "), rates.slice(-1)[0]].join(" and ");
-            body = _t(
-                "Product has an invalid tax amount. Only the following rates are allowed: %s.",
-                ratesText
-            );
-        } else {
-            body = _t(
-                "There was an error while loading the Germany taxes. Try again later or your Fiskaly API key and secret might have been corrupted, request new ones"
-            );
-        }
         this.dialog.add(AlertDialog, { title, body });
     },
 });

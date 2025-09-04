@@ -5,7 +5,7 @@ import { _t } from "@web/core/l10n/translation";
 patch(OrderPaymentValidation.prototype, {
     //@override
     async validateOrder(isForceValidate) {
-        if (this.pos.isCountryGermanyAndFiskaly()) {
+        if (this.pos.isCountryGermanyAndFiskaly() && !this.pos.data.network.offline) {
             if (this.pos.validateOrderFree) {
                 this.pos.validateOrderFree = false;
                 try {
@@ -20,7 +20,7 @@ patch(OrderPaymentValidation.prototype, {
     },
     //@override
     async finalizeValidation() {
-        if (this.pos.isCountryGermanyAndFiskaly()) {
+        if (this.pos.isCountryGermanyAndFiskaly() && !this.pos.data.network.offline) {
             if (this.order.isTransactionInactive()) {
                 try {
                     await this.pos.createTransaction(this.order);

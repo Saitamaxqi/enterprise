@@ -9,10 +9,11 @@
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <field name="state" invisible="1"/>
-                        <button name="l10n_de_action_refresh_state" string="Refresh state" class="oe_highlight" type="object"
+                        <button name="l10n_de_action_refresh_state" string="Refresh state" class="bg-primary text-white" type="object"
                                 invisible="state not in ['pending', 'working']"/>
-                        <button name="l10n_de_action_download_export" string="Download export" class="oe_highlight" type="object"
-                                invisible="state != 'completed'" icon="fa-download"/>
+                        <button name="l10n_de_action_download_export" class="bg-primary text-white" type="object" invisible="state != 'completed'">
+                            <i class="fa fa-download me-2"/> Download export
+                        </button>
                         <span class="text-warning mb4 mt16" invisible="state in [False, 'completed', 'pending', 'working']">
                             The export is not available, please create a new one sale.
                         </span>
@@ -21,7 +22,7 @@
                         <group>
                             <field name="start_datetime" readonly="state"/>
                             <field name="end_datetime" readonly="state"/>
-                            <field name="config_id" readonly="state"/>
+                            <field name="config_id" readonly="state" placeholder="All PoS"/>
                         </group>
                         <group>
                             <field name="l10n_de_fiskaly_export_uuid"/>
@@ -51,7 +52,7 @@
                 <field name="state"/>
                 <field name="start_datetime"/>
                 <field name="end_datetime"/>
-                <field name="config_id"/>
+                <field name="config_id" placeholder="All PoS"/>
             </list>
         </field>
     </record>

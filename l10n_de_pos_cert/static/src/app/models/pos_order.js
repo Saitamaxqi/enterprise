@@ -113,10 +113,18 @@ patch(PosOrder.prototype, {
     _createAmountPerPaymentTypeArray() {
         const amountPerPaymentTypeArray = [];
         this.payment_ids.forEach((line) => {
-            amountPerPaymentTypeArray.push({
-                payment_type: line.payment_method_id.type === "cash" ? "CASH" : "NON_CASH",
-                amount: roundCurrency(line.amount, this.currency).toFixed(2),
-            });
+            const type = line.payment_method_id.type === "cash" ? "CASH" : "NON_CASH";
+            const amount = roundCurrency(line.amount, this.currency);
+            const existing = amountPerPaymentTypeArray.find((entry) => entry.payment_type === type);
+
+            if (existing) {
+                existing.amount = this.currency.round(parseFloat(existing.amount) + amount);
+            } else {
+                amountPerPaymentTypeArray.push({
+                    payment_type: type,
+                    amount: this.currency.round(amount),
+                });
+            }
         });
         const change = this.getChange();
         if (change) {
@@ -125,7 +133,33 @@ patch(PosOrder.prototype, {
                 amount: roundCurrency(-change, this.currency).toFixed(2),
             });
         }
+
+        // Reduce receivable payment which will be shown as paid when paid using deposit/settlement
+        const nonCashPaymentType = amountPerPaymentTypeArray.find(
+            (l) => l.payment_type === "NON_CASH"
+        );
+        const adjustment = this.requiredSettlementAmount();
+        if (nonCashPaymentType && adjustment) {
+            if (!nonCashPaymentType) {
+                amountPerPaymentTypeArray.push({
+                    payment_type: "NON_CASH",
+                    amount: "0.00",
+                });
+            }
+            nonCashPaymentType.amount = roundCurrency(
+                parseFloat(nonCashPaymentType.amount) + adjustment,
+                this.currency
+            ).toFixed(2);
+        }
+
         return amountPerPaymentTypeArray;
+    },
+    requiredSettlementAmount() {
+        // Overall payment through receivable pm needs to be adjusted
+        const totalReceivablePayment = this.payment_ids
+            .filter((line) => !line.payment_method_id.journal_id)
+            .reduce((sum, line) => sum + line.amount, 0);
+        return -totalReceivablePayment;
     },
     _updateTimeStart(seconds) {
         this.l10n_de_fiskaly_time_start = convertFromEpoch(seconds);

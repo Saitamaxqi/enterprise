@@ -21,6 +21,7 @@ Install this if you are using the Point of Sale app in Germany.
     'data': [
         'security/ir.model.access.csv',
         'security/l10n_de_pos_cert_security.xml',
+        'views/account_view.xml',
         'views/l10n_de_pos_dsfinvk_export_views.xml',
         'views/point_of_sale_dashboard.xml',
         'views/res_config_settings_views.xml',

@@ -19,6 +19,7 @@ class ResCompany(models.Model):
     is_country_germany = fields.Boolean(string="Company located in Germany", compute='_compute_is_country_germany')
     l10n_de_fiskaly_kassensichv_token = fields.Char(string="Fiskaly Kassensichv Token", groups="base.group_erp_manager", help="Store the temporary token used for the Kassensichv API")
     l10n_de_fiskaly_dsfinvk_token = fields.Char(string="Fiskaly DSFinV-K Token", groups="base.group_erp_manager", help="Store the temporary token used for the DSFinV-K API")
+    l10n_de_vat_export_data = fields.Json(readonly=True, help="This stores VAT definition export IDs for the company's taxes from Fiskaly")
 
     @api.depends('country_id')
     def _compute_is_country_germany(self):
@@ -189,6 +190,7 @@ class ResCompany(models.Model):
                     })
                 else:   # the request to create credentials failed but the company was still well registered
                     self.l10n_de_fiskaly_organization_id = response['organization_id']
+                self.l10n_de_update_vat_export_data()
 
     def l10n_de_action_fiskaly_create_new_keys(self):
         self.ensure_one()
@@ -199,3 +201,10 @@ class ResCompany(models.Model):
             'l10n_de_fiskaly_api_key': response['api_key'],
             'l10n_de_fiskaly_api_secret': response['api_secret'],
         })
+
+    def l10n_de_update_vat_export_data(self):
+        """Fetch and update the VAT definition export IDs for the company's taxes from Fiskaly."""
+        self.ensure_one()
+        vat_response = self._l10n_de_fiskaly_dsfinvk_rpc('GET', '/vat_definitions')
+        if vat_response.status_code == 200:
+            self.l10n_de_vat_export_data = vat_response.json().get("data", [])
