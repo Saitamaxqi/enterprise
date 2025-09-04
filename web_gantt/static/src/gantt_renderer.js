@@ -1228,6 +1228,7 @@ export class GanttRenderer extends Component {
         }
 
         this.mappingCellToRecords = {};
+        this.rowIdsByFirstRow = {};
 
         const { displayUnavailability, globalStart, globalStop, scale, startDate, stopDate } =
             this.model.metaData;
@@ -2566,7 +2567,9 @@ export class GanttRenderer extends Component {
         const subRowsCount = Object.values(gridRowTypes).reduce((acc, val) => acc + val, 0);
         const gridRow = [this.currentGridRow, this.currentGridRow + subRowsCount];
         const subKey = `${gridRow[0]}_${gridRow[1]}`;
-
+        if (this.model.hasMultiCreate && !isGroup) {
+            this.rowIdsByFirstRow[this.currentGridRow] = row.id;
+        }
         for (const rowPill of rowPills) {
             rowPill.id = `__pill__${this.nextPillId++}`;
             const pillFirstRow = this.currentGridRow + rowPill.level;
@@ -3104,17 +3107,10 @@ export class GanttRenderer extends Component {
 
     getCellsInfo(selectedCells) {
         const cellsInfo = [];
-        const rowIdsByFirstRow = {};
-        for (const row of this.rows) {
-            if (!row.isGroup) {
-                const [first] = row.grid.row;
-                rowIdsByFirstRow[first] = row.id;
-            }
-        }
         const colsInfo = {};
         for (const selectedCell of selectedCells) {
             const { startRow, startCol } = this.getBlock(selectedCell);
-            const rowId = rowIdsByFirstRow[startRow];
+            const rowId = this.rowIdsByFirstRow[startRow];
             if (!rowId) {
                 continue;
             }
