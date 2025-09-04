@@ -191,7 +191,7 @@ class HrPayslip(models.Model):
             credit_account = line.salary_rule_id.account_credit
             merge_amounts = self.company_id.batch_payroll_move_lines or not line.salary_rule_id.employee_move_line
 
-            if debit_account.id: # If the rule has a debit account.
+            if debit_account.id:    # If the rule has a debit account.
                 if self.company_id.account_storno and self.credit_note:
                     debit = amount if amount < 0.0 else 0.0
                     credit = -amount if amount > 0.0 else 0.0
@@ -209,7 +209,7 @@ class HrPayslip(models.Model):
                     debit_line['debit'] += debit
                     debit_line['credit'] += credit
 
-            if credit_account.id: # If the rule has a credit account.
+            if credit_account.id:   # If the rule has a credit account.
                 if self.company_id.account_storno and self.credit_note:
                     debit = -amount if amount > 0.0 else 0.0
                     credit = amount if amount < 0.0 else 0.0

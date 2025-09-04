@@ -217,6 +217,8 @@ result_rate = 10''')
 
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)
+        if default and 'name' in default:
+            return vals_list
         return [dict(vals, name=self.env._("%s (copy)", rule.name)) for rule, vals in zip(self, vals_list)]
 
     @api.constrains('category_id', 'struct_id')

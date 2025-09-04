@@ -16,19 +16,8 @@ class HrPayrollStructure(models.Model):
         default_structure = self.env.ref('hr_payroll.default_structure', False)
         if not default_structure or not default_structure.rule_ids:
             return []
-        vals = [
-            (0, 0, {
-                'name': rule.name,
-                'sequence': rule.sequence,
-                'code': rule.code,
-                'category_id': rule.category_id,
-                'condition_select': rule.condition_select,
-                'condition_python': rule.condition_python,
-                'amount_select': rule.amount_select,
-                'amount_python_compute': rule.amount_python_compute,
-                'appears_on_employee_cost_dashboard': rule.appears_on_employee_cost_dashboard,
-            }) for rule in default_structure.rule_ids]
-        return vals
+        vals_list = [rule.copy_data(default={'name': rule.name})[0] for rule in default_structure.rule_ids]
+        return [(0, 0, vals) for vals in vals_list]
 
     def _get_domain_report(self):
         if self.env.company.country_code:

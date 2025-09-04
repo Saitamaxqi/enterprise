@@ -376,7 +376,7 @@ class HrPayslip(models.Model):
             raise UserError(self.env._("Only support generating the HSBC autopay report for one company."))
         currencies = self.mapped('currency_id')
         if len(currencies) > 1:
-            raise UserError(_("Only support generating the HSBC autopay report for one currency"))
+            raise UserError(self.env._("Only support generating the HSBC autopay report for one currency"))
         invalid_employees = self.mapped('employee_id').filtered(lambda e: not e.bank_account_ids)
         if invalid_employees:
             raise UserError(self.env._("Some employees (%s) don't have a bank account.", ','.join(invalid_employees.mapped('name'))))
