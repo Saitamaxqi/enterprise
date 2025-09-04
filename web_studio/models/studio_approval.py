@@ -247,6 +247,8 @@ class StudioApprovalRule(models.Model):
                 "Rules with existing entries cannot be modified since it would break existing "
                 "approval entries. You should archive the rule and create a new one instead."))
         res = super().write(vals)
+        if "active" in vals:
+            self._post_create_delete(operation="create" if vals["active"] else "unlink")
         self._update_registry()
         return res
 
@@ -362,8 +364,13 @@ class StudioApprovalRule(models.Model):
                 vals.pop("approver_ids", None)
         rules = super().create(vals_list)
         rules._make_automated_actions()
+        rules._post_create_delete(operation="create")
         self._update_registry()
         return rules
+
+    @api.ondelete(at_uninstall=True)
+    def _on_delete_model_side_effects(self):
+        self._post_create_delete(operation="unlink")
 
     def _update_registry(self):
         """ Update the registry after a modification on approval rules. """
@@ -1141,6 +1148,24 @@ class StudioApprovalRule(models.Model):
             "domain": domain,
             "context": context,
         }
+
+    def _get_remaining_rules_domain(self, model_name, method, action_id):
+        return Domain.AND([
+            Domain("model_name", "=", model_name),
+            Domain("method", "=", method),
+            Domain("action_id", "=", action_id),
+            Domain("active", "=", True),
+            Domain("id", "not in", self.ids)
+        ])
+
+    def _post_create_delete(self, operation=None):
+        for model_name, method, action_id in {(r.model_name, r.method, r.action_id) for r in self}:
+            if model_name == "account.move" and method == "action_post":
+                if action := self.env.ref("account.action_validate_account_move", raise_if_not_found=False):
+                    if operation == "create":
+                        action.binding_model_id = False
+                    if operation == "unlink" and not self.search_count(self._get_remaining_rules_domain(model_name, method, action_id)):
+                        action.binding_model_id = self.env["ir.model"]._get("account.move").id
 
     # Tracking Values
     def _track_filter_for_display(self, tracking_values):
