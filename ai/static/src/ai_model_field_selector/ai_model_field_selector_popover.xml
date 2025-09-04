@@ -5,15 +5,24 @@
         <xpath expr="//div[hasclass('o_model_field_selector_popover_body')]" position="before">
             <div>
                 <div
-                    class="badge bg-primary m-1 text-white rounded d-inline-flex flex-row align-items-center"
+                    class="badge bg-primary m-1 text-white rounded d-inline-flex flex-row align-items-center text-break"
                     t-foreach="aiFieldsState.selected"
                     t-as="field"
                     t-key="field.map(f => f.name).join('.')"
                 >
-                    <span t-out="field.map(f => f.string).join(' > ')"/>
+                    <span class="text-wrap" t-out="field.map(f => f.string).join(' > ')"/>
                     <a href="#" class="ms-1 fa fa-close text-white my-0 py-0" t-on-click="() => this.onRemoveField(field[0])"/>
                 </div>
             </div>
+        </xpath>
+        <xpath expr="//t[@t-esc='fieldDef.string']" position="replace">
+            <t t-if="isFieldSelected(fieldDef)">
+                <strong t-esc="fieldDef.string"/>
+            </t>
+            <t t-else="">
+                <t t-esc="fieldDef.string"/>
+            </t>
+            <i class="fa fa-check text-success ms-2" t-if="isFieldSelected(fieldDef)"/>
         </xpath>
         <xpath expr="//div[hasclass('o_model_field_selector_popover_body')]//t[@t-if='fieldDef.record_name']" position="attributes">
             <attribute name="t-if">fieldDef.record_name &amp;&amp; (!fieldDef.is_property || state.page.previousPage?.previousPage)</attribute>

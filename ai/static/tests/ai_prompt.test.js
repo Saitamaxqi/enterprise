@@ -131,7 +131,7 @@ test("AI Prompt - Field selector with template editor group", async () => {
     await animationFrame();
     await expect(".o_model_field_selector_popover .badge").toHaveCount(1);
     await expect(".o_model_field_selector_popover .badge").toHaveText("Created on");
-    await expect(".o_model_field_selector_popover_item_name:contains('Created on')").toHaveCount(0);
+    await expect(".o_model_field_selector_popover_item_name:contains('Created on') i.fa-check").toHaveCount(1);
     await click(".o_model_field_selector_popover_item_name:contains('Display name')");
     await animationFrame();
     await expect(".o_model_field_selector_popover .badge").toHaveCount(2);

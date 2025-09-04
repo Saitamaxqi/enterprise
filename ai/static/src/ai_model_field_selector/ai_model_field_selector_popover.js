@@ -33,8 +33,6 @@ export class AiModelFieldSelectorPopover extends ModelFieldSelectorPopover {
     }
 
     get fieldNames() {
-        const selected = this.aiFieldsState.selected.map((s) => s.map((f) => f.name).join("."));
-
         // Can not use `page.path`, because properties have custom code
         const currentPath = [];
         let page = this.state.page.previousPage;
@@ -46,9 +44,6 @@ export class AiModelFieldSelectorPopover extends ModelFieldSelectorPopover {
 
         return super.fieldNames.filter((f) => {
             const path = currentPathStr ? `${currentPathStr}.${f}` : f;
-            if (selected.includes(path) || currentPathStr === f) {
-                return false;
-            }
             if (this.props.aiFieldPath && this.props.aiFieldPath === path) {
                 return false;
             }
@@ -61,8 +56,8 @@ export class AiModelFieldSelectorPopover extends ModelFieldSelectorPopover {
             return this.followRelation(field);
         }
         this.state.page.selectedName = field.name;
-        const fullPath = this.state.page.path;
-        if (this.aiFieldsState.selected.find((f) => f[0] === fullPath)) {
+        // Check if this exact field chain already exists in selected fields
+        if (this.isFieldSelected(field)) {
             return;
         }
 
@@ -153,4 +148,13 @@ export class AiModelFieldSelectorPopover extends ModelFieldSelectorPopover {
         }
         this.aiFieldsState.selected = selected;
     }
+    
+    isFieldSelected(fieldDef) {
+    const fullFieldPath = [...this.fieldsChain, fieldDef].map(f => f.name).join('.');
+    
+    // Check if this path exists in selected fields
+    return this.aiFieldsState.selected.some(selectedChain => 
+        selectedChain.map(f => f.name).join('.') === fullFieldPath
+    );
+}
 }
