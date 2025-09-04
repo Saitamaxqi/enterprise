@@ -30,4 +30,9 @@ export default class PackageLineComponent extends LineComponent {
         this.env.model.selectPackageLine(this.line);
         this.env.model.trigger("update");
     }
+
+    unpack() {
+        this.env.model.unpack(this.line.lines);
+        this.env.model.trigger("update");
+    }
 }

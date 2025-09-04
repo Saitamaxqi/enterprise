@@ -108,6 +108,14 @@ export default class LineComponent extends Component {
         return this.line.inventory_quantity_set;
     }
 
+    get resultPackageLabel() {
+        let label = this.line.result_package_id.name;
+        if (this.line.outermost_result_package_id) {
+            label = `${this.line.outermost_result_package_id.name} > ${label}`;
+        }
+        return label;
+    }
+
     get line() {
         return this.props.line;
     }

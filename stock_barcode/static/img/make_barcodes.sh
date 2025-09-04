@@ -8,6 +8,7 @@ OCDCANC
 OBTPROP
 OBTPRSL
 OBTPACK
+OBTUPCK
 OBTSCRA
 OBTRECO
 OBTRETU
@@ -24,10 +25,11 @@ cat > barcodes_actions_header.ps << HEADER
 (PRINT PICKING OPERATION) 89 551 showTitle
 (PRINT DELIVERY SLIP) 348 551 showTitle
 (PUT IN PACK) 89 444 showTitle
-(SCRAP) 348 444 showTitle
-(RECORD COMPONENTS) 89 337 showTitle
-(RETURN) 348 337 showTitle
-(WAIT A REVIEW) 89 230 showTitle
+(UNPACK) 348 444 showTitle
+(SCRAP) 89 337 showTitle
+(RECORD COMPONENTS) 348 337 showTitle
+(RETURN) 89 230 showTitle
+(WAIT A REVIEW) 348 230 showTitle
 HEADER
 
 cat barcodes_actions_header.ps barcodes_actions_barcode.ps | ps2pdf - - > barcodes_actions.pdf

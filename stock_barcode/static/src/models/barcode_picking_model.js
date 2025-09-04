@@ -274,21 +274,32 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     async updateLine(line, args) {
         await super.updateLine(...arguments);
-        let { location_id, location_dest_id, result_package_id, is_entire_pack } = args;
-        if (result_package_id) {
-            if (typeof result_package_id === "number") {
-                result_package_id = this.cache.getRecord("stock.package", result_package_id);
+        let { location_id, location_dest_id, is_entire_pack } = args;
+        if ("result_package_id" in args) {
+            let resultPackage = args.result_package_id;
+            if (typeof resultPackage === "number") {
+                resultPackage = this.cache.getRecord("stock.package", resultPackage);
             }
             if (
-                result_package_id.package_type_id &&
-                typeof result_package_id.package_type_id === "number"
+                resultPackage.package_type_id &&
+                typeof resultPackage.package_type_id === "number"
             ) {
-                result_package_id.package_type_id = this.cache.getRecord(
+                resultPackage.package_type_id = this.cache.getRecord(
                     "stock.package.type",
-                    result_package_id.package_type_id
+                    resultPackage.package_type_id
                 );
             }
-            line.result_package_id = result_package_id;
+            line.result_package_id = resultPackage;
+        }
+        if ("outermost_result_package_id" in args) {
+            let outermostResultPackage = args.outermost_result_package_id;
+            if (typeof outermostResultPackage === "number") {
+                outermostResultPackage = this.cache.getRecord(
+                    "stock.package",
+                    outermostResultPackage
+                );
+            }
+            line.outermost_result_package_id = outermostResultPackage;
         }
         if (!args.dontUpdateSourceLocation && !location_id && this.lastScanned.sourceLocation) {
             line.location_id = this.lastScanned.sourceLocation;
@@ -1326,6 +1337,9 @@ export default class BarcodePickingModel extends BarcodeModel {
             smlData.owner_id && this.cache.getRecord("res.partner", smlData.owner_id);
         smlData.package_id =
             smlData.package_id && this.cache.getRecord("stock.package", smlData.package_id);
+        smlData.outermost_result_package_id =
+            smlData.outermost_result_package_id &&
+            this.cache.getRecord("stock.package", smlData.outermost_result_package_id);
 
         if (this.reloadingMoveLines) {
             if (prevLine) {
@@ -1455,6 +1469,7 @@ export default class BarcodePickingModel extends BarcodeModel {
             "lot_id",
             "lot_name",
             "package_id",
+            "outermost_result_package_id",
             "owner_id",
             "qty_done",
             "result_package_id",
@@ -2068,6 +2083,18 @@ export default class BarcodePickingModel extends BarcodeModel {
         } else {
             this.trigger("refresh");
         }
+    }
+
+    async unpack(linesToUnpack) {
+        for (const line of linesToUnpack) {
+            if (line.outermost_result_package_id) {
+                await this.updateLine(line, { outermost_result_package_id: false });
+            } else {
+                await this.updateLine(line, { result_package_id: false });
+            }
+        }
+        await this.save();
+        this.trigger("update");
     }
 
     async _returnProducts() {

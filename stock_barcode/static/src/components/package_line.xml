@@ -13,10 +13,16 @@
                         <i class="fa fa-long-arrow-right mx-1"/>
                         <t class="result-package" t-esc="line.result_package_id.dest_complete_name"/>
                     </div>
-                    <button t-on-click="() => this.props.openPackage(this.props.line.package_id.id)"
-                            class="o_line_button o_package_content btn btn-secondary ms-2">
-                        <i class="fa fa-lg fa-dropbox"/>
-                    </button>
+                    <div>
+                        <button t-on-click="unpack"
+                                class="o_line_button o_unpack btn btn-secondary ms-2">
+                            Unpack
+                        </button>
+                        <button t-on-click="() => this.props.openPackage(this.props.line.package_id.id)"
+                                class="o_line_button o_package_content btn btn-secondary ms-2">
+                            <i class="fa fa-lg fa-dropbox"/>
+                        </button>
+                    </div>
                 </div>
                 <t t-call="stock_barcode.LineQuantity"/>
                 <t t-call="stock_barcode.LineOwner"/>

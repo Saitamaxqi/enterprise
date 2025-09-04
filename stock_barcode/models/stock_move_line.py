@@ -136,6 +136,7 @@ class StockMoveLine(models.Model):
             'dummy_id',
             'picked',
             'move_id',
+            'outermost_result_package_id',
             'packaging_uom_id',
             'packaging_uom_qty',
             'description_picking',

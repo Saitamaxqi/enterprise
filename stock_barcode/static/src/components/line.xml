@@ -161,7 +161,7 @@
                     <i class="fa fa-fw fa-archive"/>
                     <span t-if="line.package_id" class="package" t-esc="line.package_id.complete_name"/>
                     <i t-if="displayResultPackage" class="fa fa-long-arrow-right mx-1"/>
-                    <span t-if="line.result_package_id" class="result-package" t-esc="line.result_package_id.dest_complete_name"/>
+                    <span t-if="line.result_package_id" class="result-package" t-esc="resultPackageLabel"/>
                     <span t-if="line.result_package_id &amp;&amp; line.result_package_id.package_type_id"
                         class="fst-italic text-muted">
                         (<t t-esc="line.result_package_id.package_type_id.name"/>)
