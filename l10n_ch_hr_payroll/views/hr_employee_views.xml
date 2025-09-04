@@ -178,8 +178,7 @@
         <field name="contract_date_start" string="Start Date" placeholder="Not Employed" class="o_hr_narrow_field me-3"/>to
         <field name="contract_date_end" string="End Date" placeholder="Indefinite"
             class="o_hr_narrow_field ms-3" invisible="not contract_date_start"/>
-            <button name="action_new_contract" type="object" string="New Contract" class="btn btn-link p-0 ms-auto"
-                invisible="not contract_date_start and not contract_date_end"/>
+            <widget name="button_new_contract"/>
         </div>
                             <field name="contract_type_id" string="Contract Type" placeholder="Contract Type"/>
                             <field name="structure_type_id" string="Pay Category" placeholder="Pay Category"
