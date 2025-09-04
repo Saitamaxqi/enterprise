@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <a name="action_reset_tax_return_common" position="after">
                 <a invisible="state == 'new' and not is_completed or type_external_id != 'l10n_be_reports.be_isoc_prepayment_return_type'" class="dropdown-item" type="object" name="l10n_be_reset_tax_prepayment" string="Reset"/>
-                <a invisible="state == 'new' and not is_completed or type_external_id not in ('l10n_be_reports.be_vat_listing_return_type', 'l10n_be_reports.be_ec_sales_list_return_type')" class="dropdown-item" type="object" name="action_reset_2_states" string="Reset"/>
+                <a invisible="state == 'new' and not is_completed or type_external_id != 'l10n_be_reports.be_vat_listing_return_type'" class="dropdown-item" type="object" name="action_reset_2_states" string="Reset"/>
             </a>
 
             <div id="return_amount_to_pay" position="attributes">

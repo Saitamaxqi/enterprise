@@ -18,7 +18,6 @@ Adds the possibility to specify the origin country of goods and the partner VAT 
         'data/intrastat_report_services_f02cms.xml',
         'data/intrastat_report_services_f01dgs.xml',
         'data/account_return_data.xml',
-        'views/account_return_views.xml',
         'wizard/intrastat_goods_submission_wizard.xml'
     ],
     'auto_install': True,

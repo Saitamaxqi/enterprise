@@ -7,7 +7,6 @@
     'depends': ['account_intrastat', 'l10n_si_reports'],
     'data': [
         'data/account_return_data.xml',
-        'views/account_return_views.xml',
     ],
     'installable': True,
     'auto_install': True,

@@ -1,5 +1,4 @@
-from odoo import models
-from odoo.exceptions import UserError
+from odoo import api, fields, models
 
 from odoo.addons.account_reports.models.account_return import LIMIT_CHECK_ENTRIES
 
@@ -7,35 +6,25 @@ from odoo.addons.account_reports.models.account_return import LIMIT_CHECK_ENTRIE
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
+    is_intrastat_return = fields.Boolean(string="Is an Intrastat Return", compute="_compute_is_intrastat_return")
+
+    @api.depends('type_id')
+    def _compute_is_intrastat_return(self):
+        generic_intrastat_report = self.env.ref('account_intrastat.intrastat_report')
+        for record in self:
+            report = record.type_id.report_id
+            record.is_intrastat_return = record.type_id.report_id and (
+                        report.root_report_id == generic_intrastat_report or report == generic_intrastat_report)
+
     def _get_state_field(self):
         # Extends account_reports
-        if self.env.ref('account_intrastat.intrastat_report') in {self.type_id.report_id.root_report_id, self.type_id.report_id}:
+        if self.is_intrastat_return:
             return 'generic_state_review_submit'
         return super()._get_state_field()
 
-    def intrastat_reset_to_states_common(self):
-        self.ensure_one()
-
-        if not self.env.user.has_group('account.group_account_manager'):
-            raise UserError(self.env._("Only an Accounting Administrator can reset a tax return"))
-
-        if self.state == 'submitted':
-            self._reset_checks_for_states([self.state, 'reviewed'])
-            self.date_submission = False
-            self.state = 'reviewed'
-
-        if self.state == 'reviewed':
-            self._reset_checks_for_states([self.state, 'new'])
-            self.state = 'new'
-
-        self.report_opened_once = False
-        self._mark_uncompleted()
-
-        return True
-
     def _run_checks(self, check_codes_to_ignore):
         checks = super()._run_checks(check_codes_to_ignore)
-        if (self.type_id.report_id.root_report_id or self.type_id.report_id) == self.env.ref('account_intrastat.intrastat_report'):
+        if self.is_intrastat_return:
             checks += self._check_suite_common_intrastat_goods(check_codes_to_ignore)
         return checks
 

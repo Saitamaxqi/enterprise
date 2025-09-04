@@ -23,6 +23,7 @@ Intrastat Reports
         'data/intrastat_menus.xml',
         'views/report_invoice.xml',
         'views/account_move_view.xml',
+        'views/account_return_view.xml',
     ],
     'demo': [
         'demo/product_demo.xml',

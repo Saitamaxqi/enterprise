@@ -10,7 +10,6 @@ Adds the possibility to specify the origin country of goods and the partner VAT 
     'data': [
         'data/account_return_data.xml',
         'security/ir.model.access.csv',
-        'views/account_return_views.xml',
         'wizard/intrastat_goods_submission_wizard.xml',
     ],
     'author': 'Odoo S.A.',
