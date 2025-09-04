@@ -21,7 +21,7 @@ patch(PlanningGanttRenderer.prototype, {
         if (!workingPeriods) {
             return true;
         }
-        const resourceId = Object.assign({}, ...JSON.parse(row.id)).resource_id[0];
+        const resourceId = Object.assign({}, ...JSON.parse(row.id)).resource_id?.[0];
         const periods = workingPeriods[resourceId];
         if (periods?.length) {
             const { interval } = this.model.metaData.scale;
