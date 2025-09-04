@@ -42,10 +42,10 @@ registry.category("web_tour.tours").add("knowledge_readonly_favorite_tour", {
             // Check that the article has been added to the favorites under the other
             // one and try to resquence the favorite articles
             trigger: 'section[data-section="favorites"] li:last:contains("Readonly Article 2")',
-            run: () =>
+            run: ({ queryOne }) =>
                 dragAndDropArticle(
-                    'section[data-section="favorites"] li:last .o_article_handle',
-                    'section[data-section="favorites"] li:first .o_article_handle'
+                    queryOne('section[data-section="favorites"] li:last .o_article_handle'),
+                    queryOne('section[data-section="favorites"] li:first .o_article_handle')
                 ),
         },
         {

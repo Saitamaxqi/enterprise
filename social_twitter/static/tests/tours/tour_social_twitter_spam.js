@@ -1,6 +1,5 @@
 import { patch } from '@web/core/utils/patch';
 import { registry } from "@web/core/registry";
-import { queryOne } from "@odoo/hoot-dom";
 
 let uniqueSeed = 0;
 
@@ -32,7 +31,7 @@ function createReplies(textareaSelector) {
             {
                 trigger: '.o_social_comments_modal textarea',
                 content: `Reply number ${i}`,
-                run: () => {
+                run({ queryOne }) {
                     const inputComment = queryOne(textareaSelector);
                     inputComment.value = message;
                     triggerEnterEvent(inputComment);
@@ -52,7 +51,7 @@ function createReplies(textareaSelector) {
         {
             trigger: '.o_social_comments_modal textarea',
             content: 'Write the last comment that will fail',
-            run: () => {
+            run({ queryOne }) {
                 const inputComment = queryOne(textareaSelector);
                 inputComment.value = message;
                 triggerEnterEvent(inputComment);

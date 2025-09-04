@@ -1,12 +1,11 @@
 import { registry } from "@web/core/registry";
-import { queryAll, queryOne } from "@odoo/hoot-dom";
 
 function checkSearchArticles(expectedArticles) {
-    if (queryAll(".o_article_search_item").length !== expectedArticles.length) {
+    if (document.querySelectorAll(".o_article_search_item").length !== expectedArticles.length) {
         console.error("Incorrect number of articles returned by search");
     }
     for (const articleName of expectedArticles) {
-        if (!queryOne(`.o_article_search_item:contains(${articleName})`)) {
+        if (!this.queryOne(`.o_article_search_item:contains(${articleName})`)) {
             console.error(`Missing article "${articleName}" in search results`);
         }
     }
@@ -34,7 +33,7 @@ registry.category("web_tour.tours").add("website_knowledge_public_view_tour", {
             content: "Check that the sidebar initially only has the subsite root article",
             trigger: ".o_knowledge_sidebar .o_article:contains('Published Root')",
             run: () => {
-                if (queryAll(".o_knowledge_sidebar .o_article").length > 1) {
+                if (document.querySelectorAll(".o_knowledge_sidebar .o_article").length > 1) {
                     console.error("Sidebar has more articles than expected");
                 }
             },
@@ -48,7 +47,10 @@ registry.category("web_tour.tours").add("website_knowledge_public_view_tour", {
             content: "Check that only the published child articles is shown",
             trigger: ".o_knowledge_sidebar .o_article ul .o_article .o_article_name:contains('Published Child')",
             run: () => {
-                if (queryAll(".o_knowledge_sidebar .o_article ul .o_article").length > 1) {
+                if (
+                    document.querySelectorAll(".o_knowledge_sidebar .o_article ul .o_article")
+                        .length > 1
+                ) {
                     console.error("Sidebar has more articles than expected");
                 }
             },
@@ -79,8 +81,8 @@ registry.category("web_tour.tours").add("website_knowledge_public_view_tour", {
         {
             content: "Check that search only returns the published articles",
             trigger: ".o_article_search_item",
-            run: () =>
-                checkSearchArticles([
+            run: (helpers) =>
+                checkSearchArticles.call(helpers, [
                     "Published Subchild",
                     "Published Child",
                     "Published Root",
@@ -95,7 +97,7 @@ registry.category("web_tour.tours").add("website_knowledge_public_view_tour", {
         {
             content: "Check that the search only returns the published child containing 'content'",
             trigger: ".o_article_search_dialog:not(:contains('Published Root'))",
-            run: () => checkSearchArticles(["Untitled"]),
+            run: (helpers) => checkSearchArticles.call(helpers, ["Untitled"]),
         },
         {
             content: "Click on the article to open it",

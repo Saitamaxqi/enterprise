@@ -1,20 +1,20 @@
 import { registry } from "@web/core/registry";
-import { animationFrame, click, hover, waitFor } from "@odoo/hoot-dom";
 
-async function splitPill(pillEl, index = 0) {
+async function splitPill(helpers, index = 0) {
+    const pillEl = helpers.anchor;
     if (pillEl.parentElement.dataset.pillId === "__pill__8") {
         pillEl.scrollIntoView({ block: "end" });
-        await animationFrame();
+        await new Promise(requestAnimationFrame);
     }
     const style = getComputedStyle(pillEl.parentElement); // wrapper style
     const first = +style.getPropertyValue("grid-column-start").slice(1);
     const last = +style.getPropertyValue("grid-column-end").slice(1);
     const span = last - first;
     const { width, height } = pillEl.getBoundingClientRect();
-    const position = { x: (index + 1) * width / span, y: height / 2 };
-    await hover(pillEl, { position, relative: true });
-    await animationFrame();
-    click(pillEl, { position, relative: true });
+    const position = { x: ((index + 1) * width) / span, y: height / 2 };
+    await helpers.hover(pillEl, { position, relative: true });
+    await new Promise(requestAnimationFrame);
+    helpers.click(pillEl, { position, relative: true });
 }
 
 registry.category("web_tour.tours").add('planning_split_shift_week', {
@@ -32,12 +32,12 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
         "body:has(.o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM))",
     ],
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM)",
-    async run(helpers) {
-        await helpers.click();
+    async run({ click, waitFor }) {
+        await click();
         await waitFor(`.o_popover`, { timeout: 2000 });
-        await helpers.click(`.o_popover button:contains(delete)`);
+        await click(`.o_popover button:contains(delete)`);
         await waitFor(`.modal`, { timeout: 2000 });
-        await helpers.click(`.modal button:contains(delete)`);
+        await click(`.modal button:contains(delete)`);
     }
 }, {
     trigger: "body:not(:has(.o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill:contains(10:00 AM - 11:00 AM)))",
@@ -116,7 +116,9 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
 {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__1'] .o_gantt_pill",
     content: "Split the slot assigned to Aramis after one day",
-    run: ({ anchor }) => splitPill(anchor, 0),
+    async run(helpers) {
+        await splitPill(helpers, 0);
+    }
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__5']",
     content: "Wait for the new shift to appear",
@@ -126,7 +128,9 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__3'] .o_gantt_pill",
     content: "Split the slot assigned to Athos after two days",
-    run: ({ anchor }) => splitPill(anchor, 1),
+    async run(helpers) {
+        await splitPill(helpers, 1);
+    }
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__6']",
     content: "Wait for the new shift to appear",
@@ -136,7 +140,9 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__3'] .o_gantt_pill",
     content: "Split the first slot assigned to Athos after one day",
-    run: ({ anchor }) => splitPill(anchor, 0),
+    async run(helpers) {
+        await splitPill(helpers, 0);
+    }
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__7']",
     content: "Wait for the new shift to appear",
@@ -146,7 +152,9 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__6'] .o_gantt_pill",
     content: "Split the first slot assigned to Porthos after one day",
-    run: ({ anchor }) => splitPill(anchor, 0),
+    async run(helpers) {
+        await splitPill(helpers, 0);
+    }
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__8']",
     content: "Wait for the new shift to appear",
@@ -156,7 +164,9 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__8'] .o_gantt_pill",
     content: "Split the first slot assigned to Rochefort on weekend",
-    run: ({ anchor }) => splitPill(anchor, 0),
+    async run(helpers) {
+        await splitPill(helpers, 0);
+    }
 }, {
     trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__9']",
     content: "Wait for the new shift to appear",

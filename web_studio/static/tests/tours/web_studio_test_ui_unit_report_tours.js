@@ -6,7 +6,6 @@ import { assertEqual, stepNotInStudio, nextTick } from "@web_studio/../tests/tou
 import { cookie } from "@web/core/browser/cookie";
 import { editorsWeakMap } from "@html_editor/../tests/tours/helpers/editor";
 import { nodeSize } from "@html_editor/utils/position";
-import { waitUntil } from "@odoo/hoot-dom";
 
 const getBoundingClientRect = Element.prototype.getBoundingClientRect;
 
@@ -527,7 +526,7 @@ registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
         {
             trigger:
                 ".o-web-studio-report-editor-wysiwyg div:has(> .o-web-studio-report-container)",
-            async run() {
+            async run({ waitUntil }) {
                 const placeholderBox = getBoundingClientRect.call(
                     document.querySelector(".o-web-studio-report-dynamic-placeholder-popover")
                 );
@@ -622,7 +621,7 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
         {
             trigger:
                 ".o-web-studio-report-editor-wysiwyg div:has(> .o-web-studio-report-container)",
-            async run() {
+            async run({ waitUntil }) {
                 const placeholderBox = getBoundingClientRect.call(
                     document.querySelector(".o-web-studio-report-dynamic-placeholder-popover")
                 );

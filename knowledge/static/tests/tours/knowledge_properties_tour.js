@@ -39,10 +39,10 @@ unfoldArticleFromSidebar("ParentArticle"),
     run: 'click',
 }, { // wait InheritPropertiesArticle loading and move InheritPropertiesArticle under ParentArticle
     trigger: '.o_hierarchy_article_name input:value("InheritPropertiesArticle")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            '.o_article_handle:contains("InheritPropertiesArticle")',
-            '.o_article_handle:contains("ChildArticle")',
+            queryOne('.o_article_handle:contains("InheritPropertiesArticle")'),
+            queryOne('.o_article_handle:contains("ChildArticle")'),
         );
     },
 }, { // verify property

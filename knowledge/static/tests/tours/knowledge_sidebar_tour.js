@@ -613,10 +613,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop child above other child
 {
     trigger: 'section[data-section="private"] .o_article .o_article:first:contains("Private Child 1")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            '.o_section[data-section="private"] .o_article_name:contains("Private Child 3")',
-            '.o_section[data-section="private"] .o_article_name:contains("Private Child 1")',
+            queryOne('.o_section[data-section="private"] .o_article_name:contains("Private Child 3")'),
+            queryOne('.o_section[data-section="private"] .o_article_name:contains("Private Child 1")'),
         );
     },
         },
@@ -645,10 +645,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Add Properties")',
 }, {
     trigger: 'section[data-section="private"] .o_article:first:contains("Private Article")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            '.o_section[data-section="private"] .o_article_name:contains("Private Child 2")',
-            '.o_section[data-section="private"] .o_article_name:contains("Private Article")',
+            queryOne('.o_section[data-section="private"] .o_article_name:contains("Private Child 2")'),
+            queryOne('.o_section[data-section="private"] .o_article_name:contains("Private Article")'),
         );
     },
 },
@@ -674,10 +674,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop root above root
 {
     trigger: '.o_section[data-section="private"] .o_article:contains("Private Child 2") + .o_article:contains("Private Article")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            '.o_section[data-section="private"] .o_article_name:contains("Private Article")',
-            '.o_section[data-section="private"] .o_article_name:contains("Private Child 2")',
+            queryOne('.o_section[data-section="private"] .o_article_name:contains("Private Article")'),
+            queryOne('.o_section[data-section="private"] .o_article_name:contains("Private Child 2")'),
         );
     },
 }, {
@@ -699,10 +699,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     run: "edit Private Child 4 && click body",
 }, {
     trigger: '.o_article_active:contains("Private Child 4")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="private"] .o_article_name:contains("Private Child 4")',
-            'section[data-section="private"] .o_article_name:contains("Private Child 1")',
+            queryOne('section[data-section="private"] .o_article_name:contains("Private Child 4")'),
+            queryOne('section[data-section="private"] .o_article_name:contains("Private Child 1")'),
         );
     },
         },
@@ -723,10 +723,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop workspace to private
 {
     trigger: 'section[data-section="workspace"] .o_article:contains("Workspace Article")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="workspace"] .o_article:contains("Workspace Article")',
-            'section[data-section="private"]',
+            queryOne('section[data-section="workspace"] .o_article:contains("Workspace Article")'),
+            queryOne('section[data-section="private"]'),
         );
     },
 }, {
@@ -747,10 +747,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Cancel drag and drop
 {
     trigger: '.o_knowledge_tree',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="private"] .o_article_name:contains("Workspace Article")',
-            'section[data-section="workspace"] .o_section_header',
+            queryOne('section[data-section="private"] .o_article_name:contains("Workspace Article")'),
+            queryOne('section[data-section="workspace"] .o_section_header'),
         );
     },
         },
@@ -769,10 +769,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop private to workspace
 {
     trigger: '.o_knowledge_tree',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="private"] .o_article_name:contains("Workspace Article")',
-            'section[data-section="workspace"]',
+            queryOne('section[data-section="private"] .o_article_name:contains("Workspace Article")'),
+            queryOne('section[data-section="workspace"]'),
         );
     },
 }, {
@@ -793,10 +793,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop article to shared (fails)
 {
     trigger: '.o_article:contains("Private Article")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="private"] .o_article:contains("Private Article")',
-            'section[data-section="shared"]',
+            queryOne('section[data-section="private"] .o_article:contains("Private Article")'),
+            queryOne('section[data-section="shared"]'),
         );
     },
         },
@@ -848,10 +848,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         },
         {
     trigger: 'section[data-section="shared"] .o_article:contains("Shared Article") + .o_article:contains("Shared 2")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="shared"] .o_article_name:contains("Shared 2")',
-            'section[data-section="shared"] .o_article_name:contains("Shared Article")',
+            queryOne('section[data-section="shared"] .o_article_name:contains("Shared 2")'),
+            queryOne('section[data-section="shared"] .o_article_name:contains("Shared Article")'),
         );
     },
 }, {
@@ -873,10 +873,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     run: "edit Moved to Share && click body",
 }, {
     trigger: '.o_article_active:contains("Moved to Share")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="private"] .o_article_name:contains("Moved to Share")',
-            'section[data-section="shared"] .o_article_name:contains("Shared Child")',
+            queryOne('section[data-section="private"] .o_article_name:contains("Moved to Share")'),
+            queryOne('section[data-section="shared"] .o_article_name:contains("Shared Child")'),
         );
     },
         },
@@ -895,19 +895,19 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop shared child to shared
 {
     trigger: '.o_knowledge_tree',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="shared"] .o_article_name:contains("Moved to Share")',
-            'section[data-section="shared"] .o_article_name:contains("Shared Article")',
+            queryOne('section[data-section="shared"] .o_article_name:contains("Moved to Share")'),
+            queryOne('section[data-section="shared"] .o_article_name:contains("Shared Article")'),
         );
     },
 }, {
     // Check that the article moved and move it back
     trigger: 'section[data-section="shared"] .o_article:contains("Moved to Share") + .o_article:contains("Shared Article")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="shared"] .o_article_name:contains("Moved to Share")',
-            'section[data-section="shared"] .o_article_name:contains("Shared Article")',
+            queryOne('section[data-section="shared"] .o_article_name:contains("Moved to Share")'),
+            queryOne('section[data-section="shared"] .o_article_name:contains("Shared Article")'),
         );
     },
         },
@@ -921,10 +921,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop article to trash
 {
     trigger: '.o_knowledge_tree',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="private"] .o_article_name:contains("Private Child 2")',
-            '.o_section.o_knowledge_sidebar_trash',
+            queryOne('section[data-section="private"] .o_article_name:contains("Private Child 2")'),
+            queryOne('.o_section.o_knowledge_sidebar_trash'),
         );
     },
 }, {
@@ -934,10 +934,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Drag and drop parent of active article to trash
 {
     trigger: '.o_article_active:contains("Moved to Share")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="shared"] .o_article_name:contains("Shared Article")',
-            '.o_section.o_knowledge_sidebar_trash',
+            queryOne('section[data-section="shared"] .o_article_name:contains("Shared Article")'),
+            queryOne('.o_section.o_knowledge_sidebar_trash'),
         );
     },
 }, {
@@ -950,10 +950,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Resequence favorites
 {
     trigger: 'section[data-section="favorites"] .o_article:contains("Private Article") + .o_article:contains("Workspace Child")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="favorites"] .o_article_name:contains("Workspace Child")',
-            'section[data-section="favorites"] .o_article_name:contains("Private Article")',
+            queryOne('section[data-section="favorites"] .o_article_name:contains("Workspace Child")'),
+            queryOne('section[data-section="favorites"] .o_article_name:contains("Private Article")'),
         );
     },
 }, {

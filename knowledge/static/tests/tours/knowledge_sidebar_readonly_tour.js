@@ -24,10 +24,14 @@ registry.category("web_tour.tours").add("knowledge_sidebar_readonly_tour", {
         {
             // Check that article has been unfolded and move an article under a readonly article (fails)
             trigger: '.o_article:contains("Private Child")',
-            run: () => {
+            run: ({ queryOne }) => {
                 dragAndDropArticle(
-                    'section[data-section="workspace"] .o_article_name:contains("Workspace Article")',
-                    'section[data-section="workspace"] .o_article_name:contains("Private Article")'
+                    queryOne(
+                        'section[data-section="workspace"] .o_article_name:contains("Workspace Article")'
+                    ),
+                    queryOne(
+                        'section[data-section="workspace"] .o_article_name:contains("Private Article")'
+                    )
                 );
             },
         },
@@ -43,10 +47,14 @@ registry.category("web_tour.tours").add("knowledge_sidebar_readonly_tour", {
             // Move a readonly article (fails)
             trigger:
                 '.o_knowledge_tree .o_article:contains("Workspace Article") + .o_article:contains("Private Article")',
-            run: () => {
+            run: ({ queryOne }) => {
                 dragAndDropArticle(
-                    'section[data-section="workspace"] .o_article_name:contains("Private Article")',
-                    'section[data-section="workspace"] .o_article_name:contains("Workspace Article")'
+                    queryOne(
+                        'section[data-section="workspace"] .o_article_name:contains("Private Article")'
+                    ),
+                    queryOne(
+                        'section[data-section="workspace"] .o_article_name:contains("Workspace Article")'
+                    )
                 );
             },
         },

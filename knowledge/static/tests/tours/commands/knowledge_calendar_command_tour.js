@@ -6,7 +6,6 @@ import {
 } from "../knowledge_tour_utils.js";
 import { stepUtils } from "@web_tour/tour_utils";
 import { patch } from "@web/core/utils/patch";
-import { animationFrame, hover, queryFirst } from "@odoo/hoot-dom";
 
 const embeddedViewPatchUtil = embeddedViewPatchFunctions();
 
@@ -391,17 +390,18 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     },
 }, { // Resize the item
     trigger: '.fc-timegrid-event:contains("Item Article")',
-    run: async () => {
+    async run({ hover }){
         // Make resizer visible
-        await hover(`.fc-event-main:first`, { root: this.anchor });
-        await animationFrame();
-        const resizer = queryFirst(`.fc-event-resizer-end`, { root: this.anchor });
+        const element = this.anchor.querySelector(`.fc-event-main`)
+        await hover(element);
+        await new Promise(requestAnimationFrame);
+        const resizer = this.anchor.querySelector(`.fc-event-resizer-end`);
         Object.assign(resizer.style, {
             display: "block",
             height: "1px",
             bottom: "0",
         });
-        const target = queryFirst('.fc-timegrid-slot.fc-timegrid-slot-lane[data-time="11:00:00"]');
+        const target = document.querySelector('.fc-timegrid-slot.fc-timegrid-slot-lane[data-time="11:00:00"]');
         dragDate(resizer, target);
     },
 }, {

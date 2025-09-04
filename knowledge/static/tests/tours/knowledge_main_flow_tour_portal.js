@@ -153,10 +153,10 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour_portal', {
 }, {
     // move private article above workspace article in the favorite section
     trigger: 'div.o_favorite_container .o_article_handle:contains("My Private Article")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'div.o_favorite_container .o_article_handle:contains("My Private Article")',
-            'div.o_favorite_container .o_article_handle:contains("Workspace Article")',
+            queryOne('div.o_favorite_container .o_article_handle:contains("My Private Article")'),
+            queryOne('div.o_favorite_container .o_article_handle:contains("Workspace Article")'),
         );
     },
 }, {

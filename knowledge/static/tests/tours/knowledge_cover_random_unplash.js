@@ -1,4 +1,4 @@
-import { endKnowledgeTour, makeVisible } from './knowledge_tour_utils.js';
+import { endKnowledgeTour } from './knowledge_tour_utils.js';
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_utils";
 
@@ -8,6 +8,15 @@ import { stepUtils } from "@web_tour/tour_utils";
  * selected unsplash collection if no name is set on the article, either
  * add a random image using the article name as query word.
  */
+
+function makeVisible(el) {
+    if (el) {
+        el.style.setProperty("visibility", "visible", "important");
+        el.style.setProperty("opacity", "1", "important");
+        el.style.setProperty("display", "block", "important");
+    }
+}
+
 registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
     url: '/odoo',
     steps: () => [stepUtils.showAppsMenuItem(), {
@@ -21,7 +30,7 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
 }, {
     // Make the add cover button visible (only visible on hover)
     trigger: '.o_article_active:contains("Untitled")',
-    run: () => makeVisible('.o_knowledge_add_cover'),
+    run: () => makeVisible(document.querySelector('.o_knowledge_add_cover')),
 }, {
     // Click on add cover button
     trigger: '.o_knowledge_add_cover',
@@ -29,7 +38,7 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
 }, {
     // Check that a cover has been added, and make the change cover button visible
     trigger: '.o_knowledge_cover .o_knowledge_cover_image',
-    run: () => makeVisible('.o_knowledge_replace_cover'),
+    run: () => makeVisible(document.querySelector('.o_knowledge_replace_cover')),
 }, {
     // Click on change cover button
     trigger: '.o_knowledge_replace_cover',
@@ -46,7 +55,7 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
 }, {
     // Make the remove cover button visible
     trigger: '.o_knowledge_edit_cover_buttons',
-    run: () => makeVisible('.o_knowledge_remove_cover'),
+    run: () => makeVisible(document.querySelector('.o_knowledge_remove_cover')),
 }, {
     // Remove the cover of the article
     trigger: '.o_knowledge_remove_cover',
@@ -58,7 +67,7 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
 }, {
     // Make the add cover button visible
     trigger: '.o_article_active:contains("Birds")',
-    run: () => makeVisible('.o_knowledge_add_cover'),
+    run: () => makeVisible(document.querySelector('.o_knowledge_add_cover')),
 }, {
     // Click on add cover button
     trigger: '.o_knowledge_add_cover',
@@ -66,7 +75,7 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
 }, {
     // Check that a cover has been added and make the change cover button visible
     trigger: '.o_knowledge_cover .o_knowledge_cover_image',
-    run: () => makeVisible('.o_knowledge_replace_cover'),
+    run: () => makeVisible(document.querySelector('.o_knowledge_replace_cover')),
 }, {
     // Click on change cover button
     trigger: '.o_knowledge_replace_cover',

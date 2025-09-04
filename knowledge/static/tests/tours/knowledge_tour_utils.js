@@ -1,6 +1,5 @@
 import { SORTABLE_TOLERANCE } from "@knowledge/components/sidebar/sidebar";
 import { stepUtils } from "@web_tour/tour_utils";
-import { queryOne, queryFirst } from "@odoo/hoot-dom";
 import { childNodeIndex } from "@html_editor/utils/position";
 import { Component, xml } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
@@ -84,10 +83,7 @@ function getOffset(element) {
  * @param {MaybeIterable<Node> | string | null | undefined | false} from Hoot Dom target
  * @param {MaybeIterable<Node> | string | null | undefined | false} to Hoot Dom target
  */
-export const dragAndDropArticle = (from, to) => {
-    const source = queryOne(from);
-    const target = queryOne(to);
-
+export const dragAndDropArticle = (source, target) => {
     const elementOffset = getOffset(source);
     const targetOffset = getOffset(target);
     // If the target is under the element, the cursor needs to be in the upper
@@ -186,15 +182,6 @@ export function endKnowledgeTour() {
             trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
         }
     ];
-}
-
-export function makeVisible(selector) {
-    const el = queryFirst(selector);
-    if (el) {
-        el.style.setProperty("visibility", "visible", "important");
-        el.style.setProperty("opacity", "1", "important");
-        el.style.setProperty("display", "block", "important");
-    }
 }
 
 /**

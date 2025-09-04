@@ -1,6 +1,5 @@
 import { registry } from "@web/core/registry";
 import { stepNotInStudio, assertEqual } from "@web_studio/../tests/tours/tour_helpers";
-import { queryAll, queryFirst, queryOne, drag, waitFor } from "@odoo/hoot-dom";
 import { rpcBus } from "@web/core/network/rpc";
 import { DEBOUNCED_DELAY } from "@web/core/select_menu/select_menu";
 
@@ -137,7 +136,7 @@ registry.category("web_tour.tours").add("web_studio_enter_x2many_edition_and_add
         {
             trigger:
                 ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(User log entries)",
-            run() {
+            run({ queryFirst }) {
                 queryFirst(
                     ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(User log entries)"
                 ).scrollIntoView();
@@ -201,7 +200,7 @@ registry.category("web_tour.tours").add("web_studio_enter_x2many_auto_inlined_su
         {
             trigger:
                 ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(User log entries)",
-            run() {
+            run({ queryFirst }) {
                 queryFirst(
                     ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(User log entries)"
                 ).scrollIntoView();
@@ -267,7 +266,7 @@ registry
             {
                 trigger:
                     ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(User log entries)",
-                run() {
+                run({ queryFirst }) {
                     queryFirst(
                         ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(User log entries)"
                     ).scrollIntoView();
@@ -350,7 +349,7 @@ registry.category("web_tour.tours").add("web_studio_field_with_group", {
         {
             trigger:
                 ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(Website Link)",
-            run() {
+            run({ queryFirst }) {
                 queryFirst(
                     ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(Website Link)"
                 ).scrollIntoView();
@@ -454,9 +453,9 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
         {
             trigger: "body:not(.o_in_studio):has(.o_searchview_facet):has(.o_list_table)",
             run() {
-                assertEqual(queryAll(".o_group_name").length, 1);
-                assertEqual(queryAll(".o_searchview_facet").length, 1);
-                assertEqual(queryOne(".o_searchview_facet").textContent, "Active");
+                assertEqual(document.querySelectorAll(".o_group_name").length, 1);
+                assertEqual(document.querySelectorAll(".o_searchview_facet").length, 1);
+                assertEqual(document.querySelector(".o_searchview_facet").textContent, "Active");
             },
         },
         {
@@ -482,8 +481,11 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
         {
             trigger: "body:not(.o_in_studio):has(.o_searchview_facet):has(.o_list_table)",
             run() {
-                assertEqual(queryAll(".o_searchview_facet").length, 1);
-                assertEqual(queryOne(".o_searchview_facet").textContent, "Active>City");
+                assertEqual(document.querySelectorAll(".o_searchview_facet").length, 1);
+                assertEqual(
+                    document.querySelector(".o_searchview_facet").textContent,
+                    "Active>City"
+                );
             },
         },
         {
@@ -493,7 +495,7 @@ registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", 
         {
             trigger: ".o_group_name:eq(1)",
             run() {
-                if (queryAll(".o_group_name").length < 2) {
+                if (document.querySelectorAll(".o_group_name").length < 2) {
                     throw new Error("There should be at least 2 group headers");
                 }
             },
@@ -528,7 +530,7 @@ registry.category("web_tour.tours").add("web_studio_elements_with_groups_form", 
         {
             trigger:
                 ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(Website Link)",
-            run() {
+            run({ queryFirst }) {
                 queryFirst(
                     ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(Website Link)"
                 ).scrollIntoView();
@@ -1019,7 +1021,7 @@ registry.category("web_tour.tours").add("web_studio_test_studio_view_is_last", {
         {
             trigger:
                 ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(Website Link)",
-            run() {
+            run({ queryFirst }) {
                 queryFirst(
                     ".o_web_studio_sidebar .o_web_studio_existing_fields_section .o_web_studio_component:contains(Website Link)"
                 ).scrollIntoView();
@@ -1793,8 +1795,9 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
         },
         {
             trigger: ".o_web_studio_component.o_web_studio_field_menu",
-            async run() {
+            async run({ waitFor }) {
                 await animationFrame();
+                const { drag } = odoo.loader.modules.get("@odoo/hoot-dom");
                 const { drop, moveTo } = await drag(this.anchor);
                 await moveTo(".o_kanban_record:first");
                 await animationFrame(500); // wait for animations to finish in under 500ms

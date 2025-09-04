@@ -1,6 +1,5 @@
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_utils";
-import { queryFirst } from "@odoo/hoot-dom";
 import { _t } from "@web/core/l10n/translation";
 
 function triggerDragEvent(element, type, data = {}) {
@@ -13,9 +12,8 @@ function triggerDragEvent(element, type, data = {}) {
     element.dispatchEvent(event);
 }
 
-export function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
+function dragAndDropSignItemAtHeight(from, to, height = 0.5, width = 0.5) {
     const iframe = document.querySelector("iframe");
-    const to = queryFirst(`:iframe .page[data-page-number="1"]`);
     const toPosition = to.getBoundingClientRect();
     toPosition.x += iframe.contentWindow.scrollX + to.clientWidth * width;
     toPosition.y += iframe.contentWindow.scrollY + to.clientHeight * height;
@@ -43,9 +41,7 @@ export function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
     triggerDragEvent(from, "dragend");
 }
 
-export function createSelectionRectangle(startPos = 0.25, endPos = 0.75) {
-    const viewerContainer = queryFirst(`:iframe #viewerContainer`);
-    const page = queryFirst(`:iframe .page[data-page-number="1"]`);
+export function createSelectionRectangle(viewerContainer, page, startPos = 0.25, endPos = 0.75) {
     const pageRect = page.getBoundingClientRect();
 
     const startX = pageRect.width * startPos;
@@ -132,29 +128,34 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         {
             content: "Drop Signature Item",
             trigger: ".o_sign_field_type_button:contains(" + _t("Signature") + ")",
-            run() {
-                dragAndDropSignItemAtHeight(this.anchor, 0.5, 0.25);
+            run({ queryFirst }) {
+                const to = queryFirst(`:iframe .page[data-page-number="1"]`);
+                dragAndDropSignItemAtHeight(this.anchor, to, 0.5, 0.25);
             },
         },
         {
             content: "Drop Name Sign Item",
             trigger: ".o_sign_field_type_button:contains(" + _t("Name") + ")",
-            run() {
-                dragAndDropSignItemAtHeight(this.anchor, 0.25, 0.25);
+            run({ queryFirst }) {
+                const to = queryFirst(`:iframe .page[data-page-number="1"]`);
+                dragAndDropSignItemAtHeight(this.anchor, to, 0.25, 0.25);
             },
         },
         {
             content: "Drop Text Sign Item",
             trigger: ".o_sign_field_type_button:contains(" + _t("Text") + ")",
-            run() {
-                dragAndDropSignItemAtHeight(this.anchor, 0.15, 0.25);
+            run({ queryFirst }) {
+                const to = queryFirst(`:iframe .page[data-page-number="1"]`);
+                dragAndDropSignItemAtHeight(this.anchor, to, 0.15, 0.25);
             },
         },
         {
             content: "Test multi-select by creating a selection rectangle",
             trigger: ":iframe .page[data-page-number='1']",
-            run() {
-                createSelectionRectangle(0.25, 0.75);
+            run({ queryFirst }) {
+                const viewerContainer = queryFirst(`:iframe #viewerContainer`);
+                const page = queryFirst(`:iframe .page[data-page-number="1"]`);
+                createSelectionRectangle(viewerContainer, page, 0.25, 0.75);
             },
         },
         {
@@ -177,10 +178,10 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         {
             content: "Click elsewhere to prepare for paste",
             trigger: ":iframe .page[data-page-number='1']",
-            run(actions) {
+            run({ queryFirst, click }) {
                 const page = queryFirst(`:iframe .page[data-page-number="1"]`);
                 const pageRect = page.getBoundingClientRect();
-                actions.click({
+                click({
                     x: pageRect.left + pageRect.width * 0.8,
                     y: pageRect.top + pageRect.height * 0.8,
                 });
@@ -202,8 +203,10 @@ registry.category("web_tour.tours").add("sign_template_creation_tour", {
         {
             content: "Test multi-select by creating a selection rectangle",
             trigger: ":iframe .page[data-page-number='1']",
-            run() {
-                createSelectionRectangle(0.25, 0.75);
+            run({ queryFirst }) {
+                const viewerContainer = queryFirst(`:iframe #viewerContainer`);
+                const page = queryFirst(`:iframe .page[data-page-number="1"]`);
+                createSelectionRectangle(viewerContainer, page, 0.25, 0.75);
             },
         },
         {

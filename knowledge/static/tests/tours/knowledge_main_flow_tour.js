@@ -106,10 +106,10 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
 }, {
     // move child article 2 above child article 1
     trigger: '.o_article_handle:contains("Child Article 2")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            '.o_article_handle:contains("Child Article 2")',
-            '.o_article_handle:contains("Child Article 1")',
+            queryOne('.o_article_handle:contains("Child Article 2")'),
+            queryOne('.o_article_handle:contains("Child Article 1")'),
         );
     },
 }, {
@@ -211,10 +211,10 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
 }, {
     // move private article above workspace article in the favorite section
     trigger: 'section[data-section="favorites"] .o_article_handle:contains("My Private Article")',
-    run: () => {
+    run: ({ queryOne }) => {
         dragAndDropArticle(
-            'section[data-section="favorites"] .o_article_handle:contains("My Private Article")',
-            'section[data-section="favorites"] .o_article_handle:contains("My Workspace Article")',
+            queryOne('section[data-section="favorites"] .o_article_handle:contains("My Private Article")'),
+            queryOne('section[data-section="favorites"] .o_article_handle:contains("My Workspace Article")'),
         );
     },
 }, {
