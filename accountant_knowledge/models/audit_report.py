@@ -1,9 +1,4 @@
-import ast
-import re
-import json
-
 from datetime import datetime
-from lxml import html
 
 from odoo import _, api, Command, fields, models
 
@@ -48,122 +43,8 @@ class AuditReport(models.Model):
 
         audit_reports = super().create(vals_list)
         for audit_report, root_article in zip(audit_reports, root_articles):
-
-            template_to_article_pairs = []
-            stack = [(audit_report.knowledge_template_article_id, root_article)]
-
-            while stack:
-                (parent_template, parent_article) = stack.pop()
-                template_to_article_pairs.append((parent_template, parent_article))
-
-                # Create the child articles:
-                child_templates = parent_template.child_ids
-                child_templates = child_templates.filtered(
-                    lambda template: template.template_child_default_create)
-                child_templates = child_templates.sorted(
-                    lambda template: (template.write_date, template.id))
-
-                if not child_templates:
-                    continue
-
-                child_articles_values = []
-                for template in child_templates:
-                    child_articles_values.append({
-                        'is_article_item': template.is_article_item,
-                        'parent_id': parent_article.id,
-                        'icon': template.icon,
-                        'name': template.template_name,
-                    })
-
-                child_articles = self.env['knowledge.article'].create(child_articles_values)
-                stack.extend(zip(child_templates, child_articles))
-
-            template_xml_id_to_article_id_mapping = {}
-            all_ir_model_data = self.env['ir.model.data'].sudo().search([
-                ('model', '=', 'knowledge.article'),
-                ('res_id', 'in', [template.id for (template, _) in template_to_article_pairs])
-            ])
-
-            for (template, article) in template_to_article_pairs:
-                ir_model_data = all_ir_model_data.filtered(
-                    lambda ir_model_data: ir_model_data.res_id == template.id)
-                if ir_model_data:
-                    template_xml_id = ir_model_data.complete_name
-                    template_xml_id_to_article_id_mapping[template_xml_id] = article.id
-
-            def ref(xml_id):
-                return template_xml_id_to_article_id_mapping[xml_id] \
-                    if xml_id in template_xml_id_to_article_id_mapping \
-                        else self.env.ref(xml_id).id
-
-            def transform_xmlid_to_res_id(match):
-                return str(ref(match.group('xml_id')))
-
-            for (template, article) in reversed(template_to_article_pairs):
-                fragment = html.fragment_fromstring(template.template_body, create_parent='div')
-
-                # Populate the article index:
-                for element in fragment.xpath('//*[@data-embedded="articleIndex"]'):
-                    embedded_props = json.loads(element.get('data-embedded-props', '{}'))
-                    if embedded_props.get('showAllChildren'):
-                        def build_article_index(parent_article):
-                            return [{
-                                'id': child_article.id,
-                                'name': child_article.display_name,
-                                'childIds': build_article_index(child_article)
-                            } for child_article in parent_article.child_ids
-                                if not child_article.is_template]
-                        element.set('data-embedded-props', json.dumps({
-                            'articles': build_article_index(article),
-                            'showAllChildren': True
-                        }))
-                    else:
-                        element.set('data-embedded-props', json.dumps({
-                            'articles': [{
-                                'id': child.id,
-                                'name': child.display_name,
-                                'childIds': []
-                            } for child in article.child_ids],
-                            'showAllChildren': False
-                        }))
-
-                for element in fragment.xpath('//*[@data-embedded="accountReport"]'):
-                    embedded_props = ast.literal_eval(re.sub(
-                        r'(?<![\w])ref\(\'(?P<xml_id>\w+\.\w+)\'\)',
-                        transform_xmlid_to_res_id,
-                        element.get('data-embedded-props')))
-                    if 'options' in embedded_props:
-                        account_report_options = embedded_props['options']
-                        if 'report_id' in account_report_options:
-                            account_report = self.env['account.report'].browse(account_report_options['report_id'])
-                            embedded_props['options'] = account_report.get_options({
-                                'selected_variant_id': account_report.id,
-                                'date': {
-                                    'date_from': str(audit_report.start_date),
-                                    'date_to': str(audit_report.end_date),
-                                    'mode': 'range',
-                                    'filter': 'custom',
-                                },
-                                **embedded_props['options']
-                            })
-                    element.set('data-embedded-props', json.dumps(embedded_props))
-
-                elements = []
-                for child in fragment.getchildren():
-                    elements.append(
-                        html.tostring(child, encoding='unicode', method='html'))
-
-                article.write({
-                    'article_properties': template.article_properties or {},
-                    'article_properties_definition': template.article_properties_definition,
-                    'body': ''.join(elements),
-                    'cover_image_id': template.cover_image_id.id,
-                    'full_width': template.full_width,
-                    'icon': template.icon,
-                    'name': template.template_name,
-                    'origin_template_id': template.id,
-                })
-
+            root_template = audit_report.knowledge_template_article_id
+            root_article.apply_template(root_template.id)
             root_article.write({
                 'name': audit_report.title
             })

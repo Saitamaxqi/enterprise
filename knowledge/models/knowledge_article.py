@@ -1800,6 +1800,8 @@ class KnowledgeArticle(models.Model):
             article = self.env['knowledge.article'].create({
                 'parent_id': parent_article.id,
                 'origin_template_id': template.id,
+                'icon': template.icon,
+                'name': template.template_name,
             })
             if sibling_articles:
                 articles_with_higher_template_sequence = sorted([
@@ -1839,11 +1841,9 @@ class KnowledgeArticle(models.Model):
             article.write({
                 'article_properties': template.article_properties or {},
                 'article_properties_definition': template.article_properties_definition,
-                'body': template._render_template(ref),
+                'body': template.with_context(target_article_id=article.id)._render_template(ref),
                 'cover_image_id': template.cover_image_id.id,
                 'full_width': template.full_width,
-                'icon': template.icon,
-                'name': template.template_name,
             })
 
         return parent_article
@@ -2914,6 +2914,8 @@ class KnowledgeArticle(models.Model):
                 article_values = {
                     'is_article_item': template.is_article_item,
                     'parent_id': parent_article.id,
+                    'icon': template.icon,
+                    'name': template.template_name,
                 }
                 article_stage = next((article_stage for (article_stage, template_stage) in \
                     zip(parent_article_stages, parent_template_stages) \
@@ -2958,11 +2960,9 @@ class KnowledgeArticle(models.Model):
             article.write({
                 'article_properties': template.article_properties or {},
                 'article_properties_definition': template.article_properties_definition,
-                'body': template._render_template(ref),
+                'body': template.with_context(target_article_id=article.id)._render_template(ref),
                 'cover_image_id': template.cover_image_id.id,
                 'full_width': template.full_width,
-                'icon': template.icon,
-                'name': template.template_name,
                 'origin_template_id': template.id,
             })
 
@@ -2975,7 +2975,7 @@ class KnowledgeArticle(models.Model):
             'name': root_article.name or root_template.template_name,
             'origin_template_id': root_template.id,
         }
-        body = root_template._render_template(ref)
+        body = root_template.with_context(target_article_id=root_article.id)._render_template(ref)
         if not skip_body_update:
             values['body'] = body
         root_article.write(values)
@@ -2997,10 +2997,19 @@ class KnowledgeArticle(models.Model):
             def ref(xml_id):
                 return self.env.ref(xml_id).id
 
+        fragment = self._prepare_template(ref)
+        elements = []
+        for child in fragment.getchildren():
+            elements.append(
+                html.tostring(child, encoding='unicode', method='html'))
+        return ''.join(elements)
+
+    def _prepare_template(self, ref):
         def transform_xmlid_to_res_id(match):
             return str(ref(match.group('xml_id')))
 
         fragment = html.fragment_fromstring(self.template_body, create_parent='div')
+
         for element in fragment.xpath('//*[@data-embedded="view"]'):
             # When encoding the "embedded props", we find and replace the function
             # calls of `ref` with the ids returned by the given `ref` function for
@@ -3014,6 +3023,7 @@ class KnowledgeArticle(models.Model):
                 transform_xmlid_to_res_id,
                 element.get('data-embedded-props')))
             element.set('data-embedded-props', json.dumps(embedded_props))
+
         for element in fragment.xpath('//*[contains(@class, "o_knowledge_article_link")]'):
             article_id = ast.literal_eval(re.sub(
                 r'(?<![\w])ref\(\'(?P<xml_id>\w+\.\w+)\'\)',
@@ -3022,8 +3032,32 @@ class KnowledgeArticle(models.Model):
             element.set('href', '/knowledge/article/%s' % (article_id))
             element.set('data-res_id', '%s' % (article_id))
 
-        return ''.join(html.tostring(child, encoding='unicode', method='html') \
-            for child in fragment.getchildren()) # unwrap the elements from the parent node
+        target_article = self.env['knowledge.article'].browse(
+            self.env.context.get('target_article_id', False)) or self
+
+        for element in fragment.xpath('//*[@data-embedded="articleIndex"]'):
+            embedded_props = json.loads(element.get('data-embedded-props', '{}'))
+            if embedded_props.get('showAllChildren'):
+                def build_article_index(parent_article):
+                    return [{
+                        'id': child_article.id,
+                        'name': child_article.display_name,
+                        'childIds': build_article_index(child_article)
+                    } for child_article in parent_article.child_ids
+                        if not child_article.is_article_item]
+                articles = build_article_index(target_article)
+            else:
+                articles = [{
+                    'id': child_article.id,
+                    'name': child_article.display_name,
+                    'childIds': []
+                } for child_article in target_article.child_ids
+                    if not child_article.is_article_item]
+            element.set('data-embedded-props', json.dumps({
+                'articles': articles,
+                'showAllChildren': embedded_props.get('showAllChildren', False)
+            }))
+        return fragment
 
     def apply_article_as_template(self, article_id):
         """Substitute the current article fields for the given article and return

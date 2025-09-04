@@ -16,6 +16,9 @@ patch(WysiwygArticleHelper.prototype, {
         this.dialogService.add(ArticleAnnexePickerDialog, {
             articles: [],
             templates: templates,
+            previewRenderingContext: {
+                target_article_id: this.props.record.id
+            },
             onLoadArticle: () => {},
             /** @param {integer} articleId */
             onLoadTemplate: async (templateId) => {

@@ -28,6 +28,7 @@ export class ArticleTemplatePickerDialog extends Component {
     static props = {
         articles: { type: Object },
         templates: { type: Object },
+        templateRenderingContext: { type: Object, optional: true },
         onLoadArticle: { type: Function },
         onLoadTemplate: { type: Function },
         onDeleteArticle: { type: Function },

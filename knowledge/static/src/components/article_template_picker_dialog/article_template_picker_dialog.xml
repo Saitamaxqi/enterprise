@@ -66,6 +66,7 @@
                         resId="this.state.resId"
                         fieldNames="this.templateFieldNames"
                         mode="'readonly'"
+                        context="this.props.templateRenderingContext || {}"
                         t-slot-scope="slot">
                         <div class="o_knowledge_template_preview flex-grow-1 flex-basis-0" t-ref="scroll-view">
                             <img t-if="slot.record.data.cover_image_url"
