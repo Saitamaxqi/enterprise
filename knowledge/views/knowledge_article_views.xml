@@ -417,6 +417,13 @@
                     domain="[('active', '=', False)]"/>
                 <filter name="filter_trashed" string="Trashed"
                     domain="[('active', '=', False), ('to_delete', '=', True)]"/>
+                <filter invisible="1" string="Late Activities" name="activities_overdue"
+                    domain="[('my_activity_date_deadline', '&lt;', 'today')]"
+                    help="Show all records whose next activity date is past"/>
+                <filter invisible="1" string="Today Activities" name="activities_today"
+                    domain="[('my_activity_date_deadline', '=', 'today')]"/>
+                <filter invisible="1" string="Future Activities" name="activities_upcoming_all"
+                    domain="[('my_activity_date_deadline', '&gt;', 'today')]"/>
                 <group>
                     <filter name="group_by_category" domain="[]" context="{'group_by': 'category'}"/>
                     <filter name="group_by_menu_article" context="{'group_by': 'root_article_id'}"/>
