@@ -361,3 +361,41 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         self.assertFalse(work_entries1.active)
         self.assertTrue(work_entries2.active)
         self.assertEqual(work_entries2.duration, 3)
+
+    def test_fully_flexible_employee_overlapping_leaves(self):
+        """
+        Test Fully Flexible employee with overlapping leaves doesn't cause singleton errors.
+        """
+        fully_flexible_emp = self.env['hr.employee'].create({
+            'name': 'Flexible Employee',
+            'date_version': datetime(2025, 6, 1).date(),
+            'contract_date_start': datetime(2025, 6, 1).date(),
+            'wage': 5000.0,
+            'work_entry_source': 'attendance',
+            'resource_calendar_id': False,
+        })
+
+        sick_leave_type = self.env['hr.work.entry.type'].search([('code', '=', 'LEAVE110')], limit=1)
+
+        self.env['resource.calendar.leaves'].create([
+            {
+                'name': 'Sick Leave',
+                'date_from': datetime(2025, 6, 25),
+                'date_to': datetime(2025, 6, 29),
+                'resource_id': fully_flexible_emp.resource_id.id,
+                'work_entry_type_id': sick_leave_type.id,
+            },
+            {
+                'name': 'Public Holiday',
+                'date_from': datetime(2025, 6, 27),
+                'date_to': datetime(2025, 6, 27, 23, 59, 59),
+                'calendar_id': False,
+                'work_entry_type_id': self.work_entry_type_leave.id,
+            }
+        ])
+
+        # This should NOT raise singleton errors
+        fully_flexible_emp.generate_work_entries(
+            datetime(2025, 6, 25).date(),
+            datetime(2025, 6, 29).date()
+        )
