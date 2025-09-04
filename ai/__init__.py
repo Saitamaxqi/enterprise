@@ -17,10 +17,14 @@ More information at https://github.com/pgvector/pgvector.
 """
 
 
-def _pre_init_ai(env):
+def pgvector_is_available(env):
     try:
         with tools.mute_logger('odoo.sql_db'), env.cr.savepoint():
             env.cr.execute(
                 SQL("CREATE EXTENSION IF NOT EXISTS vector"))
     except psycopg2.errors.FeatureNotSupported:
         raise UserError(MISSING_PGVECTOR_LOG_MESSAGE)
+
+
+def _pre_init_ai(env):
+    pgvector_is_available(env)

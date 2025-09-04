@@ -43,7 +43,6 @@
         ],
     },
     'pre_init_hook': "_pre_init_ai",
-    'auto_install': True,
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }
