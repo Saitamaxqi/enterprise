@@ -868,16 +868,21 @@ class AccountReturn(models.Model):
 
         account_returns = self.browse(return_ids)
         dashboard_return_dicts = []
-        for account_return in account_returns:
-            name = account_return.type_id._get_return_name(account_return.company_id, account_return.date_from, account_return.date_to, minimal=True)
-            dashboard_return_dicts.append({
-                'id': account_return.id,
-                'date_deadline': account_return.date_deadline,
-                'name': name,
-                'type_id': account_return.type_id.id,
-            })
+        grouped_by_type = defaultdict(list)
 
-        dashboard_return_dicts.sort(key=lambda return_dict: return_dict['date_deadline'])
+        for account_return in account_returns:
+            return_type = account_return.type_id
+            grouped_by_type[return_type] += account_return
+
+        for return_type, returns in grouped_by_type.items():
+            returns.sort(key=lambda x: x.date_deadline)
+            dashboard_return_dicts.append(
+                {
+                    'id': returns[0].id,
+                    'date_deadline': returns[0].date_deadline,
+                    'name': return_type.name,
+                    'type_id': return_type.id,
+                })
         return dashboard_return_dicts
 
     @api.model
