@@ -4,7 +4,7 @@
         <field name="name">l10n.ch.occupation.list</field>
         <field name="model">l10n.ch.occupation</field>
         <field name="arch" type="xml">
-            <list>
+            <list create="0" edit="0" delete="0">
                 <field name="employee_id"/>
                 <field name="date_start"/>
                 <field name="date_end"/>
