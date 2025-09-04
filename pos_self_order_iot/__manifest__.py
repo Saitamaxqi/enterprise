@@ -31,6 +31,10 @@
         'web.assets_backend': [
             'pos_self_order_iot/static/src/views/*',
         ],
+        'pos_self_order.assets_tests': [
+            ('include', 'iot.assets_tests'),
+            "pos_self_order_iot/static/tests/tours/**/*",
+        ],
     },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

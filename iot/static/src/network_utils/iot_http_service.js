@@ -52,6 +52,7 @@ export class IotHttpService {
         this._longpolling.bind(this),
         this._websocket.bind(this)
     ];
+    cachedIotBoxes = {};
 
     /**
      *
@@ -74,8 +75,11 @@ export class IotHttpService {
     }
 
     async getIotBoxData(iotBoxId) {
-        const [iotBoxData] = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["ip", "identifier"]);
-        return iotBoxData;
+        const record = await this.orm.searchRead("iot.box", [["id", "=", iotBoxId]], ["id", "ip", "identifier"]);
+        if (!record) {
+            throw new Error(`No IoT Box found`);
+        }
+        return record;
     }
 
     _ensureLongpollingEnabled() {
@@ -130,7 +134,11 @@ export class IotHttpService {
             iotBoxId = iotBoxId[0]; // iotBoxId is the ``Many2one`` field, we need the actual ID
         }
 
-        const { ip, identifier } = await this.getIotBoxData(iotBoxId);
+        if (!this.cachedIotBoxes[iotBoxId]) {
+            const [box] = await this.getIotBoxData(iotBoxId);
+            this.cachedIotBoxes[iotBoxId] = { ip: box.ip, identifier: box.identifier };
+        }
+        const { ip, identifier } = this.cachedIotBoxes[iotBoxId];
         const params = { ip, identifier, ...arguments[0] };
 
         for (const connectionType of this.connectionTypes) {
@@ -141,7 +149,8 @@ export class IotHttpService {
             }
         }
 
-        // If all the connection types failed, run the onFailure callback
+        // If all the connection types failed, run the onFailure callback and remove the cached IoT Box data
+        delete this.cachedIotBoxes[iotBoxId];
         this.connectionStatus = "offline";
         onFailure({ status: "disconnected" }, deviceIdentifier);
     }
@@ -191,6 +200,7 @@ export class IotHttpService {
         messageId = null,
     ) {
         messageId ??= uuid();
+
         if (!data) {
             data = {};
         }

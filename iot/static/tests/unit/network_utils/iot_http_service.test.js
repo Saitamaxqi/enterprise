@@ -19,11 +19,12 @@ class IotChannel extends models.Model {
 defineModels({ IotChannel });
 
 class DummyOrm {
-    constructor(returned) {
-        this._returned = returned;
-    }
-    async searchRead(model, domain, fields) {
-        return [this._returned];
+    async searchRead(model, domain, _fields) {
+        const [[, , iotBoxId]] = domain;
+        if (iotBoxId === 1) {
+            return [{ ip: "127.0.0.1", identifier: "box-123" }];
+        }
+        return [{ ip: "127.0.0.1", identifier: "box-456" }];
     }
 }
 
@@ -235,6 +236,21 @@ describe("iot_http_service", () => {
             await iotHttpService.action(1, "mock-device", { foo: "bar" }, onSuccess, onFailure);
             expect(calledCallback).toBe('onSuccess');
             expect(iotHttpService.connectionStatus).toBe('online');
+        });
+
+        test("IoT Box records were cached after success, then removed after failure", async () => {
+            await iotHttpService.action(1, "device-2", { a: "attempt-1-succeeds" }, onSuccess, onFailure);
+            await iotHttpService.action(2, "device-2", { a: "attempt-1-succeeds" }, onSuccess, onFailure);
+            expect(iotHttpService.cachedIotBoxes[1]?.identifier).toBe("box-123");
+            expect(iotHttpService.cachedIotBoxes[2]?.identifier).toBe("box-456");
+
+            // ensure that the second record (and only this one) is removed after failure
+            webRtc.setThrow(true);
+            longpolling.setThrow(true);
+            websocket.setThrow(true);
+            await iotHttpService.action(2, "device-2", { a: "attempt-2-fails" }, onSuccess, onFailure);
+            expect(iotHttpService.cachedIotBoxes[1]?.identifier).toBe("box-123");
+            expect(iotHttpService.cachedIotBoxes[2]).toBe(undefined);
         });
     });
 });
