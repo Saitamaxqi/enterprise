@@ -1342,10 +1342,10 @@ class SaleOrder(models.Model):
             if invoice.state != 'posted':
                 invoice.with_context(ocr_trigger_delta=15)._post()
         AccountMoveSend = self.env['account.move.send']
-        AccountMoveSend._generate_and_send_invoices(
-            moves=invoices.filtered(AccountMoveSend._get_default_extra_edis),
-            from_cron=automatic,
-        )
+        if moves_to_send := invoices.filtered(
+            lambda move: not move.is_move_sent and AccountMoveSend._get_default_extra_edis(move),
+        ):
+            AccountMoveSend._generate_and_send_invoices(moves=moves_to_send)
 
     def _get_subscription_mail_payment_context(self, mail_ctx=None):
         self.ensure_one()

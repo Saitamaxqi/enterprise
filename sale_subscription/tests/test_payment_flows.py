@@ -306,6 +306,9 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
     @mute_logger('odoo.http')
     def test_invoice_document_generation(self):
         """Check that invoice documents get generated when posting subscription invoices."""
+        self.env['ir.config_parameter'].set_param(
+            'sale.automatic_invoice', self.env.context.get('automatic_invoice', False),
+        )
         self.subscription.action_confirm()
 
         AccountMoveSend = self.env.registry['account.move.send']
@@ -332,3 +335,8 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
                 mock.call_count, 1,
                 "Web services should have been called for document generation",
             )
+
+    def test_invoice_document_generation_auto_invoice(self):
+        """Check that invoice documents get generated only once with automatic invoice enabled."""
+        self.env = self.env['base'].with_context(automatic_invoice=True).env
+        self.test_invoice_document_generation()
