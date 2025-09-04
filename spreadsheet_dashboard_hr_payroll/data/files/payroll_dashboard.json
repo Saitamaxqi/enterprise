@@ -1,42 +1,50 @@
 {
-  "version": "18.4.14",
+  "version": "18.5.10",
   "sheets": [
     {
       "id": "sheet1",
       "name": "Dashboard",
-      "colNumber": 26,
-      "rowNumber": 99,
-      "rows": {},
+      "colNumber": 9,
+      "rowNumber": 93,
+      "rows": {
+        "12": { "size": 38 },
+        "28": { "size": 41 },
+        "29": { "size": 30 },
+        "30": { "size": 30 },
+        "31": { "size": 30 },
+        "32": { "size": 30 },
+        "33": { "size": 30 },
+        "34": { "size": 30 },
+        "35": { "size": 30 },
+        "36": { "size": 30 },
+        "37": { "size": 30 },
+        "38": { "size": 30 },
+        "39": { "size": 30 }
+      },
       "cols": {
         "0": { "size": 269 }
       },
-      "merges": ["A15:E16", "A34:E35"],
+      "merges": [],
       "cells": {
-        "A15": "[Payslip Lines](odoo://ir_menu_xml_id/hr_payroll.menu_hr_payslip_line_action_report)",
-        "A34": "[Work Entries Analysis](odoo://ir_menu_xml_id/hr_payroll.menu_hr_work_entry_report)",
-        "A36": "=_t(\"Work type\")",
-        "A37": "=PIVOT.HEADER(7,\"work_entry_type_id\",1)",
-        "A38": "=PIVOT.HEADER(7,\"work_entry_type_id\",3)",
-        "A39": "=PIVOT.HEADER(7,\"work_entry_type_id\",6)",
-        "A40": "=PIVOT.HEADER(7,\"work_entry_type_id\",7)",
-        "A41": "=PIVOT.HEADER(7,\"work_entry_type_id\",8)",
-        "A42": "=PIVOT.HEADER(7)",
-        "B36": "=PIVOT.HEADER(7,\"measure\",\"number_of_days:sum\")",
-        "B37": "=PIVOT.VALUE(7,\"number_of_days:sum\",\"work_entry_type_id\",1)",
-        "B38": "=PIVOT.VALUE(7,\"number_of_days:sum\",\"work_entry_type_id\",3)",
-        "B39": "=PIVOT.VALUE(7,\"number_of_days:sum\",\"work_entry_type_id\",6)",
-        "B40": "=PIVOT.VALUE(7,\"number_of_days:sum\",\"work_entry_type_id\",7)",
-        "B41": "=PIVOT.VALUE(7,\"number_of_days:sum\",\"work_entry_type_id\",8)",
-        "B42": "=PIVOT.VALUE(7,\"number_of_days:sum\")"
+        "A13": "[Payslip Lines](odoo://ir_menu_xml_id/hr_payroll.menu_hr_payslip_line_action_report)",
+        "A29": "[Work Entries Analysis](odoo://ir_menu_xml_id/hr_payroll.menu_hr_work_entry_report)",
+        "A30": "=pivot(7, 10, FALSE, FALSE)"
       },
-      "styles": { "A15:E16": 1, "A34:E35": 2, "A36:B36": 3 },
+      "styles": {
+        "A13:E14": 1,
+        "A29:E29": 2,
+        "A30": 3,
+        "A31:B40": 4,
+        "C30:I40": 4,
+        "B30": 5
+      },
       "formats": {},
-      "borders": { "A36:B36": 1 },
+      "borders": { "A13:I13": 1, "A30:B30": 2 },
       "conditionalFormats": [
         {
+          "rule": { "type": "DataBarRule", "color": 15726335, "rangeValues": "B31:B35" },
           "id": "36e4304b-6c7e",
-          "rule": { "type": "DataBarRule", "color": 14281427, "rangeValues": "B37:B41" },
-          "ranges": ["A37:A44"]
+          "ranges": ["A31:A38"]
         }
       ],
       "dataValidationRules": [],
@@ -44,8 +52,8 @@
         {
           "id": "b404ea45-e061",
           "col": 3,
-          "row": 1,
-          "offset": { "x": 76, "y": 4 },
+          "row": 0,
+          "offset": { "x": 34, "y": 10 },
           "width": 232,
           "height": 113,
           "tag": "chart",
@@ -58,14 +66,15 @@
             "background": "#FFF7ED",
             "baseline": "Data!C6",
             "keyValue": "Data!B6",
-            "humanize": false
+            "humanize": false,
+            "chartId": "b404ea45-e061"
           }
         },
         {
           "id": "9ef81369-f423",
-          "col": 6,
-          "row": 1,
-          "offset": { "x": 44, "y": 4 },
+          "col": 5,
+          "row": 0,
+          "offset": { "x": 85, "y": 10 },
           "width": 232,
           "height": 113,
           "tag": "chart",
@@ -78,14 +87,15 @@
             "background": "#FFF7ED",
             "baseline": "Data!C7",
             "keyValue": "Data!B7",
-            "humanize": false
+            "humanize": false,
+            "chartId": "9ef81369-f423"
           }
         },
         {
           "id": "b551d5f4-b068",
           "col": 0,
-          "row": 1,
-          "offset": { "x": 22, "y": 4 },
+          "row": 0,
+          "offset": { "x": 11, "y": 10 },
           "width": 232,
           "height": 113,
           "tag": "chart",
@@ -98,14 +108,15 @@
             "background": "#FFF7ED",
             "baseline": "Data!C3",
             "keyValue": "Data!B3",
-            "humanize": false
+            "humanize": false,
+            "chartId": "b551d5f4-b068"
           }
         },
         {
           "id": "742e78cf-e36f",
-          "col": 1,
-          "row": 1,
-          "offset": { "x": 6, "y": 4 },
+          "col": 0,
+          "row": 0,
+          "offset": { "x": 253, "y": 10 },
           "width": 232,
           "height": 113,
           "tag": "chart",
@@ -118,14 +129,15 @@
             "background": "#FFF7ED",
             "baseline": "Data!C4",
             "keyValue": "Data!B4",
-            "humanize": false
+            "humanize": false,
+            "chartId": "742e78cf-e36f"
           }
         },
         {
           "id": "5e2a5991-057b",
           "col": 0,
           "row": 6,
-          "offset": { "x": 22, "y": 15 },
+          "offset": { "x": 11, "y": 0 },
           "width": 232,
           "height": 113,
           "tag": "chart",
@@ -138,14 +150,15 @@
             "background": "#EFF6FF",
             "baseline": "Data!C11",
             "keyValue": "Data!B11",
-            "humanize": false
+            "humanize": false,
+            "chartId": "5e2a5991-057b"
           }
         },
         {
           "id": "fd349ef1-755a",
-          "col": 1,
+          "col": 0,
           "row": 6,
-          "offset": { "x": 6, "y": 15 },
+          "offset": { "x": 253, "y": 0 },
           "width": 232,
           "height": 113,
           "tag": "chart",
@@ -159,15 +172,16 @@
             "baseline": "Data!B12",
             "baselineDescr": { "text": "Employees" },
             "keyValue": "Data!B13",
-            "humanize": false
+            "humanize": false,
+            "chartId": "fd349ef1-755a"
           }
         },
         {
           "id": "7f8c2bd8-a13f",
           "col": 0,
-          "row": 17,
-          "offset": { "x": 11, "y": 9 },
-          "width": 850,
+          "row": 13,
+          "offset": { "x": 0, "y": 0 },
+          "width": 1036,
           "height": 335,
           "tag": "chart",
           "data": {
@@ -187,7 +201,9 @@
             "cumulative": false,
             "fillArea": false,
             "showValues": false,
-            "hideDataMarkers": false
+            "hideDataMarkers": false,
+            "humanize": true,
+            "chartId": "7f8c2bd8-a13f"
           }
         }
       ],
@@ -306,7 +322,7 @@
         "P20": "=PIVOT.VALUE(1,\"amount:sum\",\"code\",\"NET\",\"date_from:quarter\",\"1/2028\")",
         "P21": "=PIVOT.VALUE(1,\"amount:sum\",\"date_from:quarter\",\"1/2028\")"
       },
-      "styles": { "A2:A15": 4, "B1:E1": 4 },
+      "styles": { "A2:A15": 6, "B1:E1": 6 },
       "formats": {},
       "borders": {},
       "conditionalFormats": [],
@@ -556,9 +572,9 @@
       },
       "merges": [],
       "cells": { "A1": "=PIVOT(\"7\")" },
-      "styles": { "A10:B10": 3, "A11:B20": 5 },
+      "styles": { "A10:B10": 7, "A11:B20": 8 },
       "formats": {},
-      "borders": { "A10:B10": 1, "A11:B11": 2, "A12:B20": 3 },
+      "borders": { "A10:B10": 2, "A11:B11": 3, "A12:B20": 4 },
       "conditionalFormats": [
         {
           "id": "2d8209f3-cf92",
@@ -597,24 +613,41 @@
   "styles": {
     "1": { "verticalAlign": "middle", "bold": true, "fontSize": 16 },
     "2": { "fontSize": 16, "bold": true },
-    "3": { "textColor": "#434343", "fontSize": 11, "bold": true },
-    "4": { "bold": true },
-    "5": { "textColor": "#434343", "verticalAlign": "middle" }
+    "3": {
+      "textColor": "#434343",
+      "fontSize": 11,
+      "bold": true,
+      "fillColor": "#FFFFFF"
+    },
+    "4": { "fillColor": "#FFFFFF" },
+    "5": {
+      "textColor": "#434343",
+      "fontSize": 11,
+      "bold": true,
+      "align": "center",
+      "fillColor": "#FFFFFF"
+    },
+    "6": { "bold": true },
+    "7": { "textColor": "#434343", "fontSize": 11, "bold": true },
+    "8": { "textColor": "#434343", "verticalAlign": "middle" }
   },
   "formats": {},
   "borders": {
     "1": {
-      "top": { "style": "thin", "color": "#CCCCCC" }
+      "bottom": { "style": "thin", "color": "#CCCCCC" }
     },
     "2": {
-      "bottom": { "style": "thick", "color": "#FFFFFF" }
+      "top": { "style": "thin", "color": "#CCCCCC" }
     },
     "3": {
+      "bottom": { "style": "thick", "color": "#FFFFFF" }
+    },
+    "4": {
       "top": { "style": "thick", "color": "#FFFFFF" },
       "bottom": { "style": "thick", "color": "#FFFFFF" }
     }
   },
-  "revisionId": "9ece465a-5d52-467f-8933-865a356aa5c3",
+  "revisionId": "START_REVISION",
   "uniqueFigureIds": true,
   "settings": {
     "locale": {
@@ -758,12 +791,6 @@
         { "fieldName": "work_entry_type_id" }
       ],
       "measures": [
-        {
-          "id": "number_of_days:max",
-          "fieldName": "number_of_days",
-          "aggregator": "max"
-        },
-        { "id": "__count:max", "fieldName": "__count", "aggregator": "max" },
         {
           "id": "number_of_days:sum",
           "fieldName": "number_of_days",

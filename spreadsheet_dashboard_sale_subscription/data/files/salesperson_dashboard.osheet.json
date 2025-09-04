@@ -1,5 +1,5 @@
 {
-  "version": "18.4.14",
+  "version": "18.5.10",
   "sheets": [
     {
       "id": "sheet1",
@@ -80,17 +80,6 @@
         "A46": "=ODOO.LIST(4,9,\"order_id\")",
         "A47": "=ODOO.LIST(4,10,\"order_id\")",
         "A49": "[Top Recurrence](odoo://view/{\"viewType\":\"list\",\"action\":{\"domain\":[\"&\",\"&\",[\"is_subscription\",\"=\",true],[\"subscription_state\",\"not in\",[\"2_renewal\",\"5_renewed\"]],\"|\",[\"subscription_state\",\"=\",\"3_progress\"],[\"subscription_state\",\"=\",\"4_paused\"]],\"context\":{\"group_by\":[]},\"modelName\":\"sale.order\",\"views\":[[false,\"list\"],[false,\"kanban\"],[false,\"form\"],[false,\"pivot\"],[false,\"graph\"],[false,\"cohort\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Subscriptions\"})",
-        "A50": "=_t(\"Plans\")",
-        "A51": "=PIVOT.HEADER(10,\"#template_id\",1)",
-        "A52": "=PIVOT.HEADER(10,\"#template_id\",2)",
-        "A53": "=PIVOT.HEADER(10,\"#template_id\",3)",
-        "A54": "=PIVOT.HEADER(10,\"#template_id\",4)",
-        "A55": "=PIVOT.HEADER(10,\"#template_id\",5)",
-        "A56": "=PIVOT.HEADER(10,\"#template_id\",6)",
-        "A57": "=PIVOT.HEADER(10,\"#template_id\",7)",
-        "A58": "=PIVOT.HEADER(10,\"#template_id\",8)",
-        "A59": "=PIVOT.HEADER(10,\"#template_id\",9)",
-        "A60": "=PIVOT.HEADER(10,\"#template_id\",10)",
         "B24": "=ODOO.LIST.HEADER(1, \"amount_signed\", _t(\"Value\"))",
         "B25": "=ODOO.LIST(1,1,\"amount_signed\")",
         "B26": "=ODOO.LIST(1,2,\"amount_signed\")",
@@ -113,17 +102,6 @@
         "B45": "=ODOO.LIST(4,8,\"amount_signed\")",
         "B46": "=ODOO.LIST(4,9,\"amount_signed\")",
         "B47": "=ODOO.LIST(4,10,\"amount_signed\")",
-        "B50": "=_t(\"# Subscriptions\")",
-        "B51": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",1)",
-        "B52": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",2)",
-        "B53": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",3)",
-        "B54": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",4)",
-        "B55": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",5)",
-        "B56": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",6)",
-        "B57": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",7)",
-        "B58": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",8)",
-        "B59": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",9)",
-        "B60": "=PIVOT.VALUE(10,\"order_reference\",\"#template_id\",10)",
         "C24": "=ODOO.LIST.HEADER(1, \"recurring_monthly\", _t(\"MRR\"))",
         "C25": "=ODOO.LIST(1,1,\"recurring_monthly\")",
         "C26": "=ODOO.LIST(1,2,\"recurring_monthly\")",
@@ -146,17 +124,6 @@
         "C45": "=ODOO.LIST(4,8,\"recurring_monthly\")",
         "C46": "=ODOO.LIST(4,9,\"recurring_monthly\")",
         "C47": "=ODOO.LIST(4,10,\"recurring_monthly\")",
-        "C50": "=_t(\"MRR\")",
-        "C51": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",1)",
-        "C52": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",2)",
-        "C53": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",3)",
-        "C54": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",4)",
-        "C55": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",5)",
-        "C56": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",6)",
-        "C57": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",7)",
-        "C58": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",8)",
-        "C59": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",9)",
-        "C60": "=PIVOT.VALUE(10,\"recurring_monthly\",\"#template_id\",10)",
         "E23": "[Top New](odoo://view/{\"viewType\":\"list\",\"action\":{\"domain\":[\"&\",[\"event_type\",\"!=\",\"3_transfer\"],[\"event_type\",\"=\",\"0_creation\"]],\"context\":{\"group_by\":[]},\"modelName\":\"sale.order.log.report\",\"views\":[[false,\"graph\"],[false,\"list\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"MRR Growth\"})",
         "E24": "=ODOO.LIST.HEADER(3, \"order_id\", _t(\"Subscriptions\"))",
         "E25": "=ODOO.LIST(3,1,\"order_id\")",
@@ -224,7 +191,8 @@
         "G44": "=ODOO.LIST(2,7,\"recurring_monthly\")",
         "G45": "=ODOO.LIST(2,8,\"recurring_monthly\")",
         "G46": "=ODOO.LIST(2,9,\"recurring_monthly\")",
-        "G47": "=ODOO.LIST(2,10,\"recurring_monthly\")"
+        "G47": "=ODOO.LIST(2,10,\"recurring_monthly\")",
+        "A50": "=PIVOT(10, 10, FALSE, FALSE)"
       },
       "styles": {
         "A7": 1,
@@ -324,7 +292,8 @@
             "baseline": "Data!E2",
             "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!D2",
-            "humanize": false
+            "humanize": false,
+            "chartId": "a5dcffea-a653-44c3-9563-773e5979da47"
           },
           "offset": { "x": 0, "y": 9 },
           "col": 0,
@@ -345,7 +314,8 @@
             "baseline": "Data!E8",
             "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!B8",
-            "humanize": false
+            "humanize": false,
+            "chartId": "259c7a2c-c4ae-4471-8b64-1292ef24ce47"
           },
           "offset": { "x": 220, "y": 9 },
           "col": 0,
@@ -366,7 +336,8 @@
             "baseline": "Data!C10",
             "baselineDescr": "",
             "keyValue": "Data!D10",
-            "humanize": false
+            "humanize": false,
+            "chartId": "d6573225-1b5e-4a1d-930b-19071b5023c4"
           },
           "offset": { "x": 442, "y": 9 },
           "col": 0,
@@ -386,8 +357,7 @@
               "measure": "mrr_change_normalized",
               "order": null,
               "resModel": "sale.order.log.report",
-              "mode": "bar",
-              "cumulatedStart": false
+              "mode": "bar"
             },
             "searchParams": {
               "comparison": null,
@@ -399,9 +369,17 @@
               "orderBy": []
             },
             "type": "odoo_bar",
-            "dataSets": [],
+            "dataSets": [
+              {}
+            ],
             "verticalAxisPosition": "left",
             "stacked": true,
+            "axesDesign": {
+              "y": {
+                "title": { "text": "MRR Change" }
+              }
+            },
+            "chartId": "a6a21399-abd8-4175-8239-648be24e3cea",
             "fieldMatching": {
               "5dac8b40-3868-4049-a237-6fc28656c7a4": { "chain": "first_contract_date", "type": "date", "offset": 0 },
               "2967df50-3aec-4336-af5d-4eaceb383120": { "chain": "country_id", "type": "many2one" },
@@ -428,7 +406,8 @@
             "baseline": "Data!D13",
             "baselineDescr": { "text": "over the period" },
             "keyValue": "Data!D12",
-            "humanize": false
+            "humanize": false,
+            "chartId": "f1b6db9c-ddb7-495f-916c-4f918492ffc4"
           },
           "offset": { "x": 670, "y": 9 },
           "col": 0,
@@ -630,7 +609,7 @@
       "left": { "style": "thin", "color": "#2D7E84" }
     }
   },
-  "revisionId": "59d452d0-643c-4318-a466-8335547497e3",
+  "revisionId": "START_REVISION",
   "uniqueFigureIds": true,
   "settings": {
     "locale": {
@@ -911,11 +890,19 @@
       ],
       "id": "10",
       "measures": [
-        { "id": "recurring_monthly", "fieldName": "recurring_monthly" },
-        { "id": "order_reference", "fieldName": "order_reference" }
+        {
+          "id": "recurring_monthly",
+          "fieldName": "recurring_monthly",
+          "userDefinedName": "# Subscriptions"
+        },
+        {
+          "id": "order_reference",
+          "fieldName": "order_reference",
+          "userDefinedName": "MRR"
+        }
       ],
       "model": "sale.subscription.report",
-      "name": "Subscription Analysis by Subscription Template",
+      "name": "Plans",
       "sortedColumn": {
         "measure": "recurring_monthly",
         "order": "desc",
@@ -932,7 +919,8 @@
       "fieldMatching": {
         "5dac8b40-3868-4049-a237-6fc28656c7a4": { "chain": "date", "type": "datetime", "offset": 0 },
         "4e294d4b-9dae-401f-a278-49a0237387a6": { "chain": "team_id", "type": "many2one" },
-        "64c04791-cd96-44a0-9fc2-4edbc062f23d": { "chain": "user_id", "type": "many2one" }
+        "64c04791-cd96-44a0-9fc2-4edbc062f23d": { "chain": "user_id", "type": "many2one" },
+        "2967df50-3aec-4336-af5d-4eaceb383120": {}
       },
       "context": {
         "search_default_Sales": 1,
@@ -1021,7 +1009,7 @@
       "id": "64c04791-cd96-44a0-9fc2-4edbc062f23d",
       "type": "relation",
       "label": "Salesperson",
-      "defaultValue": "current_user",
+      "defaultValue": { "operator": "in", "ids": "current_user" },
       "defaultValueDisplayNames": [],
       "modelName": "res.users"
     }
@@ -1042,7 +1030,12 @@
       ],
       "id": "1",
       "name": "MRR Growth by Monthly Recurring Revenue",
-      "fieldMatching": {}
+      "fieldMatching": {
+        "5dac8b40-3868-4049-a237-6fc28656c7a4": { "chain": "first_contract_date", "type": "date", "offset": 0 },
+        "2967df50-3aec-4336-af5d-4eaceb383120": { "chain": "country_id", "type": "many2one" },
+        "4e294d4b-9dae-401f-a278-49a0237387a6": { "chain": "team_id", "type": "many2one" },
+        "64c04791-cd96-44a0-9fc2-4edbc062f23d": { "chain": "user_id", "type": "many2one" }
+      }
     },
     "2": {
       "columns": ["order_id", "amount_signed", "recurring_monthly"],
@@ -1059,7 +1052,12 @@
       ],
       "id": "2",
       "name": "MRR Growth by Monthly Recurring Revenue",
-      "fieldMatching": {}
+      "fieldMatching": {
+        "5dac8b40-3868-4049-a237-6fc28656c7a4": { "chain": "first_contract_date", "type": "date", "offset": 0 },
+        "2967df50-3aec-4336-af5d-4eaceb383120": { "chain": "country_id", "type": "many2one" },
+        "4e294d4b-9dae-401f-a278-49a0237387a6": { "chain": "team_id", "type": "many2one" },
+        "64c04791-cd96-44a0-9fc2-4edbc062f23d": { "chain": "user_id", "type": "many2one" }
+      }
     },
     "3": {
       "columns": ["order_id", "amount_signed", "recurring_monthly"],
@@ -1076,7 +1074,12 @@
       ],
       "id": "3",
       "name": "MRR Growth by Monthly Recurring Revenue",
-      "fieldMatching": {}
+      "fieldMatching": {
+        "5dac8b40-3868-4049-a237-6fc28656c7a4": { "chain": "first_contract_date", "type": "date", "offset": 0 },
+        "2967df50-3aec-4336-af5d-4eaceb383120": { "chain": "country_id", "type": "many2one" },
+        "4e294d4b-9dae-401f-a278-49a0237387a6": { "chain": "team_id", "type": "many2one" },
+        "64c04791-cd96-44a0-9fc2-4edbc062f23d": { "chain": "user_id", "type": "many2one" }
+      }
     },
     "4": {
       "columns": ["order_id", "amount_signed", "recurring_monthly"],
@@ -1090,7 +1093,12 @@
       ],
       "id": "4",
       "name": "MRR Analysis by Monthly Recurring Revenue",
-      "fieldMatching": {}
+      "fieldMatching": {
+        "5dac8b40-3868-4049-a237-6fc28656c7a4": { "chain": "first_contract_date", "type": "date", "offset": 0 },
+        "2967df50-3aec-4336-af5d-4eaceb383120": { "chain": "country_id", "type": "many2one" },
+        "4e294d4b-9dae-401f-a278-49a0237387a6": { "chain": "team_id", "type": "many2one" },
+        "64c04791-cd96-44a0-9fc2-4edbc062f23d": { "chain": "user_id", "type": "many2one" }
+      }
     }
   },
   "listNextId": 5,

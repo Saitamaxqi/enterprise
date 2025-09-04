@@ -1,5 +1,5 @@
 {
-  "version": "18.4.14",
+  "version": "18.5.10",
   "sheets": [
     {
       "id": "sheet1",
@@ -19,7 +19,7 @@
       "merges": [],
       "cells": {
         "A1": "=_t(\"Last 30 days\")",
-        "A8": "=_t(\"Customer churn rate\")",
+        "A8": "=_t(\"Customer Churn Rate\")",
         "A25": "=_t(\"Revenue churn rate\")",
         "A42": "=_t(\"Net Retention rate\")",
         "A59": "=_t(\"Customer Life Time Value\")",
@@ -62,7 +62,8 @@
             "baseline": "Data!C3",
             "baselineDescr": { "text": "Churns" },
             "keyValue": "Data!C2",
-            "humanize": false
+            "humanize": false,
+            "chartId": "c5965b6e-d729-44cc-8e3a-0b605c325d3d"
           },
           "offset": { "x": 0, "y": 40 },
           "col": 0,
@@ -83,7 +84,8 @@
             "baseline": "Data!C5",
             "baselineDescr": { "text": "MRR" },
             "keyValue": "Data!C4",
-            "humanize": false
+            "humanize": false,
+            "chartId": "aa964ffe-ad26-4124-8c0c-6044f124fced"
           },
           "offset": { "x": 219, "y": 40 },
           "col": 0,
@@ -103,7 +105,8 @@
             "background": "#ECFDF5",
             "baselineDescr": "",
             "keyValue": "Data!C6",
-            "humanize": false
+            "humanize": false,
+            "chartId": "5034de4a-9be0-410d-97eb-0a7092f48969"
           },
           "offset": { "x": 437, "y": 40 },
           "col": 0,
@@ -123,7 +126,8 @@
             "background": "#FFF7ED",
             "baselineDescr": "",
             "keyValue": "Data!C7",
-            "humanize": false
+            "humanize": false,
+            "chartId": "d8fb1b9b-bd79-41f8-a0df-982395c26b96"
           },
           "offset": { "x": 656, "y": 40 },
           "col": 0,
@@ -147,7 +151,14 @@
             "stacked": false,
             "aggregated": false,
             "cumulative": false,
-            "fillArea": true
+            "axesDesign": {
+              "y": {
+                "title": { "text": "Customer Churn Rate" }
+              }
+            },
+            "fillArea": true,
+            "humanize": true,
+            "chartId": "f2d1a98e-d4d6-4711-a073-319b72d52fed"
           },
           "offset": { "x": 0, "y": 217 },
           "col": 0,
@@ -171,7 +182,14 @@
             "stacked": false,
             "aggregated": false,
             "cumulative": false,
-            "fillArea": true
+            "axesDesign": {
+              "y": {
+                "title": { "text": "Revenue Churn Rate" }
+              }
+            },
+            "fillArea": true,
+            "humanize": true,
+            "chartId": "2e2ed109-f199-4941-9750-edf85856c2ab"
           },
           "offset": { "x": 0, "y": 629 },
           "col": 0,
@@ -195,7 +213,14 @@
             "stacked": false,
             "aggregated": false,
             "cumulative": false,
-            "fillArea": true
+            "axesDesign": {
+              "y": {
+                "title": { "text": "Net Retention Rate" }
+              }
+            },
+            "fillArea": true,
+            "humanize": true,
+            "chartId": "d083cb45-5352-48aa-b511-e5cf8ed4959c"
           },
           "offset": { "x": 0, "y": 1037 },
           "col": 0,
@@ -219,7 +244,14 @@
             "stacked": false,
             "aggregated": false,
             "cumulative": false,
-            "fillArea": true
+            "axesDesign": {
+              "y": {
+                "title": { "text": "Customer Life Time Value" }
+              }
+            },
+            "fillArea": true,
+            "humanize": true,
+            "chartId": "d61c9bf1-4832-400c-8913-8c9319905d1b"
           },
           "offset": { "x": 0, "y": 1445 },
           "col": 0,
@@ -243,7 +275,14 @@
             "stacked": false,
             "aggregated": false,
             "cumulative": false,
-            "fillArea": true
+            "axesDesign": {
+              "y": {
+                "title": { "text": "MRR" }
+              }
+            },
+            "fillArea": true,
+            "humanize": true,
+            "chartId": "36fb37c8-76a6-40b6-a7c6-d57e7076f5db"
           },
           "offset": { "x": 0, "y": 1856 },
           "col": 0,
@@ -267,7 +306,14 @@
             "stacked": false,
             "aggregated": false,
             "cumulative": false,
-            "fillArea": true
+            "axesDesign": {
+              "y": {
+                "title": { "text": "Average Revenue" }
+              }
+            },
+            "fillArea": true,
+            "humanize": true,
+            "chartId": "7e33aaf7-0e56-4369-9d22-d1a51f181f13"
           },
           "offset": { "x": 0, "y": 2267 },
           "col": 0,

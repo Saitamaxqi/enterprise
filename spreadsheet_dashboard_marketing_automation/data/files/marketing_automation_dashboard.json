@@ -1,5 +1,5 @@
 {
-  "version": "18.4.14",
+  "version": "18.5.10",
   "sheets": [
     {
       "id": "sheet1",
@@ -124,13 +124,7 @@
         "B78:D78",
         "B77:D77",
         "B76:D76",
-        "B75:D75",
-        "A88:B88",
-        "A89:B89",
-        "A90:B90",
-        "A91:B91",
-        "A92:B92",
-        "A93:B93"
+        "B75:D75"
       ],
       "cells": {
         "A12": "=_t(\"Mails sent per month\")",
@@ -171,13 +165,7 @@
         "A83": "=ODOO.LIST(4,8,\"create_date\")",
         "A84": "=ODOO.LIST(4,9,\"create_date\")",
         "A85": "=ODOO.LIST(4,10,\"create_date\")",
-        "A87": "=_t(\"Top 5 failed reasons\")",
-        "A88": "=_t(\"Reason\")",
-        "A89": "=PIVOT.HEADER(10,\"#failure_type\",1)",
-        "A90": "=PIVOT.HEADER(10,\"#failure_type\",2)",
-        "A91": "=PIVOT.HEADER(10,\"#failure_type\",3)",
-        "A92": "=PIVOT.HEADER(10,\"#failure_type\",4)",
-        "A93": "=PIVOT.HEADER(10,\"#failure_type\",5)",
+        "A88": "=CHOOSECOLS(PIVOT(10, 10, FALSE, FALSE), 1)",
         "B49": "=ODOO.LIST.HEADER(2,\"subject\")",
         "B50": "=ODOO.LIST(2,1,\"subject\")",
         "B51": "=ODOO.LIST(2,2,\"subject\")",
@@ -222,12 +210,7 @@
         "C57": "=ODOO.LIST(2,8,\"sent\")",
         "C58": "=ODOO.LIST(2,9,\"sent\")",
         "C59": "=ODOO.LIST(2,10,\"sent\")",
-        "C88": "=_t(\"Count\")",
-        "C89": "=PIVOT.VALUE(10,\"__count:sum\",\"#failure_type\",1)",
-        "C90": "=PIVOT.VALUE(10,\"__count:sum\",\"#failure_type\",2)",
-        "C91": "=PIVOT.VALUE(10,\"__count:sum\",\"#failure_type\",3)",
-        "C92": "=PIVOT.VALUE(10,\"__count:sum\",\"#failure_type\",4)",
-        "C93": "=PIVOT.VALUE(10,\"__count:sum\",\"#failure_type\",5)",
+        "C88": "=CHOOSECOLS(PIVOT(10, 5, FALSE, FALSE), 2)",
         "D49": "=ODOO.LIST.HEADER(2, \"received_ratio\", _t(\"Received (%)\"))",
         "D50": "=ODOO.LIST(2,1,\"received_ratio\")",
         "D51": "=ODOO.LIST(2,2,\"received_ratio\")",
@@ -492,7 +475,7 @@
         "A50:A59": 3,
         "A63:A72": 3,
         "A76:A85": 3,
-        "A89:C93": 3,
+        "A89:B93": 3,
         "C50:H59": 3,
         "A88:B88": 4,
         "A62:H62": 4,
@@ -501,7 +484,7 @@
         "B63:D72": 5,
         "B76:D85": 5,
         "C49:H49": 6,
-        "C88": 7,
+        "C88:C93": 7,
         "E63:H72": 8,
         "E76:H85": 8,
         "M72": 8,
@@ -516,15 +499,17 @@
         "A48:H48": 1,
         "A61:H61": 1,
         "A74:H74": 1,
+        "C88:C92": 2,
         "A13:H13": 2,
         "A32:H32": 2,
         "A49:H49": 2,
         "A62:H62": 2,
         "A75:H75": 2,
         "A31:H31": 3,
-        "A88:C88": 4,
-        "A89:C92": 5,
-        "A93:C93": 6
+        "A88:B88": 4,
+        "C93": 4,
+        "A89:B92": 5,
+        "A93:B93": 6
       },
       "conditionalFormats": [
         {
@@ -550,7 +535,8 @@
             "baseline": "'Mailing Statistics'!C10",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B10",
-            "humanize": false
+            "humanize": false,
+            "chartId": "15bc3d3b-444b-4332-9253-c70d05c13922"
           },
           "offset": { "x": 0, "y": 10 },
           "col": 0,
@@ -571,7 +557,8 @@
             "baseline": "'Mailing Statistics'!C11",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B11",
-            "humanize": false
+            "humanize": false,
+            "chartId": "b15c80fb-33e5-4c7c-9637-3120004b1479"
           },
           "offset": { "x": 628, "y": 10 },
           "col": 0,
@@ -592,7 +579,8 @@
             "baseline": "'Mailing Statistics'!C17",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B17",
-            "humanize": false
+            "humanize": false,
+            "chartId": "788392ce-cc56-40fd-8b1e-0dde698dde42"
           },
           "offset": { "x": 628, "y": 121 },
           "col": 0,
@@ -613,7 +601,8 @@
             "baseline": "'Mailing Statistics'!C14",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B14",
-            "humanize": false
+            "humanize": false,
+            "chartId": "821a7c97-27ae-4186-b164-750c7b383677"
           },
           "offset": { "x": 209, "y": 122 },
           "col": 0,
@@ -634,7 +623,8 @@
             "baseline": "'Mailing Statistics'!C13",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B13",
-            "humanize": false
+            "humanize": false,
+            "chartId": "79341445-3077-45f4-b2cd-8f5bd8c914f0"
           },
           "offset": { "x": 0, "y": 121 },
           "col": 0,
@@ -655,7 +645,8 @@
             "baseline": "'Mailing Statistics'!C12",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B12",
-            "humanize": false
+            "humanize": false,
+            "chartId": "bab9bd74-affe-46a7-bb69-d1d222a8642b"
           },
           "offset": { "x": 838, "y": 10 },
           "col": 0,
@@ -676,7 +667,8 @@
             "baseline": "'Mailing Statistics'!C16",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B16",
-            "humanize": false
+            "humanize": false,
+            "chartId": "33928488-81ad-4159-a6eb-4bc756eeb172"
           },
           "offset": { "x": 418, "y": 122 },
           "col": 0,
@@ -697,7 +689,8 @@
             "baseline": "'Mailing Statistics'!C21",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B21",
-            "humanize": false
+            "humanize": false,
+            "chartId": "ff80c592-1b87-4703-9715-3f408953e11e"
           },
           "offset": { "x": 418, "y": 10 },
           "col": 0,
@@ -746,7 +739,9 @@
             "labelRange": "'Mailing sent Statistics by Created on (Month & Year) & status (previous)'!A1:A",
             "title": { "text": "" },
             "stacked": true,
-            "aggregated": false
+            "aggregated": false,
+            "humanize": true,
+            "chartId": "3a24c73f-11f9-4477-8bd4-f1bc47a3a252"
           },
           "offset": { "x": 0, "y": 709 },
           "col": 0,
@@ -796,7 +791,9 @@
             "title": { "text": "" },
             "stacked": true,
             "aggregated": false,
-            "showValues": false
+            "showValues": false,
+            "humanize": true,
+            "chartId": "24a85627-ba30-45a6-8370-635a37722349"
           },
           "offset": { "x": 0, "y": 280 },
           "col": 0,
@@ -817,11 +814,49 @@
             "baseline": "'Mailing Statistics'!C7",
             "baselineDescr": { "text": "vs last period" },
             "keyValue": "'Mailing Statistics'!B7",
-            "humanize": false
+            "humanize": false,
+            "chartId": "93997682-c4c5-4605-8847-5d18d1791a95"
           },
           "offset": { "x": 209, "y": 10 },
           "col": 0,
           "row": 0
+        },
+        {
+          "id": "fe829060-ca64",
+          "col": 0,
+          "row": 86,
+          "offset": { "x": 0, "y": 5 },
+          "width": 465,
+          "height": 225,
+          "tag": "carousel",
+          "data": {
+            "chartDefinitions": {
+              "e70a3910-07b9": {
+                "type": "pie",
+                "dataSetsHaveTitle": false,
+                "dataSets": [
+                  { "dataRange": "C89:C93" }
+                ],
+                "legendPosition": "top",
+                "labelRange": "A89:B93",
+                "title": {},
+                "aggregated": false,
+                "isDoughnut": false,
+                "humanize": true
+              }
+            },
+            "items": [
+              { "type": "chart", "chartId": "e70a3910-07b9", "title": "Chart" },
+              { "type": "carouselDataView", "title": "Top 5" }
+            ],
+            "fieldMatching": {},
+            "title": {
+              "text": "Top 5 failed reasons",
+              "bold": true,
+              "fontSize": 21,
+              "color": "#2D7E84"
+            }
+          }
         }
       ],
       "tables": [
@@ -1457,7 +1492,7 @@
       "rows": [
         { "fieldName": "failure_type", "order": "desc" }
       ],
-      "name": "Mailing Statistics by Sent Date (Month) and Failed Reason",
+      "name": "Reason",
       "actionXmlId": "studio_customization.mailing_traces_dd609272-6199-4b1e-83b3-332f2545a116",
       "formulaId": "10",
       "fieldMatching": {

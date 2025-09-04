@@ -4,8 +4,8 @@
     {
       "id": "Sheet1",
       "name": "Dashboard",
-      "colNumber": 8,
-      "rowNumber": 80,
+      "colNumber": 7,
+      "rowNumber": 79,
       "rows": {
         "6": { "size": 43 },
         "7": { "size": 33 },
@@ -43,8 +43,9 @@
         "43": { "size": 27 },
         "44": { "size": 27 },
         "45": { "size": 27 },
+        "47": { "size": 40 },
         "48": { "size": 40 },
-        "49": { "size": 40 },
+        "49": { "size": 27 },
         "50": { "size": 27 },
         "51": { "size": 27 },
         "52": { "size": 27 },
@@ -54,9 +55,9 @@
         "56": { "size": 27 },
         "57": { "size": 27 },
         "58": { "size": 27 },
-        "59": { "size": 27 },
+        "60": { "size": 40 },
         "61": { "size": 40 },
-        "62": { "size": 40 },
+        "62": { "size": 27 },
         "63": { "size": 27 },
         "64": { "size": 27 },
         "65": { "size": 27 },
@@ -65,452 +66,258 @@
         "68": { "size": 27 },
         "69": { "size": 27 },
         "70": { "size": 27 },
-        "71": { "size": 27 },
-        "72": { "size": 27 }
+        "71": { "size": 27 }
       },
       "cols": {
-        "0": { "size": 16 },
-        "1": { "size": 275 },
+        "0": { "size": 275 },
+        "1": { "size": 100 },
         "2": { "size": 100 },
-        "3": { "size": 100 },
-        "4": { "size": 50 },
-        "5": { "size": 275 },
-        "6": { "size": 100 },
-        "7": { "size": 100 }
+        "3": { "size": 50 },
+        "4": { "size": 275 },
+        "5": { "size": 100 },
+        "6": { "size": 100 }
       },
       "merges": [],
       "cells": {
-        "B8": "=ODOO.LIST.HEADER(1, \"name\")",
-        "B9": "=ODOO.LIST(1,1,\"name\")",
-        "B10": "=ODOO.LIST(1,2,\"name\")",
-        "B11": "=ODOO.LIST(1,3,\"name\")",
-        "B12": "=ODOO.LIST(1,4,\"name\")",
-        "B13": "=ODOO.LIST(1,5,\"name\")",
-        "B14": "=ODOO.LIST(1,6,\"name\")",
-        "B15": "=ODOO.LIST(1,7,\"name\")",
-        "B16": "=ODOO.LIST(1,8,\"name\")",
-        "B17": "=ODOO.LIST(1,9,\"name\")",
-        "B18": "=ODOO.LIST(1,10,\"name\")",
-        "B22": "Stage",
-        "B23": "=PIVOT(10,10,false,false,,false)",
-        "B36": "=_t(\"Country\")",
-        "B37": "=PIVOT.HEADER(5,\"#country_id\",1)",
-        "B38": "=PIVOT.HEADER(5,\"#country_id\",2)",
-        "B39": "=PIVOT.HEADER(5,\"#country_id\",3)",
-        "B40": "=PIVOT.HEADER(5,\"#country_id\",4)",
-        "B41": "=PIVOT.HEADER(5,\"#country_id\",5)",
-        "B42": "=PIVOT.HEADER(5,\"#country_id\",6)",
-        "B43": "=PIVOT.HEADER(5,\"#country_id\",7)",
-        "B44": "=PIVOT.HEADER(5,\"#country_id\",8)",
-        "B45": "=PIVOT.HEADER(5,\"#country_id\",9)",
-        "B46": "=PIVOT.HEADER(5,\"#country_id\",10)",
-        "B49": "[Top Cities](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"city\",\"!=\",false]],\"context\":{\"group_by\":[\"city\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"city\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
-        "B50": "=_t(\"City\")",
-        "B51": "=PIVOT.HEADER(6,\"#city\",1)",
-        "B52": "=PIVOT.HEADER(6,\"#city\",2)",
-        "B53": "=PIVOT.HEADER(6,\"#city\",3)",
-        "B54": "=PIVOT.HEADER(6,\"#city\",4)",
-        "B55": "=PIVOT.HEADER(6,\"#city\",5)",
-        "B56": "=PIVOT.HEADER(6,\"#city\",6)",
-        "B57": "=PIVOT.HEADER(6,\"#city\",7)",
-        "B58": "=PIVOT.HEADER(6,\"#city\",8)",
-        "B59": "=PIVOT.HEADER(6,\"#city\",9)",
-        "B60": "=PIVOT.HEADER(6,\"#city\",10)",
-        "B62": "[Top Salespeople](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"user_id\",\"!=\",false]],\"context\":{\"group_by\":[\"user_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"user_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
-        "B63": "=_t(\"Salesperson\")",
-        "B64": "=PIVOT.HEADER(3,\"#user_id\",1)",
-        "B65": "=PIVOT.HEADER(3,\"#user_id\",2)",
-        "B66": "=PIVOT.HEADER(3,\"#user_id\",3)",
-        "B67": "=PIVOT.HEADER(3,\"#user_id\",4)",
-        "B68": "=PIVOT.HEADER(3,\"#user_id\",5)",
-        "B69": "=PIVOT.HEADER(3,\"#user_id\",6)",
-        "B70": "=PIVOT.HEADER(3,\"#user_id\",7)",
-        "B71": "=PIVOT.HEADER(3,\"#user_id\",8)",
-        "B72": "=PIVOT.HEADER(3,\"#user_id\",9)",
-        "B73": "=PIVOT.HEADER(3,\"#user_id\",10)",
-        "C8": "=ODOO.LIST.HEADER(1, \"stage_id\")",
-        "C9": "=ODOO.LIST(1,1,\"stage_id\")",
-        "C10": "=ODOO.LIST(1,2,\"stage_id\")",
-        "C11": "=ODOO.LIST(1,3,\"stage_id\")",
-        "C12": "=ODOO.LIST(1,4,\"stage_id\")",
-        "C13": "=ODOO.LIST(1,5,\"stage_id\")",
-        "C14": "=ODOO.LIST(1,6,\"stage_id\")",
-        "C15": "=ODOO.LIST(1,7,\"stage_id\")",
-        "C16": "=ODOO.LIST(1,8,\"stage_id\")",
-        "C17": "=ODOO.LIST(1,9,\"stage_id\")",
-        "C18": "=ODOO.LIST(1,10,\"stage_id\")",
-        "C22": "# Leads",
-        "C36": "=_t(\"# Leads\")",
-        "C37": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",1)",
-        "C38": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",2)",
-        "C39": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",3)",
-        "C40": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",4)",
-        "C41": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",5)",
-        "C42": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",6)",
-        "C43": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",7)",
-        "C44": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",8)",
-        "C45": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",9)",
-        "C46": "=PIVOT.VALUE(5,\"__count\",\"#country_id\",10)",
-        "C50": "=_t(\"# Leads\")",
-        "C51": "=PIVOT.VALUE(6,\"__count\",\"#city\",1)",
-        "C52": "=PIVOT.VALUE(6,\"__count\",\"#city\",2)",
-        "C53": "=PIVOT.VALUE(6,\"__count\",\"#city\",3)",
-        "C54": "=PIVOT.VALUE(6,\"__count\",\"#city\",4)",
-        "C55": "=PIVOT.VALUE(6,\"__count\",\"#city\",5)",
-        "C56": "=PIVOT.VALUE(6,\"__count\",\"#city\",6)",
-        "C57": "=PIVOT.VALUE(6,\"__count\",\"#city\",7)",
-        "C58": "=PIVOT.VALUE(6,\"__count\",\"#city\",8)",
-        "C59": "=PIVOT.VALUE(6,\"__count\",\"#city\",9)",
-        "C60": "=PIVOT.VALUE(6,\"__count\",\"#city\",10)",
-        "C63": "=_t(\"# Leads\")",
-        "C64": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",1)",
-        "C65": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",2)",
-        "C66": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",3)",
-        "C67": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",4)",
-        "C68": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",5)",
-        "C69": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",6)",
-        "C70": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",7)",
-        "C71": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",8)",
-        "C72": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",9)",
-        "C73": "=PIVOT.VALUE(3,\"__count\",\"#user_id\",10)",
-        "D8": "=ODOO.LIST.HEADER(1, \"user_id\")",
-        "D9": "=ODOO.LIST(1,1,\"user_id\")",
-        "D10": "=ODOO.LIST(1,2,\"user_id\")",
-        "D11": "=ODOO.LIST(1,3,\"user_id\")",
-        "D12": "=ODOO.LIST(1,4,\"user_id\")",
-        "D13": "=ODOO.LIST(1,5,\"user_id\")",
-        "D14": "=ODOO.LIST(1,6,\"user_id\")",
-        "D15": "=ODOO.LIST(1,7,\"user_id\")",
-        "D16": "=ODOO.LIST(1,8,\"user_id\")",
-        "D17": "=ODOO.LIST(1,9,\"user_id\")",
-        "D18": "=ODOO.LIST(1,10,\"user_id\")",
-        "D22": "Revenue",
-        "D36": "=_t(\"Revenue\")",
-        "D37": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",1)",
-        "D38": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",2)",
-        "D39": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",3)",
-        "D40": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",4)",
-        "D41": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",5)",
-        "D42": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",6)",
-        "D43": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",7)",
-        "D44": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",8)",
-        "D45": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",9)",
-        "D46": "=PIVOT.VALUE(5,\"prorated_revenue\",\"#country_id\",10)",
-        "D50": "=_t(\"Revenue\")",
-        "D51": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",1)",
-        "D52": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",2)",
-        "D53": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",3)",
-        "D54": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",4)",
-        "D55": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",5)",
-        "D56": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",6)",
-        "D57": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",7)",
-        "D58": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",8)",
-        "D59": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",9)",
-        "D60": "=PIVOT.VALUE(6,\"prorated_revenue\",\"#city\",10)",
-        "D63": "=_t(\"Revenue\")",
-        "D64": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",1)",
-        "D65": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",2)",
-        "D66": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",3)",
-        "D67": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",4)",
-        "D68": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",5)",
-        "D69": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",6)",
-        "D70": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",7)",
-        "D71": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",8)",
-        "D72": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",9)",
-        "D73": "=PIVOT.VALUE(3,\"prorated_revenue\",\"#user_id\",10)",
-        "F8": "=ODOO.LIST.HEADER(1, \"country_id\")",
-        "F9": "=ODOO.LIST(1,1,\"country_id\")",
-        "F10": "=ODOO.LIST(1,2,\"country_id\")",
-        "F11": "=ODOO.LIST(1,3,\"country_id\")",
-        "F12": "=ODOO.LIST(1,4,\"country_id\")",
-        "F13": "=ODOO.LIST(1,5,\"country_id\")",
-        "F14": "=ODOO.LIST(1,6,\"country_id\")",
-        "F15": "=ODOO.LIST(1,7,\"country_id\")",
-        "F16": "=ODOO.LIST(1,8,\"country_id\")",
-        "F17": "=ODOO.LIST(1,9,\"country_id\")",
-        "F18": "=ODOO.LIST(1,10,\"country_id\")",
-        "F36": "=_t(\"Source\")",
-        "F37": "=PIVOT.HEADER(8,\"#source_id\",1)",
-        "F38": "=PIVOT.HEADER(8,\"#source_id\",2)",
-        "F39": "=PIVOT.HEADER(8,\"#source_id\",3)",
-        "F40": "=PIVOT.HEADER(8,\"#source_id\",4)",
-        "F41": "=PIVOT.HEADER(8,\"#source_id\",5)",
-        "F42": "=PIVOT.HEADER(8,\"#source_id\",6)",
-        "F43": "=PIVOT.HEADER(8,\"#source_id\",7)",
-        "F44": "=PIVOT.HEADER(8,\"#source_id\",8)",
-        "F45": "=PIVOT.HEADER(8,\"#source_id\",9)",
-        "F46": "=PIVOT.HEADER(8,\"#source_id\",10)",
-        "F49": "[Top Mediums](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"medium_id\",\"!=\",false]],\"context\":{\"group_by\":[\"medium_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"medium_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
-        "F50": "=_t(\"Medium\")",
-        "F51": "=PIVOT.HEADER(7,\"#medium_id\",1)",
-        "F52": "=PIVOT.HEADER(7,\"#medium_id\",2)",
-        "F53": "=PIVOT.HEADER(7,\"#medium_id\",3)",
-        "F54": "=PIVOT.HEADER(7,\"#medium_id\",4)",
-        "F55": "=PIVOT.HEADER(7,\"#medium_id\",5)",
-        "F56": "=PIVOT.HEADER(7,\"#medium_id\",6)",
-        "F57": "=PIVOT.HEADER(7,\"#medium_id\",7)",
-        "F58": "=PIVOT.HEADER(7,\"#medium_id\",8)",
-        "F59": "=PIVOT.HEADER(7,\"#medium_id\",9)",
-        "F60": "=PIVOT.HEADER(7,\"#medium_id\",10)",
-        "F62": "[Top Sales Teams](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"team_id\",\"!=\",false]],\"context\":{\"group_by\":[\"team_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"team_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
-        "F63": "=_t(\"Sales Team\")",
-        "F64": "=PIVOT.HEADER(4,\"#team_id\",1)",
-        "F65": "=PIVOT.HEADER(4,\"#team_id\",2)",
-        "F66": "=PIVOT.HEADER(4,\"#team_id\",3)",
-        "F67": "=PIVOT.HEADER(4,\"#team_id\",4)",
-        "F68": "=PIVOT.HEADER(4,\"#team_id\",5)",
-        "F69": "=PIVOT.HEADER(4,\"#team_id\",6)",
-        "F70": "=PIVOT.HEADER(4,\"#team_id\",7)",
-        "F71": "=PIVOT.HEADER(4,\"#team_id\",8)",
-        "F72": "=PIVOT.HEADER(4,\"#team_id\",9)",
-        "F73": "=PIVOT.HEADER(4,\"#team_id\",10)",
-        "G8": "=ODOO.LIST.HEADER(1, \"prorated_revenue\", _t(\"Revenue\"))",
-        "G9": "=ODOO.LIST(1,1,\"prorated_revenue\")",
-        "G10": "=ODOO.LIST(1,2,\"prorated_revenue\")",
-        "G11": "=ODOO.LIST(1,3,\"prorated_revenue\")",
-        "G12": "=ODOO.LIST(1,4,\"prorated_revenue\")",
-        "G13": "=ODOO.LIST(1,5,\"prorated_revenue\")",
-        "G14": "=ODOO.LIST(1,6,\"prorated_revenue\")",
-        "G15": "=ODOO.LIST(1,7,\"prorated_revenue\")",
-        "G16": "=ODOO.LIST(1,8,\"prorated_revenue\")",
-        "G17": "=ODOO.LIST(1,9,\"prorated_revenue\")",
-        "G18": "=ODOO.LIST(1,10,\"prorated_revenue\")",
-        "G36": "=_t(\"# Leads\")",
-        "G37": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",1)",
-        "G38": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",2)",
-        "G39": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",3)",
-        "G40": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",4)",
-        "G41": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",5)",
-        "G42": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",6)",
-        "G43": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",7)",
-        "G44": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",8)",
-        "G45": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",9)",
-        "G46": "=PIVOT.VALUE(8,\"__count\",\"#source_id\",10)",
-        "G50": "=_t(\"# Leads\")",
-        "G51": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",1)",
-        "G52": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",2)",
-        "G53": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",3)",
-        "G54": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",4)",
-        "G55": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",5)",
-        "G56": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",6)",
-        "G57": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",7)",
-        "G58": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",8)",
-        "G59": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",9)",
-        "G60": "=PIVOT.VALUE(7,\"__count\",\"#medium_id\",10)",
-        "G63": "=_t(\"# Leads\")",
-        "G64": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",1)",
-        "G65": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",2)",
-        "G66": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",3)",
-        "G67": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",4)",
-        "G68": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",5)",
-        "G69": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",6)",
-        "G70": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",7)",
-        "G71": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",8)",
-        "G72": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",9)",
-        "G73": "=PIVOT.VALUE(4,\"__count\",\"#team_id\",10)",
-        "H8": "=ODOO.LIST.HEADER(1, \"probability\", _t(\"Success (%)\"))",
-        "H9": "=ODOO.LIST(1,1,\"probability\")",
-        "H10": "=ODOO.LIST(1,2,\"probability\")",
-        "H11": "=ODOO.LIST(1,3,\"probability\")",
-        "H12": "=ODOO.LIST(1,4,\"probability\")",
-        "H13": "=ODOO.LIST(1,5,\"probability\")",
-        "H14": "=ODOO.LIST(1,6,\"probability\")",
-        "H15": "=ODOO.LIST(1,7,\"probability\")",
-        "H16": "=ODOO.LIST(1,8,\"probability\")",
-        "H17": "=ODOO.LIST(1,9,\"probability\")",
-        "H18": "=ODOO.LIST(1,10,\"probability\")",
-        "H36": "=_t(\"Revenue\")",
-        "H37": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",1)",
-        "H38": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",2)",
-        "H39": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",3)",
-        "H40": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",4)",
-        "H41": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",5)",
-        "H42": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",6)",
-        "H43": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",7)",
-        "H44": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",8)",
-        "H45": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",9)",
-        "H46": "=PIVOT.VALUE(8,\"prorated_revenue\",\"#source_id\",10)",
-        "H50": "=_t(\"Revenue\")",
-        "H51": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",1)",
-        "H52": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",2)",
-        "H53": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",3)",
-        "H54": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",4)",
-        "H55": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",5)",
-        "H56": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",6)",
-        "H57": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",7)",
-        "H58": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",8)",
-        "H59": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",9)",
-        "H60": "=PIVOT.VALUE(7,\"prorated_revenue\",\"#medium_id\",10)",
-        "H63": "=_t(\"Revenue\")",
-        "H64": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",1)",
-        "H65": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",2)",
-        "H66": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",3)",
-        "H67": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",4)",
-        "H68": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",5)",
-        "H69": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",6)",
-        "H70": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",7)",
-        "H71": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",8)",
-        "H72": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",9)",
-        "H73": "=PIVOT.VALUE(4,\"prorated_revenue\",\"#team_id\",10)"
+        "A8": "=ODOO.LIST.HEADER(1, \"name\")",
+        "A9": "=ODOO.LIST(1,1,\"name\")",
+        "A10": "=ODOO.LIST(1,2,\"name\")",
+        "A11": "=ODOO.LIST(1,3,\"name\")",
+        "A12": "=ODOO.LIST(1,4,\"name\")",
+        "A13": "=ODOO.LIST(1,5,\"name\")",
+        "A14": "=ODOO.LIST(1,6,\"name\")",
+        "A15": "=ODOO.LIST(1,7,\"name\")",
+        "A16": "=ODOO.LIST(1,8,\"name\")",
+        "A17": "=ODOO.LIST(1,9,\"name\")",
+        "A18": "=ODOO.LIST(1,10,\"name\")",
+        "A22": "Stage",
+        "A23": "=PIVOT(10,10,false,false,,false)",
+        "A36": "=PIVOT(5, 10, FALSE, FALSE)",
+        "A48": "[Top Cities](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"city\",\"!=\",false]],\"context\":{\"group_by\":[\"city\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"city\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
+        "A49": "=PIVOT(6, 10, FALSE, FALSE)",
+        "A61": "[Top Salespeople](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"user_id\",\"!=\",false]],\"context\":{\"group_by\":[\"user_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"user_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
+        "A62": "=PIVOT(3, 10, FALSE, FALSE)",
+        "B8": "=ODOO.LIST.HEADER(1, \"stage_id\")",
+        "B9": "=ODOO.LIST(1,1,\"stage_id\")",
+        "B10": "=ODOO.LIST(1,2,\"stage_id\")",
+        "B11": "=ODOO.LIST(1,3,\"stage_id\")",
+        "B12": "=ODOO.LIST(1,4,\"stage_id\")",
+        "B13": "=ODOO.LIST(1,5,\"stage_id\")",
+        "B14": "=ODOO.LIST(1,6,\"stage_id\")",
+        "B15": "=ODOO.LIST(1,7,\"stage_id\")",
+        "B16": "=ODOO.LIST(1,8,\"stage_id\")",
+        "B17": "=ODOO.LIST(1,9,\"stage_id\")",
+        "B18": "=ODOO.LIST(1,10,\"stage_id\")",
+        "B22": "# Leads",
+        "C8": "=ODOO.LIST.HEADER(1, \"user_id\")",
+        "C9": "=ODOO.LIST(1,1,\"user_id\")",
+        "C10": "=ODOO.LIST(1,2,\"user_id\")",
+        "C11": "=ODOO.LIST(1,3,\"user_id\")",
+        "C12": "=ODOO.LIST(1,4,\"user_id\")",
+        "C13": "=ODOO.LIST(1,5,\"user_id\")",
+        "C14": "=ODOO.LIST(1,6,\"user_id\")",
+        "C15": "=ODOO.LIST(1,7,\"user_id\")",
+        "C16": "=ODOO.LIST(1,8,\"user_id\")",
+        "C17": "=ODOO.LIST(1,9,\"user_id\")",
+        "C18": "=ODOO.LIST(1,10,\"user_id\")",
+        "C22": "Revenue",
+        "E8": "=ODOO.LIST.HEADER(1, \"country_id\")",
+        "E9": "=ODOO.LIST(1,1,\"country_id\")",
+        "E10": "=ODOO.LIST(1,2,\"country_id\")",
+        "E11": "=ODOO.LIST(1,3,\"country_id\")",
+        "E12": "=ODOO.LIST(1,4,\"country_id\")",
+        "E13": "=ODOO.LIST(1,5,\"country_id\")",
+        "E14": "=ODOO.LIST(1,6,\"country_id\")",
+        "E15": "=ODOO.LIST(1,7,\"country_id\")",
+        "E16": "=ODOO.LIST(1,8,\"country_id\")",
+        "E17": "=ODOO.LIST(1,9,\"country_id\")",
+        "E18": "=ODOO.LIST(1,10,\"country_id\")",
+        "E36": "=PIVOT(8, 10, FALSE, FALSE)",
+        "E48": "[Top Mediums](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"medium_id\",\"!=\",false]],\"context\":{\"group_by\":[\"medium_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"medium_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
+        "E49": "=PIVOT(7, 10, FALSE, FALSE)",
+        "E61": "[Top Sales Teams](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"team_id\",\"!=\",false]],\"context\":{\"group_by\":[\"team_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"team_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
+        "E62": "=PIVOT(4, 10, FALSE, FALSE)",
+        "F8": "=ODOO.LIST.HEADER(1, \"prorated_revenue\", _t(\"Revenue\"))",
+        "F9": "=ODOO.LIST(1,1,\"prorated_revenue\")",
+        "F10": "=ODOO.LIST(1,2,\"prorated_revenue\")",
+        "F11": "=ODOO.LIST(1,3,\"prorated_revenue\")",
+        "F12": "=ODOO.LIST(1,4,\"prorated_revenue\")",
+        "F13": "=ODOO.LIST(1,5,\"prorated_revenue\")",
+        "F14": "=ODOO.LIST(1,6,\"prorated_revenue\")",
+        "F15": "=ODOO.LIST(1,7,\"prorated_revenue\")",
+        "F16": "=ODOO.LIST(1,8,\"prorated_revenue\")",
+        "F17": "=ODOO.LIST(1,9,\"prorated_revenue\")",
+        "F18": "=ODOO.LIST(1,10,\"prorated_revenue\")",
+        "G8": "=ODOO.LIST.HEADER(1, \"probability\", _t(\"Success (%)\"))",
+        "G9": "=ODOO.LIST(1,1,\"probability\")",
+        "G10": "=ODOO.LIST(1,2,\"probability\")",
+        "G11": "=ODOO.LIST(1,3,\"probability\")",
+        "G12": "=ODOO.LIST(1,4,\"probability\")",
+        "G13": "=ODOO.LIST(1,5,\"probability\")",
+        "G14": "=ODOO.LIST(1,6,\"probability\")",
+        "G15": "=ODOO.LIST(1,7,\"probability\")",
+        "G16": "=ODOO.LIST(1,8,\"probability\")",
+        "G17": "=ODOO.LIST(1,9,\"probability\")",
+        "G18": "=ODOO.LIST(1,10,\"probability\")"
       },
       "styles": {
-        "A7:B7": 1,
-        "A21:B21": 1,
-        "A35:B35": 1,
-        "A49:B49": 1,
-        "A62:B62": 1,
-        "F21": 1,
-        "F35": 1,
-        "F49": 1,
-        "F62": 1,
-        "A22:B22": 2,
-        "A36:B36": 2,
-        "A50:B50": 2,
-        "A63:B63": 2,
-        "A8:F8": 2,
-        "F36": 2,
-        "F50": 2,
-        "F63": 2,
-        "A9:B18": 3,
-        "A37:D43": 4,
-        "A51:D60": 4,
-        "A64:D73": 4,
-        "C9:H18": 4,
-        "F37:H46": 4,
-        "F51:H60": 4,
-        "F64:H73": 4,
-        "C22:D22": 5,
-        "C36:D36": 5,
-        "C50:D50": 5,
-        "C63:D63": 5,
-        "G8:H8": 5,
-        "G36:H36": 5,
-        "G50:H50": 5,
-        "G63:H63": 5
+        "A7": 1,
+        "A21": 1,
+        "A35": 1,
+        "A48": 1,
+        "A61": 1,
+        "E21": 1,
+        "E35": 1,
+        "E48": 1,
+        "E61": 1,
+        "A22": 2,
+        "A36": 2,
+        "A49": 2,
+        "A62": 2,
+        "A8:E8": 2,
+        "E36": 2,
+        "E49": 2,
+        "E62": 2,
+        "A9:A18": 3,
+        "A37:C43": 4,
+        "A50:C59": 4,
+        "A63:C72": 4,
+        "B9:G18": 4,
+        "E37:G46": 4,
+        "E50:G59": 4,
+        "E63:G72": 4,
+        "B22:C22": 5,
+        "B36:C36": 5,
+        "B49:C49": 5,
+        "B62:C62": 5,
+        "F8:G8": 5,
+        "F36:G36": 5,
+        "F49:G49": 5,
+        "F62:G62": 5
       },
       "formats": {},
       "borders": {
-        "B9": 1,
-        "B23": 1,
-        "B37": 1,
-        "B51": 1,
-        "B64": 1,
-        "F37": 1,
-        "F51": 1,
-        "F64": 1,
-        "B10:B17": 2,
-        "B24:B31": 2,
-        "B38:B45": 2,
-        "B52:B59": 2,
-        "B65:B72": 2,
-        "F38:F45": 2,
-        "F52:F59": 2,
-        "F65:F72": 2,
-        "B18": 3,
-        "B32": 3,
-        "B46": 3,
-        "B60": 3,
-        "B73": 3,
-        "F46": 3,
-        "F60": 3,
-        "F73": 3,
-        "B49:D49": 4,
-        "B62:D62": 4,
-        "F49:H49": 4,
-        "F62:H62": 4,
-        "B50:D50": 5,
-        "B63:D63": 5,
-        "F50:H50": 5,
-        "F63:H63": 5,
-        "C23": 6,
-        "C37": 6,
-        "C51": 6,
-        "C64": 6,
-        "C9:G9": 6,
-        "G37": 6,
-        "G51": 6,
-        "G64": 6,
-        "C24:C31": 7,
-        "C38:C45": 7,
-        "C52:C59": 7,
-        "C65:C72": 7,
-        "C10:G17": 7,
-        "G38:G45": 7,
-        "G52:G59": 7,
-        "G65:G72": 7,
-        "C32": 8,
-        "C46": 8,
-        "C60": 8,
-        "C73": 8,
-        "C18:G18": 8,
-        "G46": 8,
-        "G60": 8,
-        "G73": 8,
-        "D23": 9,
-        "D37": 9,
-        "D51": 9,
-        "D64": 9,
-        "H9": 9,
-        "H37": 9,
-        "H51": 9,
-        "H64": 9,
-        "D24:D31": 10,
-        "D38:D45": 10,
-        "D52:D59": 10,
-        "D65:D72": 10,
-        "H10:H17": 10,
-        "H38:H45": 10,
-        "H52:H59": 10,
-        "H65:H72": 10,
-        "D32": 11,
-        "D46": 11,
-        "D60": 11,
-        "D73": 11,
-        "H18": 11,
-        "H46": 11,
-        "H60": 11,
-        "H73": 11
+        "A9": 1,
+        "A23": 1,
+        "A37": 1,
+        "A50": 1,
+        "A63": 1,
+        "E37": 1,
+        "E50": 1,
+        "E63": 1,
+        "A10:A17": 2,
+        "A24:A31": 2,
+        "A38:A45": 2,
+        "A51:A58": 2,
+        "A64:A71": 2,
+        "E38:E45": 2,
+        "E51:E58": 2,
+        "E64:E71": 2,
+        "A18": 3,
+        "A32": 3,
+        "A46": 3,
+        "A59": 3,
+        "A72": 3,
+        "E46": 3,
+        "E59": 3,
+        "E72": 3,
+        "A48:C48": 4,
+        "A61:C61": 4,
+        "E48:G48": 4,
+        "E61:G61": 4,
+        "A49:C49": 5,
+        "A62:C62": 5,
+        "E49:G49": 5,
+        "E62:G62": 5,
+        "B23": 6,
+        "B37": 6,
+        "B50": 6,
+        "B63": 6,
+        "B9:F9": 6,
+        "F37": 6,
+        "F50": 6,
+        "F63": 6,
+        "B24:B31": 7,
+        "B38:B45": 7,
+        "B51:B58": 7,
+        "B64:B71": 7,
+        "B10:F17": 7,
+        "F38:F45": 7,
+        "F51:F58": 7,
+        "F64:F71": 7,
+        "B32": 8,
+        "B46": 8,
+        "B59": 8,
+        "B72": 8,
+        "B18:F18": 8,
+        "F46": 8,
+        "F59": 8,
+        "F72": 8,
+        "C23": 9,
+        "C37": 9,
+        "C50": 9,
+        "C63": 9,
+        "G9": 9,
+        "G37": 9,
+        "G50": 9,
+        "G63": 9,
+        "C24:C31": 10,
+        "C38:C45": 10,
+        "C51:C58": 10,
+        "C64:C71": 10,
+        "G10:G17": 10,
+        "G38:G45": 10,
+        "G51:G58": 10,
+        "G64:G71": 10,
+        "C32": 11,
+        "C46": 11,
+        "C59": 11,
+        "C72": 11,
+        "G18": 11,
+        "G46": 11,
+        "G59": 11,
+        "G72": 11
       },
       "conditionalFormats": [
         {
           "id": "13881108-f614-4278-89c4-a58fda80496c",
-          "rule": { "type": "DataBarRule", "color": 15531509, "rangeValues": "G9:G18" },
-          "ranges": ["B9:B18"]
+          "rule": { "type": "DataBarRule", "color": 15531509, "rangeValues": "F9:F18" },
+          "ranges": ["A9:A18"]
         },
         {
           "id": "160a3e6f-6265-4a3e-a84e-a93efce715c6",
-          "rule": { "type": "DataBarRule", "color": 15726335, "rangeValues": "D64:D73" },
-          "ranges": ["B64:B73"]
+          "rule": { "type": "DataBarRule", "color": 15726335, "rangeValues": "C63:C72" },
+          "ranges": ["A63:A72"]
         },
         {
           "id": "adcc4f6a-b796-4ad9-ab48-ecdb91c2ef05",
-          "rule": { "type": "DataBarRule", "color": 16775149, "rangeValues": "H64:H73" },
-          "ranges": ["F64:F73"]
+          "rule": { "type": "DataBarRule", "color": 16775149, "rangeValues": "G63:G72" },
+          "ranges": ["E63:E72"]
         },
         {
           "id": "14099357-8292-4a05-92d3-33656028ed9e",
-          "rule": { "type": "DataBarRule", "color": 16708338, "rangeValues": "D37:D46" },
-          "ranges": ["B37:B46"]
+          "rule": { "type": "DataBarRule", "color": 16708338, "rangeValues": "C37:C46" },
+          "ranges": ["A37:A46"]
         },
         {
           "id": "66f8207d-2f52-4321-a1e2-c8b76117aff0",
-          "rule": { "type": "DataBarRule", "color": 15531509, "rangeValues": "D51:D60" },
-          "ranges": ["B51:B60"]
+          "rule": { "type": "DataBarRule", "color": 15531509, "rangeValues": "C50:C59" },
+          "ranges": ["A50:A59"]
         },
         {
-          "rule": { "type": "DataBarRule", "color": 15726335, "rangeValues": "H51:H60" },
+          "rule": { "type": "DataBarRule", "color": 15726335, "rangeValues": "G50:G59" },
           "id": "0c8a2d29-0965-4f95-a091-6526cd056eea",
-          "ranges": ["F51:F59"]
+          "ranges": ["E50:E58"]
         },
         {
           "id": "bd248e0c-82e6-4f75-a8f0-7c25bb0e3ebe",
-          "rule": { "type": "DataBarRule", "color": 16775149, "rangeValues": "H37:H46" },
-          "ranges": ["F37:F46"]
+          "rule": { "type": "DataBarRule", "color": 16775149, "rangeValues": "G37:G46" },
+          "ranges": ["E37:E46"]
         },
         {
-          "rule": { "type": "DataBarRule", "color": 16775149, "rangeValues": "D23:D32" },
+          "rule": { "type": "DataBarRule", "color": 16775149, "rangeValues": "C23:C32" },
           "id": "df4deb50-e2aa",
-          "ranges": ["B23:B32"]
+          "ranges": ["A23:A32"]
         }
       ],
       "dataValidationRules": [],
@@ -534,7 +341,7 @@
             "chartId": "09ab3fe3-04d6-4c9f-97ff-bb37fee0e692"
           },
           "offset": { "x": 0, "y": 9 },
-          "col": 1,
+          "col": 0,
           "row": 0
         },
         {
@@ -556,7 +363,7 @@
             "chartId": "5dc98740-8fc9-432d-b386-59e6e5c8b7e8"
           },
           "offset": { "x": 208, "y": 9 },
-          "col": 1,
+          "col": 0,
           "row": 0
         },
         {
@@ -577,13 +384,13 @@
             "chartId": "735dabd8-96dc-44a1-9871-f35a94c347f5"
           },
           "offset": { "x": 416, "y": 9 },
-          "col": 1,
+          "col": 0,
           "row": 0
         },
         {
           "id": "6c739756-da1e-4e9b-bd26-e74e6cd10c88",
           "width": 490,
-          "height": 340,
+          "height": 345,
           "tag": "chart",
           "data": {
             "title": {
@@ -643,17 +450,17 @@
               "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
             }
           },
-          "offset": { "x": 40, "y": 22 },
-          "col": 4,
-          "row": 19
+          "offset": { "x": 35, "y": 7 },
+          "col": 3,
+          "row": 20
         },
         {
           "id": "371be81c-1fac",
           "col": 0,
           "row": 6,
-          "offset": { "x": 0, "y": 9 },
-          "width": 1021,
-          "height": 345,
+          "offset": { "x": 0, "y": 11 },
+          "width": 1000,
+          "height": 362,
           "tag": "carousel",
           "data": {
             "chartDefinitions": {
@@ -661,11 +468,11 @@
                 "type": "combo",
                 "dataSetsHaveTitle": true,
                 "dataSets": [
-                  { "dataRange": "G8:G18", "yAxisId": "y", "type": "bar" },
-                  { "dataRange": "H8:H18", "type": "line", "yAxisId": "y1" }
+                  { "dataRange": "F8:F18", "yAxisId": "y", "type": "bar" },
+                  { "dataRange": "G8:G18", "type": "line", "yAxisId": "y1" }
                 ],
                 "legendPosition": "top",
-                "labelRange": "B8:B18",
+                "labelRange": "A8:A18",
                 "title": { "text": "", "bold": true, "color": "#01666B", "fontSize": 21 },
                 "aggregated": false,
                 "axesDesign": {
@@ -680,38 +487,25 @@
               }
             },
             "items": [
-              {
-                "type": "chart",
-                "chartId": "2a5063b0-4c4b",
-                "title": "Graph",
-                "carouselTitle": {
-                  "text": "Top Opportunities",
-                  "fontSize": 21,
-                  "color": "#01666B",
-                  "bold": true
-                }
-              },
-              {
-                "type": "carouselDataView",
-                "title": "Top 10",
-                "carouselTitle": {
-                  "text": "Top Opportunities",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                }
-              }
+              { "type": "chart", "chartId": "2a5063b0-4c4b", "title": "Graph" },
+              { "type": "carouselDataView", "title": "Top 10" }
             ],
-            "fieldMatching": {}
+            "fieldMatching": {},
+            "title": {
+              "text": "Top Opportunities",
+              "fontSize": 21,
+              "color": "#01666B",
+              "bold": true
+            }
           }
         },
         {
           "id": "d8fb9812-04f0",
           "col": 0,
           "row": 20,
-          "offset": { "x": 0, "y": 9 },
+          "offset": { "x": 0, "y": 7 },
           "width": 491,
-          "height": 340,
+          "height": 349,
           "tag": "carousel",
           "data": {
             "chartDefinitions": {
@@ -779,37 +573,13 @@
               }
             },
             "items": [
-              {
-                "type": "chart",
-                "chartId": "a53f3ad6-5a53",
-                "carouselTitle": {
-                  "text": "Pipeline Stages",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                }
-              },
+              { "type": "chart", "chartId": "a53f3ad6-5a53" },
               {
                 "type": "chart",
                 "chartId": "5adf5fa8-e0e4-4e13-a3ac-259d67389cfb",
-                "title": "Bar",
-                "carouselTitle": {
-                  "text": "Pipeline Stages",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                }
+                "title": "Bar"
               },
-              {
-                "type": "carouselDataView",
-                "title": "Top 10",
-                "carouselTitle": {
-                  "text": "Pipeline Stages",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                }
-              }
+              { "type": "carouselDataView", "title": "Top 10" }
             ],
             "fieldMatching": {
               "5adf5fa8-e0e4-4e13-a3ac-259d67389cfb": {
@@ -832,16 +602,17 @@
                 "c21a4660-9a0a-4757-8d28-1c8d95f73edb": { "chain": "medium_id", "type": "many2one" },
                 "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
               }
-            }
+            },
+            "title": { "text": "Pipeline", "bold": true, "fontSize": 21, "color": "#01666B" }
           }
         },
         {
           "id": "2e2fe2d8-ad50",
           "col": 0,
           "row": 34,
-          "offset": { "x": 0, "y": 9 },
+          "offset": { "x": 0, "y": 8 },
           "width": 491,
-          "height": 353,
+          "height": 360,
           "tag": "carousel",
           "data": {
             "chartDefinitions": {
@@ -867,7 +638,9 @@
                 },
                 "type": "odoo_geo",
                 "actionXmlId": "crm_enterprise.crm_opportunity_action_dashboard",
-                "dataSets": [],
+                "dataSets": [
+                  {}
+                ],
                 "colorScale": "blues"
               },
               "df10a4eb-48ac": {
@@ -897,38 +670,9 @@
               }
             },
             "items": [
-              {
-                "type": "chart",
-                "chartId": "af11f776-28fb",
-                "title": "Revenue",
-                "carouselTitle": {
-                  "text": "Revenues by Country",
-                  "fontSize": 21,
-                  "bold": true,
-                  "color": "#01666B"
-                }
-              },
-              {
-                "type": "chart",
-                "chartId": "df10a4eb-48ac",
-                "title": "Leads",
-                "carouselTitle": {
-                  "text": "Leads by Country",
-                  "fontSize": 21,
-                  "color": "#01666B",
-                  "bold": true
-                }
-              },
-              {
-                "type": "carouselDataView",
-                "title": "Top 10",
-                "carouselTitle": {
-                  "text": "Top Countries",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                }
-              }
+              { "type": "chart", "chartId": "af11f776-28fb", "title": "Revenue" },
+              { "type": "chart", "chartId": "df10a4eb-48ac", "title": "Leads" },
+              { "type": "carouselDataView", "title": "Top 10" }
             ],
             "fieldMatching": {
               "af11f776-28fb": {
@@ -951,12 +695,18 @@
                 "c21a4660-9a0a-4757-8d28-1c8d95f73edb": { "chain": "medium_id", "type": "many2one" },
                 "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
               }
+            },
+            "title": {
+              "text": "Top Countries",
+              "fontSize": 21,
+              "bold": true,
+              "color": "#01666B"
             }
           }
         },
         {
           "id": "0f2fc6cd-0b55",
-          "col": 4,
+          "col": 3,
           "row": 34,
           "offset": { "x": 35, "y": 8 },
           "width": 490,
@@ -986,31 +736,14 @@
                 },
                 "type": "odoo_treemap",
                 "actionXmlId": "crm_enterprise.crm_opportunity_action_dashboard",
-                "dataSets": []
+                "dataSets": [
+                  {}
+                ]
               }
             },
             "items": [
-              {
-                "type": "chart",
-                "chartId": "6aeb5a7c-00a7",
-                "title": "Graph",
-                "carouselTitle": {
-                  "text": "Revenues by source",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                }
-              },
-              {
-                "type": "carouselDataView",
-                "title": "Top 10",
-                "carouselTitle": {
-                  "text": "Top Sources",
-                  "bold": true,
-                  "fontSize": 21,
-                  "color": "#01666B"
-                }
-              }
+              { "type": "chart", "chartId": "6aeb5a7c-00a7", "title": "Graph" },
+              { "type": "carouselDataView", "title": "Top 10" }
             ],
             "fieldMatching": {
               "6aeb5a7c-00a7": {
@@ -1023,13 +756,19 @@
                 "c21a4660-9a0a-4757-8d28-1c8d95f73edb": { "chain": "medium_id", "type": "many2one" },
                 "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
               }
+            },
+            "title": {
+              "text": "Revenues by source",
+              "bold": true,
+              "fontSize": 21,
+              "color": "#01666B"
             }
           }
         }
       ],
       "tables": [
         {
-          "range": "B8:H18",
+          "range": "A8:G18",
           "type": "static",
           "config": {
             "hasFilters": false,
@@ -1044,7 +783,7 @@
           }
         },
         {
-          "range": "B23",
+          "range": "A23",
           "type": "dynamic",
           "config": {
             "hasFilters": false,
@@ -1059,7 +798,7 @@
           }
         },
         {
-          "range": "B36:D46",
+          "range": "A36:C46",
           "type": "static",
           "config": {
             "hasFilters": false,
@@ -1074,7 +813,7 @@
           }
         },
         {
-          "range": "B50:D60",
+          "range": "A49:C59",
           "type": "static",
           "config": {
             "hasFilters": false,
@@ -1089,7 +828,7 @@
           }
         },
         {
-          "range": "F36:H46",
+          "range": "E36:G46",
           "type": "static",
           "config": {
             "hasFilters": false,
@@ -1104,7 +843,7 @@
           }
         },
         {
-          "range": "F50:H60",
+          "range": "E49:G59",
           "type": "static",
           "config": {
             "hasFilters": false,
@@ -1119,7 +858,7 @@
           }
         },
         {
-          "range": "F63:H73",
+          "range": "E62:G72",
           "type": "static",
           "config": {
             "hasFilters": false,
@@ -1134,7 +873,7 @@
           }
         },
         {
-          "range": "B63:D73",
+          "range": "A62:C72",
           "type": "static",
           "config": {
             "hasFilters": false,
@@ -1396,11 +1135,15 @@
       ],
       "id": "3",
       "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "__count", "fieldName": "__count", "userDefinedName": "# Leads" },
+        {
+          "id": "prorated_revenue",
+          "fieldName": "prorated_revenue",
+          "userDefinedName": "Revenue"
+        }
       ],
       "model": "crm.lead",
-      "name": "top salespeople",
+      "name": "Salesperson",
       "sortedColumn": {
         "measure": "prorated_revenue",
         "order": "desc",
@@ -1436,11 +1179,15 @@
       ],
       "id": "4",
       "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "__count", "fieldName": "__count", "userDefinedName": "# Leads" },
+        {
+          "id": "prorated_revenue",
+          "fieldName": "prorated_revenue",
+          "userDefinedName": "Revenue"
+        }
       ],
       "model": "crm.lead",
-      "name": "top sales team",
+      "name": "Sales Team",
       "sortedColumn": {
         "measure": "prorated_revenue",
         "order": "desc",
@@ -1476,11 +1223,15 @@
       ],
       "id": "5",
       "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "__count", "fieldName": "__count", "userDefinedName": "# Leads" },
+        {
+          "id": "prorated_revenue",
+          "fieldName": "prorated_revenue",
+          "userDefinedName": "Revenue"
+        }
       ],
       "model": "crm.lead",
-      "name": "top countries",
+      "name": "Country",
       "sortedColumn": {
         "measure": "prorated_revenue",
         "order": "desc",
@@ -1516,11 +1267,15 @@
       ],
       "id": "6",
       "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "__count", "fieldName": "__count", "userDefinedName": "# Leads" },
+        {
+          "id": "prorated_revenue",
+          "fieldName": "prorated_revenue",
+          "userDefinedName": "Revenue"
+        }
       ],
       "model": "crm.lead",
-      "name": "top cities",
+      "name": "City",
       "sortedColumn": {
         "measure": "prorated_revenue",
         "order": "desc",
@@ -1556,11 +1311,15 @@
       ],
       "id": "7",
       "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "__count", "fieldName": "__count", "userDefinedName": "# Leads" },
+        {
+          "id": "prorated_revenue",
+          "fieldName": "prorated_revenue",
+          "userDefinedName": "Revenue"
+        }
       ],
       "model": "crm.lead",
-      "name": "top mediums",
+      "name": "Medium",
       "sortedColumn": {
         "measure": "prorated_revenue",
         "order": "desc",
@@ -1596,11 +1355,15 @@
       ],
       "id": "8",
       "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "__count", "fieldName": "__count", "userDefinedName": "# Leads" },
+        {
+          "id": "prorated_revenue",
+          "fieldName": "prorated_revenue",
+          "userDefinedName": "Revenue"
+        }
       ],
       "model": "crm.lead",
-      "name": "top sources",
+      "name": "Source",
       "sortedColumn": {
         "measure": "prorated_revenue",
         "order": "desc",
