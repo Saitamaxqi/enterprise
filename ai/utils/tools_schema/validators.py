@@ -48,9 +48,13 @@ def validate_params_llm_values_with_schema(instance, schema, required_parameters
         if required not in instance:
             raise ValidationError(env._("Could you please provide info about '%s' as it is required to process your request", required))
 
+    instance.update({param: None for param in schema if param not in instance})
+
     for name, value in instance.items():
         if name not in schema:
             raise ValidationError(env._("Missing definition for %(name)s", name=name))
+        if name not in required_parameters and value is None:
+            continue
 
         if schema[name]['type'] not in JSON_SCHEMA_TO_PYTHON_TYPE or not isinstance(value, JSON_SCHEMA_TO_PYTHON_TYPE[schema[name]['type']]):
             raise ValidationError(env._(

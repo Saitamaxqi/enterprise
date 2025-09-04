@@ -316,7 +316,7 @@ class IrActionsServer(models.Model):
 
         if ai_tool_schema := self.ai_tool_schema:
             ai_tool_schema = json.loads(ai_tool_schema)
-            validate_params_llm_values_with_schema(
+            arguments = validate_params_llm_values_with_schema(
                 arguments,
                 ai_tool_schema.get("properties", {}),
                 ai_tool_schema.get("required", []),

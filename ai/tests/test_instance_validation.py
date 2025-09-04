@@ -44,11 +44,13 @@ class TestInstanceValidation(TransactionCase):
         }
         instance = {'user_name': 'Mohamed'}
         required_parameters = ['user_name']
-        self.validate_instance_with_schema(
+        instance = self.validate_instance_with_schema(
             instance=instance,
             schema=schema,
             required_parameters=required_parameters,
         )
+        # non required param should have been added
+        self.assertEqual(instance['phone_number'], None)
 
     def test_missing_required_parameter(self):
         '''

@@ -565,9 +565,6 @@ class LLMApiService:
                     _logger.error("AI: Try to call a forbidden action %s", tool_name)
                     continue
 
-                # Ensure that all arguments are set in the dict, even the non-required ones
-                arguments = {n: None for n in tools[tool_name][3].get("properties", {})} | arguments
-
                 has_end_message = "__end_message" in arguments
                 end_message = arguments.pop("__end_message", None)
                 result, error = tools[tool_name][2](arguments=arguments)
