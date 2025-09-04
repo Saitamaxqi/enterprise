@@ -197,7 +197,7 @@ class SignEmsigner(SignController):
                 'account_token': account.sudo().account_token,  # FOR IAP CREDIT
                 'emsigner_state': '%s.%s' % (request_item_sudo.sign_request_id.id, request_item_sudo.access_token),
                 'db_uuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
-                'url': self.get_base_url(),
+                'url': account.get_base_url(),
             }
             response = jsonrpc(url_join(endpoint, '/api/emsigner/1/sign_identity_request'), params=params)
             return response
