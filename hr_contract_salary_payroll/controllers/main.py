@@ -135,6 +135,36 @@ class HrContractSalary(main.HrContractSalary):
 
         return result
 
+    def _update_version_payroll_properties(self, version, benefits):
+        version_benefits = request.env['hr.contract.salary.benefit'].sudo().search([
+            ('structure_type_id', '=', version.structure_type_id.id),
+            ('source', '=', 'rule')])
+        variants = [
+                '',
+                "_manual",
+                "_radio",
+                "_slider",
+        ]
+        for benefit in version_benefits:
+            fields = ['%s%s' % (benefit.field, k) for k in variants]
+            value = next((benefits[field] for field in fields if field in benefits), None) or 0.0
+            version._set_property_input_value(benefit.salary_rule_id.code, float(value))
+
+    def create_new_version(self, version_vals, offer_id, benefits, no_write=False, **kw):
+        new_version, version_diff = super().create_new_version(version_vals, offer_id, benefits, no_write=no_write, **kw)
+        benefits_values = benefits['version']
+        request.env.flush_all()
+        with request.env.cr.savepoint(flush=False) as sp:
+            offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
+            version = offer._get_version()
+            new_version.write({
+                'payroll_properties': dict(version.payroll_properties),
+            })
+            request.env.flush_all()
+            sp.rollback()
+        self._update_version_payroll_properties(new_version, benefits_values)
+        return new_version, version_diff
+
     @http.route()
     def submit(self, offer_id=None, benefits=None, **kw):
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)

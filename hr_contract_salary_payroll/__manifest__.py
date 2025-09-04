@@ -18,6 +18,7 @@
         'views/hr_employee_views.xml',
         'views/hr_contract_salary_template.xml',
         'views/hr_payroll_headcount.xml',
+        'views/hr_contract_salary_benefit_views.xml',
     ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

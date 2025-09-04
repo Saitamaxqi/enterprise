@@ -87,7 +87,7 @@ result_rate = 10''')
                                   default='monetary')
     input_suffix = fields.Char()
     dependent_input_id = fields.Many2one('hr.salary.rule', string='Dependent Salary Input', domain="[('id', '!=', id), ('struct_id', '=', struct_id), ('dependent_input_id', '=', False), ('condition_select', '=', 'property_input')]")
-    input_used_in_definition = fields.Boolean(compute='_compute_input_used_in_definition')
+    input_used_in_definition = fields.Boolean(compute='_compute_input_used_in_definition', search='_search_input_used_in_definition')
 
     @api.model
     def update_properties_definition_domain(self, salary_rule_ids, res_model):
@@ -108,6 +108,35 @@ result_rate = 10''')
 
         for rule in self:
             rule.input_used_in_definition = rule.condition_select == 'property_input' and str(rule.id) in definitions_inputs_by_structure[rule.struct_id]
+
+    def _search_input_used_in_definition(self, operator, value):
+        # operator should be '=' or '!='
+        # value is True/False
+        if operator not in ('=', '!='):
+            raise UserError(self.env._("Unsupported operator %s") % operator)
+
+        # collect all struct->input_names mapping
+        all_structures = self.env['hr.payroll.structure'].search([])
+        definitions_inputs_by_structure = defaultdict(set)
+        for struct in all_structures:
+            definitions_inputs_by_structure[struct.id] = {
+                prop['name'] for prop in struct.payslip_properties_definition if not prop['name'].startswith('separator_')
+            } | {
+                prop['name'] for prop in struct.version_properties_definition if not prop['name'].startswith('separator_')
+            }
+
+        # find rule ids that match the condition
+        matching_rules = []
+        rules = self.env['hr.salary.rule'].search([('condition_select', '=', 'property_input')])
+        for rule in rules:
+            if str(rule.id) in definitions_inputs_by_structure.get(rule.struct_id.id, set()):
+                matching_rules.append(rule.id)
+
+        domain = [('id', 'in', matching_rules)]
+        if (operator == '=' and not value) or (operator == '!=' and value):
+            domain = [('id', 'not in', matching_rules)]
+
+        return domain
 
     def _raise_error(self, localdict, error_type, e):
         raise UserError(_("""%(error_type)s

@@ -99,13 +99,14 @@ class SignContract(Sign):
             ('activity_type_id', '!=', False),
             ('activity_creation', 'in', contract_states)])
         for benefit in benefits:
-            field = benefit.res_field_id.name
-            value = version[field]
-            if (benefit.activity_creation_type == "onchange" and version[field] != version.origin_version_id[field]) or \
+            field = benefit.field
+            value = version[field] if benefit.source == 'field' else version._get_property_input_value(benefit.salary_rule_id.code)
+            origin_value = version.origin_version_id[field] if benefit.source == 'field' else version.origin_version_id._get_property_input_value(benefit.salary_rule_id.code)
+            if (benefit.activity_creation_type == "onchange" and value != origin_value) or \
                     benefit.activity_creation_type == "always" and value:
                 version.activity_schedule(
                     activity_type_id=benefit.activity_type_id.id,
-                    note="%s: %s" % (benefit.name or benefit.res_field_id.name, value),
+                    note="%s: %s" % (benefit.name or benefit.field, value),
                     user_id=benefit.activity_responsible_id.id)
 
     def _send_benefit_sign_request(self, version):
@@ -118,12 +119,13 @@ class SignContract(Sign):
 
         sent_templates = request.env['sign.template']
         for benefit in benefits:
-            field = benefit.res_field_id.name
-            value = version[field]
+            field = benefit.field
+            value = version[field] if benefit.source == 'field' else version._get_property_input_value(benefit.salary_rule_id.code)
+            origin_value = version.origin_version_id[field] if benefit.source == 'field' else version.origin_version_id._get_property_input_value(benefit.salary_rule_id.code)
             sign_template = benefit.sign_template_id
             if sign_template in sent_templates:
                 continue
-            if (benefit.activity_creation_type == "onchange" and version[field] != version.origin_version_id[field]) or \
+            if (benefit.activity_creation_type == "onchange" and value != origin_value) or \
                     benefit.activity_creation_type == "always" and value:
 
                 sent_templates |= sign_template
@@ -374,7 +376,7 @@ class HrContractSalary(http.Controller):
         for benefit in benefits:
             mapped_benefits[benefit.benefit_type_id] |= benefit
             field = benefit.field
-            initial_values[field] = version[field]
+            initial_values[field] = version[field] if benefit.source == 'field' else version._get_property_input_value(benefit.salary_rule_id.code)
 
             if benefit.folded:
                 fold_field = 'fold_%s' % (benefit.field)
@@ -384,7 +386,7 @@ class HrContractSalary(http.Controller):
             if benefit.display_type == 'manual':
                 manual_field = '%s_manual' % (benefit.field)
                 field = benefit.manual_field or benefit.field
-                initial_values[manual_field] = version[field] if field and field in version else 0
+                initial_values[manual_field] = initial_values.get(field, False) or (version[field] if field and field in version else 0)
             if benefit.display_type == 'text':
                 text_field = '%s_text' % (benefit.field)
                 field = benefit.manual_field or benefit.field
@@ -778,7 +780,7 @@ class HrContractSalary(http.Controller):
                 for benefit in resume_line.benefit_ids:
                     if not benefit.fold_field or (benefit.fold_field and new_version[benefit.fold_field]):
                         field = benefit.field
-                        value += new_version[field]
+                        value += new_version[field] if benefit.source == 'field' else new_version._get_property_input_value(benefit.salary_rule_id.code)
             if resume_line.impacts_monthly_total:
                 monthly_total += value / 12.0 if resume_line.category_id.periodicity == 'yearly' else value
             try:
@@ -808,7 +810,7 @@ class HrContractSalary(http.Controller):
                 return error_page
             benefit = request.env['hr.contract.salary.benefit'].sudo().search([
                 ('structure_type_id', '=', version.structure_type_id.id),
-                ('res_field_id.name', '=', benefit_field)], limit=1)
+                ('field', '=', benefit_field)], limit=1)
             if hasattr(version, '_get_description_%s' % benefit_field):
                 description = getattr(version, '_get_description_%s' % benefit_field)(new_value)
             else:

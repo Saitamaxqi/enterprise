@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
@@ -29,6 +28,9 @@ class HrContractSalaryBenefit(models.Model):
     name = fields.Char(translate=True)
     show_name = fields.Boolean(string="Show Name", default=True, help='Whether the name should be displayed in the Salary Configurator')
     active = fields.Boolean(default=True)
+    source = fields.Selection([
+        ('field', 'Field'),
+    ], string="Benefit Source", default='field', required=True)
     res_field_id = fields.Many2one(
         'ir.model.fields',
         string="Employee Record Related Field",
@@ -65,7 +67,7 @@ class HrContractSalaryBenefit(models.Model):
         compute="_compute_cost_res_field_public",
         inverse="_inverse_cost_res_field_public",
     )
-    field = fields.Char(related="res_field_id.name", readonly=True)
+    field = fields.Char(compute="_compute_field", store=True, readonly=True)
     cost_field = fields.Char(related="cost_res_field_id.name", string="Cost Field Name", readonly=True, compute_sudo=True)
     sequence = fields.Integer(default=100)
     benefit_type_id = fields.Many2one(
@@ -151,6 +153,14 @@ class HrContractSalaryBenefit(models.Model):
     )
 
     @api.depends('res_field_id')
+    def _compute_field(self):
+        for record in self:
+            if record.source == 'field':
+                record.field = record.res_field_id.name
+            else:
+                record.field = False
+
+    @api.depends('res_field_id')
     def _compute_res_field_public(self):
         for record in self:
             record.res_field_public = record.res_field_id.id
@@ -206,11 +216,14 @@ class HrContractSalaryBenefit(models.Model):
             if record.display_type == 'slider' and record.slider_min > record.slider_max:
                 raise ValidationError(_('The minimum value for the slider should be inferior to the maximum value.'))
 
-    @api.constrains('display_type', 'res_field_id')
+    @api.constrains('display_type', 'res_field_id', 'source')
     def _check_min_inferior_to_max(self):
+        white_list = ['radio', 'slider', 'manual', 'always']
         for record in self:
-            if not record.res_field_id and record.display_type != 'always':
-                raise ValidationError(_('Benefits that are not linked to a field should always be displayed.'))
+            if record.source == 'rule' and record.display_type not in white_list:
+                raise ValidationError(self.env._('The display type of a benefit linked to a salary rule must be one of the following: %s') % ', '.join(white_list))
+            if record.source == 'field' and not record.res_field_id and record.display_type != 'always':
+                raise ValidationError(self.env._('Benefits that are not linked to a field or salary rule should always be displayed.'))
 
     @api.depends('show_name')
     def _compute_icon(self):

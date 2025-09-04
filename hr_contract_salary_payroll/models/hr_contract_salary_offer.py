@@ -164,7 +164,7 @@ class HrContractSalaryOffer(models.Model):
             for benefit in resume_line.benefit_ids:
                 if not benefit.fold_field or (benefit.fold_field and version[benefit.fold_field]):
                     field = benefit.field
-                    value += version[field]
+                    value += version[field] if benefit.source == 'field' else version._get_property_input_value(benefit.salary_rule_id.code)
             result[resume_line.category_id.id] += round(float(value), 2)
         return result[monthly_benefit_category.id], result[yearly_benefit_category.id]
 

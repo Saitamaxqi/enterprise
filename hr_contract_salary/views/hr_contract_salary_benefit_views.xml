@@ -14,7 +14,8 @@
             <list string="Salary Package Benefit">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="res_field_id"/>
+                <field name="source"/>
+                <field name="res_field_id" invisible="source != 'field'"/>
                 <field name="field" column_invisible="True"/>
                 <field name="structure_type_id"/>
             </list>
@@ -47,10 +48,10 @@
                     <group class="px-3">
                         <group class="o_form_fw_labels">
                             <field name="benefit_type_id"/>
-                            <field name="res_field_public" groups="!base.group_erp_manager"/>
-                            <field name="res_field_id" groups="base.group_erp_manager"/>
-                            <field name="cost_res_field_public" groups="!base.group_erp_manager"/>
-                            <field name="cost_res_field_id" groups="base.group_erp_manager" placeholder="Doesn't impact net salary"/>
+                            <field name="res_field_public" groups="!base.group_erp_manager" invisible="source != 'field'"/>
+                            <field name="res_field_id" groups="base.group_erp_manager" invisible="source != 'field'"/>
+                            <field name="cost_res_field_public" groups="!base.group_erp_manager" invisible="source != 'field'"/>
+                            <field name="cost_res_field_id" groups="base.group_erp_manager" placeholder="Doesn't impact net salary" invisible="source != 'field'"/>
                         </group>
                         <group>
                             <field name="structure_type_id"/>
@@ -82,9 +83,9 @@
                                 <group>
                                     <field name="show_name"/>
                                     <field name="icon" invisible="not show_name"/>
-                                    <field name="folded"/>
-                                    <field name="fold_label" invisible="not folded"/>
-                                    <field name="fold_res_field_id" invisible="not folded" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                                    <field name="folded" invisible="source != 'field'"/>
+                                    <field name="fold_label" invisible="not folded or source != 'field'"/>
+                                    <field name="fold_res_field_id" invisible="not folded or source != 'field'" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
                                     <field name="always_show_description"/>
                                 </group>
                                 <group>
@@ -124,7 +125,7 @@
                                                 column_invisible="parent.display_type == 'dropdown'"/>
                                         </list>
                                     </field>
-                                    <field name="manual_res_field_id" invisible="display_type != 'manual'" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
+                                    <field name="manual_res_field_id" invisible="display_type != 'manual' or source != 'field'" options="{'no_create': True, 'no_edit': True, 'no_open': True}"/>
                                     <field name="manual_field" invisible="1"/>
                                     <field name="slider_min" invisible="display_type != 'slider'"/>
                                     <field name="slider_max" invisible="display_type != 'slider'"/>
