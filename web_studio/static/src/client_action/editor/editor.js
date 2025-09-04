@@ -44,6 +44,7 @@ const actionServiceStudio = {
         const router = {
             current: { hash: {} },
             pushState() {},
+            stateToUrl() {},
             hideKeyFromUrl: () => {},
         };
         const action = makeActionManager(env, router);

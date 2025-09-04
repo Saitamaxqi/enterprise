@@ -1,5 +1,5 @@
 import { Component, onWillRender, useState } from "@odoo/owl";
-import { stateToUrl } from "@web/core/browser/router";
+import { router } from "@web/core/browser/router";
 import { useService } from "@web/core/utils/hooks";
 import { humanReadableError } from "@web_studio/client_action/report_editor/utils";
 
@@ -28,6 +28,6 @@ export class ErrorDisplay extends Component {
         this.action.doAction(action);
     }
     urlFor(model, resId, viewType = "form") {
-        return stateToUrl({ action: "base.action_ui_view", model, resId });
+        return router.stateToUrl({ action: "base.action_ui_view", model, resId });
     }
 }
