@@ -3,7 +3,7 @@ import { Component } from "@odoo/owl";
 
 export class AppointmentBookingActionHelper extends Component {
     static template = "appointment.AppointmentBookingActionHelper";
-    static props = ["context", "onAddClicked"];
+    static props = ["context", "onNewClicked"];
     setup() {
         this.action = useService("action");
     }

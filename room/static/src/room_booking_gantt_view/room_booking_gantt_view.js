@@ -15,7 +15,7 @@ class RoomBookingGanttController extends ganttView.Controller {
      * When creating a new booking using the "new" button, use the current time
      * as start datetime and the current time plus one hour as stop datetime.
      */
-    onAddClicked() {
+    _onNewClicked() {
         const start = luxon.DateTime.now();
         const stop = start.plus({ hour: 1 });
         const context = this.model.getDialogContext({ start, stop, withDefault: true });

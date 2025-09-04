@@ -33,7 +33,7 @@ export class WorkEntriesGanttController extends GanttController {
         super.openDialog(...arguments);
     }
 
-    onAddClicked() {
+    _onNewClicked() {
         const { scale, globalStart, globalStop } = this.model.metaData;
         const today = DateTime.local().startOf("day");
         if (scale.unit !== "day" && globalStart <= today.endOf("day") && today <= globalStop.minus({ millisecond: 1 })) {
@@ -50,6 +50,6 @@ export class WorkEntriesGanttController extends GanttController {
             this.create(context);
             return;
         }
-        super.onAddClicked(...arguments);
+        super._onNewClicked(...arguments);
     }
 }

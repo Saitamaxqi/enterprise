@@ -59,6 +59,7 @@ import { GanttPopover } from "./gantt_popover";
 import { GanttRendererControls } from "./gantt_renderer_controls";
 import { GanttTimeDisplayBadge } from "./gantt_time_display_badge";
 import { GanttRowProgressBar } from "./gantt_row_progress_bar";
+import { useCallbackRecorder } from "@web/search/action_hook";
 
 const viewRegistry = registry.category("views");
 
@@ -486,7 +487,10 @@ export class GanttRenderer extends Component {
             }
         });
 
-        this.env.getCurrentFocusDateCallBackRecorder.add(this, this.getCurrentFocusDate.bind(this));
+        useCallbackRecorder(
+            this.env.getCurrentFocusDateCallBackRecorder,
+            this.getCurrentFocusDate.bind(this)
+        );
     }
 
     //-------------------------------------------------------------------------
@@ -614,6 +618,28 @@ export class GanttRenderer extends Component {
         ).length;
     }
 
+    createFromSelection() {
+        if (!this.selectedCells?.size) {
+            return false;
+        }
+        const cellBlocks = [];
+        for (const selectedCell of this.selectedCells) {
+            cellBlocks.push(this.getBlock(selectedCell));
+        }
+        cellBlocks.sort((b1, b2) => b1.startRow - b2.startRow || b1.startCol - b2.startCol);
+        const firstBlock = cellBlocks[0];
+        for (let i = 1; i < cellBlocks.length; i++) {
+            const { startRow, startCol, endCol } = cellBlocks[i];
+            if (startRow !== firstBlock.startRow || startCol !== firstBlock.endCol) {
+                break;
+            }
+            firstBlock.endCol = endCol;
+        }
+        const rowId = this.rowIdsByFirstRow[firstBlock.startRow];
+        this.onCreate(rowId, firstBlock.startCol, firstBlock.endCol - 1);
+        return true;
+    }
+
     cleanMultiSelection() {
         this.selectedCells = new Set();
         this.multiSelectionButtonsReactive.visible = false;
@@ -700,6 +726,11 @@ export class GanttRenderer extends Component {
         });
 
         useBus(this.model.bus, "update", this.cleanMultiSelection.bind(this));
+
+        useCallbackRecorder(
+            this.env.createFromSelectionCallBackRecorder,
+            this.createFromSelection.bind(this)
+        );
 
         this.dragStates.push(selectState);
     }

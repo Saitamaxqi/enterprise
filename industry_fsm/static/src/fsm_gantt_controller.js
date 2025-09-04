@@ -7,7 +7,7 @@ patch(TaskGanttController.prototype, {
     /**
      * @override
     */
-    onAddClicked() {
+    _onNewClicked() {
         const { context } = this.model.searchParams;
         const { startDate, stopDate } = this.model.metaData;
         const today = DateTime.local().startOf("day");
@@ -19,6 +19,6 @@ patch(TaskGanttController.prototype, {
             this.create(context);
             return;
         }
-        super.onAddClicked(...arguments);
+        super._onNewClicked(...arguments);
     },
 });

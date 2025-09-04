@@ -41,6 +41,7 @@ export class GanttController extends Component {
 
         useSubEnv({
             getCurrentFocusDateCallBackRecorder: new CallbackRecorder(),
+            createFromSelectionCallBackRecorder: new CallbackRecorder(),
         });
 
         const rootRef = useRef("root");
@@ -185,9 +186,16 @@ export class GanttController extends Component {
     // Handlers
     //--------------------------------------------------------------------------
 
-    onAddClicked() {
+    _onNewClicked() {
         const context = this.getAdditionalContext();
         this.create(context);
+    }
+
+    onNewClicked() {
+        const created = this.createFromSelection();
+        if (!created) {
+            this._onNewClicked();
+        }
     }
 
     getAdditionalContext() {
@@ -196,6 +204,14 @@ export class GanttController extends Component {
         const start = focusDate.startOf(scale.unit);
         const stop = focusDate.endOf(scale.unit).plus({ millisecond: 1 });
         return this.model.getDialogContext({ start, stop, withDefault: true });
+    }
+
+    createFromSelection() {
+        const { callbacks } = this.env.createFromSelectionCallBackRecorder;
+        if (callbacks.length) {
+            return callbacks[0]();
+        }
+        return false;
     }
 
     getCurrentFocusDate() {

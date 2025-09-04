@@ -4,7 +4,7 @@
         <button class="o_gantt_button_add btn btn-primary" position="replace">
             <ProjectTaskTemplateDropdown
                 projectId="props.context.default_project_id"
-                onCreate="() =&gt; this.onAddClicked()"
+                onCreate="() =&gt; this.onNewClicked()"
                 newButtonClasses="'o_gantt_button_add btn btn-primary'"
                 hotkey="r"
                 context="props.context"

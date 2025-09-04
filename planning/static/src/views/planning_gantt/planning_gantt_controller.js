@@ -58,7 +58,7 @@ export class PlanningGanttController extends GanttController {
     /**
      * @override
      */
-    onAddClicked() {
+    _onNewClicked() {
         const { scale, globalStart, globalStop } = this.model.metaData;
         const today = DateTime.local().startOf("day");
         if (scale.id !== "day" && globalStart <= today.endOf("day") && today <= globalStop) {
@@ -68,7 +68,7 @@ export class PlanningGanttController extends GanttController {
             this.create(context);
             return;
         }
-        super.onAddClicked(...arguments);
+        super._onNewClicked(...arguments);
     }
 
     /**

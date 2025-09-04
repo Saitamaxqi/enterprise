@@ -536,3 +536,126 @@ test("multi_create: selection with ctrl", async () => {
         },
     ]);
 });
+
+test("multi_create: create single record from selection", async () => {
+    Tasks._records = [];
+    onRpc("tasks", "web_save", ({ args: [, record], kwargs: { context } }) => {
+        expect.step(`web_save`);
+        expect.step(`name: ${record.name}`);
+        expect.step(`start: ${context.default_start}`);
+        expect.step(`stop: ${context.default_stop}`);
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full'}"
+                multi_create_view="multi_create_form"
+                create="1"
+            >
+                <field name="progress"/>
+            </gantt>
+        `,
+        groupBy: ["stage_id"],
+    });
+    let gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([{ title: "" }]);
+
+    await selectBlock({
+        sourceCell: getCell("17", "December 2018"),
+        targetCell: getCell("18", "December 2018"),
+    });
+    await animationFrame();
+    await keyDown("Control");
+    await selectBlock({
+        sourceCell: getCell("03", "December 2018"),
+        targetCell: getCell("04", "December 2018"),
+    });
+    await animationFrame();
+    await keyUp("Control");
+    expect(".o_dialog").toHaveCount(0);
+
+    await contains(".o_gantt_button_add").click();
+    await animationFrame();
+    expect(".o_dialog").toHaveCount(1);
+
+    await contains(".o_dialog .o_input:eq(0)").edit("a name");
+    await contains(".o_dialog .o_form_button_save").click();
+    expect(".o_dialog").toHaveCount(0);
+    gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "03 December 2018 -> 04 December 2018",
+                    level: 0,
+                    title: "a name",
+                },
+            ],
+            title: "Undefined Stage",
+        },
+    ]);
+    expect.verifySteps([
+        "web_save",
+        `name: a name`,
+        `start: 2018-12-02 23:00:00`,
+        `stop: 2018-12-04 23:00:00`,
+    ]);
+});
+
+test("multi_create: create single record if no selection", async () => {
+    Tasks._records = [];
+    onRpc("tasks", "web_save", ({ args: [, record], kwargs: { context } }) => {
+        expect.step(`web_save`);
+        expect.step(`name: ${record.name}`);
+        expect.step(`start: ${context.default_start}`);
+        expect.step(`stop: ${context.default_stop}`);
+    });
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full'}"
+                multi_create_view="multi_create_form"
+                create="1"
+            >
+                <field name="progress"/>
+            </gantt>
+        `,
+        groupBy: ["stage_id"],
+    });
+    let gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([{ title: "" }]);
+    expect(".o_multi_selection_buttons").toHaveCount(0);
+
+    await contains(".o_gantt_button_add").click();
+    await animationFrame();
+    expect(".o_dialog").toHaveCount(1);
+
+    await contains(".o_dialog .o_input:eq(0)").edit("a name");
+    await contains(".o_dialog .o_form_button_save").click();
+    expect(".o_dialog").toHaveCount(0);
+    gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "01 December 2018 -> Out of bounds (32) ",
+                    level: 0,
+                    title: "a name",
+                },
+            ],
+            title: "Undefined Stage",
+        },
+    ]);
+    expect.verifySteps([
+        "web_save",
+        `name: a name`,
+        `start: 2018-11-30 23:00:00`,
+        `stop: 2018-12-31 23:00:00`,
+    ]);
+});
