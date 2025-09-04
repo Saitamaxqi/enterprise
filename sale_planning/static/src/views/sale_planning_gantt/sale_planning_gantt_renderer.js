@@ -84,7 +84,7 @@ patch(PlanningGanttRenderer.prototype, {
             }
             return;
         }
-        const currentRow = this.rows.find((row) => row.id === rowId);
+        const currentRow = this.rowByIds[rowId];
         this.roleIds = (currentRow.progressBar && currentRow.progressBar.role_ids) || [];
         const existsShiftToPlan = await this.props.model.searchShiftsToPlan(
             this.getPlanDialogDomain()
