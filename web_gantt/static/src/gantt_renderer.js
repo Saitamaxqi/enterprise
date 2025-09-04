@@ -3,8 +3,8 @@ import {
     markup,
     onWillRender,
     onWillStart,
-    onWillUpdateProps,
     onWillUnmount,
+    onWillUpdateProps,
     reactive,
     useEffect,
     useExternalListener,
@@ -14,8 +14,8 @@ import {
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
 import { serializeDate, serializeDateTime, toLocaleDateTimeString } from "@web/core/l10n/dates";
-import { is24HourFormat } from "@web/core/l10n/time";
 import { localization } from "@web/core/l10n/localization";
+import { is24HourFormat } from "@web/core/l10n/time";
 import { _t } from "@web/core/l10n/translation";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { evaluateBooleanExpr } from "@web/core/py_js/py";
@@ -31,12 +31,9 @@ import { url } from "@web/core/utils/urls";
 import { parseXML } from "@web/core/utils/xml";
 import { useVirtualGrid } from "@web/core/virtual_grid_hook";
 import { extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
+import { useCallbackRecorder } from "@web/search/action_hook";
 import { formatFloatTime } from "@web/views/fields/formatters";
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
-import {
-    MultiSelectionButtons,
-    useMultiSelectionButtons,
-} from "@web/views/view_components/multi_selection_buttons";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 import { GanttConnector } from "./gantt_connector";
 import {
@@ -55,11 +52,11 @@ import {
     useGanttUndraggable,
     useMultiHover,
 } from "./gantt_helpers";
+import { GanttMultiSelectionButtons } from "./gantt_multi_selection_buttons";
 import { GanttPopover } from "./gantt_popover";
 import { GanttRendererControls } from "./gantt_renderer_controls";
-import { GanttTimeDisplayBadge } from "./gantt_time_display_badge";
 import { GanttRowProgressBar } from "./gantt_row_progress_bar";
-import { useCallbackRecorder } from "@web/search/action_hook";
+import { GanttTimeDisplayBadge } from "./gantt_time_display_badge";
 
 const viewRegistry = registry.category("views");
 
@@ -179,7 +176,7 @@ export class GanttRenderer extends Component {
         GanttTimeDisplayBadge,
         GanttRowProgressBar,
         Popover: GanttPopover,
-        MultiSelectionButtons,
+        MultiSelectionButtons: GanttMultiSelectionButtons,
     };
     static props = [
         "model",
@@ -616,6 +613,15 @@ export class GanttRenderer extends Component {
         this.multiSelectionButtonsReactive.nbSelected = this.getSelectedRecordIds(
             this.selectedCells
         ).length;
+        if (this.selectedCells.size === 1 && this.model.metaData.canPlan) {
+            const selectedCell = [...this.selectedCells][0];
+            const { startRow, startCol } = this.getBlock(selectedCell);
+            const rowId = this.rowIdsByFirstRow[startRow];
+            this.multiSelectionButtonsReactive.onPlan = () =>
+                this.onPlan(rowId, startCol, startCol);
+        } else {
+            delete this.multiSelectionButtonsReactive.onPlan;
+        }
     }
 
     createFromSelection() {
@@ -644,17 +650,12 @@ export class GanttRenderer extends Component {
         this.selectedCells = new Set();
         this.multiSelectionButtonsReactive.visible = false;
         this.multiSelectionButtonsReactive.nbSelected = 0;
+        delete this.multiSelectionButtonsReactive.onPlan;
         this.removeCellGhosts();
     }
 
-    prepareSelectionFeature() {
-        const scale = () => this.model.metaData.scale;
-        const getDatetime = (col) => this.getSubColumnFromColNumber(col).start;
-
-        this.selectedCells = new Set();
-        this.cellGhost = document.createElement("div");
-        this.cellGhost.classList.add("o_gantt_cell", "o_drag_hover", "o_cell_ghost", "pe-none");
-        this.multiSelectionButtonsReactive = useMultiSelectionButtons({
+    prepareMultiSelectionButtonsReactive() {
+        return reactive({
             onCancel: this.cleanMultiSelection.bind(this),
             onAdd: (multiCreateData) => {
                 this.onMultiCreate(multiCreateData, this.selectedCells);
@@ -666,11 +667,22 @@ export class GanttRenderer extends Component {
             },
             nbSelected: 0,
             resModel: this.model.metaData.resModel,
-            multiCreateView: this.model.metaData.multiCreateView,
+            multiCreateView: this.model.metaData.multiCreateView || "",
             multiCreateValues: this.props.multiCreateValues,
             showMultiCreateTimeRange: this.model.showMultiCreateTimeRange,
+            visible: false,
             context: this.model.searchParams.context,
         });
+    }
+
+    prepareSelectionFeature() {
+        const scale = () => this.model.metaData.scale;
+        const getDatetime = (col) => this.getSubColumnFromColNumber(col).start;
+
+        this.selectedCells = new Set();
+        this.cellGhost = document.createElement("div");
+        this.cellGhost.classList.add("o_gantt_cell", "o_drag_hover", "o_cell_ghost", "pe-none");
+        this.multiSelectionButtonsReactive = this.prepareMultiSelectionButtonsReactive();
 
         let action = null;
         const update = ({ startCol, endCol, startRow, endRow }) => {

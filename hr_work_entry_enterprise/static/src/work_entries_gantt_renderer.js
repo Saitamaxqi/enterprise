@@ -247,15 +247,20 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
     /**
      * @override
      */
+    prepareMultiSelectionButtonsReactive() {
+        const result = super.prepareMultiSelectionButtonsReactive();
+        result.userFavoritesWorkEntries = this.model.userFavoritesWorkEntries || [];
+        result.onQuickReplace = (values) => this.onMultiReplace(values, this.selectedCells);
+        result.onQuickReset = () => this.onResetWorkEntries(this.selectedCells);
+        return result;
+    }
+
+    /**
+     * @override
+     */
     updateMultiSelection() {
         super.updateMultiSelection(...arguments);
-        this.multiSelectionButtonsReactive.userFavoritesWorkEntries = this.model.userFavoritesWorkEntries;
-        this.multiSelectionButtonsReactive.onQuickReplace = (values) => {
-            this.onMultiReplace(values, this.selectedCells);
-        };
-        this.multiSelectionButtonsReactive.onQuickReset = () => {
-            this.onResetWorkEntries(this.selectedCells);
-        };
+        this.multiSelectionButtonsReactive.userFavoritesWorkEntries = this.model.userFavoritesWorkEntries || [];
     }
 
     /**

@@ -659,3 +659,105 @@ test("multi_create: create single record if no selection", async () => {
         `stop: 2018-12-31 23:00:00`,
     ]);
 });
+
+test(`multi_create: no plan button if plan="0"`, async () => {
+    Tasks._records = [];
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full'}"
+                multi_create_view="multi_create_form"
+                plan="0"
+            >
+                <field name="progress"/>
+            </gantt>
+        `,
+        groupBy: ["stage_id"],
+    });
+
+    await click(getCell("17", "December 2018"));
+    await animationFrame();
+
+    expect(".o_multi_selection_buttons > button").toHaveCount(1);
+    expect(".o_multi_selection_buttons > button").toHaveText("Add");
+});
+
+test(`multi_create: plan button if plan="1" and one cell selected`, async () => {
+    Tasks._records = [{ id: 1, start: false, stop: false, progress: 0, name: "a name" }];
+    Tasks._views["list"] = `<list><field name="name"/></list>`;
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full'}"
+                multi_create_view="multi_create_form"
+                plan="1"
+            >
+                <field name="progress"/>
+            </gantt>
+        `,
+        groupBy: ["stage_id"],
+    });
+    let gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([{ title: "" }]);
+
+    await click(getCell("17", "December 2018"));
+    await animationFrame();
+
+    expect(".o_multi_selection_buttons > button").toHaveCount(2);
+    expect(".o_multi_selection_buttons > button:first").toHaveText("Add");
+    expect(".o_multi_selection_buttons > button:last").toHaveText("Plan");
+    expect(".o_dialog").toHaveCount(0);
+
+    await contains(".o_multi_selection_buttons > button:last").click();
+    expect(".o_dialog").toHaveCount(1);
+
+    await contains(".o_data_cell").click(); // select record
+    expect(".o_dialog").toHaveCount(0);
+    gridContent = getGridContent();
+    expect(gridContent.rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "17 December 2018 -> 17 December 2018",
+                    level: 0,
+                    title: "a name",
+                },
+            ],
+            title: "Undefined Stage",
+        },
+    ]);
+});
+
+test(`multi_create: no plan button if plan="1" and more that one cell selected`, async () => {
+    Tasks._records = [];
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt
+                date_start="start"
+                date_stop="stop"
+                precision="{'day':'hour:full', 'week':'day:full', 'month':'day:full'}"
+                multi_create_view="multi_create_form"
+                plan="1"
+            >
+                <field name="progress"/>
+            </gantt>
+        `,
+        groupBy: ["stage_id"],
+    });
+
+    await selectBlock({
+        sourceCell: getCell("17", "December 2018"),
+        targetCell: getCell("18", "December 2018"),
+    });
+    await animationFrame();
+
+    expect(".o_multi_selection_buttons > button").toHaveCount(1);
+    expect(".o_multi_selection_buttons > button:first").toHaveText("Add");
+});
