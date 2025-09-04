@@ -106,7 +106,7 @@ class HrVersion(models.Model):
     l10n_in_gratuity = fields.Monetary(string='Gratuity', compute="_compute_l10n_in_gratuity",
         groups="hr_payroll.group_hr_payroll_user", readonly=False, store=True, tracking=True,
         help='Gratuity amount as a percentage of the basic salary.')
-    l10n_in_provident_fund = fields.Boolean(related='company_id.l10n_in_provident_fund')
+    l10n_in_provident_fund = fields.Boolean(related='company_id.l10n_in_provident_fund', groups="hr_payroll.group_hr_payroll_user")
     l10n_in_pf_employee_amount = fields.Monetary(compute="_compute_l10n_in_pf_employee_amount",
         store=True, readonly=False, tracking=True, groups="hr_payroll.group_hr_payroll_user",
         help='Employee contributes a percentage of the Basic salary + Dearness allowance.')
@@ -117,8 +117,8 @@ class HrVersion(models.Model):
         help='Employer contributes a percentage of the Basic salary + Dearness allowance.')
     l10n_in_pf_employer_percentage = fields.Float(string="Employer PF Percentage",
         compute="_compute_l10n_in_pf_employer_percentage", store=True, groups="hr_payroll.group_hr_payroll_user")
-    l10n_in_pt = fields.Boolean(related='company_id.l10n_in_pt')
-    l10n_in_esic = fields.Boolean(related='company_id.l10n_in_esic')
+    l10n_in_pt = fields.Boolean(related='company_id.l10n_in_pt', groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_esic = fields.Boolean(related='company_id.l10n_in_esic', groups="hr_payroll.group_hr_payroll_user")
     l10n_in_esic_employee_amount = fields.Monetary(groups="hr_payroll.group_hr_payroll_user",
         compute="_compute_l10n_in_esic_employee_amount", store=True, readonly=False, tracking=True,
         help='Employee contributions towards ESIC (Employees’ State Insurance Corporation) are\
@@ -133,7 +133,7 @@ class HrVersion(models.Model):
     l10n_in_esic_employer_percentage = fields.Float(string='Employer ESIC Percentage',
         compute="_compute_l10n_in_esic_employer_percentage", store=True, readonly=False,
         groups="hr_payroll.group_hr_payroll_user")
-    l10n_in_labour_welfare = fields.Boolean(related='company_id.l10n_in_labour_welfare')
+    l10n_in_labour_welfare = fields.Boolean(related='company_id.l10n_in_labour_welfare', groups="hr_payroll.group_hr_payroll_user")
     l10n_in_lwf_employer_contribution = fields.Monetary(groups="hr_payroll.group_hr_payroll_user", tracking=True,
         help='LWF Employer Contribution deduction fix amount withheld from salary for the state-administered Labour\
         Welfare Fund.')
