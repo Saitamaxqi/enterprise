@@ -7,8 +7,6 @@ import {
     reactive,
     useState,
 } from "@odoo/owl";
-import { loadBundle } from "@web/core/assets";
-import { ensureJQuery } from "@web/core/ensure_jquery";
 import { _t } from "@web/core/l10n/translation";
 import { omit } from "@web/core/utils/objects";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
@@ -121,13 +119,7 @@ export class ReportEditorWysiwyg extends Component {
             redo: () => this.editor?.shared.history.redo(),
         });
 
-        onWillStart(async () => {
-            await ensureJQuery();
-            await Promise.all([
-                loadBundle("web_editor.backend_assets_wysiwyg"),
-                this.reportEditorModel.loadReportQweb(),
-            ]);
-        });
+        onWillStart(() => this.reportEditorModel.loadReportQweb());
 
         onWillUnmount(() => {
             this.reportEditorModel.bus.trigger("WILL_SAVE_URGENTLY");

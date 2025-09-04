@@ -26,7 +26,6 @@ Note: Only the admin user is allowed to make those customizations.
         'web',
         'web_enterprise',
         'html_editor',
-        'web_editor',
         'web_map',
         'web_gantt',
         'web_cohort',
