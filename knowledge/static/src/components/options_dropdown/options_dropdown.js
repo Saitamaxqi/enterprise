@@ -13,7 +13,7 @@ import { rpc } from "@web/core/network/rpc";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 
-import { Component, onWillStart } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@odoo/owl";
 
 export class OptionsDropdown extends Component {
     static components = { Dropdown, DropdownItem };
@@ -28,6 +28,9 @@ export class OptionsDropdown extends Component {
         this.orm = useService("orm");
         this.openChat = useOpenChat("res.users");
         this.formatDateTime = formatDateTime;
+        this.commentsState = useState(this.env.commentsState);
+        this.chatterPanelState = useState(this.env.chatterPanelState);
+        this.propertiesPanelState = useState(this.env.propertiesPanelState);
         onWillStart(async () => {
             this.isInternalUser = await user.hasGroup("base.group_user");
         });
@@ -45,10 +48,6 @@ export class OptionsDropdown extends Component {
         return this.data.create_uid.display_name;
     }
 
-    get creatorAvatarUrl() {
-        return `/web/image?model=res.users&field=avatar_128&id=${this.data.create_uid.id}`;
-    }
-
     get data() {
         return this.props.record.data;
     }
@@ -62,7 +61,7 @@ export class OptionsDropdown extends Component {
     }
 
     get lastEditorAvatarUrl() {
-        return `/web/image?model=res.users&field=avatar_128&id=${this.data.last_edition_uid.id}`;
+        return `/web/image/knowledge.article/${this.articleId}/last_edition_user_avatar`;
     }
 
     async addCover() {

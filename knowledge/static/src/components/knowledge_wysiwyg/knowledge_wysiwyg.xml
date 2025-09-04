@@ -5,5 +5,9 @@
             <WysiwygArticleHelper record="this.env.model.root" editor="editor"
                 isVisible="articleHelperState.isVisible"/>
         </xpath>
+        <!-- Remove `overflow-auto` to prevent box shadows and outlines from being clipped. -->
+        <xpath expr="//div[hasclass('o-wysiwyg')]/div[hasclass('flex-grow-1')]" position="attributes">
+            <attribute name="t-att-class"></attribute>
+        </xpath>
     </t>
 </templates>

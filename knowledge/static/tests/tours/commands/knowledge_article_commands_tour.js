@@ -545,8 +545,8 @@ const embedViewFiltersSteps = [{
     run: "click",
 }, { // Wait for the article to be open
     trigger: '.o_hierarchy_article_name input:value("Child 1")',
-}, { // Go back via the pager
-    trigger: '.o_knowledge_header i.oi-chevron-left',
+}, { // Re-open the main article
+    trigger: '.o_article .o_article_name:contains("EditorCommandsArticle")',
     run: "click",
 }, { // Check that there is the filter in the searchBar
     trigger: '.o_searchview_input_container',
@@ -567,8 +567,8 @@ const embedKanbanEditArticleSteps = [{ // Create a new article using quick creat
     run: 'click'
 }, { // verify that the view switched to the article item
     trigger: '.o_knowledge_header .o_hierarchy_article_name input:value("Quick Create Ongoing Item")',
-}, { // Go back via the pager
-    trigger: '.o_knowledge_header i.oi-chevron-left',
+}, { // Re-open the main article
+    trigger: '.o_article .o_article_name:contains("EditorCommandsArticle")',
     run: "click",
 }, { // Wait for the article to be properly loaded
     trigger: '.odoo-editor-editable:contains("EditorCommandsArticle Content")',
@@ -619,8 +619,8 @@ const articleCommandUsageSteps = [{ // wait for the block to appear in the edito
 }, { // check that the view switched to the corresponding article
     trigger: '.o_knowledge_header:has(.o_hierarchy_article_name input:value("LinkedArticle"))',
     run: "click",
-}, { // Go back via the pager
-    trigger: '.o_knowledge_header i.oi-chevron-left',
+}, { // Re-open the main article
+    trigger: '.o_article .o_article_name:contains("EditorCommandsArticle")',
     run: "click",
 }, { // Wait for the article to be properly loaded
     trigger: '.odoo-editor-editable:contains("EditorCommandsArticle Content")',

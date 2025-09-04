@@ -1,4 +1,3 @@
-import KnowledgeIcon from "@knowledge/components/knowledge_icon/knowledge_icon";
 import { useService } from "@web/core/utils/hooks";
 
 import { Component, onWillUpdateProps, useState } from "@odoo/owl";
@@ -6,40 +5,8 @@ import { Component, onWillUpdateProps, useState } from "@odoo/owl";
 /**
  * The SidebarRow component is responsible of displaying an article (and its
  * children recursively) in a section of the sidebar, and modifying the record
- * of the article (such as updating the icon).
+ * of the article.
  */
-
-class KnowledgeSidebarIcon extends KnowledgeIcon {
-    static props = {
-        article: Object,
-        readonly: Boolean,
-        record: Object,
-        iconClasses: {type: String, optional: true},
-    };
-
-    setup() {
-        super.setup();
-        this.orm = useService("orm");
-    }
-
-    get icon() {
-        return this.props.article.icon || '📄';
-    }
-
-    async updateIcon(icon) {
-        if (this.props.record.resId === this.props.article.id) {
-            this.props.record.update({ icon });
-        } else {
-            await this.orm.write(
-                "knowledge.article",
-                [this.props.article.id],
-                {icon}
-            );
-            this.props.article.icon = icon;
-        }
-    }
-}
-
 export class KnowledgeSidebarRow extends Component {
     static props = {
         article: Object,
@@ -49,7 +16,6 @@ export class KnowledgeSidebarRow extends Component {
     };
     static template = "knowledge.SidebarRow";
     static components = {
-        KnowledgeSidebarIcon,
         KnowledgeSidebarRow
     };
 

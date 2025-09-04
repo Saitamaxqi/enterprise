@@ -34,8 +34,8 @@ registry.category("web_tour.tours").add('knowledge_embedded_view_filters_tour', 
         run: "click",
     }, { // Wait for the article to be open
         trigger: '.o_hierarchy_article_name input:value("Child 1")',
-    }, { // Go back via the breadcrumbs go back button
-        trigger: '.o_knowledge_header i.oi-chevron-left',
+    }, { // Re-open the main article
+        trigger: '.o_article .o_article_name:contains("EditorCommandsArticle")',
         run: "click",
     }, { // Check that there is the filter in the searchBar
         trigger: '.o_searchview_input_container > div',

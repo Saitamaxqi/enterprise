@@ -1,15 +1,11 @@
-import { dragAndDropArticle } from '@knowledge/../tests/tours/knowledge_tour_utils';
-import { endKnowledgeTour } from './knowledge_tour_utils.js';
+import { dragAndDropArticle, endKnowledgeTour, unfoldArticleFromSidebar } from '@knowledge/../tests/tours/knowledge_tour_utils';
 import { registry } from "@web/core/registry";
 
 // Checks that one can resequence children under a readonly parent
 
 registry.category("web_tour.tours").add('knowledge_resequence_children_of_readonly_parent_tour', {
     steps: () => [
-{ // check presence of parent article and unfold it
-    trigger: '.o_article_active:contains(Readonly Parent) > a.o_article_caret',
-    run: 'click',
-},
+unfoldArticleFromSidebar("Readonly Parent"),
 {
     trigger:
         "li.o_article:has(li:nth-child(1):contains(Child 1)):has(li:nth-child(2):contains(Child 2))",

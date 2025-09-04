@@ -28,7 +28,7 @@ function extractURLResID(url) {
 registry.category("web_tour.tours").add('knowledge_main_flow_tour_portal', {
     url: '/knowledge/home',
     steps: () => [{
-    trigger: 'button.o_section_create:not(:visible)',
+    trigger: '.o_section_create',
     run: (actionHelper) => {
         const url = new URL(browser.location);
         workspaceArticleResId = extractURLResID(url);

@@ -1,7 +1,7 @@
-import { KnowledgeFormStatusIndicator } from "@knowledge/components/form_status_indicator/form_status_indicator";
 import KnowledgeHierarchy from "@knowledge/components/hierarchy/hierarchy";
 import { OptionsDropdown } from "@knowledge/components/options_dropdown/options_dropdown";
 import { PermissionPanel } from "@knowledge/components/permission_panel/permission_panel";
+import { PermissionPanelDialog } from "../permission_panel_dialog/permission_panel_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { usePopover } from "@web/core/popover/popover_hook";
 import { registry } from "@web/core/registry";
@@ -17,16 +17,15 @@ class KnowledgeTopbar extends Component {
     static props = standardWidgetProps;
     static components = {
         KnowledgeHierarchy,
-        KnowledgeFormStatusIndicator,
         OptionsDropdown,
     };
 
     setup() {
         super.setup();
 
+        this.dialog = useService("dialog");
         this.permissionPopover = usePopover(PermissionPanel, {
             closeOnClickAway: true,
-            env: this.env,
             arrow: false,
             onClose: () => (this.state.shareBtnIsActive = false),
             position: "bottom-end",
@@ -34,8 +33,7 @@ class KnowledgeTopbar extends Component {
         this.state = useState({
             shareBtnIsActive: false,
         });
-        this.commentsService = useService("knowledge.comments");
-        this.commentsState = useState(this.commentsService.getCommentsState());
+        this.commentsState = useState(this.env.commentsState);
         this.chatterPanelState = useState(this.env.chatterPanelState);
         this.propertiesPanelState = useState(this.env.propertiesPanelState);
 
@@ -56,34 +54,25 @@ class KnowledgeTopbar extends Component {
     }
 
     get commentButtonTitle() {
-        return this.commentsState.displayMode === "panel"
+        return this.commentsState.isDisplayed
             ? _t("Close comments panel")
             : _t("Open comments panel");
     }
 
-    get displayCommentsPanelButton() {
-        return (
-            this.commentsState.displayMode === "panel" ||
-            Object.keys(this.commentsState.threadRecords).length
-        );
-    }
-
-    get favoriteButtonTile() {
+    get favoriteButtonTitle() {
         return this.props.record.data.is_user_favorite
             ? _t("Remove from favorites")
             : _t("Add to favorites");
     }
 
-    toggleComments() {
-        if (this.commentsState.displayMode === "handler") {
-            this.commentsState.displayMode = "panel";
-        } else {
-            this.commentsState.displayMode = "handler";
-        }
-    }
-
     togglePermissionPanel(event) {
-        if (this.permissionPopover.isOpen) {
+        if (this.env.isSmall && !this.state.shareBtnIsActive) {
+            this.dialog.add(PermissionPanelDialog, {
+                reactiveRecordWrapper: this.reactiveRecordWrapper,
+                openArticle: this.env.openArticle,
+                sendArticleToTrash: this.env.sendArticleToTrash
+            });
+        } else if (this.permissionPopover.isOpen) {
             this.permissionPopover.close();
         } else {
             if (this.props.record.dirty) {
@@ -91,6 +80,8 @@ class KnowledgeTopbar extends Component {
             }
             this.permissionPopover.open(event.currentTarget, {
                 reactiveRecordWrapper: this.reactiveRecordWrapper,
+                openArticle: this.env.openArticle,
+                sendArticleToTrash: this.env.sendArticleToTrash
             });
             this.state.shareBtnIsActive = true;
         }

@@ -133,23 +133,23 @@ class TestKnowledgePublic(HttpCase):
 
         # sidebar for root of subsite should only contain root
         self.assertEqual(self.make_jsonrpc_request("/knowledge/public/sidebar", {'article_id': self.root_article.id}), [
-            {'id': self.root_article.id, 'display_name': '🐣 Published Root', 'parent_id': self.unpublished_root.id}
+            {'id': self.root_article.id, 'icon': '🐣', 'name': 'Published Root', 'parent_id': self.unpublished_root.id}
         ])
 
         # sidebar for child should contain published non-items children of articles in parent-path (to show active article)
         request_result = self.make_jsonrpc_request("/knowledge/public/sidebar", {'article_id': self.subchildren[0].id})
         self.assertEqual(request_result, [
-            {'id': self.root_article.id, 'display_name': '🐣 Published Root', 'parent_id': self.unpublished_root.id},
-            {'id': self.root_children[0].id, 'display_name': '📄 Published Child', 'parent_id': self.root_article.id},
-            {'id': self.subchildren[0].id, 'display_name': '📄 Published Subchild', 'parent_id': self.root_children[0].id},
-            {'id': self.subchildren[1].id, 'display_name': '📄 Untitled', 'parent_id': self.root_children[0].id}])
+            {'id': self.root_article.id, 'icon': '🐣', 'name': 'Published Root', 'parent_id': self.unpublished_root.id},
+            {'id': self.root_children[0].id, 'icon': False, 'name': 'Published Child', 'parent_id': self.root_article.id},
+            {'id': self.subchildren[0].id, 'icon': False, 'name': 'Published Subchild', 'parent_id': self.root_children[0].id},
+            {'id': self.subchildren[1].id, 'icon': False, 'name': False, 'parent_id': self.root_children[0].id}])
 
         # sidebar for unpublished article should return nothing
         self.assertEqual(self.make_jsonrpc_request("/knowledge/public/sidebar", {'article_id': self.root_children[1].id}), [])
 
         # children route should only return published non item articles
         self.assertEqual(self.make_jsonrpc_request("/knowledge/public/children", {'article_id': self.root_article.id}), [
-            {'id': self.root_children[0].id, 'display_name': '📄 Published Child'}
+            {'id': self.root_children[0].id, 'name': 'Published Child', 'icon': False}
         ])
 
         # article search should only return published article with title matching the search term

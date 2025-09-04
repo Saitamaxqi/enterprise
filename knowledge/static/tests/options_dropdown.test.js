@@ -110,7 +110,7 @@ function assertOptionsDropdown(config) {
     expect(".dropdown-item:contains('Convert into Article Item')").toHaveCount(
         hasParent && canWrite ? 1 : 0
     );
-    expect(".dropdown-item:contains('Export')").toHaveCount(1);
+    expect(".dropdown-item:contains('Download PDF')").toHaveCount(1);
     expect(".dropdown-item:contains('Add to Templates')").toHaveCount(
         canWrite && isInternalUser ? 1 : 0
     );
@@ -126,8 +126,7 @@ test("Options Dropdown layout for a readonly article", async () => {
     await openOptionsDropdown();
     // user with read permission can only copy and export the article and see create and edit info
     assertOptionsDropdown({ isInternalUser: true });
-    expect(".o_knowledge_options_dropdown span:contains('Last Edited')").toHaveCount(1);
-    expect(".o_knowledge_options_dropdown span:contains('Created')").toHaveCount(1);
+    expect(".o_knowledge_options_dropdown div.text-muted:contains('Last Edited')").toHaveCount(1);
 });
 
 test("Options Dropdown layout for a portal user", async () => {
@@ -137,10 +136,9 @@ test("Options Dropdown layout for a portal user", async () => {
     await mountTopbar(articleId);
     await openOptionsDropdown();
     // some options are not shown for portal users
-    expect(".o_knowledge_options_dropdown .dropdown-item").toHaveCount(5);
+    expect(".o_knowledge_options_dropdown .dropdown-item").toHaveCount(6);
     assertOptionsDropdown({ canWrite: true, isInternalUser: false });
-    expect(".o_knowledge_options_dropdown span:contains('Last Edited')").toHaveCount(1);
-    expect(".o_knowledge_options_dropdown span:contains('Created')").toHaveCount(1);
+    expect(".o_knowledge_options_dropdown div.text-muted:contains('Last Edited')").toHaveCount(1);
 });
 
 test("Add/Remove Cover", async () => {
@@ -417,6 +415,18 @@ test("Toggle Properties Panel (Mobile)", async () => {
         { name: "child2", parent_id: parentId, article_properties: [{}] },
     ]);
     localStorage.setItem("knowledge.unfolded.ids", parentId); // show children in sidebar
+    patchWithCleanup(knowledgeTopbar, {
+        fieldDependencies: [
+            ...knowledgeTopbar.fieldDependencies.map((dependency) => ({
+                ...dependency,
+                readonly: false,
+            })),
+            { name: "create_date", type: "datetime" },
+            { name: "last_edition_date", type: "datetime" },
+            { name: "html_field_history_metadata", type: "jsonb" },
+        ],
+    });
+
     await mountView({
         arch: /* xml */ `
             <form js_class="knowledge_article_view_form">
@@ -437,13 +447,19 @@ test("Toggle Properties Panel (Mobile)", async () => {
     await animationFrame();
     expect(".o_widget_knowledge_properties_panel").not.toBeVisible();
     expect(".o_field_properties").toHaveCount(0);
-    expect(".o_knowledge_header .btn-properties").not.toHaveClass("active");
     // open the properties panel
-    await click(".o_knowledge_header .btn-properties");
+    await openOptionsDropdown();
+    expect(".dropdown-item:contains('Add Properties')").toHaveCount(0);
+    expect(".dropdown-item:contains('Show Properties')").toHaveCount(1);
+    expect(".dropdown-item:contains('Hide Properties')").toHaveCount(0);
+    await click(".dropdown-item:contains('Show Properties')");
     await animationFrame();
     expect(".o_widget_knowledge_properties_panel").toBeVisible();
     expect(".o_field_properties").toHaveCount(1);
-    expect(".o_knowledge_header .btn-properties").toHaveClass("active");
+    await openOptionsDropdown();
+    expect(".dropdown-item:contains('Add Properties')").toHaveCount(0);
+    expect(".dropdown-item:contains('Show Properties')").toHaveCount(0);
+    expect(".dropdown-item:contains('Hide Properties')").toHaveCount(1);
     // panel should remain open when opening an article with properties while the panel is opened
     await click(".o_article_name:contains('child2')");
     await waitFor(".o_article_active .o_article_name:contains('child2')");
@@ -461,5 +477,4 @@ test("Toggle Properties Panel (Mobile)", async () => {
     await animationFrame();
     expect(".o_widget_knowledge_properties_panel").not.toBeVisible();
     expect(".o_field_properties").toHaveCount(0);
-    expect(".o_knowledge_header .btn-properties").toHaveCount(0);
 });

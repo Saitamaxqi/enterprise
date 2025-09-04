@@ -16,13 +16,17 @@ import {
 import { user } from "@web/core/user";
 
 import { beforeEach, expect, test } from "@odoo/hoot";
-import { click } from "@odoo/hoot-dom";
+import { click, queryText } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
-import { useSubEnv } from "@odoo/owl";
 import { mockKnowledgePermissionPanelRpc } from "./knowledge_test_helpers";
 
 const permissions = {
     none: "No Access",
+    read: "Can Read",
+    write: "Can Edit",
+};
+const internalPermissions = {
+    none: "Members only",
     read: "Can Read",
     write: "Can Edit",
 };
@@ -47,9 +51,9 @@ class KnowledgeArticle extends models.ServerModel {
     category = fields.Selection({ selection: ["private", "workspace", "shared"] });
     is_article_visible_by_everyone = fields.Boolean();
     is_desynchronized = fields.Boolean();
-    internal_permission = fields.Selection({ selection: Object.keys(permissions) });
+    internal_permission = fields.Selection({ selection: Object.keys(internalPermissions) });
     inherited_permission_parent_id = fields.Many2one({ relation: "knowledge.article" });
-    inherited_permission = fields.Selection({ selection: Object.keys(permissions) });
+    inherited_permission = fields.Selection({ selection: Object.keys(internalPermissions) });
     user_can_write = fields.Boolean({ compute: "_compute_user_can_write" });
     user_permission = fields.Selection({ selection: Object.keys(permissions) });
 
@@ -242,20 +246,17 @@ const internalVisibilitySelector = ".o_internal_visibility .dropdown-toggle";
 const inviteMemberSelector = ".fa-user-plus + .input-group";
 
 const expectMember = (member, disabled) => {
-    const selector = `.o_knowledge_permission_panel_members > div:nth-of-type(${member.member_id})`;
-    expect(selector).toHaveCount(1);
-    expect(selector + " .flex-grow-1 .text-truncate:not(.text-muted) span:not(.badge)").toHaveText(
-        member.name
-    );
-    expect(selector + " .flex-grow-1 .text-truncate.text-muted:nth-child(2)").toHaveText(
-        (member.partner_share ? "Guest•" : "") + member.email
-    );
-    if (member.based_on) {
-        expect(selector + " .flex-grow-1 .text-truncate.text-muted:nth-child(3)").toHaveText(
-            `Based on ${member.based_on_icon} ${member.based_on_name}`
-        );
+    const selector = `.o_knowledge_permission_panel_members > div:contains(${member.name})`;
+    const texts = [member.name];
+    if (member.partner_share) {
+        texts.push(member.partner_id === serverState.partnerId ? "(You)" : "(Guest)");
     }
-    expect(selector + " .dropdown-toggle").toHaveText(permissions[member.permission]);
+    texts.push(member.email);
+    if (member.based_on) {
+        texts.push(`Based on ${member.based_on_icon} ${member.based_on_name}`);
+    }
+    texts.push(permissions[member.permission]);
+    expect(queryText(selector).split("\n")).toEqual(texts);
     if (disabled) {
         expect(selector + " .dropdown-toggle").toHaveClass("disabled");
     } else {
@@ -270,32 +271,25 @@ patchWithCleanup(knowledgeTopbar, {
     })),
 });
 
-// mock controller env
-let env;
 let mockServer;
 beforeEach(async () => {
     mockServer = await makeMockServer();
-    env = await makeMockEnv({
+    await makeMockEnv({
+        /** @param {integer} articleId */
+        async openArticle(articleId) {
+            expect.step(`open ${articleId}`);
+            await this.reactiveRecordWrapper.record.model.load({ resId: articleId });
+        },
         sendArticleToTrash() {
             expect.step("send to trash");
         },
         save: () => {},
         discard: () => {},
+        commentsState: { isDisplayed: false },
         chatterPanelState: { isDisplayed: false },
         propertiesPanelState: { isDisplayed: true },
     });
     patchWithCleanup(PermissionPanel.prototype, {
-        setup() {
-            super.setup();
-            useSubEnv({
-                ...env,
-                openArticle: async (articleId) => {
-                    expect.step(`open ${articleId}`);
-                    await this.props.reactiveRecordWrapper.record.model.load({ resId: articleId });
-                    return true;
-                },
-            });
-        },
         load() {
             expect.step("reload record");
             return super.load();
@@ -319,6 +313,7 @@ async function mountPermissionPanel(articleId, user_can_write = undefined) {
 
 mockKnowledgePermissionPanelRpc();
 
+test.tags("desktop");
 test("Permission Panel as a read only user", async () => {
     patchWithCleanup(user, { isAdmin: false }); // readonly internal user
     members = [
@@ -328,6 +323,7 @@ test("Permission Panel as a read only user", async () => {
             email: "current@example.com",
             permission: "read",
             partner_id: serverState.partnerId,
+            partner_share: true,
         },
         {
             member_id: 2,
@@ -341,7 +337,7 @@ test("Permission Panel as a read only user", async () => {
     // internal permission, visibility and members should appear as disabled
     expect(internalPermissionSelector).toHaveText("Can Read");
     expect(internalPermissionSelector).toHaveClass("disabled");
-    expect(internalVisibilitySelector).toHaveText("Members");
+    expect(internalVisibilitySelector).toHaveText("Members only");
     expect(internalVisibilitySelector).toHaveClass("disabled");
     // since there is no right escalation in this case, the user can remove its member.
     expectMember(members[0], false);
@@ -349,6 +345,7 @@ test("Permission Panel as a read only user", async () => {
     expect(inviteMemberSelector).toHaveCount(0);
 });
 
+test.tags("desktop");
 test("Permission Panel as a portal user", async () => {
     patchWithCleanup(user, { isAdmin: false, hasGroup: (group) => group !== "base.group_user" }); // portal user
     members = [
@@ -382,6 +379,7 @@ test("Permission Panel as a portal user", async () => {
     expectMember(members[1], true);
 });
 
+test.tags("desktop");
 test("Add a read member on a private article", async () => {
     members = [
         {
@@ -392,7 +390,7 @@ test("Add a read member on a private article", async () => {
         },
     ];
     await mountPermissionPanel(1, true);
-    expect(internalPermissionSelector).toHaveText("No Access");
+    expect(internalPermissionSelector).toHaveText("Members only");
     expect(internalVisibilitySelector).toHaveCount(0);
     expect(".o_knowledge_permission_panel_members > div").toHaveCount(1);
     // member should be disabled: admin can't remove the editor of another users' private article)
@@ -416,6 +414,7 @@ test("Add a read member on a private article", async () => {
     expect.verifySteps(["reload record"]);
 });
 
+test.tags("desktop");
 test("Remove a member", async () => {
     members = [
         {
@@ -440,9 +439,10 @@ test("Remove a member", async () => {
     await click(".o_knowledge_permission_panel_remove_member");
     await animationFrame();
     expect(".o_knowledge_permission_panel_members > div").toHaveCount(1);
-    expect.verifySteps(["remove member 1 on article 3", "reload record"]);
+    expect.verifySteps(["remove member 2 on article 3", "reload record"]);
 });
 
+test.tags("desktop");
 test("Leave a private article", async () => {
     members = [
         {
@@ -451,6 +451,7 @@ test("Leave a private article", async () => {
             email: "admin@example.com",
             permission: "write",
             partner_id: serverState.partnerId,
+            partner_share: true,
         },
     ];
     await mountPermissionPanel(1, true);
@@ -467,18 +468,19 @@ test("Leave a private article", async () => {
     expect.verifySteps(["send to trash"]);
 });
 
+test.tags("desktop");
 test("Change internal permission and visibility", async () => {
     members = [];
     await mountPermissionPanel(1, true);
     await animationFrame();
-    expect(internalPermissionSelector).toHaveText("No Access");
+    expect(internalPermissionSelector).toHaveText("Members only");
     expect(internalVisibilitySelector).toHaveCount(0);
     await click(internalPermissionSelector);
     await animationFrame();
     await click(".o-dropdown-item:contains('Can Edit')");
     await animationFrame();
     expect(internalPermissionSelector).toHaveText("Can Edit");
-    expect(internalVisibilitySelector).toHaveText("Members");
+    expect(internalVisibilitySelector).toHaveText("Members only");
     expect.verifySteps(["change permission to write on article 1", "reload record"]);
     await click(internalVisibilitySelector);
     await animationFrame();
@@ -488,6 +490,7 @@ test("Change internal permission and visibility", async () => {
     expect.verifySteps(["change visibility to everyone on article 1", "reload record"]);
 });
 
+test.tags("desktop");
 test("Change inherited internal permission", async () => {
     members = [];
     await mountPermissionPanel(5, true);
@@ -500,13 +503,13 @@ test("Change inherited internal permission", async () => {
     );
     await click(internalPermissionSelector);
     await animationFrame();
-    await click(".o-dropdown-item:contains('No Access')");
+    await click(".o-dropdown-item:contains('Members only')");
     await animationFrame();
     // downgrading internal permission should show confirmation dialog
     expect(".modal-title").toHaveText("Restrict Access");
     await click(".modal-footer button:contains('Restrict access')");
     await animationFrame();
-    expect(internalPermissionSelector).toHaveText("No Access");
+    expect(internalPermissionSelector).toHaveText("Members only");
     expect.verifySteps(["change permission to none on article 5", "reload record"]);
     // for simplicity the test model does not desync the article from its parent when changing the
     // permission, so we can check the behavior when upgrading the permission of a synced article
@@ -521,6 +524,7 @@ test("Change inherited internal permission", async () => {
     expect.verifySteps(["change permission to read on article 5", "reload record"]);
 });
 
+test.tags("desktop");
 test("Downgrade inherited member permission", async () => {
     members = [
         {
@@ -551,6 +555,7 @@ test("Downgrade inherited member permission", async () => {
     expect.verifySteps(["change permission of member 1 to read on article 5", "reload record"]);
 });
 
+test.tags("desktop");
 test("Upgrade inherited member permission", async () => {
     members = [
         {
@@ -581,6 +586,7 @@ test("Upgrade inherited member permission", async () => {
     expect.verifySteps(["change permission of member 1 to write on article 5", "reload record"]);
 });
 
+test.tags("desktop");
 test("Remove inherited member", async () => {
     members = [
         {
@@ -611,6 +617,7 @@ test("Remove inherited member", async () => {
     expect.verifySteps([`remove member 1 on article 5`, "reload record"]);
 });
 
+test.tags("desktop");
 test("Can't remove an inherited member with permission = 'none'", async () => {
     members = [
         {
@@ -629,6 +636,7 @@ test("Can't remove an inherited member with permission = 'none'", async () => {
     expect(".o_select_menu_toggler_clear").toHaveCount(0);
 });
 
+test.tags("desktop");
 test("Remove member while member has permission on a parent", async () => {
     members = [
         {
@@ -661,6 +669,7 @@ test("Remove member while member has permission on a parent", async () => {
     expect.verifySteps(["remove member 1 on article 5", "reload record"]);
 });
 
+test.tags("desktop");
 test("Change article while permission panel is open", async () => {
     await mountPermissionPanel(6, true);
     await animationFrame();
@@ -672,6 +681,7 @@ test("Change article while permission panel is open", async () => {
     expect(internalPermissionSelector).toHaveText("Can Edit");
 });
 
+test.tags("desktop");
 test("Downgrade own permission", async () => {
     members = [
         {
@@ -680,6 +690,7 @@ test("Downgrade own permission", async () => {
             email: "current@example.com",
             permission: "write",
             partner_id: serverState.partnerId,
+            partner_share: true,
         },
     ];
     patchWithCleanup(user, { isAdmin: false }); // not admin user
@@ -708,6 +719,7 @@ test("Downgrade own permission", async () => {
     ]);
 });
 
+test.tags("desktop");
 test("Restore Article", async () => {
     members = [
         {

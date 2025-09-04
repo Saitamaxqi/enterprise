@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="knowledge.PermissionPanel">
-        <div class="o_knowledge_permission_panel px-3 py-2 gap-2 mw-100 overflow-y-auto">
+        <div class="o_knowledge_permission_panel px-3 py-2 gap-2 overflow-y-auto">
             <div class="d-flex align-items-center py-1 knowledge_restriction_message" t-if="data.is_desynchronized and state.isArticleLoaded">
                 <i class="fa fa-fw fa-shield fa-2x mx-1"/>
                 <div class="flex-grow-1 px-3">
@@ -13,21 +13,20 @@
             <div class="o_internal_permission d-flex align-items-center py-1" t-if="userIsInternal and state.isArticleLoaded">
                 <i class="fa fa-fw fa-building ms-1 fs-3"/>
                 <div class="flex-grow-1 min-w-0 px-3">
-                    <div class="text-truncate">Default Access Rights</div>
+                    <div class="text-truncate">General Access</div>
                     <div t-if="data.inherited_permission_parent_id" class="knowledge_internal_permission_based_on_text text-truncate text-muted">
                         Based on <a href="#" t-on-click="() => this.openArticle(this.inheritedPermissionParent.id)" t-out="inheritedPermissionParent.name"/>
                     </div>
                 </div>
                 <Dropdown menuClass="'d-flex flex-column min-w-0'">
-                    <button class="btn bg-light border d-flex align-items-center fw-normal"
+                    <button class="btn fw-normal"
                             t-att-class="{
                                 'disabled': !userCanEdit,
-                                'o-dropdown-caret': userCanEdit,
                             }"
-                            t-out="permissions[this.data.inherited_permission]"
+                            t-out="internalPermissions[this.data.inherited_permission]"
                     />
                     <t t-set-slot="content">
-                        <t t-foreach="permissions" t-as="permission" t-key="permission">
+                        <t t-foreach="internalPermissions" t-as="permission" t-key="permission">
                             <DropdownItem onSelected="() => this.selectInternalPermission(permission)"
                                             class="{ 'flex-grow-1': true, active: permission === data.inherited_permission }"
                                             t-out="permission_value"
@@ -38,12 +37,11 @@
             </div>
             <div t-if="userIsInternal and isRootArticle and data.inherited_permission !== 'none' and state.isArticleLoaded" class="o_internal_visibility d-flex align-items-center">
                 <i class="fa fa-fw fa-eye ms-1 fs-3"/>
-                <div class="flex-grow-1 px-3">Visibility</div>
+                <div class="flex-grow-1 px-3">Show in Workspace</div>
                 <Dropdown menuClass="'d-flex flex-column min-w-0'">
-                    <button class="btn bg-light border d-flex align-items-center fw-normal"
+                    <button class="btn fw-normal"
                             t-att-class="{
                                 'disabled': !userCanEdit,
-                                'o-dropdown-caret': userCanEdit,
                             }"
                             t-out="visibilities[this.visibility]"
                     />
@@ -61,7 +59,7 @@
             <div class="d-flex align-items-center py-1" t-if="userIsAdmin or (userCanEdit and userIsInternal)">
                 <i class="fa fa-fw fa-user-plus ms-2 fs-3"/>
                 <div t-on-click="openInviteDialog" class="input-group ps-3">
-                    <span class="form-control text-truncate text-muted cursor-pointer">Add people or email addresses...</span>
+                    <span class="form-control text-truncate text-muted cursor-pointer">Add people...</span>
                     <span class="btn btn-primary">Invite</span>
                 </div>
             </div>
@@ -77,27 +75,22 @@
                     <t t-set="canEditOtherMember"
                         t-value="!member.isCurrentUser and !isUniqueWriter and userCanEdit"/>
                     <div>
-                        <img t-if="userIsInternal" class="rounded"
-                                t-att-class="{'cursor-pointer': !member.partner_share}"
-                                t-att-src="member.avatarUrl"
-                                t-on-click="() => this.onMemberClick(member)"
-                        />
-                        <i t-else="" class="fa fa-user fa-2x ms-1"/>
+                        <img t-if="userIsInternal and !member.partner_share" class="rounded cursor-pointer"
+                            t-att-src="member.avatarUrl"
+                            t-on-click="() => this.onMemberClick(member)"/>
+                        <img t-else="" class="rounded" t-att-src="member.avatarUrl"/>
                     </div>
                     <div class="flex-grow-1 text-truncate px-3">
-                        <div class="text-truncate">
-                            <span t-att-class="{'text-primary fw-bold': member.isCurrentUser}" t-out="member.name"/>
-                            <span t-if="member.isCurrentUser" class="badge rounded-pill text-bg-primary ms-1">You</span>
+                        <div class="d-flex flex-row gap-1">
+                            <div class="text-truncate" t-out="member.name"/>
+                            <span t-if="member.isCurrentUser" class="text-muted">(You)</span>
+                            <span t-elif="member.partner_share" class="text-muted">(Guest)</span>
+                            <span t-if="member.isCurrentUser and userIsAdmin">
+                                <i class="fa fa-cog pe-1"/>
+                            </span>
                         </div>
                         <div class="text-muted text-truncate">
-                            <t t-if="userIsAdmin and member.isCurrentUser">
-                                <i class="fa fa-cog pe-1"/><span>Admin</span>
-                            </t>
-                            <span t-elif="member.partner_share">Guest</span>
-                            <t t-if="member.email">
-                                <span t-if="member.partner_share or userIsAdmin and member.isCurrentUser" class="mx-1">•</span>
-                                <span t-out="member.email" t-att-title="member.email"/>
-                            </t>
+                            <span t-if="member.email" t-out="member.email" t-att-title="member.email"/>
                         </div>
                         <div t-if="member.based_on" class="text-muted text-truncate">
                             Based on
@@ -106,10 +99,9 @@
                     </div>
                     <div class="flex-shrink-0">
                         <Dropdown menuClass="'d-flex flex-column min-w-0'">
-                            <button class="btn bg-light border w-100 d-flex align-items-center fw-normal"
+                            <button class="btn fw-normal"
                                     t-att-class="{
                                         disabled: !noRightsEscalation and !canEditOtherMember,
-                                        'o-dropdown-caret': noRightsEscalation or canEditOtherMember
                                     }" t-out="permissions[member.permission]"
                             />
                             <t t-set-slot="content">

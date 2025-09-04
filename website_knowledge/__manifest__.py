@@ -21,6 +21,7 @@
             'website_knowledge/static/src/backend/**/*',
         ],
         'web.assets_frontend': [
+            'knowledge/static/src/scss/knowledge_variables.scss',
             'knowledge/static/src/portal_webclient/router_utils.js',
             'knowledge/static/src/components/article_search_dialog/article_search_dialog.*',
             'knowledge/static/src/editor/embedded_components/core/**/*',

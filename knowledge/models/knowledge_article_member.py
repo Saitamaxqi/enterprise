@@ -13,6 +13,7 @@ class KnowledgeArticleMember(models.Model):
     article_id = fields.Many2one(
         'knowledge.article', 'Article',
         ondelete='cascade', required=True)
+    article_member_avatar = fields.Image(related="partner_id.avatar_128")
     partner_id = fields.Many2one(
         'res.partner', 'Partner',
         index=True, ondelete='cascade', required=True)

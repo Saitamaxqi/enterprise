@@ -319,12 +319,12 @@ class TestKnowledgeUI(TestKnowledgeUICommon):
         self.assertTrue(bool(workspace_article))
         self.assertEqual(workspace_article.category, 'workspace')
         self.assertFalse(workspace_article.parent_id)
-        self.assertEqual(workspace_article.icon, '🥵')
+        self.assertFalse(workspace_article.icon)
 
         # Check article create and icon buttons
         workspace_child = self.env['knowledge.article'].search([('name', '=', 'Workspace Child')])
         self.assertEqual(workspace_child.parent_id, workspace_article)
-        self.assertEqual(workspace_child.icon, '😬')
+        self.assertFalse(workspace_child.icon)
         self.assertTrue(workspace_child.is_user_favorite)
 
         # Check drag and drop to trash
@@ -343,7 +343,7 @@ class TestKnowledgeUI(TestKnowledgeUICommon):
         # Check articles resequencing and article icon button
         private_children = private_article.child_ids.sorted('sequence')
         self.assertEqual(private_children[0].name, 'Private Child 3')
-        self.assertEqual(private_children[0].icon, '🥶')
+        self.assertTrue(private_children[0].icon)
         self.assertEqual(private_children[1].name, 'Private Child 4')
         self.assertEqual(private_children[2].name, 'Private Child 1')
 

@@ -18,8 +18,8 @@ registry.category("web_tour.tours").add("knowledge_sidebar_readonly_tour", {
         {
             // Unfold the private article and check that articles are in the correct
             // order to make the move possible
-            trigger: ".o_article.readonly .o_article_caret",
-            run: "click",
+            trigger: '.o_article.readonly .o_article_handle:contains("Private Article") .o_article_icon',
+            run: 'hover && click .o_article.readonly .o_article_handle:contains("Private Article") .o_article_caret .fa-caret-right',
         },
         {
             // Check that article has been unfolded and move an article under a readonly article (fails)

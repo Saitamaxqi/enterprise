@@ -1,9 +1,9 @@
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
+import { KnowledgeFormStatusIndicator } from "@knowledge/components/form_status_indicator/form_status_indicator";
 import { useService } from "@web/core/utils/hooks";
 import { useRecordObserver } from "@web/model/relational_model/utils";
 
-import KnowledgeBreadcrumbs from "@knowledge/components/breadcrumbs/breadcrumbs";
 import KnowledgeIcon from "@knowledge/components/knowledge_icon/knowledge_icon";
 
 import { Component, useState } from "@odoo/owl";
@@ -12,8 +12,8 @@ export default class KnowledgeHierarchy extends Component {
     static components = {
         Dropdown,
         DropdownItem,
-        KnowledgeBreadcrumbs,
         KnowledgeIcon,
+        KnowledgeFormStatusIndicator,
     };
     static props = { record: Object };
     static template = "knowledge.KnowledgeHierarchy";

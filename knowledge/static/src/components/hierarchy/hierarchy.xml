@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="knowledge.KnowledgeHierarchy">
-        <KnowledgeBreadcrumbs record="props.record"/>
         <!-- Root Article -->
         <div t-if="rootId !== props.record.resId" class="o_hierarchy_item d-flex min-w-0 align-items-center"> 
             <a role="button" class="btn btn-light border-0 px-2 text-truncate me-1"
                 t-on-click="() => this.env.openArticle(this.rootId)"
                 t-out="rootName"
                 t-att-title="rootName"/>
-            <span>/</span>
+            <span class="text-muted">/</span>
         </div>
         <!-- Dropdown with all articles between the root and the direct parent -->
         <div t-if="displayDropdownToggle" class="o_hierarchy_item d-flex w-auto align-items-center">
@@ -60,6 +59,10 @@
                     <t t-else="">Untitled</t>
                 </span>
             </div>
+            <i t-if="props.record.data.is_locked"
+                class="fa fa-fw fa-lock"
+                title="This article is locked" />
+            <KnowledgeFormStatusIndicator model="props.record.model" save="env.save" discard="env.discard"/>
         </div>
     </t>
 </templates>

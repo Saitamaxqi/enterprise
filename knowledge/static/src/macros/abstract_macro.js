@@ -19,7 +19,7 @@ export class AbstractMacro extends Macro {
      */
     constructor({ targetXmlDoc, breadcrumbs, data, services }) {
         super({
-            name: "restore_recort",
+            name: "restore_record",
             steps: [],
         });
         this.targetXmlDoc = targetXmlDoc;
@@ -52,10 +52,7 @@ export class AbstractMacro extends Macro {
                 action: () => this.blockUI(),
             },
             {
-                // Restore the target Form view through its breadcrumb jsId.
-                trigger: () => {
-                    return document.querySelector(`.o_knowledge_header i.oi-chevron-left`);
-                },
+                // Restore the previous view:
                 action: async () => {
                     try {
                         // Try to restore the target controller.

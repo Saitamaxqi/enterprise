@@ -4,7 +4,7 @@
         <div class="o_view_nocontent position-static">
             <!-- No Content Helper -->
             <div class="o_nocontent_help">
-                <p class="o_view_nocontent_smiling_face">Your report is complete!</p>
+                <p class="o_view_nocontent_smiling_face">No annex found!</p>
                 <p>All pages have already been loaded.</p>
             </div>
         </div>

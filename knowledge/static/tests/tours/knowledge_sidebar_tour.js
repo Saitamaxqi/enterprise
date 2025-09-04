@@ -208,18 +208,18 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     trigger: '.o_knowledge_tree:not(:has(section[data-section="favorites"]))',
 }, {
     // Click on the toggleFavorite button
-    trigger: 'a.o_knowledge_toggle_favorite',
+    trigger: '.o_knowledge_toggle_favorite',
     run: "click",
 }, {
     // Check that the article has been added to the added favorite section
     trigger: 'section[data-section="favorites"] .o_article:contains("Private Article")',
 }, {
     // Click on the toggleFavorite button again
-    trigger: 'a.o_knowledge_toggle_favorite',
+    trigger: '.o_knowledge_toggle_favorite',
     run: "click",
         },
         {
-            trigger: 'a.o_knowledge_toggle_favorite .fa-star-o',
+            trigger: '.o_knowledge_toggle_favorite .fa-star-o',
         },
         {
     // Check that the favorite section has been removed
@@ -229,7 +229,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Unfold/Fold favorite article
 {
     // Add article to favorite
-    trigger: 'a.o_knowledge_toggle_favorite',
+    trigger: '.o_knowledge_toggle_favorite',
     run: "click",
         },
         {
@@ -237,22 +237,22 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         },
         {
     // Check that favorite is initially folded, and unfold it
-    trigger: 'section[data-section="favorites"] .o_article_caret .fa-caret-right',
-    run: "click",
+    trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_icon',
+    run: 'hover && click section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret .fa-caret-right',
         },
         {
-            trigger: 'section[data-section="favorites"] .o_article_caret .fa-caret-down',
+            trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-down',
         },
         {
     // Check that caret changed and that child is displayed
     trigger: 'section[data-section="favorites"] .o_article:contains("Private Article") .o_article_name:contains("Private Child 1")',
 }, {
     // Click on the caret again to refold the article
-    trigger: 'section[data-section="favorites"] .o_article_caret',
-    run: "click",
+    trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_icon',
+    run: 'hover && click section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret .fa-caret-down',
         },
         {
-            trigger: 'section[data-section="favorites"] .o_article_caret .fa-caret-right',
+            trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-right',
         },
         {
             content: "Check that caret changed and that child is hidden again",
@@ -263,7 +263,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             trigger: 'section[data-section="private"] .o_article:contains("Private Child 1")',
         },
         {
-            trigger: 'section[data-section="favorites"] .o_article_caret .fa-caret-right',
+            trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-right',
         },
         {
             content: "Hover on Favorites Private Article to make create article visible",
@@ -273,7 +273,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         {
             content: "Check that article has been unfolded",
             trigger:
-                'section[data-section="favorites"] .o_article:contains("Private Article") .fa-caret-down',
+                'section[data-section="favorites"] .o_article:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-down',
         },
         {
     // Check that previously existing child is displayed
@@ -297,15 +297,15 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     // Fold/unfold an article
         },
         {
-            trigger: 'section[data-section="private"] .o_article_caret .fa-caret-down',
+            trigger: 'section[data-section="private"] .o_article_caret:not(:visible) .fa-caret-down',
         },
         {
             content: "Click on the caret (should be caret down)",
-            trigger: 'section[data-section="private"] .o_article_caret',
-            run: "click",
+            trigger: 'section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_icon',
+            run: 'hover && click section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_caret .fa-caret-down',
         },
         {
-            trigger: 'section[data-section="private"] .o_article_caret .fa-caret-right',
+            trigger: 'section[data-section="private"] .o_article_caret:not(:visible) .fa-caret-right',
         },
         {
             content:
@@ -314,7 +314,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         },
         {
             trigger:
-                'section[data-section="favorites"] .o_article_handle:contains("Private Article") .fa-caret-down',
+                'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-down',
         },
         {
     // Check that favorite has not been folded
@@ -322,22 +322,22 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     run: "click",
 }, {
     // Fold favorite article (to later check that unfolding article won't unfold favorite)
-    trigger: 'section[data-section="favorites"] .o_article_caret',
-    run: "click",
+    trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_icon',
+    run: 'hover &&  click section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret .fa-caret-down',
 }, {
     // Click on the caret again
-    trigger: 'section[data-section="private"] .o_article_caret',
-    run: "click",
+    trigger: 'section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_icon',
+    run: 'hover && click section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_caret .fa-caret-right',
         },
         {
-            trigger: 'section[data-section="private"] .o_article_caret .fa-caret-down',
+            trigger: 'section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-down',
         },
         {
     // Check that articles are shown again
     trigger: 'section[data-section="private"] .o_article .o_article',
         },
         {
-            trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .fa-caret-right',
+            trigger: 'section[data-section="favorites"] .o_article_handle:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-right',
         },
         {
     // Check that favorite has not been unfolded
@@ -346,11 +346,11 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Create a child of a folded article
 {
     // Fold article again
-    trigger: 'section[data-section="private"] .o_article_caret',
-    run: "click",
-}, 
+    trigger: 'section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_icon',
+    run: 'hover && click section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_caret .fa-caret-down',
+},
         {
-            trigger: "section[data-section=private] .o_article_caret .fa-caret-right",
+            trigger: 'section[data-section="private"] .o_article_handle:contains("Private Article") .o_article_caret:not(:visible) .fa-caret-right',
         },
         {
             content: "Hover on Private Section => Private Article to make create article visible",
@@ -358,7 +358,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             run: "hover && click section[data-section=private] .o_article:contains(Private Article) a.o_article_create",
         },
         {
-            trigger: 'section[data-section="private"] .o_article_caret .fa-caret-down',
+            trigger: 'section[data-section="private"] .o_article_caret:not(:visible) .fa-caret-down',
         },
         {
             content:
@@ -390,7 +390,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     trigger: ".o_article_active .o_article_emoji:not(:contains(📄))",
 },
 {
-    // Check that the icon has been updated in the sidenar
+    // Check that the icon has been updated in the sidebar
     trigger: '.o_knowledge_body div[name="icon"]',
     run: () => {
         const bodyIcon = document.querySelector('.o_knowledge_body div[name="icon"]').innerText;
@@ -400,93 +400,10 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
         }
     },
 },
-// Update icon of active article from sidebar
+// Open another article
 {
-    // Click on the icon in the sidebar
-    trigger: '.o_article_active .o_article_emoji',
-    run: "click",
-}, {
-    // Choose an icon
-    trigger: '.o-Emoji[data-codepoints="🥶"]',
-    run: "click",
-        },
-        {
-            trigger: 'section[data-section="private"] .o_article_active .o_article_emoji:contains("🥶")',
-        },
-        {
-    // Check that the icon has been updated in both trees in the sidebar
-    trigger: 'section[data-section="favorites"] .o_article_active .o_article_emoji:contains("🥶")',
-}, {
-    // Check that the icon in the body has been updated
-    trigger: '.o_knowledge_body div[name="icon"]:contains("🥶")',
-},
-// Update icon of non active article
-{
-    // Click on the icon in the sidebar
-    trigger: '.o_article:contains("Workspace Article") .o_article_emoji',
-    run: "click",
-}, {
-    // Choose an icon
-    trigger: '.o-Emoji[data-codepoints="🥵"]',
-    run: "click",
-}, {
-    // Check that the icon has been updated in the sidebar
-    trigger: '.o_article:contains("Workspace Article") .o_article_emoji:contains("🥵")',
-}, {
-    // Check that the icon in the body has not been updated
-    trigger: '.o_knowledge_body div[name="icon"]:contains("🥶")',
-},
-// Update icon of locked article (fails)
-{
-    // Open another article
     trigger: '.o_article_name:contains("Workspace Child")',
     run: "click",
-        },
-        {
-            trigger: '.o_article_active:contains("Workspace Child")',
-        },
-        {
-    // Lock the article
-    trigger: '.o_knowledge_header .dropdown-toggle',
-    run: "click",
-}, {
-    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Lock")',
-    run: "click",
-        },
-        {
-            trigger: '.o_knowledge_header > div > i.fa-lock',
-        },
-        {
-    // Click on the icon of the active article in the sidebar
-    trigger: '.o_article_active .o_article_emoji:contains("📄")',
-    run: "click",
-}, {
-    // Check that emoji picker did not show up
-    trigger: 'body:not(:has(.o-EmojiPicker))',
-},
-// Update icon of unlocked article
-{
-    // Unlock the article
-    trigger: '.o_knowledge_header .dropdown-toggle',
-    run: "click",
-}, {
-    trigger: '.o_knowledge_options_dropdown .dropdown-item:contains("Unlock")',
-    run: "click",
-        },
-        {
-            trigger: '.o_knowledge_header > div:not(:has(> i.fa-lock))',
-        },
-        {
-    // Click on the icon of the active article in the sidebar
-    trigger: '.o_article_active a.o_article_emoji',
-    run: "click",
-}, {
-    // Choose an icon
-    trigger: '.o-Emoji[data-codepoints="😬"]',
-    run: "click",
-}, {
-    // Check that the icon has been updated in the sidebar
-    trigger: '.o_article:contains("Workspace Child") .o_article_emoji:contains("😬")',
 },
 // Convert article into item
 {
