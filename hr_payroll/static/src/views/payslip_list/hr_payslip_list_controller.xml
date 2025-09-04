@@ -17,7 +17,7 @@
             <attribute name="t-if">displayButton(button) &amp;&amp; !this.env.inDialog</attribute>
         </xpath>
         <xpath expr="//t[@t-set-slot='control-panel-create-button']//button" position="inside">
-            <t t-if="!payrunId &amp;&amp; !this.env.inDialog">Off-Cycle</t>
+            <t t-if="!payrunId &amp;&amp; !this.env.inDialog"> Off-Cycle</t>
         </xpath>
     </t>
 

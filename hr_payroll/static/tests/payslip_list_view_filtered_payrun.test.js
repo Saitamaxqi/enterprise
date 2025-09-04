@@ -33,3 +33,15 @@ test("Test context of PayRunCard", async () => {
     );
     expect(record.props.context).toEqual(payslipListController.props.context);
 });
+
+test("Test header buttons of payslip list view filtered by payrun", async () => {
+    await mountView({
+        type: "list",
+        resModel: "hr.payslip",
+        context: {
+            search_default_payslip_run_id: 1,
+        },
+    });
+    expect(".o_control_panel_main_buttons button").toHaveCount(1);
+    expect(".o_list_button_add").toHaveText("New");
+});
