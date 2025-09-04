@@ -653,11 +653,14 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         })
         url = f"{appointment_type.get_base_url()}/calendar/view/{appointment.access_token}"
         description = (
-            '<div><span>Contact Details</span><br><span>&lt;p&gt;John Doe&lt;/p&gt; - john@example.com - 123456789</span>'
-            '<br><span>Appointment Manager - apt_manager@test.example.com - +32456111111</span><br><span>Jean - jean@example.com</span>'
-            '</div><br><div><span>Questions</span><br><span>How are you ?: I am Good</span></div><br>'
-            '<p>Please try to be there <strong>5 minutes</strong> before the time.</p><p><br>Thank you.</p>'
-            '<span>Need to reschedule? <a href=%s>Click here</a></span>'
+            '<div><strong>Organized by</strong><br>Appointment Manager<br>'
+            '<a href="mailto:apt_manager@test.example.com">apt_manager@test.example.com</a><br>'
+            '<a href="tel:+32456111111">+32456111111</a><br><br>'
+            '<strong>Contact Details</strong><br>&lt;p&gt;John Doe&lt;/p&gt;<br>'
+            '<a href="mailto:john@example.com">john@example.com</a><br>'
+            '<a href="tel:123456789">123456789</a></div><br>'
+            '<p>Please try to be there <strong>5 minutes</strong> before the time.</p>'
+            '<p><br>Thank you.</p><span>Need to reschedule? <a href=%s>Click here</a></span>'
         ) % (url)
         self.assertEqual(appointment._get_customer_description(), description)
 

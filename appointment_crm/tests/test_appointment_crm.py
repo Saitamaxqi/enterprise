@@ -31,7 +31,7 @@ class AppointmentCRMTest(TestAppointmentCrmCommon):
         self.assertEqual(lead.name, event.name)
         self.assertTrue(lead.description)
         self.assertIn('crm_leads@test.example.com', lead.description, 'Description should contain contact info of the attendee')
-        self.assertEqual(html2plaintext(lead.description), html2plaintext(event._get_attendee_description()))
+        self.assertEqual(html2plaintext(lead.description), html2plaintext(event.description))
         self.assertEqual(lead.partner_id, self.contact_1)
         self.assertTrue(lead.activity_ids[0], "Lead should have a next activity")
         self.assertNotIn(self.env.user.partner_id, lead.message_partner_ids)

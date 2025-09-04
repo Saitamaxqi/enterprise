@@ -222,6 +222,7 @@ class GoogleReserveController(Controller):
             appointment_values = appointment_type_su._prepare_calendar_event_values(
                 asked_capacity=party_size,
                 booking_line_values=booking_lines,
+                description='',
                 duration=duration_sec / 3600,
                 allday=False,
                 appointment_invite=request.env['appointment.invite'],

@@ -7,7 +7,6 @@
             <t t-set="staff_user" t-value="event.user_id"/>
             <t t-set="resources" t-value="event.appointment_resource_ids"/>
             <t t-set="based_on_users" t-value="appointment_type.schedule_based_on == 'users'"/>
-            <t t-set="attendee_description" t-value="event._get_attendee_description()"/>
             <div id="wrap" class="o_appointment d-flex bg-o-color-4 p-4">
                 <div class="oe_structure"/>
                 <div class="oe_structure container">
@@ -69,7 +68,7 @@
                                             <img src="/appointment/static/src/img/outlook-calendar.svg" alt="Outlook"/>
                                             <small>Add to iCal/Outlook</small>
                                         </a>
-                                        <a role="button" class="o_google_calendar btn btn-block bg-white" t-att-href="google_url" target="_top">
+                                        <a role="button" class="o_google_calendar btn btn-block bg-white" t-att-href="google_url" target="new">
                                             <img src="/appointment/static/src/img/google-calendar.svg" alt="Google Agenda"/>
                                             <small>Add to Google Agenda</small>
                                         </a>
@@ -182,12 +181,12 @@
                                     </form>
                                 </div>
                             </div>
-                            <div t-if="attendee_description" class="row mb-4">
+                            <div t-if="not is_html_empty(event.description)" class="row mb-4">
                                 <div class="col-3">
                                     <span class="text-muted">Details</span>
                                 </div>
                                 <div class="col-9">
-                                    <div t-out="attendee_description"/>
+                                    <div t-out="event.description"/>
                                 </div>
                             </div>
                             <div t-if="appointment_type and (not partner_id or event.appointment_booker_id.id == partner_id or not appointment_type.allow_guests) and not is_cancelled" class="row mb-4">

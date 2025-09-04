@@ -30,6 +30,10 @@
                 <li t-if="data.phone_number">
                     <strong>Phone: </strong> <t t-out="data.phone_number"/>
                 </li>
+                <li t-if="!isHtmlEmpty(data.description)">
+                    <br/>
+                    <t t-out="data.description"/>
+                </li>
             </div>
 
             <div class="popover-footer d-flex justify-content-between">
