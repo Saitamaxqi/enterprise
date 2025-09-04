@@ -1,6 +1,7 @@
 import { registry } from "@web/core/registry";
 import { inputFiles } from "@web/../tests/utils";
 import { redirect } from "@web/core/utils/urls";
+import { stepUtils } from "@web_tour/tour_utils";
 
 registry.category("web_tour.tours").add("hr_contract_salary_tour", {
     url: "/my",
@@ -1067,14 +1068,10 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             trigger: ".o_form_button_save",
             run: "click",
         },
-        {
-            content: "Show more smart buttons",
-            trigger: ".o_button_more",
-            run: "click",
-        },
+        stepUtils.autoExpandMoreButtons(),
         {
             content: "Generate Offer",
-            trigger: ".o_popover .btn:contains(Offers)",
+            trigger: ".btn:contains(Offers)",
             run: "click",
         },
         {
