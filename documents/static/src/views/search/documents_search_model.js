@@ -89,13 +89,15 @@ export class DocumentsSearchModel extends SearchModel {
     _extractSearchDefaultsFromGlobalContext() {
         const { searchDefaults, searchPanelDefaults } =
             super._extractSearchDefaultsFromGlobalContext(...arguments);
-        if (
-            searchPanelDefaults.user_folder_id &&
-            !this.globalContext.no_documents_unique_folder_id
-        ) {
-            this.globalContext["documents_unique_folder_id"] = Number(
-                searchPanelDefaults.user_folder_id
-            );
+        if (searchPanelDefaults.user_folder_id) {
+            if (!isNaN(searchPanelDefaults.user_folder_id)) {
+                // Search panel keys (values) only support integers
+                searchPanelDefaults.user_folder_id = Number(searchPanelDefaults.user_folder_id);
+            }
+            if (!this.globalContext.no_documents_unique_folder_id) {
+                this.globalContext["documents_unique_folder_id"] =
+                    searchPanelDefaults.user_folder_id;
+            }
         }
         return { searchDefaults, searchPanelDefaults };
     }
