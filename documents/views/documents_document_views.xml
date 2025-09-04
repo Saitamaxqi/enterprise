@@ -287,6 +287,7 @@
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" column_invisible="1"/> <!-- fetch `color` too -->
                 <field name="create_activity_type_id" column_invisible="1"/>
                 <field name="create_activity_user_id" column_invisible="1"/>
+                <widget name="documents_list_actions" width="125px"/>
             </list>
         </field>
     </record>
