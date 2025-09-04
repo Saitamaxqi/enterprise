@@ -14,8 +14,7 @@ class WebsitePage(models.Model):
 
     def _construct_homepage(self, homepage_data):
         self._construct_page(homepage_data)
-        # Temporarily disabled due to missing integration with website options for dynamically generated footers
-        # self._create_footer(homepage_data)
+        self._create_footer(homepage_data)
         self._create_header(homepage_data)
         self._apply_website_themes(homepage_data)
         self._apply_user_values(homepage_data)
@@ -163,29 +162,5 @@ class WebsitePage(models.Model):
             'key': f'website_generator.template_ws_custom_footer_{self.website_id.id}',
             'arch': new_footer_template,
             'inherit_id': self.env['website'].with_context(website_id=self.website_id.id).viewref('website.layout').id,
-            'website_id': self.website_id.id,
-        })
-
-        # And generate the footer snippet (such that it is selectable in the editor.)
-        new_footer_snippet = f"""
-    <xpath expr="//we-select[@data-variable='footer-template']" position="inside">
-        <we-button title="Imported Footer"
-            class="position-relative"
-            data-customize-website-views="website_generator.template_ws_custom_footer_{self.website_id.id}"
-            data-customize-website-variable="'imported-footer-{self.website_id.id}'"
-            data-img="/website_generator/static/src/img/footer_template_imported.svg">
-            <span class="badge bg-info position-absolute ms-4" style="top: 10px; left: 4px;">
-                <i class="fa fa-gears"></i>
-                Imported
-            </span>
-        </we-button>
-    </xpath>"""
-
-        self.env['ir.ui.view'].create({
-            'name': 'WS Custom Footer',
-            'type': 'qweb',
-            'key': f'website.ws_custom_footer{self.website_id.id}',
-            'arch': new_footer_snippet,
-            'inherit_id': self.env.ref('website.snippet_options').id,
             'website_id': self.website_id.id,
         })
