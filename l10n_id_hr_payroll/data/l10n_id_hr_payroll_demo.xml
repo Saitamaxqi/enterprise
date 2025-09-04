@@ -143,7 +143,7 @@
         <field name="study_field">Engineering</field>
         <field name="study_school">Airlangga University</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_id_hr_payroll.res_partner_bank_account_siti"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_id_hr_payroll.res_partner_bank_account_siti'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>
@@ -184,7 +184,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">University of Indonesia</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_id_hr_payroll.res_partner_bank_account_agus"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_id_hr_payroll.res_partner_bank_account_agus'))]"/>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_id_hr_payroll.id_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_id_hr_payroll.structure_type_employee_id"/>

@@ -16,27 +16,43 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         self.ensure_one()
         aba_date = fields.Date.context_today(self).strftime('%d%m%y')
         payslip_batch = self.env['hr.payslip.run'].search([('l10n_au_payment_batch_id', '=', self.id)])
+
+        payments_data = []
+
+        for payslip in payslip_batch.slip_ids:
+            employee = payslip.employee_id
+            allocations = payslip.compute_salary_allocations()
+            for ba in employee.bank_account_ids:
+                amount = allocations[str(ba.id)]
+                payments_data.append({
+                    'name': str(payslip.id),
+                    'amount': amount,
+                    'bank_account': ba,
+                    'account_holder': employee,
+                    'transaction_code': "53",  # PAYROLL
+                    'reference': str(payslip.id),
+                })
+
         aba_values = {
             'aba_date': aba_date,
             'aba_description': 'PAYROLL',
-            'self_balancing_reference': 'PAYROLL %s' % aba_date,
-            'payments_data': [{
-                'name': str(payslip.id),
-                'amount': payslip.net_wage,
-                'bank_account': payslip.employee_id.bank_account_id,
-                'account_holder': payslip.employee_id,
-                'transaction_code': "53",  # PAYROLL
-                'reference': str(payslip.id),
-            } for payslip in payslip_batch.slip_ids]
+            'self_balancing_reference': f'PAYROLL {aba_date}',
+            'payments_data': payments_data,
         }
+
         file_data = self.env['account.batch.payment']._create_aba_document(self.journal_id, aba_values).encode()
         return base64.encodebytes(file_data)
 
     def _perform_checks(self):
         if self.export_format == 'aba':
             self.env['account.batch.payment']._check_valid_journal_for_aba(self.journal_id)
+
+            # Employees where any linked bank account is not valid for ABA
             employees = self.payslip_ids.employee_id.filtered(
-                lambda emp: emp.bank_account_id.acc_type != "aba" or not emp.bank_account_id.aba_bsb or not emp.bank_account_id.allow_out_payment
+                lambda emp: not all(
+                    acc.acc_type == "aba" and acc.aba_bsb
+                    for acc in emp.bank_account_ids
+                )
             )
             if employees:
                 raise RedirectWarning(

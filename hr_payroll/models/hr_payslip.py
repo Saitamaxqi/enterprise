@@ -1285,7 +1285,7 @@ class HrPayslip(models.Model):
             'version_id', 'version_id.contract_date_start', 'version_id.contract_date_end', 'version_id.schedule_pay',
             'struct_id', 'version_id.structure_type_id.default_schedule_pay',
             'company_id', 'payslip_run_id.company_id',
-            'employee_id.bank_account_id', 'employee_id.bank_account_id.allow_out_payment',
+            'employee_id.bank_account_ids', 'employee_id.bank_account_ids.allow_out_payment',
         ]
 
     def _get_errors_by_slip(self):
@@ -1350,12 +1350,12 @@ class HrPayslip(models.Model):
             warnings_by_slip[slip] = warnings
 
         # Payment report related errors
-        for bank, slips in self.filtered(
+        for employee_banks, slips in self.filtered(
             lambda ps: ps.state == 'validated'
         ).grouped(
-            lambda ps: ps.employee_id.bank_account_id
+            lambda ps: ps.employee_id.bank_account_ids
         ).items():
-            if not bank:
+            if not employee_banks:
                 for slip in slips:
                     warnings_by_slip[slip].append({
                         'message': _("Missing bank account on employee"),
@@ -1363,11 +1363,11 @@ class HrPayslip(models.Model):
                         'action': slip.employee_id._get_records_action(),
                         'level': 'warning',
                     })
-            elif not bank.allow_out_payment:
+            elif any(not b.allow_out_payment for b in employee_banks):
                 warning = {
-                    'message': _("Untrusted bank account"),
-                    'action_text': _('Bank Account'),
-                    'action': bank._get_records_action(),
+                    'message': _("Untrusted bank accounts"),
+                    'action_text': _('Bank Accounts'),
+                    'action': employee_banks._get_records_action(),
                     'level': 'warning',
                 }
                 for slip in slips:
@@ -2207,3 +2207,52 @@ class HrPayslip(models.Model):
                 ('dependent_input_id', '=', False),
             ]
         }
+
+    def compute_salary_allocations(self, total_amount=None):
+        self.ensure_one()
+        if total_amount is None:
+            remaining = self.currency_id.round(self.net_wage)
+        else:
+            remaining = self.currency_id.round(total_amount)
+
+        res = {}
+        if remaining == 0 or not self.employee_id.bank_account_ids:
+            return res
+        if not self.employee_id.has_multiple_bank_accounts:
+            res[str(self.employee_id.primary_bank_account_id.id)] = remaining
+            return res
+
+        fixed_bank_account_ids = self.employee_id.get_accounts_with_fixed_allocations()
+        for ba in fixed_bank_account_ids:
+            amount, _ = self.employee_id.get_bank_account_salary_allocation(str(ba.id))
+            if amount > 0 and amount <= remaining:
+                amount = self.currency_id.round(amount)
+                res[str(ba.id)] = amount
+                remaining -= amount
+                if remaining < 0:
+                    raise ValidationError(self.env._("Allocated amounts surpass the net salary."))
+            else:
+                raise ValidationError(self.env._("Allocated amounts surpass the net salary."))
+
+        percentage_bank_account_ids = self.employee_id.bank_account_ids - fixed_bank_account_ids
+        if not percentage_bank_account_ids and remaining > 0:
+            raise ValidationError(self.env._("Allocated amounts are less than the net salary."))
+
+        total_percentage_account_amounts = 0
+        for i, ba in enumerate(percentage_bank_account_ids):
+            percentage, _ = self.employee_id.get_bank_account_salary_allocation(str(ba.id))
+            if percentage > 0:
+                if i == len(percentage_bank_account_ids) - 1:
+                    amount = self.currency_id.round(remaining - total_percentage_account_amounts)
+                else:
+                    amount = self.currency_id.round((percentage / 100.0) * remaining)
+                    total_percentage_account_amounts += amount
+                if amount > 0:
+                    res[str(ba.id)] = amount
+        return res
+
+    def safe_compute_salary_allocations(self, total_amount=None):
+        try:
+            return self.compute_salary_allocations(total_amount)
+        except ValidationError as e:
+            return {"__error__": str(e)}

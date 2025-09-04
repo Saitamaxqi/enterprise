@@ -33,17 +33,23 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         report_data = csv.writer(output)
         report_data.writerow([_('Sequence'), _('Payment Date'), _('Report Date'), _('Payslip Period'), _('Employee name'), _('Bank account'), _('BIC'), _('Amount to pay')])
         rows = []
-        for index, slip in enumerate(self.payslip_ids):
-            rows.append((
-                str(index + 1),
-                format_date(self.env, self.effective_date),
-                format_date(self.env, fields.Date.today()),
-                format_date(self.env, slip.date_from) + ' - ' + format_date(self.env, slip.date_to),
-                slip.employee_id.legal_name,
-                slip.employee_id.bank_account_id.acc_number,
-                slip.employee_id.bank_account_id.bank_bic or '',
-                format_amount(self.env, slip.net_wage, slip.currency_id)
-            ))
+        index = 1
+        for slip in self.payslip_ids:
+            legal_name = slip.employee_id.legal_name
+            allocations = slip.compute_salary_allocations()
+            for ba in slip.employee_id.bank_account_ids:
+                amount = allocations[str(ba.id)]
+                rows.append((
+                    str(index),
+                    format_date(self.env, self.effective_date),
+                    format_date(self.env, fields.Date.today()),
+                    format_date(self.env, slip.date_from) + ' - ' + format_date(self.env, slip.date_to),
+                    legal_name,
+                    ba.acc_number,
+                    ba.bank_bic or '',
+                    format_amount(self.env, amount, slip.currency_id)
+                ))
+                index += 1
         report_data.writerows(rows)
         return base64.encodebytes(output.getvalue().encode())
 

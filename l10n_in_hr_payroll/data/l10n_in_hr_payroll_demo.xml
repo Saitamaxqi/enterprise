@@ -189,7 +189,7 @@
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
             <field name="identification_id">82735682375623</field>
-            <field name="bank_account_id" ref="l10n_in_hr_payroll.l10n_in_emp_vihaan_bank_account"/>
+            <field name="bank_account_ids" eval="[(4, ref('l10n_in_hr_payroll.l10n_in_emp_vihaan_bank_account'))]"/>
             <field name="image_1920" type="base64" file="l10n_in_hr_payroll/static/img/hr_employee_vihaan.jpg"/>
             <field name="user_id" ref="l10n_in_hr_payroll.l10n_in_user_vihaan"/>
             <field name="l10n_in_relationship">Father</field>
@@ -255,7 +255,7 @@
             <field name="country_id" ref="base.in"/>
             <field name="resource_calendar_id" ref="l10n_in_resource_calendar_part_time"/>
             <field name="identification_id">82735682375623</field>
-            <field name="bank_account_id" ref="l10n_in_hr_payroll.l10n_in_emp_shaurya_khurana_bank_account"/>
+            <field name="bank_account_ids" eval="[(4, ref('l10n_in_hr_payroll.l10n_in_emp_shaurya_khurana_bank_account'))]"/>
             <field name="image_1920" type="base64" file="l10n_in_hr_payroll/static/img/hr_employee_shaurya.jpg"/>
             <field name="parent_id" ref="l10n_in_hr_payroll.l10n_in_hr_employee_vihaan"/>
             <field name="company_id" ref="base.demo_company_in"/>
@@ -302,7 +302,7 @@
             <field name="country_of_birth" ref="base.in"/>
             <field name="country_id" ref="base.in"/>
             <field name="parent_id" ref="l10n_in_hr_payroll.l10n_in_hr_employee_shaurya"/>
-            <field name="bank_account_id" ref="l10n_in_hr_payroll.l10n_in_emp_alisha_sharma_bank_account"/>
+            <field name="bank_account_ids" eval="[(4, ref('l10n_in_hr_payroll.l10n_in_emp_alisha_sharma_bank_account'))]"/>
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="image_1920" type="base64" file="l10n_in_hr_payroll/static/img/hr_employee_alisha_sharma.jpg"/>
             <field name="l10n_in_uan">398175628304</field>

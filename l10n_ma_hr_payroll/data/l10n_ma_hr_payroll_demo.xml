@@ -142,7 +142,7 @@
         <field name="l10n_ma_cnss_number">1000-149</field>
         <field name="l10n_ma_cimr_number">1000-784</field>
         <field name="l10n_ma_mut_number">1000-893</field>
-        <field name="bank_account_id" ref="l10n_ma_hr_payroll.res_partner_bank_account_sufyan"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ma_hr_payroll.res_partner_bank_account_sufyan'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ma_hr_payroll.ma_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_ma_hr_payroll.structure_type_employee_mar"/>
@@ -188,7 +188,7 @@
         <field name="l10n_ma_cnss_number">1000-123</field>
         <field name="l10n_ma_cimr_number">1000-123</field>
         <field name="l10n_ma_mut_number">1000-123</field>
-        <field name="bank_account_id" ref="l10n_ma_hr_payroll.res_partner_bank_account_meryem"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ma_hr_payroll.res_partner_bank_account_meryem'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ma_hr_payroll.ma_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_ma_hr_payroll.structure_type_employee_mar"/>

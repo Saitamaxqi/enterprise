@@ -13,8 +13,8 @@ class AccountBatchPayment(models.Model):
         bank = payment.partner_bank_id
         if not bank.clearing_number:
             raise ValidationError(
-                _(
-                    "Please set an ABA routing number on the %(account)s bank account for %(partner)s.",
+                self.env._(
+                    "Please set a Clearing Number on the %(account)s bank account for %(partner)s.",
                     account=bank.display_name,
                     partner=payment.partner_id.display_name,
                 )

@@ -131,22 +131,46 @@ class HrPayslip(models.Model):
                 slips.payslip_run_id.write({'move_id': move.id})
         return True
 
-    def _prepare_line_values(self, line, account_id, date, debit, credit):
-        if not self.company_id.batch_payroll_move_lines and line.salary_rule_id.employee_move_line:
+    def _prepare_line_values(self, line, account, date, debit, credit):
+        batch_lines = self.company_id.batch_payroll_move_lines
+        if not batch_lines and line.salary_rule_id.employee_move_line:
             partner = self.employee_id.work_contact_id
         else:
             partner = line.partner_id
-        return {
+        line_vals = []
+        if not batch_lines and line.salary_rule_id.employee_move_line and self.employee_id.has_multiple_bank_accounts:
+            debit_allocations = self.compute_salary_allocations(debit)
+            credit_allocations = self.compute_salary_allocations(credit)
+            for ba in self.employee_id.bank_account_ids:
+                subdebit = debit_allocations.get(str(ba.id), 0)
+                subcredit = credit_allocations.get(str(ba.id), 0)
+                line_vals.append({
+                    'name': line.name if line.salary_rule_id.split_move_lines else line.salary_rule_id.name,
+                    'partner_id': partner.id,
+                    'account_id': account.id,
+                    'employee_bank_account_id': ba.id,
+                    'journal_id': line.slip_id.struct_id.journal_id.id,
+                    'date': date,
+                    'debit': subdebit,
+                    'credit': subcredit,
+                    'analytic_distribution': line.salary_rule_id.analytic_distribution or line.slip_id.version_id.analytic_distribution,
+                    'tax_tag_ids': line.debit_tag_ids.ids if account.id == line.salary_rule_id.account_debit.id else line.credit_tag_ids.ids,
+                    'tax_ids': [(4, tax_id) for tax_id in account.tax_ids.ids],
+                })
+            return line_vals
+
+        return [{
             'name': line.name if line.salary_rule_id.split_move_lines else line.salary_rule_id.name,
             'partner_id': partner.id,
-            'account_id': account_id,
+            'account_id': account.id,
             'journal_id': line.slip_id.struct_id.journal_id.id,
             'date': date,
             'debit': debit,
             'credit': credit,
             'analytic_distribution': line.salary_rule_id.analytic_distribution or line.slip_id.version_id.analytic_distribution,
-            'tax_tag_ids': line.debit_tag_ids.ids if account_id == line.salary_rule_id.account_debit.id else line.credit_tag_ids.ids,
-        }
+            'tax_tag_ids': line.debit_tag_ids.ids if account.id == line.salary_rule_id.account_debit.id else line.credit_tag_ids.ids,
+            'tax_ids': [(4, tax_id) for tax_id in account.tax_ids.ids],
+        }]
 
     def _prepare_slip_lines(self, date, line_ids):
         self.ensure_one()
@@ -163,11 +187,11 @@ class HrPayslip(models.Model):
                             amount += abs(tmp_line.total)
             if float_is_zero(amount, precision_digits=precision):
                 continue
-            debit_account_id = line.salary_rule_id.account_debit.id
-            credit_account_id = line.salary_rule_id.account_credit.id
+            debit_account = line.salary_rule_id.account_debit
+            credit_account = line.salary_rule_id.account_credit
             merge_amounts = self.company_id.batch_payroll_move_lines or not line.salary_rule_id.employee_move_line
 
-            if debit_account_id: # If the rule has a debit account.
+            if debit_account.id: # If the rule has a debit account.
                 if self.company_id.account_storno and self.credit_note:
                     debit = amount if amount < 0.0 else 0.0
                     credit = -amount if amount > 0.0 else 0.0
@@ -176,17 +200,16 @@ class HrPayslip(models.Model):
                     credit = -amount if amount < 0.0 else 0.0
 
                 debit_line = merge_amounts and next(self._get_existing_lines(
-                    line_ids + new_lines, line, debit_account_id, debit, credit), False)
+                    line_ids + new_lines, line, debit_account.id, debit, credit), False)
 
                 if not debit_line:
-                    debit_line = self._prepare_line_values(line, debit_account_id, date, debit, credit)
-                    debit_line['tax_ids'] = [(4, tax_id) for tax_id in line.salary_rule_id.account_debit.tax_ids.ids]
-                    new_lines.append(debit_line)
+                    debit_lines = self._prepare_line_values(line, debit_account, date, debit, credit)
+                    new_lines.extend(debit_lines)
                 else:
                     debit_line['debit'] += debit
                     debit_line['credit'] += credit
 
-            if credit_account_id: # If the rule has a credit account.
+            if credit_account.id: # If the rule has a credit account.
                 if self.company_id.account_storno and self.credit_note:
                     debit = -amount if amount > 0.0 else 0.0
                     credit = amount if amount < 0.0 else 0.0
@@ -195,12 +218,11 @@ class HrPayslip(models.Model):
                     credit = amount if amount > 0.0 else 0.0
 
                 credit_line = merge_amounts and next(self._get_existing_lines(
-                    line_ids + new_lines, line, credit_account_id, debit, credit), False)
+                    line_ids + new_lines, line, credit_account.id, debit, credit), False)
 
                 if not credit_line:
-                    credit_line = self._prepare_line_values(line, credit_account_id, date, debit, credit)
-                    credit_line['tax_ids'] = [(4, tax_id) for tax_id in line.salary_rule_id.account_credit.tax_ids.ids]
-                    new_lines.append(credit_line)
+                    credit_lines = self._prepare_line_values(line, credit_account, date, debit, credit)
+                    new_lines.extend(credit_lines)
                 else:
                     credit_line['debit'] += debit
                     credit_line['credit'] += credit
@@ -266,17 +288,18 @@ class HrPayslip(models.Model):
         :return: An action opening the account.payment.register wizard.
         '''
         if any(state == 'paid' for state in self.mapped('state')):
-            raise UserError(_("You can only register payments for unpaid documents."))
+            raise UserError(self.env._("You can only register payments for unpaid documents."))
         if not self.struct_id.rule_ids.filtered(lambda r: r.code == "NET").account_credit.reconcile:
-            raise UserError(_('The credit account on the NET salary rule is not reconciliable'))
-        bank_account = self.employee_id.sudo().bank_account_id
-        if not bank_account.allow_out_payment:
-            raise UserError(_('The employee bank account is untrusted'))
+            raise UserError(self.env._('The credit account on the NET salary rule is not reconciliable'))
+        bank_accounts = self.employee_id.sudo().bank_account_ids
+        if any(not bank.allow_out_payment for bank in bank_accounts):
+            raise UserError(self.env._('An employee bank account is untrusted'))
         if any(m.state != 'posted' for m in self.move_id):
-            raise UserError(_("You can only register payment for posted journal entries."))
+            raise UserError(self.env._("You can only register payment for posted journal entries."))
+
         return self.move_id.line_ids.action_register_payment(
             ctx={"default_partner_id": self.employee_id.work_contact_id.id,
-                 "default_partner_bank_id": bank_account.id,
+                 "default_partner_bank_id": self.employee_id.primary_bank_account_id.id,
                  "default_company_id": self.company_id.id})
 
     def action_open_move(self):

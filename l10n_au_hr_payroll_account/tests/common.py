@@ -2,6 +2,7 @@
 
 from datetime import date
 
+from odoo import Command
 from odoo.tests import tagged, new_test_user
 from odoo.exceptions import ValidationError
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
@@ -81,7 +82,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "company_id": cls.company.id,
             "user_id": cls.employee_user_1.id,
             'work_contact_id': cls.employee_contact_1.id,
-            'bank_account_id': cls.bank_accounts_emp_1[1].id,
+            'bank_account_ids': [Command.link(cls.bank_accounts_emp_1[1].id)],
             "work_phone": "123456789",
             "work_email": "mel@gmail.com",
             "private_phone": "123456789",
@@ -109,7 +110,7 @@ class L10nPayrollAccountCommon(AccountTestInvoicingCommon):
             "resource_calendar_id": cls.resource_calendar.id,
             "company_id": cls.company.id,
             'work_contact_id': cls.employee_contact_2.id,
-            'bank_account_id': cls.bank_accounts_emp_2.id,
+            'bank_account_ids': [Command.link(cls.bank_accounts_emp_2.id)],
             "work_phone": "123456789",
             "private_phone": "123456789",
             "private_email": "harry@odoo.com",

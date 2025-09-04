@@ -164,7 +164,7 @@ if employees_wo_id:
             <field name="color">9</field>
             <field name="evaluation_code">
 employees_wo_bnk_acc = self.env['hr.employee'].search([
-    ('bank_account_id', '=', False),
+    ('bank_account_ids', '=', False),
     ('company_id', 'in', self.env.context.get('allowed_company_ids')),
 ])
 if employees_wo_bnk_acc:
@@ -178,9 +178,8 @@ if employees_wo_bnk_acc:
             <field name="country_id" eval="False"/>
             <field name="color">10</field>
             <field name="evaluation_code">
-employee_bank_data = self.env['hr.employee']._get_account_holder_employees_data()
-untrusted_bank_employee_ids = self.env['hr.employee']._get_untrusted_bank_employee_ids(employee_bank_data)
-untrusted_bank_accounts = (self.env['hr.employee'].browse(untrusted_bank_employee_ids))['bank_account_id']
+untrusted_bank_accounts_ids = self.env['hr.employee']._get_untrusted_bank_account_ids()
+untrusted_bank_accounts = self.env['res.partner.bank'].browse(untrusted_bank_accounts_ids)
 if untrusted_bank_accounts:
     warning_count = len(untrusted_bank_accounts)
     warning_records = untrusted_bank_accounts

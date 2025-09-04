@@ -119,9 +119,9 @@ class HrPayslip(models.Model):
 
             rows.append([
                 self._l10n_sa_format_float(net),
-                employee_id.bank_account_id.acc_number or "",
+                employee_id.primary_bank_account_id.acc_number or "",
                 employee_id.name or "",
-                (employee_id.bank_account_id.bank_id.l10n_sa_sarie_code or "") if employee_id.bank_account_id.bank_id != payslip.company_id.l10n_sa_bank_account_id.bank_id else "",
+                (employee_id.primary_bank_account_id.bank_id.l10n_sa_sarie_code or "") if employee_id.primary_bank_account_id.bank_id != payslip.company_id.l10n_sa_bank_account_id.bank_id else "",
                 employee_id.version_id.l10n_sa_wps_description or "",
                 '',  # [RET-CODE]: Required blank cell
                 self._l10n_sa_format_float(basic),

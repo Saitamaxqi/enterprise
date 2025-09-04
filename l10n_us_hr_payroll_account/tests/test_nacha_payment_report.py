@@ -41,7 +41,7 @@ class TestNacha(CommonTestPayslips):
     def convert_payslip_to_payment(self, payslip):
         return self.env['account.payment'].new({
             "partner_id": payslip.employee_id.work_contact_id.id,
-            "partner_bank_id": payslip.employee_id.bank_account_id.id,
+            "partner_bank_id": payslip.employee_id.primary_bank_account_id.id,
             "amount": payslip.net_wage,
             "date": fields.Date.today(),
         })

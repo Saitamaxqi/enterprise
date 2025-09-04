@@ -143,7 +143,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Universitatea din București</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_ro_hr_payroll.res_partner_bank_account_ionel"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ro_hr_payroll.res_partner_bank_account_ionel'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>
@@ -185,7 +185,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Technical University of Cluj-Napoca</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_ro_hr_payroll.res_partner_bank_account_demetra"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ro_hr_payroll.res_partner_bank_account_demetra'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>

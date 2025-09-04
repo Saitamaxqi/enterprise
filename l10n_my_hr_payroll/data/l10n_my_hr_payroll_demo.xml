@@ -97,7 +97,7 @@
         <field name="parent_id" ref="l10n_my_hr_payroll.hr_employee_kah_yoon_ooi"/>
         <field name="country_id" ref="base.my"/>
         <field name="identification_id">8752027365496</field>
-        <field name="bank_account_id" ref="l10n_my_hr_payroll.res_partner_bank_account_norberta"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_my_hr_payroll.res_partner_bank_account_norberta'))]"/>
         <field name="image_1920" type="base64" file="l10n_my_hr_payroll/static/img/hr_employe_xiu_mei_lee.jpg"/>
         <field name="company_id" ref="base.demo_company_my"/>
         <field name="user_id" ref="l10n_my_hr_payroll.user_xiu_mei_lee"/>

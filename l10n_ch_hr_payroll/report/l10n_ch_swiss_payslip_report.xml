@@ -151,8 +151,20 @@
                 </tbody>
             </table>
             <hr/>
-            <div class="center" id="to_pay_ch" t-if="o.employee_id.bank_account_id">
-                <p t-if="o.net_wage &gt;= 0">To pay on <b><span t-field="o.employee_id.bank_account_id"></span></b></p>
+            <div class="center" id="to_pay_ch" t-if="o.employee_id.bank_account_ids">
+                <t t-if="o.net_wage >= 0">
+                    <t t-set="allocations" t-value="o.compute_salary_allocations()"/>
+                    <p>To pay on:</p>
+                    <ul>
+                        <t t-foreach="o.employee_id.bank_account_ids" t-as="ba">
+                            <li>
+                                <span  class="fw-bold" t-out="ba.display_name"/>
+                                of <span class="fst-italic" t-field="o.employee_id"/>:
+                                <t t-esc="allocations.get(str(ba.id), 0.0)"/>
+                            </li>
+                        </t>
+                    </ul>
+                </t>
             </div>
 
         </div>

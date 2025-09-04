@@ -51,9 +51,7 @@
                         </tr>
                         <tr>
                             <td><strong>Reference</strong></td>
-                            <td><span t-field="o.id"/></td>
-                            <td><strong>Bank Account</strong></td>
-                            <td><span t-field="o.employee_id.bank_account_id"/></td>
+                            <td colspan="3"><span t-field="o.id"/></td>
                         </tr>
                         <tr>
                             <td><strong>Start notice period</strong></td>
@@ -118,6 +116,41 @@
                             </t>
                         </tbody>
                     </table>
+                    <t t-set="net_line" t-value="o.line_ids.filtered(lambda l: l.code == 'NET')[:1]" />
+                    <t t-if="net_line">
+                        <t t-set="allocations" t-value="o.safe_compute_salary_allocations(net_line.total)" />
+                        <t t-if="'__error__' in allocations">
+                            <div class="alert alert-danger mt-3">
+                                <i class="fa fa-exclamation-triangle"/> <strong>Salary allocations could not be computed:</strong>
+                                <span t-out="allocations['__error__']"/>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <table class="table table-sm mt-3">
+                                <tbody>
+                                    <t t-set="line_count" t-value="0" />
+                                    <t t-foreach="o.employee_id.bank_account_ids" t-as="bank">
+                                        <t t-if="str(bank.id) in allocations">
+                                            <tr class="table-secondary">
+                                                <t t-if="line_count == 0">
+                                                    <td width="40%" t-att-rowspan="len(o.employee_id.bank_account_ids)">To Pay On</td>
+                                                </t>
+                                                <td class="text-end">
+                                                    <span t-out="bank.acc_number"/>
+                                                    <t t-if="bank.bank_id"> - <span t-out="bank.bank_id.name"/></t>
+                                                </td>
+                                                <td class="text-end">
+                                                    <span t-out="allocations[str(bank.id)]"
+                                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                        <t t-set="line_count" t-value="line_count+1" />
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                    </t>
                     <div class="oe_structure"></div>
                     <p class="text-end"><strong>Established on <span t-field="o.compute_date"/></strong></p>
                     <p class="text-end"><strong>Authorized signature</strong></p>

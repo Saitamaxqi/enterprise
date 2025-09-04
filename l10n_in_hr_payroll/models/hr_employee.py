@@ -67,8 +67,9 @@ class HrEmployee(models.Model):
         "This ESIC Number already exists",
     )
 
+    # TODO: adapt for multiple bank accounts
     def _get_employees_with_invalid_ifsc(self):
-        return self.filtered(lambda emp: not bool(re.match(r"^[A-Z]{4}0[A-Z0-9]{6}$", emp.bank_account_id.bank_bic or '')))
+        return self.filtered(lambda emp: not bool(re.match(r"^[A-Z]{4}0[A-Z0-9]{6}$", emp.primary_bank_account_id.bank_bic or '')))
 
     @api.model
     def notify_expiring_contract_work_permit(self):

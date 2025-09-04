@@ -125,8 +125,23 @@
                         </tr>
                     </tbody>
                 </table>
-                <p t-if="o.net_wage &gt;= 0">To pay on <b><span t-field="o.employee_id.bank_account_id"/></b> of <i><span t-field="o.employee_id"/></i>: <span t-field="o.net_wage"/></p>
-                <p t-if="o.net_wage &lt; 0">The net amount will be recovered from the first positive remuneration established after this.</p>
+                <t t-if="o.net_wage >= 0">
+                    <t t-set="allocations" t-value="o.compute_salary_allocations()"/>
+                    <p>To pay on:</p>
+                    <ul>
+                        <t t-foreach="o.employee_id.bank_account_ids" t-as="ba">
+                            <li>
+                                <span class="fw-bold" t-out="ba.display_name"/>
+                                of <span class="fst-italic" t-field="o.employee_id"/>:
+                                <t t-esc="allocations.get(str(ba.id), 0.0)"/>
+                            </li>
+                        </t>
+                    </ul>
+                </t>
+                <p t-if="o.net_wage &lt; 0">
+                    The net amount will be recovered from the first positive remuneration established after this.
+                </p>
+
             </div>
         </t>
     </template>

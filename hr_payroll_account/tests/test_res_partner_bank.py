@@ -34,13 +34,13 @@ class TestResPartnerBank(common.TransactionCase):
             partner_bank.partner_id = partner_1
             self.assertTrue(partner_bank.has_alt_bank_account)
             p_bank = partner_bank.save()
-            self.assertNotEqual(res_partner_bank_1, partner_1.employee_ids[0].bank_account_id)
-            self.assertEqual(p_bank, partner_1.employee_ids[0].bank_account_id)
+            self.assertNotIn(res_partner_bank_1, partner_1.employee_ids[0].bank_account_ids)
+            self.assertIn(p_bank, partner_1.employee_ids[0].bank_account_ids)
 
-        self.assertFalse(partner_2.employee_ids[0].bank_account_id)
+        self.assertFalse(partner_2.employee_ids[0].bank_account_ids)
         with Form(partner, view=partner_bank_form) as partner_bank:
             partner_bank.acc_number = '23298957'
             partner_bank.partner_id = partner_2
             self.assertFalse(partner_bank.has_alt_bank_account)
             p_bank = partner_bank.save()
-            self.assertEqual(p_bank, partner_2.employee_ids[0].bank_account_id)
+            self.assertIn(p_bank, partner_2.employee_ids[0].bank_account_ids)

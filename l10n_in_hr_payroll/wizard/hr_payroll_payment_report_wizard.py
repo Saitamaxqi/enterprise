@@ -31,9 +31,10 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         for record in self:
             record.l10n_in_valid_bank_accounts_ids = record.company_id.partner_id.bank_ids
 
+    # TODO: adapt for multiple bank accounts
     def _get_report_data(self, payslip):
         employee = payslip.employee_id
-        bank_account = employee.bank_account_id
+        bank_account = employee.primary_bank_account_id
 
         return {
             'company_name': self.company_id.name or '',
@@ -100,6 +101,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
 
         return self._get_wizard()
 
+    # TODO: adapt for multiple bank accounts
     def generate_payment_report_xls(self):
         self.ensure_one()
         self._perform_checks()

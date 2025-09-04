@@ -49,7 +49,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
                 raise UserError(_("Saudi WPS report can only be printed for KSA companies"))
             payslips = self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0)
             employees = payslips.employee_id
-            invalid_banks_employee_ids = employees.filtered(lambda e: not e.bank_account_id.bank_id.l10n_sa_sarie_code)
+            invalid_banks_employee_ids = employees.filtered(lambda e: not e.primary_bank_account_id.bank_id.l10n_sa_sarie_code)
             if invalid_banks_employee_ids:
                 raise UserError(_(
                     "Missing SARIE code for the bank account for the following employees:\n%s",

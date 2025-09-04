@@ -2,6 +2,7 @@
 
 from datetime import date
 
+from odoo import Command
 from odoo.tests.common import TransactionCase
 from odoo.tests import tagged
 
@@ -92,7 +93,7 @@ class TestPayrollCommon(TransactionCase):
             'bank_id': cls.in_bank.id,
             'allow_out_payment': True,
         })
-        cls.rahul_emp.bank_account_id = cls.res_bank
+        cls.rahul_emp.bank_account_ids = [Command.link(cls.res_bank.id)]
 
         cls.res_bank_1 = cls.Bank.create({
             'acc_number': '3025632343044',
@@ -101,7 +102,7 @@ class TestPayrollCommon(TransactionCase):
             'bank_id': cls.in_bank.id,
             'allow_out_payment': True,
         })
-        cls.jethalal_emp.bank_account_id = cls.res_bank_1
+        cls.jethalal_emp.bank_account_ids = [Command.link(cls.res_bank_1.id)]
 
         cls.contract_rahul = cls.rahul_emp.version_id
         cls.contract_jethalal = cls.jethalal_emp.version_id

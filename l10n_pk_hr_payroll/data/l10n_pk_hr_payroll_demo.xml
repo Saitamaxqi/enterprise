@@ -161,7 +161,7 @@
         <field name="study_field">Digital Communication</field>
         <field name="study_school">Lahore University of Management Sciences (LUMS)</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_pk_hr_payroll.res_partner_bank_account_shahid"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_pk_hr_payroll.res_partner_bank_account_shahid'))]"/>
         <field name="wage_type">monthly</field>
         <field name="wage">250000</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
@@ -203,7 +203,7 @@
         <field name="study_field">Accountancy</field>
         <field name="study_school">National University of Sciences and Technology (NUST)</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_pk_hr_payroll.res_partner_bank_account_shazia"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_pk_hr_payroll.res_partner_bank_account_shazia'))]"/>
         <field name="wage_type">monthly</field>
         <field name="wage">200000</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>

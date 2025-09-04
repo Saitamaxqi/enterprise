@@ -15,31 +15,39 @@ class HrPayslip(models.Model):
 
     def _get_payments_vals(self, journal_id, payment_date=fields.Date.today()):
         self.ensure_one()
-
-        payment_vals = {
-            'id': self.id,
-            'name': str(self.id),
-            'payment_date': payment_date,
-            'amount': self.net_wage,
-            'journal_id': journal_id.id,
-            'currency_id': journal_id.currency_id.id,
-            'payment_type': 'outbound',
-            'memo': str(self.id),
-            'partner_id': self.employee_id.work_contact_id.id,
-            'partner_bank_id': self.employee_id.bank_account_id.id,
-            'iso20022_charge_bearer': journal_id.iso20022_charge_bearer,
-            # The "High" priority level is a payment attribute that we should specify for salary payments :
-            # https://www.febelfin.be/sites/default/files/2019-04/standard-credit_transfer-xml-v32-en_0.pdf
-            # section 2.6
-            'iso20022_priority': 'HIGH',
-        }
+        payments = []
         if journal_id.sepa_pain_version == 'pain.001.001.09':
             if not self.iso20022_uetr:
-                payment_vals['iso20022_uetr'] = self.iso20022_uetr = str(uuid4())
+                iso20022_uetr = self.iso20022_uetr = str(uuid4())
             else:
-                payment_vals['iso20022_uetr'] = self.iso20022_uetr
+                iso20022_uetr = self.iso20022_uetr
+        else:
+            iso20022_uetr = False
 
-        return payment_vals
+        allocations = self.compute_salary_allocations()
+        for ba in self.employee_id.bank_account_ids:
+            amount = allocations[str(ba.id)]
+            payment = {
+                'id': self.id,
+                'name': str(self.id),
+                'payment_date': payment_date,
+                'amount': amount,
+                'journal_id': journal_id.id,
+                'currency_id': journal_id.currency_id.id,
+                'payment_type': 'outbound',
+                'memo': str(self.id),
+                'partner_id': self.employee_id.work_contact_id.id,
+                'partner_bank_id': ba.id,
+                'iso20022_charge_bearer': journal_id.iso20022_charge_bearer,
+                # The "High" priority level is a payment attribute that we should specify for salary payments :
+                # https://www.febelfin.be/sites/default/files/2019-04/standard-credit_transfer-xml-v32-en_0.pdf
+                # section 2.6
+                'iso20022_priority': 'HIGH',
+            }
+            if iso20022_uetr:
+                payment['iso20022_uetr'] = iso20022_uetr
+            payments.append(payment)
+        return payments
 
     def action_payslip_payment_report(self, export_format='sepa'):
         self.ensure_one()

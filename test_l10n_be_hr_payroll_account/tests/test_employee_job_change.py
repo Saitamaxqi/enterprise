@@ -3,7 +3,7 @@
 import datetime
 from freezegun import freeze_time
 
-from odoo import fields
+from odoo import fields, Command
 import odoo.tests
 from . import common
 
@@ -53,7 +53,7 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
             'name': 'Jean Jasse',
             'company_id': cls.company_id.id,
             'country_id': cls.env.ref('base.be').id,
-            'bank_account_id': account.id,
+            'bank_account_ids':  [Command.link(account.id)],
             'sex': 'male',
             'children': 0,
             'km_home_work': 0,

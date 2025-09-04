@@ -152,7 +152,7 @@
         <field name="study_field">Engineering</field>
         <field name="study_school">Abu Dhabi University</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_ae_hr_payroll.res_partner_bank_account_aisha"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ae_hr_payroll.res_partner_bank_account_aisha'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure_type"/>
@@ -193,7 +193,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">American University of Sharjah</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_ae_hr_payroll.res_partner_bank_account_saeed"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ae_hr_payroll.res_partner_bank_account_saeed'))]"/>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_ae_hr_payroll.ae_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_ae"/>

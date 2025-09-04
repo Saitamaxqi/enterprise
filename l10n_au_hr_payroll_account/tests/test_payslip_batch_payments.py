@@ -45,7 +45,7 @@ class TestPayslipRun(L10nPayrollAccountCommon):
         for payment in payments:
             slip = payslip_run.slip_ids.filtered(lambda p: p.employee_id.work_contact_id == payment.partner_id)
             self.assertEqual(payment.amount, slip.line_ids.filtered(lambda x: x.code == 'NET').total)
-            self.assertEqual(payment.partner_bank_id, slip.employee_id.bank_account_id, "The Payment should be made to bank account on the Employee!")
+            self.assertIn(payment.partner_bank_id, slip.employee_id.bank_account_ids, "The Payment should be made to bank account on the Employee!")
 
         payslip_run.l10n_au_payment_batch_id.validate_batch()
         self.assertEqual(payslip_run.l10n_au_payment_batch_id.state, "sent", "Batch Should be in sent state!")
@@ -113,7 +113,7 @@ class TestPayslipRun(L10nPayrollAccountCommon):
         payment = self.env["account.payment"].browse(action_create_payment['res_id'])
         amount = sum(payslip.move_id.line_ids.filtered_domain([("partner_id", "!=", False), ("price_total", ">", 0)]).mapped("price_total"))
         self.assertAlmostEqual(payment.amount, amount, msg='Payment amount is not correct!')
-        self.assertEqual(payment.partner_bank_id, payslip.employee_id.bank_account_id)
+        self.assertIn(payment.partner_bank_id, payslip.employee_id.bank_account_ids)
         self.assertTrue(payment.is_reconciled, 'Payment should be Reconciled!')
 
         stmnt = self.env['account.bank.statement'].create({

@@ -224,7 +224,7 @@
         <field name="marital">single</field>
         <field name="ssnid">20008509461</field>
         <field name="registration_number">001</field>
-        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_cesar"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_mx_hr_payroll.res_partner_bank_account_cesar'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
@@ -273,7 +273,7 @@
         <field name="marital">single</field>
         <field name="ssnid">20804909461</field>
         <field name="registration_number">002</field>
-        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_cecilia"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_mx_hr_payroll.res_partner_bank_account_cecilia'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
@@ -339,7 +339,7 @@
         <field name="marital">single</field>
         <field name="ssnid">20997609461</field>
         <field name="registration_number">003</field>
-        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_xochitl"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_mx_hr_payroll.res_partner_bank_account_xochitl'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
@@ -389,7 +389,7 @@
         <field name="marital">single</field>
         <field name="ssnid">20926709461</field>
         <field name="registration_number">004</field>
-        <field name="bank_account_id" ref="l10n_mx_hr_payroll.res_partner_bank_account_karla"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_mx_hr_payroll.res_partner_bank_account_karla'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_mx_hr_payroll.mx_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>

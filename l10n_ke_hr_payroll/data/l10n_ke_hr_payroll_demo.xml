@@ -151,7 +151,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">University of Nairobi</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_ke_hr_payroll.res_partner_bank_account_ahmed"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ke_hr_payroll.res_partner_bank_account_ahmed'))]"/>
         <field name="l10n_ke_mortgage">19500</field>
         <field name="l10n_ke_kra_pin">0101</field>
         <field name="l10n_ke_nssf_number">230115</field>
@@ -209,7 +209,7 @@
         <field name="study_field">Software Engineering</field>
         <field name="study_school">University of Nairobi</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_ke_hr_payroll.res_partner_bank_account_barack"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_ke_hr_payroll.res_partner_bank_account_barack'))]"/>
         <field name="l10n_ke_mortgage">21000</field>
         <field name="l10n_ke_kra_pin">4321</field>
         <field name="l10n_ke_nssf_number">160465</field>

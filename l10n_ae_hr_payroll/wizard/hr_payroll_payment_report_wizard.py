@@ -31,7 +31,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         if self.export_format == 'l10n_ae_wps':
             payslips = self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0)
             employees = payslips.employee_id
-            invalid_banks_employee_ids = employees.filtered(lambda e: not e.bank_account_id.bank_id.l10n_ae_routing_code)
+            invalid_banks_employee_ids = employees.filtered(lambda e: not e.primary_bank_account_id.bank_id.l10n_ae_routing_code)
             if invalid_banks_employee_ids:
                 raise UserError(_(
                     "Missing UAE routing code for the bank account for the following employees:\n%s",
@@ -65,6 +65,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         csv_data.close()
         return base64.encodebytes(generated_file.encode())
 
+    # TODO: adjust for multiple bank accounts
     def generate_payment_report(self):
         super().generate_payment_report()
         if self.export_format == 'l10n_ae_wps':

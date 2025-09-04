@@ -151,7 +151,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Vilnius University</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_lt_hr_payroll.res_partner_bank_account_linas"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_lt_hr_payroll.res_partner_bank_account_linas'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_lt_hr_payroll.lt_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_lt_hr_payroll.structure_type_employee_lt"/>
@@ -197,7 +197,7 @@
         <field name="study_field">Electrical Engineering</field>
         <field name="study_school">Université Catholique de Louvain-la-Neuve</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_lt_hr_payroll.res_partner_bank_account_norberta"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_lt_hr_payroll.res_partner_bank_account_norberta'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_lt_hr_payroll.lt_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_lt_hr_payroll.structure_type_employee_lt"/>

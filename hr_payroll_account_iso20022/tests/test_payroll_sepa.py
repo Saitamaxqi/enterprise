@@ -4,6 +4,7 @@ import base64
 
 from lxml import etree
 
+from odoo import Command
 from odoo.addons.hr_payroll_account.tests.test_hr_payroll_account import TestHrPayrollAccountCommon
 from odoo.tests.common import test_xsd
 from odoo.tests import tagged
@@ -37,7 +38,7 @@ class TestPayrollSEPACreditTransferCommon(TestHrPayrollAccountCommon):
             'partner_id': cls.company_us.partner_id.id,
         })
 
-        cls.hr_employee_john.bank_account_id = cls.res_partner_bank
+        cls.hr_employee_john.bank_account_ids = [Command.link(cls.res_partner_bank.id)]
 
         cls.bank_journal = cls.env['account.journal'].create({
             'name': 'Bank',

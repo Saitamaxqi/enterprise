@@ -160,7 +160,7 @@
         <field name="structure_type_id" ref="structure_type_employee_eg"/>
         <field name="l10n_eg_housing_allowance">1000</field>
         <field name="l10n_eg_other_allowances">1000</field>
-        <field name="bank_account_id" ref="l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_abeer"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_abeer'))]"/>
         <field name="structure_type_id" ref="l10n_eg_hr_payroll.structure_type_employee_eg"/>
     </record>
 
@@ -205,7 +205,7 @@
         <field name="structure_type_id" ref="structure_type_employee_eg"/>
         <field name="l10n_eg_housing_allowance">1000</field>
         <field name="l10n_eg_other_allowances">1000</field>
-        <field name="bank_account_id" ref="l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_hany"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_eg_hr_payroll.l10n_eg_res_partner_bank_account_hany'))]"/>
         <field name="structure_type_id" ref="l10n_eg_hr_payroll.structure_type_employee_eg"/>
     </record>
 

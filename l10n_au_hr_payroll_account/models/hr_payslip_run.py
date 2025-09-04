@@ -46,7 +46,7 @@ class HrPayslipRun(models.Model):
         if not self.slip_ids.struct_id.rule_ids.filtered(lambda r: r.code == "NET").account_credit.reconcile:
             raise UserError(_('The credit account on the NET salary rule is not reconciliable'))
 
-        faulty_bank_accounts = self.slip_ids.employee_id.sudo().bank_account_id.filtered(lambda b: not b.allow_out_payment)
+        faulty_bank_accounts = self.slip_ids.employee_id.sudo().bank_account_ids.filtered(lambda b: not b.allow_out_payment)
         if faulty_bank_accounts:
             raise RedirectWarning(
                 message=_('Bank account(s) for the following employee(s) are not allowed for outgoing payments!\n%s',

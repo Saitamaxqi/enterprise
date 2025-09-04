@@ -33,7 +33,8 @@ class AccountBatchPayment(models.Model):
                 'payments_data': [{
                     'name': str(payslip.id),
                     'amount': payslip.net_wage,
-                    'bank_account': payslip.employee_id.bank_account_id,
+                    # TODO: adapt to multiple bank accounts
+                    'bank_account': payslip.employee_id.primary_bank_account_id,
                     'account_holder': payslip.employee_id,
                     'transaction_code': "53",  # PAYROLL
                     'reference': str(payslip.id),

@@ -76,13 +76,24 @@
     <td id="payslip_line_quantity" position="replace"/>
     <td id="payslip_line_rate" position="replace"/>
 
-    <xpath expr="//p[@id='to_pay_line']" position="replace">
-        <span>
-            Deposited to the account
-            <b>
-                <span t-out="('X' * (len(o.employee_id.bank_account_id.acc_number)-4) + o.employee_id.bank_account_id.acc_number[-4:]) if o.employee_id.bank_account_id else 'xxxxxxxxxxxx'"/>
-            </b> of <i><span t-field="o.employee_id.legal_name"/></i>: <span t-field="o.net_wage" class="fw-bold"/>
-        </span>
+    <xpath expr="//div[@id='to_pay']" position="replace">
+        <div id="to_pay">
+            <t t-if="o.net_wage >= 0">
+                <t t-set="allocations" t-value="o.compute_salary_allocations()"/>
+                <t t-foreach="allocations.items()" t-as="alloc">
+                    <t t-set="bank" t-value="o.employee_id.bank_account_ids.filtered(lambda b: str(b.id) == alloc[0])[0]"/>
+                    <p>
+                        Deposited to the account
+                        <span class="fw-bold" t-out="('X' * (len(bank.acc_number) - 4) + bank.acc_number[-4:]) if bank.acc_number else 'xxxxxxxxxxxx'"/>
+                        of <span class="fst-italic" t-field="o.employee_id.legal_name"/>:
+                        <span t-esc="alloc[1]" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class="fw-bold"/>
+                    </p>
+                </t>
+            </t>
+            <p t-if="o.net_wage &lt; 0">
+                The net amount will be recovered from the first positive remuneration established after this.
+            </p>
+        </div>
     </xpath>
 
 </template>
@@ -144,13 +155,27 @@
         </div>
     </xpath>
 
-    <xpath expr="//p[@id='to_pay_line']" position="replace">
-        <span>
-            Deposited to the account
-            <b>
-                <span t-out="('X' * (len(o.employee_id.bank_account_id.acc_number)-4) + o.employee_id.bank_account_id.acc_number[-4:]) if o.employee_id.bank_account_id else 'xxxxxxxxxxxx'"/>
-            </b> of <i><span t-field="o.employee_id.legal_name"/></i>: <span t-field="o.net_wage" class="fw-bold"/>
-        </span>
+
+    <xpath expr="//div[@id='to_pay']" position="replace">
+        <div id="to_pay">
+            <t t-if="o.net_wage >= 0">
+                <t t-set="allocations" t-value="o.compute_salary_allocations()"/>
+                <t t-foreach="allocations.items()" t-as="alloc">
+                    <t t-set="bank" t-value="o.employee_id.bank_account_ids.filtered(lambda b: str(b.id) == alloc[0])[0]"/>
+                    <p>
+                        Deposited to the account
+                        <b>
+                            <span t-out="('X' * (len(bank.acc_number) - 4) + bank.acc_number[-4:]) if bank.acc_number else 'xxxxxxxxxxxx'"/>
+                        </b>
+                        of <i><span t-field="o.employee_id.legal_name"/></i>:
+                        <span t-esc="alloc[1]" t-options='{"widget": "monetary", "display_currency": o.currency_id}' class="fw-bold"/>
+                    </p>
+                </t>
+            </t>
+            <p t-if="o.net_wage &lt; 0">
+                The net amount will be recovered from the first positive remuneration established after this.
+            </p>
+        </div>
     </xpath>
 
 </template>

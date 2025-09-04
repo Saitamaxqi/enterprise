@@ -150,7 +150,7 @@
         <field name="study_field">Physics</field>
         <field name="study_school">The University of Hong Kong</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_hk_hr_payroll.res_partner_bank_account_anthony"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_hk_hr_payroll.res_partner_bank_account_anthony'))]"/>
         <field name="l10n_hk_surname">Choi</field>
         <field name="l10n_hk_given_name">Anthony</field>
         <field name="structure_type_id" ref="structure_type_employee_cap57"/>
@@ -195,7 +195,7 @@
         <field name="study_field">Computer Engineering</field>
         <field name="study_school">The University of Hong Kong</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_hk_hr_payroll.res_partner_bank_account_natalie"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_hk_hr_payroll.res_partner_bank_account_natalie'))]"/>
         <field name="l10n_hk_surname">Chan</field>
         <field name="l10n_hk_given_name">Natalie</field>
         <field name="job_id" ref="hr.job_consultant"/>

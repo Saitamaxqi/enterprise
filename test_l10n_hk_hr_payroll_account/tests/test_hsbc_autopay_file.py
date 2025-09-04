@@ -5,6 +5,7 @@ import re
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
+from odoo import Command
 from odoo.tests import tagged
 
 from .common import TestL10NHkHrPayrollAccountCommon
@@ -66,7 +67,7 @@ class TestHsbcAutoFile(TestL10NHkHrPayrollAccountCommon):
         cls.employee.write({
             'name': "Test Employee",
             'work_contact_id': cls.address_home.id,
-            'bank_account_id': cls.bank_account.id,
+            'bank_account_ids':  [Command.link(cls.bank_account.id)],
             'resource_calendar_id': cls.company.resource_calendar_id.id,
             'company_id': cls.env.company.id,
             'l10n_hk_autopay_account_type': 'bban',

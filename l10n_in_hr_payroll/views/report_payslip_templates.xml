@@ -37,7 +37,7 @@
                 </div>
                 <div id="employee_bank_account">
                     <strong class="me-2">Bank Account No:</strong>
-                    <span t-field="o.employee_id.bank_account_id.acc_number"/>
+                    <span t-field="o.employee_id.primary_bank_account_id.acc_number"/>
                 </div>
             </td>
         </td>

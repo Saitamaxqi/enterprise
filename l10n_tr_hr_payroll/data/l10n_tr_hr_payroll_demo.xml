@@ -149,7 +149,7 @@
         <field name="study_field">Digital Communication</field>
         <field name="study_school">Boğaziçi University </field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_tr_hr_payroll.res_partner_bank_account_deniz"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_tr_hr_payroll.res_partner_bank_account_deniz'))]"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_marketing"/>
         <field name="company_id" ref="base.demo_company_tr"/>
         <field name="wage_type">monthly</field>
@@ -193,7 +193,7 @@
         <field name="study_field">Accountancy</field>
         <field name="study_school">Middle East Technical University (METU)</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_tr_hr_payroll.res_partner_bank_account_narin"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_tr_hr_payroll.res_partner_bank_account_narin'))]"/>
         <field name="department_id" ref="l10n_tr_hr_payroll.tr_hr_department_accounting"/>
         <field name="company_id" ref="base.demo_company_tr"/>
         <field name="wage_type">monthly</field>

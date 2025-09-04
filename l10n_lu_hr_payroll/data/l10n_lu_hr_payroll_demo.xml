@@ -175,7 +175,7 @@
         <field name="study_field">Mechanical Engineering</field>
         <field name="study_school">University of Luxembourg</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_tom"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_lu_hr_payroll.res_partner_bank_account_tom'))]"/>
         <field name="l10n_lu_deduction_fd_daily">8.58</field>
         <field name="l10n_lu_deduction_ac_ae_daily">7.26</field>
         <field name="l10n_lu_tax_id_number">24961437</field>
@@ -226,7 +226,7 @@
         <field name="study_field">Computer Programming</field>
         <field name="study_school">University of Luxembourg</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_frida"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_lu_hr_payroll.res_partner_bank_account_frida'))]"/>
         <field name="l10n_lu_deduction_fd_daily">8.58</field>
         <field name="l10n_lu_deduction_ac_ae_daily">7.26</field>
         <field name="l10n_lu_tax_id_number">29489284</field>
@@ -285,7 +285,7 @@
         <field name="study_field">Chef</field>
         <field name="study_school">EHTL</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_lu_hr_payroll.res_partner_bank_account_simone"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_lu_hr_payroll.res_partner_bank_account_simone'))]"/>
         <field name="l10n_lu_tax_id_number">35135122</field>
         <field name="l10n_lu_tax_credit_cip">True</field>
         <field name="job_id" ref="hr.job_consultant"/>

@@ -21,3 +21,4 @@ from . import test_ytd
 from . import test_rule_category
 from . import test_domain_condition_rules
 from . import test_payroll_properties
+from . import test_payslip_allocations

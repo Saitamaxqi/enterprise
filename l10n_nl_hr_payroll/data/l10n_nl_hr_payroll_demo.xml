@@ -143,7 +143,7 @@
         <field name="study_field">Mechanical Engineering</field>
         <field name="study_school">TU Delft</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_nl_hr_payroll.res_partner_bank_account_wouter"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_nl_hr_payroll.res_partner_bank_account_wouter'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_nl_hr_payroll.nl_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_nl_hr_payroll.structure_type_employee_nl"/>
@@ -186,7 +186,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Utrecht University</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_nl_hr_payroll.res_partner_bank_account_lotte"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_nl_hr_payroll.res_partner_bank_account_lotte'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_nl_hr_payroll.nl_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_nl_hr_payroll.structure_type_employee_nl"/>

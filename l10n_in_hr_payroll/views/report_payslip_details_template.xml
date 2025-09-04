@@ -61,9 +61,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="1"><strong>Designation</strong></td>
-                                            <td colspan="2">: <span t-field="o.employee_id.job_title"/></td>
-                                            <td colspan="1"><strong class="me-2">Bank Account No.</strong></td>
-                                            <td colspan="2">: <span t-field="o.employee_id.bank_account_id.acc_number"/></td>
+                                            <td colspan="5">: <span t-field="o.employee_id.job_title"/></td>
                                         </tr>
                                         <tr>
                                             <td colspan="1"><strong>Date of Joining</strong></td>
@@ -248,6 +246,38 @@
                         </tr>
                     </tbody>
                 </table>
+                <t t-set="allocations" t-value="o.safe_compute_salary_allocations(o.net_wage)" />
+                <t t-if="'__error__' in allocations">
+                    <div class="alert alert-danger mt-3">
+                        <i class="fa fa-exclamation-triangle"/> <strong>Salary allocations could not be computed:</strong>
+                        <span t-out="allocations['__error__']"/>
+                    </div>
+                </t>
+                <t t-else="">
+                    <table class="table table-sm mt-3">
+                        <tbody>
+                            <t t-set="line_count" t-value="0" />
+                            <t t-foreach="o.employee_id.bank_account_ids" t-as="bank">
+                                <t t-if="str(bank.id) in allocations">
+                                    <tr class="table-secondary">
+                                        <t t-if="line_count == 0">
+                                            <td width="40%" t-att-rowspan="len(o.employee_id.bank_account_ids)">To Pay On</td>
+                                        </t>
+                                        <td class="text-end">
+                                            <span t-out="bank.acc_number"/>
+                                            <t t-if="bank.bank_id"> - <span t-out="bank.bank_id.name"/></t>
+                                        </td>
+                                        <td class="text-end">
+                                            <span t-out="allocations[str(bank.id)]"
+                                                t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </t>
+                                <t t-set="line_count" t-value="line_count+1" />
+                            </t>
+                        </tbody>
+                    </table>
+                </t>
                 <p class="text-center m-0">This is a system generated payslip, hence the signature is not required.</p>
                 <p class="text-center m-0">Made by Odoo with ❤️</p>
             </div>

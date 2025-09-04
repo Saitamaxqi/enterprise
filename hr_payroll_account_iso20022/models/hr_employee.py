@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, _
+from odoo import models
 from odoo.exceptions import ValidationError
 from odoo.addons.base_iban.models.res_partner_bank import validate_iban
 
@@ -18,18 +18,6 @@ def _is_iban_valid(iban):
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
-
-    is_trusted_bank_account = fields.Boolean(related="bank_account_id.allow_out_payment", groups="hr.group_hr_user")
-
-    def action_trust_bank_accounts(self):
-        if not self.env.user.has_group('hr_payroll.group_hr_payroll_user'):
-            raise ValidationError(_('You do not have the right to trust or un-trust a bank account.'))
-        self.sudo().bank_account_id.allow_out_payment = True
-
-    def action_untrust_bank_accounts(self):
-        if not self.env.user.has_group('hr_payroll.group_hr_payroll_user'):
-            raise ValidationError(_('You do not have the right to trust or un-trust a bank account.'))
-        self.sudo().bank_account_id.allow_out_payment = False
 
     def _get_invalid_iban_employee_ids(self, employees_data=False):
         if not employees_data:

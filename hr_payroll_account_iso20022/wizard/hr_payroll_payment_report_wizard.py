@@ -16,7 +16,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         # Map the necessary data
         payments_data = []
         for slip in self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0):
-            payments_data.append(slip._get_payments_vals(self.journal_id, self.effective_date))
+            payments_data.extend(slip._get_payments_vals(self.journal_id, self.effective_date))
         payment_method_code = self.env.context.get('payment_method') or 'sepa_ct'
 
         # Generate XML File

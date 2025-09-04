@@ -120,8 +120,8 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         bank = payment.partner_bank_id
         if not bank.clearing_number:
             raise ValidationError(
-                _(
-                    "Please set an ABA routing number on the %(account)s bank account for %(partner)s.",
+                self.env._(
+                    "Please set a Clearing Number on the %(account)s bank account for %(partner)s.",
                     account=bank.display_name,
                     partner=payment.partner_id.display_name,
                 )
@@ -131,13 +131,18 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         payments = self.env['account.payment']
         # Only payslips with state == "validated" and net_wage > 0 will be used to generate the report
         for payslip in self.payslip_ids.filtered(lambda p: p.state == "validated" and p.net_wage > 0):
-            payment = self.env["account.payment"].new({
-                    "partner_id": payslip.employee_id.work_contact_id.id,
-                    "partner_bank_id": payslip.employee_id.bank_account_id.id,
-                    "amount": payslip.net_wage,
+            employee = payslip.employee_id
+            allocations = payslip.compute_salary_allocations()
+            for ba in payslip.employee_id.bank_account_ids:
+                amount = allocations[str(ba.id)]
+                payment = self.env["account.payment"].new({
+                    "partner_id": employee.work_contact_id.id,
+                    "partner_bank_id": ba.id,
+                    "amount": amount,
                     "date": self.effective_date,
-            })
-            payments |= payment
+                })
+                payments |= payment
+
         return payments
 
     def _get_blocking_factor(self):

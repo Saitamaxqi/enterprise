@@ -376,20 +376,21 @@ class HrPayslip(models.Model):
             raise UserError(self.env._("Only support generating the HSBC autopay report for one company."))
         currencies = self.mapped('currency_id')
         if len(currencies) > 1:
-            raise UserError(self.env._("Only support generating the HSBC autopay report for one currency"))
-        invalid_employees = self.mapped('employee_id').filtered(lambda e: not e.bank_account_id)
+            raise UserError(_("Only support generating the HSBC autopay report for one currency"))
+        invalid_employees = self.mapped('employee_id').filtered(lambda e: not e.bank_account_ids)
         if invalid_employees:
             raise UserError(self.env._("Some employees (%s) don't have a bank account.", ','.join(invalid_employees.mapped('name'))))
         invalid_employees = self.mapped('employee_id').filtered(lambda e: not e.l10n_hk_autopay_account_type)
         if invalid_employees:
             raise UserError(self.env._("Some employees (%s) haven't set the autopay type.", ','.join(invalid_employees.mapped('name'))))
-        invalid_banks = self.employee_id.bank_account_id.mapped('bank_id').filtered(lambda b: not b.l10n_hk_bank_code)
+        invalid_banks = self.employee_id.bank_account_ids.mapped('bank_id').filtered(lambda b: not b.l10n_hk_bank_code)
         if invalid_banks:
             raise UserError(self.env._("Some banks (%s) don't have a bank code", ','.join(invalid_banks.mapped('name'))))
+        # TODO: adapt for multiple bank accounts
         invalid_bank_accounts = self.mapped('employee_id').filtered(
-            lambda e: e.l10n_hk_autopay_account_type in ['bban', 'hkid'] and not e.bank_account_id.acc_holder_name)
+            lambda e: e.l10n_hk_autopay_account_type in ['bban', 'hkid'] and not e.primary_bank_account_id.acc_holder_name)
         if invalid_bank_accounts:
-            raise UserError(self.env._("Some bank accounts (%s) don't have a bank account name.", ','.join(invalid_bank_accounts.mapped('bank_account_id.acc_number'))))
+            raise UserError(self.env._("Some bank accounts (%s) don't have a bank account name.", ','.join(invalid_bank_accounts.mapped('primary_bank_account_id.acc_number'))))
         rule_code = {'first': 'MEA', 'second': 'SBA'}[batch_type]
         payslips = self.filtered(lambda p: p.struct_id.code == 'CAP57MONTHLY' and p.line_ids.filtered(lambda line: line.code == rule_code))
         if not payslips:
@@ -420,13 +421,13 @@ class HrPayslip(models.Model):
             bank_code = ''
             if employee.l10n_hk_autopay_account_type == 'bban':
                 # The bank code is only expected when the autopay type is set to bban
-                bank_code = employee.bank_account_id.bank_id.l10n_hk_bank_code
+                bank_code = employee.primary_bank_account_id.bank_id.l10n_hk_bank_code
 
             # The identifier used depends on the employee autopay type
             identifier = ''
             match employee.l10n_hk_autopay_account_type:
                 case "bban":
-                    identifier = re.sub(r"[^0-9]", "", employee.bank_account_id.acc_number)
+                    identifier = re.sub(r"[^0-9]", "", employee.primary_bank_account_id.acc_number)
                 case "svid":
                     identifier = employee.l10n_hk_autopay_svid
                 case "emal":
@@ -444,7 +445,7 @@ class HrPayslip(models.Model):
                 'identifier': re.sub(r'[^a-zA-Z0-9]', '', employee.identification_id or ''),
                 'bank_code': bank_code,
                 'autopay_field': identifier,
-                'bank_account_name': employee.bank_account_id.acc_holder_name or '',
+                'bank_account_name': employee.primary_bank_account_id.acc_holder_name or '',
             })
 
         apc_doc = payslips._generate_hsbc_autopay(header_data, payments_data)

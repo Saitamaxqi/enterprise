@@ -137,7 +137,7 @@
         <field name="study_field">Frontend developer</field>
         <field name="study_school">Univerzita Komenského</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_sk_hr_payroll.res_partner_bank_account_richard"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_sk_hr_payroll.res_partner_bank_account_richard'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_sk"/>
@@ -179,7 +179,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Comenius University Bratislava</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_sk_hr_payroll.res_partner_bank_account_frantiska"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_sk_hr_payroll.res_partner_bank_account_frantiska'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_sk_hr_payroll.sk_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_sk_hr_payroll.structure_type_employee_sk"/>

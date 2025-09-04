@@ -735,7 +735,7 @@
         <field name="private_state_id" ref="base.state_us_39"/>
         <field name="private_phone">+1 555-555-5555</field>
         <field name="private_email">admin@yourcompany.example.com</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_admin"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_admin'))]"/>
         <field name="sex">male</field>
         <field name="certificate">civil_engineer</field>
         <field name="sdworx_code">0000001</field>
@@ -787,7 +787,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_al"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_al'))]"/>
         <field name="sex">female</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000002</field>
@@ -843,7 +843,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_mit"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_mit"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_mit'))]"/>
         <field name="sex">female</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000003</field>
@@ -898,7 +898,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_niv"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_niv"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_niv'))]"/>
         <field name="sex">female</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000004</field>
@@ -957,7 +957,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_stw"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_stw"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_stw'))]"/>
         <field name="sex">male</field>
         <field name="certificate">doctor</field>
         <field name="sdworx_code">0000005</field>
@@ -1013,7 +1013,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_chs"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_chs"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_chs'))]"/>
         <field name="sex">male</field>
         <field name="certificate">doctor</field>
         <field name="sdworx_code">0000006</field>
@@ -1070,7 +1070,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_qdp"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_qdp"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_qdp'))]"/>
         <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000007</field>
@@ -1122,7 +1122,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_fme"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_fme'))]"/>
         <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000008</field>
@@ -1178,7 +1178,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_fpi"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_fpi"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_fpi'))]"/>
         <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000009</field>
@@ -1234,7 +1234,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jth"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jth"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_jth'))]"/>
         <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000010</field>
@@ -1290,7 +1290,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_ngh"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_ngh"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_ngh'))]"/>
         <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000011</field>
@@ -1332,7 +1332,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_vad"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_vad"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_vad'))]"/>
         <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000012</field>
@@ -1386,7 +1386,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_han"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_han"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_han'))]"/>
         <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000013</field>
@@ -1442,7 +1442,7 @@
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
         <field name="work_contact_id" ref="test_l10n_be_hr_payroll_account.res_partner_employee_jve"/>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jve"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_jve'))]"/>
         <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000014</field>
@@ -1495,7 +1495,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jep"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_jep'))]"/>
         <field name="sex">male</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000015</field>
@@ -1535,7 +1535,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jod"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_jod'))]"/>
         <field name="sex">female</field>
         <field name="certificate">bachelor</field>
         <field name="sdworx_code">0000016</field>
@@ -1575,7 +1575,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jog"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_jog'))]"/>
         <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000017</field>
@@ -1615,7 +1615,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_jgo"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_jgo'))]"/>
         <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000018</field>
@@ -1655,7 +1655,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_lur"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_lur'))]"/>
         <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000019</field>
@@ -1695,7 +1695,7 @@
         <field name="private_street">Brussels Street</field>
         <field name="private_city">Brussels</field>
         <field name="private_zip">2928</field>
-        <field name="bank_account_id" ref="test_l10n_be_hr_payroll_account.res_partner_bank_employee_hne"/>
+        <field name="bank_account_ids" eval="[(4, ref('test_l10n_be_hr_payroll_account.res_partner_bank_employee_hne'))]"/>
         <field name="sex">male</field>
         <field name="certificate">master</field>
         <field name="sdworx_code">0000020</field>
@@ -2032,7 +2032,7 @@
         <field name="resource_calendar_id" ref="resource.resource_calendar_std_38h"/>
         <field name="identification_id">90-09-05-874-51</field>
         <field name="niss">91111111192</field>
-        <field name="bank_account_id" ref="res_partner_bank_account_joseph_noluck"/>
+        <field name="bank_account_ids" eval="[(4, ref('res_partner_bank_account_joseph_noluck'))]"/>
         <field name="image_1920" type="base64" file="test_l10n_be_hr_payroll_account/static/img/employee_jon-image.jpg"/>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="sex">male</field>
@@ -2558,7 +2558,7 @@
         <field name="resource_calendar_id" ref="test_l10n_be_hr_payroll_account.resource_calendar_1_5_monday_student"/>
         <field name="identification_id">02-02-02-085-37</field>
         <field name="niss">02020208537</field>
-        <field name="bank_account_id" ref="res_partner_bank_account_clemence_student"/>
+        <field name="bank_account_ids" eval="[(4, ref('res_partner_bank_account_clemence_student'))]"/>
         <field name="image_1920" type="base64" file="test_l10n_be_hr_payroll_account/static/img/employee_student-image.jpg"/>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="sdworx_code">0000022</field>

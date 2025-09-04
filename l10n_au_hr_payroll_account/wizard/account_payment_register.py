@@ -61,14 +61,14 @@ class AccountPaymentRegister(models.TransientModel):
         # Batch payment defaults to empoyee bank account
         if self.env.context.get("hr_payroll_payment_register_batch"):
             if "partner_bank_id" not in res:
-                res['partner_bank_id'] = batch['lines'].move_id.payslip_ids.employee_id.bank_account_id.id
+                res['partner_bank_id'] = batch['lines'].move_id.payslip_ids.employee_id.primary_bank_account_id.id
         return res
 
     def _compute_trust_values(self):
         super()._compute_trust_values()
         if self.env.context.get("hr_payroll_payment_register_batch"):
             self.missing_account_employees = self.line_ids.move_id.payslip_ids.employee_id\
-                .filtered(lambda e: not e.sudo().bank_account_id)
+                .filtered(lambda e: not e.sudo().bank_account_ids)
             self.missing_account_partners = False
 
     def action_open_missing_account_employees(self):

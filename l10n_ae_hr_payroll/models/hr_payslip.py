@@ -38,8 +38,8 @@ class HrPayslip(models.Model):
             rows.append([
                 "EDR",
                 (employee.identification_id or '').zfill(14),
-                employee.bank_account_id.bank_id.l10n_ae_routing_code or '',
-                employee.bank_account_id.acc_number or '',
+                employee.primary_bank_account_id.bank_id.l10n_ae_routing_code or '',
+                employee.primary_bank_account_id.acc_number or '',
                 payslip.date_from.strftime('%Y-%m-%d'),
                 payslip.date_to.strftime('%Y-%m-%d'),
                 (payslip.date_to - payslip.date_from).days + 1,
@@ -52,7 +52,7 @@ class HrPayslip(models.Model):
                 rows.append([
                     "EVP",
                     (employee.identification_id or '').zfill(14),
-                    employee.bank_account_id.bank_id.l10n_ae_routing_code or '',
+                    employee.primary_bank_account_id.bank_id.l10n_ae_routing_code or '',
                     *map(self._l10n_ae_get_wps_formatted_amount, evp_inputs)
                 ])
 

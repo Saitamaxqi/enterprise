@@ -143,7 +143,7 @@
         <field name="study_school">Bangladesh University of Engineering and Technology</field>
         <field name="marital">single</field>
         <field name="l10n_bd_gazetted_war_founded_freedom_fighter">False</field>
-        <field name="bank_account_id" ref="l10n_bd_hr_payroll.res_partner_bank_account_rahmat"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_bd_hr_payroll.res_partner_bank_account_rahmat'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_bd_hr_payroll.bd_hr_department_rd"/>
         <field name="company_id" ref="base.demo_company_bd"/>
@@ -186,7 +186,7 @@
         <field name="study_school">Bangladesh University of Engineering and Technology</field>
         <field name="marital">single</field>
         <field name="l10n_bd_gazetted_war_founded_freedom_fighter">False</field>
-        <field name="bank_account_id" ref="l10n_bd_hr_payroll.res_partner_bank_account_tarek"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_bd_hr_payroll.res_partner_bank_account_tarek'))]"/>
         <field name="job_id" ref="hr.job_consultant"/>
         <field name="department_id" ref="l10n_bd_hr_payroll.bd_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_bd_hr_payroll.structure_type_employee_bd"/>

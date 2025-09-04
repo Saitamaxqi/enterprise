@@ -3,6 +3,8 @@
 import base64
 
 from datetime import date
+
+from odoo import Command
 from odoo.tests import tagged
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -58,7 +60,7 @@ class TestSEPAFile(AccountTestInvoicingCommon):
         cls.employee = cls.env['hr.employee'].sudo().create({
             'name': "Test Employee",
             'work_contact_id': cls.address_home.id,
-            'bank_account_id': cls.bank_account.id,
+            'bank_account_ids': [Command.link(cls.bank_account.id)],
             'resource_calendar_id': cls.company.resource_calendar_id.id,
             'company_id': cls.env.company.id,
             'distance_home_work': 75,
@@ -80,7 +82,7 @@ class TestSEPAFile(AccountTestInvoicingCommon):
             'company_id': self.company.id,
         })
 
-        self.employee.action_trust_bank_accounts()
+        self.employee.action_toggle_primary_bank_account_trust()
 
         payslip_run.generate_payslips(employee_ids=[self.employee.id])
         payslip_run.action_validate()

@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+from odoo import Command
 from odoo.tests import tagged, Form
 from odoo.exceptions import UserError
 
@@ -28,13 +28,12 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
             'account_credit': cls.credit_account.id,
             'struct_id': cls.hr_structure_softwaredeveloper.id,
         })
-
-        cls.hr_employee_john.bank_account_id = cls.env['res.partner.bank'].create([{
+        john_bank_account = cls.env['res.partner.bank'].create([{
             'acc_number': '0144748555',
             'partner_id': cls.hr_employee_john.work_contact_id.id,
             'allow_out_payment': True,
         }])
-
+        cls.hr_employee_john.bank_account_ids = [Command.link(john_bank_account.id)]
         cls.hr_payslip_john.action_refresh_from_work_entries()
 
     def test_payment_hr_payslip(self):
@@ -63,11 +62,10 @@ class TestHrPayrollPayment(TestHrPayrollAccountCommon):
         wizard = Form.from_action(self.env, action_register_payment)
         self.assertEqual(wizard.partner_id, self.hr_employee_john.work_contact_id, 'Partner is not correct!')
         self.assertEqual(wizard.amount, self.hr_payslip_john.move_id.amount_total, 'Amount is not correct!')
-        self.assertEqual(wizard.partner_bank_id, self.hr_employee_john.bank_account_id, 'Bank account is not correct!')
         action_create_payment = wizard.save().action_create_payments()
         payment = self.env[action_create_payment['res_model']].browse(action_create_payment['res_id'])
         self.assertAlmostEqual(payment.amount, self.hr_payslip_john.move_id.amount_total, 'Payment amount is not correct!')
-        self.assertEqual(payment.partner_bank_id, self.hr_employee_john.bank_account_id)
+        self.assertEqual(payment.partner_bank_id, self.hr_employee_john.bank_account_ids)
 
     def test_hr_payslip_payment_reverse(self):
         payslip = self.hr_payslip_john

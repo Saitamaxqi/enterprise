@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields
+from odoo import fields, Command
 from odoo.tests import TransactionCase
 
 
@@ -19,7 +19,7 @@ class CommonTestPayslips(TransactionCase):
                 "clearing_number": "123456780",
                 'allow_out_payment': True,
             })
-            employee_id.bank_account_id = bank_account.id
+            employee_id.bank_account_ids = [Command.link(bank_account.id)]
             return employee_id
 
         def create_contract(contract_name, wage, start, employee):

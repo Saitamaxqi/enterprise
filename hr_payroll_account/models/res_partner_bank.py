@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import api, fields, models
+from odoo import api, fields, models, Command
 
 
 class ResPartnerBank(models.Model):
@@ -30,4 +30,4 @@ class ResPartnerBank(models.Model):
 
     def _set_bank_account(self):
         for partner_bank in self:
-            partner_bank.partner_id.employee_ids.write({'bank_account_id': partner_bank.id})
+            partner_bank.partner_id.employee_ids.write({'bank_account_ids': [Command.link(partner_bank.id)]})

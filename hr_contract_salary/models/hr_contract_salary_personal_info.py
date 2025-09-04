@@ -80,7 +80,7 @@ class HrContractSalaryPersonalInfo(models.Model):
             elif info.applies_on == 'version_personal':
                 info_value = version[info.field]
             else:
-                info_value = version.employee_id.bank_account_id[info.field]
+                info_value = version.employee_id.primary_bank_account_id[info.field]
             if info.value_ids:
                 value = info.value_ids.filtered(lambda v: v.value == info_value)
                 return value.hide_children

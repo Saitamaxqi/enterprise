@@ -142,7 +142,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">University of Warsaw</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_pl_hr_payroll.res_partner_bank_account_blazej"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_pl_hr_payroll.res_partner_bank_account_blazej'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_pl_hr_payroll.pl_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_pl_hr_payroll.structure_type_employee_pl"/>
@@ -184,7 +184,7 @@
         <field name="study_field">Computer Science</field>
         <field name="study_school">Wroclaw University of Science and Technology</field>
         <field name="marital">single</field>
-        <field name="bank_account_id" ref="l10n_pl_hr_payroll.res_partner_bank_account_antonina"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_pl_hr_payroll.res_partner_bank_account_antonina'))]"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_pl_hr_payroll.pl_hr_department_rd"/>
         <field name="structure_type_id" ref="l10n_pl_hr_payroll.structure_type_employee_pl"/>

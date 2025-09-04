@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date
-
+from odoo import Command
 from odoo.addons.hr_payroll.tests.common import TestPayslipBase
 
 
@@ -17,7 +17,7 @@ class TestHrPayslipPaymentReport(TestPayslipBase):
             'acc_type': 'bank',
             'allow_out_payment': True,
         })
-        cls.richard_emp.bank_account_id = cls.partner_bank_account
+        cls.richard_emp.bank_account_ids = [Command.link(cls.partner_bank_account.id)]
         cls.payslip = cls.env['hr.payslip'].create({
             'name': 'Test Payslip',
             'employee_id': cls.richard_emp.id,

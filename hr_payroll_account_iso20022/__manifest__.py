@@ -6,7 +6,6 @@
     'version': '1.0',
     'depends': ['hr_payroll_account', 'account_iso20022'],
     'data': [
-        'views/hr_employee_views.xml',
         'views/hr_payslip_views.xml',
         'views/hr_payslip_run_views.xml',
         'data/hr_payroll_dashboard_warning_data.xml',

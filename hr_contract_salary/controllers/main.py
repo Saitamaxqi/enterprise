@@ -310,7 +310,7 @@ class HrContractSalary(http.Controller):
         targets = {
             'version_personal': version,
             'employee': version.employee_id,
-            'bank_account': version.employee_id.bank_account_id,
+            'bank_account': version.employee_id.primary_bank_account_id,
         }
 
         # PERSONAL INFOS
@@ -588,7 +588,7 @@ class HrContractSalary(http.Controller):
             else:
                 bank_account = request.env['res.partner.bank'].sudo().create(bank_account_vals)
 
-            employee_vals['bank_account_id'] = bank_account.id
+            employee_vals['bank_account_ids'] = [Command.link(bank_account.id)]
 
         employee_vals['work_contact_id'] = partner.id
 
@@ -879,7 +879,7 @@ class HrContractSalary(http.Controller):
                 field_value = version.employee_id[info.field]
             if info.applies_on == 'bank_account':
                 field_label = field_names['res.partner.bank'][info.field]
-                field_value = version.employee_id.bank_account_id[info.field]
+                field_value = version.employee_id.primary_bank_account_id[info.field]
             if info.applies_on == 'version_personal':
                 field_label = field_names['hr.version'][info.field]
                 field_value = version[info.field]

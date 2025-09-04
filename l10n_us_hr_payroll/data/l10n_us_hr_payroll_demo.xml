@@ -168,7 +168,7 @@
         <field name="date_version" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
         <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('l10n_us.demo_company_us').id)], limit=1)"/>
-        <field name="bank_account_id" ref="l10n_us_hr_payroll.res_partner_bank_account_troy"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_us_hr_payroll.res_partner_bank_account_troy'))]"/>
     </record>
 
     <record id="hr_employee_maggie" model="hr.employee">
@@ -217,7 +217,7 @@
         <field name="contract_date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
         <field name="contract_date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('l10n_us.demo_company_us').id)], limit=1)"/>
-        <field name="bank_account_id" ref="l10n_us_hr_payroll.res_partner_bank_account_maggie"/>
+        <field name="bank_account_ids" eval="[(4, ref('l10n_us_hr_payroll.res_partner_bank_account_maggie'))]"/>
     </record>
 
     <function name="create_version" model="hr.employee">

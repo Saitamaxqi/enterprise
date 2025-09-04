@@ -103,20 +103,39 @@ class HrEmployee(models.Model):
             SELECT emp.id,
                    acc.acc_number,
                    acc.allow_out_payment
-              FROM hr_employee emp
+             FROM  hr_employee emp
+         LEFT JOIN employee_bank_account_rel rel
+                ON rel.employee_id=emp.id
          LEFT JOIN res_partner_bank acc
-                ON acc.id=emp.bank_account_id
+                ON acc.id=rel.bank_account_id
+              JOIN hr_version ver
+                ON ver.employee_id=emp.id
              WHERE emp.company_id IN %s
-               AND emp.active=TRUE
-               AND emp.bank_account_id is not NULL
+             AND emp.active = TRUE
         ''', (tuple(self.env.companies.ids),))
 
         return self.env.cr.dictfetchall()
 
-    def _get_untrusted_bank_employee_ids(self, employees_data=False):
-        if not employees_data:
-            employees_data = self._get_account_holder_employees_data()
-        return [employee['id'] for employee in employees_data if not employee['allow_out_payment']]
+    @api.model
+    def _get_untrusted_bank_account_ids(self):
+        """Return a list of bank account IDs linked to employees that are not marked for out payment."""
+        if (not self.browse().has_access('read') or
+                not self.env['res.partner.bank'].has_access('read')):
+            return []
+
+        self.env.cr.execute('''
+            SELECT acc.id
+            FROM res_partner_bank acc
+            JOIN employee_bank_account_rel rel
+                ON rel.bank_account_id = acc.id
+            JOIN hr_employee emp
+                ON emp.id = rel.employee_id
+            WHERE acc.allow_out_payment = FALSE
+            AND emp.company_id IN %s
+            AND emp.active = TRUE
+        ''', (tuple(self.env.companies.ids),))
+        # Return ids of untrusted bank accounts.
+        return [row[0] for row in self.env.cr.fetchall()]
 
     def action_configure_employee_inputs(self):
         self.ensure_one()
