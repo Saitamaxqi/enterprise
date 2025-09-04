@@ -101,7 +101,7 @@ class HrVersion(models.Model):
     l10n_in_pf_employee_type = fields.Selection(selection=_l10n_in_get_pf_selection, default='fixed',
         groups="hr_payroll.group_hr_payroll_user")
     l10n_in_gratuity_percentage = fields.Float(string='Gratuity Percentage', groups="hr_payroll.group_hr_payroll_user",
-        compute="_compute_l10n_in_gratuity_percentage", store=True, readonly=False,
+        compute="_compute_l10n_in_gratuity_percentage", store=True, readonly=False, digits=(16, 4),
         help='Percentage(%) to calculate gratuity amount.')
     l10n_in_gratuity = fields.Monetary(string='Gratuity', compute="_compute_l10n_in_gratuity",
         groups="hr_payroll.group_hr_payroll_user", readonly=False, store=True, tracking=True,

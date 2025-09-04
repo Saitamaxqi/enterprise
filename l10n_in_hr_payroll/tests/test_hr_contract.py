@@ -124,5 +124,5 @@ class TestHrContract(TestPayrollCommon):
             msg="PF employee amount should be 12% of updated basic salary")
         self.assertAlmostEqual(version.l10n_in_pf_employer_amount, 2640,
             msg="PF employer amount should be 12% of updated basic salary")
-        self.assertAlmostEqual(version.l10n_in_gratuity_percentage, 0.048090909090909094,
+        self.assertAlmostEqual(version.l10n_in_gratuity_percentage, 0.0481,
             msg="Gratuity should be 4.81% of updated basic salary")
