@@ -216,6 +216,8 @@ class WhatsappComposer(models.TransientModel):
 
     def action_send_whatsapp_template(self):
         self.ensure_one()
+        if not self.wa_template_id:
+            raise ValidationError(_("Please select a WhatsApp Template to send."))
         return self._send_whatsapp_template()
 
     def _create_whatsapp_messages(self, force_create=False):

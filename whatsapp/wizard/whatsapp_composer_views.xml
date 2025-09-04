@@ -29,6 +29,7 @@
                         <field name="is_button_dynamic" invisible="1"/>
                         <field name="batch_mode" invisible="1"/>
                         <field name="wa_template_id"
+                            required="1"
                             options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"
                             domain="[('model', '=', res_model), ('status', '=', 'approved'), ('template_type', 'in', context.get('template_types', ['authentication', 'marketing', 'utility']))]"/>
                         <field name="phone" invisible="batch_mode" required="not batch_mode"/>
