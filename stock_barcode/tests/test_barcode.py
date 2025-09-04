@@ -283,7 +283,7 @@ class TestBarcodeClientAction(HttpCase):
         self.assertEqual(action['action']['context']['search_default_lot_id'], lot.id)
 
     def test_filter_on_packaging_barcode(self):
-        self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
+        self.env.user.write({'group_ids': [Command.link(self.env.ref('uom.group_uom').id)]})
         magic_beer = self.env['product.product'].create({
             'name': 'White Beer',
             'barcode': '01304510',
