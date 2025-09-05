@@ -1,68 +1,23 @@
 <odoo>
     <!--anniversary coupon campaign-->
     <template id="mailing_anniversary_arch">
-   <div class="o_layout oe_unremovable oe_unmovable o_empty_theme bg-o-color-3" data-name="Mailing"><style id="design-element">.o_mail_wrapper a.btn.btn-link {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper a:not(.btn) {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper li &gt; * {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper li {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper p &gt; * {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper p {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper h3 {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper h2 {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper h1 {
-color:rgb(17, 24, 39);
-}
-.o_mail_wrapper h1 :not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper h1:not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper h2 :not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper h2:not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper li :not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper li:not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper p :not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper p:not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper h3 :not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
-}
-.o_mail_wrapper h3:not(.fa) {
-font-family:Georgia, Times, "Times New Roman", serif !important;
+   <div class="o_layout oe_unremovable oe_unmovable o_empty_theme bg-o-color-3" data-name="Mailing"><style id="design-element">
+.o_layout .o_mail_wrapper .o_mail_wrapper_td {
+  --link-color: rgb(17, 24, 39);
+  --text-color: rgb(17, 24, 39);
+  --h1-color: rgb(17, 24, 39);
+  --h2-color: rgb(17, 24, 39);
+  --h3-color: rgb(17, 24, 39);
+  --text-font-family: Georgia, Times, "Times New Roman", serif !important;
+  --h1-font-family: Georgia, Times, "Times New Roman", serif !important;
+  --h2-font-family: Georgia, Times, "Times New Roman", serif !important;
+  --h3-font-family: Georgia, Times, "Times New Roman", serif !important;
 }
 </style>
 <div class="container o_mail_wrapper oe_unremovable o_mail_small">
     <div class="row">
         <div class="col o_mail_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selection_done">
-            <div class="s_picture o_mail_snippet_general o_cc o_cc2 pt16 pb16" style="padding-left: 15px; padding-right: 15px;" data-snippet="s_picture" data-name="Picture">
+            <section class="s_picture o_mail_snippet_general o_cc o_cc2 pt16 pb16" style="padding-left: 15px; padding-right: 15px;" data-snippet="s_picture" data-name="Picture">
                 <div class="container s_allow_columns" style="text-align: center;">
                     <p><br/></p>
                     <img
@@ -73,12 +28,12 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
                         loading=""
                     />
                 </div>
-            </div>
-            <div class="s_mail_text_highlight o_mail_snippet_general o_cc o_cc3 w-100 bg-o-color-4 pb0 pt8" data-snippet="s_text_highlight" data-name="Text Highlight">
+            </section>
+            <section class="s_mail_text_highlight o_mail_snippet_general o_cc o_cc3 w-100 bg-o-color-4 pb0 pt8" data-snippet="s_text_highlight" data-name="Text Highlight">
                 <div class="container s_allow_columns" style="text-align: center;">
                 <h2><span style="font-size: 3.5rem;">Happy Non-birthday!</span></h2>
                 <h3><span style="font-size: 1rem;">You've been with us for a whole year—thank you for being here! 🎈</span></h3>
-                <p style="margin-bottom: 0px;">To celebrate, here’s a little something for you.</p>
+                <p style="margin-bottom: 0px;">To celebrate, here's a little something for you.</p>
                 <p class="o_default_snippet_text" style="text-align: center;">
                     <span style="font-weight: bolder; color: inherit; font-size: 0.857143rem;">BUY YOURSELF A GIFT</span><span style="font-size: 0.857143rem;">&#xA0;!</span><br />
                 </p>
@@ -99,14 +54,14 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
                     <a class="o_default_snippet_text btn btn-secondary" href="#" role="button" target="_blank">Redeem coupon now</a>
                 </p>
                 </div>
-            </div>
-            <div class="s_mail_blockquote blockquote o_mail_snippet_general o_cc o_cc2 pt16 pb16 mb-0 w-100" data-snippet="s_blockquote" data-name="Blockquote">
+            </section>
+            <section class="s_mail_blockquote blockquote o_mail_snippet_general o_cc o_cc2 pt16 pb16 mb-0 w-100" data-snippet="s_blockquote" data-name="Blockquote">
                 <div class="container" style="text-align: center;">
                     <div class="row">
-                        <div class="col-lg-1" style="text-align: left;">
+                        <div class="col-md-1" style="text-align: left;">
                             <i class="fa fa-quote-left"></i>
                         </div>
-                        <div class="col-lg-10">
+                        <div class="col-md-10">
                             <div>
                                 <p><i>Cheers to more great years ahead!</i><br /></p>
                                 <div>
@@ -129,16 +84,16 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-1" style="text-align: right;">
+                        <div class="col-md-1" style="text-align: right;">
                             <i class="fa fa-quote-right"></i>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general bg-o-color-3 pt0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
+            </section>
+            <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general bg-o-color-3 pt0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg o_mail_footer_social" style="text-align: center;">
+                        <div class="col-md o_mail_footer_social" style="text-align: center;">
                             <a aria-label="Facebook" title="Facebook" href="https://www.facebook.com/Odoo">
                                 <span class="fa fa-facebook"></span>
                             </a>
@@ -161,20 +116,20 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg o_mail_footer_links" style="text-align: center;">
+                        <div class="col-md o_mail_footer_links" style="text-align: center;">
                             <a role="button" href="/unsubscribe_from_list" class="btn btn-link">Unsubscribe</a>
                             | <a role="button" href="/contactus" class="btn btn-link">Contact</a>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg">
+                        <div class="col-md">
                             <p style="text-align: center;">
                                 © 2024 All Rights Reserved
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 </div>
@@ -185,82 +140,21 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
     <template id="mailing_purchase_followup_arch">
 <div class="o_layout oe_unremovable oe_unmovable bg-200 o_newsletter_theme" style="background-color: rgb(255, 255, 255) !important" data-name="Mailing">
   <style id="design-element">
-    .o_mail_wrapper h1 {
-        color:rgb(206, 0, 0);
-        font-size:54px;
-        }
-        .o_mail_wrapper h2 {
-        font-weight:bolder;
-        }
-        .o_mail_wrapper h3 {
-        font-size:16px;
-        font-weight:bolder;
-        }
-        .o_mail_wrapper p {
-        font-size:16px;
-        }
-        .o_mail_wrapper p &gt; * {
-        font-size:16px;
-        }
-        .o_mail_wrapper li {
-        font-size:16px;
-        }
-        .o_mail_wrapper li &gt; * {
-        font-size:16px;
-        }
-        .o_mail_wrapper a:not(.btn) {
-        text-decoration-line:underline;
-        color:rgb(33, 37, 41);
-        }
-        .o_mail_wrapper a.btn.btn-link {
-        text-decoration-line:underline;
-        color:rgb(33, 37, 41);
-        }
-        .o_mail_wrapper a.btn.btn-primary {
-        background-color:rgb(206, 0, 0);
-        border-top-color:rgb(206, 0, 0);
-        border-right-color:rgb(206, 0, 0);
-        border-bottom-color:rgb(206, 0, 0);
-        border-left-color:rgb(206, 0, 0);
-        }
-        .o_mail_wrapper a.btn.btn-outline-primary {
-        background-color:rgb(206, 0, 0);
-        border-top-color:rgb(206, 0, 0);
-        border-right-color:rgb(206, 0, 0);
-        border-bottom-color:rgb(206, 0, 0);
-        border-left-color:rgb(206, 0, 0);
-        }
-        .o_mail_wrapper a.btn.btn-fill-primary {
-        background-color:rgb(206, 0, 0);
-        border-top-color:rgb(206, 0, 0);
-        border-right-color:rgb(206, 0, 0);
-        border-bottom-color:rgb(206, 0, 0);
-        border-left-color:rgb(206, 0, 0);
-        }
-        .o_mail_wrapper a.btn.btn-secondary {
-        color:rgb(206, 0, 0);
-        background-color:rgb(255, 255, 255);
-        border-top-color:rgb(206, 0, 0);
-        border-right-color:rgb(206, 0, 0);
-        border-bottom-color:rgb(206, 0, 0);
-        border-left-color:rgb(206, 0, 0);
-        }
-        .o_mail_wrapper a.btn.btn-outline-secondary {
-        color:rgb(206, 0, 0);
-        background-color:rgb(255, 255, 255);
-        border-top-color:rgb(206, 0, 0);
-        border-right-color:rgb(206, 0, 0);
-        border-bottom-color:rgb(206, 0, 0);
-        border-left-color:rgb(206, 0, 0);
-        }
-        .o_mail_wrapper a.btn.btn-fill-secondary {
-        color:rgb(206, 0, 0);
-        background-color:rgb(255, 255, 255);
-        border-top-color:rgb(206, 0, 0);
-        border-right-color:rgb(206, 0, 0);
-        border-bottom-color:rgb(206, 0, 0);
-        border-left-color:rgb(206, 0, 0);
-        }
+    .o_layout .o_mail_wrapper .o_mail_wrapper_td {
+      --h1-color: rgb(206, 0, 0);
+      --h1-font-size: 54px;
+      --h2-font-weight: bolder;
+      --h3-font-size: 16px;
+      --h3-font-weight: bolder;
+      --text-font-size: 16px;
+      --link-text-decoration-line: underline;
+      --link-color: rgb(33, 37, 41);
+      --btn-primary-background-color: rgb(206, 0, 0);
+      --btn-primary-border-color: rgb(206, 0, 0);
+      --btn-secondary-color: rgb(206, 0, 0);
+      --btn-secondary-background-color: rgb(255, 255, 255);
+      --btn-secondary-border-color: rgb(206, 0, 0);
+    }
   </style>
   <div class="container o_mail_wrapper oe_unremovable o_mail_regular">
     <div class="row">
@@ -269,21 +163,21 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
           <a href="/view" target="_blank">View Online</a> -
           <span style="color: rgb(183, 191, 199); font-size: 12.25px">September 10 2024</span>
         </div>
-        <div class="s_title o_mail_snippet_general pt24 pb24" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 255, 255) !important">
+        <section class="s_title o_mail_snippet_general pt24 pb24" data-snippet="s_title" data-name="Title" style="background-color: rgb(255, 255, 255) !important">
           <div class="container s_allow_columns">
             <h1 style="text-align: center">
               <font style="color: rgb(0, 0, 255)">How's everything going?</font>
             </h1>
           </div>
-        </div>
-        <div class="s_title o_mail_snippet_general px-3 pb0 pt0" data-snippet="s_title" data-name="Title">
+        </section>
+        <section class="s_title o_mail_snippet_general px-3 pb0 pt0" data-snippet="s_title" data-name="Title">
           <div class="container s_allow_columns">
             <h2>
               <span style="font-size: 1.28571rem">Hey <t t-out='name_dynamic_expression'/>! It's been a few days since your purchase. We hope you like&#xA0;it!</span>
             </h2>
           </div>
-        </div>
-        <div class="s_text_block o_mail_snippet_general px-3 pt16 pb24" data-snippet="s_text_block" data-name="Text">
+        </section>
+        <section class="s_text_block o_mail_snippet_general px-3 pt16 pb24" data-snippet="s_text_block" data-name="Text">
           <div class="container s_allow_columns">
             <p>Thank you again for choosing us!</p>
             <p>
@@ -293,16 +187,16 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               have.&#xA0;
             </p>
           </div>
-        </div>
-        <div class="s_cover o_mail_snippet_general" data-snippet="s_cover" data-name="Cover">
+        </section>
+        <section class="s_cover o_mail_snippet_general" data-snippet="s_cover" data-name="Cover">
           <img src="/web_editor/shape/marketing_automation_website_sale/purchase_followup/wavybuddies-support-call-center-customer-ecommerce-retail-order-question-simple.svg?c2=%238595A2&amp;c4=%23FFFFFF&amp;c1=%230000FF&amp;unique=a237383d" class="img-fluid w-100 mx-auto img o_we_custom_image" data-mimetype="image/svg+xml" style="width: 50% !important"/>
-        </div>
-        <div class="s_title o_mail_snippet_general px-3 pb0 pt0" data-snippet="s_title" data-name="Title">
+        </section>
+        <section class="s_title o_mail_snippet_general px-3 pb0 pt0" data-snippet="s_title" data-name="Title">
           <div class="container s_allow_columns">
             <h3>Need anything?</h3>
           </div>
-        </div>
-        <div class="s_text_block o_mail_snippet_general px-3 pt16 pb24" data-snippet="s_text_block" data-name="Text">
+        </section>
+        <section class="s_text_block o_mail_snippet_general px-3 pt16 pb24" data-snippet="s_text_block" data-name="Text">
           <div class="container s_allow_columns">
             <p>
               If you need a hand or have any questions, please don't hesitate to
@@ -313,10 +207,10 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
             <p>Cheers,</p>
             <p>John Doe, from all of us at MyCompany</p>
           </div>
-        </div>
-        <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general o_cc o_cc1 pt0 pb0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
+        </section>
+        <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general o_cc o_cc1 pt0 pb0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
           <div class="container">
-            <div class="col-lg-12 o_mail_footer_social pt0 pb0" style="text-align: center">
+            <div class="col-md-12 o_mail_footer_social pt0 pb0" style="text-align: center">
               <a aria-label="Facebook" class="text-white" target="_blank" href="https://www.facebook.com/Odoo" data-original-title="Facebook" rel="noreferrer">
                 <img class="img-fluid o_we_custom_image" src="/mass_mailing_themes/static/src/img/theme_newsletter/social-facebook.png" data-mimetype="image/png" style="width: 30px" width="30" loading=""/>
               </a>&#xA0;&#xA0;
@@ -328,11 +222,11 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               </a>
             </div>
           </div>
-        </div>
-        <div class="s_hr o_mail_snippet_general pt16 pb16" data-snippet="s_hr" data-name="Separator">
+        </section>
+        <section class="s_hr o_mail_snippet_general pt16 pb16" data-snippet="s_hr" data-name="Separator">
           <hr class="s_hr_1px s_hr_solid" style="border-top-color: rgb(108, 117, 125) !important"/>
-        </div>
-        <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general o_cc o_cc1 pt0 pb0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
+        </section>
+        <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general o_cc o_cc1 pt0 pb0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
           <div class="container" style="text-align: center; color: rgb(183, 191, 199) !important">
             <span style="font-size: 12px">
               <font style="color: rgb(183, 191, 199)">8000 Marina Blvd, Suite 300</font></span>
@@ -352,7 +246,7 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               </a>
               <span style="font-size: 12px"><font style="color: rgb(183, 191, 199)">.</font></span>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
@@ -363,85 +257,46 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
     <template id="mailing_repeat_customer_new_arrivals_arch">
 <div class="o_layout oe_unremovable oe_unmovable bg-200 o_bignews_theme" data-name="Mailing">
   <style id="design-element">
-    .o_mail_wrapper h1 {
-    font-size:36px;
-    font-weight:bolder;
-    font-style:italic;
-    color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper h2 {
-    font-size:14px;
-    font-weight:bolder;
-    }
-    .o_mail_wrapper h3 {
-    font-size:18px;
-    font-weight:bolder;
-    }
-    .o_mail_wrapper p {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper p &gt; * {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper li {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper li &gt; * {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper a:not(.btn) {
-    color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-link {
-    color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-primary {
-    background-color:rgb(186, 0, 19);
-    border-top-color:rgb(186, 0, 19);
-    border-right-color:rgb(186, 0, 19);
-    border-bottom-color:rgb(186, 0, 19);
-    border-left-color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-outline-primary {
-    background-color:rgb(186, 0, 19);
-    border-top-color:rgb(186, 0, 19);
-    border-right-color:rgb(186, 0, 19);
-    border-bottom-color:rgb(186, 0, 19);
-    border-left-color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-fill-primary {
-    background-color:rgb(186, 0, 19);
-    border-top-color:rgb(186, 0, 19);
-    border-right-color:rgb(186, 0, 19);
-    border-bottom-color:rgb(186, 0, 19);
-    border-left-color:rgb(186, 0, 19);
+    .o_layout .o_mail_wrapper .o_mail_wrapper_td {
+      --h1-font-size:36px;
+      --h1-font-weight:bolder;
+      --h1-font-style:italic;
+      --h1-color:rgb(186, 0, 19);
+      --h2-font-size:14px;
+      --h2-font-weight:bolder;
+      --h3-font-size:18px;
+      --h3-font-weight:bolder;
+      --text-color:rgb(108, 117, 125);
+      --link-color:rgb(186, 0, 19);
+      --btn-primary-background-color:rgb(186, 0, 19);
+      --btn-primary-border-color:rgb(186, 0, 19);
     }
   </style>
   <div class="container o_mail_wrapper o_mail_regular oe_unremovable">
     <div class="row">
       <div class="col o_mail_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selection_done">
-        <div class="s_header_logo o_mail_block_header_logo o_mail_snippet_general pt16 pb16 bg-200" data-snippet="s_mail_block_header_logo" data-name="Header Logo">
+        <section class="s_header_logo o_mail_block_header_logo o_mail_snippet_general pt16 pb16 bg-200" data-snippet="s_mail_block_header_logo" data-name="Header Logo">
           <div class="container">
             <div class="row">
-              <div class="col-lg-4">​</div>
-              <div class="col-lg-4 pt16 pb16" style="text-align: center">
+              <div class="col-md-4">​</div>
+              <div class="col-md-4 pt16 pb16" style="text-align: center">
                 <a style="text-decoration: none" href="http://www.example.com">
                   <img src="/logo" width="70" style="height: auto; max-width: 100%; width: 70px" class="img-fluid" loading=""/>
                 </a>
               </div>
-              <div class="col-lg-4" style="text-align: right">​</div>
+              <div class="col-md-4" style="text-align: right">​</div>
             </div>
           </div>
-        </div>
-        <div class="s_title o_mail_snippet_general pt32 pb16" data-snippet="s_title" data-name="Title">
+        </section>
+        <section class="s_title o_mail_snippet_general pt32 pb16" data-snippet="s_title" data-name="Title">
           <div class="container s_allow_columns">
             <h1 style="text-align: center">CHECK OUT OUR LATEST ARRIVALS</h1>
           </div>
-        </div>
-        <div class="s_cover o_mail_snippet_general pt0" data-snippet="s_cover" data-name="Cover">
+        </section>
+        <section class="s_cover o_mail_snippet_general pt0" data-snippet="s_cover" data-name="Cover">
           <img src="/web_editor/shape/marketing_automation_website_sale/repeat_customer/product-tour.svg?c1=%23FF0000&amp;unique=08e60e72" class="img-fluid w-100 mx-auto img o_we_custom_image" style="padding: 15px; width: 50% !important" data-mimetype="image/svg+xml"/>
-        </div>
-        <div class="s_text_block o_mail_snippet_general pt32 pb32" data-snippet="s_text_block" data-name="Text" style="padding-left: 15px; padding-right: 15px">
+        </section>
+        <section class="s_text_block o_mail_snippet_general pt32 pb32" data-snippet="s_text_block" data-name="Text" style="padding-left: 15px; padding-right: 15px">
           <div class="container s_allow_columns">
             <p>&#xA0;🌟 Exciting News Alert! 🌟</p>
             <p>
@@ -457,11 +312,11 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               <a role="button" href="/shop" class="btn btn-primary"><strong>VISIT STORE</strong></a>&#xA0;<br/>
             </p>
           </div>
-        </div>
-        <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general bg-200 pt16 pb16" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
+        </section>
+        <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general bg-200 pt16 pb16" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
           <div class="container">
             <div class="row">
-              <div class="col-lg-12" style="text-align: center">
+              <div class="col-md-12" style="text-align: center">
                 <a aria-label="Facebook" title="Facebook" href="https://www.facebook.com/Odoo">
                   <span class="fa fa-facebook" style="color: rgb(186, 0, 19) !important"></span>
                 </a>&#xA0;&#xA0;
@@ -480,17 +335,17 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-12 o_mail_footer_links pt8 pb8" style="text-align: center">
+              <div class="col-md-12 o_mail_footer_links pt8 pb8" style="text-align: center">
                 <a role="button" href="/unsubscribe_from_list" class="btn btn-link">Unsubscribe</a>
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-md-12">
                 <p style="text-align: center">© 2024 All Rights Reserved</p>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
@@ -500,84 +355,48 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
     <template id="mailing_repeat_customer_new_purchase_arch">
 <div class="o_layout oe_unremovable oe_unmovable bg-200 o_bignews_theme" data-name="Mailing">
   <style id="design-element">
-    .o_mail_wrapper h1 {
-    font-size:36px;
-    font-weight:bolder;
-    font-style:italic;
-    color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper h2 {
-    font-size:14px;
-    font-weight:bolder;
-    }
-    .o_mail_wrapper h3 {
-    font-size:18px;
-    font-weight:bolder;
-    }
-    .o_mail_wrapper p {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper p &gt; * {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper li {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper li &gt; * {
-    color:rgb(108, 117, 125);
-    }
-    .o_mail_wrapper a:not(.btn) {
-    color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-link {
-    color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-primary {
-    background-color:rgb(186, 0, 19);
-    border-top-color:rgb(186, 0, 19);
-    border-right-color:rgb(186, 0, 19);
-    border-bottom-color:rgb(186, 0, 19);
-    border-left-color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-outline-primary {
-    background-color:rgb(186, 0, 19);
-    border-top-color:rgb(186, 0, 19);
-    border-right-color:rgb(186, 0, 19);
-    border-bottom-color:rgb(186, 0, 19);
-    border-left-color:rgb(186, 0, 19);
-    }
-    .o_mail_wrapper a.btn.btn-fill-primary {
-    background-color:rgb(186, 0, 19);
-    border-top-color:rgb(186, 0, 19);
-    border-right-color:rgb(186, 0, 19);
-    border-bottom-color:rgb(186, 0, 19);
-    border-left-color:rgb(186, 0, 19);
+    .o_layout .o_mail_wrapper .o_mail_wrapper_td {
+      --h1-font-size:36px;
+      --h1-font-weight:bolder;
+      --h1-font-style:italic;
+      --h1-color:rgb(186, 0, 19);
+      --h2-font-size:14px;
+      --h2-font-weight:bolder;
+      --h3-font-size:18px;
+      --h3-font-weight:bolder;
+      --text-color:rgb(108, 117, 125);
+      --link-color:rgb(186, 0, 19);
+      --btn-primary-background-color:rgb(186, 0, 19);
+      --btn-primary-border-top-color:rgb(186, 0, 19);
+      --btn-primary-border-right-color:rgb(186, 0, 19);
+      --btn-primary-border-bottom-color:rgb(186, 0, 19);
+      --btn-primary-border-left-color:rgb(186, 0, 19);
     }
   </style>
   <div class="container o_mail_wrapper o_mail_regular oe_unremovable">
     <div class="row">
       <div class="col o_mail_no_options o_mail_wrapper_td bg-white oe_structure o_editable theme_selection_done">
-        <div class="s_header_logo o_mail_block_header_logo o_mail_snippet_general pt16 pb16 bg-200" data-snippet="s_mail_block_header_logo" data-name="Header Logo">
+        <section class="s_header_logo o_mail_block_header_logo o_mail_snippet_general pt16 pb16 bg-200" data-snippet="s_mail_block_header_logo" data-name="Header Logo">
           <div class="container">
             <div class="row">
-              <div class="col-lg-4">​</div>
-              <div class="col-lg-4 pt16 pb16" style="text-align: center">
+              <div class="col-md-4">​</div>
+              <div class="col-md-4 pt16 pb16" style="text-align: center">
                 <a style="text-decoration: none" href="http://www.example.com">
                   <img src="/logo" width="70" style="height: auto; max-width: 100%; width: 70px" class="img-fluid" loading=""/>
                 </a>
               </div>
-              <div class="col-lg-4" style="text-align: right">​</div>
+              <div class="col-md-4" style="text-align: right">​</div>
             </div>
           </div>
-        </div>
-        <div class="s_title o_mail_snippet_general pt32 pb16" data-snippet="s_title" data-name="Title">
+        </section>
+        <section class="s_title o_mail_snippet_general pt32 pb16" data-snippet="s_title" data-name="Title">
           <div class="container s_allow_columns">
             <h1 style="text-align: center">
               <font style="color: rgb(255, 0, 0)">THANK YOU FOR CHOOSING US</font>
             </h1>
           </div>
-        </div>
-        <div class="s_picture o_mail_snippet_general o_cc o_cc2 bg-o-color-4 pt4 pb4" style="padding-left: 15px; padding-right: 15px" data-snippet="s_picture" data-name="Picture">
+        </section>
+        <section class="s_picture o_mail_snippet_general o_cc o_cc2 bg-o-color-4 pt4 pb4" style="padding-left: 15px; padding-right: 15px" data-snippet="s_picture" data-name="Picture">
           <div class="container s_allow_columns">
             <h2 style="text-align: center">&#xA0;<br /></h2>
             <img src="/web_editor/shape/marketing_automation_website_sale/repeat_customer/celebration.svg?c1=%23FF0000&amp;unique=7403313f" class="mx-auto d-block mw-100 img img-fluid o_we_custom_image" style="padding: 10px; width: 50% !important" data-mimetype="image/svg+xml"/>
@@ -585,8 +404,8 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               <span style="font-size: 1.07143rem">THANKS FOR YOUR PURCHASE</span>
             </h2>
           </div>
-        </div>
-        <div class="s_text_block o_mail_snippet_general pt4 pb4" style="padding-left: 15px; padding-right: 15px" data-snippet="s_text_block" data-name="Text">
+        </section>
+        <section class="s_text_block o_mail_snippet_general pt4 pb4" style="padding-left: 15px; padding-right: 15px" data-snippet="s_text_block" data-name="Text">
           <div class="container s_allow_columns">
             <p>
               We’re absolutely thrilled to welcome you to the MyCompany family.
@@ -597,8 +416,8 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               at MyCompany.&#xA0;
             </p>
           </div>
-        </div>
-        <div class="s_picture o_mail_snippet_general o_cc o_cc2 pt0 bg-o-color-4 pb8" style="padding-left: 15px; padding-right: 15px" data-snippet="s_picture" data-name="Picture">
+        </section>
+        <section class="s_picture o_mail_snippet_general o_cc o_cc2 pt0 bg-o-color-4 pb8" style="padding-left: 15px; padding-right: 15px" data-snippet="s_picture" data-name="Picture">
           <div class="container s_allow_columns">
             <p><br/></p>
             <img
@@ -612,8 +431,8 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               <font style="font-size: 12px">​</font><br/>
             </h2>
           </div>
-        </div>
-        <div class="s_text_block o_mail_snippet_general pb32 pt0" data-snippet="s_text_block" data-name="Text" style="padding-left: 15px; padding-right: 15px">
+        </section>
+        <section class="s_text_block o_mail_snippet_general pb32 pt0" data-snippet="s_text_block" data-name="Text" style="padding-left: 15px; padding-right: 15px">
           <div class="container s_allow_columns">
             <p>
               What started as a small project in my garage has grown into a
@@ -640,11 +459,11 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               <a role="button" href="#" class="btn btn-primary">READ MORE</a>
             </p>
           </div>
-        </div>
-        <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general bg-200 pt16 pb16" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
+        </section>
+        <section class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general bg-200 pt16 pb16" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
           <div class="container">
             <div class="row">
-              <div class="col-lg-12" style="text-align: center">
+              <div class="col-md-12" style="text-align: center">
                 <a aria-label="Facebook" title="Facebook" href="https://www.facebook.com/Odoo">
                   <span class="fa fa-facebook" style="color: rgb(186, 0, 19) !important"></span>
                 </a>&#xA0;&#xA0;
@@ -663,17 +482,17 @@ font-family:Georgia, Times, "Times New Roman", serif !important;
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-12 o_mail_footer_links pt8 pb8" style="text-align: center">
+              <div class="col-md-12 o_mail_footer_links pt8 pb8" style="text-align: center">
                 <a role="button" href="/unsubscribe_from_list" class="btn btn-link">Unsubscribe</a>
               </div>
             </div>
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-md-12">
                 <p style="text-align: center">© 2024 All Rights Reserved</p>
               </div>
             </div>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   </div>
