@@ -41,6 +41,9 @@
         'security/ir.model.access.csv',
         'security/ir_rule.xml',
     ],
+    'demo': [
+        'demo/knowledge_article_demo.xml',
+    ],
     'installable': True,
     'application': True,
     'author': 'Odoo S.A.',
@@ -50,6 +53,7 @@
     'uninstall_hook': '_uninstall_knowledge',
     'assets': {
         'web.assets_backend': [
+            'knowledge/static/src/scss/knowledge_variables.scss',
             'knowledge/static/src/scss/knowledge_common.scss',
             'knowledge/static/src/scss/knowledge_views.scss',
             'knowledge/static/src/scss/knowledge_editor.scss',
@@ -82,10 +86,6 @@
         ],
         "web.assets_web_dark": [
             'knowledge/static/src/scss/knowledge_views.dark.scss',
-        ],
-        'web.assets_frontend': [
-            'knowledge/static/src/scss/knowledge_common.scss',
-            'knowledge/static/src/js/knowledge_utils.js',
         ],
         'web.assets_unit_tests': [
             'knowledge/static/tests/**/*',

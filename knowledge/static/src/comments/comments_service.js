@@ -32,6 +32,14 @@ export const knowledgeCommentsService = {
             articleId: undefined,
             activeThreadId: undefined,
             shouldOpenActiveThread: false,
+            /** @returns {boolean} */
+            get isDisplayed () {
+                return this.displayMode === "panel";
+            },
+            /** @returns {boolean} */
+            get hasComments () {
+                return Object.keys(this.threadRecords).length > 0;
+            },
             // database records
             threadRecords: {},
             // mail.store instances

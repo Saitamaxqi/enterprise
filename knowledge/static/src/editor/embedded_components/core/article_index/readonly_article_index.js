@@ -11,9 +11,6 @@ export class ReadonlyEmbeddedArticleIndexComponent extends Component {
         showAllChildren: true,
     };
     static template = "knowledge.ReadonlyEmbeddedArticleIndex";
-    setup() {
-        this;
-    }
 
     /** @param {integer} articleId */
     openArticle(articleId) {

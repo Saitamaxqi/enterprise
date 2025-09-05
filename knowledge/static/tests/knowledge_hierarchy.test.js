@@ -1,6 +1,7 @@
 import KnowledgeHierarchy from "@knowledge/components/hierarchy/hierarchy";
 
 import { registry } from "@web/core/registry";
+import { Component, xml } from "@odoo/owl";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
@@ -14,7 +15,6 @@ import {
     models,
     mountView,
     onRpc,
-    patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 
 class Article extends models.Model {
@@ -122,24 +122,28 @@ onRpc(
 let openArticle;
 
 before(() => {
-    // Patch the component to make it a widget so that it can be tested without the complete topbar
-    patchWithCleanup(KnowledgeHierarchy.props, { ...standardWidgetProps });
-    registry.category("view_widgets").add("knowledge_hierarchy", {
-        component: KnowledgeHierarchy,
+    // Create a component to test the breadcrumb and the hierarchy without the top bar component:
+    class KnowledgeNavigation extends Component {
+        static template = xml`
+            <KnowledgeHierarchy record="props.record"/>
+        `;
+        static components = {
+            KnowledgeHierarchy
+        };
+        static props = {...standardWidgetProps};
+        setup() {
+            openArticle = (resId) => this.env.openArticle(resId);
+        }
+    }
+    registry.category("view_widgets").add("knowledge_navigation", {
+        component: KnowledgeNavigation,
         fieldDependencies: Object.entries(Article._fields).map(([fieldName, field]) => ({
             name: fieldName,
             type: field.type,
         })),
     });
-    // Patch to allow loading an article easily
-    patchWithCleanup(KnowledgeHierarchy.prototype, {
-        setup() {
-            super.setup();
-            openArticle = (resId) => this.env.openArticle(resId);
-        },
-    });
 });
-after(() => registry.category("view_widgets").remove("knowledge_hierarchy"));
+after(() => registry.category("view_widgets").remove("knowledge_navigation"));
 
 /**
  * Assert that the current article in the hierarchy is the given one
@@ -219,7 +223,7 @@ const openHierarchyDropdown = async () => {
 const viewParams = {
     arch: /* xml */ `
         <form js_class="knowledge_article_view_form">
-            <widget name="knowledge_hierarchy" class="d-flex"/>
+            <widget name="knowledge_navigation" class="d-flex"/>
         </form>
     `,
     resModel: "article",
@@ -262,70 +266,4 @@ test("Hierarchy - Inaccessible articles", async function () {
     // Check that the link to the article in the dropdown is disabled
     const [article] = MockServer.env["article"].browse(2);
     expect(`.o-dropdown-item.disabled:contains(${article.display_name})`).toHaveCount(1);
-});
-
-test("Hierarchy - Use breadcrumbs", async function () {
-    /**
-     * Assert that the breadcrumbs buttons are enabled/disabled
-     * @param {boolean} isPrevEnabled
-     * @param {boolean} isNextEnabled
-     */
-    const assertBreadcrumbsButtons = (isPrevEnabled, isNextEnabled) => {
-        expect(
-            `.o_widget_knowledge_hierarchy .btn${
-                isPrevEnabled ? ":not(.disabled)" : ".disabled"
-            } .oi-chevron-left`
-        ).toHaveCount(1);
-        expect(
-            `.o_widget_knowledge_hierarchy .btn${
-                isNextEnabled ? ":not(.disabled)" : ".disabled"
-            } .oi-chevron-right`
-        ).toHaveCount(1);
-    };
-    const clickBack = async () => {
-        await click(".o_widget_knowledge_hierarchy .oi-chevron-left");
-        return animationFrame();
-    };
-    const clickNext = async () => {
-        await click(".o_widget_knowledge_hierarchy .oi-chevron-right");
-        return animationFrame();
-    };
-    await mountView({ ...viewParams, resId: 2 });
-    assertCurrentArticle(2);
-    // Back and Next should be disabled
-    assertBreadcrumbsButtons(false, false);
-    // Open an article
-    openArticle(1);
-    await animationFrame();
-    // Make sure current article changed
-    assertCurrentArticle(1);
-    // Back should be enabled, next should still be disabled
-    assertBreadcrumbsButtons(true, false);
-    // Use go back button, back should then be disabled and next should be enabled
-    await clickBack();
-    assertCurrentArticle(2);
-    assertBreadcrumbsButtons(false, true);
-    // Use go next button, back should then be enabled and next should be disabled
-    await clickNext();
-    assertCurrentArticle(1);
-    assertBreadcrumbsButtons(true, false);
-    // Open another article, back should then be enabled and next should be disabled
-    openArticle(5);
-    await animationFrame();
-    assertCurrentArticle(5);
-    assertBreadcrumbsButtons(true, false);
-    // Use go back button twice, back should then be disabled and next should be enabled
-    await clickBack();
-    await clickBack();
-    assertCurrentArticle(2);
-    assertBreadcrumbsButtons(false, true);
-    // Use go next button, back and next should then be enabled
-    await clickNext();
-    assertCurrentArticle(1);
-    assertBreadcrumbsButtons(true, true);
-    // Open another article, back should then be enabled and next should be disabled
-    openArticle(5);
-    await animationFrame();
-    assertCurrentArticle(5);
-    assertBreadcrumbsButtons(true, false);
 });

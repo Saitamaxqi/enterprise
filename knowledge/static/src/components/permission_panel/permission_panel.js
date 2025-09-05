@@ -13,7 +13,7 @@ class Member {
     }
 
     get avatarUrl() {
-        return `/web/image?model=res.partner&field=avatar_128&id=${this.partner_id}`;
+        return `/web/image/knowledge.article.member/${this.member_id}/article_member_avatar`;
     }
 
     get basedOnName() {
@@ -41,6 +41,8 @@ export class PermissionPanel extends Component {
     static template = "knowledge.PermissionPanel";
     static props = {
         reactiveRecordWrapper: Object,
+        openArticle: Function,
+        sendArticleToTrash: Function,
         close: Function,
     };
     static components = { Dropdown, DropdownItem };
@@ -105,18 +107,41 @@ export class PermissionPanel extends Component {
         return { none: _t("No Access"), read: _t("Can Read"), write: _t("Can Edit") };
     }
 
+    get internalPermissions() {
+        return { none: _t("Members only"), read: _t("Can Read"), write: _t("Can Edit") };
+    }
+
     get userCanEdit() {
         return this.data.user_can_write;
     }
 
     get visibilities() {
-        return { everyone: _t("Everyone"), members: _t("Members") };
+        return { everyone: _t("Everyone"), members: _t("Members only") };
     }
 
+    /**
+     * Loads the members displayed in the permissions panel.
+     * If the user is included in the member list, they will be shown first,
+     * followed by the other members in alphabetical order.
+     * @param {integer} articleId
+     */
     async loadMembers(articleId = this.record.resId) {
-        this.state.members = (
-            await this.orm.call("knowledge.article", "get_permission_panel_members", [articleId])
-        ).map((memberVals) => new Member(memberVals));
+        const members = await this.orm.call(
+            "knowledge.article",
+            "get_permission_panel_members",
+            [articleId]
+        );
+        this.state.members = members.map((memberVals) => {
+            return new Member(memberVals);
+        }).sort((m1, m2) => {
+            if (m1.isCurrentUser || !m2.name) {
+                return -1;
+            }
+            if (m2.isCurrentUser || !m1.name) {
+                return 1;
+            }
+            return m1.name.localeCompare(m2.name);
+        });
     }
 
     async load() {
@@ -175,9 +200,6 @@ export class PermissionPanel extends Component {
      * @param {Member} member
      */
     onMemberClick(member) {
-        if (member.partner_share) {
-            return;
-        }
         this.mailStore.openChat({ partnerId: member.partner_id });
     }
 
@@ -187,7 +209,7 @@ export class PermissionPanel extends Component {
     async openArticle(resId) {
         // Permission panel needs to stay open while switching articles.
         this.state.isArticleLoaded = false;
-        await this.env.openArticle(resId);
+        await this.props.openArticle(resId);
         await this.loadMembers(resId);
         this.state.isArticleLoaded = true;
     }
@@ -277,7 +299,7 @@ export class PermissionPanel extends Component {
                     ),
                     cancel: () => {},
                     cancelLabel: _t("Discard"),
-                    confirm: () => this.env.sendArticleToTrash(),
+                    confirm: () => this.props.sendArticleToTrash(),
                     confirmLabel: _t("Move to Trash"),
                 });
             } else {

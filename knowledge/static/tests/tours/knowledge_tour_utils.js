@@ -6,7 +6,11 @@ import { Component, xml } from "@odoo/owl";
 import { patch } from "@web/core/utils/patch";
 import { ReadonlyEmbeddedViewComponent } from "@knowledge/editor/embedded_components/backend/view/readonly_embedded_view";
 
-const permissions = { none: "No Access", read: "Can Read", write: "Can Edit" };
+const internalPermissions = {
+    none: "Members only",
+    read: "Can Read",
+    write: "Can Edit",
+};
 
 export const openPermissionPanel = [
     {
@@ -38,11 +42,29 @@ export const changeInternalPermission = (permission) => {
             run: "click",
         },
         {
-            trigger: `.o-dropdown-item:contains('${permissions[permission]}')`,
+            trigger: `.o-dropdown-item:contains('${internalPermissions[permission]}')`,
             run: "click",
         },
     ];
 };
+
+/**
+ * @param {string} name
+ * @param {string} [section]
+ */
+export function unfoldArticleFromSidebar(name, section) {
+    let trigger = section
+        ? `.o_section[data-section=${section}] .o_article_name:contains(${name})`
+        : `.o_article_name:contains(${name})`;
+    return {
+        trigger,
+        run: function () {
+            const handle = this.anchor.closest(".o_article_handle");
+            const caret = handle.querySelector(".o_article_caret");
+            caret.click();
+        }
+    }
+}
 
 function getOffset(element) {
     if (!element.getClientRects().length) {

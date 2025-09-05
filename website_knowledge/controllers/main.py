@@ -56,7 +56,7 @@ class KnowledgeWebsiteController(KnowledgeController):
     def get_public_article_children(self, article_id):
         return request.env['knowledge.article'].search_read(
             [('parent_id', '=', article_id), ('is_article_item', '=', False)],
-            ['display_name'],
+            ['icon', 'name'],
             order='sequence',
         )
 
@@ -83,7 +83,7 @@ class KnowledgeWebsiteController(KnowledgeController):
                     ('id', 'in', accessible_ancestors_ids),
                     ('parent_id', 'in', accessible_ancestors_ids), ('parent_id', '!=', article_id)
             ],
-            ['display_name', 'parent_id'],
+            ['icon', 'name', 'parent_id'],
             order='parent_id desc, sequence',
             load=False,
         )

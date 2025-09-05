@@ -41,12 +41,12 @@ registry.category("web_tour.tours").add("website_knowledge_public_view_tour", {
         },
         {
             content: "Unfold the article in the sidebar",
-            trigger: ".o_knowledge_sidebar .o_article .fa-caret-right",
+            trigger: ".o_knowledge_sidebar .o_article .o_article_icon",
             run: "click",
         },
         {
             content: "Check that only the published child articles is shown",
-            trigger: ".o_knowledge_sidebar .o_article ul .o_article:contains('📄 Published Child')",
+            trigger: ".o_knowledge_sidebar .o_article ul .o_article .o_article_name:contains('Published Child')",
             run: () => {
                 if (queryAll(".o_knowledge_sidebar .o_article ul .o_article").length > 1) {
                     console.error("Sidebar has more articles than expected");
@@ -64,7 +64,7 @@ registry.category("web_tour.tours").add("website_knowledge_public_view_tour", {
         },
         {
             content: "Check that active article in the sidebar was updated",
-            trigger: ".o_knowledge_sidebar .o_article_active:contains(📄 Published Child)",
+            trigger: ".o_knowledge_sidebar .o_article_active .o_article_name:contains(Published Child)",
         },
         {
             content: "Click on search bar",
@@ -108,7 +108,7 @@ registry.category("web_tour.tours").add("website_knowledge_public_view_tour", {
         },
         {
             content: "Check that article is visible in the sidebar",
-            trigger: ".o_knowledge_sidebar .o_article_active:contains('📄 Untitled')",
+            trigger: ".o_knowledge_sidebar .o_article_active .o_article_name:contains('Untitled')",
         },
     ],
 });

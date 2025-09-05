@@ -33,15 +33,21 @@
     <t t-name="website_knowledge.publicSidebarArticle">
         <li class="o_article position-relative">
             <div t-attf-class="o_article_handle d-flex #{article.id === record.resId ? 'o_article_active' : ''}">
-                <button type="button" class="btn btn-link p-0 text-muted" t-on-click="() => article.toggleFold()">
-                    <i t-attf-class="fa fa-fw fa-caret-#{article.isUnfolded ? 'down' : 'right'} align-self-center"/>
-                </button>
-                <a href="#" type="button" t-on-click="() => this.env.openArticle(article.id)" t-out="article.displayName"
+                <div class="o_article_icon position-relative p-1 cursor-pointer" t-on-click="() => article.toggleFold()">
+                    <div class="o_article_emoji" t-out="article.icon or '📄'"/>
+                    <div class="o_article_caret d-flex align-items-center justify-content-center">
+                        <i t-attf-class="fa fa-fw #{article.isUnfolded ? 'fa-caret-down' : 'fa-caret-right'}"/>
+                    </div>
+                </div>
+                <a href="#" type="button" t-on-click="() => this.env.openArticle(article.id)"
                     class="o_article_name text-decoration-none text-black text-truncate flex-grow-1 p-1"
                     t-att-class="{
                         'fw-bold text-900': article.id === record.resId,
                         'text-muted': article.id !== record.resId
-                    }"/>
+                    }">
+                    <t t-if="article.name" t-out="article.name"/>
+                    <t t-else="">Untitled</t>
+                </a>
             </div>
             <t t-if="article.isUnfolded">
                 <ul>

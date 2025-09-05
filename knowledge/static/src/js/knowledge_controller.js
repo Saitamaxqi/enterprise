@@ -2,13 +2,14 @@ import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
 import { _t } from "@web/core/l10n/translation";
 import { FormController } from '@web/views/form/form_controller';
+import { KnowledgeCoverDialog } from '@knowledge/components/knowledge_cover/knowledge_cover_dialog';
 import { KnowledgeSidebar } from '@knowledge/components/sidebar/sidebar';
 import { useBus, useService } from "@web/core/utils/hooks";
 
 import {
     onWillStart,
     reactive,
-    useChildSubEnv,
+    useSubEnv,
     useEffect,
     useExternalListener,
     useRef,
@@ -28,18 +29,26 @@ export class KnowledgeArticleFormController extends FormController {
         this.orm = useService('orm');
         this.actionService = useService('action');
         this.dialogService = useService("dialog");
+        this.commentsService = useService("knowledge.comments");
 
-        useChildSubEnv({
+        useSubEnv({
             createArticle: this.createArticle.bind(this),
             ensureArticleName: this.ensureArticleName.bind(this),
             openArticle: this.openArticle.bind(this),
+            openCoverSelector: this.openCoverSelector.bind(this),
             renameArticle: this.renameArticle.bind(this),
             sendArticleToTrash: this.sendArticleToTrash.bind(this),
             toggleAsideMobile: this.toggleAsideMobile.bind(this),
+            toggleChatter: this.toggleChatter.bind(this),
+            toggleComments: this.toggleComments.bind(this),
+            toggleFavorite: this.toggleFavorite.bind(this),
+            toggleProperties: this.toggleProperties.bind(this),
             save: this.save.bind(this),
             discard: this.discard.bind(this),
+            // Internal states:
             propertiesPanelState: reactive({ isDisplayed: false }),
             chatterPanelState: reactive({ isDisplayed: false }),
+            commentsState: this.commentsService.getCommentsState(),
         });
 
         useBus(this.env.bus, 'KNOWLEDGE:OPEN_ARTICLE', (event) => {
@@ -232,7 +241,17 @@ export class KnowledgeArticleFormController extends FormController {
         return true;
     }
 
-    /*
+    openCoverSelector() {
+        this.dialogService.add(KnowledgeCoverDialog, {
+            articleCoverId: this.model.root.data.cover_image_id.id,
+            articleName: this.model.root.data.name || "",
+            save: (id) => this.model.root.update({
+                cover_image_id: { id }
+            })
+        });
+    }
+
+    /**
      * Rename the article using the given name, or using the article title if
      * no name is given (first h1 in the body). If no title is found, the
      * article is kept untitled.
@@ -264,5 +283,43 @@ export class KnowledgeArticleFormController extends FormController {
     toggleAsideMobile(force) {
         const container = this.root.el.querySelector('.o_knowledge_form_view');
         container.classList.toggle('o_toggle_aside', force);
+    }
+
+    toggleChatter() {
+        this.env.chatterPanelState.isDisplayed = !this.env.chatterPanelState.isDisplayed;
+    }
+
+    toggleComments() {
+        if (this.env.commentsState.displayMode === "handler") {
+            this.env.commentsState.displayMode = "panel";
+        } else {
+            this.env.commentsState.displayMode = "handler";
+        }
+    }
+
+    /**
+     * Add/Remove article from favorites and reload the favorite tree.
+     * One does not use "record.update" since the article could be in readonly.
+     * @param {event} Event
+     */
+    async toggleFavorite(event) {
+        // Save in case name has been edited, so that this new name is used
+        // when adding the article in the favorite section.
+        if (await this.model.root.isDirty()) {
+            await this.model.root.save();
+        }
+        await this.orm.call(this.model.root.resModel, "action_toggle_favorite", [[this.resId]]);
+        // Load to have the correct value for 'is_user_favorite'.
+        await this.model.root.load();
+    }
+
+    /**
+     * Toggle the properties panel
+     * @param {boolean} [force] - Flag determining the desired visibility of the properties panel.
+     */
+    toggleProperties(force) {
+        this.env.propertiesPanelState.isDisplayed = (
+            typeof force === "boolean" ? force : !this.env.propertiesPanelState.isDisplayed
+        );
     }
 }

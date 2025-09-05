@@ -1,8 +1,9 @@
 import { KnowledgeSidebarRow } from "./sidebar_row";
+import { browser } from "@web/core/browser/browser";
 import { user } from "@web/core/user";
+import { useRecordObserver } from "@web/model/relational_model/utils";
 import { useService } from "@web/core/utils/hooks";
-
-import { Component, onWillStart, useChildSubEnv } from "@odoo/owl";
+import { Component, onWillStart, useChildSubEnv, useState } from "@odoo/owl";
 
 /**
  * This file defines the different sections used in the sidebar.
@@ -23,15 +24,35 @@ export class KnowledgeSidebarSection extends Component {
 
     setup() {
         super.setup();
+        const foldedSections = JSON.parse(browser.localStorage.getItem("knowledge.folded.sections") ?? "{}");
+        this.state = useState({
+            isFolded: foldedSections[this.getSectionIdentifier()] || this.props.rootIds.length === 0,
+        });
+
+        // Unfold the section of the current article:
+        useRecordObserver((record) => {
+            if (record.data.category === this.getSectionIdentifier()) {
+                this.state.isFolded = false;
+            }
+        });
+
         onWillStart(async () => {
             this.isInternalUser = await user.hasGroup('base.group_user');
         });
+    }
+
+    toggleSidebarSection() {
+        this.state.isFolded = !this.state.isFolded;
+        // Persist the new folding state in local storage:
+        const foldedSections = JSON.parse(browser.localStorage.getItem("knowledge.folded.sections") ?? "{}");
+        foldedSections[this.getSectionIdentifier()] = this.state.isFolded;
+        browser.localStorage.setItem("knowledge.folded.sections", JSON.stringify(foldedSections));
     }
 }
 
 export class KnowledgeSidebarFavoriteSection extends KnowledgeSidebarSection {
     static template = "knowledge.SidebarFavoriteSection";
-    
+
     setup() {
         super.setup();
 
@@ -41,11 +62,15 @@ export class KnowledgeSidebarFavoriteSection extends KnowledgeSidebarSection {
             unfold: id => this.env.unfold(id, true),
         });
     }
+
+    getSectionIdentifier() {
+        return "favorites";
+    }
 }
 
 export class KnowledgeSidebarWorkspaceSection extends KnowledgeSidebarSection {
     static template = "knowledge.SidebarWorkspaceSection";
-    
+
     setup() {
         super.setup();
         this.command = useService("command");
@@ -58,10 +83,18 @@ export class KnowledgeSidebarWorkspaceSection extends KnowledgeSidebarSection {
     searchHiddenArticle() {
         this.command.openMainPalette({searchValue: "$"});
     }
+
+    getSectionIdentifier() {
+        return "workspace";
+    }
 }
 
 export class KnowledgeSidebarSharedSection extends KnowledgeSidebarSection {
     static template = "knowledge.SidebarSharedSection";
+
+    getSectionIdentifier() {
+        return "shared";
+    }
 }
 
 export class KnowledgeSidebarPrivateSection extends KnowledgeSidebarSection {
@@ -69,5 +102,9 @@ export class KnowledgeSidebarPrivateSection extends KnowledgeSidebarSection {
 
     createRoot() {
         this.env.createArticle("private");
+    }
+
+    getSectionIdentifier() {
+        return "private";
     }
 }

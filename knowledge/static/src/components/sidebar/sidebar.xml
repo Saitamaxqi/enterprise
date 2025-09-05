@@ -5,24 +5,27 @@
             t-attf-style="--knowledge-article-sidebar-size: #{state.sidebarSize}px">
             <div class="d-flex flex-column flex-grow-1 min-w-0">
                 <!-- Search bar -->
-                <div class="d-flex align-items-center gap-1 pe-md-1 ps-1 pb-3 pt-2">
-                    <a role="button" t-on-click="() => env.toggleAsideMobile()"
-                        class="o_knowledge_toggle_sidebar d-md-none btn btn-light px-2 py-1">
-                        <i class="oi oi-lg oi-panel-right" title="Toggle aside menu"/>
-                    </a>
-                    <a t-if="isPortalUser" class="flex-grow-1 ps-3 fs-3 fw-bold text-black" href="/my" data-hotkey="h">
-                        <i class="fa fa-home pe-2"/>Home
-                    </a>
-                    <button t-if="isInternalUser" data-hotkey="n" t-on-click="() => this.env.createArticle('private')"
-                        class="o_knowledge_create_article btn fw-normal text-black text-start text-truncate flex-grow-1 ps-3">
-                        <i class="fa fa-fw fa-plus pe-2"/>New Article
+                <div class="d-flex px-1 pt-2">
+                    <button class="o_knowledge_toggle_sidebar d-md-none btn text-black"
+                        t-on-click="() => env.toggleAsideMobile()"
+                        title="Toggle aside menu">
+                        <i class="oi oi-lg oi-panel-right"/>
                     </button>
-                    <button data-hotkey="f" t-on-click="onSearchBarClick"
-                        class="o_knowledge_search btn fw-normal text-black text-start text-truncate"
-                        data-tooltip="Search for an article or a keyword"
-                        aria-label="Search for an article or a keyword">
-                        <i class="fa fa-search"/>
-                    </button>
+                    <div class="d-flex flex-grow-1 justify-content-between">
+                        <a t-if="isPortalUser" class="flex-grow-1 ps-3 fs-3 fw-bold text-black" href="/my" data-hotkey="h">
+                            <i class="fa fa-home pe-2"/>Home
+                        </a>
+                        <button t-if="isInternalUser" data-hotkey="n" t-on-click="() => this.env.createArticle('private')"
+                            class="o_knowledge_create_article btn fw-normal text-black text-start text-truncate">
+                            <i class="fa fa-fw fa-plus pe-2"/>New Article
+                        </button>
+                        <button data-hotkey="f" t-on-click="onSearchBarClick"
+                            class="o_knowledge_search btn fw-normal text-black text-start text-truncate"
+                            data-tooltip="Search for an article or a keyword"
+                            aria-label="Search for an article or a keyword">
+                            <i class="oi oi-search"/>
+                        </button>
+                    </div>
                 </div>
                 <!-- File explorer -->
                 <div t-if="state.loading" class="p-5 text-center">

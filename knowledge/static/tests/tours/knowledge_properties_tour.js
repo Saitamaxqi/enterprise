@@ -1,4 +1,4 @@
-import { dragAndDropArticle, endKnowledgeTour } from './knowledge_tour_utils.js';
+import { dragAndDropArticle, endKnowledgeTour, unfoldArticleFromSidebar } from './knowledge_tour_utils.js';
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_utils";
 
@@ -8,14 +8,9 @@ registry.category("web_tour.tours").add('knowledge_properties_tour', {
     // open Knowledge App
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
     run: "click",
-}, { // ensure display of ParentArticle child articles
-    trigger: '.o_article_handle:contains("ParentArticle") .o_article_caret',
-    run: function (actions) {
-        if (this.anchor.querySelector("i.fa-caret-right")) {
-            actions.click();
-        }
-    }
-}, { // go to ChildArticle
+},
+unfoldArticleFromSidebar("ParentArticle"),
+{ // go to ChildArticle
     trigger: '.o_article .o_article_name:contains("ChildArticle")',
     run: 'click',
 }, { // wait ChildArticle loading

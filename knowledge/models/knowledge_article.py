@@ -52,12 +52,12 @@ class KnowledgeArticle(models.Model):
     article_url = fields.Char('Article URL', compute='_compute_article_url', readonly=True)
     # Access rules and members + implied category
     internal_permission = fields.Selection(
-        [('write', 'Can edit'), ('read', 'Can read'), ('none', 'No access')],
+        [('write', 'Can edit'), ('read', 'Can read'), ('none', 'Members only')],
         string='Internal Permission', required=False,
         help="Default permission for all internal users. "
              "(External users can still have access to this article if they are added to its members)")
     inherited_permission = fields.Selection(
-        [('write', 'Can edit'), ('read', 'Can read'), ('none', 'No access')],
+        [('write', 'Can edit'), ('read', 'Can read'), ('none', 'Members only')],
         string='Inherited Permission',
         compute="_compute_inherited_permission", compute_sudo=True,
         store=True, index=True, recursive=True)
@@ -125,6 +125,7 @@ class KnowledgeArticle(models.Model):
         "res.users", string="Last Edited by", readonly=True, copy=False)
     last_edition_date = fields.Datetime(
         string="Last Edited on", readonly=True, copy=False)
+    last_edition_user_avatar = fields.Image(string="Last Editor's Avatar", related="last_edition_uid.avatar_128")
     # Favorite
     is_user_favorite = fields.Boolean(
         string="Is Favorited",
@@ -1854,20 +1855,17 @@ class KnowledgeArticle(models.Model):
 
     def get_permission_panel_members(self):
         self.ensure_one()
+        res_partner_fields_list = [('name', 'name'), ('partner_share', 'partner_share'), ('id', 'partner_id')]
+        if self.env.user._is_internal():
+            res_partner_fields_list.append(('email', 'email'))
         member_permissions = list(self._get_article_member_permissions(additional_fields={
-            'res.partner': [
-                ('name', 'name'), ('email', 'email'), ('partner_share', 'partner_share'), ('id', 'partner_id'),
-            ],
+            'res.partner': res_partner_fields_list,
             'knowledge.article': [
                 ('icon', 'based_on_icon'),
                 ('name', 'based_on_name'),
             ],
         })[self.id].values())
-        return sorted(
-            member_permissions,
-            key=lambda member: '' if member['partner_id'] == self.env.user.partner_id.id else member['name']
-        )  # our own permission, if it exists, should appear first in the panel so we
-        # use the smallest key possible for it: the empty string ''
+        return member_permissions
 
     def restore_article_access(self):
         """ Resets permissions based on ancestors. It removes all members except

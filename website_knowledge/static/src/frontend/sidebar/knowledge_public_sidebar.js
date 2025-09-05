@@ -29,9 +29,15 @@ class KnowledgePublicResizablePanel extends ResizablePanel {
 }
 
 class SidebarArticle {
-    constructor(id, displayName) {
+    /**
+     * @param {integer} id
+     * @param {string} icon
+     * @param {string} name
+     */
+    constructor(id, icon, name) {
         this.id = id;
-        this.displayName = displayName;
+        this.icon = icon;
+        this.name = name;
         this.children = [];
         this.isUnfolded = false;
         this.childrenAreLoaded = false;
@@ -40,7 +46,7 @@ class SidebarArticle {
 
     async loadChildren() {
         const children = await rpc("/knowledge/public/children", { article_id: this.id });
-        this.children = children.map((child) => new SidebarArticle(child.id, child.display_name));
+        this.children = children.map((child) => new SidebarArticle(child.id, child.icon, child.name));
         this.childrenAreLoaded = true;
     }
 
@@ -63,7 +69,7 @@ export class KnowledgePublicSidebar extends Component {
 
     setup() {
         useSubEnv(this.props.subEnv);
-        this.rootArticle = useState(new SidebarArticle(null, null));
+        this.rootArticle = useState(new SidebarArticle(null, null, null));
         this.articlesMap = new Map();
         this.record = useState(this.env.record);
         this.dialog = useService("dialog");
@@ -111,7 +117,7 @@ export class KnowledgePublicSidebar extends Component {
         );
         this.articlesMap = new Map();
         articles.forEach((article) => {
-            this.articlesMap.set(article.id, new SidebarArticle(article.id, article.display_name));
+            this.articlesMap.set(article.id, new SidebarArticle(article.id, article.icon, article.name));
         });
         articles.forEach((article) => {
             const currentArticle = this.articlesMap.get(article.id);
