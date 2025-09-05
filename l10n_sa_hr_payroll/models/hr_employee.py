@@ -8,7 +8,7 @@ class HrEmployee(models.Model):
 
     l10n_sa_employee_code = fields.Char(string="Saudi National / IQAMA ID", groups="hr_payroll.group_hr_payroll_user")
     l10n_sa_remaining_annual_leave_balance = fields.Float(compute="_compute_l10n_sa_remaining_annual_leave_balance",
-        groups="hr.group_hr_user")
+        groups="hr_payroll.group_hr_payroll_user")
     l10n_sa_leaves_count_compensable = fields.Float(
         'Number of Time Off Eligible for Compensation',
         compute='_compute_l10n_sa_leaves_count_compensable',
