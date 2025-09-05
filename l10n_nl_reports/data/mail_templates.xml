@@ -6,8 +6,14 @@
                     <img t-att-src="ctx.get('qr_data')" width="150" height="150" alt="payment qr"/>
                     <p><strong>Scan me with your banking app.</strong></p>
                 </td>
+            </tr>
+            <tr>
                 <td>
-                    <table style="margin:10px 30px; text-align:left; border-spacing: 16px;">
+                    <table style="margin:10px; text-align:left; border-spacing: 16px;">
+                        <colgroup>
+                            <col style="width:110px;"/>
+                            <col style="width:auto;"/>
+                        </colgroup>
                         <tr>
                             <td>Account Holder</td>
                             <td><t t-out="object.type_id.payment_partner_id.name or ''"/></td>
