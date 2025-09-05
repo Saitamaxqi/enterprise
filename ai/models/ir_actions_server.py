@@ -336,8 +336,10 @@ class IrActionsServer(models.Model):
         eval_context = arguments.copy()
         eval_context |= self._get_eval_context(self)
         eval_context["ai"] = {}
-        eval_context["record"] = record
-        eval_context["records"] = record
+        eval_context["record"] = record.sudo(False)
+        eval_context["records"] = record.sudo(False)
+        eval_context["model"] = eval_context["model"].sudo(False)
+        eval_context["env"] = self.env(su=False)
         if self.state == "code":
             self._run_action_code_multi(eval_context=eval_context)
             return eval_context["ai"].get("result")

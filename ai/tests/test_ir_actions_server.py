@@ -3,10 +3,12 @@ from unittest.mock import patch
 
 from odoo.addons.ai.utils.llm_api_service import LLMApiService
 from odoo.exceptions import AccessError
-from odoo.tests import TransactionCase, new_test_user
+from odoo.tests import TransactionCase, new_test_user, tagged
 from odoo.tools import mute_logger
+from odoo.addons.ai.models.ir_actions_server import _logger as tool_logger
 
 
+@tagged('post_install', '-at_install')
 class TestAiServerActions(TransactionCase):
     def _mock_llm_api_get_token(self):
         def _mock_get_api_token(self):
@@ -59,6 +61,51 @@ class TestAiServerActions(TransactionCase):
             action.with_user(user).with_context(active_id=partner.id, active_model='res.partner').run()
 
         self.assertEqual(llm_calls, 0)
+
+    def test_ai_server_action_user_access(self):
+        user = new_test_user(self.env, "internal_user_ai", "base.group_user")
+        partner = self.env["res.partner"].create({"name": "Partner"})
+
+        # Remove res.partner read access from the user
+        access_records = self.env['ir.model.access'].search([
+            ('model_id.model', '=', 'res.partner'),
+            ('group_id', 'in', user.group_ids.ids)
+        ])
+        access_records.write({'perm_read': False})
+
+        # Prepare the mocked LLM responses, openai format
+        mock_request = self._create_mock_request([
+            {
+                "output": [
+                    {
+                        "type": "function_call",
+                        "name": "ir_actions_server_search",
+                        "call_id": "call_1",
+                        "arguments": json.dumps({"model_name": "res.partner", "domain": json.dumps([["id", "=", partner.id]]), "fields": ["name"]}),
+                    },
+                ],
+            },
+            {
+                "output": [
+                    {"text": "Unable to fetch partner details due to access rights."},
+                ],
+            },
+        ])
+
+        # Fetch the ask_ai_agent record with elevated rights, just like they do in the controller
+        ask_ai_agent_sudo = self.env["ai.agent"]._get_potential_ask_ai_agent().with_user(user).sudo()
+
+        # Need to ensure the llm model is openai since the mocked request is for openai
+        ask_ai_agent_sudo.write({"llm_model": "gpt-4.1"})
+
+        with patch.object(LLMApiService, "_request", mock_request), \
+            patch.object(LLMApiService, "_get_api_token", return_value='dummy_token'), \
+            self.assertLogs(tool_logger, level='ERROR') as mock_tool_logger:
+            ask_ai_agent_sudo._generate_response("test")
+
+        # Single error log stating the user cannot access the records
+        error_log_record, = mock_tool_logger.records
+        self.assertIn("An error occurred while executing AI: Search: You are not allowed to access 'Contact' (res.partner) records.", error_log_record.msg)
 
     @mute_logger("odoo.addons.ai.utils.llm_api_service")
     def test_ai_server_action_ai_tool(self):
@@ -191,3 +238,14 @@ class TestAiServerActions(TransactionCase):
     def _ai_tool_call(self, name, call_id, arguments):
         # Simulate the response of `_request_llm` when the LLM ask to execute a tool
         return [], [(name, call_id, arguments)], [{"call_id": call_id, "name": name, "arguments": json.dumps(arguments)}]
+
+    def _create_mock_request(self, responses):
+        call_count = 0
+
+        def mock_request(*args, **kwargs):
+            nonlocal call_count
+            result = responses[call_count]
+            call_count += 1
+            return result
+
+        return mock_request
