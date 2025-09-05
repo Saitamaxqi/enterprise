@@ -45,7 +45,10 @@ export class SessionRecorder {
     constructor(sipSession) {
         const { audioContext, stream } = SessionRecorder.mergeStreams(sipSession);
         this._audioContext = audioContext;
-        const recorder = new MediaRecorder(stream, { mimeType: this.outputMimeType });
+        const recorder = new MediaRecorder(stream, {
+            audioBitsPerSecond: 8000, // bitrate of G.729 (widely used codec for VoIP)
+            mimeType: this.outputMimeType,
+        });
         recorder.addEventListener("stop", (event) => this._onStop(event));
         recorder.addEventListener("dataavailable", (event) => this._onDataAvailable(event));
         recorder.addEventListener("error", (event) => this._onError(event));
