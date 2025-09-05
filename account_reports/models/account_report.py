@@ -807,7 +807,7 @@ class AccountReport(models.Model):
     def _init_options_return_periodicity(self, options, previous_options):
         if (previous_options.get('return_periodicity')
             and previous_options['return_periodicity'].get('return_type_id')
-            and previous_options['return_periodicity'].get('report_id') in (False, self.id)):
+            and previous_options['return_periodicity'].get('report_id') in (False, self.id, options['sections_source_id'])):
             options['return_periodicity'] = {
                 **previous_options['return_periodicity'],
                 'report_id': self.id,
