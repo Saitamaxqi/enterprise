@@ -18,9 +18,6 @@ class AccountOnlineLink(models.Model):
             self.is_payment_enabled = data['is_payment_enabled']
 
         if data.get('is_payment_activated') is not None:
-            template_ref = 'account_online_payment.mail_template_account_payment_activation_success'
-            if not self.is_payment_activated and data.get('is_payment_activated') and (template := self.sudo().env.ref(template_ref, raise_if_not_found=False)):
-                template.send_mail(self.id)
             self.is_payment_activated = data['is_payment_activated']
 
     def _update_connection_status(self):
