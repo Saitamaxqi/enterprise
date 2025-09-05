@@ -4,6 +4,7 @@ from freezegun import freeze_time
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 
+from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
 
@@ -234,3 +235,40 @@ class TestHrAppraisal(TransactionCase):
 
     def test_load_scenario(self):
         self.env['hr.appraisal']._load_demo_data()
+
+    def test_create_appraisal_without_hr_right(self):
+        user_without_hr_right = self.env['res.users'].create({
+            'name': 'Test without hr right',
+            'login': 'test_without_hr_right',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id])],
+            'notification_type': 'email',
+        })
+        user_without_hr_right.action_create_employee()
+        appraisal_form = Form(self.env['hr.appraisal'].with_user(user_without_hr_right).with_context({'uid': user_without_hr_right.id}))
+        appraisal_form.save()
+
+    def test_create_appraisal_campaign_without_hr_right(self):
+        user_without_hr_right = self.env['res.users'].create({
+            'name': 'Test without hr right',
+            'login': 'test_without_hr_right',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id])],
+            'notification_type': 'email',
+        })
+        user_without_hr_right.action_create_employee()
+        employees = self.env['hr.employee'].create([
+            {
+                'name': 'Emp1',
+                'parent_id': user_without_hr_right.employee_ids[0].id,
+            }, {
+                'name': 'Emp2',
+                'parent_id': user_without_hr_right.employee_ids[0].id,
+            }
+        ])
+        appraisal_template = self.env['hr.appraisal.template'].create({'description': 'Test appraisal template'})
+        appraisal_campaign_form = Form(self.env['hr.appraisal.campaign.wizard'].with_user(user_without_hr_right).with_context(
+            {'uid': user_without_hr_right.id}
+        ))
+        appraisal_campaign_form.employee_ids = employees
+        appraisal_campaign_form.appraisal_template_id = appraisal_template
+        appraisal_campaign = appraisal_campaign_form.save()
+        appraisal_campaign.action_generate_appraisals()

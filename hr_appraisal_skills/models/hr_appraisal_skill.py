@@ -99,7 +99,7 @@ class HrAppraisalSkill(models.Model):
                 domain=Domain.AND([
                     Domain('goal_id', 'any', Domain.AND([
                         Domain('employee_ids', '=', False),
-                        Domain('id', 'not in', self.employee_id.goals_ids.template_goal_id.ids)
+                        Domain('id', 'not in', self.employee_id.sudo().goals_ids.template_goal_id.ids)
                     ])),
                     Domain.OR([
                         Domain.AND([
@@ -125,7 +125,7 @@ class HrAppraisalSkill(models.Model):
         action['context'] = {'default_employee_id': self.employee_id.id}
         action['domain'] = Domain.AND([
             Domain('employee_ids', '=', False),
-            Domain('id', 'not in', self.employee_id.goals_ids.template_goal_id.ids),
+            Domain('id', 'not in', self.employee_id.sudo().goals_ids.template_goal_id.ids),
             Domain('current_goal_skill_ids', 'any',
                 Domain.AND([
                     Domain('skill_id', '=', self.skill_id.id),

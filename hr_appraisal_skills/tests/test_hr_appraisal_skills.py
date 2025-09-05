@@ -39,20 +39,20 @@ class TestHrAppraisalSkills(TransactionCase):
             }
         )
 
-        skill_type = cls.env["hr.skill.type"].create({"name": "Test Skill Type"})
+        cls.skill_type = cls.env["hr.skill.type"].create({"name": "Test Skill Type"})
         cls.skill_level_1, cls.skill_level_2, cls.skill_level_3 = cls.env["hr.skill.level"].create(
             [
-                {"name": "Level 1", "skill_type_id": skill_type.id, "level_progress": 0},
-                {"name": "Level 2", "skill_type_id": skill_type.id, "level_progress": 50},
-                {"name": "Level 3", "skill_type_id": skill_type.id, "level_progress": 100},
+                {"name": "Level 1", "skill_type_id": cls.skill_type.id, "level_progress": 0},
+                {"name": "Level 2", "skill_type_id": cls.skill_type.id, "level_progress": 50},
+                {"name": "Level 3", "skill_type_id": cls.skill_type.id, "level_progress": 100},
             ]
         )
-        skill = cls.env["hr.skill"].create({"name": "Test Skill", "skill_type_id": skill_type.id})
+        cls.skill = cls.env["hr.skill"].create({"name": "Test Skill", "skill_type_id": cls.skill_type.id})
 
         cls.appraisal_skill = cls.env["hr.appraisal.skill"].create(
             {
-                "skill_type_id": skill_type.id,
-                "skill_id": skill.id,
+                "skill_type_id": cls.skill_type.id,
+                "skill_id": cls.skill.id,
                 "skill_level_id": cls.skill_level_1.id,
                 "appraisal_id": cls.appraisal.id,
                 "valid_from": datetime.today() - relativedelta(months=1),
@@ -108,3 +108,31 @@ class TestHrAppraisalSkills(TransactionCase):
             "This should NOT create a new skill",
             "The justification should have changed to 'This should NOT create a new skill'",
         )
+
+    def test_create_appraisal_skill_without_hr_right(self):
+        user_without_hr_right = self.env['res.users'].create({
+            'name': 'Test without hr right',
+            'login': 'test_without_hr_right',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id])],
+            'notification_type': 'email',
+        })
+        user_without_hr_right.action_create_employee()
+        employee_1 = self.env['hr.employee'].create([
+            {
+                'name': 'Emp1',
+                'parent_id': user_without_hr_right.employee_ids[0].id,
+            }
+        ])
+        self.env['hr.employee.skill'].create({
+            'skill_type_id': self.skill_type.id,
+            'skill_id': self.skill.id,
+            'skill_level_id': self.skill_level_1.id,
+            'employee_id': employee_1.id,
+            'valid_from': date(2024, 3, 2),
+        })
+        with self.with_user(user_without_hr_right.login):
+            appraisal_form = Form(self.env['hr.appraisal'])
+            appraisal_form.employee_id = employee_1
+            employee_1_appraisal = appraisal_form.save()
+            employee_1_appraisal.action_confirm()
+            self.assertEqual(employee_1_appraisal.appraisal_skill_ids[0].manager_ids, user_without_hr_right.employee_ids[0])

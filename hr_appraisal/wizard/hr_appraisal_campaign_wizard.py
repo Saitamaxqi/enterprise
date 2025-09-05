@@ -8,6 +8,7 @@ class HrAppraisalCampaignWizard(models.TransientModel):
 
     _name = 'hr.appraisal.campaign.wizard'
     _description = 'Appraisal Campaign Wizard'
+    _inherit = ['hr.mixin']
 
     mode = fields.Selection([
         ('employee', 'By Employee'),
