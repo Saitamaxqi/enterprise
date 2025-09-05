@@ -72,7 +72,7 @@
         <field name="arch" type="xml">
             <form string="Payslip" duplicate="0">
             <header>
-                <button string="Confirm" name="action_payslip_done" type="object" invisible="state != 'draft'" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
+                <button string="Confirm" name="action_payslip_done" type="object" invisible="state != 'draft' or not line_ids" class="oe_highlight" context="{'payslip_generate_pdf': True}"/>
                 <button string="Mark as paid" name="action_payslip_paid" type="object" class="oe_highlight" invisible="state != 'validated'"/>
                 <button string="Create Payment Report" name="action_payslip_payment_report" type="object" invisible="state != 'validated'"/>
                 <button string="Revert" name="refund_sheet" type='object' invisible="is_refunded or credit_note or state != 'paid'"
