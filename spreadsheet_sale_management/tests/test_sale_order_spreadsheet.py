@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
+from odoo.tests import Form
 from odoo.tests.common import new_test_user
 from odoo.addons.spreadsheet_edition.tests.spreadsheet_test_case import SpreadsheetTestCase
 
@@ -131,3 +132,34 @@ class SaleOrderSpreadsheet(SpreadsheetTestCase):
         self.assertTrue(spreadsheet.with_user(other_salesman).has_access("read"))
         self.assertTrue(spreadsheet.with_user(other_salesman).has_access("write"))
         self.assertTrue(spreadsheet.with_user(other_salesman).has_access("unlink"))
+
+    def test_sale_order_template_change_after_open(self):
+        """
+        Test ensures that spreadsheet template is changed on changing sale order template,
+        once spreadsheet has been opened.
+        """
+        # Ensure user has access to sale order templates
+        self.env.user.group_ids += self.env.ref('sale_management.group_sale_order_template')
+        spreadsheet = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet"})
+        spreadsheet2 = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet2"})
+        quotation_templates = self.env["sale.order.template"].create(
+            [
+                {"name": "Test template1", "spreadsheet_template_id": spreadsheet.id},
+                {"name": "Test template2", "spreadsheet_template_id": spreadsheet2.id},
+            ]
+        )
+        sale_order = self.env["sale.order"].create(
+            {
+                "partner_id": self.env.user.partner_id.id,
+                "sale_order_template_id": quotation_templates[0].id,
+            }
+        )
+        self.assertFalse(sale_order.spreadsheet_ids)
+        sale_order.action_open_sale_order_spreadsheet()
+        so_spreadsheets = sale_order.spreadsheet_ids
+        self.assertEqual(sale_order.spreadsheet_id.name, "spreadsheet")
+        with Form(sale_order) as so:
+            so.sale_order_template_id = quotation_templates[1]
+            self.assertFalse(so.spreadsheet_id)
+        self.assertFalse(so_spreadsheets.exists(), "previous spreadsheet should not exist")
+        self.assertEqual(sale_order.sale_order_template_id.spreadsheet_template_id.name, "spreadsheet2")
