@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from requests.exceptions import RequestException
 from odoo.tools import SQL
 from odoo.exceptions import UserError
@@ -82,7 +82,14 @@ class AIEmbedding(models.Model):
                 embedding_model = source.agent_id._get_embedding_model()
                 if (source.attachment_id.checksum, embedding_model) not in existing_checksum_model_pairs:
                     _logger.info("Creating embedding chunks for source %s", source.name)
-                    source.attachment_id._setup_attachment_chunks(embedding_model)
+                    content = source.attachment_id._get_attachment_content()
+                    if not content:
+                        source.write({
+                            'status': 'failed',
+                            'error_details': _("Invalid attachment. Failed to extract content."),
+                        })
+                        continue
+                    source.attachment_id._setup_attachment_chunks(embedding_model, content)
 
         # Generate embeddings for sources that are missing embeddings
         missing_embeddings = self.search([

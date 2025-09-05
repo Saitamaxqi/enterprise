@@ -2,6 +2,7 @@
 import base64
 import contextlib
 import io
+import importlib.util
 import logging
 import re
 
@@ -21,9 +22,15 @@ class IrAttachment(models.Model):
     def _compute_pdf_content(self):
         """Compute the content of the PDF attachment."""
         self.ensure_one()
-        if not self.raw or not self.raw.startswith(b'%PDF-'):
-            return None
+
+        def _has_pdfminer_six():
+            return importlib.util.find_spec("pdfminer.high_level") is not None
+
         try:
+            if not _has_pdfminer_six():
+                _logger.warning("Attention: 'pdfminer.six' is not installed. PDF text extraction and AI sources context may not work properly.")
+                return None
+
             from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter  # noqa: PLC0415
             from pdfminer.converter import TextConverter  # noqa: PLC0415
             from pdfminer.layout import LAParams  # noqa: PLC0415
@@ -55,6 +62,36 @@ class IrAttachment(models.Model):
 
         return self._clean_pdf_content(buf)
 
+    def _get_attachment_content(self):
+        """
+        Get the content of the attachment.
+        For PDFs, prioritize content extracted via _compute_pdf_content over index_content.
+        For other file types, use index_content.
+        :return: The content of the attachment or None if the content is invalid
+        :rtype: str
+        """
+        self.ensure_one()
+        # For PDF files, try to get content via _compute_pdf_content first
+        if self.mimetype == 'application/pdf' and self.raw and self.raw.startswith(b'%PDF-'):
+            pdf_content = self._compute_pdf_content()
+            if pdf_content:
+                content = pdf_content
+            else:
+                # Fallback to index_content if PDF extraction fails
+                content = self.index_content
+        else:
+            # For non-PDF files, use index_content
+            content = self.index_content
+
+        # Validate the content
+        if not content or len(content.split()) <= 2:
+            return False
+        # Check for reasonable content length and word variety
+        words = content.split()
+        if len(content.strip()) >= 10 and len({w.lower() for w in words}) >= 2:
+            return content
+        return None
+
     def _clean_pdf_content(self, buf):
         """
         Clean the PDF content by removing unwanted characters and formatting.
@@ -66,10 +103,9 @@ class IrAttachment(models.Model):
         paragraphs = [re.sub(r'[ \t]+', ' ', p.strip()) for p in paragraphs]
         return '\n'.join(paragraphs)
 
-    def _setup_attachment_chunks(self, embedding_model):
+    def _setup_attachment_chunks(self, embedding_model, content=None):
         self.ensure_one()
-        content = self._compute_pdf_content()
-        chunks = self._chunk_text(content if content else self.index_content)
+        chunks = self._chunk_text(content)
         vals_list = []
         for chunk in chunks:
             if self.name:

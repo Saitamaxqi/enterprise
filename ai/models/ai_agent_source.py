@@ -83,11 +83,7 @@ class AIAgentSource(models.Model):
                 'attachment_id': attachment.id,
                 'type': 'binary',
             }
-
-            if not self._validate_content(attachment.index_content):
-                source['status'] = 'failed'
-                source['error_details'] = _("Invalid attachment. Failed to extract content.")
-            elif attachment in matching_attachments:
+            if attachment in matching_attachments:
                 source['status'] = 'indexed'
                 source['is_active'] = True
 
@@ -267,7 +263,7 @@ class AIAgentSource(models.Model):
 
             if self.url:
                 cron = 'ai.ir_cron_process_sources'
-            elif self.attachment_id and self._validate_content(self.attachment_id.index_content):
+            elif self.attachment_id:
                 cron = 'ai.ir_cron_generate_embedding'
             else:
                 cron = False
@@ -351,12 +347,6 @@ class AIAgentSource(models.Model):
             source.attachment_id = new_attachment.id
             # Check if embeddings already exist
             if not self.env['ai.embedding'].search_count([('checksum', '=', new_attachment.checksum), ('embedding_model', '=', embedding_model)], limit=1):
-                if not self._validate_content(new_attachment.index_content):
-                    source.write({
-                        'status': 'failed',
-                        'error_details': _("Invalid attachment. Failed to extract content."),
-                    })
-                    return False
                 return True
             else:
                 source.write({
@@ -367,13 +357,6 @@ class AIAgentSource(models.Model):
         else:
             # Create new attachment
             attachment_name = f"{source.name}-({attachment_url})"
-            if not self._validate_content(content):
-                source.write({
-                    'status': 'failed',
-                    'error_details': _("Invalid source. Failed to extract content."),
-                })
-                return False
-
             new_attachment = self.env['ir.attachment'].create({
                 'name': attachment_name,
                 'res_model': 'ai.agent.source',
@@ -385,18 +368,3 @@ class AIAgentSource(models.Model):
             })
             source.attachment_id = new_attachment.id
             return True
-
-    def _validate_content(self, content):
-        """
-        Validate the content of the source.
-        :param content: content of the source
-        :type content: str
-        :return: True if the content is valid, False otherwise
-        :rtype: bool
-        """
-        if not content or len(content.split()) <= 2:
-            return False
-
-        # Check for reasonable content length and word variety
-        words = content.split()
-        return len(content.strip()) >= 10 and len({w.lower() for w in words}) >= 2
