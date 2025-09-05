@@ -18,8 +18,14 @@
             <field name="product_category_ids" position="attributes">
                 <attribute name="invisible">is_workorder_step and operation_id</attribute>
             </field>
-            <xpath expr="//field[@name='note']" position="after">
-                <field name="worksheet_document" help="Upload your PDF file." widget="pdf_viewer"/>
+            <xpath expr="//page[@name='instructions']" position="after">
+                <page string="Worksheet" name="worksheet">
+                    <div invisible="worksheet_document" class="d-flex justify-content-center o_nocontent_help">
+                        <p class="o_view_nocontent_worksheet">No worksheet yet !</p>
+                    </div>
+                    <div style="width:calc(50% - 55px); height:1px; float:left;" invisible="worksheet_document"/> 
+                    <field name="worksheet_document" widget="pdf_viewer" style="flex-grow: 1"/>
+                </page>
             </xpath>
         </field>
     </record>
@@ -33,6 +39,67 @@
             <field name="picking_type_ids" position="replace">
                 <field name="picking_type_ids" widget="many2many_tags" domain="[('code', '=', 'mrp_operation'), ('company_id', '=', company_id)]"/>
             </field>
+        </field>
+    </record>
+
+    <record id="quality_point_routing_view_tree" model="ir.ui.view">
+        <field name="name">quality.point.routing.view.list</field>
+        <field name="model">quality.point</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="title"/>
+                <field name="test_type_id" string="Type"/>
+                <field name="name"/>
+                <field name="worksheet_document" column_invisible="1"/>
+                <button name="action_view_worksheet_document" class="btn-link" string="Worksheet" type="object" invisible="not worksheet_document"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="quality_point_routing_view_form" model="ir.ui.view">
+        <field name="name">quality.point.routing.view.form</field>
+        <field name="model">quality.point</field>
+        <field name="inherit_id" ref="quality.quality_point_view_form"/>
+        <field name="mode">primary</field>
+        <field name="priority">10000</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="invisible">not id</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_category_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_ids']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='operation_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="quality_point_worksheet_document_preview_form" model="ir.ui.view">
+        <field name="name">quality.point.worksheet.document.preview.form</field>
+        <field name="model">quality.point</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="worksheet_document" widget="pdf_viewer" nolabel="1" readonly="1"/>
+                </group>
+                <footer>
+                    <button string="Close" class="btn-primary" special="cancel" />
+                </footer>
+            </form>
         </field>
     </record>
 

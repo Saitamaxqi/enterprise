@@ -32,6 +32,8 @@ class MrpRoutingWorkcenter(models.Model):
 
     employee_ratio = fields.Float("Employee Capacity", default=1, help="Number of employees needed to complete operation.")
 
+    default_picking_type_ids = fields.One2many(comodel_name='stock.picking.type', compute='_compute_default_picking_type_ids')
+
     @api.depends('employee_ratio')
     def _compute_cost(self):
         super()._compute_cost()
@@ -48,6 +50,9 @@ class MrpRoutingWorkcenter(models.Model):
         for operation in self:
             operation.quality_point_count = data.get(operation.id, 0)
 
+    def _compute_default_picking_type_ids(self):
+        self.default_picking_type_ids = self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')])
+
     def write(self, vals):
         if 'active' in vals:
             self.with_context(active_test=False).quality_point_ids.write({'active': vals['active']})
@@ -62,21 +67,6 @@ class MrpRoutingWorkcenter(models.Model):
             for new_workcenter in new_workcenters:
                 new_workcenter.quality_point_ids._change_product_ids_for_bom(new_workcenter.bom_id)
         return new_workcenters
-
-    def action_mrp_workorder_show_steps(self):
-        self.ensure_one()
-        if self.bom_id.picking_type_id:
-            picking_type_ids = self.bom_id.picking_type_id.ids
-        else:
-            picking_type_ids = self.env['stock.picking.type'].search([('code', '=', 'mrp_operation')], limit=1).ids
-        action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.action_mrp_workorder_show_steps")
-        ctx = {
-            'default_company_id': self.company_id.id,
-            'default_operation_id': self.id,
-            'default_picking_type_ids': picking_type_ids,
-        }
-        action.update({'context': ctx, 'domain': [('operation_id', '=', self.id)]})
-        return action
 
 
 class QualityPoint(models.Model):
@@ -170,6 +160,17 @@ class QualityPoint(models.Model):
         if 'picking_type_ids' in vals:
             self.filtered(lambda p: not p.is_workorder_step).operation_id = False
         return res
+
+    def action_view_worksheet_document(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _("Worksheet Preview"),
+            'res_model': 'quality.point',
+            'res_id': self.id,
+            'views': [(self.env.ref('mrp_workorder.quality_point_worksheet_document_preview_form').id, 'form')],
+            'target': 'new',
+        }
 
 
 class QualityAlert(models.Model):

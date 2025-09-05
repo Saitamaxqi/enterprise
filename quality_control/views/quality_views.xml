@@ -819,7 +819,7 @@
                     </div>
                 </button>
             </xpath>
-            <xpath expr="//page[@name='instructions']" position="after">
+            <xpath expr="//page[@name='Notes']" position="before">
                 <page string="Message If Failure" name="message_if_failure"
                     invisible="test_type in ['picture', 'instructions', 'register_consumed_materials', 'print_label']">
                     <field name="failure_message"/>
