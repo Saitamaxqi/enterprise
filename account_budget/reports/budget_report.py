@@ -107,7 +107,11 @@ class BudgetReport(models.Model):
         self.env['budget.line'].flush_model()
         self.env['account.analytic.line'].flush_model()
         project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
-        plan_fnames = [plan._column_name() for plan in project_plan | other_plans]
+        plan_fnames = [
+            fname
+            for plan in project_plan | other_plans
+            if (fname := plan._column_name()) in self
+        ]
         return SQL(
             "%s UNION ALL %s",
             self._get_bl_query(plan_fnames),
