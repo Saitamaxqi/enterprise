@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
-        <record id="project.project_project_3" model="project.project">
-            <field name="use_documents">False</field>
-        </record>
-        <record id="project.project_home_construction" model="project.project">
-            <field name="use_documents">False</field>
-        </record>
-    </data>
-
     <!-- Demo data seems to be installed before post init hooks are executed,
         so we need to generate the project folders here -->
     <function model="project.project" name="_create_missing_folders">
-        <value model="project.project" eval="obj().search([('use_documents', '=', True)]).ids"/>
+        <value model="project.project" eval="obj().search([]).ids"/>
     </function>
 
     <record id="document_access_projects_admin" model="documents.access">

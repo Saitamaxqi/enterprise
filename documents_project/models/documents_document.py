@@ -45,10 +45,10 @@ class DocumentsDocument(models.Model):
         project_folder = self.env.ref('documents_project.document_project_folder')
         if self._project_folder_or_ancestor_in_self(project_folder):
             raise UserError(_('Uh-oh! The project app needs the "%s" folder, so you can’t delete it.', project_folder.name))
-        projects_with_folder = self.env['project.project'].search([('use_documents', '=', True), ('documents_folder_id', 'child_of', self.ids)])
+        projects_with_folder = self.env['project.project'].search([('documents_folder_id', 'child_of', self.ids)])
         if projects_with_folder:
             raise UserError(_(
-                "This action can't be performed, as it would remove the folders used by the following projects:\n%(projects)s\nTo continue, choose different folders or turn off the Documents feature for these projects.",
+                "This action can't be performed, as it would remove the folders used by the following projects:\n%(projects)s\nTo continue, choose different folders for these projects.",
                 projects="\n".join(f"- {project.name}" for project in projects_with_folder),
             ))
 
@@ -115,7 +115,6 @@ class DocumentsDocument(models.Model):
         if project_sudo := self._get_project_from_closest_ancestor().sudo():
             return {
                 'partner_id': project_sudo.partner_id.id,
-                'tag_ids': project_sudo.documents_tag_ids,
             }
         return {}
 

@@ -12,7 +12,7 @@ class IrAttachment(models.Model):
             else self.env['project.task'].browse(self.res_id).project_id
             if self.res_model == 'project.task'
             else False
-        )) and project.use_documents:
+        )):
             return {
                 'destination': str(project.documents_folder_id.id),
                 'display_name': project.documents_folder_id.display_name,

@@ -83,17 +83,8 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
     def test_project_folder_creation(self):
         project = self.env['project.project'].create({
             'name': 'Project',
-            'use_documents': False,
         })
-        self.assertFalse(project.documents_folder_id, "A project created with the documents feature disabled should have no workspace")
-        project.use_documents = True
-        self.assertTrue(project.documents_folder_id, "A workspace should be created for the project when enabling the documents feature")
-
-        documents_folder = project.documents_folder_id
-        project.use_documents = False
-        self.assertTrue(project.documents_folder_id, "The project should keep its workspace when disabling the feature")
-        project.use_documents = True
-        self.assertEqual(documents_folder, project.documents_folder_id, "No workspace should be created when enablind the documents feature if the project already has a workspace")
+        self.assertTrue(project.documents_folder_id, "A workspace should be created for the project")
 
     def test_project_task_access_document(self):
         """
@@ -194,8 +185,6 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
         })
         with self.assertRaises(UserError):
             project.documents_folder_id.unlink()
-        project.use_documents = False
-        project.documents_folder_id.unlink()
 
         project_1, project_2, project_3 = self.env['project.project'].create([{
             'name': f"Test Project {i}",
@@ -208,17 +197,8 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
         with self.assertRaises(UserError, msg="It shouldn't be possible to delete a folder that is used by one or multiple projects."):
             parent_folder.unlink()
 
-        (project_1 | project_3).use_documents = False
-        with self.assertRaises(UserError, msg="It shouldn't be possible to delete a folder that is used by one or multiple projects."):
-            parent_folder.unlink()
-
-        project_2.use_documents = False
-        # Should not raise an error
-        parent_folder.unlink()
-
     def test_add_attachment_to_project_folder_id(self):
         project = self.env['project.project'].create({'name': "Test Project"})
-        self.assertTrue(project.use_documents)
         self.assertTrue(project.documents_folder_id)
         task = self.env['project.task'].create({'name': "Test Task", 'project_id': project.id})
         project_attachment, task_attachment = self.env['ir.attachment'].create([
@@ -230,9 +210,3 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
                 'destination': str(project.documents_folder_id.id),
                 'display_name': project.documents_folder_id.display_name,
             })
-        project.use_documents = False
-        for attachment in (project_attachment, task_attachment):
-            self.assertNotEqual(
-                attachment.get_documents_operation_add_destination().get('destination'),
-                str(project.documents_folder_id.id)
-            )

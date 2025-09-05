@@ -10,17 +10,14 @@ class ProjectProject(models.Model):
     _name = 'project.project'
     _inherit = ['project.project']
 
-    use_documents = fields.Boolean("Documents", default=True)
     documents_folder_id = fields.Many2one(
-        'documents.document', string="Folder", copy=False, context=lambda env: {
+        'documents.document', string="Documents Folder", copy=False, context=lambda env: {
             'default_folder_id': env.company.documents_project_folder_id.id,
         },
         domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False), "
                "'|', ('company_id', '=', False), ('company_id', '=', company_id)]",
         index='btree_not_null',
         help="Folder in which all of the documents of this project will be categorized.")
-    documents_tag_ids = fields.Many2many(
-        'documents.tag', 'project_documents_tag_rel', string="Default Tags", copy=True)
     document_count = fields.Integer(
         compute='_compute_documents', export_string_translation=False)
     document_ids = fields.One2many('documents.document', compute='_compute_documents', export_string_translation=False)
@@ -50,10 +47,6 @@ class ProjectProject(models.Model):
             ('id', 'child_of', self.documents_folder_id.ids)
         ])
         for project in self:
-            if not project.use_documents:
-                project.document_ids = self.env['documents.document']
-                project.document_count = 0
-                continue
             document_ids = documents.filtered(lambda doc: doc.parent_path.startswith(project.documents_folder_id.parent_path))
             project.document_ids = document_ids
             project.document_count = len(document_ids)
@@ -84,7 +77,7 @@ class ProjectProject(models.Model):
     def create(self, vals_list):
         projects = super().create(vals_list)
         if not self.env.context.get('no_create_folder'):
-            projects.filtered(lambda project: project.use_documents)._create_missing_folders()
+            projects._create_missing_folders()
         return projects
 
     def write(self, vals):
@@ -115,7 +108,7 @@ class ProjectProject(models.Model):
                 if project.documents_folder_id and project.documents_folder_id.company_id:
                     project.documents_folder_id.company_id = project.company_id
         if not self.env.context.get('no_create_folder'):
-            self.filtered('use_documents')._create_missing_folders()
+            self._create_missing_folders()
         if project_root_documents:
             project_root_documents.folder_id = self.documents_folder_id
 
@@ -127,7 +120,7 @@ class ProjectProject(models.Model):
         copied_projects = super(ProjectProject, self.with_context(no_create_folder=True)).copy(default).with_env(self.env)
 
         for old_project, new_project in zip(self, copied_projects):
-            if not self.env.context.get('no_create_folder') and new_project.use_documents and old_project.documents_folder_id:
+            if not self.env.context.get('no_create_folder') and old_project.documents_folder_id:
                 new_project.documents_folder_id = old_project.documents_folder_id.sudo().copy(
                         {'name': new_project.name, 'owner_id': False}
                     )
@@ -135,7 +128,7 @@ class ProjectProject(models.Model):
 
     def _get_stat_buttons(self):
         buttons = super()._get_stat_buttons()
-        if self.use_documents and self.documents_folder_id.user_permission != 'none':
+        if self.documents_folder_id.user_permission != 'none':
             buttons.append({
                 'icon': 'file-text-o',
                 'text': self.env._('Documents'),
@@ -145,7 +138,6 @@ class ProjectProject(models.Model):
                 'additional_context': json.dumps({
                     'active_id': self.id,
                 }),
-                'show': self.use_documents,
                 'sequence': 20,
             })
         return buttons
@@ -160,5 +152,6 @@ class ProjectProject(models.Model):
                 'active_id': self.id,
                 'active_model':  'project.project',
                 'searchpanel_default_user_folder_id': default_user_folder_id,
+                'no_documents_unique_folder_id': True,
             }
         }

@@ -23,7 +23,6 @@
             <field name="stage_id" ref="project.project_project_stage_1"/>
             <field name="account_id" ref="analytic_renovation_architect"/>
             <field name="documents_folder_id" ref="documents_renovations_projects"/>
-            <field name="documents_tag_ids" eval="[Command.link(ref('documents_folder_tag_unsorted'))]"/>
         </record>
 
         <record id="project_task_visit_customer" model="project.task">
@@ -64,20 +63,20 @@
             <field name="service_tracking">project_only</field>
             <field name="project_template_id" ref="project_project_renovation_architect"/>
         </record>
-  
+
         <record id="sale_order_1" model="sale.order">
             <field name="partner_id" ref="base.res_partner_2"/>
             <field name="user_id" ref="base.user_admin"/>
             <field name="client_order_ref">DOC</field>
         </record>
-    
+
         <record id="sale_order_1_sale_line_1" model="sale.order.line">
             <field name="order_id" ref="sale_order_1"/>
             <field name="sequence" eval="1"/>
             <field name="product_id" search="[('product_tmpl_id', '=', ref('product_1'))]"/>
             <field name="product_uom_qty">30</field>
         </record>
-    
+
         <function model="sale.order" name="action_confirm" eval="[[ref('sale_order_1')]]" context="{'action_no_send_mail': True}"/>
     </data>
 </odoo>

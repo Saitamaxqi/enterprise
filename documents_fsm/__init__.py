@@ -5,7 +5,7 @@ from . import models
 
 
 def _documents_fsm_post_init(env):
-    fsm_projects = env["project.project"].search([("is_fsm", "=", True), ("use_documents", "=", True)])
+    fsm_projects = env["project.project"].search([("is_fsm", "=", True)])
 
     # Search for folders that are descendants of fsm_projects folders and have documents
     subfolders_with_documents = env["documents.document"].search([
@@ -26,13 +26,11 @@ def _documents_fsm_post_init(env):
 
     for project in fsm_projects:
         if project.document_count == 0:
-            project.use_documents = False
 
             project_folder = project.documents_folder_id
+            project.documents_folder_id = False
             if (
                 project_folder.document_count == 0
                 and project_folder.id not in folders_with_non_empty_subfolders
             ):
-                project.documents_folder_id.unlink()
-            else:
-                project.documents_folder_id = False
+                project_folder.unlink()

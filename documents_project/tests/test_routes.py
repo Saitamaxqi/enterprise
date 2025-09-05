@@ -78,7 +78,6 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
     def test_upload_document_propagates_values(self):
         """Check that relevant project-defined values are passed on documents uploaded inside the project folder."""
         self.project_pigs.partner_id = self.partner_1
-        self.project_pigs.documents_tag_ids = self.env['documents.tag'].create({'name': 'Test Project Tag'})
 
         self.project_pigs.documents_folder_id.access_via_link = 'edit'
         self.authenticate(None, None)
@@ -92,7 +91,6 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
             res.raise_for_status()
         document = capture.records.ensure_one()
         self.assertEqual(document.partner_id, self.partner_1)
-        self.assertEqual(document.tag_ids, self.project_pigs.documents_tag_ids)
 
     def test_upload_to_project_folder_without_sharing_project(self):
         """Test sharing the project's folder without sharing the project itself.
