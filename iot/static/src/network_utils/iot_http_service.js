@@ -191,6 +191,10 @@ export class IotHttpService {
         messageId = null,
     ) {
         messageId ??= uuid();
+        if (!data) {
+            data = {};
+        }
+        data.action_unique_id = messageId;
 
         await this._attemptFallbacks({
             iotBoxId,
