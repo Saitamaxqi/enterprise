@@ -115,7 +115,7 @@ class HTMLExtractor:
             return response.content, None
         except requests.exceptions.RequestException as e:
             error_msg = f"Failed to fetch URL: {e!s}"
-            _logger.error(error_msg)
+            _logger.warning(error_msg)
             return None, error_msg
 
     def _get_title(self, tree):
