@@ -847,12 +847,13 @@ export const EditablePDFIframeMixin = (pdfClass) =>
         }
 
         onSidebarDragStart(e) {
-            if (!this.isActive) {
+            const firstPage = this.root.querySelector('.page[data-page-number="1"]');
+            if (!firstPage || !this.isActive) {
+                e.preventDefault();
                 return;
             }
             this.setCanvasVisibility("hidden");
             const signTypeElement = e.currentTarget;
-            const firstPage = this.root.querySelector('.page[data-page-number="1"]');
             firstPage.insertAdjacentHTML(
                 "beforeend",
                 renderToString(
@@ -887,7 +888,9 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             }
             this.scrollCleanup();
             const firstPage = this.root.querySelector('.page[data-page-number="1"]');
-            firstPage.removeChild(this.ghostSignItem);
+            if (firstPage.contains(this.ghostSignItem)) {
+                firstPage.removeChild(this.ghostSignItem);
+            }
             this.ghostSignItem = false;
             this.setCanvasVisibility("visible");
         }
@@ -907,6 +910,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             e.preventDefault();
             const page = e.currentTarget;
             const textLayer = page.querySelector(".textLayer");
+            if (!textLayer) return;
             const targetPage = Number(page.dataset.pageNumber);
 
             const { top, left } = offset(textLayer);
