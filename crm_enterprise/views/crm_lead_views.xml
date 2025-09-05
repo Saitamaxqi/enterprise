@@ -28,6 +28,7 @@
                     <field name="recurring_revenue_monthly_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
+                    <field name="stage_id_color" invisible="1"/>
                 </graph>
             </field>
         </record>
@@ -49,6 +50,7 @@
                     <field name="recurring_revenue_monthly_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
+                    <field name="stage_id_color" invisible="1"/>
                 </pivot>
             </field>
         </record>
@@ -78,6 +80,7 @@
                     <field name="recurring_revenue_monthly_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
+                    <field name="stage_id_color" invisible="1"/>
                 </graph>
             </field>
         </record>
@@ -116,6 +119,7 @@
                     <field name="recurring_revenue_monthly_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue" groups="!crm.group_use_recurring_revenues" invisible="1"/>
                     <field name="recurring_revenue_prorated" groups="!crm.group_use_recurring_revenues" invisible="1"/>
+                    <field name="stage_id_color" invisible="1"/>
                 </cohort>
             </field>
         </record>

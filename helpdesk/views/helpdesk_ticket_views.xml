@@ -45,6 +45,7 @@
                 <field name="sla_deadline_hours" widget="float_time"/>
                 <field name="color" invisible="1"/>
                 <field name="answered_customer_message_count" invisible="1"/>
+                <field name="stage_id_color" invisible="1"/>
                 <field name="total_response_hours" invisible="1" widget="float_time"/>
             </graph>
         </field>
@@ -61,6 +62,7 @@
                 <field name="assign_hours" string="Working Hours to Assign" widget="float_time"/>
                 <field name="color" invisible="1"/>
                 <field name="answered_customer_message_count" invisible="1"/>
+                <field name="stage_id_color" invisible="1"/>
                 <field name="total_response_hours" invisible="1"/>
             </pivot>
         </field>
@@ -468,6 +470,7 @@
         <field name="arch" type="xml">
             <cohort string="Tickets" date_start="create_date" date_stop="close_date" interval="day" sample="1">
                 <field name="color" invisible="1"/>
+                <field name="stage_id_color" invisible="1"/>
             </cohort>
         </field>
     </record>
@@ -943,6 +946,7 @@
                 <field name="name"/>
                 <field name="close_hours" type="measure"/>
                 <field name="color" invisible="1"/>
+                <field name="stage_id_color" invisible="1"/>
             </pivot>
         </field>
     </record>
@@ -952,6 +956,7 @@
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
             <graph string="Performance Analysis" sample="1">
+                <field name="stage_id_color" invisible="1"/>
                 <field name="stage_id"/>
                 <field name="team_id"/>
                 <field name="close_hours" type="measure"/>
