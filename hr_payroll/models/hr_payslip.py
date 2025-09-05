@@ -358,7 +358,7 @@ class HrPayslip(models.Model):
                 payslip.negative_net_to_report_display = payslips_to_report
                 payslip.negative_net_to_report_amount = payslips_to_report._get_line_values(['NET'], compute_sum=True)['NET']['sum']['total']
                 payslip.negative_net_to_report_message = _(
-                    'Note: There are previous payslips with a negative amount for a total of %s to report.',
+                    'There are previous payslips with a negative amount for a total of %s to report.',
                     round(payslip.negative_net_to_report_amount, 2))
                 if payslips_to_report and payslip.state == 'draft' and payslip.line_ids and payslip.version_id and (
                     not payslip.activity_ids.filtered(lambda a: a.activity_type_id == activity_type)

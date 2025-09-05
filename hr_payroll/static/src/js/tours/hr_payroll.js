@@ -114,7 +114,7 @@ registry.category("web_tour.tours").add('payroll_tours', {
         run: "click",
     },
     {
-        trigger: `.o_hr_payroll_worked_days_input`,
+        trigger: `.o_hr_payroll_worked_days`,
         content: markup(_t('On the first tab is the amount of worked time giving you a <strong>gross amount</strong>.')),
         tooltipPosition: 'top',
         run: "click",

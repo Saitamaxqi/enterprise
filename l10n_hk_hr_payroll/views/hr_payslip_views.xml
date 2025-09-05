@@ -8,7 +8,7 @@
             <field name='is_superuser' position="after">
                 <field name="l10n_hk_worked_days_leaves_count" invisible="1"/>
             </field>
-            <xpath expr="//page[@name='worked_days_input']//list/field[@name='name']" position="after">
+            <xpath expr="//page[@name='worked_days']//list/field[@name='name']" position="after">
                 <field
                     name="l10n_hk_leave_id"
                     column_invisible="parent.l10n_hk_worked_days_leaves_count == 0 or parent.country_code != 'HK'"/>

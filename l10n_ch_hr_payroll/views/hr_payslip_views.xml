@@ -55,10 +55,10 @@
                 <field name="l10n_ch_after_departure_payment" string="After Departure Payment"/>
                 <field name="l10n_ch_is_code" invisible="not l10n_ch_is_code"/>
             </field>
-            <page name="worked_days_input" position="attributes">
+            <page name="worked_days" position="attributes">
                 <attribute name="invisible">1</attribute>
             </page>
-            <page name="worked_days_input" position="before">
+            <page name="worked_days" position="before">
                 <page string="Wage Types">
                 <separator string="Monthly Wages"/>
                 <field name="l10n_ch_swiss_wage_ids" readonly="state in ['cancel', 'validated', 'paid']">
