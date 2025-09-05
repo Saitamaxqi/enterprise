@@ -36,16 +36,18 @@
                 <field name="currency_id"/>
                 <field name="payment_report_format"/>
                 <field name="payment_report_filename"/>
+                <field name="payslips_with_issues"/>
+                <field name="has_error"/>
                 <templates>
                     <t t-name="menu" class="d-flex flex-column">
-                        <button name="action_confirm" type="object" class="btn oe_highlight" string="Compute" invisible="state != '01_ready' or not payslip_count"/>
-                        <button name="action_validate" type="object" class="btn oe_highlight" string="Confirm" invisible="state != '01_ready'" context="{'payslip_generate_pdf': True}"/>
+                        <button name="action_confirm" type="object" class="btn oe_highlight" string="Compute" invisible="state != '01_ready' or not empty_payslips"/>
+                        <button name="action_validate" type="object" class="btn oe_highlight" string="Confirm" invisible="state != '01_ready' or empty_payslips" context="{'payslip_generate_pdf': True}"/>
                         <button name="action_paid" type="object" class="btn btn-primary" string="Mark as Paid" invisible="state != '02_close'" options="{'is_priority': True}"/>
                         <field name="payment_report" filename="payment_report_filename" format="payment_report_format"
                                widget="payrun_binary" class="btn btn-secondary btn-addr align-content-center text-center"  invisible="not payment_report"/>
                         <button name="action_unpaid" type="object" class="btn btn-secondary" string="Revert" invisible="state != '03_paid'"/>
                         <button name="action_payment_report" type="object" class="btn btn-secondary" string="Payment Report" invisible="state != '02_close'"/>
-                        <button name="action_draft" type="object" class="btn btn-secondary" string="Set to Draft" invisible="state not in ('01_ready', '02_close')"/>
+                        <button name="action_draft" type="object" class="btn btn-secondary" string="Set to Draft" invisible="state != '02_close'"/>
                         <button name="action_payroll_hr_version_list_view_payrun" type="object" class="btn btn-secondary" string="Generate Payslips" invisible="state in ('02_close', '03_paid')"/>
                         <button name="unlink" type="object" class="btn text-danger" string="Delete"/>
                     </t>
