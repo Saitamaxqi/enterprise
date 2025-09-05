@@ -326,13 +326,32 @@
         </field>
     </record>
 
+    <record id="calendar_event_view_calendar_booking_resource" model="ir.ui.view">
+        <field name="name">calendar.event.view.calendar.booking.resource.appointment</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="appointment.calendar_event_view_calendar"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_ids']" position="attributes">
+                <attribute name="filters"/>
+                <attribute name="write_model"/>
+                <attribute name="write_field"/>
+                <attribute name="filter_field"/>
+                <attribute name="avatar_field"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_ids']" position="after">
+                <field name="appointment_resource_ids" filters="1" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="calendar_event_action_view_bookings_resources" model="ir.actions.act_window">
         <field name="name">Resource Bookings</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">calendar.event</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'gantt', 'view_id': ref('appointment.calendar_event_view_gantt_booking_resource')}),
-            (0, 0, {'view_mode': 'calendar', 'view_id': ref('appointment.calendar_event_view_calendar')}),
+            (0, 0, {'view_mode': 'calendar', 'view_id': ref('appointment.calendar_event_view_calendar_booking_resource')}),
             (0, 0, {'view_mode': 'list', 'view_id': ref('appointment.calendar_event_view_tree_booking')}),
         ]"/>
         <field name="view_mode">gantt,calendar,list,form</field>
