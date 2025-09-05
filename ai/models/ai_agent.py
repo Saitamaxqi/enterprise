@@ -288,10 +288,10 @@ class AIAgent(models.Model):
         string="Sources",
     )
     sources_fully_processed = fields.Boolean(compute="_compute_sources_fully_processed", default=True)
-    is_natural_language_query_agent = fields.Boolean(
+    is_ask_ai_agent = fields.Boolean(
         'Is Natural Language Query Agent',
-        compute='_compute_is_natural_language_query_agent',
-        search='_search_is_natural_language_query_agent'
+        compute='_compute_is_ask_ai_agent',
+        search='_search_is_ask_ai_agent'
     )
 
     @api.model_create_multi
@@ -427,9 +427,9 @@ class AIAgent(models.Model):
 
     @api.model
     def action_ask_ai(self, user_prompt: str):
-        ask_ai_agent = self._get_potential_natural_language_query_agent()
+        ask_ai_agent = self._get_potential_ask_ai_agent()
         if not ask_ai_agent:
-            raise UserError(_('No AI agent is configured with the Natural Language Query topic. Please contact your administrator.'))
+            raise UserError(_('No configured Ask AI agent. Please contact your administrator.'))
 
         channel = ask_ai_agent._get_or_create_ai_chat()
         return {
@@ -443,36 +443,39 @@ class AIAgent(models.Model):
 
     @api.model
     def get_ask_ai_agent(self):
-        agent = self._get_potential_natural_language_query_agent()
+        agent = self._get_potential_ask_ai_agent()
         return agent.read(['id', 'name'])[0] if agent else None
 
     @api.model
-    def _get_potential_natural_language_query_agent(self):
-        agents = self.search([('is_natural_language_query_agent', '=', True)])
+    def _get_potential_ask_ai_agent(self):
+        agents = self.search([('is_ask_ai_agent', '=', True)])
         if not agents:
             return None
 
-        # prioritize the one that exclusively has the Natural Language Query topic
         agents = sorted(agents, key=lambda a: len(a.topic_ids))
         return agents[0]
 
-    def _compute_is_natural_language_query_agent(self):
-        natural_language_query_topic = self.env.ref('ai.ai_topic_natural_language_query', raise_if_not_found=False)
-        if not natural_language_query_topic:
-            self.is_natural_language_query_agent = False
-        else:
-            for agent in self:
-                agent.is_natural_language_query_agent = natural_language_query_topic.id in agent.topic_ids.ids
+    @api.model
+    def _get_ask_ai_topics(self):
+        return [t for t in (
+            self.env.ref('ai.ai_topic_natural_language_query', raise_if_not_found=False),
+            self.env.ref('ai.ai_topic_information_retrieval_query', raise_if_not_found=False)
+        ) if t]
 
-    def _search_is_natural_language_query_agent(self, operator, value):
+    def _compute_is_ask_ai_agent(self):
+        ask_ai_topics = self._get_ask_ai_topics()
+        for agent in self:
+            agent.is_ask_ai_agent = bool(set(agent.topic_ids) & set(ask_ai_topics))
+
+    def _search_is_ask_ai_agent(self, operator, value):
         if operator not in ('=', '!='):
             raise UserError(_("Invalid search operator."))
-        natural_language_query_topic = self.env.ref('ai.ai_topic_natural_language_query', raise_if_not_found=False)
-        if natural_language_query_topic:
+
+        if ask_ai_topics := self._get_ask_ai_topics():
             if operator == '=' and value or operator == '!=' and not value:  # truthy
-                return [("topic_ids", "in", [natural_language_query_topic.id])]
+                return [("topic_ids", "in", [t.id for t in ask_ai_topics])]
             elif operator == '=' and not value or operator == '!=' and value:  # falsy
-                return [("topic_ids", "not in", [natural_language_query_topic.id])]
+                return [("topic_ids", "not in", [t.id for t in ask_ai_topics])]
         else:
             return [('id', '=', False)]
 
@@ -725,7 +728,7 @@ class AIAgent(models.Model):
     def _parse_user_message(self, mail_message):
         self.ensure_one()
         session_info_context = ""
-        if self.is_natural_language_query_agent:
+        if self.is_ask_ai_agent:
             context_lines = []
             context_lines.append("<session_info_context>")
             context_lines.append(

@@ -20,6 +20,9 @@ async function askAIProvide(env, options) {
     const orm = env.services.orm;
     const actions = env.services.action;
     const agent = await orm.cache().call("ai.agent", "get_ask_ai_agent", []);
+    if (!agent) {
+        return [];
+    }
     return [
         {
             action: async () => {
@@ -54,7 +57,12 @@ patch(CommandPalette.prototype, {
     async setCommands(namespace, options = {}) {
         const [askAICommand] = await askAIProvide(this.env, options);
         const result = await super.setCommands(namespace, options);
-        if (namespace === "default" && this.state.commands.length === 0 && options.searchValue) {
+        if (
+            askAICommand &&
+            namespace === "default" &&
+            this.state.commands.length === 0 &&
+            options.searchValue
+        ) {
             this.state.commands = markRaw([
                 {
                     ...askAICommand,
