@@ -1,5 +1,6 @@
-import { Component, useState, onWillStart } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
+import { debounce } from "@web/core/utils/timing";
 import { STATIC_COG_GROUP_ACTION_PIN } from "./documents_cog_menu_group";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { _t } from "@web/core/l10n/translation";
@@ -29,14 +30,16 @@ export class DocumentCogMenuPinAction extends Component {
         this.documentService = useService("document.document");
         this.notification = useService("notification");
 
-        this.documentsState = useState({ actions: [] });
+        this.documentsState = useState({ actions: [], isLoading: true });
+        this._reloadSearchModel = debounce(() => {
+            this.env.searchModel._reloadSearchModel(true);
+        }, 1500);
 
-        onWillStart(async () => {
-            const folderId = this.env.searchModel.getSelectedFolderId();
-            this.documentService.getActions(folderId).then((actions) => {
-                // Do not block `onWillStart` to not create a lag when opening the cogwheel
-                this.documentsState.actions = actions;
-            });
+        const folderId = this.env.searchModel.getSelectedFolderId();
+        this.documentService.getActions(folderId).then((actions) => {
+            // Do not block `onWillStart` to not create a lag when opening the cogwheel
+            this.documentsState.actions = actions;
+            this.documentsState.isLoading = false;
         });
     }
 
@@ -49,11 +52,15 @@ export class DocumentCogMenuPinAction extends Component {
             return;
         }
 
-        this.documentsState.actions = await this.documentService.enableAction(
-            currentFolderId,
-            actionId
-        );
-        this.env.searchModel._reloadSearchModel(true);
+        // Toggle immediately the action to not create a lag (will be restored in "catch" if it fails)
+        const action = this.documentsState.actions.find((a) => a.id === actionId);
+        action.is_embedded = !action.is_embedded;
+        try {
+            await this.documentService.enableAction(currentFolderId, actionId);
+        } catch {
+            action.is_embedded = !action.is_embedded;
+        }
+        this._reloadSearchModel();
     }
 }
 
