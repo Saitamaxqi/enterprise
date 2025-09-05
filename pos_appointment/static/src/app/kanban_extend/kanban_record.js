@@ -45,16 +45,16 @@ export class PosAppointmentKanbanPopover extends Component {
 
     getButtonClass(status) {
         const classMap = {
-            booked: "o_kanban_color_3",
+            booked: "o_kanban_color_2",
             attended: "o_kanban_color_10",
-            no_show: "o_kanban_color_1 text-white",
+            no_show: "o_kanban_color_1",
         };
-        return this.props.record.data.appointment_status === status ? classMap[status] : "";
+        return this.props.record.data.appointment_status === status ? `${classMap[status]}` : "";
     }
 
     get buttons() {
         return [
-            { status: "cancelled", label: _t("Delete"), extraClass: "o_kanban_color_1 text-white" },
+            { status: "cancelled", label: _t("Delete"), extraClass: "text-bg-danger" },
             { status: "booked", label: _t("Booked"), extraClass: "ms-4" },
             { status: "attended", label: _t("Check In"), extraClass: "" },
             { status: "no_show", label: _t("No Show"), extraClass: "" },

@@ -146,7 +146,7 @@
                             <div class="d-flex gap-1">
                                 <field name="resource_ids" widget="kanban.many2many_tags" readonly="1" class="mt-1" />
                                 <div class="px-2 py-1 rounded align-self-start text-nowrap"
-                                    t-attf-class="{{ {'booked': 'o_kanban_color_3', 'attended': 'o_kanban_color_10', 'no_show': 'o_kanban_color_1 text-white'}[record.appointment_status.raw_value] }}">
+                                    t-attf-class="{{ {'booked': 'o_kanban_color_2', 'attended': 'o_kanban_color_10', 'no_show': 'o_kanban_color_1'}[record.appointment_status.raw_value] }}">
                                     <t t-if="record.appointment_status.raw_value == 'booked'">Waiting</t>
                                     <t t-elif="record.appointment_status.raw_value == 'attended'">Check In</t>
                                     <t t-elif="record.appointment_status.raw_value == 'no_show'">No show</t>
