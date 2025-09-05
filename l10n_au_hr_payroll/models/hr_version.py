@@ -586,6 +586,5 @@ class HrVersion(models.Model):
                 "l10n_au_workplace_giving",
                 "l10n_au_workplace_giving_employer",
                 "l10n_au_yearly_wage",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

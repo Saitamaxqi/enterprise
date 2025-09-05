@@ -35,6 +35,5 @@ Benefit in kind is taxed as employment income.""")
                 "l10n_lt_benefits_in_kind",
                 "l10n_lt_pension",
                 "l10n_lt_time_limited",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

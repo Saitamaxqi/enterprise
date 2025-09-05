@@ -41,6 +41,5 @@ class HrVersion(models.Model):
                 "l10n_ae_number_of_leave_days",
                 "l10n_ae_other_allowances",
                 "l10n_ae_transportation_allowance",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

@@ -230,6 +230,5 @@ class HrVersion(models.Model):
                 "l10n_us_pre_retirement_matching_yearly_cap",
                 "l10n_us_pre_retirement_type",
                 "l10n_us_worker_compensation_id",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

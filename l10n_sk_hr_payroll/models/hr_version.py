@@ -14,6 +14,5 @@ class HrVersion(models.Model):
             whitelisted_fields += [
                 "l10n_sk_meal_voucher_employee",
                 "l10n_sk_meal_voucher_employer",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

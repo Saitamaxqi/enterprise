@@ -29,6 +29,5 @@ class HrVersion(models.Model):
                 "l10n_sa_other_allowances",
                 "l10n_sa_transportation_allowance",
                 "l10n_sa_wps_description",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

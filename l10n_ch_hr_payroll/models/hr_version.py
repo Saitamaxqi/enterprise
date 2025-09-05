@@ -586,6 +586,5 @@ class HrVersion(models.Model):
                 "l10n_ch_total_occupation_rate",
                 "l10n_ch_yearly_holidays",
                 "l10n_ch_yearly_paid_public_holidays",
-                "overtime_from_attendance",
             ]
         return whitelist_fields

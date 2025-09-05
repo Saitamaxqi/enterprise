@@ -59,6 +59,5 @@ class HrVersion(models.Model):
                 "l10n_ke_pension_allowance",
                 "l10n_ke_pension_contribution",
                 "l10n_ke_voluntary_medical_insurance",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

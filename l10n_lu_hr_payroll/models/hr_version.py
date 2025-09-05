@@ -243,6 +243,5 @@ class HrVersion(models.Model):
                 "l10n_lu_meal_voucher_amount",
                 "l10n_lu_meal_voucher_employee_computation",
                 "l10n_lu_meal_voucher_employer_cost",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

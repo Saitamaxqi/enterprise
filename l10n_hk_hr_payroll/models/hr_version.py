@@ -94,6 +94,5 @@ class HrVersion(models.Model):
         if self.env.company.country_id.code == "HK":
             whitelisted_fields += [
                 'l10n_hk_internet',
-                'overtime_from_attendance'
             ]
         return whitelisted_fields

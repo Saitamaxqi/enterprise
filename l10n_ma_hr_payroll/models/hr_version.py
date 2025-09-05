@@ -26,6 +26,5 @@ class HrVersion(models.Model):
                 "l10n_ma_meal_allowance",
                 "l10n_ma_medical_allowance",
                 "l10n_ma_transport_exemption",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

@@ -14,6 +14,5 @@ class HrVersion(models.Model):
         if self.env.company.country_id.code == "NL":
             whitelisted_fields += [
                 "l10n_nl_30_percent",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

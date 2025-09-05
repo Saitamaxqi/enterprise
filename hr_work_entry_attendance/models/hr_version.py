@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 from pytz import timezone, utc
 from datetime import timedelta
 
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.tools.intervals import Intervals
 
 
@@ -183,3 +183,7 @@ class HrVersion(models.Model):
         if interval[2]._name == 'hr.attendance.overtime.line':
             vals.append(('overtime_id', interval[2].id))
         return vals
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        return super()._get_whitelist_fields_from_template() + ['overtime_from_attendance']

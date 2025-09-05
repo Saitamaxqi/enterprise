@@ -40,6 +40,5 @@ class HrVersion(models.Model):
                 "l10n_mx_payment_period_vouchers",
                 "l10n_mx_savings_fund",
                 "l10n_mx_transport_amount",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields

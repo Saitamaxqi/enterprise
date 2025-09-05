@@ -450,7 +450,6 @@ class HrVersion(models.Model):
                 "l10n_in_medical_insurance",
                 "l10n_in_provident_fund",
                 "l10n_in_tds",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields
 
