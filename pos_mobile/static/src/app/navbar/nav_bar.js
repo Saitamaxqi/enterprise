@@ -1,10 +1,11 @@
-import mobile from "@web_mobile/js/services/core";
+import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
-import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
+import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
-import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
+import { cookie } from "@web/core/browser/cookie";
+import mobile from "@web_mobile/js/services/core";
 
 patch(Navbar.prototype, {
     setup() {
@@ -22,21 +23,26 @@ patch(Navbar.prototype, {
 
                 /** @type {Display[]} */
                 const displays = result.data;
+                const customerDisplayId = cookie.get("pos_customer_display_id");
                 displays.forEach((display) => {
-                    mobile.methods
-                        .showDisplayAndGoToUrl({
-                            url: "about:blank",
-                            displayId: display.displayId,
-                        })
-                        .catch((error) => {
-                            logPosMessage(
-                                "Navbar",
-                                "setup",
-                                "Error opening customer display",
-                                false,
-                                [error]
-                            );
-                        });
+                    if (customerDisplayId && display.displayId.toString() === customerDisplayId) {
+                        this._showDisplayAndGoToUrl({ displayId: display.displayId });
+                    } else {
+                        mobile.methods
+                            .showDisplayAndGoToUrl({
+                                url: "about:blank",
+                                displayId: display.displayId,
+                            })
+                            .catch((error) => {
+                                logPosMessage(
+                                    "Navbar",
+                                    "setup",
+                                    "Error opening customer display",
+                                    false,
+                                    [error]
+                                );
+                            });
+                    }
                 });
             });
         }
@@ -98,6 +104,7 @@ patch(Navbar.prototype, {
             });
     },
     _showDisplayAndGoToUrl({ displayId }) {
+        cookie.set("pos_customer_display_id", displayId);
         mobile.methods
             .showDisplayAndGoToUrl({
                 url: `${this.pos.config._base_url}/pos_customer_display/${this.pos.config.id}/${this.pos.config.access_token}`,
