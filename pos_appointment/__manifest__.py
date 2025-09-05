@@ -34,6 +34,7 @@
             'appointment/static/src/components/appointment_type_sync_duration/*',
             'appointment/static/src/views/gantt/**/*',
             'appointment/static/src/xml/appointment_svg.xml',
+            'calendar/static/src/scss/calendar_event_views.scss',
             'calendar/static/src/views/**/*',
             ('remove', 'web_gantt/static/src/**/*.dark.scss'),
         ],

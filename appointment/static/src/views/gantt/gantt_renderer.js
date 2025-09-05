@@ -2,17 +2,18 @@ import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { user } from "@web/core/user";
 import { GanttRenderer } from "@web_gantt/gantt_renderer";
-import { isHtmlEmpty } from "@web/core/utils/html";
 import { patch } from "@web/core/utils/patch";
 const { DateTime } = luxon;
 import { onWillStart } from "@odoo/owl";
 import { AppointmentBookingGanttRendererControls } from "./gantt_renderer_controls";
+import { AppointmentGanttPopover } from "./gantt_popover";
 
 export class AppointmentBookingGanttRenderer extends GanttRenderer {
     static pillTemplate = "appointment.AppointmentBookingGanttRendererPill";
     static components = {
         ...GanttRenderer.components,
         GanttRendererControls: AppointmentBookingGanttRendererControls,
+        Popover: AppointmentGanttPopover,
     }
 
     /**
@@ -69,6 +70,7 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
             color = 8;  // blue
         }
         if (color) {
+            enrichedPill._color = color;
             enrichedPill.className += ` o_gantt_color_${color}`;
         }
         return enrichedPill;
@@ -154,34 +156,23 @@ export class AppointmentBookingGanttRenderer extends GanttRenderer {
         const popoverProps = await super.getPopoverProps(...arguments);
         const { record } = pill;
         Object.assign(popoverProps, {
-            buttons: this.getPopoverButtons(record),
-            context: {
-                ...popoverProps.context,
-                can_edit: this.model.metaData.canEdit,
-                isHtmlEmpty: isHtmlEmpty,
-            },
+            buttons: [
+                {
+                    class: "btn btn-sm btn-primary",
+                    text: _t("Save & Close"),
+                    onClick: this.popover.close.bind(this.popover),
+                },
+                ...popoverProps.buttons,
+                {
+                    class: "btn btn-sm btn-secondary ms-auto",
+                    icon: "fa fa-trash",
+                    iconTitle: _t("Remove"),
+                    onClick: () => this.model.unlinkRecords([record.id]),
+                },
+            ],
+            headerClass: `o_gantt_color_${pill._color}`,
             title: record.appointment_booker_id?.display_name || this.getDisplayName(pill),
         });
         return popoverProps;
-    }
-
-    getPopoverButtons(record) {
-        return [{
-            class: "o_appointment_booking_confirm_status btn btn-sm btn-primary",
-            onClick: () => {
-                if (this.model.metaData.canEdit && record.appointment_status) {
-                    const newAppointmentStatus = document.querySelector('.o_appointment_booking_status').selectedOptions[0].value;
-                    this.orm.write("calendar.event", [record.id], {
-                        active: newAppointmentStatus !== 'cancelled',
-                        appointment_status: newAppointmentStatus,
-                    }).then(() => this.model.fetchData());
-                }
-            },
-            text: this.model.metaData.canEdit && record.appointment_status ? _t("Save & Close") : _t('Close'),
-        }, {
-            class: "btn btn-sm btn-secondary",
-            onClick: () => this.model.mutex.exec(() => this.props.openDialog({ resId: record.id })),
-            text: this.model.metaData.canEdit ? _t("Edit") : _t("View"),
-        }];
     }
 }

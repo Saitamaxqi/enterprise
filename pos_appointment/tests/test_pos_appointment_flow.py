@@ -39,6 +39,7 @@ class TestPosAppointmentFlow(CommonPosTest):
         # Reservation should depend on resource_total_capacity_reserved
         capacity_reservation = self.env['calendar.event'].create({
             'name': 'event without partner',
+            'resource_ids': self.resource_1.ids,
             'total_capacity_reserved': 3,
             'appointment_type_id': self.reservation_appointment.id,
         })

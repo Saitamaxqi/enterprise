@@ -167,11 +167,12 @@ export class GanttController extends Component {
     /**
      * Opens dialog to add/edit/view a record
      *
-     * @param {Record<string, any>} props FormViewDialog props
+     * @param {Record<string, any>} props dialog component props
      * @param {Record<string, any>} [options={}]
+     * @param {Component} dialog component to instantiate, usually FormViewDialog
      */
-    openDialog(props, options = {}) {
-        this.closeDialog = this.dialogService.add(FormViewDialog, this._getDialogProps(props), {
+    openDialog(props, options = {}, dialogComponent = FormViewDialog) {
+        this.closeDialog = this.dialogService.add(dialogComponent, this._getDialogProps(props), {
             ...options,
             onClose: () => {
                 this.closeDialog = null;
