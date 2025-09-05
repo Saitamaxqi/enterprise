@@ -67,12 +67,6 @@ async function selectBlock({ sourceCell, targetCell }) {
 }
 
 test("multi_create: render and basic creation/deletion", async () => {
-    onRpc("event", "create", ({ args: [records] }) => {
-        for (const record of records) {
-            expect.step(`${record.name}_${record.date_start}`);
-        }
-    });
-
     await mountGanttView({
         resModel: "tasks",
         arch: `
@@ -284,12 +278,6 @@ test(`multi_create: no button "Delete" if no record selected`, async () => {
 });
 
 test("multi_create: selection with ctrl", async () => {
-    onRpc("event", "create", ({ args: [records] }) => {
-        for (const record of records) {
-            expect.step(`${record.name}_${record.date_start}`);
-        }
-    });
-
     await mountGanttView({
         resModel: "tasks",
         arch: `
