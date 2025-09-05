@@ -43,8 +43,6 @@ class UrbanPiperClient:
         try:
             # Make the API request
             response = self.session.request(method, access_url, json=data, headers=headers, timeout=timeout)
-            # raise an error if the response is not successful
-            response.raise_for_status()
             # Parse the response as JSON
             response_json = response.json()
             pos_config.log_xml(
@@ -52,6 +50,8 @@ class UrbanPiperClient:
                 '_make_api_request',
                 'Urbanpiper API Success'
             )
+            # raise an error if the response is not successful
+            response.raise_for_status()
             return response_json
         except requests.exceptions.ConnectionError as error:
             _logger.warning('Connection Error: %r with the given URL %r', error, access_url)
@@ -62,13 +62,14 @@ class UrbanPiperClient:
             )
             return {'errors': {'timeout': 'Cannot reach the server. Please try again later.'}}
         except requests.exceptions.HTTPError as error:
-            _logger.warning('HTTPError: %r', error)
+            message = response_json.get("message")
             pos_config.log_xml(
-                "HttpError: %s \nURL: %s \nMethod: %s \nPayload: %s" % (error, access_url, method, json.dumps(data)),
+                "HttpError: %s \nURL: %s \nMethod: %s \nPayload: %s" % (message or error, access_url, method, json.dumps(data)),
                 '_make_api_request',
                 'Urbanpiper API HTTP Error'
             )
-            return {'errors': {'HTTPError': str(error)}}
+            _logger.warning('HTTPError: %r', message or error)
+            return {'errors': {'HTTPError': message or str(error)}}
         except json.decoder.JSONDecodeError as error:
             _logger.warning('JSONDecodeError: %r', error)
             pos_config.log_xml(
@@ -76,7 +77,7 @@ class UrbanPiperClient:
                 '_make_api_request',
                 'Urbanpiper API JSON Decode Error'
             )
-            return {'errors': {'JSONDecodeError': str(error)}}
+            return {'errors': {'JSONDecodeError': 'Failed to parse server response.'}}
 
     def configure_webhook(self):
         """
@@ -422,7 +423,7 @@ class UrbanPiperClient:
             if response_json.get('status') == 'success':
                 return True, ''
             else:
-                return False, response_json.get('message')
+                return False, response_json.get('message') or next(iter(response_json.get("errors", {}).values()), "")
         else:
             return False, 'Failed to update status in Urban Piper'
 
