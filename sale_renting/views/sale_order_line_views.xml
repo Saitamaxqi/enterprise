@@ -223,15 +223,13 @@
         <!-- 'convert_default_order_line_values' is necessary as the gantt view will add default
              values named after sale.order.line fields. This context key will convert any relevant
              SOL field to a SO field. -->
-        <field name="context">
-            {
-                'in_rental_app': 1,
-                'in_rental_schedule': 1,
-                'search_default_confirmed': 1,
-                'convert_default_order_line_values': 1,
-                'sale_renting_short_display_name': 1,
-            }
-        </field>
+        <field name="context">{
+            'in_rental_app': 1,
+            'in_rental_schedule': 1,
+            'search_default_confirmed': 1,
+            'convert_default_order_line_values': 1,
+            'sale_renting_short_display_name': 1,
+        }</field>
     </record>
 
 </odoo>

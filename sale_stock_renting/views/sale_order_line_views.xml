@@ -35,17 +35,15 @@
     </record>
 
     <record id="sale_renting.action_rental_order_schedule" model="ir.actions.act_window">
-        <field name="context">
-            {
-                'in_rental_app': 1,
-                'in_rental_schedule': 1,
-                'search_default_confirmed': 1,
-                'search_default_groupby_product': 1,
-                'search_default_groupby_reserved_lot': 2,
-                'convert_default_order_line_values': 1,
-                'sale_renting_short_display_name': 1,
-            }
-        </field>
+        <field name="context">{
+            'in_rental_app': 1,
+            'in_rental_schedule': 1,
+            'search_default_confirmed': 1,
+            'search_default_groupby_product': 1,
+            'search_default_groupby_reserved_lot': 2,
+            'convert_default_order_line_values': 1,
+            'sale_renting_short_display_name': 1,
+        }</field>
     </record>
 
     <record id="sale_order_line_form_lot_allocation" model="ir.ui.view">
