@@ -3,6 +3,7 @@ import logging
 from odoo import models, fields, _
 from odoo.exceptions import UserError
 from odoo.tools import SQL
+from odoo.fields import Domain
 
 _logger = logging.getLogger(__name__)
 
@@ -91,8 +92,13 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
         report._check_groupby_fields([current_groupby] if current_groupby else [])
 
         journal, journal_currency, _company_currency = self._get_bank_journal_and_currencies(options)
+        exchange_journal = journal.company_id.currency_exchange_journal_id
 
         bank_miscellaneous_domain = self._get_bank_miscellaneous_move_lines_domain(options, journal)
+        bank_miscellaneous_domain = Domain.AND([
+            bank_miscellaneous_domain,
+            [('journal_id', '!=', exchange_journal.id)]
+        ])
 
         base_query = report._get_report_query(options, 'strict_range', domain=bank_miscellaneous_domain or [])
 

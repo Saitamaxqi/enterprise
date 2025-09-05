@@ -799,3 +799,61 @@ class TestReconciliationReport(TestAccountReportsCommon):
             currency_map={3: {'currency': bank_journal.currency_id}},
             ignore_folded=False,
         )
+
+    def test_reconciliation_report_exchange_entry(self):
+        """ This test will check that misc entries reported in the exchange journal
+            do not figure in the report
+        """
+
+        bank_journal = self.company_data['default_journal_bank']
+        exchange_journal = self.env.company.currency_exchange_journal_id
+
+        move_a = self.env['account.move'].create({
+                'journal_id': exchange_journal.id,
+                'move_type': 'entry',
+                'date': '2019-01-01',
+                'line_ids': [
+                    Command.create({
+                        'name': 'line_a_1',
+                        'account_id': bank_journal.default_account_id.id,
+                        'debit': 1000.0,
+                        'credit': 0.0,
+                    }),
+                    Command.create({
+                        'name': 'line_a_2',
+                        'account_id': self.company_data['default_account_expense'].id,
+                        'debit': 0.0,
+                        'credit': 1000.0,
+                    }),
+                ]
+        })
+        move_a.action_post()
+        report = self.env.ref('account_reports.bank_reconciliation_report').with_context(
+            active_id=bank_journal.id,
+            active_model='account.journal'
+        )
+
+        options = self._generate_options(report, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-01-12'))
+
+        lines = report._get_lines(options)
+        self.assertLinesValues(
+            lines,
+            #   Name                                                             Date            Amount
+            [0,                                                                     1,              3],
+            [
+                ('Balance of \'101401 Bank\'',                                     '',            0.0),
+                ('Last statement balance',                                         '',            0.0),
+                ('Including Unreconciled Receipts',                                '',            0.0),
+                ('Including Unreconciled Payments',                                '',            0.0),
+                ('Transactions without statement',                                 '',            0.0),
+                ('Including Unreconciled Receipts',                                '',            0.0),
+                ('Including Unreconciled Payments',                                '',            0.0),
+                ('Misc. operations',                                               '',            0.0),
+                ('Outstanding Receipts/Payments',                                  '',            0.0),
+                ('(+) Outstanding Receipts',                                       '',            0.0),
+                ('(-) Outstanding Payments',                                       '',            0.0),
+            ],
+            options,
+            currency_map={3: {'currency': bank_journal.currency_id}},
+            ignore_folded=False,
+        )
