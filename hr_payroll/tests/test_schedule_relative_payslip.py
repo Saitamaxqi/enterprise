@@ -112,13 +112,13 @@ class TestScheduleRelativePayslip(TransactionCase):
 
             payslip.date_from = Date.to_date('2022-01-31')
             self.assertTrue(
-                payslip.issues and "The period selected does not match the contract validity period." in [issue['message'] for issue in payslip.issues.values()],
-                "A warning should be set on contract validity.")
+                payslip.issues and "No running contract over payslip period" in [issue['message'] for issue in payslip.issues.values()],
+                "An error should be set on contract validity.")
 
             payslip.date_to = Date.to_date('2022-05-14')
             self.assertTrue(
-                payslip.issues and "The period selected does not match the contract validity period." in [issue['message'] for issue in payslip.issues.values()],
-                "A warning should be set on contract validity.")
+                payslip.issues and "No running contract over payslip period" in [issue['message'] for issue in payslip.issues.values()],
+                "An error should be set on contract validity.")
             self.assertTrue(
                 payslip.issues and "The duration of the payslip is not accurate according to the structure type." in [issue['message'] for issue in payslip.issues.values()],
                 "A warning should be set on structure type duration.")

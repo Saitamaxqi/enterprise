@@ -1294,7 +1294,11 @@ class HrPayslip(models.Model):
             errors_by_slip[slip].append({
                 'message': _('No running contract over payslip period'),
                 'action_text': _("Contract"),
-                'action': slip.version_id._get_records_action(),
+                'action': slip.employee_id._get_records_action(
+                    name=self.env._("Employee"),
+                    target='new',
+                    context={**self.env.context, 'version_id': slip.version_id.id}
+                ),
                 'level': 'danger',
             })
         for slip in draft_slips.filtered(lambda slip: slip.payslip_run_id and slip.company_id != slip.payslip_run_id.company_id):
@@ -1314,18 +1318,6 @@ class HrPayslip(models.Model):
             s.state in ['draft', 'validated'] and s.date_from and s.date_to
         )):
             warnings = []
-            if slip.version_id and (
-                slip.date_from < slip.version_id.contract_date_start
-                or (slip.version_id.contract_date_end
-                    and slip.date_to > slip.version_id.contract_date_end)
-            ):
-                warnings.append({
-                    'message': _("The period selected does not match the contract validity period."),
-                    'action_text': _("Contract"),
-                    'action': slip.version_id._get_records_action(target='new'),
-                    'level': 'warning',
-                })
-
             if slip.struct_id.use_worked_day_lines \
                     and (slip.version_id.schedule_pay or slip.version_id.structure_type_id.default_schedule_pay) \
                     and slip.date_from \

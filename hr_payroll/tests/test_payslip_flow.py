@@ -5,6 +5,7 @@ import datetime
 from odoo import Command
 from odoo.addons.hr_payroll.tests.common import TestPayslipBase
 from odoo.exceptions import UserError
+from odoo.tests import Form
 from dateutil.relativedelta import relativedelta
 
 
@@ -387,3 +388,12 @@ class TestPayslipFlow(TestPayslipBase):
             payslip.version_id.structure_type_id == payslip.struct_id.type_id and
             payslip.struct_id.type_id == payslip_runC.structure_id.type_id
         for payslip in payslip_runC.slip_ids))
+
+    def test_09_payslip_creation_with_employee_without_contract(self):
+        employee = self.env['hr.employee'].create({
+            'name': 'Johnny',
+        })
+        payslip_form = Form(self.env['hr.payslip'])
+        payslip_form.employee_id = employee
+        payslip_form.save()
+        self.assertTrue(payslip_form)
