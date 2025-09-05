@@ -4120,6 +4120,119 @@ registry.category("web_tour.tours").add("test_put_in_pack_no_freeze", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_unpack_package_lines", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_line:not(.o_selected)",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLinePackage(0, "PAL01");
+                helper.assertLineResultPackage(0, "PAL01");
+                helper.assertButtonIsVisible(0, "unpack", false);
+            },
+        },
+        // Select the package line to verify Unpack button is then displayed.
+        { trigger: ".o_barcode_line", run: "click" },
+        {
+            trigger: ".o_barcode_line.o_selected",
+            run: () => {
+                helper.assertLinesCount(1);
+                helper.assertLinePackage(0, "PAL01");
+                helper.assertLineResultPackage(0, "PAL01");
+                helper.assertButtonIsVisible(0, "unpack");
+            },
+        },
+        // Check the package content to be sure all child packages content is shown.
+        { trigger: ".o_line_button.o_package_content", run: "click" },
+        {
+            trigger: ".o_kanban_view .o_kanban_record",
+            run: function () {
+                helper.assertKanbanRecordsCount(4);
+            },
+        },
+        { trigger: "button.o_close", run: "click" },
+        // Unpack the package line -> Should have two package lines (one by box.)
+        { trigger: ".o_barcode_line button.o_unpack", run: "click" },
+        {
+            trigger: ".o_barcode_line:nth-child(2)",
+            run: () => {
+                helper.assertLinesCount(2);
+                helper.assertLinePackage(0, "PAL01 > BOX01");
+                helper.assertLineResultPackage(0, "BOX01");
+                helper.assertButtonIsVisible(0, "unpack", true);
+                helper.assertLinePackage(1, "PAL01 > BOX02");
+                helper.assertLineResultPackage(1, "BOX02");
+                helper.assertButtonIsVisible(1, "unpack", false);
+            },
+        },
+        // Unpack the first package line -> Should have two lines with no result package.
+        { trigger: ".o_barcode_line:first-child button.o_unpack", run: "click" },
+        {
+            trigger: ".o_barcode_line:nth-child(2)[data-barcode='product2']",
+            run: () => {
+                helper.assertLinesCount(3);
+                helper.assertLinePackage(0, "PAL01 > BOX01");
+                helper.assertLineResultPackage(0, false);
+                helper.assertButtonIsVisible(0, "unpack", false);
+                helper.assertLinePackage(1, "PAL01 > BOX01");
+                helper.assertLineResultPackage(1, false);
+                helper.assertButtonIsVisible(1, "unpack", false);
+                helper.assertLinePackage(2, "PAL01 > BOX02");
+                helper.assertLineResultPackage(2, "BOX02");
+                helper.assertButtonIsVisible(2, "unpack", false);
+            },
+        },
+        // Unpack the second package line -> Should have two more lines with no result package.
+        { trigger: ".o_barcode_line:last-child", run: "click" },
+        { trigger: ".o_barcode_line:last-child.o_selected button.o_unpack", run: "click" },
+        {
+            trigger: ".o_barcode_line:nth-child(4)[data-barcode='product2']",
+            run: () => {
+                helper.assertLinesCount(4);
+                helper.assertLinePackage(0, "PAL01 > BOX01");
+                helper.assertLineResultPackage(0, false);
+                helper.assertButtonIsVisible(0, "unpack", false);
+                helper.assertLinePackage(1, "PAL01 > BOX01");
+                helper.assertLineResultPackage(1, false);
+                helper.assertButtonIsVisible(1, "unpack", false);
+                helper.assertLinePackage(2, "PAL01 > BOX02");
+                helper.assertLineResultPackage(2, false);
+                helper.assertButtonIsVisible(2, "unpack", false);
+                helper.assertLinePackage(3, "PAL01 > BOX02");
+                helper.assertLineResultPackage(3, false);
+                helper.assertButtonIsVisible(3, "unpack", false);
+            },
+        },
+        // Process all quantities.
+        { trigger: ".o_barcode_line:first-child button.o_add_remaining_quantity", run: "click" },
+        { trigger: ".o_barcode_line:nth-child(2) button.o_add_remaining_quantity", run: "click" },
+        { trigger: ".o_barcode_line:nth-child(3) button.o_add_remaining_quantity", run: "click" },
+        { trigger: ".o_barcode_line:last-child button.o_add_remaining_quantity", run: "click" },
+        // Scan another palet to pack all lines.
+        { trigger: "button.o_validate_page.btn-primary" },
+        { trigger: ".o_barcode_client_action", run: "scan PAL02" },
+        {
+            trigger: ".o_barcode_line:last-child .result-package",
+            run: () => {
+                helper.assertLinesCount(4);
+                helper.assertLinePackage(0, "PAL01 > BOX01");
+                helper.assertLineResultPackage(0, "PAL02");
+                helper.assertButtonIsVisible(0, "unpack", false);
+                helper.assertLinePackage(1, "PAL01 > BOX01");
+                helper.assertLineResultPackage(1, "PAL02");
+                helper.assertButtonIsVisible(1, "unpack", false);
+                helper.assertLinePackage(2, "PAL01 > BOX02");
+                helper.assertLineResultPackage(2, "PAL02");
+                helper.assertButtonIsVisible(2, "unpack", false);
+                helper.assertLinePackage(3, "PAL01 > BOX02");
+                helper.assertLineResultPackage(3, "PAL02");
+                helper.assertButtonIsVisible(3, "unpack", false);
+            },
+        },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});
+
 registry.category("web_tour.tours").add("test_reload_flow", {
     steps: () => [
         {
@@ -5045,7 +5158,7 @@ registry.category("web_tour.tours").add("test_show_entire_package", {
                 helper.assertValidateIsHighlighted(true);
                 helper.assertValidateEnabled(true);
                 const line = helper.getLine();
-                helper.assertLineIsHighlighted(line, false);
+                helper.assertLineIsHighlighted(line, true);
                 helper.assertButtonIsVisible(line, "package_content");
                 helper.assert(
                     line.querySelector('[name="package"]').innerText,

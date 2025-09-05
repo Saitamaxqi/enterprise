@@ -556,6 +556,10 @@ export default class BarcodeModel extends EventBus {
             if (typeof package_id === "number") {
                 package_id = this.cache.getRecord("stock.package", args.package_id);
             }
+            const parentPackId = package_id.parent_package_id;
+            if (parentPackId && typeof parentPackId === "number") {
+                package_id.parent_package_id = this.cache.getRecord("stock.package", parentPackId);
+            }
             line.package_id = package_id;
         }
         if (args.lot_name && line.product_id.tracking !== "none") {

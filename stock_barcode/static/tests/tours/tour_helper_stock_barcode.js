@@ -252,6 +252,25 @@ export function assertLineQty(lineOrIndex, expectedQuantityWithUOM) {
 }
 
 /**
+ * Checks the package assigned to a line. The expected package can be let
+ * empty to check there is no package assigned on the line.
+ * @param {(HTMLElement|integer)} lineOrIndex @see _getLineOrFail
+ * @param {string} [expectedPackageName]
+ */
+export function assertLinePackage(lineOrIndex, expectedPackageName = false) {
+    const line = _getLineOrFail(lineOrIndex, "Can't check the line's result package");
+    const packageEl = line.querySelector("div[name='package'] > .package");
+    if (!packageEl) {
+        if (expectedPackageName) {
+            fail(`There is no package: ${expectedPackageName} expected`);
+        }
+    } else {
+        const linePackageName = packageEl.innerText;
+        assert(linePackageName, expectedPackageName, "Not the expected line's package");
+    }
+}
+
+/**
  * Checks the result package assigned to a line. The expected package can be let
  * empty to check there is no result package assigned on the line.
  * @param {(HTMLElement|integer)} lineOrIndex @see _getLineOrFail

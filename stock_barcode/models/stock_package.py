@@ -30,6 +30,7 @@ class StockPackage(models.Model):
             'location_id',
             'location_dest_id',
             'package_dest_id',
+            'parent_package_id',
             'outermost_package_id',
             'package_type_id',
             'contained_quant_ids',

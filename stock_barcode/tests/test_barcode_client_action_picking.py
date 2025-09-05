@@ -1616,6 +1616,46 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = "/web#action=" + str(action_id.id)
         self.start_tour(url, 'test_put_in_pack_no_freeze', login='admin', timeout=180)
 
+    def test_unpack_package_lines(self):
+        """Ensure the unpack button works as expected, unpacking the lines beginning
+        with the outermost package and then only unpacking the result package."""
+        # Config.
+        group_package = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'group_ids': [Command.link(group_package.id)]})
+        self.picking_type_out.show_entire_packs = True
+        # Create some packages and add packed quantities in stock.
+        box1, box2, palet1, palet2 = self.env['stock.package'].create([
+            {'name': "BOX01"}, {'name': "BOX02"},
+            {'name': "PAL01"}, {'name': "PAL02"},
+        ])
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 4, package_id=box1)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 4, package_id=box1)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 4, package_id=box2)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 4, package_id=box2)
+        # Pack boxes into a palet.
+        box1.parent_package_id = palet1
+        box2.parent_package_id = palet1
+        # Create a delivery and process it. Unpack all the products before to
+        # pack them in a single new package.
+        delivery = self.env['stock.picking'].create({
+            'location_id': self.picking_type_out.default_location_src_id.id,
+            'location_dest_id': self.picking_type_out.default_location_dest_id.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 8,
+                }) for product in (self.product1, self.product2)],
+        })
+        delivery.action_confirm()
+        url = self._get_client_action_url(delivery.id)
+        self.start_tour(url, 'test_unpack_package_lines', login='admin')
+        # palet2 must have all the products while other packages must be empty.
+        self.assertRecordValues(palet2.quant_ids, [
+            {'product_id': self.product1.id, 'quantity': 8, 'package_id': palet2.id},
+            {'product_id': self.product2.id, 'quantity': 8, 'package_id': palet2.id},
+        ])
+        self.assertEqual((box1.quant_ids | box2.quant_ids | palet1.quant_ids).ids, [])
+
     def test_reload_flow(self):
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_multi_locations').id)]})
 

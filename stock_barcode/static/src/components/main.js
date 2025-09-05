@@ -54,16 +54,15 @@ registry.category("view_widgets").add("stock_barcode_unlink_button", {
     component: StockBarcodeUnlinkButton,
 });
 
-
 /**
  * TODO: stock_barcode should not depend on base_import.
  */
 export class ImportBlockUI extends Component {
-	static props = {
-		message: { type: String, optional: true },
-		blockComponent: { type: Object, optional: true },
-	};
-	static template = "stock_barcode.BlockUI";
+    static props = {
+        message: { type: String, optional: true },
+        blockComponent: { type: Object, optional: true },
+    };
+    static template = "stock_barcode.BlockUI";
 }
 
 /**
@@ -212,7 +211,7 @@ class MainComponent extends Component {
         this.sounds[type].play().catch((error) => {
             // `play` returns a promise. In case this promise is rejected (permission
             // issue for example), catch it to avoid Odoo's `UncaughtPromiseError`.
-            this.config.play_sound  = false;
+            this.config.play_sound = false;
             console.warn(error);
         });
     }
@@ -233,7 +232,9 @@ class MainComponent extends Component {
         barcodeData.actionId = this.props.actionId;
         this.config = { play_sound: true, ...barcodeData.data.config };
         if (this.config.play_sound) {
-            const fileExtension = new Audio().canPlayType("audio/ogg; codecs=vorbis") ? "ogg" : "mp3";
+            const fileExtension = new Audio().canPlayType("audio/ogg; codecs=vorbis")
+                ? "ogg"
+                : "mp3";
             this.sounds = {
                 error: new Audio(url(`/barcodes/static/src/audio/error.${fileExtension}`)),
                 notify: new Audio(url(`/mail/static/src/audio/ting.${fileExtension}`)),
@@ -582,8 +583,8 @@ class MainComponent extends Component {
         });
     }
 
-    onOpenPackage(packageId) {
-        this._inspectedPackageId = packageId;
+    onOpenPackage(packageIds) {
+        this._inspectedPackageIds = packageIds;
         this.changeView("packagePage");
     }
 
@@ -594,7 +595,12 @@ class MainComponent extends Component {
 
     get displayOperationButtons() {
         const { model } = this.env;
-        return model.canScrap || model.displayCancelButton || model.displaySignatureButton || model.displayReturnButton;
+        return (
+            model.canScrap ||
+            model.displayCancelButton ||
+            model.displaySignatureButton ||
+            model.displayReturnButton
+        );
     }
 
     get scrapViewProps() {

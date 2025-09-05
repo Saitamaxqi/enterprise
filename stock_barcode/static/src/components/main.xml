@@ -100,7 +100,7 @@
                 viewId="packageKanbanViewId"
                 display="{ controlPanel: false }"
                 resModel="'stock.quant'"
-                domain="[['package_id', '=', _inspectedPackageId]]"/>
+                domain="[['package_id', 'in', _inspectedPackageIds]]"/>
         </div>
         <div t-elif="state.view === 'infoFormView'"> <!-- Res Model Form View -->
             <View type="'form'"
