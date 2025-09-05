@@ -129,7 +129,7 @@ class MrpProduction(models.Model):
 
         warehouse = self.env['stock.warehouse'].search([('company_id', '=', self.env.company.id)], limit=1)
 
-        def read_image_datas(path):
+        def read_file_datas(path):
             with file_open(path, "rb") as f:
                 return base64.b64encode(f.read())
 
@@ -139,7 +139,7 @@ class MrpProduction(models.Model):
             'uom_id': self.env.ref('uom.product_uom_unit').id,
             'description': desc,
             'default_code': code,
-            'image_1920': read_image_datas(img),
+            'image_1920': read_file_datas(img),
         }} for (xmlid, name, desc, code, img) in (
             (
                 'mrp.product_product_computer_desk',
@@ -231,13 +231,15 @@ class MrpProduction(models.Model):
                 'title': title,
                 'sequence': seq,
                 'component_id': comp,
-            }} for (xmlid, testtype, note, title, seq, comp) in (
+                'worksheet_document': worksheet_doc and read_file_datas(worksheet_doc),
+            }} for (xmlid, testtype, note, title, seq, comp, worksheet_doc) in (
                 (
                     'mrp_workorder.quality_point_register_serial_production',
                     'mrp_workorder.test_type_register_production',
                     'Register the produced quantity.',
                     'Register production',
                     5,
+                    None,
                     None,
                 ),
                 (
@@ -247,6 +249,7 @@ class MrpProduction(models.Model):
                     'Component Registration: Table Head',
                     20,
                     tabletop.id,
+                    'mrp/static/img/cutting-worksheet-1.pdf',
                 ),
                 (
                     'mrp_workorder.quality_point_instructions',
@@ -255,6 +258,7 @@ class MrpProduction(models.Model):
                     'Choice of screwdriver',
                     30,
                     None,
+                    'mrp/static/img/cutting-worksheet-1.pdf',
                 ),
                 (
                     'mrp_workorder.quality_point_component_registration_2',
@@ -263,6 +267,7 @@ class MrpProduction(models.Model):
                     'Component Registration: Table Legs',
                     70,
                     tableleg.id,
+                    'mrp/static/img/cutting-worksheet-4.pdf',
                 ),
                 (
                     'mrp_workorder.quality_point_register_production',
@@ -271,6 +276,7 @@ class MrpProduction(models.Model):
                     'Table Legs',
                     60,
                     None,
+                    'mrp/static/img/cutting-worksheet-4.pdf',
                 ),
                 (
                     'mrp_workorder.quality_point_print_labels',
@@ -278,6 +284,7 @@ class MrpProduction(models.Model):
                     None,
                     'Print Labels',
                     90,
+                    None,
                     None,
                 ),
             )]
