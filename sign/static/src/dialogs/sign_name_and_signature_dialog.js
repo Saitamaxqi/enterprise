@@ -82,11 +82,11 @@ export class SignNameAndSignature extends NameAndSignature {
     }
 
     async onClickSignAuto() {
-        super.onClickSignAuto();
-        this.props.signature.signatureChanged = true;
         if (this.fonts.length <= 1) {
             this.fonts = await rpc(`/web/sign/get_fonts/`);
         }
+        super.onClickSignAuto();
+        this.props.signature.signatureChanged = true;
     }
 
     onClickSignDrawClear() {
