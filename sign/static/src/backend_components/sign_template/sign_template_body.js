@@ -31,6 +31,7 @@ export class SignTemplateBody extends Component {
         iframe: { type: Object, optional: true },
         setIframe: { type: Function },
         documentId: { type: Number },
+        updateSignItemsCountCallback: { type: Function },
     };
 
     setup() {
@@ -168,6 +169,7 @@ export class SignTemplateBody extends Component {
                 signStatus: this.props.signStatus,
                 setTemplateChangedState: (state) => this.props.signStatus.isTemplateChanged = state,
                 documentId: this.props.documentId,
+                updateSignItemsCountCallback: this.props.updateSignItemsCountCallback,
             }
         );
         this.props.setIframe(iframe);

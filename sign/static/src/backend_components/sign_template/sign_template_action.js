@@ -191,7 +191,6 @@ export class SignTemplate extends Component {
 
                 /* Set callback for tracking number of items of each signer and load font. */
                 this.state.documents.forEach(document => {
-                    document.iframe.updateSignItemsCountCallback = () => this.updateSignItemsCount();
                     document.iframe.setFont(this.font);
                 });
             });
@@ -276,7 +275,6 @@ export class SignTemplate extends Component {
             document.setIframe = (iframe) => {
                 document.iframe = iframe;
                 document.iframe.setFont(this.font);
-                document.iframe.updateSignItemsCountCallback = () => this.updateSignItemsCount();
                 this.state.signers.forEach(signer => {
                     document.iframe.setRoleColor(signer.roleId, signer.colorId);
                 });
@@ -400,6 +398,7 @@ export class SignTemplate extends Component {
             setIframe: (iframe) => document.setIframe(iframe),
             onTemplateSaveClick: () => this.onTemplateSaveClick(),
             documentId: documentId,
+            updateSignItemsCountCallback: () => this.updateSignItemsCount(),
         }
     }
 

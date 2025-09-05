@@ -19,7 +19,7 @@
 
     <t t-name="sign.SignViews.sign_request.buttons">
         <button class="btn btn-primary" title="Upload a pdf that you want to sign directly" t-on-click="() => this.requestFile('sign_send_request')">
-            Upload a PDF
+            Upload PDF
         </button>
     </t>
 

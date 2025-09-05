@@ -140,7 +140,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                     this.signItemsCountByRole[role]++;
                 }
             }
-            this.updateSignItemsCountCallback();
+            this.props.updateSignItemsCountCallback();
         }
 
         setFont(font) {
