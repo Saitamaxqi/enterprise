@@ -153,6 +153,11 @@
                     <filter name="account_inactive" string="Inactive Account" domain="[('active', '=', False)]"/>
                     <filter name="groupby_audit_status" string="Account Audit Status" context="{'group_by': 'audit_status'}"/>
                     <filter name="groupby_type" string="Account Type" context="{'group_by': 'account_type'}"/>
+                    <filter name="audit_accounts"
+                            string="Audit Accounts"
+                            invisible="not context.get('currency_exhange_difference_account_ids')"
+                            domain="[('id', 'in', context.get('currency_exhange_difference_account_ids'))]"
+                    />
                     <searchpanel>
                         <field name="audit_status" select="multi" enable_counters="1"/>
                         <field name="account_type" select="multi" enable_counters="1"/>

@@ -230,7 +230,7 @@
             <field name="return_type" ref="account_reports.default_audit_return_type"/>
             <field name="code">_account_return_check_template_foreign_exchange_differences</field>
             <field name="action_id" ref="account_reports.action_view_account_balances"/>
-            <field name="additional_action_domain">[('id', 'in', currency_exhange_difference_account_ids)]</field>
+            <field name="additional_action_context">{'search_default_audit_accounts': 1, 'currency_exhange_difference_account_ids': currency_exhange_difference_account_ids}</field>
         </record>
 
         <!-- Purchases -->
