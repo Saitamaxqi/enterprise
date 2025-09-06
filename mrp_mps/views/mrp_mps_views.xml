@@ -68,7 +68,7 @@
                 <footer>
                     <button name="apply_forecast_quantity_suggestion" data-hotkey="q" type="object" string="Apply" class="btn-primary"/>
                     <button special="cancel" class="btn btn-secondary" string="Discard" data-hotkey="x" />
-                    <div class="position-absolute end-0 pe-3 text-end text-info fw-bold" invisible="not suggestion_period and suggestion_based_on not in ['last_30_days', 'last_3_months', 'last_12_months']">
+                    <div class="position-absolute end-0 pe-3 text-end text-info fw-bold" invisible="not suggestion_period and suggestion_based_on not in ['30_days', 'three_months', 'one_year']">
                         <field name="suggestion_quantity_before_scale" class="oe_inline"/> units x 
                         <field name="suggestion_percent_factor" class="o_small oe_inline me-1" readonly="True"/>% = 
                         <field name="suggestion_quantity" class="oe_inline"/> units

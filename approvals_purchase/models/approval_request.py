@@ -106,7 +106,7 @@ class ApprovalRequest(models.Model):
                         seller_uom_qty,
                         seller.product_uom_id,
                         line.company_id,
-                        seller,
+                        vendor,
                         purchase_order,
                     )
                     new_po_line = self.env['purchase.order.line'].create(po_line_vals)
@@ -131,7 +131,7 @@ class ApprovalRequest(models.Model):
                     seller_uom_qty,
                     seller.product_uom_id,
                     line.company_id,
-                    seller,
+                    vendor,
                     new_purchase_order,
                 )
                 new_po_line = self.env['purchase.order.line'].create(po_line_vals)
