@@ -66,9 +66,10 @@ topbarMenuRegistry.addChild("save_as_template", ["file"], {
     icon: "o-spreadsheet-Icon.SAVE",
 });
 
-topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
-    let sequence = 1000;
-    const lists_items = env.model.getters.getListIds().map((listId, index) => {
+topbarMenuRegistry.addChild("list_data_sources", ["data"], (env) => {
+    const sequence = 53;
+    const numberOfLists = env.model.getters.getListIds().length;
+    return env.model.getters.getListIds().map((listId, index) => {
         const highlightProvider = {
             get highlights() {
                 return getListHighlights(env.model.getters, listId);
@@ -77,7 +78,7 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
         return {
             id: `item_list_${listId}`,
             name: env.model.getters.getListDisplayName(listId),
-            sequence: sequence++,
+            sequence: sequence + index / numberOfLists,
             isReadonlyAllowed: true,
             execute: (env) => {
                 env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
@@ -93,10 +94,15 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
             isVisible: (env) => !env.isSmall,
         };
     });
-    const charts_items = env.model.getters.getOdooChartIds().map((chartId, index) => ({
+});
+
+topbarMenuRegistry.addChild("chart_data_sources", ["data"], (env) => {
+    const sequence = 56;
+    const numberOfCharts = env.model.getters.getOdooChartIds().length;
+    return env.model.getters.getOdooChartIds().map((chartId, index) => ({
         id: `item_chart_${chartId}`,
         name: env.model.getters.getOdooChartDisplayName(chartId),
-        sequence: sequence++,
+        sequence: sequence + index / numberOfCharts,
         execute: (env) => {
             env.model.dispatch("SELECT_FIGURE", {
                 figureId: env.model.getters.getFigureIdFromChartId(chartId),
@@ -107,24 +113,23 @@ topbarMenuRegistry.addChild("data_sources_data", ["data"], (env) => {
         separator: index === env.model.getters.getOdooChartIds().length - 1,
         isVisible: (env) => !env.isSmall,
     }));
-    return lists_items.concat(charts_items).concat([
-        {
-            id: "refresh_all_data",
-            name: _t("Refresh all data"),
-            sequence: sequence++,
-            execute: (env) => {
-                env.model.dispatch("REFRESH_ALL_DATA_SOURCES");
-            },
-            separator: true,
-            icon: "o-spreadsheet-Icon.REFRESH_DATA",
-        },
-    ]);
+});
+
+topbarMenuRegistry.addChild("refresh_data_sources", ["data"], {
+    id: "refresh_all_data",
+    name: _t("Refresh all data"),
+    sequence: 58,
+    execute: (env) => {
+        env.model.dispatch("REFRESH_ALL_DATA_SOURCES");
+    },
+    separator: true,
+    icon: "o-spreadsheet-Icon.REFRESH_DATA",
 });
 
 const reinsertDynamicPivotMenu = {
     id: "reinsert_dynamic_pivot",
     name: _t("Re-insert dynamic pivot"),
-    sequence: 1020,
+    sequence: 60,
     children: [REINSERT_DYNAMIC_PIVOT_CHILDREN],
     isVisible: (env) =>
         env.model.getters.getPivotIds().some((id) => env.model.getters.getPivot(id).isValid()),
@@ -133,7 +138,7 @@ const reinsertDynamicPivotMenu = {
 const reinsertStaticPivotMenu = {
     id: "reinsert_static_pivot",
     name: _t("Re-insert static pivot"),
-    sequence: 1021,
+    sequence: 70,
     children: [REINSERT_STATIC_PIVOT_CHILDREN],
     isVisible: (env) =>
         env.model.getters.getPivotIds().some((id) => env.model.getters.getPivot(id).isValid()),
@@ -143,7 +148,7 @@ const reinsertStaticPivotMenu = {
 const reinsertPivotCell = {
     id: "reinsert_pivot_cell",
     name: _t("Re-insert pivot cell"),
-    sequence: 1022,
+    sequence: 72,
     children: [REINSERT_PIVOT_CELL_CHILDREN],
     isVisible: (env) =>
         env.model.getters.getPivotIds().some((id) => env.model.getters.getPivot(id).isValid()),
@@ -153,7 +158,7 @@ const reinsertPivotCell = {
 const reInsertListMenu = {
     id: "reinsert_list",
     name: _t("Re-insert list"),
-    sequence: 1021,
+    sequence: 74,
     children: [REINSERT_LIST_CHILDREN],
     isVisible: (env) =>
         env.model.getters
