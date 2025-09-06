@@ -1,11 +1,11 @@
-import { KanbanRenderer } from '@web/views/kanban/kanban_renderer';
+import { RottingKanbanRenderer } from '@mail/js/rotting_mixin/rotting_kanban_renderer';
 import { HelpdeskTicketKanbanHeader } from './helpdesk_ticket_kanban_header';
 import { onWillStart } from "@odoo/owl";
 import { user } from "@web/core/user";
 
-export class HelpdeskTicketRenderer extends KanbanRenderer {
+export class HelpdeskTicketRenderer extends RottingKanbanRenderer {
     static components = {
-        ...KanbanRenderer.components,
+        ...RottingKanbanRenderer.components,
         KanbanHeader: HelpdeskTicketKanbanHeader,
     };
 

@@ -1,9 +1,9 @@
-import { KanbanHeader } from "@web/views/kanban/kanban_header";
+import { RottingKanbanHeader } from "@mail/js/rotting_mixin/rotting_kanban_header";
 import { HelpdeskTicketGroupConfigMenu } from "../helpdesk_ticket_group_config_menu";
 
-export class HelpdeskTicketKanbanHeader extends KanbanHeader {
+export class HelpdeskTicketKanbanHeader extends RottingKanbanHeader {
     static components = {
-        ...KanbanHeader.components,
+        ...RottingKanbanHeader.components,
         GroupConfigMenu: HelpdeskTicketGroupConfigMenu,
     };
 }

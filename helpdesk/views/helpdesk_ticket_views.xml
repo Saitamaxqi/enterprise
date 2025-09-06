@@ -147,6 +147,9 @@
                 <separator/>
                 <filter string="Properties" name="group_by_properties" context="{'group_by': 'properties'}"/>
             </filter>
+            <filter name="is_open" position="after">
+                <filter string="Rotting" name="filter_rotting" domain="[('is_rotting', '=', True)]"/>
+            </filter>
             <filter name="archive" position="before">
                 <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction', '=', True)]" groups="mail.group_mail_notification_type_inbox"/>
                 <separator/>
@@ -236,8 +239,10 @@
                     invisible="rating_avg_text == 'none'"
                     class="fw-bold" widget="helpdesk_smiley_badge" optional="hide"/>
                 <field name="kanban_state" nolabel="1" width="20px" optional="show" widget="state_selection"/>
+                <field name="is_rotting" column_invisible="True"/>
+                <field name="rotting_days" column_invisible="True"/>
                 <field name="stage_id_color" column_invisible="1"/>
-                <field name="stage_id" optional="show" widget="selection_badge" options="{'color_field': 'stage_id_color'}"/>
+                <field name="stage_id" optional="show" widget="badge_rotting" options="{'color_field': 'stage_id_color'}"/>
             </list>
         </field>
     </record>
@@ -334,7 +339,9 @@
                                 </b>
                             </div>
                             <div class="d-flex align-items-center ms-auto">
-                                <field name="user_id" widget="many2one_avatar_user"/>
+                                <field name="is_rotting" invisible="1"/>
+                                <field name="rotting_days" widget="rotting"/>
+                                <field name="user_id" widget="many2one_avatar_user" class="ms-1"/>
                                 <field name="kanban_state" widget="state_selection" groups="base.group_user" class="ms-1"/>
                             </div>
                         </footer>
@@ -350,7 +357,7 @@
         <field name="arch" type="xml">
             <form string="Helpdesk Ticket" js_class="form_description_expander">
                 <header>
-                    <field name="stage_id" widget="statusbar_duration" options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                    <field name="stage_id" widget="rotting_statusbar_duration" options="{'clickable': '1', 'fold_field': 'fold'}"/>
                 </header>
                 <sheet>
                     <field name="legend_blocked" invisible="1"/>
@@ -361,6 +368,8 @@
                     <field name="rating_avg" invisible="1"/>
                     <field name="company_id" invisible="1"/>
                     <field name="team_privacy_visibility" invisible="1"/>
+                    <field name="is_rotting" invisible="1"/>
+                    <field name="rotting_days" invisible="1"/>
                     <div class="oe_button_box" name="button_box" groups="base.group_user">
                         <button name="action_open_ratings" type="object" class="oe_stat_button" icon="" invisible="not use_rating or rating_count == 0" groups="helpdesk.group_use_rating">
                             <i class="fa fa-fw o_button_icon fa-smile-o text-success" invisible="rating_avg &lt; 3.66" title="Happy"/>

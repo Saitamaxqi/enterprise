@@ -9,6 +9,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="team_ids" widget="many2many_tags" options="{'color_field': 'color'}" optional="show"/>
+                <field name="rotting_threshold_days" optional="hide"/>
                 <field name="template_id" options="{'no_create': True}" optional="hide"/>
                 <field name="color" optional="hide" widget="color_picker"/>
                 <field name="fold" optional="show"/>
@@ -57,6 +58,7 @@
                     <t t-name="card">
                         <field name="name" class="fw-bolder fs-5"/>
                         <field name="team_ids" options="{'color_field': 'color'}" widget="many2many_tags"/>
+                        <field name="rotting_threshold_days"/>
                     </t>
                 </templates>
             </kanban>
@@ -86,6 +88,7 @@
                         <group>
                             <field name="fold"/>
                             <field name="team_ids" widget="many2many_tags" options="{'color_field': 'color', 'edit_tags': True}"/>
+                            <field name="rotting_threshold_days"/>
                         </group>
                     </group>
                 </sheet>

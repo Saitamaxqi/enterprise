@@ -1,9 +1,9 @@
 import { registry } from "@web/core/registry";
-import { kanbanView } from '@web/views/kanban/kanban_view';
+import { rottingKanbanView } from "@mail/js/rotting_mixin/rotting_kanban_view";
 import { HelpdeskTicketRenderer } from './helpdesk_ticket_kanban_renderer';
 
 export const helpdeskTicketKanbanView = {
-    ...kanbanView,
+    ...rottingKanbanView,
     Renderer: HelpdeskTicketRenderer,
 };
 

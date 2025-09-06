@@ -369,6 +369,12 @@ class HelpdeskTicket(models.Model):
             | (Domain('close_date', '!=', False) & domain_closed)
         )
 
+    def _get_rotting_depends_fields(self):
+        return super()._get_rotting_depends_fields() + ['close_date', 'kanban_state']
+
+    def _get_rotting_domain(self):
+        return super()._get_rotting_domain() & Domain('close_date', '=', False)
+
     def _get_partner_email_update(self):
         self.ensure_one()
         if self.partner_id.email and self.partner_email and self.partner_email != self.partner_id.email:
@@ -642,6 +648,9 @@ class HelpdeskTicket(models.Model):
             vals['date_last_stage_update'] = now
             if 'kanban_state' not in vals:
                 vals['kanban_state'] = 'normal'
+
+        if 'kanban_state' in vals:
+            vals['date_last_stage_update'] = now
 
         old_tag_ids_per_ticket_id = {}
         if 'tag_ids' in vals:

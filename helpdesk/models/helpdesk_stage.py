@@ -30,6 +30,8 @@ class HelpdeskStage(models.Model):
         help="Email automatically sent to the customer when the ticket reaches this stage.\n"
              "By default, the email will be sent from the email alias of the helpdesk team.\n"
              "Otherwise it will be sent from the company's email address, or from the catchall (as defined in the System Parameters).")
+    rotting_threshold_days = fields.Integer('Days to rot', default=0,
+        help='Highlight tickets that haven\'t been updated for this many days.')
     legend_blocked = fields.Char(
         'Red Kanban Label', default=lambda s: s.env._('Blocked'), translate=True, required=True)
     legend_done = fields.Char(
