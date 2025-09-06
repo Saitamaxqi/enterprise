@@ -101,9 +101,9 @@
                 <filter string="Closed" domain="[('stage_id.fold', '=', True)]" name="is_close"/>
                 <filter name="closed_on" string="Closed On" date="close_date">
                     <filter name="closed_on_today" string="Today" domain="[('close_date', '&gt;=', 'today')]"/>
-                    <filter name="closed_on_last_7_days" string="Last 7 Days" domain="[('close_date', '&gt;=', 'today -7d + 1d')]"/>
-                    <filter name="closed_on_last_30_days" string="Last 30 Days" domain="[('close_date', '&gt;=', 'today -30d + 1d')]"/>
-                    <filter name="closed_on_last_365_days" string="Last 365 Days" domain="[('close_date', '&gt;=', 'today -365d + 1d')]"/>
+                    <filter name="closed_on_last_7_days" string="Last 7 Days" domain="[('close_date', '&gt;=', 'today -7d +1d')]"/>
+                    <filter name="closed_on_last_30_days" string="Last 30 Days" domain="[('close_date', '&gt;=', 'today -30d +1d')]"/>
+                    <filter name="closed_on_last_365_days" string="Last 365 Days" domain="[('close_date', '&gt;=', 'today -365d +1d')]"/>
                 </filter>
                 <separator />
                 <filter name="rating_satisfied" string="Happy" domain="[('rating_avg', '&gt;', 3.66)]" groups="helpdesk.group_use_rating"/>
@@ -112,9 +112,9 @@
                 <separator/>
                 <filter string="Creation Date" date="create_date" name="creation_date">
                     <filter name="create_date_today" string="Today" domain="[('create_date', '&gt;=', 'today')]"/>
-                    <filter name="create_date_last_7_days" string="Last 7 Days" domain="[('create_date', '&gt;=', 'today -7d + 1d')]"/>
-                    <filter name="create_date_last_30_days" string="Last 30 Days" domain="[('create_date', '&gt;=', 'today -30d + 1d')]"/>
-                    <filter name="create_date_last_365_days" string="Last 365 Days" domain="[('create_date', '&gt;=', 'today -365d + 1d')]"/>
+                    <filter name="create_date_last_7_days" string="Last 7 Days" domain="[('create_date', '&gt;=', 'today -7d +1d')]"/>
+                    <filter name="create_date_last_30_days" string="Last 30 Days" domain="[('create_date', '&gt;=', 'today -30d +1d')]"/>
+                    <filter name="create_date_last_365_days" string="Last 365 Days" domain="[('create_date', '&gt;=', 'today -365d +1d')]"/>
                 </filter>
                 <separator/>
                 <filter string="Archived" domain="[('active', '=', False)]" name="archive"/>
