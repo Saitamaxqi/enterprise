@@ -280,6 +280,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         mto_route = self.env['stock.route'].with_context(active_test=False).search([('name', '=', 'Replenish on Order (MTO)')])
         mto_route.rule_ids.procure_method = "make_to_order"
         buy_route = self.env['stock.route'].search([('name', '=', 'Buy')])
+        buy_route.product_selectable = True
         mto_route.active = True
 
         # setup product with customizable attribute value
@@ -370,6 +371,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         mto_route.active = True
         mto_route.rule_ids.procure_method = 'make_to_order'
         buy_route = self.env.ref('purchase_stock.route_warehouse0_buy')
+        buy_route.product_selectable = True
 
         product = self.env['product.product'].create({
             'is_storable': True,
