@@ -46,7 +46,7 @@
                         <record id="account_uk_cis_report_line_purchase_expr_deduction" model="account.report.expression">
                             <field name="label">deduction</field>
                             <field name="engine">tax_tags</field>
-                            <field name="formula">CISPT</field>
+                            <field name="formula">-CISPT</field>
                         </record>
                         <record id="account_uk_cis_report_line_purchase_expr_base" model="account.report.expression">
                             <field name="label">_cis_line_base_amount</field>
@@ -81,7 +81,7 @@
                         <record id="account_uk_cis_report_line_sale_expr_base" model="account.report.expression">
                             <field name="label">_cis_sales_base_amount</field>
                             <field name="engine">tax_tags</field>
-                            <field name="formula">CISSB</field>
+                            <field name="formula">-CISSB</field>
                         </record>
                     </field>
                 </record>

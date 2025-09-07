@@ -421,7 +421,7 @@
                                     <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_014_balance" model="account.report.expression">
                                         <field name="label">balance</field>
                                         <field name="engine">tax_tags</field>
-                                        <field name="formula">014</field>
+                                        <field name="formula">-014</field>
                                     </record>
                                 </field>
                             </record>
@@ -435,7 +435,7 @@
                                     <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_015_balance" model="account.report.expression">
                                         <field name="label">balance</field>
                                         <field name="engine">tax_tags</field>
-                                        <field name="formula">015</field>
+                                        <field name="formula">-015</field>
                                     </record>
                                 </field>
                             </record>
@@ -449,7 +449,7 @@
                                     <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_016_balance" model="account.report.expression">
                                         <field name="label">balance</field>
                                         <field name="engine">tax_tags</field>
-                                        <field name="formula">016</field>
+                                        <field name="formula">-016</field>
                                     </record>
                                 </field>
                             </record>
@@ -463,7 +463,7 @@
                                     <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_017_balance" model="account.report.expression">
                                         <field name="label">balance</field>
                                         <field name="engine">tax_tags</field>
-                                        <field name="formula">017</field>
+                                        <field name="formula">-017</field>
                                     </record>
                                 </field>
                             </record>
@@ -483,7 +483,7 @@
                                             <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_018_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">tax_tags</field>
-                                                <field name="formula">018</field>
+                                                <field name="formula">-018</field>
                                             </record>
                                         </field>
                                     </record>
@@ -497,7 +497,7 @@
                                             <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_423_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">tax_tags</field>
-                                                <field name="formula">423</field>
+                                                <field name="formula">-423</field>
                                             </record>
                                         </field>
                                     </record>
@@ -511,7 +511,7 @@
                                             <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_424_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">tax_tags</field>
-                                                <field name="formula">424</field>
+                                                <field name="formula">-424</field>
                                             </record>
                                         </field>
                                     </record>
@@ -539,7 +539,7 @@
                                             <record id="l10n_lu_annual_tax_report_section_1_exemptions_deductible_019_balance" model="account.report.expression">
                                                 <field name="label">balance</field>
                                                 <field name="engine">tax_tags</field>
-                                                <field name="formula">019</field>
+                                                <field name="formula">-019</field>
                                             </record>
                                         </field>
                                     </record>
