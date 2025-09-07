@@ -1,34 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields
+from odoo import models
 
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
-
-    sign_request_count = fields.Integer(
-        compute='_compute_sign_request_count',
-        compute_sudo=True,
-    )
-
-    @property
-    def SELF_READABLE_FIELDS(self):
-        return super().SELF_READABLE_FIELDS + ['sign_request_count']
-
-    def _compute_sign_request_count(self):
-        for user in self:
-            employees = user.employee_ids
-            if not employees:
-                user.sign_request_count = 0
-                continue
-            contracts = self.sudo().env['hr.version'].search([('employee_id', 'in', employees.ids)])
-            sign_from_contract = contracts.mapped('sign_request_ids')
-
-            sign_from_role = self.env['sign.request.item'].search([
-                ('partner_id', '=', user.partner_id.id),
-                ('role_id', '=', self.env.ref('hr_sign.sign_item_role_employee_signatory').id)]).mapped('sign_request_id')
-
-            user.sign_request_count = len(set(sign_from_contract + sign_from_role))
 
     def open_employee_sign_requests(self):
         self.ensure_one()

@@ -3,7 +3,7 @@ import base64
 import io
 
 from odoo.exceptions import AccessError
-from odoo.tests import Form, TransactionCase, users
+from odoo.tests import TransactionCase, users
 from odoo.tools.pdf import PdfFileWriter
 from odoo.tools import mute_logger
 
@@ -162,22 +162,3 @@ class testAttachmentAccess(TransactionCase):
                 msg=f'An employee must not be able to read the attachment related to the {field!r} of another user'
             ):
                 self.env['ir.attachment'].browse(attachment_id).datas
-
-    @users('foo')
-    def test_sign_user_fields_preferences_form(self):
-        """
-        Test an employee can change its signature and initials through the preferences form
-
-        It deserves a test because of the tricky case that the signature and initials fields are protected
-        behind a `groups='base.group_system' but part of the `SELF_WRITEABLE_FIELDS`,
-        as a user should be able to change its own signature and initials,
-        so they should be included in the user preferences form and be editable.
-        """
-        my_user = self.env['res.users'].browse(self.env.user.id)
-        signature = base64.b64encode(b'signature')
-        initials = base64.b64encode(b'initials')
-        with Form(my_user, view='base.view_users_form_simple_modif') as UserForm:
-            UserForm.sign_signature = signature
-            UserForm.sign_initials = initials
-        self.assertEqual(my_user.sign_signature, signature)
-        self.assertEqual(my_user.sign_initials, initials)

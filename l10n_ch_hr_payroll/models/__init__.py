@@ -31,7 +31,6 @@ from . import l10n_ch_declaration_source_tax
 from . import l10n_ch_declaration_statistic
 from . import res_company
 from . import res_config_settings
-from . import res_users
 from . import hr_leave
 from . import hr_leave_type
 from . import l10n_ch_avs_income_splits

@@ -77,6 +77,36 @@ registry.category("web_tour.tours").add("test_sign_flow_tour", {
             run: "click",
         },
         {
+            content: "Click on style button",
+            trigger: ".o_web_sign_auto_select_style > button",
+            run: "click",
+        },
+        {
+            content: "Select a style",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3)",
+            run: "click",
+        },
+        {
+            content: "Click on style button",
+            trigger: ".o_web_sign_auto_select_style > button",
+            run: "click",
+        },
+        {
+            content: "Select a style",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(2)",
+            run: "click",
+        },
+        {
+            content: "Click on style button",
+            trigger: ".o_web_sign_auto_select_style > button",
+            run: "click",
+        },
+        {
+            content: "Select a style",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3)",
+            run: "click",
+        },
+        {
             trigger: "canvas.o_web_sign_signature",
         },
         {

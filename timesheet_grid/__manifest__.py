@@ -20,7 +20,6 @@
         'security/ir.model.access.csv',
         'views/account_analytic_line_views.xml',
         'views/project_task_views.xml',
-        'views/res_users_views.xml',
         'views/hr_employee.xml',
         'views/timesheet_grid_menus.xml',
         'views/project_views.xml',

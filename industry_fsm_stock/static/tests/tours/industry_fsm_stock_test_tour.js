@@ -217,13 +217,18 @@ registry.category("web_tour.tours").add('industry_fsm_stock_test_tour', {
         run: "click",
     },
     {
+        content: 'Go back to app switcher',
+        trigger: 'nav.o_main_navbar a.o_menu_toggle',
+        run: "click",
+    },
+    {
         content: 'Open user menu',
         trigger: 'div.o_user_menu button',
         run: "click",
     },
     {
-        content: 'Open the profile page',
-        trigger: '.dropdown-menu .dropdown-item[data-menu="settings"]',
+        content: 'Open My Preferences',
+        trigger: '.dropdown-menu .dropdown-item[data-menu="preferences"]',
         run: "click",
     },
     {
@@ -238,9 +243,10 @@ registry.category("web_tour.tours").add('industry_fsm_stock_test_tour', {
         run: "click",
     },
     {
-        content: 'Go back to app switcher',
-        trigger: 'nav.o_main_navbar a.o_menu_toggle',
+        content: "Save the form",
+        trigger: 'button[name="preference_save"]',
         run: "click",
+        expectUnloadPage: true,
     },
     ...StepToFSMProductsKanbanWithFavoritesFilterSteps,
     {

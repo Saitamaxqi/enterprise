@@ -32,7 +32,6 @@ Lithuanian Payroll Rules.
         'views/hr_employee_views.xml',
         'views/res_config_settings_views.xml',
         'views/report_payslip_templates.xml',
-        'views/res_users_views.xml',
     ],
     'demo': [
         'data/l10n_lt_hr_payroll_demo.xml',
