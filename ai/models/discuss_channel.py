@@ -1,4 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import random
+
 from odoo import _, fields, models, api
 from odoo.exceptions import AccessError
 from odoo.fields import Domain
@@ -82,7 +84,10 @@ class DiscussChannel(models.Model):
         # Finally pass the complete "save" the context to the channel
         channel.ai_env_context = model_context
 
-        return {"ai_channel_id": channel.id, "data": Store().add(channel).get_result(), "prompts": [prompt.name for prompt in ai_composer.available_prompts]}
+        prompts = ai_composer.available_prompts
+        random_prompts = random.sample(prompts, min(3, len(prompts)))
+
+        return {"ai_channel_id": channel.id, "data": Store().add(channel).get_result(), "prompts": [prompt.name for prompt in random_prompts]}
 
     @api.autovacuum
     def _remove_ai_chat_channels(self):

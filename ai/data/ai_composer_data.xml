@@ -20,12 +20,12 @@
             <field name="name">Rewrite selected text</field>
         </record>
 
-        <record id="ai_prompt_find_information_systray" model="ai.prompt.button">
-            <field name="name">Help me find something</field>
+        <record id="ai_prompt_optout_reason" model="ai.prompt.button">
+            <field name="name">Top reason for which people opt-out from lists</field>
         </record>
 
-        <record id="ai_prompt_build_report_systray" model="ai.prompt.button">
-            <field name="name">Help me build a report</field>
+        <record id="ai_prompt_stock_move" model="ai.prompt.button">
+            <field name="name">Single most common stock move from/to</field>
         </record>
 
         <record id="ai_prompt_transcription_summarize_recruitment_call" model="ai.prompt.button">
@@ -38,6 +38,58 @@
 
         <record id="ai_prompt_transcription_write_email_recap" model="ai.prompt.button">
             <field name="name">Write an email recap</field>
+        </record>
+
+        <record id="ai_prompt_sales_by_country" model="ai.prompt.button">
+            <field name="name">Pie chart of sales by customer country</field>
+        </record>
+
+        <record id="ai_prompt_low_stock_pivot" model="ai.prompt.button">
+            <field name="name">Pivot of products with less than 5 in stock</field>
+        </record>
+
+        <record id="ai_prompt_agenda_today" model="ai.prompt.button">
+            <field name="name">What's my agenda for today?</field>
+        </record>
+
+        <record id="ai_prompt_top_sales_reps" model="ai.prompt.button">
+            <field name="name">Top 5 sales reps by revenue</field>
+        </record>
+
+        <record id="ai_prompt_sales_by_category" model="ai.prompt.button">
+            <field name="name">Show sales by product category this month</field>
+        </record>
+
+        <record id="ai_prompt_top_selling_products_chart" model="ai.prompt.button">
+            <field name="name">Bar chart of top-selling products</field>
+        </record>
+
+        <record id="ai_prompt_customer_japan" model="ai.prompt.button">
+            <field name="name">Do I have any customer in Japan?</field>
+        </record>
+
+        <record id="ai_prompt_most_expensive_project" model="ai.prompt.button">
+            <field name="name">Which project costs us the most?</field>
+        </record>
+
+        <record id="ai_prompt_cash_flow_status" model="ai.prompt.button">
+            <field name="name">Show me the current cash flow status</field>
+        </record>
+
+        <record id="ai_prompt_top_ticket_cause" model="ai.prompt.button">
+            <field name="name">Summarize what the last tickets complain about</field>
+        </record>
+
+        <record id="ai_prompt_latest_po_azure" model="ai.prompt.button">
+            <field name="name">Latest PO from supplier Azure interior</field>
+        </record>
+
+        <record id="ai_prompt_profit_margin_by_category" model="ai.prompt.button">
+            <field name="name">Display the profit margins by product category</field>
+        </record>
+
+        <record id="ai_prompt_blog_ideas_catalog" model="ai.prompt.button">
+            <field name="name">5 blog ideas from my product catalog</field>
         </record>
         
         <!-- Create the basic UI rules that exist by default and are not deletable -->
@@ -131,7 +183,23 @@ You are an Email Prompt Transformer. You'll get a single instruction or rough pr
             <field name="name">Ask AI</field>
             <field name="interface_key">systray_ai_button</field>
             <field name="ai_agent" ref="ai.ai_agent_natural_language_search"/>
-            <field name="available_prompts" eval="[(4, ref('ai.ai_prompt_find_information_systray')), (4, ref('ai.ai_prompt_build_report_systray'))]"/>
+            <field name="available_prompts" eval="[
+                (4, ref('ai.ai_prompt_optout_reason')),
+                (4, ref('ai.ai_prompt_stock_move')),
+                (4, ref('ai.ai_prompt_sales_by_country')),
+                (4, ref('ai.ai_prompt_low_stock_pivot')),
+                (4, ref('ai.ai_prompt_agenda_today')),
+                (4, ref('ai.ai_prompt_top_sales_reps')),
+                (4, ref('ai.ai_prompt_sales_by_category')),
+                (4, ref('ai.ai_prompt_top_selling_products_chart')),
+                (4, ref('ai.ai_prompt_customer_japan')),
+                (4, ref('ai.ai_prompt_most_expensive_project')),
+                (4, ref('ai.ai_prompt_cash_flow_status')),
+                (4, ref('ai.ai_prompt_top_ticket_cause')),
+                (4, ref('ai.ai_prompt_latest_po_azure')),
+                (4, ref('ai.ai_prompt_profit_margin_by_category')),
+                (4, ref('ai.ai_prompt_blog_ideas_catalog'))
+            ]"/>
             <field name="is_system_default">True</field>
         </record>
 
