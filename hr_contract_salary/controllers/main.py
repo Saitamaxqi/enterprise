@@ -73,6 +73,11 @@ class SignContract(Sign):
         if request_item.sign_request_id.nb_wait == 0:
             current_employee_version = version.employee_id.version_id
             must_archive_current_version = version.applicant_id or False
+            # If you are an employee with an existing version already, close the existing version
+            if not version.applicant_id and current_employee_version.contract_date_start:
+                current_employee_version.contract_date_end = (
+                    version.contract_date_start - timedelta(days=1)
+                )
             if current_employee_version.date_version >= version.date_version:
                 # then remplace the current version with the new one signed. We must 'fake' the date_version in order
                 # to be able to unarchive the new version without triggering the constraint if the two dates are equal

@@ -66,6 +66,7 @@
         ],
         'web.assets_tests': [
             'hr_contract_salary/static/tests/tours/hr_contract_salary_applicant_flow_tour.js',
+            'hr_contract_salary/static/tests/tours/hr_contract_salary_employee_flow_tour.js',
         ]
     }
 }
