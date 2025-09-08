@@ -47,6 +47,9 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             'filter_period_comparison': True,
         })
 
+        # Test the default account_report reports. Don't choose US variants based on the fiscal country.
+        cls.env['account.report'].search([]).variant_report_ids.active = False
+
     ####################################################
     # DATES RANGE
     ####################################################

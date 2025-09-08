@@ -17,6 +17,9 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
         cls.report = cls.env.ref('account_reports.balance_sheet')
         cls.report.column_ids.sortable = True
 
+        # Test the root reports. We don't want to choose US variants if some are installed.
+        cls.env['account.report'].search([]).variant_report_ids.active = False
+
         # Create moves
         cls.account_101401 = cls.env['account.account'].search([
             ('company_ids', '=', cls.company_data['company'].id),

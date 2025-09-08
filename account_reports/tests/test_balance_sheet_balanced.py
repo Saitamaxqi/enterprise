@@ -312,6 +312,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_tz_reports.account_financial_report_tz_active',
         'liability_line_ref': 'l10n_tz_reports.account_financial_report_tz_passive',
     },
+    'l10n_us_reports.balance_sheet': {
+        'asset_line_ref': 'l10n_us_reports.assets',
+        'liability_line_ref': 'l10n_us_reports.liabilities_equity',
+    },
     'l10n_vn_reports.balance_sheet_l10n_vn': {
         'asset_line_ref': 'l10n_vn_reports.account_financial_report_l10n_vn_bs_ta',
         'liability_line_ref': 'l10n_vn_reports.account_financial_report_l10n_vn_bs_tos',

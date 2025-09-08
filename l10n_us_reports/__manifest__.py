@@ -13,6 +13,8 @@ Accounting reports for US
     'data': [
         'data/account_return_data.xml',
         'data/tax_report.xml',
+        'data/balance_sheet.xml',
+        'data/profit_and_loss.xml',
     ],
     'installable': True,
     'post_init_hook': '_l10n_us_reports_post_init',
