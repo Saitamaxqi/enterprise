@@ -263,7 +263,7 @@ export class Voip {
      * @returns {string|undefined}
      */
     _onBeforeUnload(ev) {
-        if (!this.env.services["voip.user_agent"]?.session?.call.isInProgress) {
+        if (!this.env.services["voip.user_agent"]?.activeSession?.call.isInProgress) {
             return;
         }
         ev.preventDefault();
