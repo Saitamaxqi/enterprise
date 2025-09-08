@@ -1,34 +1,12 @@
 from odoo import models, fields
 
 
-class IAPExtractedWords(models.Model):
-    _name = 'iap.extracted.words'
-    _description = 'Extracted words from an OCRed document'
-
-    field = fields.Char()
-    ocr_selected = fields.Boolean()
-    user_selected = fields.Boolean()
-    word_text = fields.Char()
-    word_page = fields.Integer()
-    word_box_midX = fields.Float()
-    word_box_midY = fields.Float()
-    word_box_width = fields.Float()
-    word_box_height = fields.Float()
-    word_box_angle = fields.Float()
-
-    res_model = fields.Char('Resource Model')
-    res_id = fields.Many2oneReference('Resource ID', model_field='res_model')
-
-    _res_id_res_model_idx = models.Index('(res_id, res_model)')
-
-
 class ExtractMixinWithWords(models.AbstractModel):
     _name = 'extract.mixin.with.words'
     _inherit = ['extract.mixin']
     _description = 'Base class to extract data from documents with OCRed words saved'
 
     extract_attachment_id = fields.Many2one('ir.attachment', readonly=True, ondelete='set null', copy=False, index='btree_not_null')
-    extracted_word_ids = fields.One2many('iap.extracted.words', 'res_id', string="Old Extracted Words")
     extracted_words = fields.Json()
     extracted_numbers = fields.Json()
     extracted_dates = fields.Json()

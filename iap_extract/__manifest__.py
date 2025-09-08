@@ -11,7 +11,6 @@
         'data/config_parameter_endpoint.xml',
         'data/iap_service_data.xml',
         'data/mail_template_data.xml',
-        'security/ir.model.access.csv',
     ],
     'auto_install': True,
     'author': 'Odoo S.A.',
