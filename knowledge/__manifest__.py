@@ -89,17 +89,11 @@
         ],
         'web.assets_unit_tests': [
             'knowledge/static/tests/**/*',
-            ('remove', 'knowledge/static/tests/legacy/**/*'),
             ('remove', 'knowledge/static/tests/tours/**/*'),
         ],
         'web.assets_tests': [
+            'html_editor/static/tests/_helpers/selection.js',
             'knowledge/static/tests/tours/**/*',
-        ],
-        # 'web.qunit_suite_tests': [
-        #     # 'knowledge/static/tests/legacy/**/*',  # TODO: conversion
-        # ],
-        'web.tests_assets': [
-            'knowledge/static/tests/legacy/mock_services.js',
         ],
         'knowledge.webclient': [
             ('include', 'web.assets_backend'),

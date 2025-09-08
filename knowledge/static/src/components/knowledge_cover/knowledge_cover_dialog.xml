@@ -13,7 +13,7 @@
     </Dialog>
 </t>
 
-<t t-name="knowledge.CoversListTemplate" t-inherit="web_editor.ImagesListTemplate" t-inherit-mode="primary">
+<t t-name="knowledge.CoversListTemplate" t-inherit="html_editor.ImagesListTemplate" t-inherit-mode="primary">
     <xpath expr="//t[@t-foreach='state.attachments']" position="replace">
         <t t-foreach="state.attachments" t-as="attachment" t-key="attachment.id">
             <AutoResizeCover t-if="!attachment.original_id or state.showOptimized"

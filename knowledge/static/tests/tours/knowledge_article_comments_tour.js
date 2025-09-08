@@ -3,7 +3,8 @@ import { insertText } from "@web/../tests/utils";
 import { stepUtils } from "@web_tour/tour_utils";
 
 import { endKnowledgeTour } from "./knowledge_tour_utils.js";
-import { setSelection, boundariesIn } from "@web_editor/js/editor/odoo-editor/src/utils/utils";
+import { boundariesIn } from "@html_editor/utils/position";
+import { setSelection } from "@html_editor/../tests/_helpers/selection";
 
 const addAnswerComment = (commentText) => [{
     trigger: '.o-mail-Composer-input',
@@ -55,7 +56,10 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
             content: "Select some text in the first paragraph",
             trigger: ".note-editable p.o_knowledge_tour_first_paragraph",
             run: function () {
-                setSelection(...boundariesIn(this.anchor));
+                const [anchorNode, anchorOffset, focusNode, focusOffset] = boundariesIn(
+                    this.anchor
+                );
+                setSelection({ anchorNode, anchorOffset, focusNode, focusOffset });
             },
         }, { // Trigger comment creation with the editor toolbar
             trigger: '.o-we-toolbar button[name="expand_toolbar"]',
