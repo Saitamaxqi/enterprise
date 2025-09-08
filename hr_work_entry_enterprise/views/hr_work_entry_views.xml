@@ -36,6 +36,7 @@
                    create="0"
                    default_group_by='employee_id'
                    decoration-warning="state == 'conflict'"
+                   disable_drag_drop="1"
                    display_unavailability="1"
                    pill_label="True"
                    scales="week,month"

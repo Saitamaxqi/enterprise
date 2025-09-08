@@ -9,7 +9,6 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, models
 from odoo.fields import Domain
-from odoo.tools import float_round
 from odoo.tools.intervals import Intervals
 from odoo.tools.date_utils import localized
 
@@ -155,7 +154,7 @@ class HrWorkEntry(models.Model):
     def _gantt_progress_bar(self, field, res_ids, start, stop):
         all_versions = self.env['hr.employee'].browse(res_ids)._get_all_versions_with_contract_overlap_with_period(start, stop)
         intervals_to_search = defaultdict(lambda: self.env['hr.version'])
-        values = defaultdict(lambda: {'value': 0, 'max_value': 0})
+        values = defaultdict(lambda: {'value': 0, 'max_value': 0, 'value_per_day': defaultdict(float), 'max_per_day': defaultdict(float)})
 
         # Max duration value fetch
         all_version_normal, all_version_shifted = tee(all_versions.sorted(lambda v: (v.employee_id, v.date_version)))
@@ -186,6 +185,7 @@ class HrWorkEntry(models.Model):
             for work_entry_value in self.env["hr.version"]._generate_work_entries_postprocess(versions._get_work_entries_values(date_from, date_to)):
                 if work_entry_value['date'] < stop.date():
                     values[work_entry_value['employee_id']]['max_value'] += work_entry_value["duration"]
+                    values[work_entry_value['employee_id']]['max_per_day'][str(work_entry_value['date'])] += work_entry_value["duration"]
 
         # Current durations
         work_entries = self._read_group(
@@ -194,12 +194,13 @@ class HrWorkEntry(models.Model):
                 ["date", "<", stop],
                 ["date", ">=", start]
             ],
-            groupby=[field],
+            groupby=[field, "date:day"],
             aggregates=["duration:sum"]
         )
 
-        for employee, duration in work_entries:
-            values[employee.id]['value'] = float_round(duration, precision_digits=2)
-            values[employee.id]['max_value'] = float_round(values[employee.id]['max_value'], precision_digits=2)
+        for employee, date, duration in work_entries:
+            values[employee.id]['value'] += duration
+            values[employee.id]['value_per_day'][str(date)] += duration
+            values[employee.id]['max_value'] = values[employee.id]['max_value']
 
         return values

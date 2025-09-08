@@ -9,10 +9,10 @@
             <attribute name="t-attf-class" add="#{pill.record.state === 'validated' ? 'opacity-50' : '' }" />
         </xpath>
         <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="after">
-            <span class="o-xsmaller text-muted text-truncate"><t t-esc="pill.subName"/></span>
+            <span t-if="pill?.dayDuration !== pill?.maxDayDuration" class="o-xsmaller text-truncate w-100 text-center"><t t-esc="pill.subName"/></span>
         </xpath>
         <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="attributes">
-            <attribute name="class" remove="o_gantt_pill_title" add="w-100 text-center" separator=" "/>
+            <attribute name="class" remove="o_gantt_pill_title mx-1" add="text-center w-100" separator=" "/>
         </xpath>
     </t>
 </templates>

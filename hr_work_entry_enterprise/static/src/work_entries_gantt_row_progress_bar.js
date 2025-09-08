@@ -9,6 +9,6 @@ export class WorkEntriesGanttRowProgressBar extends GanttRowProgressBar {
 
     get status() {
         const { ratio } = this.props.progressBar;
-        return ratio > 100 ? "warning" : ratio === 100 ? "success" : null;
+        return ratio === 100 ? "black" : "warning";
     }
 }

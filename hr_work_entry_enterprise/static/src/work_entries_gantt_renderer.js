@@ -49,7 +49,7 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
      * @override
      */
     getRowTypeHeight(type) {
-        return { t0: 24, t1: 45, t2: 10 }[type];
+        return { t0: 24, t1: 35, t2: 25 }[type];
     }
 
     /**
@@ -98,10 +98,19 @@ export class WorkEntriesGanttRenderer extends HrGanttRenderer {
     enrichPill(pill) {
         const enrichedPill = super.enrichPill(pill);
         enrichedPill.subName = this.getDurationStr(pill.record.duration);
-        enrichedPill.className += ` justify-content-center flex-column`;
+        enrichedPill.className += ` justify-content-center flex-column px-1`;
         enrichedPill.duration = {
             [this.getFirstGridCol(pill)]: pill.record.duration,
         };
+        const progressBarForEmployee =
+            this.model.data?.progressBars.employee_id[pill.record.employee_id.id];
+        if (progressBarForEmployee) {
+            const date = pill.record.date.toISODate();
+            Object.assign(enrichedPill, {
+                maxDayDuration: progressBarForEmployee.max_per_day[date],
+                dayDuration: progressBarForEmployee.value_per_day[date],
+            });
+        }
         return enrichedPill;
     }
 
