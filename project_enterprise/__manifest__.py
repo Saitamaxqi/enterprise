@@ -12,7 +12,6 @@ Bridge module for project and enterprise
     'data': [
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
-        'views/project_task_template_view.xml',
         'views/project_task_views.xml',
         'views/project_views.xml',
         'views/project_sharing_templates.xml',

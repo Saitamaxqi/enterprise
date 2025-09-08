@@ -13,7 +13,6 @@ Create Sales order with timesheets and products from tasks
         'data/industry_fsm_data.xml',
         'report/report_project_task_user_fsm_views.xml',
         'report/worksheet_custom_report_templates.xml',
-        'views/project_task_template_views.xml',
         'views/project_task_views.xml',
         'views/product_product_views.xml',
         'views/project_project_views.xml',

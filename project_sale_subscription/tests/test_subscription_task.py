@@ -305,13 +305,13 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             4. Confirm the sale order.
             5. Assert the task is created with correct recurrence.
         """
-        task_template = self.env['project.task.template'].create({
+        task_template = self.env['project.task'].create({
+            'is_template': True,
             'name': 'Recurring Template',
             'project_id': self.project.id,
             'recurring_task': True,
             'repeat_unit': 'week',
             'repeat_type': 'forever',
-            'repeat_interval': 1,
             'date_deadline': "2023-01-01 00:00:00",
         })
 

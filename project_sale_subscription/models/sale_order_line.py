@@ -32,20 +32,18 @@ class SaleOrderLine(models.Model):
             return task
 
         task_template_id = self.product_id.task_template_id
-        if task_template_id.recurring_task and not task_template_id.repeat_interval:
-            return task
-
-        start_date = datetime.combine(order.next_invoice_date, datetime.min.time())
-        repeat_until = order.end_date and datetime.combine(order.end_date, datetime.min.time())
-        repeat_until = repeat_until and repeat_until + relativedelta(day=int(order.plan_id.billing_period_unit == 'month' and start_date.day))
-        if task_template_id.recurring_task:
+        if task_template_id.recurrence_id:
             repeat_interval = task_template_id.repeat_interval
             repeat_type = task_template_id.repeat_type
             repeat_unit = task_template_id.repeat_unit
+            repeat_until = task_template_id.repeat_until
             task.date_deadline = task_template_id.date_deadline
         else:
             # if there is a recurrent task template and the subscription product has an end date,
             # we set this end date on the task recurrence
+            start_date = datetime.combine(order.next_invoice_date, datetime.min.time())
+            repeat_until = order.end_date and datetime.combine(order.end_date, datetime.min.time())
+            repeat_until = repeat_until and repeat_until + relativedelta(day=int(order.plan_id.billing_period_unit == 'month' and start_date.day))
             repeat_type = 'until' if repeat_until else 'forever'
             repeat_interval = order.plan_id.billing_period_value
             repeat_unit = order.plan_id.billing_period_unit

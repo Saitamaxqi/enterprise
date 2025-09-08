@@ -29,17 +29,17 @@
                 <field name="display_send_report_primary" invisible="1"/>
                 <field name="display_send_report_secondary" invisible="1"/>
                 <button name="action_preview_worksheet" type="object" string="Sign Report" class="btn-primary"
-                    invisible="not display_sign_report_primary" data-hotkey="y"/>
+                    invisible="not display_sign_report_primary or has_template_ancestor" data-hotkey="y"/>
                 <button name="action_send_report" type="object" string="Send Report" class="btn-primary"
-                    invisible="not display_send_report_primary" data-hotkey="g"/>
+                    invisible="not display_send_report_primary or has_template_ancestor" data-hotkey="g"/>
                 <button class="btn-primary" name="action_fsm_validate" type="object" string="Mark as done"
-                        invisible="not display_mark_as_done_primary" data-hotkey="v"/>
+                        invisible="not display_mark_as_done_primary or has_template_ancestor" data-hotkey="v"/>
                 <button name="action_preview_worksheet" type="object" string="Sign Report" class="btn-secondary"
-                    invisible="not display_sign_report_secondary" data-hotkey="y"/>
+                    invisible="not display_sign_report_secondary or has_template_ancestor" data-hotkey="y"/>
                 <button name="action_send_report" type="object" string="Send Report" class="btn-secondary"
-                    invisible="not display_send_report_secondary" data-hotkey="g"/>
+                    invisible="not display_send_report_secondary or has_template_ancestor" data-hotkey="g"/>
                 <button class="btn-secondary" name="action_fsm_validate" type="object" string="Mark as done"
-                        invisible="not display_mark_as_done_secondary" data-hotkey="v"/>
+                        invisible="not display_mark_as_done_secondary or has_template_ancestor" data-hotkey="v"/>
             </xpath>
             <xpath expr="//label[@for='date_deadline'][1]" position="attributes">
                 <attribute name="invisible">is_fsm or planned_date_begin</attribute>
@@ -62,7 +62,7 @@
                     icon="fa-globe"
                     type="object"
                     groups="project.group_project_user"
-                    invisible="not show_customer_preview">
+                    invisible="not show_customer_preview or has_template_ancestor">
                     <div class="o_stat_info">
                         <span class="o_stat_text text-wrap">Customer Preview</span>
                     </div>
@@ -71,13 +71,13 @@
             <field name="is_fsm" string="is FSM?" invisible="1"/>
             <field name="partner_id" position="attributes">
                 <attribute name="context">{'show_address': is_fsm, 'show_address_if_fsm': 1, 'res_partner_search_mode': 'customer'}</attribute>
-                <attribute name="required">is_fsm</attribute>
+                <attribute name="required">is_fsm and not has_template_ancestor</attribute>
             </field>
             <xpath expr="//field[@name='depend_on_ids']/list/field[@name='partner_id']" position="after">
                 <field name="is_fsm" column_invisible="True"/>
             </xpath>
             <xpath expr="//field[@name='depend_on_ids']/list/field[@name='partner_id']" position="attributes">
-                <attribute name="required">is_fsm</attribute>
+                <attribute name="required">is_fsm and not has_template_ancestor</attribute>
             </xpath>
             <xpath expr="//field[@name='child_ids']/list/field[@name='partner_id']" position="after">
                 <field name="is_fsm" column_invisible="True"/>
@@ -87,15 +87,15 @@
                 <attribute name="required">is_fsm and parent.partner_id</attribute>
             </xpath>
             <field name="partner_id" position="after">
-                <label for="action_fsm_navigate" id="action_fsm_navigate" class="d-flex d-sm-none" invisible="not is_fsm or not partner_id"/>
-                <div invisible="not is_fsm or not partner_id">
+                <label for="action_fsm_navigate" id="action_fsm_navigate" class="d-flex d-sm-none" invisible="not is_fsm or not partner_id or has_template_ancestor"/>
+                <div invisible="not is_fsm or not partner_id or has_template_ancestor">
                     <button
                         name="action_fsm_navigate" type="object" class="btn btn-link ps-0 pt-0 pb-2"
                         icon="oi-arrow-right" string="View Itinerary" colspan="2"/>
                 </div>
                 <field name="is_task_phone_update" invisible="1"/>
-                <label for="partner_phone" invisible="not is_fsm"/>
-                <div name="partner_phone" class="o_row o_row_readonly" invisible="not is_fsm">
+                <label for="partner_phone" invisible="not is_fsm or has_template_ancestor"/>
+                <div name="partner_phone" class="o_row o_row_readonly" invisible="not is_fsm or has_template_ancestor">
                     <field name="partner_phone" widget="phone"/>
                     <span class="fa fa-exclamation-triangle text-warning oe_edit_only"
                         title="By saving this change, the customer contact number will also be updated." invisible="not partner_id or not is_task_phone_update"/>
@@ -113,6 +113,7 @@
                     ('company_id', '=?', company_id),
                     ('is_fsm', '=?', context.get('fsm_mode')),
                     ('is_internal_project', '=', False),
+                    ('is_template', 'in', [is_template, False]),
                 ]</attribute>
             </field>
             <xpath expr="//group//field[@name='project_id']" position="attributes">
@@ -127,6 +128,7 @@
                     ('company_id', '=?', company_id),
                     ('is_fsm', '=?', context.get('fsm_mode')),
                     ('is_internal_project', '=', False),
+                    ('is_template', 'in', [is_template, False]),
                 ]</attribute>
             </xpath>
             <xpath expr="//div[@id='date_deadline_and_recurring_task']" position="attributes">
@@ -219,7 +221,7 @@
             </field>
             <field name="user_ids" position="before">
                 <field name="is_fsm" invisible="1"/>
-                <field name="partner_id" invisible="not is_fsm" required="is_fsm" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer'}"/>
+                <field name="partner_id" invisible="not is_fsm or is_template" required="is_fsm" widget="res_partner_many2one" context="{'res_partner_search_mode': 'customer'}"/>
             </field>
         </field>
     </record>

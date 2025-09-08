@@ -34,6 +34,7 @@ class ProjectTask(models.Model):
             })
         return result
 
+    is_fsm = fields.Boolean(related='project_id.is_fsm')
     fsm_done = fields.Boolean("Task Done", compute='_compute_fsm_done', readonly=False, store=True, copy=False)
     # Use to count conditions between : time, worksheet and materials
     # If 2 over 3 are enabled for the project, the required count = 2

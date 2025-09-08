@@ -29,7 +29,6 @@ Adds the following options:
         'views/hr_timesheet_views.xml',
         'views/rating_rating_views.xml',
         'views/fsm_views.xml',
-        'views/project_task_template_views.xml',
         'views/project_task_views.xml',
         'report/project_report_views.xml',
         'report/worksheet_custom_report_templates.xml',
