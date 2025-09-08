@@ -1,8 +1,10 @@
+from unittest.mock import patch
+
 from freezegun import freeze_time
 from odoo import Command
 
 from odoo.addons.l10n_cl_edi.tests.common import TestL10nClEdiCommon
-from odoo.tools import misc
+from odoo.tools import misc, mute_logger
 from odoo.tests import tagged
 
 
@@ -123,3 +125,35 @@ class TestEdiFactoring(TestL10nClEdiCommon):
                 self.get_xml_tree_from_attachment(move.l10n_cl_aec_attachment_id),
                 self.get_xml_tree_from_string(expected_aec)
             )
+
+    def test_l10n_cl_send_dte_to_sii_failure(self):
+        """This tests the various failure paths in l10n_cl_send_dte_to_sii."""
+        def send_and_verify_token_reset():
+            signature.last_token = 'test'
+            move.l10n_cl_send_dte_to_sii()
+            self.assertFalse(signature.last_token)
+
+        move = self.env['account.move'].create({
+            'move_type': 'entry',
+            'l10n_cl_aec_attachment_file': b'test',
+        })
+        signature = move.company_id._get_digital_signature(user_id=self.env.user.id)
+        move.company_id.l10n_cl_dte_service_provider = 'SIITEST'
+
+        patch_target = 'odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._send_xml_to_sii'
+
+        with mute_logger('odoo.addons.l10n_cl_edi_factoring.models.account_move'):
+            with patch(patch_target, return_value=None):
+                send_and_verify_token_reset()
+
+            # The code branches on whether the response is XML or HTML. Add a boolean attribute to the return value to force it to be parsed as HTML.
+            with patch(patch_target, return_value='<html a>test</html>'):
+                send_and_verify_token_reset()
+
+            # The code has a separate path for invalid XML/HTML.
+            with patch(patch_target, return_value='</invalid>'):
+                send_and_verify_token_reset()
+
+        with patch(patch_target, return_value='<STATUS>invalid</STATUS>'):
+            move.l10n_cl_send_dte_to_sii()
+            self.assertEqual(move.l10n_cl_dte_status, 'rejected')

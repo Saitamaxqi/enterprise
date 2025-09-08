@@ -107,13 +107,16 @@ class AccountMove(models.Model):
             post='/cgi_rtc/RTC/RTCAnotEnvio.cgi'
         )
         if not response:
+            digital_signature_sudo.last_token = False
             return None
         analyze_response = self._parse_response(response)
         if analyze_response['type'] == 'html':
-            self.messsage_post(body=_('WARNING: Message from SII was: %s', analyze_response['result']))
+            self.message_post(body=_('WARNING: Message from SII was: %s', analyze_response['result']))
+            digital_signature_sudo.last_token = False
             return None
         elif analyze_response['type'] is None:
-            self.messsage_post(body=_('The SII did not answered properly. Please try again'))
+            self.message_post(body=_('The SII did not answered properly. Please try again'))
+            digital_signature_sudo.last_token = False
             return None
         response_parsed = analyze_response['result']
         self.l10n_cl_sii_send_ident = response_parsed.findtext('TRACKID')
@@ -131,7 +134,7 @@ class AccountMove(models.Model):
         elif sii_response_status == '0':
             self.l10n_cl_dte_status = 'ask_for_status'
         else:
-            self.l10n_cl_dte_status == 'rejected'
+            self.l10n_cl_dte_status = 'rejected'
         self.message_post(body=_('DTE has been sent to SII with response: %s.',
                                  self._l10n_cl_get_sii_reception_status_message(sii_response_status)))
 
