@@ -927,6 +927,50 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.suspense_account_id.id, 'balance': -600.0},
         ], reconciled_amls=[])
 
+    def test_move_name_caba_tax_account(self):
+        self.env.company.tax_exigibility = True
+        tax_account = self.company_data['default_account_tax_sale']
+        tax_account.reconcile = True
+
+        caba_tax = self.env['account.tax'].create({
+            'name': "CABA",
+            'amount_type': 'percent',
+            'amount': 20.0,
+            'tax_exigibility': 'on_payment',
+            'cash_basis_transition_account_id': self.safe_copy(tax_account).id,
+            'invoice_repartition_line_ids': [
+                Command.create({
+                    'repartition_type': 'base',
+                }),
+                Command.create({
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+        })
+
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2021-07-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'name': "test",
+                    'price_unit': 100,
+                    'tax_ids': [Command.set(caba_tax.ids)],
+                }),
+            ]
+        })
+        invoice.action_post()
+        self.env['account.bank.statement.line'].with_context(auto_statement_processing=True).create({
+            'amount': 100.0,
+            'date': '2019-01-01',
+            'payment_ref': invoice.name,
+            'journal_id': self.company_data['default_journal_bank'].id,
+            })
+        caba_move = invoice.tax_cash_basis_created_move_ids
+        self.assertEqual(caba_move.line_ids[0].move_name, caba_move.name)
+
     def test_widget_available_for_line(self):
         """
             Tests what the reconcileModelPerStatementLineId (js side) will receive
