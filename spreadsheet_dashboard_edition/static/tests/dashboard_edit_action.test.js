@@ -123,7 +123,7 @@ test("publish dashboard from control panel", async function () {
     await createDashboardEditAction();
     expect(queryText(".o_sp_publish_dashboard")).toInclude("Unpublished");
     expect(".o_sp_publish_dashboard .o-checkbox input").not.toBeChecked();
-    await contains(".o_sp_publish_dashboard").click();
+    await contains(".o_sp_publish_dashboard .o-checkbox input").click();
     expect(".o_sp_publish_dashboard .o-checkbox input").toBeChecked();
     expect(queryText(".o_sp_publish_dashboard")).toInclude("Published");
     expect.verifySteps(["dashboard_published"]);
@@ -148,8 +148,22 @@ test("unpublish dashboard from control panel", async function () {
     await createDashboardEditAction();
     expect(queryText(".o_sp_publish_dashboard")).toInclude("Published");
     expect(".o_sp_publish_dashboard .o-checkbox input").toBeChecked();
-    await contains(".o_sp_publish_dashboard").click();
+    await contains(".o_sp_publish_dashboard .o-checkbox input").click();
     expect(".o_sp_publish_dashboard .o-checkbox input").not.toBeChecked();
     expect(queryText(".o_sp_publish_dashboard")).toInclude("Unpublished");
     expect.verifySteps(["dashboard_unpublished"]);
+});
+
+test("toggles publish state when clicking on checkbox label", async function () {
+    onRpc("spreadsheet.dashboard", "write", ({ args }) => {
+        expect.step("dashboard_published");
+        expect(args[1]).toEqual({ is_published: true });
+    });
+    await createDashboardEditAction();
+    expect(queryText(".o_sp_publish_dashboard")).toInclude("Unpublished");
+    expect(".o_sp_publish_dashboard .o-checkbox input").not.toBeChecked();
+    await contains(".o_sp_publish_dashboard .o-checkbox .form-check-label").click();
+    expect(".o_sp_publish_dashboard .o-checkbox input").toBeChecked();
+    expect(queryText(".o_sp_publish_dashboard")).toInclude("Published");
+    expect.verifySteps(["dashboard_published"]);
 });

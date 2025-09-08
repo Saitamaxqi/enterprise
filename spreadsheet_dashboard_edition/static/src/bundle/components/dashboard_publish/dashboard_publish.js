@@ -17,12 +17,12 @@ export class DashboardPublish extends Component {
         return this.env.isRecordReadonly();
     }
 
-    toggleDashboardPublished() {
-        if (this.isReadonly) {
+    toggleDashboardPublished(checked) {
+        if (this.isReadonly || this.state.isPublished === checked) {
             return;
         }
-        this.state.isPublished = !this.state.isPublished;
-        this.env.toggleDashboardPublished(this.state.isPublished);
+        this.state.isPublished = checked;
+        this.env.toggleDashboardPublished(checked);
     }
 }
 
