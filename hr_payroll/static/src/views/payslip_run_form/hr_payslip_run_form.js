@@ -28,6 +28,7 @@ export class PayslipBatchFormController extends FormController {
             serializeDate(this.model.root.data.date_end),
             this.model.root.data.structure_id?.id,
             this.model.root.data.company_id?.id,
+            this.model.root.data.schedule_pay,
         ]);
         return this.actionService.doAction({
             ...employeeListAction,

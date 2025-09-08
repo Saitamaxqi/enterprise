@@ -48,16 +48,8 @@ class HrPayslipRun(models.Model):
         default=lambda self: fields.Date.to_string((datetime.now() + relativedelta(months=+1, day=1, days=-1)).date()))
     structure_id = fields.Many2one('hr.payroll.structure', string='Salary Structure', readonly=False)
     use_worked_day_lines = fields.Boolean(related='structure_id.use_worked_day_lines')
-    schedule_pay = fields.Selection([
-        ('annually', 'Annually'),
-        ('semi-annually', 'Semi-annually'),
-        ('quarterly', 'Quarterly'),
-        ('bi-monthly', 'Bi-monthly'),
-        ('monthly', 'Monthly'),
-        ('semi-monthly', 'Semi-monthly'),
-        ('bi-weekly', 'Bi-weekly'),
-        ('weekly', 'Weekly'),
-        ('daily', 'Daily')],
+    schedule_pay = fields.Selection(
+        selection=lambda self: self.env['hr.payroll.structure.type']._get_selection_schedule_pay(),
         compute='_compute_schedule_pay', default="monthly", readonly=False, store=True, precompute=True, string='Pay Schedule')
     payslip_count = fields.Integer(compute='_compute_payslip_count', store=True)
     payslips_with_issues = fields.Integer(compute='_compute_payslips_with_issues')
@@ -125,10 +117,11 @@ class HrPayslipRun(models.Model):
             name += " - " + structure_id.name
         return name
 
-    def _get_valid_version_ids(self, date_start=None, date_end=None, structure_id=None, company_id=None, employee_ids=None):
+    def _get_valid_version_ids(self, date_start=None, date_end=None, structure_id=None, company_id=None, employee_ids=None, schedule_pay=None):
         date_start = date_start or self.date_start
         date_end = date_end or self.date_end
         structure = self.env["hr.payroll.structure"].browse(structure_id) if structure_id else self.structure_id
+        schedule_pay = schedule_pay or self.schedule_pay
         company = company_id or self.company_id.id
         version_domain = Domain([
             ('company_id', '=', company),
@@ -143,6 +136,8 @@ class HrPayslipRun(models.Model):
             version_domain &= Domain([('structure_type_id', '=', structure.type_id.id)])
         if employee_ids:
             version_domain &= Domain([('employee_id', 'in', employee_ids)])
+        if schedule_pay:
+            version_domain &= Domain([('schedule_pay', '=', schedule_pay)])
         all_versions = self.env['hr.version']._read_group(
             domain=version_domain,
             groupby=['employee_id', 'date_version:day'],
@@ -295,7 +290,7 @@ class HrPayslipRun(models.Model):
             search_default_payslip_run_id=self.id or False)
         return action
 
-    def action_payroll_hr_version_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None):
+    def action_payroll_hr_version_list_view_payrun(self, date_start=None, date_end=None, structure_id=None, company_id=None, schedule_pay=None):
         action = self.env['ir.actions.act_window']._for_xml_id('hr_payroll.action_payroll_hr_version_list_view_payrun')
 
         valid_version_ids = self._get_valid_version_ids(
@@ -303,6 +298,8 @@ class HrPayslipRun(models.Model):
             fields.Date.from_string(date_end),
             structure_id,
             company_id,
+            None,
+            schedule_pay,
         )
 
         payslip_domain = Domain.AND([
@@ -311,6 +308,7 @@ class HrPayslipRun(models.Model):
            Domain('date_to', '=', fields.Date.from_string(date_end) if date_end else self.date_end),
            Domain('struct_id', '=', structure_id if structure_id else (self.structure_id.id if self.structure_id else False)),
            Domain('state', '!=', 'cancel'),
+           Domain('version_id.schedule_pay', '=', schedule_pay if schedule_pay else False)
         ])
         existing_version_ids = self.env['hr.payslip'].search(payslip_domain).version_id.ids
         filtered_version_ids = set(valid_version_ids) - set(existing_version_ids)
