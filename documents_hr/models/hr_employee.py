@@ -140,7 +140,7 @@ class HrEmployee(models.Model):
                 added_subfolder_names = list(set(subfolder_names) - set(existing_subfolders.mapped('name')))
                 for subfolder_name in added_subfolder_names:
                     create_subfolders_vals.append({
-                        'name': subfolder_name,
+                        'name': subfolder_name.strip(),
                         'type': 'folder',
                         'folder_id': employee.hr_employee_folder_id.id,
                         'company_id': company.id,
