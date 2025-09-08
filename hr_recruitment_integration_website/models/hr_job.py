@@ -41,7 +41,7 @@ Here is the data to generate the job description:
         try:
             IrConfigParameter = self.env['ir.config_parameter'].sudo()
             olg_api_endpoint = IrConfigParameter.get_param(
-                'web_editor.olg_api_endpoint', DEFAULT_OLG_ENDPOINT
+                'html_editor.olg_api_endpoint', DEFAULT_OLG_ENDPOINT
             )
             database_id = IrConfigParameter.get_param('database.uuid')
             response = iap_tools.iap_jsonrpc(olg_api_endpoint + "/api/olg/1/chat", params={

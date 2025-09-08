@@ -200,7 +200,7 @@ class BusinessCardScanner:
     def _ocr_from_iap(self, image_url):
         IrConfigParameter = self.env["ir.config_parameter"].sudo()
         olg_api_endpoint = IrConfigParameter.get_param(
-            "web_editor.olg_api_endpoint", "https://olg.api.odoo.com"
+            "html_editor.olg_api_endpoint", "https://olg.api.odoo.com"
         )
         database_id = IrConfigParameter.get_param("database.uuid")
         response = iap_tools.iap_jsonrpc(
