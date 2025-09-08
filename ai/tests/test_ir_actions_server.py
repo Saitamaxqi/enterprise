@@ -140,7 +140,7 @@ class TestAiServerActions(TransactionCase):
                     {"value": "new name", "__end_message": "Renamed!"},
                 )
 
-            return [], [], []
+            return ["Done"], [], []
 
         partner = self.env["res.partner"].create({"name": "Partner"})
 
@@ -190,7 +190,7 @@ class TestAiServerActions(TransactionCase):
             llm_calls += 1
             if llm_calls == 1:
                 return self._ai_tool_call(f"action_{bad_action.id}", "call_123456", {})
-            return [], [], []
+            return ["Done"], [], []
 
         with patch.object(LLMApiService, "_request_llm", _mocked_request_llm_bad_action):
             action.with_context(active_model=partner._name, active_id=partner.id).run()
@@ -227,7 +227,7 @@ class TestAiServerActions(TransactionCase):
                     "call_789123",
                     {"value": "new name"},
                 )
-            return [], [], []
+            return ["Done"], [], []
 
         with patch.object(LLMApiService, "_request_llm", _mocked_request_llm_use_in_ai_false):
             action.with_context(active_model=partner._name, active_id=partner.id).run()
@@ -249,7 +249,7 @@ class TestAiServerActions(TransactionCase):
             if llm_calls == 1:
                 self.assertFalse(inputs)
                 return self._ai_tool_call(f"action_{ir_action_tool.id}", "call_123456", {})
-            return [], [], []
+            return ["Done"], [], []
 
         partner = self.env["res.partner"].create({"name": "Partner"})
 

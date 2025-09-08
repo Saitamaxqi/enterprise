@@ -373,12 +373,12 @@ class LLMApiService:
         response = []
         next_inputs = list(inputs or ())
 
-        for line in llm_response.get("output") or ():
+        output_lines = llm_response.get("output") or []
+        has_tool_calls = any(line.get('type') == 'function_call' for line in output_lines)
+
+        for line in output_lines:
             if line.get('type') == 'function_call':
                 tool_name = line.get("name", "")
-                if tool_name not in tools:
-                    _logger.error("AI: Try to call a forbidden action %s", line)
-                    continue
 
                 try:
                     arguments = json.loads(line.get("arguments") or "")
@@ -389,10 +389,11 @@ class LLMApiService:
                 to_call.append((tool_name, line.get('call_id'), arguments))
                 next_inputs.append(line)
 
-            elif text := line.get('text'):
-                response.append(text)
-            elif line.get('type') == 'message':
-                response.extend(t for c in line.get('content', ()) if (t := c.get('text')))
+            elif not has_tool_calls:
+                if text := line.get('text'):
+                    response.append(text)
+                elif line.get('type') == 'message':
+                    response.extend(t for c in line.get('content', ()) if (t := c.get('text')))
         return response, to_call, next_inputs
 
     def _request_llm_google(
@@ -484,15 +485,23 @@ class LLMApiService:
         response = []
         next_inputs = list(inputs or ())
 
-        for candidate in llm_response.get("candidates") or ():
+        candidates = llm_response.get("candidates") or []
+        has_tool_calls = any(
+            part.get('functionCall')
+            for candidate in candidates
+            for part in candidate.get('content', {}).get('parts') or []
+        )
+
+        for candidate in candidates:
             for line in candidate.get('content', {}).get('parts') or ():
                 if f_info := line.get('functionCall'):
                     to_call.append((f_info['name'], f_info['name'], f_info['args']))
                     next_inputs.append({"role": "model", "parts": [line]})
-                elif r := line.get('text'):
-                    response.append(r)
-                else:
-                    _logger.warning("Gemini: could not parse %s", line)
+                elif not has_tool_calls:
+                    if r := line.get('text'):
+                        response.append(r)
+                    else:
+                        _logger.warning("Gemini: could not parse %s", line)
 
         return response, to_call, next_inputs
 
@@ -594,15 +603,20 @@ class LLMApiService:
                 break
 
             done = False
-            limited_next_actions = next_actions[:AI_MAX_TOOL_CALLS_PER_CALL]
             session = get_ai_logging_session()
 
             if session:
-                session["tool_calls"] += len(limited_next_actions)
+                session["tool_calls"] += min(len(next_actions), AI_MAX_TOOL_CALLS_PER_CALL)
 
-            for tool_name, call_id, arguments in limited_next_actions:
+            for i, (tool_name, call_id, arguments) in enumerate(next_actions):
+                if i >= AI_MAX_TOOL_CALLS_PER_CALL:
+                    _logger.warning("AI: Tool call limit reached, stopping further tool calls")
+                    inputs.append(self._build_tool_call_response(call_id, "Error: This tool call isn't processed because of tool call limit, try again"))
+                    continue
+
                 if tool_name not in tools:
                     _logger.error("AI: Try to call a forbidden action %s", tool_name)
+                    inputs.append(self._build_tool_call_response(call_id, f"Error: unknown tool '{tool_name}'. Try again with the correct tool name."))
                     continue
 
                 has_end_message = "__end_message" in arguments
@@ -619,13 +633,19 @@ class LLMApiService:
                     else:
                         _logger.info("AI: action terminate early with empty message")
 
-            if session and len(limited_next_actions) > 1:  # Batch of tool calls
-                _logger.debug("[AI Tool Summary] Batch #%d completed, %d tool calls", session["current_batch_id"], len(limited_next_actions))
+            if session and len(next_actions) > 1:  # Batch of tool calls
+                _logger.debug("[AI Tool Summary] Batch #%d completed, %d tool calls", session["current_batch_id"], len(next_actions))
 
             if done:
                 break
 
         _logger.info("AI: API calls %s", api_call + 1)
+
+        if not all_responses:
+            error_msg = "Processing loop ended with no response."
+            if api_call + 1 >= AI_MAX_SUCCESSIVE_CALLS:
+                error_msg = "Number of successive API calls exceeded, please try again with a more precise request."
+            raise ValueError(error_msg)
 
         return all_responses
 

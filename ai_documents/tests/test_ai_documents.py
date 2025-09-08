@@ -89,7 +89,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
                     {'folder_id': llm_target_folder.id},
                 )
 
-            return [], [], []
+            return ["Done"], [], []
 
         with patch.object(LLMApiService, "_request_llm", _mocked_request_llm):
             document = Doc.create({
@@ -132,7 +132,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
                     "call_789123",
                     {'folder_id': target.id},
                 )
-            return [], [], []
+            return ["Done"], [], []
 
         sort_wizard = Form(self.env['ai_documents.sort'].with_context(default_folder_id=self.target_folder.id))
         sort_wizard.ai_sort_prompt = f"Target folder prompt: move in {Doc._ai_folder_insert(self.folder.id)}"
@@ -213,7 +213,7 @@ class TestAiDocuments(TestAiDocumentsCommon):
                     "call_789123",
                     {'folder_id': self.target_folder.id},
                 )
-            return [], [], []
+            return ["Done"], [], []
 
         ir_action_tool_first_move = self.env["ir.actions.server"].create({
             "model_id": self.env["ir.model"]._get_id("documents.document"),

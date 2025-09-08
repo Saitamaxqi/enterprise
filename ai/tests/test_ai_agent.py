@@ -67,11 +67,12 @@ class TestAIAgent(TransactionCase):
              patch('odoo.addons.ai.utils.llm_api_service.LLMApiService._get_api_token') as mock_token:
             mock_token.return_value = 'test-api-key'
             mock_request.return_value = {
-                'choices': [{
-                    'message': {
-                        'role': 'assistant',
-                        'content': 'Response to second question',
-                    },
+                'output': [{
+                    'type': 'message',
+                    'content': [{
+                        'type': 'text',
+                        'text': 'Response to second question',
+                    }],
                 }],
             }
 

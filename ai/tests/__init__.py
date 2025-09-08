@@ -10,4 +10,5 @@ from . import test_gemini_integration
 from . import test_instance_validation
 from . import test_ir_actions_server
 from . import test_llm_api_service
+from . import test_llm_tool_calling
 from . import test_schema_validation
