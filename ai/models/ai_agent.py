@@ -3,7 +3,6 @@ import base64
 import logging
 import json
 import lxml.html
-import pytz
 
 from ast import literal_eval
 from collections import defaultdict
@@ -18,7 +17,7 @@ except ImportError:
 from odoo import _, api, Command, fields, models
 from odoo.fields import Domain
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, file_open, html_sanitize, SQL, is_html_empty, ormcache
+from odoo.tools import file_open, html_sanitize, SQL, is_html_empty, ormcache
 from odoo.http import request
 from odoo.tools.mail import html_to_inner_content
 from odoo.tools.misc import mute_logger, submap
@@ -539,16 +538,12 @@ class AIAgent(models.Model):
 
     def _build_system_context(self, extra_system_context: str = ""):
         self.ensure_one()
-
-        tz = None
-        if self.env.user.tz:
-            tz = pytz.timezone(self.env.user.tz)
-        today_date = str(datetime.now(tz).strftime(DEFAULT_SERVER_DATETIME_FORMAT))
         system_content = self.system_prompt or "You are a RAG assistant."
-        system_content += f"\n\nToday's date to be used: {today_date}"
+        system_content += f"\n\nToday's date to be used: {fields.Datetime.now()} (UTC)"
         if not self.env.user._is_public():
             partner_vals, _ = self.env.user.partner_id._ai_read(['name', 'function', 'email', 'phone'], None)
-            system_content += f"\n\nUser info: {partner_vals} "
+            system_content += f"\n\nUser info: {partner_vals}"
+        system_content += f"\nAll record data timestamps are in UTC. In responses, convert them to {self.env.tz}"
 
         if self.topic_ids:
             system_content += PREPROMPTS['tools']
