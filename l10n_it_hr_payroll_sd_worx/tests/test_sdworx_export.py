@@ -61,6 +61,8 @@ class TestSdworxITExportLogic(TestSdworxITExportCommon):
             export_form.action_export_file()
 
     def test_export_full_day_leave(self):
+        if self.env.ref('base.module_hr_holidays').state != 'installed':
+            return
         leave_date = date(2025, 6, 9)
         leave = self.env['hr.leave'].with_company(self.it_company).create({
             'name': 'Full Day Leave Test',
@@ -82,6 +84,8 @@ class TestSdworxITExportLogic(TestSdworxITExportCommon):
         )
 
     def test_export_half_day_leave(self):
+        if self.env.ref('base.module_hr_holidays').state != 'installed':
+            return
         leave_date = date(2025, 6, 9)
         leave = self.env['hr.leave'].with_company(self.it_company).create({
             'name': 'Half Day Leave Test',

@@ -33,25 +33,26 @@ class TestSdworxITExportCommon(TestPayslipContractBase):
         cls.env['resource.calendar.attendance'].create(resource_calendar_attendance_values)
 
         cls.richard_emp.version_id.write({'resource_calendar_id': cls.it_calendar_8h.id})
-        cls.wet_legal_leave = cls.env['hr.work.entry.type'].create({
-            'name': 'Legal Leave (SDWorx IT)',
-            'code': 'IT_LEGAL_LEAVE',
-            'l10n_it_sdworx_code': 'FER',
-            'is_leave': True,
-        })
-        cls.leave_type_day_it = cls.env['hr.leave.type'].create({
-            'name': 'IT Full-Day Leave',
-            'company_id': cls.it_company.id,
-            'requires_allocation': False,
-            'request_unit': 'day',
-            'leave_validation_type': 'no_validation',
-            'work_entry_type_id': cls.wet_legal_leave.id,
-        })
-        cls.leave_type_half_day = cls.env['hr.leave.type'].create({
-            'name': 'IT Half-Day Leave',
-            'company_id': cls.it_company.id,
-            'requires_allocation': False,
-            'request_unit': 'half_day',
-            'leave_validation_type': 'no_validation',
-            'work_entry_type_id': cls.wet_legal_leave.id,
-        })
+        if cls.env.ref('base.module_hr_holidays').state == 'installed':
+            cls.wet_legal_leave = cls.env['hr.work.entry.type'].create({
+                'name': 'Legal Leave (SDWorx IT)',
+                'code': 'IT_LEGAL_LEAVE',
+                'l10n_it_sdworx_code': 'FER',
+                'is_leave': True,
+            })
+            cls.leave_type_day_it = cls.env['hr.leave.type'].create({
+                'name': 'IT Full-Day Leave',
+                'company_id': cls.it_company.id,
+                'requires_allocation': False,
+                'request_unit': 'day',
+                'leave_validation_type': 'no_validation',
+                'work_entry_type_id': cls.wet_legal_leave.id,
+            })
+            cls.leave_type_half_day = cls.env['hr.leave.type'].create({
+                'name': 'IT Half-Day Leave',
+                'company_id': cls.it_company.id,
+                'requires_allocation': False,
+                'request_unit': 'half_day',
+                'leave_validation_type': 'no_validation',
+                'work_entry_type_id': cls.wet_legal_leave.id,
+            })

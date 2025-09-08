@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
-    l10n_it_sdworx_code = fields.Char("SD Worx IT Code", groups="hr.group_hr_user")
+    l10n_it_sdworx_code = fields.Char("SD Worx IT Code", groups="hr_payroll.group_hr_payroll_user")
 
     @api.constrains('l10n_it_sdworx_code')
     def _check_sdworx_code(self):
