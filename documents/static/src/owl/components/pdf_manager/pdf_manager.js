@@ -510,7 +510,7 @@ export class PdfManager extends Component {
      */
     _displayErrorNotification(message) {
         this.notification.add(message, {
-            title: _t("Error"),
+            type: "danger",
         });
     }
     /**

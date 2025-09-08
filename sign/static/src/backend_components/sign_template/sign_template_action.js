@@ -297,7 +297,6 @@ export class SignTemplate extends Component {
         if (!template.length) {
             this.templateID = undefined;
             this.notification.add(_t("The template doesn't exist anymore."), {
-                title: _t("Warning"),
                 type: "warning",
             });
             return;

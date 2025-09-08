@@ -802,7 +802,6 @@ export class ViewEditorModel extends Reactive {
             _t("This operation caused an error, probably because a xpath was broken"),
             {
                 type: "danger",
-                title: _t("Error"),
             }
         );
 

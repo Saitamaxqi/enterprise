@@ -396,7 +396,7 @@ test("AI Fields - Unresolved Request", async () => {
     await click(".o_field_ai_char .btn[title='Refresh value']");
     await waitForSteps(["char computed"]);
     await animationFrame();
-    expect(".o_notification .o_notification_content").toHaveText("The value could not be resolved");
+    expect(".o_notification .o_notification_content").toHaveText(/The value could not be resolved$/);
     expect(".o_field_ai_char input").toHaveValue("");
 });
 
@@ -434,6 +434,6 @@ test("AI Properties - Unresolved Request", async () => {
     await click(".o_field_properties .btn[title='Refresh value']");
     await waitForSteps(["properties.ai_char computed"]);
     await animationFrame();
-    expect(".o_notification .o_notification_content").toHaveText("The value could not be resolved");
+    expect(".o_notification .o_notification_content").toHaveText(/The value could not be resolved$/);
     expect(".o_field_properties .o_property_field_value input").toHaveValue("");
 });

@@ -386,7 +386,7 @@ function useDocumentsViewFileUpload() {
 
     const handleUploadError = (result) => {
         notification.add(result.error, {
-            title: _t("Error"),
+            type: "danger",
             sticky: true,
         });
     };

@@ -66,7 +66,6 @@ export class StudioView extends Component {
                     ),
                     {
                         type: "danger",
-                        title: _t("Error"),
                     }
                 );
                 this.viewEditorModel.resetSidebar("view");

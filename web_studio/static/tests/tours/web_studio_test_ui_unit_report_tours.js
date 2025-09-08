@@ -350,7 +350,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_er
             run: "click",
         },
         {
-            trigger: ".o_notification .o_notification_title:contains(Report edition failed)",
+            trigger: ".o_notification:contains(Report edition failed)",
         },
         {
             trigger:
@@ -381,7 +381,7 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
             run: "click",
         },
         {
-            trigger: ".o_notification .o_notification_title:contains(Report edition failed)",
+            trigger: ".o_notification:contains(Report edition failed)",
         },
         {
             trigger: ".o-web-studio-report-container :iframe body",

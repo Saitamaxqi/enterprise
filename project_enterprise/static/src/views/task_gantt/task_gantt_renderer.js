@@ -132,7 +132,6 @@ export class TaskGanttRenderer extends TaskGanttRendererCommon {
 
             for (const warning of warnings) {
                 this.notificationService.add(warning[1], {
-                    title: _t("Warning"),
                     type: "warning",
                     sticky: true,
                 });

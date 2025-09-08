@@ -2756,7 +2756,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settin
         {
             trigger: ".o_notification_bar.bg-danger",
             run: function () {
-                helper.assertErrorMessage("You must scan a product");
+                helper.assertErrorMessage("Not the expected scan. You must scan a product");
             },
         },
 
@@ -2838,7 +2838,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settin
             trigger: ".o_notification:has(.o_notification_bar.bg-danger)",
             run: function () {
                 helper.assertErrorMessage(
-                    "You are supposed to scan WH/Stock or another source location"
+                    "Mandatory Source Location. You are supposed to scan WH/Stock or another source location"
                 );
             },
         },
@@ -2911,7 +2911,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settin
             trigger: ".o_notification_bar.bg-danger",
             run: function () {
                 helper.assertErrorMessage(
-                    "Please scan destination location for product1 before scanning other product"
+                    "Mandatory Destination Location. Please scan destination location for product1 before scanning other product"
                 );
             },
         },
@@ -2935,7 +2935,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settin
             trigger: ".o_notification_bar.bg-danger",
             run: function () {
                 helper.assertErrorMessage(
-                    "You are supposed to scan WH/Stock or another source location"
+                    "Mandatory Source Location. You are supposed to scan WH/Stock or another source location"
                 );
             },
         },
@@ -3284,7 +3284,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
             trigger: ".o_notification:has(.o_notification_bar.bg-danger)",
             run: function () {
                 helper.assertErrorMessage(
-                    "Please scan destination location for product1 before scanning other product"
+                    "Mandatory Destination Location. Please scan destination location for product1 before scanning other product"
                 );
             },
         },
@@ -3460,7 +3460,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
             trigger: ".o_notification",
             run: function () {
                 helper.assertErrorMessage(
-                    "You are supposed to scan WH/Stock or another source location"
+                    "Mandatory Source Location. You are supposed to scan WH/Stock or another source location"
                 );
             },
         },
@@ -3498,7 +3498,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
         {
             trigger: ".o_notification",
             run: function () {
-                helper.assertErrorMessage("You must scan a package or put in pack");
+                helper.assertErrorMessage("Not the expected scan. You must scan a package or put in pack");
             },
         },
         {
@@ -3536,7 +3536,7 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
         {
             trigger: ".o_notification",
             run: function () {
-                helper.assertErrorMessage("You must scan a package or put in pack");
+                helper.assertErrorMessage("Not the expected scan. You must scan a package or put in pack");
             },
         },
         {

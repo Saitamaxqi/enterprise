@@ -750,7 +750,7 @@ test("Test highlight shifts added by executed action", async function () {
     await click(".o_popover.dropdown-menu .o_gantt_button_copy_previous_week");
     await animationFrame();
 
-    expect(".o_notification .bg-success").toHaveCount(1, {
+    expect(".o_notification .bg-success").toHaveCount(2, {
         message: "The notification should be a success notification.",
     });
     expect(".o_notification button .fa-undo").toHaveCount(1, {
@@ -770,7 +770,7 @@ test("Test highlight shifts added by executed action", async function () {
     await click(".o_popover.dropdown-menu .o_gantt_button_auto_plan"); // click on copy button in desktop view
     await animationFrame();
     expect(".o_notification").toHaveCount(2, { message: "2 notifications should be displayed." });
-    expect(".o_notification .bg-success").toHaveCount(2, {
+    expect(".o_notification .bg-success").toHaveCount(4, {
         message: "Both notifications should be a success notification.",
     });
     expect(".o_notification button .fa-undo").toHaveCount(2, {

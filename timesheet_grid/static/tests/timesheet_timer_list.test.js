@@ -125,8 +125,8 @@ test("timesheet.grid (list)(timer): start the timer without a valid project", as
     });
 
     await clickTimerButton("stop");
-    await waitFor("div.o_notification_manager h5:contains(Invalid fields:)");
-    expect("div.o_notification_manager h5:contains(Invalid fields:)").toHaveCount(1, {
+    await waitFor("div.o_notification_manager span:contains('Missing Required Fields')");
+    expect("div.o_notification_manager span:contains('Missing Required Fields')").toHaveCount(1, {
         message:
             "The default notification of 'required fields' of a Many2one relation should be raised.",
     });

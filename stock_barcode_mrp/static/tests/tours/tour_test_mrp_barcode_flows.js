@@ -1036,7 +1036,7 @@ registry.category("web_tour.tours").add("test_barcode_production_add_byproduct",
             run: "scan final",
         },
         {
-            trigger: ".o_notification_title:contains('Product not Allowed')",
+            trigger: ".o_notification:contains('Product not Allowed')",
             run: "click",
         },
         {

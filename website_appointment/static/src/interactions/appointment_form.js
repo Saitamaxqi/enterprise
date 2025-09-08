@@ -2,7 +2,6 @@ import { patch } from "@web/core/utils/patch";
 import { AppointmentForm } from "@appointment/interactions/appointment_form";
 import { ReCaptcha } from "@google_recaptcha/js/recaptcha";
 import { session } from "@web/session";
-import { _t } from "@web/core/l10n/translation";
 
 
 patch(AppointmentForm.prototype, {
@@ -54,7 +53,6 @@ patch(AppointmentForm.prototype, {
         if (tokenObj.error) {
             this.notification.add(tokenObj.error, {
                 sticky: true,
-                title: _t("Error"),
                 type: "danger",
             });
             return false;
