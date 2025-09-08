@@ -8,7 +8,9 @@ class ProductTemplate(models.Model):
     def _update_product_by_barcodelookup(self, product, barcode_lookup_data):
         product.ensure_one()
         description = super()._update_product_by_barcodelookup(product, barcode_lookup_data)
-        product.description_ecommerce = description
+        if not product.description_ecommerce:
+            product.description_ecommerce = description
+        return description
 
     def _set_lookup_image(self, product, img):
         image = super()._set_lookup_image(product, img)
@@ -17,3 +19,4 @@ class ProductTemplate(models.Model):
                 'name': product.name,
                 'image_1920': image,
             })]
+        return image

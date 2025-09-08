@@ -1,4 +1,4 @@
-from odoo.tests import tagged
+from odoo.tests import Form, tagged
 from ...product_barcodelookup.tests.test_barcodelookup_flow import TestBarcodelookup
 
 
@@ -12,3 +12,14 @@ class TestWebsiteBarcodelookup(TestBarcodelookup):
         self._verify_product_data(product, normalized_view=True)
         #  Product created from website should be published by default
         self.assertTrue(product.is_published)
+
+    def test_website_barcodelookup_description_ecommerce(self):
+        with self.mockBarcodelookupAutofill():
+            templ_form = Form(self.env['product.template'])
+            templ_form.description_ecommerce = 'hello world'
+            templ_form.barcode = "710535977349"
+            self.assertEqual(templ_form.description_ecommerce, 'hello world')
+
+            templ_form = Form(self.env['product.template'])
+            templ_form.barcode = "710535977349"
+            self.assertEqual(templ_form.description_ecommerce, 'Test Description')
