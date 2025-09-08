@@ -317,6 +317,7 @@
                 <attribute name="js_class">documents_list_secondary</attribute>
                 <attribute name="expand">1</attribute>
             </list>
+            <widget name="documents_list_actions" position="replace"/>
         </field>
     </record>
 
