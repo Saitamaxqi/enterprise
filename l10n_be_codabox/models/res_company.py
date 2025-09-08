@@ -32,7 +32,7 @@ class ResCompany(models.Model):
             elif company.account_representative_id:
                 company.l10n_be_codabox_fiduciary_vat = company.account_representative_id.vat or company.company_registry
             else:
-                company.l10n_be_codabox_fiduciary_vat = self.vat or self.company_registry
+                company.l10n_be_codabox_fiduciary_vat = company.vat or company.company_registry
 
     @api.model
     def _l10n_be_codabox_return_wizard(self, name, view_id, res_model, res_id):
