@@ -48,9 +48,8 @@ export class AccountReportController {
         this.cachedFilterOptions = this.options;
         this.saveSessionOptions(mainReportOptions);
 
-        const activeSectionPromise = this.displayReport(mainReportOptions['report_id']);
+        this.reportLoadingPromise = this.displayReport(mainReportOptions['report_id']);
         this.preLoadClosedSections();
-        await activeSectionPromise;
 
         const chatterState = JSON.parse(
             browser.sessionStorage.getItem(this.sessionChatterStateID())
@@ -78,7 +77,7 @@ export class AccountReportController {
             this.cachedFilterOptions = options;
         }
 
-        this.loadInformationMap(options, cacheKey);
+        return this.loadInformationMap(options, cacheKey);
     }
 
     serverCallResultCanBeSetAsActive(callResult, options, cacheKey) {

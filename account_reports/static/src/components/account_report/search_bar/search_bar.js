@@ -21,10 +21,13 @@ export class AccountReportSearchBar extends Component {
     //------------------------------------------------------------------------------------------------------------------
     // Search
     //------------------------------------------------------------------------------------------------------------------
-    search() {
+    async search() {
         const inputText = this.searchText.el.value.trim();
         const query = inputText.toLowerCase();
         const linesIDsMatched = [];
+
+        // Since the search bar is loaded before the report data, we need to wait for it
+        await this.controller.reportLoadingPromise;
 
         if (query.length) {
             for (const line of this.controller.lines) {
@@ -42,6 +45,6 @@ export class AccountReportSearchBar extends Component {
         } else {
             delete this.controller.lines_searched;
             this.controller.deleteOption("filter_search_bar");
-        }        
+        }
     }
 }
