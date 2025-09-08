@@ -34,6 +34,9 @@
             'data_cleaning/static/src/views/*.js',
             'data_cleaning/static/src/views/*.xml',
         ],
+        'web.assets_unit_tests': [
+            'data_cleaning/static/tests/*.test.js',
+        ],
     },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
