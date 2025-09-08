@@ -100,16 +100,21 @@ class MailActivity(models.Model):
             partner_ids = [p[0].id for p in partners_by_records.values() if p]
             store.add(self.env["res.partner"].browse(partner_ids))
             for activity in activities:
-                activity_data = {
-                    **activity.read(["id", "res_name", "phone", "res_id", "res_model", "state", "summary", "date_deadline", "mail_template_ids", "user_id"])[0],
-                    "activity_category": activity.activity_type_id.category,
-                    "persona": Store.One(activity.user_id.partner_id, []),
-                }
-                activity_data["user_id"] = activity_data["user_id"][0]
-                partners = partners_by_records.get(activity.res_id)
-                if partners:
-                    activity_data["partner"] = Store.One(partners[:1], partners._voip_get_store_fields())
-                store.add(activity, activity_data)
+                partners = partners_by_records.get(activity.res_id, self.env["res.partner"])
+                store.add(activity, [
+                    "id",
+                    "res_name",
+                    "phone",
+                    "res_id",
+                    "res_model",
+                    "state",
+                    "summary",
+                    "date_deadline",
+                    "mail_template_ids",
+                    "activity_category",
+                    Store.One("user_id", Store.One("partner_id")),
+                    Store.Attr("partner", Store.One(partners[:1], partners._voip_get_store_fields()))
+                ])
 
     def _get_phone_numbers_by_activity(self):
         """Batch compute the phone numbers associated with the activities.
@@ -132,4 +137,4 @@ class MailActivity(models.Model):
         return phone_numbers_by_activity
 
     def _to_store_defaults(self, target):
-        return [*super()._to_store_defaults(target), "country_code_from_phone", "phone", "user_id"]
+        return [*super()._to_store_defaults(target), "country_code_from_phone", "phone"]

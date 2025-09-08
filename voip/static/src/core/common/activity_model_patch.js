@@ -3,16 +3,6 @@ import { Activity } from "@mail/core/common/activity_model";
 
 import { patch } from "@web/core/utils/patch";
 
-patch(Activity, {
-    /** @override */
-    _insert(data) {
-        const activity = super._insert(...arguments);
-        if (Object.hasOwn(data, "partner")) {
-            activity.partner = data.partner;
-        }
-        return activity;
-    },
-});
 
 /** @type {import("models").Activity} */
 const activityPatch = {

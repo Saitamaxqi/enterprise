@@ -59,7 +59,7 @@ export class Softphone {
                 activity.activity_category === "phonecall" &&
                 ["today", "overdue"].includes(activity.state) &&
                 activity.phone &&
-                activity.user_id === this.store.self.main_user_id?.id &&
+                activity.user_id.eq(this.store.self.main_user_id) &&
                 (!searchInputValue ||
                     [
                         activity.partner.name,
