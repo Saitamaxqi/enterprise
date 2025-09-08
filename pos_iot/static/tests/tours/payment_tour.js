@@ -127,11 +127,8 @@ registry.category("web_tour.tours").add("payment_terminals_tour", {
             },
             ...PaymentScreen.clickPaymentMethod("Cash"),
             ...PaymentScreen.clickNumpad("5"),
-            {
-                content: "Check that the payment is confirmed",
-                trigger: ".button.next.highlight",
-                run: "click",
-            },
+            ...PaymentScreen.validateButtonIsHighlighted(),
+            ...PaymentScreen.clickValidate(),
             {
                 content: "Immediately at the receipt screen.",
                 trigger: '.receipt-screen .button.next.highlight:contains("New Order")',
