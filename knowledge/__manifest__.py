@@ -9,7 +9,6 @@
     'version': '1.0',
     'depends': [
         'web',
-        'web_editor',  # still needed for backend history functions
         'digest',
         'html_editor',
         'mail',

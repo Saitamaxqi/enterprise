@@ -151,8 +151,8 @@ Let your customers follow the signature process easily.
             'web/static/lib/bootstrap/js/dist/tab.js',
             'web/static/lib/bootstrap/js/dist/toast.js',
 
-            'web_editor/static/src/scss/web_editor.common.scss',
-            'web_editor/static/src/scss/web_editor.frontend.scss',
+            'html_editor/static/src/scss/html_editor.common.scss',
+            'html_editor/static/src/scss/html_editor.frontend.scss',
 
             'sign/static/src/scss/sign_common.scss',
             'sign/static/src/scss/sign_frontend.scss',
