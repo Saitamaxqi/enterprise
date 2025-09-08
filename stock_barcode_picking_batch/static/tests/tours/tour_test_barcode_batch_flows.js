@@ -949,6 +949,14 @@ registry.category("web_tour.tours").add("test_batch_create", {
                 );
             },
         },
+        {
+            content: "Check we did not lose the config and that scans are working",
+            trigger: ".o_scan_message.o_scan_src",
+            run: "scan LOC-01-01-00",
+        },
+        {
+            trigger: ".o_scan_message.o_scan_product",
+        },
     ],
 });
 
@@ -1025,7 +1033,6 @@ registry.category("web_tour.tours").add("test_put_in_pack_scan_suggested_package
                 helper.assert(line4.querySelector("[name=package]").innerText, "PACK0000001 ?"); // Display suggested package.
             },
         },
-
         // Scans the delivery 2 line's product and put it in pack.
         {
             trigger: ".o_barcode_client_action",

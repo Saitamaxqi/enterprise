@@ -144,7 +144,7 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
             );
             await this.refreshCache(data.records);
             this.selectedPickings = [];
-            this.config = data.config || {}; // Get the picking type's scan restrictions configuration.
+            this.config = { ...this.config, ...(data.config || {}) }; // Get the picking type's scan restrictions configuration.
             this.trigger("update");
         }
     }
