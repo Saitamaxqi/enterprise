@@ -26,8 +26,8 @@
                     </div>
                     <div id="studio_video" class="o_video_embed w-100 w-md-50 ratio ratio-16x9">
                         <iframe class="embed-responsive-item"
-                            t-attf-src="https://www.youtube.com/embed/xCvFZrrQq7k?autoplay=1"
-                            frameborder="0" allowfullscreen="true" />
+                            t-attf-src="https://www.youtube.com/embed/IRbj-SzTcrY?autoplay=1"
+                            allow="autoplay" frameborder="0" allowfullscreen="true" />
                     </div>
                 </div>
 
