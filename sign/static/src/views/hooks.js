@@ -98,8 +98,8 @@ export function useSignViewButtons() {
             resModel = this.props.resModel;
             signTemplateId = this.props.signTemplateId;
             updateDocuments = this.props.updateDocuments;
-            referenceDoc = this.env.searchModel?.globalContext?.default_reference_doc || false;
-            activityId = this.env.searchModel?.globalContext?.default_activity_id || false;
+            referenceDoc = this.env.searchModel?.globalContext?.default_reference_doc;
+            activityId = this.env.searchModel?.globalContext?.default_activity_id;
             fileInput.el.click();
         },
     };
