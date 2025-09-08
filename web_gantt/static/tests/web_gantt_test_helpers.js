@@ -583,3 +583,19 @@ export function getPill(text, options) {
 export function getPillWrapper(text, options) {
     return getPill(text, options).closest(SELECTORS.pillWrapper);
 }
+
+/**
+ * For each cell of a specific column, checks whether the cell has the class in
+ * its' classList and returns as a list of booleans.
+ *
+ * @param {string} cssClass
+ * @param {string[]} columnHeaders
+ * @returns {boolean[]}
+ */
+export function cssClassPresencePerCellInColumn(cssClass, columnHeaders) {
+    const columnIndex = findColumnFromHeader(...columnHeaders);
+    const cells = queryAll(`${SELECTORS.cell}[data-col='${columnIndex}']`);
+    return cells.map((el) => {
+        return el.classList.contains(cssClass);
+    });
+}
