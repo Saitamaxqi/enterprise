@@ -100,7 +100,7 @@
                                 <field name="budget_type" nolabel="1" required="1"/>
                             </div>
                             <field name="structure_id" required="1" options="{'no_open': True}"/>
-                            <field name="resource_calendar_id" required="1"/>
+                            <field name="resource_calendar_id" placeholder="Company's Working Schedule"/>
                             <label for="simulation_employee_id" string="Employee"/>
                             <field name="simulation_employee_id" placeholder="Optional" nolabel="1"/>
                         </group>
@@ -155,10 +155,8 @@
                     <div class="d-flex flex-column flex-sm-row gap-2 w-100">
                         <div class="d-flex w-100 w-sm-auto gap-2">
                             <button string="Configure Benefits" name="action_open_salary_configurator" type="object"
-                                class="btn-primary w-50 w-sm-auto" invisible="id" disabled="1"/>
-                            <button string="Configure Benefits" name="action_open_salary_configurator" type="object"
-                                class="btn-primary w-50 w-sm-auto" invisible="not id"/>
-                            <field name="url" string="Copy Link" widget="CopyClipboardButton" disabled="not id" 
+                                class="btn-primary w-50 w-sm-auto"/>
+                            <field name="url" string="Copy Link" widget="CopyClipboardButton"
                                 class="w-50 w-sm-auto" options="{'btn_class': 'primary w-100'}"/>
                         </div>
                         <button special="cancel" string="Close" type="object" class="btn-secondary w-100 w-sm-auto"/>

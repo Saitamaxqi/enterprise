@@ -95,7 +95,7 @@ class HrContractSalaryOffer(models.Model):
 
         # Offer for an employee
         if self.employee_id:
-            contract_template = self.contract_template_id.with_context(tracking_disable=True)
+            contract_template = self.contract_template_id.with_context(tracking_disable=True, salary_simulation=True)
             if contract_template:
                 if not contract_template.employee_id:
                     contract_template.write({
@@ -105,7 +105,7 @@ class HrContractSalaryOffer(models.Model):
                     })
                 return contract_template
             else:
-                return self.employee_version_id.with_context(tracking_disable=True)
+                return self.employee_version_id.with_context(tracking_disable=True, salary_simulation=True)
 
         # Offer for an applicant, create an employee
         employee = self.env['hr.employee'].with_context(
@@ -122,11 +122,11 @@ class HrContractSalaryOffer(models.Model):
             'company_id': self.company_id.id,
         })
         if self.contract_template_id:
-            employee.version_id.with_context(tracking_disable=True).write(
+            employee.version_id.with_context(tracking_disable=True, salary_simulation=True).write(
                 self.env['hr.version'].get_values_from_contract_template(self.contract_template_id)
             )
-            return employee.current_version_id.with_context(tracking_disable=True)
-        return employee.current_version_id.with_context(tracking_disable=True)
+            return employee.current_version_id.with_context(tracking_disable=True, salary_simulation=True)
+        return employee.current_version_id.with_context(tracking_disable=True, salary_simulation=True)
 
     @api.depends('contract_template_id.sign_template_id')
     def _compute_sign_template_id(self):
