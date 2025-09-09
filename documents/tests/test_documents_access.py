@@ -879,6 +879,7 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         """
         self._assert_no_members(self.folder_b)
         self.folder_b.folder_id = self.folder_a.id
+        self.assertEqual((self.folder_b + self.document_txt).access_ids.mapped('role'), [False, 'edit'])
         self.folder_a.owner_id = False
 
         self.assertEqual(self.folder_a.access_internal, 'view')
@@ -895,6 +896,8 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
         # Create a shortcut to document_txt in folder_a
         shortcut = self.document_txt.action_create_shortcut(location_user_folder_id=str(self.folder_a.id))
 
+        self.assertEqual(
+            shortcut.access_ids.mapped(lambda a: (a.role, a.partner_id)), [('edit', self.doc_user.partner_id)])
         self._assert_raises_check_access_rule(shortcut.with_user(self.portal_user), 'read',
                                               "Shortcut shouldn't be visible as source is inaccessible")
         self.assertEqual(shortcut.with_user(self.portal_user).user_permission, 'none')
@@ -1650,3 +1653,22 @@ class TestDocumentsAccess(TransactionCaseDocuments, MockEmail):
                 ('is_access_via_link_hidden', 'boolean', False, True),
             ], strict=True)
             self.assertIn('Portal user rights changed from\nViewer\nto\nEditor', html2plaintext(message.body))
+
+    def test_members_access_on_move_documents(self):
+        self.document_txt.action_update_access_rights(partners={self.internal_user.partner_id.id: ('view', False)})
+        self.env['documents.access'].create({
+            'document_id': self.folder_a.id,
+            'partner_id': self.internal_user.partner_id.id,
+            'last_access_date': fields.Datetime.now(),
+        })
+        self.assertIn(
+            (self.internal_user.partner_id, 'view'),
+            self.document_txt.access_ids.mapped(lambda a: (a.partner_id, a.role)))
+        self.assertIn(
+            (self.internal_user.partner_id, False),
+            self.folder_a.access_ids.mapped(lambda a: (a.partner_id, a.role)))
+
+        self.document_txt.folder_id = self.folder_a.id
+        self.assertIn(
+            (self.internal_user.partner_id, 'view'),
+            self.document_txt.access_ids.mapped(lambda a: (a.partner_id, a.role)))

@@ -2134,8 +2134,8 @@ class DocumentsDocument(models.Model):
 
             vals.update((k, v) for k, v in vals_values.items() if k not in old_vals)
             # Add folder-inherited members without overriding provided values
-            if (folder and (inherited_access_ids := folder._get_inherited_access_ids_vals())
-                    and old_vals.get('access_ids') not in (False, Command.set([]), [])):
+            if ('shortcut_document_id' not in old_vals and old_vals.get('access_ids') not in (False, Command.set([]), [])
+                    and folder and (inherited_access_ids := folder._get_inherited_access_ids_vals())):
                 vals_access_ids_to_check = vals['access_ids'] if old_vals.get('access_ids') else []
                 partner_ids = [val[2]['partner_id'] for val in vals_access_ids_to_check]
                 access_vals_to_add = [v for v in inherited_access_ids if v['partner_id'] not in partner_ids]
@@ -2375,7 +2375,7 @@ class DocumentsDocument(models.Model):
                 is_access_via_link_hidden=new_parent_folder.is_access_via_link_hidden,
                 # Simply add partners of destination
                 partners={access.partner_id: (access.role, access.expiration_date)
-                          for access in new_parent_folder.access_ids},
+                          for access in new_parent_folder.access_ids if access.role},
             )
             # Propagate folder company unless passed as well (already done)
             if 'company_id' not in vals:
