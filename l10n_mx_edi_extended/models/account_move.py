@@ -215,7 +215,7 @@ class AccountMove(models.Model):
             ext_trade_values['total_usd'] = 0.0
             ext_trade_values['mercancia_list'] = []
             for product, product_values in product_values_map.items():
-                total_usd = usd.round(product_values['total'] * to_usd_rate)
+                total_usd = usd.round(product_values['total'] * to_usd_rate) if usd else 0.0
                 weighted_prices = sum(price_unit * qty for (price_unit, qty) in zip(product_values['price_unit_list'], product_values['quantity_list']))
                 weights = sum(product_values['quantity_list'])
                 if weights != 0:
