@@ -391,10 +391,11 @@ class L10n_InReportHandler(models.AbstractModel):
 
             query.left_join('account_move', 'l10n_in_withholding_ref_move_id', 'account_move', 'id', 'bill_move')
             query.left_join('account_move__bill_move', 'partner_id', 'res_partner', 'id', 'partner')
+            query.left_join('account_move__bill_move__partner', 'l10n_in_pan_entity_id', 'l10n_in_pan_entity', 'id', 'pan_entity')
 
             qu = query.select(
                 *common_cols,
-                'account_move__bill_move__partner.l10n_in_pan AS partner_pan',
+                'account_move__bill_move__partner__pan_entity.name AS partner_pan',
                 'account_move__bill_move__partner.name AS partner_name',
                 'account_move.name AS wh_move_name',
                 'account_move__bill_move.name AS move_name',
@@ -405,10 +406,11 @@ class L10n_InReportHandler(models.AbstractModel):
             )
         else:
             query.left_join('account_move', 'partner_id', 'res_partner', 'id', 'partner')
+            query.left_join('account_move__partner', 'l10n_in_pan_entity_id', 'l10n_in_pan_entity', 'id', 'pan_entity')
 
             qu = query.select(
                 *common_cols,
-                'account_move__partner.l10n_in_pan AS partner_pan',
+                'account_move__partner__pan_entity.name AS partner_pan',
                 'account_move__partner.name AS partner_name',
                 'account_move.name AS move_name',
                 'account_move.invoice_date',
