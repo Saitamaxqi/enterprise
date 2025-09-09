@@ -605,3 +605,29 @@ class TestPayslipComputation(TestPayslipContractBase):
         self.assertEqual(richard_work_entry.state, 'validated')
         richard_work_entry.write({'state': 'draft'})
         self.assertEqual(richard_work_entry.state, 'draft')
+
+    def test_duplicate_payslips_cancellation(self):
+        work_entries = self.env['hr.work.entry'].search([
+            ('employee_id', '=', self.richard_emp.id),
+            ('date', '>=', self.richard_payslip.date_from),
+            ('date', '<=', self.richard_payslip.date_to)])
+        self.richard_payslip.action_payslip_done()
+        self.assertTrue(all(entry.state == 'validated' for entry in work_entries))
+
+        dup_payslip = self.env['hr.payslip'].create({
+            'name': 'Payslip of Richard',
+            'employee_id': self.richard_emp.id,
+            'version_id': self.contract_cdi.id,
+            'struct_id': self.developer_pay_structure.id,
+            'date_from': date(2016, 1, 1),
+            'date_to': date(2016, 1, 31)
+        })
+        dup_payslip.action_payslip_done()
+        self.assertTrue(all(entry.state == 'validated' for entry in work_entries))
+
+        self.richard_payslip.action_payslip_cancel()
+        self.assertTrue(all(entry.state == 'validated' for entry in work_entries))
+
+        dup_payslip.action_payslip_cancel()
+        self.assertTrue(all(entry.state == 'draft' for entry in work_entries))
+        self.assertTrue(all(not entry.has_payslip for entry in work_entries))

@@ -508,11 +508,19 @@ class HrPayslip(models.Model):
                 & Domain('state', '=', 'validated')
             )
         linked_entries = self.env['hr.work.entry']
+        similar_payslips = self._get_similar_payslips()
         for regular_payslip in self:
             payslip_start = regular_payslip.date_from
             payslip_end = regular_payslip.date_to
+            key = (regular_payslip.employee_id.id, regular_payslip.struct_id.id, payslip_start, payslip_end)
+            duplicates = similar_payslips[key].filtered(lambda dup: dup.id != regular_payslip.id)
+            if duplicates:
+                continue
             linked_entries |= work_entries.filtered(
-                lambda entry: entry.employee_id == regular_payslip.employee_id and payslip_start <= entry.date <= payslip_end)
+                lambda entry: entry.employee_id == regular_payslip.employee_id
+                              and payslip_start <= entry.date <= payslip_end
+                              and not entry.has_payslip)
+
         if linked_entries:
             linked_entries.action_set_to_draft()
 
