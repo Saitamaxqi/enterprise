@@ -115,7 +115,7 @@
         <div t-elif="state.view === 'actionsView'"
              class="o_barcode_settings d-flex flex-grow-1 flex-column p-2">
             <BarcodeInput onSubmit.bind="onBarcodeSubmitted"/>
-            <div class="my-2">
+            <div class="my-2" t-if="env.model.resModel == 'stock.quant'">
                 <button class="w-100 fs-4 btn btn-secondary mb-2 py-2"
                     t-attf-class="{{`o_count_entire_locations ${env.model.countEntireLocation ? 'active' : ''}`}}"
                     t-on-click="() => { env.model.countEntireLocation = !env.model.countEntireLocation; env.model.trigger('update'); }"
