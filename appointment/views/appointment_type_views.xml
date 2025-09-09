@@ -82,7 +82,7 @@
                             </div>
                             <div class="col-lg-2 col-12 pe-sm-0 py-0 mt-3 mb-2 my-lg-auto d-flex o_appointment_kanban_buttons">
                                 <widget name="appointment_quick_share_button" class="ms-lg-auto me-2"/>
-                                <button type="open" class="btn btn-secondary">
+                                <button type="open" class="btn btn-secondary z-1">
                                     Configure
                                 </button >
                             </div>
