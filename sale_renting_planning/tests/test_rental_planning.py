@@ -150,9 +150,12 @@ class TestRentalPlanning(TestSalePlanning):
         4. Check the generated shifts - each resource should have only one shift at a time
             if no resource available generate a open shift for that.
         '''
-        self.planning_role_junior.resource_ids = [
-            Command.set((self.employee_joseph.resource_id + self.employee_bert.resource_id).ids)
-        ]
+        self.planning_role_junior.write({
+            'sync_shift_rental': True,
+            'resource_ids': [
+                Command.set((self.employee_joseph.resource_id + self.employee_bert.resource_id).ids)
+            ],
+        })
         self.plannable_product.rent_ok = True
 
         rental_order_1, rental_order_2 = self.env['sale.order'].with_context(in_rental_app=True).create([
@@ -314,3 +317,73 @@ class TestRentalPlanning(TestSalePlanning):
         rental_order_form.rental_return_date += relativedelta(days=1)
         rental_order = rental_order_form.save()
         self.assertEqual(planning_slot.end_datetime, rental_order.rental_return_date, "Make sure the dates are sync between planning slot and rental order")
+
+    def test_confirm_rental_order_with_unavailable_resource(self):
+        """
+        Test rental order confirmation with unavailable resource:
+        1. Confirms order and creates slot when shift sync is off.
+        2. Raises ValidationError when shift sync is on.
+        """
+        self.env['planning.slot'].create({
+            'resource_id': self.projector.id,
+            'start_datetime': datetime(2025, 9, 18, 7, 0),
+            'end_datetime': datetime(2025, 9, 19, 12, 0),
+        })
+        order_without_sync = self.env['sale.order'].with_context(in_rental_app=True).create({
+            'partner_id': self.planning_partner.id,
+            'rental_start_date': datetime(2025, 9, 18, 8, 0),
+            'rental_return_date': datetime(2025, 9, 19, 8, 0),
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_projector.id,
+                    'product_uom_qty': 1,
+                }),
+            ],
+        })
+        order_without_sync.action_confirm()
+        self.assertEqual(
+            len(order_without_sync.order_line.planning_slot_ids),
+            1,
+            "Expected exactly one planning slot for the projector"
+        )
+
+        self.planning_role_projector.sync_shift_rental = True
+        order_with_sync = order_without_sync.copy()
+        with self.assertRaises(
+            ValidationError,
+            msg="Cannot confirm rental when shift sync is on and resource is unavailable"
+        ):
+            order_with_sync.action_confirm()
+
+    def test_confirm_rental_order_without_sufficient_resources(self):
+        """
+        Test confirming a rental order when there are insufficient resources:
+        1. Raises ValidationError when shift sync is enabled.
+        2. Allows confirmation and creates one planning slot when shift sync is disabled.
+        """
+        self.planning_role_projector.sync_shift_rental = True
+        order_with_sync = self.env['sale.order'].with_context(in_rental_app=True).create({
+            'partner_id': self.planning_partner.id,
+            'rental_start_date': datetime(2025, 9, 18, 8, 0),
+            'rental_return_date': datetime(2025, 9, 19, 8, 0),
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_projector.id,
+                    'product_uom_qty': 4,
+                }),
+            ],
+        })
+        with self.assertRaises(
+            ValidationError,
+            msg="Cannot confirm rental when shift sync is on and resource is not enough",
+        ):
+            order_with_sync.action_confirm()
+
+        self.planning_role_projector.sync_shift_rental = False
+        order_without_sync = order_with_sync.copy()
+        order_without_sync.action_confirm()
+        self.assertEqual(
+            len(order_without_sync.order_line.planning_slot_ids),
+            1,
+            "Expected exactly one planning slot for the projector"
+        )

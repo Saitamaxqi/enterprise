@@ -83,20 +83,21 @@ class SaleOrderLine(models.Model):
                     assigned_resource_ids.append(resource_id)
                 if sol.product_uom_id == unit_uom and float_compare(sol.product_uom_qty, 1, precision_rounding=sol.product_uom_id.rounding) > 0:
                     nb_shifts_to_generate = int(float_round(sol.product_uom_qty, 0, rounding_method="UP"))
-                    if len(free_resource_ids) < nb_shifts_to_generate:
+                    if len(free_resource_ids) >= nb_shifts_to_generate:
+                        vals_list.extend([
+                            {**sol._planning_slot_values(), 'resource_id': free_resource_ids[i]}
+                            for i in range(1, nb_shifts_to_generate)
+                        ])
+                    elif sol.product_id.planning_role_id.sync_shift_rental:
                         raise ValidationError(
                             self.env._(
                                 "This Sales Order can't be confirmed. No enough resources are available for the shifts in: %(product_name)s.",
                                 product_name=sol.product_id.name,
                             )
                         )
-                    vals_list.extend([
-                        {**sol._planning_slot_values(), 'resource_id': free_resource_ids[i]}
-                        for i in range(1, nb_shifts_to_generate)
-                    ])
             else:
                 problematic_services.append(sol.product_id.name)
-        if problematic_services:
+        if problematic_services and sol.product_id.planning_role_id.sync_shift_rental:
             raise ValidationError(
                 self.env._(
                     "This Sales Order can't be confirmed. No resources are available for the shifts in: %(problematic_services)s.",
