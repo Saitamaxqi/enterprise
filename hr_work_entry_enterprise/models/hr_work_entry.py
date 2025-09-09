@@ -158,7 +158,7 @@ class HrWorkEntry(models.Model):
         values = defaultdict(lambda: {'value': 0, 'max_value': 0})
 
         # Max duration value fetch
-        all_version_normal, all_version_shifted = tee(all_versions.sorted("employee_id", "date_version"))
+        all_version_normal, all_version_shifted = tee(all_versions.sorted(lambda v: (v.employee_id, v.date_version)))
         next(all_version_shifted, None)
         all_version_shifted = chain(all_version_shifted, [None])
         for current_version, next_version in zip(all_version_normal, all_version_shifted):
