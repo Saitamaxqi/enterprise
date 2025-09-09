@@ -495,7 +495,7 @@ class Sign(http.Controller):
 
         partner = self.env['mail.thread'].sudo()._partner_find_from_emails_single([mail], no_create=False)
 
-        new_sign_request = sign_request.with_user(sign_request.create_uid).with_context(no_sign_mail=True).copy({
+        new_sign_request_sudo = sign_request.with_user(sign_request.create_uid).with_context(no_sign_mail=True).sudo().copy({
             'reference': sign_request.reference.replace('-%s' % _("Shared"), ''),
             'request_item_ids': [Command.create({
                 'partner_id': partner.id,
@@ -503,7 +503,7 @@ class Sign(http.Controller):
             })],
             'state': 'sent',
         })
-        return {"requestID": new_sign_request.id, "requestToken": new_sign_request.access_token, "accessToken": new_sign_request.request_item_ids[0].sudo().access_token}
+        return {"requestID": new_sign_request_sudo.id, "requestToken": new_sign_request_sudo.access_token, "accessToken": new_sign_request_sudo.request_item_ids[0].access_token}
 
     @http.route([
         '/sign/send-sms/<int:request_id>/<token>/<phone_number>',
